@@ -6,13 +6,17 @@ import UserPage from './pages/UserPage';
 import AdminPage from './pages/AdminPage';
 import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
+import FeedPage from './pages/FeedPage/FeedPage';
 import './index.css';
 
 // A simple protected route wrapper
-function ProtectedRoute({ children }) {
-  const { session, loading } = useAuth();
+function ProtectedRoute({ children, requireAdmin }) {
+  const { session, profile, loading } = useAuth();
   if (loading) return null;
   if (!session) return <Navigate to="/auth" replace />;
+  if (requireAdmin && profile?.role !== 'admin') {
+    return <Navigate to="/feed" replace />; // Redirect non-admins to the feed or home
+  }
   return children;
 }
 
@@ -26,12 +30,20 @@ function App() {
             <Route 
               path="admin" 
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requireAdmin={true}>
                   <AdminPage />
                 </ProtectedRoute>
               } 
             />
             <Route path="auth" element={<AuthPage />} />
+            <Route 
+              path="feed" 
+              element={
+                <ProtectedRoute>
+                  <FeedPage />
+                </ProtectedRoute>
+              } 
+            />
             <Route 
               path="profile" 
               element={
