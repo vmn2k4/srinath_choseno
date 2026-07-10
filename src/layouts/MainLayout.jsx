@@ -32,21 +32,18 @@ export default function MainLayout() {
           >
             Boundary Finder
           </Link>
-          <Link 
-            to="/admin"
-            className={`px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
-              isActive('/admin') 
-                ? 'text-slate-50 bg-blue-500/20 border border-blue-500/30' 
-                : 'text-slate-400 hover:text-slate-50 hover:bg-white/5'
-            }`}
-          >
-            Admin
-          </Link>
-          
-          <div className="w-px h-6 bg-white/10 mx-2"></div>
-
           {session ? (
             <>
+              <Link 
+                to="/admin"
+                className={`px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
+                  isActive('/admin') 
+                    ? 'text-slate-50 bg-blue-500/20 border border-blue-500/30' 
+                    : 'text-slate-400 hover:text-slate-50 hover:bg-white/5'
+                }`}
+              >
+                Admin
+              </Link>
               <Link 
                 to="/profile"
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${

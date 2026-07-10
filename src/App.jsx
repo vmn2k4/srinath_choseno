@@ -23,7 +23,14 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<UserPage />} />
-            <Route path="admin" element={<AdminPage />} />
+            <Route 
+              path="admin" 
+              element={
+                <ProtectedRoute>
+                  <AdminPage />
+                </ProtectedRoute>
+              } 
+            />
             <Route path="auth" element={<AuthPage />} />
             <Route 
               path="profile" 

@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import { supabase } from '../services/supabase';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { useEffect } from 'react';
 
 export default function AuthPage() {
+  const navigate = useNavigate();
+  const { session } = useAuth();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(true);
   const [message, setMessage] = useState({ type: '', text: '' });
+
+  useEffect(() => {
+    if (session) {
+      navigate('/profile', { replace: true });
+    }
+  }, [session, navigate]);
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -27,7 +38,7 @@ export default function AuthPage() {
           password,
         });
         if (error) throw error;
-        // User will be redirected/updated via onAuthStateChange in App.jsx
+        // Navigation will be handled by the useEffect watching session
       }
     } catch (error) {
       setMessage({ type: 'error', text: error.error_description || error.message });
