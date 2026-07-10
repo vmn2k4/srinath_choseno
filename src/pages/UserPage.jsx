@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from './supabaseClient';
+import { supabase } from '../services/supabase';
 import * as turf from '@turf/turf';
 import { MapPin, Search, Compass, Navigation, Map as MapIcon } from 'lucide-react';
-import MapComponent from './MapComponent';
+import MapComponent from '../components/map/MapComponent';
 
-export default function User() {
+export default function UserPage() {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [result, setResult] = useState(null);

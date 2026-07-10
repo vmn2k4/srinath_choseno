@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON, Tooltip, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { supabase } from './supabaseClient';
+import { supabase } from '../../services/supabase';
 import * as turf from '@turf/turf';
 
 function AutoFitBounds({ boundaries }) {
