@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { LogOut, User as UserIcon } from 'lucide-react';
 
 export default function MainLayout() {
-  const { session, signOut } = useAuth();
+  const { session, profile, signOut } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -35,15 +35,27 @@ export default function MainLayout() {
           {session ? (
             <>
               <Link 
-                to="/admin"
+                to="/feed"
                 className={`px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
-                  isActive('/admin') 
+                  isActive('/feed') 
                     ? 'text-slate-50 bg-blue-500/20 border border-blue-500/30' 
                     : 'text-slate-400 hover:text-slate-50 hover:bg-white/5'
                 }`}
               >
-                Admin
+                Feed
               </Link>
+              {profile?.role === 'admin' && (
+                <Link 
+                  to="/admin"
+                  className={`px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
+                    isActive('/admin') 
+                      ? 'text-slate-50 bg-blue-500/20 border border-blue-500/30' 
+                      : 'text-slate-400 hover:text-slate-50 hover:bg-white/5'
+                  }`}
+                >
+                  Admin
+                </Link>
+              )}
               <Link 
                 to="/profile"
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
