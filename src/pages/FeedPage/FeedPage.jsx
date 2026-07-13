@@ -149,7 +149,7 @@ export default function FeedPage() {
       // 1. Fetch user's posts
       const { data: userPosts, error: postError } = await supabase
         .from('posts')
-        .select('id, content, created_at, likes_count, dislikes_count')
+        .select('id, content, created_at, likes_count, dislikes_count, comments(id)')
         .eq('ghost_id', profile.current_ghost_id);
       
       if (postError) throw postError;
@@ -163,26 +163,35 @@ export default function FeedPage() {
       if (commentError) throw commentError;
 
       // 3. Construct JSON Object
+      const postsToExport = userPosts || [];
+      const commentsToExport = userComments || [];
+
+      const postStats = postsToExport.map(p => ({
+        post_id: p.id,
+        likes_count: p.likes_count || 0,
+        dislikes_count: p.dislikes_count || 0,
+        comments_count: p.comments ? p.comments.length : 0
+      }));
+
       const exportData = {
         user_id: profile.id,
         ghost_id: profile.current_ghost_id,
         exported_at: new Date().toISOString(),
-        post_count: userPosts.length,
-        comment_count: userComments.length,
-        post_ids: userPosts.map(p => p.id),
-        comment_ids: userComments.map(c => c.id),
-        posts: userPosts,
-        comments: userComments
+        post_count: postsToExport.length,
+        comment_count: commentsToExport.length,
+        post_ids: postsToExport.map(p => p.id),
+        comment_ids: commentsToExport.map(c => c.id),
+        post_stats: postStats
       };
 
-      // 4. Create Blob
-      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      // 4. Serialize to String
+      const jsonString = JSON.stringify(exportData, null, 2);
       const fileName = `${profile.id}_export.json`;
 
       // 5. Upload to Supabase Storage
       const { error: uploadError } = await supabase.storage
         .from('user_exports')
-        .upload(fileName, blob, {
+        .upload(fileName, jsonString, {
           upsert: true,
           contentType: 'application/json'
         });
