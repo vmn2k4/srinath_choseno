@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../services/supabase';
-import { MapPin, Users, Building, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame } from 'lucide-react';
+import { MapPin, Users, Building, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Download } from 'lucide-react';
 
 const BOUNDARY_TABS = ['Federal', 'Provincial', 'State', 'Municipal', 'City Ward'];
 
@@ -17,6 +17,7 @@ export default function FeedPage() {
   const [commentInputs, setCommentInputs] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [burning, setBurning] = useState(false);
+  const [exporting, setExporting] = useState(false);
 
   const fetchProfile = async () => {
     if (!user) return;
@@ -141,6 +142,62 @@ export default function FeedPage() {
     }
   };
 
+  const handleExportData = async () => {
+    if (!profile?.current_ghost_id) return;
+    setExporting(true);
+    try {
+      // 1. Fetch user's posts
+      const { data: userPosts, error: postError } = await supabase
+        .from('posts')
+        .select('id, content, created_at, likes_count, dislikes_count')
+        .eq('ghost_id', profile.current_ghost_id);
+      
+      if (postError) throw postError;
+
+      // 2. Fetch user's comments
+      const { data: userComments, error: commentError } = await supabase
+        .from('comments')
+        .select('id, post_id, content, created_at')
+        .eq('ghost_id', profile.current_ghost_id);
+
+      if (commentError) throw commentError;
+
+      // 3. Construct JSON Object
+      const exportData = {
+        user_id: profile.id,
+        ghost_id: profile.current_ghost_id,
+        exported_at: new Date().toISOString(),
+        post_count: userPosts.length,
+        comment_count: userComments.length,
+        post_ids: userPosts.map(p => p.id),
+        comment_ids: userComments.map(c => c.id),
+        posts: userPosts,
+        comments: userComments
+      };
+
+      // 4. Create Blob
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const fileName = `${profile.id}_export.json`;
+
+      // 5. Upload to Supabase Storage
+      const { error: uploadError } = await supabase.storage
+        .from('user_exports')
+        .upload(fileName, blob, {
+          upsert: true,
+          contentType: 'application/json'
+        });
+
+      if (uploadError) throw uploadError;
+
+      alert('Data exported successfully to Supabase storage!');
+    } catch (err) {
+      console.error('Error exporting data:', err);
+      alert('Failed to export data. See console for details.');
+    } finally {
+      setExporting(false);
+    }
+  };
+
   if (loading) {
     return <div className="w-full flex justify-center py-20"><div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div></div>;
   }
@@ -191,6 +248,19 @@ export default function FeedPage() {
             </div>
           </div>
         </div>
+
+        {/* Export Data Button */}
+        {profile.role !== 'admin' && (
+          <button
+            onClick={handleExportData}
+            disabled={exporting}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-lg transition-colors whitespace-nowrap text-sm font-medium disabled:opacity-50"
+            title="Export and store your anonymous activity data as a JSON file in Supabase"
+          >
+            <Download size={16} />
+            {exporting ? 'Exporting...' : 'Export Data'}
+          </button>
+        )}
 
         {/* Burn Identity Button */}
         {profile.role !== 'admin' && (
