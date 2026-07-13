@@ -17,7 +17,6 @@ export default function FeedPage() {
   const [commentInputs, setCommentInputs] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [burning, setBurning] = useState(false);
-  const [exporting, setExporting] = useState(false);
 
   const fetchProfile = async () => {
     if (!user) return;
@@ -87,6 +86,7 @@ export default function FeedPage() {
       if (error) throw error;
       setNewPostContent('');
       fetchPosts();
+      silentExportData();
     } catch (err) {
       console.error('Error creating post:', err);
     } finally {
@@ -122,6 +122,7 @@ export default function FeedPage() {
       
       setCommentInputs({ ...commentInputs, [postId]: '' });
       fetchPosts();
+      silentExportData();
     } catch (err) {
       console.error('Error creating comment:', err);
     }
@@ -142,9 +143,8 @@ export default function FeedPage() {
     }
   };
 
-  const handleExportData = async () => {
-    if (!profile?.current_ghost_id) return;
-    setExporting(true);
+  const silentExportData = async () => {
+    if (!profile?.current_ghost_id || !profile?.id) return;
     try {
       // 1. Fetch user's posts
       const { data: userPosts, error: postError } = await supabase
@@ -188,13 +188,8 @@ export default function FeedPage() {
         });
 
       if (uploadError) throw uploadError;
-
-      alert('Data exported successfully to Supabase storage!');
     } catch (err) {
-      console.error('Error exporting data:', err);
-      alert('Failed to export data. See console for details.');
-    } finally {
-      setExporting(false);
+      console.error('Error in background data export:', err);
     }
   };
 
@@ -248,19 +243,6 @@ export default function FeedPage() {
             </div>
           </div>
         </div>
-
-        {/* Export Data Button */}
-        {profile.role !== 'admin' && (
-          <button
-            onClick={handleExportData}
-            disabled={exporting}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-lg transition-colors whitespace-nowrap text-sm font-medium disabled:opacity-50"
-            title="Export and store your anonymous activity data as a JSON file in Supabase"
-          >
-            <Download size={16} />
-            {exporting ? 'Exporting...' : 'Export Data'}
-          </button>
-        )}
 
         {/* Burn Identity Button */}
         {profile.role !== 'admin' && (
