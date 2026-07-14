@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../services/supabase';
-import { MapPin, Users, Building, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Download } from 'lucide-react';
+import { MapPin, Users, Building, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Download, Video } from 'lucide-react';
+import VideoRecorder from '../../components/video/VideoRecorder';
 
 const BOUNDARY_TABS = ['Polling District', 'Federal Area', 'Country', 'International'];
 
@@ -19,6 +20,9 @@ export default function FeedPage() {
   const [commentInputs, setCommentInputs] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [burning, setBurning] = useState(false);
+  
+  const [showVideoRecorder, setShowVideoRecorder] = useState(false);
+  const [uploadedVideoUrl, setUploadedVideoUrl] = useState(null);
 
   const fetchProfile = async () => {
     if (!user) return;
@@ -58,11 +62,27 @@ export default function FeedPage() {
         .order('created_at', { ascending: false });
 
       if (activeTab === 'Polling District') {
-        // Only show posts from the same exact polling district ID
-        query = query.eq('polling_district_id', profile.location?.polling_district_id).eq('is_country', false).eq('is_international', false);
+        // Guard: if user has no polling district ID, show nothing (don't run a null query)
+        if (!profile.location?.polling_district_id) {
+          setPosts([]);
+          return;
+        }
+        query = query
+          .eq('polling_district_id', profile.location.polling_district_id)
+          .is('federal_boundary_id', null)
+          .eq('is_country', false)
+          .eq('is_international', false);
       } else if (activeTab === 'Federal Area') {
-        // Show posts from the exact federal boundary ID
-        query = query.eq('federal_boundary_id', profile.location?.federal_boundary_id).eq('is_country', false).eq('is_international', false);
+        // Guard: if user has no federal boundary ID, show nothing
+        if (!profile.location?.federal_boundary_id) {
+          setPosts([]);
+          return;
+        }
+        query = query
+          .eq('federal_boundary_id', profile.location.federal_boundary_id)
+          .is('polling_district_id', null)
+          .eq('is_country', false)
+          .eq('is_international', false);
       } else if (activeTab === 'Country') {
         query = query.eq('is_country', true);
       } else if (activeTab === 'International') {
@@ -78,6 +98,15 @@ export default function FeedPage() {
         ...post,
         comments: post.comments.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
       }));
+
+      // Politicians want to see the most interacted posts first
+      if (profile.role === 'politician') {
+        sortedPosts.sort((a, b) => {
+           const scoreA = (a.likes_count || 0) + (a.comments?.length || 0);
+           const scoreB = (b.likes_count || 0) + (b.comments?.length || 0);
+           return scoreB - scoreA;
+        });
+      }
 
       setPosts(sortedPosts);
     } catch (err) {
@@ -99,19 +128,36 @@ export default function FeedPage() {
     e.preventDefault();
     if (!newPostContent.trim() || !profile?.current_ghost_id) return;
     
+    // Block posting if the required boundary ID is not set
+    if (activeTab === 'Polling District' && !profile.location?.polling_district_id) {
+      alert('Your Polling District location is not set. Please go to your Profile, enter your coordinates and click Save.');
+      return;
+    }
+    if (activeTab === 'Federal Area' && !profile.location?.federal_boundary_id) {
+      alert('Your Federal Area location is not set. Please go to your Profile, enter your coordinates and click Save.');
+      return;
+    }
+    
     setSubmitting(true);
     try {
       const { error } = await supabase.from('posts').insert({
         ghost_id: profile.current_ghost_id,
         constituency: profile.constituency,
-        federal_boundary_id: profile.location?.federal_boundary_id,
-        polling_district_id: activeTab === 'Polling District' ? profile.location?.polling_district_id : null,
+        federal_boundary_id: activeTab === 'Federal Area'
+          ? profile.location?.federal_boundary_id
+          : null,
+        polling_district_id: activeTab === 'Polling District'
+          ? profile.location?.polling_district_id
+          : null,
         content: newPostContent.trim(),
+        video_url: uploadedVideoUrl,
         is_country: isCountry,
         is_international: isInternational
       });
       if (error) throw error;
       setNewPostContent('');
+      setUploadedVideoUrl(null);
+      setShowVideoRecorder(false);
       setIsCountry(false);
       setIsInternational(false);
       fetchPosts();
@@ -328,8 +374,32 @@ export default function FeedPage() {
 
           <div className="p-4 sm:p-8">
             
-            {/* Create Post Input */}
-            <form onSubmit={handleCreatePost} className="mb-8 bg-slate-900/50 rounded-xl p-4 border border-slate-700/50">
+            {/* Location not set warning banner */}
+            {activeTab === 'Polling District' && !profile.location?.polling_district_id && (
+              <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-start gap-3">
+                <MapPin className="text-amber-400 shrink-0 mt-0.5" size={18} />
+                <div>
+                  <h3 className="text-amber-300 font-semibold text-sm mb-1">Polling District Not Set</h3>
+                  <p className="text-amber-200/70 text-xs">Your location has no Polling District mapped yet. Go to <a href="/profile" className="underline hover:text-amber-200">Profile Settings</a>, enter your coordinates, and click Save to activate this feed.</p>
+                </div>
+              </div>
+            )}
+            {activeTab === 'Federal Area' && !profile.location?.federal_boundary_id && (
+              <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-start gap-3">
+                <MapPin className="text-amber-400 shrink-0 mt-0.5" size={18} />
+                <div>
+                  <h3 className="text-amber-300 font-semibold text-sm mb-1">Federal Area Not Set</h3>
+                  <p className="text-amber-200/70 text-xs">Your Federal boundary is not mapped. Go to <a href="/profile" className="underline hover:text-amber-200">Profile Settings</a> and save your location to activate this feed.</p>
+                </div>
+              </div>
+            )}
+
+            {/* Create Post Input — hidden if boundary ID missing for geo tabs */}
+            {(activeTab === 'Country' || activeTab === 'International' ||
+              (activeTab === 'Polling District' && profile.location?.polling_district_id) ||
+              (activeTab === 'Federal Area' && profile.location?.federal_boundary_id)
+            ) && (
+              <form onSubmit={handleCreatePost} className="mb-8 bg-slate-900/50 rounded-xl p-4 border border-slate-700/50">
               <textarea
                 value={newPostContent}
                 onChange={(e) => setNewPostContent(e.target.value)}
@@ -338,11 +408,39 @@ export default function FeedPage() {
                 required
               />
               
+              {showVideoRecorder && (
+                <VideoRecorder onVideoUploaded={(url) => {
+                  setUploadedVideoUrl(url);
+                  setShowVideoRecorder(false);
+                }} />
+              )}
+
+              {uploadedVideoUrl && (
+                <div className="mb-4 bg-indigo-500/10 border border-indigo-500/30 p-3 rounded-lg flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-indigo-300 text-sm font-medium">
+                    <Video size={16} />
+                    Video Attached Successfully
+                  </div>
+                  <button type="button" onClick={() => setUploadedVideoUrl(null)} className="text-indigo-400 hover:text-indigo-200 text-xs underline">Remove</button>
+                </div>
+              )}
+              
               <div className="flex flex-wrap items-center gap-4 mt-2 border-t border-slate-700/50 pt-3">
                 <span className="text-xs text-slate-500 flex items-center gap-1">
                   <ShieldAlert size={12} /> Posted as Ghost ID
                 </span>
                 
+                {profile.role === 'politician' && !showVideoRecorder && !uploadedVideoUrl && (
+                  <button
+                    type="button"
+                    onClick={() => setShowVideoRecorder(true)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-500/20 text-indigo-300 rounded-lg text-xs font-medium hover:bg-indigo-500/30 transition-colors"
+                  >
+                    <Video size={14} />
+                    Record Pitch
+                  </button>
+                )}
+
                 <div className="flex items-center gap-4 ml-auto">
                   <label className="flex items-center gap-1.5 text-sm text-slate-300 cursor-pointer">
                     <input 
@@ -372,6 +470,7 @@ export default function FeedPage() {
                 </div>
               </div>
             </form>
+            )}
 
             {/* Posts Feed */}
             <div className="space-y-6">
@@ -405,9 +504,15 @@ export default function FeedPage() {
                           </span>
                         </div>
                       </div>
-                      <p className="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">
+                      <p className="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed mb-3">
                         {post.content}
                       </p>
+                      
+                      {post.video_url && (
+                        <div className="mb-4 rounded-lg overflow-hidden border border-slate-700 bg-black">
+                           <video src={post.video_url} controls className="w-full max-h-96 object-contain" />
+                        </div>
+                      )}
                     </div>
 
                     {/* Action Bar */}
