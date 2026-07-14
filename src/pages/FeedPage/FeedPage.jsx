@@ -3,17 +3,19 @@ import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../services/supabase';
 import { MapPin, Users, Building, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Download } from 'lucide-react';
 
-const BOUNDARY_TABS = ['Federal', 'Provincial', 'State', 'Municipal', 'City Ward'];
+const BOUNDARY_TABS = ['Polling District', 'Federal Area', 'Country', 'International'];
 
 export default function FeedPage() {
   const { user } = useAuth();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('Federal');
+  const [activeTab, setActiveTab] = useState('Polling District');
 
   // Feed State
   const [posts, setPosts] = useState([]);
   const [newPostContent, setNewPostContent] = useState('');
+  const [isCountry, setIsCountry] = useState(false);
+  const [isInternational, setIsInternational] = useState(false);
   const [commentInputs, setCommentInputs] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [burning, setBurning] = useState(false);
@@ -28,7 +30,15 @@ export default function FeedPage() {
         .single();
       
       if (error) throw error;
-      setProfile(data);
+
+      // Fetch location IDs to ensure strict boundary filtering
+      const { data: locData } = await supabase
+        .from('user_locations')
+        .select('*')
+        .eq('profile_id', user.id)
+        .maybeSingle();
+
+      setProfile({ ...data, location: locData });
     } catch (err) {
       console.error('Error fetching profile:', err);
     } finally {
@@ -39,14 +49,27 @@ export default function FeedPage() {
   const fetchPosts = async () => {
     try {
       // Fetch posts and their nested comments
-      const { data, error } = await supabase
+      let query = supabase
         .from('posts')
         .select(`
           *,
           comments (*)
         `)
-        .eq('constituency', activeTab)
         .order('created_at', { ascending: false });
+
+      if (activeTab === 'Polling District') {
+        // Only show posts from the same exact polling district ID
+        query = query.eq('polling_district_id', profile.location?.polling_district_id).eq('is_country', false).eq('is_international', false);
+      } else if (activeTab === 'Federal Area') {
+        // Show posts from the exact federal boundary ID
+        query = query.eq('federal_boundary_id', profile.location?.federal_boundary_id).eq('is_country', false).eq('is_international', false);
+      } else if (activeTab === 'Country') {
+        query = query.eq('is_country', true);
+      } else if (activeTab === 'International') {
+        query = query.eq('is_international', true);
+      }
+      
+      const { data, error } = await query;
       
       if (error) throw error;
       
@@ -80,11 +103,17 @@ export default function FeedPage() {
     try {
       const { error } = await supabase.from('posts').insert({
         ghost_id: profile.current_ghost_id,
-        constituency: activeTab,
-        content: newPostContent.trim()
+        constituency: profile.constituency,
+        federal_boundary_id: profile.location?.federal_boundary_id,
+        polling_district_id: activeTab === 'Polling District' ? profile.location?.polling_district_id : null,
+        content: newPostContent.trim(),
+        is_country: isCountry,
+        is_international: isInternational
       });
       if (error) throw error;
       setNewPostContent('');
+      setIsCountry(false);
+      setIsInternational(false);
       fetchPosts();
       silentExportData();
     } catch (err) {
@@ -308,17 +337,39 @@ export default function FeedPage() {
                 className="w-full bg-transparent text-slate-200 placeholder:text-slate-500 resize-none outline-none min-h-[80px]"
                 required
               />
-              <div className="flex justify-between items-center mt-2 border-t border-slate-700/50 pt-3">
+              
+              <div className="flex flex-wrap items-center gap-4 mt-2 border-t border-slate-700/50 pt-3">
                 <span className="text-xs text-slate-500 flex items-center gap-1">
                   <ShieldAlert size={12} /> Posted as Ghost ID
                 </span>
-                <button
-                  type="submit"
-                  disabled={submitting || !newPostContent.trim()}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium disabled:opacity-50"
-                >
-                  {submitting ? 'Posting...' : 'Share Post'}
-                </button>
+                
+                <div className="flex items-center gap-4 ml-auto">
+                  <label className="flex items-center gap-1.5 text-sm text-slate-300 cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      checked={isCountry} 
+                      onChange={(e) => setIsCountry(e.target.checked)} 
+                      className="rounded border-slate-600 bg-slate-800 text-blue-500 focus:ring-blue-500/20"
+                    />
+                    Country-wide
+                  </label>
+                  <label className="flex items-center gap-1.5 text-sm text-slate-300 cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      checked={isInternational} 
+                      onChange={(e) => setIsInternational(e.target.checked)} 
+                      className="rounded border-slate-600 bg-slate-800 text-blue-500 focus:ring-blue-500/20"
+                    />
+                    International
+                  </label>
+                  <button
+                    type="submit"
+                    disabled={submitting || !newPostContent.trim()}
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium disabled:opacity-50"
+                  >
+                    {submitting ? 'Posting...' : 'Share Post'}
+                  </button>
+                </div>
               </div>
             </form>
 

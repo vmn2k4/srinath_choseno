@@ -7,7 +7,7 @@ export default function ProfilePage() {
   const { session } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  
+
   // Profile state
   const [role, setRole] = useState('');
   const [fullName, setFullName] = useState('');
@@ -15,14 +15,16 @@ export default function ProfilePage() {
   const [constituency, setConstituency] = useState('');
   const [designation, setDesignation] = useState('');
   const [message, setMessage] = useState({ type: '', text: '' });
-  
+
   const [dbDesignations, setDbDesignations] = useState({});
   const [countriesList, setCountriesList] = useState([]);
-  
+
   const [isCustomCountry, setIsCustomCountry] = useState(false);
   const [customCountry, setCustomCountry] = useState('');
   const [isCustomDesignation, setIsCustomDesignation] = useState(false);
   const [customDesignation, setCustomDesignation] = useState('');
+
+  const [pendingLocation, setPendingLocation] = useState(null);
 
   const [geoLoading, setGeoLoading] = useState(false);
   const [manualLat, setManualLat] = useState('');
@@ -47,8 +49,8 @@ export default function ProfilePage() {
         if (desigData) {
           const grouped = {};
           desigData.forEach(d => {
-             if (!grouped[d.country]) grouped[d.country] = [];
-             if (!grouped[d.country].includes(d.name)) grouped[d.country].push(d.name);
+            if (!grouped[d.country]) grouped[d.country] = [];
+            if (!grouped[d.country].includes(d.name)) grouped[d.country].push(d.name);
           });
           setDbDesignations(grouped);
           setCountriesList(Object.keys(grouped).sort());
@@ -72,7 +74,7 @@ export default function ProfilePage() {
     e.preventDefault();
     setSaving(true);
     setMessage({ type: '', text: '' });
-    
+
     try {
       const { user } = session;
 
@@ -99,6 +101,34 @@ export default function ProfilePage() {
       if (error) {
         throw error;
       }
+
+      // If they searched for a new location, save it to user_locations now
+      if (pendingLocation) {
+        const { data: pData } = await supabase.from('profiles').select('current_ghost_id').eq('id', user.id).single();
+
+        const locationPayload = {
+          profile_id: user.id,
+          ghost_id: pData?.current_ghost_id,
+          latitude: pendingLocation.lat,
+          longitude: pendingLocation.lng,
+          federal_boundary_id: pendingLocation.federalId,
+          polling_district_id: pendingLocation.pollingId
+        };
+
+        const { data: existingLoc } = await supabase.from('user_locations')
+          .select('id')
+          .eq('profile_id', user.id)
+          .maybeSingle();
+
+        if (existingLoc) {
+          await supabase.from('user_locations').update(locationPayload).eq('id', existingLoc.id);
+        } else {
+          await supabase.from('user_locations').insert(locationPayload);
+        }
+
+        setPendingLocation(null);
+      }
+
       setMessage({ type: 'success', text: 'Profile updated successfully!' });
     } catch (error) {
       setMessage({ type: 'error', text: error.message });
@@ -115,19 +145,70 @@ export default function ProfilePage() {
         lng: parseFloat(lng),
         lat: parseFloat(lat)
       });
-      
+
+      let federalId = null;
+      let pollingId = null;
+      let federalName = null;
+      let pollingName = null;
+
       if (!error && data && data.length > 0) {
-        // Usually the smallest boundary is the local constituency
-        const localArea = data[0].name;
-        setConstituency(localArea);
-        setMessage({ type: 'success', text: `Located you in ${localArea}` });
-      } else {
-        setConstituency(`Lat: ${parseFloat(lat).toFixed(4)}, Lng: ${parseFloat(lng).toFixed(4)}`);
-        setMessage({ type: 'success', text: 'Location saved as coordinates (no boundary found).' });
+        data.forEach(b => {
+          if (b.boundary_type === 'Federal') {
+            federalId = b.id;
+            federalName = b.name;
+          }
+          if (b.boundary_type === 'City Ward' || b.boundary_type === 'Municipal' || b.boundary_type === 'Provincial') {
+            pollingId = b.id;
+            pollingName = b.name;
+          }
+        });
       }
+
+      const { data: profileData } = await supabase.from('profiles').select('current_ghost_id').eq('id', session.user.id).single();
+
+      const locationPayload = {
+        profile_id: session.user.id,
+        ghost_id: profileData?.current_ghost_id,
+        latitude: parseFloat(lat),
+        longitude: parseFloat(lng),
+        federal_boundary_id: federalId,
+        polling_district_id: pollingId
+      };
+
+      // Check if location record already exists for this profile
+      const { data: existingLoc } = await supabase.from('user_locations')
+        .select('id')
+        .eq('profile_id', session.user.id)
+        .maybeSingle();
+
+      let locData;
+      let locError;
+
+      if (existingLoc) {
+        // Update existing record
+        const { data, error } = await supabase.from('user_locations')
+          .update(locationPayload)
+          .eq('id', existingLoc.id)
+          .select().single();
+        locData = data;
+        locError = error;
+      } else {
+        // Create new record
+        const { data, error } = await supabase.from('user_locations')
+          .insert(locationPayload)
+          .select().single();
+        locData = data;
+        locError = error;
+      }
+
+      if (locError) throw locError;
+
+      const displayConstituency = federalName || pollingName || `Location Mapped (${locData.id.split('-')[0]})`;
+      setConstituency(displayConstituency);
+      setMessage({ type: 'success', text: `Located you in ${displayConstituency}` });
     } catch (err) {
-      setConstituency(`Lat: ${parseFloat(lat).toFixed(4)}, Lng: ${parseFloat(lng).toFixed(4)}`);
-      setMessage({ type: 'success', text: 'Location saved as coordinates.' });
+      console.error(err);
+      setMessage({ type: 'error', text: 'Error mapping coordinates to boundary.' });
     } finally {
       setGeoLoading(false);
     }
@@ -141,7 +222,7 @@ export default function ProfilePage() {
 
     setGeoLoading(true);
     setMessage({ type: '', text: '' });
-    
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const lat = position.coords.latitude;
@@ -181,206 +262,204 @@ export default function ProfilePage() {
           </a>
         </div>
       ) : (
-      <form onSubmit={updateProfile} className="flex flex-col gap-6">
-        <div>
-          <label className="block mb-2 text-sm font-medium text-slate-300">Full Name</label>
-          <input
-            type="text"
-            placeholder="Your Name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-900 focus:outline-none focus:border-blue-500"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-3 text-sm font-medium text-slate-300">Account Type</label>
-          <div className="grid grid-cols-2 gap-4">
-            <button
-              type="button"
-              className={`p-4 rounded-xl border text-left transition-all duration-300 ${
-                role === 'normal' 
-                  ? 'bg-blue-500/20 border-blue-500 text-blue-100' 
-                  : 'bg-slate-900 border-slate-600 text-slate-400 hover:border-slate-500 hover:bg-slate-800'
-              }`}
-              onClick={() => setRole('normal')}
-            >
-              <h3 className="font-bold mb-1">Citizen</h3>
-              <p className="text-xs opacity-80">I am a regular citizen tracking my constituency.</p>
-            </button>
-            <button
-              type="button"
-              className={`p-4 rounded-xl border text-left transition-all duration-300 ${
-                role === 'politician' 
-                  ? 'bg-indigo-500/20 border-indigo-500 text-indigo-100' 
-                  : 'bg-slate-900 border-slate-600 text-slate-400 hover:border-slate-500 hover:bg-slate-800'
-              }`}
-              onClick={() => setRole('politician')}
-            >
-              <h3 className="font-bold mb-1">Politician</h3>
-              <p className="text-xs opacity-80">I represent a region or plan to run for office.</p>
-            </button>
+        <form onSubmit={updateProfile} className="flex flex-col gap-6">
+          <div>
+            <label className="block mb-2 text-sm font-medium text-slate-300">Full Name</label>
+            <input
+              type="text"
+              placeholder="Your Name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-900 focus:outline-none focus:border-blue-500"
+              required
+            />
           </div>
-        </div>
 
-        {/* Shared Location Section for both Roles */}
-        {(role === 'normal' || role === 'politician') && (
-          <div className="animate-fade-in p-5 bg-slate-900/50 rounded-xl border border-white/10 space-y-4">
-            <div>
-              <h3 className="font-bold text-slate-200">Location & Constituency</h3>
-              <p className="text-xs text-slate-400 mt-1">We need your location to match you with your relevant boundary.</p>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1 space-y-2">
-                <label className="block text-xs text-slate-400">Latitude</label>
-                <input
-                  type="text"
-                  placeholder="e.g. 49.15"
-                  value={manualLat}
-                  onChange={(e) => setManualLat(e.target.value)}
-                  className="w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500"
-                />
-              </div>
-              <div className="flex-1 space-y-2">
-                <label className="block text-xs text-slate-400">Longitude</label>
-                <input
-                  type="text"
-                  placeholder="e.g. -122.64"
-                  value={manualLng}
-                  onChange={(e) => setManualLng(e.target.value)}
-                  className="w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-2 pt-1">
+          <div>
+            <label className="block mb-3 text-sm font-medium text-slate-300">Account Type</label>
+            <div className="grid grid-cols-2 gap-4">
               <button
                 type="button"
-                onClick={getGeolocation}
-                disabled={geoLoading}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 rounded-lg transition-colors border border-blue-500/30 disabled:opacity-50 text-sm font-medium"
+                className={`p-4 rounded-xl border text-left transition-all duration-300 ${role === 'normal'
+                    ? 'bg-blue-500/20 border-blue-500 text-blue-100'
+                    : 'bg-slate-900 border-slate-600 text-slate-400 hover:border-slate-500 hover:bg-slate-800'
+                  }`}
+                onClick={() => setRole('normal')}
               >
-                <MapPin size={16} />
-                {geoLoading ? 'Detecting...' : 'Auto-Detect'}
+                <h3 className="font-bold mb-1">Citizen</h3>
+                <p className="text-xs opacity-80">I am a regular citizen tracking my constituency.</p>
               </button>
               <button
                 type="button"
-                onClick={() => findFromCoordinates(manualLat, manualLng)}
-                disabled={geoLoading || !manualLat || !manualLng}
-                className="flex-1 px-4 py-3 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg transition-colors border border-slate-500 disabled:opacity-50 text-sm font-medium"
+                className={`p-4 rounded-xl border text-left transition-all duration-300 ${role === 'politician'
+                    ? 'bg-indigo-500/20 border-indigo-500 text-indigo-100'
+                    : 'bg-slate-900 border-slate-600 text-slate-400 hover:border-slate-500 hover:bg-slate-800'
+                  }`}
+                onClick={() => setRole('politician')}
               >
-                Find from Coordinates
+                <h3 className="font-bold mb-1">Politician</h3>
+                <p className="text-xs opacity-80">I represent a region or plan to run for office.</p>
               </button>
             </div>
-
-            <div className="space-y-2 pt-2 border-t border-white/5 mt-4">
-              <label className="block text-sm font-medium text-slate-300">Constituency / District Result</label>
-              <input
-                type="text"
-                placeholder="Will be auto-filled, or type manually"
-                value={constituency}
-                onChange={(e) => setConstituency(e.target.value)}
-                className="w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-900 focus:outline-none focus:border-blue-500"
-                required
-              />
-            </div>
           </div>
-        )}
 
-        {role === 'politician' && (
-          <div className="animate-fade-in p-5 bg-slate-900/50 rounded-xl border border-white/10 space-y-4">
-            <h3 className="font-bold text-slate-200">Political Details</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Shared Location Section for both Roles */}
+          {(role === 'normal' || role === 'politician') && (
+            <div className="animate-fade-in p-5 bg-slate-900/50 rounded-xl border border-white/10 space-y-4">
               <div>
-                <label className="block mb-2 text-sm font-medium text-slate-300">Country</label>
-                {isCustomCountry ? (
+                <h3 className="font-bold text-slate-200">Location & Constituency</h3>
+                <p className="text-xs text-slate-400 mt-1">We need your location to match you with your relevant boundary.</p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex-1 space-y-2">
+                  <label className="block text-xs text-slate-400">Latitude</label>
                   <input
                     type="text"
-                    placeholder="Enter new country"
-                    value={customCountry}
-                    onChange={(e) => setCustomCountry(e.target.value)}
-                    className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
-                    required
+                    placeholder="e.g. 49.15"
+                    value={manualLat}
+                    onChange={(e) => setManualLat(e.target.value)}
+                    className="w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500"
                   />
-                ) : (
-                  <select
-                    value={country}
-                    onChange={(e) => {
-                      if (e.target.value === '_custom_') {
-                        setIsCustomCountry(true);
-                        setIsCustomDesignation(true);
-                      } else {
-                        setCountry(e.target.value);
-                        setDesignation('');
-                      }
-                    }}
-                    className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
-                    required
-                  >
-                    <option value="" disabled>Select Country</option>
-                    {countriesList.map(c => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                    <option value="_custom_">+ Add New Country...</option>
-                  </select>
-                )}
-                {isCustomCountry && (
-                  <button type="button" onClick={() => setIsCustomCountry(false)} className="text-xs text-blue-400 hover:underline">Cancel Custom Country</button>
-                )}
-              </div>
-              
-              <div>
-                <label className="block mb-2 text-sm font-medium text-slate-300">Designation / Role</label>
-                {isCustomDesignation || isCustomCountry ? (
+                </div>
+                <div className="flex-1 space-y-2">
+                  <label className="block text-xs text-slate-400">Longitude</label>
                   <input
                     type="text"
-                    placeholder="Enter new designation"
-                    value={customDesignation}
-                    onChange={(e) => setCustomDesignation(e.target.value)}
-                    className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
-                    required
+                    placeholder="e.g. -122.64"
+                    value={manualLng}
+                    onChange={(e) => setManualLng(e.target.value)}
+                    className="w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500"
                   />
-                ) : (
-                  <select
-                    value={designation}
-                    onChange={(e) => {
-                      if (e.target.value === '_custom_') setIsCustomDesignation(true);
-                      else setDesignation(e.target.value);
-                    }}
-                    className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
-                    required
-                  >
-                    <option value="" disabled>Select Designation</option>
-                    {dbDesignations[country]?.map(d => (
-                      <option key={d} value={d}>{d}</option>
-                    ))}
-                    <option value="_custom_">+ Add New Designation...</option>
-                  </select>
-                )}
-                {isCustomDesignation && !isCustomCountry && (
-                  <button type="button" onClick={() => setIsCustomDesignation(false)} className="text-xs text-blue-400 hover:underline">Cancel Custom Designation</button>
-                )}
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={getGeolocation}
+                  disabled={geoLoading}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 rounded-lg transition-colors border border-blue-500/30 disabled:opacity-50 text-sm font-medium"
+                >
+                  <MapPin size={16} />
+                  {geoLoading ? 'Detecting...' : 'Auto-Detect'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => findFromCoordinates(manualLat, manualLng)}
+                  disabled={geoLoading || !manualLat || !manualLng}
+                  className="flex-1 px-4 py-3 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg transition-colors border border-slate-500 disabled:opacity-50 text-sm font-medium"
+                >
+                  Find from Coordinates
+                </button>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-white/5 mt-4">
+                <label className="block text-sm font-medium text-slate-300">Constituency / District Result</label>
+                <input
+                  type="text"
+                  placeholder="Will be auto-filled, or type manually"
+                  value={constituency}
+                  onChange={(e) => setConstituency(e.target.value)}
+                  className="w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-900 focus:outline-none focus:border-blue-500"
+                  required
+                />
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {message.text && (
-          <div className={`p-4 rounded-lg text-sm font-medium animate-fade-in ${message.type === 'error' ? 'bg-red-500/10 border border-red-500/30 text-red-400' : 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400'}`}>
-            {message.text}
-          </div>
-        )}
+          {role === 'politician' && (
+            <div className="animate-fade-in p-5 bg-slate-900/50 rounded-xl border border-white/10 space-y-4">
+              <h3 className="font-bold text-slate-200">Political Details</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-slate-300">Country</label>
+                  {isCustomCountry ? (
+                    <input
+                      type="text"
+                      placeholder="Enter new country"
+                      value={customCountry}
+                      onChange={(e) => setCustomCountry(e.target.value)}
+                      className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
+                      required
+                    />
+                  ) : (
+                    <select
+                      value={country}
+                      onChange={(e) => {
+                        if (e.target.value === '_custom_') {
+                          setIsCustomCountry(true);
+                          setIsCustomDesignation(true);
+                        } else {
+                          setCountry(e.target.value);
+                          setDesignation('');
+                        }
+                      }}
+                      className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
+                      required
+                    >
+                      <option value="" disabled>Select Country</option>
+                      {countriesList.map(c => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                      <option value="_custom_">+ Add New Country...</option>
+                    </select>
+                  )}
+                  {isCustomCountry && (
+                    <button type="button" onClick={() => setIsCustomCountry(false)} className="text-xs text-blue-400 hover:underline">Cancel Custom Country</button>
+                  )}
+                </div>
 
-        <button
-          type="submit"
-          className="mt-4 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:ring-4 focus:ring-blue-500/20 disabled:opacity-50"
-          disabled={saving || !role}
-        >
-          {saving ? 'Saving...' : isOnboarding ? 'Complete Setup' : 'Save Profile'}
-        </button>
-      </form>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-slate-300">Designation / Role</label>
+                  {isCustomDesignation || isCustomCountry ? (
+                    <input
+                      type="text"
+                      placeholder="Enter new designation"
+                      value={customDesignation}
+                      onChange={(e) => setCustomDesignation(e.target.value)}
+                      className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
+                      required
+                    />
+                  ) : (
+                    <select
+                      value={designation}
+                      onChange={(e) => {
+                        if (e.target.value === '_custom_') setIsCustomDesignation(true);
+                        else setDesignation(e.target.value);
+                      }}
+                      className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
+                      required
+                    >
+                      <option value="" disabled>Select Designation</option>
+                      {dbDesignations[country]?.map(d => (
+                        <option key={d} value={d}>{d}</option>
+                      ))}
+                      <option value="_custom_">+ Add New Designation...</option>
+                    </select>
+                  )}
+                  {isCustomDesignation && !isCustomCountry && (
+                    <button type="button" onClick={() => setIsCustomDesignation(false)} className="text-xs text-blue-400 hover:underline">Cancel Custom Designation</button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {message.text && (
+            <div className={`p-4 rounded-lg text-sm font-medium animate-fade-in ${message.type === 'error' ? 'bg-red-500/10 border border-red-500/30 text-red-400' : 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400'}`}>
+              {message.text}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            className="mt-4 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:ring-4 focus:ring-blue-500/20 disabled:opacity-50"
+            disabled={saving || !role}
+          >
+            {saving ? 'Saving...' : isOnboarding ? 'Complete Setup' : 'Save Profile'}
+          </button>
+        </form>
       )}
     </div>
   );
