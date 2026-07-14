@@ -2,9 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../services/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import { MapPin } from 'lucide-react';
-
 export default function ProfilePage() {
   const { session } = useAuth();
+  
+  const POLITICAL_ROLES = [
+    { label: 'Prime Minister / President', type: 'Country' },
+    { label: 'Member of Parliament (MP) / Senator', type: 'Federal' },
+    { label: 'MLA / MPP / Governor', type: 'Provincial' },
+    { label: 'Mayor / County Executive', type: 'Municipal' },
+    { label: 'City Councilor', type: 'City Ward' }
+  ];
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -21,8 +28,8 @@ export default function ProfilePage() {
 
   const [isCustomCountry, setIsCustomCountry] = useState(false);
   const [customCountry, setCustomCountry] = useState('');
-  const [isCustomDesignation, setIsCustomDesignation] = useState(false);
-  const [customDesignation, setCustomDesignation] = useState('');
+  
+  const [politicalTargetRole, setPoliticalTargetRole] = useState('');
 
   const [pendingLocation, setPendingLocation] = useState(null);
 
@@ -38,9 +45,29 @@ export default function ProfilePage() {
 
       const { data, error } = await supabase
         .from('profiles')
-        .select(`role, full_name, country, constituency, designation`)
+        .select(`role, full_name, country, constituency`)
         .eq('id', user.id)
         .single();
+        
+      if (data?.role === 'politician') {
+        const { data: polData } = await supabase
+          .from('politician_profiles')
+          .select('political_target_role, target_boundary_id, target_boundary_name')
+          .eq('id', user.id)
+          .maybeSingle();
+        if (polData) {
+           data.political_target_role = polData.political_target_role;
+           data.target_boundary_id = polData.target_boundary_id;
+           data.target_boundary_name = polData.target_boundary_name;
+        }
+      }
+
+      // Fetch existing location coordinates to pre-fill the fields
+      const { data: locData } = await supabase
+        .from('user_locations')
+        .select('latitude, longitude, federal_boundary_id, polling_district_id')
+        .eq('profile_id', user.id)
+        .maybeSingle();
 
       // Fetch dynamic designations
       const { data: desigData } = await supabase.from('designations').select('*');
@@ -60,7 +87,11 @@ export default function ProfilePage() {
           setFullName(data.full_name || '');
           if (data.country) setCountry(data.country);
           setConstituency(data.constituency || '');
-          setDesignation(data.designation || '');
+          setPoliticalTargetRole(data.political_target_role || '');
+        }
+        if (locData) {
+          if (locData.latitude) setManualLat(String(locData.latitude));
+          if (locData.longitude) setManualLng(String(locData.longitude));
         }
         setLoading(false);
       }
@@ -79,11 +110,29 @@ export default function ProfilePage() {
       const { user } = session;
 
       const finalCountry = isCustomCountry ? customCountry.trim() : country;
-      const finalDesignation = isCustomDesignation ? customDesignation.trim() : designation;
+      
+      let targetBoundaryType = null;
+      let targetBoundaryId = null;
 
-      // Insert custom ones into global pool
-      if (role === 'politician' && finalCountry && finalDesignation && (isCustomCountry || isCustomDesignation)) {
-        await supabase.from('designations').upsert({ country: finalCountry, name: finalDesignation }, { onConflict: 'country,name' });
+      if (role === 'politician' && politicalTargetRole) {
+         const selectedRoleObj = POLITICAL_ROLES.find(r => r.label === politicalTargetRole);
+         targetBoundaryType = selectedRoleObj ? selectedRoleObj.type : null;
+         
+         if (pendingLocation && pendingLocation.allBoundaries) {
+             // User just searched a new location — find the matching boundary from that search
+             const matchingB = pendingLocation.allBoundaries.find(b => b.boundary_type === targetBoundaryType);
+             if (matchingB) {
+               targetBoundaryId = matchingB.id;
+             }
+         } else {
+             // No new location searched — preserve the existing record
+             const { data: existData } = await supabase
+               .from('politician_profiles')
+               .select('target_boundary_id')
+               .eq('id', user.id)
+               .maybeSingle();
+             targetBoundaryId = existData?.target_boundary_id;
+         }
       }
 
       const updates = {
@@ -92,7 +141,6 @@ export default function ProfilePage() {
         full_name: fullName,
         country: role === 'politician' ? finalCountry : null,
         constituency: (role === 'normal' || role === 'politician') ? constituency : null,
-        designation: role === 'politician' ? finalDesignation : null,
         updated_at: new Date(),
       };
 
@@ -100,6 +148,34 @@ export default function ProfilePage() {
 
       if (error) {
         throw error;
+      }
+      
+      if (role === 'politician') {
+          // Also resolve the human-readable name for the target boundary
+          let targetBoundaryName = null;
+          if (pendingLocation && pendingLocation.allBoundaries && targetBoundaryType) {
+            const matchingB = pendingLocation.allBoundaries.find(b => b.boundary_type === targetBoundaryType);
+            if (matchingB) targetBoundaryName = matchingB.name;
+          } else {
+            const { data: existPol } = await supabase
+              .from('politician_profiles')
+              .select('target_boundary_name')
+              .eq('id', user.id)
+              .maybeSingle();
+            targetBoundaryName = existPol?.target_boundary_name;
+          }
+
+          const polUpdates = {
+            id: user.id,
+            political_target_role: politicalTargetRole,
+            target_boundary_type: targetBoundaryType,
+            target_boundary_id: targetBoundaryId,
+            target_boundary_name: targetBoundaryName,
+            updated_at: new Date(),
+          };
+          await supabase.from('politician_profiles').upsert(polUpdates);
+      } else {
+          await supabase.from('politician_profiles').delete().eq('id', user.id);
       }
 
       // If they searched for a new location, save it to user_locations now
@@ -146,66 +222,69 @@ export default function ProfilePage() {
         lat: parseFloat(lat)
       });
 
+      if (error) throw error;
+
       let federalId = null;
       let pollingId = null;
       let federalName = null;
       let pollingName = null;
 
-      if (!error && data && data.length > 0) {
-        data.forEach(b => {
-          if (b.boundary_type === 'Federal') {
-            federalId = b.id;
-            federalName = b.name;
-          }
-          if (b.boundary_type === 'City Ward' || b.boundary_type === 'Municipal' || b.boundary_type === 'Provincial') {
-            pollingId = b.id;
-            pollingName = b.name;
-          }
-        });
+      // 1. Try to find boundaries from the shapefile data
+      if (data && data.length > 0) {
+        const fed = data.find(b => b.boundary_type?.toUpperCase() === 'FEDERAL');
+        if (fed) {
+          federalId = fed.id;
+          federalName = fed.name;
+        }
+
+        // Check for common local boundary types
+        const localTypes = ['POLLING DISTRICT', 'CITY WARD', 'MUNICIPAL', 'PROVINCIAL'];
+        let local = null;
+        for (const t of localTypes) {
+           local = data.find(b => b.boundary_type?.toUpperCase() === t);
+           if (local) break;
+        }
+        
+        // If no recognized local type, grab any boundary that isn't the federal one
+        if (!local) local = data.find(b => b.id !== federalId);
+
+        if (local) {
+          pollingId = local.id;
+          pollingName = local.name;
+        }
       }
 
-      const { data: profileData } = await supabase.from('profiles').select('current_ghost_id').eq('id', session.user.id).single();
+      // 2. HYBRID FALLBACK ARCHITECTURE
+      // If the government shapefiles are incomplete for this location, 
+      // we generate a Geo-Grid based on their coordinates to guarantee they have a feed.
+      
+      const numLat = parseFloat(lat);
+      const numLng = parseFloat(lng);
 
-      const locationPayload = {
-        profile_id: session.user.id,
-        ghost_id: profileData?.current_ghost_id,
-        latitude: parseFloat(lat),
-        longitude: parseFloat(lng),
-        federal_boundary_id: federalId,
-        polling_district_id: pollingId
-      };
-
-      // Check if location record already exists for this profile
-      const { data: existingLoc } = await supabase.from('user_locations')
-        .select('id')
-        .eq('profile_id', session.user.id)
-        .maybeSingle();
-
-      let locData;
-      let locError;
-
-      if (existingLoc) {
-        // Update existing record
-        const { data, error } = await supabase.from('user_locations')
-          .update(locationPayload)
-          .eq('id', existingLoc.id)
-          .select().single();
-        locData = data;
-        locError = error;
-      } else {
-        // Create new record
-        const { data, error } = await supabase.from('user_locations')
-          .insert(locationPayload)
-          .select().single();
-        locData = data;
-        locError = error;
+      // Federal fallback: 1 decimal place (~11km x 11km area)
+      if (!federalId) {
+        federalId = `grid-fed-${numLat.toFixed(1)}-${numLng.toFixed(1)}`;
+        federalName = `Federal Grid (${numLat.toFixed(1)}, ${numLng.toFixed(1)})`;
       }
 
-      if (locError) throw locError;
+      // Local fallback: 2 decimal places (~1.1km x 1.1km neighborhood)
+      if (!pollingId) {
+        pollingId = `grid-loc-${numLat.toFixed(2)}-${numLng.toFixed(2)}`;
+        pollingName = `Local Grid (${numLat.toFixed(2)}, ${numLng.toFixed(2)})`;
+      }
 
-      const displayConstituency = federalName || pollingName || `Location Mapped (${locData.id.split('-')[0]})`;
+      // Only stage in memory — no DB writes here
+      setPendingLocation({
+        lat: parseFloat(lat),
+        lng: parseFloat(lng),
+        federalId,
+        pollingId,
+        allBoundaries: data || []
+      });
+
+      const displayConstituency = federalName || pollingName || 'Location Mapped';
       setConstituency(displayConstituency);
-      setMessage({ type: 'success', text: `Located you in ${displayConstituency}` });
+      setMessage({ type: 'success', text: `Located in ${displayConstituency}. Click 'Save Profile' to apply.` });
     } catch (err) {
       console.error(err);
       setMessage({ type: 'error', text: 'Error mapping coordinates to boundary.' });
@@ -411,37 +490,20 @@ export default function ProfilePage() {
                 </div>
 
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-slate-300">Designation / Role</label>
-                  {isCustomDesignation || isCustomCountry ? (
-                    <input
-                      type="text"
-                      placeholder="Enter new designation"
-                      value={customDesignation}
-                      onChange={(e) => setCustomDesignation(e.target.value)}
-                      className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
-                      required
-                    />
-                  ) : (
-                    <select
-                      value={designation}
-                      onChange={(e) => {
-                        if (e.target.value === '_custom_') setIsCustomDesignation(true);
-                        else setDesignation(e.target.value);
-                      }}
-                      className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
-                      required
-                    >
-                      <option value="" disabled>Select Designation</option>
-                      {dbDesignations[country]?.map(d => (
-                        <option key={d} value={d}>{d}</option>
-                      ))}
-                      <option value="_custom_">+ Add New Designation...</option>
-                    </select>
-                  )}
-                  {isCustomDesignation && !isCustomCountry && (
-                    <button type="button" onClick={() => setIsCustomDesignation(false)} className="text-xs text-blue-400 hover:underline">Cancel Custom Designation</button>
-                  )}
-                </div>
+                <label className="block mb-2 text-sm font-medium text-slate-300">Target Political Role</label>
+                <select
+                  value={politicalTargetRole}
+                  onChange={(e) => setPoliticalTargetRole(e.target.value)}
+                  className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
+                  required
+                >
+                  <option value="" disabled>Select Role Level</option>
+                  {POLITICAL_ROLES.map(r => (
+                    <option key={r.label} value={r.label}>{r.label} ({r.type} level)</option>
+                  ))}
+                </select>
+                <p className="text-xs text-slate-400 mt-1">This defines the exact geographic boundary you want to target.</p>
+              </div>  
               </div>
             </div>
           )}
