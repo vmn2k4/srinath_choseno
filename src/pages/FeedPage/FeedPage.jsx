@@ -23,6 +23,9 @@ export default function FeedPage() {
   
   const [showVideoRecorder, setShowVideoRecorder] = useState(false);
   const [uploadedVideoUrl, setUploadedVideoUrl] = useState(null);
+  
+  // Stories state
+  const [activeStoryUrl, setActiveStoryUrl] = useState(null);
 
   const fetchProfile = async () => {
     if (!user) return;
@@ -470,6 +473,57 @@ export default function FeedPage() {
                 </div>
               </div>
             </form>
+            )}
+
+            {/* Stories Section for Politician Videos */}
+            {posts.filter(p => p.video_url).length > 0 && (
+              <div className="mb-8">
+                <h3 className="text-slate-400 text-sm font-medium mb-3 flex items-center gap-2">
+                  <Video size={16} className="text-indigo-400" /> Politician Pitches
+                </h3>
+                <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                  {posts.filter(p => p.video_url).map(post => (
+                    <button 
+                      key={`story-${post.id}`}
+                      onClick={() => setActiveStoryUrl(post.video_url)}
+                      className="flex flex-col items-center min-w-[100px] group"
+                    >
+                      <div className="w-[100px] h-[150px] rounded-xl border-2 border-indigo-500/50 group-hover:border-indigo-400 p-0.5 relative overflow-hidden bg-slate-800 flex-shrink-0 transition-all group-hover:scale-105 shadow-lg">
+                        <video 
+                           src={post.video_url} 
+                           className="w-full h-full rounded-lg object-cover"
+                           muted 
+                           preload="metadata"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-lg transition-opacity group-hover:opacity-80" />
+                        <div className="absolute bottom-2 left-2 right-2 flex items-center gap-1.5">
+                           <div className="w-4 h-4 rounded-full bg-indigo-500 flex items-center justify-center shrink-0 border border-indigo-300">
+                             <Video size={8} className="text-white" />
+                           </div>
+                           <span className="text-[10px] text-white font-medium truncate drop-shadow-md">
+                             Ghost-{post.ghost_id.split('-')[0]}
+                           </span>
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Full Screen Story Modal */}
+            {activeStoryUrl && (
+              <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm">
+                 <div className="relative max-w-sm w-full bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-700">
+                    <button 
+                      onClick={() => setActiveStoryUrl(null)}
+                      className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-black/50 hover:bg-black/80 rounded-full text-white transition-colors"
+                    >
+                      ✕
+                    </button>
+                    <video src={activeStoryUrl} controls autoPlay className="w-full max-h-[85vh] object-contain bg-black" />
+                 </div>
+              </div>
             )}
 
             {/* Posts Feed */}
