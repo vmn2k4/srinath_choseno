@@ -29,6 +29,8 @@ export default function PoliticianWall() {
   const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
+    let supportChannel = null;
+
     async function loadWall() {
       setLoading(true);
       
@@ -58,7 +60,7 @@ export default function PoliticianWall() {
         checkSupportStatus(owner.id);
         
         // Real-time subscription for support count
-        const channel = supabase.channel('support-updates')
+        supportChannel = supabase.channel(`support-${owner.id}-${Date.now()}`)
           .on('postgres_changes', { 
             event: '*', 
             schema: 'public', 
@@ -68,13 +70,18 @@ export default function PoliticianWall() {
             fetchSupportCount(owner.id);
           })
           .subscribe();
-
-        return () => supabase.removeChannel(channel);
       }
 
       fetchPosts();
     }
+    
     if (user && ghostId) loadWall();
+
+    return () => {
+      if (supportChannel) {
+        supabase.removeChannel(supportChannel);
+      }
+    };
   }, [user, ghostId]);
 
   const checkSupportStatus = async (politicianId) => {
@@ -233,25 +240,29 @@ export default function PoliticianWall() {
   };
 
   if (loading) {
-    return <div className="min-h-screen bg-background flex items-center justify-center"><div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" /></div>;
+    return (
+      <div className="w-full flex items-center justify-center py-32">
+        <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+      </div>
+    );
   }
 
   if (!wallOwner) {
-    return <div className="min-h-screen bg-background text-white flex items-center justify-center">Wall not found.</div>;
+    return <div className="w-full text-center py-20 text-text-muted">Wall not found.</div>;
   }
 
   return (
-    <div className="w-full max-w-6xl mx-auto animate-fade-in pb-20 flex flex-col lg:flex-row gap-6 px-4">
+    <div className="w-full max-w-3xl mx-auto animate-fade-in pb-20 px-4">
       {/* Main Wall Column */}
-      <div className="flex-1 max-w-3xl min-w-0">
+      <div className="w-full min-w-0">
         
         <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-text-muted hover:text-text-secondary mb-6 transition-colors">
           <ArrowLeft size={16} /> Back to Feed
         </button>
 
         {/* Cover & Profile Header */}
-        <div className="bg-surface rounded-2xl overflow-hidden border border-border shadow-xl mb-8">
-           <div className="h-32 bg-gradient-to-r from-indigo-900 to-blue-900" />
+        <div className="bg-surface rounded-2xl border border-border shadow-xl mb-8 relative">
+           <div className="h-32 bg-gradient-to-r from-indigo-900 to-blue-900 rounded-t-2xl" />
            <div className="px-6 pb-6 relative">
               <div className="w-24 h-24 rounded-full bg-surface-hover border-4 border-slate-900 flex items-center justify-center text-3xl font-bold text-white shadow-lg absolute -top-12">
                 {wallOwner.full_name ? wallOwner.full_name.charAt(0).toUpperCase() : 'P'}
@@ -456,11 +467,21 @@ export default function PoliticianWall() {
                   </div>
                 )}
 
-                {post.link_metadata && (
+                {post.link_metadata ? (
                   <div className="mb-4">
                     <LinkPreview url={post.link_metadata.url} metadata={post.link_metadata} />
                   </div>
-                )}
+                ) : (() => {
+                  const match = post.content?.match(/(https?:\/\/[^\s]+)/);
+                  if (match) {
+                    return (
+                      <div className="mb-4">
+                        <LinkPreview url={match[1]} />
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
                 
                 {post.video_url && (
                   <div className="mt-3 rounded-lg overflow-hidden border border-border-light bg-black">

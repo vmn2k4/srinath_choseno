@@ -49,7 +49,21 @@ export default function LinkPreview({ url, metadata, onMetadataFetched }) {
     return () => { ignore = true; };
   }, [url, metadata]);
 
-  if (error || (!loading && !data)) return null;
+  if (error || (!loading && !data)) {
+    return (
+      <a href={url} target="_blank" rel="noopener noreferrer" className="block my-3 group">
+        <div className="flex bg-surface-hover/40 rounded-lg overflow-hidden border border-border-light/50 group-hover:border-primary/50 transition-colors h-16 items-center px-4">
+          <LinkIcon className="text-text-darker w-6 h-6 mr-4 shrink-0" />
+          <div className="flex-1 min-w-0">
+            <h4 className="text-sm font-semibold text-text-secondary line-clamp-1 group-hover:text-primary-lighter transition-colors">{url}</h4>
+            <span className="text-[10px] text-text-muted uppercase tracking-wider font-medium mt-1 block truncate">
+              {new URL(url).hostname || 'External Link'}
+            </span>
+          </div>
+        </div>
+      </a>
+    );
+  }
 
   if (loading) {
     return (

@@ -639,11 +639,21 @@ export default function FeedPage() {
                         </div>
                       )}
 
-                      {post.link_metadata && (
+                      {post.link_metadata ? (
                         <div className="mb-4">
                           <LinkPreview url={post.link_metadata.url} metadata={post.link_metadata} />
                         </div>
-                      )}
+                      ) : (() => {
+                        const match = post.content?.match(/(https?:\/\/[^\s]+)/);
+                        if (match) {
+                          return (
+                            <div className="mb-4">
+                              <LinkPreview url={match[1]} />
+                            </div>
+                          );
+                        }
+                        return null;
+                      })()}
                       
                       {post.video_url && (
                         <div className="mb-4 rounded-lg overflow-hidden border border-border-light bg-black">
