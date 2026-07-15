@@ -4,7 +4,7 @@ import { supabase } from '../services/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import LinkPreview from '../components/LinkPreview';
 import PoliticianSidebar from '../components/PoliticianSidebar';
-import { MapPin, Users, ShieldAlert, ArrowLeft, Heart, QrCode, X } from 'lucide-react';
+import { MapPin, Users, ShieldAlert, ArrowLeft, Heart, QrCode, X, Image as ImageIcon } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 
 export default function PoliticianWall() {
@@ -24,6 +24,9 @@ export default function PoliticianWall() {
   const [isSupporting, setIsSupporting] = useState(false);
   const [showSupporters, setShowSupporters] = useState(false);
   const [supportersList, setSupportersList] = useState([]);
+  
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     async function loadWall() {
@@ -181,18 +184,46 @@ export default function PoliticianWall() {
     
     setSubmitting(true);
     try {
+      let finalImageUrl = null;
+      
+      if (imageFile) {
+        const fileExt = imageFile.name.split('.').pop();
+        const fileName = `${profile.current_ghost_id}-${Date.now()}.${fileExt}`;
+        const filePath = `posts/${fileName}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('post-images')
+          .upload(filePath, imageFile);
+          
+        if (uploadError) {
+          console.error('Upload error:', uploadError);
+          alert('Failed to upload image.');
+          setSubmitting(false);
+          return;
+        }
+        
+        const { data: { publicUrl } } = supabase.storage
+          .from('post-images')
+          .getPublicUrl(filePath);
+          
+        finalImageUrl = publicUrl;
+      }
+
       const { error } = await supabase.from('posts').insert({
         ghost_id: profile.current_ghost_id,
         constituency: profile.constituency,
         content: newPostContent.trim(),
         wall_ghost_id: ghostId,
-        link_metadata: linkMetadata
+        link_metadata: linkMetadata,
+        image_url: finalImageUrl
       });
       if (error) throw error;
       
       setNewPostContent('');
       setExtractedUrl(null);
       setLinkMetadata(null);
+      setImageFile(null);
+      setImagePreview(null);
       fetchPosts();
     } catch (err) {
       console.error('Error creating post:', err);
@@ -327,8 +358,8 @@ export default function PoliticianWall() {
             value={newPostContent}
             onChange={handlePostChange}
             placeholder={`Write something to ${wallOwner.full_name || 'this representative'}...`}
-            className="w-full bg-transparent text-text-secondary placeholder:text-text-main0 resize-none outline-none min-h-[80px]"
-            required
+            className="w-full bg-transparent text-text-secondary placeholder:text-text-muted resize-none outline-none min-h-[80px]"
+            required={!imageFile}
           />
           
           {extractedUrl && (
@@ -338,17 +369,56 @@ export default function PoliticianWall() {
             />
           )}
 
+          {imagePreview && (
+            <div className="relative mt-2 mb-2 inline-block">
+              <img src={imagePreview} alt="Preview" className="h-32 rounded-lg border border-border-light object-cover" />
+              <button 
+                type="button" 
+                onClick={() => { setImageFile(null); setImagePreview(null); }}
+                className="absolute -top-2 -right-2 bg-danger text-white rounded-full p-1 shadow-lg hover:bg-danger-light"
+              >
+                <X size={14} />
+              </button>
+            </div>
+          )}
+
           <div className="flex items-center justify-between mt-2 border-t border-border-light/50 pt-3">
-            <span className="text-xs text-text-main0 flex items-center gap-1">
+            <span className="text-xs text-text-dark flex items-center gap-1">
               <ShieldAlert size={12} /> Posting as Ghost ID
             </span>
-            <button
-              type="submit"
-              disabled={submitting || !newPostContent.trim()}
-              className="px-6 py-2 bg-accent text-white rounded-lg hover:bg-accent-hover transition-colors text-sm font-medium disabled:opacity-50"
-            >
-              {submitting ? 'Posting...' : 'Post to Wall'}
-            </button>
+            <div className="flex items-center gap-2">
+              <input 
+                type="file" 
+                accept="image/*" 
+                id="wall-image-upload" 
+                className="hidden" 
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    if (file.size > 5 * 1024 * 1024) return alert("Image must be less than 5MB");
+                    setImageFile(file);
+                    const reader = new FileReader();
+                    reader.onloadend = () => setImagePreview(reader.result);
+                    reader.readAsDataURL(file);
+                  }
+                }}
+              />
+              <label 
+                htmlFor="wall-image-upload"
+                className="p-2 text-text-muted hover:bg-surface-hover hover:text-primary-light rounded-lg cursor-pointer transition-colors"
+                title="Attach Image"
+              >
+                <ImageIcon size={18} />
+              </label>
+
+              <button
+                type="submit"
+                disabled={submitting || (!newPostContent.trim() && !imageFile)}
+                className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors text-sm font-medium disabled:opacity-50"
+              >
+                {submitting ? 'Posting...' : 'Post anonymously'}
+              </button>
+            </div>
           </div>
         </form>
 
@@ -380,8 +450,16 @@ export default function PoliticianWall() {
                   {post.content}
                 </p>
 
+                {post.image_url && (
+                  <div className="mb-4 rounded-lg overflow-hidden border border-border-light">
+                     <img src={post.image_url} alt="Post Attachment" className="w-full max-h-[500px] object-cover" loading="lazy" />
+                  </div>
+                )}
+
                 {post.link_metadata && (
-                  <LinkPreview url={post.link_metadata.url} metadata={post.link_metadata} />
+                  <div className="mb-4">
+                    <LinkPreview url={post.link_metadata.url} metadata={post.link_metadata} />
+                  </div>
                 )}
                 
                 {post.video_url && (
