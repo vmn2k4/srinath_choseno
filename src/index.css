@@ -2,16 +2,52 @@
 
 @import "tailwindcss";
 
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+
+  /* Semantic Theme Variables */
+  --color-background: var(--color-slate-950);
+  --color-surface: var(--color-slate-900);
+  --color-surface-hover: var(--color-slate-800);
+  --color-surface-active: var(--color-slate-700);
+  --color-surface-elevated: rgba(30, 41, 59, 0.7);
+
+  --color-border: var(--color-slate-800);
+  --color-border-light: var(--color-slate-700);
+
+  --color-text-main: var(--color-slate-50);
+  --color-text-secondary: var(--color-slate-200);
+  --color-text-tertiary: var(--color-slate-300);
+  --color-text-muted: var(--color-slate-400);
+  --color-text-dark: var(--color-slate-500);
+  --color-text-darker: var(--color-slate-600);
+
+  /* Primary Brand (Indigo mapped) */
+  --color-primary: var(--color-indigo-600);
+  --color-primary-hover: var(--color-indigo-700);
+  --color-primary-light: var(--color-indigo-400);
+  --color-primary-lighter: var(--color-indigo-300);
+
+  /* Secondary/Accent Brand (Blue mapped) */
+  --color-accent: var(--color-blue-600);
+  --color-accent-hover: var(--color-blue-700);
+
+  /* Danger/Alert (Rose mapped) */
+  --color-danger: var(--color-rose-500);
+  --color-danger-light: var(--color-rose-400);
+}
+
 @layer base {
   body {
-    @apply min-h-screen text-slate-50 antialiased font-sans m-0 p-0 box-border;
-    background: radial-gradient(circle at top right, #1e1b4b, #0f172a 40%, #020617);
+    @apply min-h-screen text-text-main antialiased font-sans m-0 p-0 box-border;
+    background: radial-gradient(circle at top right, #1e1b4b, var(--color-surface) 40%, var(--color-background));
   }
 }
 
 @layer utilities {
   .glass-card {
-    @apply bg-slate-800/70 backdrop-blur-md border border-white/10 rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)];
+    @apply bg-surface-elevated backdrop-blur-md border border-white/10 rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)];
   }
 }
 
