@@ -7,6 +7,7 @@ import AdminPage from './pages/AdminPage';
 import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
 import FeedPage from './pages/FeedPage/FeedPage';
+import PoliticianWall from './pages/PoliticianWall';
 import './index.css';
 
 // A simple protected route wrapper
@@ -41,6 +42,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <FeedPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="wall/:ghostId" 
+              element={
+                <ProtectedRoute>
+                  <PoliticianWall />
                 </ProtectedRoute>
               } 
             />

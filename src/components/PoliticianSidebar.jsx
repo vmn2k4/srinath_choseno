@@ -1,0 +1,105 @@
+import React, { useEffect, useState } from 'react';
+import { supabase } from '../services/supabase';
+import { Users, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
+export default function PoliticianSidebar({ profile, activeTab }) {
+  const [politicians, setPoliticians] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!profile) return;
+    
+    async function fetchPoliticians() {
+      setLoading(true);
+      try {
+        let boundaryIds = [];
+        if (profile.location?.polling_district_id) boundaryIds.push(profile.location.polling_district_id);
+        if (profile.location?.federal_boundary_id) boundaryIds.push(profile.location.federal_boundary_id);
+        
+        let query = supabase
+          .from('politician_profiles')
+          .select(`
+            id,
+            political_target_role,
+            target_boundary_name,
+            target_boundary_type,
+            profiles!inner (
+              current_ghost_id,
+              full_name,
+              country
+            )
+          `);
+
+        if (boundaryIds.length > 0) {
+           query = query.or(`target_boundary_id.in.(${boundaryIds.join(',')}),target_boundary_type.eq.Country`);
+        } else {
+           query = query.eq('target_boundary_type', 'Country');
+        }
+        
+        const { data, error } = await query;
+        if (!error && data) {
+           // Filter Country-level politicians to match user's country in JS to avoid foreign table OR constraints
+           let filteredData = data.filter(pol => {
+              if (pol.target_boundary_type === 'Country') {
+                 return pol.profiles?.country === profile.country;
+              }
+              return true;
+           });
+
+           // Sort so Federal shows up above Local
+           const sorted = filteredData.sort((a, b) => {
+              if (a.target_boundary_type === 'Federal' && b.target_boundary_type !== 'Federal') return -1;
+              if (b.target_boundary_type === 'Federal' && a.target_boundary_type !== 'Federal') return 1;
+              return 0;
+           });
+           setPoliticians(sorted);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchPoliticians();
+  }, [profile, activeTab]);
+
+  if (activeTab === 'International') return null;
+
+  return (
+    <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 p-5 sticky top-24">
+      <h3 className="text-slate-200 font-semibold mb-4 flex items-center gap-2">
+        <Users size={18} className="text-indigo-400" /> 
+        Local Representatives
+      </h3>
+      
+      {loading ? (
+        <div className="text-center py-4 text-slate-500 text-sm">Loading...</div>
+      ) : politicians.length === 0 ? (
+        <div className="text-center py-6 text-slate-500 text-sm bg-slate-800/50 rounded-lg border border-dashed border-slate-700">
+          No representatives found for this {activeTab.toLowerCase()}.
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {politicians.map(pol => (
+            <div 
+              key={pol.id}
+              onClick={() => navigate(`/wall/${pol.profiles.current_ghost_id}`)}
+              className="group cursor-pointer bg-slate-800/50 hover:bg-slate-800 rounded-lg p-3 border border-slate-700/50 hover:border-indigo-500/30 transition-all flex items-center gap-3"
+            >
+              <div className="w-10 h-10 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-500/30 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+                 <Users size={16} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-slate-200 text-sm font-medium truncate">{pol.profiles.full_name || `Ghost-${pol.profiles.current_ghost_id.split('-')[0]}`}</h4>
+                <p className="text-slate-400 text-xs truncate">{pol.political_target_role}</p>
+              </div>
+              <ChevronRight size={16} className="text-slate-600 group-hover:text-indigo-400 transition-colors" />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

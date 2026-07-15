@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../services/supabase';
-import { MapPin, Users, Building, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Download, Video } from 'lucide-react';
+import { MapPin, Users, Building, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Download, Video, Link as LinkIcon } from 'lucide-react';
 import VideoRecorder from '../../components/video/VideoRecorder';
+import PoliticianSidebar from '../../components/PoliticianSidebar';
+import LinkPreview from '../../components/LinkPreview';
 
 const BOUNDARY_TABS = ['Polling District', 'Federal Area', 'Country', 'International'];
 
@@ -26,6 +28,10 @@ export default function FeedPage() {
   
   // Stories state
   const [activeStoryUrl, setActiveStoryUrl] = useState(null);
+
+  // Link Preview state
+  const [extractedUrl, setExtractedUrl] = useState(null);
+  const [linkMetadata, setLinkMetadata] = useState(null);
 
   const fetchProfile = async () => {
     if (!user) return;
@@ -154,12 +160,15 @@ export default function FeedPage() {
           : null,
         content: newPostContent.trim(),
         video_url: uploadedVideoUrl,
+        link_metadata: linkMetadata,
         is_country: isCountry,
         is_international: isInternational
       });
       if (error) throw error;
       setNewPostContent('');
       setUploadedVideoUrl(null);
+      setExtractedUrl(null);
+      setLinkMetadata(null);
       setShowVideoRecorder(false);
       setIsCountry(false);
       setIsInternational(false);
@@ -299,8 +308,10 @@ export default function FeedPage() {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto animate-fade-in pb-20">
+    <div className="w-full max-w-6xl mx-auto animate-fade-in pb-20 flex flex-col lg:flex-row gap-6 px-4">
       
+      {/* Main Feed Column */}
+      <div className="flex-1 max-w-3xl min-w-0">
       {/* Header Profile Summary */}
       <div className="bg-slate-800/80 backdrop-blur-md rounded-2xl border border-white/10 p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
@@ -405,11 +416,29 @@ export default function FeedPage() {
               <form onSubmit={handleCreatePost} className="mb-8 bg-slate-900/50 rounded-xl p-4 border border-slate-700/50">
               <textarea
                 value={newPostContent}
-                onChange={(e) => setNewPostContent(e.target.value)}
+                onChange={(e) => {
+                  const text = e.target.value;
+                  setNewPostContent(text);
+                  const urlRegex = /(https?:\/\/[^\s]+)/;
+                  const match = text.match(urlRegex);
+                  if (match && match[1] !== extractedUrl) {
+                    setExtractedUrl(match[1]);
+                    setLinkMetadata(null);
+                  } else if (!match) {
+                    setExtractedUrl(null);
+                    setLinkMetadata(null);
+                  }
+                }}
                 placeholder={`Post anonymously in the ${activeTab} feed...`}
                 className="w-full bg-transparent text-slate-200 placeholder:text-slate-500 resize-none outline-none min-h-[80px]"
                 required
               />
+              
+              {extractedUrl && !uploadedVideoUrl && (
+                <div className="mb-3">
+                  <LinkPreview url={extractedUrl} onMetadataFetched={setLinkMetadata} />
+                </div>
+              )}
               
               {showVideoRecorder && (
                 <VideoRecorder onVideoUploaded={(url) => {
@@ -561,6 +590,12 @@ export default function FeedPage() {
                       <p className="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed mb-3">
                         {post.content}
                       </p>
+
+                      {post.link_metadata && (
+                        <div className="mb-4">
+                          <LinkPreview url={post.link_metadata.url} metadata={post.link_metadata} />
+                        </div>
+                      )}
                       
                       {post.video_url && (
                         <div className="mb-4 rounded-lg overflow-hidden border border-slate-700 bg-black">
@@ -643,6 +678,13 @@ export default function FeedPage() {
           </div>
         </div>
       )}
+      </div>
+      
+      {/* Right Sidebar Column */}
+      <div className="hidden lg:block w-80 shrink-0">
+        <PoliticianSidebar profile={profile} activeTab={activeTab} />
+      </div>
+
     </div>
   );
 }

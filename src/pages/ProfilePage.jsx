@@ -119,10 +119,15 @@ export default function ProfilePage() {
          targetBoundaryType = selectedRoleObj ? selectedRoleObj.type : null;
          
          if (pendingLocation && pendingLocation.allBoundaries) {
-             // User just searched a new location — find the matching boundary from that search
-             const matchingB = pendingLocation.allBoundaries.find(b => b.boundary_type === targetBoundaryType);
+             const matchingB = pendingLocation.allBoundaries.find(
+               b => b.boundary_type?.toUpperCase() === targetBoundaryType?.toUpperCase()
+             );
              if (matchingB) {
                targetBoundaryId = matchingB.id;
+             } else if (targetBoundaryType?.toUpperCase() === 'FEDERAL') {
+               targetBoundaryId = pendingLocation.federalId;
+             } else {
+               targetBoundaryId = pendingLocation.pollingId;
              }
          } else {
              // No new location searched — preserve the existing record
@@ -154,8 +159,14 @@ export default function ProfilePage() {
           // Also resolve the human-readable name for the target boundary
           let targetBoundaryName = null;
           if (pendingLocation && pendingLocation.allBoundaries && targetBoundaryType) {
-            const matchingB = pendingLocation.allBoundaries.find(b => b.boundary_type === targetBoundaryType);
-            if (matchingB) targetBoundaryName = matchingB.name;
+            const matchingB = pendingLocation.allBoundaries.find(b => b.boundary_type?.toUpperCase() === targetBoundaryType?.toUpperCase());
+            if (matchingB) {
+              targetBoundaryName = matchingB.name;
+            } else {
+              targetBoundaryName = targetBoundaryType?.toUpperCase() === 'FEDERAL' 
+                ? `Federal Grid (${pendingLocation.lat.toFixed(1)}, ${pendingLocation.lng.toFixed(1)})`
+                : `Local Grid (${pendingLocation.lat.toFixed(2)}, ${pendingLocation.lng.toFixed(2)})`;
+            }
           } else {
             const { data: existPol } = await supabase
               .from('politician_profiles')
