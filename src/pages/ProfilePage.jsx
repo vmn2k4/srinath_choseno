@@ -329,50 +329,50 @@ export default function ProfilePage() {
   };
 
   if (loading) {
-    return <div className="text-slate-400 text-center mt-10">Loading profile...</div>;
+    return <div className="text-text-muted text-center mt-10">Loading profile...</div>;
   }
 
   const isOnboarding = !role;
 
   return (
-    <div className="w-full max-w-2xl p-8 bg-slate-800 rounded-2xl border border-white/10 shadow-xl animate-fade-in mx-auto mt-10">
-      <h2 className="text-2xl font-bold text-slate-50 mb-2 text-center">
+    <div className="w-full max-w-2xl p-8 bg-surface-hover rounded-2xl border border-white/10 shadow-xl animate-fade-in mx-auto mt-10">
+      <h2 className="text-2xl font-bold text-text-main mb-2 text-center">
         {isOnboarding ? 'Complete Your Profile' : 'Edit Profile'}
       </h2>
-      <p className="text-slate-400 text-center mb-8">
+      <p className="text-text-muted text-center mb-8">
         {isOnboarding ? 'Welcome! Tell us a bit more about yourself to get started.' : 'Update your personal information and preferences.'}
       </p>
 
       {role === 'admin' ? (
-        <div className="text-center bg-slate-900/50 p-6 rounded-xl border border-white/10 mt-6">
-          <h3 className="text-xl font-bold text-slate-200 mb-2">Administrator Account</h3>
-          <p className="text-slate-400 mb-4">You have special privileges to manage electoral boundaries. Your profile details are locked.</p>
-          <a href="/admin" className="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+        <div className="text-center bg-surface/50 p-6 rounded-xl border border-white/10 mt-6">
+          <h3 className="text-xl font-bold text-text-secondary mb-2">Administrator Account</h3>
+          <p className="text-text-muted mb-4">You have special privileges to manage electoral boundaries. Your profile details are locked.</p>
+          <a href="/admin" className="inline-block px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent-hover transition-colors">
             Go to Admin Portal
           </a>
         </div>
       ) : (
         <form onSubmit={updateProfile} className="flex flex-col gap-6">
           <div>
-            <label className="block mb-2 text-sm font-medium text-slate-300">Full Name</label>
+            <label className="block mb-2 text-sm font-medium text-text-tertiary">Full Name</label>
             <input
               type="text"
               placeholder="Your Name"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-900 focus:outline-none focus:border-blue-500"
+              className="block w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-surface focus:outline-none focus:border-accent"
               required
             />
           </div>
 
           <div>
-            <label className="block mb-3 text-sm font-medium text-slate-300">Account Type</label>
+            <label className="block mb-3 text-sm font-medium text-text-tertiary">Account Type</label>
             <div className="grid grid-cols-2 gap-4">
               <button
                 type="button"
                 className={`p-4 rounded-xl border text-left transition-all duration-300 ${role === 'normal'
-                    ? 'bg-blue-500/20 border-blue-500 text-blue-100'
-                    : 'bg-slate-900 border-slate-600 text-slate-400 hover:border-slate-500 hover:bg-slate-800'
+                    ? 'bg-blue-500/20 border-accent text-blue-100'
+                    : 'bg-surface border-slate-600 text-text-muted hover:border-slate-500 hover:bg-surface-hover'
                   }`}
                 onClick={() => setRole('normal')}
               >
@@ -382,8 +382,8 @@ export default function ProfilePage() {
               <button
                 type="button"
                 className={`p-4 rounded-xl border text-left transition-all duration-300 ${role === 'politician'
-                    ? 'bg-indigo-500/20 border-indigo-500 text-indigo-100'
-                    : 'bg-slate-900 border-slate-600 text-slate-400 hover:border-slate-500 hover:bg-slate-800'
+                    ? 'bg-primary/20 border-primary text-indigo-100'
+                    : 'bg-surface border-slate-600 text-text-muted hover:border-slate-500 hover:bg-surface-hover'
                   }`}
                 onClick={() => setRole('politician')}
               >
@@ -395,31 +395,31 @@ export default function ProfilePage() {
 
           {/* Shared Location Section for both Roles */}
           {(role === 'normal' || role === 'politician') && (
-            <div className="animate-fade-in p-5 bg-slate-900/50 rounded-xl border border-white/10 space-y-4">
+            <div className="animate-fade-in p-5 bg-surface/50 rounded-xl border border-white/10 space-y-4">
               <div>
-                <h3 className="font-bold text-slate-200">Location & Constituency</h3>
-                <p className="text-xs text-slate-400 mt-1">We need your location to match you with your relevant boundary.</p>
+                <h3 className="font-bold text-text-secondary">Location & Constituency</h3>
+                <p className="text-xs text-text-muted mt-1">We need your location to match you with your relevant boundary.</p>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-1 space-y-2">
-                  <label className="block text-xs text-slate-400">Latitude</label>
+                  <label className="block text-xs text-text-muted">Latitude</label>
                   <input
                     type="text"
                     placeholder="e.g. 49.15"
                     value={manualLat}
                     onChange={(e) => setManualLat(e.target.value)}
-                    className="w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500"
+                    className="w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-background focus:outline-none focus:border-accent"
                   />
                 </div>
                 <div className="flex-1 space-y-2">
-                  <label className="block text-xs text-slate-400">Longitude</label>
+                  <label className="block text-xs text-text-muted">Longitude</label>
                   <input
                     type="text"
                     placeholder="e.g. -122.64"
                     value={manualLng}
                     onChange={(e) => setManualLng(e.target.value)}
-                    className="w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500"
+                    className="w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-background focus:outline-none focus:border-accent"
                   />
                 </div>
               </div>
@@ -429,7 +429,7 @@ export default function ProfilePage() {
                   type="button"
                   onClick={getGeolocation}
                   disabled={geoLoading}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 rounded-lg transition-colors border border-blue-500/30 disabled:opacity-50 text-sm font-medium"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-accent/20 hover:bg-accent/30 text-blue-400 rounded-lg transition-colors border border-accent/30 disabled:opacity-50 text-sm font-medium"
                 >
                   <MapPin size={16} />
                   {geoLoading ? 'Detecting...' : 'Auto-Detect'}
@@ -438,20 +438,20 @@ export default function ProfilePage() {
                   type="button"
                   onClick={() => findFromCoordinates(manualLat, manualLng)}
                   disabled={geoLoading || !manualLat || !manualLng}
-                  className="flex-1 px-4 py-3 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg transition-colors border border-slate-500 disabled:opacity-50 text-sm font-medium"
+                  className="flex-1 px-4 py-3 bg-surface-active hover:bg-slate-600 text-text-secondary rounded-lg transition-colors border border-slate-500 disabled:opacity-50 text-sm font-medium"
                 >
                   Find from Coordinates
                 </button>
               </div>
 
               <div className="space-y-2 pt-2 border-t border-white/5 mt-4">
-                <label className="block text-sm font-medium text-slate-300">Constituency / District Result</label>
+                <label className="block text-sm font-medium text-text-tertiary">Constituency / District Result</label>
                 <input
                   type="text"
                   placeholder="Will be auto-filled, or type manually"
                   value={constituency}
                   onChange={(e) => setConstituency(e.target.value)}
-                  className="w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-900 focus:outline-none focus:border-blue-500"
+                  className="w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-surface focus:outline-none focus:border-accent"
                   required
                 />
               </div>
@@ -459,18 +459,18 @@ export default function ProfilePage() {
           )}
 
           {role === 'politician' && (
-            <div className="animate-fade-in p-5 bg-slate-900/50 rounded-xl border border-white/10 space-y-4">
-              <h3 className="font-bold text-slate-200">Political Details</h3>
+            <div className="animate-fade-in p-5 bg-surface/50 rounded-xl border border-white/10 space-y-4">
+              <h3 className="font-bold text-text-secondary">Political Details</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-slate-300">Country</label>
+                  <label className="block mb-2 text-sm font-medium text-text-tertiary">Country</label>
                   {isCustomCountry ? (
                     <input
                       type="text"
                       placeholder="Enter new country"
                       value={customCountry}
                       onChange={(e) => setCustomCountry(e.target.value)}
-                      className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
+                      className="block w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-background focus:outline-none focus:border-accent mb-2"
                       required
                     />
                   ) : (
@@ -485,7 +485,7 @@ export default function ProfilePage() {
                           setDesignation('');
                         }
                       }}
-                      className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
+                      className="block w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-background focus:outline-none focus:border-accent mb-2"
                       required
                     >
                       <option value="" disabled>Select Country</option>
@@ -501,11 +501,11 @@ export default function ProfilePage() {
                 </div>
 
                 <div>
-                <label className="block mb-2 text-sm font-medium text-slate-300">Target Political Role</label>
+                <label className="block mb-2 text-sm font-medium text-text-tertiary">Target Political Role</label>
                 <select
                   value={politicalTargetRole}
                   onChange={(e) => setPoliticalTargetRole(e.target.value)}
-                  className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-950 focus:outline-none focus:border-blue-500 mb-2"
+                  className="block w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-background focus:outline-none focus:border-accent mb-2"
                   required
                 >
                   <option value="" disabled>Select Role Level</option>
@@ -513,7 +513,7 @@ export default function ProfilePage() {
                     <option key={r.label} value={r.label}>{r.label} ({r.type} level)</option>
                   ))}
                 </select>
-                <p className="text-xs text-slate-400 mt-1">This defines the exact geographic boundary you want to target.</p>
+                <p className="text-xs text-text-muted mt-1">This defines the exact geographic boundary you want to target.</p>
               </div>  
               </div>
             </div>
@@ -527,7 +527,7 @@ export default function ProfilePage() {
 
           <button
             type="submit"
-            className="mt-4 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:ring-4 focus:ring-blue-500/20 disabled:opacity-50"
+            className="mt-4 px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent-hover transition-colors focus:ring-4 focus:ring-blue-500/20 disabled:opacity-50"
             disabled={saving || !role}
           >
             {saving ? 'Saving...' : isOnboarding ? 'Complete Setup' : 'Save Profile'}

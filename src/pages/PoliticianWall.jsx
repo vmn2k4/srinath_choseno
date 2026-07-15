@@ -4,7 +4,8 @@ import { supabase } from '../services/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import LinkPreview from '../components/LinkPreview';
 import PoliticianSidebar from '../components/PoliticianSidebar';
-import { MapPin, Users, ShieldAlert, ArrowLeft } from 'lucide-react';
+import { MapPin, Users, ShieldAlert, ArrowLeft, Heart, QrCode, X } from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
 
 export default function PoliticianWall() {
   const { ghostId } = useParams();
@@ -19,6 +20,10 @@ export default function PoliticianWall() {
   const [extractedUrl, setExtractedUrl] = useState(null);
   const [linkMetadata, setLinkMetadata] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [supportCount, setSupportCount] = useState(0);
+  const [isSupporting, setIsSupporting] = useState(false);
+  const [showSupporters, setShowSupporters] = useState(false);
+  const [supportersList, setSupportersList] = useState([]);
 
   useEffect(() => {
     async function loadWall() {
@@ -32,6 +37,7 @@ export default function PoliticianWall() {
       const { data: owner } = await supabase
         .from('profiles')
         .select(`
+           id,
            current_ghost_id,
            full_name,
            role,
@@ -46,12 +52,91 @@ export default function PoliticianWall() {
         
       if (owner) {
         setWallOwner(owner);
+        checkSupportStatus(owner.id);
+        
+        // Real-time subscription for support count
+        const channel = supabase.channel('support-updates')
+          .on('postgres_changes', { 
+            event: '*', 
+            schema: 'public', 
+            table: 'politician_supporters',
+            filter: `politician_id=eq.${owner.id}`
+          }, () => {
+            fetchSupportCount(owner.id);
+          })
+          .subscribe();
+
+        return () => supabase.removeChannel(channel);
       }
 
       fetchPosts();
     }
     if (user && ghostId) loadWall();
   }, [user, ghostId]);
+
+  const checkSupportStatus = async (politicianId) => {
+    // Check if current user supports
+    const { data: mySupport } = await supabase
+      .from('politician_supporters')
+      .select('supporter_id')
+      .eq('politician_id', politicianId)
+      .eq('supporter_id', user.id)
+      .maybeSingle();
+      
+    setIsSupporting(!!mySupport);
+    fetchSupportCount(politicianId);
+  };
+
+  const fetchSupportCount = async (politicianId) => {
+    const { count } = await supabase
+      .from('politician_supporters')
+      .select('*', { count: 'exact', head: true })
+      .eq('politician_id', politicianId);
+      
+    setSupportCount(count || 0);
+  };
+
+  const toggleSupport = async () => {
+    if (!wallOwner) return;
+    
+    if (isSupporting) {
+      // Withdraw support
+      setIsSupporting(false);
+      setSupportCount(prev => Math.max(0, prev - 1));
+      await supabase
+        .from('politician_supporters')
+        .delete()
+        .eq('politician_id', wallOwner.id)
+        .eq('supporter_id', user.id);
+    } else {
+      // Add support
+      setIsSupporting(true);
+      setSupportCount(prev => prev + 1);
+      await supabase
+        .from('politician_supporters')
+        .insert({
+          politician_id: wallOwner.id,
+          supporter_id: user.id
+        });
+    }
+  };
+
+  const loadSupportersDashboard = async () => {
+    setShowSupporters(true);
+    const { data } = await supabase
+      .from('politician_supporters')
+      .select(`
+        created_at,
+        profiles!politician_supporters_supporter_id_fkey (
+          full_name,
+          current_ghost_id
+        )
+      `)
+      .eq('politician_id', wallOwner.id)
+      .order('created_at', { ascending: false });
+      
+    if (data) setSupportersList(data);
+  };
 
   const fetchPosts = async () => {
     try {
@@ -117,11 +202,11 @@ export default function PoliticianWall() {
   };
 
   if (loading) {
-    return <div className="min-h-screen bg-slate-950 flex items-center justify-center"><div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" /></div>;
+    return <div className="min-h-screen bg-background flex items-center justify-center"><div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" /></div>;
   }
 
   if (!wallOwner) {
-    return <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">Wall not found.</div>;
+    return <div className="min-h-screen bg-background text-white flex items-center justify-center">Wall not found.</div>;
   }
 
   return (
@@ -129,39 +214,120 @@ export default function PoliticianWall() {
       {/* Main Wall Column */}
       <div className="flex-1 max-w-3xl min-w-0">
         
-        <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-slate-400 hover:text-slate-200 mb-6 transition-colors">
+        <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-text-muted hover:text-text-secondary mb-6 transition-colors">
           <ArrowLeft size={16} /> Back to Feed
         </button>
 
         {/* Cover & Profile Header */}
-        <div className="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-xl mb-8">
+        <div className="bg-surface rounded-2xl overflow-hidden border border-border shadow-xl mb-8">
            <div className="h-32 bg-gradient-to-r from-indigo-900 to-blue-900" />
            <div className="px-6 pb-6 relative">
-              <div className="w-24 h-24 rounded-full bg-slate-800 border-4 border-slate-900 flex items-center justify-center text-3xl font-bold text-white shadow-lg absolute -top-12">
+              <div className="w-24 h-24 rounded-full bg-surface-hover border-4 border-slate-900 flex items-center justify-center text-3xl font-bold text-white shadow-lg absolute -top-12">
                 {wallOwner.full_name ? wallOwner.full_name.charAt(0).toUpperCase() : 'P'}
               </div>
               <div className="pt-14">
-                 <h1 className="text-2xl font-bold text-slate-50">{wallOwner.full_name || `Ghost-${ghostId.split('-')[0]}`}</h1>
+                 <h1 className="text-2xl font-bold text-text-main">{wallOwner.full_name || `Ghost-${ghostId.split('-')[0]}`}</h1>
                  <div className="flex items-center gap-2 mt-2">
-                    <span className="px-2.5 py-1 rounded bg-indigo-500/20 text-indigo-300 text-xs font-semibold">
+                    <span className="px-2.5 py-1 rounded bg-primary/20 text-primary-lighter text-xs font-semibold">
                       {wallOwner.politician_profiles?.[0]?.political_target_role || 'Representative'}
                     </span>
-                    <span className="flex items-center gap-1 text-slate-400 text-sm">
+                    <span className="flex items-center gap-1 text-text-muted text-sm">
                       <MapPin size={14} />
                       {wallOwner.politician_profiles?.[0]?.target_boundary_name || wallOwner.constituency}
                     </span>
                  </div>
               </div>
+
+              {/* Support & Actions Section */}
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
+                <div className="flex items-center gap-3">
+                  <button 
+                    onClick={toggleSupport}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+                      isSupporting 
+                        ? 'bg-danger/10 text-danger-light border border-danger/30 hover:bg-danger/20' 
+                        : 'bg-surface-hover text-text-tertiary border border-border-light hover:bg-surface-active hover:text-white'
+                    }`}
+                  >
+                    <Heart size={18} className={isSupporting ? "fill-current" : ""} />
+                    {isSupporting ? 'Supported' : 'I Support'}
+                  </button>
+                  <div className="text-text-muted text-sm font-medium">
+                    {supportCount.toLocaleString()} Supporter{supportCount !== 1 ? 's' : ''}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  {wallOwner.id === user.id && (
+                    <button 
+                      onClick={loadSupportersDashboard}
+                      className="flex items-center gap-2 px-4 py-2 bg-primary/20 text-primary-light hover:bg-primary/30 hover:text-primary-lighter border border-primary/30 rounded-lg text-sm font-medium transition-colors"
+                    >
+                      <Users size={16} /> View Supporters
+                    </button>
+                  )}
+                  <div className="group relative">
+                    <button type="button" className="p-2.5 bg-surface-hover text-text-tertiary hover:bg-surface-active rounded-lg border border-border-light transition-colors">
+                      <QrCode size={18} />
+                    </button>
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-white p-3 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 transform origin-top-right">
+                      <p className="text-center text-slate-800 text-xs font-bold mb-2 uppercase tracking-wide">Scan to Visit</p>
+                      <div className="bg-white p-1 rounded-lg flex justify-center">
+                        <QRCodeSVG value={window.location.href} size={150} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
            </div>
         </div>
 
+        {/* Supporters Dashboard Modal */}
+        {showSupporters && (
+          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-surface border border-border-light rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
+              <div className="px-5 py-4 border-b border-border flex items-center justify-between bg-surface/50">
+                <h3 className="font-bold text-lg text-white flex items-center gap-2">
+                  <Heart size={18} className="text-danger fill-danger" /> Supporter Dashboard
+                </h3>
+                <button onClick={() => setShowSupporters(false)} className="text-text-muted hover:text-white p-1 rounded-lg hover:bg-surface-hover">
+                  <X size={20} />
+                </button>
+              </div>
+              <div className="p-5 overflow-y-auto flex-1">
+                {supportersList.length === 0 ? (
+                  <p className="text-center text-text-main0 py-8">No supporters yet.</p>
+                ) : (
+                  <div className="space-y-3">
+                    {supportersList.map((sup, idx) => (
+                      <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-surface-hover/50 border border-border-light/50">
+                        <div className="w-10 h-10 rounded-full bg-surface-active flex items-center justify-center text-text-tertiary font-bold shrink-0">
+                          {sup.profiles?.full_name ? sup.profiles.full_name.charAt(0).toUpperCase() : 'A'}
+                        </div>
+                        <div className="min-w-0">
+                          <div className="font-medium text-text-secondary text-sm truncate">
+                            {sup.profiles?.full_name || 'Anonymous Citizen'}
+                          </div>
+                          <div className="text-xs text-text-main0 font-mono">
+                            Ghost-{sup.profiles?.current_ghost_id?.split('-')[0] || 'Unknown'}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Wall Post Input */}
-        <form onSubmit={handleCreatePost} className="mb-8 bg-slate-900/50 rounded-xl p-4 border border-slate-700/50">
+        <form onSubmit={handleCreatePost} className="mb-8 bg-surface/50 rounded-xl p-4 border border-border-light/50">
           <textarea
             value={newPostContent}
             onChange={handlePostChange}
             placeholder={`Write something to ${wallOwner.full_name || 'this representative'}...`}
-            className="w-full bg-transparent text-slate-200 placeholder:text-slate-500 resize-none outline-none min-h-[80px]"
+            className="w-full bg-transparent text-text-secondary placeholder:text-text-main0 resize-none outline-none min-h-[80px]"
             required
           />
           
@@ -172,14 +338,14 @@ export default function PoliticianWall() {
             />
           )}
 
-          <div className="flex items-center justify-between mt-2 border-t border-slate-700/50 pt-3">
-            <span className="text-xs text-slate-500 flex items-center gap-1">
+          <div className="flex items-center justify-between mt-2 border-t border-border-light/50 pt-3">
+            <span className="text-xs text-text-main0 flex items-center gap-1">
               <ShieldAlert size={12} /> Posting as Ghost ID
             </span>
             <button
               type="submit"
               disabled={submitting || !newPostContent.trim()}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium disabled:opacity-50"
+              className="px-6 py-2 bg-accent text-white rounded-lg hover:bg-accent-hover transition-colors text-sm font-medium disabled:opacity-50"
             >
               {submitting ? 'Posting...' : 'Post to Wall'}
             </button>
@@ -189,28 +355,28 @@ export default function PoliticianWall() {
         {/* Feed */}
         <div className="space-y-6">
           {posts.length === 0 ? (
-             <div className="text-center py-10 text-slate-500 text-sm bg-slate-900/30 rounded-xl border border-dashed border-slate-700">
+             <div className="text-center py-10 text-text-main0 text-sm bg-surface/30 rounded-xl border border-dashed border-border-light">
                 No posts on this wall yet.
              </div>
           ) : (
             posts.map(post => (
-              <div key={post.id} className="bg-slate-900/80 rounded-xl border border-slate-700/50 overflow-hidden p-5">
+              <div key={post.id} className="bg-surface/80 rounded-xl border border-border-light/50 overflow-hidden p-5">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center">
-                    <Users size={16} className="text-slate-400" />
+                  <div className="w-10 h-10 rounded-full bg-surface-active flex items-center justify-center">
+                    <Users size={16} className="text-text-muted" />
                   </div>
                   <div>
-                    <div className="text-sm font-bold text-slate-200 font-mono">
+                    <div className="text-sm font-bold text-text-secondary font-mono">
                       Ghost-{post.ghost_id.split('-')[0]}
                       {post.ghost_id === ghostId && (
-                         <span className="ml-2 text-[10px] bg-indigo-500/20 text-indigo-400 px-2 py-0.5 rounded uppercase tracking-wider font-bold">Author</span>
+                         <span className="ml-2 text-[10px] bg-primary/20 text-primary-light px-2 py-0.5 rounded uppercase tracking-wider font-bold">Author</span>
                       )}
                     </div>
-                    <div className="text-xs text-slate-500">{new Date(post.created_at).toLocaleString()}</div>
+                    <div className="text-xs text-text-main0">{new Date(post.created_at).toLocaleString()}</div>
                   </div>
                 </div>
                 
-                <p className="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed mb-3">
+                <p className="text-text-tertiary text-sm whitespace-pre-wrap leading-relaxed mb-3">
                   {post.content}
                 </p>
 
@@ -219,7 +385,7 @@ export default function PoliticianWall() {
                 )}
                 
                 {post.video_url && (
-                  <div className="mt-3 rounded-lg overflow-hidden border border-slate-700 bg-black">
+                  <div className="mt-3 rounded-lg overflow-hidden border border-border-light bg-black">
                      <video src={post.video_url} controls className="w-full max-h-96 object-contain" />
                   </div>
                 )}

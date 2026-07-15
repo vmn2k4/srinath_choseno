@@ -183,30 +183,30 @@ export default function AdminPage() {
     <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in p-4 lg:p-0">
       
       {/* LEFT SIDE: UPLOAD FORM */}
-      <div className="p-8 bg-slate-800 rounded-2xl border border-white/10 shadow-xl self-start">
-        <h2 className="text-2xl font-bold text-slate-50 mb-4">Upload Boundaries</h2>
-        <p className="text-sm text-slate-400 mb-6">
+      <div className="p-8 bg-surface-hover rounded-2xl border border-white/10 shadow-xl self-start">
+        <h2 className="text-2xl font-bold text-text-main mb-4">Upload Boundaries</h2>
+        <p className="text-sm text-text-muted mb-6">
           Upload electoral boundaries (.geojson or .zip containing shapefiles).
         </p>
 
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block mb-2 text-sm font-medium text-slate-300">Country</label>
+            <label className="block mb-2 text-sm font-medium text-text-tertiary">Country</label>
             <input
               type="text"
               placeholder="e.g. Canada"
-              className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-900 focus:outline-none focus:border-blue-500"
+              className="block w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-surface focus:outline-none focus:border-accent"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             />
           </div>
           <div>
-            <label className="block mb-2 text-sm font-medium text-slate-300">Boundary Type</label>
+            <label className="block mb-2 text-sm font-medium text-text-tertiary">Boundary Type</label>
             <input
               type="text"
               list="boundaryTypes"
               placeholder="e.g. Federal"
-              className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-900 focus:outline-none focus:border-blue-500"
+              className="block w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-surface focus:outline-none focus:border-accent"
               value={boundaryType}
               onChange={(e) => setBoundaryType(e.target.value)}
             />
@@ -222,21 +222,21 @@ export default function AdminPage() {
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block mb-2 text-sm font-medium text-slate-300">Name Attribute</label>
+            <label className="block mb-2 text-sm font-medium text-text-tertiary">Name Attribute</label>
             <input
               type="text"
               placeholder="e.g. ED_NAMEE"
-              className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-900 focus:outline-none focus:border-blue-500"
+              className="block w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-surface focus:outline-none focus:border-accent"
               value={nameField}
               onChange={(e) => setNameField(e.target.value)}
             />
           </div>
           <div>
-            <label className="block mb-2 text-sm font-medium text-slate-300">Code Attribute</label>
+            <label className="block mb-2 text-sm font-medium text-text-tertiary">Code Attribute</label>
             <input
               type="text"
               placeholder="e.g. FED_NUM"
-              className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-900 focus:outline-none focus:border-blue-500"
+              className="block w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-surface focus:outline-none focus:border-accent"
               value={codeField}
               onChange={(e) => setCodeField(e.target.value)}
             />
@@ -244,9 +244,9 @@ export default function AdminPage() {
         </div>
 
         <div className="mb-6">
-          <label className="block mb-2 text-sm font-medium text-slate-300">Select File</label>
+          <label className="block mb-2 text-sm font-medium text-text-tertiary">Select File</label>
           <input
-            className="block w-full text-sm text-slate-400 border border-slate-600 rounded-lg cursor-pointer bg-slate-900 focus:outline-none file:mr-4 file:py-3 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition-colors"
+            className="block w-full text-sm text-text-muted border border-slate-600 rounded-lg cursor-pointer bg-surface focus:outline-none file:mr-4 file:py-3 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-accent file:text-white hover:file:bg-blue-700 transition-colors"
             type="file"
             accept=".zip,.geojson,.json"
             onChange={handleFileChange}
@@ -255,7 +255,7 @@ export default function AdminPage() {
 
         <div>
           <button
-            className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:ring-4 focus:ring-blue-500/20 disabled:opacity-50 w-full"
+            className="px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent-hover transition-colors focus:ring-4 focus:ring-blue-500/20 disabled:opacity-50 w-full"
             onClick={handleUpload}
             disabled={progress > 0 && progress < 100}
           >
@@ -264,10 +264,10 @@ export default function AdminPage() {
         </div>
 
         {status && (
-          <div className="mt-4 p-4 bg-slate-900/80 border border-slate-700 rounded-lg text-sm font-medium animate-fade-in flex flex-col gap-2">
+          <div className="mt-4 p-4 bg-surface/80 border border-border-light rounded-lg text-sm font-medium animate-fade-in flex flex-col gap-2">
             <span className={status.startsWith('Error') ? 'text-red-400' : 'text-blue-300'}>{status}</span>
             {progress > 0 && progress < 100 && (
-              <div className="w-full bg-slate-700 rounded-full h-2 mt-1">
+              <div className="w-full bg-surface-active rounded-full h-2 mt-1">
                 <div className="bg-blue-500 h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
               </div>
             )}
@@ -276,32 +276,32 @@ export default function AdminPage() {
       </div>
 
       {/* RIGHT SIDE: BOUNDARY LIST */}
-      <div className="p-8 bg-slate-800 rounded-2xl border border-white/10 shadow-xl flex flex-col h-[650px]">
-        <h2 className="text-2xl font-bold text-slate-50 mb-4">Uploaded Boundaries</h2>
-        <p className="text-sm text-slate-400 mb-6">
+      <div className="p-8 bg-surface-hover rounded-2xl border border-white/10 shadow-xl flex flex-col h-[650px]">
+        <h2 className="text-2xl font-bold text-text-main mb-4">Uploaded Boundaries</h2>
+        <p className="text-sm text-text-muted mb-6">
           Recent boundaries successfully uploaded to the system.
         </p>
 
         <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-3">
           {loadingBoundaries ? (
-            <div className="text-center text-slate-400 py-10">Loading...</div>
+            <div className="text-center text-text-muted py-10">Loading...</div>
           ) : boundaries.length === 0 ? (
-            <div className="text-center text-slate-500 py-10 bg-slate-900/50 rounded-lg border border-dashed border-slate-700">
+            <div className="text-center text-text-main0 py-10 bg-surface/50 rounded-lg border border-dashed border-border-light">
               No boundaries found.
             </div>
           ) : (
             boundaries.map((b) => (
-              <div key={b.id} className="p-4 bg-slate-900/50 rounded-xl border border-white/5 flex items-center justify-between group hover:border-slate-600 transition-colors">
+              <div key={b.id} className="p-4 bg-surface/50 rounded-xl border border-white/5 flex items-center justify-between group hover:border-slate-600 transition-colors">
                 <div>
-                  <h4 className="font-bold text-slate-200">{b.name}</h4>
-                  <div className="text-xs text-slate-400 mt-1 flex gap-2">
+                  <h4 className="font-bold text-text-secondary">{b.name}</h4>
+                  <div className="text-xs text-text-muted mt-1 flex gap-2">
                     <span className="bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded">{b.country}</span>
                     <span className="bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">{b.boundary_type}</span>
                   </div>
                 </div>
                 <button
                   onClick={() => handleDelete(b.id)}
-                  className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                  className="p-2 text-text-main0 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
                   title="Delete Boundary"
                 >
                   <Trash2 size={18} />

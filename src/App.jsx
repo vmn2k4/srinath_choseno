@@ -46,7 +46,7 @@ function App() {
               } 
             />
             <Route 
-              path="wall/:ghostId" 
+              path="wall/:ghostId/:slug?" 
               element={
                 <ProtectedRoute>
                   <PoliticianWall />
