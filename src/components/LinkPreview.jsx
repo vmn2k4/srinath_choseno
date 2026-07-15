@@ -53,8 +53,8 @@ export default function LinkPreview({ url, metadata, onMetadataFetched }) {
 
   if (loading) {
     return (
-      <div className="w-full h-24 rounded-lg bg-slate-800/50 animate-pulse flex items-center justify-center border border-slate-700/50 my-3">
-        <LinkIcon className="text-slate-600 w-6 h-6" />
+      <div className="w-full h-24 rounded-lg bg-surface-hover/50 animate-pulse flex items-center justify-center border border-border-light/50 my-3">
+        <LinkIcon className="text-text-darker w-6 h-6" />
       </div>
     );
   }
@@ -62,11 +62,11 @@ export default function LinkPreview({ url, metadata, onMetadataFetched }) {
   // If it's a direct video link or a site with a video preview
   if (data.video) {
     return (
-      <div className="my-3 rounded-lg overflow-hidden border border-slate-700 bg-black">
+      <div className="my-3 rounded-lg overflow-hidden border border-border-light bg-black">
         <video src={data.video} controls className="w-full max-h-96 object-contain" />
-        <div className="p-3 bg-slate-900 border-t border-slate-800">
-          <h4 className="text-sm font-semibold text-slate-200 line-clamp-1">{data.title || data.url}</h4>
-          <p className="text-xs text-slate-400 mt-1 line-clamp-1">{data.description || new URL(data.url).hostname}</p>
+        <div className="p-3 bg-surface border-t border-border">
+          <h4 className="text-sm font-semibold text-text-secondary line-clamp-1">{data.title || data.url}</h4>
+          <p className="text-xs text-text-muted mt-1 line-clamp-1">{data.description || new URL(data.url).hostname}</p>
         </div>
       </div>
     );
@@ -74,22 +74,22 @@ export default function LinkPreview({ url, metadata, onMetadataFetched }) {
 
   return (
     <a href={data.url} target="_blank" rel="noopener noreferrer" className="block my-3 group">
-      <div className="flex flex-col sm:flex-row bg-slate-800/40 rounded-lg overflow-hidden border border-slate-700/50 group-hover:border-indigo-500/50 transition-colors h-full sm:h-32">
+      <div className="flex flex-col sm:flex-row bg-surface-hover/40 rounded-lg overflow-hidden border border-border-light/50 group-hover:border-primary/50 transition-colors h-full sm:h-32">
         {data.image ? (
-          <div className="sm:w-32 h-40 sm:h-full shrink-0 bg-slate-800 relative">
+          <div className="sm:w-32 h-40 sm:h-full shrink-0 bg-surface-hover relative">
             <img src={data.image} alt="Preview" className="w-full h-full object-cover" />
           </div>
         ) : (
-          <div className="sm:w-32 h-32 shrink-0 bg-slate-800 flex items-center justify-center">
-            <LinkIcon className="text-slate-600 w-8 h-8" />
+          <div className="sm:w-32 h-32 shrink-0 bg-surface-hover flex items-center justify-center">
+            <LinkIcon className="text-text-darker w-8 h-8" />
           </div>
         )}
         <div className="p-4 flex flex-col justify-center flex-1 min-w-0">
-          <h4 className="text-sm font-semibold text-slate-200 line-clamp-2 group-hover:text-indigo-300 transition-colors">{data.title || data.url}</h4>
+          <h4 className="text-sm font-semibold text-text-secondary line-clamp-2 group-hover:text-primary-lighter transition-colors">{data.title || data.url}</h4>
           {data.description && (
-            <p className="text-xs text-slate-400 mt-1.5 line-clamp-2">{data.description}</p>
+            <p className="text-xs text-text-muted mt-1.5 line-clamp-2">{data.description}</p>
           )}
-          <span className="text-[10px] text-slate-500 uppercase tracking-wider font-medium mt-2 block truncate">
+          <span className="text-[10px] text-text-main0 uppercase tracking-wider font-medium mt-2 block truncate">
             {new URL(data.url).hostname}
           </span>
         </div>

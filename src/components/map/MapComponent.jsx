@@ -35,8 +35,8 @@ function AutoFitBounds({ boundaries }) {
 export default function MapComponent({ boundaries }) {
   if (!boundaries || boundaries.length === 0) {
     return (
-      <div className="w-full h-96 bg-slate-800 rounded-xl flex items-center justify-center border border-white/10 mt-6">
-        <p className="text-slate-400">No map data available. Please upload shapefiles.</p>
+      <div className="w-full h-96 bg-surface-hover rounded-xl flex items-center justify-center border border-white/10 mt-6">
+        <p className="text-text-muted">No map data available. Please upload shapefiles.</p>
       </div>
     );
   }

@@ -68,36 +68,43 @@ export default function PoliticianSidebar({ profile, activeTab }) {
   if (activeTab === 'International') return null;
 
   return (
-    <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 p-5 sticky top-24">
-      <h3 className="text-slate-200 font-semibold mb-4 flex items-center gap-2">
-        <Users size={18} className="text-indigo-400" /> 
+    <div className="bg-surface/50 rounded-xl border border-border-light/50 p-5 sticky top-24">
+      <h3 className="text-text-secondary font-semibold mb-4 flex items-center gap-2">
+        <Users size={18} className="text-primary-light" /> 
         Local Representatives
       </h3>
       
       {loading ? (
-        <div className="text-center py-4 text-slate-500 text-sm">Loading...</div>
+        <div className="text-center py-4 text-text-main0 text-sm">Loading...</div>
       ) : politicians.length === 0 ? (
-        <div className="text-center py-6 text-slate-500 text-sm bg-slate-800/50 rounded-lg border border-dashed border-slate-700">
+        <div className="text-center py-6 text-text-main0 text-sm bg-surface-hover/50 rounded-lg border border-dashed border-border-light">
           No representatives found for this {activeTab.toLowerCase()}.
         </div>
       ) : (
         <div className="space-y-3">
-          {politicians.map(pol => (
+          {politicians.map((pol) => {
+            const name = pol.profiles.full_name || `ghost-${pol.profiles.current_ghost_id.split('-')[0]}`;
+            const role = pol.political_target_role || 'politician';
+            const boundary = pol.target_boundary_name || pol.profiles.country || '';
+            const slug = `${name}-${role}-${boundary}`.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
+            return (
             <div 
               key={pol.id}
-              onClick={() => navigate(`/wall/${pol.profiles.current_ghost_id}`)}
-              className="group cursor-pointer bg-slate-800/50 hover:bg-slate-800 rounded-lg p-3 border border-slate-700/50 hover:border-indigo-500/30 transition-all flex items-center gap-3"
+              onClick={() => navigate(`/wall/${pol.profiles.current_ghost_id}/${slug}`)}
+              className="group cursor-pointer bg-surface-hover/50 hover:bg-surface-hover rounded-lg p-3 border border-border-light/50 hover:border-primary/30 transition-all flex items-center gap-3"
             >
-              <div className="w-10 h-10 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-500/30 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+              <div className="w-10 h-10 rounded-full bg-primary/20 text-primary-light flex items-center justify-center shrink-0 border border-primary/30 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
                  <Users size={16} />
               </div>
               <div className="flex-1 min-w-0">
-                <h4 className="text-slate-200 text-sm font-medium truncate">{pol.profiles.full_name || `Ghost-${pol.profiles.current_ghost_id.split('-')[0]}`}</h4>
-                <p className="text-slate-400 text-xs truncate">{pol.political_target_role}</p>
+                <h4 className="text-text-secondary text-sm font-medium truncate">{pol.profiles.full_name || `Ghost-${pol.profiles.current_ghost_id.split('-')[0]}`}</h4>
+                <p className="text-text-muted text-xs truncate">{pol.political_target_role}</p>
               </div>
-              <ChevronRight size={16} className="text-slate-600 group-hover:text-indigo-400 transition-colors" />
+              <ChevronRight size={16} className="text-text-darker group-hover:text-primary-light transition-colors" />
             </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
