@@ -15,7 +15,7 @@ export default function AuthPage() {
 
   useEffect(() => {
     if (session) {
-      navigate('/profile', { replace: true });
+      navigate('/feed', { replace: true });
     }
   }, [session, navigate]);
 
