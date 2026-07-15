@@ -1,22 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../services/supabase';
-import { MapPin, Users, Building, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Download } from 'lucide-react';
+import { MapPin, Users, Building, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Download, Video, Link as LinkIcon, Image as ImageIcon, X } from 'lucide-react';
+import VideoRecorder from '../../components/video/VideoRecorder';
+import PoliticianSidebar from '../../components/PoliticianSidebar';
+import LinkPreview from '../../components/LinkPreview';
 
-const BOUNDARY_TABS = ['Federal', 'Provincial', 'State', 'Municipal', 'City Ward'];
+const BOUNDARY_TABS = ['Polling District', 'Federal Area', 'Country', 'International'];
 
 export default function FeedPage() {
   const { user } = useAuth();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('Federal');
+  const [activeTab, setActiveTab] = useState('Polling District');
 
   // Feed State
   const [posts, setPosts] = useState([]);
   const [newPostContent, setNewPostContent] = useState('');
+  const [isCountry, setIsCountry] = useState(false);
+  const [isInternational, setIsInternational] = useState(false);
   const [commentInputs, setCommentInputs] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [burning, setBurning] = useState(false);
+  
+  const [showVideoRecorder, setShowVideoRecorder] = useState(false);
+  const [uploadedVideoUrl, setUploadedVideoUrl] = useState(null);
+  
+  // Stories state
+  const [activeStoryUrl, setActiveStoryUrl] = useState(null);
+
+  // Link Preview state
+  const [extractedUrl, setExtractedUrl] = useState(null);
+  const [linkMetadata, setLinkMetadata] = useState(null);
+
+  // Image Upload state
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const fetchProfile = async () => {
     if (!user) return;
@@ -28,7 +47,15 @@ export default function FeedPage() {
         .single();
       
       if (error) throw error;
-      setProfile(data);
+
+      // Fetch location IDs to ensure strict boundary filtering
+      const { data: locData } = await supabase
+        .from('user_locations')
+        .select('*')
+        .eq('profile_id', user.id)
+        .maybeSingle();
+
+      setProfile({ ...data, location: locData });
     } catch (err) {
       console.error('Error fetching profile:', err);
     } finally {
@@ -39,14 +66,43 @@ export default function FeedPage() {
   const fetchPosts = async () => {
     try {
       // Fetch posts and their nested comments
-      const { data, error } = await supabase
+      let query = supabase
         .from('posts')
         .select(`
           *,
           comments (*)
         `)
-        .eq('constituency', activeTab)
         .order('created_at', { ascending: false });
+
+      if (activeTab === 'Polling District') {
+        // Guard: if user has no polling district ID, show nothing (don't run a null query)
+        if (!profile.location?.polling_district_id) {
+          setPosts([]);
+          return;
+        }
+        query = query
+          .eq('polling_district_id', profile.location.polling_district_id)
+          .is('federal_boundary_id', null)
+          .eq('is_country', false)
+          .eq('is_international', false);
+      } else if (activeTab === 'Federal Area') {
+        // Guard: if user has no federal boundary ID, show nothing
+        if (!profile.location?.federal_boundary_id) {
+          setPosts([]);
+          return;
+        }
+        query = query
+          .eq('federal_boundary_id', profile.location.federal_boundary_id)
+          .is('polling_district_id', null)
+          .eq('is_country', false)
+          .eq('is_international', false);
+      } else if (activeTab === 'Country') {
+        query = query.eq('is_country', true);
+      } else if (activeTab === 'International') {
+        query = query.eq('is_international', true);
+      }
+      
+      const { data, error } = await query;
       
       if (error) throw error;
       
@@ -55,6 +111,15 @@ export default function FeedPage() {
         ...post,
         comments: post.comments.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
       }));
+
+      // Politicians want to see the most interacted posts first
+      if (profile.role === 'politician') {
+        sortedPosts.sort((a, b) => {
+           const scoreA = (a.likes_count || 0) + (a.comments?.length || 0);
+           const scoreB = (b.likes_count || 0) + (b.comments?.length || 0);
+           return scoreB - scoreA;
+        });
+      }
 
       setPosts(sortedPosts);
     } catch (err) {
@@ -76,15 +141,65 @@ export default function FeedPage() {
     e.preventDefault();
     if (!newPostContent.trim() || !profile?.current_ghost_id) return;
     
+    // Block posting if the required boundary ID is not set
+    if (activeTab === 'Polling District' && !profile.location?.polling_district_id) {
+      alert('Your Polling District location is not set. Please go to your Profile, enter your coordinates and click Save.');
+      return;
+    }
+    if (activeTab === 'Federal Area' && !profile.location?.federal_boundary_id) return;
+    
     setSubmitting(true);
     try {
+      let finalImageUrl = null;
+      
+      if (imageFile) {
+        const fileExt = imageFile.name.split('.').pop();
+        const fileName = `${profile.current_ghost_id}-${Date.now()}.${fileExt}`;
+        const filePath = `posts/${fileName}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('post-images')
+          .upload(filePath, imageFile);
+          
+        if (uploadError) {
+          console.error('Upload error:', uploadError);
+          alert('Failed to upload image.');
+          setSubmitting(false);
+          return;
+        }
+        
+        const { data: { publicUrl } } = supabase.storage
+          .from('post-images')
+          .getPublicUrl(filePath);
+          
+        finalImageUrl = publicUrl;
+      }
+
       const { error } = await supabase.from('posts').insert({
         ghost_id: profile.current_ghost_id,
-        constituency: activeTab,
-        content: newPostContent.trim()
+        constituency: profile.constituency,
+        federal_boundary_id: activeTab === 'Federal Area'
+          ? profile.location?.federal_boundary_id
+          : null,
+        polling_district_id: activeTab === 'Polling District'
+          ? profile.location?.polling_district_id
+          : null,
+        content: newPostContent.trim(),
+        video_url: uploadedVideoUrl,
+        link_metadata: linkMetadata,
+        is_country: activeTab === 'Country',
+        is_international: activeTab === 'International',
+        image_url: finalImageUrl
       });
       if (error) throw error;
+      
       setNewPostContent('');
+      setUploadedVideoUrl(null);
+      setShowVideoRecorder(false);
+      setExtractedUrl(null);
+      setLinkMetadata(null);
+      setImageFile(null);
+      setImagePreview(null);
       fetchPosts();
       silentExportData();
     } catch (err) {
@@ -203,11 +318,11 @@ export default function FeedPage() {
   };
 
   if (loading) {
-    return <div className="w-full flex justify-center py-20"><div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div></div>;
+    return <div className="w-full flex justify-center py-20"><div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin"></div></div>;
   }
 
   if (!profile) {
-    return <div className="text-center py-20 text-slate-400">Please complete your profile to view your feed.</div>;
+    return <div className="text-center py-20 text-text-muted">Please complete your profile to view your feed.</div>;
   }
 
   let locationDisplay = "Unknown Location";
@@ -221,20 +336,22 @@ export default function FeedPage() {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto animate-fade-in pb-20">
+    <div className="w-full max-w-6xl mx-auto animate-fade-in pb-20 flex flex-col lg:flex-row gap-6 px-4">
       
+      {/* Main Feed Column */}
+      <div className="flex-1 max-w-3xl min-w-0">
       {/* Header Profile Summary */}
-      <div className="bg-slate-800/80 backdrop-blur-md rounded-2xl border border-white/10 p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
+      <div className="bg-surface-hover/80 backdrop-blur-md rounded-2xl border border-white/10 p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
           <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xl font-bold text-white shadow-lg shrink-0">
             {profile.full_name ? profile.full_name.charAt(0).toUpperCase() : 'U'}
           </div>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold text-slate-50">{profile.full_name || 'Anonymous User'}</h1>
-            <div className="flex flex-wrap items-center gap-2 mt-1 text-slate-400 text-sm">
+            <h1 className="text-2xl font-bold text-text-main">{profile.full_name || 'Anonymous User'}</h1>
+            <div className="flex flex-wrap items-center gap-2 mt-1 text-text-muted text-sm">
               <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                profile.role === 'politician' ? 'bg-indigo-500/20 text-indigo-300' : 
-                profile.role === 'admin' ? 'bg-rose-500/20 text-rose-300' : 'bg-emerald-500/20 text-emerald-300'
+                profile.role === 'politician' ? 'bg-primary/20 text-primary-lighter' : 
+                profile.role === 'admin' ? 'bg-danger/20 text-rose-300' : 'bg-emerald-500/20 text-emerald-300'
               }`}>
                 {profile.role ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1) : 'Citizen'}
               </span>
@@ -245,7 +362,7 @@ export default function FeedPage() {
               
               {/* Ghost ID Info */}
               {profile.role !== 'admin' && profile.current_ghost_id && (
-                <span className="ml-0 sm:ml-auto flex items-center gap-2 px-3 py-1 bg-slate-900/50 rounded-lg border border-slate-700 text-xs text-slate-500 font-mono">
+                <span className="ml-0 sm:ml-auto flex items-center gap-2 px-3 py-1 bg-surface/50 rounded-lg border border-border-light text-xs text-text-main0 font-mono">
                   Ghost ID: {profile.current_ghost_id.split('-')[0]}...
                 </span>
               )}
@@ -278,18 +395,18 @@ export default function FeedPage() {
       )}
 
       {profile.role !== 'admin' && (
-        <div className="bg-slate-800/50 rounded-2xl border border-white/10 overflow-hidden shadow-xl">
+        <div className="bg-surface-hover/50 rounded-2xl border border-white/10 overflow-hidden shadow-xl">
           
           {/* Tabs Navigation */}
-          <div className="flex overflow-x-auto custom-scrollbar border-b border-white/10 bg-slate-900/50">
+          <div className="flex overflow-x-auto custom-scrollbar border-b border-white/10 bg-surface/50">
             {BOUNDARY_TABS.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap border-b-2 flex-1 text-center ${
                   activeTab === tab
-                    ? 'border-blue-500 text-blue-400 bg-blue-500/5'
-                    : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                    ? 'border-accent text-blue-400 bg-blue-500/5'
+                    : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-white/5'
                 }`}
               >
                 {tab} Posts
@@ -299,105 +416,291 @@ export default function FeedPage() {
 
           <div className="p-4 sm:p-8">
             
-            {/* Create Post Input */}
-            <form onSubmit={handleCreatePost} className="mb-8 bg-slate-900/50 rounded-xl p-4 border border-slate-700/50">
+            {/* Location not set warning banner */}
+            {activeTab === 'Polling District' && !profile.location?.polling_district_id && (
+              <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-start gap-3">
+                <MapPin className="text-amber-400 shrink-0 mt-0.5" size={18} />
+                <div>
+                  <h3 className="text-amber-300 font-semibold text-sm mb-1">Polling District Not Set</h3>
+                  <p className="text-amber-200/70 text-xs">Your location has no Polling District mapped yet. Go to <a href="/profile" className="underline hover:text-amber-200">Profile Settings</a>, enter your coordinates, and click Save to activate this feed.</p>
+                </div>
+              </div>
+            )}
+            {activeTab === 'Federal Area' && !profile.location?.federal_boundary_id && (
+              <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-start gap-3">
+                <MapPin className="text-amber-400 shrink-0 mt-0.5" size={18} />
+                <div>
+                  <h3 className="text-amber-300 font-semibold text-sm mb-1">Federal Area Not Set</h3>
+                  <p className="text-amber-200/70 text-xs">Your Federal boundary is not mapped. Go to <a href="/profile" className="underline hover:text-amber-200">Profile Settings</a> and save your location to activate this feed.</p>
+                </div>
+              </div>
+            )}
+
+            {/* Create Post Input — hidden if boundary ID missing for geo tabs */}
+            {(activeTab === 'Country' || activeTab === 'International' ||
+              (activeTab === 'Polling District' && profile.location?.polling_district_id) ||
+              (activeTab === 'Federal Area' && profile.location?.federal_boundary_id)
+            ) && (
+              <form onSubmit={handleCreatePost} className="mb-8 bg-surface/50 rounded-xl p-4 border border-border-light/50">
               <textarea
                 value={newPostContent}
-                onChange={(e) => setNewPostContent(e.target.value)}
-                placeholder={`Post anonymously in the ${activeTab} feed...`}
-                className="w-full bg-transparent text-slate-200 placeholder:text-slate-500 resize-none outline-none min-h-[80px]"
-                required
+                onChange={(e) => {
+                  const text = e.target.value;
+                  setNewPostContent(text);
+                  const urlRegex = /(https?:\/\/[^\s]+)/;
+                  const match = text.match(urlRegex);
+                  if (match && match[1] !== extractedUrl) {
+                    setExtractedUrl(match[1]);
+                    setLinkMetadata(null);
+                  } else if (!match) {
+                    setExtractedUrl(null);
+                    setLinkMetadata(null);
+                  }
+                }}
+                placeholder={activeTab === 'Polling District' ? "What's happening in your neighborhood?" : `Post anonymously in the ${activeTab} feed...`}
+                className="w-full bg-transparent text-text-secondary placeholder:text-text-muted resize-none outline-none min-h-[80px]"
+                required={!uploadedVideoUrl && !imageFile}
               />
-              <div className="flex justify-between items-center mt-2 border-t border-slate-700/50 pt-3">
-                <span className="text-xs text-slate-500 flex items-center gap-1">
+              
+              {extractedUrl && !uploadedVideoUrl && (
+                <div className="mb-3">
+                  <LinkPreview url={extractedUrl} onMetadataFetched={setLinkMetadata} />
+                </div>
+              )}
+
+              {imagePreview && (
+                <div className="relative mt-2 mb-2 inline-block">
+                  <img src={imagePreview} alt="Preview" className="h-32 rounded-lg border border-border-light object-cover" />
+                  <button 
+                    type="button" 
+                    onClick={() => { setImageFile(null); setImagePreview(null); }}
+                    className="absolute -top-2 -right-2 bg-danger text-white rounded-full p-1 shadow-lg hover:bg-danger-light"
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              )}
+              
+              {showVideoRecorder && (
+                <VideoRecorder onVideoUploaded={(url) => {
+                  setUploadedVideoUrl(url);
+                  setShowVideoRecorder(false);
+                }} />
+              )}
+
+              {uploadedVideoUrl && (
+                <div className="mb-4 bg-indigo-500/10 border border-primary/30 p-3 rounded-lg flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-primary-lighter text-sm font-medium">
+                    <Video size={16} />
+                    Video Attached Successfully
+                  </div>
+                  <button type="button" onClick={() => setUploadedVideoUrl(null)} className="text-primary-light hover:text-indigo-200 text-xs underline">Remove</button>
+                </div>
+              )}
+              
+              <div className="flex flex-wrap items-center gap-4 mt-2 border-t border-border-light/50 pt-3">
+                <span className="text-xs text-text-main0 flex items-center gap-1">
                   <ShieldAlert size={12} /> Posted as Ghost ID
                 </span>
-                <button
-                  type="submit"
-                  disabled={submitting || !newPostContent.trim()}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium disabled:opacity-50"
-                >
-                  {submitting ? 'Posting...' : 'Share Post'}
-                </button>
+                
+                <div className="flex items-center gap-2">
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      id="post-image-upload" 
+                      className="hidden" 
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          if (file.size > 5 * 1024 * 1024) return alert("Image must be less than 5MB");
+                          setImageFile(file);
+                          const reader = new FileReader();
+                          reader.onloadend = () => setImagePreview(reader.result);
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                    <label 
+                      htmlFor="post-image-upload"
+                      className="p-2 text-text-muted hover:bg-surface-hover hover:text-primary-light rounded-lg cursor-pointer transition-colors"
+                      title="Attach Image"
+                    >
+                      <ImageIcon size={18} />
+                    </label>
+
+                    {profile.role === 'politician' && (
+                      <button
+                        type="button"
+                        onClick={() => setShowVideoRecorder(!showVideoRecorder)}
+                        className={`p-2 rounded-lg transition-colors ${showVideoRecorder || uploadedVideoUrl ? 'bg-accent/20 text-accent' : 'text-text-muted hover:bg-surface-hover hover:text-accent'}`}
+                        title="Record Video Pitch"
+                      >
+                        <Video size={18} />
+                      </button>
+                    )}
+                    <button
+                      type="submit"
+                      disabled={submitting || (!newPostContent.trim() && !uploadedVideoUrl && !imageFile)}
+                      className="px-6 py-2 bg-accent text-white rounded-lg hover:bg-accent-hover transition-colors text-sm font-medium disabled:opacity-50"
+                    >
+                      {submitting ? 'Posting...' : 'Share Post'}
+                    </button>
+                  </div>
               </div>
             </form>
+            )}
+
+            {/* Stories Section for Politician Videos */}
+            {posts.filter(p => p.video_url).length > 0 && (
+              <div className="mb-8">
+                <h3 className="text-text-muted text-sm font-medium mb-3 flex items-center gap-2">
+                  <Video size={16} className="text-primary-light" /> Politician Pitches
+                </h3>
+                <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                  {posts.filter(p => p.video_url).map(post => (
+                    <button 
+                      key={`story-${post.id}`}
+                      onClick={() => setActiveStoryUrl(post.video_url)}
+                      className="flex flex-col items-center min-w-[100px] group"
+                    >
+                      <div className="w-[100px] h-[150px] rounded-xl border-2 border-primary/50 group-hover:border-indigo-400 p-0.5 relative overflow-hidden bg-surface-hover flex-shrink-0 transition-all group-hover:scale-105 shadow-lg">
+                        <video 
+                           src={post.video_url} 
+                           className="w-full h-full rounded-lg object-cover"
+                           muted 
+                           preload="metadata"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-lg transition-opacity group-hover:opacity-80" />
+                        <div className="absolute bottom-2 left-2 right-2 flex items-center gap-1.5">
+                           <div className="w-4 h-4 rounded-full bg-indigo-500 flex items-center justify-center shrink-0 border border-indigo-300">
+                             <Video size={8} className="text-white" />
+                           </div>
+                           <span className="text-[10px] text-white font-medium truncate drop-shadow-md">
+                             Ghost-{post.ghost_id.split('-')[0]}
+                           </span>
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Full Screen Story Modal */}
+            {activeStoryUrl && (
+              <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm">
+                 <div className="relative max-w-sm w-full bg-surface rounded-2xl overflow-hidden shadow-2xl border border-border-light">
+                    <button 
+                      onClick={() => setActiveStoryUrl(null)}
+                      className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-black/50 hover:bg-black/80 rounded-full text-white transition-colors"
+                    >
+                      ✕
+                    </button>
+                    <video src={activeStoryUrl} controls autoPlay className="w-full max-h-[85vh] object-contain bg-black" />
+                 </div>
+              </div>
+            )}
 
             {/* Posts Feed */}
             <div className="space-y-6">
               {posts.length === 0 ? (
-                <div className="text-center py-10 bg-slate-900/30 rounded-xl border border-dashed border-slate-700">
-                  <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-4">
-                    {activeTab === 'Federal' && <Flag className="text-slate-400 w-8 h-8" />}
-                    {activeTab === 'Provincial' && <Building className="text-slate-400 w-8 h-8" />}
-                    {activeTab === 'State' && <Building className="text-slate-400 w-8 h-8" />}
-                    {activeTab === 'Municipal' && <Users className="text-slate-400 w-8 h-8" />}
-                    {activeTab === 'City Ward' && <MapPin className="text-slate-400 w-8 h-8" />}
+                <div className="text-center py-10 bg-surface/30 rounded-xl border border-dashed border-border-light">
+                  <div className="w-16 h-16 rounded-full bg-surface-hover flex items-center justify-center mx-auto mb-4">
+                    <Flag className="text-text-muted w-8 h-8" />
                   </div>
-                  <h3 className="text-slate-300 font-medium mb-1">No Posts Yet</h3>
-                  <p className="text-slate-500 text-sm">Be the first to share your thoughts anonymously.</p>
+                  <h3 className="text-text-tertiary font-medium mb-1">No Posts Yet</h3>
+                  <p className="text-text-main0 text-sm">Be the first to share your thoughts anonymously.</p>
                 </div>
               ) : (
                 posts.map(post => (
-                  <div key={post.id} className="bg-slate-900/80 rounded-xl border border-slate-700/50 overflow-hidden">
+                  <div key={post.id} className="bg-surface/80 rounded-xl border border-border-light/50 overflow-hidden">
                     {/* Post Content */}
                     <div className="p-5">
                       <div className="flex items-center gap-2 mb-3">
-                        <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center">
-                          <Users size={14} className="text-slate-400" />
+                        <div className="w-8 h-8 rounded-full bg-surface-active flex items-center justify-center">
+                          <Users size={14} className="text-text-muted" />
                         </div>
                         <div>
-                          <span className="text-sm font-bold text-slate-200 font-mono">
+                          <span className="text-sm font-bold text-text-secondary font-mono">
                             Ghost-{post.ghost_id.split('-')[0]}
                           </span>
-                          <span className="text-xs text-slate-500 ml-2">
+                          <span className="text-xs text-text-main0 ml-2">
                             {new Date(post.created_at).toLocaleDateString()}
                           </span>
                         </div>
                       </div>
-                      <p className="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">
+                      <p className="text-text-tertiary text-sm whitespace-pre-wrap leading-relaxed mb-3">
                         {post.content}
                       </p>
+
+                      {post.image_url && (
+                        <div className="mb-4 rounded-lg overflow-hidden border border-border-light">
+                           <img src={post.image_url} alt="Post Attachment" className="w-full max-h-[500px] object-cover" loading="lazy" />
+                        </div>
+                      )}
+
+                      {post.link_metadata ? (
+                        <div className="mb-4">
+                          <LinkPreview url={post.link_metadata.url} metadata={post.link_metadata} />
+                        </div>
+                      ) : (() => {
+                        const match = post.content?.match(/(https?:\/\/[^\s]+)/);
+                        if (match) {
+                          return (
+                            <div className="mb-4">
+                              <LinkPreview url={match[1]} />
+                            </div>
+                          );
+                        }
+                        return null;
+                      })()}
+                      
+                      {post.video_url && (
+                        <div className="mb-4 rounded-lg overflow-hidden border border-border-light bg-black">
+                           <video src={post.video_url} controls className="w-full max-h-96 object-contain" />
+                        </div>
+                      )}
                     </div>
 
                     {/* Action Bar */}
-                    <div className="px-5 py-3 bg-slate-950/50 border-t border-slate-800 flex items-center gap-4">
+                    <div className="px-5 py-3 bg-background/50 border-t border-border flex items-center gap-4">
                       <button 
                         onClick={() => handleVote(post.id, 1)}
-                        className="flex items-center gap-1.5 text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors"
+                        className="flex items-center gap-1.5 text-sm font-medium text-text-muted hover:text-emerald-400 transition-colors"
                       >
                         <ThumbsUp size={16} />
                         <span>{post.likes_count}</span>
                       </button>
                       <button 
                         onClick={() => handleVote(post.id, -1)}
-                        className="flex items-center gap-1.5 text-sm font-medium text-slate-400 hover:text-red-400 transition-colors"
+                        className="flex items-center gap-1.5 text-sm font-medium text-text-muted hover:text-red-400 transition-colors"
                       >
                         <ThumbsDown size={16} />
                         <span>{post.dislikes_count}</span>
                       </button>
-                      <div className="flex items-center gap-1.5 text-sm font-medium text-slate-500 ml-auto">
+                      <div className="flex items-center gap-1.5 text-sm font-medium text-text-main0 ml-auto">
                         <MessageSquare size={16} />
                         <span>{post.comments?.length || 0}</span>
                       </div>
                     </div>
 
                     {/* Comments Section */}
-                    <div className="bg-slate-900/40 p-4 border-t border-slate-800">
+                    <div className="bg-surface/40 p-4 border-t border-border">
                       
                       {/* List Comments */}
                       {post.comments && post.comments.length > 0 && (
-                        <div className="space-y-3 mb-4 pl-2 border-l-2 border-slate-800">
+                        <div className="space-y-3 mb-4 pl-2 border-l-2 border-border">
                           {post.comments.map(comment => (
                             <div key={comment.id} className="pl-3">
                               <div className="flex items-baseline gap-2 mb-0.5">
-                                <span className="text-xs font-bold text-slate-400 font-mono">
+                                <span className="text-xs font-bold text-text-muted font-mono">
                                   Ghost-{comment.ghost_id.split('-')[0]}
                                 </span>
-                                <span className="text-[10px] text-slate-600">
+                                <span className="text-[10px] text-text-darker">
                                   {new Date(comment.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                                 </span>
                               </div>
-                              <p className="text-sm text-slate-300">{comment.content}</p>
+                              <p className="text-sm text-text-tertiary">{comment.content}</p>
                             </div>
                           ))}
                         </div>
@@ -413,12 +716,12 @@ export default function FeedPage() {
                             if (e.key === 'Enter') handleCreateComment(post.id);
                           }}
                           placeholder="Write an anonymous comment..."
-                          className="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500"
+                          className="flex-1 bg-background border border-border-light rounded-lg px-3 py-2 text-sm text-text-secondary focus:outline-none focus:border-accent"
                         />
                         <button
                           onClick={() => handleCreateComment(post.id)}
                           disabled={!commentInputs[post.id]?.trim()}
-                          className="p-2 bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white rounded-lg transition-colors disabled:opacity-50"
+                          className="p-2 bg-accent/20 text-blue-400 hover:bg-accent hover:text-white rounded-lg transition-colors disabled:opacity-50"
                         >
                           <Send size={16} />
                         </button>
@@ -433,6 +736,13 @@ export default function FeedPage() {
           </div>
         </div>
       )}
+      </div>
+      
+      {/* Right Sidebar Column */}
+      <div className="hidden lg:block w-80 shrink-0">
+        <PoliticianSidebar profile={profile} activeTab={activeTab} />
+      </div>
+
     </div>
   );
 }

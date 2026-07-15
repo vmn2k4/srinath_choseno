@@ -15,7 +15,7 @@ export default function AuthPage() {
 
   useEffect(() => {
     if (session) {
-      navigate('/profile', { replace: true });
+      navigate('/feed', { replace: true });
     }
   }, [session, navigate]);
 
@@ -48,36 +48,36 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="w-full max-w-md p-8 bg-slate-800 rounded-2xl border border-white/10 shadow-xl animate-fade-in mx-auto mt-10">
-      <h2 className="text-2xl font-bold text-slate-50 mb-6 text-center">
+    <div className="w-full max-w-md p-8 bg-surface-hover rounded-2xl border border-white/10 shadow-xl animate-fade-in mx-auto mt-10">
+      <h2 className="text-2xl font-bold text-text-main mb-6 text-center">
         {isSignUp ? 'Create an Account' : 'Welcome Back'}
       </h2>
       <form onSubmit={handleAuth} className="flex flex-col gap-4">
         <div>
-          <label className="block mb-2 text-sm font-medium text-slate-300">Email</label>
+          <label className="block mb-2 text-sm font-medium text-text-tertiary">Email</label>
           <input
             type="email"
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-900 focus:outline-none focus:border-blue-500"
+            className="block w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-surface focus:outline-none focus:border-accent"
             required
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-slate-300">Password</label>
+          <label className="block mb-2 text-sm font-medium text-text-tertiary">Password</label>
           <input
             type="password"
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="block w-full p-3 text-sm text-slate-50 border border-slate-600 rounded-lg bg-slate-900 focus:outline-none focus:border-blue-500"
+            className="block w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-surface focus:outline-none focus:border-accent"
             required
           />
         </div>
         <button
           type="submit"
-          className="mt-4 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:ring-4 focus:ring-blue-500/20 disabled:opacity-50"
+          className="mt-4 px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent-hover transition-colors focus:ring-4 focus:ring-blue-500/20 disabled:opacity-50"
           disabled={loading}
         >
           {loading ? 'Processing...' : isSignUp ? 'Sign Up' : 'Log In'}
@@ -92,7 +92,7 @@ export default function AuthPage() {
 
       <div className="mt-6 text-center">
         <button
-          className="text-sm text-slate-400 hover:text-slate-200 transition-colors"
+          className="text-sm text-text-muted hover:text-text-secondary transition-colors"
           onClick={() => setIsSignUp(!isSignUp)}
         >
           {isSignUp ? 'Already have an account? Log In' : "Don't have an account? Sign Up"}

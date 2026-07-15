@@ -7,16 +7,26 @@ import AdminPage from './pages/AdminPage';
 import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
 import FeedPage from './pages/FeedPage/FeedPage';
+import PoliticianWall from './pages/PoliticianWall';
+import OnboardingFlow from './pages/Onboarding/OnboardingFlow';
 import './index.css';
 
 // A simple protected route wrapper
-function ProtectedRoute({ children, requireAdmin }) {
+function ProtectedRoute({ children, requireAdmin, requireOnboarding = true }) {
   const { session, profile, loading } = useAuth();
-  if (loading) return null;
+  
+  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" /></div>;
   if (!session) return <Navigate to="/auth" replace />;
+  
+  // If user is authenticated but hasn't completed onboarding
+  if (requireOnboarding && profile && !profile.role) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
   if (requireAdmin && profile?.role !== 'admin') {
     return <Navigate to="/feed" replace />; // Redirect non-admins to the feed or home
   }
+  
   return children;
 }
 
@@ -45,10 +55,34 @@ function App() {
               } 
             />
             <Route 
+              path="wall/:ghostId" 
+              element={
+                <ProtectedRoute>
+                  <PoliticianWall />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="wall/:ghostId/:slug" 
+              element={
+                <ProtectedRoute>
+                  <PoliticianWall />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
               path="profile" 
               element={
                 <ProtectedRoute>
                   <ProfilePage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="onboarding" 
+              element={
+                <ProtectedRoute requireOnboarding={false}>
+                  <OnboardingFlow />
                 </ProtectedRoute>
               } 
             />
