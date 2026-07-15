@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../services/supabase';
-import { MapPin, Users, Building, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Download, Video, Link as LinkIcon } from 'lucide-react';
+import { MapPin, Users, Building, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Download, Video, Link as LinkIcon, Image as ImageIcon, X } from 'lucide-react';
 import VideoRecorder from '../../components/video/VideoRecorder';
 import PoliticianSidebar from '../../components/PoliticianSidebar';
 import LinkPreview from '../../components/LinkPreview';
@@ -32,6 +32,10 @@ export default function FeedPage() {
   // Link Preview state
   const [extractedUrl, setExtractedUrl] = useState(null);
   const [linkMetadata, setLinkMetadata] = useState(null);
+
+  // Image Upload state
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const fetchProfile = async () => {
     if (!user) return;
@@ -142,13 +146,35 @@ export default function FeedPage() {
       alert('Your Polling District location is not set. Please go to your Profile, enter your coordinates and click Save.');
       return;
     }
-    if (activeTab === 'Federal Area' && !profile.location?.federal_boundary_id) {
-      alert('Your Federal Area location is not set. Please go to your Profile, enter your coordinates and click Save.');
-      return;
-    }
+    if (activeTab === 'Federal Area' && !profile.location?.federal_boundary_id) return;
     
     setSubmitting(true);
     try {
+      let finalImageUrl = null;
+      
+      if (imageFile) {
+        const fileExt = imageFile.name.split('.').pop();
+        const fileName = `${profile.current_ghost_id}-${Date.now()}.${fileExt}`;
+        const filePath = `posts/${fileName}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('post-images')
+          .upload(filePath, imageFile);
+          
+        if (uploadError) {
+          console.error('Upload error:', uploadError);
+          alert('Failed to upload image.');
+          setSubmitting(false);
+          return;
+        }
+        
+        const { data: { publicUrl } } = supabase.storage
+          .from('post-images')
+          .getPublicUrl(filePath);
+          
+        finalImageUrl = publicUrl;
+      }
+
       const { error } = await supabase.from('posts').insert({
         ghost_id: profile.current_ghost_id,
         constituency: profile.constituency,
@@ -161,17 +187,19 @@ export default function FeedPage() {
         content: newPostContent.trim(),
         video_url: uploadedVideoUrl,
         link_metadata: linkMetadata,
-        is_country: isCountry,
-        is_international: isInternational
+        is_country: activeTab === 'Country',
+        is_international: activeTab === 'International',
+        image_url: finalImageUrl
       });
       if (error) throw error;
+      
       setNewPostContent('');
       setUploadedVideoUrl(null);
+      setShowVideoRecorder(false);
       setExtractedUrl(null);
       setLinkMetadata(null);
-      setShowVideoRecorder(false);
-      setIsCountry(false);
-      setIsInternational(false);
+      setImageFile(null);
+      setImagePreview(null);
       fetchPosts();
       silentExportData();
     } catch (err) {
@@ -429,14 +457,27 @@ export default function FeedPage() {
                     setLinkMetadata(null);
                   }
                 }}
-                placeholder={`Post anonymously in the ${activeTab} feed...`}
-                className="w-full bg-transparent text-text-secondary placeholder:text-text-main0 resize-none outline-none min-h-[80px]"
-                required
+                placeholder={activeTab === 'Polling District' ? "What's happening in your neighborhood?" : `Post anonymously in the ${activeTab} feed...`}
+                className="w-full bg-transparent text-text-secondary placeholder:text-text-muted resize-none outline-none min-h-[80px]"
+                required={!uploadedVideoUrl && !imageFile}
               />
               
               {extractedUrl && !uploadedVideoUrl && (
                 <div className="mb-3">
                   <LinkPreview url={extractedUrl} onMetadataFetched={setLinkMetadata} />
+                </div>
+              )}
+
+              {imagePreview && (
+                <div className="relative mt-2 mb-2 inline-block">
+                  <img src={imagePreview} alt="Preview" className="h-32 rounded-lg border border-border-light object-cover" />
+                  <button 
+                    type="button" 
+                    onClick={() => { setImageFile(null); setImagePreview(null); }}
+                    className="absolute -top-2 -right-2 bg-danger text-white rounded-full p-1 shadow-lg hover:bg-danger-light"
+                  >
+                    <X size={14} />
+                  </button>
                 </div>
               )}
               
@@ -462,44 +503,49 @@ export default function FeedPage() {
                   <ShieldAlert size={12} /> Posted as Ghost ID
                 </span>
                 
-                {profile.role === 'politician' && !showVideoRecorder && !uploadedVideoUrl && (
-                  <button
-                    type="button"
-                    onClick={() => setShowVideoRecorder(true)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/20 text-primary-lighter rounded-lg text-xs font-medium hover:bg-indigo-500/30 transition-colors"
-                  >
-                    <Video size={14} />
-                    Record Pitch
-                  </button>
-                )}
+                <div className="flex items-center gap-2">
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      id="post-image-upload" 
+                      className="hidden" 
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          if (file.size > 5 * 1024 * 1024) return alert("Image must be less than 5MB");
+                          setImageFile(file);
+                          const reader = new FileReader();
+                          reader.onloadend = () => setImagePreview(reader.result);
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                    <label 
+                      htmlFor="post-image-upload"
+                      className="p-2 text-text-muted hover:bg-surface-hover hover:text-primary-light rounded-lg cursor-pointer transition-colors"
+                      title="Attach Image"
+                    >
+                      <ImageIcon size={18} />
+                    </label>
 
-                <div className="flex items-center gap-4 ml-auto">
-                  <label className="flex items-center gap-1.5 text-sm text-text-tertiary cursor-pointer">
-                    <input 
-                      type="checkbox" 
-                      checked={isCountry} 
-                      onChange={(e) => setIsCountry(e.target.checked)} 
-                      className="rounded border-slate-600 bg-surface-hover text-blue-500 focus:ring-blue-500/20"
-                    />
-                    Country-wide
-                  </label>
-                  <label className="flex items-center gap-1.5 text-sm text-text-tertiary cursor-pointer">
-                    <input 
-                      type="checkbox" 
-                      checked={isInternational} 
-                      onChange={(e) => setIsInternational(e.target.checked)} 
-                      className="rounded border-slate-600 bg-surface-hover text-blue-500 focus:ring-blue-500/20"
-                    />
-                    International
-                  </label>
-                  <button
-                    type="submit"
-                    disabled={submitting || !newPostContent.trim()}
-                    className="px-6 py-2 bg-accent text-white rounded-lg hover:bg-accent-hover transition-colors text-sm font-medium disabled:opacity-50"
-                  >
-                    {submitting ? 'Posting...' : 'Share Post'}
-                  </button>
-                </div>
+                    {profile.role === 'politician' && (
+                      <button
+                        type="button"
+                        onClick={() => setShowVideoRecorder(!showVideoRecorder)}
+                        className={`p-2 rounded-lg transition-colors ${showVideoRecorder || uploadedVideoUrl ? 'bg-accent/20 text-accent' : 'text-text-muted hover:bg-surface-hover hover:text-accent'}`}
+                        title="Record Video Pitch"
+                      >
+                        <Video size={18} />
+                      </button>
+                    )}
+                    <button
+                      type="submit"
+                      disabled={submitting || (!newPostContent.trim() && !uploadedVideoUrl && !imageFile)}
+                      className="px-6 py-2 bg-accent text-white rounded-lg hover:bg-accent-hover transition-colors text-sm font-medium disabled:opacity-50"
+                    >
+                      {submitting ? 'Posting...' : 'Share Post'}
+                    </button>
+                  </div>
               </div>
             </form>
             )}
@@ -560,11 +606,7 @@ export default function FeedPage() {
               {posts.length === 0 ? (
                 <div className="text-center py-10 bg-surface/30 rounded-xl border border-dashed border-border-light">
                   <div className="w-16 h-16 rounded-full bg-surface-hover flex items-center justify-center mx-auto mb-4">
-                    {activeTab === 'Federal' && <Flag className="text-text-muted w-8 h-8" />}
-                    {activeTab === 'Provincial' && <Building className="text-text-muted w-8 h-8" />}
-                    {activeTab === 'State' && <Building className="text-text-muted w-8 h-8" />}
-                    {activeTab === 'Municipal' && <Users className="text-text-muted w-8 h-8" />}
-                    {activeTab === 'City Ward' && <MapPin className="text-text-muted w-8 h-8" />}
+                    <Flag className="text-text-muted w-8 h-8" />
                   </div>
                   <h3 className="text-text-tertiary font-medium mb-1">No Posts Yet</h3>
                   <p className="text-text-main0 text-sm">Be the first to share your thoughts anonymously.</p>
@@ -590,6 +632,12 @@ export default function FeedPage() {
                       <p className="text-text-tertiary text-sm whitespace-pre-wrap leading-relaxed mb-3">
                         {post.content}
                       </p>
+
+                      {post.image_url && (
+                        <div className="mb-4 rounded-lg overflow-hidden border border-border-light">
+                           <img src={post.image_url} alt="Post Attachment" className="w-full max-h-[500px] object-cover" loading="lazy" />
+                        </div>
+                      )}
 
                       {post.link_metadata && (
                         <div className="mb-4">
