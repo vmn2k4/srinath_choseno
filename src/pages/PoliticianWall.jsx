@@ -252,7 +252,7 @@ export default function PoliticianWall() {
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto animate-fade-in pb-20 px-4">
+    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8">
       {/* Main Wall Column */}
       <div className="w-full min-w-0">
         
@@ -261,40 +261,40 @@ export default function PoliticianWall() {
         </button>
 
         {/* Cover & Profile Header */}
-        <div className="bg-surface rounded-2xl border border-border shadow-xl mb-8 relative">
-           <div className="h-32 bg-gradient-to-r from-indigo-900 to-blue-900 rounded-t-2xl" />
+        <div className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl mb-8 relative">
+           <div className="h-32 bg-gradient-to-br from-vintage-grape via-surface to-coffee-bean rounded-t-2xl border-b border-border-light/20" />
            <div className="px-6 pb-6 relative">
-              <div className="w-24 h-24 rounded-full bg-surface-hover border-4 border-slate-900 flex items-center justify-center text-3xl font-bold text-white shadow-lg absolute -top-12">
+              <div className="w-24 h-24 rounded-full bg-surface/80 border-4 border-surface flex items-center justify-center text-3xl font-bold text-text-main shadow-lg absolute -top-12">
                 {wallOwner.full_name ? wallOwner.full_name.charAt(0).toUpperCase() : 'P'}
               </div>
               <div className="pt-14">
                  <h1 className="text-2xl font-bold text-text-main">{wallOwner.full_name || `Ghost-${ghostId.split('-')[0]}`}</h1>
                  <div className="flex items-center gap-2 mt-2">
-                    <span className="px-2.5 py-1 rounded bg-primary/20 text-primary-lighter text-xs font-semibold">
+                    <span className="px-2.5 py-1 rounded bg-primary/20 text-primary-light text-xs font-bold uppercase tracking-wider">
                       {wallOwner.politician_profiles?.[0]?.political_target_role || 'Representative'}
                     </span>
                     <span className="flex items-center gap-1 text-text-muted text-sm">
-                      <MapPin size={14} />
+                      <MapPin size={14} className="text-accent" />
                       {wallOwner.politician_profiles?.[0]?.target_boundary_name || wallOwner.constituency}
                     </span>
                  </div>
               </div>
 
               {/* Support & Actions Section */}
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-border-light/35 pt-6">
                 <div className="flex items-center gap-3">
                   <button 
                     onClick={toggleSupport}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+                    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
                       isSupporting 
-                        ? 'bg-danger/10 text-danger-light border border-danger/30 hover:bg-danger/20' 
-                        : 'bg-surface-hover text-text-tertiary border border-border-light hover:bg-surface-active hover:text-white'
+                        ? 'bg-danger/20 text-danger-light border border-danger/40 hover:bg-danger/30' 
+                        : 'bg-surface-hover/80 text-text-secondary border border-border-light hover:bg-surface-active hover:text-text-main'
                     }`}
                   >
-                    <Heart size={18} className={isSupporting ? "fill-current" : ""} />
+                    <Heart size={16} className={isSupporting ? "fill-current text-danger" : ""} />
                     {isSupporting ? 'Supported' : 'I Support'}
                   </button>
-                  <div className="text-text-muted text-sm font-medium">
+                  <div className="text-text-muted text-sm font-semibold">
                     {supportCount.toLocaleString()} Supporter{supportCount !== 1 ? 's' : ''}
                   </div>
                 </div>
@@ -303,16 +303,16 @@ export default function PoliticianWall() {
                   {wallOwner.id === user.id && (
                     <button 
                       onClick={loadSupportersDashboard}
-                      className="flex items-center gap-2 px-4 py-2 bg-primary/20 text-primary-light hover:bg-primary/30 hover:text-primary-lighter border border-primary/30 rounded-lg text-sm font-medium transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary-light hover:bg-primary hover:text-slate-950 border border-primary/35 rounded-xl text-sm font-bold transition-all"
                     >
                       <Users size={16} /> View Supporters
                     </button>
                   )}
                   <div className="group relative">
-                    <button type="button" className="p-2.5 bg-surface-hover text-text-tertiary hover:bg-surface-active rounded-lg border border-border-light transition-colors">
+                    <button type="button" className="p-2.5 bg-surface-hover/80 text-text-muted hover:text-text-main hover:bg-surface-active rounded-xl border border-border-light transition-colors">
                       <QrCode size={18} />
                     </button>
-                    <div className="absolute right-0 top-full mt-2 w-48 bg-white p-3 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 transform origin-top-right">
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-white p-3 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 transform origin-top-right border border-slate-100">
                       <p className="text-center text-slate-800 text-xs font-bold mb-2 uppercase tracking-wide">Scan to Visit</p>
                       <div className="bg-white p-1 rounded-lg flex justify-center">
                         <QRCodeSVG value={window.location.href} size={150} />
@@ -436,14 +436,14 @@ export default function PoliticianWall() {
         {/* Feed */}
         <div className="space-y-6">
           {posts.length === 0 ? (
-             <div className="text-center py-10 text-text-main0 text-sm bg-surface/30 rounded-xl border border-dashed border-border-light">
+             <div className="text-center py-10 text-text-muted text-sm bg-surface/20 rounded-2xl border border-dashed border-border-light/60">
                 No posts on this wall yet.
              </div>
           ) : (
             posts.map(post => (
-              <div key={post.id} className="bg-surface/80 rounded-xl border border-border-light/50 overflow-hidden p-5">
+              <div key={post.id} className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/40 overflow-hidden p-5 hover:border-primary/25 transition-all duration-300 shadow-md">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full bg-surface-active flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-surface/50 border border-border-light/30 flex items-center justify-center">
                     <Users size={16} className="text-text-muted" />
                   </div>
                   <div>
@@ -453,7 +453,7 @@ export default function PoliticianWall() {
                          <span className="ml-2 text-[10px] bg-primary/20 text-primary-light px-2 py-0.5 rounded uppercase tracking-wider font-bold">Author</span>
                       )}
                     </div>
-                    <div className="text-xs text-text-main0">{new Date(post.created_at).toLocaleString()}</div>
+                    <div className="text-xs text-text-muted">{new Date(post.created_at).toLocaleString()}</div>
                   </div>
                 </div>
                 
@@ -462,7 +462,7 @@ export default function PoliticianWall() {
                 </p>
 
                 {post.image_url && (
-                  <div className="mb-4 rounded-lg overflow-hidden border border-border-light">
+                  <div className="mb-4 rounded-xl overflow-hidden border border-border-light/45">
                      <img src={post.image_url} alt="Post Attachment" className="w-full max-h-[500px] object-cover" loading="lazy" />
                   </div>
                 )}
@@ -484,7 +484,7 @@ export default function PoliticianWall() {
                 })()}
                 
                 {post.video_url && (
-                  <div className="mt-3 rounded-lg overflow-hidden border border-border-light bg-black">
+                  <div className="mt-3 rounded-xl overflow-hidden border border-border-light/45 bg-black">
                      <video src={post.video_url} controls className="w-full max-h-96 object-contain" />
                   </div>
                 )}

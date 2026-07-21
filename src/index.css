@@ -1,37 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 @import "tailwindcss";
 
 @theme {
   --font-sans: 'Inter', sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', sans-serif;
   --font-mono: 'Fira Code', monospace;
 
+  /* Brand Colors */
+  --color-coffee-bean: #14080e;
+  --color-vintage-grape: #49475b;
+  --color-cool-steel: #799496;
+  --color-muted-olive: #acc196;
+  --color-vanilla-custard: #e9eb9e;
+
   /* Semantic Theme Variables */
-  --color-background: var(--color-slate-950);
-  --color-surface: var(--color-slate-900);
-  --color-surface-hover: var(--color-slate-800);
-  --color-surface-active: var(--color-slate-700);
-  --color-surface-elevated: rgba(30, 41, 59, 0.7);
+  --color-background: var(--color-coffee-bean);
+  --color-surface: #201a24;
+  --color-surface-hover: #322b37;
+  --color-surface-active: #443c4c;
+  --color-surface-elevated: rgba(73, 71, 91, 0.35);
 
-  --color-border: var(--color-slate-800);
-  --color-border-light: var(--color-slate-700);
+  --color-border: #3c3543;
+  --color-border-light: rgba(121, 148, 150, 0.25);
 
-  --color-text-main: var(--color-slate-50);
-  --color-text-secondary: var(--color-slate-200);
-  --color-text-tertiary: var(--color-slate-300);
-  --color-text-muted: var(--color-slate-400);
-  --color-text-dark: var(--color-slate-500);
-  --color-text-darker: var(--color-slate-600);
+  --color-text-main: #f4f5f0;
+  --color-text-secondary: var(--color-vanilla-custard);
+  --color-text-tertiary: var(--color-muted-olive);
+  --color-text-muted: var(--color-cool-steel);
+  --color-text-dark: var(--color-vintage-grape);
+  --color-text-darker: #2f2d3d;
 
-  /* Primary Brand (Indigo mapped) */
-  --color-primary: var(--color-indigo-600);
-  --color-primary-hover: var(--color-indigo-700);
-  --color-primary-light: var(--color-indigo-400);
-  --color-primary-lighter: var(--color-indigo-300);
+  /* Primary Brand (Vanilla Custard mapped) */
+  --color-primary: var(--color-vanilla-custard);
+  --color-primary-hover: #dbdd8d;
+  --color-primary-light: var(--color-muted-olive);
+  --color-primary-lighter: var(--color-cool-steel);
 
-  /* Secondary/Accent Brand (Blue mapped) */
-  --color-accent: var(--color-blue-600);
-  --color-accent-hover: var(--color-blue-700);
+  /* Secondary/Accent Brand (Muted Olive mapped) */
+  --color-accent: var(--color-muted-olive);
+  --color-accent-hover: #9bb185;
 
   /* Danger/Alert (Rose mapped) */
   --color-danger: var(--color-rose-500);
@@ -41,7 +49,7 @@
 @layer base {
   body {
     @apply min-h-screen text-text-main antialiased font-sans m-0 p-0 box-border;
-    background: radial-gradient(circle at top right, #1e1b4b, var(--color-surface) 40%, var(--color-background));
+    background: radial-gradient(circle at top right, var(--color-vintage-grape), var(--color-surface) 45%, var(--color-background));
   }
 }
 
@@ -58,4 +66,122 @@
 
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out;
+}
+
+/* ============ Home page animations ============ */
+
+/* Staggered hero entrance */
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-item {
+  opacity: 0;
+  animation: heroRise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Scroll-triggered reveal (toggled by IntersectionObserver) */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Shimmering gradient headline */
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    110deg,
+    var(--color-muted-olive) 20%,
+    var(--color-vanilla-custard) 40%,
+    var(--color-cool-steel) 60%,
+    var(--color-muted-olive) 80%
+  );
+  background-size: 250% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: shimmer 7s ease-in-out infinite;
+}
+
+/* Ambient floating orbs */
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -35px) scale(1.08); }
+  66% { transform: translate(-30px, 25px) scale(0.94); }
+}
+
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  will-change: transform;
+  animation: drift 18s ease-in-out infinite;
+}
+
+.orb-a { width: 480px; height: 480px; top: -10%; right: -5%; background: rgba(172, 193, 150, 0.14); }
+.orb-b { width: 400px; height: 400px; bottom: -15%; left: -8%; background: rgba(233, 235, 158, 0.10); animation-delay: -6s; }
+.orb-c { width: 320px; height: 320px; top: 35%; left: 20%; background: rgba(121, 148, 150, 0.10); animation-delay: -12s; }
+.orb-d { width: 420px; height: 420px; top: 10%; right: 0; background: rgba(121, 148, 150, 0.08); animation-delay: -4s; }
+.orb-e { width: 360px; height: 360px; top: -30%; left: 30%; background: rgba(233, 235, 158, 0.10); animation-delay: -9s; }
+
+/* Dot-grid backdrop for the hero */
+.hero-grid {
+  background-image: radial-gradient(rgba(244, 245, 240, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, black 30%, transparent 75%);
+}
+
+/* Cycling boundary-level pill */
+@keyframes levelSwap {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.level-swap {
+  animation: levelSwap 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Scroll-hint dot */
+@keyframes scrollDot {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.3; transform: translateY(8px); }
+}
+
+.animate-scroll-dot {
+  animation: scrollDot 1.8s ease-in-out infinite;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .hero-item {
+    animation: none;
+    opacity: 1;
+  }
+  .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .text-shimmer {
+    animation: none;
+  }
+  .orb,
+  .level-swap,
+  .animate-scroll-dot {
+    animation: none;
+  }
 }

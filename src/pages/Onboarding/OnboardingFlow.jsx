@@ -42,23 +42,36 @@ export default function OnboardingFlow() {
     setLoading(true);
     setError(null);
     try {
-      // 1. Update Profiles Table
+      // 1. Upsert Profiles Table (creates the row if signup didn't)
       const finalRole = formData.role === 'citizen' ? 'normal' : formData.role;
-      const { error: profileError } = await supabase.from('profiles').update({
+      const { error: profileError } = await supabase.from('profiles').upsert({
+        id: user.id,
         role: finalRole,
         full_name: formData.fullName || null,
         country: formData.country,
         constituency: formData.boundaryName || formData.constituency
-      }).eq('id', user.id);
+      });
       if (profileError) throw profileError;
 
-      // 2. Update User Locations Table
+      // 2. Update User Locations Table (update-or-insert; a blind upsert
+      // inserts a duplicate row every time since the PK is a generated UUID)
       if (formData.polling_district_id || formData.federal_boundary_id) {
-        const { error: locError } = await supabase.from('user_locations').upsert({
+        const locPayload = {
           profile_id: user.id,
+          latitude: parseFloat(formData.lat) || 0,
+          longitude: parseFloat(formData.lng) || 0,
           polling_district_id: formData.polling_district_id,
           federal_boundary_id: formData.federal_boundary_id
-        });
+        };
+        const { data: existLoc } = await supabase
+          .from('user_locations')
+          .select('id')
+          .eq('profile_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(1);
+        const { error: locError } = existLoc?.length
+          ? await supabase.from('user_locations').update(locPayload).eq('id', existLoc[0].id)
+          : await supabase.from('user_locations').insert(locPayload);
         if (locError) throw locError;
       }
 
