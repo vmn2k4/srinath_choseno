@@ -48,36 +48,36 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="w-full max-w-md p-8 bg-surface-hover rounded-2xl border border-white/10 shadow-xl animate-fade-in mx-auto mt-10">
+    <div className="w-full max-w-md p-8 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-2xl animate-fade-in mx-auto mt-14">
       <h2 className="text-2xl font-bold text-text-main mb-6 text-center">
         {isSignUp ? 'Create an Account' : 'Welcome Back'}
       </h2>
       <form onSubmit={handleAuth} className="flex flex-col gap-4">
         <div>
-          <label className="block mb-2 text-sm font-medium text-text-tertiary">Email</label>
+          <label className="block mb-2 text-xs font-semibold text-text-muted uppercase tracking-wider">Email Address</label>
           <input
             type="email"
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="block w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-surface focus:outline-none focus:border-accent"
+            className="block w-full p-3 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
             required
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-text-tertiary">Password</label>
+          <label className="block mb-2 text-xs font-semibold text-text-muted uppercase tracking-wider">Password</label>
           <input
             type="password"
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="block w-full p-3 text-sm text-text-main border border-slate-600 rounded-lg bg-surface focus:outline-none focus:border-accent"
+            className="block w-full p-3 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
             required
           />
         </div>
         <button
           type="submit"
-          className="mt-4 px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent-hover transition-colors focus:ring-4 focus:ring-blue-500/20 disabled:opacity-50"
+          className="mt-4 px-6 py-3 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-xl transition-all duration-200 focus:ring-4 focus:ring-primary/10 disabled:opacity-50 shadow-[0_4px_14px_rgba(233,235,158,0.15)]"
           disabled={loading}
         >
           {loading ? 'Processing...' : isSignUp ? 'Sign Up' : 'Log In'}
@@ -85,14 +85,14 @@ export default function AuthPage() {
       </form>
 
       {message.text && (
-        <div className={`mt-4 p-4 rounded-lg text-sm font-medium animate-fade-in ${message.type === 'error' ? 'bg-red-500/10 border border-red-500/30 text-red-400' : 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400'}`}>
+        <div className={`mt-4 p-4 rounded-xl text-sm font-medium animate-fade-in ${message.type === 'error' ? 'bg-danger/10 border border-danger/25 text-danger' : 'bg-accent/15 border border-accent/25 text-accent'}`}>
           {message.text}
         </div>
       )}
 
       <div className="mt-6 text-center">
         <button
-          className="text-sm text-text-muted hover:text-text-secondary transition-colors"
+          className="text-xs text-text-muted hover:text-text-secondary transition-colors font-medium"
           onClick={() => setIsSignUp(!isSignUp)}
         >
           {isSignUp ? 'Already have an account? Log In' : "Don't have an account? Sign Up"}

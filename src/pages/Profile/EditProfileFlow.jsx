@@ -116,8 +116,8 @@ export default function EditProfileFlow({ initialData, onComplete, onCancel }) {
           federal_boundary_id: formData.federal_boundary_id,
           polling_district_id: formData.polling_district_id
         };
-        const { data: existLoc } = await supabase.from('user_locations').select('id').eq('profile_id', user.id).maybeSingle();
-        if (existLoc) { await supabase.from('user_locations').update(locPayload).eq('id', existLoc.id); }
+        const { data: existLocs } = await supabase.from('user_locations').select('id').eq('profile_id', user.id).order('created_at', { ascending: false }).limit(1);
+        if (existLocs?.length) { await supabase.from('user_locations').update(locPayload).eq('id', existLocs[0].id); }
         else { await supabase.from('user_locations').insert(locPayload); }
       }
 

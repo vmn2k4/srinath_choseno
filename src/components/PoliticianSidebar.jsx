@@ -75,9 +75,9 @@ export default function PoliticianSidebar({ profile, activeTab }) {
       </h3>
       
       {loading ? (
-        <div className="text-center py-4 text-text-main0 text-sm">Loading...</div>
+        <div className="text-center py-4 text-text-muted text-sm">Loading...</div>
       ) : politicians.length === 0 ? (
-        <div className="text-center py-6 text-text-main0 text-sm bg-surface-hover/50 rounded-lg border border-dashed border-border-light">
+        <div className="text-center py-6 text-text-muted text-sm bg-surface-hover/50 rounded-lg border border-dashed border-border-light">
           No representatives found for this {activeTab.toLowerCase()}.
         </div>
       ) : (

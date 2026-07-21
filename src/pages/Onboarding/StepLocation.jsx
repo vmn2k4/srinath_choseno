@@ -35,7 +35,7 @@ export default function StepLocation({ data, updateData, nextStep, prevStep }) {
     setLoading(true);
     try {
       const { data: boundaries, error: rpcError } = await supabase.rpc('find_boundaries_by_point', {
-        lon: parseFloat(longitude),
+        lng: parseFloat(longitude),
         lat: parseFloat(latitude)
       });
       
@@ -45,17 +45,26 @@ export default function StepLocation({ data, updateData, nextStep, prevStep }) {
       let f_id = null;
       let b_name = '';
 
+      // The RPC returns map_shapes rows: { id, name, country, boundary_type, code }.
+      // boundary_type is admin-defined free text (Federal, Provincial, Municipal, ...).
       if (boundaries && boundaries.length > 0) {
-        boundaries.forEach(b => {
-          if (b.layer_type === 'polling_districts') {
-             p_id = b.boundary_id;
-             b_name = b.boundary_name;
-          }
-          if (b.layer_type === 'federal_boundaries') {
-             f_id = b.boundary_id;
-             if (!b_name) b_name = b.boundary_name;
-          }
-        });
+        const idOf = (b) => String(b.id ?? b.code ?? b.name);
+        const typeOf = (b) => (b.boundary_type || '').toLowerCase();
+
+        // Prefer explicit types, else use any boundary
+        const polling = boundaries.find(b => /poll|ward/.test(typeOf(b)));
+        const provincial = boundaries.find(b => /provinc|state|local|municipal|city/.test(typeOf(b)));
+        const federal = boundaries.find(b => /federal|national|country/.test(typeOf(b)));
+
+        // Assignment: most local wins
+        if (polling) p_id = idOf(polling);
+        else if (provincial) p_id = idOf(provincial);
+        else if (federal) p_id = idOf(federal); // fallback: use federal for p_id too
+
+        if (federal) f_id = idOf(federal);
+
+        // Display name: most local boundary
+        b_name = polling?.name || provincial?.name || federal?.name || boundaries[0].name || '';
       }
 
       // Grid Fallback

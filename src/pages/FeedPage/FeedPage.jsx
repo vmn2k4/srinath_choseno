@@ -49,13 +49,15 @@ export default function FeedPage() {
       if (error) throw error;
 
       // Fetch location IDs to ensure strict boundary filtering
-      const { data: locData } = await supabase
+      // (latest row wins — resilient to legacy duplicate rows)
+      const { data: locRows } = await supabase
         .from('user_locations')
         .select('*')
         .eq('profile_id', user.id)
-        .maybeSingle();
+        .order('created_at', { ascending: false })
+        .limit(1);
 
-      setProfile({ ...data, location: locData });
+      setProfile({ ...data, location: locRows?.[0] || null });
     } catch (err) {
       console.error('Error fetching profile:', err);
     } finally {
@@ -336,14 +338,14 @@ export default function FeedPage() {
   }
 
   return (
-    <div className="w-full max-w-6xl mx-auto animate-fade-in pb-20 flex flex-col lg:flex-row gap-6 px-4">
+    <div className="w-full max-w-none animate-fade-in pb-20 flex flex-col lg:flex-row gap-6 px-4 lg:px-8">
       
       {/* Main Feed Column */}
-      <div className="flex-1 max-w-3xl min-w-0">
+      <div className="flex-1 min-w-0">
       {/* Header Profile Summary */}
       <div className="bg-surface-hover/80 backdrop-blur-md rounded-2xl border border-white/10 p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xl font-bold text-white shadow-lg shrink-0">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center text-xl font-bold text-slate-950 shadow-lg shrink-0">
             {profile.full_name ? profile.full_name.charAt(0).toUpperCase() : 'U'}
           </div>
           <div className="flex-1">
@@ -362,7 +364,7 @@ export default function FeedPage() {
               
               {/* Ghost ID Info */}
               {profile.role !== 'admin' && profile.current_ghost_id && (
-                <span className="ml-0 sm:ml-auto flex items-center gap-2 px-3 py-1 bg-surface/50 rounded-lg border border-border-light text-xs text-text-main0 font-mono">
+                <span className="ml-0 sm:ml-auto flex items-center gap-2 px-3 py-1 bg-surface/50 rounded-lg border border-border-light text-xs text-text-muted font-mono">
                   Ghost ID: {profile.current_ghost_id.split('-')[0]}...
                 </span>
               )}
@@ -375,7 +377,7 @@ export default function FeedPage() {
           <button
             onClick={handleBurnIdentity}
             disabled={burning}
-            className="flex items-center gap-2 px-4 py-2 bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded-lg transition-colors whitespace-nowrap text-sm font-medium disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-orange-500/10 hover:bg-orange-500/25 text-orange-400 border border-orange-500/25 rounded-xl transition-colors whitespace-nowrap text-sm font-semibold disabled:opacity-50 shadow-[0_0_12px_rgba(249,115,22,0.1)]"
             title="Generate a new anonymous identity and orphan your old posts"
           >
             <Flame size={16} />
@@ -385,7 +387,7 @@ export default function FeedPage() {
       </div>
 
       {profile.role === 'admin' && (
-        <div className="mb-8 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-start gap-3">
+        <div className="mb-8 p-4 bg-amber-500/10 border border-amber-500/25 rounded-xl flex items-start gap-3">
           <ShieldAlert className="text-amber-400 shrink-0 mt-0.5" />
           <div>
             <h3 className="text-amber-400 font-bold mb-1">Admin Account</h3>
@@ -395,18 +397,18 @@ export default function FeedPage() {
       )}
 
       {profile.role !== 'admin' && (
-        <div className="bg-surface-hover/50 rounded-2xl border border-white/10 overflow-hidden shadow-xl">
+        <div className="bg-surface-hover/30 rounded-2xl border border-white/5 overflow-hidden shadow-xl">
           
           {/* Tabs Navigation */}
-          <div className="flex overflow-x-auto custom-scrollbar border-b border-white/10 bg-surface/50">
+          <div className="flex overflow-x-auto custom-scrollbar border-b border-border-light bg-surface/40">
             {BOUNDARY_TABS.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap border-b-2 flex-1 text-center ${
+                className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex-1 text-center ${
                   activeTab === tab
-                    ? 'border-accent text-blue-400 bg-blue-500/5'
-                    : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-white/5'
+                    ? 'border-primary text-primary bg-primary/5'
+                    : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-surface-hover/30'
                 }`}
               >
                 {tab} Posts
@@ -489,21 +491,21 @@ export default function FeedPage() {
               )}
 
               {uploadedVideoUrl && (
-                <div className="mb-4 bg-indigo-500/10 border border-primary/30 p-3 rounded-lg flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-primary-lighter text-sm font-medium">
+                <div className="mb-4 bg-primary/10 border border-primary/30 p-3 rounded-lg flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-primary-light text-sm font-medium">
                     <Video size={16} />
                     Video Attached Successfully
                   </div>
-                  <button type="button" onClick={() => setUploadedVideoUrl(null)} className="text-primary-light hover:text-indigo-200 text-xs underline">Remove</button>
+                  <button type="button" onClick={() => setUploadedVideoUrl(null)} className="text-primary-light hover:text-primary-lighter text-xs underline">Remove</button>
                 </div>
               )}
               
-              <div className="flex flex-wrap items-center gap-4 mt-2 border-t border-border-light/50 pt-3">
-                <span className="text-xs text-text-main0 flex items-center gap-1">
-                  <ShieldAlert size={12} /> Posted as Ghost ID
+              <div className="flex flex-wrap items-center justify-between gap-4 mt-2 border-t border-border-light/40 pt-3.5">
+                <span className="text-xs text-text-muted flex items-center gap-1.5 font-mono">
+                  <ShieldAlert size={14} className="text-primary-light" /> Posted as Ghost ID
                 </span>
                 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                     <input 
                       type="file" 
                       accept="image/*" 
@@ -522,7 +524,7 @@ export default function FeedPage() {
                     />
                     <label 
                       htmlFor="post-image-upload"
-                      className="p-2 text-text-muted hover:bg-surface-hover hover:text-primary-light rounded-lg cursor-pointer transition-colors"
+                      className="p-2 text-text-muted hover:bg-surface-hover hover:text-primary-light rounded-xl cursor-pointer transition-colors"
                       title="Attach Image"
                     >
                       <ImageIcon size={18} />
@@ -532,7 +534,7 @@ export default function FeedPage() {
                       <button
                         type="button"
                         onClick={() => setShowVideoRecorder(!showVideoRecorder)}
-                        className={`p-2 rounded-lg transition-colors ${showVideoRecorder || uploadedVideoUrl ? 'bg-accent/20 text-accent' : 'text-text-muted hover:bg-surface-hover hover:text-accent'}`}
+                        className={`p-2 rounded-xl transition-colors ${showVideoRecorder || uploadedVideoUrl ? 'bg-primary/20 text-primary-light' : 'text-text-muted hover:bg-surface-hover hover:text-primary-light'}`}
                         title="Record Video Pitch"
                       >
                         <Video size={18} />
@@ -541,7 +543,7 @@ export default function FeedPage() {
                     <button
                       type="submit"
                       disabled={submitting || (!newPostContent.trim() && !uploadedVideoUrl && !imageFile)}
-                      className="px-6 py-2 bg-accent text-white rounded-lg hover:bg-accent-hover transition-colors text-sm font-medium disabled:opacity-50"
+                      className="px-6 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 rounded-xl transition-all duration-200 text-sm font-bold disabled:opacity-40 disabled:cursor-not-allowed shadow-[0_4px_12px_rgba(233,235,158,0.15)] hover:shadow-[0_6px_16px_rgba(233,235,158,0.25)]"
                     >
                       {submitting ? 'Posting...' : 'Share Post'}
                     </button>
@@ -563,7 +565,7 @@ export default function FeedPage() {
                       onClick={() => setActiveStoryUrl(post.video_url)}
                       className="flex flex-col items-center min-w-[100px] group"
                     >
-                      <div className="w-[100px] h-[150px] rounded-xl border-2 border-primary/50 group-hover:border-indigo-400 p-0.5 relative overflow-hidden bg-surface-hover flex-shrink-0 transition-all group-hover:scale-105 shadow-lg">
+                      <div className="w-[100px] h-[150px] rounded-xl border-2 border-primary/50 group-hover:border-primary p-0.5 relative overflow-hidden bg-surface-hover flex-shrink-0 transition-all group-hover:scale-105 shadow-lg">
                         <video 
                            src={post.video_url} 
                            className="w-full h-full rounded-lg object-cover"
@@ -572,9 +574,9 @@ export default function FeedPage() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-lg transition-opacity group-hover:opacity-80" />
                         <div className="absolute bottom-2 left-2 right-2 flex items-center gap-1.5">
-                           <div className="w-4 h-4 rounded-full bg-indigo-500 flex items-center justify-center shrink-0 border border-indigo-300">
-                             <Video size={8} className="text-white" />
-                           </div>
+                            <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center shrink-0 border border-primary-light">
+                              <Video size={8} className="text-slate-950" />
+                            </div>
                            <span className="text-[10px] text-white font-medium truncate drop-shadow-md">
                              Ghost-{post.ghost_id.split('-')[0]}
                            </span>
@@ -613,18 +615,18 @@ export default function FeedPage() {
                 </div>
               ) : (
                 posts.map(post => (
-                  <div key={post.id} className="bg-surface/80 rounded-xl border border-border-light/50 overflow-hidden">
+                  <div key={post.id} className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/40 overflow-hidden hover:border-primary/25 transition-all duration-300 shadow-md">
                     {/* Post Content */}
                     <div className="p-5">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="w-8 h-8 rounded-full bg-surface-active flex items-center justify-center">
+                      <div className="flex items-center gap-2.5 mb-3">
+                        <div className="w-8 h-8 rounded-full bg-surface/50 flex items-center justify-center border border-border-light/30">
                           <Users size={14} className="text-text-muted" />
                         </div>
                         <div>
                           <span className="text-sm font-bold text-text-secondary font-mono">
                             Ghost-{post.ghost_id.split('-')[0]}
                           </span>
-                          <span className="text-xs text-text-main0 ml-2">
+                          <span className="text-xs text-text-muted ml-2.5">
                             {new Date(post.created_at).toLocaleDateString()}
                           </span>
                         </div>
@@ -634,14 +636,14 @@ export default function FeedPage() {
                       </p>
 
                       {post.image_url && (
-                        <div className="mb-4 rounded-lg overflow-hidden border border-border-light">
+                        <div className="mb-4 rounded-xl overflow-hidden border border-border-light/45">
                            <img src={post.image_url} alt="Post Attachment" className="w-full max-h-[500px] object-cover" loading="lazy" />
                         </div>
                       )}
 
                       {post.link_metadata ? (
                         <div className="mb-4">
-                          <LinkPreview url={post.link_metadata.url} metadata={post.link_metadata} />
+                           <LinkPreview url={post.link_metadata.url} metadata={post.link_metadata} />
                         </div>
                       ) : (() => {
                         const match = post.content?.match(/(https?:\/\/[^\s]+)/);
@@ -656,47 +658,47 @@ export default function FeedPage() {
                       })()}
                       
                       {post.video_url && (
-                        <div className="mb-4 rounded-lg overflow-hidden border border-border-light bg-black">
+                        <div className="mb-4 rounded-xl overflow-hidden border border-border-light/45 bg-black">
                            <video src={post.video_url} controls className="w-full max-h-96 object-contain" />
                         </div>
                       )}
                     </div>
 
                     {/* Action Bar */}
-                    <div className="px-5 py-3 bg-background/50 border-t border-border flex items-center gap-4">
+                    <div className="px-5 py-3 bg-surface/20 border-t border-border-light/20 flex items-center gap-5">
                       <button 
                         onClick={() => handleVote(post.id, 1)}
-                        className="flex items-center gap-1.5 text-sm font-medium text-text-muted hover:text-emerald-400 transition-colors"
+                        className="flex items-center gap-1.5 text-sm font-semibold text-text-muted hover:text-emerald-400 transition-colors"
                       >
                         <ThumbsUp size={16} />
                         <span>{post.likes_count}</span>
                       </button>
                       <button 
                         onClick={() => handleVote(post.id, -1)}
-                        className="flex items-center gap-1.5 text-sm font-medium text-text-muted hover:text-red-400 transition-colors"
+                        className="flex items-center gap-1.5 text-sm font-semibold text-text-muted hover:text-rose-400 transition-colors"
                       >
                         <ThumbsDown size={16} />
                         <span>{post.dislikes_count}</span>
                       </button>
-                      <div className="flex items-center gap-1.5 text-sm font-medium text-text-main0 ml-auto">
+                      <div className="flex items-center gap-1.5 text-sm font-semibold text-text-muted ml-auto">
                         <MessageSquare size={16} />
                         <span>{post.comments?.length || 0}</span>
                       </div>
                     </div>
 
                     {/* Comments Section */}
-                    <div className="bg-surface/40 p-4 border-t border-border">
+                    <div className="bg-surface/10 p-4 border-t border-border-light/20">
                       
                       {/* List Comments */}
                       {post.comments && post.comments.length > 0 && (
-                        <div className="space-y-3 mb-4 pl-2 border-l-2 border-border">
+                        <div className="space-y-3 mb-4 pl-2.5 border-l border-primary/30">
                           {post.comments.map(comment => (
                             <div key={comment.id} className="pl-3">
                               <div className="flex items-baseline gap-2 mb-0.5">
                                 <span className="text-xs font-bold text-text-muted font-mono">
                                   Ghost-{comment.ghost_id.split('-')[0]}
                                 </span>
-                                <span className="text-[10px] text-text-darker">
+                                <span className="text-[10px] text-text-muted/60">
                                   {new Date(comment.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                                 </span>
                               </div>
@@ -716,12 +718,12 @@ export default function FeedPage() {
                             if (e.key === 'Enter') handleCreateComment(post.id);
                           }}
                           placeholder="Write an anonymous comment..."
-                          className="flex-1 bg-background border border-border-light rounded-lg px-3 py-2 text-sm text-text-secondary focus:outline-none focus:border-accent"
+                          className="flex-1 bg-surface/50 border border-border-light/40 rounded-xl px-3.5 py-2.5 text-sm text-text-secondary placeholder:text-text-muted focus:outline-none focus:border-primary transition-colors"
                         />
                         <button
                           onClick={() => handleCreateComment(post.id)}
                           disabled={!commentInputs[post.id]?.trim()}
-                          className="p-2 bg-accent/20 text-blue-400 hover:bg-accent hover:text-white rounded-lg transition-colors disabled:opacity-50"
+                          className="p-2.5 bg-primary/10 text-primary-light hover:bg-primary hover:text-slate-950 rounded-xl transition-all disabled:opacity-40"
                         >
                           <Send size={16} />
                         </button>

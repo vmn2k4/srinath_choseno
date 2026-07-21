@@ -120,14 +120,14 @@ export default function VideoRecorder({ onVideoUploaded }) {
         />
         
         {!isRecording && !videoBlob && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-text-main0 gap-2">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-text-muted gap-2">
             <Video size={32} />
             <span className="text-sm">Record a 30-sec pitch</span>
           </div>
         )}
 
         {isRecording && (
-          <div className="absolute top-4 right-4 bg-red-500/90 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center gap-2 animate-pulse">
+          <div className="absolute top-4 right-4 bg-danger/90 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center gap-2 animate-pulse">
             <div className="w-2 h-2 bg-white rounded-full" />
             00:{timeLeft < 10 ? `0${timeLeft}` : timeLeft}
           </div>
@@ -139,7 +139,7 @@ export default function VideoRecorder({ onVideoUploaded }) {
           <button 
             type="button"
             onClick={startRecording}
-            className="flex items-center gap-2 px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-full font-medium transition-colors"
+            className="flex items-center gap-2 px-6 py-2 bg-danger hover:bg-danger/80 text-white rounded-full font-medium transition-colors"
           >
             <Video size={18} />
             Start Recording
@@ -150,7 +150,7 @@ export default function VideoRecorder({ onVideoUploaded }) {
           <button 
             type="button"
             onClick={stopRecording}
-            className="flex items-center gap-2 px-6 py-2 bg-surface-active hover:bg-slate-600 text-white rounded-full font-medium transition-colors border border-slate-500"
+            className="flex items-center gap-2 px-6 py-2 bg-surface-active hover:bg-surface-hover text-text-main rounded-full font-medium transition-colors border border-border"
           >
             <StopCircle size={18} />
             Stop
@@ -162,7 +162,7 @@ export default function VideoRecorder({ onVideoUploaded }) {
             <button 
               type="button"
               onClick={retakeVideo}
-              className="flex items-center gap-2 px-4 py-2 bg-surface-hover hover:bg-surface-active text-text-tertiary rounded-lg transition-colors border border-slate-600 text-sm"
+              className="flex items-center gap-2 px-4 py-2 bg-surface-hover hover:bg-surface-active text-text-tertiary rounded-lg transition-colors border border-border text-sm"
             >
               <RefreshCw size={16} />
               Retake
@@ -170,7 +170,7 @@ export default function VideoRecorder({ onVideoUploaded }) {
             <button 
               type="button"
               onClick={handleUpload}
-              className="flex items-center gap-2 px-6 py-2 bg-primary hover:bg-primary-hover text-white rounded-lg transition-colors text-sm font-bold"
+              className="flex items-center gap-2 px-6 py-2 bg-primary hover:bg-primary-hover text-surface rounded-lg transition-colors text-sm font-bold"
             >
               <Upload size={16} />
               Attach to Post
@@ -179,7 +179,7 @@ export default function VideoRecorder({ onVideoUploaded }) {
         )}
 
         {uploading && (
-          <div className="flex items-center gap-2 text-primary-light font-medium px-4 py-2 bg-indigo-500/10 rounded-lg">
+          <div className="flex items-center gap-2 text-primary-light font-medium px-4 py-2 bg-primary/10 rounded-lg">
             <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
             Uploading...
           </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import MainLayout from './layouts/MainLayout';
+import HomePage from './pages/HomePage';
 import UserPage from './pages/UserPage';
 import AdminPage from './pages/AdminPage';
 import AuthPage from './pages/AuthPage';
@@ -19,7 +20,8 @@ function ProtectedRoute({ children, requireAdmin, requireOnboarding = true }) {
   if (!session) return <Navigate to="/auth" replace />;
   
   // If user is authenticated but hasn't completed onboarding
-  if (requireOnboarding && profile && !profile.role) {
+  // (covers both a missing profile row and a profile without a role)
+  if (requireOnboarding && !profile?.role) {
     return <Navigate to="/onboarding" replace />;
   }
 
@@ -36,7 +38,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainLayout />}>
-            <Route index element={<UserPage />} />
+            <Route index element={<HomePage />} />
+            <Route path="explore" element={<UserPage />} />
             <Route 
               path="admin" 
               element={

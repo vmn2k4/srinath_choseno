@@ -16,7 +16,16 @@ export function AuthProvider({ children }) {
         if (active) setProfile(null);
         return;
       }
-      const { data } = await supabase.from('profiles').select('*').eq('id', userId).single();
+      let { data } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle();
+      if (!data) {
+        // Self-heal: no DB trigger creates profile rows at signup, so create it here
+        const { data: created } = await supabase
+          .from('profiles')
+          .upsert({ id: userId })
+          .select()
+          .maybeSingle();
+        data = created;
+      }
       if (active) setProfile(data);
     };
 
