@@ -26,7 +26,7 @@ export default function ProfilePage() {
     if (data?.role === 'politician') {
       const { data: pd } = await supabase
         .from('politician_profiles')
-        .select('political_target_role, target_boundary_id, target_boundary_name, political_party, bio')
+        .select('political_target_role, target_boundary_id, target_boundary_name, political_party, education, hometown, bio')
         .eq('id', user.id)
         .maybeSingle();
       polData = pd;
@@ -34,11 +34,19 @@ export default function ProfilePage() {
 
     const { data: locRows } = await supabase
       .from('user_locations')
-      .select('latitude, longitude, federal_boundary_id, polling_district_id')
+      .select('latitude, longitude')
       .eq('profile_id', user.id)
       .order('created_at', { ascending: false })
       .limit(1);
     const locData = locRows?.[0] || null;
+
+    const { data: memberships } = await supabase
+      .from('user_boundary_memberships')
+      .select('map_shape_id, map_shapes(id, name, country, boundary_type)')
+      .eq('profile_id', user.id);
+    const matchedBoundaries = (memberships || [])
+      .map(m => m.map_shapes)
+      .filter(Boolean);
 
     setProfile({
       role: data?.role || '',
@@ -48,12 +56,13 @@ export default function ProfilePage() {
       ghostId: data?.current_ghost_id || '',
       politicalTargetRole: polData?.political_target_role || '',
       politicalParty: polData?.political_party || '',
+      education: polData?.education || '',
+      hometown: polData?.hometown || '',
       bio: polData?.bio || '',
       target_boundary_id: polData?.target_boundary_id || null,
       lat: locData?.latitude || '',
       lng: locData?.longitude || '',
-      polling_district_id: locData?.polling_district_id || null,
-      federal_boundary_id: locData?.federal_boundary_id || null,
+      matchedBoundaries,
     });
     setLoading(false);
   };
@@ -130,11 +139,22 @@ export default function ProfilePage() {
                 <span className={`inline-block px-3 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider ${roleColor}`}>{roleLabel}</span>
               </div>
               <div className="sm:col-span-2">
-                <p className="text-xs text-text-muted mb-1">Jurisdiction / Constituency</p>
-                <p className="font-medium text-text-main flex items-center gap-2">
-                  <MapPin size={15} className="text-accent shrink-0" />
-                  {profile?.constituency || <em className="text-text-muted not-italic font-normal">Not mapped yet</em>}
-                </p>
+                <p className="text-xs text-text-muted mb-1">Groups You Belong To</p>
+                {profile?.matchedBoundaries?.length ? (
+                  <div className="flex flex-wrap gap-2 mt-1.5">
+                    {profile.matchedBoundaries.map(b => (
+                      <span key={b.id} className="flex items-center gap-1.5 px-3 py-1 bg-surface-hover rounded-lg border border-border-light text-xs font-semibold text-text-main">
+                        <MapPin size={12} className="text-accent shrink-0" />
+                        {b.name} <span className="text-text-muted font-normal">({b.boundary_type})</span>
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="font-medium text-text-main flex items-center gap-2">
+                    <MapPin size={15} className="text-accent shrink-0" />
+                    <em className="text-text-muted not-italic font-normal">No groups mapped yet</em>
+                  </p>
+                )}
               </div>
             </div>
           </section>

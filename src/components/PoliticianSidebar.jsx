@@ -3,21 +3,19 @@ import { supabase } from '../services/supabase';
 import { Users, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-export default function PoliticianSidebar({ profile, activeTab }) {
+export default function PoliticianSidebar({ profile, activeTab, memberships = [] }) {
   const [politicians, setPoliticians] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!profile) return;
-    
+
     async function fetchPoliticians() {
       setLoading(true);
       try {
-        let boundaryIds = [];
-        if (profile.location?.polling_district_id) boundaryIds.push(profile.location.polling_district_id);
-        if (profile.location?.federal_boundary_id) boundaryIds.push(profile.location.federal_boundary_id);
-        
+        let boundaryIds = memberships.map(m => m.id);
+
         let query = supabase
           .from('politician_profiles')
           .select(`
@@ -65,7 +63,7 @@ export default function PoliticianSidebar({ profile, activeTab }) {
     fetchPoliticians();
   }, [profile, activeTab]);
 
-  if (activeTab === 'International') return null;
+  if (activeTab?.toLowerCase() === 'international') return null;
 
   return (
     <div className="bg-surface/50 rounded-xl border border-border-light/50 p-5 sticky top-24">

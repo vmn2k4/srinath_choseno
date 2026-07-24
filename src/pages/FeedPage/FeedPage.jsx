@@ -1,31 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../services/supabase';
-import { MapPin, Users, Building, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Download, Video, Link as LinkIcon, Image as ImageIcon, X } from 'lucide-react';
+import { MapPin, Users, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Video, Image as ImageIcon, X, Globe2, Landmark } from 'lucide-react';
 import VideoRecorder from '../../components/video/VideoRecorder';
 import PoliticianSidebar from '../../components/PoliticianSidebar';
 import LinkPreview from '../../components/LinkPreview';
-
-const BOUNDARY_TABS = ['Polling District', 'Federal Area', 'Country', 'International'];
 
 export default function FeedPage() {
   const { user } = useAuth();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('Polling District');
+
+  // Groups the user belongs to (their boundary memberships, ranked broad→local)
+  // plus the fixed Country/International pseudo-groups.
+  const [memberships, setMemberships] = useState([]);
+  const [loadingMemberships, setLoadingMemberships] = useState(true);
+  const [activeTab, setActiveTab] = useState('country'); // 'country' | 'international' | 'membership:<shapeId>'
 
   // Feed State
   const [posts, setPosts] = useState([]);
   const [newPostContent, setNewPostContent] = useState('');
-  const [isCountry, setIsCountry] = useState(false);
-  const [isInternational, setIsInternational] = useState(false);
   const [commentInputs, setCommentInputs] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [burning, setBurning] = useState(false);
-  
+
   const [showVideoRecorder, setShowVideoRecorder] = useState(false);
   const [uploadedVideoUrl, setUploadedVideoUrl] = useState(null);
-  
+
   // Stories state
   const [activeStoryUrl, setActiveStoryUrl] = useState(null);
 
@@ -45,19 +46,9 @@ export default function FeedPage() {
         .select('*')
         .eq('id', user.id)
         .single();
-      
+
       if (error) throw error;
-
-      // Fetch location IDs to ensure strict boundary filtering
-      // (latest row wins — resilient to legacy duplicate rows)
-      const { data: locRows } = await supabase
-        .from('user_locations')
-        .select('*')
-        .eq('profile_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(1);
-
-      setProfile({ ...data, location: locRows?.[0] || null });
+      setProfile(data);
     } catch (err) {
       console.error('Error fetching profile:', err);
     } finally {
@@ -65,50 +56,68 @@ export default function FeedPage() {
     }
   };
 
+  const fetchMemberships = async () => {
+    if (!user) return;
+    setLoadingMemberships(true);
+    try {
+      const { data, error } = await supabase
+        .from('user_boundary_memberships')
+        .select('map_shape_id, map_shapes(id, name, country, boundary_type)')
+        .eq('profile_id', user.id);
+
+      if (error) throw error;
+
+      const shapes = (data || []).map(m => m.map_shapes).filter(Boolean);
+
+      if (shapes.length === 0) {
+        setMemberships([]);
+        return;
+      }
+
+      const countries = [...new Set(shapes.map(s => s.country))];
+      const { data: types } = await supabase
+        .from('country_boundary_types')
+        .select('country, type_name, rank')
+        .in('country', countries);
+
+      const rankOf = (country, typeName) =>
+        types?.find(t => t.country === country && t.type_name === typeName)?.rank ?? 999;
+
+      const sorted = shapes
+        .map(s => ({ ...s, rank: rankOf(s.country, s.boundary_type) }))
+        .sort((a, b) => a.rank - b.rank);
+
+      setMemberships(sorted);
+    } catch (err) {
+      console.error('Error fetching memberships:', err);
+    } finally {
+      setLoadingMemberships(false);
+    }
+  };
+
   const fetchPosts = async () => {
     try {
-      // Fetch posts and their nested comments
-      let query = supabase
-        .from('posts')
-        .select(`
-          *,
-          comments (*)
-        `)
-        .order('created_at', { ascending: false });
+      const isMembershipTab = activeTab.startsWith('membership:');
+      const selectStr = isMembershipTab
+        ? '*, comments (*), post_boundaries!inner(map_shape_id)'
+        : '*, comments (*)';
 
-      if (activeTab === 'Polling District') {
-        // Guard: if user has no polling district ID, show nothing (don't run a null query)
-        if (!profile.location?.polling_district_id) {
-          setPosts([]);
-          return;
-        }
-        query = query
-          .eq('polling_district_id', profile.location.polling_district_id)
-          .is('federal_boundary_id', null)
-          .eq('is_country', false)
-          .eq('is_international', false);
-      } else if (activeTab === 'Federal Area') {
-        // Guard: if user has no federal boundary ID, show nothing
-        if (!profile.location?.federal_boundary_id) {
-          setPosts([]);
-          return;
-        }
-        query = query
-          .eq('federal_boundary_id', profile.location.federal_boundary_id)
-          .is('polling_district_id', null)
-          .eq('is_country', false)
-          .eq('is_international', false);
-      } else if (activeTab === 'Country') {
-        query = query.eq('is_country', true);
-      } else if (activeTab === 'International') {
+      let query = supabase.from('posts').select(selectStr).order('created_at', { ascending: false });
+
+      if (activeTab === 'country') {
+        if (!profile.country) return;
+        query = query.eq('is_country', true).eq('country', profile.country);
+      } else if (activeTab === 'international') {
         query = query.eq('is_international', true);
+      } else if (isMembershipTab) {
+        const shapeId = activeTab.split(':')[1];
+        query = query.eq('post_boundaries.map_shape_id', shapeId);
       }
-      
+
       const { data, error } = await query;
-      
+
       if (error) throw error;
-      
-      // Sort comments by created_at ascending
+
       const sortedPosts = data.map(post => ({
         ...post,
         comments: post.comments.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
@@ -117,9 +126,9 @@ export default function FeedPage() {
       // Politicians want to see the most interacted posts first
       if (profile.role === 'politician') {
         sortedPosts.sort((a, b) => {
-           const scoreA = (a.likes_count || 0) + (a.comments?.length || 0);
-           const scoreB = (b.likes_count || 0) + (b.comments?.length || 0);
-           return scoreB - scoreA;
+          const scoreA = (a.likes_count || 0) + (a.comments?.length || 0);
+          const scoreB = (b.likes_count || 0) + (b.comments?.length || 0);
+          return scoreB - scoreA;
         });
       }
 
@@ -131,70 +140,72 @@ export default function FeedPage() {
 
   useEffect(() => {
     fetchProfile();
+    fetchMemberships();
   }, [user]);
+
+  // Default to the user's most local group once memberships load, if they have any
+  useEffect(() => {
+    if (!loadingMemberships && memberships.length > 0 && activeTab === 'country') {
+      const mostLocal = memberships[memberships.length - 1];
+      setActiveTab(`membership:${mostLocal.id}`);
+    }
+  }, [loadingMemberships, memberships]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // profile.country is only set once a boundary lookup resolved it during
+  // onboarding — a user with no local groups AND no derived country has
+  // nothing to show on the Country tab, so land on International instead.
+  useEffect(() => {
+    if (profile && !profile.country && activeTab === 'country') {
+      setActiveTab('international');
+    }
+  }, [profile]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (profile && profile.role !== 'admin') {
       fetchPosts();
     }
-  }, [profile, activeTab]);
+  }, [profile, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
-    if (!newPostContent.trim() || !profile?.current_ghost_id) return;
-    
-    // Block posting if the required boundary ID is not set
-    if (activeTab === 'Polling District' && !profile.location?.polling_district_id) {
-      alert('Your Polling District location is not set. Please go to your Profile, enter your coordinates and click Save.');
-      return;
-    }
-    if (activeTab === 'Federal Area' && !profile.location?.federal_boundary_id) return;
-    
+    if (!newPostContent.trim() && !uploadedVideoUrl && !imageFile) return;
+    if (!profile?.current_ghost_id) return;
+
     setSubmitting(true);
     try {
       let finalImageUrl = null;
-      
+
       if (imageFile) {
         const fileExt = imageFile.name.split('.').pop();
         const fileName = `${profile.current_ghost_id}-${Date.now()}.${fileExt}`;
         const filePath = `posts/${fileName}`;
-        
+
         const { error: uploadError } = await supabase.storage
           .from('post-images')
           .upload(filePath, imageFile);
-          
+
         if (uploadError) {
           console.error('Upload error:', uploadError);
           alert('Failed to upload image.');
           setSubmitting(false);
           return;
         }
-        
+
         const { data: { publicUrl } } = supabase.storage
           .from('post-images')
           .getPublicUrl(filePath);
-          
+
         finalImageUrl = publicUrl;
       }
 
-      const { error } = await supabase.from('posts').insert({
-        ghost_id: profile.current_ghost_id,
-        constituency: profile.constituency,
-        federal_boundary_id: activeTab === 'Federal Area'
-          ? profile.location?.federal_boundary_id
-          : null,
-        polling_district_id: activeTab === 'Polling District'
-          ? profile.location?.polling_district_id
-          : null,
-        content: newPostContent.trim(),
-        video_url: uploadedVideoUrl,
-        link_metadata: linkMetadata,
-        is_country: activeTab === 'Country',
-        is_international: activeTab === 'International',
-        image_url: finalImageUrl
+      const { error } = await supabase.rpc('create_post', {
+        p_content: newPostContent.trim(),
+        p_image_url: finalImageUrl,
+        p_video_url: uploadedVideoUrl,
+        p_link_metadata: linkMetadata
       });
       if (error) throw error;
-      
+
       setNewPostContent('');
       setUploadedVideoUrl(null);
       setShowVideoRecorder(false);
@@ -236,7 +247,7 @@ export default function FeedPage() {
         content: content.trim()
       });
       if (error) throw error;
-      
+
       setCommentInputs({ ...commentInputs, [postId]: '' });
       fetchPosts();
       silentExportData();
@@ -268,7 +279,7 @@ export default function FeedPage() {
         .from('posts')
         .select('id, content, created_at, likes_count, dislikes_count, comments(id)')
         .eq('ghost_id', profile.current_ghost_id);
-      
+
       if (postError) throw postError;
 
       // 2. Fetch user's comments
@@ -328,7 +339,7 @@ export default function FeedPage() {
   }
 
   let locationDisplay = "Unknown Location";
-  if (profile.role === 'politician') {
+  if (profile.role === 'politician' && profile.country) {
     locationDisplay = profile.country;
     if(profile.designation) {
         locationDisplay += ` - ${profile.designation}`;
@@ -337,9 +348,13 @@ export default function FeedPage() {
     locationDisplay = profile.constituency;
   }
 
+  const activeMembership = activeTab.startsWith('membership:')
+    ? memberships.find(m => `membership:${m.id}` === activeTab)
+    : null;
+
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 flex flex-col lg:flex-row gap-6 px-4 lg:px-8">
-      
+
       {/* Main Feed Column */}
       <div className="flex-1 min-w-0">
       {/* Header Profile Summary */}
@@ -352,7 +367,7 @@ export default function FeedPage() {
             <h1 className="text-2xl font-bold text-text-main">{profile.full_name || 'Anonymous User'}</h1>
             <div className="flex flex-wrap items-center gap-2 mt-1 text-text-muted text-sm">
               <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                profile.role === 'politician' ? 'bg-primary/20 text-primary-lighter' : 
+                profile.role === 'politician' ? 'bg-primary/20 text-primary-lighter' :
                 profile.role === 'admin' ? 'bg-danger/20 text-rose-300' : 'bg-emerald-500/20 text-emerald-300'
               }`}>
                 {profile.role ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1) : 'Citizen'}
@@ -361,7 +376,7 @@ export default function FeedPage() {
                 <MapPin size={14} />
                 {locationDisplay}
               </span>
-              
+
               {/* Ghost ID Info */}
               {profile.role !== 'admin' && profile.current_ghost_id && (
                 <span className="ml-0 sm:ml-auto flex items-center gap-2 px-3 py-1 bg-surface/50 rounded-lg border border-border-light text-xs text-text-muted font-mono">
@@ -398,52 +413,61 @@ export default function FeedPage() {
 
       {profile.role !== 'admin' && (
         <div className="bg-surface-hover/30 rounded-2xl border border-white/5 overflow-hidden shadow-xl">
-          
+
           {/* Tabs Navigation */}
           <div className="flex overflow-x-auto custom-scrollbar border-b border-border-light bg-surface/40">
-            {BOUNDARY_TABS.map((tab) => (
+            {memberships.map((m) => (
               <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
+                key={m.id}
+                onClick={() => setActiveTab(`membership:${m.id}`)}
                 className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex-1 text-center ${
-                  activeTab === tab
+                  activeTab === `membership:${m.id}`
                     ? 'border-primary text-primary bg-primary/5'
                     : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-surface-hover/30'
                 }`}
               >
-                {tab} Posts
+                {m.name} <span className="text-xs opacity-70">({m.boundary_type})</span>
               </button>
             ))}
+            {profile?.country && (
+              <button
+                onClick={() => setActiveTab('country')}
+                className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex-1 text-center flex items-center justify-center gap-1.5 ${
+                  activeTab === 'country'
+                    ? 'border-primary text-primary bg-primary/5'
+                    : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-surface-hover/30'
+                }`}
+              >
+                <Landmark size={14} /> Country
+              </button>
+            )}
+            <button
+              onClick={() => setActiveTab('international')}
+              className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex-1 text-center flex items-center justify-center gap-1.5 ${
+                activeTab === 'international'
+                  ? 'border-primary text-primary bg-primary/5'
+                  : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-surface-hover/30'
+              }`}
+            >
+              <Globe2 size={14} /> International
+            </button>
           </div>
 
           <div className="p-4 sm:p-8">
-            
-            {/* Location not set warning banner */}
-            {activeTab === 'Polling District' && !profile.location?.polling_district_id && (
+
+            {/* No local groups yet notice */}
+            {!loadingMemberships && memberships.length === 0 && (
               <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-start gap-3">
                 <MapPin className="text-amber-400 shrink-0 mt-0.5" size={18} />
                 <div>
-                  <h3 className="text-amber-300 font-semibold text-sm mb-1">Polling District Not Set</h3>
-                  <p className="text-amber-200/70 text-xs">Your location has no Polling District mapped yet. Go to <a href="/profile" className="underline hover:text-amber-200">Profile Settings</a>, enter your coordinates, and click Save to activate this feed.</p>
-                </div>
-              </div>
-            )}
-            {activeTab === 'Federal Area' && !profile.location?.federal_boundary_id && (
-              <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-start gap-3">
-                <MapPin className="text-amber-400 shrink-0 mt-0.5" size={18} />
-                <div>
-                  <h3 className="text-amber-300 font-semibold text-sm mb-1">Federal Area Not Set</h3>
-                  <p className="text-amber-200/70 text-xs">Your Federal boundary is not mapped. Go to <a href="/profile" className="underline hover:text-amber-200">Profile Settings</a> and save your location to activate this feed.</p>
+                  <h3 className="text-amber-300 font-semibold text-sm mb-1">No Local Groups Yet</h3>
+                  <p className="text-amber-200/70 text-xs">No boundary data covers your location yet, so you don't have any municipal/federal groups to post into. Go to <a href="/profile" className="underline hover:text-amber-200">Profile Settings</a> to search for and add your jurisdiction manually, or check back once an admin uploads boundary data for your area. You can still post to Country and International.</p>
                 </div>
               </div>
             )}
 
-            {/* Create Post Input — hidden if boundary ID missing for geo tabs */}
-            {(activeTab === 'Country' || activeTab === 'International' ||
-              (activeTab === 'Polling District' && profile.location?.polling_district_id) ||
-              (activeTab === 'Federal Area' && profile.location?.federal_boundary_id)
-            ) && (
-              <form onSubmit={handleCreatePost} className="mb-8 bg-surface/50 rounded-xl p-4 border border-border-light/50">
+            {/* Create Post Input — always available; the post is tagged with every group you belong to */}
+            <form onSubmit={handleCreatePost} className="mb-8 bg-surface/50 rounded-xl p-4 border border-border-light/50">
               <textarea
                 value={newPostContent}
                 onChange={(e) => {
@@ -459,11 +483,10 @@ export default function FeedPage() {
                     setLinkMetadata(null);
                   }
                 }}
-                placeholder={activeTab === 'Polling District' ? "What's happening in your neighborhood?" : `Post anonymously in the ${activeTab} feed...`}
+                placeholder="What's happening? This post will show up in every group you belong to."
                 className="w-full bg-transparent text-text-secondary placeholder:text-text-muted resize-none outline-none min-h-[80px]"
-                required={!uploadedVideoUrl && !imageFile}
               />
-              
+
               {extractedUrl && !uploadedVideoUrl && (
                 <div className="mb-3">
                   <LinkPreview url={extractedUrl} onMetadataFetched={setLinkMetadata} />
@@ -473,8 +496,8 @@ export default function FeedPage() {
               {imagePreview && (
                 <div className="relative mt-2 mb-2 inline-block">
                   <img src={imagePreview} alt="Preview" className="h-32 rounded-lg border border-border-light object-cover" />
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={() => { setImageFile(null); setImagePreview(null); }}
                     className="absolute -top-2 -right-2 bg-danger text-white rounded-full p-1 shadow-lg hover:bg-danger-light"
                   >
@@ -482,7 +505,7 @@ export default function FeedPage() {
                   </button>
                 </div>
               )}
-              
+
               {showVideoRecorder && (
                 <VideoRecorder onVideoUploaded={(url) => {
                   setUploadedVideoUrl(url);
@@ -499,18 +522,18 @@ export default function FeedPage() {
                   <button type="button" onClick={() => setUploadedVideoUrl(null)} className="text-primary-light hover:text-primary-lighter text-xs underline">Remove</button>
                 </div>
               )}
-              
+
               <div className="flex flex-wrap items-center justify-between gap-4 mt-2 border-t border-border-light/40 pt-3.5">
                 <span className="text-xs text-text-muted flex items-center gap-1.5 font-mono">
                   <ShieldAlert size={14} className="text-primary-light" /> Posted as Ghost ID
                 </span>
-                
+
                 <div className="flex items-center gap-3">
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      id="post-image-upload" 
-                      className="hidden" 
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id="post-image-upload"
+                      className="hidden"
                       onChange={(e) => {
                         const file = e.target.files[0];
                         if (file) {
@@ -522,7 +545,7 @@ export default function FeedPage() {
                         }
                       }}
                     />
-                    <label 
+                    <label
                       htmlFor="post-image-upload"
                       className="p-2 text-text-muted hover:bg-surface-hover hover:text-primary-light rounded-xl cursor-pointer transition-colors"
                       title="Attach Image"
@@ -550,7 +573,6 @@ export default function FeedPage() {
                   </div>
               </div>
             </form>
-            )}
 
             {/* Stories Section for Politician Videos */}
             {posts.filter(p => p.video_url).length > 0 && (
@@ -560,16 +582,16 @@ export default function FeedPage() {
                 </h3>
                 <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                   {posts.filter(p => p.video_url).map(post => (
-                    <button 
+                    <button
                       key={`story-${post.id}`}
                       onClick={() => setActiveStoryUrl(post.video_url)}
                       className="flex flex-col items-center min-w-[100px] group"
                     >
                       <div className="w-[100px] h-[150px] rounded-xl border-2 border-primary/50 group-hover:border-primary p-0.5 relative overflow-hidden bg-surface-hover flex-shrink-0 transition-all group-hover:scale-105 shadow-lg">
-                        <video 
-                           src={post.video_url} 
+                        <video
+                           src={post.video_url}
                            className="w-full h-full rounded-lg object-cover"
-                           muted 
+                           muted
                            preload="metadata"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-lg transition-opacity group-hover:opacity-80" />
@@ -592,7 +614,7 @@ export default function FeedPage() {
             {activeStoryUrl && (
               <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm">
                  <div className="relative max-w-sm w-full bg-surface rounded-2xl overflow-hidden shadow-2xl border border-border-light">
-                    <button 
+                    <button
                       onClick={() => setActiveStoryUrl(null)}
                       className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-black/50 hover:bg-black/80 rounded-full text-white transition-colors"
                     >
@@ -656,7 +678,7 @@ export default function FeedPage() {
                         }
                         return null;
                       })()}
-                      
+
                       {post.video_url && (
                         <div className="mb-4 rounded-xl overflow-hidden border border-border-light/45 bg-black">
                            <video src={post.video_url} controls className="w-full max-h-96 object-contain" />
@@ -666,14 +688,14 @@ export default function FeedPage() {
 
                     {/* Action Bar */}
                     <div className="px-5 py-3 bg-surface/20 border-t border-border-light/20 flex items-center gap-5">
-                      <button 
+                      <button
                         onClick={() => handleVote(post.id, 1)}
                         className="flex items-center gap-1.5 text-sm font-semibold text-text-muted hover:text-emerald-400 transition-colors"
                       >
                         <ThumbsUp size={16} />
                         <span>{post.likes_count}</span>
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleVote(post.id, -1)}
                         className="flex items-center gap-1.5 text-sm font-semibold text-text-muted hover:text-rose-400 transition-colors"
                       >
@@ -688,7 +710,7 @@ export default function FeedPage() {
 
                     {/* Comments Section */}
                     <div className="bg-surface/10 p-4 border-t border-border-light/20">
-                      
+
                       {/* List Comments */}
                       {post.comments && post.comments.length > 0 && (
                         <div className="space-y-3 mb-4 pl-2.5 border-l border-primary/30">
@@ -739,10 +761,10 @@ export default function FeedPage() {
         </div>
       )}
       </div>
-      
+
       {/* Right Sidebar Column */}
       <div className="hidden lg:block w-80 shrink-0">
-        <PoliticianSidebar profile={profile} activeTab={activeTab} />
+        <PoliticianSidebar profile={profile} activeTab={activeMembership?.boundary_type || activeTab} memberships={memberships} />
       </div>
 
     </div>

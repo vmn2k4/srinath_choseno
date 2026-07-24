@@ -32,7 +32,7 @@ function AutoFitBounds({ boundaries }) {
   return null;
 }
 
-export default function MapComponent({ boundaries }) {
+export default function MapComponent({ boundaries, selectedIds, onShapeClick }) {
   if (!boundaries || boundaries.length === 0) {
     return (
       <div className="w-full h-96 bg-surface-hover rounded-xl flex items-center justify-center border border-white/10 mt-6">
@@ -59,22 +59,34 @@ export default function MapComponent({ boundaries }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           className="map-tiles"
         />
-        
+
         {boundaries.map((boundary, index) => {
           if (!boundary.geojson) return null;
-          
-          return (
-            <GeoJSON 
-              key={boundary.id || index} 
-              data={boundary.geojson}
-              style={{
+
+          const isSelected = selectedIds?.has(boundary.id);
+          const style = selectedIds
+            ? {
+                fillColor: isSelected ? '#e9eb9e' : '#64748b',
+                weight: isSelected ? 3 : 1,
+                opacity: 1,
+                color: isSelected ? '#e9eb9e' : '#94a3b8',
+                fillOpacity: isSelected ? 0.45 : 0.15
+              }
+            : {
                 fillColor: getColor(boundary.id || index),
                 weight: 2,
                 opacity: 1,
                 color: 'white',
                 dashArray: '3',
                 fillOpacity: 0.4
-              }}
+              };
+
+          return (
+            <GeoJSON
+              key={boundary.id || index}
+              data={boundary.geojson}
+              style={style}
+              eventHandlers={onShapeClick ? { click: () => onShapeClick(boundary.id) } : undefined}
             >
               <Tooltip sticky>
                 <div className="text-slate-800 font-medium">
@@ -84,7 +96,7 @@ export default function MapComponent({ boundaries }) {
             </GeoJSON>
           );
         })}
-        
+
         <AutoFitBounds boundaries={boundaries} />
       </MapContainer>
     </div>

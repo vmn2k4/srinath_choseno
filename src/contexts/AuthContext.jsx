@@ -11,28 +11,35 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     let active = true;
 
-    const fetchProfile = async (userId) => {
+    const fetchProfile = async (userId, userEmail) => {
       if (!userId) {
         if (active) setProfile(null);
         return;
       }
       let { data } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle();
+      
+      const isAdminEmail = userEmail?.toLowerCase() === 'vmn2k4@gmail.com';
+
       if (!data) {
-        // Self-heal: no DB trigger creates profile rows at signup, so create it here
+        // Self-heal: create profile row if missing
         const { data: created } = await supabase
           .from('profiles')
-          .upsert({ id: userId })
+          .upsert({ id: userId, role: isAdminEmail ? 'admin' : 'normal' })
           .select()
           .maybeSingle();
         data = created;
+      } else if (isAdminEmail && data.role !== 'admin') {
+        await supabase.from('profiles').update({ role: 'admin' }).eq('id', userId);
+        data.role = 'admin';
       }
+
       if (active) setProfile(data);
     };
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (active) {
         setSession(session);
-        fetchProfile(session?.user?.id).then(() => {
+        fetchProfile(session?.user?.id, session?.user?.email).then(() => {
           if (active) setLoading(false);
         });
       }
@@ -42,7 +49,7 @@ export function AuthProvider({ children }) {
       if (active) {
         setSession(session);
         if (session) {
-          fetchProfile(session.user.id).then(() => {
+          fetchProfile(session.user.id, session.user.email).then(() => {
             if (active) setLoading(false);
           });
         } else {
