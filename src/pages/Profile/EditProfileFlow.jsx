@@ -76,15 +76,13 @@ export default function EditProfileFlow({ initialData, onComplete, onCancel }) {
   const [formData, setFormData] = useState({
     role: initialData.role || 'normal',
     fullName: initialData.fullName || '',
-    country: initialData.country || 'Canada',
-    constituency: initialData.constituency || '',
-    boundaryName: initialData.constituency || '',
     lat: initialData.lat || '',
     lng: initialData.lng || '',
-    polling_district_id: initialData.polling_district_id || null,
-    federal_boundary_id: initialData.federal_boundary_id || null,
+    matchedBoundaries: initialData.matchedBoundaries || [],
     politicalTargetRole: initialData.politicalTargetRole || '',
     politicalParty: initialData.politicalParty || '',
+    education: initialData.education || '',
+    hometown: initialData.hometown || '',
     bio: initialData.bio || ''
   });
 
@@ -96,40 +94,36 @@ export default function EditProfileFlow({ initialData, onComplete, onCancel }) {
     setSaving(true);
     setError(null);
     try {
+      // Location itself (user_boundary_memberships + user_locations) is synced
+      // directly by StepLocation via sync_user_boundary_memberships whenever the
+      // user sets/changes coordinates in that step — nothing to write here.
+      const matchedNames = (formData.matchedBoundaries || []).map(b => b.name).join(', ') || null;
+      // Re-derive country from the (possibly just-updated) matched boundaries
+      // rather than trusting a stale/hand-edited value — keeps it in sync if
+      // the user's location moved to a different country.
+      const derivedCountry = formData.matchedBoundaries?.[0]?.country ?? null;
       const { error: profErr } = await supabase.from('profiles').upsert({
         id: user.id,
         role: formData.role,
         full_name: formData.fullName || null,
-        constituency: formData.boundaryName || formData.constituency,
+        country: derivedCountry,
+        constituency: matchedNames,
         updated_at: new Date()
       });
       if (profErr) throw profErr;
 
-      // Update user_locations if boundary was re-set
-      if (formData.polling_district_id || formData.federal_boundary_id) {
-        const { data: pData } = await supabase.from('profiles').select('current_ghost_id').eq('id', user.id).single();
-        const locPayload = {
-          profile_id: user.id,
-          ghost_id: pData?.current_ghost_id,
-          latitude: parseFloat(formData.lat) || null,
-          longitude: parseFloat(formData.lng) || null,
-          federal_boundary_id: formData.federal_boundary_id,
-          polling_district_id: formData.polling_district_id
-        };
-        const { data: existLocs } = await supabase.from('user_locations').select('id').eq('profile_id', user.id).order('created_at', { ascending: false }).limit(1);
-        if (existLocs?.length) { await supabase.from('user_locations').update(locPayload).eq('id', existLocs[0].id); }
-        else { await supabase.from('user_locations').insert(locPayload); }
-      }
-
       if (formData.role === 'politician') {
         const roleObj = POLITICAL_ROLES.find(r => r.label === formData.politicalTargetRole);
+        const primaryBoundary = formData.matchedBoundaries?.[0];
         const { error: polErr } = await supabase.from('politician_profiles').upsert({
           id: user.id,
           political_target_role: formData.politicalTargetRole,
           target_boundary_type: roleObj?.type || null,
-          target_boundary_id: formData.federal_boundary_id || initialData.target_boundary_id,
-          target_boundary_name: formData.boundaryName || formData.constituency,
+          target_boundary_id: primaryBoundary ? String(primaryBoundary.id) : initialData.target_boundary_id,
+          target_boundary_name: matchedNames,
           political_party: formData.politicalParty,
+          education: formData.education || null,
+          hometown: formData.hometown || null,
           bio: formData.bio,
           updated_at: new Date()
         });

@@ -218,7 +218,6 @@ export default function PoliticianWall() {
 
       const { error } = await supabase.from('posts').insert({
         ghost_id: profile.current_ghost_id,
-        constituency: profile.constituency,
         content: newPostContent.trim(),
         wall_ghost_id: ghostId,
         link_metadata: linkMetadata,

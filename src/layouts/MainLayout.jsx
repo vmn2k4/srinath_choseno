@@ -34,16 +34,28 @@ export default function MainLayout() {
           </Link>
           {session ? (
             <>
-              <Link 
+              <Link
                 to="/feed"
                 className={`px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
-                  isActive('/feed') 
-                    ? 'text-text-main bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(233,235,158,0.15)]' 
+                  isActive('/feed')
+                    ? 'text-text-main bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(233,235,158,0.15)]'
                     : 'text-text-muted hover:text-text-main hover:bg-surface-hover'
                 }`}
               >
                 Feed
               </Link>
+              {profile?.role !== 'admin' && (
+                <Link
+                  to={profile?.role === 'politician' ? '/politician/elections' : '/elections'}
+                  className={`px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
+                    isActive('/elections') || isActive('/politician/elections')
+                      ? 'text-text-main bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(233,235,158,0.15)]'
+                      : 'text-text-muted hover:text-text-main hover:bg-surface-hover'
+                  }`}
+                >
+                  Elections
+                </Link>
+              )}
               {profile?.role === 'admin' && (
                 <Link 
                   to="/admin"

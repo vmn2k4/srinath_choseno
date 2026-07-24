@@ -5,11 +5,15 @@ import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
 import UserPage from './pages/UserPage';
 import AdminPage from './pages/AdminPage';
+import ElectionsAdmin from './pages/Admin/ElectionsAdmin';
 import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
 import FeedPage from './pages/FeedPage/FeedPage';
 import PoliticianWall from './pages/PoliticianWall';
 import OnboardingFlow from './pages/Onboarding/OnboardingFlow';
+import ElectionsPage from './pages/ElectionsPage';
+import PoliticianElections from './pages/PoliticianElections';
+import CandidacyWall from './components/CandidacyWall';
 import './index.css';
 
 // A simple protected route wrapper
@@ -20,8 +24,7 @@ function ProtectedRoute({ children, requireAdmin, requireOnboarding = true }) {
   if (!session) return <Navigate to="/auth" replace />;
   
   // If user is authenticated but hasn't completed onboarding
-  // (covers both a missing profile row and a profile without a role)
-  if (requireOnboarding && !profile?.role) {
+  if (requireOnboarding && profile?.role !== 'admin' && !profile?.onboarding_completed) {
     return <Navigate to="/onboarding" replace />;
   }
 
@@ -40,13 +43,21 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<HomePage />} />
             <Route path="explore" element={<UserPage />} />
-            <Route 
-              path="admin" 
+            <Route
+              path="admin"
               element={
                 <ProtectedRoute requireAdmin={true}>
                   <AdminPage />
                 </ProtectedRoute>
-              } 
+              }
+            />
+            <Route
+              path="admin/elections"
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <ElectionsAdmin />
+                </ProtectedRoute>
+              }
             />
             <Route path="auth" element={<AuthPage />} />
             <Route 
@@ -81,13 +92,37 @@ function App() {
                 </ProtectedRoute>
               } 
             />
-            <Route 
-              path="onboarding" 
+            <Route
+              path="onboarding"
               element={
                 <ProtectedRoute requireOnboarding={false}>
                   <OnboardingFlow />
                 </ProtectedRoute>
-              } 
+              }
+            />
+            <Route
+              path="elections"
+              element={
+                <ProtectedRoute>
+                  <ElectionsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="politician/elections"
+              element={
+                <ProtectedRoute>
+                  <PoliticianElections />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="candidacy/:candidateId"
+              element={
+                <ProtectedRoute>
+                  <CandidacyWall />
+                </ProtectedRoute>
+              }
             />
           </Route>
         </Routes>

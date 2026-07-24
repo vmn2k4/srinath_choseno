@@ -39,13 +39,36 @@ export default function StepPolitician({ data, updateData, nextStep, prevStep, l
 
         <div>
           <label className="block text-sm font-medium text-text-tertiary mb-2">Political Party</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             placeholder="e.g. Independent, Democratic, Conservative..."
             value={data.politicalParty}
             onChange={e => updateData({ politicalParty: e.target.value })}
             className="w-full bg-surface border border-border-light rounded-xl p-3 text-text-main outline-none focus:border-primary transition-colors"
           />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-text-tertiary mb-2">Education</label>
+            <input
+              type="text"
+              placeholder="e.g. B.A. Political Science"
+              value={data.education || ''}
+              onChange={e => updateData({ education: e.target.value })}
+              className="w-full bg-surface border border-border-light rounded-xl p-3 text-text-main outline-none focus:border-primary transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-text-tertiary mb-2">Hometown</label>
+            <input
+              type="text"
+              placeholder="e.g. Surrey, BC"
+              value={data.hometown || ''}
+              onChange={e => updateData({ hometown: e.target.value })}
+              className="w-full bg-surface border border-border-light rounded-xl p-3 text-text-main outline-none focus:border-primary transition-colors"
+            />
+          </div>
         </div>
 
         <div>

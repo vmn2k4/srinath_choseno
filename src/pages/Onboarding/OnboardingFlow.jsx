@@ -17,17 +17,15 @@ export default function OnboardingFlow() {
   // Form State
   const [formData, setFormData] = useState({
     role: '', // 'citizen' or 'politician'
-    country: 'Canada',
-    constituency: '',
     lat: '',
     lng: '',
-    polling_district_id: null,
-    federal_boundary_id: null,
-    boundaryName: '',
+    matchedBoundaries: [],
     fullName: '',
     // Politician specifics
     politicalTargetRole: '',
     politicalParty: '',
+    education: '',
+    hometown: '',
     bio: ''
   });
 
@@ -42,48 +40,40 @@ export default function OnboardingFlow() {
     setLoading(true);
     setError(null);
     try {
-      // 1. Upsert Profiles Table (creates the row if signup didn't)
-      const finalRole = formData.role === 'citizen' ? 'normal' : formData.role;
+      // 1. Upsert Profiles Table
+      // (Location itself was already synced to user_boundary_memberships by
+      // StepLocation when the user set/confirmed it earlier in this flow.)
+      const isAdminEmail = user?.email?.toLowerCase() === 'vmn2k4@gmail.com';
+      const finalRole = isAdminEmail ? 'admin' : (formData.role === 'citizen' ? 'normal' : formData.role);
+      const matchedNames = (formData.matchedBoundaries || []).map(b => b.name).join(', ') || null;
+      // find_boundaries_by_point (called in StepLocation) orders matches by
+      // rank ascending, so the first match is the broadest boundary — derive
+      // the user's country from it rather than guessing. If nothing matched
+      // (no data loaded for their area yet), leave it null rather than
+      // defaulting to a wrong country.
+      const derivedCountry = formData.matchedBoundaries?.[0]?.country ?? null;
       const { error: profileError } = await supabase.from('profiles').upsert({
         id: user.id,
         role: finalRole,
         full_name: formData.fullName || null,
-        country: formData.country,
-        constituency: formData.boundaryName || formData.constituency
+        country: derivedCountry,
+        constituency: matchedNames,
+        onboarding_completed: true
       });
       if (profileError) throw profileError;
 
-      // 2. Update User Locations Table (update-or-insert; a blind upsert
-      // inserts a duplicate row every time since the PK is a generated UUID)
-      if (formData.polling_district_id || formData.federal_boundary_id) {
-        const locPayload = {
-          profile_id: user.id,
-          latitude: parseFloat(formData.lat) || 0,
-          longitude: parseFloat(formData.lng) || 0,
-          polling_district_id: formData.polling_district_id,
-          federal_boundary_id: formData.federal_boundary_id
-        };
-        const { data: existLoc } = await supabase
-          .from('user_locations')
-          .select('id')
-          .eq('profile_id', user.id)
-          .order('created_at', { ascending: false })
-          .limit(1);
-        const { error: locError } = existLoc?.length
-          ? await supabase.from('user_locations').update(locPayload).eq('id', existLoc[0].id)
-          : await supabase.from('user_locations').insert(locPayload);
-        if (locError) throw locError;
-      }
-
-      // 3. Update Politician Profiles (if applicable)
+      // 2. Update Politician Profiles (if applicable)
       if (formData.role === 'politician') {
+        const primaryBoundary = formData.matchedBoundaries?.[0];
         const { error: polError } = await supabase.from('politician_profiles').upsert({
           id: user.id,
           political_target_role: formData.politicalTargetRole,
           target_boundary_type: formData.politicalTargetRole.includes('Federal') ? 'Federal' : 'Provincial',
-          target_boundary_id: formData.federal_boundary_id, // Defaulting for MVP
-          target_boundary_name: formData.boundaryName,
+          target_boundary_id: primaryBoundary ? String(primaryBoundary.id) : null,
+          target_boundary_name: matchedNames,
           political_party: formData.politicalParty,
+          education: formData.education || null,
+          hometown: formData.hometown || null,
           bio: formData.bio
         });
         if (polError) throw polError;
