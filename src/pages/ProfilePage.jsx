@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../services/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import { MapPin, Pencil, Loader2, Flame, RefreshCw } from 'lucide-react';
 import EditProfileFlow from './Profile/EditProfileFlow';
+import { getOwnProfile, getPoliticianProfileFull, getLatestUserLocation, getUserBoundaryMemberships, burnGhostIdRaw, upsertProfileCore } from '../services/profile';
 
 export default function ProfilePage() {
   const { session } = useAuth();
@@ -11,39 +11,24 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [burning, setBurning] = useState(false);
+  const [switchingRole, setSwitchingRole] = useState(false);
   const [profile, setProfile] = useState(null);
 
   const fetchProfile = async () => {
     if (!user) return;
     setLoading(true);
-    const { data } = await supabase
-      .from('profiles')
-      .select('role, full_name, country, constituency, current_ghost_id')
-      .eq('id', user.id)
-      .single();
+    const { data } = await getOwnProfile(user.id, { columns: 'role, full_name, country, constituency, current_ghost_id' });
 
     let polData = null;
     if (data?.role === 'politician') {
-      const { data: pd } = await supabase
-        .from('politician_profiles')
-        .select('target_boundary_id, target_boundary_name, political_party_id, political_parties(name), education, hometown, bio')
-        .eq('id', user.id)
-        .maybeSingle();
+      const { data: pd } = await getPoliticianProfileFull(user.id);
       polData = pd;
     }
 
-    const { data: locRows } = await supabase
-      .from('user_locations')
-      .select('latitude, longitude')
-      .eq('profile_id', user.id)
-      .order('created_at', { ascending: false })
-      .limit(1);
+    const { data: locRows } = await getLatestUserLocation(user.id);
     const locData = locRows?.[0] || null;
 
-    const { data: memberships } = await supabase
-      .from('user_boundary_memberships')
-      .select('map_shape_id, map_shapes(id, name, country, boundary_type)')
-      .eq('profile_id', user.id);
+    const { data: memberships } = await getUserBoundaryMemberships(user.id);
     const matchedBoundaries = (memberships || [])
       .map(m => m.map_shapes)
       .filter(Boolean);
@@ -72,8 +57,7 @@ export default function ProfilePage() {
   const burnGhostId = async () => {
     if (!confirm('⚠️ This permanently severs all your past activity from your account. Are you sure?')) return;
     setBurning(true);
-    const newGhostId = crypto.randomUUID();
-    await supabase.from('profiles').update({ current_ghost_id: newGhostId }).eq('id', user.id);
+    await burnGhostIdRaw(user.id);
     await fetchProfile();
     setBurning(false);
   };
@@ -81,6 +65,23 @@ export default function ProfilePage() {
   const handleEditComplete = (updatedFormData) => {
     setIsEditing(false);
     fetchProfile(); // Refresh from DB to show saved values
+  };
+
+  // One-click downgrade back to a citizen account — no dedicated politician
+  // fields need clearing, just the role flip (mirrors the "Become a
+  // Politician" prompts citizens see everywhere; politicians had no
+  // reciprocal one-click way back).
+  const switchToCitizen = async () => {
+    if (!confirm('Switch back to a Citizen account? You\'ll no longer be able to manage a public wall or nominate yourself for seats.')) return;
+    setSwitchingRole(true);
+    await upsertProfileCore(user.id, {
+      role: 'normal',
+      fullName: profile.fullName,
+      country: profile.country,
+      constituency: profile.constituency
+    });
+    await fetchProfile();
+    setSwitchingRole(false);
   };
 
   if (loading) return (
@@ -162,7 +163,16 @@ export default function ProfilePage() {
           {/* Politician Details Card */}
           {profile?.role === 'politician' && (
             <section className="p-6 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl">
-              <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest mb-5">Political Details</h3>
+              <div className="flex items-center justify-between mb-5 gap-3 flex-wrap">
+                <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest">Political Details</h3>
+                <button
+                  onClick={switchToCitizen}
+                  disabled={switchingRole}
+                  className="text-xs font-semibold text-text-muted hover:text-text-main hover:bg-surface-hover px-3 py-1.5 rounded-lg border border-border-light transition-colors disabled:opacity-50"
+                >
+                  {switchingRole ? 'Switching...' : 'Switch to Citizen Account'}
+                </button>
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <p className="text-xs text-text-muted mb-1">Political Party</p>

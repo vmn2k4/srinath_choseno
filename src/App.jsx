@@ -3,9 +3,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
-import UserPage from './pages/UserPage';
 import AdminPage from './pages/AdminPage';
 import ElectionsAdmin from './pages/Admin/ElectionsAdmin';
+import ElectionAdminApplications from './pages/Admin/ElectionAdminApplications';
 import BoundaryVisualizer from './pages/Admin/BoundaryVisualizer';
 import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
@@ -13,6 +13,7 @@ import FeedPage from './pages/FeedPage/FeedPage';
 import PoliticianWall from './pages/PoliticianWall';
 import OnboardingFlow from './pages/Onboarding/OnboardingFlow';
 import ElectionsPage from './pages/ElectionsPage';
+import ElectionSeatPage from './pages/ElectionSeatPage';
 import PoliticianElections from './pages/PoliticianElections';
 import CandidacyWall from './components/CandidacyWall';
 import CandidateApplication from './pages/CandidateApplication';
@@ -44,7 +45,6 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<HomePage />} />
-            <Route path="explore" element={<UserPage />} />
             <Route
               path="admin"
               element={
@@ -58,6 +58,14 @@ function App() {
               element={
                 <ProtectedRoute requireAdmin={true}>
                   <ElectionsAdmin />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="admin/election-admins"
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <ElectionAdminApplications />
                 </ProtectedRoute>
               }
             />
@@ -115,6 +123,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <ElectionsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="elections/seat/:seatId"
+              element={
+                <ProtectedRoute>
+                  <ElectionSeatPage />
                 </ProtectedRoute>
               }
             />

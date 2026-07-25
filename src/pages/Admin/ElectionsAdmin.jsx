@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../services/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import BoundaryPicker from '../../components/map/BoundaryPicker';
 import AdminSubNav from '../../components/AdminSubNav';
-import { fetchAllPages } from '../../utils/fetchAllPages';
-import { Plus, Trash2, Landmark, MapPin, Vote, HelpCircle, ChevronDown, ChevronUp, CheckCircle2, XCircle, Video } from 'lucide-react';
+import {
+  getElections, createElection, advanceElectionStatus, getElectionRoleTypes,
+  getElectionSeatsByElectionId, getElectionCandidatesBySeatIds, createElectionSeats, deleteElectionSeat,
+  deleteCandidacy, reviewCandidateApplication, getElectionQuestions, createElectionQuestion,
+  deleteElectionQuestion, createElectionQuestionOptions, resolveRegionNames
+} from '../../services/elections';
+import { getCountries, listBoundaryTypes, getMapShapesByType, findShapesInContainers } from '../../services/boundaries';
+import { Plus, Trash2, Landmark, MapPin, Vote, HelpCircle, ChevronDown, ChevronUp, XCircle, Video } from 'lucide-react';
 
 const STATUS_FLOW = {
   draft: 'nominations_open',
@@ -61,18 +66,18 @@ export default function ElectionsAdmin() {
 
   const fetchElections = async () => {
     setLoadingElections(true);
-    const { data } = await supabase.from('elections').select('*').order('created_at', { ascending: false });
+    const { data } = await getElections();
     setElections(data || []);
     setLoadingElections(false);
   };
 
   const fetchCountries = async () => {
-    const { data } = await supabase.from('countries').select('name').order('name');
+    const { data } = await getCountries();
     setCountries((data || []).map(c => c.name));
   };
 
   const fetchBoundaryTypes = async () => {
-    const { data } = await supabase.from('country_boundary_types').select('country, type_name, rank, admin_only').order('country').order('rank');
+    const { data } = await listBoundaryTypes();
     setBoundaryTypes(data || []);
   };
 
@@ -116,11 +121,7 @@ export default function ElectionsAdmin() {
     }
     let cancelled = false;
     (async () => {
-      const { data } = await supabase
-        .from('election_role_types')
-        .select('role_key, region_override, role_title')
-        .eq('country', seatCountry)
-        .eq('boundary_type', targetType);
+      const { data } = await getElectionRoleTypes(seatCountry, targetType);
       if (!cancelled) setRoleTypes(data || []);
     })();
     return () => { cancelled = true; };
@@ -151,38 +152,15 @@ export default function ElectionsAdmin() {
   const fetchSeats = async (electionId) => {
     setLoadingSeats(true);
     // A single container-driven batch (e.g. every Municipal seat across two
-    // provinces) routinely produces thousands of seats — paginate past
-    // Supabase/PostgREST's default 1000-row cap the same way fetchAllPages
-    // is used everywhere else large map_shapes-derived result sets show up.
-    const { data: seatRows } = await fetchAllPages((from, to) =>
-      supabase
-        .from('election_seats')
-        .select('id, role_title, map_shapes(id, name, boundary_type, country)')
-        .eq('election_id', electionId)
-        .order('role_title')
-        .order('id')
-        .range(from, to)
-    );
+    // provinces) routinely produces thousands of seats — the service
+    // functions below paginate past Supabase/PostgREST's default 1000-row
+    // cap via fetchAllPages internally.
+    const { data: seatRows } = await getElectionSeatsByElectionId(electionId);
 
     const seatIds = (seatRows || []).map(s => s.id);
     let candidatesBySeat = {};
     if (seatIds.length > 0) {
-      const { data: candidateRows } = await fetchAllPages((from, to) =>
-        supabase
-          .from('election_candidates')
-          .select(`
-            id, seat_id, statement, status, submitted_at, intro_video_url,
-            profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id),
-            election_candidate_answers(
-              id, context_text,
-              election_questions(id, question_text, rank),
-              election_question_options(option_text)
-            )
-          `)
-          .in('seat_id', seatIds)
-          .order('id')
-          .range(from, to)
-      );
+      const { data: candidateRows } = await getElectionCandidatesBySeatIds(seatIds);
       (candidateRows || []).forEach(c => {
         candidatesBySeat[c.seat_id] = candidatesBySeat[c.seat_id] || [];
         const sortedAnswers = [...(c.election_candidate_answers || [])]
@@ -197,11 +175,7 @@ export default function ElectionsAdmin() {
 
   const fetchQuestions = async (electionId) => {
     setLoadingQuestions(true);
-    const { data } = await supabase
-      .from('election_questions')
-      .select('id, question_text, required, allow_context, visible_to_public, rank, election_question_options(id, option_text, rank)')
-      .eq('election_id', electionId)
-      .order('rank');
+    const { data } = await getElectionQuestions(electionId);
     setQuestions((data || []).map(q => ({
       ...q,
       election_question_options: [...(q.election_question_options || [])].sort((a, b) => a.rank - b.rank)
@@ -225,11 +199,7 @@ export default function ElectionsAdmin() {
       setCreateStatus('Error: name and election date are required.');
       return;
     }
-    const { data, error } = await supabase
-      .from('elections')
-      .insert({ name: newName.trim(), election_date: newDate })
-      .select()
-      .single();
+    const { data, error } = await createElection({ name: newName.trim(), electionDate: newDate });
     if (error) {
       setCreateStatus('Error: ' + error.message);
       return;
@@ -254,26 +224,9 @@ export default function ElectionsAdmin() {
     // Leaving no container selected means "every {targetType} in
     // {seatCountry}" — since container shapes of one type partition a
     // country, that's equivalent to picking every container of that type.
-    const { data, error } = await fetchAllPages((from, to) => {
-      if (containerShapeIds.length > 0) {
-        return supabase
-          .rpc('find_shapes_in_containers', {
-            p_container_shape_ids: containerShapeIds,
-            p_target_boundary_type: targetType,
-            p_country: seatCountry || null
-          })
-          .select('id')
-          .range(from, to);
-      }
-      return supabase
-        .from('map_shapes')
-        .select('id')
-        .eq('country', seatCountry)
-        .eq('boundary_type', targetType)
-        .is('retired_at', null)
-        .order('id')
-        .range(from, to);
-    });
+    const { data, error } = containerShapeIds.length > 0
+      ? await findShapesInContainers({ containerShapeIds, targetBoundaryType: targetType, country: seatCountry })
+      : await getMapShapesByType({ country: seatCountry, boundaryType: targetType, paginated: true });
     if (error) {
       setSeatStatus('Error: ' + error.message);
       return;
@@ -295,10 +248,7 @@ export default function ElectionsAdmin() {
       return;
     }
     const shapeIds = [...pendingShapeIds];
-    const { data: regionRows, error: regionError } = await supabase.rpc('resolve_region_names', {
-      p_shape_ids: shapeIds,
-      p_country: seatCountry
-    });
+    const { data: regionRows, error: regionError } = await resolveRegionNames(shapeIds, seatCountry);
     if (regionError) {
       setSeatStatus('Error: ' + regionError.message);
       return;
@@ -317,7 +267,7 @@ export default function ElectionsAdmin() {
       });
     });
 
-    const { error } = await supabase.from('election_seats').insert(rows);
+    const { error } = await createElectionSeats(rows);
     if (error) {
       setSeatStatus('Error: ' + error.message);
       return;
@@ -331,25 +281,18 @@ export default function ElectionsAdmin() {
 
   const handleDeleteSeat = async (seatId) => {
     if (!window.confirm('Delete this seat? Any candidate applications for it will be removed too.')) return;
-    await supabase.from('election_seats').delete().eq('id', seatId);
+    await deleteElectionSeat(seatId);
     fetchSeats(selectedElection.id);
   };
 
   const handleDeleteCandidate = async (candidateId) => {
     if (!window.confirm('Remove this candidate from the seat?')) return;
-    await supabase.from('election_candidates').delete().eq('id', candidateId);
+    await deleteCandidacy(candidateId);
     fetchSeats(selectedElection.id);
   };
 
   const handleReviewCandidate = async (candidateId, approve) => {
-    const { error } = await supabase
-      .from('election_candidates')
-      .update({
-        status: approve ? 'approved' : 'rejected',
-        reviewed_at: new Date(),
-        reviewed_by: user.id
-      })
-      .eq('id', candidateId);
+    const { error } = await reviewCandidateApplication(candidateId, { approve, reviewedBy: user.id });
     if (error) {
       alert('Error: ' + error.message);
       return;
@@ -369,26 +312,20 @@ export default function ElectionsAdmin() {
       setQuestionStatus('Error: question text and at least 2 options are required.');
       return;
     }
-    const { data: q, error } = await supabase
-      .from('election_questions')
-      .insert({
-        election_id: selectedElection.id,
-        question_text: newQuestionText.trim(),
-        required: newQuestionRequired,
-        allow_context: newQuestionAllowContext,
-        visible_to_public: newQuestionVisible,
-        rank: questions.length
-      })
-      .select()
-      .single();
+    const { data: q, error } = await createElectionQuestion({
+      election_id: selectedElection.id,
+      question_text: newQuestionText.trim(),
+      required: newQuestionRequired,
+      allow_context: newQuestionAllowContext,
+      visible_to_public: newQuestionVisible,
+      rank: questions.length
+    });
     if (error) {
       setQuestionStatus('Error: ' + error.message);
       return;
     }
 
-    const { error: optErr } = await supabase
-      .from('election_question_options')
-      .insert(opts.map((option_text, i) => ({ question_id: q.id, option_text, rank: i })));
+    const { error: optErr } = await createElectionQuestionOptions(opts.map((option_text, i) => ({ question_id: q.id, option_text, rank: i })));
     if (optErr) {
       setQuestionStatus('Error: ' + optErr.message);
       return;
@@ -405,14 +342,14 @@ export default function ElectionsAdmin() {
 
   const handleDeleteQuestion = async (questionId) => {
     if (!window.confirm('Delete this question? Any candidate answers to it will be removed too.')) return;
-    await supabase.from('election_questions').delete().eq('id', questionId);
+    await deleteElectionQuestion(questionId);
     fetchQuestions(selectedElection.id);
   };
 
   const advanceStatus = async () => {
     const nextStatus = STATUS_FLOW[selectedElection.status];
     if (!nextStatus) return;
-    const { error } = await supabase.from('elections').update({ status: nextStatus }).eq('id', selectedElection.id);
+    const { error } = await advanceElectionStatus(selectedElection.id, nextStatus);
     if (error) {
       setSeatStatus('Error: ' + error.message);
       return;
@@ -753,11 +690,8 @@ export default function ElectionsAdmin() {
                                     {!c.submitted_at && (
                                       <span className="text-[9px] text-text-muted uppercase font-bold">Draft — not submitted</span>
                                     )}
-                                    {canReview && c.status !== 'approved' && (
-                                      <button onClick={() => handleReviewCandidate(c.id, true)} className="p-1 text-text-muted hover:text-emerald-400 transition-colors" title="Approve">
-                                        <CheckCircle2 size={14} />
-                                      </button>
-                                    )}
+                                    {/* Candidates auto-approve on submit now -- only moderation
+                                        (rejecting a live candidacy) remains an admin action. */}
                                     {canReview && c.status !== 'rejected' && (
                                       <button onClick={() => handleReviewCandidate(c.id, false)} className="p-1 text-text-muted hover:text-danger transition-colors" title="Reject">
                                         <XCircle size={14} />

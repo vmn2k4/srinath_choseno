@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
-import { supabase } from '../../services/supabase';
+import { getPoliticalParties } from '../../services/politicalParties';
 
 export default function StepPolitician({ data, updateData, nextStep, prevStep, loading, error }) {
   const [parties, setParties] = useState([]);
@@ -12,14 +12,9 @@ export default function StepPolitician({ data, updateData, nextStep, prevStep, l
       return;
     }
     let cancelled = false;
-    supabase
-      .from('political_parties')
-      .select('id, name')
-      .eq('country', country)
-      .order('rank')
-      .then(({ data: rows }) => {
-        if (!cancelled) setParties(rows || []);
-      });
+    getPoliticalParties({ country }).then(({ data: rows }) => {
+      if (!cancelled) setParties(rows || []);
+    });
     return () => { cancelled = true; };
   }, [country]);
 

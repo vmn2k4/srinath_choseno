@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { supabase } from '../../services/supabase';
 import { MapPin, Users, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Video, Image as ImageIcon, X, Globe2, Landmark, Vote, Layers } from 'lucide-react';
 import VideoRecorder from '../../components/video/VideoRecorder';
 import PoliticianSidebar from '../../components/PoliticianSidebar';
 import LinkPreview from '../../components/LinkPreview';
+import { getOwnProfile, getUserBoundaryMemberships } from '../../services/profile';
+import { getBoundaryTypesForCountries } from '../../services/boundaries';
+import {
+  getMembershipScopedPosts, getCountryScopedPosts, getInternationalScopedPosts, getFeedPostsForTab,
+  createFeedPost, voteOnPost, createComment, uploadPostImage,
+  getActiveElectionsForUser, dismissElectionNotification, burnGhostIdentityViaRpc,
+  getPostsForExport, getCommentsForExport, uploadUserExport
+} from '../../services/feed';
 
 export default function FeedPage() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -48,11 +57,7 @@ export default function FeedPage() {
   const fetchProfile = async () => {
     if (!user) return;
     try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
+      const { data, error } = await getOwnProfile(user.id);
 
       if (error) throw error;
       setProfile(data);
@@ -67,10 +72,7 @@ export default function FeedPage() {
     if (!user) return;
     setLoadingMemberships(true);
     try {
-      const { data, error } = await supabase
-        .from('user_boundary_memberships')
-        .select('map_shape_id, map_shapes(id, name, country, boundary_type)')
-        .eq('profile_id', user.id);
+      const { data, error } = await getUserBoundaryMemberships(user.id);
 
       if (error) throw error;
 
@@ -82,10 +84,7 @@ export default function FeedPage() {
       }
 
       const countries = [...new Set(shapes.map(s => s.country))];
-      const { data: types } = await supabase
-        .from('country_boundary_types')
-        .select('country, type_name, rank')
-        .in('country', countries);
+      const { data: types } = await getBoundaryTypesForCountries(countries);
 
       const rankOf = (country, typeName) =>
         types?.find(t => t.country === country && t.type_name === typeName)?.rank ?? 999;
@@ -104,7 +103,7 @@ export default function FeedPage() {
 
   const fetchActiveElections = async () => {
     if (!user) return;
-    const { data, error } = await supabase.rpc('get_active_elections_for_user');
+    const { data, error } = await getActiveElectionsForUser();
     if (error) {
       console.error('Error fetching active elections:', error);
       return;
@@ -114,10 +113,7 @@ export default function FeedPage() {
 
   const dismissElectionBanner = async (electionId) => {
     setActiveElections(prev => prev.filter(e => e.election_id !== electionId));
-    await supabase.from('election_notification_dismissals').insert({
-      profile_id: user.id,
-      election_id: electionId
-    });
+    await dismissElectionNotification(user.id, electionId);
   };
 
   // Master feed: everything from every group the user belongs to, plus
@@ -132,25 +128,15 @@ export default function FeedPage() {
       const queries = [];
 
       if (matchingMembershipIds.length > 0) {
-        queries.push(
-          supabase
-            .from('posts')
-            .select('*, comments(*), post_boundaries!inner(map_shape_id)')
-            .in('post_boundaries.map_shape_id', matchingMembershipIds)
-        );
+        queries.push(getMembershipScopedPosts(matchingMembershipIds));
       }
 
       if ((masterFilter === 'all' || masterFilter === 'Country') && profile.country) {
-        queries.push(
-          supabase.from('posts').select('*, comments(*)')
-            .eq('is_country', true).eq('country', profile.country)
-        );
+        queries.push(getCountryScopedPosts(profile.country));
       }
 
       if (masterFilter === 'all' || masterFilter === 'International') {
-        queries.push(
-          supabase.from('posts').select('*, comments(*)').eq('is_international', true)
-        );
+        queries.push(getInternationalScopedPosts());
       }
 
       if (queries.length === 0) {
@@ -193,23 +179,11 @@ export default function FeedPage() {
     }
     try {
       const isMembershipTab = activeTab.startsWith('membership:');
-      const selectStr = isMembershipTab
-        ? '*, comments (*), post_boundaries!inner(map_shape_id)'
-        : '*, comments (*)';
+      if (activeTab === 'country' && !profile.country) return;
 
-      let query = supabase.from('posts').select(selectStr).order('created_at', { ascending: false });
-
-      if (activeTab === 'country') {
-        if (!profile.country) return;
-        query = query.eq('is_country', true).eq('country', profile.country);
-      } else if (activeTab === 'international') {
-        query = query.eq('is_international', true);
-      } else if (isMembershipTab) {
-        const shapeId = activeTab.split(':')[1];
-        query = query.eq('post_boundaries.map_shape_id', shapeId);
-      }
-
-      const { data, error } = await query;
+      const tab = activeTab === 'country' ? 'country' : activeTab === 'international' ? 'international' : isMembershipTab ? 'membership' : activeTab;
+      const shapeId = isMembershipTab ? activeTab.split(':')[1] : undefined;
+      const { data, error } = await getFeedPostsForTab({ tab, country: profile.country, shapeId });
 
       if (error) throw error;
 
@@ -272,13 +246,7 @@ export default function FeedPage() {
       let finalImageUrl = null;
 
       if (imageFile) {
-        const fileExt = imageFile.name.split('.').pop();
-        const fileName = `${profile.current_ghost_id}-${Date.now()}.${fileExt}`;
-        const filePath = `posts/${fileName}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from('post-images')
-          .upload(filePath, imageFile);
+        const { publicUrl, error: uploadError } = await uploadPostImage(imageFile, profile.current_ghost_id);
 
         if (uploadError) {
           console.error('Upload error:', uploadError);
@@ -287,18 +255,14 @@ export default function FeedPage() {
           return;
         }
 
-        const { data: { publicUrl } } = supabase.storage
-          .from('post-images')
-          .getPublicUrl(filePath);
-
         finalImageUrl = publicUrl;
       }
 
-      const { error } = await supabase.rpc('create_post', {
-        p_content: newPostContent.trim(),
-        p_image_url: finalImageUrl,
-        p_video_url: uploadedVideoUrl,
-        p_link_metadata: linkMetadata
+      const { error } = await createFeedPost({
+        content: newPostContent.trim(),
+        imageUrl: finalImageUrl,
+        videoUrl: uploadedVideoUrl,
+        linkMetadata
       });
       if (error) throw error;
 
@@ -321,10 +285,7 @@ export default function FeedPage() {
   const handleVote = async (postId, voteType) => {
     if (!profile?.current_ghost_id) return;
     try {
-      const { error } = await supabase.rpc('vote_on_post', {
-        p_post_id: postId,
-        p_vote_type: voteType
-      });
+      const { error } = await voteOnPost(postId, voteType);
       if (error) throw error;
       fetchPosts(); // Refresh counts
     } catch (err) {
@@ -337,11 +298,7 @@ export default function FeedPage() {
     if (!content?.trim() || !profile?.current_ghost_id) return;
 
     try {
-      const { error } = await supabase.from('comments').insert({
-        post_id: postId,
-        ghost_id: profile.current_ghost_id,
-        content: content.trim()
-      });
+      const { error } = await createComment(postId, profile.current_ghost_id, content.trim());
       if (error) throw error;
 
       setCommentInputs({ ...commentInputs, [postId]: '' });
@@ -356,7 +313,7 @@ export default function FeedPage() {
     if (window.confirm("Warning: Burning your identity will permanently orphan all your past posts and comments. You will not be able to edit or delete them anymore, and you will get a brand new anonymous identity. Are you sure?")) {
       setBurning(true);
       try {
-        const { error } = await supabase.rpc('burn_ghost_identity');
+        const { error } = await burnGhostIdentityViaRpc();
         if (error) throw error;
         await fetchProfile(); // Refresh to get the new current_ghost_id
       } catch (err) {
@@ -371,18 +328,12 @@ export default function FeedPage() {
     if (!profile?.current_ghost_id || !profile?.id) return;
     try {
       // 1. Fetch user's posts
-      const { data: userPosts, error: postError } = await supabase
-        .from('posts')
-        .select('id, content, created_at, likes_count, dislikes_count, comments(id)')
-        .eq('ghost_id', profile.current_ghost_id);
+      const { data: userPosts, error: postError } = await getPostsForExport(profile.current_ghost_id);
 
       if (postError) throw postError;
 
       // 2. Fetch user's comments
-      const { data: userComments, error: commentError } = await supabase
-        .from('comments')
-        .select('id, post_id, content, created_at')
-        .eq('ghost_id', profile.current_ghost_id);
+      const { data: userComments, error: commentError } = await getCommentsForExport(profile.current_ghost_id);
 
       if (commentError) throw commentError;
 
@@ -413,12 +364,7 @@ export default function FeedPage() {
       const fileName = `${profile.id}_export.json`;
 
       // 5. Upload to Supabase Storage
-      const { error: uploadError } = await supabase.storage
-        .from('user_exports')
-        .upload(fileName, jsonString, {
-          upsert: true,
-          contentType: 'application/json'
-        });
+      const { error: uploadError } = await uploadUserExport(fileName, jsonString);
 
       if (uploadError) throw uploadError;
     } catch (err) {
@@ -498,22 +444,26 @@ export default function FeedPage() {
       </div>
 
       {activeElections.length > 0 && (
-        <div className="mb-8 space-y-3">
+        <div className="mb-8 flex flex-wrap gap-2.5">
           {activeElections.map(e => (
-            <div key={e.election_id} className="p-4 bg-amber-500/10 border border-amber-500/25 rounded-xl flex items-start gap-3">
-              <Vote className="text-amber-400 shrink-0 mt-0.5" size={20} />
-              <div className="flex-1 min-w-0">
-                <h3 className="text-amber-400 font-bold mb-1">An election is happening in your area</h3>
-                <p className="text-amber-200/70 text-sm">
-                  {e.election_name} · {e.election_date} — <a href="/elections" className="underline hover:text-amber-200">view candidates</a>
-                </p>
-              </div>
+            <div
+              key={e.seat_id}
+              className="flex items-center gap-2 pl-3.5 pr-2 py-2 bg-amber-500/10 border border-amber-500/25 rounded-full"
+            >
+              <Vote className="text-amber-400 shrink-0" size={14} />
+              <button
+                onClick={() => navigate(`/elections/seat/${e.seat_id}`)}
+                className="text-amber-200 text-sm font-semibold hover:text-amber-100 transition-colors whitespace-nowrap"
+                title={e.election_name}
+              >
+                {e.role_title} · {e.election_date}
+              </button>
               <button
                 onClick={() => dismissElectionBanner(e.election_id)}
-                className="p-1.5 text-amber-400/70 hover:text-amber-200 hover:bg-amber-500/10 rounded-lg transition-colors shrink-0"
+                className="p-1 text-amber-400/70 hover:text-amber-200 hover:bg-amber-500/10 rounded-full transition-colors shrink-0"
                 title="Dismiss"
               >
-                <X size={16} />
+                <X size={13} />
               </button>
             </div>
           ))}

@@ -203,13 +203,6 @@ export default function HomePage() {
               {primaryCta.label}
               <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
             </Link>
-            <Link
-              to="/explore"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl border border-border-light bg-surface-elevated backdrop-blur-md text-text-secondary font-medium text-lg hover:bg-surface-hover hover:border-primary/30 transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer"
-            >
-              <Globe2 size={20} aria-hidden="true" />
-              Explore boundaries
-            </Link>
           </div>
         </div>
 

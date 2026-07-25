@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Search } from 'lucide-react';
-import { supabase } from '../../services/supabase';
-import { fetchAllPages } from '../../utils/fetchAllPages';
+import { getBoundaryCandidates, getGeojsonShapes } from '../../services/boundaries';
 import MapComponent from './MapComponent';
 
 // Above this many candidate shapes we don't eagerly load every geometry
@@ -32,20 +31,7 @@ export default function BoundaryPicker({
 
     const fetchBoundaries = async () => {
       setLoading(true);
-      const { data, error } = await fetchAllPages((from, to) => {
-        let query = supabase
-          .from('map_shapes')
-          .select('id, name, country, boundary_type, code, properties')
-          .is('retired_at', null)
-          .order('name')
-          .order('id')
-          .range(from, to);
-
-        if (boundaryTypeFilter?.length) query = query.in('boundary_type', boundaryTypeFilter);
-        if (countryFilter) query = query.eq('country', countryFilter);
-
-        return query;
-      });
+      const { data, error } = await getBoundaryCandidates({ boundaryTypeFilter, countryFilter });
       if (error || cancelled) {
         setLoading(false);
         return;
@@ -55,7 +41,7 @@ export default function BoundaryPicker({
 
       if (showMap && withGeo.length > 0 && withGeo.length <= EAGER_LOAD_LIMIT) {
         const ids = withGeo.map(b => b.id);
-        const { data: geoData } = await supabase.rpc('get_geojson_shapes', { ids });
+        const { data: geoData } = await getGeojsonShapes(ids);
         if (geoData) {
           const geoMap = new Map(geoData.map(g => [g.id, g.geojson]));
           withGeo = withGeo.map(b => ({ ...b, geojson: geoMap.get(b.id) || null }));
@@ -95,7 +81,7 @@ export default function BoundaryPicker({
         .map(b => b.id);
       if (missingIds.length === 0) return;
 
-      const { data } = await supabase.rpc('get_geojson_shapes', { ids: missingIds });
+      const { data } = await getGeojsonShapes(missingIds);
       if (cancelled || !data) return;
       const geoMap = new Map(data.map(g => [g.id, g.geojson]));
       setBoundaries(prev => prev.map(b => (geoMap.has(b.id) ? { ...b, geojson: geoMap.get(b.id) } : b)));
@@ -119,7 +105,7 @@ export default function BoundaryPicker({
     if (!eagerLoaded) {
       const b = boundaries.find(x => x.id === id);
       if (b && !b.geojson) {
-        const { data } = await supabase.rpc('get_geojson_shapes', { ids: [id] }).single();
+        const { data } = await getGeojsonShapes([id], { single: true });
         if (data?.geojson) {
           setBoundaries(prev => prev.map(x => (x.id === id ? { ...x, geojson: data.geojson } : x)));
         }

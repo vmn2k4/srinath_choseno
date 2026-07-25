@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../services/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import {
+  getOpenSeatsNearShapeIds, getMyCandidacies, findOpenSeatsInContainer, applyForSeat, deleteCandidacy,
+  getMyElectionAdminApplications
+} from '../services/elections';
+import { getCountries, listBoundaryTypes, getMapShapesByType } from '../services/boundaries';
+import { getUserBoundaryShapeIds } from '../services/profile';
 import { Vote, MapPin, ExternalLink, FileEdit, Search, X } from 'lucide-react';
 
 const STATUS_COPY = {
@@ -17,6 +22,7 @@ export default function PoliticianElections() {
   const [loading, setLoading] = useState(true);
   const [openSeats, setOpenSeats] = useState([]); // seats in the politician's own boundaries
   const [myCandidacies, setMyCandidacies] = useState([]);
+  const [myAdminApplications, setMyAdminApplications] = useState([]);
   const [myShapeIds, setMyShapeIds] = useState(new Set());
   const [applyingSeatId, setApplyingSeatId] = useState(null);
   const [status, setStatus] = useState('');
@@ -37,10 +43,7 @@ export default function PoliticianElections() {
   const fetchAll = async () => {
     setLoading(true);
 
-    const { data: memberships } = await supabase
-      .from('user_boundary_memberships')
-      .select('map_shape_id')
-      .eq('profile_id', user.id);
+    const { data: memberships } = await getUserBoundaryShapeIds(user.id);
     const shapeIds = (memberships || []).map(m => m.map_shape_id);
     setMyShapeIds(new Set(shapeIds));
 
@@ -50,33 +53,24 @@ export default function PoliticianElections() {
     // Scoped to the politician's own boundaries by default — "browse a
     // different area" below is how they see anything wider than that.
     if (shapeIds.length > 0) {
-      const today = new Date().toISOString().slice(0, 10);
-      const { data: seats } = await supabase
-        .from('election_seats')
-        .select('id, role_title, map_shape_id, map_shapes(name, boundary_type, country), elections!inner(id, name, election_date, status)')
-        .in('map_shape_id', shapeIds)
-        .in('elections.status', ['nominations_open', 'active'])
-        .gte('elections.election_date', today)
-        .order('role_title');
+      const { data: seats } = await getOpenSeatsNearShapeIds(shapeIds);
       setOpenSeats(seats || []);
     } else {
       setOpenSeats([]);
     }
 
-    const { data: candidacies } = await supabase
-      .from('election_candidates')
-      .select('id, statement, seat_id, status, submitted_at, election_seats(role_title, map_shapes(name), elections(name, status))')
-      .eq('politician_id', user.id)
-      .order('created_at', { ascending: false });
+    const { data: candidacies } = await getMyCandidacies(user.id);
     setMyCandidacies(candidacies || []);
+
+    const { data: adminApps } = await getMyElectionAdminApplications(user.id);
+    setMyAdminApplications(adminApps || []);
 
     setLoading(false);
   };
 
   useEffect(() => {
     if (user) fetchAll();
-    supabase.from('countries').select('name').order('name')
-      .then(({ data }) => setCountries((data || []).map(c => c.name)));
+    getCountries().then(({ data }) => setCountries((data || []).map(c => c.name)));
   }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -88,12 +82,7 @@ export default function PoliticianElections() {
       setContainerTypes([]);
       return;
     }
-    supabase
-      .from('country_boundary_types')
-      .select('type_name')
-      .eq('country', browseCountry)
-      .eq('admin_only', true)
-      .order('rank')
+    listBoundaryTypes({ country: browseCountry, adminOnly: true, columns: 'type_name' })
       .then(({ data }) => setContainerTypes((data || []).map(t => t.type_name)));
   }, [browseCountry]);
 
@@ -104,13 +93,7 @@ export default function PoliticianElections() {
       setContainers([]);
       return;
     }
-    supabase
-      .from('map_shapes')
-      .select('id, name')
-      .eq('country', browseCountry)
-      .eq('boundary_type', browseContainerType)
-      .is('retired_at', null)
-      .order('name')
+    getMapShapesByType({ country: browseCountry, boundaryType: browseContainerType, columns: 'id, name', orderBy: 'name' })
       .then(({ data }) => setContainers(data || []));
   }, [browseCountry, browseContainerType]);
 
@@ -118,9 +101,7 @@ export default function PoliticianElections() {
     if (!browseContainerId) return;
     setBrowseLoading(true);
     setBrowseStatus('');
-    const { data, error } = await supabase.rpc('find_open_seats_in_container', {
-      p_container_shape_id: Number(browseContainerId)
-    });
+    const { data, error } = await findOpenSeatsInContainer(Number(browseContainerId));
     setBrowseLoading(false);
     if (error) {
       setBrowseStatus('Error: ' + error.message);
@@ -141,10 +122,7 @@ export default function PoliticianElections() {
   const startApplying = async (seatId) => {
     setApplyingSeatId(seatId);
     setStatus('');
-    const { data, error } = await supabase.rpc('apply_for_seat', {
-      p_seat_id: seatId,
-      p_statement: null
-    });
+    const { data, error } = await applyForSeat(seatId);
     setApplyingSeatId(null);
     if (error) {
       setStatus('Error: ' + error.message);
@@ -155,7 +133,7 @@ export default function PoliticianElections() {
 
   const withdraw = async (candidateId) => {
     if (!window.confirm('Withdraw this candidacy?')) return;
-    await supabase.from('election_candidates').delete().eq('id', candidateId);
+    await deleteCandidacy(candidateId);
     fetchAll();
   };
 
@@ -219,6 +197,34 @@ export default function PoliticianElections() {
           </div>
         )}
       </section>
+
+      {/* My Election-Administrator Applications */}
+      {myAdminApplications.length > 0 && (
+        <section>
+          <h2 className="text-lg font-bold text-text-secondary mb-4">My Election-Administrator Applications</h2>
+          <div className="space-y-3">
+            {myAdminApplications.map(a => {
+              const statusInfo = STATUS_COPY[a.status] || STATUS_COPY.pending;
+              return (
+                <div key={a.id} className="p-4 bg-surface/30 rounded-xl border border-border-light/35 flex items-center justify-between gap-3 flex-wrap">
+                  <div>
+                    <p className="font-bold text-text-secondary text-sm">{a.election_seats?.role_title} — {a.election_seats?.map_shapes?.name}</p>
+                    <div className="flex items-center gap-2 mt-1 flex-wrap">
+                      <span className="text-xs text-text-muted">{a.election_seats?.elections?.name}</span>
+                      <span className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded ${statusInfo.className}`}>{statusInfo.label}</span>
+                    </div>
+                  </div>
+                  {a.status === 'approved' && (
+                    <button onClick={() => navigate(`/elections/seat/${a.seat_id}`)} className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary-light hover:bg-primary/20 rounded-lg text-xs font-semibold transition-colors">
+                      <ExternalLink size={13} /> Manage Seat
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Open Seats near me */}
       <section>

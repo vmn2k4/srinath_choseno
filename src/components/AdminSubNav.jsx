@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 const TABS = [
   { key: 'boundaries', label: 'Boundaries', to: '/admin' },
   { key: 'elections', label: 'Elections', to: '/admin/elections' },
+  { key: 'election-admins', label: 'Election Admins', to: '/admin/election-admins' },
   { key: 'visualizer', label: 'Visualizer', to: '/admin/visualize' },
 ];
 

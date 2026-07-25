@@ -22,16 +22,6 @@ export default function MainLayout() {
           Choseno
         </Link>
         <div className="flex gap-4 items-center">
-          <Link
-            to="/explore"
-            className={`px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
-              isActive('/explore')
-                ? 'text-text-main bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(233,235,158,0.15)]'
-                : 'text-text-muted hover:text-text-main hover:bg-surface-hover'
-            }`}
-          >
-            Boundary Finder
-          </Link>
           {session ? (
             <>
               <Link

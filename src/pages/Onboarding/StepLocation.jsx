@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Loader2, ArrowLeft, ArrowRight, Search, Check, Layers } from 'lucide-react';
-import { supabase } from '../../services/supabase';
+import { searchMapShapesByName, findBoundariesByPoint, syncUserBoundaryMemberships, addUserBoundaryMembership } from '../../services/boundaries';
 
 export default function StepLocation({ data, updateData, nextStep, prevStep }) {
   const [loading, setLoading] = useState(false);
@@ -23,11 +23,7 @@ export default function StepLocation({ data, updateData, nextStep, prevStep }) {
 
     const timer = setTimeout(async () => {
       setSearchingBoundaries(true);
-      const { data: boundaries } = await supabase
-        .from('map_shapes')
-        .select('id, name, country, boundary_type')
-        .ilike('name', `%${searchQuery.trim()}%`)
-        .limit(15);
+      const { data: boundaries } = await searchMapShapesByName(searchQuery.trim());
 
       setSearchResults(boundaries || []);
       setSearchingBoundaries(false);
@@ -66,17 +62,11 @@ export default function StepLocation({ data, updateData, nextStep, prevStep }) {
     setLoading(true);
     setError('');
     try {
-      const { data: boundaries, error: rpcError } = await supabase.rpc('find_boundaries_by_point', {
-        lng: parseFloat(longitude),
-        lat: parseFloat(latitude)
-      });
+      const { data: boundaries, error: rpcError } = await findBoundariesByPoint(parseFloat(latitude), parseFloat(longitude));
 
       if (rpcError) throw rpcError;
 
-      const { error: syncError } = await supabase.rpc('sync_user_boundary_memberships', {
-        p_lat: parseFloat(latitude),
-        p_lng: parseFloat(longitude)
-      });
+      const { error: syncError } = await syncUserBoundaryMemberships(parseFloat(latitude), parseFloat(longitude));
 
       if (syncError) throw syncError;
 
@@ -101,9 +91,7 @@ export default function StepLocation({ data, updateData, nextStep, prevStep }) {
   // lookup missed it, or the user wants to add a boundary by name directly).
   const addBoundary = async (boundary) => {
     try {
-      const { error: addError } = await supabase.rpc('add_user_boundary_membership', {
-        p_map_shape_id: boundary.id
-      });
+      const { error: addError } = await addUserBoundaryMembership(boundary.id);
       if (addError) throw addError;
 
       const already = (data.matchedBoundaries || []).some(b => String(b.id) === String(boundary.id));

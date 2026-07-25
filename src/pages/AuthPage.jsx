@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from '../services/supabase';
+import { signUp, signInWithPassword } from '../services/auth';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useEffect } from 'react';
@@ -26,17 +26,11 @@ export default function AuthPage() {
 
     try {
       if (isSignUp) {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-        });
+        const { error } = await signUp(email, password);
         if (error) throw error;
         setMessage({ type: 'success', text: 'Success! Please check your email for a confirmation link, or log in if auto-confirm is enabled.' });
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
+        const { error } = await signInWithPassword(email, password);
         if (error) throw error;
         // Navigation will be handled by the useEffect watching session
       }

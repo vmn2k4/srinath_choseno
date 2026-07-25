@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../services/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import { getActiveSeatsByShapeIds, getCandidatesBySeatIds } from '../services/elections';
+import { getProfileRole, getUserBoundaryShapeIds } from '../services/profile';
 import { Vote, MapPin, Users, ChevronRight } from 'lucide-react';
 
 export default function ElectionsPage() {
@@ -14,17 +15,10 @@ export default function ElectionsPage() {
   const fetchElections = async () => {
     setLoading(true);
 
-    const { data: myProfile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single();
+    const { data: myProfile } = await getProfileRole(user.id);
     setRole(myProfile?.role || null);
 
-    const { data: memberships } = await supabase
-      .from('user_boundary_memberships')
-      .select('map_shape_id')
-      .eq('profile_id', user.id);
+    const { data: memberships } = await getUserBoundaryShapeIds(user.id);
     const shapeIds = (memberships || []).map(m => m.map_shape_id);
 
     if (shapeIds.length === 0) {
@@ -33,19 +27,12 @@ export default function ElectionsPage() {
       return;
     }
 
-    const { data: seatRows } = await supabase
-      .from('election_seats')
-      .select('id, role_title, map_shapes(name, boundary_type), elections!inner(id, name, election_date, status)')
-      .in('map_shape_id', shapeIds)
-      .eq('elections.status', 'active');
+    const { data: seatRows } = await getActiveSeatsByShapeIds(shapeIds);
 
     const seatIds = (seatRows || []).map(s => s.id);
     let candidatesBySeat = {};
     if (seatIds.length > 0) {
-      const { data: candidateRows } = await supabase
-        .from('election_candidates')
-        .select('id, statement, seat_id, profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id)')
-        .in('seat_id', seatIds);
+      const { data: candidateRows } = await getCandidatesBySeatIds(seatIds);
       (candidateRows || []).forEach(c => {
         candidatesBySeat[c.seat_id] = candidatesBySeat[c.seat_id] || [];
         candidatesBySeat[c.seat_id].push(c);
@@ -98,46 +85,28 @@ export default function ElectionsPage() {
           <p className="text-text-muted text-sm">There's no election running right now for any group you belong to.</p>
         </div>
       ) : (
-        <div className="space-y-8">
+        <div className="space-y-4">
           {seats.map(seat => (
-            <div key={seat.id} className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl overflow-hidden">
-              <div className="p-5 border-b border-border-light/30">
+            <button
+              key={seat.id}
+              onClick={() => navigate(`/elections/seat/${seat.id}`)}
+              className="w-full text-left bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 hover:border-primary/30 shadow-xl overflow-hidden p-5 flex items-center justify-between gap-4 transition-all group"
+            >
+              <div className="min-w-0">
                 <p className="text-xs text-text-muted mb-1">{seat.elections?.name} · {seat.elections?.election_date}</p>
-                <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+                <h2 className="text-lg font-bold text-text-main flex items-center gap-2 flex-wrap">
                   {seat.role_title}
                   <span className="text-sm font-normal text-text-muted flex items-center gap-1">
                     <MapPin size={13} className="text-accent" /> {seat.map_shapes?.name}
                   </span>
                 </h2>
+                <p className="text-xs text-text-muted mt-1.5 flex items-center gap-1.5">
+                  <Users size={12} />
+                  {seat.candidates.length === 0 ? 'No candidates yet' : `${seat.candidates.length} candidate${seat.candidates.length !== 1 ? 's' : ''}`}
+                </p>
               </div>
-              <div className="p-3">
-                {seat.candidates.length === 0 ? (
-                  <p className="text-sm text-text-muted text-center py-6">No candidates have applied for this seat yet.</p>
-                ) : (
-                  <div className="space-y-2">
-                    {seat.candidates.map(c => {
-                      const name = c.profiles?.full_name || `Ghost-${c.profiles?.current_ghost_id?.split('-')[0]}`;
-                      return (
-                        <button
-                          key={c.id}
-                          onClick={() => navigate(`/candidacy/${c.id}`)}
-                          className="w-full flex items-center gap-3 p-3 rounded-xl bg-surface-hover/40 hover:bg-surface-hover border border-border-light/30 hover:border-primary/30 transition-all text-left group"
-                        >
-                          <div className="w-10 h-10 rounded-full bg-primary/20 text-primary-light flex items-center justify-center shrink-0 border border-primary/30">
-                            <Users size={16} />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-text-secondary truncate">{name}</p>
-                            {c.statement && <p className="text-xs text-text-muted truncate">{c.statement}</p>}
-                          </div>
-                          <ChevronRight size={16} className="text-text-darker group-hover:text-primary-light transition-colors shrink-0" />
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
+              <ChevronRight size={18} className="text-text-darker group-hover:text-primary-light transition-colors shrink-0" />
+            </button>
           ))}
         </div>
       )}

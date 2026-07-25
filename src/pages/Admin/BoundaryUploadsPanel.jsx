@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../services/supabase';
+import {
+  listBoundaryUploads, countMapShapesByUploadId, getMapShapesForUploadRow,
+  renameBoundaryUpload, deleteBoundaryUpload
+} from '../../services/boundaries';
 import { Trash2, ChevronDown, ChevronUp, Pencil, Check, X, GitBranch, PlayCircle } from 'lucide-react';
 
 export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload, countryFilter }) {
@@ -17,12 +20,7 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
 
   const fetchUploads = async () => {
     setLoading(true);
-    let query = supabase
-      .from('boundary_uploads')
-      .select('id, name, country, boundary_type, created_at, expected_count, completed_at')
-      .order('created_at', { ascending: false });
-    if (countryFilter) query = query.eq('country', countryFilter);
-    const { data: uploadRows } = await query;
+    const { data: uploadRows } = await listBoundaryUploads({ country: countryFilter });
     setUploads(uploadRows || []);
 
     // Exact counts per batch via head requests (no row payload, no default
@@ -31,8 +29,8 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
     const counts = {};
     await Promise.all((uploadRows || []).map(async (u) => {
       const [{ count: active }, { count: retired }] = await Promise.all([
-        supabase.from('map_shapes').select('id', { count: 'exact', head: true }).eq('upload_id', u.id).is('retired_at', null),
-        supabase.from('map_shapes').select('id', { count: 'exact', head: true }).eq('upload_id', u.id).not('retired_at', 'is', null)
+        countMapShapesByUploadId(u.id, { retired: false }),
+        countMapShapesByUploadId(u.id, { retired: true })
       ]);
       counts[u.id] = { active: active || 0, retired: retired || 0 };
     }));
@@ -55,14 +53,7 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
   };
 
   const loadExpandedShapes = async (uploadId, search) => {
-    let query = supabase
-      .from('map_shapes')
-      .select('id, name, retired_at')
-      .eq('upload_id', uploadId)
-      .order('name')
-      .limit(SHAPE_LIST_CAP);
-    if (search.trim()) query = query.ilike('name', `%${search.trim()}%`);
-    const { data } = await query;
+    const { data } = await getMapShapesForUploadRow(uploadId, { nameSearch: search, limit: SHAPE_LIST_CAP });
     setExpandedShapes(data || []);
   };
 
@@ -78,7 +69,7 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
 
   const saveRename = async (uploadId) => {
     if (!renameValue.trim()) return;
-    await supabase.from('boundary_uploads').update({ name: renameValue.trim() }).eq('id', uploadId);
+    await renameBoundaryUpload(uploadId, renameValue.trim());
     setRenamingId(null);
     fetchUploads();
   };
@@ -86,7 +77,7 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
   const handleDelete = async (uploadId) => {
     if (!window.confirm('Permanently delete this entire upload batch? This cannot be undone.')) return;
     setStatus(prev => ({ ...prev, [uploadId]: '' }));
-    const { error } = await supabase.rpc('delete_boundary_upload', { p_upload_id: uploadId });
+    const { error } = await deleteBoundaryUpload(uploadId);
     if (error) {
       if (error.message.startsWith('RETIRE_REQUIRED')) {
         setStatus(prev => ({

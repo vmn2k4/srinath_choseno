@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../services/supabase';
 import BoundaryPicker from '../../components/map/BoundaryPicker';
 import MapComponent from '../../components/map/MapComponent';
 import AdminSubNav from '../../components/AdminSubNav';
-import { fetchAllPages } from '../../utils/fetchAllPages';
+import { getCountries, listBoundaryTypes, getMapShapesByType, findShapesInContainers, getGeojsonShapes } from '../../services/boundaries';
 import { Eye, MapPin, List } from 'lucide-react';
 
 // Above this many matched shapes, fetching + rendering full-resolution
@@ -27,10 +26,8 @@ export default function BoundaryVisualizer() {
   const [status, setStatus] = useState('');
 
   useEffect(() => {
-    supabase.from('countries').select('name').order('name')
-      .then(({ data }) => setCountries((data || []).map(c => c.name)));
-    supabase.from('country_boundary_types').select('country, type_name, rank, admin_only').order('country').order('rank')
-      .then(({ data }) => setBoundaryTypes(data || []));
+    getCountries().then(({ data }) => setCountries((data || []).map(c => c.name)));
+    listBoundaryTypes().then(({ data }) => setBoundaryTypes(data || []));
   }, []);
 
   const typesForCountry = country ? boundaryTypes.filter(t => t.country === country) : [];
@@ -60,18 +57,8 @@ export default function BoundaryVisualizer() {
 
     const containerShapeIds = [...containerId];
     const { data, error } = containerShapeIds.length > 0
-      ? await fetchAllPages((from, to) =>
-          supabase.rpc('find_shapes_in_containers', {
-            p_container_shape_ids: containerShapeIds,
-            p_target_boundary_type: targetType,
-            p_country: country
-          }).select('id, name, code').range(from, to)
-        )
-      : await fetchAllPages((from, to) =>
-          supabase.from('map_shapes').select('id, name, code')
-            .eq('country', country).eq('boundary_type', targetType).is('retired_at', null)
-            .order('id').range(from, to)
-        );
+      ? await findShapesInContainers({ containerShapeIds, targetBoundaryType: targetType, country, columns: 'id, name, code' })
+      : await getMapShapesByType({ country, boundaryType: targetType, columns: 'id, name, code', paginated: true });
 
     setLoadingMatches(false);
     if (error) {
@@ -89,7 +76,7 @@ export default function BoundaryVisualizer() {
 
   const loadGeometry = async (ids) => {
     setLoadingGeo(true);
-    const { data, error } = await supabase.rpc('get_geojson_shapes', { ids });
+    const { data, error } = await getGeojsonShapes(ids);
     setLoadingGeo(false);
     if (error) {
       setStatus('Error loading geometry: ' + error.message);

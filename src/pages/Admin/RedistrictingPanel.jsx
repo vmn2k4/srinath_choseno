@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../services/supabase';
 import BoundaryPicker from '../../components/map/BoundaryPicker';
-import { fetchAllPages } from '../../utils/fetchAllPages';
+import {
+  getCountries, listBoundaryUploads, listBoundaryTypes, getMapShapeIdsByUploadId, getMapShapesByType,
+  suggestReplacedShapes, previewRetirementCoverageGap, retireShapes, deleteShapes
+} from '../../services/boundaries';
 import { GitBranch, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
@@ -17,12 +19,9 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
   const [affectedCount, setAffectedCount] = useState(null);
 
   useEffect(() => {
-    supabase.from('countries').select('name').order('name')
-      .then(({ data }) => setCountries((data || []).map(c => c.name)));
-    supabase.from('boundary_uploads').select('id, name, country').order('created_at', { ascending: false })
-      .then(({ data }) => setUploads(data || []));
-    supabase.from('country_boundary_types').select('country, type_name').order('country').order('type_name')
-      .then(({ data }) => setBoundaryTypes(data || []));
+    getCountries().then(({ data }) => setCountries((data || []).map(c => c.name)));
+    listBoundaryUploads({ columns: 'id, name, country' }).then(({ data }) => setUploads(data || []));
+    listBoundaryTypes({ columns: 'country, type_name', orderBy: 'type_name' }).then(({ data }) => setBoundaryTypes(data || []));
   }, []);
 
   // Reset any selection tied to the previous country whenever the filter changes.
@@ -50,9 +49,7 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
   const loadBatchOwnShapes = async () => {
     if (!focusUploadId) return;
     setBusy(true);
-    const { data, error } = await fetchAllPages((from, to) =>
-      supabase.from('map_shapes').select('id').eq('upload_id', focusUploadId).is('retired_at', null).order('id').range(from, to)
-    );
+    const { data, error } = await getMapShapeIdsByUploadId(focusUploadId);
     setBusy(false);
     if (error) {
       setStatus('Error: ' + error.message);
@@ -64,9 +61,7 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
   const loadByType = async () => {
     if (!focusType || !countryFilter) return;
     setBusy(true);
-    const { data, error } = await fetchAllPages((from, to) =>
-      supabase.from('map_shapes').select('id').eq('country', countryFilter).eq('boundary_type', focusType).is('retired_at', null).order('id').range(from, to)
-    );
+    const { data, error } = await getMapShapesByType({ country: countryFilter, boundaryType: focusType, paginated: true });
     setBusy(false);
     if (error) {
       setStatus('Error: ' + error.message);
@@ -78,9 +73,7 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
   const suggestReplaced = async () => {
     if (!focusUploadId) return;
     setBusy(true);
-    const { data, error } = await fetchAllPages((from, to) =>
-      supabase.rpc('suggest_replaced_shapes', { p_upload_id: focusUploadId }).range(from, to)
-    );
+    const { data, error } = await suggestReplacedShapes(focusUploadId);
     setBusy(false);
     if (error) {
       setStatus('Error: ' + error.message);
@@ -93,9 +86,7 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
   const previewImpact = async () => {
     if (selectedShapeIds.size === 0) return;
     setBusy(true);
-    const { data, error } = await fetchAllPages((from, to) =>
-      supabase.rpc('preview_retirement_coverage_gap', { p_shape_ids: [...selectedShapeIds] }).range(from, to)
-    );
+    const { data, error } = await previewRetirementCoverageGap([...selectedShapeIds]);
     setBusy(false);
     if (error) {
       setStatus('Error: ' + error.message);
@@ -108,7 +99,7 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
     if (selectedShapeIds.size === 0) return;
     if (!window.confirm(`Retire ${selectedShapeIds.size} boundary(ies)? They'll stop matching new members but stay intact for any elections/posts that already reference them.`)) return;
     setBusy(true);
-    const { error } = await supabase.rpc('retire_shapes', { p_shape_ids: [...selectedShapeIds] });
+    const { error } = await retireShapes([...selectedShapeIds]);
     setBusy(false);
     if (error) {
       setStatus('Error: ' + error.message);
@@ -124,7 +115,7 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
     if (selectedShapeIds.size === 0) return;
     if (!window.confirm(`Permanently delete ${selectedShapeIds.size} boundary(ies)? This cannot be undone.`)) return;
     setBusy(true);
-    const { error } = await supabase.rpc('delete_shapes', { p_shape_ids: [...selectedShapeIds] });
+    const { error } = await deleteShapes([...selectedShapeIds]);
     setBusy(false);
     if (error) {
       if (error.message.startsWith('RETIRE_REQUIRED')) {

@@ -3,8 +3,8 @@
 This document exists so a future session (human or Claude) can pick this project back up
 without re-deriving context. It covers what existed before this working session, everything
 built during it, how it's designed, and known gaps that were flagged but intentionally left
-unfixed. Written 2026-07-23, updated same day across four further work sessions (§§11–15), and again
-2026-07-24 (§17).
+unfixed. Written 2026-07-23, updated same day across four further work sessions (§§11–15), again
+2026-07-24 (§17), and again 2026-07-25 across a sixth session (§§18–21).
 
 ---
 
@@ -1044,6 +1044,8 @@ and stayed gone after dismiss + reload; USA State load is exactly 50 valid rows.
 
 ## 17. File map
 
+*Migrations `20260728000008` through `20260729000005` below existed on disk but had never been written up in this doc before §21's session — backfilled here for completeness, one line each rather than a full retroactive narrative.*
+
 ```
 supabase/migrations/
   20260721*.sql                          pre-existing: profiles, posts, comments, votes,
@@ -1070,10 +1072,50 @@ supabase/migrations/
   20260728000005_election_role_types_usa_state.sql §16 (Governor/US Senator seed rows)
   20260728000006_narrow_find_shapes_within.sql    §16 (return-type fix, PostgREST timeout)
   20260728000007_map_shapes_type_country_index.sql §16 (composite index, same timeout family)
+  20260728000008_fix_find_shapes_within_containment.sql  ST_Intersects falsely matched shapes
+                                                   merely touching the container's border;
+                                                   tightened to a real area-ratio containment test
+  20260728000009_shape_containers_cache.sql       precomputed shape_containers cache table so
+                                                   admin tools don't redo the live geometry join
+                                                   from §28000008 on every request
+  20260728000010_optimize_shape_containers_recompute.sql  fixed a timeout in the cache's own
+                                                   backfill (same ST_Area(ST_Intersection(...))
+                                                   planner pathology as §28000008, one query later)
+  20260728000011_find_shapes_in_containers.sql    cache-backed, multi-container replacement for
+                                                   calling find_shapes_within live from the frontend
+  20260728000012_political_parties.sql            political_parties table (admin-managed,
+                                                   country-scoped) replaces politician_profiles'
+                                                   old free-text party field
+  20260729000000_storage_buckets.sql              storage.buckets was completely empty in this
+                                                   project — post-images/politician_videos buckets
+                                                   actually created (every upload had been silently
+                                                   failing until this)
+  20260729000001_election_questionnaire.sql       admin-configured per-election candidate
+                                                   questionnaire (election_questions/_options/
+                                                   _candidate_answers)
+  20260729000002_candidate_applications.sql       turned self-nomination into a real
+                                                   application/approval workflow (status pending/
+                                                   approved/rejected) — this gate is what §21 removes
+  20260729000003_nominations_open_through_election_date.sql  apply_for_seat accepts
+                                                   nominations_open and active, not just the former
+  20260729000004_public_read_shape_containers.sql public SELECT on the shape_containers cache
+  20260729000005_find_open_seats_in_container.sql find_open_seats_in_container RPC backing
+                                                   PoliticianElections.jsx's "browse a different area"
+  20260729000006_widen_get_active_elections_for_user.sql  §18 (Feed pills go per-seat, not
+                                                   per-election; includes nominations_open)
+  20260729000007_election_administrators.sql      §21 (election_administrators table + RPCs)
+  20260729000008_unregistered_candidates.sql      §21 (add/update/remove_unregistered_candidate)
+  20260729000009_fix_submit_candidate_application.sql  §21 (auto-approve on submit + guard trigger)
+  20260729000010_fix_candidate_status_guard_null_bypass.sql  §21 (bug found + fixed during
+                                                   verification — the guard trigger was a no-op)
 
 src/
   components/
-    AdminSubNav.jsx              §15 — shared Boundaries/Elections/Visualizer tab bar
+    AdminSubNav.jsx              §15 — shared Boundaries/Elections/Visualizer/Election Admins
+                                 tab bar (4th tab added §21)
+    wall/WallPostFeed.jsx       §18 — shared post-card + owner-pinned-first comment thread +
+                                 comment composer, used by both PoliticianWall and CandidacyWall
+                                 so they're actually the same wall, not two lookalikes
     map/BoundaryPicker.jsx      §4 — reusable list+search+map picker (countryFilter/
                                  boundaryTypeFilter props now actually wired up, §12) +
                                  get_geojson_shapes calls fixed to pass ids server-side +
@@ -1081,35 +1123,67 @@ src/
     map/MapComponent.jsx        §4 — Leaflet render layer (extended for click-select) +
                                  preferCanvas, memoized BoundaryLayer, stable-key
                                  AutoFitBounds (§15 — perf fixes, benefit every caller)
-    CandidacyWall.jsx           §5
+    CandidacyWall.jsx           §5 — rebuilt on WallPostFeed (§18): owner-pinned comments,
+                                 support button, campaign video gallery, wide 2-column sticky-
+                                 profile layout, candidateId/embedded props for inline embedding;
+                                 §21 added the nomination-filed badge + owner toggle
     LinkPreview.jsx             pre-existing
-    PoliticianSidebar.jsx       pre-existing (updated to use user_boundary_memberships)
+    PoliticianSidebar.jsx       pre-existing — direct `supabase.from()` call, a standing
+                                 service-layer violation, see §20's compliance note (not fixed)
   pages/
     AdminPage.jsx                    boundary types + upload form (§8 analyze/tiered-upload
                                       flow) + Countries section / Add Country / standard-set
                                       preset (§12) + AdminSubNav (§15)
     Admin/ElectionsAdmin.jsx         §5 + country-scoped seat building (§12) +
                                       Container Type filter (§13) + AdminSubNav (§15) +
-                                      role-catalog checkboxes + resolve_region_names (§16)
+                                      role-catalog checkboxes + resolve_region_names (§16) +
+                                      §21 removed the now-redundant per-candidate Approve button
+    Admin/ElectionAdminApplications.jsx  §21 — new site-admin review queue for election-
+                                      administrator applications
     Admin/BoundaryVisualizer.jsx     §15 — new admin tab, container+type -> map visualization
     Admin/BoundaryUploadsPanel.jsx   §6 (batch list) + §8 (incomplete badge/resume) +
                                       countryFilter prop (§12)
     Admin/RedistrictingPanel.jsx     §6 + self-contained country scoping (§12)
     FeedPage/FeedPage.jsx            §4 — dynamic membership tabs; Country tab null-safe (§12) +
-                                      dismissible active-election banner (§16)
-    PoliticianElections.jsx          §5
-    ElectionsPage.jsx                §5
-    PoliticianWall.jsx               pre-existing
-    UserPage.jsx                     pre-existing (refactored onto BoundaryPicker) +
-                                      optional country filter (§12), defaults to a specific
-                                      country instead of "All" (§13's perf issue, mitigated)
-    Onboarding/OnboardingFlow.jsx    country now derived, not hardcoded (§12)
+                                      §18 replaced the single dismissible election banner with a
+                                      row of per-seat pills (one per matching open seat)
+    ElectionSeatPage.jsx             §18 — new page, route `elections/seat/:seatId`: seat header,
+                                      candidate avatar switcher embedding CandidacyWall, nominate-
+                                      yourself flow; §21 added the volunteer-as-election-admin
+                                      banner and the add-unregistered-candidate form
+    PoliticianElections.jsx          §5 + §21 added a "My Election-Administrator Applications"
+                                      section alongside the existing "My Candidacies"
+    ElectionsPage.jsx                §5 — §18 simplified seat cards to link into
+                                      ElectionSeatPage instead of listing candidates inline
+    PoliticianWall.jsx               pre-existing — §18 rebuilt on WallPostFeed (behavior
+                                      unchanged); still has a direct `supabase.channel()`/
+                                      `removeChannel()` realtime subscription, see §20
+    Onboarding/OnboardingFlow.jsx    country now derived, not hardcoded (§12) + §19 removed the
+                                      redundant `min-h-screen bg-background` wrapper that was
+                                      painting a solid black box over the app's real gradient
     Onboarding/StepLocation.jsx      §4 (shared: onboarding + profile edit)
     Onboarding/StepPolitician.jsx    §5 (added education/hometown fields)
+    Onboarding/StepRole.jsx          §19 — responsive padding/sizing pass (was desktop-only)
     Profile/EditProfileFlow.jsx      dead country field fixed to re-derive+save (§12)
+    ProfilePage.jsx                  §19 — added a one-click "Switch to Citizen Account" button
+                                      (politicians previously had no way back except the full
+                                      multi-step Edit Profile wizard)
+    CandidateApplication.jsx         §21 — success copy now reflects auto-approval (and the
+                                      resubmit-after-rejection edge case) instead of "an admin
+                                      will review it soon"
   utils/
     fetchAllPages.js             §6 — pagination helper, use for any large map_shapes query
     countVertices.js             §8 — client-side vertex counter (ST_NPoints equivalent)
+
+contexts/
+  AuthContext.jsx                §19 — fixed a real bug: `loading` flipped to false on the
+                                 first (signed-out) resolution and never reset, so a fresh
+                                 sign-in's profile fetch raced against AuthPage's
+                                 navigate-on-session-truthy and ProtectedRoute would redirect to
+                                 /onboarding on every sign-in regardless of the account's actual
+                                 onboarding_completed value. Now re-arms `loading` for each fresh
+                                 session's profile fetch; also stopped hiding all children while
+                                 loading (relies on ProtectedRoute's own spinner instead)
 
 scripts/
   upload_boundary.py            §7 — two bugs fixed in second session, see §11
@@ -1122,4 +1196,120 @@ docs/
   settings.json                 project-level permission allowlist (curl/python/git/grep/
                                  find/npm/node prefix rules) — separate from this doc's
                                  subject matter, noted here so it isn't mistaken for stray config
+
+Removed:
+  src/pages/UserPage.jsx        §19 — the public "Boundary Finder" (/explore) page, its nav
+                                 link, and its homepage CTA were removed at the user's request.
+                                 BoundaryPicker.jsx and the boundaries.js service functions it
+                                 used are untouched (still used elsewhere).
 ```
+
+---
+
+## 18. Feed + Election pages redesign: seat-scoped pages, one shared candidate/politician wall
+
+*Built in a sixth work session, same day.* Prompted by hand-drawn sketches: the Feed should surface active elections as a row of pills instead of one generic banner, and clicking through should land on a page where a seat's candidates appear as a switcher — selecting one loads their statement/Q&A/videos/discussion inline, with self-nomination available right there. Separately, `CandidacyWall.jsx` (a candidate's election page) and `PoliticianWall.jsx` (a politician's own public wall) had drifted into two near-identical implementations; the ask was to make them demonstrably the same wall.
+
+**`get_active_elections_for_user()`** (`20260729000006`) widened from one aggregated row per *election* to one row per *seat* (`seat_id, election_id, election_name, election_date, role_title`), and its status filter widened from `= 'active'` to `IN ('nominations_open', 'active')` so citizens can discover — and a politician can self-nominate for — a seat before an admin flips the election fully active. Return-type change meant drop+recreate, not `CREATE OR REPLACE` (same precedent as `20260728000006`).
+
+**`src/components/wall/WallPostFeed.jsx`** (new): the post-card + owner-pinned-first comment thread + comment composer, extracted out of `PoliticianWall.jsx` (which already had this pin-to-top behavior) and reused by `CandidacyWall.jsx` (which didn't — it had no comment UI at all before this). Pure presentational component: takes `posts`, an `ownerGhostId` (for the pin-to-top sort and the owner badge), and comment input state/handlers as props; does not call any service itself, per the Components-layer rule. Both walls now render this component — that's what actually makes them the same wall rather than two lookalikes.
+
+**`CandidacyWall.jsx`** rebuilt: added the comment thread (via `WallPostFeed`), a support button (reusing `politicianWall.js`'s existing `politician_supporters` functions, keyed on `candidate.politician_id`), and a campaign-video gallery (the required intro video from the application step, plus the candidate's own later video posts — no new schema, both already live on existing rows). Also gained `candidateId`/`embedded` props so it can be rendered standalone at `/candidacy/:id` or embedded inline elsewhere. Layout changed from a single `max-w-3xl` centered column to a wide `max-w-6xl` two-column grid — a sticky left profile column (header, support, video gallery, Q&A) beside a right column for the composer and feed, the classic profile+feed split, so it actually uses a wide screen instead of a narrow centered strip with empty margins on both sides.
+
+**`src/pages/ElectionSeatPage.jsx`** (new page, route `elections/seat/:seatId`): seat/election header, a candidate avatar-switcher row (only shown once a seat has more than one candidate), and a role-gated nominate-yourself section mirroring the citizen/politician banners already established on `ElectionsPage.jsx`. Selecting a candidate renders `<CandidacyWall candidateId={selected} embedded />` below — same component, same width, no separate "seat page wall" implementation.
+
+**`ElectionsPage.jsx`** simplified: each seat card is now a summary (role, boundary, candidate count) linking into `ElectionSeatPage` instead of listing every candidate inline — the seat page now owns candidate browsing, so this page stopped duplicating it.
+
+**`FeedPage.jsx`**: the single dismissible banner replaced with a row of pills, one per seat row from the widened RPC (label `${role_title} · ${election_date}`), each linking to its `ElectionSeatPage`. Dismissing any pill still calls the same `dismissElectionNotification(profile.id, election_id)` — dismissal stays election-scoped, so dismissing one pill hides every pill sharing that election (an accepted simplification, not a bug).
+
+Verified end-to-end with disposable test accounts across desktop/tablet/mobile widths: pills render and dismiss correctly, the seat page's candidate switcher and embedded wall work, self-nomination's RPC→navigate flow lands on `/apply/:id` correctly, comments post and the candidate's own reply correctly sorts above an earlier citizen comment even when posted later, and `/wall/:ghostId` is unchanged after the `WallPostFeed` extraction.
+
+## 19. Sign-in race condition, Boundary Finder removal, role-switch button, onboarding visuals
+
+*Same session, smaller fixes bundled together.*
+
+**AuthContext sign-in bug (real, reproducible, not cosmetic)**: `loading` started `true` and flipped to `false` the first time it resolved (typically on the signed-out landing page, where `fetchProfile` short-circuits immediately since there's no user id) — and then never reset. On an actual sign-in, `onAuthStateChange` fires with the new session and starts a fresh `fetchOrHealProfile` round-trip, but `AuthPage.jsx`'s own `useEffect` navigates to `/feed` the instant `session` becomes truthy, well before that fetch resolves. Since `loading` was already `false` from the earlier resolution, `ProtectedRoute` rendered immediately with the *previous* (`null`) profile and redirected to `/onboarding` — on every single sign-in, regardless of the account's real `onboarding_completed` value (confirmed `true` in the DB the whole time for the account that reported this). Fixed by re-arming `loading` for the duration of each fresh session's profile fetch, and by no longer hiding all of `children` while loading (relied on `ProtectedRoute`'s own spinner instead, avoiding a full-app blank flash on every sign-in). Verified: a test account with `onboarding_completed = true` now lands directly on `/feed` after signing in, no redirect.
+
+**Boundary Finder removed** at the user's request: deleted `src/pages/UserPage.jsx`, its `/explore` route, its `MainLayout.jsx` nav link, and its "Explore boundaries" homepage CTA. `BoundaryPicker.jsx` and the `boundaries.js` service functions it used (`getCountries`, `findBoundariesByPoint`) are untouched — still used by `StepLocation.jsx` and the various admin panels.
+
+**Politician → Citizen role switching**: turned out to already work end-to-end via the existing multi-step Edit Profile wizard (`EditProfileFlow.jsx`'s Account Type toggle) — verified live, no backend bug. The actual gap was discoverability: citizens see "Become a Politician" prompts throughout the Elections pages, but politicians had no equivalent one-click way back. Added a "Switch to Citizen Account" button directly on `ProfilePage.jsx`'s Political Details card — one click (with a confirmation prompt) flips the role while preserving the existing name/country/constituency, no need to re-enter location or step through the wizard.
+
+**Onboarding visuals**: `OnboardingFlow.jsx` wrapped itself in its own `min-h-screen bg-background` div — a solid, flat near-black rectangle that didn't match the app's actual radial-gradient background (which every other page, like the auth screen, just lets show through from `body`). Replaced with the same translucent/backdrop-blurred card style used elsewhere. `StepRole.jsx` (the role-selection first step) also got a responsive pass — smaller heading/padding/icon sizes below the `sm` breakpoint, cards stack instead of a fixed two-column grid on narrow screens.
+
+---
+
+## 20. Roles & Permissions Reference
+
+Four roles exist. Three are `profiles.role` values (`CHECK (role IN ('normal', 'politician', 'admin'))`); the fourth — Election Administrator — is deliberately **not** a role value at all, it's a permission grant (a row in `election_administrators`, §21) layered on top of whichever role an account already has, scoped to exactly one election seat. This was an explicit product decision: the request was for election administrators to keep their ordinary citizen/politician feed and everything else, which only works cleanly as an additive grant, not a fourth mutually-exclusive role.
+
+### Citizen (`role = 'normal'`) — the default
+
+- Posts/comments/votes under a rotating anonymous ghost ID (`current_ghost_id`); can burn it any time via `burn_ghost_identity()` to sever all links to past activity (§3).
+- Feed scoped to their boundary memberships (municipal/federal/provincial/etc., from `user_boundary_memberships`) plus fixed Country/International tabs.
+- Can support politicians and candidates ("I Support", `politician_supporters`).
+- Can discuss/comment on any politician's wall or any election candidate's page.
+- Can volunteer to be the Election Administrator for any seat (§21) — this is open to citizens, not politician-gated.
+- To self-nominate for a seat, must first switch to the Politician account type (`ProfilePage.jsx` → Edit Profile, or the one-click reverse via the "Switch to Citizen Account" button, §19) — there's no separate "citizen nominates directly" path.
+- Cannot: manage boundary data, review candidate or election-administrator applications, or do anything gated by `role = 'admin'`.
+
+### Politician (`role = 'politician'`)
+
+- Everything a citizen can do, plus:
+- A public wall (`/wall/:ghostId`) — post updates and (recorded in-browser) video pitches; citizens can visit, comment, and support them there.
+- Can self-nominate for any open seat (`apply_for_seat` → `CandidateApplication.jsx` → `submit_candidate_application`) — submitting now makes the candidacy immediately public, no site-admin approval needed (§21; the site admin can still reject a live candidacy afterward as a moderation action).
+- Once a candidate, gets a candidacy page (`/candidacy/:id`) — the *same* wall component as their personal wall (§18), scoped to that specific race, with a self-editable "Nomination Papers Filed" status (§21) they're expected to keep current as the real-world filing fact it represents (distinct from the platform's own approval status).
+- Can switch back to Citizen at any time (§19).
+
+### Election Administrator (a grant, not a role) — new in §21
+
+- Any citizen or politician can volunteer to administer one specific seat, via the banner on that seat's `ElectionSeatPage.jsx`.
+- Approved either by the site admin, or automatically 48 hours after applying if the site admin hasn't acted — first applicant wins; only one approved administrator can exist per seat at a time (a DB-level partial unique index, not just application logic).
+- Once approved for a seat, can add a candidate who is running in real life but hasn't registered on the platform — just a name and party. This creates a real candidate row with the full wall experience (citizens can discuss, comment, support) behind a synthetic profile that has no login — nobody can post as that candidate, since nobody is logged in as them.
+- The grant is per-seat: being approved for one seat gives no standing on any other seat.
+- Keeps their existing citizen/politician feed, wall, and everything else unchanged — this is additive capability, not a role switch.
+- Cannot: review applications for other seats, act as site admin, or override a site admin's decision.
+
+### Site Admin (`role = 'admin'`)
+
+- The hardcoded email (`vmn2k4@gmail.com`) auto-promotes on first login; any other account is promoted manually via SQL.
+- Manages electoral boundary data end to end: upload, redistrict (retire, never mutate), delete (only where safe), country/boundary-type configuration (§6–§16).
+- Manages elections: create them, build seats (auto-select by container or manual multi-select), configure the candidate questionnaire, advance election status through its lifecycle (draft → nominations_open → active → closed).
+- Reviews election-administrator applications (`Admin/ElectionAdminApplications.jsx`, §21) — though most resolve on their own after 48 hours if left untouched.
+- Can reject a live candidate's application as a moderation action, even though self-nomination itself no longer needs their sign-off to go public first.
+- Manages political parties and countries.
+- Does **not** belong to a specific constituency feed — `FeedPage.jsx` shows an "Admin Account" notice instead of a normal feed for this role, since an admin account has no boundary membership of its own.
+
+### Known gap, not addressed here
+
+`OnboardingFlow.jsx`'s `submitOnboarding` still unconditionally overwrites `profiles.role` from the onboarding UI's selection on every completion — flagged in §2/§12, still true, still not fixed. An admin (or an election administrator, by extension) who ever runs through onboarding again would silently lose that status. Out of scope for §21; noted here since this section is the natural place someone would look for it.
+
+---
+
+## 21. Election Administrators, no-approval self-nomination, and nomination-filed status
+
+*Built in the same sixth session, directly after §18–19.* Two related requests: let a citizen or politician volunteer to moderate one specific seat and add real-world candidates who haven't registered on the platform (so citizens aren't missing races that actually have candidates), and remove the admin-approval gate on self-nomination entirely (§16/`20260729000002`'s workflow — submitting should make a candidate immediately public). Plus a small third piece: a self-editable "have I actually filed my nomination papers" status, distinct from and shown alongside the platform's own status.
+
+Design confirmed with the user before building: election-administrator scope is **per seat**, not per whole election; the 48-hour auto-approval is a genuine delay (not instant), implemented as a lazy sweep run from inside the handful of RPCs that read/act on the table rather than a `pg_cron` job — no scheduler to manage, and the state is always correct by the time anything actually needs it; admin-added candidates get the **full** candidate wall, not a stripped-down info card, so `CandidacyWall.jsx`/`WallPostFeed.jsx` needed zero changes to support them.
+
+**`election_administrators`** (`20260729000007`): `seat_id, profile_id, status (pending/approved/rejected), motivation, social_media_info, contact_email, submitted_at, reviewed_at, reviewed_by`, `UNIQUE(seat_id, profile_id)`, plus a **partial unique index** `(seat_id) WHERE status = 'approved'` making "one admin per seat" a hard DB invariant rather than something only application logic enforces — closes a real race a validation pass caught (two stale pending applications for the same seat both becoming eligible for auto-promotion at once). No public SELECT policy (motivation/contact email/social-media info are real PII); a dedicated `get_seat_admin_status(seat_id)` RPC returns just `(has_approved_admin, my_application_status)` for the frontend instead. `apply_for_election_admin` blocks reapplying after an explicit rejection (raises, rather than silently letting a rejected applicant wait out the clock) and blocks applying to a seat that already has an approved admin. `review_election_admin_application` (site-admin only) auto-rejects any other pending applicants for the same seat when one is approved.
+
+**`election_candidates` additions** (`20260729000008`): `nomination_filed boolean default false` (self-editable through the same pre-existing "Candidates update own application" policy `updateCandidateStatement` already relies on — no new RPC), `added_by_election_admin_id uuid references profiles(id)` (provenance marker, and the flag that identifies an unclaimed/stub candidacy — a future "claim this candidacy" flow is a natural next step but explicitly out of scope here). `add_unregistered_candidate(seat_id, full_name, party_id, education, hometown, bio)` (SECURITY DEFINER): checks the caller has an approved `election_administrators` row for that seat, validates the party's country matches the seat's, then creates a synthetic `profiles` row (`role='politician'`, a freshly generated `current_ghost_id`, `target_boundary_id`/`target_boundary_type` deliberately left `NULL` so the stub never shows up in `PoliticianSidebar.jsx`'s "People Interested in Politics" query) + a `politician_profiles` row + the `election_candidates` row itself (`status='approved'` immediately). No `auth.users` row is created or needed — `profiles.id` has had no FK to `auth.users` since `20260721000001_drop_fk.sql`, and nothing in `CandidacyWall.jsx`/`WallPostFeed.jsx` assumes one exists; `isOwner` is simply always `false` for a stub candidate, which is exactly correct (nobody can post as them, citizens can still discuss/comment/support). `update_unregistered_candidate`/`remove_unregistered_candidate` are scoped to `added_by_election_admin_id = auth.uid()`, covering the likely "typo in the name" case.
+
+**Two real bugs found and fixed during this work, not just the intended feature:**
+
+1. **A logic bug in the auto-approve-on-submit change itself**: `CandidateApplication.jsx` already supports editing and resubmitting after a first submission. Making `submit_candidate_application` unconditionally set `status = 'approved'` would silently undo an explicit site-admin rejection the next time the candidate resubmits. Fixed with a conditional (`CASE WHEN status = 'rejected' THEN status ELSE 'approved' END`) — verified live: rejected a test candidacy as the site admin, resubmitted it as the candidate, confirmed status stayed `rejected` rather than flipping back.
+2. **The guard trigger was a no-op** (`20260729000010`, found during the same verification pass): the trigger blocking direct client changes to `status`/`reviewed_at`/`reviewed_by` compared `current_setting('app.bypass_candidate_status_guard', true)` directly to `'true'` — but when that setting has never been set in a session (the overwhelmingly common case), `current_setting(..., true)` returns `NULL`, `NULL = 'true'` is `NULL`, and PL/pgSQL's `IF NOT (NULL) THEN` treats a `NULL` condition as false, so the exception branch was never entered for anyone. Confirmed directly: a raw `UPDATE election_candidates SET status = 'rejected'` with no admin role and no bypass flag succeeded when it should have been blocked. Fixed by coalescing the missing-setting `NULL` to `'false'` before comparing, then re-verified the same raw update now correctly raises `Cannot modify candidate status directly`, while the legitimate admin-reject path (`reviewCandidateApplication`, which checks `role='admin'`) still works unchanged. This guard matters more than it would have before §21: with admin review no longer gating initial visibility at all, it was the only thing stopping a candidate from directly setting their own `status` to `approved` and skipping the video/questionnaire checklist `submit_candidate_application` enforces.
+
+**Frontend**: `ElectionSeatPage.jsx` gained an "Election Administrator" banner (apply / pending / seat-already-taken / approved-with-add-candidate-form states) and a checkmark badge per candidate chip; `PoliticianElections.jsx` lists "My Election-Administrator Applications" alongside "My Candidacies" (this route already has no role restriction beyond a session, matching that either a citizen or politician can apply); new `Admin/ElectionAdminApplications.jsx` mirrors `ElectionsAdmin.jsx`'s list/approve/reject visual pattern for the site-admin review queue, wired into a 4th `AdminSubNav` tab; `ElectionsAdmin.jsx` dropped the now-redundant per-candidate Approve button (submissions auto-approve now) but kept Reject for moderation; `CandidacyWall.jsx` shows the nomination-filed badge to everyone with an owner-only toggle.
+
+Verified end-to-end with disposable test accounts: applied and confirmed the pending state; backdated `submitted_at` past 48 hours and confirmed the next page load auto-promoted it; added an unregistered candidate and confirmed a second citizen could comment on and support them with the composer/video-record affordances correctly absent (no real account behind the candidate); confirmed a second application to the same seat is correctly refused; self-nominated, submitted, confirmed immediate public visibility, then walked through the reject → resubmit → stays-rejected sequence above; toggled nomination-filed and confirmed it persisted. All test data cleaned up afterward.
+
+### Service-layer compliance check (requested directly — full audit, not just this session's new code)
+
+Every file touched or added in §18–21 goes through `src/services/**` exclusively — no page or component in this session's work calls `supabase.from/.rpc/.storage/.auth` directly. A full-codebase grep for direct `supabase` usage in `src/pages/**` and `src/components/**` turned up three pre-existing spots, none introduced by this session's work:
+
+- **`src/components/PoliticianSidebar.jsx`** — calls `supabase.from('politician_profiles')` directly. A genuine, standing violation of the hard rule in `CLAUDE.md`/`docs/CODE_LAYERS.md`. Flagged in an earlier session's review too; still not fixed. Left as-is rather than fixed opportunistically, since it's unrelated to what was actually being built each time it's been noticed — a real fix belongs in its own pass (extract the query into a new function in `politicianWall.js` or a new `politicians.js` service file).
+- **`src/pages/PoliticianWall.jsx`** — calls `supabase.channel(...)`/`supabase.removeChannel(...)` directly for a realtime subscription on `politician_supporters` changes. Not a `.from/.rpc/.storage/.auth` call in the literal sense the hard rule names, but still bypasses the principle that `services/**` is the only layer that imports the `supabase` client — worth folding into a service-layer helper (e.g. a `subscribeToSupportChanges(politicianId, callback)` in `politicianWall.js`) the next time this file is touched.
+- **`src/components/map/MapComponent.jsx`** — imports `supabase` but never actually calls it; a dead import, not a functional violation. Cheap to remove whenever this file is next edited.
+
+None of these block anything — they're noted here so a future session doesn't mistake "found during a compliance check" for "introduced by §18–21," and doesn't need to re-discover them from scratch.

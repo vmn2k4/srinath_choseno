@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { supabase } from '../services/supabase';
 import shp from 'shpjs';
 import { Trash2, Plus } from 'lucide-react';
 import BoundaryUploadsPanel from './Admin/BoundaryUploadsPanel';
 import RedistrictingPanel from './Admin/RedistrictingPanel';
 import AdminSubNav from '../components/AdminSubNav';
 import { countVertices } from '../utils/countVertices';
+import {
+  getCountries, createCountry, listBoundaryTypes, createBoundaryType, createStandardBoundaryTypeSet,
+  deleteBoundaryType, getRecentMapShapes, deleteMapShape, createBoundaryUpload, getMapShapeCodesByUploadId,
+  insertMapShapesBatch, insertMapShape, finalizeBoundaryUpload
+} from '../services/boundaries';
+import { listPoliticalPartiesAllCountries, createPoliticalParty, deletePoliticalParty } from '../services/politicalParties';
 
 const VERTEX_BUCKETS = [
   [0, 1_000], [1_000, 5_000], [5_000, 20_000],
@@ -70,32 +75,21 @@ export default function AdminPage() {
 
   const fetchCountries = async () => {
     setLoadingCountries(true);
-    const { data } = await supabase
-      .from('countries')
-      .select('name, code, flag_emoji')
-      .order('name', { ascending: true });
+    const { data } = await getCountries();
     setCountryRows(data || []);
     setLoadingCountries(false);
   };
 
   const fetchBoundaryTypes = async () => {
     setLoadingTypes(true);
-    const { data } = await supabase
-      .from('country_boundary_types')
-      .select('id, country, type_name, rank')
-      .order('country', { ascending: true })
-      .order('rank', { ascending: true });
+    const { data } = await listBoundaryTypes({ columns: 'id, country, type_name, rank' });
     setBoundaryTypes(data || []);
     setLoadingTypes(false);
   };
 
   const fetchParties = async () => {
     setLoadingParties(true);
-    const { data } = await supabase
-      .from('political_parties')
-      .select('id, country, name, rank')
-      .order('country', { ascending: true })
-      .order('rank', { ascending: true });
+    const { data } = await listPoliticalPartiesAllCountries();
     setPartyRows(data || []);
     setLoadingParties(false);
   };
@@ -126,10 +120,10 @@ export default function AdminPage() {
       setCountryStatus('Error: Country name is required.');
       return;
     }
-    const { error } = await supabase.from('countries').insert({
+    const { error } = await createCountry({
       name: newCountryName.trim(),
       code: newCountryCode.trim() ? newCountryCode.trim().toUpperCase() : null,
-      flag_emoji: newCountryFlag.trim() || null,
+      flagEmoji: newCountryFlag.trim() || null,
     });
     if (error) {
       setCountryStatus('Error: ' + error.message);
@@ -149,11 +143,7 @@ export default function AdminPage() {
   const handleAddStandardSet = async () => {
     if (!newTypeCountry) return;
     setTypeStatus('');
-    const { error } = await supabase.from('country_boundary_types').insert([
-      { country: newTypeCountry, type_name: 'National', rank: 1 },
-      { country: newTypeCountry, type_name: 'State-Province', rank: 2 },
-      { country: newTypeCountry, type_name: 'Municipal', rank: 3 },
-    ]);
+    const { error } = await createStandardBoundaryTypeSet(newTypeCountry);
     if (error) {
       setTypeStatus('Error: ' + error.message);
       return;
@@ -173,9 +163,9 @@ export default function AdminPage() {
       setTypeStatus('Error: Country, type name, and rank are all required.');
       return;
     }
-    const { error } = await supabase.from('country_boundary_types').insert({
+    const { error } = await createBoundaryType({
       country: newTypeCountry.trim(),
-      type_name: newTypeName.trim(),
+      typeName: newTypeName.trim(),
       rank: parseInt(newTypeRank, 10)
     });
     if (error) {
@@ -190,7 +180,7 @@ export default function AdminPage() {
 
   const handleDeleteBoundaryType = async (id) => {
     if (!window.confirm('Delete this boundary type? Any uploaded shapes still using it will block this.')) return;
-    const { error } = await supabase.from('country_boundary_types').delete().eq('id', id);
+    const { error } = await deleteBoundaryType(id);
     if (error) {
       alert('Could not delete: ' + error.message + '\nDelete or re-type the shapes using this type first.');
       return;
@@ -203,7 +193,7 @@ export default function AdminPage() {
       setPartyStatus('Error: Country and party name are required.');
       return;
     }
-    const { error } = await supabase.from('political_parties').insert({
+    const { error } = await createPoliticalParty({
       country: newPartyCountry.trim(),
       name: newPartyName.trim(),
       rank: newPartyRank ? parseInt(newPartyRank, 10) : 999
@@ -220,7 +210,7 @@ export default function AdminPage() {
 
   const handleDeleteParty = async (id) => {
     if (!window.confirm('Delete this party? This will fail if any politician has already selected it.')) return;
-    const { error } = await supabase.from('political_parties').delete().eq('id', id);
+    const { error } = await deletePoliticalParty(id);
     if (error) {
       alert('Could not delete: ' + error.message + '\nSome politicians have this party selected — have them switch first.');
       return;
@@ -230,13 +220,7 @@ export default function AdminPage() {
 
   const fetchBoundaries = async () => {
     setLoadingBoundaries(true);
-    // Fetch distinct boundary groups if possible, or just the latest 100 boundaries
-    const { data, error } = await supabase
-      .from('map_shapes')
-      .select('id, name, country, boundary_type, retired_at')
-      .order('created_at', { ascending: false })
-      .limit(50);
-      
+    const { data } = await getRecentMapShapes({ limit: 50 });
     if (data) {
       setBoundaries(data);
     }
@@ -249,7 +233,7 @@ export default function AdminPage() {
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this boundary?")) {
-      await supabase.from('map_shapes').delete().eq('id', id);
+      await deleteMapShape(id);
       fetchBoundaries();
     }
   };
@@ -402,15 +386,11 @@ export default function AdminPage() {
     try {
       let uploadId = resumeUploadId;
       if (!uploadId) {
-        const { data: uploadRow, error: uploadRowError } = await supabase
-          .from('boundary_uploads')
-          .insert({
-            name: uploadName.trim() || file.name,
-            country, boundary_type: boundaryType,
-            expected_count: analyzedFeatures.length,
-          })
-          .select()
-          .single();
+        const { data: uploadRow, error: uploadRowError } = await createBoundaryUpload({
+          name: uploadName.trim() || file.name,
+          country, boundaryType,
+          expectedCount: analyzedFeatures.length,
+        });
         if (uploadRowError) throw uploadRowError;
         uploadId = uploadRow.id;
       }
@@ -419,10 +399,7 @@ export default function AdminPage() {
       const hasCodes = pending.some(f => f.code);
       if (resumeUploadId && hasCodes) {
         setStatus('Checking what has already been uploaded...');
-        const { data: existing, error: existingError } = await supabase
-          .from('map_shapes')
-          .select('code')
-          .eq('upload_id', uploadId);
+        const { data: existing, error: existingError } = await getMapShapeCodesByUploadId(uploadId);
         if (existingError) throw existingError;
         const doneCodes = new Set((existing || []).map(r => r.code));
         pending = pending.filter(f => !f.code || !doneCodes.has(f.code));
@@ -446,9 +423,7 @@ export default function AdminPage() {
       for (let i = 0; i < normalTier.length; i += BULK_BATCH_SIZE) {
         const chunk = normalTier.slice(i, i + BULK_BATCH_SIZE);
         setStatus(`Tier 1: normal-complexity shapes — batch ${Math.floor(i / BULK_BATCH_SIZE) + 1}/${Math.ceil(normalTier.length / BULK_BATCH_SIZE)}`);
-        const { error } = await supabase.rpc('insert_map_shapes_batch', {
-          p_shapes: chunk.map(toShapePayload),
-        });
+        const { error } = await insertMapShapesBatch(chunk.map(toShapePayload));
         if (error) throw new Error(`Batch insert failed: ${error.message}. Safe to retry — rerun the upload for this same file, already-inserted shapes will be skipped.`);
         done += chunk.length;
         setProgress(Math.round((done / Math.max(totalToInsert, 1)) * 100));
@@ -457,17 +432,17 @@ export default function AdminPage() {
       for (let i = 0; i < mediumTier.length; i++) {
         const f = mediumTier[i];
         setStatus(`Tier 2: medium-complexity shapes — ${i + 1}/${mediumTier.length} (${f.name})`);
-        const { error } = await supabase.rpc('insert_map_shape', {
-          p_country: f.country, p_boundary_type: f.boundary_type,
-          p_name: f.name, p_code: f.code, p_properties: f.properties,
-          p_geojson: f.geom, p_upload_id: uploadId,
+        const { error } = await insertMapShape({
+          country: f.country, boundaryType: f.boundary_type,
+          name: f.name, code: f.code, properties: f.properties,
+          geojson: f.geom, uploadId,
         });
         if (error) throw new Error(`Shape "${f.name}" failed: ${error.message}. Safe to retry — rerun the upload for this same file, already-inserted shapes will be skipped.`);
         done += 1;
         setProgress(Math.round((done / Math.max(totalToInsert, 1)) * 100));
       }
 
-      await supabase.from('boundary_uploads').update({ completed_at: new Date().toISOString() }).eq('id', uploadId);
+      await finalizeBoundaryUpload(uploadId, new Date().toISOString());
 
       setStatus(`Done. ${totalToInsert} shape(s) uploaded, ${skippedCount} skipped (over ${vertexCutoff.toLocaleString()} vertices).`);
       setProgress(100);

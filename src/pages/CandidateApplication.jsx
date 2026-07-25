@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { supabase } from '../services/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import VideoRecorder from '../components/video/VideoRecorder';
+import {
+  getCandidateById, getElectionQuestions, getCandidateAnswers, updateCandidateStatement,
+  upsertCandidateAnswer, updateCandidateIntroVideoUrl, submitCandidateApplication
+} from '../services/elections';
 import { ArrowLeft, Send, Video, RefreshCw } from 'lucide-react';
 
 const STATUS_COPY = {
@@ -28,14 +31,7 @@ export default function CandidateApplication() {
 
   const fetchAll = async () => {
     setLoading(true);
-    const { data: c } = await supabase
-      .from('election_candidates')
-      .select(`
-        id, seat_id, statement, status, submitted_at, intro_video_url, politician_id,
-        election_seats ( role_title, map_shapes ( name ), elections ( id, name, election_date, status ) )
-      `)
-      .eq('id', candidateId)
-      .maybeSingle();
+    const { data: c } = await getCandidateById(candidateId);
 
     if (!c || c.politician_id !== user.id) {
       setCandidate(null);
@@ -48,20 +44,13 @@ export default function CandidateApplication() {
 
     const electionId = c.election_seats?.elections?.id;
     if (electionId) {
-      const { data: qs } = await supabase
-        .from('election_questions')
-        .select('id, question_text, required, allow_context, rank, election_question_options(id, option_text, rank)')
-        .eq('election_id', electionId)
-        .order('rank');
+      const { data: qs } = await getElectionQuestions(electionId);
       setQuestions((qs || []).map(q => ({
         ...q,
         election_question_options: [...(q.election_question_options || [])].sort((a, b) => a.rank - b.rank)
       })));
 
-      const { data: existingAnswers } = await supabase
-        .from('election_candidate_answers')
-        .select('question_id, option_id, context_text')
-        .eq('candidate_id', candidateId);
+      const { data: existingAnswers } = await getCandidateAnswers(candidateId);
       const answerMap = {};
       (existingAnswers || []).forEach(a => {
         answerMap[a.question_id] = { optionId: a.option_id, context: a.context_text || '' };
@@ -76,16 +65,13 @@ export default function CandidateApplication() {
   }, [user, candidateId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const saveStatement = async () => {
-    await supabase.from('election_candidates').update({ statement }).eq('id', candidateId);
+    await updateCandidateStatement(candidateId, statement);
   };
 
   const selectOption = async (questionId, optionId) => {
     const context = answers[questionId]?.context || null;
     setAnswers(prev => ({ ...prev, [questionId]: { optionId, context } }));
-    await supabase.from('election_candidate_answers').upsert(
-      { candidate_id: candidateId, question_id: questionId, option_id: optionId, context_text: context },
-      { onConflict: 'candidate_id,question_id' }
-    );
+    await upsertCandidateAnswer(candidateId, questionId, optionId, context);
   };
 
   const updateContext = (questionId, text) => {
@@ -95,16 +81,13 @@ export default function CandidateApplication() {
   const saveContext = async (questionId) => {
     const a = answers[questionId];
     if (!a?.optionId) return;
-    await supabase.from('election_candidate_answers').upsert(
-      { candidate_id: candidateId, question_id: questionId, option_id: a.optionId, context_text: a.context || null },
-      { onConflict: 'candidate_id,question_id' }
-    );
+    await upsertCandidateAnswer(candidateId, questionId, a.optionId, a.context || null);
   };
 
   const handleVideoUploaded = async (url) => {
     setIntroVideoUrl(url);
     setShowRecorder(false);
-    await supabase.from('election_candidates').update({ intro_video_url: url }).eq('id', candidateId);
+    await updateCandidateIntroVideoUrl(candidateId, url);
   };
 
   const missingRequired = questions.filter(q => q.required && !answers[q.id]?.optionId);
@@ -114,13 +97,17 @@ export default function CandidateApplication() {
     setSubmitting(true);
     setStatus('');
     await saveStatement();
-    const { error } = await supabase.rpc('submit_candidate_application', { p_candidate_id: candidateId });
+    const { data, error } = await submitCandidateApplication(candidateId);
     setSubmitting(false);
     if (error) {
       setStatus('Error: ' + error.message);
       return;
     }
-    setStatus('Application submitted! An admin will review it soon.');
+    setStatus(
+      data?.status === 'rejected'
+        ? 'Application updated. This application was previously not approved — contact an admin if you believe this should change.'
+        : 'Application submitted! You are now a public candidate for this seat.'
+    );
     fetchAll();
   };
 

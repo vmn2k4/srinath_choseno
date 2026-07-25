@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { X, Loader2 } from 'lucide-react';
-import { supabase } from '../../services/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import StepLocation from '../Onboarding/StepLocation';
 import StepPolitician from '../Onboarding/StepPolitician';
+import { upsertProfileCore, upsertPoliticianProfile } from '../../services/profile';
 
 // ─── Step 1: Basic Info ──────────────────────────────────────────
 function StepBasicInfo({ data, updateData, nextStep }) {
@@ -93,28 +93,24 @@ export default function EditProfileFlow({ initialData, onComplete, onCancel }) {
       // rather than trusting a stale/hand-edited value — keeps it in sync if
       // the user's location moved to a different country.
       const derivedCountry = formData.matchedBoundaries?.[0]?.country ?? null;
-      const { error: profErr } = await supabase.from('profiles').upsert({
-        id: user.id,
+      const { error: profErr } = await upsertProfileCore(user.id, {
         role: formData.role,
-        full_name: formData.fullName || null,
+        fullName: formData.fullName,
         country: derivedCountry,
-        constituency: matchedNames,
-        updated_at: new Date()
+        constituency: matchedNames
       });
       if (profErr) throw profErr;
 
       if (formData.role === 'politician') {
         const primaryBoundary = formData.matchedBoundaries?.[0];
-        const { error: polErr } = await supabase.from('politician_profiles').upsert({
-          id: user.id,
-          target_boundary_id: primaryBoundary ? String(primaryBoundary.id) : initialData.target_boundary_id,
-          target_boundary_name: matchedNames,
-          political_party_id: formData.politicalParty || null,
-          education: formData.education || null,
-          hometown: formData.hometown || null,
-          bio: formData.bio,
-          updated_at: new Date()
-        });
+        const { error: polErr } = await upsertPoliticianProfile(user.id, {
+          targetBoundaryId: primaryBoundary ? String(primaryBoundary.id) : undefined,
+          targetBoundaryName: matchedNames,
+          politicalPartyId: formData.politicalParty,
+          education: formData.education,
+          hometown: formData.hometown,
+          bio: formData.bio
+        }, initialData.target_boundary_id);
         if (polErr) throw polErr;
       }
 

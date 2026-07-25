@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../services/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { upsertProfileCore, upsertPoliticianProfile } from '../../services/profile';
 import StepRole from './StepRole';
 import StepLocation from './StepLocation';
 import StepUsername from './StepUsername';
@@ -51,14 +51,12 @@ export default function OnboardingFlow() {
       // (no data loaded for their area yet), leave it null rather than
       // defaulting to a wrong country.
       const derivedCountry = formData.matchedBoundaries?.[0]?.country ?? null;
-      const { error: profileError } = await supabase.from('profiles').upsert({
-        id: user.id,
+      const { error: profileError } = await upsertProfileCore(user.id, {
         role: finalRole,
-        full_name: formData.fullName || null,
+        fullName: formData.fullName,
         country: derivedCountry,
-        constituency: matchedNames,
-        onboarding_completed: true
-      });
+        constituency: matchedNames
+      }, { onboardingCompleted: true });
       if (profileError) throw profileError;
 
       // 2. Update Politician Profiles (if applicable)
@@ -66,15 +64,14 @@ export default function OnboardingFlow() {
       // real election seat they choose once one opens in their area.
       if (formData.role === 'politician') {
         const primaryBoundary = formData.matchedBoundaries?.[0];
-        const { error: polError } = await supabase.from('politician_profiles').upsert({
-          id: user.id,
-          target_boundary_id: primaryBoundary ? String(primaryBoundary.id) : null,
-          target_boundary_name: matchedNames,
-          political_party_id: formData.politicalParty || null,
-          education: formData.education || null,
-          hometown: formData.hometown || null,
+        const { error: polError } = await upsertPoliticianProfile(user.id, {
+          targetBoundaryId: primaryBoundary ? String(primaryBoundary.id) : undefined,
+          targetBoundaryName: matchedNames,
+          politicalPartyId: formData.politicalParty,
+          education: formData.education,
+          hometown: formData.hometown,
           bio: formData.bio
-        });
+        }, null);
         if (polError) throw polError;
       }
 
@@ -106,17 +103,17 @@ export default function OnboardingFlow() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-2xl bg-surface border border-border shadow-2xl rounded-2xl overflow-hidden relative">
+    <div className="w-full flex items-center justify-center py-6 sm:py-10">
+      <div className="w-full max-w-2xl bg-surface/40 backdrop-blur-md border border-border-light/45 shadow-2xl rounded-2xl overflow-hidden relative animate-fade-in">
         {/* Progress Bar */}
         <div className="absolute top-0 left-0 w-full h-1 bg-surface-hover">
-          <div 
-            className="h-full bg-primary transition-all duration-300" 
+          <div
+            className="h-full bg-primary transition-all duration-300"
             style={{ width: `${(currentStep / (formData.role === 'citizen' ? 3 : 4)) * 100}%` }}
           />
         </div>
-        
-        <div className="p-8">
+
+        <div className="p-5 sm:p-8">
           {renderStep()}
         </div>
       </div>

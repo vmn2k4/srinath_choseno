@@ -4,8 +4,15 @@ import { supabase } from '../services/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import LinkPreview from '../components/LinkPreview';
 import PoliticianSidebar from '../components/PoliticianSidebar';
-import { MapPin, Users, ShieldAlert, ArrowLeft, Heart, QrCode, X, Image as ImageIcon, MessageSquare, Send } from 'lucide-react';
+import WallPostFeed from '../components/wall/WallPostFeed';
+import { MapPin, Users, ShieldAlert, ArrowLeft, Heart, QrCode, X, Image as ImageIcon } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
+import { getOwnProfile } from '../services/profile';
+import {
+  getWallOwnerProfile, getSupportStatus, getSupporterCount, withdrawSupport, addSupport,
+  getSupportersList, getWallPosts, createWallPost
+} from '../services/politicianWall';
+import { uploadPostImage, createComment } from '../services/feed';
 
 export default function PoliticianWall() {
   const { ghostId } = useParams();
@@ -40,26 +47,12 @@ export default function PoliticianWall() {
       setLoading(true);
       
       // Load current user profile
-      const { data: myProfile } = await supabase.from('profiles').select('*').eq('id', user.id).single();
+      const { data: myProfile } = await getOwnProfile(user.id);
       setProfile(myProfile);
 
       // Load wall owner
-      const { data: owner } = await supabase
-        .from('profiles')
-        .select(`
-           id,
-           current_ghost_id,
-           full_name,
-           role,
-           constituency,
-           politician_profiles (
-             political_target_role,
-             target_boundary_name
-           )
-        `)
-        .eq('current_ghost_id', ghostId)
-        .single();
-        
+      const { data: owner } = await getWallOwnerProfile(ghostId);
+
       if (owner) {
         setWallOwner(owner);
         checkSupportStatus(owner.id);
@@ -91,88 +84,50 @@ export default function PoliticianWall() {
 
   const checkSupportStatus = async (politicianId) => {
     // Check if current user supports
-    const { data: mySupport } = await supabase
-      .from('politician_supporters')
-      .select('supporter_id')
-      .eq('politician_id', politicianId)
-      .eq('supporter_id', user.id)
-      .maybeSingle();
-      
+    const { data: mySupport } = await getSupportStatus(politicianId, user.id);
+
     setIsSupporting(!!mySupport);
     fetchSupportCount(politicianId);
   };
 
   const fetchSupportCount = async (politicianId) => {
-    const { count } = await supabase
-      .from('politician_supporters')
-      .select('*', { count: 'exact', head: true })
-      .eq('politician_id', politicianId);
-      
+    const { count } = await getSupporterCount(politicianId);
+
     setSupportCount(count || 0);
   };
 
   const toggleSupport = async () => {
     if (!wallOwner) return;
-    
+
     if (isSupporting) {
       // Withdraw support
       setIsSupporting(false);
       setSupportCount(prev => Math.max(0, prev - 1));
-      await supabase
-        .from('politician_supporters')
-        .delete()
-        .eq('politician_id', wallOwner.id)
-        .eq('supporter_id', user.id);
+      await withdrawSupport(wallOwner.id, user.id);
     } else {
       // Add support
       setIsSupporting(true);
       setSupportCount(prev => prev + 1);
-      await supabase
-        .from('politician_supporters')
-        .insert({
-          politician_id: wallOwner.id,
-          supporter_id: user.id
-        });
+      await addSupport(wallOwner.id, user.id);
     }
   };
 
   const loadSupportersDashboard = async () => {
     setShowSupporters(true);
-    const { data } = await supabase
-      .from('politician_supporters')
-      .select(`
-        created_at,
-        profiles!politician_supporters_supporter_id_fkey (
-          full_name,
-          current_ghost_id
-        )
-      `)
-      .eq('politician_id', wallOwner.id)
-      .order('created_at', { ascending: false });
-      
+    const { data } = await getSupportersList(wallOwner.id);
+
     if (data) setSupportersList(data);
   };
 
   const fetchPosts = async () => {
     try {
-      const { data, error } = await supabase
-        .from('posts')
-        .select(`*, comments (*)`)
-        .or(`ghost_id.eq.${ghostId},wall_ghost_id.eq.${ghostId}`)
-        .order('created_at', { ascending: false });
+      const { data, error } = await getWallPosts(ghostId);
 
       if (error) throw error;
 
-      // The politician's own replies always lead each comment thread on their
-      // wall, ahead of everyone else's — chronological order within each of
-      // those two groups.
-      const byDate = (a, b) => new Date(a.created_at) - new Date(b.created_at);
-      const sortedPosts = data.map(post => {
-        const mine = post.comments.filter(c => c.ghost_id === ghostId).sort(byDate);
-        const others = post.comments.filter(c => c.ghost_id !== ghostId).sort(byDate);
-        return { ...post, comments: [...mine, ...others] };
-      });
-      setPosts(sortedPosts);
+      // Comment pin-to-top ordering (owner's replies always lead) is handled
+      // by WallPostFeed itself, keyed off ownerGhostId.
+      setPosts(data);
     } catch (err) {
       console.error(err);
     } finally {
@@ -202,31 +157,21 @@ export default function PoliticianWall() {
     setSubmitting(true);
     try {
       let finalImageUrl = null;
-      
+
       if (imageFile) {
-        const fileExt = imageFile.name.split('.').pop();
-        const fileName = `${profile.current_ghost_id}-${Date.now()}.${fileExt}`;
-        const filePath = `posts/${fileName}`;
-        
-        const { error: uploadError } = await supabase.storage
-          .from('post-images')
-          .upload(filePath, imageFile);
-          
+        const { publicUrl, error: uploadError } = await uploadPostImage(imageFile, profile.current_ghost_id);
+
         if (uploadError) {
           console.error('Upload error:', uploadError);
           alert('Failed to upload image.');
           setSubmitting(false);
           return;
         }
-        
-        const { data: { publicUrl } } = supabase.storage
-          .from('post-images')
-          .getPublicUrl(filePath);
-          
+
         finalImageUrl = publicUrl;
       }
 
-      const { error } = await supabase.from('posts').insert({
+      const { error } = await createWallPost({
         ghost_id: profile.current_ghost_id,
         content: newPostContent.trim(),
         wall_ghost_id: ghostId,
@@ -253,11 +198,7 @@ export default function PoliticianWall() {
     if (!content?.trim() || !profile?.current_ghost_id) return;
 
     try {
-      const { error } = await supabase.from('comments').insert({
-        post_id: postId,
-        ghost_id: profile.current_ghost_id,
-        content: content.trim()
-      });
+      const { error } = await createComment(postId, profile.current_ghost_id, content.trim());
       if (error) throw error;
 
       setCommentInputs({ ...commentInputs, [postId]: '' });
@@ -483,118 +424,20 @@ export default function PoliticianWall() {
         </div>
 
         {/* Feed */}
-        <div className="space-y-6">
-          {(() => {
-            const visiblePosts = posts.filter(post => {
-              if (activeTab === 'mine') return post.ghost_id === ghostId;
-              if (activeTab === 'reviews') return post.ghost_id !== ghostId;
-              return true;
-            });
-            if (visiblePosts.length === 0) {
-              return (
-                <div className="text-center py-10 text-text-muted text-sm bg-surface/20 rounded-2xl border border-dashed border-border-light/60">
-                  {activeTab === 'mine' ? 'No posts yet.' : activeTab === 'reviews' ? 'No reviews yet.' : 'No posts on this wall yet.'}
-                </div>
-              );
-            }
-            return visiblePosts.map(post => (
-              <div key={post.id} className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/40 overflow-hidden p-5 hover:border-primary/25 transition-all duration-300 shadow-md">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full bg-surface/50 border border-border-light/30 flex items-center justify-center">
-                    <Users size={16} className="text-text-muted" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-bold text-text-secondary font-mono">
-                      Ghost-{post.ghost_id.split('-')[0]}
-                      {post.ghost_id === ghostId && (
-                         <span className="ml-2 text-[10px] bg-primary/20 text-primary-light px-2 py-0.5 rounded uppercase tracking-wider font-bold">Author</span>
-                      )}
-                    </div>
-                    <div className="text-xs text-text-muted">{new Date(post.created_at).toLocaleString()}</div>
-                  </div>
-                </div>
-                
-                <p className="text-text-tertiary text-sm whitespace-pre-wrap leading-relaxed mb-3">
-                  {post.content}
-                </p>
-
-                {post.image_url && (
-                  <div className="mb-4 rounded-xl overflow-hidden border border-border-light/45">
-                     <img src={post.image_url} alt="Post Attachment" className="w-full max-h-[500px] object-cover" loading="lazy" />
-                  </div>
-                )}
-
-                {post.link_metadata ? (
-                  <div className="mb-4">
-                    <LinkPreview url={post.link_metadata.url} metadata={post.link_metadata} />
-                  </div>
-                ) : (() => {
-                  const match = post.content?.match(/(https?:\/\/[^\s]+)/);
-                  if (match) {
-                    return (
-                      <div className="mb-4">
-                        <LinkPreview url={match[1]} />
-                      </div>
-                    );
-                  }
-                  return null;
-                })()}
-                
-                {post.video_url && (
-                  <div className="mt-3 rounded-xl overflow-hidden border border-border-light/45 bg-black">
-                     <video src={post.video_url} controls className="w-full max-h-96 object-contain" />
-                  </div>
-                )}
-
-                {/* Comments — the wall owner's own replies always lead, so a
-                    politician responding to a review is the first thing seen. */}
-                <div className="mt-4 pt-4 border-t border-border-light/20">
-                  {post.comments?.length > 0 && (
-                    <div className="space-y-3 mb-4 pl-2.5 border-l border-primary/30">
-                      {post.comments.map(comment => (
-                        <div key={comment.id} className="pl-3">
-                          <div className="flex items-baseline gap-2 mb-0.5">
-                            <span className="text-xs font-bold text-text-muted font-mono">
-                              Ghost-{comment.ghost_id.split('-')[0]}
-                            </span>
-                            {comment.ghost_id === ghostId && (
-                              <span className="text-[9px] bg-primary/20 text-primary-light px-1.5 py-0.5 rounded uppercase tracking-wider font-bold">
-                                {wallOwner.id === user.id ? 'You' : 'Owner'}
-                              </span>
-                            )}
-                            <span className="text-[10px] text-text-muted/60">
-                              {new Date(comment.created_at).toLocaleString()}
-                            </span>
-                          </div>
-                          <p className="text-sm text-text-tertiary">{comment.content}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="flex items-center gap-2">
-                    <MessageSquare size={14} className="text-text-muted shrink-0" />
-                    <input
-                      type="text"
-                      value={commentInputs[post.id] || ''}
-                      onChange={(e) => setCommentInputs({ ...commentInputs, [post.id]: e.target.value })}
-                      onKeyDown={(e) => { if (e.key === 'Enter') handleCreateComment(post.id); }}
-                      placeholder="Write an anonymous comment..."
-                      className="flex-1 bg-surface/50 border border-border-light/40 rounded-xl px-3 py-2 text-sm text-text-secondary placeholder:text-text-muted focus:outline-none focus:border-primary transition-colors"
-                    />
-                    <button
-                      onClick={() => handleCreateComment(post.id)}
-                      disabled={!commentInputs[post.id]?.trim()}
-                      className="p-2 bg-primary/10 text-primary-light hover:bg-primary hover:text-slate-950 rounded-xl transition-all disabled:opacity-40"
-                    >
-                      <Send size={14} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ));
-          })()}
-        </div>
+        <WallPostFeed
+          posts={posts.filter(post => {
+            if (activeTab === 'mine') return post.ghost_id === ghostId;
+            if (activeTab === 'reviews') return post.ghost_id !== ghostId;
+            return true;
+          })}
+          ownerGhostId={ghostId}
+          ownerBadgeLabel="Author"
+          viewerIsOwner={wallOwner.id === user.id}
+          emptyMessage={activeTab === 'mine' ? 'No posts yet.' : activeTab === 'reviews' ? 'No reviews yet.' : 'No posts on this wall yet.'}
+          commentInputs={commentInputs}
+          onCommentInputChange={(postId, value) => setCommentInputs({ ...commentInputs, [postId]: value })}
+          onSubmitComment={handleCreateComment}
+        />
       </div>
 
     </div>

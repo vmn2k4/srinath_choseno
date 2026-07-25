@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Video, StopCircle, RefreshCw, Upload, CheckCircle } from 'lucide-react';
-import { supabase } from '../../services/supabase';
+import { uploadVideo, getVideoPublicUrl } from '../../services/video';
 
 export default function VideoRecorder({ onVideoUploaded, maxDuration = 30, bucket = 'politician_videos' }) {
   const [isRecording, setIsRecording] = useState(false);
@@ -87,18 +87,12 @@ export default function VideoRecorder({ onVideoUploaded, maxDuration = 30, bucke
     setUploading(true);
     try {
       const fileName = `video_${Date.now()}.webm`;
-      
-      const { data, error } = await supabase.storage
-        .from(bucket)
-        .upload(fileName, videoBlob, {
-          contentType: 'video/webm'
-        });
+
+      const { data, error } = await uploadVideo(bucket, fileName, videoBlob);
 
       if (error) throw error;
 
-      const { data: publicUrlData } = supabase.storage
-        .from(bucket)
-        .getPublicUrl(fileName);
+      const { data: publicUrlData } = getVideoPublicUrl(bucket, fileName);
 
       onVideoUploaded(publicUrlData.publicUrl);
     } catch (error) {

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '../services/supabase';
+import { getSession, onAuthStateChange, signOut as signOutService } from '../services/auth';
+import { fetchOrHealProfile, getOwnProfile } from '../services/profile';
 
 const AuthContext = createContext();
 
@@ -11,52 +12,37 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     let active = true;
 
-    const fetchProfile = async (userId, userEmail) => {
+    // Applies a session and (re)fetches its profile. Sets `loading` back to
+    // true for the duration of that fetch -- a fresh sign-in fires this with
+    // a new session while `loading` may already be false from an earlier
+    // resolution, and AuthPage navigates to /feed as soon as `session` is
+    // truthy, well before this async fetch completes. Without re-arming
+    // `loading`, ProtectedRoute would render with the *previous* (null)
+    // profile and incorrectly redirect to /onboarding on every sign-in,
+    // regardless of the account's actual onboarding_completed value.
+    const applySession = async (newSession) => {
+      if (!active) return;
+      setSession(newSession);
+      const userId = newSession?.user?.id;
+
       if (!userId) {
-        if (active) setProfile(null);
+        setProfile(null);
+        setLoading(false);
         return;
       }
-      let { data } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle();
-      
-      const isAdminEmail = userEmail?.toLowerCase() === 'vmn2k4@gmail.com';
 
-      if (!data) {
-        // Self-heal: create profile row if missing
-        const { data: created } = await supabase
-          .from('profiles')
-          .upsert({ id: userId, role: isAdminEmail ? 'admin' : 'normal' })
-          .select()
-          .maybeSingle();
-        data = created;
-      } else if (isAdminEmail && data.role !== 'admin') {
-        await supabase.from('profiles').update({ role: 'admin' }).eq('id', userId);
-        data.role = 'admin';
+      setLoading(true);
+      const data = await fetchOrHealProfile(userId, newSession.user.email);
+      if (active) {
+        setProfile(data);
+        setLoading(false);
       }
-
-      if (active) setProfile(data);
     };
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (active) {
-        setSession(session);
-        fetchProfile(session?.user?.id, session?.user?.email).then(() => {
-          if (active) setLoading(false);
-        });
-      }
-    });
+    getSession().then(({ data: { session } }) => applySession(session));
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (active) {
-        setSession(session);
-        if (session) {
-          fetchProfile(session.user.id, session.user.email).then(() => {
-            if (active) setLoading(false);
-          });
-        } else {
-          setProfile(null);
-          setLoading(false);
-        }
-      }
+    const { data: { subscription } } = onAuthStateChange((_event, session) => {
+      applySession(session);
     });
 
     return () => {
@@ -67,19 +53,19 @@ export function AuthProvider({ children }) {
 
   const signOut = () => {
     setProfile(null);
-    return supabase.auth.signOut();
+    return signOutService();
   };
 
   const refreshProfile = async () => {
     if (session?.user?.id) {
-      const { data } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
+      const { data } = await getOwnProfile(session.user.id);
       setProfile(data);
     }
   };
 
   return (
     <AuthContext.Provider value={{ session, user: session?.user, profile, loading, signOut, refreshProfile }}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 }
