@@ -5,14 +5,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import StepLocation from '../Onboarding/StepLocation';
 import StepPolitician from '../Onboarding/StepPolitician';
 
-const POLITICAL_ROLES = [
-  { label: 'Prime Minister / President', type: 'Country' },
-  { label: 'Member of Parliament (MP) / Senator', type: 'Federal' },
-  { label: 'MLA / MPP / Governor', type: 'Provincial' },
-  { label: 'Mayor / County Executive', type: 'Municipal' },
-  { label: 'City Councilor', type: 'City Ward' }
-];
-
 // ─── Step 1: Basic Info ──────────────────────────────────────────
 function StepBasicInfo({ data, updateData, nextStep }) {
   const canContinue = data.role && (data.role !== 'politician' || data.fullName?.trim());
@@ -79,8 +71,7 @@ export default function EditProfileFlow({ initialData, onComplete, onCancel }) {
     lat: initialData.lat || '',
     lng: initialData.lng || '',
     matchedBoundaries: initialData.matchedBoundaries || [],
-    politicalTargetRole: initialData.politicalTargetRole || '',
-    politicalParty: initialData.politicalParty || '',
+    politicalParty: initialData.politicalPartyId || '',
     education: initialData.education || '',
     hometown: initialData.hometown || '',
     bio: initialData.bio || ''
@@ -113,15 +104,12 @@ export default function EditProfileFlow({ initialData, onComplete, onCancel }) {
       if (profErr) throw profErr;
 
       if (formData.role === 'politician') {
-        const roleObj = POLITICAL_ROLES.find(r => r.label === formData.politicalTargetRole);
         const primaryBoundary = formData.matchedBoundaries?.[0];
         const { error: polErr } = await supabase.from('politician_profiles').upsert({
           id: user.id,
-          political_target_role: formData.politicalTargetRole,
-          target_boundary_type: roleObj?.type || null,
           target_boundary_id: primaryBoundary ? String(primaryBoundary.id) : initialData.target_boundary_id,
           target_boundary_name: matchedNames,
-          political_party: formData.politicalParty,
+          political_party_id: formData.politicalParty || null,
           education: formData.education || null,
           hometown: formData.hometown || null,
           bio: formData.bio,

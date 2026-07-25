@@ -4,7 +4,7 @@ import { supabase } from '../services/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import LinkPreview from '../components/LinkPreview';
 import PoliticianSidebar from '../components/PoliticianSidebar';
-import { MapPin, Users, ShieldAlert, ArrowLeft, Heart, QrCode, X, Image as ImageIcon } from 'lucide-react';
+import { MapPin, Users, ShieldAlert, ArrowLeft, Heart, QrCode, X, Image as ImageIcon, MessageSquare, Send } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 
 export default function PoliticianWall() {
@@ -27,6 +27,11 @@ export default function PoliticianWall() {
   
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+
+  // 'all' | 'mine' | 'reviews' — lets the owner separate their own posts from
+  // visitor reviews so they can find and respond to feedback quickly.
+  const [activeTab, setActiveTab] = useState('all');
+  const [commentInputs, setCommentInputs] = useState({});
 
   useEffect(() => {
     let supportChannel = null;
@@ -157,11 +162,16 @@ export default function PoliticianWall() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      
-      const sortedPosts = data.map(post => ({
-        ...post,
-        comments: post.comments.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
-      }));
+
+      // The politician's own replies always lead each comment thread on their
+      // wall, ahead of everyone else's — chronological order within each of
+      // those two groups.
+      const byDate = (a, b) => new Date(a.created_at) - new Date(b.created_at);
+      const sortedPosts = data.map(post => {
+        const mine = post.comments.filter(c => c.ghost_id === ghostId).sort(byDate);
+        const others = post.comments.filter(c => c.ghost_id !== ghostId).sort(byDate);
+        return { ...post, comments: [...mine, ...others] };
+      });
       setPosts(sortedPosts);
     } catch (err) {
       console.error(err);
@@ -235,6 +245,25 @@ export default function PoliticianWall() {
       console.error('Error creating post:', err);
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleCreateComment = async (postId) => {
+    const content = commentInputs[postId];
+    if (!content?.trim() || !profile?.current_ghost_id) return;
+
+    try {
+      const { error } = await supabase.from('comments').insert({
+        post_id: postId,
+        ghost_id: profile.current_ghost_id,
+        content: content.trim()
+      });
+      if (error) throw error;
+
+      setCommentInputs({ ...commentInputs, [postId]: '' });
+      fetchPosts();
+    } catch (err) {
+      console.error('Error creating comment:', err);
     }
   };
 
@@ -432,14 +461,43 @@ export default function PoliticianWall() {
           </div>
         </form>
 
+        {/* Tabs — let the owner separate their own posts from visitor reviews */}
+        <div className="flex gap-2 mb-6">
+          {[
+            { key: 'all', label: 'All' },
+            { key: 'mine', label: wallOwner.id === user.id ? 'My Posts' : `${wallOwner.full_name || 'Their'} Posts` },
+            { key: 'reviews', label: 'Reviews & Comments' }
+          ].map(t => (
+            <button
+              key={t.key}
+              onClick={() => setActiveTab(t.key)}
+              className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors ${
+                activeTab === t.key
+                  ? 'bg-primary/15 text-primary-light border border-primary/40'
+                  : 'bg-surface-hover/40 text-text-muted border border-border-light/30 hover:bg-surface-hover'
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+
         {/* Feed */}
         <div className="space-y-6">
-          {posts.length === 0 ? (
-             <div className="text-center py-10 text-text-muted text-sm bg-surface/20 rounded-2xl border border-dashed border-border-light/60">
-                No posts on this wall yet.
-             </div>
-          ) : (
-            posts.map(post => (
+          {(() => {
+            const visiblePosts = posts.filter(post => {
+              if (activeTab === 'mine') return post.ghost_id === ghostId;
+              if (activeTab === 'reviews') return post.ghost_id !== ghostId;
+              return true;
+            });
+            if (visiblePosts.length === 0) {
+              return (
+                <div className="text-center py-10 text-text-muted text-sm bg-surface/20 rounded-2xl border border-dashed border-border-light/60">
+                  {activeTab === 'mine' ? 'No posts yet.' : activeTab === 'reviews' ? 'No reviews yet.' : 'No posts on this wall yet.'}
+                </div>
+              );
+            }
+            return visiblePosts.map(post => (
               <div key={post.id} className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/40 overflow-hidden p-5 hover:border-primary/25 transition-all duration-300 shadow-md">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 rounded-full bg-surface/50 border border-border-light/30 flex items-center justify-center">
@@ -487,9 +545,55 @@ export default function PoliticianWall() {
                      <video src={post.video_url} controls className="w-full max-h-96 object-contain" />
                   </div>
                 )}
+
+                {/* Comments — the wall owner's own replies always lead, so a
+                    politician responding to a review is the first thing seen. */}
+                <div className="mt-4 pt-4 border-t border-border-light/20">
+                  {post.comments?.length > 0 && (
+                    <div className="space-y-3 mb-4 pl-2.5 border-l border-primary/30">
+                      {post.comments.map(comment => (
+                        <div key={comment.id} className="pl-3">
+                          <div className="flex items-baseline gap-2 mb-0.5">
+                            <span className="text-xs font-bold text-text-muted font-mono">
+                              Ghost-{comment.ghost_id.split('-')[0]}
+                            </span>
+                            {comment.ghost_id === ghostId && (
+                              <span className="text-[9px] bg-primary/20 text-primary-light px-1.5 py-0.5 rounded uppercase tracking-wider font-bold">
+                                {wallOwner.id === user.id ? 'You' : 'Owner'}
+                              </span>
+                            )}
+                            <span className="text-[10px] text-text-muted/60">
+                              {new Date(comment.created_at).toLocaleString()}
+                            </span>
+                          </div>
+                          <p className="text-sm text-text-tertiary">{comment.content}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-2">
+                    <MessageSquare size={14} className="text-text-muted shrink-0" />
+                    <input
+                      type="text"
+                      value={commentInputs[post.id] || ''}
+                      onChange={(e) => setCommentInputs({ ...commentInputs, [post.id]: e.target.value })}
+                      onKeyDown={(e) => { if (e.key === 'Enter') handleCreateComment(post.id); }}
+                      placeholder="Write an anonymous comment..."
+                      className="flex-1 bg-surface/50 border border-border-light/40 rounded-xl px-3 py-2 text-sm text-text-secondary placeholder:text-text-muted focus:outline-none focus:border-primary transition-colors"
+                    />
+                    <button
+                      onClick={() => handleCreateComment(post.id)}
+                      disabled={!commentInputs[post.id]?.trim()}
+                      className="p-2 bg-primary/10 text-primary-light hover:bg-primary hover:text-slate-950 rounded-xl transition-all disabled:opacity-40"
+                    >
+                      <Send size={14} />
+                    </button>
+                  </div>
+                </div>
               </div>
-            ))
-          )}
+            ));
+          })()}
         </div>
       </div>
 

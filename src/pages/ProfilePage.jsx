@@ -26,7 +26,7 @@ export default function ProfilePage() {
     if (data?.role === 'politician') {
       const { data: pd } = await supabase
         .from('politician_profiles')
-        .select('political_target_role, target_boundary_id, target_boundary_name, political_party, education, hometown, bio')
+        .select('target_boundary_id, target_boundary_name, political_party_id, political_parties(name), education, hometown, bio')
         .eq('id', user.id)
         .maybeSingle();
       polData = pd;
@@ -54,8 +54,8 @@ export default function ProfilePage() {
       country: data?.country || '',
       constituency: data?.constituency || '',
       ghostId: data?.current_ghost_id || '',
-      politicalTargetRole: polData?.political_target_role || '',
-      politicalParty: polData?.political_party || '',
+      politicalPartyId: polData?.political_party_id || '',
+      politicalParty: polData?.political_parties?.name || '',
       education: polData?.education || '',
       hometown: polData?.hometown || '',
       bio: polData?.bio || '',
@@ -165,12 +165,12 @@ export default function ProfilePage() {
               <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest mb-5">Political Details</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <p className="text-xs text-text-muted mb-1">Target Office</p>
-                  <p className="font-semibold text-text-main">{profile?.politicalTargetRole || <em className="text-text-muted not-italic font-normal">Not set</em>}</p>
+                  <p className="text-xs text-text-muted mb-1">Political Party</p>
+                  <p className="font-semibold text-text-main">{profile?.politicalParty || <em className="text-text-muted not-italic font-normal">Not set</em>}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-text-muted mb-1">Political Party</p>
-                  <p className="font-semibold text-text-main">{profile?.politicalParty || <em className="text-text-muted not-italic font-normal">Independent</em>}</p>
+                  <p className="text-xs text-text-muted mb-1">Hometown</p>
+                  <p className="font-semibold text-text-main">{profile?.hometown || <em className="text-text-muted not-italic font-normal">Not set</em>}</p>
                 </div>
                 {profile?.bio && (
                   <div className="sm:col-span-2">

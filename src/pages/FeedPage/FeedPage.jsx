@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../services/supabase';
-import { MapPin, Users, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Video, Image as ImageIcon, X, Globe2, Landmark } from 'lucide-react';
+import { MapPin, Users, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Video, Image as ImageIcon, X, Globe2, Landmark, Vote, Layers } from 'lucide-react';
 import VideoRecorder from '../../components/video/VideoRecorder';
 import PoliticianSidebar from '../../components/PoliticianSidebar';
 import LinkPreview from '../../components/LinkPreview';
@@ -15,7 +15,14 @@ export default function FeedPage() {
   // plus the fixed Country/International pseudo-groups.
   const [memberships, setMemberships] = useState([]);
   const [loadingMemberships, setLoadingMemberships] = useState(true);
-  const [activeTab, setActiveTab] = useState('country'); // 'country' | 'international' | 'membership:<shapeId>'
+  const [activeTab, setActiveTab] = useState('country'); // 'master' | 'country' | 'international' | 'membership:<shapeId>'
+
+  // Boundary-type filter for the 'master' tab: 'all', a boundary_type name
+  // (e.g. 'Municipal'), 'Country', or 'International'.
+  const [masterFilter, setMasterFilter] = useState('all');
+
+  // Active elections in the user's area, not yet dismissed — for the Feed banner.
+  const [activeElections, setActiveElections] = useState([]);
 
   // Feed State
   const [posts, setPosts] = useState([]);
@@ -95,7 +102,95 @@ export default function FeedPage() {
     }
   };
 
+  const fetchActiveElections = async () => {
+    if (!user) return;
+    const { data, error } = await supabase.rpc('get_active_elections_for_user');
+    if (error) {
+      console.error('Error fetching active elections:', error);
+      return;
+    }
+    setActiveElections(data || []);
+  };
+
+  const dismissElectionBanner = async (electionId) => {
+    setActiveElections(prev => prev.filter(e => e.election_id !== electionId));
+    await supabase.from('election_notification_dismissals').insert({
+      profile_id: user.id,
+      election_id: electionId
+    });
+  };
+
+  // Master feed: everything from every group the user belongs to, plus
+  // Country and International, merged and de-duped by post id (a post can
+  // legitimately match more than one of these at once).
+  const fetchMasterFeedPosts = async () => {
+    try {
+      const matchingMembershipIds = memberships
+        .filter(m => masterFilter === 'all' || m.boundary_type === masterFilter)
+        .map(m => m.id);
+
+      const queries = [];
+
+      if (matchingMembershipIds.length > 0) {
+        queries.push(
+          supabase
+            .from('posts')
+            .select('*, comments(*), post_boundaries!inner(map_shape_id)')
+            .in('post_boundaries.map_shape_id', matchingMembershipIds)
+        );
+      }
+
+      if ((masterFilter === 'all' || masterFilter === 'Country') && profile.country) {
+        queries.push(
+          supabase.from('posts').select('*, comments(*)')
+            .eq('is_country', true).eq('country', profile.country)
+        );
+      }
+
+      if (masterFilter === 'all' || masterFilter === 'International') {
+        queries.push(
+          supabase.from('posts').select('*, comments(*)').eq('is_international', true)
+        );
+      }
+
+      if (queries.length === 0) {
+        setPosts([]);
+        return;
+      }
+
+      const results = await Promise.all(queries);
+      const merged = new Map();
+      for (const { data, error } of results) {
+        if (error) throw error;
+        (data || []).forEach(post => merged.set(post.id, post));
+      }
+
+      const sortedPosts = Array.from(merged.values())
+        .map(post => ({
+          ...post,
+          comments: post.comments.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+        }))
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+      if (profile.role === 'politician') {
+        sortedPosts.sort((a, b) => {
+          const scoreA = (a.likes_count || 0) + (a.comments?.length || 0);
+          const scoreB = (b.likes_count || 0) + (b.comments?.length || 0);
+          return scoreB - scoreA;
+        });
+      }
+
+      setPosts(sortedPosts);
+    } catch (err) {
+      console.error('Error fetching master feed posts:', err);
+    }
+  };
+
   const fetchPosts = async () => {
+    if (activeTab === 'master') {
+      fetchMasterFeedPosts();
+      return;
+    }
     try {
       const isMembershipTab = activeTab.startsWith('membership:');
       const selectStr = isMembershipTab
@@ -141,7 +236,8 @@ export default function FeedPage() {
   useEffect(() => {
     fetchProfile();
     fetchMemberships();
-  }, [user]);
+    fetchActiveElections();
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Default to the user's most local group once memberships load, if they have any
   useEffect(() => {
@@ -164,7 +260,7 @@ export default function FeedPage() {
     if (profile && profile.role !== 'admin') {
       fetchPosts();
     }
-  }, [profile, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [profile, activeTab, masterFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
@@ -401,6 +497,29 @@ export default function FeedPage() {
         )}
       </div>
 
+      {activeElections.length > 0 && (
+        <div className="mb-8 space-y-3">
+          {activeElections.map(e => (
+            <div key={e.election_id} className="p-4 bg-amber-500/10 border border-amber-500/25 rounded-xl flex items-start gap-3">
+              <Vote className="text-amber-400 shrink-0 mt-0.5" size={20} />
+              <div className="flex-1 min-w-0">
+                <h3 className="text-amber-400 font-bold mb-1">An election is happening in your area</h3>
+                <p className="text-amber-200/70 text-sm">
+                  {e.election_name} · {e.election_date} — <a href="/elections" className="underline hover:text-amber-200">view candidates</a>
+                </p>
+              </div>
+              <button
+                onClick={() => dismissElectionBanner(e.election_id)}
+                className="p-1.5 text-amber-400/70 hover:text-amber-200 hover:bg-amber-500/10 rounded-lg transition-colors shrink-0"
+                title="Dismiss"
+              >
+                <X size={16} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
       {profile.role === 'admin' && (
         <div className="mb-8 p-4 bg-amber-500/10 border border-amber-500/25 rounded-xl flex items-start gap-3">
           <ShieldAlert className="text-amber-400 shrink-0 mt-0.5" />
@@ -414,46 +533,7 @@ export default function FeedPage() {
       {profile.role !== 'admin' && (
         <div className="bg-surface-hover/30 rounded-2xl border border-white/5 overflow-hidden shadow-xl">
 
-          {/* Tabs Navigation */}
-          <div className="flex overflow-x-auto custom-scrollbar border-b border-border-light bg-surface/40">
-            {memberships.map((m) => (
-              <button
-                key={m.id}
-                onClick={() => setActiveTab(`membership:${m.id}`)}
-                className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex-1 text-center ${
-                  activeTab === `membership:${m.id}`
-                    ? 'border-primary text-primary bg-primary/5'
-                    : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-surface-hover/30'
-                }`}
-              >
-                {m.name} <span className="text-xs opacity-70">({m.boundary_type})</span>
-              </button>
-            ))}
-            {profile?.country && (
-              <button
-                onClick={() => setActiveTab('country')}
-                className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex-1 text-center flex items-center justify-center gap-1.5 ${
-                  activeTab === 'country'
-                    ? 'border-primary text-primary bg-primary/5'
-                    : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-surface-hover/30'
-                }`}
-              >
-                <Landmark size={14} /> Country
-              </button>
-            )}
-            <button
-              onClick={() => setActiveTab('international')}
-              className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex-1 text-center flex items-center justify-center gap-1.5 ${
-                activeTab === 'international'
-                  ? 'border-primary text-primary bg-primary/5'
-                  : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-surface-hover/30'
-              }`}
-            >
-              <Globe2 size={14} /> International
-            </button>
-          </div>
-
-          <div className="p-4 sm:p-8">
+          <div className="p-4 sm:p-8 pb-0">
 
             {/* No local groups yet notice */}
             {!loadingMemberships && memberships.length === 0 && (
@@ -467,7 +547,7 @@ export default function FeedPage() {
             )}
 
             {/* Create Post Input — always available; the post is tagged with every group you belong to */}
-            <form onSubmit={handleCreatePost} className="mb-8 bg-surface/50 rounded-xl p-4 border border-border-light/50">
+            <form onSubmit={handleCreatePost} className="mb-6 bg-surface/50 rounded-xl p-4 border border-border-light/50">
               <textarea
                 value={newPostContent}
                 onChange={(e) => {
@@ -573,6 +653,99 @@ export default function FeedPage() {
                   </div>
               </div>
             </form>
+          </div>
+
+          {/* Tabs Navigation */}
+          <div className="flex overflow-x-auto custom-scrollbar border-b border-border-light bg-surface/40">
+            <button
+              onClick={() => setActiveTab('master')}
+              className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex-1 text-center flex items-center justify-center gap-1.5 ${
+                activeTab === 'master'
+                  ? 'border-primary text-primary bg-primary/5'
+                  : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-surface-hover/30'
+              }`}
+            >
+              <Layers size={14} /> All Feeds
+            </button>
+            {memberships.map((m) => (
+              <button
+                key={m.id}
+                onClick={() => setActiveTab(`membership:${m.id}`)}
+                className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex-1 text-center ${
+                  activeTab === `membership:${m.id}`
+                    ? 'border-primary text-primary bg-primary/5'
+                    : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-surface-hover/30'
+                }`}
+              >
+                {m.name} <span className="text-xs opacity-70">({m.boundary_type})</span>
+              </button>
+            ))}
+            {profile?.country && (
+              <button
+                onClick={() => setActiveTab('country')}
+                className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex-1 text-center flex items-center justify-center gap-1.5 ${
+                  activeTab === 'country'
+                    ? 'border-primary text-primary bg-primary/5'
+                    : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-surface-hover/30'
+                }`}
+              >
+                <Landmark size={14} /> Country
+              </button>
+            )}
+            <button
+              onClick={() => setActiveTab('international')}
+              className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex-1 text-center flex items-center justify-center gap-1.5 ${
+                activeTab === 'international'
+                  ? 'border-primary text-primary bg-primary/5'
+                  : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-surface-hover/30'
+              }`}
+            >
+              <Globe2 size={14} /> International
+            </button>
+          </div>
+
+          <div className="p-4 sm:p-8">
+
+            {/* Boundary-type filter chips — only on the master "All Feeds" tab */}
+            {activeTab === 'master' && (
+              <div className="flex flex-wrap gap-2 mb-8">
+                {['all', ...new Set(memberships.map(m => m.boundary_type))].map((filterKey) => (
+                  <button
+                    key={filterKey}
+                    onClick={() => setMasterFilter(filterKey)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
+                      masterFilter === filterKey
+                        ? 'bg-primary/20 border-primary text-primary'
+                        : 'bg-surface/40 border-border-light text-text-muted hover:text-text-secondary hover:border-border-light'
+                    }`}
+                  >
+                    {filterKey === 'all' ? 'All' : filterKey}
+                  </button>
+                ))}
+                {profile?.country && (
+                  <button
+                    onClick={() => setMasterFilter('Country')}
+                    className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-colors flex items-center gap-1.5 ${
+                      masterFilter === 'Country'
+                        ? 'bg-primary/20 border-primary text-primary'
+                        : 'bg-surface/40 border-border-light text-text-muted hover:text-text-secondary hover:border-border-light'
+                    }`}
+                  >
+                    <Landmark size={12} /> Country
+                  </button>
+                )}
+                <button
+                  onClick={() => setMasterFilter('International')}
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-colors flex items-center gap-1.5 ${
+                    masterFilter === 'International'
+                      ? 'bg-primary/20 border-primary text-primary'
+                      : 'bg-surface/40 border-border-light text-text-muted hover:text-text-secondary hover:border-border-light'
+                  }`}
+                >
+                  <Globe2 size={12} /> International
+                </button>
+              </div>
+            )}
 
             {/* Stories Section for Politician Videos */}
             {posts.filter(p => p.video_url).length > 0 && (

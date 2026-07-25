@@ -68,15 +68,15 @@ export default function PoliticianSidebar({ profile, activeTab, memberships = []
   return (
     <div className="bg-surface/50 rounded-xl border border-border-light/50 p-5 sticky top-24">
       <h3 className="text-text-secondary font-semibold mb-4 flex items-center gap-2">
-        <Users size={18} className="text-primary-light" /> 
-        Local Representatives
+        <Users size={18} className="text-primary-light" />
+        People Interested in Politics
       </h3>
-      
+
       {loading ? (
         <div className="text-center py-4 text-text-muted text-sm">Loading...</div>
       ) : politicians.length === 0 ? (
         <div className="text-center py-6 text-text-muted text-sm bg-surface-hover/50 rounded-lg border border-dashed border-border-light">
-          No representatives found for this {activeTab.toLowerCase()}.
+          No one interested in politics found for this {activeTab.toLowerCase()} yet.
         </div>
       ) : (
         <div className="space-y-3">

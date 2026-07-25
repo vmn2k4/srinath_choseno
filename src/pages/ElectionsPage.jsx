@@ -9,9 +9,17 @@ export default function ElectionsPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [seats, setSeats] = useState([]); // [{...seat, candidates: [...]}]
+  const [role, setRole] = useState(null);
 
   const fetchElections = async () => {
     setLoading(true);
+
+    const { data: myProfile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+    setRole(myProfile?.role || null);
 
     const { data: memberships } = await supabase
       .from('user_boundary_memberships')
@@ -36,7 +44,7 @@ export default function ElectionsPage() {
     if (seatIds.length > 0) {
       const { data: candidateRows } = await supabase
         .from('election_candidates')
-        .select('id, statement, seat_id, profiles(full_name, current_ghost_id)')
+        .select('id, statement, seat_id, profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id)')
         .in('seat_id', seatIds);
       (candidateRows || []).forEach(c => {
         candidatesBySeat[c.seat_id] = candidatesBySeat[c.seat_id] || [];
@@ -66,6 +74,20 @@ export default function ElectionsPage() {
         <Vote className="text-primary" size={24} />
         <h1 className="text-2xl font-bold text-text-main">Elections</h1>
       </div>
+
+      {role === 'normal' && (
+        <div className="p-4 bg-primary/10 border border-primary/25 rounded-xl flex items-center justify-between gap-4 flex-wrap">
+          <p className="text-sm text-text-secondary">
+            Want to run for one of these seats? Switch your account to a politician profile to nominate yourself.
+          </p>
+          <button
+            onClick={() => navigate('/profile')}
+            className="px-4 py-2 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-sm transition-colors shrink-0"
+          >
+            Become a Politician
+          </button>
+        </div>
+      )}
 
       {seats.length === 0 ? (
         <div className="text-center py-16 bg-surface/20 rounded-2xl border border-dashed border-border-light/60">

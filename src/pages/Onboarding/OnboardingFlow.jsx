@@ -22,7 +22,6 @@ export default function OnboardingFlow() {
     matchedBoundaries: [],
     fullName: '',
     // Politician specifics
-    politicalTargetRole: '',
     politicalParty: '',
     education: '',
     hometown: '',
@@ -63,15 +62,15 @@ export default function OnboardingFlow() {
       if (profileError) throw profileError;
 
       // 2. Update Politician Profiles (if applicable)
+      // No pre-declared office here — a politician nominates for whichever
+      // real election seat they choose once one opens in their area.
       if (formData.role === 'politician') {
         const primaryBoundary = formData.matchedBoundaries?.[0];
         const { error: polError } = await supabase.from('politician_profiles').upsert({
           id: user.id,
-          political_target_role: formData.politicalTargetRole,
-          target_boundary_type: formData.politicalTargetRole.includes('Federal') ? 'Federal' : 'Provincial',
           target_boundary_id: primaryBoundary ? String(primaryBoundary.id) : null,
           target_boundary_name: matchedNames,
-          political_party: formData.politicalParty,
+          political_party_id: formData.politicalParty || null,
           education: formData.education || null,
           hometown: formData.hometown || null,
           bio: formData.bio

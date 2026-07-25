@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../services/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import LinkPreview from './LinkPreview';
-import { MapPin, Users, ArrowLeft, ShieldAlert, GraduationCap, Home, Image as ImageIcon, X, Vote } from 'lucide-react';
+import VideoRecorder from './video/VideoRecorder';
+import { MapPin, Users, ArrowLeft, ShieldAlert, GraduationCap, Home, Image as ImageIcon, X, Vote, Video, HelpCircle } from 'lucide-react';
 
 export default function CandidacyWall() {
   const { candidateId } = useParams();
@@ -13,6 +14,7 @@ export default function CandidacyWall() {
   const [profile, setProfile] = useState(null);
   const [candidate, setCandidate] = useState(null);
   const [candidateProfile, setCandidateProfile] = useState(null); // politician_profiles row
+  const [answers, setAnswers] = useState([]); // visible-to-public questionnaire answers
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,6 +24,8 @@ export default function CandidacyWall() {
   const [submitting, setSubmitting] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [showRecorder, setShowRecorder] = useState(false);
+  const [uploadedVideoUrl, setUploadedVideoUrl] = useState(null);
 
   const fetchAll = async () => {
     setLoading(true);
@@ -32,21 +36,37 @@ export default function CandidacyWall() {
     const { data: candidateRow } = await supabase
       .from('election_candidates')
       .select(`
-        id, statement, politician_id,
+        id, statement, politician_id, status, intro_video_url,
         election_seats ( role_title, map_shapes ( name, boundary_type ), elections ( name, status ) ),
-        profiles ( full_name, current_ghost_id )
+        profiles!election_candidates_politician_id_fkey ( full_name, current_ghost_id )
       `)
       .eq('id', candidateId)
-      .single();
+      .maybeSingle();
 
     if (candidateRow) {
       setCandidate(candidateRow);
       const { data: polProfile } = await supabase
         .from('politician_profiles')
-        .select('education, hometown, bio, political_party')
+        .select('education, hometown, bio, political_parties(name)')
         .eq('id', candidateRow.politician_id)
         .maybeSingle();
       setCandidateProfile(polProfile);
+
+      // RLS already withholds hidden-question answers from non-owner
+      // viewers, but the owner's own "Candidates manage own answers" policy
+      // lets them see everything (including admin-only-visible answers) —
+      // filter to visible_to_public client-side too so the owner previews
+      // exactly what voters actually see.
+      const { data: answerRows } = await supabase
+        .from('election_candidate_answers')
+        .select('id, context_text, election_questions(id, question_text, rank, visible_to_public), election_question_options(option_text)')
+        .eq('candidate_id', candidateId);
+      const visible = (answerRows || [])
+        .filter(a => a.election_questions?.visible_to_public)
+        .sort((a, b) => (a.election_questions?.rank ?? 0) - (b.election_questions?.rank ?? 0));
+      setAnswers(visible);
+    } else {
+      setCandidate(null);
     }
 
     await fetchPosts();
@@ -86,7 +106,7 @@ export default function CandidacyWall() {
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
-    if (!newPostContent.trim() && !imageFile) return;
+    if (!newPostContent.trim() && !imageFile && !uploadedVideoUrl) return;
     if (!profile?.current_ghost_id) return;
 
     setSubmitting(true);
@@ -111,7 +131,8 @@ export default function CandidacyWall() {
         content: newPostContent.trim(),
         election_candidate_id: candidateId,
         link_metadata: linkMetadata,
-        image_url: finalImageUrl
+        image_url: finalImageUrl,
+        video_url: uploadedVideoUrl
       });
       if (error) throw error;
 
@@ -120,6 +141,8 @@ export default function CandidacyWall() {
       setLinkMetadata(null);
       setImageFile(null);
       setImagePreview(null);
+      setUploadedVideoUrl(null);
+      setShowRecorder(false);
       fetchPosts();
     } catch (err) {
       console.error('Error creating post:', err);
@@ -166,8 +189,8 @@ export default function CandidacyWall() {
             <span className="flex items-center gap-1 text-text-muted text-sm">
               <MapPin size={14} className="text-accent" /> {seat?.map_shapes?.name}
             </span>
-            {candidateProfile?.political_party && (
-              <span className="text-text-muted text-sm">· {candidateProfile.political_party}</span>
+            {candidateProfile?.political_parties?.name && (
+              <span className="text-text-muted text-sm">· {candidateProfile.political_parties.name}</span>
             )}
             {isOwner && (
               <span className="ml-auto text-[10px] bg-primary/20 text-primary-light px-2 py-0.5 rounded uppercase tracking-wider font-bold">This is you</span>
@@ -209,6 +232,32 @@ export default function CandidacyWall() {
           )}
         </div>
 
+        {/* Introductory Campaign Video */}
+        {candidate.intro_video_url && (
+          <div className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl mb-8 p-6">
+            <h2 className="text-sm font-bold text-text-main mb-3 flex items-center gap-2"><Video size={16} className="text-primary" /> Introduction</h2>
+            <video src={candidate.intro_video_url} controls className="w-full max-h-[500px] rounded-xl bg-black" />
+          </div>
+        )}
+
+        {/* Questionnaire Responses */}
+        {answers.length > 0 && (
+          <div className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl mb-8 p-6">
+            <h2 className="text-sm font-bold text-text-main mb-4 flex items-center gap-2"><HelpCircle size={16} className="text-primary" /> Candidate Questionnaire</h2>
+            <div className="space-y-4">
+              {answers.map(a => (
+                <div key={a.id} className="pb-4 border-b border-border-light/20 last:border-0 last:pb-0">
+                  <p className="text-sm font-semibold text-text-secondary">{a.election_questions?.question_text}</p>
+                  <p className="text-sm text-primary-light mt-1">{a.election_question_options?.option_text}</p>
+                  {a.context_text && (
+                    <p className="text-xs text-text-muted mt-1.5 italic whitespace-pre-wrap">"{a.context_text}"</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Post / Video Pitch Composer */}
         <form onSubmit={handleCreatePost} className="mb-8 bg-surface/50 rounded-xl p-4 border border-border-light/50">
           <textarea
@@ -216,7 +265,7 @@ export default function CandidacyWall() {
             onChange={handlePostChange}
             placeholder={isOwner ? 'Post an update or video pitch...' : `Start a discussion with ${displayName}...`}
             className="w-full bg-transparent text-text-secondary placeholder:text-text-muted resize-none outline-none min-h-[80px]"
-            required={!imageFile}
+            required={!imageFile && !uploadedVideoUrl}
           />
 
           {extractedUrl && <div className="mb-3"><LinkPreview url={extractedUrl} onMetadataFetched={setLinkMetadata} /></div>}
@@ -227,6 +276,19 @@ export default function CandidacyWall() {
               <button type="button" onClick={() => { setImageFile(null); setImagePreview(null); }} className="absolute -top-2 -right-2 bg-danger text-white rounded-full p-1 shadow-lg hover:bg-danger-light">
                 <X size={14} />
               </button>
+            </div>
+          )}
+
+          {isOwner && showRecorder && (
+            <VideoRecorder onVideoUploaded={(url) => { setUploadedVideoUrl(url); setShowRecorder(false); }} />
+          )}
+
+          {isOwner && uploadedVideoUrl && (
+            <div className="mb-3 bg-primary/10 border border-primary/30 p-3 rounded-lg flex items-center justify-between">
+              <div className="flex items-center gap-2 text-primary-light text-sm font-medium">
+                <Video size={16} /> Video Attached
+              </div>
+              <button type="button" onClick={() => setUploadedVideoUrl(null)} className="text-primary-light hover:text-primary-lighter text-xs underline">Remove</button>
             </div>
           )}
 
@@ -254,9 +316,19 @@ export default function CandidacyWall() {
               <label htmlFor="candidacy-image-upload" className="p-2 text-text-muted hover:bg-surface-hover hover:text-primary-light rounded-lg cursor-pointer transition-colors" title="Attach Image">
                 <ImageIcon size={18} />
               </label>
+              {isOwner && (
+                <button
+                  type="button"
+                  onClick={() => setShowRecorder(!showRecorder)}
+                  className={`p-2 rounded-lg transition-colors ${showRecorder || uploadedVideoUrl ? 'bg-primary/20 text-primary-light' : 'text-text-muted hover:bg-surface-hover hover:text-primary-light'}`}
+                  title="Post a Campaign Video Update"
+                >
+                  <Video size={18} />
+                </button>
+              )}
               <button
                 type="submit"
-                disabled={submitting || (!newPostContent.trim() && !imageFile)}
+                disabled={submitting || (!newPostContent.trim() && !imageFile && !uploadedVideoUrl)}
                 className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors text-sm font-medium disabled:opacity-50"
               >
                 {submitting ? 'Posting...' : 'Post anonymously'}

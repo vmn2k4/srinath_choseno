@@ -9,17 +9,23 @@ import MapComponent from './MapComponent';
 // the map only works within a set small enough to render in full.
 const EAGER_LOAD_LIMIT = 400;
 
+// Above this many selected shapes, skip bulk-fetching geometry for the
+// selection too — matches BoundaryVisualizer's RENDER_CAP.
+const SELECTED_GEO_FETCH_CAP = 500;
+
 export default function BoundaryPicker({
   mode = 'multi', // 'multi' | 'single'
   selectedIds,
   onChange,
   boundaryTypeFilter, // string[] optional
   countryFilter, // string optional
-  height = '450px'
+  height = '450px',
+  showMap = true // false renders a plain list, no map column or geometry fetches
 }) {
   const [boundaries, setBoundaries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [forceLoadSelected, setForceLoadSelected] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -47,7 +53,7 @@ export default function BoundaryPicker({
 
       let withGeo = (data || []).map(b => ({ ...b, geojson: null }));
 
-      if (withGeo.length > 0 && withGeo.length <= EAGER_LOAD_LIMIT) {
+      if (showMap && withGeo.length > 0 && withGeo.length <= EAGER_LOAD_LIMIT) {
         const ids = withGeo.map(b => b.id);
         const { data: geoData } = await supabase.rpc('get_geojson_shapes', { ids });
         if (geoData) {
@@ -67,6 +73,37 @@ export default function BoundaryPicker({
   }, [JSON.stringify(boundaryTypeFilter), countryFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const eagerLoaded = boundaries.length > 0 && boundaries.length <= EAGER_LOAD_LIMIT;
+
+  // Bulk selection changes (e.g. a parent setting selectedIds directly from a
+  // "find matching boundaries" result, rather than via toggle() below) never
+  // ran through toggle()'s per-shape lazy fetch, so above EAGER_LOAD_LIMIT the
+  // selected shapes never got geometry and the map showed nothing. Fetch
+  // geometry for whatever's selected but missing it, in one batched call.
+  // Above SELECTED_GEO_FETCH_CAP this is opt-in (forceLoadSelected) rather
+  // than automatic — real election-sized selections routinely exceed it, and
+  // silently rendering no map at all read as broken rather than capped.
+  useEffect(() => {
+    if (!showMap || eagerLoaded) return;
+    if (!selectedIds || selectedIds.size === 0) return;
+    if (selectedIds.size > SELECTED_GEO_FETCH_CAP && !forceLoadSelected) return;
+
+    let cancelled = false;
+
+    const fetchMissing = async () => {
+      const missingIds = boundaries
+        .filter(b => selectedIds.has(b.id) && !b.geojson)
+        .map(b => b.id);
+      if (missingIds.length === 0) return;
+
+      const { data } = await supabase.rpc('get_geojson_shapes', { ids: missingIds });
+      if (cancelled || !data) return;
+      const geoMap = new Map(data.map(g => [g.id, g.geojson]));
+      setBoundaries(prev => prev.map(b => (geoMap.has(b.id) ? { ...b, geojson: geoMap.get(b.id) } : b)));
+    };
+
+    fetchMissing();
+    return () => { cancelled = true; };
+  }, [selectedIds, eagerLoaded, boundaries, showMap, forceLoadSelected]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggle = async (id) => {
     if (mode === 'single') {
@@ -116,10 +153,12 @@ export default function BoundaryPicker({
     ? filtered.filter(b => b.geojson)
     : boundaries.filter(b => selectedIds.has(b.id) && b.geojson);
 
+  const overCap = !eagerLoaded && selectedIds && selectedIds.size > SELECTED_GEO_FETCH_CAP && !forceLoadSelected;
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className={showMap ? 'grid grid-cols-1 md:grid-cols-3 gap-4' : 'grid grid-cols-1'}>
       {/* List Column */}
-      <div className="md:col-span-1 flex flex-col rounded-xl border border-border-light overflow-hidden bg-surface/30" style={{ height }}>
+      <div className={`${showMap ? 'md:col-span-1' : ''} flex flex-col rounded-xl border border-border-light overflow-hidden bg-surface/30`} style={{ height }}>
         <div className="p-3 border-b border-border-light bg-surface/50 shrink-0">
           <div className="relative">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-muted w-3.5 h-3.5" />
@@ -175,13 +214,30 @@ export default function BoundaryPicker({
       </div>
 
       {/* Map Column */}
-      <div className="md:col-span-2 rounded-xl overflow-hidden border border-border-light" style={{ height }}>
-        <MapComponent
-          boundaries={mapBoundaries}
-          selectedIds={selectedIds}
-          onShapeClick={eagerLoaded ? toggle : undefined}
-        />
-      </div>
+      {showMap && (
+        <div className="md:col-span-2 rounded-xl overflow-hidden border border-border-light flex items-center justify-center bg-surface/20" style={{ height }}>
+          {overCap ? (
+            <div className="text-center p-6">
+              <p className="text-xs text-text-muted mb-3">
+                {selectedIds.size} shapes selected — too many to auto-render (cap: {SELECTED_GEO_FETCH_CAP}).
+              </p>
+              <button
+                type="button"
+                onClick={() => setForceLoadSelected(true)}
+                className="px-4 py-2 bg-surface-active hover:bg-border text-text-main rounded-lg text-xs font-semibold transition-colors"
+              >
+                Load Map Anyway
+              </button>
+            </div>
+          ) : (
+            <MapComponent
+              boundaries={mapBoundaries}
+              selectedIds={selectedIds}
+              onShapeClick={eagerLoaded ? toggle : undefined}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

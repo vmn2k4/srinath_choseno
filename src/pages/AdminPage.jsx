@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import { supabase } from '../services/supabase';
 import shp from 'shpjs';
 import { Trash2, Plus } from 'lucide-react';
 import BoundaryUploadsPanel from './Admin/BoundaryUploadsPanel';
 import RedistrictingPanel from './Admin/RedistrictingPanel';
+import AdminSubNav from '../components/AdminSubNav';
 import { countVertices } from '../utils/countVertices';
 
 const VERTEX_BUCKETS = [
@@ -59,6 +59,15 @@ export default function AdminPage() {
   const [newCountryFlag, setNewCountryFlag] = useState('');
   const [countryStatus, setCountryStatus] = useState('');
 
+  // Political parties per country — admin-managed, feeds the politician
+  // profile form's party dropdown.
+  const [partyRows, setPartyRows] = useState([]);
+  const [loadingParties, setLoadingParties] = useState(true);
+  const [newPartyCountry, setNewPartyCountry] = useState('');
+  const [newPartyName, setNewPartyName] = useState('');
+  const [newPartyRank, setNewPartyRank] = useState('');
+  const [partyStatus, setPartyStatus] = useState('');
+
   const fetchCountries = async () => {
     setLoadingCountries(true);
     const { data } = await supabase
@@ -80,9 +89,21 @@ export default function AdminPage() {
     setLoadingTypes(false);
   };
 
+  const fetchParties = async () => {
+    setLoadingParties(true);
+    const { data } = await supabase
+      .from('political_parties')
+      .select('id, country, name, rank')
+      .order('country', { ascending: true })
+      .order('rank', { ascending: true });
+    setPartyRows(data || []);
+    setLoadingParties(false);
+  };
+
   useEffect(() => {
     fetchCountries();
     fetchBoundaryTypes();
+    fetchParties();
   }, []);
 
   const countries = useMemo(
@@ -175,6 +196,36 @@ export default function AdminPage() {
       return;
     }
     fetchBoundaryTypes();
+  };
+
+  const handleAddParty = async () => {
+    if (!newPartyCountry.trim() || !newPartyName.trim()) {
+      setPartyStatus('Error: Country and party name are required.');
+      return;
+    }
+    const { error } = await supabase.from('political_parties').insert({
+      country: newPartyCountry.trim(),
+      name: newPartyName.trim(),
+      rank: newPartyRank ? parseInt(newPartyRank, 10) : 999
+    });
+    if (error) {
+      setPartyStatus('Error: ' + error.message);
+      return;
+    }
+    setPartyStatus('');
+    setNewPartyName('');
+    setNewPartyRank('');
+    fetchParties();
+  };
+
+  const handleDeleteParty = async (id) => {
+    if (!window.confirm('Delete this party? This will fail if any politician has already selected it.')) return;
+    const { error } = await supabase.from('political_parties').delete().eq('id', id);
+    if (error) {
+      alert('Could not delete: ' + error.message + '\nSome politicians have this party selected — have them switch first.');
+      return;
+    }
+    fetchParties();
   };
 
   const fetchBoundaries = async () => {
@@ -437,11 +488,7 @@ export default function AdminPage() {
   return (
     <div className="w-full max-w-none flex flex-col gap-8 animate-fade-in p-4 lg:p-0 px-4 lg:px-8">
 
-      {/* Admin sub-nav */}
-      <div className="flex gap-2">
-        <span className="px-4 py-2 rounded-xl text-sm font-semibold text-primary bg-primary/10 border border-primary/30">Boundaries</span>
-        <Link to="/admin/elections" className="px-4 py-2 rounded-xl text-sm font-semibold text-text-muted hover:text-text-main hover:bg-surface-hover transition-colors">Elections</Link>
-      </div>
+      <AdminSubNav active="boundaries" />
 
       {/* COUNTRIES */}
       <div className="p-8 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl">
@@ -592,6 +639,87 @@ export default function AdminPage() {
                       <span className="font-semibold text-text-secondary">{t.type_name}</span>
                       <span className="text-text-muted">rank {t.rank}</span>
                       <button onClick={() => handleDeleteBoundaryType(t.id)} className="text-text-muted hover:text-danger transition-colors">
+                        <Trash2 size={12} />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* POLITICAL PARTIES */}
+      <div className="p-8 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl">
+        <h2 className="text-2xl font-bold text-text-main mb-4">Political Parties</h2>
+        <p className="text-sm text-text-muted mb-6">
+          Define the party list a politician can pick from when editing their profile, per country. Independent should
+          usually be included as its own entry.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_100px_auto] gap-3 mb-6 items-end">
+          <div>
+            <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Country</label>
+            <select
+              className="block w-full p-2.5 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
+              value={newPartyCountry}
+              onChange={(e) => setNewPartyCountry(e.target.value)}
+            >
+              <option value="" disabled>Select country...</option>
+              {countries.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+            {countries.length === 0 && (
+              <p className="text-xs text-amber-400 mt-1.5">No countries registered yet — add one above first.</p>
+            )}
+          </div>
+          <div>
+            <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Party Name</label>
+            <input
+              type="text"
+              placeholder="e.g. Green Party"
+              className="block w-full p-2.5 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
+              value={newPartyName}
+              onChange={(e) => setNewPartyName(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Rank</label>
+            <input
+              type="number"
+              min="1"
+              placeholder="999"
+              className="block w-full p-2.5 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
+              value={newPartyRank}
+              onChange={(e) => setNewPartyRank(e.target.value)}
+            />
+          </div>
+          <button
+            onClick={handleAddParty}
+            className="flex items-center justify-center gap-1.5 px-4 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-xl transition-all text-sm shadow-md"
+          >
+            <Plus size={16} /> Add
+          </button>
+        </div>
+
+        {partyStatus && <p className="text-danger text-xs font-medium mb-4">{partyStatus}</p>}
+
+        {loadingParties ? (
+          <div className="text-center text-text-muted py-6">Loading...</div>
+        ) : partyRows.length === 0 ? (
+          <div className="text-center text-text-muted py-6 bg-surface/20 rounded-2xl border border-dashed border-border-light/60">
+            No parties configured yet.
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {countries.map(c => (
+              <div key={c}>
+                <h4 className="text-xs font-bold text-accent-hover uppercase tracking-wider mb-2">{c}</h4>
+                <div className="flex flex-wrap gap-2">
+                  {partyRows.filter(p => p.country === c).map(p => (
+                    <span key={p.id} className="flex items-center gap-2 px-3 py-1.5 bg-surface/40 border border-border-light/30 rounded-lg text-xs">
+                      <span className="font-semibold text-text-secondary">{p.name}</span>
+                      <button onClick={() => handleDeleteParty(p.id)} className="text-text-muted hover:text-danger transition-colors">
                         <Trash2 size={12} />
                       </button>
                     </span>

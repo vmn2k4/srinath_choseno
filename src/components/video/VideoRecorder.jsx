@@ -2,11 +2,11 @@ import React, { useState, useRef } from 'react';
 import { Video, StopCircle, RefreshCw, Upload, CheckCircle } from 'lucide-react';
 import { supabase } from '../../services/supabase';
 
-export default function VideoRecorder({ onVideoUploaded }) {
+export default function VideoRecorder({ onVideoUploaded, maxDuration = 30, bucket = 'politician_videos' }) {
   const [isRecording, setIsRecording] = useState(false);
   const [videoBlob, setVideoBlob] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(maxDuration);
 
   const mediaRecorderRef = useRef(null);
   const videoPreviewRef = useRef(null);
@@ -48,7 +48,7 @@ export default function VideoRecorder({ onVideoUploaded }) {
       chunksRef.current = [];
       mediaRecorderRef.current.start();
       setIsRecording(true);
-      setTimeLeft(30);
+      setTimeLeft(maxDuration);
 
       timerRef.current = setInterval(() => {
         setTimeLeft(prev => {
@@ -89,15 +89,15 @@ export default function VideoRecorder({ onVideoUploaded }) {
       const fileName = `video_${Date.now()}.webm`;
       
       const { data, error } = await supabase.storage
-        .from('politician_videos')
+        .from(bucket)
         .upload(fileName, videoBlob, {
           contentType: 'video/webm'
         });
 
       if (error) throw error;
-      
+
       const { data: publicUrlData } = supabase.storage
-        .from('politician_videos')
+        .from(bucket)
         .getPublicUrl(fileName);
 
       onVideoUploaded(publicUrlData.publicUrl);
@@ -122,7 +122,7 @@ export default function VideoRecorder({ onVideoUploaded }) {
         {!isRecording && !videoBlob && (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-text-muted gap-2">
             <Video size={32} />
-            <span className="text-sm">Record a 30-sec pitch</span>
+            <span className="text-sm">Record a {maxDuration}-sec pitch</span>
           </div>
         )}
 

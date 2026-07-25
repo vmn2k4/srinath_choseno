@@ -3,7 +3,8 @@
 This document exists so a future session (human or Claude) can pick this project back up
 without re-deriving context. It covers what existed before this working session, everything
 built during it, how it's designed, and known gaps that were flagged but intentionally left
-unfixed. Written 2026-07-23, updated same day after a second work session (§§11–13).
+unfixed. Written 2026-07-23, updated same day across four further work sessions (§§11–15), and again
+2026-07-24 (§17).
 
 ---
 
@@ -808,7 +809,240 @@ as designed, with zero USA-specific code changes required anywhere in the app.
 
 ---
 
-## 15. File map
+## 15. Boundary Visualizer + two hard-won RPC performance fixes
+
+*Built in a fifth work session, same day.* New admin tab: pick a country, optionally narrow
+to a container (e.g. one province), pick a target boundary type, and see every matching
+boundary rendered on a map — read-only, no selection, no editing. Directly reuses the
+container/target-type pattern already built for `ElectionsAdmin.jsx`'s seat-building flow
+(`find_shapes_within`), just for display instead of seat creation.
+
+### Files
+- **`src/pages/Admin/BoundaryVisualizer.jsx`** (new): country → container-type → container
+  (`BoundaryPicker mode="single"`) → target-type → "Visualize". A **500-shape render cap**
+  (checked via a count *before* fetching any geometry) shows a plain name list with a "Load
+  Map Anyway" opt-in instead of silently trying to fetch/render a huge geometry payload —
+  same spirit as `BoundaryPicker`'s existing `EAGER_LOAD_LIMIT` warning.
+- **`src/components/AdminSubNav.jsx`** (new): the "Boundaries / Elections" tab bar was
+  independently hardcoded in both `AdminPage.jsx` and `ElectionsAdmin.jsx` — extracted to a
+  shared component (now Boundaries/Elections/Visualizer) rather than duplicating a third time.
+- **`src/App.jsx`**: `admin/visualize` added as a flat sibling route, same
+  `ProtectedRoute requireAdmin` pattern as the other two admin routes.
+- **`src/components/map/MapComponent.jsx`**: real performance work, not cosmetic — added
+  `preferCanvas` to `MapContainer` (canvas rendering instead of one SVG DOM node per polygon),
+  extracted a memoized `BoundaryLayer` sub-component (`React.memo` + `useMemo`'d style/
+  eventHandlers — most effective for the Visualizer's read-only case, where `onShapeClick` is
+  always `undefined` so memoization actually holds across re-renders), and fixed
+  `AutoFitBounds`'s `useEffect` to key off a stable joined-id string instead of the raw
+  `boundaries` array reference (callers like `BoundaryPicker` recreate that array via
+  `.filter()` every render even when contents haven't changed, causing redundant
+  `turf.bbox` recomputation). Benefits every existing `BoundaryPicker` caller, not just the
+  new Visualizer.
+
+### Two RPC performance bugs found and fixed — both looked like "just add an index" problems and weren't
+Testing the Visualizer against a real province (Ontario, 622 municipalities inside it)
+immediately timed out in ways that didn't reproduce in an interactive `psql` session — both
+turned out to be genuine bugs, not environmental flakiness, found by comparing `EXPLAIN
+ANALYZE` plans and REST-vs-psql timing side by side.
+
+**1. `find_shapes_within` timed out through PostgREST** (anon: 3s / authenticated: 8s
+`statement_timeout`) **even though the identical query ran in ~0.5s over a warm psql
+session.** Root cause: the container geometry (Canada's `Province` outlines, §13 — up to
+279,418 vertices for Nunavut) forced a full-precision `ST_Intersects` test against ~8,600
+bbox-overlapping candidates every call. Tried and **rejected**: simplifying the container
+geometry *inline* in the query (via a CTE, or wrapping `container.geom` in
+`ST_Simplify(...)` directly in the `WHERE` clause) — both approaches broke the planner's
+GiST index pushdown entirely, falling back to a full sequential scan that was **slower**
+than the unsimplified original. The only fix that preserved the working index-based plan
+was simplifying the **stored** geometry once (migration `20260727000004_simplify_province_
+containers.sql`): plain `ST_Simplify` (not `ST_SimplifyPreserveTopology` — confirmed the
+topology-preserving variant barely reduced vertex count at all, since it refuses to collapse
+the thousands of small lake/coastal islands that dominate these provinces' vertex counts) at
+0.02° (~2km) tolerance, repaired via `ST_MakeValid` + `ST_CollectionExtract(...,3)` (same
+pattern `scripts/upload_boundary.py` already uses). Ontario: 161,272 → 1,733 vertices, area
+preserved to within 0.01%, fully valid. **This is a precision tradeoff only appropriate
+because `Province` is `admin_only`** (§13) — never shown to citizens, never determines a
+real membership, always admin-reviewed before use (Ontario's matched-municipality count
+shifted by 2, from 624 to 622, as a direct result — acceptable for this use case, would not
+be for a boundary type citizens actually belong to).
+- Also note: the first call after the bulk geometry `UPDATE` took 11s even via warm psql
+  (cold buffer cache), settling to ~0.4–1.3s on repeat — expect one slow query after any
+  large geometry `UPDATE`, not a regression.
+
+**2. `get_geojson_shapes` (the id-filtering fix from §11) hit a *second*, different timeout**
+bulk-fetching geometry for real municipality sets, again passing fine in `psql` (~450ms) but
+failing consistently through PostgREST. Root cause, confirmed by testing 10/50/100/150-id
+subsets of the same set: **not** shape count — a small minority of outlier geometries (26 of
+622 Ontario municipalities, ~4%, StatsCan "Unorganized"/rural subdivisions with complex
+coastlines — the same pattern as the Arctic territories in §6) inflated the total
+`ST_AsGeoJSON` payload from a few MB to 59MB, and *that* (not raw query time) is what
+PostgREST/the pooler couldn't handle in budget. Tried and **rejected**: simplifying every
+requested geometry uniformly (`ST_SimplifyPreserveTopology` on all 622 took 20+ seconds —
+expensive per-geometry, and wasted on the 96% that were already simple). Fix (migration
+`20260727000005_simplify_geojson_outliers.sql`): only simplify geometries over 5,000
+vertices (matches `scripts/upload_boundary.py`'s own "medium complexity" tier boundary) using
+plain `ST_Simplify` at 0.005° (~500m — coarser than the container fix above is fine here
+since this only affects on-screen *display*, repaired the same `ST_MakeValid`+
+`ST_CollectionExtract` way. Ontario's full 622-shape set went from a consistent timeout to
+15.6MB / ~5s, well inside the authenticated role's 8s budget (654ms of that is actual query
+time; the rest is response transfer). **This changes what every caller of
+`get_geojson_shapes` receives** (`BoundaryPicker.jsx`'s individual-shape fetches too, not
+just the Visualizer's bulk ones) — judged acceptable because this RPC only ever feeds map
+*display*, never a real boundary/membership decision (those query `map_shapes.geom`
+directly via `find_boundaries_by_point`/`find_shapes_within`/`sync_user_boundary_
+memberships`, all untouched by this migration).
+
+**General lesson for future sessions**: if a query is fast in an interactive `psql` session
+but times out through the app/PostgREST, don't assume it's cold-cache flakiness without
+testing — subset the input to binary-search for a size/complexity threshold (as done for
+both bugs above) before concluding it's environmental. Both of these looked identical to
+"just PgBouncer connection pooling being slow" at first and were something else entirely.
+
+### Verified
+Ontario container + `Municipal` target correctly identified 622 real municipalities
+(down from the pre-fix 624, per the documented precision tradeoff above) via the live UI;
+500-shape cap correctly triggered with the exact matched count; "Load Map Anyway" correctly
+rendered all 622 on the map (confirmed via DOM inspection — canvas rendering active, only a
+handful of actual DOM nodes for 622 shapes, confirming `preferCanvas` is working as intended)
+with no console/server errors. The large, visually striking colored regions on the resulting
+map are genuine — verified directly against the *original, untouched* source data that
+"Kenora, Unorganized" and "Division No. 23, Unorganized" really are single StatsCan census
+subdivisions covering vast, sparsely-populated areas of Northern Ontario, not a rendering bug.
+
+---
+
+## 16. Election role catalog, region-correct seat creation, and Feed notifications
+
+Built to answer: what elected positions actually exist per boundary level/country (Federal
+MP, Provincial MLA — or MPP/MNA/MHA depending on province, Municipal Mayor/Councillor, USA's
+equivalents plus statewide Governor/US Senator), and to let citizens learn an election in
+their area has gone live without manually checking `/elections`.
+
+**Role catalog — `election_role_types`** (new table, `20260728000000_election_role_types.sql`):
+`(country, boundary_type, role_key, region_override, role_title)`, `FOREIGN KEY (country,
+boundary_type) REFERENCES country_boundary_types(country, type_name)`. `region_override` uses
+`''` (empty string) as the "default for this country+boundary_type" sentinel, not `NULL` —
+Postgres unique indexes treat every `NULL` as distinct, which would've silently allowed
+duplicate default rows. `election_seats.role_title` itself is unchanged (still a plain
+string, no FK) — the catalog only pre-fills `ElectionsAdmin.jsx`'s seat-creation UI. Seeded:
+Canada Federal→MP, Provincial→MLA (Ontario→MPP, Quebec→MNA, Newfoundland and
+Labrador→MHA), Municipal→Mayor+Councillor; USA Federal→U.S. Representative, State
+Senate→State Senator, State House→State Representative, Municipal→Mayor+Council Member,
+State→Governor+U.S. Senator. School trustee elections were explicitly scoped out for both
+countries (no national school-board boundary dataset for Canada; skipped for USA too, for
+consistency, even though Census does publish one).
+
+**Per-shape region resolution — `resolve_region_names(p_shape_ids bigint[], p_country text)`**
+(`20260728000001_resolve_region_names.sql`): given a batch of shapes, resolves which
+admin_only container (Province/State) each one spatially falls inside via `ST_Contains`. This
+exists because the *first* design draft resolved region from whichever single container the
+admin picked in the UI for the whole batch — wrong, because `ElectionsAdmin.jsx`'s seat-
+building flow lets an admin freely mix `find_shapes_within` results with manually-searched
+additions from a different region in one create action. A Plan-agent validation pass caught
+this before implementation. Verified in practice, not just in theory: building Ontario
+Provincial seats via `find_shapes_within` (whose *container* geometry is deliberately
+simplified per §15) pulled in a few real near-border ridings that actually beIong to Quebec;
+`resolve_region_names`'s per-shape resolution correctly labeled those MNA rather than
+blindly stamping the whole batch MPP — the exact class of bug the redesign was meant to
+prevent, caught live during verification, not hypothesized.
+
+**USA "State" admin_only boundary** (`20260728000003_usa_state_boundary_type.sql` + data
+load + `20260728000004_simplify_state_containers.sql`): mirrors Canada's `Province` pattern
+(§13) — needed because Governor/US Senator are statewide offices. Source: Census cartographic
+boundary "state" file, 20m (lowest-detail) tier, filtered to the 50 states only (Census ships
+56: 50 states + DC + 5 territories; DC/territories have different offices — Delegate/Resident
+Commissioner, not Governor/Senators — so were deliberately excluded, same "skip rather than
+half-support" call as school trustees). **Alaska crosses the antimeridian** (raw X-extent
+-179.17 to 179.77) — confirmed via a direct coordinate check before upload, fixed with
+`ogr2ogr -wrapdateline -datelineoffset 10` (splits the Aleutian tail into properly-bounded
+MultiPolygon parts instead of one ring spanning almost the whole globe). Simplified
+unconditionally post-load (`ST_Simplify(0.02)` + repair), not conditionally — Canada's
+Province layer already needed a second simplify pass after an insufficient upload-time one
+(§15), no reason to wait and rediscover that here. Result: 50 rows, all valid.
+
+**Two more `find_shapes_within` performance bugs found and fixed while verifying this
+feature** (same symptom pattern as §15's — fast via direct `psql`/`EXPLAIN ANALYZE`, but
+consistently timing out through PostgREST):
+- **Wide return type forced full-row materialization.** `find_shapes_within` returned `SETOF
+  map_shapes` (every column, including raw `geom`+`properties`), even though every caller
+  only ever chains `.select('id')` or `.select('id,name,code')` afterward. PostgREST
+  materializes a set-returning function's result before projecting the caller's requested
+  columns (needed for correctness with VOLATILE functions in general), which forced Postgres
+  to fully construct/detoast every column of every matched row regardless of what was
+  actually asked for — confirmed by testing a throwaway narrow-return variant side by side:
+  it succeeded via PostgREST in under 1.5s where the wide version consistently timed out.
+  Fixed in `20260728000006_narrow_find_shapes_within.sql` by narrowing the function's own
+  return type to `TABLE(id bigint, name text, code text)` (dropped and recreated, since
+  Postgres can't `CREATE OR REPLACE` across a return-type change; also dropped a stale,
+  unused 2-arg overload left over from before `p_country` was added, which still returned the
+  old wide type). `ElectionsAdmin.jsx`'s `handleFindMatching` was also missing the
+  `.select('id')` narrowing entirely (unlike `BoundaryVisualizer.jsx`, which already had it) —
+  fixed alongside.
+- **No index supported `boundary_type`+`country` filtering.** `map_shapes` (54k+ rows across
+  10 boundary-type/country combinations, all in one table) only had a plain GiST index on
+  `geom`. For a container like Ontario, whose bounding box overlaps thousands of shapes across
+  every type and both countries, `idx_map_shapes_geom` alone returned every nearby shape
+  regardless of type before `boundary_type`/`country` were applied as a plain post-hoc filter
+  — for Provincial-riding targets specifically (unsimplified, real electoral geometry, unlike
+  Municipal shapes) this meant evaluating expensive `ST_Intersects` against ~8500 candidates
+  to find ~130 real matches: 1.68s execution (`EXPLAIN ANALYZE`), well past PostgREST's role
+  timeouts once connection/serialization overhead is added. Fixed in
+  `20260728000007_map_shapes_type_country_index.sql`: a partial btree index on `(boundary_type,
+  country) WHERE retired_at IS NULL`, letting Postgres combine it with the GiST index via
+  `BitmapAnd` — candidates dropped from 8558 to 761 pre-filter, execution time from 1.68s to
+  ~30ms warm / ~900ms cold (single backend not yet holding the plan).
+- **General lesson reconfirmed**: even after both fixes, the *very first* PostgREST call
+  against a given backend connection for a not-yet-touched `(container, target_type)`
+  combination still reliably fails once (matches §15's documented cold-cache pattern) before
+  succeeding on retry — this is a property of Supabase's connection pool, not a bug in either
+  fix. Don't treat a single PostgREST timeout as proof of a broken query; retry once before
+  investigating further, but don't stop at "retrying fixed it" either — as this session
+  showed, that can mask a real, fixable bug (both issues above were genuine and are now fixed,
+  not just retried around).
+
+**Bulk-selected shapes never got a map preview** (`BoundaryPicker.jsx`): a pre-existing gap
+unrelated to the above — `handleFindMatching`-style bulk mutations to `selectedIds` (setting
+the whole `Set` at once, not via the component's own `toggle()`) never triggered the
+per-shape lazy geometry fetch, so any selection above `EAGER_LOAD_LIMIT` (400) showed a plain
+checkbox list with zero map, even after geometry-fetching succeeded. Fixed with an effect that
+bulk-fetches geometry (one `get_geojson_shapes` call) for whatever's selected but missing it,
+capped at `SELECTED_GEO_FETCH_CAP = 500` (mirrors `BoundaryVisualizer`'s `RENDER_CAP`) — above
+that, stays list-only by design, same as before. Benefits every caller (`ElectionsAdmin.jsx`,
+`RedistrictingPanel.jsx`, `UserPage.jsx`), not just this feature.
+
+**`ElectionsAdmin.jsx` seat-creation rework**: the free-text `roleTitle` input is gone,
+replaced with a checkbox list sourced from `election_role_types` (filtered by
+`{country: seatCountry, boundary_type: targetType}`, showing each `role_key`'s *default*
+title — per-seat resolution happens at creation time via `resolve_region_names`, not from the
+checkbox labels). `handleCreateSeats` now loops `pendingShapeIds × selectedRoleKeys`,
+inserting one `election_seats` row per pair with the resolved title — multiple roles per
+shape was already schema-legal (`UNIQUE(election_id, map_shape_id, role_title)`) but never
+exercised by the old single-role-title UI. Switching `targetType` now resets both
+`pendingShapeIds` and `selectedRoleKeys` (previously only `seatCountry` changes cascaded,
+leaving a stale selection from a different boundary type in place).
+
+**Feed notification**: `election_notification_dismissals` (own-row RLS, `profile_id +
+election_id` PK) + `get_active_elections_for_user()` (`20260728000002_...sql`) — joins
+`elections` (status='active') → `election_seats` → `user_boundary_memberships` for
+`auth.uid()`, excluding already-dismissed elections. **No `SECURITY DEFINER`**: every table
+touched is already RLS-scoped to exactly what the function needs (`elections`/
+`election_seats` already allow public read of non-draft rows; `user_boundary_memberships` and
+the dismissals table both already restrict to `auth.uid()`), so plain invoker mode returns
+identical results and can't be walked to leak another user's data if the query is ever
+extended later without an explicit `auth.uid()` filter — same posture as `find_shapes_within`.
+`FeedPage.jsx` calls it once on mount alongside the existing `fetchMemberships()`, renders one
+dismissible amber card per active election (same inline styling convention already used
+elsewhere in that file), dismiss inserts into the dismissals table. In-app banner only — no
+push/email, per explicit scope decision (nothing like that exists anywhere in this app yet).
+
+Verified end-to-end in the browser with real (then cleaned-up) test data: role-catalog
+checkboxes render correct titles per country+type; a mixed Ontario/Quebec seat-creation batch
+produced correctly-per-shape titles (123 MPP, 11 MNA for border ridings `find_shapes_within`
+had over-included, 1 MLA default-fallback, 1 explicitly-added MNA — not one uniform title
+across the batch); the Feed banner appeared for a real active election + matching membership
+and stayed gone after dismiss + reload; USA State load is exactly 50 valid rows.
+
+## 17. File map
 
 ```
 supabase/migrations/
@@ -826,26 +1060,43 @@ supabase/migrations/
   20260727000001_admin_only_boundary_types.sql    §13 (admin_only column + RPC guards)
   20260727000002_admin_only_reconcile_trigger.sql §13 (reconcile_shape_memberships fix)
   20260727000003_fix_get_geojson_shapes.sql       §11's timeout bug, actually fixed here
+  20260727000004_simplify_province_containers.sql §15 (stored-geometry fix for find_shapes_within)
+  20260727000005_simplify_geojson_outliers.sql    §15 (selective simplify for get_geojson_shapes)
+  20260728000000_election_role_types.sql          §16 (role catalog table + FK + seed data)
+  20260728000001_resolve_region_names.sql         §16 (per-shape region resolution RPC)
+  20260728000002_election_notification_dismissals.sql  §16 (dismissals table + Feed RPC)
+  20260728000003_usa_state_boundary_type.sql      §16 (admin_only State type for USA)
+  20260728000004_simplify_state_containers.sql    §16 (unconditional simplify, USA State)
+  20260728000005_election_role_types_usa_state.sql §16 (Governor/US Senator seed rows)
+  20260728000006_narrow_find_shapes_within.sql    §16 (return-type fix, PostgREST timeout)
+  20260728000007_map_shapes_type_country_index.sql §16 (composite index, same timeout family)
 
 src/
   components/
+    AdminSubNav.jsx              §15 — shared Boundaries/Elections/Visualizer tab bar
     map/BoundaryPicker.jsx      §4 — reusable list+search+map picker (countryFilter/
                                  boundaryTypeFilter props now actually wired up, §12) +
-                                 get_geojson_shapes calls fixed to pass ids server-side
-    map/MapComponent.jsx        §4 — Leaflet render layer (extended for click-select)
+                                 get_geojson_shapes calls fixed to pass ids server-side +
+                                 bulk-fetches geometry for externally-set selectedIds (§16)
+    map/MapComponent.jsx        §4 — Leaflet render layer (extended for click-select) +
+                                 preferCanvas, memoized BoundaryLayer, stable-key
+                                 AutoFitBounds (§15 — perf fixes, benefit every caller)
     CandidacyWall.jsx           §5
     LinkPreview.jsx             pre-existing
     PoliticianSidebar.jsx       pre-existing (updated to use user_boundary_memberships)
   pages/
     AdminPage.jsx                    boundary types + upload form (§8 analyze/tiered-upload
                                       flow) + Countries section / Add Country / standard-set
-                                      preset (§12)
+                                      preset (§12) + AdminSubNav (§15)
     Admin/ElectionsAdmin.jsx         §5 + country-scoped seat building (§12) +
-                                      Container Type filter (§13)
+                                      Container Type filter (§13) + AdminSubNav (§15) +
+                                      role-catalog checkboxes + resolve_region_names (§16)
+    Admin/BoundaryVisualizer.jsx     §15 — new admin tab, container+type -> map visualization
     Admin/BoundaryUploadsPanel.jsx   §6 (batch list) + §8 (incomplete badge/resume) +
                                       countryFilter prop (§12)
     Admin/RedistrictingPanel.jsx     §6 + self-contained country scoping (§12)
-    FeedPage/FeedPage.jsx            §4 — dynamic membership tabs; Country tab null-safe (§12)
+    FeedPage/FeedPage.jsx            §4 — dynamic membership tabs; Country tab null-safe (§12) +
+                                      dismissible active-election banner (§16)
     PoliticianElections.jsx          §5
     ElectionsPage.jsx                §5
     PoliticianWall.jsx               pre-existing

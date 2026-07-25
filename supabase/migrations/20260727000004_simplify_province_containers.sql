@@ -1,0 +1,34 @@
+-- The 13 Province/territory outline shapes (admin_only container-selection
+-- aids, §13) were pre-simplified once at upload time (1km tolerance) but
+-- several (Nunavut 279k, Ontario 161k, BC 121k, Quebec 95k, Newfoundland &
+-- Labrador 85k vertices) are still complex enough that find_shapes_within's
+-- ST_Intersects test against them times out through PostgREST (anon: 3s,
+-- authenticated: 8s) even though the same query completes in ~0.5s over a
+-- long-lived psql session — confirmed via EXPLAIN ANALYZE that the GiST
+-- index (idx_map_shapes_geom) IS being used correctly; the container
+-- geometry's sheer complexity (mostly from thousands of small lake/coastal
+-- islands, per ST_SimplifyPreserveTopology barely reducing vertex count
+-- because topology preservation refuses to collapse them) is the real cost.
+--
+-- Tried and rejected: simplifying container.geom inline in the query
+-- (wrapped in ST_Simplify/ST_SimplifyPreserveTopology at query time, or via
+-- a CTE) — both broke the GiST index pushdown entirely, causing a full
+-- sequential scan instead, which was *slower* than the unsimplified direct
+-- query. The only approach that preserves the working index-based query
+-- plan is simplifying the STORED geometry itself.
+--
+-- Fix: ST_Simplify (not ST_SimplifyPreserveTopology — confirmed topology
+-- preservation was the reason PreserveTopology barely reduced vertex count)
+-- at 0.02 degrees (~2km), which collapses the small islands entirely rather
+-- than fighting to preserve their topology, then ST_MakeValid +
+-- ST_CollectionExtract(...,3) to repair the self-intersections ST_Simplify
+-- introduces (same repair pattern already used throughout the upload
+-- pipeline, scripts/upload_boundary.py). Verified for Ontario: 161,272 ->
+-- 1,733 vertices, area preserved to within 0.01% (ratio 1.00011), fully
+-- valid. Acceptable precision loss for an admin container-selection aid
+-- that's never shown to citizens and never determines an actual boundary
+-- (§13's admin_only design) — not appropriate for any boundary type that
+-- determines real user membership.
+UPDATE public.map_shapes
+SET geom = ST_Multi(ST_CollectionExtract(ST_MakeValid(ST_Simplify(geom, 0.02)), 3))::geometry(MultiPolygon, 4326)
+WHERE boundary_type = 'Province' AND country = 'Canada';

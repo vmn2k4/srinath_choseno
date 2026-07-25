@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import UserPage from './pages/UserPage';
 import AdminPage from './pages/AdminPage';
 import ElectionsAdmin from './pages/Admin/ElectionsAdmin';
+import BoundaryVisualizer from './pages/Admin/BoundaryVisualizer';
 import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
 import FeedPage from './pages/FeedPage/FeedPage';
@@ -14,6 +15,7 @@ import OnboardingFlow from './pages/Onboarding/OnboardingFlow';
 import ElectionsPage from './pages/ElectionsPage';
 import PoliticianElections from './pages/PoliticianElections';
 import CandidacyWall from './components/CandidacyWall';
+import CandidateApplication from './pages/CandidateApplication';
 import './index.css';
 
 // A simple protected route wrapper
@@ -56,6 +58,14 @@ function App() {
               element={
                 <ProtectedRoute requireAdmin={true}>
                   <ElectionsAdmin />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="admin/visualize"
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <BoundaryVisualizer />
                 </ProtectedRoute>
               }
             />
@@ -121,6 +131,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <CandidacyWall />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="apply/:candidateId"
+              element={
+                <ProtectedRoute>
+                  <CandidateApplication />
                 </ProtectedRoute>
               }
             />
