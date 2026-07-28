@@ -219,14 +219,29 @@ this much simplification, or possibly any).
 Not every boundary needs to become something a citizen "belongs to." `sync_user_boundary_
 memberships` and the `reconcile_shape_memberships` trigger both respect a
 `country_boundary_types.admin_only` flag (see [ARCHITECTURE.md](../ARCHITECTURE.md) §13) —
-set it when registering a boundary type via the admin panel (or directly in SQL) if the data
-is purely a container/selection aid for other admin tools (e.g. whole-province outlines, used
-to auto-select every municipality inside a province when building election seats) and should
-never generate a feed tab or get tagged onto posts. **If you add a new boundary-eligibility
-rule like this in the future, remember `user_boundary_memberships` has two independent write
-paths** — the `sync_user_boundary_memberships` RPC (called explicitly from `StepLocation.jsx`)
-and the `reconcile_shape_memberships` trigger (fires automatically on every `map_shapes`
-insert, retroactively enrolling existing users) — both need the same filter, not just the one
-that seems obviously relevant. Missing the trigger was a real bug hit in that session: it
-silently auto-created 5 real memberships the moment the province shapes were uploaded, before
-being caught and fixed.
+set it when registering a boundary type via the admin panel (or directly in SQL) if citizens
+should never get a membership/feed tab for it and it should never get tagged onto posts.
+**If you add a new boundary-eligibility rule like this in the future, remember
+`user_boundary_memberships` has two independent write paths** — the
+`sync_user_boundary_memberships` RPC (called explicitly from `StepLocation.jsx`) and the
+`reconcile_shape_memberships` trigger (fires automatically on every `map_shapes` insert,
+retroactively enrolling existing users) — both need the same filter, not just the one that
+seems obviously relevant. Missing the trigger was a real bug hit in that session: it silently
+auto-created 5 real memberships the moment the province shapes were uploaded, before being
+caught and fixed.
+
+**`admin_only` is *not* the same thing as "usable as a container"** (a common trap — the two
+happened to always coincide until USA's `State` needed to be both a real citizen membership
+*and* a container, see [ARCHITECTURE.md](../ARCHITECTURE.md) §26). Container-eligibility for
+`ElectionsAdmin.jsx`/`BoundaryVisualizer.jsx`'s seat-building "container" dropdown and the
+`shape_containers` cache is its own `country_boundary_types.is_container` column. In practice:
+- A pure container that should never be a citizen membership either (Canada's `Province`):
+  `admin_only=true`, `is_container=true`.
+- A normal citizen-facing boundary that's never useful as a container (most types — `Federal`,
+  `Municipal`, ...): `admin_only=false`, `is_container=false`.
+- A type that's both a real citizen membership *and* still useful to scope another type's
+  search by (USA's `State`, backing Governor/Senator): `admin_only=false`,
+  `is_container=true`.
+
+Set `is_container` explicitly if a new boundary type needs to work as a container — it
+defaults to `false` and does **not** automatically follow `admin_only`.

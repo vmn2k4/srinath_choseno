@@ -83,7 +83,10 @@ export default function PoliticianElections() {
       setContainerTypes([]);
       return;
     }
-    listBoundaryTypes({ country: browseCountry, adminOnly: true, columns: 'type_name' })
+    // is_container, not admin_only -- USA's 'State' is a valid "browse by"
+    // container here too, even though it's no longer admin_only (see
+    // 20260729000017; ElectionsAdmin.jsx has the matching comment).
+    listBoundaryTypes({ country: browseCountry, isContainer: true, columns: 'type_name' })
       .then(({ data }) => setContainerTypes((data || []).map(t => t.type_name)));
   }, [browseCountry]);
 

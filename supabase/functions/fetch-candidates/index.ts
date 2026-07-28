@@ -147,13 +147,20 @@ async function fetchBc(supabaseAdmin: any, mapShape: any) {
   if (!res.ok) return { status: 'no_candidates_yet', sourceUrl: event.source_url, eventName: event.name };
   const html = await res.text();
 
+  // 5 columns per row: hidden district (repeats every row, used for the
+  // filter below), hidden numeric sort key, a *visible* district-name repeat
+  // (class="bold-on-mobile", only on a district's first candidate row --
+  // empty/class="hide-on-mobile" on subsequent rows), candidate name, party.
+  // Confirmed directly against a live capture -- the previous version of
+  // this regex read name/party from columns 3/4 (the district-repeat column
+  // and the candidate name), off by one from the real column 4/5.
   const rowRe = /<td[^>]*>([^<]*)<\/td>\s*<td[^>]*>(\d*)<\/td>\s*<td[^>]*>([^<]*)<\/td>\s*<td[^>]*>([^<]*)<\/td>\s*<td[^>]*>([^<]*)<\/td>/g;
   const candidates = [];
   let m;
   while ((m = rowRe.exec(html))) {
     const district = decodeEntities(m[1]);
     if (district !== mapShape.name) continue;
-    candidates.push({ name: decodeEntities(m[3]), party: decodeEntities(m[4]) });
+    candidates.push({ name: decodeEntities(m[4]), party: decodeEntities(m[5]) });
   }
   return { status: candidates.length ? 'ok' : 'no_candidates_yet', candidates, sourceUrl: event.source_url, eventName: event.name };
 }

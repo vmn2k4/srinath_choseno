@@ -44,18 +44,18 @@ const BOUNDARY_LEVELS = ['Polling District', 'Federal Area', 'Country', 'Interna
 const STEPS = [
   {
     icon: MapPin,
-    title: 'Get located',
-    text: 'Share your location once. We match it against official electoral boundaries to find your polling district and federal area — no address forms, no guesswork.',
+    title: 'Verify your district',
+    text: 'Share your location once. PostGIS automatically matches your coordinates with official electoral boundaries — no address forms, zero identity leakage.',
   },
   {
     icon: Layers,
-    title: 'See your feeds',
-    text: 'Your newsfeed is scoped to where you actually live. Flip between polling district, federal, country, and international conversations in one tap.',
+    title: 'Explore local feeds',
+    text: 'Access civic conversations scoped strictly to where you live. Seamlessly switch between polling district, municipal, federal, and international levels.',
   },
   {
     icon: Megaphone,
-    title: 'Make yourself heard',
-    text: 'React, comment, and support the issues that matter. Politicians see real signals from real constituents — not noise from everywhere else.',
+    title: 'Signal constituent support',
+    text: 'Participate anonymously and endorse key local issues. Representatives receive verified constituent signals rather than out-of-district noise.',
   },
 ];
 
@@ -72,22 +72,22 @@ const ROLES = [
     accent: 'text-accent',
     ring: 'group-hover:shadow-[0_0_40px_rgba(172,193,150,0.18)]',
     points: [
-      'Read a newsfeed scoped to your own constituency',
-      'Comment on issues raised by your representatives',
-      'Vote posts up or down under an anonymous ghost identity',
-      'Burn your ghost ID anytime for a clean slate',
+      'Access local civic feeds locked to your electoral boundary',
+      'Engage in constituent discussions with local representatives',
+      'Upvote and endorse issues using rotatable Ghost IDs',
+      'Burn your Ghost ID anytime to un-link all future posts',
     ],
   },
   {
     icon: Landmark,
-    label: 'Politicians',
+    label: 'Representatives',
     accent: 'text-primary',
     ring: 'group-hover:shadow-[0_0_40px_rgba(233,235,158,0.18)]',
     points: [
-      'Post video statements about local issues',
-      'Collect "I Support" endorsements from constituents',
-      'Reach exactly the districts you represent',
-      'Run a public wall citizens can visit and share',
+      'Publish video position statements directly on key topics',
+      'Gather verified "I Support" endorsements from constituents',
+      'Target messages directly to the districts you represent',
+      'Maintain an official candidate wall for public constituent review',
     ],
   },
   {
@@ -96,10 +96,10 @@ const ROLES = [
     accent: 'text-text-muted',
     ring: 'group-hover:shadow-[0_0_40px_rgba(121,148,150,0.18)]',
     points: [
-      'Upload electoral boundaries as GeoJSON or shapefiles',
-      'Manage boundary types across multiple countries',
-      'Keep constituency maps accurate as districts change',
-      'Every user is matched against the maps you maintain',
+      'Import electoral geometries as GeoJSON or Shapefiles',
+      'Manage multi-jurisdictional boundary hierarchy maps',
+      'Maintain district accuracy as electoral boundaries shift',
+      'Verify PostGIS spatial matching for constituent location privacy',
     ],
   },
 ];
@@ -107,33 +107,33 @@ const ROLES = [
 const FEATURES = [
   {
     icon: Flame,
-    title: 'Ghost identities',
-    text: 'Speak freely. Posts are tied to a rotating anonymous ID, never your name — and you can burn it whenever you want.',
+    title: 'Rotatable Ghost IDs',
+    text: 'Participate freely. Posts use a privacy-preserving ghost UUID — burn it anytime for a completely fresh identity.',
   },
   {
     icon: Video,
-    title: 'Video-first issues',
-    text: 'Politicians record video statements right in the browser, so positions are heard in their own words.',
+    title: 'Direct video statements',
+    text: 'Representatives post video messages in-browser, ensuring position statements remain authentic and unedited.',
   },
   {
     icon: ThumbsUp,
-    title: 'I Support',
-    text: 'A single, honest endorsement signal. One ghost, one vote — no bots, no brigading from outside the district.',
+    title: 'Constituent endorsements',
+    text: 'One verified constituent, one endorsement. Prevents bot farms, brigading, and out-of-district manipulation.',
   },
   {
     icon: Globe2,
-    title: 'Four levels of debate',
-    text: 'From your polling district to the international stage, every conversation happens at the level it belongs to.',
+    title: '4-Tier boundary scoping',
+    text: 'From your immediate polling district to federal and international levels, debate happens where it belongs.',
   },
   {
     icon: MessageSquare,
-    title: 'Constituency threads',
-    text: 'Comments stay local. The people replying to you are your actual neighbours, not the whole internet.',
+    title: 'Hyper-local threads',
+    text: 'Discussion threads remain scoped to your actual district, connecting you with verified local neighbours.',
   },
   {
     icon: MapPin,
-    title: 'Real boundary data',
-    text: 'Feeds are drawn from official electoral geometry, matched to your coordinates with point-in-polygon precision.',
+    title: 'PostGIS boundary matching',
+    text: 'Feeds use official spatial geometry matched to your coordinates with exact point-in-polygon precision.',
   },
 ];
 
@@ -211,7 +211,7 @@ export default function HomePage() {
         >
           <motion.div initial={reduceMotion ? false : 'hidden'} animate="visible" variants={heroStagger}>
             <motion.div variants={heroItem}>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border-light bg-surface-elevated backdrop-blur-md text-sm text-text-tertiary tracking-wide">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border-light bg-surface-elevated/80 backdrop-blur-md text-xs font-semibold uppercase tracking-wider text-text-tertiary shadow-sm">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
@@ -220,7 +220,7 @@ export default function HomePage() {
               </span>
             </motion.div>
 
-            <motion.h1 variants={heroItem} className="font-display text-5xl md:text-7xl font-bold leading-[1.05] mt-8 tracking-tight">
+            <motion.h1 variants={heroItem} className="font-display text-5xl sm:text-6xl md:text-7xl font-bold leading-[1.04] mt-8 tracking-tight">
               Your voice, heard
               <br />
               <span className="text-shimmer">where you live.</span>
@@ -243,7 +243,7 @@ export default function HomePage() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -8, scale: 0.96 }}
                     transition={{ duration: 0.45, ease: EASE }}
-                    className="col-start-1 row-start-1 inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-primary/15 border border-primary/25 text-primary font-medium"
+                    className="col-start-1 row-start-1 inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-primary/15 border border-primary/30 text-primary font-medium shadow-sm"
                   >
                     <MapPin size={14} aria-hidden="true" />
                     {BOUNDARY_LEVELS[activeLevel]}
@@ -255,10 +255,10 @@ export default function HomePage() {
             <motion.div variants={heroItem} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <MotionLink
                 to={primaryCta.to}
-                whileHover={reduceMotion ? undefined : { y: -3, boxShadow: '0 0 45px rgba(233,235,158,0.35)' }}
+                whileHover={reduceMotion ? undefined : { y: -3, boxShadow: '0 0 45px rgba(233,235,158,0.4)' }}
                 whileTap={reduceMotion ? undefined : { scale: 0.97 }}
                 transition={{ duration: 0.25, ease: EASE }}
-                className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-primary text-text-darker font-semibold text-lg hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer"
+                className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-primary text-text-darker font-semibold text-lg hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200 cursor-pointer shadow-lg shadow-primary/10"
               >
                 {primaryCta.label}
                 <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />

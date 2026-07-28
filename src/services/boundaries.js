@@ -12,13 +12,21 @@ export async function createCountry({ name, code, flagEmoji }) {
 }
 
 // country_boundary_types — flexible listing used by both the admin builder
-// (all types for all countries, needs admin_only to split container vs
+// (all types for all countries, needs is_container to split container vs
 // target dropdowns) and the politician's "browse a different area" filter
-// (one country, admin_only=true containers only, type_name only).
-export async function listBoundaryTypes({ country, adminOnly, columns = 'country, type_name, rank, admin_only', orderBy = 'rank' } = {}) {
+// (one country, is_container=true containers only, type_name only).
+// admin_only and is_container are separate flags (20260729000017) --
+// admin_only means "excluded from citizen boundary membership," is_container
+// means "usable as an admin container to scope another type's search";
+// USA's 'State' is admin_only=false (a real target/membership, for
+// Governor/Senator) but is_container=true (still usable as a container,
+// like Canada's Province), which is why callers that want "container types"
+// must filter on is_container, not admin_only.
+export async function listBoundaryTypes({ country, adminOnly, isContainer, columns = 'country, type_name, rank, admin_only, is_container', orderBy = 'rank' } = {}) {
   let q = supabase.from('country_boundary_types').select(columns).order('country').order(orderBy);
   if (country) q = q.eq('country', country);
   if (adminOnly !== undefined) q = q.eq('admin_only', adminOnly);
+  if (isContainer !== undefined) q = q.eq('is_container', isContainer);
   return q;
 }
 

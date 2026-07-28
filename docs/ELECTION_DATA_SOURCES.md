@@ -78,6 +78,73 @@ this jurisdiction (unlike every Canadian one above), so the client builds the
 doesn't fit this seat→map_shape-keyed function's model; `sync_us_federal_candidates.py`
 still covers it for manual backfills, just not this one-click path.
 
+**Full audit: does every Canada federal/provincial + US federal jurisdiction
+actually have a working manual link?** Checked directly — not just re-reading the
+code — by running the exact `detectJurisdiction`/`getCandidateSourceInfoForSeats`
+logic against the real live database (a throwaway REST-based script, not the
+actual app, since Node 20 can't run `@supabase/supabase-js` here without a
+WebSocket polyfill) for one real seat per jurisdiction. Found and fixed two real
+bugs in the process, beyond the already-known Alberta/Saskatchewan/PEI gap:
+
+1. **BC's candidate parser had the wrong column mapping.** `fetchBc`'s regex
+   captured 5 `<td>` columns per row, but BC's real table has a repeated
+   district-name column for mobile responsiveness (`class="bold-on-mobile"`) that
+   the code didn't account for — it was reading `name`/`party` from columns 3/4
+   instead of the actual 4/5, producing swapped-looking output (a district name in
+   the `name` field, a candidate's name in the `party` field). Confirmed this
+   wasn't a Wayback-specific artifact: `scripts/sync_bc_candidates.py` already had
+   the *correct* 5-column unpacking (`district, _sort, _district_repeat, name,
+   party`) — the Edge Function's TypeScript port introduced the off-by-one error
+   and it was never separately verified until now. Fixed and redeployed; reverified
+   against real data (Burnaby-New Westminster: Daniel Kofi Ampong/Independent, Raj
+   Chouhan/BC NDP, Deepak Suri/Conservative Party — all correct).
+2. **Canada federal's event-picker could point most ridings at the wrong `EV`.**
+   `pickEvent`/`getCurrentEventsByJurisdiction` picked "whichever event has the
+   latest `event_date`," with no distinction between a general election (covers
+   every riding) and a by-election (covers only its own few ridings, not tracked
+   structurally anywhere). A scheduled-but-not-yet-held by-election's future date
+   sorted above the actual general election's past date, so *any* riding not in
+   that specific by-election got pointed at an `EV` that doesn't recognize it —
+   confirmed live: Elections Canada's VIS responds with an "Object moved" redirect
+   to a generic "find your district" page, not the candidate list, not even a "no
+   candidates" message. Fixed by preferring `is_general = true` first, then most
+   recent — in both `candidateSync.js` and the Edge Function's `pickEvent` (only
+   the federal table has `is_general`, so this is gated to that table). Trade-off:
+   the handful of ridings actually *in* a live by-election now also get the general
+   election's (stale) `EV` instead of their own — accepted, since there's no
+   structural way to know which few ridings a by-election covers, and this is
+   right for the overwhelming majority of ridings. Confirmed fixed live (Cape
+   Spear now correctly resolves to `EV=99`, the 45th General Election, returning
+   the real elected MP).
+
+**BC/Ontario/Quebec also had zero `provincial_election_events` rows in
+production** (same root cause as Alberta/Saskatchewan/PEI) — seeded via
+`20260729000016_seed_bc_on_qc_events.sql`:
+- **BC**: neither the known-past (`2024-provincial-election`) nor the predictable-
+  future (`2028-provincial-election`) slug resolves live right now (both 404,
+  confirmed) — seeded with a confirmed-working Wayback snapshot of the real 2024
+  general election page instead.
+- **Ontario**: seeded with the discovery endpoint (`.../all-with-election`,
+  confirmed live 200 right now even with no election running) rather than a
+  specific past election, since this API's whole design is "poll to see if
+  something's live," not a historical archive. Caveat: `fetchOn` builds its actual
+  per-riding fetch URL by *appending the district code directly onto
+  `source_url`* (expects it to already be an `.../electoral-district/` prefix for
+  a specific, currently-live `electionId`) — with the discovery root seeded
+  instead, that concatenation produces a nonsensical URL. This is **safe, not
+  broken**: it coincidentally still 404s, which `fetchOn` already treats as
+  `no_candidates_yet` — the same honest outcome a well-formed request during a
+  dormant period would produce anyway. The manual link (which uses `source_url`
+  directly, unmodified) is unaffected and correct. A future session running
+  `sync_ontario_candidates.py`'s `discover` during a real live election should
+  replace this row with the properly-shaped per-riding template for that
+  election's real `electionId` — this seed is a placeholder for right now, not a
+  permanent fix.
+- **Quebec**: seeded with the equivalent discovery endpoint, confirmed to
+  correctly `403` while dormant (`fetchQc` fetches this URL as a *list* first, not
+  by concatenating the district code onto it directly, so it degrades safely to
+  `no_candidates_yet` with no equivalent cosmetic issue).
+
 **New: `manual_only` status tier.** Found while auditing whether every researched
 jurisdiction actually surfaces a "view official source" link in the admin UI —
 Alberta/Saskatchewan/PEI didn't, despite being fully researched, because

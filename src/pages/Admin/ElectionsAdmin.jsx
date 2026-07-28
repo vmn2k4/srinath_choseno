@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import BoundaryPicker from '../../components/map/BoundaryPicker';
 import AdminSubNav from '../../components/AdminSubNav';
@@ -37,6 +38,12 @@ const ELECTION_STATUS_TONE = {
 
 export default function ElectionsAdmin() {
   const { user } = useAuth();
+  // Selecting an election is kept in the URL (?election=<id>) so it survives
+  // navigating away and back -- this page previously reset to "nothing
+  // selected" on every remount (a plain route, not a tab, so leaving and
+  // returning always unmounts it), forcing a full reselect + reload even
+  // though the seat list can take a while to fetch for a large election.
+  const [searchParams, setSearchParams] = useSearchParams();
   const [elections, setElections] = useState([]);
   const [loadingElections, setLoadingElections] = useState(true);
   const [selectedElection, setSelectedElection] = useState(null);
@@ -104,14 +111,13 @@ export default function ElectionsAdmin() {
   }, []);
 
   const typesForSeatCountry = seatCountry ? boundaryTypes.filter(t => t.country === seatCountry) : [];
-  // Container types (Canada's Province, ...) are admin_only — they exist
-  // purely to help admins scope a seat-building batch, never themselves a
-  // real election boundary. USA's 'State' used to be admin_only too (until
-  // 20260729000014_promote_usa_state_boundary_type.sql), which is why this
-  // split is driven by the admin_only column rather than hardcoded per type
-  // — Governor/U.S. Senator needed 'State' to be a real target, not just a
-  // container.
-  const containerTypeOptions = typesForSeatCountry.filter(t => t.admin_only);
+  // Container types (Canada's Province, ...) exist purely to help admins
+  // scope a seat-building batch. USA's 'State' is BOTH a container (like
+  // Province) AND a real target (Governor/U.S. Senator seats attach to it
+  // directly) -- is_container and admin_only are deliberately separate flags
+  // (20260729000017) so a type can be one, the other, or both; this split is
+  // driven by those columns rather than hardcoded per type.
+  const containerTypeOptions = typesForSeatCountry.filter(t => t.is_container);
   const targetTypeOptions = typesForSeatCountry.filter(t => !t.admin_only);
 
   // Country scopes both the container/target-type pickers and the manual
@@ -228,6 +234,7 @@ export default function ElectionsAdmin() {
 
   const selectElection = (election) => {
     setSelectedElection(election);
+    setSearchParams({ election: election.id }, { replace: true });
     setPendingShapeIds(new Set());
     setContainerId(new Set());
     setSelectedRoleKeys(new Set());
@@ -236,6 +243,18 @@ export default function ElectionsAdmin() {
     fetchSeats(election.id);
     fetchQuestions(election.id);
   };
+
+  // Restores the ?election= selection on mount/return, once the elections
+  // list has loaded far enough to look it up -- guarded on selectedElection
+  // being unset so this never fights a manual click.
+  useEffect(() => {
+    if (selectedElection || elections.length === 0) return;
+    const wanted = searchParams.get('election');
+    if (!wanted) return;
+    const match = elections.find(e => e.id === wanted);
+    if (match) selectElection(match);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [elections]);
 
   const handleCreateElection = async () => {
     if (!newName.trim() || !newDate) {

@@ -46,15 +46,36 @@ export async function getElectionSeatsByElectionId(electionId) {
   );
 }
 
+// fetchAllPages alone paginates the *result* rows via .range(), but the
+// .in('seat_id', seatIds) filter itself was passed whole on every page --
+// fine for a small election, but for one with thousands of seats (e.g. a
+// municipal election) the filter clause alone can exceed 2000+ UUIDs.
+// Confirmed directly: at ~2300 ids the resulting request's headers exceed
+// 60KB and the request fails outright ("Failed sending data to the peer"),
+// which is what actually caused the ~1 minute load (the query doesn't just
+// get slow, it fails and the browser client retries). Chunking the id list
+// itself, not just the result pagination, fixes this at the root; chunks are
+// independent so they run in parallel rather than one giant sequential call.
+const SEAT_ID_CHUNK_SIZE = 200;
+
 export async function getElectionCandidatesBySeatIds(seatIds) {
-  return fetchAllPages((from, to) =>
-    supabase
-      .from('election_candidates')
-      .select(ADMIN_CANDIDATE_COLUMNS)
-      .in('seat_id', seatIds)
-      .order('id')
-      .range(from, to)
-  );
+  const chunks = [];
+  for (let i = 0; i < seatIds.length; i += SEAT_ID_CHUNK_SIZE) {
+    chunks.push(seatIds.slice(i, i + SEAT_ID_CHUNK_SIZE));
+  }
+  const results = await Promise.all(chunks.map(chunk =>
+    fetchAllPages((from, to) =>
+      supabase
+        .from('election_candidates')
+        .select(ADMIN_CANDIDATE_COLUMNS)
+        .in('seat_id', chunk)
+        .order('id')
+        .range(from, to)
+    )
+  ));
+  const failed = results.find(r => r.error);
+  if (failed) return { data: null, error: failed.error };
+  return { data: results.flatMap(r => r.data || []), error: null };
 }
 
 export async function createElectionSeats(rows) {

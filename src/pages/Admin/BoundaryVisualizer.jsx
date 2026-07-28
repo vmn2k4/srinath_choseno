@@ -32,11 +32,12 @@ export default function BoundaryVisualizer() {
   }, []);
 
   const typesForCountry = country ? boundaryTypes.filter(t => t.country === country) : [];
-  // Container types (Canada's Province, ...) are admin_only and exist only to
-  // scope this tool's search — never a valid target type themselves. See
-  // ElectionsAdmin.jsx's matching comment for why this is driven by the
-  // admin_only column rather than hardcoded per type.
-  const containerTypeOptions = typesForCountry.filter(t => t.admin_only);
+  // Container types (Canada's Province, USA's State, ...) exist to scope
+  // this tool's search. USA's 'State' is both a container and a valid
+  // target (Governor/Senator) at once -- see ElectionsAdmin.jsx's matching
+  // comment; is_container and admin_only are separate flags
+  // (20260729000017), not hardcoded per type.
+  const containerTypeOptions = typesForCountry.filter(t => t.is_container);
   const targetTypeOptions = typesForCountry.filter(t => !t.admin_only);
 
   useEffect(() => {
