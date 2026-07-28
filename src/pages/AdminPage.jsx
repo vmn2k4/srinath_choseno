@@ -11,6 +11,7 @@ import {
   insertMapShapesBatch, insertMapShape, finalizeBoundaryUpload
 } from '../services/boundaries';
 import { listPoliticalPartiesAllCountries, createPoliticalParty, deletePoliticalParty } from '../services/politicalParties';
+import { Card, Button, Input, Select, Spinner, EmptyState } from '../components/ui';
 
 const VERTEX_BUCKETS = [
   [0, 1_000], [1_000, 5_000], [5_000, 20_000],
@@ -466,7 +467,7 @@ export default function AdminPage() {
       <AdminSubNav active="boundaries" />
 
       {/* COUNTRIES */}
-      <div className="p-8 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl">
+      <Card padding="lg">
         <h2 className="text-2xl font-bold text-text-main mb-4">Countries</h2>
         <p className="text-sm text-text-muted mb-6">
           Register a country before defining boundary types or uploading shapes for it. This is the canonical list every
@@ -476,51 +477,44 @@ export default function AdminPage() {
         <div className="grid grid-cols-1 sm:grid-cols-[1fr_100px_100px_auto] gap-3 mb-6 items-end">
           <div>
             <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Name</label>
-            <input
+            <Input
               type="text"
               placeholder="e.g. USA"
-              className="block w-full p-2.5 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
               value={newCountryName}
               onChange={(e) => setNewCountryName(e.target.value)}
             />
           </div>
           <div>
             <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">ISO Code</label>
-            <input
+            <Input
               type="text"
               placeholder="e.g. US"
               maxLength={2}
-              className="block w-full p-2.5 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all uppercase"
+              className="uppercase"
               value={newCountryCode}
               onChange={(e) => setNewCountryCode(e.target.value)}
             />
           </div>
           <div>
             <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Flag</label>
-            <input
+            <Input
               type="text"
               placeholder="🇺🇸"
-              className="block w-full p-2.5 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
               value={newCountryFlag}
               onChange={(e) => setNewCountryFlag(e.target.value)}
             />
           </div>
-          <button
-            onClick={handleAddCountry}
-            className="flex items-center justify-center gap-1.5 px-4 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-xl transition-all text-sm shadow-md"
-          >
+          <Button onClick={handleAddCountry}>
             <Plus size={16} /> Add
-          </button>
+          </Button>
         </div>
 
         {countryStatus && <p className="text-danger text-xs font-medium mb-4">{countryStatus}</p>}
 
         {loadingCountries ? (
-          <div className="text-center text-text-muted py-6">Loading...</div>
+          <div className="flex justify-center py-6"><Spinner /></div>
         ) : countryRows.length === 0 ? (
-          <div className="text-center text-text-muted py-6 bg-surface/20 rounded-2xl border border-dashed border-border-light/60">
-            No countries registered yet.
-          </div>
+          <EmptyState description="No countries registered yet." />
         ) : (
           <div className="flex flex-wrap gap-2">
             {countryRows.map(c => (
@@ -532,10 +526,10 @@ export default function AdminPage() {
             ))}
           </div>
         )}
-      </div>
+      </Card>
 
       {/* BOUNDARY TYPES CONFIGURATION */}
-      <div className="p-8 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl">
+      <Card padding="lg">
         <h2 className="text-2xl font-bold text-text-main mb-4">Boundary Types</h2>
         <p className="text-sm text-text-muted mb-6">
           Define which boundary types exist for each country (e.g. Canada → Federal, Provincial, Municipal) and their rank
@@ -545,64 +539,50 @@ export default function AdminPage() {
         <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_100px_auto] gap-3 mb-6 items-end">
           <div>
             <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Country</label>
-            <select
-              className="block w-full p-2.5 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
-              value={newTypeCountry}
-              onChange={(e) => setNewTypeCountry(e.target.value)}
-            >
+            <Select value={newTypeCountry} onChange={(e) => setNewTypeCountry(e.target.value)}>
               <option value="" disabled>Select country...</option>
               {countries.map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
+            </Select>
             {countries.length === 0 && (
               <p className="text-xs text-amber-400 mt-1.5">No countries registered yet — add one above first.</p>
             )}
           </div>
           <div>
             <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Type Name</label>
-            <input
+            <Input
               type="text"
               placeholder="e.g. Federal"
-              className="block w-full p-2.5 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
               value={newTypeName}
               onChange={(e) => setNewTypeName(e.target.value)}
             />
           </div>
           <div>
             <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Rank</label>
-            <input
+            <Input
               type="number"
               min="1"
               placeholder="1"
-              className="block w-full p-2.5 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
               value={newTypeRank}
               onChange={(e) => setNewTypeRank(e.target.value)}
             />
           </div>
-          <button
-            onClick={handleAddBoundaryType}
-            className="flex items-center justify-center gap-1.5 px-4 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-xl transition-all text-sm shadow-md"
-          >
+          <Button onClick={handleAddBoundaryType}>
             <Plus size={16} /> Add
-          </button>
+          </Button>
         </div>
 
         {newTypeCountry && typesForNewTypeCountry.length === 0 && (
-          <button
-            onClick={handleAddStandardSet}
-            className="mb-4 px-3 py-2 text-xs font-semibold text-primary-light bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-colors"
-          >
+          <Button variant="outline" size="sm" onClick={handleAddStandardSet} className="mb-4">
             Add standard set (National / State-Province / Municipal) for {newTypeCountry}
-          </button>
+          </Button>
         )}
 
         {typeStatus && <p className="text-danger text-xs font-medium mb-4">{typeStatus}</p>}
 
         {loadingTypes ? (
-          <div className="text-center text-text-muted py-6">Loading...</div>
+          <div className="flex justify-center py-6"><Spinner /></div>
         ) : boundaryTypes.length === 0 ? (
-          <div className="text-center text-text-muted py-6 bg-surface/20 rounded-2xl border border-dashed border-border-light/60">
-            No boundary types configured yet.
-          </div>
+          <EmptyState description="No boundary types configured yet." />
         ) : (
           <div className="space-y-4">
             {countries.map(c => (
@@ -623,10 +603,10 @@ export default function AdminPage() {
             ))}
           </div>
         )}
-      </div>
+      </Card>
 
       {/* POLITICAL PARTIES */}
-      <div className="p-8 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl">
+      <Card padding="lg">
         <h2 className="text-2xl font-bold text-text-main mb-4">Political Parties</h2>
         <p className="text-sm text-text-muted mb-6">
           Define the party list a politician can pick from when editing their profile, per country. Independent should
@@ -636,55 +616,44 @@ export default function AdminPage() {
         <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_100px_auto] gap-3 mb-6 items-end">
           <div>
             <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Country</label>
-            <select
-              className="block w-full p-2.5 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
-              value={newPartyCountry}
-              onChange={(e) => setNewPartyCountry(e.target.value)}
-            >
+            <Select value={newPartyCountry} onChange={(e) => setNewPartyCountry(e.target.value)}>
               <option value="" disabled>Select country...</option>
               {countries.map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
+            </Select>
             {countries.length === 0 && (
               <p className="text-xs text-amber-400 mt-1.5">No countries registered yet — add one above first.</p>
             )}
           </div>
           <div>
             <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Party Name</label>
-            <input
+            <Input
               type="text"
               placeholder="e.g. Green Party"
-              className="block w-full p-2.5 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
               value={newPartyName}
               onChange={(e) => setNewPartyName(e.target.value)}
             />
           </div>
           <div>
             <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Rank</label>
-            <input
+            <Input
               type="number"
               min="1"
               placeholder="999"
-              className="block w-full p-2.5 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
               value={newPartyRank}
               onChange={(e) => setNewPartyRank(e.target.value)}
             />
           </div>
-          <button
-            onClick={handleAddParty}
-            className="flex items-center justify-center gap-1.5 px-4 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-xl transition-all text-sm shadow-md"
-          >
+          <Button onClick={handleAddParty}>
             <Plus size={16} /> Add
-          </button>
+          </Button>
         </div>
 
         {partyStatus && <p className="text-danger text-xs font-medium mb-4">{partyStatus}</p>}
 
         {loadingParties ? (
-          <div className="text-center text-text-muted py-6">Loading...</div>
+          <div className="flex justify-center py-6"><Spinner /></div>
         ) : partyRows.length === 0 ? (
-          <div className="text-center text-text-muted py-6 bg-surface/20 rounded-2xl border border-dashed border-border-light/60">
-            No parties configured yet.
-          </div>
+          <EmptyState description="No parties configured yet." />
         ) : (
           <div className="space-y-4">
             {countries.map(c => (
@@ -704,12 +673,12 @@ export default function AdminPage() {
             ))}
           </div>
         )}
-      </div>
+      </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
       {/* LEFT SIDE: UPLOAD FORM */}
-      <div className="p-8 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl self-start">
+      <Card padding="lg" className="self-start">
         <h2 className="text-2xl font-bold text-text-main mb-4">Upload Boundaries</h2>
         <p className="text-sm text-text-muted mb-6">
           Upload electoral boundaries (.geojson or .zip containing shapefiles).
@@ -720,56 +689,49 @@ export default function AdminPage() {
             <p className="text-xs text-primary-light">
               Resuming <strong>{uploadName}</strong> — re-select the same source file below, already-uploaded shapes will be skipped automatically.
             </p>
-            <button onClick={cancelResume} className="text-xs text-text-muted hover:text-text-main shrink-0">Cancel</button>
+            <Button variant="ghost" size="sm" onClick={cancelResume} className="shrink-0">Cancel</Button>
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block mb-2 text-xs font-semibold text-text-muted uppercase tracking-wider">Country</label>
-            <select
-              className="block w-full p-3 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-            >
+            <Select value={country} onChange={(e) => setCountry(e.target.value)}>
               <option value="" disabled>Select country...</option>
               {countries.map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
+            </Select>
           </div>
           <div>
             <label className="block mb-2 text-xs font-semibold text-text-muted uppercase tracking-wider">Boundary Type</label>
-            <select
-              className="block w-full p-3 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all disabled:opacity-50"
+            <Select
               value={boundaryType}
               onChange={(e) => setBoundaryType(e.target.value)}
               disabled={!country || typesForSelectedCountry.length === 0}
             >
               <option value="" disabled>{country ? 'Select type...' : 'Select a country first'}</option>
               {typesForSelectedCountry.map(t => <option key={t.id} value={t.type_name}>{t.type_name} (rank {t.rank})</option>)}
-            </select>
+            </Select>
             {country && typesForSelectedCountry.length === 0 && (
               <p className="text-xs text-amber-400 mt-1.5">No types defined for {country} yet — add one above.</p>
             )}
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <div>
             <label className="block mb-2 text-xs font-semibold text-text-muted uppercase tracking-wider">Name Attribute</label>
-            <input
+            <Input
               type="text"
               placeholder="e.g. ED_NAMEE"
-              className="block w-full p-3 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
               value={nameField}
               onChange={(e) => setNameField(e.target.value)}
             />
           </div>
           <div>
             <label className="block mb-2 text-xs font-semibold text-text-muted uppercase tracking-wider">Code Attribute</label>
-            <input
+            <Input
               type="text"
               placeholder="e.g. FED_NUM"
-              className="block w-full p-3 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
               value={codeField}
               onChange={(e) => setCodeField(e.target.value)}
             />
@@ -788,10 +750,9 @@ export default function AdminPage() {
 
         <div className="mb-6">
           <label className="block mb-2 text-xs font-semibold text-text-muted uppercase tracking-wider">Upload Name</label>
-          <input
+          <Input
             type="text"
             placeholder="e.g. Ontario Municipalities 2025"
-            className="block w-full p-3 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
             value={uploadName}
             onChange={(e) => setUploadName(e.target.value)}
           />
@@ -799,21 +760,15 @@ export default function AdminPage() {
         </div>
 
         {!analyzedFeatures ? (
-          <div>
-            <button
-              className="px-6 py-3 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-xl transition-all duration-200 focus:ring-4 focus:ring-primary/10 disabled:opacity-50 w-full shadow-[0_4px_14px_rgba(233,235,158,0.15)]"
-              onClick={handleAnalyze}
-              disabled={analyzing}
-            >
-              {analyzing ? 'Analyzing...' : 'Analyze File'}
-            </button>
-          </div>
+          <Button onClick={handleAnalyze} disabled={analyzing} className="w-full">
+            {analyzing ? 'Analyzing...' : 'Analyze File'}
+          </Button>
         ) : (
           <div className="space-y-4">
             <div className="p-4 bg-surface/40 rounded-xl border border-border-light/30">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="text-xs font-bold text-text-secondary uppercase tracking-wider">Vertex Distribution</h4>
-                <button onClick={() => setAnalyzedFeatures(null)} className="text-xs text-text-muted hover:text-text-main">Re-analyze</button>
+                <Button variant="ghost" size="sm" onClick={() => setAnalyzedFeatures(null)}>Re-analyze</Button>
               </div>
               <div className="space-y-1 mb-3">
                 {vertexHistogram.buckets.map(({ lo, hi, count }) => (
@@ -848,13 +803,9 @@ export default function AdminPage() {
               )}
             </div>
 
-            <button
-              className="px-6 py-3 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-xl transition-all duration-200 focus:ring-4 focus:ring-primary/10 disabled:opacity-50 w-full shadow-[0_4px_14px_rgba(233,235,158,0.15)]"
-              onClick={handleConfirmUpload}
-              disabled={uploading}
-            >
+            <Button onClick={handleConfirmUpload} disabled={uploading} className="w-full">
               {uploading ? 'Uploading...' : `Upload ${vertexHistogram.total - vertexHistogram.overCutoff.length} Shape(s)`}
-            </button>
+            </Button>
           </div>
         )}
 
@@ -868,10 +819,10 @@ export default function AdminPage() {
             )}
           </div>
         )}
-      </div>
+      </Card>
 
       {/* RIGHT SIDE: BOUNDARY LIST */}
-      <div className="p-8 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl flex flex-col h-[650px]">
+      <Card padding="lg" className="flex flex-col h-[70vh] max-h-[650px] min-h-[320px]">
         <h2 className="text-2xl font-bold text-text-main mb-4">Uploaded Boundaries</h2>
         <p className="text-sm text-text-muted mb-6">
           Recent boundaries successfully uploaded to the system.
@@ -879,11 +830,9 @@ export default function AdminPage() {
 
         <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-3">
           {loadingBoundaries ? (
-            <div className="text-center text-text-muted py-10">Loading...</div>
+            <div className="flex justify-center py-10"><Spinner /></div>
           ) : boundaries.length === 0 ? (
-            <div className="text-center text-text-muted py-10 bg-surface/20 rounded-2xl border border-dashed border-border-light/60">
-              No boundaries found.
-            </div>
+            <EmptyState description="No boundaries found." />
           ) : (
             boundaries.map((b) => (
               <div key={b.id} className="p-4 bg-surface/40 rounded-xl border border-border-light/30 flex items-center justify-between group hover:border-primary/25 transition-colors">
@@ -910,21 +859,22 @@ export default function AdminPage() {
             ))
           )}
         </div>
-      </div>
+      </Card>
 
       </div>
 
       <div>
         <div className="flex items-center justify-between mb-3 px-1">
           <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">Filter Upload Batches</h3>
-          <select
+          <Select
             value={uploadsPanelCountry}
             onChange={(e) => setUploadsPanelCountry(e.target.value)}
-            className="p-2 bg-surface/40 border border-border-light text-xs text-text-main rounded-lg focus:outline-none focus:border-primary"
+            size="sm"
+            className="w-auto"
           >
             <option value="">All countries</option>
             {countries.map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
+          </Select>
         </div>
         <BoundaryUploadsPanel
           key={uploadsPanelKey}

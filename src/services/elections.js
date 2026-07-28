@@ -38,7 +38,7 @@ export async function getElectionSeatsByElectionId(electionId) {
   return fetchAllPages((from, to) =>
     supabase
       .from('election_seats')
-      .select('id, role_title, map_shapes(id, name, boundary_type, country)')
+      .select('id, role_title, map_shapes(id, name, boundary_type, country, code, properties)')
       .eq('election_id', electionId)
       .order('role_title')
       .order('id')
@@ -83,6 +83,16 @@ export async function getActiveSeatsByShapeIds(shapeIds) {
     .select('id, role_title, map_shapes(name, boundary_type), elections!inner(id, name, election_date, status)')
     .in('map_shape_id', shapeIds)
     .in('elections.status', ['nominations_open', 'active']);
+}
+
+// Platform-wide active seats, unscoped by boundary membership — used for
+// public/anonymous browsing where there's no "my area" to filter by.
+export async function getActiveSeats() {
+  return supabase
+    .from('election_seats')
+    .select('id, role_title, map_shapes(name, boundary_type), elections!inner(id, name, election_date, status)')
+    .in('elections.status', ['nominations_open', 'active'])
+    .order('role_title');
 }
 
 export async function findOpenSeatsInContainer(containerShapeId) {

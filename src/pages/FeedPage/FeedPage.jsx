@@ -5,6 +5,7 @@ import { MapPin, Users, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, 
 import VideoRecorder from '../../components/video/VideoRecorder';
 import PoliticianSidebar from '../../components/PoliticianSidebar';
 import LinkPreview from '../../components/LinkPreview';
+import { Card, Button, Input, Textarea, Spinner, EmptyState } from '../../components/ui';
 import { getOwnProfile, getUserBoundaryMemberships } from '../../services/profile';
 import { getBoundaryTypesForCountries } from '../../services/boundaries';
 import {
@@ -373,7 +374,7 @@ export default function FeedPage() {
   };
 
   if (loading) {
-    return <div className="w-full flex justify-center py-20"><div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin"></div></div>;
+    return <Spinner fullPage />;
   }
 
   if (!profile) {
@@ -497,8 +498,9 @@ export default function FeedPage() {
             )}
 
             {/* Create Post Input — always available; the post is tagged with every group you belong to */}
-            <form onSubmit={handleCreatePost} className="mb-6 bg-surface/50 rounded-xl p-4 border border-border-light/50">
-              <textarea
+            <Card as="form" variant="composer" padding="sm" onSubmit={handleCreatePost} className="mb-6">
+              <Textarea
+                plain
                 value={newPostContent}
                 onChange={(e) => {
                   const text = e.target.value;
@@ -514,7 +516,7 @@ export default function FeedPage() {
                   }
                 }}
                 placeholder="What's happening? This post will show up in every group you belong to."
-                className="w-full bg-transparent text-text-secondary placeholder:text-text-muted resize-none outline-none min-h-[80px]"
+                className="min-h-[80px]"
               />
 
               {extractedUrl && !uploadedVideoUrl && (
@@ -593,16 +595,15 @@ export default function FeedPage() {
                         <Video size={18} />
                       </button>
                     )}
-                    <button
+                    <Button
                       type="submit"
                       disabled={submitting || (!newPostContent.trim() && !uploadedVideoUrl && !imageFile)}
-                      className="px-6 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 rounded-xl transition-all duration-200 text-sm font-bold disabled:opacity-40 disabled:cursor-not-allowed shadow-[0_4px_12px_rgba(233,235,158,0.15)] hover:shadow-[0_6px_16px_rgba(233,235,158,0.25)]"
                     >
                       {submitting ? 'Posting...' : 'Share Post'}
-                    </button>
+                    </Button>
                   </div>
               </div>
-            </form>
+            </Card>
           </div>
 
           {/* Tabs Navigation */}
@@ -751,16 +752,14 @@ export default function FeedPage() {
             {/* Posts Feed */}
             <div className="space-y-6">
               {posts.length === 0 ? (
-                <div className="text-center py-10 bg-surface/30 rounded-xl border border-dashed border-border-light">
-                  <div className="w-16 h-16 rounded-full bg-surface-hover flex items-center justify-center mx-auto mb-4">
-                    <Flag className="text-text-muted w-8 h-8" />
-                  </div>
-                  <h3 className="text-text-tertiary font-medium mb-1">No Posts Yet</h3>
-                  <p className="text-text-main0 text-sm">Be the first to share your thoughts anonymously.</p>
-                </div>
+                <EmptyState
+                  icon={Flag}
+                  title="No Posts Yet"
+                  description="Be the first to share your thoughts anonymously."
+                />
               ) : (
                 posts.map(post => (
-                  <div key={post.id} className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/40 overflow-hidden hover:border-primary/25 transition-all duration-300 shadow-md">
+                  <Card key={post.id} interactive padding="none" className="overflow-hidden">
                     {/* Post Content */}
                     <div className="p-5">
                       <div className="flex items-center gap-2.5 mb-3">
@@ -855,7 +854,7 @@ export default function FeedPage() {
 
                       {/* Add Comment Input */}
                       <div className="flex items-center gap-2">
-                        <input
+                        <Input
                           type="text"
                           value={commentInputs[post.id] || ''}
                           onChange={(e) => setCommentInputs({...commentInputs, [post.id]: e.target.value})}
@@ -863,19 +862,19 @@ export default function FeedPage() {
                             if (e.key === 'Enter') handleCreateComment(post.id);
                           }}
                           placeholder="Write an anonymous comment..."
-                          className="flex-1 bg-surface/50 border border-border-light/40 rounded-xl px-3.5 py-2.5 text-sm text-text-secondary placeholder:text-text-muted focus:outline-none focus:border-primary transition-colors"
                         />
-                        <button
+                        <Button
+                          variant="icon"
+                          tone="primary"
                           onClick={() => handleCreateComment(post.id)}
                           disabled={!commentInputs[post.id]?.trim()}
-                          className="p-2.5 bg-primary/10 text-primary-light hover:bg-primary hover:text-slate-950 rounded-xl transition-all disabled:opacity-40"
                         >
                           <Send size={16} />
-                        </button>
+                        </Button>
                       </div>
 
                     </div>
-                  </div>
+                  </Card>
                 ))
               )}
             </div>
@@ -885,8 +884,9 @@ export default function FeedPage() {
       )}
       </div>
 
-      {/* Right Sidebar Column */}
-      <div className="hidden lg:block w-80 shrink-0">
+      {/* Right Sidebar Column — stacks below the feed on mobile/tablet instead of
+          disappearing entirely, becomes a true sidebar at lg */}
+      <div className="w-full lg:w-80 shrink-0">
         <PoliticianSidebar profile={profile} activeTab={activeMembership?.boundary_type || activeTab} memberships={memberships} />
       </div>
 

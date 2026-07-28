@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { X, Loader2 } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import StepLocation from '../Onboarding/StepLocation';
 import StepPolitician from '../Onboarding/StepPolitician';
 import { upsertProfileCore, upsertPoliticianProfile } from '../../services/profile';
+import { Button, Input } from '../../components/ui';
 
 // ─── Step 1: Basic Info ──────────────────────────────────────────
 function StepBasicInfo({ data, updateData, nextStep }) {
@@ -21,18 +22,17 @@ function StepBasicInfo({ data, updateData, nextStep }) {
           {data.role === 'politician' ? 'Full Public Name' : 'Display Name'}
           {data.role !== 'politician' && <span className="text-text-dark text-xs ml-1">(optional)</span>}
         </label>
-        <input
+        <Input
           type="text"
           value={data.fullName}
           onChange={e => updateData({ fullName: e.target.value })}
           placeholder={data.role === 'politician' ? 'e.g. Jane Doe' : 'e.g. Alex — private to your profile'}
-          className="w-full bg-surface border border-border-light rounded-xl p-3 text-text-main outline-none focus:border-primary transition-colors"
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-text-tertiary mb-3">Account Type</label>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[{ val: 'normal', label: 'Citizen', desc: 'Anonymous community member' },
             { val: 'politician', label: 'Politician', desc: 'Public representative or candidate' }
           ].map(({ val, label, desc }) => (
@@ -49,10 +49,9 @@ function StepBasicInfo({ data, updateData, nextStep }) {
       </div>
 
       <div className="flex justify-end pt-2">
-        <button onClick={nextStep} disabled={!canContinue}
-          className="px-8 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary-hover transition-colors disabled:opacity-50">
+        <Button size="lg" onClick={nextStep} disabled={!canContinue}>
           Continue →
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -158,9 +157,9 @@ export default function EditProfileFlow({ initialData, onComplete, onCancel }) {
               <div key={i} className={`h-2 rounded-full transition-all duration-300 ${i + 1 === step ? 'w-6 bg-primary' : i + 1 < step ? 'w-2 bg-primary/50' : 'w-2 bg-border-light'}`} />
             ))}
           </div>
-          <button onClick={onCancel} className="p-2 text-text-muted hover:text-text-main hover:bg-surface-hover rounded-xl transition-colors">
+          <Button variant="icon" onClick={onCancel}>
             <X size={20} />
-          </button>
+          </Button>
         </div>
 
         {/* Progress bar */}

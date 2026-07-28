@@ -15,6 +15,32 @@ export async function getOwnProfile(userId, { columns = '*' } = {}) {
   return supabase.from('profiles').select(columns).eq('id', userId).single();
 }
 
+// politician_profiles — directory of politicians/candidates matching a set of
+// boundary ids (or Country-level, always included) — PoliticianSidebar's feed.
+export async function getInterestedPoliticians(boundaryIds = []) {
+  let query = supabase
+    .from('politician_profiles')
+    .select(`
+      id,
+      political_target_role,
+      target_boundary_name,
+      target_boundary_type,
+      profiles!inner (
+        current_ghost_id,
+        full_name,
+        country
+      )
+    `);
+
+  if (boundaryIds.length > 0) {
+    query = query.or(`target_boundary_id.in.(${boundaryIds.join(',')}),target_boundary_type.eq.Country`);
+  } else {
+    query = query.eq('target_boundary_type', 'Country');
+  }
+
+  return query;
+}
+
 // profiles — select('*'), missing-row self-heal (create default profile) +
 // admin-email role correction. Used by AuthContext on session init and auth
 // state changes. Returns the profile row directly (not {data,error}), same

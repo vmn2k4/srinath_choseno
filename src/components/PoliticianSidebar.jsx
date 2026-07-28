@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../services/supabase';
+import { getInterestedPoliticians } from '../services/profile';
 import { Users, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Card, Spinner, EmptyState } from './ui';
 
 export default function PoliticianSidebar({ profile, activeTab, memberships = [] }) {
   const [politicians, setPoliticians] = useState([]);
@@ -16,27 +17,7 @@ export default function PoliticianSidebar({ profile, activeTab, memberships = []
       try {
         let boundaryIds = memberships.map(m => m.id);
 
-        let query = supabase
-          .from('politician_profiles')
-          .select(`
-            id,
-            political_target_role,
-            target_boundary_name,
-            target_boundary_type,
-            profiles!inner (
-              current_ghost_id,
-              full_name,
-              country
-            )
-          `);
-
-        if (boundaryIds.length > 0) {
-           query = query.or(`target_boundary_id.in.(${boundaryIds.join(',')}),target_boundary_type.eq.Country`);
-        } else {
-           query = query.eq('target_boundary_type', 'Country');
-        }
-        
-        const { data, error } = await query;
+        const { data, error } = await getInterestedPoliticians(boundaryIds);
         if (!error && data) {
            // Filter Country-level politicians to match user's country in JS to avoid foreign table OR constraints
            let filteredData = data.filter(pol => {
@@ -66,18 +47,16 @@ export default function PoliticianSidebar({ profile, activeTab, memberships = []
   if (activeTab?.toLowerCase() === 'international') return null;
 
   return (
-    <div className="bg-surface/50 rounded-xl border border-border-light/50 p-5 sticky top-24">
+    <Card variant="composer" padding="sm" className="sticky top-24">
       <h3 className="text-text-secondary font-semibold mb-4 flex items-center gap-2">
         <Users size={18} className="text-primary-light" />
         People Interested in Politics
       </h3>
 
       {loading ? (
-        <div className="text-center py-4 text-text-muted text-sm">Loading...</div>
+        <div className="flex justify-center py-4"><Spinner size="sm" /></div>
       ) : politicians.length === 0 ? (
-        <div className="text-center py-6 text-text-muted text-sm bg-surface-hover/50 rounded-lg border border-dashed border-border-light">
-          No one interested in politics found for this {activeTab.toLowerCase()} yet.
-        </div>
+        <EmptyState description={`No one interested in politics found for this ${activeTab.toLowerCase()} yet.`} />
       ) : (
         <div className="space-y-3">
           {politicians.map((pol) => {
@@ -105,6 +84,6 @@ export default function PoliticianSidebar({ profile, activeTab, memberships = []
           })}
         </div>
       )}
-    </div>
+    </Card>
   );
 }

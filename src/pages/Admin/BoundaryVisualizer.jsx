@@ -4,6 +4,7 @@ import MapComponent from '../../components/map/MapComponent';
 import AdminSubNav from '../../components/AdminSubNav';
 import { getCountries, listBoundaryTypes, getMapShapesByType, findShapesInContainers, getGeojsonShapes } from '../../services/boundaries';
 import { Eye, MapPin, List } from 'lucide-react';
+import { Card, Button, Select } from '../../components/ui';
 
 // Above this many matched shapes, fetching + rendering full-resolution
 // geometry for all of them at once would hang the tab (BoundaryPicker's own
@@ -31,8 +32,10 @@ export default function BoundaryVisualizer() {
   }, []);
 
   const typesForCountry = country ? boundaryTypes.filter(t => t.country === country) : [];
-  // Container types (Province, State, ...) are admin_only and exist only to
-  // scope this tool's search — they're never a valid target type themselves.
+  // Container types (Canada's Province, ...) are admin_only and exist only to
+  // scope this tool's search — never a valid target type themselves. See
+  // ElectionsAdmin.jsx's matching comment for why this is driven by the
+  // admin_only column rather than hardcoded per type.
   const containerTypeOptions = typesForCountry.filter(t => t.admin_only);
   const targetTypeOptions = typesForCountry.filter(t => !t.admin_only);
 
@@ -96,7 +99,7 @@ export default function BoundaryVisualizer() {
     <div className="w-full max-w-none flex flex-col gap-8 animate-fade-in p-4 lg:p-0 px-4 lg:px-8">
       <AdminSubNav active="visualizer" />
 
-      <div className="p-8 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl space-y-5">
+      <Card padding="lg" className="space-y-5">
         <h2 className="text-2xl font-bold text-text-main flex items-center gap-2"><Eye size={20} className="text-primary" /> Boundary Visualizer</h2>
         <p className="text-sm text-text-muted">
           Pick a country, optionally narrow to every boundary inside a specific container (e.g. every municipality
@@ -106,30 +109,26 @@ export default function BoundaryVisualizer() {
         <div className="flex flex-wrap gap-4 items-end">
           <div>
             <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Country</label>
-            <select
-              value={country}
-              onChange={e => setCountry(e.target.value)}
-              className="w-full max-w-xs p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary"
-            >
+            <Select value={country} onChange={e => setCountry(e.target.value)} className="max-w-xs">
               <option value="">Select country...</option>
               {countries.map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
+            </Select>
           </div>
         </div>
 
         <div>
           <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">Container (optional — e.g. a province)</p>
-          <select
+          <Select
             value={containerType}
             onChange={e => { setContainerType(e.target.value); setContainerId(new Set()); }}
             disabled={!country}
-            className="w-full max-w-xs mb-2 p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary disabled:opacity-50"
+            className="max-w-xs mb-2"
           >
             <option value="">{country ? 'Container type: none' : 'Select a country first'}</option>
             {containerTypeOptions.map(t => (
               <option key={t.type_name} value={t.type_name}>{t.type_name}</option>
             ))}
-          </select>
+          </Select>
           {containerType && (
             <>
               <p className="text-[10px] text-text-muted mb-2">
@@ -150,38 +149,25 @@ export default function BoundaryVisualizer() {
         <div className="flex flex-wrap gap-3 items-end pt-2 border-t border-border-light/20">
           <div className="flex-1 min-w-[200px]">
             <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Target boundary type</label>
-            <select
-              value={targetType}
-              onChange={e => setTargetType(e.target.value)}
-              disabled={!country}
-              className="w-full p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary disabled:opacity-50"
-            >
+            <Select value={targetType} onChange={e => setTargetType(e.target.value)} disabled={!country}>
               <option value="">{country ? 'Select target boundary type...' : 'Select a country first'}</option>
               {targetTypeOptions.map(t => (
                 <option key={t.type_name} value={t.type_name}>{t.type_name}</option>
               ))}
-            </select>
+            </Select>
           </div>
-          <button
-            onClick={handleVisualize}
-            disabled={!country || !targetType || loadingMatches}
-            className="px-5 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
-          >
+          <Button onClick={handleVisualize} disabled={!country || !targetType || loadingMatches}>
             <MapPin size={16} /> {loadingMatches ? 'Finding...' : 'Visualize'}
-          </button>
+          </Button>
         </div>
 
         {status && <p className="text-xs text-amber-300">{status}</p>}
 
         {matches && matches.length > RENDER_CAP && !mapBoundaries && (
           <div className="space-y-3">
-            <button
-              onClick={() => loadGeometry(matches.map(m => m.id))}
-              disabled={loadingGeo}
-              className="px-4 py-2.5 bg-surface-active hover:bg-border text-text-main rounded-lg text-sm font-semibold transition-colors disabled:opacity-50"
-            >
+            <Button variant="secondary" onClick={() => loadGeometry(matches.map(m => m.id))} disabled={loadingGeo}>
               {loadingGeo ? 'Loading map...' : 'Load Map Anyway'}
-            </button>
+            </Button>
             <div className="flex items-center gap-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">
               <List size={14} /> {matches.length} boundaries
             </div>
@@ -194,11 +180,11 @@ export default function BoundaryVisualizer() {
         )}
 
         {mapBoundaries && (
-          <div style={{ height: '600px' }}>
+          <div className="h-[70vh] max-h-[600px] min-h-[320px]">
             <MapComponent boundaries={mapBoundaries} />
           </div>
         )}
-      </div>
+      </Card>
     </div>
   );
 }

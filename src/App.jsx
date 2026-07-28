@@ -118,35 +118,15 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="elections"
-              element={
-                <ProtectedRoute>
-                  <ElectionsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="elections/seat/:seatId"
-              element={
-                <ProtectedRoute>
-                  <ElectionSeatPage />
-                </ProtectedRoute>
-              }
-            />
+            {/* Public: viewable without an account, like a campaign site */}
+            <Route path="elections" element={<ElectionsPage />} />
+            <Route path="elections/seat/:seatId" element={<ElectionSeatPage />} />
+            <Route path="candidacy/:candidateId" element={<CandidacyWall />} />
             <Route
               path="politician/elections"
               element={
                 <ProtectedRoute>
                   <PoliticianElections />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="candidacy/:candidateId"
-              element={
-                <ProtectedRoute>
-                  <CandidacyWall />
                 </ProtectedRoute>
               }
             />

@@ -9,10 +9,11 @@ import {
 import { getPoliticalParties } from '../services/politicalParties';
 import { getProfileRole } from '../services/profile';
 import { Vote, MapPin, ArrowLeft, Users, Calendar, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Card, Button, Badge, Input, Textarea, Select, Spinner, EmptyState } from '../components/ui';
 
 export default function ElectionSeatPage() {
   const { seatId } = useParams();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
@@ -54,14 +55,23 @@ export default function ElectionSeatPage() {
     setCandidates(candidateRows || []);
     setSelectedCandidateId((candidateRows && candidateRows[0]?.id) || null);
 
-    const { data: myProfile } = await getProfileRole(user.id);
-    setRole(myProfile?.role || null);
+    // Everything below is about the signed-in visitor's own relationship to
+    // this seat (their role, their applications, their admin status) — none
+    // of it applies to an anonymous visitor just browsing candidates.
+    if (user) {
+      const { data: myProfile } = await getProfileRole(user.id);
+      setRole(myProfile?.role || null);
 
-    const { data: candidacies } = await getMyCandidacies(user.id);
-    setMyCandidacies(candidacies || []);
+      const { data: candidacies } = await getMyCandidacies(user.id);
+      setMyCandidacies(candidacies || []);
 
-    const { data: seatAdminStatus } = await getSeatAdminStatus(seatId);
-    setAdminStatus(seatAdminStatus);
+      const { data: seatAdminStatus } = await getSeatAdminStatus(seatId);
+      setAdminStatus(seatAdminStatus);
+    } else {
+      setRole(null);
+      setMyCandidacies([]);
+      setAdminStatus(null);
+    }
 
     if (seatRow?.map_shapes?.country) {
       const { data: partyRows } = await getPoliticalParties({ country: seatRow.map_shapes.country });
@@ -72,8 +82,8 @@ export default function ElectionSeatPage() {
   };
 
   useEffect(() => {
-    if (user && seatId) fetchAll();
-  }, [user, seatId]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (!authLoading && seatId) fetchAll();
+  }, [user, authLoading, seatId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const startApplying = async () => {
     setApplying(true);
@@ -126,11 +136,7 @@ export default function ElectionSeatPage() {
   };
 
   if (loading) {
-    return (
-      <div className="w-full flex items-center justify-center py-32">
-        <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-      </div>
-    );
+    return <Spinner fullPage />;
   }
 
   if (!seat) {
@@ -147,16 +153,13 @@ export default function ElectionSeatPage() {
         </button>
 
         {/* Seat / Election Header */}
-        <div className="relative overflow-hidden bg-surface/30 backdrop-blur-md rounded-3xl border border-border-light/45 shadow-xl mb-6 p-8">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent pointer-events-none" />
-          <div className="relative flex items-center gap-2 mb-3">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-300 bg-amber-500/10 border border-amber-500/25 px-2.5 py-1 rounded-full uppercase tracking-wider">
-              <Vote size={12} /> {seat.elections?.status?.replace('_', ' ')}
-            </span>
+        <Card variant="hero" padding="lg" className="mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <Badge tone="amber" shape="pill" icon={<Vote size={12} />}>{seat.elections?.status?.replace('_', ' ')}</Badge>
             <span className="text-xs text-text-muted">{seat.elections?.name}</span>
           </div>
-          <h1 className="relative text-3xl sm:text-4xl font-bold text-text-main tracking-tight">{seat.role_title}</h1>
-          <div className="relative flex items-center gap-4 mt-3 flex-wrap text-sm text-text-muted">
+          <h1 className="text-3xl sm:text-4xl font-bold text-text-main tracking-tight">{seat.role_title}</h1>
+          <div className="flex items-center gap-4 mt-3 flex-wrap text-sm text-text-muted">
             <span className="flex items-center gap-1.5">
               <MapPin size={14} className="text-accent" /> {seat.map_shapes?.name}
             </span>
@@ -167,54 +170,44 @@ export default function ElectionSeatPage() {
               <Users size={14} className="text-accent" /> {candidates.length} candidate{candidates.length !== 1 ? 's' : ''}
             </span>
           </div>
-        </div>
+        </Card>
 
         {/* Nominate Yourself */}
         {role === 'normal' && (
-          <div className="mb-6 p-5 bg-primary/10 border border-primary/25 rounded-2xl flex items-center justify-between gap-4 flex-wrap">
+          <Card padding="sm" className="mb-6 bg-primary/10 border-primary/25 flex items-center justify-between gap-4 flex-wrap">
             <p className="text-sm text-text-secondary">
               Want to run for this seat? Switch your account to a politician profile to nominate yourself.
             </p>
-            <button
-              onClick={() => navigate('/profile')}
-              className="px-4 py-2 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-sm transition-colors shrink-0"
-            >
+            <Button onClick={() => navigate('/profile')} className="shrink-0">
               Become a Politician
-            </button>
-          </div>
+            </Button>
+          </Card>
         )}
 
         {role === 'politician' && (
-          <div className="mb-6 p-5 bg-primary/10 border border-primary/25 rounded-2xl flex items-center justify-between gap-4 flex-wrap">
+          <Card padding="sm" className="mb-6 bg-primary/10 border-primary/25 flex items-center justify-between gap-4 flex-wrap">
             {alreadyApplied ? (
               <>
                 <p className="text-sm text-text-secondary">You've already applied for this seat.</p>
-                <button
-                  onClick={() => navigate('/politician/elections')}
-                  className="px-4 py-2 bg-surface-active hover:bg-border text-text-main font-semibold rounded-lg text-sm transition-colors shrink-0"
-                >
+                <Button variant="secondary" onClick={() => navigate('/politician/elections')} className="shrink-0">
                   Manage My Candidacies
-                </button>
+                </Button>
               </>
             ) : (
               <>
                 <p className="text-sm text-text-secondary">Think you'd be a good fit for {seat.role_title}?</p>
-                <button
-                  onClick={startApplying}
-                  disabled={applying}
-                  className="px-4 py-2 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-sm transition-colors shrink-0 disabled:opacity-50"
-                >
+                <Button onClick={startApplying} disabled={applying} className="shrink-0">
                   {applying ? 'Starting...' : 'Nominate Yourself'}
-                </button>
+                </Button>
               </>
             )}
-          </div>
+          </Card>
         )}
         {status && <p className="text-danger text-xs mb-6">{status}</p>}
 
         {/* Election Administrator */}
         {adminStatus && (
-          <div className="mb-6 p-5 bg-surface/30 border border-border-light/45 rounded-2xl">
+          <Card variant="row" padding="sm" className="mb-6">
             <div className="flex items-center gap-2 mb-1">
               <ShieldCheck size={16} className="text-accent" />
               <h3 className="text-sm font-bold text-text-main">Election Administrator</h3>
@@ -226,56 +219,40 @@ export default function ElectionSeatPage() {
                   You administer this seat. You can add a candidate who is running but hasn't registered on the platform yet.
                 </p>
                 {!showAddCandidateForm ? (
-                  <button
-                    onClick={() => setShowAddCandidateForm(true)}
-                    className="px-4 py-2 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-sm transition-colors"
-                  >
+                  <Button onClick={() => setShowAddCandidateForm(true)}>
                     Add a Candidate
-                  </button>
+                  </Button>
                 ) : (
                   <form onSubmit={submitUnregisteredCandidate} className="space-y-3 mt-3">
-                    <input
+                    <Input
                       type="text" required placeholder="Candidate's full name" value={newCandidateName}
                       onChange={e => setNewCandidateName(e.target.value)}
-                      className="w-full bg-surface-hover border border-border-light rounded-lg p-2.5 text-sm text-text-main outline-none focus:border-primary"
                     />
-                    <select
-                      value={newCandidateParty} onChange={e => setNewCandidateParty(e.target.value)}
-                      className="w-full bg-surface-hover border border-border-light rounded-lg p-2.5 text-sm text-text-main outline-none focus:border-primary"
-                    >
+                    <Select value={newCandidateParty} onChange={e => setNewCandidateParty(e.target.value)}>
                       <option value="">No party / Independent</option>
                       {parties.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
-                    </select>
+                    </Select>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <input
+                      <Input
                         type="text" placeholder="Education (optional)" value={newCandidateEducation}
                         onChange={e => setNewCandidateEducation(e.target.value)}
-                        className="w-full bg-surface-hover border border-border-light rounded-lg p-2.5 text-sm text-text-main outline-none focus:border-primary"
                       />
-                      <input
+                      <Input
                         type="text" placeholder="Hometown (optional)" value={newCandidateHometown}
                         onChange={e => setNewCandidateHometown(e.target.value)}
-                        className="w-full bg-surface-hover border border-border-light rounded-lg p-2.5 text-sm text-text-main outline-none focus:border-primary"
                       />
                     </div>
-                    <textarea
+                    <Textarea
                       placeholder="Short bio (optional)" value={newCandidateBio} rows={2}
                       onChange={e => setNewCandidateBio(e.target.value)}
-                      className="w-full bg-surface-hover border border-border-light rounded-lg p-2.5 text-sm text-text-main outline-none focus:border-primary resize-none"
                     />
                     <div className="flex items-center gap-2">
-                      <button
-                        type="submit" disabled={addingCandidate}
-                        className="px-4 py-2 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-sm transition-colors disabled:opacity-50"
-                      >
+                      <Button type="submit" disabled={addingCandidate}>
                         {addingCandidate ? 'Adding...' : 'Add Candidate'}
-                      </button>
-                      <button
-                        type="button" onClick={() => setShowAddCandidateForm(false)}
-                        className="px-4 py-2 text-text-muted hover:text-text-main text-sm font-semibold"
-                      >
+                      </Button>
+                      <Button type="button" variant="ghost" onClick={() => setShowAddCandidateForm(false)}>
                         Cancel
-                      </button>
+                      </Button>
                     </div>
                     {addCandidateStatus && <p className="text-danger text-xs">{addCandidateStatus}</p>}
                   </form>
@@ -293,61 +270,48 @@ export default function ElectionSeatPage() {
                   Volunteer to moderate this seat and help add candidates who are missing from the platform.
                 </p>
                 {!showAdminApplyForm ? (
-                  <button
-                    onClick={() => setShowAdminApplyForm(true)}
-                    className="px-4 py-2 bg-surface-active hover:bg-border text-text-main font-semibold rounded-lg text-sm transition-colors"
-                  >
+                  <Button variant="secondary" onClick={() => setShowAdminApplyForm(true)}>
                     Volunteer to Administer This Seat
-                  </button>
+                  </Button>
                 ) : (
                   <form onSubmit={submitElectionAdminApplication} className="space-y-3">
-                    <textarea
+                    <Textarea
                       required placeholder="Tell us about yourself and why you're interested..."
                       value={adminMotivation} rows={3}
                       onChange={e => setAdminMotivation(e.target.value)}
-                      className="w-full bg-surface-hover border border-border-light rounded-lg p-2.5 text-sm text-text-main outline-none focus:border-primary resize-none"
                     />
-                    <input
+                    <Input
                       type="text" placeholder="Do you run any social media communities? (optional)"
                       value={adminSocialMedia} onChange={e => setAdminSocialMedia(e.target.value)}
-                      className="w-full bg-surface-hover border border-border-light rounded-lg p-2.5 text-sm text-text-main outline-none focus:border-primary"
                     />
-                    <input
+                    <Input
                       type="email" required placeholder="Contact email"
                       value={adminContactEmail} onChange={e => setAdminContactEmail(e.target.value)}
-                      className="w-full bg-surface-hover border border-border-light rounded-lg p-2.5 text-sm text-text-main outline-none focus:border-primary"
                     />
                     <div className="flex items-center gap-2">
-                      <button
-                        type="submit" disabled={submittingAdminApp}
-                        className="px-4 py-2 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-sm transition-colors disabled:opacity-50"
-                      >
+                      <Button type="submit" disabled={submittingAdminApp}>
                         {submittingAdminApp ? 'Submitting...' : 'Submit Application'}
-                      </button>
-                      <button
-                        type="button" onClick={() => setShowAdminApplyForm(false)}
-                        className="px-4 py-2 text-text-muted hover:text-text-main text-sm font-semibold"
-                      >
+                      </Button>
+                      <Button type="button" variant="ghost" onClick={() => setShowAdminApplyForm(false)}>
                         Cancel
-                      </button>
+                      </Button>
                     </div>
                     {adminAppStatus && <p className="text-danger text-xs">{adminAppStatus}</p>}
                   </form>
                 )}
               </>
             )}
-          </div>
+          </Card>
         )}
 
         {/* Candidate Switcher */}
         {candidates.length === 0 ? (
-          <div className="text-center py-16 bg-surface/20 rounded-2xl border border-dashed border-border-light/60 mb-8">
-            <div className="w-16 h-16 rounded-full bg-surface-hover flex items-center justify-center mx-auto mb-4">
-              <Vote className="text-text-muted w-8 h-8" />
-            </div>
-            <h3 className="text-text-tertiary font-medium mb-1">No Candidates Yet</h3>
-            <p className="text-text-muted text-sm">Nobody has applied for this seat yet — be the first to run.</p>
-          </div>
+          <EmptyState
+            icon={Vote}
+            title="No Candidates Yet"
+            description="Nobody has applied for this seat yet — be the first to run."
+            className="mb-8"
+          />
         ) : (
           <>
             {candidates.length > 1 && (

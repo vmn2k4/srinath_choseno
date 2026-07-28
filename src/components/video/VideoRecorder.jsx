@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { Video, StopCircle, RefreshCw, Upload, CheckCircle } from 'lucide-react';
+import { Video, StopCircle, RefreshCw, Upload } from 'lucide-react';
 import { uploadVideo, getVideoPublicUrl } from '../../services/video';
+import { Button } from '../ui';
 
 export default function VideoRecorder({ onVideoUploaded, maxDuration = 30, bucket = 'politician_videos' }) {
   const [isRecording, setIsRecording] = useState(false);
@@ -105,7 +106,7 @@ export default function VideoRecorder({ onVideoUploaded, maxDuration = 30, bucke
 
   return (
     <div className="w-full bg-background rounded-xl p-4 border border-primary/30 flex flex-col items-center justify-center gap-4 mb-4">
-      
+
       <div className="relative w-full aspect-video bg-black rounded-lg overflow-hidden border border-border flex items-center justify-center">
         <video 
           ref={videoPreviewRef} 
@@ -130,45 +131,29 @@ export default function VideoRecorder({ onVideoUploaded, maxDuration = 30, bucke
 
       <div className="flex items-center gap-3 w-full justify-center">
         {!isRecording && !videoBlob && (
-          <button 
-            type="button"
-            onClick={startRecording}
-            className="flex items-center gap-2 px-6 py-2 bg-danger hover:bg-danger/80 text-white rounded-full font-medium transition-colors"
-          >
+          <Button type="button" variant="danger" onClick={startRecording} className="rounded-full">
             <Video size={18} />
             Start Recording
-          </button>
+          </Button>
         )}
 
         {isRecording && (
-          <button 
-            type="button"
-            onClick={stopRecording}
-            className="flex items-center gap-2 px-6 py-2 bg-surface-active hover:bg-surface-hover text-text-main rounded-full font-medium transition-colors border border-border"
-          >
+          <Button type="button" variant="secondary" onClick={stopRecording} className="rounded-full">
             <StopCircle size={18} />
             Stop
-          </button>
+          </Button>
         )}
 
         {videoBlob && !uploading && (
           <>
-            <button 
-              type="button"
-              onClick={retakeVideo}
-              className="flex items-center gap-2 px-4 py-2 bg-surface-hover hover:bg-surface-active text-text-tertiary rounded-lg transition-colors border border-border text-sm"
-            >
+            <Button type="button" variant="outline" size="sm" onClick={retakeVideo}>
               <RefreshCw size={16} />
               Retake
-            </button>
-            <button 
-              type="button"
-              onClick={handleUpload}
-              className="flex items-center gap-2 px-6 py-2 bg-primary hover:bg-primary-hover text-surface rounded-lg transition-colors text-sm font-bold"
-            >
+            </Button>
+            <Button type="button" size="sm" onClick={handleUpload}>
               <Upload size={16} />
               Attach to Post
-            </button>
+            </Button>
           </>
         )}
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Loader2, ArrowLeft, ArrowRight, Search, Check, Layers } from 'lucide-react';
 import { searchMapShapesByName, findBoundariesByPoint, syncUserBoundaryMemberships, addUserBoundaryMembership } from '../../services/boundaries';
+import { Card, Button, Input } from '../../components/ui';
 
 export default function StepLocation({ data, updateData, nextStep, prevStep }) {
   const [loading, setLoading] = useState(false);
@@ -115,9 +116,9 @@ export default function StepLocation({ data, updateData, nextStep, prevStep }) {
       {/* Header */}
       <div className="flex items-center gap-4">
         {prevStep && (
-          <button onClick={prevStep} className="p-2 bg-surface-hover rounded-full text-text-muted hover:text-text-main transition-colors">
+          <Button variant="icon" onClick={prevStep} className="rounded-full">
             <ArrowLeft size={20} />
-          </button>
+          </Button>
         )}
         <div>
           <h2 className="text-2xl font-bold text-text-main">Set Your Jurisdiction</h2>
@@ -126,7 +127,7 @@ export default function StepLocation({ data, updateData, nextStep, prevStep }) {
       </div>
 
       {/* Main Location Action Box */}
-      <div className="bg-surface-hover p-6 rounded-2xl border border-border text-center">
+      <Card variant="row" padding="md" className="text-center">
         <div className="w-16 h-16 bg-primary/20 text-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
           <MapPin size={32} />
         </div>
@@ -137,17 +138,13 @@ export default function StepLocation({ data, updateData, nextStep, prevStep }) {
           Your exact coordinates are never shared publicly.
         </p>
 
-        <button
-          onClick={getLocationFromBrowser}
-          disabled={loading}
-          className="px-6 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary-hover transition-colors flex items-center gap-2 mx-auto disabled:opacity-50 text-sm shadow-md"
-        >
+        <Button onClick={getLocationFromBrowser} disabled={loading} className="mx-auto">
           {loading ? <Loader2 size={18} className="animate-spin" /> : <MapPin size={18} />}
           {loading ? 'Locating...' : 'Detect My Location'}
-        </button>
+        </Button>
 
         {error && <p className="text-amber-400 mt-3 text-xs font-medium max-w-md mx-auto">{error}</p>}
-      </div>
+      </Card>
 
       {/* Matched Groups Display */}
       {matchedBoundaries.length > 0 && (
@@ -167,28 +164,25 @@ export default function StepLocation({ data, updateData, nextStep, prevStep }) {
       )}
 
       {/* Option to Search / Add a Jurisdiction Manually */}
-      <div className="bg-surface p-5 rounded-2xl border border-border space-y-4">
+      <Card variant="row" padding="sm" className="space-y-4">
         <div className="flex items-center justify-between">
           <h4 className="text-sm font-bold text-text-main flex items-center gap-2">
             <Search size={16} className="text-primary-light" /> Search &amp; Add a Jurisdiction
           </h4>
-          <button
-            onClick={() => setIsSearching(!isSearching)}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-hover text-text-main hover:bg-surface-active border border-border rounded-xl text-xs font-semibold transition-all"
-          >
+          <Button variant="secondary" size="sm" onClick={() => setIsSearching(!isSearching)}>
             {isSearching ? 'Close' : 'Open Search'}
-          </button>
+          </Button>
         </div>
 
         {isSearching && (
           <>
             <div className="relative">
-              <input
+              <Input
                 type="text"
                 placeholder="Search by constituency name (e.g. Lac-Saint-Jean)..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="w-full bg-surface-hover border border-border-light rounded-xl p-3 text-sm text-text-main outline-none focus:border-primary transition-colors pr-10"
+                className="pr-10"
               />
               {searchingBoundaries && (
                 <Loader2 size={18} className="animate-spin absolute right-3 top-3.5 text-text-muted" />
@@ -225,43 +219,42 @@ export default function StepLocation({ data, updateData, nextStep, prevStep }) {
         <div className="pt-3 border-t border-border/60">
           <p className="text-xs text-text-muted mb-2 font-medium uppercase tracking-wider">Or Enter Coordinates</p>
           <div className="flex gap-3">
-            <input
+            <Input
               type="number"
+              size="sm"
               placeholder="Lat (e.g. 49.11)"
               value={lat}
               onChange={e => setLat(e.target.value)}
-              className="flex-1 bg-surface-hover border border-border-light rounded-xl p-2.5 text-xs text-text-main outline-none focus:border-primary"
+              className="flex-1"
             />
-            <input
+            <Input
               type="number"
+              size="sm"
               placeholder="Lng (e.g. -122.65)"
               value={lng}
               onChange={e => setLng(e.target.value)}
-              className="flex-1 bg-surface-hover border border-border-light rounded-xl p-2.5 text-xs text-text-main outline-none focus:border-primary"
+              className="flex-1"
             />
-            <button
+            <Button
+              variant="secondary"
+              size="sm"
               onClick={() => {
                 if (lat && lng) lookupBoundaries(lat, lng);
                 else setError('Enter both latitude and longitude');
               }}
               disabled={loading || !lat || !lng}
-              className="px-4 py-2.5 bg-surface-active text-text-main rounded-xl hover:bg-border transition-colors text-xs font-bold disabled:opacity-50"
             >
               Verify
-            </button>
+            </Button>
           </div>
         </div>
-      </div>
+      </Card>
 
       {/* Navigation Buttons */}
       <div className="flex justify-end pt-4">
-        <button
-          onClick={nextStep}
-          disabled={!hasLocation}
-          className="px-8 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary-hover transition-colors flex items-center gap-2 disabled:opacity-50 shadow-md"
-        >
+        <Button size="lg" onClick={nextStep} disabled={!hasLocation}>
           Continue <ArrowRight size={16} />
-        </button>
+        </Button>
       </div>
     </div>
   );

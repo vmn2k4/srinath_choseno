@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { supabase } from '../services/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import LinkPreview from '../components/LinkPreview';
-import PoliticianSidebar from '../components/PoliticianSidebar';
 import WallPostFeed from '../components/wall/WallPostFeed';
 import { MapPin, Users, ShieldAlert, ArrowLeft, Heart, QrCode, X, Image as ImageIcon } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { getOwnProfile } from '../services/profile';
 import {
   getWallOwnerProfile, getSupportStatus, getSupporterCount, withdrawSupport, addSupport,
-  getSupportersList, getWallPosts, createWallPost
+  getSupportersList, getWallPosts, createWallPost, subscribeToSupportChanges, unsubscribeFromSupportChanges
 } from '../services/politicianWall';
 import { uploadPostImage, createComment } from '../services/feed';
+import { Card, Button, Badge, Textarea, Spinner, EmptyState } from '../components/ui';
 
 export default function PoliticianWall() {
   const { ghostId } = useParams();
@@ -34,6 +33,7 @@ export default function PoliticianWall() {
   
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [showQr, setShowQr] = useState(false);
 
   // 'all' | 'mine' | 'reviews' — lets the owner separate their own posts from
   // visitor reviews so they can find and respond to feedback quickly.
@@ -56,29 +56,18 @@ export default function PoliticianWall() {
       if (owner) {
         setWallOwner(owner);
         checkSupportStatus(owner.id);
-        
+
         // Real-time subscription for support count
-        supportChannel = supabase.channel(`support-${owner.id}-${Date.now()}`)
-          .on('postgres_changes', { 
-            event: '*', 
-            schema: 'public', 
-            table: 'politician_supporters',
-            filter: `politician_id=eq.${owner.id}`
-          }, () => {
-            fetchSupportCount(owner.id);
-          })
-          .subscribe();
+        supportChannel = subscribeToSupportChanges(owner.id, () => fetchSupportCount(owner.id));
       }
 
       fetchPosts();
     }
-    
+
     if (user && ghostId) loadWall();
 
     return () => {
-      if (supportChannel) {
-        supabase.removeChannel(supportChannel);
-      }
+      unsubscribeFromSupportChanges(supportChannel);
     };
   }, [user, ghostId]);
 
@@ -209,11 +198,7 @@ export default function PoliticianWall() {
   };
 
   if (loading) {
-    return (
-      <div className="w-full flex items-center justify-center py-32">
-        <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-      </div>
-    );
+    return <Spinner fullPage />;
   }
 
   if (!wallOwner) {
@@ -230,7 +215,7 @@ export default function PoliticianWall() {
         </button>
 
         {/* Cover & Profile Header */}
-        <div className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl mb-8 relative">
+        <Card padding="none" className="mb-8 relative">
            <div className="h-32 bg-gradient-to-br from-vintage-grape via-surface to-coffee-bean rounded-t-2xl border-b border-border-light/20" />
            <div className="px-6 pb-6 relative">
               <div className="w-24 h-24 rounded-full bg-surface/80 border-4 border-surface flex items-center justify-center text-3xl font-bold text-text-main shadow-lg absolute -top-12">
@@ -239,9 +224,7 @@ export default function PoliticianWall() {
               <div className="pt-14">
                  <h1 className="text-2xl font-bold text-text-main">{wallOwner.full_name || `Ghost-${ghostId.split('-')[0]}`}</h1>
                  <div className="flex items-center gap-2 mt-2">
-                    <span className="px-2.5 py-1 rounded bg-primary/20 text-primary-light text-xs font-bold uppercase tracking-wider">
-                      {wallOwner.politician_profiles?.[0]?.political_target_role || 'Representative'}
-                    </span>
+                    <Badge tone="primary" size="sm">{wallOwner.politician_profiles?.[0]?.political_target_role || 'Representative'}</Badge>
                     <span className="flex items-center gap-1 text-text-muted text-sm">
                       <MapPin size={14} className="text-accent" />
                       {wallOwner.politician_profiles?.[0]?.target_boundary_name || wallOwner.constituency}
@@ -252,17 +235,10 @@ export default function PoliticianWall() {
               {/* Support & Actions Section */}
               <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-border-light/35 pt-6">
                 <div className="flex items-center gap-3">
-                  <button 
-                    onClick={toggleSupport}
-                    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
-                      isSupporting 
-                        ? 'bg-danger/20 text-danger-light border border-danger/40 hover:bg-danger/30' 
-                        : 'bg-surface-hover/80 text-text-secondary border border-border-light hover:bg-surface-active hover:text-text-main'
-                    }`}
-                  >
+                  <Button variant={isSupporting ? 'danger' : 'outline'} onClick={toggleSupport}>
                     <Heart size={16} className={isSupporting ? "fill-current text-danger" : ""} />
                     {isSupporting ? 'Supported' : 'I Support'}
-                  </button>
+                  </Button>
                   <div className="text-text-muted text-sm font-semibold">
                     {supportCount.toLocaleString()} Supporter{supportCount !== 1 ? 's' : ''}
                   </div>
@@ -270,28 +246,32 @@ export default function PoliticianWall() {
 
                 <div className="flex items-center gap-3">
                   {wallOwner.id === user.id && (
-                    <button 
-                      onClick={loadSupportersDashboard}
-                      className="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary-light hover:bg-primary hover:text-slate-950 border border-primary/35 rounded-xl text-sm font-bold transition-all"
-                    >
+                    <Button variant="outline" onClick={loadSupportersDashboard}>
                       <Users size={16} /> View Supporters
-                    </button>
+                    </Button>
                   )}
-                  <div className="group relative">
-                    <button type="button" className="p-2.5 bg-surface-hover/80 text-text-muted hover:text-text-main hover:bg-surface-active rounded-xl border border-border-light transition-colors">
+                  <div className="relative">
+                    <Button
+                      type="button"
+                      variant="icon"
+                      onClick={() => setShowQr(v => !v)}
+                      className="border border-border-light"
+                    >
                       <QrCode size={18} />
-                    </button>
-                    <div className="absolute right-0 top-full mt-2 w-48 bg-white p-3 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 transform origin-top-right border border-slate-100">
-                      <p className="text-center text-slate-800 text-xs font-bold mb-2 uppercase tracking-wide">Scan to Visit</p>
-                      <div className="bg-white p-1 rounded-lg flex justify-center">
-                        <QRCodeSVG value={window.location.href} size={150} />
+                    </Button>
+                    {showQr && (
+                      <div className="absolute right-0 top-full mt-2 w-48 bg-white p-3 rounded-2xl shadow-2xl z-50 border border-slate-100">
+                        <p className="text-center text-slate-800 text-xs font-bold mb-2 uppercase tracking-wide">Scan to Visit</p>
+                        <div className="bg-white p-1 rounded-lg flex justify-center">
+                          <QRCodeSVG value={window.location.href} size={150} />
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>
            </div>
-        </div>
+        </Card>
 
         {/* Supporters Dashboard Modal */}
         {showSupporters && (
@@ -307,7 +287,7 @@ export default function PoliticianWall() {
               </div>
               <div className="p-5 overflow-y-auto flex-1">
                 {supportersList.length === 0 ? (
-                  <p className="text-center text-text-main0 py-8">No supporters yet.</p>
+                  <EmptyState description="No supporters yet." />
                 ) : (
                   <div className="space-y-3">
                     {supportersList.map((sup, idx) => (
@@ -319,7 +299,7 @@ export default function PoliticianWall() {
                           <div className="font-medium text-text-secondary text-sm truncate">
                             {sup.profiles?.full_name || 'Anonymous Citizen'}
                           </div>
-                          <div className="text-xs text-text-main0 font-mono">
+                          <div className="text-xs text-text-muted font-mono">
                             Ghost-{sup.profiles?.current_ghost_id?.split('-')[0] || 'Unknown'}
                           </div>
                         </div>
@@ -333,15 +313,16 @@ export default function PoliticianWall() {
         )}
 
         {/* Wall Post Input */}
-        <form onSubmit={handleCreatePost} className="mb-8 bg-surface/50 rounded-xl p-4 border border-border-light/50">
-          <textarea
+        <Card as="form" onSubmit={handleCreatePost} variant="composer" padding="sm" className="mb-8">
+          <Textarea
+            plain
             value={newPostContent}
             onChange={handlePostChange}
             placeholder={`Write something to ${wallOwner.full_name || 'this representative'}...`}
-            className="w-full bg-transparent text-text-secondary placeholder:text-text-muted resize-none outline-none min-h-[80px]"
+            className="min-h-[80px]"
             required={!imageFile}
           />
-          
+
           {extractedUrl && (
             <LinkPreview 
               url={extractedUrl} 
@@ -391,35 +372,28 @@ export default function PoliticianWall() {
                 <ImageIcon size={18} />
               </label>
 
-              <button
-                type="submit"
-                disabled={submitting || (!newPostContent.trim() && !imageFile)}
-                className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors text-sm font-medium disabled:opacity-50"
-              >
+              <Button type="submit" size="sm" disabled={submitting || (!newPostContent.trim() && !imageFile)}>
                 {submitting ? 'Posting...' : 'Post anonymously'}
-              </button>
+              </Button>
             </div>
           </div>
-        </form>
+        </Card>
 
         {/* Tabs — let the owner separate their own posts from visitor reviews */}
-        <div className="flex gap-2 mb-6">
+        <div className="flex flex-wrap gap-2 mb-6">
           {[
             { key: 'all', label: 'All' },
             { key: 'mine', label: wallOwner.id === user.id ? 'My Posts' : `${wallOwner.full_name || 'Their'} Posts` },
             { key: 'reviews', label: 'Reviews & Comments' }
           ].map(t => (
-            <button
+            <Button
               key={t.key}
+              variant={activeTab === t.key ? 'primary' : 'outline'}
+              size="sm"
               onClick={() => setActiveTab(t.key)}
-              className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors ${
-                activeTab === t.key
-                  ? 'bg-primary/15 text-primary-light border border-primary/40'
-                  : 'bg-surface-hover/40 text-text-muted border border-border-light/30 hover:bg-surface-hover'
-              }`}
             >
               {t.label}
-            </button>
+            </Button>
           ))}
         </div>
 

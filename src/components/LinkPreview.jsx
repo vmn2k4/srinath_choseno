@@ -103,7 +103,7 @@ export default function LinkPreview({ url, metadata, onMetadataFetched }) {
           {data.description && (
             <p className="text-xs text-text-muted mt-1.5 line-clamp-2">{data.description}</p>
           )}
-          <span className="text-[10px] text-text-main0 uppercase tracking-wider font-medium mt-2 block truncate">
+          <span className="text-[10px] text-text-muted uppercase tracking-wider font-medium mt-2 block truncate">
             {new URL(data.url).hostname}
           </span>
         </div>

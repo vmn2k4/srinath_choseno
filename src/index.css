@@ -69,30 +69,8 @@
 }
 
 /* ============ Home page animations ============ */
-
-/* Staggered hero entrance */
-@keyframes heroRise {
-  from { opacity: 0; transform: translateY(28px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hero-item {
-  opacity: 0;
-  animation: heroRise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-/* Scroll-triggered reveal (toggled by IntersectionObserver) */
-.reveal {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* Entrance/scroll-reveal/parallax motion lives in HomePage.jsx via
+   framer-motion. What's left here is purely static/decorative CSS. */
 
 /* Shimmering gradient headline */
 @keyframes shimmer {
@@ -116,19 +94,13 @@
   animation: shimmer 7s ease-in-out infinite;
 }
 
-/* Ambient floating orbs */
-@keyframes drift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(40px, -35px) scale(1.08); }
-  66% { transform: translate(-30px, 25px) scale(0.94); }
-}
-
+/* Ambient floating orbs — position/size/color only; movement is driven by
+   framer-motion (scroll parallax + idle drift) in HomePage.jsx. */
 .orb {
   position: absolute;
   border-radius: 9999px;
   filter: blur(90px);
   will-change: transform;
-  animation: drift 18s ease-in-out infinite;
 }
 
 .orb-a { width: 480px; height: 480px; top: -10%; right: -5%; background: rgba(172, 193, 150, 0.14); }
@@ -145,43 +117,9 @@
   -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, black 30%, transparent 75%);
 }
 
-/* Cycling boundary-level pill */
-@keyframes levelSwap {
-  from { opacity: 0; transform: translateY(8px) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.level-swap {
-  animation: levelSwap 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Scroll-hint dot */
-@keyframes scrollDot {
-  0%, 100% { opacity: 1; transform: translateY(0); }
-  50% { opacity: 0.3; transform: translateY(8px); }
-}
-
-.animate-scroll-dot {
-  animation: scrollDot 1.8s ease-in-out infinite;
-}
-
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
-  .hero-item {
-    animation: none;
-    opacity: 1;
-  }
-  .reveal {
-    transition: none;
-    opacity: 1;
-    transform: none;
-  }
   .text-shimmer {
-    animation: none;
-  }
-  .orb,
-  .level-swap,
-  .animate-scroll-dot {
     animation: none;
   }
 }

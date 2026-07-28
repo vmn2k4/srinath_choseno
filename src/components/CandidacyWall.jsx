@@ -11,11 +11,12 @@ import {
   getSupportStatus, getSupporterCount, withdrawSupport, addSupport
 } from '../services/politicianWall';
 import { MapPin, ArrowLeft, ShieldAlert, GraduationCap, Home, Image as ImageIcon, X, Vote, Video, HelpCircle, Heart, CheckCircle2, Circle } from 'lucide-react';
+import { Card, Button, Badge, Textarea, Spinner } from './ui';
 
 export default function CandidacyWall({ candidateId: candidateIdProp, embedded = false } = {}) {
   const { candidateId: paramCandidateId } = useParams();
   const candidateId = candidateIdProp ?? paramCandidateId;
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
 
   const [profile, setProfile] = useState(null);
@@ -44,8 +45,12 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
   const fetchAll = async () => {
     setLoading(true);
 
-    const { data: myProfile } = await getOwnProfile(user.id);
-    setProfile(myProfile);
+    if (user) {
+      const { data: myProfile } = await getOwnProfile(user.id);
+      setProfile(myProfile);
+    } else {
+      setProfile(null);
+    }
 
     const { data: candidateRow } = await getPublicCandidateById(candidateId);
 
@@ -65,8 +70,12 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
         .sort((a, b) => (a.election_questions?.rank ?? 0) - (b.election_questions?.rank ?? 0));
       setAnswers(visible);
 
-      const { data: mySupport } = await getSupportStatus(candidateRow.politician_id, user.id);
-      setIsSupporting(!!mySupport);
+      if (user) {
+        const { data: mySupport } = await getSupportStatus(candidateRow.politician_id, user.id);
+        setIsSupporting(!!mySupport);
+      } else {
+        setIsSupporting(false);
+      }
       const { count } = await getSupporterCount(candidateRow.politician_id);
       setSupportCount(count || 0);
     } else {
@@ -85,8 +94,8 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
   };
 
   useEffect(() => {
-    if (user && candidateId) fetchAll();
-  }, [user, candidateId]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (!authLoading && candidateId) fetchAll();
+  }, [user, authLoading, candidateId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleNominationFiled = async () => {
     const next = !candidate.nomination_filed;
@@ -96,6 +105,10 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
 
   const toggleSupport = async () => {
     if (!candidate) return;
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
     if (isSupporting) {
       setIsSupporting(false);
       setSupportCount(prev => Math.max(0, prev - 1));
@@ -180,18 +193,14 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
   };
 
   if (loading) {
-    return (
-      <div className="w-full flex items-center justify-center py-32">
-        <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-      </div>
-    );
+    return <Spinner fullPage />;
   }
 
   if (!candidate) {
     return <div className="w-full text-center py-20 text-text-muted">Candidate not found.</div>;
   }
 
-  const isOwner = candidate.politician_id === user.id;
+  const isOwner = !!user && candidate.politician_id === user.id;
   const seat = candidate.election_seats;
   const displayName = candidate.profiles?.full_name || `Ghost-${candidate.profiles?.current_ghost_id?.split('-')[0]}`;
   const candidateGhostId = candidate.profiles?.current_ghost_id;
@@ -224,22 +233,18 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
           <div className="space-y-6 min-w-0 lg:sticky lg:top-6">
 
             {/* Candidate Header */}
-            <div className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl p-6">
+            <Card>
               <div className="flex items-center gap-2 mb-3">
                 <Vote size={14} className="text-primary" />
                 <span className="text-xs text-text-muted">{seat?.elections?.name} · <span className="uppercase font-semibold">{seat?.elections?.status?.replace('_', ' ')}</span></span>
               </div>
               <h1 className="text-2xl font-bold text-text-main">{displayName}</h1>
               <div className="flex items-center gap-2 mt-2 flex-wrap">
-                <span className="px-2.5 py-1 rounded bg-primary/20 text-primary-light text-xs font-bold uppercase tracking-wider">
-                  {seat?.role_title}
-                </span>
+                <Badge tone="primary" size="sm">{seat?.role_title}</Badge>
                 <span className="flex items-center gap-1 text-text-muted text-sm">
                   <MapPin size={14} className="text-accent" /> {seat?.map_shapes?.name}
                 </span>
-                {isOwner && (
-                  <span className="text-[10px] bg-primary/20 text-primary-light px-2 py-0.5 rounded uppercase tracking-wider font-bold">This is you</span>
-                )}
+                {isOwner && <Badge tone="primary">This is you</Badge>}
               </div>
               {candidateProfile?.political_parties?.name && (
                 <p className="text-text-muted text-sm mt-1">{candidateProfile.political_parties.name}</p>
@@ -261,13 +266,13 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
                     {candidate.nomination_filed ? 'Nomination Papers Filed' : 'Mark Nomination Papers as Filed'}
                   </button>
                 ) : candidate.nomination_filed ? (
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                    <CheckCircle2 size={13} /> Nomination Papers Filed
-                  </span>
+                  <Badge tone="emerald" shape="pill" size="sm" uppercase={false} icon={<CheckCircle2 size={13} />}>
+                    Nomination Papers Filed
+                  </Badge>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-surface-hover/60 text-text-muted border border-border-light">
-                    <Circle size={13} /> Nomination Papers Not Yet Filed
-                  </span>
+                  <Badge tone="neutral" shape="pill" size="sm" uppercase={false} icon={<Circle size={13} />}>
+                    Nomination Papers Not Yet Filed
+                  </Badge>
                 )}
               </div>
 
@@ -277,18 +282,14 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
 
               {/* Support button */}
               <div className="mt-5 pt-5 border-t border-border-light/35 flex items-center gap-3 flex-wrap">
-                <button
+                <Button
+                  variant={isSupporting ? 'danger' : 'outline'}
                   onClick={toggleSupport}
                   disabled={isOwner}
-                  className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
-                    isSupporting
-                      ? 'bg-danger/20 text-danger-light border border-danger/40 hover:bg-danger/30'
-                      : 'bg-surface-hover/80 text-text-secondary border border-border-light hover:bg-surface-active hover:text-text-main'
-                  }`}
                 >
                   <Heart size={16} className={isSupporting ? 'fill-current text-danger' : ''} />
-                  {isSupporting ? 'Supported' : 'I Support'}
-                </button>
+                  {!user ? 'Sign in to Support' : isSupporting ? 'Supported' : 'I Support'}
+                </Button>
                 <div className="text-text-muted text-sm font-semibold">
                   {supportCount.toLocaleString()} Supporter{supportCount !== 1 ? 's' : ''}
                 </div>
@@ -329,11 +330,11 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
                   <p className="text-sm text-text-secondary leading-relaxed whitespace-pre-wrap">{candidateProfile.bio}</p>
                 </div>
               )}
-            </div>
+            </Card>
 
             {/* Campaign Video Gallery */}
             {videoGallery.length > 0 && (
-              <div className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl p-6">
+              <Card>
                 <h2 className="text-sm font-bold text-text-main mb-3 flex items-center gap-2"><Video size={16} className="text-primary" /> Campaign Videos</h2>
                 <div className="flex gap-4 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                   {videoGallery.map((v, idx) => (
@@ -355,12 +356,12 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
                     </button>
                   ))}
                 </div>
-              </div>
+              </Card>
             )}
 
             {/* Questionnaire Responses */}
             {answers.length > 0 && (
-              <div className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl p-6">
+              <Card>
                 <h2 className="text-sm font-bold text-text-main mb-4 flex items-center gap-2"><HelpCircle size={16} className="text-primary" /> Candidate Questionnaire</h2>
                 <div className="space-y-4">
                   {answers.map(a => (
@@ -373,19 +374,27 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
                     </div>
                   ))}
                 </div>
-              </div>
+              </Card>
             )}
           </div>
 
           {/* RIGHT: composer + feed */}
           <div className="space-y-6 min-w-0">
-            {/* Post / Video Pitch Composer */}
-            <form onSubmit={handleCreatePost} className="bg-surface/50 rounded-xl p-4 border border-border-light/50">
-              <textarea
+            {/* Post / Video Pitch Composer — requires an account to post anonymously as a ghost ID */}
+            {!user ? (
+              <Card padding="sm" className="text-center">
+                <p className="text-sm text-text-muted">
+                  <button onClick={() => navigate('/auth')} className="text-primary-light hover:underline font-semibold">Sign in</button> to join the discussion.
+                </p>
+              </Card>
+            ) : (
+            <Card as="form" onSubmit={handleCreatePost} variant="composer" padding="sm">
+              <Textarea
+                plain
                 value={newPostContent}
                 onChange={handlePostChange}
                 placeholder={isOwner ? 'Post an update or video pitch...' : `Start a discussion with ${displayName}...`}
-                className="w-full bg-transparent text-text-secondary placeholder:text-text-muted resize-none outline-none min-h-[80px]"
+                className="min-h-[80px]"
                 required={!imageFile && !uploadedVideoUrl}
               />
 
@@ -447,16 +456,17 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
                       <Video size={18} />
                     </button>
                   )}
-                  <button
+                  <Button
                     type="submit"
+                    size="sm"
                     disabled={submitting || (!newPostContent.trim() && !imageFile && !uploadedVideoUrl)}
-                    className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors text-sm font-medium disabled:opacity-50"
                   >
                     {submitting ? 'Posting...' : 'Post anonymously'}
-                  </button>
+                  </Button>
                 </div>
               </div>
-            </form>
+            </Card>
+            )}
 
             {/* Feed */}
             <WallPostFeed
@@ -464,6 +474,7 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
               ownerGhostId={candidateGhostId}
               ownerBadgeLabel="Candidate"
               viewerIsOwner={isOwner}
+              canComment={!!user}
               emptyMessage={isOwner ? 'No posts yet. Share your first pitch above.' : 'No posts yet. Be the first to start a discussion.'}
               commentInputs={commentInputs}
               onCommentInputChange={(postId, value) => setCommentInputs({ ...commentInputs, [postId]: value })}

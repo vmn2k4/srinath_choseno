@@ -9,7 +9,9 @@ import {
   deleteElectionQuestion, createElectionQuestionOptions, resolveRegionNames
 } from '../../services/elections';
 import { getCountries, listBoundaryTypes, getMapShapesByType, findShapesInContainers } from '../../services/boundaries';
-import { Plus, Trash2, Landmark, MapPin, Vote, HelpCircle, ChevronDown, ChevronUp, XCircle, Video } from 'lucide-react';
+import { getCandidateSourceInfoForSeats, fetchOfficialCandidates, addFetchedCandidate } from '../../services/candidateSync';
+import { Plus, Trash2, Landmark, MapPin, Vote, HelpCircle, ChevronDown, ChevronUp, XCircle, Video, ExternalLink, Download, Loader2 } from 'lucide-react';
+import { Card, Button, Badge, Input, Select, Spinner, EmptyState } from '../../components/ui';
 
 const STATUS_FLOW = {
   draft: 'nominations_open',
@@ -21,10 +23,16 @@ const STATUS_LABEL = {
   nominations_open: 'Activate Election',
   active: 'Close Election'
 };
-const CANDIDATE_STATUS_BADGE = {
-  pending: 'bg-amber-500/20 text-amber-300',
-  approved: 'bg-emerald-500/20 text-emerald-300',
-  rejected: 'bg-danger/20 text-rose-300'
+const CANDIDATE_STATUS_TONE = {
+  pending: 'amber',
+  approved: 'emerald',
+  rejected: 'rose'
+};
+const ELECTION_STATUS_TONE = {
+  draft: 'neutral',
+  nominations_open: 'amber',
+  active: 'emerald',
+  closed: 'neutral'
 };
 
 export default function ElectionsAdmin() {
@@ -52,6 +60,14 @@ export default function ElectionsAdmin() {
 
   const [seats, setSeats] = useState([]); // [{id, role_title, map_shapes: {...}, candidateCount}]
   const [loadingSeats, setLoadingSeats] = useState(false);
+
+  // Official candidate data (docs/ELECTION_DATA_SOURCES.md) -- candidateSourceInfo
+  // is keyed by seat id: { jurisdiction, status, url, label }. fetchResultsBySeat
+  // holds the live "Fetch candidates" preview once an admin requests it for a
+  // given seat: { loading, error, candidates, sourceUrl, eventName, status }.
+  const [candidateSourceInfo, setCandidateSourceInfo] = useState(new Map());
+  const [fetchResultsBySeat, setFetchResultsBySeat] = useState({});
+  const [addingCandidateKey, setAddingCandidateKey] = useState(null); // `${seatId}:${candidateName}` while an add is in flight
 
   const [countries, setCountries] = useState([]);
   const [seatCountry, setSeatCountry] = useState('');
@@ -88,11 +104,13 @@ export default function ElectionsAdmin() {
   }, []);
 
   const typesForSeatCountry = seatCountry ? boundaryTypes.filter(t => t.country === seatCountry) : [];
-  // Container types (Province, State, ...) are admin_only — they exist purely
-  // to help admins scope a seat-building batch, they're never themselves a
-  // real election boundary. Keep the two dropdowns mutually exclusive so
-  // Province can never be picked as a seat's target type, and a real
-  // election type (Federal/Municipal/...) can never be picked as a container.
+  // Container types (Canada's Province, ...) are admin_only — they exist
+  // purely to help admins scope a seat-building batch, never themselves a
+  // real election boundary. USA's 'State' used to be admin_only too (until
+  // 20260729000014_promote_usa_state_boundary_type.sql), which is why this
+  // split is driven by the admin_only column rather than hardcoded per type
+  // — Governor/U.S. Senator needed 'State' to be a real target, not just a
+  // container.
   const containerTypeOptions = typesForSeatCountry.filter(t => t.admin_only);
   const targetTypeOptions = typesForSeatCountry.filter(t => !t.admin_only);
 
@@ -169,8 +187,33 @@ export default function ElectionsAdmin() {
       });
     }
 
-    setSeats((seatRows || []).map(s => ({ ...s, candidates: candidatesBySeat[s.id] || [] })));
+    const nextSeats = (seatRows || []).map(s => ({ ...s, candidates: candidatesBySeat[s.id] || [] }));
+    setSeats(nextSeats);
     setLoadingSeats(false);
+    setFetchResultsBySeat({});
+
+    // Batched (2 queries total, not one per seat) -- see
+    // getCandidateSourceInfoForSeats's comment for why that matters here.
+    const sourceInfo = await getCandidateSourceInfoForSeats(nextSeats);
+    setCandidateSourceInfo(sourceInfo);
+  };
+
+  const handleFetchCandidates = async (seatId) => {
+    setFetchResultsBySeat(prev => ({ ...prev, [seatId]: { loading: true } }));
+    const result = await fetchOfficialCandidates(seatId);
+    setFetchResultsBySeat(prev => ({ ...prev, [seatId]: { loading: false, ...result } }));
+  };
+
+  const handleAddFetchedCandidate = async (seat, candidate) => {
+    const key = `${seat.id}:${candidate.name}`;
+    setAddingCandidateKey(key);
+    const { error } = await addFetchedCandidate(seat.id, seat.map_shapes?.country, candidate);
+    setAddingCandidateKey(null);
+    if (error) {
+      alert('Error adding candidate: ' + error.message);
+      return;
+    }
+    await fetchSeats(selectedElection.id);
   };
 
   const fetchQuestions = async (electionId) => {
@@ -365,32 +408,32 @@ export default function ElectionsAdmin() {
       <AdminSubNav active="elections" className="lg:col-span-2" />
 
       {/* LEFT: Elections list + create */}
-      <div className="p-6 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl self-start space-y-5">
+      <Card padding="md" className="self-start space-y-5">
         <h2 className="text-xl font-bold text-text-main flex items-center gap-2"><Vote size={20} className="text-primary" /> Elections</h2>
 
-        <div className="space-y-2.5 p-3 bg-surface/40 rounded-xl border border-border-light/30">
-          <input
+        <Card variant="row" padding="sm" className="space-y-2.5">
+          <Input
             type="text"
+            size="sm"
             placeholder="Election name (e.g. 2028 Municipal Elections)"
-            className="w-full p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary"
             value={newName}
             onChange={e => setNewName(e.target.value)}
           />
-          <input
+          <Input
             type="date"
-            className="w-full p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary"
+            size="sm"
             value={newDate}
             onChange={e => setNewDate(e.target.value)}
           />
-          <button onClick={handleCreateElection} className="w-full flex items-center justify-center gap-1.5 px-4 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-sm transition-colors">
+          <Button onClick={handleCreateElection} className="w-full">
             <Plus size={16} /> Create Election
-          </button>
+          </Button>
           {createStatus && <p className="text-danger text-xs">{createStatus}</p>}
-        </div>
+        </Card>
 
         <div className="space-y-2">
           {loadingElections ? (
-            <p className="text-xs text-text-muted text-center py-4">Loading...</p>
+            <div className="flex justify-center py-4"><Spinner size="sm" /></div>
           ) : elections.length === 0 ? (
             <p className="text-xs text-text-muted text-center py-4">No elections yet.</p>
           ) : (
@@ -403,40 +446,34 @@ export default function ElectionsAdmin() {
                 <p className="text-sm font-bold text-text-secondary truncate">{e.name}</p>
                 <div className="flex items-center gap-2 mt-1">
                   <span className="text-[10px] text-text-muted">{e.election_date}</span>
-                  <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded ${
-                    e.status === 'draft' ? 'bg-surface-active text-text-muted' :
-                    e.status === 'nominations_open' ? 'bg-amber-500/20 text-amber-300' :
-                    e.status === 'active' ? 'bg-emerald-500/20 text-emerald-300' : 'bg-slate-500/20 text-slate-300'
-                  }`}>{e.status.replace('_', ' ')}</span>
+                  <Badge tone={ELECTION_STATUS_TONE[e.status] || 'neutral'}>{e.status.replace('_', ' ')}</Badge>
                 </div>
               </button>
             ))
           )}
         </div>
-      </div>
+      </Card>
 
       {/* RIGHT: Selected election detail */}
       <div className="space-y-6">
         {!selectedElection ? (
-          <div className="p-10 bg-surface/20 rounded-2xl border border-dashed border-border-light/60 text-center text-text-muted text-sm">
-            Select or create an election to manage its seats.
-          </div>
+          <EmptyState description="Select or create an election to manage its seats." className="py-10" />
         ) : (
           <>
-            <div className="p-6 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl flex items-center justify-between flex-wrap gap-4">
+            <Card className="flex items-center justify-between flex-wrap gap-4">
               <div>
                 <h2 className="text-xl font-bold text-text-main">{selectedElection.name}</h2>
                 <p className="text-xs text-text-muted mt-1">{selectedElection.election_date} · Status: <span className="font-semibold text-text-secondary">{selectedElection.status.replace('_', ' ')}</span></p>
               </div>
               {STATUS_FLOW[selectedElection.status] && (
-                <button onClick={advanceStatus} className="px-5 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-xl text-sm transition-colors">
+                <Button onClick={advanceStatus}>
                   {STATUS_LABEL[selectedElection.status]}
-                </button>
+                </Button>
               )}
-            </div>
+            </Card>
 
             {/* CANDIDATE QUESTIONNAIRE */}
-            <div className="p-6 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl space-y-5">
+            <Card className="space-y-5">
               <div>
                 <h3 className="text-lg font-bold text-text-main flex items-center gap-2"><HelpCircle size={18} className="text-primary" /> Candidate Questionnaire</h3>
                 <p className="text-xs text-text-muted mt-1">
@@ -445,7 +482,7 @@ export default function ElectionsAdmin() {
               </div>
 
               {loadingQuestions ? (
-                <p className="text-xs text-text-muted text-center py-4">Loading...</p>
+                <div className="flex justify-center py-4"><Spinner size="sm" /></div>
               ) : questions.length === 0 ? (
                 <p className="text-xs text-text-muted">No questions configured yet — candidates will only need to submit a statement and intro video.</p>
               ) : (
@@ -476,22 +513,23 @@ export default function ElectionsAdmin() {
               )}
 
               <div className="pt-3 border-t border-border-light/30 space-y-3">
-                <input
+                <Input
                   type="text"
+                  size="sm"
                   placeholder="Question text (e.g. Do you support the new transit levy?)"
                   value={newQuestionText}
                   onChange={e => setNewQuestionText(e.target.value)}
-                  className="w-full p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary"
                 />
                 <div className="space-y-2">
                   {newQuestionOptions.map((opt, i) => (
                     <div key={i} className="flex items-center gap-2">
-                      <input
+                      <Input
                         type="text"
+                        size="sm"
                         placeholder={`Option ${i + 1}`}
                         value={opt}
                         onChange={e => updateNewOptionField(i, e.target.value)}
-                        className="flex-1 p-2 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary"
+                        className="flex-1"
                       />
                       {newQuestionOptions.length > 2 && (
                         <button onClick={() => removeNewOptionField(i)} className="p-1.5 text-text-muted hover:text-danger transition-colors">
@@ -518,42 +556,39 @@ export default function ElectionsAdmin() {
                     Visible to voters
                   </label>
                 </div>
-                <button onClick={handleAddQuestion} className="flex items-center gap-1.5 px-4 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-sm transition-colors">
+                <Button onClick={handleAddQuestion}>
                   <Plus size={16} /> Add Question
-                </button>
+                </Button>
                 {questionStatus && <p className="text-danger text-xs">{questionStatus}</p>}
               </div>
-            </div>
+            </Card>
 
             {selectedElection.status === 'draft' && (
-              <div className="p-6 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl space-y-5">
+              <Card className="space-y-5">
                 <h3 className="text-lg font-bold text-text-main flex items-center gap-2"><Landmark size={18} className="text-primary" /> Build Seats</h3>
 
                 <div>
                   <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">Country</p>
-                  <select
-                    value={seatCountry}
-                    onChange={e => setSeatCountry(e.target.value)}
-                    className="w-full max-w-xs p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary"
-                  >
+                  <Select value={seatCountry} onChange={e => setSeatCountry(e.target.value)} size="sm" className="max-w-xs">
                     <option value="">Select country...</option>
                     {countries.map(c => <option key={c} value={c}>{c}</option>)}
-                  </select>
+                  </Select>
                 </div>
 
                 <div>
                   <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">1. Auto-select by container (optional)</p>
-                  <select
+                  <Select
                     value={containerType}
                     onChange={e => { setContainerType(e.target.value); setContainerId(new Set()); }}
                     disabled={!seatCountry}
-                    className="w-full max-w-xs mb-2 p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary disabled:opacity-50"
+                    size="sm"
+                    className="max-w-xs mb-2"
                   >
                     <option value="">{seatCountry ? 'Select a container type...' : 'Select a country first'}</option>
                     {containerTypeOptions.map(t => (
                       <option key={t.type_name} value={t.type_name}>{t.type_name}</option>
                     ))}
-                  </select>
+                  </Select>
                   {containerType && (
                     <>
                       <p className="text-[10px] text-text-muted mb-2">
@@ -570,20 +605,21 @@ export default function ElectionsAdmin() {
                     </>
                   )}
                   <div className="flex flex-wrap gap-3 mt-3">
-                    <select
+                    <Select
                       value={targetType}
                       onChange={e => setTargetType(e.target.value)}
                       disabled={!seatCountry}
-                      className="flex-1 min-w-[200px] p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary disabled:opacity-50"
+                      size="sm"
+                      className="flex-1 min-w-[200px]"
                     >
                       <option value="">{seatCountry ? 'Select target boundary type...' : 'Select a country first'}</option>
                       {targetTypeOptions.map(t => (
                         <option key={t.type_name} value={t.type_name}>{t.type_name}</option>
                       ))}
-                    </select>
-                    <button onClick={handleFindMatching} className="px-4 py-2.5 bg-surface-active hover:bg-border text-text-main rounded-lg text-sm font-semibold transition-colors">
+                    </Select>
+                    <Button variant="secondary" size="sm" onClick={handleFindMatching}>
                       Find Matching Boundaries
-                    </button>
+                    </Button>
                   </div>
                 </div>
 
@@ -637,29 +673,66 @@ export default function ElectionsAdmin() {
                 </div>
 
                 <div className="flex flex-wrap gap-3 items-center pt-2 border-t border-border-light/30">
-                  <button onClick={handleCreateSeats} className="px-5 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-sm transition-colors">
+                  <Button onClick={handleCreateSeats}>
                     Create Seats for Selected
-                  </button>
+                  </Button>
                 </div>
                 {seatStatus && <p className="text-xs text-primary-light">{seatStatus}</p>}
-              </div>
+              </Card>
             )}
 
-            <div className="p-6 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl">
+            <Card>
               <h3 className="text-lg font-bold text-text-main mb-4">Seats ({seats.length})</h3>
               {loadingSeats ? (
-                <p className="text-xs text-text-muted text-center py-6">Loading...</p>
+                <div className="flex justify-center py-6"><Spinner size="sm" /></div>
               ) : seats.length === 0 ? (
                 <p className="text-xs text-text-muted text-center py-6">No seats defined yet.</p>
               ) : (
                 <div className="space-y-3">
                   {seats.map(seat => (
                     <div key={seat.id} className="p-3.5 bg-surface/40 rounded-xl border border-border-light/30">
-                      <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center justify-between gap-3 flex-wrap">
                         <div className="flex items-center gap-2 min-w-0">
                           <MapPin size={14} className="text-accent shrink-0" />
                           <span className="font-bold text-text-secondary text-sm truncate">{seat.role_title} — {seat.map_shapes?.name}</span>
                           <span className="text-[10px] text-text-muted shrink-0">({seat.map_shapes?.boundary_type})</span>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          {(() => {
+                            const info = candidateSourceInfo.get(seat.id);
+                            if (!info || info.status === 'unsupported') return null;
+                            if (info.status === 'no_event') {
+                              return <span className="text-[10px] text-text-muted italic">{info.label}</span>;
+                            }
+                            return (
+                              <>
+                                {info.url && (
+                                  <a
+                                    href={info.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    title={info.status === 'active' ? `Official candidate list — ${info.label}` : info.label}
+                                    className="p-1.5 text-text-muted hover:text-primary-light hover:bg-primary/10 rounded-lg transition-colors"
+                                  >
+                                    <ExternalLink size={13} />
+                                  </a>
+                                )}
+                                {info.status === 'active' && (
+                                  <Button
+                                    variant="secondary"
+                                    size="sm"
+                                    onClick={() => handleFetchCandidates(seat.id)}
+                                    disabled={fetchResultsBySeat[seat.id]?.loading}
+                                  >
+                                    {fetchResultsBySeat[seat.id]?.loading
+                                      ? <Loader2 size={13} className="animate-spin" />
+                                      : <Download size={13} />}
+                                    Fetch candidates
+                                  </Button>
+                                )}
+                              </>
+                            );
+                          })()}
                         </div>
                         {selectedElection.status === 'draft' && (
                           <button onClick={() => handleDeleteSeat(seat.id)} className="p-1.5 text-text-muted hover:text-danger hover:bg-danger/10 rounded-lg transition-colors shrink-0">
@@ -667,6 +740,55 @@ export default function ElectionsAdmin() {
                           </button>
                         )}
                       </div>
+
+                      {fetchResultsBySeat[seat.id] && !fetchResultsBySeat[seat.id].loading && (
+                        <div className="mt-2.5 pl-6 p-3 bg-surface-hover/30 rounded-lg border border-border-light/20 text-xs">
+                          {fetchResultsBySeat[seat.id].error ? (
+                            <p className="text-danger">Error: {fetchResultsBySeat[seat.id].error}</p>
+                          ) : fetchResultsBySeat[seat.id].status === 'no_candidates_yet' ? (
+                            <p className="text-text-muted italic">No candidates confirmed yet on the official source ({fetchResultsBySeat[seat.id].eventName}).</p>
+                          ) : fetchResultsBySeat[seat.id].status === 'no_event' ? (
+                            <p className="text-text-muted italic">No known election event for this jurisdiction yet.</p>
+                          ) : fetchResultsBySeat[seat.id].candidates?.length > 0 ? (
+                            <>
+                              <p className="text-text-muted mb-2">
+                                {fetchResultsBySeat[seat.id].eventName} — {fetchResultsBySeat[seat.id].candidates.length} candidate(s) on the official source:
+                              </p>
+                              <div className="space-y-1.5">
+                                {fetchResultsBySeat[seat.id].candidates.map(c => {
+                                  const alreadyHere = seat.candidates.some(existing =>
+                                    (existing.profiles?.full_name || '').trim().toLowerCase() === c.name.trim().toLowerCase()
+                                  );
+                                  const key = `${seat.id}:${c.name}`;
+                                  return (
+                                    <div key={key} className="flex items-center justify-between gap-2 py-1">
+                                      <span className="text-text-secondary">
+                                        {c.name} {c.party && <span className="text-text-muted">— {c.party}</span>}
+                                        {c.elected && <Badge tone="emerald" className="ml-1.5">Elected</Badge>}
+                                      </span>
+                                      {alreadyHere ? (
+                                        <span className="text-[10px] text-emerald-400 font-semibold uppercase shrink-0">Already added</span>
+                                      ) : (
+                                        <button
+                                          onClick={() => handleAddFetchedCandidate(seat, c)}
+                                          disabled={addingCandidateKey === key}
+                                          className="p-1 text-text-muted hover:text-primary-light hover:bg-primary/10 rounded transition-colors shrink-0"
+                                          title="Add to Choseno"
+                                        >
+                                          {addingCandidateKey === key ? <Loader2 size={13} className="animate-spin" /> : <Plus size={13} />}
+                                        </button>
+                                      )}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </>
+                          ) : (
+                            <p className="text-text-muted italic">No candidates found.</p>
+                          )}
+                        </div>
+                      )}
+
                       {seat.candidates.length > 0 && (
                         <div className="mt-2.5 pl-6 space-y-2">
                           {seat.candidates.map(c => {
@@ -684,9 +806,7 @@ export default function ElectionsAdmin() {
                                     <span className="truncate">{name}</span>
                                   </button>
                                   <div className="flex items-center gap-2 shrink-0">
-                                    <span className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded ${CANDIDATE_STATUS_BADGE[c.status]}`}>
-                                      {c.status}
-                                    </span>
+                                    <Badge tone={CANDIDATE_STATUS_TONE[c.status]}>{c.status}</Badge>
                                     {!c.submitted_at && (
                                       <span className="text-[9px] text-text-muted uppercase font-bold">Draft — not submitted</span>
                                     )}
@@ -743,7 +863,7 @@ export default function ElectionsAdmin() {
                   ))}
                 </div>
               )}
-            </div>
+            </Card>
           </>
         )}
       </div>

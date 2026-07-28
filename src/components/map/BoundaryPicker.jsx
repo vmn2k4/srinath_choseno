@@ -2,6 +2,13 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Search } from 'lucide-react';
 import { getBoundaryCandidates, getGeojsonShapes } from '../../services/boundaries';
 import MapComponent from './MapComponent';
+import { Button, Input } from '../ui';
+
+// On a mobile single-column stack, the list and map columns render one above
+// the other — forcing each to the full desktop `height` doubles the total
+// scroll height on a phone. Cap the stacked-mobile height and only grow to
+// the caller's requested height once the grid actually splits into columns.
+const MOBILE_HEIGHT = '260px';
 
 // Above this many candidate shapes we don't eagerly load every geometry
 // (avoids hammering ST_AsGeoJSON over huge result sets) — click-to-select on
@@ -144,16 +151,20 @@ export default function BoundaryPicker({
   return (
     <div className={showMap ? 'grid grid-cols-1 md:grid-cols-3 gap-4' : 'grid grid-cols-1'}>
       {/* List Column */}
-      <div className={`${showMap ? 'md:col-span-1' : ''} flex flex-col rounded-xl border border-border-light overflow-hidden bg-surface/30`} style={{ height }}>
+      <div
+        className={`${showMap ? 'md:col-span-1' : ''} h-[var(--picker-mobile-h)] md:h-[var(--picker-h)] flex flex-col rounded-xl border border-border-light overflow-hidden bg-surface/30`}
+        style={{ '--picker-h': height, '--picker-mobile-h': MOBILE_HEIGHT }}
+      >
         <div className="p-3 border-b border-border-light bg-surface/50 shrink-0">
           <div className="relative">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-muted w-3.5 h-3.5" />
-            <input
+            <Input
               type="text"
+              size="sm"
               placeholder="Search name or metadata..."
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
-              className="w-full bg-surface-hover/80 text-xs text-text-secondary border border-border-light rounded-lg pl-8 pr-2.5 py-1.5 focus:outline-none focus:border-primary transition-colors"
+              className="pl-8"
             />
           </div>
           {!loading && !eagerLoaded && boundaries.length > 0 && (
@@ -201,19 +212,18 @@ export default function BoundaryPicker({
 
       {/* Map Column */}
       {showMap && (
-        <div className="md:col-span-2 rounded-xl overflow-hidden border border-border-light flex items-center justify-center bg-surface/20" style={{ height }}>
+        <div
+          className="md:col-span-2 h-[var(--picker-mobile-h)] md:h-[var(--picker-h)] rounded-xl overflow-hidden border border-border-light flex items-center justify-center bg-surface/20"
+          style={{ '--picker-h': height, '--picker-mobile-h': MOBILE_HEIGHT }}
+        >
           {overCap ? (
             <div className="text-center p-6">
               <p className="text-xs text-text-muted mb-3">
                 {selectedIds.size} shapes selected — too many to auto-render (cap: {SELECTED_GEO_FETCH_CAP}).
               </p>
-              <button
-                type="button"
-                onClick={() => setForceLoadSelected(true)}
-                className="px-4 py-2 bg-surface-active hover:bg-border text-text-main rounded-lg text-xs font-semibold transition-colors"
-              >
+              <Button variant="secondary" size="sm" onClick={() => setForceLoadSelected(true)}>
                 Load Map Anyway
-              </button>
+              </Button>
             </div>
           ) : (
             <MapComponent

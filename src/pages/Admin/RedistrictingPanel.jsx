@@ -5,6 +5,7 @@ import {
   suggestReplacedShapes, previewRetirementCoverageGap, retireShapes, deleteShapes
 } from '../../services/boundaries';
 import { GitBranch, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { Card, Button, Select } from '../../components/ui';
 
 export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
   const [countries, setCountries] = useState([]);
@@ -132,7 +133,7 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
   };
 
   return (
-    <div className="p-8 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl space-y-5">
+    <Card padding="lg" className="space-y-5">
       <h2 className="text-2xl font-bold text-text-main flex items-center gap-2"><GitBranch size={20} className="text-primary" /> Redistricting</h2>
       <p className="text-sm text-text-muted">
         Use this when boundaries change: upload the new data first, then use it here to figure out — and retire — whatever it replaces. Nothing is ever auto-applied; every suggestion is a starting point you review.
@@ -141,32 +142,24 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
       <div className="flex flex-wrap gap-3 items-end">
         <div className="min-w-[180px]">
           <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Country</label>
-          <select
-            value={countryFilter}
-            onChange={e => setCountryFilter(e.target.value)}
-            className="w-full p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary"
-          >
+          <Select value={countryFilter} onChange={e => setCountryFilter(e.target.value)}>
             <option value="">All countries</option>
             {countries.map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
+          </Select>
         </div>
         <div className="flex-1 min-w-[220px]">
           <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Focus Upload Batch</label>
-          <select
-            value={focusUploadId}
-            onChange={e => setFocusUploadId(e.target.value)}
-            className="w-full p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary"
-          >
+          <Select value={focusUploadId} onChange={e => setFocusUploadId(e.target.value)}>
             <option value="">Select an upload...</option>
             {uploadsForCountry.map(u => <option key={u.id} value={u.id}>{u.name}</option>)}
-          </select>
+          </Select>
         </div>
-        <button onClick={loadBatchOwnShapes} disabled={!focusUploadId || busy} className="px-4 py-2.5 bg-surface-active hover:bg-border text-text-main rounded-lg text-sm font-semibold transition-colors disabled:opacity-50">
+        <Button variant="secondary" onClick={loadBatchOwnShapes} disabled={!focusUploadId || busy}>
           Load This Batch's Own Boundaries
-        </button>
-        <button onClick={suggestReplaced} disabled={!focusUploadId || busy} className="px-4 py-2.5 bg-surface-active hover:bg-border text-text-main rounded-lg text-sm font-semibold transition-colors disabled:opacity-50">
+        </Button>
+        <Button variant="secondary" onClick={suggestReplaced} disabled={!focusUploadId || busy}>
           Suggest What This Batch Replaces
-        </button>
+        </Button>
       </div>
 
       <div className="flex flex-wrap gap-3 items-end pt-1 border-t border-border-light/20">
@@ -174,21 +167,16 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
           <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">
             Select by Type <span className="text-text-muted/60 normal-case font-normal">(for legacy boundaries with no upload batch)</span>
           </label>
-          <select
-            value={focusType}
-            onChange={e => setFocusType(e.target.value)}
-            disabled={!countryFilter}
-            className="w-full p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary disabled:opacity-50"
-          >
+          <Select value={focusType} onChange={e => setFocusType(e.target.value)} disabled={!countryFilter}>
             <option value="">{countryFilter ? 'Select a boundary type...' : 'Select a country first'}</option>
             {typesForCountry.map(t => (
               <option key={t.type_name} value={t.type_name}>{t.type_name}</option>
             ))}
-          </select>
+          </Select>
         </div>
-        <button onClick={loadByType} disabled={!focusType || !countryFilter || busy} className="px-4 py-2.5 bg-surface-active hover:bg-border text-text-main rounded-lg text-sm font-semibold transition-colors disabled:opacity-50">
+        <Button variant="secondary" onClick={loadByType} disabled={!focusType || !countryFilter || busy}>
           Select All of This Type
-        </button>
+        </Button>
       </div>
 
       <div>
@@ -199,15 +187,15 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
       </div>
 
       <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-border-light/30">
-        <button onClick={previewImpact} disabled={selectedShapeIds.size === 0 || busy} className="px-5 py-2.5 bg-surface-active hover:bg-border text-text-main rounded-lg text-sm font-semibold transition-colors disabled:opacity-50">
+        <Button variant="secondary" onClick={previewImpact} disabled={selectedShapeIds.size === 0 || busy}>
           Preview Impact
-        </button>
-        <button onClick={confirmRetire} disabled={selectedShapeIds.size === 0 || busy} className="px-5 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-sm transition-colors disabled:opacity-50">
+        </Button>
+        <Button onClick={confirmRetire} disabled={selectedShapeIds.size === 0 || busy}>
           Confirm Retirement
-        </button>
-        <button onClick={confirmDelete} disabled={selectedShapeIds.size === 0 || busy} className="px-5 py-2.5 bg-danger/15 hover:bg-danger/25 text-danger-light border border-danger/30 font-bold rounded-lg text-sm transition-colors disabled:opacity-50">
+        </Button>
+        <Button variant="danger" onClick={confirmDelete} disabled={selectedShapeIds.size === 0 || busy}>
           Delete Selected Permanently
-        </button>
+        </Button>
       </div>
 
       {affectedCount !== null && (
@@ -222,6 +210,6 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
       )}
 
       {status && <p className="text-xs text-primary-light">{status}</p>}
-    </div>
+    </Card>
   );
 }

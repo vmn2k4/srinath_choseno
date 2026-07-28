@@ -4,6 +4,7 @@ import {
   renameBoundaryUpload, deleteBoundaryUpload
 } from '../../services/boundaries';
 import { Trash2, ChevronDown, ChevronUp, Pencil, Check, X, GitBranch, PlayCircle } from 'lucide-react';
+import { Card, Badge, Input, Spinner, EmptyState } from '../../components/ui';
 
 export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload, countryFilter }) {
   const [uploads, setUploads] = useState([]);
@@ -94,18 +95,16 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
   };
 
   return (
-    <div className="p-8 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl">
+    <Card padding="lg">
       <h2 className="text-2xl font-bold text-text-main mb-1">Upload Batches</h2>
       <p className="text-sm text-text-muted mb-6">
         Every upload is grouped here. Delete a batch outright if nothing has used it yet — otherwise retire it instead to preserve election/post history.
       </p>
 
       {loading ? (
-        <div className="text-center text-text-muted py-6">Loading...</div>
+        <div className="flex justify-center py-6"><Spinner /></div>
       ) : uploads.length === 0 ? (
-        <div className="text-center text-text-muted py-6 bg-surface/20 rounded-2xl border border-dashed border-border-light/60">
-          No tracked uploads yet — batches created before this feature aren't included.
-        </div>
+        <EmptyState description="No tracked uploads yet — batches created before this feature aren't included." />
       ) : (
         <div className="space-y-3">
           {uploads.map(u => {
@@ -119,10 +118,10 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
                     <div className="min-w-0">
                       {renamingId === u.id ? (
                         <div className="flex items-center gap-1.5" onClick={e => e.stopPropagation()}>
-                          <input
+                          <Input
+                            size="sm"
                             value={renameValue}
                             onChange={e => setRenameValue(e.target.value)}
-                            className="p-1.5 bg-surface-hover border border-border-light rounded-lg text-sm text-text-main outline-none focus:border-primary"
                             autoFocus
                           />
                           <button onClick={() => saveRename(u.id)} className="p-1 text-emerald-400 hover:bg-emerald-500/10 rounded"><Check size={14} /></button>
@@ -134,9 +133,9 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
                       <p className="text-[11px] text-text-muted mt-0.5 flex items-center gap-1.5 flex-wrap">
                         <span>{new Date(u.created_at).toLocaleDateString()} · {u.country} — {u.boundary_type} · {counts.active} active{counts.retired > 0 ? `, ${counts.retired} retired` : ''}</span>
                         {!u.completed_at && (
-                          <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300">
+                          <Badge tone="amber">
                             Incomplete{u.expected_count ? ` — ${counts.active + counts.retired}/${u.expected_count}` : ''}
-                          </span>
+                          </Badge>
                         )}
                       </p>
                     </div>
@@ -168,12 +167,13 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
                 {isExpanded && (
                   <div className="border-t border-border-light/20 p-3">
                     {counts.active + counts.retired > SHAPE_LIST_CAP && (
-                      <input
+                      <Input
                         type="text"
+                        size="sm"
                         placeholder="Search shapes in this batch..."
                         value={shapeSearch}
                         onChange={e => handleShapeSearch(u.id, e.target.value)}
-                        className="w-full mb-2 p-1.5 bg-surface-hover border border-border-light rounded-lg text-xs text-text-main outline-none focus:border-primary"
+                        className="mb-2"
                       />
                     )}
                     <div className="max-h-48 overflow-y-auto custom-scrollbar space-y-1">
@@ -183,9 +183,9 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
                         expandedShapes.map(s => (
                           <div key={s.id} className="flex items-center justify-between text-xs px-2 py-1.5 rounded bg-surface/30">
                             <span className="text-text-secondary truncate">{s.name}</span>
-                            <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded shrink-0 ${s.retired_at ? 'bg-slate-500/20 text-slate-300' : 'bg-emerald-500/20 text-emerald-300'}`}>
+                            <Badge tone={s.retired_at ? 'neutral' : 'emerald'} className="shrink-0">
                               {s.retired_at ? 'Retired' : 'Active'}
-                            </span>
+                            </Badge>
                           </div>
                         ))
                       )}
@@ -200,6 +200,6 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
           })}
         </div>
       )}
-    </div>
+    </Card>
   );
 }

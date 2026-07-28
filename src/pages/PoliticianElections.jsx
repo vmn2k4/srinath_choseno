@@ -8,11 +8,12 @@ import {
 import { getCountries, listBoundaryTypes, getMapShapesByType } from '../services/boundaries';
 import { getUserBoundaryShapeIds } from '../services/profile';
 import { Vote, MapPin, ExternalLink, FileEdit, Search, X } from 'lucide-react';
+import { Card, Button, Badge, Select, Spinner, EmptyState, PageHeader } from '../components/ui';
 
 const STATUS_COPY = {
-  pending: { label: 'Pending Review', className: 'bg-amber-500/20 text-amber-300' },
-  approved: { label: 'Approved', className: 'bg-emerald-500/20 text-emerald-300' },
-  rejected: { label: 'Not Approved', className: 'bg-danger/20 text-rose-300' }
+  pending: { label: 'Pending Review', tone: 'amber' },
+  approved: { label: 'Approved', tone: 'emerald' },
+  rejected: { label: 'Not Approved', tone: 'rose' }
 };
 
 export default function PoliticianElections() {
@@ -138,33 +139,24 @@ export default function PoliticianElections() {
   };
 
   if (loading) {
-    return (
-      <div className="w-full flex items-center justify-center py-32">
-        <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-      </div>
-    );
+    return <Spinner fullPage />;
   }
 
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-10">
-      <div className="flex items-center gap-3">
-        <Vote className="text-primary" size={24} />
-        <h1 className="text-2xl font-bold text-text-main">Elections</h1>
-      </div>
+      <PageHeader icon={Vote} title="Elections" />
 
       {/* My Candidacies */}
       <section>
         <h2 className="text-lg font-bold text-text-secondary mb-4">My Candidacies</h2>
         {myCandidacies.length === 0 ? (
-          <p className="text-sm text-text-muted bg-surface/20 rounded-xl border border-dashed border-border-light/60 p-6 text-center">
-            You haven't applied to any seats yet.
-          </p>
+          <EmptyState description="You haven't applied to any seats yet." />
         ) : (
           <div className="space-y-3">
             {myCandidacies.map(c => {
               const statusInfo = STATUS_COPY[c.status] || STATUS_COPY.pending;
               return (
-                <div key={c.id} className="p-4 bg-surface/30 rounded-xl border border-border-light/35 flex items-center justify-between gap-3 flex-wrap">
+                <Card key={c.id} variant="row" padding="sm" className="flex items-center justify-between gap-3 flex-wrap">
                   <div>
                     <p className="font-bold text-text-secondary text-sm">{c.election_seats?.role_title} — {c.election_seats?.map_shapes?.name}</p>
                     <div className="flex items-center gap-2 mt-1 flex-wrap">
@@ -172,26 +164,26 @@ export default function PoliticianElections() {
                         {c.election_seats?.elections?.name} · {c.election_seats?.elections?.status?.replace('_', ' ')}
                       </span>
                       {c.submitted_at ? (
-                        <span className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded ${statusInfo.className}`}>{statusInfo.label}</span>
+                        <Badge tone={statusInfo.tone}>{statusInfo.label}</Badge>
                       ) : (
-                        <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-surface-active text-text-muted">Draft — not submitted</span>
+                        <Badge tone="neutral">Draft — not submitted</Badge>
                       )}
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <button onClick={() => navigate(`/apply/${c.id}`)} className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-active hover:bg-border text-text-main rounded-lg text-xs font-semibold transition-colors">
+                    <Button variant="secondary" size="sm" onClick={() => navigate(`/apply/${c.id}`)}>
                       <FileEdit size={13} /> {c.submitted_at ? 'Edit Application' : 'Continue Application'}
-                    </button>
+                    </Button>
                     {c.status === 'approved' && (
-                      <button onClick={() => navigate(`/candidacy/${c.id}`)} className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary-light hover:bg-primary/20 rounded-lg text-xs font-semibold transition-colors">
+                      <Button variant="outline" size="sm" onClick={() => navigate(`/candidacy/${c.id}`)}>
                         <ExternalLink size={13} /> Campaign Page
-                      </button>
+                      </Button>
                     )}
-                    <button onClick={() => withdraw(c.id)} className="px-3 py-1.5 text-text-muted hover:text-danger hover:bg-danger/10 rounded-lg text-xs font-semibold transition-colors">
+                    <Button variant="ghost" size="sm" onClick={() => withdraw(c.id)} className="hover:text-danger hover:bg-danger/10">
                       Withdraw
-                    </button>
+                    </Button>
                   </div>
-                </div>
+                </Card>
               );
             })}
           </div>
@@ -206,20 +198,20 @@ export default function PoliticianElections() {
             {myAdminApplications.map(a => {
               const statusInfo = STATUS_COPY[a.status] || STATUS_COPY.pending;
               return (
-                <div key={a.id} className="p-4 bg-surface/30 rounded-xl border border-border-light/35 flex items-center justify-between gap-3 flex-wrap">
+                <Card key={a.id} variant="row" padding="sm" className="flex items-center justify-between gap-3 flex-wrap">
                   <div>
                     <p className="font-bold text-text-secondary text-sm">{a.election_seats?.role_title} — {a.election_seats?.map_shapes?.name}</p>
                     <div className="flex items-center gap-2 mt-1 flex-wrap">
                       <span className="text-xs text-text-muted">{a.election_seats?.elections?.name}</span>
-                      <span className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded ${statusInfo.className}`}>{statusInfo.label}</span>
+                      <Badge tone={statusInfo.tone}>{statusInfo.label}</Badge>
                     </div>
                   </div>
                   {a.status === 'approved' && (
-                    <button onClick={() => navigate(`/elections/seat/${a.seat_id}`)} className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary-light hover:bg-primary/20 rounded-lg text-xs font-semibold transition-colors">
+                    <Button variant="outline" size="sm" onClick={() => navigate(`/elections/seat/${a.seat_id}`)}>
                       <ExternalLink size={13} /> Manage Seat
-                    </button>
+                    </Button>
                   )}
-                </div>
+                </Card>
               );
             })}
           </div>
@@ -230,24 +222,19 @@ export default function PoliticianElections() {
       <section>
         <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
           <h2 className="text-lg font-bold text-text-secondary">Open Seats Near You</h2>
-          <button
-            onClick={() => setBrowsing(!browsing)}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-active hover:bg-border text-text-main rounded-lg text-xs font-semibold transition-colors"
-          >
+          <Button variant="secondary" size="sm" onClick={() => setBrowsing(!browsing)}>
             <Search size={13} /> {browsing ? 'Hide' : 'Browse a Different Area'}
-          </button>
+          </Button>
         </div>
 
         {openSeats.length === 0 ? (
-          <p className="text-sm text-text-muted bg-surface/20 rounded-xl border border-dashed border-border-light/60 p-6 text-center">
-            No elections are currently accepting nominations for any group you belong to.
-          </p>
+          <EmptyState description="No elections are currently accepting nominations for any group you belong to." />
         ) : (
           <div className="space-y-3">
             {openSeats.map(seat => {
               const alreadyApplied = myCandidacySeatIds.has(seat.id);
               return (
-                <div key={seat.id} className="p-4 bg-surface/30 rounded-xl border border-border-light/35">
+                <Card key={seat.id} variant="row" padding="sm">
                   <div className="flex items-center justify-between gap-3 flex-wrap">
                     <div>
                       <p className="font-bold text-text-secondary text-sm">{seat.role_title} — {seat.map_shapes?.name}</p>
@@ -258,16 +245,12 @@ export default function PoliticianElections() {
                     {alreadyApplied ? (
                       <span className="text-xs font-semibold text-emerald-400">Applied ✓</span>
                     ) : (
-                      <button
-                        onClick={() => startApplying(seat.id)}
-                        disabled={applyingSeatId === seat.id}
-                        className="px-4 py-2 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-xs transition-colors disabled:opacity-50"
-                      >
+                      <Button size="sm" onClick={() => startApplying(seat.id)} disabled={applyingSeatId === seat.id}>
                         {applyingSeatId === seat.id ? 'Starting...' : 'Apply'}
-                      </button>
+                      </Button>
                     )}
                   </div>
-                </div>
+                </Card>
               );
             })}
           </div>
@@ -277,57 +260,39 @@ export default function PoliticianElections() {
 
       {/* Browse a different area */}
       {browsing && (
-        <section className="p-5 bg-surface/20 rounded-2xl border border-border-light/40 space-y-4">
+        <Card as="section" variant="dashed" padding="lg" className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-text-secondary">Browse a Different Area</h2>
-            <button onClick={() => setBrowsing(false)} className="p-1 text-text-muted hover:text-text-main rounded-lg">
+            <Button variant="ghost" size="sm" onClick={() => setBrowsing(false)}>
               <X size={16} />
-            </button>
+            </Button>
           </div>
 
           <div className="flex flex-wrap gap-3 items-end">
             <div>
               <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Country</label>
-              <select
-                value={browseCountry}
-                onChange={e => setBrowseCountry(e.target.value)}
-                className="p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary"
-              >
+              <Select size="sm" value={browseCountry} onChange={e => setBrowseCountry(e.target.value)}>
                 <option value="">Select country...</option>
                 {countries.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
+              </Select>
             </div>
             <div>
               <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">Province / State</label>
-              <select
-                value={browseContainerType}
-                onChange={e => setBrowseContainerType(e.target.value)}
-                disabled={!browseCountry}
-                className="p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary disabled:opacity-50"
-              >
+              <Select size="sm" value={browseContainerType} onChange={e => setBrowseContainerType(e.target.value)} disabled={!browseCountry}>
                 <option value="">{browseCountry ? 'Select type...' : 'Select a country first'}</option>
                 {containerTypes.map(t => <option key={t} value={t}>{t}</option>)}
-              </select>
+              </Select>
             </div>
             <div>
               <label className="block mb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">&nbsp;</label>
-              <select
-                value={browseContainerId}
-                onChange={e => setBrowseContainerId(e.target.value)}
-                disabled={!browseContainerType}
-                className="p-2.5 bg-surface-hover border border-border-light text-sm text-text-main rounded-lg focus:outline-none focus:border-primary disabled:opacity-50"
-              >
+              <Select size="sm" value={browseContainerId} onChange={e => setBrowseContainerId(e.target.value)} disabled={!browseContainerType}>
                 <option value="">{browseContainerType ? `Select a ${browseContainerType}...` : 'Select a type first'}</option>
                 {containers.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-              </select>
+              </Select>
             </div>
-            <button
-              onClick={searchContainer}
-              disabled={!browseContainerId || browseLoading}
-              className="px-4 py-2.5 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-xs transition-colors disabled:opacity-50"
-            >
+            <Button size="sm" onClick={searchContainer} disabled={!browseContainerId || browseLoading}>
               {browseLoading ? 'Searching...' : 'Search'}
-            </button>
+            </Button>
           </div>
 
           {browseStatus && <p className="text-xs text-text-muted">{browseStatus}</p>}
@@ -337,7 +302,7 @@ export default function PoliticianElections() {
               {browseSeats.map(seat => {
                 const alreadyApplied = myCandidacySeatIds.has(seat.seat_id);
                 return (
-                  <div key={seat.seat_id} className="p-4 bg-surface/30 rounded-xl border border-border-light/35">
+                  <Card key={seat.seat_id} variant="row" padding="sm">
                     <div className="flex items-center justify-between gap-3 flex-wrap">
                       <div>
                         <p className="font-bold text-text-secondary text-sm">
@@ -351,21 +316,17 @@ export default function PoliticianElections() {
                       {alreadyApplied ? (
                         <span className="text-xs font-semibold text-emerald-400">Applied ✓</span>
                       ) : (
-                        <button
-                          onClick={() => startApplying(seat.seat_id)}
-                          disabled={applyingSeatId === seat.seat_id}
-                          className="px-4 py-2 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-lg text-xs transition-colors disabled:opacity-50"
-                        >
+                        <Button size="sm" onClick={() => startApplying(seat.seat_id)} disabled={applyingSeatId === seat.seat_id}>
                           {applyingSeatId === seat.seat_id ? 'Starting...' : 'Apply'}
-                        </button>
+                        </Button>
                       )}
                     </div>
-                  </div>
+                  </Card>
                 );
               })}
             </div>
           )}
-        </section>
+        </Card>
       )}
     </div>
   );

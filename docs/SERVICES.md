@@ -34,13 +34,13 @@ Two near-identical-looking operations are deliberately **not** unified, because 
 
 If you're about to "clean up" one of these into the other, check with whoever owns that RPC first — the divergence may be load-bearing.
 
-## Known layering violations (not fixed)
+## Known layering violations
 
-A full-codebase audit (2026-07-25, prompted by a direct request to check compliance) found three spots where `src/pages/**`/`src/components/**` import `supabase` directly, bypassing this layer. None were introduced recently — flagged here so they read as known, not newly discovered, and so nobody "fixes" them as a surprise side effect of an unrelated change:
+A full-codebase audit (2026-07-25, prompted by a direct request to check compliance) found three spots where `src/pages/**`/`src/components/**` imported `supabase` directly, bypassing this layer. The two real violations were fixed during the app-wide design-centralization pass (since both files were already being opened for that pass anyway):
 
-- **`src/components/PoliticianSidebar.jsx`** — a direct `supabase.from('politician_profiles').select(...)` query. The one real hard-rule violation here; a fix belongs in its own pass (extract into `politicianWall.js` or a new `politicians.js` service file), not bundled into whatever else is being worked on when it's next noticed.
-- **`src/pages/PoliticianWall.jsx`** — a direct `supabase.channel(...)`/`removeChannel(...)` realtime subscription. Not a `.from/.rpc/.storage/.auth` call in the letter of the rule, but still bypasses "only `services/**` imports the client" — worth a `subscribeToSupportChanges()`-style helper next time this file is touched.
-- **`src/components/map/MapComponent.jsx`** — imports `supabase` but never calls it. Dead code, not a functional violation; cheap to delete whenever this file is next edited.
+- **`src/components/PoliticianSidebar.jsx`** — **Fixed.** Its direct `supabase.from('politician_profiles').select(...)` query is now `getInterestedPoliticians()` in `profile.js`.
+- **`src/pages/PoliticianWall.jsx`** — **Fixed.** Its direct `supabase.channel(...)`/`removeChannel(...)` realtime subscription is now `subscribeToSupportChanges()`/`unsubscribeFromSupportChanges()` in `politicianWall.js`.
+- **`src/components/map/MapComponent.jsx`** — imports `supabase` but never calls it. Dead code, not a functional violation; still not fixed, cheap to delete whenever this file is next edited.
 
 Full context: `ARCHITECTURE.md` §20.
 

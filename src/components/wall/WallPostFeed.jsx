@@ -1,6 +1,7 @@
 import React from 'react';
 import { Users, MessageSquare, Send } from 'lucide-react';
 import LinkPreview from '../LinkPreview';
+import { Card, Badge, Input, Button, EmptyState } from '../ui';
 
 // Shared by PoliticianWall.jsx (a politician's own public wall) and
 // CandidacyWall.jsx (a candidate's election wall) -- both are "the same
@@ -15,16 +16,13 @@ export default function WallPostFeed({
   ownerBadgeLabel = 'Author',
   viewerIsOwner = false,
   emptyMessage = 'No posts yet.',
+  canComment = true,
   commentInputs,
   onCommentInputChange,
   onSubmitComment,
 }) {
   if (posts.length === 0) {
-    return (
-      <div className="text-center py-10 text-text-muted text-sm bg-surface/20 rounded-2xl border border-dashed border-border-light/60">
-        {emptyMessage}
-      </div>
-    );
+    return <EmptyState description={emptyMessage} />;
   }
 
   const byDate = (a, b) => new Date(a.created_at) - new Date(b.created_at);
@@ -38,7 +36,7 @@ export default function WallPostFeed({
         const isOwnerPost = post.ghost_id === ownerGhostId;
 
         return (
-          <div key={post.id} className="bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/40 overflow-hidden p-5 hover:border-primary/25 transition-all duration-300 shadow-md">
+          <Card key={post.id} interactive padding="sm" className="overflow-hidden">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-full bg-surface/50 border border-border-light/30 flex items-center justify-center">
                 <Users size={16} className="text-text-muted" />
@@ -47,7 +45,7 @@ export default function WallPostFeed({
                 <div className="text-sm font-bold text-text-secondary font-mono">
                   Ghost-{post.ghost_id.split('-')[0]}
                   {isOwnerPost && (
-                    <span className="ml-2 text-[10px] bg-primary/20 text-primary-light px-2 py-0.5 rounded uppercase tracking-wider font-bold">{ownerBadgeLabel}</span>
+                    <Badge tone="primary" className="ml-2">{ownerBadgeLabel}</Badge>
                   )}
                 </div>
                 <div className="text-xs text-text-muted">{new Date(post.created_at).toLocaleString()}</div>
@@ -86,9 +84,7 @@ export default function WallPostFeed({
                           Ghost-{comment.ghost_id.split('-')[0]}
                         </span>
                         {comment.ghost_id === ownerGhostId && (
-                          <span className="text-[9px] bg-primary/20 text-primary-light px-1.5 py-0.5 rounded uppercase tracking-wider font-bold">
-                            {viewerIsOwner ? 'You' : ownerBadgeLabel}
-                          </span>
+                          <Badge tone="primary">{viewerIsOwner ? 'You' : ownerBadgeLabel}</Badge>
                         )}
                         <span className="text-[10px] text-text-muted/60">
                           {new Date(comment.created_at).toLocaleString()}
@@ -100,26 +96,30 @@ export default function WallPostFeed({
                 </div>
               )}
 
-              <div className="flex items-center gap-2">
-                <MessageSquare size={14} className="text-text-muted shrink-0" />
-                <input
-                  type="text"
-                  value={commentInputs[post.id] || ''}
-                  onChange={(e) => onCommentInputChange(post.id, e.target.value)}
-                  onKeyDown={(e) => { if (e.key === 'Enter') onSubmitComment(post.id); }}
-                  placeholder="Write an anonymous comment..."
-                  className="flex-1 bg-surface/50 border border-border-light/40 rounded-xl px-3 py-2 text-sm text-text-secondary placeholder:text-text-muted focus:outline-none focus:border-primary transition-colors"
-                />
-                <button
-                  onClick={() => onSubmitComment(post.id)}
-                  disabled={!commentInputs[post.id]?.trim()}
-                  className="p-2 bg-primary/10 text-primary-light hover:bg-primary hover:text-slate-950 rounded-xl transition-all disabled:opacity-40"
-                >
-                  <Send size={14} />
-                </button>
-              </div>
+              {canComment && (
+                <div className="flex items-center gap-2">
+                  <MessageSquare size={14} className="text-text-muted shrink-0" />
+                  <Input
+                    type="text"
+                    size="sm"
+                    value={commentInputs[post.id] || ''}
+                    onChange={(e) => onCommentInputChange(post.id, e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') onSubmitComment(post.id); }}
+                    placeholder="Write an anonymous comment..."
+                    className="flex-1"
+                  />
+                  <Button
+                    variant="icon"
+                    tone="primary"
+                    onClick={() => onSubmitComment(post.id)}
+                    disabled={!commentInputs[post.id]?.trim()}
+                  >
+                    <Send size={14} />
+                  </Button>
+                </div>
+              )}
             </div>
-          </div>
+          </Card>
         );
       })}
     </div>

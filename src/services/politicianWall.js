@@ -36,6 +36,28 @@ export async function addSupport(politicianId, supporterId) {
   return supabase.from('politician_supporters').insert({ politician_id: politicianId, supporter_id: supporterId });
 }
 
+// Realtime subscription wrapper — keeps the raw supabase.channel()/
+// removeChannel() calls out of PoliticianWall.jsx, matching the
+// Services-layer rule that all supabase.* calls live here. Returns the
+// channel so the caller can pass it straight to unsubscribe() on cleanup.
+export function subscribeToSupportChanges(politicianId, onChange) {
+  const channel = supabase
+    .channel(`support-${politicianId}-${Date.now()}`)
+    .on('postgres_changes', {
+      event: '*',
+      schema: 'public',
+      table: 'politician_supporters',
+      filter: `politician_id=eq.${politicianId}`
+    }, onChange)
+    .subscribe();
+
+  return channel;
+}
+
+export function unsubscribeFromSupportChanges(channel) {
+  if (channel) supabase.removeChannel(channel);
+}
+
 export async function getSupportersList(politicianId) {
   return supabase
     .from('politician_supporters')

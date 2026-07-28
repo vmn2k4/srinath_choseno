@@ -1,0 +1,34 @@
+{
+  "version": "4",
+  "remote": {
+    "https://esm.sh/@supabase/supabase-js@2.45.4": "1108d69216995335d057dbd15907caaf514a4d1ef082f097050573b9d589a57c"
+  },
+  "workspace": {
+    "packageJson": {
+      "dependencies": [
+        "npm:@supabase/supabase-js@^2.110.1",
+        "npm:@tailwindcss/postcss@^4.3.2",
+        "npm:@turf/turf@^7.3.5",
+        "npm:@types/leaflet@^1.9.21",
+        "npm:@types/react-dom@^19.2.3",
+        "npm:@types/react@^19.2.17",
+        "npm:@vitejs/plugin-react@^6.0.3",
+        "npm:autoprefixer@^10.5.2",
+        "npm:framer-motion@^12.42.2",
+        "npm:leaflet@^1.9.4",
+        "npm:lucide-react@^1.23.0",
+        "npm:mapshaper@~0.7.41",
+        "npm:oxlint@^1.71.0",
+        "npm:postcss@^8.5.16",
+        "npm:qrcode.react@^4.2.0",
+        "npm:react-dom@^19.2.7",
+        "npm:react-leaflet@5",
+        "npm:react-router-dom@^7.18.1",
+        "npm:react@^19.2.7",
+        "npm:shpjs@^6.2.0",
+        "npm:tailwindcss@^4.3.2",
+        "npm:vite@^8.1.1"
+      ]
+    }
+  }
+}

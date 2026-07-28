@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { signUp, signInWithPassword } from '../services/auth';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { useEffect } from 'react';
+import { Card, Input, Button } from '../components/ui';
 
 export default function AuthPage() {
   const navigate = useNavigate();
@@ -42,40 +42,34 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="w-full max-w-md p-8 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-2xl animate-fade-in mx-auto mt-14">
+    <Card padding="lg" className="w-full max-w-md shadow-2xl animate-fade-in mx-auto mt-10 sm:mt-14">
       <h2 className="text-2xl font-bold text-text-main mb-6 text-center">
         {isSignUp ? 'Create an Account' : 'Welcome Back'}
       </h2>
       <form onSubmit={handleAuth} className="flex flex-col gap-4">
         <div>
           <label className="block mb-2 text-xs font-semibold text-text-muted uppercase tracking-wider">Email Address</label>
-          <input
+          <Input
             type="email"
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="block w-full p-3 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
             required
           />
         </div>
         <div>
           <label className="block mb-2 text-xs font-semibold text-text-muted uppercase tracking-wider">Password</label>
-          <input
+          <Input
             type="password"
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="block w-full p-3 bg-surface/40 border border-border-light text-sm text-text-main rounded-xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
             required
           />
         </div>
-        <button
-          type="submit"
-          className="mt-4 px-6 py-3 bg-primary hover:bg-primary-hover text-slate-950 font-bold rounded-xl transition-all duration-200 focus:ring-4 focus:ring-primary/10 disabled:opacity-50 shadow-[0_4px_14px_rgba(233,235,158,0.15)]"
-          disabled={loading}
-        >
+        <Button type="submit" size="lg" disabled={loading} className="mt-2 w-full">
           {loading ? 'Processing...' : isSignUp ? 'Sign Up' : 'Log In'}
-        </button>
+        </Button>
       </form>
 
       {message.text && (
@@ -92,6 +86,6 @@ export default function AuthPage() {
           {isSignUp ? 'Already have an account? Log In' : "Don't have an account? Sign Up"}
         </button>
       </div>
-    </div>
+    </Card>
   );
 }

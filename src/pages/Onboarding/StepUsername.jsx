@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowLeft, ArrowRight, ShieldAlert, CheckCircle2, User } from 'lucide-react';
+import { Card, Button, Input } from '../../components/ui';
 
 export default function StepUsername({ data, updateData, nextStep, prevStep, loading, error, isLastStep }) {
   const isPolitician = data.role === 'politician';
@@ -8,9 +9,9 @@ export default function StepUsername({ data, updateData, nextStep, prevStep, loa
   return (
     <div className="animate-fade-in">
       <div className="flex items-center gap-4 mb-8">
-        <button onClick={prevStep} className="p-2 bg-surface-hover rounded-full text-text-muted hover:text-text-main transition-colors">
+        <Button variant="icon" onClick={prevStep} className="rounded-full">
           <ArrowLeft size={20} />
-        </button>
+        </Button>
         <div>
           <h2 className="text-2xl font-bold text-text-main">
             {isPolitician ? 'Your Public Name' : 'Your Identity'}
@@ -24,24 +25,23 @@ export default function StepUsername({ data, updateData, nextStep, prevStep, loa
       {isPolitician ? (
         /* Politician: public name required */
         <div className="space-y-5">
-          <div className="p-5 bg-surface-hover rounded-2xl border border-border flex items-center gap-3">
+          <Card variant="row" padding="sm" className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-primary/20 text-primary-light flex items-center justify-center shrink-0">
               <User size={20} />
             </div>
             <p className="text-sm text-text-muted">
               As a <strong className="text-text-secondary">Politician</strong>, your name is public and tied to your official Wall and QR code.
             </p>
-          </div>
+          </Card>
 
           <div>
             <label className="block text-sm font-medium text-text-tertiary mb-2">Full Public Name</label>
-            <input
+            <Input
               type="text"
               placeholder="e.g. Jane Doe"
               value={data.fullName}
               onChange={e => updateData({ fullName: e.target.value })}
               autoFocus
-              className="w-full bg-surface border border-border-light rounded-xl p-3 text-text-main outline-none focus:border-primary transition-colors"
             />
           </div>
         </div>
@@ -52,18 +52,17 @@ export default function StepUsername({ data, updateData, nextStep, prevStep, loa
             <label className="block text-sm font-medium text-text-tertiary mb-2">
               Display Name <span className="text-text-dark text-xs font-normal ml-1">(optional)</span>
             </label>
-            <input
+            <Input
               type="text"
               placeholder="e.g. Alex — only visible on your Profile"
               value={data.fullName}
               onChange={e => updateData({ fullName: e.target.value })}
-              className="w-full bg-surface border border-border-light rounded-xl p-3 text-text-main outline-none focus:border-primary transition-colors"
             />
             <p className="text-xs text-text-muted mt-1.5">This is only shown on your Profile settings page, never attached to your anonymous posts.</p>
           </div>
 
           {/* Ghost ID explainer */}
-          <div className="p-5 bg-surface-hover rounded-2xl border border-border">
+          <Card variant="row" padding="sm">
             <div className="flex items-start gap-4 mb-4">
               <div className="w-11 h-11 bg-primary/20 text-primary-light rounded-xl flex items-center justify-center shrink-0">
                 <ShieldAlert size={22} />
@@ -88,7 +87,7 @@ export default function StepUsername({ data, updateData, nextStep, prevStep, loa
                 </li>
               ))}
             </ul>
-          </div>
+          </Card>
         </div>
       )}
 
@@ -99,14 +98,10 @@ export default function StepUsername({ data, updateData, nextStep, prevStep, loa
       )}
 
       <div className="mt-8 flex justify-end">
-        <button
-          onClick={nextStep}
-          disabled={loading || !canContinue}
-          className="px-8 py-3 bg-primary text-white rounded-xl font-bold flex items-center gap-2 hover:bg-primary-hover transition-colors disabled:opacity-50"
-        >
+        <Button size="lg" onClick={nextStep} disabled={loading || !canContinue}>
           {loading ? 'Processing...' : isLastStep ? 'Complete Setup' : 'Continue'}
           {!loading && !isLastStep && <ArrowRight size={18} />}
-        </button>
+        </Button>
       </div>
     </div>
   );

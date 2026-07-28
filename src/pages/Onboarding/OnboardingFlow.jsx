@@ -6,6 +6,7 @@ import StepRole from './StepRole';
 import StepLocation from './StepLocation';
 import StepUsername from './StepUsername';
 import StepPolitician from './StepPolitician';
+import { Card } from '../../components/ui';
 
 export default function OnboardingFlow() {
   const { user } = useAuth();
@@ -104,7 +105,7 @@ export default function OnboardingFlow() {
 
   return (
     <div className="w-full flex items-center justify-center py-6 sm:py-10">
-      <div className="w-full max-w-2xl bg-surface/40 backdrop-blur-md border border-border-light/45 shadow-2xl rounded-2xl overflow-hidden relative animate-fade-in">
+      <Card padding="none" className="w-full max-w-2xl overflow-hidden relative animate-fade-in">
         {/* Progress Bar */}
         <div className="absolute top-0 left-0 w-full h-1 bg-surface-hover">
           <div
@@ -116,7 +117,7 @@ export default function OnboardingFlow() {
         <div className="p-5 sm:p-8">
           {renderStep()}
         </div>
-      </div>
+      </Card>
     </div>
   );
 }

@@ -10,7 +10,7 @@ const TABS = [
 
 export default function AdminSubNav({ active, className = '' }) {
   return (
-    <div className={`flex gap-2 ${className}`}>
+    <div className={`flex flex-wrap gap-2 ${className}`}>
       {TABS.map(tab => (
         tab.key === active ? (
           <span key={tab.key} className="px-4 py-2 rounded-xl text-sm font-semibold text-primary bg-primary/10 border border-primary/30">

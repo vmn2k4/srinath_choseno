@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { MapPin, Pencil, Loader2, Flame, RefreshCw } from 'lucide-react';
+import { MapPin, Pencil, Flame, RefreshCw } from 'lucide-react';
 import EditProfileFlow from './Profile/EditProfileFlow';
 import { getOwnProfile, getPoliticianProfileFull, getLatestUserLocation, getUserBoundaryMemberships, burnGhostIdRaw, upsertProfileCore } from '../services/profile';
+import { Card, Button, Badge, Spinner, PageHeader } from '../components/ui';
 
 export default function ProfilePage() {
   const { session } = useAuth();
@@ -84,22 +85,18 @@ export default function ProfilePage() {
     setSwitchingRole(false);
   };
 
-  if (loading) return (
-    <div className="flex justify-center items-center h-64">
-      <Loader2 className="animate-spin text-primary-light" size={32} />
-    </div>
-  );
+  if (loading) return <Spinner fullPage />;
 
   if (profile?.role === 'admin') return (
-    <div className="w-full max-w-none p-8 bg-surface rounded-2xl border border-border text-center px-4 lg:px-8">
+    <Card padding="lg" className="w-full max-w-none text-center mx-4 lg:mx-8">
       <h3 className="text-xl font-bold text-text-secondary mb-2">Administrator Account</h3>
       <p className="text-text-muted mb-4">You manage electoral boundaries. Your profile is locked.</p>
-      <a href="/admin" className="inline-block px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent-hover transition-colors">Go to Admin Portal</a>
-    </div>
+      <Button as="a" href="/admin">Go to Admin Portal</Button>
+    </Card>
   );
 
   const roleLabel = profile?.role === 'normal' ? 'Citizen' : profile?.role === 'politician' ? 'Politician' : 'Not set';
-  const roleColor = profile?.role === 'politician' ? 'bg-primary/20 text-primary-light' : 'bg-accent/20 text-accent-hover';
+  const roleTone = profile?.role === 'politician' ? 'primary' : 'accent';
 
   return (
     <>
@@ -112,23 +109,19 @@ export default function ProfilePage() {
       )}
 
       <div className="w-full max-w-none mt-10 pb-20 animate-fade-in px-4 lg:px-8">
-        {/* Page Header */}
-        <div className="flex items-start justify-between mb-6">
-          <div>
-            <h2 className="text-2xl font-bold text-text-main">Your Profile</h2>
-            <p className="text-text-muted text-sm mt-0.5">Manage your account details.</p>
-          </div>
-          <button
-            onClick={() => setIsEditing(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary-light hover:bg-primary/20 border border-primary/30 rounded-xl transition-all font-semibold text-sm"
-          >
-            <Pencil size={15} /> Edit Profile
-          </button>
-        </div>
+        <PageHeader
+          title="Your Profile"
+          subtitle="Manage your account details."
+          action={
+            <Button variant="outline" onClick={() => setIsEditing(true)}>
+              <Pencil size={15} /> Edit Profile
+            </Button>
+          }
+        />
 
         <div className="space-y-6">
           {/* General Info Card */}
-          <section className="p-6 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl">
+          <Card as="section">
             <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest mb-5">General Info</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
@@ -137,7 +130,7 @@ export default function ProfilePage() {
               </div>
               <div>
                 <p className="text-xs text-text-muted mb-1">Account Type</p>
-                <span className={`inline-block px-3 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider ${roleColor}`}>{roleLabel}</span>
+                <Badge tone={roleTone} shape="pill" size="sm">{roleLabel}</Badge>
               </div>
               <div className="sm:col-span-2">
                 <p className="text-xs text-text-muted mb-1">Groups You Belong To</p>
@@ -158,20 +151,16 @@ export default function ProfilePage() {
                 )}
               </div>
             </div>
-          </section>
+          </Card>
 
           {/* Politician Details Card */}
           {profile?.role === 'politician' && (
-            <section className="p-6 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl">
+            <Card as="section">
               <div className="flex items-center justify-between mb-5 gap-3 flex-wrap">
                 <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest">Political Details</h3>
-                <button
-                  onClick={switchToCitizen}
-                  disabled={switchingRole}
-                  className="text-xs font-semibold text-text-muted hover:text-text-main hover:bg-surface-hover px-3 py-1.5 rounded-lg border border-border-light transition-colors disabled:opacity-50"
-                >
+                <Button variant="ghost" size="sm" onClick={switchToCitizen} disabled={switchingRole} className="border border-border-light">
                   {switchingRole ? 'Switching...' : 'Switch to Citizen Account'}
-                </button>
+                </Button>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
@@ -189,26 +178,22 @@ export default function ProfilePage() {
                   </div>
                 )}
               </div>
-            </section>
+            </Card>
           )}
 
           {/* Privacy & Ghost ID Card */}
           {profile?.role !== 'politician' && (
-            <section className="p-6 bg-surface/30 backdrop-blur-md rounded-2xl border border-border-light/45 shadow-xl">
+            <Card as="section">
               <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest mb-5">Privacy & Anonymity</h3>
               <div>
                 <p className="text-xs text-text-muted mb-1">Current Ghost ID</p>
                 <p className="font-mono text-xs text-text-secondary truncate">{profile?.ghostId}</p>
                 <p className="text-xs text-text-muted mt-2 mb-4">Burning your Ghost ID permanently severs all links to your past posts. This cannot be undone.</p>
-                <button
-                  onClick={burnGhostId}
-                  disabled={burning}
-                  className="flex items-center gap-2 px-4 py-2.5 bg-danger/15 text-danger-light hover:bg-danger/25 border border-danger/30 rounded-xl transition-all text-sm font-semibold disabled:opacity-50 shadow-[0_0_12px_rgba(244,63,94,0.1)]"
-                >
+                <Button variant="danger" onClick={burnGhostId} disabled={burning}>
                   {burning ? <><RefreshCw size={15} className="animate-spin" /> Burning...</> : <><Flame size={15} /> Burn My Ghost ID</>}
-                </button>
+                </Button>
               </div>
-            </section>
+            </Card>
           )}
         </div>
       </div>
