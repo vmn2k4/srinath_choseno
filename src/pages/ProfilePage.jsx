@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { MapPin, Pencil, Flame, RefreshCw, Award } from 'lucide-react';
 import EditProfileFlow from './Profile/EditProfileFlow';
-import { getOwnProfile, getPoliticianProfileFull, getLatestUserLocation, getUserBoundaryMemberships, calculateMyScore, upsertProfileCore } from '../services/profile';
+import { getOwnProfile, getPoliticianProfileFull, getLatestUserLocation, getUserBoundaryMemberships, calculateMyScore } from '../services/profile';
 import { burnGhostIdentityViaRpc } from '../services/feed';
 import { Card, Button, Badge, Spinner, PageHeader } from '../components/ui';
 
@@ -13,7 +13,6 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [burning, setBurning] = useState(false);
-  const [switchingRole, setSwitchingRole] = useState(false);
   const [profile, setProfile] = useState(null);
   const [score, setScore] = useState(null);
   const [scoring, setScoring] = useState(false);
@@ -87,23 +86,6 @@ export default function ProfilePage() {
     fetchProfile(); // Refresh from DB to show saved values
   };
 
-  // One-click downgrade back to a citizen account — no dedicated politician
-  // fields need clearing, just the role flip (mirrors the "Become a
-  // Politician" prompts citizens see everywhere; politicians had no
-  // reciprocal one-click way back).
-  const switchToCitizen = async () => {
-    if (!confirm('Switch back to a Citizen account? You\'ll no longer be able to manage a public wall or nominate yourself for seats.')) return;
-    setSwitchingRole(true);
-    await upsertProfileCore(user.id, {
-      role: 'normal',
-      fullName: profile.fullName,
-      country: profile.country,
-      constituency: profile.constituency
-    });
-    await fetchProfile();
-    setSwitchingRole(false);
-  };
-
   if (loading) return <Spinner fullPage />;
 
   if (profile?.role === 'admin') return (
@@ -175,12 +157,7 @@ export default function ProfilePage() {
           {/* Politician Details Card */}
           {profile?.role === 'politician' && (
             <Card as="section">
-              <div className="flex items-center justify-between mb-5 gap-3 flex-wrap">
-                <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest">Political Details</h3>
-                <Button variant="ghost" size="sm" onClick={switchToCitizen} disabled={switchingRole} className="border border-border-light">
-                  {switchingRole ? 'Switching...' : 'Switch to Citizen Account'}
-                </Button>
-              </div>
+              <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest mb-5">Political Details</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <p className="text-xs text-text-muted mb-1">Political Party</p>

@@ -5,7 +5,7 @@ import LinkPreview from './LinkPreview';
 import { getGhostDisplayName } from '../utils/ghostName';
 import VideoRecorder from './video/VideoRecorder';
 import WallPostFeed from './wall/WallPostFeed';
-import { getPublicCandidateById, getPublicCandidateAnswers, getCandidatePosts, createCandidatePost, updateNominationFiled } from '../services/elections';
+import { getPublicCandidateById, getPublicCandidateAnswers, getCandidacyWallPosts, createCandidatePost, updateNominationFiled } from '../services/elections';
 import { getOwnProfile, getPoliticianProfile } from '../services/profile';
 import { uploadPostImage, createComment } from '../services/feed';
 import {
@@ -83,12 +83,21 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
       setCandidate(null);
     }
 
-    await fetchPosts();
+    await fetchPosts(candidateRow?.profiles?.current_ghost_id);
     setLoading(false);
   };
 
-  const fetchPosts = async () => {
-    const { data } = await getCandidatePosts(candidateId);
+  // A candidacy is not a separate feed from the person's permanent wall —
+  // same posts, same discussion (see
+  // 20260730000003_unify_candidacy_and_wall_posts.sql). Always matches on
+  // election_candidate_id (no join needed); also matches by ghost id when
+  // resolvable, which is what pulls in the rest of their permanent wall.
+  // ghostId defaults to state for refetches after the initial load (state
+  // is already populated there); fetchAll passes it explicitly since
+  // `candidate` state hasn't committed yet on the very first call.
+  const fetchPosts = async (ghostId) => {
+    const targetGhostId = ghostId ?? candidate?.profiles?.current_ghost_id;
+    const { data } = await getCandidacyWallPosts(candidateId, targetGhostId);
     // Comment pin-to-top ordering (candidate's own replies always lead) is
     // handled by WallPostFeed itself, keyed off the candidate's ghost id.
     setPosts(data || []);
@@ -157,6 +166,7 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
         ghost_id: profile.current_ghost_id,
         content: newPostContent.trim(),
         election_candidate_id: candidateId,
+        wall_ghost_id: candidate?.profiles?.current_ghost_id,
         link_metadata: linkMetadata,
         image_url: finalImageUrl,
         video_url: uploadedVideoUrl

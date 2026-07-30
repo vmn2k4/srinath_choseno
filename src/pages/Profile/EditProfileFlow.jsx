@@ -7,7 +7,13 @@ import { upsertProfileCore, upsertPoliticianProfile } from '../../services/profi
 import { Button, Input } from '../../components/ui';
 
 // ─── Step 1: Basic Info ──────────────────────────────────────────
-function StepBasicInfo({ data, updateData, nextStep }) {
+// lockToPolitician: true when the account was already a politician before
+// this edit started. A politician profile can accumulate real state
+// elsewhere (candidacies, a public wall, supporters) that has no meaning
+// for a citizen account — downgrading is a one-way door the backend
+// enforces too (guard_politician_role_downgrade trigger), this just keeps
+// the picker from offering an option that would fail.
+function StepBasicInfo({ data, updateData, nextStep, lockToPolitician }) {
   const canContinue = data.role && (data.role !== 'politician' || data.fullName?.trim());
 
   return (
@@ -32,20 +38,27 @@ function StepBasicInfo({ data, updateData, nextStep }) {
 
       <div>
         <label className="block text-sm font-medium text-text-tertiary mb-3">Account Type</label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[{ val: 'normal', label: 'Citizen', desc: 'Anonymous community member' },
-            { val: 'politician', label: 'Politician', desc: 'Public representative or candidate' }
-          ].map(({ val, label, desc }) => (
-            <button key={val} type="button" onClick={() => updateData({ role: val })}
-              className={`p-4 rounded-xl border-2 text-left transition-all ${data.role === val
-                ? (val === 'politician' ? 'border-primary bg-primary/10' : 'border-accent bg-accent/10')
-                : 'border-border hover:border-border-light bg-surface-hover'
-              }`}>
-              <p className="font-bold text-text-main">{label}</p>
-              <p className="text-xs text-text-muted mt-0.5">{desc}</p>
-            </button>
-          ))}
-        </div>
+        {lockToPolitician ? (
+          <div className="p-4 rounded-xl border-2 border-primary bg-primary/10 text-left">
+            <p className="font-bold text-text-main">Politician</p>
+            <p className="text-xs text-text-muted mt-0.5">Public representative or candidate — this can't be switched back to a citizen account.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[{ val: 'normal', label: 'Citizen', desc: 'Anonymous community member' },
+              { val: 'politician', label: 'Politician', desc: 'Public representative or candidate' }
+            ].map(({ val, label, desc }) => (
+              <button key={val} type="button" onClick={() => updateData({ role: val })}
+                className={`p-4 rounded-xl border-2 text-left transition-all ${data.role === val
+                  ? (val === 'politician' ? 'border-primary bg-primary/10' : 'border-accent bg-accent/10')
+                  : 'border-border hover:border-border-light bg-surface-hover'
+                }`}>
+                <p className="font-bold text-text-main">{label}</p>
+                <p className="text-xs text-text-muted mt-0.5">{desc}</p>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="flex justify-end pt-2">
@@ -121,7 +134,7 @@ export default function EditProfileFlow({ initialData, onComplete, onCancel }) {
   };
 
   const renderStep = () => {
-    if (step === 1) return <StepBasicInfo data={formData} updateData={updateData} nextStep={() => setStep(2)} />;
+    if (step === 1) return <StepBasicInfo data={formData} updateData={updateData} nextStep={() => setStep(2)} lockToPolitician={initialData.role === 'politician'} />;
     if (step === 2) return (
       <StepLocation
         data={formData}

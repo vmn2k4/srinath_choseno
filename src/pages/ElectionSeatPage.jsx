@@ -9,7 +9,7 @@ import {
 } from '../services/elections';
 import { getPoliticalParties } from '../services/politicalParties';
 import { getProfileRole } from '../services/profile';
-import { Vote, MapPin, ArrowLeft, Users, Calendar, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Vote, MapPin, Users, Calendar, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { Card, Button, Badge, Input, Textarea, Select, Spinner, EmptyState } from '../components/ui';
 
 export default function ElectionSeatPage() {
@@ -146,176 +146,46 @@ export default function ElectionSeatPage() {
 
   const alreadyApplied = myCandidacies.some(c => c.seat_id === seatId);
 
+  const hasSidebar = role === 'normal' || role === 'politician' || adminStatus;
+
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8">
-      <div className="w-full min-w-0 max-w-6xl mx-auto">
-        <button onClick={() => navigate('/elections')} className="flex items-center gap-2 text-text-muted hover:text-text-secondary mb-6 transition-colors">
-          <ArrowLeft size={16} /> Back to Elections
-        </button>
+      <div className="w-full min-w-0 max-w-6xl mx-auto flex flex-col lg:flex-row gap-6 items-start">
 
-        {/* Seat / Election Header */}
-        <Card variant="hero" padding="lg" className="mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <Badge tone="amber" shape="pill" icon={<Vote size={12} />}>{seat.elections?.status?.replace('_', ' ')}</Badge>
-            <span className="text-xs text-text-muted">{seat.elections?.name}</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-text-main tracking-tight">{seat.role_title}</h1>
-          <div className="flex items-center gap-4 mt-3 flex-wrap text-sm text-text-muted">
-            <span className="flex items-center gap-1.5">
-              <MapPin size={14} className="text-accent" /> {seat.map_shapes?.name}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Calendar size={14} className="text-accent" /> {seat.elections?.election_date}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Users size={14} className="text-accent" /> {candidates.length} candidate{candidates.length !== 1 ? 's' : ''}
-            </span>
-          </div>
-        </Card>
-
-        {/* Nominate Yourself */}
-        {role === 'normal' && (
-          <Card padding="sm" className="mb-6 bg-primary/10 border-primary/25 flex items-center justify-between gap-4 flex-wrap">
-            <p className="text-sm text-text-secondary">
-              Want to run for this seat? Switch your account to a politician profile to nominate yourself.
-            </p>
-            <Button onClick={() => navigate('/profile')} className="shrink-0">
-              Become a Politician
-            </Button>
-          </Card>
-        )}
-
-        {role === 'politician' && (
-          <Card padding="sm" className="mb-6 bg-primary/10 border-primary/25 flex items-center justify-between gap-4 flex-wrap">
-            {alreadyApplied ? (
-              <>
-                <p className="text-sm text-text-secondary">You've already applied for this seat.</p>
-                <Button variant="secondary" onClick={() => navigate('/politician/elections')} className="shrink-0">
-                  Manage My Candidacies
-                </Button>
-              </>
-            ) : (
-              <>
-                <p className="text-sm text-text-secondary">Think you'd be a good fit for {seat.role_title}?</p>
-                <Button onClick={startApplying} disabled={applying} className="shrink-0">
-                  {applying ? 'Starting...' : 'Nominate Yourself'}
-                </Button>
-              </>
-            )}
-          </Card>
-        )}
-        {status && <p className="text-danger text-xs mb-6">{status}</p>}
-
-        {/* Election Administrator */}
-        {adminStatus && (
-          <Card variant="row" padding="sm" className="mb-6">
-            <div className="flex items-center gap-2 mb-1">
-              <ShieldCheck size={16} className="text-accent" />
-              <h3 className="text-sm font-bold text-text-main">Election Administrator</h3>
+        {/* Main column */}
+        <div className="flex-1 min-w-0 w-full">
+          {/* Seat / Election Header — compact single row */}
+          <Card variant="hero" padding="sm" className="mb-6 flex items-center justify-between gap-3 flex-wrap">
+            <div className="flex items-center gap-2.5 min-w-0 flex-wrap">
+              <Badge tone="amber" shape="pill" icon={<Vote size={12} />}>{seat.elections?.status?.replace('_', ' ')}</Badge>
+              <h1 className="text-lg font-bold text-text-main tracking-tight truncate">{seat.role_title}</h1>
+              <span className="text-xs text-text-muted truncate">{seat.elections?.name}</span>
             </div>
-
-            {adminStatus.my_application_status === 'approved' ? (
-              <>
-                <p className="text-sm text-text-secondary mt-2 mb-3">
-                  You administer this seat. You can add a candidate who is running but hasn't registered on the platform yet.
-                </p>
-                {!showAddCandidateForm ? (
-                  <Button onClick={() => setShowAddCandidateForm(true)}>
-                    Add a Candidate
-                  </Button>
-                ) : (
-                  <form onSubmit={submitUnregisteredCandidate} className="space-y-3 mt-3">
-                    <Input
-                      type="text" required placeholder="Candidate's full name" value={newCandidateName}
-                      onChange={e => setNewCandidateName(e.target.value)}
-                    />
-                    <Select value={newCandidateParty} onChange={e => setNewCandidateParty(e.target.value)}>
-                      <option value="">No party / Independent</option>
-                      {parties.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
-                    </Select>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <Input
-                        type="text" placeholder="Education (optional)" value={newCandidateEducation}
-                        onChange={e => setNewCandidateEducation(e.target.value)}
-                      />
-                      <Input
-                        type="text" placeholder="Hometown (optional)" value={newCandidateHometown}
-                        onChange={e => setNewCandidateHometown(e.target.value)}
-                      />
-                    </div>
-                    <Textarea
-                      placeholder="Short bio (optional)" value={newCandidateBio} rows={2}
-                      onChange={e => setNewCandidateBio(e.target.value)}
-                    />
-                    <div className="flex items-center gap-2">
-                      <Button type="submit" disabled={addingCandidate}>
-                        {addingCandidate ? 'Adding...' : 'Add Candidate'}
-                      </Button>
-                      <Button type="button" variant="ghost" onClick={() => setShowAddCandidateForm(false)}>
-                        Cancel
-                      </Button>
-                    </div>
-                    {addCandidateStatus && <p className="text-danger text-xs">{addCandidateStatus}</p>}
-                  </form>
-                )}
-              </>
-            ) : adminStatus.my_application_status === 'pending' ? (
-              <p className="text-sm text-text-secondary mt-2">Your application to administer this seat is under review.</p>
-            ) : adminStatus.my_application_status === 'rejected' ? (
-              <p className="text-sm text-text-secondary mt-2">Your application to administer this seat was not approved.</p>
-            ) : adminStatus.has_approved_admin ? (
-              <p className="text-sm text-text-secondary mt-2">This seat already has an election administrator.</p>
-            ) : (
-              <>
-                <p className="text-sm text-text-secondary mt-2 mb-3">
-                  Volunteer to moderate this seat and help add candidates who are missing from the platform.
-                </p>
-                {!showAdminApplyForm ? (
-                  <Button variant="secondary" onClick={() => setShowAdminApplyForm(true)}>
-                    Volunteer to Administer This Seat
-                  </Button>
-                ) : (
-                  <form onSubmit={submitElectionAdminApplication} className="space-y-3">
-                    <Textarea
-                      required placeholder="Tell us about yourself and why you're interested..."
-                      value={adminMotivation} rows={3}
-                      onChange={e => setAdminMotivation(e.target.value)}
-                    />
-                    <Input
-                      type="text" placeholder="Do you run any social media communities? (optional)"
-                      value={adminSocialMedia} onChange={e => setAdminSocialMedia(e.target.value)}
-                    />
-                    <Input
-                      type="email" required placeholder="Contact email"
-                      value={adminContactEmail} onChange={e => setAdminContactEmail(e.target.value)}
-                    />
-                    <div className="flex items-center gap-2">
-                      <Button type="submit" disabled={submittingAdminApp}>
-                        {submittingAdminApp ? 'Submitting...' : 'Submit Application'}
-                      </Button>
-                      <Button type="button" variant="ghost" onClick={() => setShowAdminApplyForm(false)}>
-                        Cancel
-                      </Button>
-                    </div>
-                    {adminAppStatus && <p className="text-danger text-xs">{adminAppStatus}</p>}
-                  </form>
-                )}
-              </>
-            )}
+            <div className="flex items-center gap-3 flex-wrap text-xs text-text-muted shrink-0">
+              <span className="flex items-center gap-1" title={seat.map_shapes?.name}>
+                <MapPin size={13} className="text-accent" /> {seat.map_shapes?.name}
+              </span>
+              <span className="flex items-center gap-1" title={seat.elections?.election_date}>
+                <Calendar size={13} className="text-accent" /> {seat.elections?.election_date}
+              </span>
+              <span className="flex items-center gap-1" title={`${candidates.length} candidate${candidates.length !== 1 ? 's' : ''}`}>
+                <Users size={13} className="text-accent" /> {candidates.length}
+              </span>
+            </div>
           </Card>
-        )}
 
-        {/* Candidate Switcher */}
-        {candidates.length === 0 ? (
-          <EmptyState
-            icon={Vote}
-            title="No Candidates Yet"
-            description="Nobody has applied for this seat yet — be the first to run."
-            className="mb-8"
-          />
-        ) : (
-          <>
-            {candidates.length > 1 && (
+          {status && <p className="text-danger text-xs mb-6">{status}</p>}
+
+          {/* Candidate Switcher */}
+          {candidates.length === 0 ? (
+            <EmptyState
+              icon={Vote}
+              title="No Candidates Yet"
+              description="Nobody has applied for this seat yet — be the first to run."
+              className="mb-8"
+            />
+          ) : (
+            <>
               <div className="flex gap-3 overflow-x-auto pb-2 mb-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 {candidates.map(c => {
                   const name = c.profiles?.full_name || getGhostDisplayName(c.profiles?.current_ghost_id);
@@ -345,10 +215,144 @@ export default function ElectionSeatPage() {
                   );
                 })}
               </div>
+
+              {selectedCandidateId && <CandidacyWall candidateId={selectedCandidateId} embedded />}
+            </>
+          )}
+        </div>
+
+        {/* Right sidebar: actions that are about the visitor's own relationship
+            to this seat, not the candidates themselves — kept out of the main
+            column so it doesn't push candidate content down the page. */}
+        {hasSidebar && (
+          <div className="w-full lg:w-72 shrink-0 space-y-4 lg:sticky lg:top-6">
+            {role === 'normal' && (
+              <Card padding="sm" className="bg-primary/10 border-primary/25">
+                <p className="text-sm text-text-secondary mb-3">
+                  Want to run for this seat? Switch your account to a politician profile to nominate yourself.
+                </p>
+                <Button onClick={() => navigate('/profile')} className="w-full">
+                  Become a Politician
+                </Button>
+              </Card>
             )}
 
-            {selectedCandidateId && <CandidacyWall candidateId={selectedCandidateId} embedded />}
-          </>
+            {role === 'politician' && (
+              <Card padding="sm" className="bg-primary/10 border-primary/25">
+                {alreadyApplied ? (
+                  <>
+                    <p className="text-sm text-text-secondary mb-3">You've already applied for this seat.</p>
+                    <Button variant="secondary" onClick={() => navigate('/politician/elections')} className="w-full">
+                      Manage My Candidacies
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-sm text-text-secondary mb-3">Think you'd be a good fit for {seat.role_title}?</p>
+                    <Button onClick={startApplying} disabled={applying} className="w-full">
+                      {applying ? 'Starting...' : 'Nominate Yourself'}
+                    </Button>
+                  </>
+                )}
+              </Card>
+            )}
+
+            {adminStatus && (
+              <Card variant="row" padding="sm">
+                <div className="flex items-center gap-2 mb-1">
+                  <ShieldCheck size={16} className="text-accent" />
+                  <h3 className="text-sm font-bold text-text-main">Election Administrator</h3>
+                </div>
+
+                {adminStatus.my_application_status === 'approved' ? (
+                  <>
+                    <p className="text-sm text-text-secondary mt-2 mb-3">
+                      You administer this seat. You can add a candidate who is running but hasn't registered on the platform yet.
+                    </p>
+                    {!showAddCandidateForm ? (
+                      <Button onClick={() => setShowAddCandidateForm(true)} className="w-full">
+                        Add a Candidate
+                      </Button>
+                    ) : (
+                      <form onSubmit={submitUnregisteredCandidate} className="space-y-3 mt-3">
+                        <Input
+                          type="text" required placeholder="Candidate's full name" value={newCandidateName}
+                          onChange={e => setNewCandidateName(e.target.value)}
+                        />
+                        <Select value={newCandidateParty} onChange={e => setNewCandidateParty(e.target.value)}>
+                          <option value="">No party / Independent</option>
+                          {parties.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                        </Select>
+                        <Input
+                          type="text" placeholder="Education (optional)" value={newCandidateEducation}
+                          onChange={e => setNewCandidateEducation(e.target.value)}
+                        />
+                        <Input
+                          type="text" placeholder="Hometown (optional)" value={newCandidateHometown}
+                          onChange={e => setNewCandidateHometown(e.target.value)}
+                        />
+                        <Textarea
+                          placeholder="Short bio (optional)" value={newCandidateBio} rows={2}
+                          onChange={e => setNewCandidateBio(e.target.value)}
+                        />
+                        <div className="flex items-center gap-2">
+                          <Button type="submit" disabled={addingCandidate}>
+                            {addingCandidate ? 'Adding...' : 'Add Candidate'}
+                          </Button>
+                          <Button type="button" variant="ghost" onClick={() => setShowAddCandidateForm(false)}>
+                            Cancel
+                          </Button>
+                        </div>
+                        {addCandidateStatus && <p className="text-danger text-xs">{addCandidateStatus}</p>}
+                      </form>
+                    )}
+                  </>
+                ) : adminStatus.my_application_status === 'pending' ? (
+                  <p className="text-sm text-text-secondary mt-2">Your application to administer this seat is under review.</p>
+                ) : adminStatus.my_application_status === 'rejected' ? (
+                  <p className="text-sm text-text-secondary mt-2">Your application to administer this seat was not approved.</p>
+                ) : adminStatus.has_approved_admin ? (
+                  <p className="text-sm text-text-secondary mt-2">This seat already has an election administrator.</p>
+                ) : (
+                  <>
+                    <p className="text-sm text-text-secondary mt-2 mb-3">
+                      Volunteer to moderate this seat and help add candidates who are missing from the platform.
+                    </p>
+                    {!showAdminApplyForm ? (
+                      <Button variant="secondary" onClick={() => setShowAdminApplyForm(true)} className="w-full">
+                        Volunteer to Administer This Seat
+                      </Button>
+                    ) : (
+                      <form onSubmit={submitElectionAdminApplication} className="space-y-3">
+                        <Textarea
+                          required placeholder="Tell us about yourself and why you're interested..."
+                          value={adminMotivation} rows={3}
+                          onChange={e => setAdminMotivation(e.target.value)}
+                        />
+                        <Input
+                          type="text" placeholder="Do you run any social media communities? (optional)"
+                          value={adminSocialMedia} onChange={e => setAdminSocialMedia(e.target.value)}
+                        />
+                        <Input
+                          type="email" required placeholder="Contact email"
+                          value={adminContactEmail} onChange={e => setAdminContactEmail(e.target.value)}
+                        />
+                        <div className="flex items-center gap-2">
+                          <Button type="submit" disabled={submittingAdminApp}>
+                            {submittingAdminApp ? 'Submitting...' : 'Submit Application'}
+                          </Button>
+                          <Button type="button" variant="ghost" onClick={() => setShowAdminApplyForm(false)}>
+                            Cancel
+                          </Button>
+                        </div>
+                        {adminAppStatus && <p className="text-danger text-xs">{adminAppStatus}</p>}
+                      </form>
+                    )}
+                  </>
+                )}
+              </Card>
+            )}
+          </div>
         )}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { getSession, onAuthStateChange, signOut as signOutService } from '../services/auth';
 import { fetchOrHealProfile, getOwnProfile } from '../services/profile';
 
@@ -8,6 +8,12 @@ export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Tracks whichever user id is currently applied, so the onAuthStateChange
+  // handler below can tell "this event is about the same session" apart
+  // from "this is actually a new sign-in" without a stale closure over
+  // `session` state (this ref is mutated directly, not through React state).
+  const currentUserIdRef = useRef(null);
 
   useEffect(() => {
     let active = true;
@@ -23,6 +29,7 @@ export function AuthProvider({ children }) {
     const applySession = async (newSession) => {
       if (!active) return;
       setSession(newSession);
+      currentUserIdRef.current = newSession?.user?.id ?? null;
       const userId = newSession?.user?.id;
 
       if (!userId) {
@@ -42,13 +49,21 @@ export function AuthProvider({ children }) {
     getSession().then(({ data: { session } }) => applySession(session));
 
     const { data: { subscription } } = onAuthStateChange((event, newSession) => {
-      // TOKEN_REFRESHED fires on a timer and whenever the tab regains focus
-      // (supabase-js revalidates the session on visibility change) -- same
-      // user, just a rotated token. Applying it through applySession would
-      // re-arm `loading`, which ProtectedRoute renders as a full-page
-      // spinner -- so every tab switch looked like the whole app reloading.
-      // Just swap in the refreshed session and skip the profile refetch.
-      if (event === 'TOKEN_REFRESHED') {
+      // supabase-js re-validates the session whenever the tab regains focus
+      // (visibilitychange). If the access token isn't near expiry yet, it
+      // doesn't emit TOKEN_REFRESHED -- it re-emits SIGNED_IN with a fresh
+      // copy of the *same* session read back from storage (auth-js
+      // GoTrueClient#_recoverAndRefresh's non-expiring branch). Both cases
+      // are the same user as before, just a redundant re-notification.
+      // Applying either through applySession would re-arm `loading` (which
+      // ProtectedRoute renders as a full-page spinner) and refetch the
+      // profile -- so every tab switch looked like the whole app reloading,
+      // and any page effect keyed on `[..., authLoading, ...]` would refire
+      // too. Only swap in the session (fresh token, kept referentially
+      // stable for `user` via the id-based useMemo below); skip the
+      // loading/refetch cycle unless this is genuinely a different user.
+      const sameUser = newSession?.user?.id && newSession.user.id === currentUserIdRef.current;
+      if ((event === 'TOKEN_REFRESHED' || event === 'SIGNED_IN') && sameUser) {
         setSession(newSession);
         return;
       }

@@ -242,8 +242,19 @@ export async function resolveRegionNames(shapeIds, country) {
 }
 
 // ── posts scoped to a candidacy (CandidacyWall) ─────────────────────────
-export async function getCandidatePosts(candidateId) {
-  return supabase.from('posts').select('*, comments (*)').eq('election_candidate_id', candidateId).order('created_at', { ascending: false });
+// Matches on election_candidate_id (always known — it's the candidacy row
+// id, no join required) OR'd with the candidate's ghost id when resolvable,
+// so a candidacy's own discussion always shows even if the profiles join
+// that would normally supply ghostId gets RLS-blocked for this viewer (e.g.
+// a candidate whose profiles.role isn't 'politician' for whatever reason —
+// the "public can view politician profiles" policy doesn't cover them).
+// When ghostId IS resolvable this also pulls in the same person's permanent
+// wall posts, unifying the two views — see
+// 20260730000003_unify_candidacy_and_wall_posts.sql.
+export async function getCandidacyWallPosts(candidateId, ghostId) {
+  const filters = [`election_candidate_id.eq.${candidateId}`];
+  if (ghostId) filters.push(`ghost_id.eq.${ghostId}`, `wall_ghost_id.eq.${ghostId}`);
+  return supabase.from('posts').select('*, comments (*)').or(filters.join(',')).order('created_at', { ascending: false });
 }
 
 export async function createCandidatePost(fields) {
