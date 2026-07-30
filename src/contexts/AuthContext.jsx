@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { getSession, onAuthStateChange, signOut as signOutService } from '../services/auth';
 import { fetchOrHealProfile, getOwnProfile } from '../services/profile';
 
@@ -41,8 +41,18 @@ export function AuthProvider({ children }) {
 
     getSession().then(({ data: { session } }) => applySession(session));
 
-    const { data: { subscription } } = onAuthStateChange((_event, session) => {
-      applySession(session);
+    const { data: { subscription } } = onAuthStateChange((event, newSession) => {
+      // TOKEN_REFRESHED fires on a timer and whenever the tab regains focus
+      // (supabase-js revalidates the session on visibility change) -- same
+      // user, just a rotated token. Applying it through applySession would
+      // re-arm `loading`, which ProtectedRoute renders as a full-page
+      // spinner -- so every tab switch looked like the whole app reloading.
+      // Just swap in the refreshed session and skip the profile refetch.
+      if (event === 'TOKEN_REFRESHED') {
+        setSession(newSession);
+        return;
+      }
+      applySession(newSession);
     });
 
     return () => {
@@ -63,8 +73,16 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // supabase-js hands back a brand-new `user` object on every session
+  // refresh (same id, different reference) -- every page that keys a
+  // useEffect on `[user]` would silently re-fetch and re-flash its own
+  // loading spinner on every tab-focus token refresh otherwise. Keep the
+  // reference stable across renders as long as the id hasn't changed, so
+  // consumers only see a "new" user when it actually is one.
+  const user = useMemo(() => session?.user, [session?.user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
-    <AuthContext.Provider value={{ session, user: session?.user, profile, loading, signOut, refreshProfile }}>
+    <AuthContext.Provider value={{ session, user, profile, loading, signOut, refreshProfile }}>
       {children}
     </AuthContext.Provider>
   );

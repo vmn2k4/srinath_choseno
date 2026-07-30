@@ -62,22 +62,8 @@ export async function dismissElectionNotification(profileId, electionId) {
 }
 
 // ── ghost identity ───────────────────────────────────────────────────────
-// FeedPage's burn path goes through this RPC — DO NOT merge with
-// profile.js's burnGhostIdRaw, which ProfilePage uses instead (raw column
-// update, bypasses whatever server-side logic this RPC runs).
+// Shared by FeedPage and ProfilePage — the only burn path. Banks the
+// outgoing ghost's civic_score contribution server-side before rotating.
 export async function burnGhostIdentityViaRpc() {
   return supabase.rpc('burn_ghost_identity');
-}
-
-// ── silent data export ───────────────────────────────────────────────────
-export async function getPostsForExport(ghostId) {
-  return supabase.from('posts').select('id, content, created_at, likes_count, dislikes_count, comments(id)').eq('ghost_id', ghostId);
-}
-
-export async function getCommentsForExport(ghostId) {
-  return supabase.from('comments').select('id, post_id, content, created_at').eq('ghost_id', ghostId);
-}
-
-export async function uploadUserExport(fileName, jsonString) {
-  return supabase.storage.from('user_exports').upload(fileName, jsonString, { upsert: true, contentType: 'application/json' });
 }

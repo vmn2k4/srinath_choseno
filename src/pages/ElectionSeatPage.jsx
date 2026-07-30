@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import CandidacyWall from '../components/CandidacyWall';
+import { getGhostDisplayName } from '../utils/ghostName';
 import {
   getSeatById, getCandidatesBySeatIds, getMyCandidacies, applyForSeat,
   getSeatAdminStatus, applyForElectionAdmin, addUnregisteredCandidate
@@ -317,7 +318,7 @@ export default function ElectionSeatPage() {
             {candidates.length > 1 && (
               <div className="flex gap-3 overflow-x-auto pb-2 mb-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 {candidates.map(c => {
-                  const name = c.profiles?.full_name || `Ghost-${c.profiles?.current_ghost_id?.split('-')[0]}`;
+                  const name = c.profiles?.full_name || getGhostDisplayName(c.profiles?.current_ghost_id);
                   const isSelected = c.id === selectedCandidateId;
                   return (
                     <button

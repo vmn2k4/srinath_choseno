@@ -1,6 +1,7 @@
 import React from 'react';
 import { Users, MessageSquare, Send } from 'lucide-react';
 import LinkPreview from '../LinkPreview';
+import { getGhostDisplayName } from '../../utils/ghostName';
 import { Card, Badge, Input, Button, EmptyState } from '../ui';
 
 // Shared by PoliticianWall.jsx (a politician's own public wall) and
@@ -43,7 +44,7 @@ export default function WallPostFeed({
               </div>
               <div>
                 <div className="text-sm font-bold text-text-secondary font-mono">
-                  Ghost-{post.ghost_id.split('-')[0]}
+                  {getGhostDisplayName(post.ghost_id)}
                   {isOwnerPost && (
                     <Badge tone="primary" className="ml-2">{ownerBadgeLabel}</Badge>
                   )}
@@ -81,7 +82,7 @@ export default function WallPostFeed({
                     <div key={comment.id} className="pl-3">
                       <div className="flex items-baseline gap-2 mb-0.5">
                         <span className="text-xs font-bold text-text-muted font-mono">
-                          Ghost-{comment.ghost_id.split('-')[0]}
+                          {getGhostDisplayName(comment.ghost_id)}
                         </span>
                         {comment.ghost_id === ownerGhostId && (
                           <Badge tone="primary">{viewerIsOwner ? 'You' : ownerBadgeLabel}</Badge>

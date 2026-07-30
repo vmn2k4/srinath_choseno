@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { MapPin, Pencil, Flame, RefreshCw } from 'lucide-react';
+import { MapPin, Pencil, Flame, RefreshCw, Award } from 'lucide-react';
 import EditProfileFlow from './Profile/EditProfileFlow';
-import { getOwnProfile, getPoliticianProfileFull, getLatestUserLocation, getUserBoundaryMemberships, burnGhostIdRaw, upsertProfileCore } from '../services/profile';
+import { getOwnProfile, getPoliticianProfileFull, getLatestUserLocation, getUserBoundaryMemberships, calculateMyScore, upsertProfileCore } from '../services/profile';
+import { burnGhostIdentityViaRpc } from '../services/feed';
 import { Card, Button, Badge, Spinner, PageHeader } from '../components/ui';
 
 export default function ProfilePage() {
@@ -14,6 +15,8 @@ export default function ProfilePage() {
   const [burning, setBurning] = useState(false);
   const [switchingRole, setSwitchingRole] = useState(false);
   const [profile, setProfile] = useState(null);
+  const [score, setScore] = useState(null);
+  const [scoring, setScoring] = useState(false);
 
   const fetchProfile = async () => {
     if (!user) return;
@@ -58,9 +61,25 @@ export default function ProfilePage() {
   const burnGhostId = async () => {
     if (!confirm('⚠️ This permanently severs all your past activity from your account. Are you sure?')) return;
     setBurning(true);
-    await burnGhostIdRaw(user.id);
+    const { error } = await burnGhostIdentityViaRpc();
+    if (error) {
+      console.error('Error burning identity:', error);
+      alert('Failed to burn identity. Please try again.');
+    }
     await fetchProfile();
     setBurning(false);
+  };
+
+  const updateScore = async () => {
+    setScoring(true);
+    const { data, error } = await calculateMyScore();
+    if (error) {
+      console.error('Error calculating score:', error);
+      alert('Failed to calculate score. Please try again.');
+    } else {
+      setScore(data);
+    }
+    setScoring(false);
   };
 
   const handleEditComplete = (updatedFormData) => {
@@ -182,13 +201,25 @@ export default function ProfilePage() {
           )}
 
           {/* Privacy & Ghost ID Card */}
-          {profile?.role !== 'politician' && (
+          {profile && (
             <Card as="section">
               <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest mb-5">Privacy & Anonymity</h3>
               <div>
                 <p className="text-xs text-text-muted mb-1">Current Ghost ID</p>
                 <p className="font-mono text-xs text-text-secondary truncate">{profile?.ghostId}</p>
-                <p className="text-xs text-text-muted mt-2 mb-4">Burning your Ghost ID permanently severs all links to your past posts. This cannot be undone.</p>
+
+                <div className="mt-4 pt-4 border-t border-border-light flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p className="text-xs text-text-muted mb-1">Civic Score</p>
+                    <p className="text-2xl font-bold text-text-main">{score !== null ? score : '—'}</p>
+                    <p className="text-xs text-text-muted mt-1">10 pts/post, 5 pts/comment, +1 per like and -1 per dislike on your posts.</p>
+                  </div>
+                  <Button variant="outline" onClick={updateScore} disabled={scoring}>
+                    {scoring ? <><RefreshCw size={15} className="animate-spin" /> Calculating...</> : <><Award size={15} /> Update My Score</>}
+                  </Button>
+                </div>
+
+                <p className="text-xs text-text-muted mt-4 mb-4">Burning your Ghost ID permanently severs all links to your past posts. This cannot be undone.</p>
                 <Button variant="danger" onClick={burnGhostId} disabled={burning}>
                   {burning ? <><RefreshCw size={15} className="animate-spin" /> Burning...</> : <><Flame size={15} /> Burn My Ghost ID</>}
                 </Button>

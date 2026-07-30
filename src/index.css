@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Big+Shoulders+Display:wght@700;800;900&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Inter', sans-serif;
-  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+  --font-sans: 'Public Sans', system-ui, sans-serif;
+  --font-display: 'Big Shoulders Display', system-ui, sans-serif;
   --font-mono: 'Fira Code', monospace;
 
   /* Brand Colors */
@@ -44,12 +44,18 @@
   /* Danger/Alert (Rose mapped) */
   --color-danger: var(--color-rose-500);
   --color-danger-light: var(--color-rose-400);
+
+  /* Elevation — neutral depth shadows (offset + blur, never a colored halo) */
+  --shadow-elevated-md: 0 10px 30px -4px rgba(0, 0, 0, 0.45);
+  --shadow-elevated-lg: 0 14px 40px -6px rgba(0, 0, 0, 0.5);
+  --shadow-elevated-xl: 0 24px 70px -10px rgba(0, 0, 0, 0.55);
 }
 
 @layer base {
   body {
     @apply min-h-screen text-text-main antialiased font-sans m-0 p-0 box-border;
-    background: radial-gradient(circle at top right, var(--color-vintage-grape), var(--color-surface) 45%, var(--color-background));
+    background-color: var(--color-background);
+    background-image: radial-gradient(circle at top right, var(--color-vintage-grape), var(--color-surface) 45%, var(--color-background));
   }
 }
 
@@ -72,33 +78,11 @@
 /* Entrance/scroll-reveal/parallax motion lives in HomePage.jsx via
    framer-motion. What's left here is purely static/decorative CSS. */
 
-/* Shimmering gradient headline */
-@keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.text-shimmer {
-  background: linear-gradient(
-    110deg,
-    var(--color-muted-olive) 20%,
-    var(--color-vanilla-custard) 40%,
-    var(--color-cool-steel) 60%,
-    var(--color-muted-olive) 80%
-  );
-  background-size: 250% 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  animation: shimmer 7s ease-in-out infinite;
-}
-
 /* Ambient floating orbs — position/size/color only; movement is driven by
    framer-motion (scroll parallax + idle drift) in HomePage.jsx. */
 .orb {
   position: absolute;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   filter: blur(90px);
   will-change: transform;
 }
@@ -109,17 +93,3 @@
 .orb-d { width: 420px; height: 420px; top: 10%; right: 0; background: rgba(121, 148, 150, 0.08); animation-delay: -4s; }
 .orb-e { width: 360px; height: 360px; top: -30%; left: 30%; background: rgba(233, 235, 158, 0.10); animation-delay: -9s; }
 
-/* Dot-grid backdrop for the hero */
-.hero-grid {
-  background-image: radial-gradient(rgba(244, 245, 240, 0.07) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, black 30%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, black 30%, transparent 75%);
-}
-
-/* Respect reduced-motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  .text-shimmer {
-    animation: none;
-  }
-}

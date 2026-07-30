@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import LinkPreview from './LinkPreview';
+import { getGhostDisplayName } from '../utils/ghostName';
 import VideoRecorder from './video/VideoRecorder';
 import WallPostFeed from './wall/WallPostFeed';
 import { getPublicCandidateById, getPublicCandidateAnswers, getCandidatePosts, createCandidatePost, updateNominationFiled } from '../services/elections';
@@ -202,7 +203,7 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
 
   const isOwner = !!user && candidate.politician_id === user.id;
   const seat = candidate.election_seats;
-  const displayName = candidate.profiles?.full_name || `Ghost-${candidate.profiles?.current_ghost_id?.split('-')[0]}`;
+  const displayName = candidate.profiles?.full_name || getGhostDisplayName(candidate.profiles?.current_ghost_id);
   const candidateGhostId = candidate.profiles?.current_ghost_id;
 
   // Campaign video gallery — the required intro video from the application

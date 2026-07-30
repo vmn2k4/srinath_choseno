@@ -12,9 +12,9 @@ Every Supabase call (`.from()`, `.rpc()`, `.storage`, `.auth`) lives in `src/ser
 | `elections.js` | elections, election_seats, election_candidates, election_administrators, questions/options, candidate answers, election RPCs | `ElectionsAdmin`, `ElectionAdminApplications`, `PoliticianElections`, `CandidateApplication`, `CandidacyWall`, `ElectionsPage`, `ElectionSeatPage` |
 | `boundaries.js` | countries, country_boundary_types, map_shapes, boundary_uploads, boundary RPCs (geojson, containers, redistricting, shape insert) | `BoundaryVisualizer`, `BoundaryUploadsPanel`, `RedistrictingPanel`, `BoundaryPicker`, `AdminPage`, `UserPage`, `StepLocation`, plus `ElectionsAdmin`/`PoliticianElections` for country/type/shape lookups |
 | `politicalParties.js` | political_parties CRUD | `AdminPage`, `StepPolitician` |
-| `feed.js` | posts (main feed), comments, post-image storage, ghost-identity RPC, election notifications, silent data export | `FeedPage`, plus `PoliticianWall`/`CandidacyWall` for the shared `createComment`/`uploadPostImage` helpers |
+| `feed.js` | posts (main feed), comments, post-image storage, ghost-identity burn RPC, election notifications | `FeedPage`, `ProfilePage` (burn), plus `PoliticianWall`/`CandidacyWall` for the shared `createComment`/`uploadPostImage` helpers |
 | `politicianWall.js` | politician_supporters, wall-scoped profile/posts lookups, wall post creation (direct insert) | `PoliticianWall` |
-| `profile.js` | profiles, user_locations, user_boundary_memberships, politician_profiles, the AuthContext self-healing profile fetch | `ProfilePage`, `EditProfileFlow`, `OnboardingFlow`, `AuthContext`, plus `FeedPage`/`PoliticianWall`/`CandidacyWall`/`ElectionsPage` for profile/membership lookups |
+| `profile.js` | profiles, user_locations, user_boundary_memberships, politician_profiles, civic score RPC, the AuthContext self-healing profile fetch | `ProfilePage`, `EditProfileFlow`, `OnboardingFlow`, `AuthContext`, plus `FeedPage`/`PoliticianWall`/`CandidacyWall`/`ElectionsPage` for profile/membership lookups |
 | `auth.js` | auth.signUp / signInWithPassword / signOut / getSession / onAuthStateChange | `AuthPage`, `AuthContext` |
 | `video.js` | storage upload/getPublicUrl for video (bucket-parameterized) | `VideoRecorder` |
 
@@ -27,12 +27,11 @@ Every Supabase call (`.from()`, `.rpc()`, `.storage`, `.auth`) lives in `src/ser
 
 ## Known intentional divergences
 
-Two near-identical-looking operations are deliberately **not** unified, because they are not actually the same operation:
-
-- **Ghost-ID burn**: `feed.js`'s `burnGhostIdentityViaRpc()` (used by `FeedPage`) calls the `burn_ghost_identity` RPC. `profile.js`'s `burnGhostIdRaw()` (used by `ProfilePage`) does a raw `profiles.current_ghost_id` update instead, bypassing whatever server-side logic the RPC runs. This was already the case before the service-layer extraction — do not merge these into one function.
-- **Post creation**: `feed.js`'s `createFeedPost()` (used by `FeedPage`) calls the `create_post` RPC. `politicianWall.js`'s `createWallPost()` (used by `PoliticianWall`) does a direct `posts.insert()` with `wall_ghost_id` set instead. Do not merge these either.
+- **Post creation**: `feed.js`'s `createFeedPost()` (used by `FeedPage`) calls the `create_post` RPC. `politicianWall.js`'s `createWallPost()` (used by `PoliticianWall`) does a direct `posts.insert()` with `wall_ghost_id` set instead. Do not merge these.
 
 If you're about to "clean up" one of these into the other, check with whoever owns that RPC first — the divergence may be load-bearing.
+
+Ghost-ID burn used to be a second documented divergence (`profile.js`'s `burnGhostIdRaw()`, a raw column update bypassing the RPC). That turned out to be a workaround from when `burn_ghost_identity` didn't exist in the database at all (fixed 2026-07-30) rather than an intentional design choice — `burnGhostIdRaw` is gone, `ProfilePage` now shares `burnGhostIdentityViaRpc()` with `FeedPage`. This mattered concretely once civic-score banking moved into the RPC (`20260730000001_civic_score.sql`): a raw column update would silently skip crediting the score.
 
 ## Known layering violations
 

@@ -10,14 +10,19 @@ colors:
   muted: "#799496"
 typography:
   display:
-    fontFamily: "Space Grotesk, Inter, sans-serif"
+    fontFamily: "Big Shoulders Display, sans-serif"
   body:
-    fontFamily: "Inter, sans-serif"
+    fontFamily: "Public Sans, sans-serif"
 rounded:
   card: "24px"
   sm: "8px"
+  full: "9999px"
 spacing:
   md: "16px"
+shadow:
+  elevated-md: "0 10px 30px -4px rgba(0,0,0,0.45)"
+  elevated-lg: "0 14px 40px -6px rgba(0,0,0,0.5)"
+  elevated-xl: "0 24px 70px -10px rgba(0,0,0,0.55)"
 ---
 
 # Design System: Choseno
@@ -38,8 +43,8 @@ Choseno combines dark atmospheric glassmorphism with high-contrast, modern typog
 
 ## Typography
 
-**Display Font:** `Space Grotesk`
-**Body Font:** `Inter`
+**Display Font:** `Big Shoulders Display` — a condensed, high-contrast civic/signage face for headlines, echoing municipal wayfinding type.
+**Body Font:** `Public Sans` — the USWDS/18F government-services typeface, chosen for its civic-institutional pedigree and accessible readability.
 
 ## Layout
 
@@ -49,11 +54,14 @@ Responsive multi-column grid with glassmorphic elevated containers (`backdrop-bl
 
 Glassmorphism and subtle radial gradients deliver visual depth. Flat-by-default cards with elevated hover transforms.
 
+Shadows are always **neutral and offset** (`--shadow-elevated-md/lg/xl`, defined in `src/index.css`) — a soft black shadow with real y-offset, never a zero-offset brand-colored glow. Colored halos read as decoration, not depth, and don't survive on this dark a background; weight, border, and surface-color shifts carry emphasis instead.
+
 ## Shapes
 
-Rounded cards (`24px` border radius) and subtle borders (`border-white/10`).
+Rounded cards (`24px` border radius) and subtle borders (`border-white/10`). Fully round (`9999px`) is reserved for pills, avatars, and circular decorative elements (e.g. the ambient background orbs) — never for cards.
 
 ## Components
 
 - **Glass Card:** Elevated surface container with glass backdrop-filter.
 - **Buttons:** Vanilla Custard primary CTAs with smooth hover transitions.
+- **Emphasis text:** Solid `--color-primary` (Vanilla Custard), never gradient-clip text — weight and size carry emphasis instead.

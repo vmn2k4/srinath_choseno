@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import BoundaryPicker from '../../components/map/BoundaryPicker';
 import AdminSubNav from '../../components/AdminSubNav';
+import { getGhostDisplayName } from '../../utils/ghostName';
 import {
   getElections, createElection, advanceElectionStatus, getElectionRoleTypes,
   getElectionSeatsByElectionId, getElectionCandidatesBySeatIds, createElectionSeats, deleteElectionSeat,
@@ -811,7 +812,7 @@ export default function ElectionsAdmin() {
                       {seat.candidates.length > 0 && (
                         <div className="mt-2.5 pl-6 space-y-2">
                           {seat.candidates.map(c => {
-                            const name = c.profiles?.full_name || `Ghost-${c.profiles?.current_ghost_id?.split('-')[0]}`;
+                            const name = c.profiles?.full_name || getGhostDisplayName(c.profiles?.current_ghost_id);
                             const isExpanded = expandedCandidateId === c.id;
                             const canReview = !!c.submitted_at;
                             return (

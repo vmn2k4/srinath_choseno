@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { MapPin, Users, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Video, Image as ImageIcon, X, Globe2, Landmark, Vote, Layers } from 'lucide-react';
+import { MapPin, Users, Flag, ShieldAlert, ThumbsUp, ThumbsDown, MessageSquare, Send, Flame, Video, Image as ImageIcon, X, Globe2, Landmark, Vote, Layers, Award, RefreshCw } from 'lucide-react';
 import VideoRecorder from '../../components/video/VideoRecorder';
+import { getGhostDisplayName } from '../../utils/ghostName';
 import PoliticianSidebar from '../../components/PoliticianSidebar';
 import LinkPreview from '../../components/LinkPreview';
 import { Card, Button, Input, Textarea, Spinner, EmptyState } from '../../components/ui';
-import { getOwnProfile, getUserBoundaryMemberships } from '../../services/profile';
+import { getOwnProfile, getUserBoundaryMemberships, calculateMyScore } from '../../services/profile';
 import { getBoundaryTypesForCountries } from '../../services/boundaries';
 import {
   getMembershipScopedPosts, getCountryScopedPosts, getInternationalScopedPosts, getFeedPostsForTab,
   createFeedPost, voteOnPost, createComment, uploadPostImage,
-  getActiveElectionsForUser, dismissElectionNotification, burnGhostIdentityViaRpc,
-  getPostsForExport, getCommentsForExport, uploadUserExport
+  getActiveElectionsForUser, dismissElectionNotification, burnGhostIdentityViaRpc
 } from '../../services/feed';
 
 export default function FeedPage() {
@@ -40,6 +40,8 @@ export default function FeedPage() {
   const [commentInputs, setCommentInputs] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [burning, setBurning] = useState(false);
+  const [score, setScore] = useState(null);
+  const [scoring, setScoring] = useState(false);
 
   const [showVideoRecorder, setShowVideoRecorder] = useState(false);
   const [uploadedVideoUrl, setUploadedVideoUrl] = useState(null);
@@ -275,7 +277,6 @@ export default function FeedPage() {
       setImageFile(null);
       setImagePreview(null);
       fetchPosts();
-      silentExportData();
     } catch (err) {
       console.error('Error creating post:', err);
     } finally {
@@ -304,7 +305,6 @@ export default function FeedPage() {
 
       setCommentInputs({ ...commentInputs, [postId]: '' });
       fetchPosts();
-      silentExportData();
     } catch (err) {
       console.error('Error creating comment:', err);
     }
@@ -319,57 +319,24 @@ export default function FeedPage() {
         await fetchProfile(); // Refresh to get the new current_ghost_id
       } catch (err) {
         console.error('Error burning identity:', err);
+        alert('Failed to burn identity. Please try again.');
       } finally {
         setBurning(false);
       }
     }
   };
 
-  const silentExportData = async () => {
-    if (!profile?.current_ghost_id || !profile?.id) return;
+  const updateScore = async () => {
+    setScoring(true);
     try {
-      // 1. Fetch user's posts
-      const { data: userPosts, error: postError } = await getPostsForExport(profile.current_ghost_id);
-
-      if (postError) throw postError;
-
-      // 2. Fetch user's comments
-      const { data: userComments, error: commentError } = await getCommentsForExport(profile.current_ghost_id);
-
-      if (commentError) throw commentError;
-
-      // 3. Construct JSON Object
-      const postsToExport = userPosts || [];
-      const commentsToExport = userComments || [];
-
-      const postStats = postsToExport.map(p => ({
-        post_id: p.id,
-        likes_count: p.likes_count || 0,
-        dislikes_count: p.dislikes_count || 0,
-        comments_count: p.comments ? p.comments.length : 0
-      }));
-
-      const exportData = {
-        user_id: profile.id,
-        ghost_id: profile.current_ghost_id,
-        exported_at: new Date().toISOString(),
-        post_count: postsToExport.length,
-        comment_count: commentsToExport.length,
-        post_ids: postsToExport.map(p => p.id),
-        comment_ids: commentsToExport.map(c => c.id),
-        post_stats: postStats
-      };
-
-      // 4. Serialize to String
-      const jsonString = JSON.stringify(exportData, null, 2);
-      const fileName = `${profile.id}_export.json`;
-
-      // 5. Upload to Supabase Storage
-      const { error: uploadError } = await uploadUserExport(fileName, jsonString);
-
-      if (uploadError) throw uploadError;
+      const { data, error } = await calculateMyScore();
+      if (error) throw error;
+      setScore(data);
     } catch (err) {
-      console.error('Error in background data export:', err);
+      console.error('Error calculating score:', err);
+      alert('Failed to calculate score. Please try again.');
+    } finally {
+      setScoring(false);
     }
   };
 
@@ -427,20 +394,39 @@ export default function FeedPage() {
                 </span>
               )}
             </div>
+
+            {/* Civic Score — below Ghost ID */}
+            {profile.role !== 'admin' && (
+              <div className="flex items-center gap-2 mt-2 text-xs text-text-muted">
+                <Award size={14} className="text-primary-light" />
+                Civic Score: <span className="font-bold text-text-main">{score !== null ? score : '—'}</span>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Burn Identity Button */}
+        {/* Ghost identity actions */}
         {profile.role !== 'admin' && (
-          <button
-            onClick={handleBurnIdentity}
-            disabled={burning}
-            className="flex items-center gap-2 px-4 py-2 bg-orange-500/10 hover:bg-orange-500/25 text-orange-400 border border-orange-500/25 rounded-xl transition-colors whitespace-nowrap text-sm font-semibold disabled:opacity-50 shadow-[0_0_12px_rgba(249,115,22,0.1)]"
-            title="Generate a new anonymous identity and orphan your old posts"
-          >
-            <Flame size={16} />
-            {burning ? 'Burning...' : 'Burn Identity'}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={updateScore}
+              disabled={scoring}
+              className="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary-light border border-primary/25 rounded-xl transition-colors whitespace-nowrap text-sm font-semibold disabled:opacity-50"
+              title="Recalculate your civic score"
+            >
+              {scoring ? <RefreshCw size={16} className="animate-spin" /> : <Award size={16} />}
+              {scoring ? 'Calculating...' : 'Update My Score'}
+            </button>
+            <button
+              onClick={handleBurnIdentity}
+              disabled={burning}
+              className="flex items-center gap-2 px-4 py-2 bg-orange-500/10 hover:bg-orange-500/25 text-orange-400 border border-orange-500/25 rounded-xl transition-colors whitespace-nowrap text-sm font-semibold disabled:opacity-50 shadow-[0_0_12px_rgba(249,115,22,0.1)]"
+              title="Generate a new anonymous identity and orphan your old posts"
+            >
+              <Flame size={16} />
+              {burning ? 'Burning...' : 'Burn Identity'}
+            </button>
+          </div>
         )}
       </div>
 
@@ -724,7 +710,7 @@ export default function FeedPage() {
                               <Video size={8} className="text-slate-950" />
                             </div>
                            <span className="text-[10px] text-white font-medium truncate drop-shadow-md">
-                             Ghost-{post.ghost_id.split('-')[0]}
+                             {getGhostDisplayName(post.ghost_id)}
                            </span>
                         </div>
                       </div>
@@ -768,7 +754,7 @@ export default function FeedPage() {
                         </div>
                         <div>
                           <span className="text-sm font-bold text-text-secondary font-mono">
-                            Ghost-{post.ghost_id.split('-')[0]}
+                            {getGhostDisplayName(post.ghost_id)}
                           </span>
                           <span className="text-xs text-text-muted ml-2.5">
                             {new Date(post.created_at).toLocaleDateString()}
@@ -840,7 +826,7 @@ export default function FeedPage() {
                             <div key={comment.id} className="pl-3">
                               <div className="flex items-baseline gap-2 mb-0.5">
                                 <span className="text-xs font-bold text-text-muted font-mono">
-                                  Ghost-{comment.ghost_id.split('-')[0]}
+                                  {getGhostDisplayName(comment.ghost_id)}
                                 </span>
                                 <span className="text-[10px] text-text-muted/60">
                                   {new Date(comment.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}

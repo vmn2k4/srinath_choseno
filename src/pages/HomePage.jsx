@@ -70,7 +70,6 @@ const ROLES = [
     icon: Users,
     label: 'Citizens',
     accent: 'text-accent',
-    ring: 'group-hover:shadow-[0_0_40px_rgba(172,193,150,0.18)]',
     points: [
       'Access local civic feeds locked to your electoral boundary',
       'Engage in constituent discussions with local representatives',
@@ -82,7 +81,6 @@ const ROLES = [
     icon: Landmark,
     label: 'Representatives',
     accent: 'text-primary',
-    ring: 'group-hover:shadow-[0_0_40px_rgba(233,235,158,0.18)]',
     points: [
       'Publish video position statements directly on key topics',
       'Gather verified "I Support" endorsements from constituents',
@@ -94,7 +92,6 @@ const ROLES = [
     icon: ShieldCheck,
     label: 'Admins',
     accent: 'text-text-muted',
-    ring: 'group-hover:shadow-[0_0_40px_rgba(121,148,150,0.18)]',
     points: [
       'Import electoral geometries as GeoJSON or Shapefiles',
       'Manage multi-jurisdictional boundary hierarchy maps',
@@ -176,7 +173,6 @@ export default function HomePage() {
   const heroContentY = useTransform(heroProgress, [0, 1], [0, 110]);
   const heroContentOpacity = useTransform(heroProgress, [0, 0.75], [1, 0]);
   const heroContentScale = useTransform(heroProgress, [0, 1], [1, 0.92]);
-  const heroGridY = useTransform(heroProgress, [0, 1], [0, 70]);
 
   /* Cycle the boundary-level pill in the hero */
   useEffect(() => {
@@ -198,70 +194,65 @@ export default function HomePage() {
           <ParallaxOrb className="orb orb-a" sectionRef={heroRef} range={[0, -180]} scrollOffset={['start start', 'end start']} driftX={[0, 40, -20, 0]} duration={18} />
           <ParallaxOrb className="orb orb-b" sectionRef={heroRef} range={[0, 220]} scrollOffset={['start start', 'end start']} driftX={[0, -35, 25, 0]} duration={22} />
           <ParallaxOrb className="orb orb-c" sectionRef={heroRef} range={[0, -120]} scrollOffset={['start start', 'end start']} driftX={[0, 30, -30, 0]} duration={16} />
-          {/* Dot grid, drifting at its own depth */}
-          <motion.div
-            className="absolute inset-0 hero-grid opacity-40"
-            style={reduceMotion ? undefined : { y: heroGridY }}
-          />
         </div>
 
         <motion.div
           style={reduceMotion ? undefined : { y: heroContentY, opacity: heroContentOpacity, scale: heroContentScale }}
-          className="relative z-10 max-w-4xl mx-auto text-center"
+          className="relative z-10 max-w-5xl mx-auto text-center"
         >
           <motion.div initial={reduceMotion ? false : 'hidden'} animate="visible" variants={heroStagger}>
             <motion.div variants={heroItem}>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border-light bg-surface-elevated/80 backdrop-blur-md text-xs font-semibold uppercase tracking-wider text-text-tertiary shadow-sm">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+              <span className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-accent/40 bg-surface-elevated/90 backdrop-blur-xl text-xs font-bold tracking-wide text-accent">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
                 </span>
                 A framework for future democracy
               </span>
             </motion.div>
 
-            <motion.h1 variants={heroItem} className="font-display text-5xl sm:text-6xl md:text-7xl font-bold leading-[1.04] mt-8 tracking-tight">
+            <motion.h1 variants={heroItem} className="font-display text-6xl sm:text-7xl md:text-8xl font-extrabold leading-[1.02] mt-8 tracking-tight drop-shadow-2xl">
               Your voice, heard
               <br />
-              <span className="text-shimmer">where you live.</span>
+              <span className="text-primary">where you live.</span>
             </motion.h1>
 
-            <motion.p variants={heroItem} className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mt-6 leading-relaxed">
+            <motion.p variants={heroItem} className="text-xl md:text-2xl text-text-main/90 font-medium max-w-3xl mx-auto mt-7 leading-relaxed">
               Choseno connects citizens and politicians inside real electoral
               boundaries. Local issues, anonymous voices, honest support signals —
               democracy at the resolution of your street.
             </motion.p>
 
             {/* Cycling boundary pill */}
-            <motion.div variants={heroItem} className="mt-8 flex items-center justify-center gap-3 text-sm text-text-muted">
-              <span>Conversations scoped to</span>
+            <motion.div variants={heroItem} className="mt-9 flex items-center justify-center gap-3 text-base text-text-muted">
+              <span className="font-medium text-text-main/80">Conversations scoped to</span>
               <span className="relative inline-grid">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={activeLevel}
-                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                    initial={{ opacity: 0, y: 10, scale: 0.94 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.94 }}
                     transition={{ duration: 0.45, ease: EASE }}
-                    className="col-start-1 row-start-1 inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-primary/15 border border-primary/30 text-primary font-medium shadow-sm"
+                    className="col-start-1 row-start-1 inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-primary/20 border border-primary/40 text-primary font-bold"
                   >
-                    <MapPin size={14} aria-hidden="true" />
+                    <MapPin size={16} aria-hidden="true" />
                     {BOUNDARY_LEVELS[activeLevel]}
                   </motion.span>
                 </AnimatePresence>
               </span>
             </motion.div>
 
-            <motion.div variants={heroItem} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <motion.div variants={heroItem} className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
               <MotionLink
                 to={primaryCta.to}
-                whileHover={reduceMotion ? undefined : { y: -3, boxShadow: '0 0 45px rgba(233,235,158,0.4)' }}
+                whileHover={reduceMotion ? undefined : { scale: 1.03, boxShadow: 'var(--shadow-elevated-lg)' }}
                 whileTap={reduceMotion ? undefined : { scale: 0.97 }}
                 transition={{ duration: 0.25, ease: EASE }}
-                className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-primary text-text-darker font-semibold text-lg hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200 cursor-pointer shadow-lg shadow-primary/10"
+                className="group inline-flex items-center gap-3 px-9 py-4.5 rounded-2xl bg-primary text-text-darker font-bold text-xl hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md"
               >
                 {primaryCta.label}
-                <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden="true" />
               </MotionLink>
             </motion.div>
           </motion.div>
@@ -289,30 +280,27 @@ export default function HomePage() {
       <section className="relative py-28 px-6">
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-16">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent mb-3">How it works</p>
-            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
               From coordinates to community
             </h2>
           </Reveal>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-7">
             {STEPS.map((step, i) => (
               <Reveal key={step.title} delay={i * 120}>
                 <motion.div
-                  whileHover={reduceMotion ? undefined : { y: -6 }}
+                  whileHover={reduceMotion ? undefined : { y: -8, scale: 1.01 }}
                   transition={{ duration: 0.3, ease: EASE }}
-                  className="glass-card p-8 h-full group hover:border-primary/25 transition-colors duration-300"
+                  className="glass-card p-8 h-full group hover:border-primary/40 hover:shadow-elevated-lg transition-all duration-300 relative overflow-hidden"
                 >
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-300">
-                      <step.icon size={22} aria-hidden="true" />
-                    </div>
-                    <span className="font-display text-5xl font-bold text-white/5 group-hover:text-primary/15 transition-colors duration-500">
-                      0{i + 1}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
-                  <p className="text-text-muted leading-relaxed">{step.text}</p>
+                  <span className="font-display text-7xl font-black text-primary/20 group-hover:text-primary/35 transition-colors duration-500 select-none leading-none">
+                    0{i + 1}
+                  </span>
+                  <h3 className="mt-5 text-2xl font-bold tracking-tight flex items-center gap-2.5">
+                    <step.icon size={20} className="text-primary" aria-hidden="true" />
+                    {step.title}
+                  </h3>
+                  <p className="mt-3 text-text-muted text-base leading-relaxed">{step.text}</p>
                 </motion.div>
               </Reveal>
             ))}
@@ -325,11 +313,10 @@ export default function HomePage() {
         <ContainerScroll
           titleComponent={
             <>
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent mb-3">See it in action</p>
-              <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
                 Every district,
                 <br />
-                <span className="text-shimmer">one feed away.</span>
+                <span className="text-primary">one feed away.</span>
               </h2>
             </>
           }
@@ -345,18 +332,18 @@ export default function HomePage() {
               {MOCK_SEATS.map((seat) => (
                 <div
                   key={seat.name}
-                  className="flex items-center justify-between gap-4 px-4 md:px-5 py-4 rounded-2xl border border-border-light bg-surface-hover/40"
+                  className="flex items-center justify-between gap-4 px-5 md:px-6 py-4.5 border-b border-border-light/50 last:border-b-0 hover:bg-surface-hover/40 transition-colors"
                 >
                   <div className="min-w-0">
-                    <p className="text-[11px] text-text-muted mb-1">{seat.election} · Nominations open</p>
-                    <p className="font-bold text-text-main flex items-center gap-2 flex-wrap">
+                    <p className="text-[11px] font-semibold text-accent tracking-wide mb-1">{seat.election} · Nominations open</p>
+                    <p className="font-extrabold text-lg text-text-main flex items-center gap-2 flex-wrap">
                       {seat.role}
-                      <span className="text-sm font-normal text-text-muted flex items-center gap-1">
-                        <MapPin size={12} className="text-accent" /> {seat.name}
+                      <span className="text-sm font-medium text-text-muted flex items-center gap-1.5 bg-surface/60 px-2.5 py-0.5 rounded-lg border border-border-light">
+                        <MapPin size={13} className="text-accent" /> {seat.name}
                       </span>
                     </p>
                   </div>
-                  <span className="text-xs text-text-muted shrink-0">{seat.candidates}</span>
+                  <span className="text-xs font-semibold text-primary bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-xl shrink-0">{seat.candidates}</span>
                 </div>
               ))}
             </div>
@@ -371,31 +358,30 @@ export default function HomePage() {
         </div>
         <div className="relative max-w-6xl mx-auto">
           <Reveal className="text-center mb-16">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent mb-3">Three roles, one platform</p>
-            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
               Built for everyone in the room
             </h2>
-            <p className="text-text-muted text-lg max-w-2xl mx-auto mt-4">
-              Citizens speak, politicians answer, admins keep the map honest.
+            <p className="text-text-main/80 text-xl max-w-2xl mx-auto mt-4 font-medium">
+              Citizens speak, representatives answer, admins keep the map honest.
             </p>
           </Reveal>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-7">
             {ROLES.map((role, i) => (
               <Reveal key={role.label} delay={i * 120}>
                 <motion.div
-                  whileHover={reduceMotion ? undefined : { y: -6 }}
+                  whileHover={reduceMotion ? undefined : { y: -8, scale: 1.01 }}
                   transition={{ duration: 0.3, ease: EASE }}
-                  className={`glass-card p-8 h-full group transition-shadow duration-500 ${role.ring}`}
+                  className="glass-card p-8 h-full group transition-all duration-500 border border-border-light hover:border-primary/40 hover:shadow-elevated-lg"
                 >
-                  <div className={`w-14 h-14 rounded-2xl bg-surface-hover border border-border-light flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 ${role.accent}`}>
-                    <role.icon size={26} aria-hidden="true" />
+                  <div className="flex items-center gap-3 mb-5">
+                    <role.icon size={24} className={`${role.accent} group-hover:scale-110 transition-transform duration-300`} aria-hidden="true" />
+                    <h3 className="font-display text-3xl font-extrabold tracking-tight">{role.label}</h3>
                   </div>
-                  <h3 className="font-display text-2xl font-bold mb-5">{role.label}</h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-3.5">
                     {role.points.map((point) => (
-                      <li key={point} className="flex items-start gap-3 text-text-muted leading-relaxed">
-                        <span className={`mt-2 w-1.5 h-1.5 rounded-full shrink-0 bg-current ${role.accent}`} aria-hidden="true" />
+                      <li key={point} className="flex items-start gap-3 text-text-muted text-[0.98rem] leading-relaxed">
+                        <span className={`mt-2.5 w-2 h-2 rounded-full shrink-0 bg-current ${role.accent}`} aria-hidden="true" />
                         {point}
                       </li>
                     ))}
@@ -411,25 +397,24 @@ export default function HomePage() {
       <section className="relative py-28 px-6">
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-16">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent mb-3">Why Choseno</p>
-            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
               Democracy needs better plumbing
             </h2>
           </Reveal>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {FEATURES.map((feature, i) => (
               <Reveal key={feature.title} delay={(i % 3) * 100}>
                 <motion.div
-                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  whileHover={reduceMotion ? undefined : { y: -6, scale: 1.01 }}
                   transition={{ duration: 0.3, ease: EASE }}
-                  className="group p-7 rounded-3xl border border-border-light bg-surface/40 backdrop-blur-sm h-full hover:bg-surface-elevated hover:border-primary/25 transition-colors duration-300"
+                  className="group p-8 rounded-3xl border border-border-light bg-surface/60 backdrop-blur-md h-full hover:bg-surface-elevated hover:border-primary/40 hover:shadow-elevated-md transition-all duration-300"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-accent/15 border border-accent/25 text-accent flex items-center justify-center mb-5 group-hover:rotate-6 group-hover:scale-110 transition-transform duration-300">
-                    <feature.icon size={20} aria-hidden="true" />
+                  <div className="w-12 h-12 rounded-2xl bg-accent/20 border border-accent/35 text-accent flex items-center justify-center mb-6 group-hover:rotate-6 group-hover:scale-110 transition-transform duration-300">
+                    <feature.icon size={22} aria-hidden="true" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-text-muted text-[0.95rem] leading-relaxed">{feature.text}</p>
+                  <h3 className="text-xl font-bold mb-2.5 tracking-tight">{feature.title}</h3>
+                  <p className="text-text-muted text-base leading-relaxed">{feature.text}</p>
                 </motion.div>
               </Reveal>
             ))}
@@ -441,30 +426,30 @@ export default function HomePage() {
       <section ref={ctaRef} className="relative py-32 px-6 overflow-hidden">
         <div className="max-w-4xl mx-auto">
           <Reveal>
-            <div className="relative glass-card p-12 md:p-16 text-center overflow-hidden">
+            <div className="relative glass-card p-12 md:p-16 text-center overflow-hidden border border-primary/20 shadow-elevated-xl">
               <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
                 <ParallaxOrb className="orb orb-e" sectionRef={ctaRef} range={[-90, 90]} driftX={[0, -25, 25, 0]} duration={19} />
               </div>
               <div className="relative">
-                <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight leading-tight">
+                <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
                   The future of democracy
                   <br />
-                  <span className="text-shimmer">starts in your district.</span>
+                  <span className="text-primary">starts in your district.</span>
                 </h2>
-                <p className="text-text-muted text-lg max-w-xl mx-auto mt-5">
+                <p className="text-text-main/80 text-xl max-w-xl mx-auto mt-6 font-medium leading-relaxed">
                   Join your constituency, follow the issues that touch your life,
                   and make your support count.
                 </p>
-                <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                   <MotionLink
                     to={primaryCta.to}
-                    whileHover={reduceMotion ? undefined : { y: -3, boxShadow: '0 0 45px rgba(233,235,158,0.35)' }}
+                    whileHover={reduceMotion ? undefined : { scale: 1.04, boxShadow: 'var(--shadow-elevated-xl)' }}
                     whileTap={reduceMotion ? undefined : { scale: 0.97 }}
                     transition={{ duration: 0.25, ease: EASE }}
-                    className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-primary text-text-darker font-semibold text-lg hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer"
+                    className="group inline-flex items-center gap-3 px-9 py-4.5 rounded-2xl bg-primary text-text-darker font-extrabold text-xl hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md"
                   >
                     {primaryCta.label}
-                    <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                    <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden="true" />
                   </MotionLink>
                 </div>
               </div>
@@ -476,7 +461,7 @@ export default function HomePage() {
       {/* ============ FOOTER ============ */}
       <footer className="border-t border-border-light py-10 px-6">
         <Reveal className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-text-muted">
-          <span className="font-display font-bold text-lg bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+          <span className="font-display font-extrabold text-xl text-primary">
             Choseno
           </span>
           <span>A framework for future democracy.</span>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getInterestedPoliticians } from '../services/profile';
+import { getGhostDisplayName } from '../utils/ghostName';
 import { Users, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Spinner, EmptyState } from './ui';
@@ -75,7 +76,7 @@ export default function PoliticianSidebar({ profile, activeTab, memberships = []
                  <Users size={16} />
               </div>
               <div className="flex-1 min-w-0">
-                <h4 className="text-text-secondary text-sm font-medium truncate">{pol.profiles.full_name || `Ghost-${pol.profiles.current_ghost_id.split('-')[0]}`}</h4>
+                <h4 className="text-text-secondary text-sm font-medium truncate">{pol.profiles.full_name || getGhostDisplayName(pol.profiles.current_ghost_id)}</h4>
                 <p className="text-text-muted text-xs truncate">{pol.political_target_role}</p>
               </div>
               <ChevronRight size={16} className="text-text-darker group-hover:text-primary-light transition-colors" />

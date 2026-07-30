@@ -96,11 +96,11 @@ export async function upsertPoliticianProfile(userId, { targetBoundaryId, target
   });
 }
 
-// profiles — raw ghost-ID burn (ProfilePage path). DO NOT merge with
-// feed.js's burnGhostIdentityViaRpc, which FeedPage uses instead (goes
-// through server-side RPC logic that this raw update bypasses).
-export async function burnGhostIdRaw(userId) {
-  return supabase.from('profiles').update({ current_ghost_id: crypto.randomUUID() }).eq('id', userId);
+// civic score — banked profiles.civic_score plus the current ghost's
+// live (not-yet-banked) activity. See 20260730000001_civic_score.sql for
+// why this is a single running total rather than a stored post/comment list.
+export async function calculateMyScore() {
+  return supabase.rpc('calculate_my_score');
 }
 
 // user_locations — most recent lat/lng for a profile.

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import LinkPreview from '../components/LinkPreview';
+import { getGhostDisplayName } from '../utils/ghostName';
 import WallPostFeed from '../components/wall/WallPostFeed';
 import { MapPin, Users, ShieldAlert, ArrowLeft, Heart, QrCode, X, Image as ImageIcon } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
@@ -222,7 +223,7 @@ export default function PoliticianWall() {
                 {wallOwner.full_name ? wallOwner.full_name.charAt(0).toUpperCase() : 'P'}
               </div>
               <div className="pt-14">
-                 <h1 className="text-2xl font-bold text-text-main">{wallOwner.full_name || `Ghost-${ghostId.split('-')[0]}`}</h1>
+                 <h1 className="text-2xl font-bold text-text-main">{wallOwner.full_name || getGhostDisplayName(ghostId)}</h1>
                  <div className="flex items-center gap-2 mt-2">
                     <Badge tone="primary" size="sm">{wallOwner.politician_profiles?.[0]?.political_target_role || 'Representative'}</Badge>
                     <span className="flex items-center gap-1 text-text-muted text-sm">
@@ -300,7 +301,7 @@ export default function PoliticianWall() {
                             {sup.profiles?.full_name || 'Anonymous Citizen'}
                           </div>
                           <div className="text-xs text-text-muted font-mono">
-                            Ghost-{sup.profiles?.current_ghost_id?.split('-')[0] || 'Unknown'}
+                            {getGhostDisplayName(sup.profiles?.current_ghost_id)}
                           </div>
                         </div>
                       </div>
