@@ -55,7 +55,7 @@ export default function ElectionsPage() {
 
   useEffect(() => {
     if (!authLoading) fetchElections();
-  }, [user, authLoading]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [user?.id, authLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
     return <Spinner fullPage />;

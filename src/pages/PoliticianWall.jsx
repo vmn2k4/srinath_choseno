@@ -70,7 +70,7 @@ export default function PoliticianWall() {
     return () => {
       unsubscribeFromSupportChanges(supportChannel);
     };
-  }, [user, ghostId]);
+  }, [user?.id, ghostId]);
 
   const checkSupportStatus = async (politicianId) => {
     // Check if current user supports

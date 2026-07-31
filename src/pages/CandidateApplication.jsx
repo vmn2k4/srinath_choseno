@@ -63,7 +63,7 @@ export default function CandidateApplication() {
 
   useEffect(() => {
     if (user && candidateId) fetchAll();
-  }, [user, candidateId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [user?.id, candidateId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const saveStatement = async () => {
     await updateCandidateStatement(candidateId, statement);

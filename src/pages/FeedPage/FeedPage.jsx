@@ -226,7 +226,7 @@ export default function FeedPage() {
     fetchProfile();
     fetchMemberships();
     fetchActiveElections();
-  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Default to the user's most local group once memberships load, if they have any
   useEffect(() => {

@@ -105,7 +105,7 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
 
   useEffect(() => {
     if (!authLoading && candidateId) fetchAll();
-  }, [user, authLoading, candidateId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [user?.id, authLoading, candidateId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleNominationFiled = async () => {
     const next = !candidate.nomination_filed;

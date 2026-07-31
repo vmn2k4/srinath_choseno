@@ -84,7 +84,7 @@ export default function ElectionSeatPage() {
 
   useEffect(() => {
     if (!authLoading && seatId) fetchAll();
-  }, [user, authLoading, seatId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [user?.id, authLoading, seatId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const startApplying = async () => {
     setApplying(true);

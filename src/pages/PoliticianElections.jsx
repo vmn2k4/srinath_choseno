@@ -72,7 +72,7 @@ export default function PoliticianElections() {
   useEffect(() => {
     if (user) fetchAll();
     getCountries().then(({ data }) => setCountries((data || []).map(c => c.name)));
-  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setBrowseContainerType('');

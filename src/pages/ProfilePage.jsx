@@ -7,8 +7,7 @@ import { burnGhostIdentityViaRpc } from '../services/feed';
 import { Card, Button, Badge, Spinner, PageHeader } from '../components/ui';
 
 export default function ProfilePage() {
-  const { session } = useAuth();
-  const user = session?.user;
+  const { user } = useAuth();
 
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -64,7 +63,7 @@ export default function ProfilePage() {
     if (!scoreError) setScore(freshScore);
   };
 
-  useEffect(() => { fetchProfile(); }, [user]);
+  useEffect(() => { fetchProfile(); }, [user?.id]);
 
   const burnGhostId = async () => {
     if (!confirm(`⚠️ This permanently severs all your past activity from your account. Your current civic score (${score ?? 0}) will be locked in — any likes or dislikes your past posts get after this point will no longer count. Are you sure?`)) return;
