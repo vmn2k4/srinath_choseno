@@ -91,7 +91,7 @@ export default function LinkPreview({ url, metadata, onMetadataFetched }) {
       <div className="flex flex-col sm:flex-row bg-surface-hover/40 rounded-lg overflow-hidden border border-border-light/50 group-hover:border-primary/50 transition-colors h-full sm:h-32">
         {data.image ? (
           <div className="sm:w-32 h-40 sm:h-full shrink-0 bg-surface-hover relative">
-            <img src={data.image} alt="Preview" className="w-full h-full object-cover" />
+            <img src={data.image} alt="Preview" className="w-full h-full object-cover" loading="lazy" decoding="async" />
           </div>
         ) : (
           <div className="sm:w-32 h-32 shrink-0 bg-surface-hover flex items-center justify-center">

@@ -1,13 +1,17 @@
 import { supabase } from './supabase';
 import { fetchAllPages } from '../utils/fetchAllPages';
+import { fetchWithCache, invalidateCache } from '../utils/apiCache';
 
 // countries — superset columns; callers that only read `.name` are
 // unaffected by the extra columns.
 export async function getCountries() {
-  return supabase.from('countries').select('name, code, flag_emoji').order('name');
+  return fetchWithCache('countries:list', () =>
+    supabase.from('countries').select('name, code, flag_emoji').order('name')
+  );
 }
 
 export async function createCountry({ name, code, flagEmoji }) {
+  invalidateCache('countries:');
   return supabase.from('countries').insert({ name, code: code || null, flag_emoji: flagEmoji || null });
 }
 
@@ -15,32 +19,33 @@ export async function createCountry({ name, code, flagEmoji }) {
 // (all types for all countries, needs is_container to split container vs
 // target dropdowns) and the politician's "browse a different area" filter
 // (one country, is_container=true containers only, type_name only).
-// admin_only and is_container are separate flags (20260729000017) --
-// admin_only means "excluded from citizen boundary membership," is_container
-// means "usable as an admin container to scope another type's search";
-// USA's 'State' is admin_only=false (a real target/membership, for
-// Governor/Senator) but is_container=true (still usable as a container,
-// like Canada's Province), which is why callers that want "container types"
-// must filter on is_container, not admin_only.
 export async function listBoundaryTypes({ country, adminOnly, isContainer, columns = 'country, type_name, rank, admin_only, is_container', orderBy = 'rank' } = {}) {
-  let q = supabase.from('country_boundary_types').select(columns).order('country').order(orderBy);
-  if (country) q = q.eq('country', country);
-  if (adminOnly !== undefined) q = q.eq('admin_only', adminOnly);
-  if (isContainer !== undefined) q = q.eq('is_container', isContainer);
-  return q;
+  const cacheKey = `boundary_types:${country || 'all'}:${adminOnly}:${isContainer}:${columns}:${orderBy}`;
+  return fetchWithCache(cacheKey, () => {
+    let q = supabase.from('country_boundary_types').select(columns).order('country').order(orderBy);
+    if (country) q = q.eq('country', country);
+    if (adminOnly !== undefined) q = q.eq('admin_only', adminOnly);
+    if (isContainer !== undefined) q = q.eq('is_container', isContainer);
+    return q;
+  });
 }
 
 // country_boundary_types — for a set of countries (FeedPage ranks memberships by type).
 export async function getBoundaryTypesForCountries(countries) {
-  return supabase.from('country_boundary_types').select('country, type_name, rank').in('country', countries);
+  const sortedKey = [...(countries || [])].sort().join(',');
+  return fetchWithCache(`boundary_types_for:${sortedKey}`, () =>
+    supabase.from('country_boundary_types').select('country, type_name, rank').in('country', countries)
+  );
 }
 
 export async function createBoundaryType({ country, typeName, rank }) {
+  invalidateCache('boundary_types');
   return supabase.from('country_boundary_types').insert({ country, type_name: typeName, rank });
 }
 
 // "Standard set" quick-seed: National / State-Province / Municipal at ranks 1-3.
 export async function createStandardBoundaryTypeSet(country) {
+  invalidateCache('boundary_types');
   return supabase.from('country_boundary_types').insert([
     { country, type_name: 'National', rank: 1 },
     { country, type_name: 'State-Province', rank: 2 },
@@ -49,6 +54,7 @@ export async function createStandardBoundaryTypeSet(country) {
 }
 
 export async function deleteBoundaryType(typeId) {
+  invalidateCache('boundary_types');
   return supabase.from('country_boundary_types').delete().eq('id', typeId);
 }
 

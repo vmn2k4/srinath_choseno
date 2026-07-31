@@ -204,7 +204,7 @@ export default function ElectionSeatPage() {
                         isSelected ? 'bg-primary/20 text-primary-light' : 'bg-surface-active text-text-muted'
                       }`}>
                         {c.profiles?.politician_profiles?.[0]?.avatar_url ? (
-                          <img src={c.profiles.politician_profiles[0].avatar_url} alt={name} className="w-full h-full object-cover" />
+                          <img src={c.profiles.politician_profiles[0].avatar_url} alt={name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                         ) : (
                           <Users size={18} />
                         )}

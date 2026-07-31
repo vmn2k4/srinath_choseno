@@ -74,7 +74,7 @@ export default function PoliticianSidebar({ profile, activeTab, memberships = []
             >
               <div className="w-10 h-10 rounded-full bg-primary/20 text-primary-light flex items-center justify-center shrink-0 border border-primary/30 group-hover:bg-indigo-500 group-hover:text-white transition-colors overflow-hidden">
                  {pol.avatar_url ? (
-                   <img src={pol.avatar_url} alt={name} className="w-full h-full object-cover" />
+                   <img src={pol.avatar_url} alt={name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                  ) : (
                    <Users size={16} />
                  )}

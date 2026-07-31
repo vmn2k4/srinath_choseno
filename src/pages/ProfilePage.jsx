@@ -169,7 +169,7 @@ export default function ProfilePage() {
               <div className="flex items-center gap-4 mb-5">
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center text-xl font-bold text-text-on-primary shadow-lg shrink-0 overflow-hidden">
                   {profile?.avatarUrl ? (
-                    <img src={profile.avatarUrl} alt={profile?.fullName || 'Profile'} className="w-full h-full object-cover" />
+                    <img src={profile.avatarUrl} alt={profile?.fullName || 'Profile'} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                   ) : (
                     profile?.fullName ? profile.fullName.charAt(0).toUpperCase() : 'P'
                   )}
