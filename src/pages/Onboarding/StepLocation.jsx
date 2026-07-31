@@ -143,7 +143,7 @@ export default function StepLocation({ data, updateData, nextStep, prevStep }) {
           {loading ? 'Locating...' : 'Detect My Location'}
         </Button>
 
-        {error && <p className="text-amber-400 mt-3 text-xs font-medium max-w-md mx-auto">{error}</p>}
+        {error && <p className="text-warning mt-3 text-xs font-medium max-w-md mx-auto">{error}</p>}
       </Card>
 
       {/* Matched Groups Display */}

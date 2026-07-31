@@ -11,8 +11,8 @@ import { uploadPostImage, createComment } from '../services/feed';
 import {
   getSupportStatus, getSupporterCount, withdrawSupport, addSupport
 } from '../services/politicianWall';
-import { MapPin, ArrowLeft, ShieldAlert, GraduationCap, Home, Image as ImageIcon, X, Vote, Video, HelpCircle, Heart, CheckCircle2, Circle } from 'lucide-react';
-import { Card, Button, Badge, Textarea, Spinner } from './ui';
+import { MapPin, ArrowLeft, ShieldAlert, GraduationCap, Home, Image as ImageIcon, Vote, Video, HelpCircle, Heart, CheckCircle2, Circle } from 'lucide-react';
+import { Card, Button, Badge, Textarea, Spinner, StoryViewerModal, RemoveMediaButton } from './ui';
 
 export default function CandidacyWall({ candidateId: candidateIdProp, embedded = false } = {}) {
   const { candidateId: paramCandidateId } = useParams();
@@ -269,7 +269,7 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
                     onClick={toggleNominationFiled}
                     className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-colors ${
                       candidate.nomination_filed
-                        ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25'
+                        ? 'bg-success/15 text-success-light border border-success/30 hover:bg-success/25'
                         : 'bg-surface-hover/60 text-text-muted border border-border-light hover:bg-surface-hover'
                     }`}
                   >
@@ -359,7 +359,7 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-lg transition-opacity group-hover:opacity-80" />
                         <div className="absolute bottom-2 left-2 right-2 flex items-center gap-1.5">
                           <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center shrink-0 border border-primary-light">
-                            <Video size={8} className="text-slate-950" />
+                            <Video size={8} className="text-text-on-primary" />
                           </div>
                           <span className="text-[10px] text-white font-medium truncate drop-shadow-md">{v.label}</span>
                         </div>
@@ -414,9 +414,7 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
               {imagePreview && (
                 <div className="relative mt-2 mb-2 inline-block">
                   <img src={imagePreview} alt="Preview" className="h-32 rounded-lg border border-border-light object-cover" />
-                  <button type="button" onClick={() => { setImageFile(null); setImagePreview(null); }} className="absolute -top-2 -right-2 bg-danger text-white rounded-full p-1 shadow-lg hover:bg-danger-light">
-                    <X size={14} />
-                  </button>
+                  <RemoveMediaButton onClick={() => { setImageFile(null); setImagePreview(null); }} />
                 </div>
               )}
 
@@ -495,19 +493,7 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
         </div>
 
         {/* Full Screen Video Modal */}
-        {activeStoryUrl && (
-          <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm">
-            <div className="relative max-w-sm w-full bg-surface rounded-2xl overflow-hidden shadow-2xl border border-border-light">
-              <button
-                onClick={() => setActiveStoryUrl(null)}
-                className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-black/50 hover:bg-black/80 rounded-full text-white transition-colors"
-              >
-                ✕
-              </button>
-              <video src={activeStoryUrl} controls autoPlay className="w-full max-h-[85vh] object-contain bg-black" />
-            </div>
-          </div>
-        )}
+        <StoryViewerModal url={activeStoryUrl} onClose={() => setActiveStoryUrl(null)} />
       </div>
     </div>
   );

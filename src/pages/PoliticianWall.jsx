@@ -12,7 +12,7 @@ import {
   getSupportersList, getWallPosts, createWallPost, subscribeToSupportChanges, unsubscribeFromSupportChanges
 } from '../services/politicianWall';
 import { uploadPostImage, createComment } from '../services/feed';
-import { Card, Button, Badge, Textarea, Spinner, EmptyState } from '../components/ui';
+import { Card, Button, Badge, Textarea, Spinner, EmptyState, Modal, RemoveMediaButton } from '../components/ui';
 
 export default function PoliticianWall() {
   const { ghostId } = useParams();
@@ -261,8 +261,8 @@ export default function PoliticianWall() {
                       <QrCode size={18} />
                     </Button>
                     {showQr && (
-                      <div className="absolute right-0 top-full mt-2 w-48 bg-white p-3 rounded-2xl shadow-2xl z-50 border border-slate-100">
-                        <p className="text-center text-slate-800 text-xs font-bold mb-2 uppercase tracking-wide">Scan to Visit</p>
+                      <div className="absolute right-0 top-full mt-2 w-48 bg-surface p-3 rounded-2xl shadow-2xl z-50 border border-border-light">
+                        <p className="text-center text-text-secondary text-xs font-bold mb-2 uppercase tracking-wide">Scan to Visit</p>
                         <div className="bg-white p-1 rounded-lg flex justify-center">
                           <QRCodeSVG value={window.location.href} size={150} />
                         </div>
@@ -276,41 +276,39 @@ export default function PoliticianWall() {
 
         {/* Supporters Dashboard Modal */}
         {showSupporters && (
-          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-surface border border-border-light rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
-              <div className="px-5 py-4 border-b border-border flex items-center justify-between bg-surface/50">
-                <h3 className="font-bold text-lg text-white flex items-center gap-2">
-                  <Heart size={18} className="text-danger fill-danger" /> Supporter Dashboard
-                </h3>
-                <button onClick={() => setShowSupporters(false)} className="text-text-muted hover:text-white p-1 rounded-lg hover:bg-surface-hover">
-                  <X size={20} />
-                </button>
-              </div>
-              <div className="p-5 overflow-y-auto flex-1">
-                {supportersList.length === 0 ? (
-                  <EmptyState description="No supporters yet." />
-                ) : (
-                  <div className="space-y-3">
-                    {supportersList.map((sup, idx) => (
-                      <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-surface-hover/50 border border-border-light/50">
-                        <div className="w-10 h-10 rounded-full bg-surface-active flex items-center justify-center text-text-tertiary font-bold shrink-0">
-                          {sup.profiles?.full_name ? sup.profiles.full_name.charAt(0).toUpperCase() : 'A'}
+          <Modal className="bg-surface border border-border-light rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
+            <div className="px-5 py-4 border-b border-border flex items-center justify-between bg-surface/50">
+              <h3 className="font-bold text-lg text-text-main flex items-center gap-2">
+                <Heart size={18} className="text-danger fill-danger" /> Supporter Dashboard
+              </h3>
+              <Button variant="icon" onClick={() => setShowSupporters(false)}>
+                <X size={20} />
+              </Button>
+            </div>
+            <div className="p-5 overflow-y-auto flex-1">
+              {supportersList.length === 0 ? (
+                <EmptyState description="No supporters yet." />
+              ) : (
+                <div className="space-y-3">
+                  {supportersList.map((sup, idx) => (
+                    <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-surface-hover/50 border border-border-light/50">
+                      <div className="w-10 h-10 rounded-full bg-surface-active flex items-center justify-center text-text-tertiary font-bold shrink-0">
+                        {sup.profiles?.full_name ? sup.profiles.full_name.charAt(0).toUpperCase() : 'A'}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-medium text-text-secondary text-sm truncate">
+                          {sup.profiles?.full_name || 'Anonymous Citizen'}
                         </div>
-                        <div className="min-w-0">
-                          <div className="font-medium text-text-secondary text-sm truncate">
-                            {sup.profiles?.full_name || 'Anonymous Citizen'}
-                          </div>
-                          <div className="text-xs text-text-muted font-mono">
-                            {getGhostDisplayName(sup.profiles?.current_ghost_id)}
-                          </div>
+                        <div className="text-xs text-text-muted font-mono">
+                          {getGhostDisplayName(sup.profiles?.current_ghost_id)}
                         </div>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
+          </Modal>
         )}
 
         {/* Wall Post Input */}
@@ -334,13 +332,7 @@ export default function PoliticianWall() {
           {imagePreview && (
             <div className="relative mt-2 mb-2 inline-block">
               <img src={imagePreview} alt="Preview" className="h-32 rounded-lg border border-border-light object-cover" />
-              <button 
-                type="button" 
-                onClick={() => { setImageFile(null); setImagePreview(null); }}
-                className="absolute -top-2 -right-2 bg-danger text-white rounded-full p-1 shadow-lg hover:bg-danger-light"
-              >
-                <X size={14} />
-              </button>
+              <RemoveMediaButton onClick={() => { setImageFile(null); setImagePreview(null); }} />
             </div>
           )}
 

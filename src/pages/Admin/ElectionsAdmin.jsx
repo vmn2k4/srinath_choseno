@@ -513,9 +513,9 @@ export default function ElectionsAdmin() {
                         <div className="min-w-0">
                           <p className="text-sm font-bold text-text-secondary">{i + 1}. {q.question_text}</p>
                           <div className="flex flex-wrap gap-1.5 mt-1.5">
-                            {q.required && <span className="text-[9px] bg-amber-500/15 text-amber-300 px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">Required</span>}
+                            {q.required && <Badge tone="amber">Required</Badge>}
                             {q.allow_context && <span className="text-[9px] bg-primary/15 text-primary-light px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">Context allowed</span>}
-                            {!q.visible_to_public && <span className="text-[9px] bg-slate-500/20 text-slate-300 px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">Hidden from voters</span>}
+                            {!q.visible_to_public && <Badge tone="neutral">Hidden from voters</Badge>}
                           </div>
                           <div className="flex flex-wrap gap-1.5 mt-2">
                             {q.election_question_options.map(o => (
@@ -523,9 +523,9 @@ export default function ElectionsAdmin() {
                             ))}
                           </div>
                         </div>
-                        <button onClick={() => handleDeleteQuestion(q.id)} className="p-1.5 text-text-muted hover:text-danger hover:bg-danger/10 rounded-lg transition-colors shrink-0">
+                        <Button variant="icon" tone="danger" size="sm" onClick={() => handleDeleteQuestion(q.id)} className="shrink-0">
                           <Trash2 size={14} />
-                        </button>
+                        </Button>
                       </div>
                     </div>
                   ))}
@@ -552,9 +552,9 @@ export default function ElectionsAdmin() {
                         className="flex-1"
                       />
                       {newQuestionOptions.length > 2 && (
-                        <button onClick={() => removeNewOptionField(i)} className="p-1.5 text-text-muted hover:text-danger transition-colors">
+                        <Button variant="icon" tone="danger" size="sm" onClick={() => removeNewOptionField(i)}>
                           <Trash2 size={13} />
-                        </button>
+                        </Button>
                       )}
                     </div>
                   ))}
@@ -755,9 +755,9 @@ export default function ElectionsAdmin() {
                           })()}
                         </div>
                         {selectedElection.status === 'draft' && (
-                          <button onClick={() => handleDeleteSeat(seat.id)} className="p-1.5 text-text-muted hover:text-danger hover:bg-danger/10 rounded-lg transition-colors shrink-0">
+                          <Button variant="icon" tone="danger" size="sm" onClick={() => handleDeleteSeat(seat.id)} className="shrink-0">
                             <Trash2 size={14} />
-                          </button>
+                          </Button>
                         )}
                       </div>
 
@@ -787,16 +787,19 @@ export default function ElectionsAdmin() {
                                         {c.elected && <Badge tone="emerald" className="ml-1.5">Elected</Badge>}
                                       </span>
                                       {alreadyHere ? (
-                                        <span className="text-[10px] text-emerald-400 font-semibold uppercase shrink-0">Already added</span>
+                                        <span className="text-[10px] text-success font-semibold uppercase shrink-0">Already added</span>
                                       ) : (
-                                        <button
+                                        <Button
+                                          variant="icon"
+                                          tone="primary"
+                                          size="sm"
                                           onClick={() => handleAddFetchedCandidate(seat, c)}
                                           disabled={addingCandidateKey === key}
-                                          className="p-1 text-text-muted hover:text-primary-light hover:bg-primary/10 rounded transition-colors shrink-0"
+                                          className="shrink-0"
                                           title="Add to Choseno"
                                         >
                                           {addingCandidateKey === key ? <Loader2 size={13} className="animate-spin" /> : <Plus size={13} />}
-                                        </button>
+                                        </Button>
                                       )}
                                     </div>
                                   );
@@ -833,13 +836,13 @@ export default function ElectionsAdmin() {
                                     {/* Candidates auto-approve on submit now -- only moderation
                                         (rejecting a live candidacy) remains an admin action. */}
                                     {canReview && c.status !== 'rejected' && (
-                                      <button onClick={() => handleReviewCandidate(c.id, false)} className="p-1 text-text-muted hover:text-danger transition-colors" title="Reject">
+                                      <Button variant="icon" tone="danger" size="sm" onClick={() => handleReviewCandidate(c.id, false)} title="Reject">
                                         <XCircle size={14} />
-                                      </button>
+                                      </Button>
                                     )}
-                                    <button onClick={() => handleDeleteCandidate(c.id)} className="text-text-muted hover:text-danger transition-colors" title="Remove candidate">
+                                    <Button variant="icon" tone="danger" size="sm" onClick={() => handleDeleteCandidate(c.id)} title="Remove candidate">
                                       <Trash2 size={12} />
-                                    </button>
+                                    </Button>
                                   </div>
                                 </div>
 

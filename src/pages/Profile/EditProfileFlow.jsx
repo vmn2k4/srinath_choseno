@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import StepLocation from '../Onboarding/StepLocation';
 import StepPolitician from '../Onboarding/StepPolitician';
 import { upsertProfileCore, upsertPoliticianProfile } from '../../services/profile';
-import { Button, Input } from '../../components/ui';
+import { Button, Input, Modal } from '../../components/ui';
 
 // ─── Step 1: Basic Info ──────────────────────────────────────────
 // lockToPolitician: true when the account was already a politician before
@@ -156,35 +156,33 @@ export default function EditProfileFlow({ initialData, onComplete, onCancel }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-surface border border-border rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border">
-          <div>
-            <h2 className="font-bold text-text-main text-lg">Edit Profile</h2>
-            <p className="text-xs text-text-muted">Step {step} of {totalSteps}</p>
-          </div>
-          {/* Progress dots */}
-          <div className="flex items-center gap-2">
-            {Array.from({ length: totalSteps }).map((_, i) => (
-              <div key={i} className={`h-2 rounded-full transition-all duration-300 ${i + 1 === step ? 'w-6 bg-primary' : i + 1 < step ? 'w-2 bg-primary/50' : 'w-2 bg-border-light'}`} />
-            ))}
-          </div>
-          <Button variant="icon" onClick={onCancel}>
-            <X size={20} />
-          </Button>
+    <Modal className="bg-surface border border-border rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      {/* Header */}
+      <div className="flex items-center justify-between px-6 py-4 border-b border-border">
+        <div>
+          <h2 className="font-bold text-text-main text-lg">Edit Profile</h2>
+          <p className="text-xs text-text-muted">Step {step} of {totalSteps}</p>
         </div>
-
-        {/* Progress bar */}
-        <div className="h-0.5 bg-surface-hover">
-          <div className="h-full bg-primary transition-all duration-300" style={{ width: `${(step / totalSteps) * 100}%` }} />
+        {/* Progress dots */}
+        <div className="flex items-center gap-2">
+          {Array.from({ length: totalSteps }).map((_, i) => (
+            <div key={i} className={`h-2 rounded-full transition-all duration-300 ${i + 1 === step ? 'w-6 bg-primary' : i + 1 < step ? 'w-2 bg-primary/50' : 'w-2 bg-border-light'}`} />
+          ))}
         </div>
-
-        {/* Step Content */}
-        <div className="p-6 overflow-y-auto flex-1">
-          {renderStep()}
-        </div>
+        <Button variant="icon" onClick={onCancel}>
+          <X size={20} />
+        </Button>
       </div>
-    </div>
+
+      {/* Progress bar */}
+      <div className="h-0.5 bg-surface-hover">
+        <div className="h-full bg-primary transition-all duration-300" style={{ width: `${(step / totalSteps) * 100}%` }} />
+      </div>
+
+      {/* Step Content */}
+      <div className="p-6 overflow-y-auto flex-1">
+        {renderStep()}
+      </div>
+    </Modal>
   );
 }

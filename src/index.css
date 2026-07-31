@@ -44,11 +44,35 @@
   /* Danger/Alert (Rose mapped) */
   --color-danger: var(--color-rose-500);
   --color-danger-light: var(--color-rose-400);
+  --color-danger-lighter: var(--color-rose-300);
+
+  /* Warning/Notice (Amber mapped) */
+  --color-warning: var(--color-amber-500);
+  --color-warning-light: var(--color-amber-300);
+
+  /* Caution/destructive-lite (Orange mapped) — distinct warm hue from Warning,
+     used for irreversible-but-not-"danger" actions (e.g. burning an identity) */
+  --color-caution: var(--color-orange-500);
+  --color-caution-light: var(--color-orange-300);
+
+  /* Success (Emerald mapped) */
+  --color-success: var(--color-emerald-500);
+  --color-success-light: var(--color-emerald-300);
+
+  /* Text drawn on top of a solid primary/warning-colored surface (e.g. filled buttons) */
+  --color-text-on-primary: var(--color-slate-950);
+
+  /* Modal/overlay scrim */
+  --color-overlay: rgba(0, 0, 0, 0.6);
+  --color-overlay-heavy: rgba(0, 0, 0, 0.95);
 
   /* Elevation — neutral depth shadows (offset + blur, never a colored halo) */
   --shadow-elevated-md: 0 10px 30px -4px rgba(0, 0, 0, 0.45);
   --shadow-elevated-lg: 0 14px 40px -6px rgba(0, 0, 0, 0.5);
   --shadow-elevated-xl: 0 24px 70px -10px rgba(0, 0, 0, 0.55);
+  /* Stacked, extended shadow for large "floating" surfaces (e.g. device frames) */
+  --shadow-floating: 0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042,
+    0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003;
 }
 
 @layer base {

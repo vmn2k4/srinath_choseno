@@ -199,7 +199,7 @@ export default function RedistrictingPanel({ preselectedBatch, onRetired }) {
       </div>
 
       {affectedCount !== null && (
-        <div className={`flex items-start gap-2 p-3 rounded-xl border text-sm ${affectedCount > 0 ? 'bg-amber-500/10 border-amber-500/30 text-amber-300' : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'}`}>
+        <div className={`flex items-start gap-2 p-3 rounded-xl border text-sm ${affectedCount > 0 ? 'bg-warning/10 border-warning/30 text-warning-light' : 'bg-success/10 border-success/30 text-success-light'}`}>
           {affectedCount > 0 ? <AlertTriangle size={16} className="shrink-0 mt-0.5" /> : <CheckCircle2 size={16} className="shrink-0 mt-0.5" />}
           <span>
             {affectedCount > 0

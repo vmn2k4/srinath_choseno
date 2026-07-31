@@ -6,7 +6,7 @@ import VideoRecorder from '../../components/video/VideoRecorder';
 import { getGhostDisplayName } from '../../utils/ghostName';
 import PoliticianSidebar from '../../components/PoliticianSidebar';
 import LinkPreview from '../../components/LinkPreview';
-import { Card, Button, Input, Textarea, Spinner, EmptyState } from '../../components/ui';
+import { Card, Button, Badge, Input, Textarea, Spinner, EmptyState, StoryViewerModal, RemoveMediaButton } from '../../components/ui';
 import { getOwnProfile, getUserBoundaryMemberships, calculateMyScore } from '../../services/profile';
 import { getBoundaryTypesForCountries } from '../../services/boundaries';
 import {
@@ -370,18 +370,19 @@ export default function FeedPage() {
       {/* Header Profile Summary */}
       <div className="bg-surface-hover/80 backdrop-blur-md rounded-2xl border border-white/10 p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center text-xl font-bold text-slate-950 shadow-lg shrink-0">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center text-xl font-bold text-text-on-primary shadow-lg shrink-0">
             {profile.full_name ? profile.full_name.charAt(0).toUpperCase() : 'U'}
           </div>
           <div className="flex-1">
             <h1 className="text-2xl font-bold text-text-main">{profile.full_name || 'Anonymous User'}</h1>
             <div className="flex flex-wrap items-center gap-2 mt-1 text-text-muted text-sm">
-              <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                profile.role === 'politician' ? 'bg-primary/20 text-primary-lighter' :
-                profile.role === 'admin' ? 'bg-danger/20 text-rose-300' : 'bg-emerald-500/20 text-emerald-300'
-              }`}>
+              <Badge
+                tone={profile.role === 'politician' ? 'primary' : profile.role === 'admin' ? 'rose' : 'emerald'}
+                size="sm"
+                uppercase={false}
+              >
                 {profile.role ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1) : 'Citizen'}
-              </span>
+              </Badge>
               <span className="flex items-center gap-1">
                 <MapPin size={14} />
                 {locationDisplay}
@@ -420,7 +421,7 @@ export default function FeedPage() {
             <button
               onClick={handleBurnIdentity}
               disabled={burning}
-              className="flex items-center gap-2 px-4 py-2 bg-orange-500/10 hover:bg-orange-500/25 text-orange-400 border border-orange-500/25 rounded-xl transition-colors whitespace-nowrap text-sm font-semibold disabled:opacity-50 shadow-[0_0_12px_rgba(249,115,22,0.1)]"
+              className="flex items-center gap-2 px-4 py-2 bg-caution/10 hover:bg-caution/25 text-caution border border-caution/25 rounded-xl transition-colors whitespace-nowrap text-sm font-semibold disabled:opacity-50 shadow-[0_0_12px_rgba(249,115,22,0.1)]"
               title="Generate a new anonymous identity and orphan your old posts"
             >
               <Flame size={16} />
@@ -435,19 +436,19 @@ export default function FeedPage() {
           {activeElections.map(e => (
             <div
               key={e.seat_id}
-              className="flex items-center gap-2 pl-3.5 pr-2 py-2 bg-amber-500/10 border border-amber-500/25 rounded-full"
+              className="flex items-center gap-2 pl-3.5 pr-2 py-2 bg-warning/10 border border-warning/25 rounded-full"
             >
-              <Vote className="text-amber-400 shrink-0" size={14} />
+              <Vote className="text-warning shrink-0" size={14} />
               <button
                 onClick={() => navigate(`/elections/seat/${e.seat_id}`)}
-                className="text-amber-200 text-sm font-semibold hover:text-amber-100 transition-colors whitespace-nowrap"
+                className="text-warning-light text-sm font-semibold hover:text-warning-light/80 transition-colors whitespace-nowrap"
                 title={e.election_name}
               >
                 {e.role_title} · {e.election_date}
               </button>
               <button
                 onClick={() => dismissElectionBanner(e.election_id)}
-                className="p-1 text-amber-400/70 hover:text-amber-200 hover:bg-amber-500/10 rounded-full transition-colors shrink-0"
+                className="p-1 text-warning/70 hover:text-warning-light hover:bg-warning/10 rounded-full transition-colors shrink-0"
                 title="Dismiss"
               >
                 <X size={13} />
@@ -458,11 +459,11 @@ export default function FeedPage() {
       )}
 
       {profile.role === 'admin' && (
-        <div className="mb-8 p-4 bg-amber-500/10 border border-amber-500/25 rounded-xl flex items-start gap-3">
-          <ShieldAlert className="text-amber-400 shrink-0 mt-0.5" />
+        <div className="mb-8 p-4 bg-warning/10 border border-warning/25 rounded-xl flex items-start gap-3">
+          <ShieldAlert className="text-warning shrink-0 mt-0.5" />
           <div>
-            <h3 className="text-amber-400 font-bold mb-1">Admin Account</h3>
-            <p className="text-amber-200/70 text-sm">You are logged in as an administrator. Your primary role is managing the system boundaries in the Admin panel. You do not belong to a specific constituency feed.</p>
+            <h3 className="text-warning font-bold mb-1">Admin Account</h3>
+            <p className="text-warning-light/70 text-sm">You are logged in as an administrator. Your primary role is managing the system boundaries in the Admin panel. You do not belong to a specific constituency feed.</p>
           </div>
         </div>
       )}
@@ -474,11 +475,11 @@ export default function FeedPage() {
 
             {/* No local groups yet notice */}
             {!loadingMemberships && memberships.length === 0 && (
-              <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-start gap-3">
-                <MapPin className="text-amber-400 shrink-0 mt-0.5" size={18} />
+              <div className="mb-6 p-4 bg-warning/10 border border-warning/30 rounded-xl flex items-start gap-3">
+                <MapPin className="text-warning shrink-0 mt-0.5" size={18} />
                 <div>
-                  <h3 className="text-amber-300 font-semibold text-sm mb-1">No Local Groups Yet</h3>
-                  <p className="text-amber-200/70 text-xs">No boundary data covers your location yet, so you don't have any municipal/federal groups to post into. Go to <a href="/profile" className="underline hover:text-amber-200">Profile Settings</a> to search for and add your jurisdiction manually, or check back once an admin uploads boundary data for your area. You can still post to Country and International.</p>
+                  <h3 className="text-warning-light font-semibold text-sm mb-1">No Local Groups Yet</h3>
+                  <p className="text-warning-light/70 text-xs">No boundary data covers your location yet, so you don't have any municipal/federal groups to post into. Go to <a href="/profile" className="underline hover:text-warning-light">Profile Settings</a> to search for and add your jurisdiction manually, or check back once an admin uploads boundary data for your area. You can still post to Country and International.</p>
                 </div>
               </div>
             )}
@@ -514,13 +515,7 @@ export default function FeedPage() {
               {imagePreview && (
                 <div className="relative mt-2 mb-2 inline-block">
                   <img src={imagePreview} alt="Preview" className="h-32 rounded-lg border border-border-light object-cover" />
-                  <button
-                    type="button"
-                    onClick={() => { setImageFile(null); setImagePreview(null); }}
-                    className="absolute -top-2 -right-2 bg-danger text-white rounded-full p-1 shadow-lg hover:bg-danger-light"
-                  >
-                    <X size={14} />
-                  </button>
+                  <RemoveMediaButton onClick={() => { setImageFile(null); setImagePreview(null); }} />
                 </div>
               )}
 
@@ -707,7 +702,7 @@ export default function FeedPage() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-lg transition-opacity group-hover:opacity-80" />
                         <div className="absolute bottom-2 left-2 right-2 flex items-center gap-1.5">
                             <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center shrink-0 border border-primary-light">
-                              <Video size={8} className="text-slate-950" />
+                              <Video size={8} className="text-text-on-primary" />
                             </div>
                            <span className="text-[10px] text-white font-medium truncate drop-shadow-md">
                              {getGhostDisplayName(post.ghost_id)}
@@ -721,19 +716,7 @@ export default function FeedPage() {
             )}
 
             {/* Full Screen Story Modal */}
-            {activeStoryUrl && (
-              <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm">
-                 <div className="relative max-w-sm w-full bg-surface rounded-2xl overflow-hidden shadow-2xl border border-border-light">
-                    <button
-                      onClick={() => setActiveStoryUrl(null)}
-                      className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-black/50 hover:bg-black/80 rounded-full text-white transition-colors"
-                    >
-                      ✕
-                    </button>
-                    <video src={activeStoryUrl} controls autoPlay className="w-full max-h-[85vh] object-contain bg-black" />
-                 </div>
-              </div>
-            )}
+            <StoryViewerModal url={activeStoryUrl} onClose={() => setActiveStoryUrl(null)} />
 
             {/* Posts Feed */}
             <div className="space-y-6">
@@ -798,14 +781,14 @@ export default function FeedPage() {
                     <div className="px-5 py-3 bg-surface/20 border-t border-border-light/20 flex items-center gap-5">
                       <button
                         onClick={() => handleVote(post.id, 1)}
-                        className="flex items-center gap-1.5 text-sm font-semibold text-text-muted hover:text-emerald-400 transition-colors"
+                        className="flex items-center gap-1.5 text-sm font-semibold text-text-muted hover:text-success transition-colors"
                       >
                         <ThumbsUp size={16} />
                         <span>{post.likes_count}</span>
                       </button>
                       <button
                         onClick={() => handleVote(post.id, -1)}
-                        className="flex items-center gap-1.5 text-sm font-semibold text-text-muted hover:text-rose-400 transition-colors"
+                        className="flex items-center gap-1.5 text-sm font-semibold text-text-muted hover:text-danger-light transition-colors"
                       >
                         <ThumbsDown size={16} />
                         <span>{post.dislikes_count}</span>

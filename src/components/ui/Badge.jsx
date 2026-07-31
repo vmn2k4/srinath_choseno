@@ -7,9 +7,9 @@ import React from 'react';
 const TONES = {
   primary: 'bg-primary/20 text-primary-light',
   accent: 'bg-accent/20 text-accent-hover',
-  amber: 'bg-amber-500/20 text-amber-300',
-  emerald: 'bg-emerald-500/20 text-emerald-300',
-  rose: 'bg-danger/20 text-rose-300',
+  amber: 'bg-warning/20 text-warning-light',
+  emerald: 'bg-success/20 text-success-light',
+  rose: 'bg-danger/20 text-danger-lighter',
   neutral: 'bg-surface-active text-text-muted',
 };
 

@@ -209,7 +209,7 @@ export default function ElectionSeatPage() {
                         {name}
                       </span>
                       {c.nomination_filed && (
-                        <CheckCircle2 size={14} className="text-emerald-400 shrink-0" title="Nomination papers filed" />
+                        <CheckCircle2 size={14} className="text-success shrink-0" title="Nomination papers filed" />
                       )}
                     </button>
                   );

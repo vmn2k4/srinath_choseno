@@ -11,7 +11,7 @@ import {
   insertMapShapesBatch, insertMapShape, finalizeBoundaryUpload
 } from '../services/boundaries';
 import { listPoliticalPartiesAllCountries, createPoliticalParty, deletePoliticalParty } from '../services/politicalParties';
-import { Card, Button, Input, Select, Spinner, EmptyState } from '../components/ui';
+import { Card, Button, Badge, Input, Select, Spinner, EmptyState } from '../components/ui';
 
 const VERTEX_BUCKETS = [
   [0, 1_000], [1_000, 5_000], [5_000, 20_000],
@@ -20,6 +20,11 @@ const VERTEX_BUCKETS = [
 ];
 const NORMAL_TIER_MAX_VERTICES = 5_000;
 const BULK_BATCH_SIZE = 200;
+
+// One place to restyle this page's five section headings at once.
+function SectionTitle({ children }) {
+  return <h2 className="text-2xl font-bold text-text-main mb-4">{children}</h2>;
+}
 
 export default function AdminPage() {
   const [redistrictBatch, setRedistrictBatch] = useState(null);
@@ -468,7 +473,7 @@ export default function AdminPage() {
 
       {/* COUNTRIES */}
       <Card padding="lg">
-        <h2 className="text-2xl font-bold text-text-main mb-4">Countries</h2>
+        <SectionTitle>Countries</SectionTitle>
         <p className="text-sm text-text-muted mb-6">
           Register a country before defining boundary types or uploading shapes for it. This is the canonical list every
           other country selector on this page draws from.
@@ -530,7 +535,7 @@ export default function AdminPage() {
 
       {/* BOUNDARY TYPES CONFIGURATION */}
       <Card padding="lg">
-        <h2 className="text-2xl font-bold text-text-main mb-4">Boundary Types</h2>
+        <SectionTitle>Boundary Types</SectionTitle>
         <p className="text-sm text-text-muted mb-6">
           Define which boundary types exist for each country (e.g. Canada → Federal, Provincial, Municipal) and their rank
           (1 = broadest, higher = more local). Shapes can only be uploaded under a type registered here.
@@ -544,7 +549,7 @@ export default function AdminPage() {
               {countries.map(c => <option key={c} value={c}>{c}</option>)}
             </Select>
             {countries.length === 0 && (
-              <p className="text-xs text-amber-400 mt-1.5">No countries registered yet — add one above first.</p>
+              <p className="text-xs text-warning mt-1.5">No countries registered yet — add one above first.</p>
             )}
           </div>
           <div>
@@ -607,7 +612,7 @@ export default function AdminPage() {
 
       {/* POLITICAL PARTIES */}
       <Card padding="lg">
-        <h2 className="text-2xl font-bold text-text-main mb-4">Political Parties</h2>
+        <SectionTitle>Political Parties</SectionTitle>
         <p className="text-sm text-text-muted mb-6">
           Define the party list a politician can pick from when editing their profile, per country. Independent should
           usually be included as its own entry.
@@ -621,7 +626,7 @@ export default function AdminPage() {
               {countries.map(c => <option key={c} value={c}>{c}</option>)}
             </Select>
             {countries.length === 0 && (
-              <p className="text-xs text-amber-400 mt-1.5">No countries registered yet — add one above first.</p>
+              <p className="text-xs text-warning mt-1.5">No countries registered yet — add one above first.</p>
             )}
           </div>
           <div>
@@ -679,7 +684,7 @@ export default function AdminPage() {
 
       {/* LEFT SIDE: UPLOAD FORM */}
       <Card padding="lg" className="self-start">
-        <h2 className="text-2xl font-bold text-text-main mb-4">Upload Boundaries</h2>
+        <SectionTitle>Upload Boundaries</SectionTitle>
         <p className="text-sm text-text-muted mb-6">
           Upload electoral boundaries (.geojson or .zip containing shapefiles).
         </p>
@@ -712,7 +717,7 @@ export default function AdminPage() {
               {typesForSelectedCountry.map(t => <option key={t.id} value={t.type_name}>{t.type_name} (rank {t.rank})</option>)}
             </Select>
             {country && typesForSelectedCountry.length === 0 && (
-              <p className="text-xs text-amber-400 mt-1.5">No types defined for {country} yet — add one above.</p>
+              <p className="text-xs text-warning mt-1.5">No types defined for {country} yet — add one above.</p>
             )}
           </div>
         </div>
@@ -741,7 +746,7 @@ export default function AdminPage() {
         <div className="mb-4">
           <label className="block mb-2 text-xs font-semibold text-text-muted uppercase tracking-wider">Select File</label>
           <input
-            className="block w-full text-xs text-text-muted border border-border-light rounded-xl cursor-pointer bg-surface/40 focus:outline-none file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-xs file:font-bold file:bg-primary file:text-slate-950 hover:file:bg-primary-hover transition-colors"
+            className="block w-full text-xs text-text-muted border border-border-light rounded-xl cursor-pointer bg-surface/40 focus:outline-none file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-xs file:font-bold file:bg-primary file:text-text-on-primary hover:file:bg-primary-hover transition-colors"
             type="file"
             accept=".zip,.geojson,.json"
             onChange={handleFileChange}
@@ -791,7 +796,7 @@ export default function AdminPage() {
               />
               {vertexHistogram.overCutoff.length > 0 ? (
                 <div>
-                  <p className="text-xs text-amber-400 mb-1.5">{vertexHistogram.overCutoff.length} shape(s) will be skipped:</p>
+                  <p className="text-xs text-warning mb-1.5">{vertexHistogram.overCutoff.length} shape(s) will be skipped:</p>
                   <div className="max-h-28 overflow-y-auto space-y-0.5">
                     {vertexHistogram.overCutoff.slice(0, 20).map((f, i) => (
                       <p key={i} className="text-[11px] text-text-muted truncate">{f.vertices.toLocaleString()} — {f.name}</p>
@@ -799,7 +804,7 @@ export default function AdminPage() {
                   </div>
                 </div>
               ) : (
-                <p className="text-xs text-emerald-400">No shapes exceed the cutoff — everything will be uploaded.</p>
+                <p className="text-xs text-success">No shapes exceed the cutoff — everything will be uploaded.</p>
               )}
             </div>
 
@@ -823,7 +828,7 @@ export default function AdminPage() {
 
       {/* RIGHT SIDE: BOUNDARY LIST */}
       <Card padding="lg" className="flex flex-col h-[70vh] max-h-[650px] min-h-[320px]">
-        <h2 className="text-2xl font-bold text-text-main mb-4">Uploaded Boundaries</h2>
+        <SectionTitle>Uploaded Boundaries</SectionTitle>
         <p className="text-sm text-text-muted mb-6">
           Recent boundaries successfully uploaded to the system.
         </p>
@@ -839,22 +844,24 @@ export default function AdminPage() {
                 <div>
                   <h4 className="font-bold text-text-secondary">{b.name}</h4>
                   <div className="text-xs text-text-muted mt-1 flex gap-2">
-                    <span className="bg-accent/20 text-accent-hover px-2 py-0.5 rounded font-medium">{b.country}</span>
-                    <span className="bg-primary/20 text-primary-light px-2 py-0.5 rounded font-medium">{b.boundary_type}</span>
+                    <Badge tone="accent" size="sm" uppercase={false}>{b.country}</Badge>
+                    <Badge tone="primary" size="sm" uppercase={false}>{b.boundary_type}</Badge>
                     {b.retired_at ? (
-                      <span className="bg-slate-500/20 text-slate-300 px-2 py-0.5 rounded font-medium">Retired</span>
+                      <Badge tone="neutral" size="sm" uppercase={false}>Retired</Badge>
                     ) : (
-                      <span className="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-medium">Active</span>
+                      <Badge tone="emerald" size="sm" uppercase={false}>Active</Badge>
                     )}
                   </div>
                 </div>
-                <button
+                <Button
+                  variant="icon"
+                  tone="danger"
                   onClick={() => handleDelete(b.id)}
-                  className="p-2 text-text-muted hover:text-danger hover:bg-danger/10 rounded-xl transition-colors opacity-0 group-hover:opacity-100"
+                  className="opacity-0 group-hover:opacity-100"
                   title="Delete Boundary"
                 >
                   <Trash2 size={18} />
-                </button>
+                </Button>
               </div>
             ))
           )}

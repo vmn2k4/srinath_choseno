@@ -9,7 +9,7 @@ Every Supabase call (`.from()`, `.rpc()`, `.storage`, `.auth`) lives in `src/ser
 | File | Domain | Used by |
 |---|---|---|
 | `supabase.js` | Client init only | (imported by every other service file) |
-| `elections.js` | elections, election_seats, election_candidates, election_administrators, questions/options, candidate answers, election RPCs | `ElectionsAdmin`, `ElectionAdminApplications`, `PoliticianElections`, `CandidateApplication`, `CandidacyWall`, `ElectionsPage`, `ElectionSeatPage` |
+| `elections.js` | elections, election_seats, election_candidates, election_administrators, questions/options, candidate answers, election RPCs, candidacy-wall posts (`getCandidacyWallPosts` — unified with the person's permanent wall, see `ARCHITECTURE.md` §27) | `ElectionsAdmin`, `ElectionAdminApplications`, `PoliticianElections`, `CandidateApplication`, `CandidacyWall`, `ElectionsPage`, `ElectionSeatPage` |
 | `boundaries.js` | countries, country_boundary_types, map_shapes, boundary_uploads, boundary RPCs (geojson, containers, redistricting, shape insert) | `BoundaryVisualizer`, `BoundaryUploadsPanel`, `RedistrictingPanel`, `BoundaryPicker`, `AdminPage`, `UserPage`, `StepLocation`, plus `ElectionsAdmin`/`PoliticianElections` for country/type/shape lookups |
 | `politicalParties.js` | political_parties CRUD | `AdminPage`, `StepPolitician` |
 | `feed.js` | posts (main feed), comments, post-image storage, ghost-identity burn RPC, election notifications | `FeedPage`, `ProfilePage` (burn), plus `PoliticianWall`/`CandidacyWall` for the shared `createComment`/`uploadPostImage` helpers |

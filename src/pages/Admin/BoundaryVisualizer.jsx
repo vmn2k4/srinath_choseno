@@ -162,7 +162,7 @@ export default function BoundaryVisualizer() {
           </Button>
         </div>
 
-        {status && <p className="text-xs text-amber-300">{status}</p>}
+        {status && <p className="text-xs text-warning-light">{status}</p>}
 
         {matches && matches.length > RENDER_CAP && !mapBoundaries && (
           <div className="space-y-3">

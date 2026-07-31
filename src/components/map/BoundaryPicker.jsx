@@ -168,7 +168,7 @@ export default function BoundaryPicker({
             />
           </div>
           {!loading && !eagerLoaded && boundaries.length > 0 && (
-            <p className="text-[10px] text-amber-400 mt-1.5">
+            <p className="text-[10px] text-warning mt-1.5">
               {boundaries.length} candidates — too many to click-select on the map here, use the list.
             </p>
           )}

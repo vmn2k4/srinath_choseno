@@ -15,6 +15,15 @@ export default function MainLayout() {
 
   const isActive = (path) => location.pathname === path;
 
+  // Single source of truth for the nav pill's active/inactive look — was
+  // previously copy-pasted independently at each Link below.
+  const navLinkClass = (active) =>
+    `px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
+      active
+        ? 'text-text-main bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(233,235,158,0.15)]'
+        : 'text-text-muted hover:text-text-main hover:bg-surface-hover'
+    }`;
+
   return (
     <div className="flex flex-col min-h-screen">
       <nav className="flex justify-between items-center px-8 py-6 bg-surface/80 backdrop-blur-md border-b border-white/10">
@@ -24,53 +33,28 @@ export default function MainLayout() {
         <div className="flex gap-4 items-center">
           {session ? (
             <>
-              <Link
-                to="/feed"
-                className={`px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
-                  isActive('/feed')
-                    ? 'text-text-main bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(233,235,158,0.15)]'
-                    : 'text-text-muted hover:text-text-main hover:bg-surface-hover'
-                }`}
-              >
+              <Link to="/feed" className={navLinkClass(isActive('/feed'))}>
                 Feed
               </Link>
               {profile?.role !== 'admin' && (
                 <Link
                   to={profile?.role === 'politician' ? '/politician/elections' : '/elections'}
-                  className={`px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
-                    isActive('/elections') || isActive('/politician/elections')
-                      ? 'text-text-main bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(233,235,158,0.15)]'
-                      : 'text-text-muted hover:text-text-main hover:bg-surface-hover'
-                  }`}
+                  className={navLinkClass(isActive('/elections') || isActive('/politician/elections'))}
                 >
                   Elections
                 </Link>
               )}
               {profile?.role === 'admin' && (
-                <Link 
-                  to="/admin"
-                  className={`px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
-                    isActive('/admin') 
-                      ? 'text-text-main bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(233,235,158,0.15)]' 
-                      : 'text-text-muted hover:text-text-main hover:bg-surface-hover'
-                  }`}
-                >
+                <Link to="/admin" className={navLinkClass(isActive('/admin'))}>
                   Admin
                 </Link>
               )}
-              <Link 
-                to="/profile"
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
-                  isActive('/profile') 
-                    ? 'text-text-main bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(233,235,158,0.15)]' 
-                    : 'text-text-muted hover:text-text-main hover:bg-surface-hover'
-                }`}
-              >
+              <Link to="/profile" className={`flex items-center gap-2 ${navLinkClass(isActive('/profile'))}`}>
                 <UserIcon size={18} />
                 Profile
               </Link>
-              <button 
-                className="flex items-center gap-2 px-4 py-2 rounded-lg text-base font-medium text-danger-light hover:text-rose-300 hover:bg-danger/10 transition-all duration-300"
+              <button
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-base font-medium text-danger-light hover:text-danger-lighter hover:bg-danger/10 transition-all duration-300"
                 onClick={handleSignOut}
               >
                 <LogOut size={18} />
@@ -78,12 +62,12 @@ export default function MainLayout() {
               </button>
             </>
           ) : (
-            <Link 
+            <Link
               to="/auth"
               className={`px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
-                isActive('/auth') 
-                  ? 'text-text-main bg-emerald-500/20 border border-emerald-500/30' 
-                  : 'text-text-muted hover:text-text-main hover:bg-white/5 border border-slate-600'
+                isActive('/auth')
+                  ? 'text-text-main bg-success/20 border border-success/30'
+                  : 'text-text-muted hover:text-text-main hover:bg-white/5 border border-border'
               }`}
             >
               Log In / Sign Up

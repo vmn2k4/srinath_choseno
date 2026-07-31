@@ -82,7 +82,7 @@ export default function StepUsername({ data, updateData, nextStep, prevStep, loa
                 'You can permanently "burn" your Ghost ID at any time to start fresh.'
               ].map((text, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-text-tertiary">
-                  <CheckCircle2 size={16} className="text-emerald-500 shrink-0 mt-0.5" />
+                  <CheckCircle2 size={16} className="text-success shrink-0 mt-0.5" />
                   {text}
                 </li>
               ))}

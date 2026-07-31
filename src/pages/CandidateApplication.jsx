@@ -140,7 +140,7 @@ export default function CandidateApplication() {
               <span className="text-xs text-text-muted">Submitted {new Date(candidate.submitted_at).toLocaleDateString()} — you can still edit and resubmit below.</span>
             </div>
           ) : (
-            <p className="mt-3 text-xs text-amber-300">Not submitted yet — fill out the questionnaire and upload an intro video, then submit for review.</p>
+            <p className="mt-3 text-xs text-warning-light">Not submitted yet — fill out the questionnaire and upload an intro video, then submit for review.</p>
           )}
         </Card>
 

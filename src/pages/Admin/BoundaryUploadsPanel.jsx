@@ -4,7 +4,7 @@ import {
   renameBoundaryUpload, deleteBoundaryUpload
 } from '../../services/boundaries';
 import { Trash2, ChevronDown, ChevronUp, Pencil, Check, X, GitBranch, PlayCircle } from 'lucide-react';
-import { Card, Badge, Input, Spinner, EmptyState } from '../../components/ui';
+import { Card, Badge, Button, Input, Spinner, EmptyState } from '../../components/ui';
 
 export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload, countryFilter }) {
   const [uploads, setUploads] = useState([]);
@@ -124,8 +124,8 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
                             onChange={e => setRenameValue(e.target.value)}
                             autoFocus
                           />
-                          <button onClick={() => saveRename(u.id)} className="p-1 text-emerald-400 hover:bg-emerald-500/10 rounded"><Check size={14} /></button>
-                          <button onClick={() => setRenamingId(null)} className="p-1 text-text-muted hover:bg-surface-hover rounded"><X size={14} /></button>
+                          <Button variant="icon" tone="success" size="sm" onClick={() => saveRename(u.id)}><Check size={14} /></Button>
+                          <Button variant="icon" tone="default" size="sm" onClick={() => setRenamingId(null)}><X size={14} /></Button>
                         </div>
                       ) : (
                         <p className="font-bold text-text-secondary text-sm truncate">{u.name}</p>
@@ -142,26 +142,26 @@ export default function BoundaryUploadsPanel({ onRedistrictBatch, onResumeUpload
                   </button>
                   <div className="flex items-center gap-1 shrink-0">
                     {!u.completed_at && (
-                      <button onClick={() => onResumeUpload(u)} className="p-2 text-text-muted hover:text-emerald-400 hover:bg-emerald-500/10 rounded-lg transition-colors" title="Resume this upload">
+                      <Button variant="icon" tone="success" onClick={() => onResumeUpload(u)} title="Resume this upload">
                         <PlayCircle size={14} />
-                      </button>
+                      </Button>
                     )}
                     {renamingId !== u.id && (
-                      <button onClick={() => startRename(u)} className="p-2 text-text-muted hover:text-text-main hover:bg-surface-hover rounded-lg transition-colors" title="Rename">
+                      <Button variant="icon" tone="default" onClick={() => startRename(u)} title="Rename">
                         <Pencil size={14} />
-                      </button>
+                      </Button>
                     )}
-                    <button onClick={() => onRedistrictBatch(u)} className="p-2 text-text-muted hover:text-primary-light hover:bg-primary/10 rounded-lg transition-colors" title="Redistrict / Retire this batch">
+                    <Button variant="icon" tone="primary" onClick={() => onRedistrictBatch(u)} title="Redistrict / Retire this batch">
                       <GitBranch size={14} />
-                    </button>
-                    <button onClick={() => handleDelete(u.id)} className="p-2 text-text-muted hover:text-danger hover:bg-danger/10 rounded-lg transition-colors" title="Delete this batch">
+                    </Button>
+                    <Button variant="icon" tone="danger" onClick={() => handleDelete(u.id)} title="Delete this batch">
                       <Trash2 size={14} />
-                    </button>
+                    </Button>
                   </div>
                 </div>
 
                 {status[u.id] && (
-                  <div className="px-3.5 pb-3 text-xs text-amber-300">{status[u.id]}</div>
+                  <div className="px-3.5 pb-3 text-xs text-warning-light">{status[u.id]}</div>
                 )}
 
                 {isExpanded && (

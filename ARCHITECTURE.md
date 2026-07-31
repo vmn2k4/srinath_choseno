@@ -4,7 +4,8 @@ This document exists so a future session (human or Claude) can pick this project
 without re-deriving context. It covers what existed before this working session, everything
 built during it, how it's designed, and known gaps that were flagged but intentionally left
 unfixed. Written 2026-07-23, updated same day across four further work sessions (§§11–15), again
-2026-07-24 (§17), and again 2026-07-25 across a sixth session (§§18–22).
+2026-07-24 (§17), again 2026-07-25 across a sixth session (§§18–22), across several later
+sessions through 2026-07-29 (§§23–26), and again 2026-07-30 (§27).
 
 ---
 
@@ -90,19 +91,21 @@ reasons), not a Choseno-specific issue.
 - `burn_ghost_identity()` RPC (`SECURITY DEFINER`): regenerates `current_ghost_id` for
   `auth.uid()`. All prior posts/comments stay under the old (now orphaned) ghost ID forever —
   nothing is deleted or re-attributed. This is the core "burn and start fresh" anonymity
-  guarantee the whole product is built around.
+  guarantee the whole product is built around. **Gotcha, found and fixed in §27:** this
+  function was described here (and called by `feed.js`) for sessions, but never actually
+  existed in the database — every burn attempt silently failed. See §27.
 - Auth: Supabase email/password. `AuthContext.jsx` self-heals a missing `profiles` row on
   first login and auto-promotes the hardcoded admin email (`vmn2k4@gmail.com`) to
   `role='admin'`.
 
-**Known unresolved issue (flagged, not fixed):** `FeedPage.jsx`'s `silentExportData()`
-function writes a file linking the real `profile.id` to `current_ghost_id` plus full
-post/comment history into a `user_exports` storage bucket, on every post/comment. The
-bucket's RLS allows any authenticated user to read any file in it (no ownership scoping) —
-this would fully deanonymize any user whose `profile.id` became known. Currently
-non-functional in practice only because the `user_exports` bucket doesn't exist in this
-Supabase project (errors silently, caught). **This should be removed entirely**, not fixed —
-no other code reads these export files, there's no evident product purpose for it.
+**Formerly-flagged issue, resolved by deletion in §27:** `FeedPage.jsx`'s `silentExportData()`
+used to write a file linking the real `profile.id` to `current_ghost_id` plus full
+post/comment history into a `user_exports` storage bucket, on every post/comment — a
+deanonymization risk (bucket RLS allowed any authenticated user to read any file in it),
+non-functional in practice only because the bucket never existed. It was deleted outright
+(not fixed) once its actual purpose came up directly with the user — see §27's civic score
+writeup for the privacy-preserving replacement (a single running score integer, no
+post-id-to-profile mapping stored anywhere).
 
 ---
 
@@ -1169,7 +1172,8 @@ src/
     Profile/EditProfileFlow.jsx      dead country field fixed to re-derive+save (§12)
     ProfilePage.jsx                  §19 — added a one-click "Switch to Citizen Account" button
                                       (politicians previously had no way back except the full
-                                      multi-step Edit Profile wizard)
+                                      multi-step Edit Profile wizard). §27 removed this button
+                                      again — downgrading is now blocked outright.
     CandidateApplication.jsx         §21 — success copy now reflects auto-approval (and the
                                       resubmit-after-rejection edge case) instead of "an admin
                                       will review it soon"
@@ -1234,7 +1238,7 @@ Verified end-to-end with disposable test accounts across desktop/tablet/mobile w
 
 **Boundary Finder removed** at the user's request: deleted `src/pages/UserPage.jsx`, its `/explore` route, its `MainLayout.jsx` nav link, and its "Explore boundaries" homepage CTA. `BoundaryPicker.jsx` and the `boundaries.js` service functions it used (`getCountries`, `findBoundariesByPoint`) are untouched — still used by `StepLocation.jsx` and the various admin panels.
 
-**Politician → Citizen role switching**: turned out to already work end-to-end via the existing multi-step Edit Profile wizard (`EditProfileFlow.jsx`'s Account Type toggle) — verified live, no backend bug. The actual gap was discoverability: citizens see "Become a Politician" prompts throughout the Elections pages, but politicians had no equivalent one-click way back. Added a "Switch to Citizen Account" button directly on `ProfilePage.jsx`'s Political Details card — one click (with a confirmation prompt) flips the role while preserving the existing name/country/constituency, no need to re-enter location or step through the wizard.
+**Politician → Citizen role switching**: turned out to already work end-to-end via the existing multi-step Edit Profile wizard (`EditProfileFlow.jsx`'s Account Type toggle) — verified live, no backend bug. The actual gap was discoverability: citizens see "Become a Politician" prompts throughout the Elections pages, but politicians had no equivalent one-click way back. Added a "Switch to Citizen Account" button directly on `ProfilePage.jsx`'s Political Details card — one click (with a confirmation prompt) flips the role while preserving the existing name/country/constituency, no need to re-enter location or step through the wizard. **Reversed in §27**: this whole direction turned out to be wrong on reflection — a politician profile accumulates real state (candidacies, a public wall, supporters) that a downgrade would orphan, so the product decision became "politicians can never downgrade," not "make downgrading easier." Both this button and `EditProfileFlow`'s ability to pick Citizen for an existing politician were removed, backstopped by a database trigger.
 
 **Onboarding visuals**: `OnboardingFlow.jsx` wrapped itself in its own `min-h-screen bg-background` div — a solid, flat near-black rectangle that didn't match the app's actual radial-gradient background (which every other page, like the auth screen, just lets show through from `body`). Replaced with the same translucent/backdrop-blurred card style used elsewhere. `StepRole.jsx` (the role-selection first step) also got a responsive pass — smaller heading/padding/icon sizes below the `sm` breakpoint, cards stack instead of a fixed two-column grid on narrow screens.
 
@@ -1247,20 +1251,21 @@ Four roles exist. Three are `profiles.role` values (`CHECK (role IN ('normal', '
 ### Citizen (`role = 'normal'`) — the default
 
 - Posts/comments/votes under a rotating anonymous ghost ID (`current_ghost_id`); can burn it any time via `burn_ghost_identity()` to sever all links to past activity (§3).
+- Earns a `civic_score` (§27) from posts/comments/votes received — 10/post, 5/comment, ±1 per like/dislike on their own posts — banked permanently into `profiles.civic_score` at burn time so it survives across ghost identities. Shown on `FeedPage.jsx` and `ProfilePage.jsx`, recalculated on demand via `calculate_my_score()`.
 - Feed scoped to their boundary memberships (municipal/federal/provincial/etc., from `user_boundary_memberships`) plus fixed Country/International tabs.
 - Can support politicians and candidates ("I Support", `politician_supporters`).
 - Can discuss/comment on any politician's wall or any election candidate's page.
 - Can volunteer to be the Election Administrator for any seat (§21) — this is open to citizens, not politician-gated.
-- To self-nominate for a seat, must first switch to the Politician account type (`ProfilePage.jsx` → Edit Profile, or the one-click reverse via the "Switch to Citizen Account" button, §19) — there's no separate "citizen nominates directly" path.
+- To self-nominate for a seat, must first switch to the Politician account type (`ProfilePage.jsx` → Edit Profile) — there's no separate "citizen nominates directly" path. **One-way as of §27**: once switched to Politician, there is no way back (see below).
 - Cannot: manage boundary data, review candidate or election-administrator applications, or do anything gated by `role = 'admin'`.
 
 ### Politician (`role = 'politician'`)
 
 - Everything a citizen can do, plus:
-- A public wall (`/wall/:ghostId`) — post updates and (recorded in-browser) video pitches; citizens can visit, comment, and support them there.
+- A public wall (`/wall/:ghostId`) — post updates and (recorded in-browser) video pitches; citizens can visit, comment, and support them there. Wall content and any candidacy page's content are now provably the same feed, not two lookalikes (§27, closing the gap §18 only partially closed by sharing `WallPostFeed.jsx` — the two pages still queried disjoint post sets under the hood until §27).
 - Can self-nominate for any open seat (`apply_for_seat` → `CandidateApplication.jsx` → `submit_candidate_application`) — submitting now makes the candidacy immediately public, no site-admin approval needed (§21; the site admin can still reject a live candidacy afterward as a moderation action).
 - Once a candidate, gets a candidacy page (`/candidacy/:id`) — the *same* wall component as their personal wall (§18), scoped to that specific race, with a self-editable "Nomination Papers Filed" status (§21) they're expected to keep current as the real-world filing fact it represents (distinct from the platform's own approval status).
-- Can switch back to Citizen at any time (§19).
+- **Cannot switch back to Citizen, as of §27.** A politician profile accumulates real state (candidacies, a public wall, supporters) a downgrade would orphan — blocked at the database (`guard_politician_role_downgrade` trigger on `profiles`), not just hidden in the UI. Superseded §19's one-click "Switch to Citizen Account" button, which is gone.
 
 ### Election Administrator (a grant, not a role) — new in §21
 
@@ -1283,7 +1288,7 @@ Four roles exist. Three are `profiles.role` values (`CHECK (role IN ('normal', '
 
 ### Known gap, not addressed here
 
-`OnboardingFlow.jsx`'s `submitOnboarding` still unconditionally overwrites `profiles.role` from the onboarding UI's selection on every completion — flagged in §2/§12, still true, still not fixed. An admin (or an election administrator, by extension) who ever runs through onboarding again would silently lose that status. Out of scope for §21; noted here since this section is the natural place someone would look for it.
+`OnboardingFlow.jsx`'s `submitOnboarding` still unconditionally overwrites `profiles.role` from the onboarding UI's selection on every completion — flagged in §2/§12, still true, still not fixed. An admin (or an election administrator, by extension) who ever runs through onboarding again would silently lose that status. Out of scope for §21; noted here since this section is the natural place someone would look for it. **Narrower as of §27**: the politician-specific case (a politician re-onboarding and picking Citizen) is now caught — `guard_politician_role_downgrade` blocks the resulting `UPDATE` at the database regardless of which code path attempts it — but the admin-demotion case above is untouched, since `guard_politician_role_downgrade` only fires on `OLD.role = 'politician'`, not `'admin'`.
 
 ---
 
@@ -1388,3 +1393,63 @@ All ten previously-built jurisdictions (Canada Federal, BC, Ontario, Quebec, Man
 The migration also force-recomputes `shape_containers` for every existing USA `'State'` shape, rather than trusting whatever rows happened to survive §23's flag flip (that migration only changed `country_boundary_types`, never touched the cache table itself).
 
 **Verified live**: Idaho as a container correctly returns exactly its 2 real congressional districts via `find_shapes_in_containers`. Ontario as a container still correctly returns 126 shapes (124 real Ontario ridings + 2 near-border Quebec ones — an already-documented quirk from §16, not a regression) — confirming the Canada path is untouched.
+
+---
+
+## 27. Ghost display names, a missing RPC, civic score, candidacy/wall unification, an auth refocus bug (twice), and a politician-downgrade guard
+
+*Built across one later session, 2026-07-30 — a series of separate direct requests handled one after another, bundled here together.*
+
+**Readable ghost names** (`src/utils/ghostName.js`, new): every place in the app rendered `Ghost-${id.split('-')[0]}` inline — 11 separate occurrences across `FeedPage.jsx`, `PoliticianWall.jsx`, `CandidacyWall.jsx`, `WallPostFeed.jsx`, `PoliticianSidebar.jsx`, `ElectionsAdmin.jsx`, `ElectionSeatPage.jsx` — at the user's request for something easier to read than a hex fragment. `getGhostDisplayName(ghostId)` hashes the UUID (no new storage) and deterministically picks an adjective + animal noun from two small word lists, e.g. `Ghost-QuietFalcon`. Purely cosmetic on top of the existing id — doesn't change the anonymity model in either direction (same reversibility as the hex fragment already had). All 11 call sites now share this one function.
+
+**`burn_ghost_identity()` didn't exist.** Investigating why a user's "Burn Identity" button did nothing (same Ghost ID before and after) led to querying the live database directly: zero functions with "ghost" in the name existed anywhere, despite §3 describing this RPC and `feed.js` calling it every session since. It had presumably only ever been described/assumed, never actually shipped as a migration. Every burn attempt was failing with a PostgREST "function not found" error, caught and only `console.error`'d — no visible failure, so it looked like the button just did nothing. Fixed (`20260730000000_burn_ghost_identity.sql`): a straightforward `SECURITY DEFINER` RPC matching §3's description. Verified directly against a real profile in a rolled-back transaction (confirmed `current_ghost_id` actually rotates, then rolled back so nothing was permanently touched) before also wiring a visible `alert()` on failure in `FeedPage.jsx`'s `handleBurnIdentity`, in case it — or anything else — ever fails silently again.
+
+### Civic score (`profiles.civic_score`)
+
+Requested directly: a per-user score (10 pts/post, 5/comment, +1/like, −1/dislike on their own posts) that survives ghost burns. The original ask sketched a `silentExportData()`-style file of the user's post/comment ids written to storage at burn time — flagged immediately: any stored `profile_id → post_id` list is itself a deanonymization index, since `posts.ghost_id` is already public on every post, so that design would have recreated exactly the pre-existing flagged `silentExportData()` risk (§3), not fixed it.
+
+**Resolution, decided with the user**: a single running integer, no post-id list ever stored anywhere. `calculate_my_score()` (`20260730000001_civic_score.sql`, perf-tuned in `20260730000002_civic_score_perf.sql`) returns `profiles.civic_score` (banked total from all previously-burned ghosts) plus a live tally of the *current* ghost's posts/comments/votes — computed fresh on every call, nothing persisted until burn. `burn_ghost_identity()` was extended to fold that live contribution into `civic_score` before rotating — the last moment a legitimate link between the profile and that ghost exists. After that, only the number survives; which specific old posts contributed is not reconstructable by anyone, including the account owner.
+
+**Perf note, found and fixed in the same session**: `posts.ghost_id`/`comments.ghost_id` had no index at all — every score calculation and every burn was a full sequential scan of both tables (confirmed via `EXPLAIN`). Added `idx_posts_ghost_id`/`idx_comments_ghost_id`, and collapsed the original 3-scan implementation (separate `count()` and `sum()` subqueries against `posts`) into one pass per table. Re-verified the exact score math after the rewrite against real data (9 posts + 1 comment + 2 likes = 97) in a rolled-back transaction.
+
+Displayed on `FeedPage.jsx` (below the Ghost ID badge, next to Burn Identity) and `ProfilePage.jsx` (inside the Privacy & Ghost ID card) via an "Update My Score" button — deliberately not auto-fetched on load, to keep it a cheap on-demand read rather than a query on every page visit.
+
+### `silentExportData()` deleted
+
+Its whole purpose turned out to be "the future civic-score feature" — now built the privacy-preserving way above, so the original function (and its now-dead `getPostsForExport`/`getCommentsForExport`/`uploadUserExport` service functions) was removed outright from `FeedPage.jsx`/`feed.js`, closing the §3-flagged deanonymization risk for good rather than leaving it dormant.
+
+### Burn paths consolidated
+
+`docs/SERVICES.md` had documented `ProfilePage.jsx`'s `burnGhostIdRaw()` (a raw `profiles.current_ghost_id` column update) and `FeedPage.jsx`'s `burnGhostIdentityViaRpc()` as a deliberate, do-not-merge divergence. Given the RPC didn't exist until this session (above), that divergence was almost certainly a workaround for the missing function, not an intentional design choice — confirmed with the user before touching it. `burnGhostIdRaw` is deleted; both pages now share `burnGhostIdentityViaRpc()`. This mattered concretely once civic-score banking moved into the RPC: the raw path would have silently skipped crediting the score for anyone burning via `ProfilePage`.
+
+### Candidacy wall ↔ permanent wall content unification
+
+Asked directly to verify a candidate's election-seat wall (`CandidacyWall`, via `getCandidatePosts` — matched only `posts.election_candidate_id`) showed the same content as their permanent politician wall (`PoliticianWall`, via `getWallPosts` — matched `posts.ghost_id`/`wall_ghost_id`). It didn't — two disjoint post sets for the same person, depending which URL you viewed them from.
+
+**Fix**: `elections.js`'s new `getCandidacyWallPosts(candidateId, ghostId)` matches `election_candidate_id.eq.candidateId` OR'd with `ghost_id`/`wall_ghost_id` when a ghost id is resolvable — the OR is what pulls in the rest of the person's permanent wall, not just this candidacy's own posts. `CandidacyWall.jsx`'s post composer now also tags new posts with `wall_ghost_id` (previously only `election_candidate_id`), so future posts flow into both views from one write. `20260730000003_unify_candidacy_and_wall_posts.sql` backfilled the one existing candidacy post's `wall_ghost_id` from its candidate's current ghost — verified directly against the row afterward.
+
+**A regression introduced and caught in the same pass**: the first version of this fix made post-fetching depend on `candidate.profiles.current_ghost_id` (from a nested `profiles` join). That join is RLS-gated to `role = 'politician'` for non-owner viewers (§5's "Related fix bundled in") — and the one real candidate this was tested against has `profiles.role = 'normal'` despite an active candidacy (very likely a leftover from earlier test-account role-switching, not representative of a real candidate). Posts vanished for any non-owner viewer as a result. Fixed by keying `getCandidacyWallPosts` on `election_candidate_id` first (always available, no join required) with the ghost-id match as a bonus when resolvable — verified working regardless of that RLS/role edge case. The underlying data anomaly (a real candidate with `role='normal'`) was flagged to the user, not fixed — a genuinely pre-existing issue, unrelated to this session's changes, that also explains why that same candidate shows as `Ghost-Unknown` instead of their real name to non-owner viewers, and why their `/wall/:ghostId` URL 404s ("Wall not found") for anyone but themselves.
+
+### `ElectionSeatPage.jsx` layout compaction
+
+Direct request, from an annotated screenshot: remove the mobile-style "Back to Elections" button (redundant with the nav bar), compact the seat/election header from a 4-line hero card into one row (status pill + title + election name, small inline icons for location/date/candidate count), and move the "Become a Politician"/"Nominate Yourself"/"Election Administrator" action cards into a sticky `lg:w-72` right sidebar instead of stacking full-width above the candidate list. The candidate switcher (previously hidden below 2 candidates) now always renders, even for a single candidate, for layout consistency.
+
+### `AuthContext.jsx` tab-refocus reload — two rounds, the real fix was deeper than it looked
+
+First report: switching tabs and back made the whole app flash a full-page spinner and looked like it reloaded. First fix: `onAuthStateChange`'s handler special-cased `TOKEN_REFRESHED` (fires on a timer and — per the theory at the time — on tab focus) to update `session` without re-arming `loading` or refetching the profile; also memoized `user` (`useMemo` keyed on `session?.user?.id`) since `supabase-js` hands back a structurally-new `user` object on every session update even when the underlying account hasn't changed, and several pages key a `useEffect` directly on `[user]`.
+
+**Reported as still happening.** Reading `@supabase/auth-js`'s actual `GoTrueClient` source (not just its public docs) found the real mechanism: `_onVisibilityChanged` → `_recoverAndRefresh()` only emits `TOKEN_REFRESHED` when the access token is near expiry. The far more common case — tab refocus with a token that still has plenty of life left — takes a different branch entirely and re-emits **`SIGNED_IN`** with a freshly-deserialized copy of the *same* session read back from storage. The first fix never touched this path, so `applySession` still ran in full: `loading` still flipped (the spinner), the profile still refetched, and any page effect keyed on `[..., authLoading, ...]` (`ElectionSeatPage.jsx`, `CandidacyWall.jsx` both match this pattern, not just a bare `[user]`) still refired — which is what was aborting an in-flight `politician_supporters` request in the reported console log.
+
+**Real fix**: track the currently-applied user id in a `ref` (not `session` state, to avoid a stale closure over the effect's single `useEffect(..., [])` registration), and treat *any* re-notification of that same user — `TOKEN_REFRESHED` or `SIGNED_IN` alike — as a no-op session refresh rather than a real change. Only a genuinely different user id (or `null`, i.e. sign-out) goes through the full `applySession`/loading/refetch cycle. Verified by triggering the actual internal code path, not a synthetic stand-in: overriding `document.visibilityState` and dispatching real `visibilitychange` events reproduced repeated real `SIGNED_IN` events (amplified further by this dev environment's own background HMR churn) — zero spinner flashes and zero new network requests, confirmed via a `MutationObserver` on `.animate-spin` and a `performance.getEntriesByType('resource')` diff across the event.
+
+### Politician role downgrade blocked, at the database
+
+Direct request: a politician should never be able to become a citizen again, because the account can have accumulated real state (candidacies, a public wall, `politician_supporters`) that a downgrade would silently orphan. Three client paths could set `profiles.role` back to `'normal'` for an existing politician: `ProfilePage.jsx`'s "Switch to Citizen Account" button (§19), `EditProfileFlow.jsx`'s Citizen/Politician picker (shown even when editing an *existing* politician, not just during first-time signup), and — found while auditing this — `/onboarding` itself, reachable again after completion since its route uses `requireOnboarding={false}` (already flagged as a related, narrower gap in §20's "Known gap" note, re: admin demotion).
+
+Per this codebase's own stated principle (client checks can be bypassed, correctness belongs in the database), the actual fix is `guard_politician_role_downgrade()` (`20260730000004_guard_politician_downgrade.sql`) — a `BEFORE UPDATE` trigger on `profiles`, structurally identical to the pre-existing `guard_candidate_status_change` pattern on `election_candidates` (§21), including the same `admin`-role and `app.bypass_*` session-flag exceptions (mirroring §21's fixed, `COALESCE`-guarded version, not its originally-buggy one). Blocks any `role = 'politician' → anything else` transition; `normal → politician` is completely untouched. Verified directly against real profile rows in rolled-back transactions: a politician's own session gets a clean rejection (`Cannot change a politician profile back to a citizen account`) attempting to self-downgrade, while `normal → politician` still succeeds. (The trigger's admin-bypass clause is currently unreachable via any normal client query regardless — `profiles` has no RLS policy letting an admin write a *different* user's row at all, matching its behavior before this trigger existed; it's there for parity with the existing pattern and for a future service-role/SECURITY DEFINER admin path, not because one exists yet.)
+
+The two client paths were then also removed for good UX (not just relying on the DB to reject a doomed request): `ProfilePage.jsx`'s button and handler deleted outright; `EditProfileFlow.jsx`'s `StepBasicInfo` now takes a `lockToPolitician` prop (`initialData.role === 'politician'`) and renders a locked, non-interactive "Politician" display instead of the picker when true — new signups picking their role for the first time are unaffected. `/onboarding`'s reachability-after-completion was **not** separately closed off — the DB trigger already makes that path safe (a stray re-submission would just fail with a clear error), and closing the route itself is a broader concern affecting all roles, not scoped to this request.
+
+### Diagnosed, no code change: `/politician/elections` looked empty
+
+Reported directly. Root cause, confirmed against live data: the account being used to check was the standing admin test account, which has zero `user_boundary_memberships` (verified: `0` rows) and zero `election_candidates` rows — both sections on that page (`My Candidacies`, filtered by `politician_id`; `Open Seats Near You`, filtered by boundary membership) are correctly, structurally empty for any admin account, not a bug. Not evidence of a wider problem: `getMyCandidacies` isn't role-gated, so a real candidate account (even one with `role='normal'`, per the anomaly found above) sees their own candidacies here regardless.

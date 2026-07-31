@@ -246,7 +246,7 @@ export default function PoliticianElections() {
                       </p>
                     </div>
                     {alreadyApplied ? (
-                      <span className="text-xs font-semibold text-emerald-400">Applied ✓</span>
+                      <span className="text-xs font-semibold text-success">Applied ✓</span>
                     ) : (
                       <Button size="sm" onClick={() => startApplying(seat.id)} disabled={applyingSeatId === seat.id}>
                         {applyingSeatId === seat.id ? 'Starting...' : 'Apply'}
@@ -317,7 +317,7 @@ export default function PoliticianElections() {
                         </p>
                       </div>
                       {alreadyApplied ? (
-                        <span className="text-xs font-semibold text-emerald-400">Applied ✓</span>
+                        <span className="text-xs font-semibold text-success">Applied ✓</span>
                       ) : (
                         <Button size="sm" onClick={() => startApplying(seat.seat_id)} disabled={applyingSeatId === seat.seat_id}>
                           {applyingSeatId === seat.seat_id ? 'Starting...' : 'Apply'}

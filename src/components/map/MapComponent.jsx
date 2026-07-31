@@ -44,10 +44,10 @@ const BoundaryLayer = React.memo(function BoundaryLayer({ boundary, isSelected, 
   const style = useMemo(() => (
     hasSelection
       ? {
-          fillColor: isSelected ? '#e9eb9e' : '#64748b',
+          fillColor: isSelected ? 'var(--color-primary)' : '#64748b',
           weight: isSelected ? 3 : 1,
           opacity: 1,
-          color: isSelected ? '#e9eb9e' : '#94a3b8',
+          color: isSelected ? 'var(--color-primary)' : '#94a3b8',
           fillOpacity: isSelected ? 0.45 : 0.15
         }
       : {
