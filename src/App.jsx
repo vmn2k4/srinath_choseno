@@ -1,12 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
 import AdminPage from './pages/AdminPage';
 import ElectionsAdmin from './pages/Admin/ElectionsAdmin';
 import ElectionAdminApplications from './pages/Admin/ElectionAdminApplications';
 import BoundaryVisualizer from './pages/Admin/BoundaryVisualizer';
+import ThemeAdmin from './pages/Admin/ThemeAdmin';
 import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
 import FeedPage from './pages/FeedPage/FeedPage';
@@ -40,108 +42,118 @@ function ProtectedRoute({ children, requireAdmin, requireOnboarding = true }) {
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<HomePage />} />
-            <Route
-              path="admin"
-              element={
-                <ProtectedRoute requireAdmin={true}>
-                  <AdminPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="admin/elections"
-              element={
-                <ProtectedRoute requireAdmin={true}>
-                  <ElectionsAdmin />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="admin/election-admins"
-              element={
-                <ProtectedRoute requireAdmin={true}>
-                  <ElectionAdminApplications />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="admin/visualize"
-              element={
-                <ProtectedRoute requireAdmin={true}>
-                  <BoundaryVisualizer />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="auth" element={<AuthPage />} />
-            <Route 
-              path="feed" 
-              element={
-                <ProtectedRoute>
-                  <FeedPage />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="wall/:ghostId" 
-              element={
-                <ProtectedRoute>
-                  <PoliticianWall />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="wall/:ghostId/:slug" 
-              element={
-                <ProtectedRoute>
-                  <PoliticianWall />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="profile" 
-              element={
-                <ProtectedRoute>
-                  <ProfilePage />
-                </ProtectedRoute>
-              } 
-            />
-            <Route
-              path="onboarding"
-              element={
-                <ProtectedRoute requireOnboarding={false}>
-                  <OnboardingFlow />
-                </ProtectedRoute>
-              }
-            />
-            {/* Public: viewable without an account, like a campaign site */}
-            <Route path="elections" element={<ElectionsPage />} />
-            <Route path="elections/seat/:seatId" element={<ElectionSeatPage />} />
-            <Route path="candidacy/:candidateId" element={<CandidacyWall />} />
-            <Route
-              path="politician/elections"
-              element={
-                <ProtectedRoute>
-                  <PoliticianElections />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="apply/:candidateId"
-              element={
-                <ProtectedRoute>
-                  <CandidateApplication />
-                </ProtectedRoute>
-              }
-            />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<HomePage />} />
+              <Route
+                path="admin"
+                element={
+                  <ProtectedRoute requireAdmin={true}>
+                    <AdminPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="admin/elections"
+                element={
+                  <ProtectedRoute requireAdmin={true}>
+                    <ElectionsAdmin />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="admin/election-admins"
+                element={
+                  <ProtectedRoute requireAdmin={true}>
+                    <ElectionAdminApplications />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="admin/visualize"
+                element={
+                  <ProtectedRoute requireAdmin={true}>
+                    <BoundaryVisualizer />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="admin/theme"
+                element={
+                  <ProtectedRoute requireAdmin={true}>
+                    <ThemeAdmin />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="auth" element={<AuthPage />} />
+              <Route 
+                path="feed" 
+                element={
+                  <ProtectedRoute>
+                    <FeedPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="wall/:ghostId" 
+                element={
+                  <ProtectedRoute>
+                    <PoliticianWall />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="wall/:ghostId/:slug" 
+                element={
+                  <ProtectedRoute>
+                    <PoliticianWall />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="profile" 
+                element={
+                  <ProtectedRoute>
+                    <ProfilePage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route
+                path="onboarding"
+                element={
+                  <ProtectedRoute requireOnboarding={false}>
+                    <OnboardingFlow />
+                  </ProtectedRoute>
+                }
+              />
+              {/* Public: viewable without an account, like a campaign site */}
+              <Route path="elections" element={<ElectionsPage />} />
+              <Route path="elections/seat/:seatId" element={<ElectionSeatPage />} />
+              <Route path="candidacy/:candidateId" element={<CandidacyWall />} />
+              <Route
+                path="politician/elections"
+                element={
+                  <ProtectedRoute>
+                    <PoliticianElections />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="apply/:candidateId"
+                element={
+                  <ProtectedRoute>
+                    <CandidateApplication />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

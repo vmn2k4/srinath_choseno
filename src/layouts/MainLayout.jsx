@@ -18,19 +18,19 @@ export default function MainLayout() {
   // Single source of truth for the nav pill's active/inactive look — was
   // previously copy-pasted independently at each Link below.
   const navLinkClass = (active) =>
-    `px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
+    `px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
       active
-        ? 'text-text-main bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(233,235,158,0.15)]'
+        ? 'text-text-main bg-primary/15 border border-primary/25'
         : 'text-text-muted hover:text-text-main hover:bg-surface-hover'
     }`;
 
   return (
     <div className="flex flex-col min-h-screen">
-      <nav className="flex justify-between items-center px-8 py-6 bg-surface/80 backdrop-blur-md border-b border-white/10">
-        <Link to="/" className="font-display font-extrabold text-2xl text-primary hover:text-accent transition-colors">
+      <nav className="sticky top-0 z-40 flex justify-between items-center px-5 lg:px-8 py-3 bg-background/70 backdrop-blur-md border-b border-border">
+        <Link to="/" className="font-display font-extrabold text-lg text-primary hover:text-accent transition-colors">
           Choseno
         </Link>
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-1 items-center">
           {session ? (
             <>
               <Link to="/feed" className={navLinkClass(isActive('/feed'))}>
@@ -49,25 +49,26 @@ export default function MainLayout() {
                   Admin
                 </Link>
               )}
-              <Link to="/profile" className={`flex items-center gap-2 ${navLinkClass(isActive('/profile'))}`}>
-                <UserIcon size={18} />
+              <Link to="/profile" className={`flex items-center gap-1.5 ${navLinkClass(isActive('/profile'))}`}>
+                <UserIcon size={15} />
                 Profile
               </Link>
+              <span className="w-px h-5 bg-border mx-1.5" />
               <button
-                className="flex items-center gap-2 px-4 py-2 rounded-lg text-base font-medium text-danger-light hover:text-danger-lighter hover:bg-danger/10 transition-all duration-300"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-danger-light hover:text-danger-lighter hover:bg-danger/10 transition-colors duration-200"
                 onClick={handleSignOut}
               >
-                <LogOut size={18} />
+                <LogOut size={15} />
                 Sign Out
               </button>
             </>
           ) : (
             <Link
               to="/auth"
-              className={`px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 ${
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
                 isActive('/auth')
                   ? 'text-text-main bg-success/20 border border-success/30'
-                  : 'text-text-muted hover:text-text-main hover:bg-white/5 border border-border'
+                  : 'text-text-muted hover:text-text-main hover:bg-surface-hover border border-border'
               }`}
             >
               Log In / Sign Up

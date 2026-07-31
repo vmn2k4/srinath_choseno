@@ -249,7 +249,7 @@ export default function HomePage() {
                 whileHover={reduceMotion ? undefined : { scale: 1.03, boxShadow: 'var(--shadow-elevated-lg)' }}
                 whileTap={reduceMotion ? undefined : { scale: 0.97 }}
                 transition={{ duration: 0.25, ease: EASE }}
-                className="group inline-flex items-center gap-3 px-9 py-4.5 rounded-2xl bg-primary text-text-darker font-bold text-xl hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md"
+                className="group inline-flex items-center gap-3 px-9 py-4.5 rounded-2xl bg-primary text-text-on-primary font-bold text-xl hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md"
               >
                 {primaryCta.label}
                 <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden="true" />
@@ -446,7 +446,7 @@ export default function HomePage() {
                     whileHover={reduceMotion ? undefined : { scale: 1.04, boxShadow: 'var(--shadow-elevated-xl)' }}
                     whileTap={reduceMotion ? undefined : { scale: 0.97 }}
                     transition={{ duration: 0.25, ease: EASE }}
-                    className="group inline-flex items-center gap-3 px-9 py-4.5 rounded-2xl bg-primary text-text-darker font-extrabold text-xl hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md"
+                    className="group inline-flex items-center gap-3 px-9 py-4.5 rounded-2xl bg-primary text-text-on-primary font-extrabold text-xl hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md"
                   >
                     {primaryCta.label}
                     <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden="true" />

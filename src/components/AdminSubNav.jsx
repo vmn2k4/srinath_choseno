@@ -6,6 +6,7 @@ const TABS = [
   { key: 'elections', label: 'Elections', to: '/admin/elections' },
   { key: 'election-admins', label: 'Election Admins', to: '/admin/election-admins' },
   { key: 'visualizer', label: 'Visualizer', to: '/admin/visualize' },
+  { key: 'theme', label: 'Theme', to: '/admin/theme' },
 ];
 
 export default function AdminSubNav({ active, className = '' }) {

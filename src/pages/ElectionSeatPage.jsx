@@ -150,7 +150,7 @@ export default function ElectionSeatPage() {
 
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8">
-      <div className="w-full min-w-0 max-w-6xl mx-auto flex flex-col lg:flex-row gap-6 items-start">
+      <div className="w-full min-w-0 flex flex-col lg:flex-row gap-6 items-start">
 
         {/* Main column */}
         <div className="flex-1 min-w-0 w-full">

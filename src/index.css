@@ -79,7 +79,7 @@
   body {
     @apply min-h-screen text-text-main antialiased font-sans m-0 p-0 box-border;
     background-color: var(--color-background);
-    background-image: radial-gradient(circle at top right, var(--color-vintage-grape), var(--color-surface) 45%, var(--color-background));
+    background-image: radial-gradient(circle at top right, color-mix(in srgb, var(--color-accent) 45%, var(--color-surface)), var(--color-surface) 45%, var(--color-background));
   }
 }
 
@@ -111,9 +111,217 @@
   will-change: transform;
 }
 
-.orb-a { width: 480px; height: 480px; top: -10%; right: -5%; background: rgba(172, 193, 150, 0.14); }
-.orb-b { width: 400px; height: 400px; bottom: -15%; left: -8%; background: rgba(233, 235, 158, 0.10); animation-delay: -6s; }
-.orb-c { width: 320px; height: 320px; top: 35%; left: 20%; background: rgba(121, 148, 150, 0.10); animation-delay: -12s; }
-.orb-d { width: 420px; height: 420px; top: 10%; right: 0; background: rgba(121, 148, 150, 0.08); animation-delay: -4s; }
-.orb-e { width: 360px; height: 360px; top: -30%; left: 30%; background: rgba(233, 235, 158, 0.10); animation-delay: -9s; }
+.orb-a { width: 480px; height: 480px; top: -10%; right: -5%; background: color-mix(in srgb, var(--color-accent) 14%, transparent); }
+.orb-b { width: 400px; height: 400px; bottom: -15%; left: -8%; background: color-mix(in srgb, var(--color-primary) 10%, transparent); animation-delay: -6s; }
+.orb-c { width: 320px; height: 320px; top: 35%; left: 20%; background: color-mix(in srgb, var(--color-primary-lighter) 10%, transparent); animation-delay: -12s; }
+.orb-d { width: 420px; height: 420px; top: 10%; right: 0; background: color-mix(in srgb, var(--color-primary-lighter) 8%, transparent); animation-delay: -4s; }
+.orb-e { width: 360px; height: 360px; top: -30%; left: 30%; background: color-mix(in srgb, var(--color-primary) 10%, transparent); animation-delay: -9s; }
+
+/* ============ Site-wide theme picker (admin-controlled, see Admin > Theme) ============ */
+/* Every theme below only overrides brand colors (primary/accent/text-on-primary) —
+   dark themes inherit the neutral scale from :root above, since the palettes were
+   designed with a shared dark base and just swap which brand color sits on top.
+   "civic-original" is the app's :root default, so it needs no block here. */
+
+[data-theme="electric-blue"] {
+  --color-primary: #3B82F6;
+  --color-primary-hover: #2f6fd6;
+  --color-primary-light: #7fb0fb;
+  --color-primary-lighter: #b7d5fd;
+  --color-accent: #22D3EE;
+  --color-accent-hover: #0fb8d4;
+  --color-text-on-primary: #ffffff;
+}
+
+[data-theme="vibrant-indigo"] {
+  --color-primary: #6366F1;
+  --color-primary-hover: #4f52d6;
+  --color-primary-light: #a5a7f6;
+  --color-primary-lighter: #c7c8fa;
+  --color-accent: #A78BFA;
+  --color-accent-hover: #8f6ef0;
+  --color-text-on-primary: #ffffff;
+}
+
+[data-theme="fresh-green"] {
+  --color-primary: #22C55E;
+  --color-primary-hover: #1aa34e;
+  --color-primary-light: #6ee0a0;
+  --color-primary-lighter: #a8edc4;
+  --color-accent: #4ADE80;
+  --color-accent-hover: #22c55e;
+  --color-text-on-primary: #062910;
+}
+
+[data-theme="sunset-coral"] {
+  --color-primary: #F5576C;
+  --color-primary-hover: #d63e52;
+  --color-primary-light: #f98fa0;
+  --color-primary-lighter: #fcb9c4;
+  --color-accent: #FFA45B;
+  --color-accent-hover: #ff8c33;
+  --color-text-on-primary: #2b0509;
+}
+
+[data-theme="bold-orange"] {
+  --color-primary: #FF6B1A;
+  --color-primary-hover: #e0570d;
+  --color-primary-light: #ffa066;
+  --color-primary-lighter: #ffc59e;
+  --color-accent: #FFB347;
+  --color-accent-hover: #ff9d1a;
+  --color-text-on-primary: #2b1200;
+}
+
+[data-theme="crimson-attention"] {
+  --color-primary: #EF4444;
+  --color-primary-hover: #d32f2f;
+  --color-primary-light: #f68f8f;
+  --color-primary-lighter: #fbc0c0;
+  --color-accent: #FCA5A5;
+  --color-accent-hover: #f87171;
+  --color-text-on-primary: #ffffff;
+}
+
+/* Light themes override the full neutral scale, not just brand colors — the
+   base ambiance (background/surface/border/text) actually flips direction
+   in light mode instead of just swapping an accent. */
+
+[data-theme="clean-sky-blue"] {
+  --color-background: #f7f9fc;
+  --color-surface: #ffffff;
+  --color-surface-hover: #eef2f8;
+  --color-surface-active: #e2e8f4;
+  --color-surface-elevated: rgba(37, 99, 235, 0.05);
+  --color-border: #e5e9f0;
+  --color-border-light: rgba(17, 24, 39, 0.08);
+  --color-text-main: #111827;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #4b5563;
+  --color-text-muted: #6b7280;
+  --color-text-dark: #9ca3af;
+  --color-text-darker: #d1d5db;
+  --color-primary: #2563EB;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-light: #3b82f6;
+  --color-primary-lighter: #93c5fd;
+  --color-accent: #0EA5E9;
+  --color-accent-hover: #0284c7;
+  --color-text-on-primary: #ffffff;
+}
+
+[data-theme="soft-mint"] {
+  --color-background: #f4fbf7;
+  --color-surface: #ffffff;
+  --color-surface-hover: #e9f6ee;
+  --color-surface-active: #dcefe3;
+  --color-surface-elevated: rgba(22, 163, 74, 0.05);
+  --color-border: #e1f0e7;
+  --color-border-light: rgba(17, 24, 39, 0.08);
+  --color-text-main: #111827;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #4b5563;
+  --color-text-muted: #6b7280;
+  --color-text-dark: #9ca3af;
+  --color-text-darker: #d1e7db;
+  --color-primary: #16A34A;
+  --color-primary-hover: #15803d;
+  --color-primary-light: #22c55e;
+  --color-primary-lighter: #86efac;
+  --color-accent: #F59E0B;
+  --color-accent-hover: #d97706;
+  --color-text-on-primary: #ffffff;
+}
+
+[data-theme="warm-coral"] {
+  --color-background: #fff8f6;
+  --color-surface: #ffffff;
+  --color-surface-hover: #fdeeea;
+  --color-surface-active: #fbe0d9;
+  --color-surface-elevated: rgba(255, 90, 95, 0.05);
+  --color-border: #f5e4e0;
+  --color-border-light: rgba(31, 41, 55, 0.08);
+  --color-text-main: #1f2937;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #6b7280;
+  --color-text-muted: #6b7280;
+  --color-text-dark: #9ca3af;
+  --color-text-darker: #f0dcd6;
+  --color-primary: #FF5A5F;
+  --color-primary-hover: #e14348;
+  --color-primary-light: #ff8589;
+  --color-primary-lighter: #ffc1c3;
+  --color-accent: #F59E0B;
+  --color-accent-hover: #d97706;
+  --color-text-on-primary: #ffffff;
+}
+
+[data-theme="soft-lavender"] {
+  --color-background: #f8f7fd;
+  --color-surface: #ffffff;
+  --color-surface-hover: #efedfa;
+  --color-surface-active: #e3dff6;
+  --color-surface-elevated: rgba(124, 58, 237, 0.05);
+  --color-border: #e9e5f8;
+  --color-border-light: rgba(17, 24, 39, 0.08);
+  --color-text-main: #111827;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #4b5563;
+  --color-text-muted: #6b7280;
+  --color-text-dark: #9ca3af;
+  --color-text-darker: #e2dcf5;
+  --color-primary: #7C3AED;
+  --color-primary-hover: #6d28d9;
+  --color-primary-light: #a78bfa;
+  --color-primary-lighter: #ddd6fe;
+  --color-accent: #DB2777;
+  --color-accent-hover: #be185d;
+  --color-text-on-primary: #ffffff;
+}
+
+[data-theme="sky-cyan"] {
+  --color-background: #f0f9ff;
+  --color-surface: #ffffff;
+  --color-surface-hover: #e0f2fe;
+  --color-surface-active: #cdeafd;
+  --color-surface-elevated: rgba(14, 165, 233, 0.05);
+  --color-border: #dceefb;
+  --color-border-light: rgba(17, 24, 39, 0.08);
+  --color-text-main: #111827;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #4b5563;
+  --color-text-muted: #6b7280;
+  --color-text-dark: #9ca3af;
+  --color-text-darker: #cfe9fa;
+  --color-primary: #0EA5E9;
+  --color-primary-hover: #0284c7;
+  --color-primary-light: #38bdf8;
+  --color-primary-lighter: #bae6fd;
+  --color-accent: #9333EA;
+  --color-accent-hover: #7e22ce;
+  --color-text-on-primary: #ffffff;
+}
+
+[data-theme="peach-amber"] {
+  --color-background: #fffaf0;
+  --color-surface: #ffffff;
+  --color-surface-hover: #fdf1de;
+  --color-surface-active: #fbe6c4;
+  --color-surface-elevated: rgba(245, 158, 11, 0.06);
+  --color-border: #f5e8d3;
+  --color-border-light: rgba(31, 41, 55, 0.08);
+  --color-text-main: #1f2937;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #4b5563;
+  --color-text-muted: #6b7280;
+  --color-text-dark: #9ca3af;
+  --color-text-darker: #f2e3c8;
+  --color-primary: #F59E0B;
+  --color-primary-hover: #d97706;
+  --color-primary-light: #fbbf24;
+  --color-primary-lighter: #fde68a;
+  --color-accent: #C2373C;
+  --color-accent-hover: #a52e33;
+  --color-text-on-primary: #451a03;
+}
 
