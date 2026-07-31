@@ -6,7 +6,7 @@ import React from 'react';
 export default function EmptyState({ icon: Icon, title, description, action, className = '' }) {
   return (
     <div
-      className={`text-center py-16 bg-surface/20 rounded-2xl border border-dashed border-border-light/60 ${className}`.trim()}
+      className={`text-center py-16 bg-surface/20 elevation-1 rounded-2xl border border-dashed border-border-light/60 ${className}`.trim()}
     >
       {Icon && (
         <div className="w-16 h-16 rounded-full bg-surface-hover flex items-center justify-center mx-auto mb-4">

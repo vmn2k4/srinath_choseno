@@ -36,7 +36,7 @@ export function ContainerScroll({ titleComponent, children }) {
 
 function ScrollHeader({ translate, children }) {
   return (
-    <motion.div style={{ translateY: translate }} className="max-w-5xl mx-auto text-center">
+    <motion.div style={{ translateY: translate }} className="max-w-5xl mx-auto text-center mb-8 md:mb-12">
       {children}
     </motion.div>
   );
@@ -50,7 +50,7 @@ function ScrollCard({ rotate, scale, children }) {
         scale,
         boxShadow: 'var(--shadow-floating)',
       }}
-      className="max-w-5xl -mt-12 mx-auto h-[26rem] md:h-[36rem] w-full border-4 border-border-light/60 p-2 md:p-6 bg-surface rounded-[30px]"
+      className="max-w-5xl mx-auto h-[26rem] md:h-[36rem] w-full border-4 border-border-light/60 p-2 md:p-6 bg-surface rounded-[30px]"
     >
       <div className="h-full w-full overflow-hidden rounded-2xl bg-background md:rounded-2xl">
         {children}

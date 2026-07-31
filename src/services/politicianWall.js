@@ -12,7 +12,8 @@ export async function getWallOwnerProfile(ghostId) {
        constituency,
        politician_profiles (
          political_target_role,
-         target_boundary_name
+         target_boundary_name,
+         avatar_url
        )
     `)
     .eq('current_ghost_id', ghostId)

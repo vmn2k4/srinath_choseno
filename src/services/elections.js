@@ -140,7 +140,7 @@ export async function getMyCandidacies(profileId) {
 export async function getCandidatesBySeatIds(seatIds) {
   return supabase
     .from('election_candidates')
-    .select('id, statement, seat_id, nomination_filed, profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id)')
+    .select('id, statement, seat_id, nomination_filed, profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id, politician_profiles(avatar_url))')
     .in('seat_id', seatIds);
 }
 

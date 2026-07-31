@@ -66,6 +66,12 @@
   --color-overlay: rgba(0, 0, 0, 0.6);
   --color-overlay-heavy: rgba(0, 0, 0, 0.95);
 
+  /* Specular highlight for the top edge of a glass surface -- simulates light
+     catching the physical edge of the glass. Derived from --color-primary
+     (not plain white) so it reads as a visible fleck in every theme instead
+     of vanishing into a white-on-white surface in the light palettes. */
+  --color-glass-highlight: color-mix(in srgb, var(--color-primary) 30%, white);
+
   /* Elevation — neutral depth shadows (offset + blur, never a colored halo) */
   --shadow-elevated-md: 0 10px 30px -4px rgba(0, 0, 0, 0.45);
   --shadow-elevated-lg: 0 14px 40px -6px rgba(0, 0, 0, 0.5);
@@ -77,15 +83,67 @@
 
 @layer base {
   body {
-    @apply min-h-screen text-text-main antialiased font-sans m-0 p-0 box-border;
+    @apply min-h-screen text-text-main antialiased font-sans m-0 p-0 box-border relative;
     background-color: var(--color-background);
+  }
+
+  /* The ambient gradient lives on a fixed, viewport-sized layer instead of
+     directly on body's background-image -- a plain body background scales
+     to the page's full scrollable content height, so the exact same
+     gradient looked completely different from one page to the next purely
+     based on how much content that page happened to have. Pinning it to
+     the viewport makes it identical everywhere, the way a single shared
+     backdrop should be. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
     background-image: radial-gradient(circle at top right, color-mix(in srgb, var(--color-accent) 45%, var(--color-surface)), var(--color-surface) 45%, var(--color-background));
   }
 }
 
 @layer utilities {
+  /* Z-axis elevation system for glass surfaces. Each level is a physical
+     metaphor, not just a bigger shadow: higher elevation means further from
+     the backdrop (more blur, since a farther pane of glass separates it from
+     what's behind it), more light passing through it (higher saturate, the
+     classic "frosted glass intensifies color" trick), a deeper cast shadow,
+     and a brighter specular highlight along its top edge (light catching the
+     glass). Pick a level by how close to the viewer the surface should feel,
+     not by trial and error:
+       1 -- inline/repeated surfaces (list rows, empty states)
+       2 -- standard cards, panels, the composer, the nav bar
+       3 -- hero panels, featured cards, floating badges
+       4 -- modals -- the topmost surface, closest to the viewer
+     backdrop-filter needs the -webkit- prefix for Safari; both are required. */
+  .elevation-1 {
+    backdrop-filter: blur(6px) saturate(140%);
+    -webkit-backdrop-filter: blur(6px) saturate(140%);
+    box-shadow: var(--shadow-elevated-md), inset 0 1px 0 var(--color-glass-highlight);
+  }
+  .elevation-2 {
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    box-shadow: var(--shadow-elevated-md), inset 0 1px 0 var(--color-glass-highlight);
+  }
+  .elevation-3 {
+    backdrop-filter: blur(16px) saturate(170%);
+    -webkit-backdrop-filter: blur(16px) saturate(170%);
+    box-shadow: var(--shadow-elevated-lg), inset 0 1px 0 var(--color-glass-highlight);
+  }
+  .elevation-4 {
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow: var(--shadow-elevated-xl), inset 0 1.5px 0 var(--color-glass-highlight);
+  }
+
+  /* Shape/color half of the recipe only -- pair with an .elevation-N class
+     at the call site for the blur/shadow/highlight half (kept separate
+     since @apply can't reach into another hand-written utility class). */
   .glass-card {
-    @apply bg-surface-elevated backdrop-blur-md border border-white/10 rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)];
+    @apply bg-surface-elevated border border-border-light rounded-3xl;
   }
 }
 

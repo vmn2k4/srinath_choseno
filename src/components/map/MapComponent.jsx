@@ -78,7 +78,7 @@ const BoundaryLayer = React.memo(function BoundaryLayer({ boundary, isSelected, 
 export default function MapComponent({ boundaries, selectedIds, onShapeClick }) {
   if (!boundaries || boundaries.length === 0) {
     return (
-      <div className="w-full h-96 bg-surface-hover rounded-xl flex items-center justify-center border border-white/10 mt-6">
+      <div className="w-full h-96 bg-surface-hover rounded-xl flex items-center justify-center border border-border-light mt-6">
         <p className="text-text-muted">No map data available. Please upload shapefiles.</p>
       </div>
     );
@@ -90,7 +90,7 @@ export default function MapComponent({ boundaries, selectedIds, onShapeClick }) 
   const hasSelection = Boolean(selectedIds);
 
   return (
-    <div className="w-full h-full rounded-xl overflow-hidden border border-white/10 shadow-xl z-0 relative">
+    <div className="w-full h-full rounded-xl overflow-hidden border border-border-light shadow-xl z-0 relative">
       <MapContainer center={defaultCenter} zoom={defaultZoom} className="w-full h-full" style={{ background: '#1e293b' }} preferCanvas>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

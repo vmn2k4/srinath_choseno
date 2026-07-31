@@ -26,7 +26,7 @@ export default function MainLayout() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <nav className="sticky top-0 z-40 flex justify-between items-center px-5 lg:px-8 py-3 bg-background/70 backdrop-blur-md border-b border-border">
+      <nav className="sticky top-0 z-40 flex justify-between items-center px-5 lg:px-8 py-3 bg-background/70 elevation-2 border-b border-border">
         <Link to="/" className="font-display font-extrabold text-lg text-primary hover:text-accent transition-colors">
           Choseno
         </Link>

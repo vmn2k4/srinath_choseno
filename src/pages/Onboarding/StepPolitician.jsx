@@ -1,11 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Camera, RefreshCw } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
 import { getPoliticalParties } from '../../services/politicalParties';
+import { uploadAvatarImage } from '../../services/profile';
 import { Button, Input, Textarea, Select } from '../../components/ui';
 
 export default function StepPolitician({ data, updateData, nextStep, prevStep, loading, error }) {
+  const { user } = useAuth();
   const [parties, setParties] = useState([]);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [avatarError, setAvatarError] = useState(null);
   const country = data.matchedBoundaries?.[0]?.country || null;
+
+  const handleAvatarSelect = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) return setAvatarError('Image must be less than 5MB');
+
+    setAvatarError(null);
+    setUploadingAvatar(true);
+    const { publicUrl, error: uploadError } = await uploadAvatarImage(file, user.id);
+    setUploadingAvatar(false);
+
+    if (uploadError) {
+      setAvatarError('Failed to upload image. Please try again.');
+      return;
+    }
+    updateData({ avatarUrl: publicUrl });
+  };
 
   useEffect(() => {
     if (!country) {
@@ -35,6 +57,40 @@ export default function StepPolitician({ data, updateData, nextStep, prevStep, l
       </div>
 
       <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium text-text-tertiary mb-2">
+            Profile Photo <span className="text-text-dark text-xs">(optional)</span>
+          </label>
+          <div className="flex items-center gap-4">
+            <div className="relative w-16 h-16 rounded-full bg-surface-hover border border-border-light flex items-center justify-center overflow-hidden shrink-0">
+              {data.avatarUrl ? (
+                <img src={data.avatarUrl} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                <Camera size={20} className="text-text-muted" />
+              )}
+              {uploadingAvatar && (
+                <div className="absolute inset-0 bg-surface/70 flex items-center justify-center">
+                  <RefreshCw size={16} className="animate-spin text-text-muted" />
+                </div>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <input type="file" accept="image/*" id="avatar-upload" className="hidden" onChange={handleAvatarSelect} />
+              <label htmlFor="avatar-upload">
+                <Button as="span" variant="outline" size="sm" className="cursor-pointer">
+                  {data.avatarUrl ? 'Replace Photo' : 'Upload Photo'}
+                </Button>
+              </label>
+              {data.avatarUrl && (
+                <Button variant="ghost" size="sm" onClick={() => updateData({ avatarUrl: '' })}>
+                  Remove
+                </Button>
+              )}
+            </div>
+          </div>
+          {avatarError && <p className="text-danger-light text-xs mt-2">{avatarError}</p>}
+        </div>
+
         <div>
           <label className="block text-sm font-medium text-text-tertiary mb-2">Political Party</label>
           <Select value={data.politicalParty || ''} onChange={e => updateData({ politicalParty: e.target.value })} disabled={!country}>

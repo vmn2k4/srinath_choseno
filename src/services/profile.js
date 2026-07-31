@@ -25,6 +25,7 @@ export async function getInterestedPoliticians(boundaryIds = []) {
       political_target_role,
       target_boundary_name,
       target_boundary_type,
+      avatar_url,
       profiles!inner (
         current_ghost_id,
         full_name,
@@ -83,7 +84,7 @@ export async function upsertProfileCore(userId, { role, fullName, country, const
 // fallbackBoundaryId: what to use for target_boundary_id when there's no
 // primary matched boundary (OnboardingFlow passes null, EditProfileFlow
 // passes the previous initialData.target_boundary_id).
-export async function upsertPoliticianProfile(userId, { targetBoundaryId, targetBoundaryName, politicalPartyId, education, hometown, bio }, fallbackBoundaryId) {
+export async function upsertPoliticianProfile(userId, { targetBoundaryId, targetBoundaryName, politicalPartyId, education, hometown, bio, avatarUrl }, fallbackBoundaryId) {
   return supabase.from('politician_profiles').upsert({
     id: userId,
     target_boundary_id: targetBoundaryId ?? fallbackBoundaryId,
@@ -92,13 +93,27 @@ export async function upsertPoliticianProfile(userId, { targetBoundaryId, target
     education: education || null,
     hometown: hometown || null,
     bio,
+    avatar_url: avatarUrl || null,
     updated_at: new Date()
   });
 }
 
+// storage — optional politician profile photo upload, mirrors feed.js's
+// uploadPostImage (same bucket-then-getPublicUrl shape, own bucket).
+export async function uploadAvatarImage(file, userId) {
+  const fileExt = file.name.split('.').pop();
+  const filePath = `${userId}-${Date.now()}.${fileExt}`;
+  const { error: uploadError } = await supabase.storage.from('politician-avatars').upload(filePath, file);
+  if (uploadError) return { publicUrl: null, error: uploadError };
+  const { data: { publicUrl } } = supabase.storage.from('politician-avatars').getPublicUrl(filePath);
+  return { publicUrl, error: null };
+}
+
 // civic score — banked profiles.civic_score plus the current ghost's
-// live (not-yet-banked) activity. See 20260730000001_civic_score.sql for
-// why this is a single running total rather than a stored post/comment list.
+// live (not-yet-banked) activity, re-cached into profiles.cached_total_score
+// on every call. See 20260730000001_civic_score.sql and
+// 20260731000000_score_persistence_and_burn_tracking.sql for why this is a
+// single running total rather than a stored post/comment list.
 export async function calculateMyScore() {
   return supabase.rpc('calculate_my_score');
 }
@@ -115,10 +130,10 @@ export async function getProfileRole(userId) {
 
 // politician_profiles — public campaign-page fields (CandidacyWall).
 export async function getPoliticianProfile(politicianId) {
-  return supabase.from('politician_profiles').select('education, hometown, bio, political_parties(name)').eq('id', politicianId).maybeSingle();
+  return supabase.from('politician_profiles').select('education, hometown, bio, avatar_url, political_parties(name)').eq('id', politicianId).maybeSingle();
 }
 
 // politician_profiles — full self-view including target_boundary + party id (ProfilePage).
 export async function getPoliticianProfileFull(userId) {
-  return supabase.from('politician_profiles').select('target_boundary_id, target_boundary_name, political_party_id, political_parties(name), education, hometown, bio').eq('id', userId).maybeSingle();
+  return supabase.from('politician_profiles').select('target_boundary_id, target_boundary_name, political_party_id, political_parties(name), education, hometown, bio, avatar_url').eq('id', userId).maybeSingle();
 }

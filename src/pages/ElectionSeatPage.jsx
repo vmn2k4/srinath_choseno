@@ -200,10 +200,14 @@ export default function ElectionSeatPage() {
                           : 'border-border-light bg-surface-hover/40 hover:border-primary/40 hover:bg-surface-hover'
                       }`}
                     >
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 overflow-hidden ${
                         isSelected ? 'bg-primary/20 text-primary-light' : 'bg-surface-active text-text-muted'
                       }`}>
-                        <Users size={18} />
+                        {c.profiles?.politician_profiles?.[0]?.avatar_url ? (
+                          <img src={c.profiles.politician_profiles[0].avatar_url} alt={name} className="w-full h-full object-cover" />
+                        ) : (
+                          <Users size={18} />
+                        )}
                       </div>
                       <span className={`text-sm font-semibold whitespace-nowrap ${isSelected ? 'text-primary-light' : 'text-text-secondary'}`}>
                         {name}

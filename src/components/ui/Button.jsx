@@ -6,9 +6,9 @@ import React from 'react';
 // primary token — standardized on the --color-text-on-primary token here,
 // the most legible.
 const VARIANTS = {
-  primary: 'bg-primary hover:bg-primary-hover text-text-on-primary font-bold shadow-[0_4px_14px_rgba(233,235,158,0.15)] hover:shadow-[0_6px_18px_rgba(233,235,158,0.25)]',
+  primary: 'bg-primary hover:bg-primary-hover text-text-on-primary font-bold shadow-[0_4px_14px_color-mix(in_srgb,var(--color-primary)_15%,transparent)] hover:shadow-[0_6px_18px_color-mix(in_srgb,var(--color-primary)_25%,transparent)]',
   secondary: 'bg-surface-active hover:bg-border text-text-main font-semibold',
-  outline: 'bg-surface-hover/80 text-text-secondary border border-border-light hover:bg-surface-active hover:text-text-main font-semibold',
+  outline: 'bg-surface-hover/80 backdrop-blur-sm text-text-secondary border border-border-light hover:bg-surface-active hover:text-text-main font-semibold',
   danger: 'bg-danger/15 hover:bg-danger/25 text-danger-light border border-danger/30 font-bold',
   ghost: 'text-text-muted hover:text-text-main hover:bg-surface-hover font-semibold',
 };

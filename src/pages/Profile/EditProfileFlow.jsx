@@ -86,7 +86,8 @@ export default function EditProfileFlow({ initialData, onComplete, onCancel }) {
     politicalParty: initialData.politicalPartyId || '',
     education: initialData.education || '',
     hometown: initialData.hometown || '',
-    bio: initialData.bio || ''
+    bio: initialData.bio || '',
+    avatarUrl: initialData.avatarUrl || ''
   });
 
   const updateData = (newData) => setFormData(prev => ({ ...prev, ...newData }));
@@ -121,7 +122,8 @@ export default function EditProfileFlow({ initialData, onComplete, onCancel }) {
           politicalPartyId: formData.politicalParty,
           education: formData.education,
           hometown: formData.hometown,
-          bio: formData.bio
+          bio: formData.bio,
+          avatarUrl: formData.avatarUrl
         }, initialData.target_boundary_id);
         if (polErr) throw polErr;
       }
@@ -156,7 +158,7 @@ export default function EditProfileFlow({ initialData, onComplete, onCancel }) {
   };
 
   return (
-    <Modal className="bg-surface border border-border rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <Modal className="bg-surface/90 elevation-4 border border-border rounded-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-border">
         <div>

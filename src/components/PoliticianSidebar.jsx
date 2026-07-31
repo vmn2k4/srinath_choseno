@@ -72,8 +72,12 @@ export default function PoliticianSidebar({ profile, activeTab, memberships = []
               onClick={() => navigate(`/wall/${pol.profiles.current_ghost_id}/${slug}`)}
               className="group cursor-pointer bg-surface-hover/50 hover:bg-surface-hover rounded-lg p-3 border border-border-light/50 hover:border-primary/30 transition-all flex items-center gap-3"
             >
-              <div className="w-10 h-10 rounded-full bg-primary/20 text-primary-light flex items-center justify-center shrink-0 border border-primary/30 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
-                 <Users size={16} />
+              <div className="w-10 h-10 rounded-full bg-primary/20 text-primary-light flex items-center justify-center shrink-0 border border-primary/30 group-hover:bg-indigo-500 group-hover:text-white transition-colors overflow-hidden">
+                 {pol.avatar_url ? (
+                   <img src={pol.avatar_url} alt={name} className="w-full h-full object-cover" />
+                 ) : (
+                   <Users size={16} />
+                 )}
               </div>
               <div className="flex-1 min-w-0">
                 <h4 className="text-text-secondary text-sm font-medium truncate">{pol.profiles.full_name || getGhostDisplayName(pol.profiles.current_ghost_id)}</h4>

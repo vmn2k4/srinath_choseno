@@ -26,7 +26,8 @@ export default function OnboardingFlow() {
     politicalParty: '',
     education: '',
     hometown: '',
-    bio: ''
+    bio: '',
+    avatarUrl: ''
   });
 
   const nextStep = () => setCurrentStep(prev => prev + 1);
@@ -71,7 +72,8 @@ export default function OnboardingFlow() {
           politicalPartyId: formData.politicalParty,
           education: formData.education,
           hometown: formData.hometown,
-          bio: formData.bio
+          bio: formData.bio,
+          avatarUrl: formData.avatarUrl
         }, null);
         if (polError) throw polError;
       }

@@ -7,7 +7,7 @@ import { getGhostDisplayName } from '../../utils/ghostName';
 import PoliticianSidebar from '../../components/PoliticianSidebar';
 import LinkPreview from '../../components/LinkPreview';
 import { Card, Button, Badge, Input, Textarea, Spinner, EmptyState, StoryViewerModal, RemoveMediaButton } from '../../components/ui';
-import { getOwnProfile, getUserBoundaryMemberships, calculateMyScore } from '../../services/profile';
+import { getOwnProfile, getUserBoundaryMemberships, calculateMyScore, getPoliticianProfileFull } from '../../services/profile';
 import { getBoundaryTypesForCountries } from '../../services/boundaries';
 import {
   getMembershipScopedPosts, getCountryScopedPosts, getInternationalScopedPosts, getFeedPostsForTab,
@@ -42,6 +42,7 @@ export default function FeedPage() {
   const [burning, setBurning] = useState(false);
   const [score, setScore] = useState(null);
   const [scoring, setScoring] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState(null);
 
   const [showVideoRecorder, setShowVideoRecorder] = useState(false);
   const [uploadedVideoUrl, setUploadedVideoUrl] = useState(null);
@@ -64,11 +65,22 @@ export default function FeedPage() {
 
       if (error) throw error;
       setProfile(data);
+      setScore(data?.cached_total_score ?? 0);
+
+      if (data?.role === 'politician') {
+        const { data: polData } = await getPoliticianProfileFull(user.id);
+        setAvatarUrl(polData?.avatar_url || null);
+      }
     } catch (err) {
       console.error('Error fetching profile:', err);
     } finally {
       setLoading(false);
     }
+
+    // Cached score is shown immediately above; refresh it in the background
+    // so it reflects any activity since the cache was last written.
+    const { data: freshScore, error: scoreError } = await calculateMyScore();
+    if (!scoreError) setScore(freshScore);
   };
 
   const fetchMemberships = async () => {
@@ -311,7 +323,7 @@ export default function FeedPage() {
   };
 
   const handleBurnIdentity = async () => {
-    if (window.confirm("Warning: Burning your identity will permanently orphan all your past posts and comments. You will not be able to edit or delete them anymore, and you will get a brand new anonymous identity. Are you sure?")) {
+    if (window.confirm(`Warning: Burning your identity will permanently orphan all your past posts and comments. Your current civic score (${score ?? 0}) will be locked in — future likes/dislikes on those posts won't count anymore. You will not be able to edit or delete them anymore, and you will get a brand new anonymous identity. Are you sure?`)) {
       setBurning(true);
       try {
         const { error } = await burnGhostIdentityViaRpc();
@@ -368,10 +380,14 @@ export default function FeedPage() {
       {/* Main Feed Column */}
       <div className="flex-1 min-w-0">
       {/* Header Profile Summary */}
-      <div className="bg-surface-hover/80 backdrop-blur-md rounded-2xl border border-white/10 p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
+      <div className="bg-surface-hover/80 elevation-2 rounded-2xl border border-border-light p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center text-xl font-bold text-text-on-primary shadow-lg shrink-0">
-            {profile.full_name ? profile.full_name.charAt(0).toUpperCase() : 'U'}
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center text-xl font-bold text-text-on-primary shadow-lg shrink-0 overflow-hidden">
+            {avatarUrl ? (
+              <img src={avatarUrl} alt={profile.full_name || 'Profile'} className="w-full h-full object-cover" />
+            ) : (
+              profile.full_name ? profile.full_name.charAt(0).toUpperCase() : 'U'
+            )}
           </div>
           <div className="flex-1">
             <h1 className="text-2xl font-bold text-text-main">{profile.full_name || 'Anonymous User'}</h1>
@@ -400,7 +416,7 @@ export default function FeedPage() {
             {profile.role !== 'admin' && (
               <div className="flex items-center gap-2 mt-2 text-xs text-text-muted">
                 <Award size={14} className="text-primary-light" />
-                Civic Score: <span className="font-bold text-text-main">{score !== null ? score : '—'}</span>
+                Civic Score: <span className="font-bold text-text-main">{score ?? 0}</span>
               </div>
             )}
           </div>
@@ -469,7 +485,7 @@ export default function FeedPage() {
       )}
 
       {profile.role !== 'admin' && (
-        <div className="bg-surface-hover/30 rounded-2xl border border-white/5 overflow-hidden shadow-xl">
+        <div className="bg-surface-hover/30 elevation-1 rounded-2xl border border-border-light/50 overflow-hidden">
 
           <div className="p-4 sm:p-8 pb-0">
 
@@ -742,6 +758,11 @@ export default function FeedPage() {
                           <span className="text-xs text-text-muted ml-2.5">
                             {new Date(post.created_at).toLocaleDateString()}
                           </span>
+                          {post.civic_score_snapshot != null && (
+                            <span className="text-xs text-text-muted ml-2.5 inline-flex items-center gap-1" title="Poster's civic score at the time of posting">
+                              <Award size={11} className="text-primary-light" /> {post.civic_score_snapshot}
+                            </span>
+                          )}
                         </div>
                       </div>
                       <p className="text-text-tertiary text-sm whitespace-pre-wrap leading-relaxed mb-3">

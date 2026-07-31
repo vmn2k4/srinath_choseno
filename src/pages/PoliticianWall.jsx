@@ -219,8 +219,12 @@ export default function PoliticianWall() {
         <Card padding="none" className="mb-8 relative">
            <div className="h-32 bg-gradient-to-br from-vintage-grape via-surface to-coffee-bean rounded-t-2xl border-b border-border-light/20" />
            <div className="px-6 pb-6 relative">
-              <div className="w-24 h-24 rounded-full bg-surface/80 border-4 border-surface flex items-center justify-center text-3xl font-bold text-text-main shadow-lg absolute -top-12">
-                {wallOwner.full_name ? wallOwner.full_name.charAt(0).toUpperCase() : 'P'}
+              <div className="w-24 h-24 rounded-full bg-surface/80 border-4 border-surface flex items-center justify-center text-3xl font-bold text-text-main shadow-lg absolute -top-12 overflow-hidden">
+                {wallOwner.politician_profiles?.[0]?.avatar_url ? (
+                  <img src={wallOwner.politician_profiles[0].avatar_url} alt={wallOwner.full_name || 'Profile'} className="w-full h-full object-cover" />
+                ) : (
+                  wallOwner.full_name ? wallOwner.full_name.charAt(0).toUpperCase() : 'P'
+                )}
               </div>
               <div className="pt-14">
                  <h1 className="text-2xl font-bold text-text-main">{wallOwner.full_name || getGhostDisplayName(ghostId)}</h1>
@@ -276,7 +280,7 @@ export default function PoliticianWall() {
 
         {/* Supporters Dashboard Modal */}
         {showSupporters && (
-          <Modal className="bg-surface border border-border-light rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
+          <Modal className="bg-surface/90 elevation-4 border border-border-light rounded-2xl w-full max-w-md overflow-hidden flex flex-col max-h-[80vh]">
             <div className="px-5 py-4 border-b border-border flex items-center justify-between bg-surface/50">
               <h3 className="font-bold text-lg text-text-main flex items-center gap-2">
                 <Heart size={18} className="text-danger fill-danger" /> Supporter Dashboard

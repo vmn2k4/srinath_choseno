@@ -249,7 +249,16 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
                 <Vote size={14} className="text-primary" />
                 <span className="text-xs text-text-muted">{seat?.elections?.name} · <span className="uppercase font-semibold">{seat?.elections?.status?.replace('_', ' ')}</span></span>
               </div>
-              <h1 className="text-2xl font-bold text-text-main">{displayName}</h1>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center text-lg font-bold text-text-on-primary shrink-0 overflow-hidden">
+                  {candidateProfile?.avatar_url ? (
+                    <img src={candidateProfile.avatar_url} alt={displayName} className="w-full h-full object-cover" />
+                  ) : (
+                    displayName.charAt(0).toUpperCase()
+                  )}
+                </div>
+                <h1 className="text-2xl font-bold text-text-main">{displayName}</h1>
+              </div>
               <div className="flex items-center gap-2 mt-2 flex-wrap">
                 <Badge tone="primary" size="sm">{seat?.role_title}</Badge>
                 <span className="flex items-center gap-1 text-text-muted text-sm">

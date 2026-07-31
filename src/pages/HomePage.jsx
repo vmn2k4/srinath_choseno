@@ -202,7 +202,7 @@ export default function HomePage() {
         >
           <motion.div initial={reduceMotion ? false : 'hidden'} animate="visible" variants={heroStagger}>
             <motion.div variants={heroItem}>
-              <span className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-accent/40 bg-surface-elevated/90 backdrop-blur-xl text-xs font-bold tracking-wide text-accent">
+              <span className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-accent/40 bg-surface-elevated/90 elevation-3 text-xs font-bold tracking-wide text-accent">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
@@ -291,7 +291,7 @@ export default function HomePage() {
                 <motion.div
                   whileHover={reduceMotion ? undefined : { y: -8, scale: 1.01 }}
                   transition={{ duration: 0.3, ease: EASE }}
-                  className="glass-card p-8 h-full group hover:border-primary/40 hover:shadow-elevated-lg transition-all duration-300 relative overflow-hidden"
+                  className="glass-card elevation-2 p-8 h-full group hover:border-primary/40 transition-all duration-300 relative overflow-hidden"
                 >
                   <span className="font-display text-7xl font-black text-primary/20 group-hover:text-primary/35 transition-colors duration-500 select-none leading-none">
                     0{i + 1}
@@ -372,7 +372,7 @@ export default function HomePage() {
                 <motion.div
                   whileHover={reduceMotion ? undefined : { y: -8, scale: 1.01 }}
                   transition={{ duration: 0.3, ease: EASE }}
-                  className="glass-card p-8 h-full group transition-all duration-500 border border-border-light hover:border-primary/40 hover:shadow-elevated-lg"
+                  className="glass-card elevation-2 p-8 h-full group transition-all duration-500 border border-border-light hover:border-primary/40"
                 >
                   <div className="flex items-center gap-3 mb-5">
                     <role.icon size={24} className={`${role.accent} group-hover:scale-110 transition-transform duration-300`} aria-hidden="true" />
@@ -408,7 +408,7 @@ export default function HomePage() {
                 <motion.div
                   whileHover={reduceMotion ? undefined : { y: -6, scale: 1.01 }}
                   transition={{ duration: 0.3, ease: EASE }}
-                  className="group p-8 rounded-3xl border border-border-light bg-surface/60 backdrop-blur-md h-full hover:bg-surface-elevated hover:border-primary/40 hover:shadow-elevated-md transition-all duration-300"
+                  className="group p-8 rounded-3xl border border-border-light bg-surface/60 elevation-2 h-full hover:bg-surface-elevated hover:border-primary/40 transition-all duration-300"
                 >
                   <div className="w-12 h-12 rounded-2xl bg-accent/20 border border-accent/35 text-accent flex items-center justify-center mb-6 group-hover:rotate-6 group-hover:scale-110 transition-transform duration-300">
                     <feature.icon size={22} aria-hidden="true" />
@@ -426,7 +426,7 @@ export default function HomePage() {
       <section ref={ctaRef} className="relative py-32 px-6 overflow-hidden">
         <div className="max-w-4xl mx-auto">
           <Reveal>
-            <div className="relative glass-card p-12 md:p-16 text-center overflow-hidden border border-primary/20 shadow-elevated-xl">
+            <div className="relative glass-card elevation-4 p-12 md:p-16 text-center overflow-hidden border border-primary/20">
               <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
                 <ParallaxOrb className="orb orb-e" sectionRef={ctaRef} range={[-90, 90]} driftX={[0, -25, 25, 0]} duration={19} />
               </div>
