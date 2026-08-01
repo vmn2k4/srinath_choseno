@@ -15,3 +15,4 @@ export { default as Spinner } from './Spinner';
 export { default as EmptyState } from './EmptyState';
 export { default as PageHeader } from './PageHeader';
 export { ContainerScroll } from './ContainerScroll';
+export { default as ChosenoLogo } from './ChosenoLogo';

@@ -416,7 +416,7 @@ export default function FeedPage() {
             {profile.role !== 'admin' && (
               <div className="flex items-center gap-2 mt-2 text-xs text-text-muted">
                 <Award size={14} className="text-primary-light" />
-                Civic Score: <span className="font-bold text-text-main">{score ?? 0}</span>
+                Civic Impact Score: <span className="font-bold text-text-main">{score ?? 0}</span>
               </div>
             )}
           </div>
@@ -429,7 +429,7 @@ export default function FeedPage() {
               onClick={updateScore}
               disabled={scoring}
               className="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary-light border border-primary/25 rounded-xl transition-colors whitespace-nowrap text-sm font-semibold disabled:opacity-50"
-              title="Recalculate your civic score"
+              title="Recalculate your civic impact score"
             >
               {scoring ? <RefreshCw size={16} className="animate-spin" /> : <Award size={16} />}
               {scoring ? 'Calculating...' : 'Update My Score'}
@@ -438,10 +438,10 @@ export default function FeedPage() {
               onClick={handleBurnIdentity}
               disabled={burning}
               className="flex items-center gap-2 px-4 py-2 bg-caution/10 hover:bg-caution/25 text-caution border border-caution/25 rounded-xl transition-colors whitespace-nowrap text-sm font-semibold disabled:opacity-50 shadow-[0_0_12px_rgba(249,115,22,0.1)]"
-              title="Generate a new anonymous identity and orphan your old posts"
+              title="Generate a new anonymous identity key and orphan your old posts"
             >
               <Flame size={16} />
-              {burning ? 'Burning...' : 'Burn Identity'}
+              {burning ? 'Rotating...' : 'Rotate Ghost ID'}
             </button>
           </div>
         )}
@@ -518,7 +518,7 @@ export default function FeedPage() {
                     setLinkMetadata(null);
                   }
                 }}
-                placeholder="What's happening? This post will show up in every group you belong to."
+                placeholder="What's happening? This post will automatically appear across all your verified constituencies."
                 className="min-h-[80px]"
               />
 
@@ -613,7 +613,7 @@ export default function FeedPage() {
                   : 'border-transparent text-text-muted hover:text-text-secondary hover:bg-surface-hover/30'
               }`}
             >
-              <Layers size={14} /> All Feeds
+              <Layers size={14} /> All Constituencies
             </button>
             {memberships.map((m) => (
               <button

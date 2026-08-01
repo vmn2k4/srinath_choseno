@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { LogOut, User as UserIcon } from 'lucide-react';
+import { ChosenoLogo } from '../components/ui';
 
 export default function MainLayout() {
   const { session, profile, signOut } = useAuth();
@@ -10,7 +11,7 @@ export default function MainLayout() {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/');
+    navigate('/auth');
   };
 
   const isActive = (path) => location.pathname === path;
@@ -18,30 +19,30 @@ export default function MainLayout() {
   // Single source of truth for the nav pill's active/inactive look — was
   // previously copy-pasted independently at each Link below.
   const navLinkClass = (active) =>
-    `px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
+    `px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
       active
-        ? 'text-text-main bg-primary/15 border border-primary/25'
+        ? 'text-primary bg-primary/10 border border-primary/25 font-semibold'
         : 'text-text-muted hover:text-text-main hover:bg-surface-hover'
     }`;
 
   return (
     <div className="flex flex-col min-h-screen">
       <nav className="sticky top-0 z-40 flex justify-between items-center px-5 lg:px-8 py-3 bg-background/70 elevation-2 border-b border-border">
-        <Link to="/" className="font-display font-extrabold text-lg text-primary hover:text-accent transition-colors">
-          Choseno
+        <Link to="/" className="hover:opacity-90 transition-opacity">
+          <ChosenoLogo size="md" />
         </Link>
         <div className="flex gap-1 items-center">
           {session ? (
             <>
               <Link to="/feed" className={navLinkClass(isActive('/feed'))}>
-                Feed
+                Local Feed
               </Link>
               {profile?.role !== 'admin' && (
                 <Link
                   to={profile?.role === 'politician' ? '/politician/elections' : '/elections'}
                   className={navLinkClass(isActive('/elections') || isActive('/politician/elections'))}
                 >
-                  Elections
+                  Elections &amp; Races
                 </Link>
               )}
               {profile?.role === 'admin' && (

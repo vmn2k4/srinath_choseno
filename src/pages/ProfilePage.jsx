@@ -142,7 +142,7 @@ export default function ProfilePage() {
                 <Badge tone={roleTone} shape="pill" size="sm">{roleLabel}</Badge>
               </div>
               <div className="sm:col-span-2">
-                <p className="text-xs text-text-muted mb-1">Groups You Belong To</p>
+                <p className="text-xs text-text-muted mb-1">Your Verified Constituencies</p>
                 {profile?.matchedBoundaries?.length ? (
                   <div className="flex flex-wrap gap-2 mt-1.5">
                     {profile.matchedBoundaries.map(b => (
@@ -155,7 +155,7 @@ export default function ProfilePage() {
                 ) : (
                   <p className="font-medium text-text-main flex items-center gap-2">
                     <MapPin size={15} className="text-accent shrink-0" />
-                    <em className="text-text-muted not-italic font-normal">No groups mapped yet</em>
+                    <em className="text-text-muted not-italic font-normal">No constituencies mapped yet</em>
                   </p>
                 )}
               </div>
@@ -165,7 +165,7 @@ export default function ProfilePage() {
           {/* Politician Details Card */}
           {profile?.role === 'politician' && (
             <Card as="section">
-              <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest mb-5">Political Details</h3>
+              <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest mb-5">Candidate Details</h3>
               <div className="flex items-center gap-4 mb-5">
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center text-xl font-bold text-text-on-primary shadow-lg shrink-0 overflow-hidden">
                   {profile?.avatarUrl ? (
@@ -174,7 +174,7 @@ export default function ProfilePage() {
                     profile?.fullName ? profile.fullName.charAt(0).toUpperCase() : 'P'
                   )}
                 </div>
-                <p className="text-xs text-text-muted">Add a profile photo from Edit Profile — it's optional and shows on your public wall and candidate listings.</p>
+                <p className="text-xs text-text-muted">Add a profile photo from Edit Profile — it's optional and shows on your public candidate wall and listings.</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
@@ -200,28 +200,28 @@ export default function ProfilePage() {
             <Card as="section">
               <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest mb-5">Privacy & Anonymity</h3>
               <div>
-                <p className="text-xs text-text-muted mb-1">Current Ghost ID</p>
+                <p className="text-xs text-text-muted mb-1">Current Ghost ID Key</p>
                 <p className="font-mono text-xs text-text-secondary truncate">{profile?.ghostId}</p>
 
                 <div className="mt-4 pt-4 border-t border-border-light flex items-center justify-between gap-4 flex-wrap">
                   <div>
-                    <p className="text-xs text-text-muted mb-1">Civic Score</p>
+                    <p className="text-xs text-text-muted mb-1">Civic Impact Score</p>
                     <p className="text-2xl font-bold text-text-main">{score ?? 0}</p>
-                    <p className="text-xs text-text-muted mt-1">10 pts/post, 5 pts/comment, +1 per like and -1 per dislike on your posts.</p>
+                    <p className="text-xs text-text-muted mt-1">10 pts/post, 5 pts/comment, +1 per upvote and -1 per downvote on your posts.</p>
                   </div>
                   <Button variant="outline" onClick={updateScore} disabled={scoring}>
-                    {scoring ? <><RefreshCw size={15} className="animate-spin" /> Calculating...</> : <><Award size={15} /> Update My Score</>}
+                    {scoring ? <><RefreshCw size={15} className="animate-spin" /> Calculating...</> : <><Award size={15} /> Update Impact Score</>}
                   </Button>
                 </div>
 
                 <p className="text-xs text-text-muted mt-4">
                   {profile.burnCount > 0
-                    ? `Burned ${profile.burnCount} time${profile.burnCount > 1 ? 's' : ''} — last on ${new Date(profile.lastBurnedAt).toLocaleDateString()}.`
-                    : 'You have never burned your Ghost ID.'}
+                    ? `Rotated ${profile.burnCount} time${profile.burnCount > 1 ? 's' : ''} — last on ${new Date(profile.lastBurnedAt).toLocaleDateString()}.`
+                    : 'You have never rotated your Ghost ID.'}
                 </p>
-                <p className="text-xs text-text-muted mt-1 mb-4">Burning your Ghost ID permanently severs all links to your past posts. This cannot be undone.</p>
+                <p className="text-xs text-text-muted mt-1 mb-4">Rotating your Ghost ID generates a fresh anonymous identity key and severs all links to your past activity. This cannot be undone.</p>
                 <Button variant="danger" onClick={burnGhostId} disabled={burning}>
-                  {burning ? <><RefreshCw size={15} className="animate-spin" /> Burning...</> : <><Flame size={15} /> Burn My Ghost ID</>}
+                  {burning ? <><RefreshCw size={15} className="animate-spin" /> Rotating...</> : <><Flame size={15} /> Rotate Ghost ID</>}
                 </Button>
               </div>
             </Card>

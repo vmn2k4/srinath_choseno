@@ -232,12 +232,6 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
     <div className={embedded ? 'w-full' : 'w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8'}>
       <div className={embedded ? 'w-full min-w-0' : 'w-full min-w-0 max-w-6xl mx-auto'}>
 
-        {!embedded && (
-          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-text-muted hover:text-text-secondary mb-6 transition-colors">
-            <ArrowLeft size={16} /> Back
-          </button>
-        )}
-
         <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 items-start">
 
           {/* LEFT: profile column — sticks in place while the feed scrolls on wide screens */}
@@ -283,21 +277,21 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
                     }`}
                   >
                     {candidate.nomination_filed ? <CheckCircle2 size={13} /> : <Circle size={13} />}
-                    {candidate.nomination_filed ? 'Nomination Papers Filed' : 'Mark Nomination Papers as Filed'}
+                    {candidate.nomination_filed ? 'Official Nomination Verified' : 'Confirm Official Nomination Filed'}
                   </button>
                 ) : candidate.nomination_filed ? (
                   <Badge tone="emerald" shape="pill" size="sm" uppercase={false} icon={<CheckCircle2 size={13} />}>
-                    Nomination Papers Filed
+                    Official Nomination Verified
                   </Badge>
                 ) : (
                   <Badge tone="neutral" shape="pill" size="sm" uppercase={false} icon={<Circle size={13} />}>
-                    Nomination Papers Not Yet Filed
+                    Official Filing Pending
                   </Badge>
                 )}
               </div>
 
               {candidate.added_by_election_admin_id && (
-                <p className="text-[10px] text-text-muted mt-2 italic">Added by an election administrator</p>
+                <p className="text-[10px] text-text-muted mt-2 italic">Listed by verified election administrator</p>
               )}
 
               {/* Support button */}

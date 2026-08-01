@@ -226,7 +226,7 @@ export default function PoliticianElections() {
         <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
           <h2 className="text-lg font-bold text-text-secondary">Open Seats Near You</h2>
           <Button variant="secondary" size="sm" onClick={() => setBrowsing(!browsing)}>
-            <Search size={13} /> {browsing ? 'Hide' : 'Browse a Different Area'}
+            <Search size={13} /> {browsing ? 'Hide Search' : 'Explore Other Districts & Races'}
           </Button>
         </div>
 

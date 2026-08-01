@@ -25,8 +25,8 @@ export default function StepRole({ data, updateData, nextStep }) {
             <Users size={28} className="sm:hidden" />
             <Users size={32} className="hidden sm:block" />
           </div>
-          <h3 className="text-lg sm:text-xl font-bold text-text-main mb-2">General Citizen</h3>
-          <p className="text-sm text-text-muted text-center">Post anonymously, vote on local issues, and connect with your community.</p>
+          <h3 className="text-lg sm:text-xl font-bold text-text-main mb-2">Citizen / Voter</h3>
+          <p className="text-sm text-text-muted text-center">Post anonymously, vote on local issues, and connect with your verified community.</p>
         </button>
 
         <button
@@ -39,8 +39,8 @@ export default function StepRole({ data, updateData, nextStep }) {
             <Flag size={28} className="sm:hidden" />
             <Flag size={32} className="hidden sm:block" />
           </div>
-          <h3 className="text-lg sm:text-xl font-bold text-text-main mb-2">Politician / Candidate</h3>
-          <p className="text-sm text-text-muted text-center">Manage a public wall, share video pitches, and engage with constituents.</p>
+          <h3 className="text-lg sm:text-xl font-bold text-text-main mb-2">Candidate / Local Representative</h3>
+          <p className="text-sm text-text-muted text-center">Publish video statements, file candidacy, and engage directly with verified constituents.</p>
         </button>
       </div>
     </div>

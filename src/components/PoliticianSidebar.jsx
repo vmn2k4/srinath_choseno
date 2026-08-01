@@ -51,13 +51,13 @@ export default function PoliticianSidebar({ profile, activeTab, memberships = []
     <Card variant="composer" padding="sm" className="sticky top-24">
       <h3 className="text-text-secondary font-semibold mb-4 flex items-center gap-2">
         <Users size={18} className="text-primary-light" />
-        People Interested in Politics
+        Candidates & Representatives
       </h3>
 
       {loading ? (
         <div className="flex justify-center py-4"><Spinner size="sm" /></div>
       ) : politicians.length === 0 ? (
-        <EmptyState description={`No one interested in politics found for this ${activeTab.toLowerCase()} yet.`} />
+        <EmptyState description={`No candidates or representatives found for this ${activeTab.toLowerCase()} area yet.`} />
       ) : (
         <div className="space-y-3">
           {politicians.map((pol) => {

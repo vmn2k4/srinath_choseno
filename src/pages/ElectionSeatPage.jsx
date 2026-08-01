@@ -213,7 +213,7 @@ export default function ElectionSeatPage() {
                         {name}
                       </span>
                       {c.nomination_filed && (
-                        <CheckCircle2 size={14} className="text-success shrink-0" title="Nomination papers filed" />
+                        <CheckCircle2 size={14} className="text-success shrink-0" title="Official nomination confirmed" />
                       )}
                     </button>
                   );
@@ -233,10 +233,10 @@ export default function ElectionSeatPage() {
             {role === 'normal' && (
               <Card padding="sm" className="bg-primary/10 border-primary/25">
                 <p className="text-sm text-text-secondary mb-3">
-                  Want to run for this seat? Switch your account to a politician profile to nominate yourself.
+                  Interested in running for this seat? Switch to candidate mode to declare your candidacy.
                 </p>
                 <Button onClick={() => navigate('/profile')} className="w-full">
-                  Become a Politician
+                  Run for Office
                 </Button>
               </Card>
             )}
@@ -245,16 +245,16 @@ export default function ElectionSeatPage() {
               <Card padding="sm" className="bg-primary/10 border-primary/25">
                 {alreadyApplied ? (
                   <>
-                    <p className="text-sm text-text-secondary mb-3">You've already applied for this seat.</p>
+                    <p className="text-sm text-text-secondary mb-3">You've filed your candidacy for this seat.</p>
                     <Button variant="secondary" onClick={() => navigate('/politician/elections')} className="w-full">
                       Manage My Candidacies
                     </Button>
                   </>
                 ) : (
                   <>
-                    <p className="text-sm text-text-secondary mb-3">Think you'd be a good fit for {seat.role_title}?</p>
+                    <p className="text-sm text-text-secondary mb-3">Ready to serve as {seat.role_title}?</p>
                     <Button onClick={startApplying} disabled={applying} className="w-full">
-                      {applying ? 'Starting...' : 'Nominate Yourself'}
+                      {applying ? 'Filing...' : 'Declare Candidacy'}
                     </Button>
                   </>
                 )}
@@ -271,11 +271,11 @@ export default function ElectionSeatPage() {
                 {adminStatus.my_application_status === 'approved' ? (
                   <>
                     <p className="text-sm text-text-secondary mt-2 mb-3">
-                      You administer this seat. You can add a candidate who is running but hasn't registered on the platform yet.
+                      You administer this seat. You can add an unclaimed candidate listing for someone running who hasn't claimed their profile on Choseno yet.
                     </p>
                     {!showAddCandidateForm ? (
                       <Button onClick={() => setShowAddCandidateForm(true)} className="w-full">
-                        Add a Candidate
+                        Add Unclaimed Candidate
                       </Button>
                     ) : (
                       <form onSubmit={submitUnregisteredCandidate} className="space-y-3 mt-3">

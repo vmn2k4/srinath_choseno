@@ -68,10 +68,10 @@ export default function ElectionsPage() {
       {role === 'normal' && (
         <Card padding="sm" className="flex items-center justify-between gap-4 flex-wrap">
           <p className="text-sm text-text-secondary">
-            Want to run for one of these seats? Switch your account to a politician profile to nominate yourself.
+            Interested in serving your community? Switch to candidate mode to file your candidacy.
           </p>
           <Button onClick={() => navigate('/profile')} className="shrink-0">
-            Become a Politician
+            Run for Office
           </Button>
         </Card>
       )}

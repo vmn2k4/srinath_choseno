@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const TABS = [
-  { key: 'boundaries', label: 'Boundaries', to: '/admin' },
-  { key: 'elections', label: 'Elections', to: '/admin/elections' },
-  { key: 'election-admins', label: 'Election Admins', to: '/admin/election-admins' },
-  { key: 'visualizer', label: 'Visualizer', to: '/admin/visualize' },
-  { key: 'theme', label: 'Theme', to: '/admin/theme' },
+  { key: 'boundaries', label: 'Geospatial Boundaries', to: '/admin' },
+  { key: 'elections', label: 'Elections & Seats', to: '/admin/elections' },
+  { key: 'election-admins', label: 'Seat Administrators', to: '/admin/election-admins' },
+  { key: 'visualizer', label: 'Boundary Inspector', to: '/admin/visualize' },
+  { key: 'theme', label: 'Site Theme', to: '/admin/theme' },
 ];
 
 export default function AdminSubNav({ active, className = '' }) {

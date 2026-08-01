@@ -210,11 +210,6 @@ export default function PoliticianWall() {
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8">
       {/* Main Wall Column */}
       <div className="w-full min-w-0">
-        
-        <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-text-muted hover:text-text-secondary mb-6 transition-colors">
-          <ArrowLeft size={16} /> Back to Feed
-        </button>
-
         {/* Cover & Profile Header */}
         <Card padding="none" className="mb-8 relative">
            <div className="h-32 bg-gradient-to-br from-vintage-grape via-surface to-coffee-bean rounded-t-2xl border-b border-border-light/20" />
