@@ -452,19 +452,19 @@ export default function FeedPage() {
           {activeElections.map(e => (
             <div
               key={e.seat_id}
-              className="flex items-center gap-2 pl-3.5 pr-2 py-2 bg-warning/10 border border-warning/25 rounded-full"
+              className="flex items-center gap-2 pl-3.5 pr-2 py-2 bg-amber-500/15 dark:bg-warning/10 border border-amber-500/30 dark:border-warning/25 rounded-full"
             >
-              <Vote className="text-warning shrink-0" size={14} />
+              <Vote className="text-amber-700 dark:text-warning shrink-0" size={14} />
               <button
                 onClick={() => navigate(`/elections/seat/${e.seat_id}`)}
-                className="text-warning-light text-sm font-semibold hover:text-warning-light/80 transition-colors whitespace-nowrap"
+                className="text-amber-950 dark:text-warning-light text-sm font-bold hover:underline transition-colors whitespace-nowrap"
                 title={e.election_name}
               >
                 {e.role_title} · {e.election_date}
               </button>
               <button
                 onClick={() => dismissElectionBanner(e.election_id)}
-                className="p-1 text-warning/70 hover:text-warning-light hover:bg-warning/10 rounded-full transition-colors shrink-0"
+                className="p-1 text-amber-800 dark:text-warning/70 hover:text-amber-950 rounded-full transition-colors shrink-0"
                 title="Dismiss"
               >
                 <X size={13} />
@@ -475,11 +475,11 @@ export default function FeedPage() {
       )}
 
       {profile.role === 'admin' && (
-        <div className="mb-8 p-4 bg-warning/10 border border-warning/25 rounded-xl flex items-start gap-3">
-          <ShieldAlert className="text-warning shrink-0 mt-0.5" />
+        <div className="mb-8 p-4 bg-amber-500/15 dark:bg-warning/10 border border-amber-500/30 dark:border-warning/25 rounded-xl flex items-start gap-3">
+          <ShieldAlert className="text-amber-700 dark:text-warning shrink-0 mt-0.5" />
           <div>
-            <h3 className="text-warning font-bold mb-1">Admin Account</h3>
-            <p className="text-warning-light/70 text-sm">You are logged in as an administrator. Your primary role is managing the system boundaries in the Admin panel. You do not belong to a specific constituency feed.</p>
+            <h3 className="text-amber-900 dark:text-warning font-bold mb-1">Admin Account</h3>
+            <p className="text-amber-950 dark:text-warning-light/90 text-sm font-medium leading-relaxed">You are logged in as an administrator. Your primary role is managing the system boundaries in the Admin panel. You do not belong to a specific constituency feed.</p>
           </div>
         </div>
       )}
@@ -491,11 +491,11 @@ export default function FeedPage() {
 
             {/* No local groups yet notice */}
             {!loadingMemberships && memberships.length === 0 && (
-              <div className="mb-6 p-4 bg-warning/10 border border-warning/30 rounded-xl flex items-start gap-3">
-                <MapPin className="text-warning shrink-0 mt-0.5" size={18} />
+              <div className="mb-6 p-4 bg-amber-500/15 dark:bg-warning/10 border border-amber-500/30 dark:border-warning/30 rounded-xl flex items-start gap-3">
+                <MapPin className="text-amber-700 dark:text-warning shrink-0 mt-0.5" size={18} />
                 <div>
-                  <h3 className="text-warning-light font-semibold text-sm mb-1">No Local Groups Yet</h3>
-                  <p className="text-warning-light/70 text-xs">No boundary data covers your location yet, so you don't have any municipal/federal groups to post into. Go to <a href="/profile" className="underline hover:text-warning-light">Profile Settings</a> to search for and add your jurisdiction manually, or check back once an admin uploads boundary data for your area. You can still post to Country and International.</p>
+                  <h3 className="text-amber-900 dark:text-warning-light font-bold text-sm mb-1">No Local Groups Yet</h3>
+                  <p className="text-amber-950 dark:text-warning-light/90 text-xs font-medium leading-relaxed">No boundary data covers your location yet, so you don't have any municipal/federal groups to post into. Go to <a href="/profile" className="underline font-bold hover:text-amber-700">Profile Settings</a> to search for and add your jurisdiction manually, or check back once an admin uploads boundary data for your area. You can still post to Country and International.</p>
                 </div>
               </div>
             )}

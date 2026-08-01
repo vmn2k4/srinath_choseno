@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const TABS = [
   { key: 'boundaries', label: 'Geospatial Boundaries', to: '/admin' },
+  { key: 'analytics', label: 'Platform Analytics', to: '/admin/analytics' },
   { key: 'elections', label: 'Elections & Seats', to: '/admin/elections' },
   { key: 'election-admins', label: 'Seat Administrators', to: '/admin/election-admins' },
   { key: 'visualizer', label: 'Boundary Inspector', to: '/admin/visualize' },

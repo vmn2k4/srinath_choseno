@@ -49,9 +49,9 @@ export default function PoliticianSidebar({ profile, activeTab, memberships = []
 
   return (
     <Card variant="composer" padding="sm" className="sticky top-24">
-      <h3 className="text-text-secondary font-semibold mb-4 flex items-center gap-2">
-        <Users size={18} className="text-primary-light" />
-        Candidates & Representatives
+      <h3 className="text-text-main font-bold mb-4 flex items-center gap-2 text-sm sm:text-base">
+        <Users size={18} className="text-primary" />
+        Candidates &amp; Representatives
       </h3>
 
       {loading ? (

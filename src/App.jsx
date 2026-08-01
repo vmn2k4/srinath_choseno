@@ -9,6 +9,7 @@ import './index.css';
 // Lazy-loaded route components for performance & automatic code-splitting
 const HomePage = lazy(() => import('./pages/HomePage'));
 const AdminPage = lazy(() => import('./pages/AdminPage'));
+const AnalyticsAdminPage = lazy(() => import('./pages/Admin/AnalyticsAdminPage'));
 const ElectionsAdmin = lazy(() => import('./pages/Admin/ElectionsAdmin'));
 const ElectionAdminApplications = lazy(() => import('./pages/Admin/ElectionAdminApplications'));
 const BoundaryVisualizer = lazy(() => import('./pages/Admin/BoundaryVisualizer'));
@@ -61,6 +62,14 @@ function App() {
                   element={
                     <ProtectedRoute requireAdmin={true}>
                       <AdminPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="admin/analytics"
+                  element={
+                    <ProtectedRoute requireAdmin={true}>
+                      <AnalyticsAdminPage />
                     </ProtectedRoute>
                   }
                 />
