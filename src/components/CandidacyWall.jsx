@@ -2,17 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import LinkPreview from './LinkPreview';
+import AnswerValue from './AnswerValue';
 import { getGhostDisplayName } from '../utils/ghostName';
 import VideoRecorder from './video/VideoRecorder';
 import WallPostFeed from './wall/WallPostFeed';
-import { getPublicCandidateById, getPublicCandidateAnswers, getCandidacyWallPosts, createCandidatePost, updateNominationFiled } from '../services/elections';
+import { getPublicCandidateById, getPublicCandidateAnswers, getCandidacyWallPosts, createCandidatePost, createAnswerComment, updateNominationFiled, requestCandidacyClaim } from '../services/elections';
 import { getOwnProfile, getPoliticianProfile } from '../services/profile';
 import { uploadPostImage, createComment } from '../services/feed';
 import {
   getSupportStatus, getSupporterCount, withdrawSupport, addSupport
 } from '../services/politicianWall';
-import { MapPin, ArrowLeft, ShieldAlert, GraduationCap, Home, Image as ImageIcon, Vote, Video, HelpCircle, Heart, CheckCircle2, Circle } from 'lucide-react';
-import { Card, Button, Badge, Textarea, Spinner, StoryViewerModal, RemoveMediaButton } from './ui';
+import { MapPin, ArrowLeft, ShieldAlert, GraduationCap, Home, Image as ImageIcon, Vote, Video, HelpCircle, Heart, CheckCircle2, Circle, ChevronDown, ChevronUp, MessageSquare, Send, UserCheck } from 'lucide-react';
+import { Card, Button, Badge, Input, Textarea, Spinner, StoryViewerModal, RemoveMediaButton } from './ui';
 
 export default function CandidacyWall({ candidateId: candidateIdProp, embedded = false } = {}) {
   const { candidateId: paramCandidateId } = useParams();
@@ -38,8 +39,20 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
 
   const [commentInputs, setCommentInputs] = useState({});
 
+  const [expandedAnswerIds, setExpandedAnswerIds] = useState(() => new Set());
+  const [answerCommentInputs, setAnswerCommentInputs] = useState({});
+
   const [supportCount, setSupportCount] = useState(0);
   const [isSupporting, setIsSupporting] = useState(false);
+
+  // "This is me" claim request (Flow B of the candidacy claim flow)
+  const [showClaimForm, setShowClaimForm] = useState(false);
+  const [claimMotivation, setClaimMotivation] = useState('');
+  const [claimContactEmail, setClaimContactEmail] = useState('');
+  const [claimSocialMedia, setClaimSocialMedia] = useState('');
+  const [submittingClaim, setSubmittingClaim] = useState(false);
+  const [claimStatus, setClaimStatus] = useState('');
+  const [claimSubmitted, setClaimSubmitted] = useState(false);
 
   const [activeStoryUrl, setActiveStoryUrl] = useState(null);
 
@@ -60,16 +73,7 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
       const { data: polProfile } = await getPoliticianProfile(candidateRow.politician_id);
       setCandidateProfile(polProfile);
 
-      // RLS already withholds hidden-question answers from non-owner
-      // viewers, but the owner's own "Candidates manage own answers" policy
-      // lets them see everything (including admin-only-visible answers) —
-      // filter to visible_to_public client-side too so the owner previews
-      // exactly what voters actually see.
-      const { data: answerRows } = await getPublicCandidateAnswers(candidateId);
-      const visible = (answerRows || [])
-        .filter(a => a.election_questions?.visible_to_public)
-        .sort((a, b) => (a.election_questions?.rank ?? 0) - (b.election_questions?.rank ?? 0));
-      setAnswers(visible);
+      await fetchAnswers();
 
       if (user) {
         const { data: mySupport } = await getSupportStatus(candidateRow.politician_id, user.id);
@@ -103,6 +107,20 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
     setPosts(data || []);
   };
 
+  // RLS already withholds hidden-question answers from non-owner viewers,
+  // but the owner's own "Candidates manage own answers" policy lets them see
+  // everything (including admin-only-visible answers) -- filter to
+  // visible_to_public client-side too so the owner previews exactly what
+  // voters actually see. Broken out from fetchAll so posting a comment on a
+  // question can refresh just the answers/comments without a full reload.
+  const fetchAnswers = async () => {
+    const { data: answerRows } = await getPublicCandidateAnswers(candidateId);
+    const visible = (answerRows || [])
+      .filter(a => a.election_questions?.visible_to_public)
+      .sort((a, b) => (a.election_questions?.rank ?? 0) - (b.election_questions?.rank ?? 0));
+    setAnswers(visible);
+  };
+
   useEffect(() => {
     if (!authLoading && candidateId) fetchAll();
   }, [user?.id, authLoading, candidateId]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -128,6 +146,22 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
       setSupportCount(prev => prev + 1);
       await addSupport(candidate.politician_id, user.id);
     }
+  };
+
+  const submitClaimRequest = async (e) => {
+    e.preventDefault();
+    setSubmittingClaim(true);
+    setClaimStatus('');
+    const { error } = await requestCandidacyClaim(candidateId, {
+      motivation: claimMotivation, contactEmail: claimContactEmail, socialMediaInfo: claimSocialMedia
+    });
+    setSubmittingClaim(false);
+    if (error) {
+      setClaimStatus('Error: ' + error.message);
+      return;
+    }
+    setClaimSubmitted(true);
+    setShowClaimForm(false);
   };
 
   const handlePostChange = (e) => {
@@ -200,6 +234,29 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
       fetchPosts();
     } catch (err) {
       console.error('Error creating comment:', err);
+    }
+  };
+
+  const toggleAnswerExpanded = (answerId) => {
+    setExpandedAnswerIds(prev => {
+      const next = new Set(prev);
+      if (next.has(answerId)) next.delete(answerId); else next.add(answerId);
+      return next;
+    });
+  };
+
+  const handleCreateAnswerComment = async (answerId) => {
+    const content = answerCommentInputs[answerId];
+    if (!content?.trim() || !profile?.current_ghost_id) return;
+
+    try {
+      const { error } = await createAnswerComment(answerId, profile.current_ghost_id, content.trim());
+      if (error) throw error;
+
+      setAnswerCommentInputs({ ...answerCommentInputs, [answerId]: '' });
+      fetchAnswers();
+    } catch (err) {
+      console.error('Error creating answer comment:', err);
     }
   };
 
@@ -294,6 +351,49 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
                 <p className="text-[10px] text-text-muted mt-2 italic">Listed by verified election administrator</p>
               )}
 
+              {candidate.added_by_election_admin_id && !candidate.claimed_at && !isOwner && (
+                <div className="mt-3 pt-3 border-t border-border-light/35">
+                  {claimSubmitted ? (
+                    <p className="text-xs text-success-light flex items-center gap-1.5">
+                      <CheckCircle2 size={13} /> Claim request submitted — an election administrator will review it.
+                    </p>
+                  ) : !user ? (
+                    <p className="text-xs text-text-muted">
+                      <button onClick={() => navigate('/auth')} className="text-primary-light hover:underline font-semibold">Sign in</button> if this is you and you'd like to claim this candidacy.
+                    </p>
+                  ) : !showClaimForm ? (
+                    <Button variant="outline" size="sm" onClick={() => setShowClaimForm(true)}>
+                      <UserCheck size={14} /> This is me — claim this candidacy
+                    </Button>
+                  ) : (
+                    <form onSubmit={submitClaimRequest} className="space-y-2.5">
+                      <Textarea
+                        required placeholder="Tell us why you're the real candidate behind this listing..."
+                        value={claimMotivation} rows={3}
+                        onChange={e => setClaimMotivation(e.target.value)}
+                      />
+                      <Input
+                        type="email" required placeholder="Contact email" value={claimContactEmail}
+                        onChange={e => setClaimContactEmail(e.target.value)}
+                      />
+                      <Input
+                        type="text" placeholder="Link to your official campaign site or social media (optional)"
+                        value={claimSocialMedia} onChange={e => setClaimSocialMedia(e.target.value)}
+                      />
+                      <div className="flex items-center gap-2">
+                        <Button type="submit" size="sm" disabled={submittingClaim}>
+                          {submittingClaim ? 'Submitting...' : 'Submit Claim Request'}
+                        </Button>
+                        <Button type="button" variant="ghost" size="sm" onClick={() => setShowClaimForm(false)}>
+                          Cancel
+                        </Button>
+                      </div>
+                      {claimStatus && <p className="text-danger text-xs">{claimStatus}</p>}
+                    </form>
+                  )}
+                </div>
+              )}
+
               {/* Support button */}
               <div className="mt-5 pt-5 border-t border-border-light/35 flex items-center gap-3 flex-wrap">
                 <Button
@@ -378,15 +478,84 @@ export default function CandidacyWall({ candidateId: candidateIdProp, embedded =
               <Card>
                 <h2 className="text-sm font-bold text-text-main mb-4 flex items-center gap-2"><HelpCircle size={16} className="text-primary" /> Candidate Questionnaire</h2>
                 <div className="space-y-4">
-                  {answers.map(a => (
-                    <div key={a.id} className="pb-4 border-b border-border-light/20 last:border-0 last:pb-0">
-                      <p className="text-sm font-semibold text-text-secondary">{a.election_questions?.question_text}</p>
-                      <p className="text-sm text-primary-light mt-1">{a.election_question_options?.option_text}</p>
-                      {a.context_text && (
-                        <p className="text-xs text-text-muted mt-1.5 italic whitespace-pre-wrap">"{a.context_text}"</p>
-                      )}
-                    </div>
-                  ))}
+                  {answers.map(a => {
+                    const isExpanded = expandedAnswerIds.has(a.id);
+                    const answerComments = [...(a.election_answer_comments || [])].sort((x, y) => new Date(x.created_at) - new Date(y.created_at));
+                    return (
+                      <div key={a.id} className="pb-4 border-b border-border-light/20 last:border-0 last:pb-0">
+                        <button
+                          type="button"
+                          onClick={() => toggleAnswerExpanded(a.id)}
+                          className="w-full flex items-start justify-between gap-2 text-left"
+                        >
+                          <div className="min-w-0">
+                            <p className="text-sm font-semibold text-text-secondary">{a.election_questions?.question_text}</p>
+                            <AnswerValue
+                              questionType={a.election_questions?.question_type}
+                              optionText={a.election_question_options?.option_text}
+                              selectedOptionTexts={(a.election_candidate_answer_options || []).map(o => o.election_question_options?.option_text).filter(Boolean)}
+                              textAnswer={a.text_answer}
+                              ratingValue={a.rating_value}
+                            />
+                          </div>
+                          {isExpanded ? <ChevronUp size={14} className="text-text-muted shrink-0 mt-1" /> : <ChevronDown size={14} className="text-text-muted shrink-0 mt-1" />}
+                        </button>
+
+                        {a.context_text && (
+                          <p className="text-xs text-text-muted mt-1.5 italic whitespace-pre-wrap">"{a.context_text}"</p>
+                        )}
+
+                        {a.video_url && (
+                          <video src={a.video_url} controls className="w-full max-h-56 rounded-lg mt-2.5 bg-black" />
+                        )}
+
+                        {isExpanded && (
+                          <div className="mt-3 pt-3 border-t border-border-light/20 space-y-2.5">
+                            {answerComments.length === 0 ? (
+                              <p className="text-xs text-text-muted italic">No comments yet.</p>
+                            ) : (
+                              answerComments.map(c => (
+                                <div key={c.id} className="pl-2.5 border-l border-primary/20">
+                                  <div className="flex items-baseline gap-2">
+                                    <span className="text-xs font-bold text-text-muted font-mono">{getGhostDisplayName(c.ghost_id)}</span>
+                                    <span className="text-[10px] text-text-muted/60">{new Date(c.created_at).toLocaleString()}</span>
+                                  </div>
+                                  <p className="text-xs text-text-tertiary mt-0.5">{c.content}</p>
+                                </div>
+                              ))
+                            )}
+
+                            {user ? (
+                              <div className="flex items-center gap-2 pt-1">
+                                <MessageSquare size={13} className="text-text-muted shrink-0" />
+                                <Input
+                                  type="text"
+                                  size="sm"
+                                  value={answerCommentInputs[a.id] || ''}
+                                  onChange={e => setAnswerCommentInputs({ ...answerCommentInputs, [a.id]: e.target.value })}
+                                  onKeyDown={e => { if (e.key === 'Enter') handleCreateAnswerComment(a.id); }}
+                                  placeholder="Write an anonymous comment..."
+                                  className="flex-1"
+                                />
+                                <Button
+                                  variant="icon"
+                                  tone="primary"
+                                  onClick={() => handleCreateAnswerComment(a.id)}
+                                  disabled={!answerCommentInputs[a.id]?.trim()}
+                                >
+                                  <Send size={13} />
+                                </Button>
+                              </div>
+                            ) : (
+                              <p className="text-xs text-text-muted">
+                                <button onClick={() => navigate('/auth')} className="text-primary-light hover:underline font-semibold">Sign in</button> to comment.
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </Card>
             )}

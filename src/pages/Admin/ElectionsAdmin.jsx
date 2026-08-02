@@ -3,9 +3,10 @@ import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import BoundaryPicker from '../../components/map/BoundaryPicker';
 import AdminSubNav from '../../components/AdminSubNav';
+import AnswerValue from '../../components/AnswerValue';
 import { getGhostDisplayName } from '../../utils/ghostName';
 import {
-  getElections, createElection, advanceElectionStatus, getElectionRoleTypes,
+  getElections, createElection, advanceElectionStatus, deleteElection, getElectionRoleTypes,
   getElectionSeatsByElectionId, getElectionCandidatesBySeatIds, createElectionSeats, deleteElectionSeat,
   deleteCandidacy, reviewCandidateApplication, getElectionQuestions, createElectionQuestion,
   deleteElectionQuestion, createElectionQuestionOptions, resolveRegionNames
@@ -36,6 +37,14 @@ const ELECTION_STATUS_TONE = {
   active: 'emerald',
   closed: 'neutral'
 };
+const QUESTION_TYPES = [
+  { value: 'single_choice', label: 'Single choice' },
+  { value: 'multiple_choice', label: 'Multiple choice' },
+  { value: 'text', label: 'Free text' },
+  { value: 'rating', label: 'Rating (1–5)' }
+];
+const QUESTION_TYPE_NEEDS_OPTIONS = new Set(['single_choice', 'multiple_choice']);
+const QUESTION_TYPE_LABEL = Object.fromEntries(QUESTION_TYPES.map(t => [t.value, t.label]));
 
 export default function ElectionsAdmin() {
   const { user } = useAuth();
@@ -53,6 +62,7 @@ export default function ElectionsAdmin() {
   const [questions, setQuestions] = useState([]);
   const [loadingQuestions, setLoadingQuestions] = useState(false);
   const [newQuestionText, setNewQuestionText] = useState('');
+  const [newQuestionType, setNewQuestionType] = useState('single_choice');
   const [newQuestionOptions, setNewQuestionOptions] = useState(['', '']);
   const [newQuestionRequired, setNewQuestionRequired] = useState(true);
   const [newQuestionAllowContext, setNewQuestionAllowContext] = useState(false);
@@ -84,6 +94,11 @@ export default function ElectionsAdmin() {
   const [containerId, setContainerId] = useState(new Set());
   const [targetType, setTargetType] = useState('');
   const [pendingShapeIds, setPendingShapeIds] = useState(new Set());
+  // null = no restriction yet (browse every targetType boundary in
+  // seatCountry); once "Find Matching Boundaries" runs, holds exactly the
+  // ids it found so the review picker below only shows that scoped set
+  // instead of every boundary of that type country-wide.
+  const [matchedShapeIds, setMatchedShapeIds] = useState(null);
   const [roleTypes, setRoleTypes] = useState([]); // election_role_types rows for seatCountry+targetType
   const [selectedRoleKeys, setSelectedRoleKeys] = useState(new Set());
   const [seatStatus, setSeatStatus] = useState('');
@@ -128,6 +143,7 @@ export default function ElectionsAdmin() {
     setContainerType('');
     setContainerId(new Set());
     setPendingShapeIds(new Set());
+    setMatchedShapeIds(null);
   }, [seatCountry]);
 
   // Target type scopes both the shape selection and the role catalog — reset
@@ -136,6 +152,7 @@ export default function ElectionsAdmin() {
   // into seat creation.
   useEffect(() => {
     setPendingShapeIds(new Set());
+    setMatchedShapeIds(null);
     setSelectedRoleKeys(new Set());
   }, [targetType]);
 
@@ -274,6 +291,23 @@ export default function ElectionsAdmin() {
     selectElection(data);
   };
 
+  const handleDeleteElection = async (election, e) => {
+    if (e) e.stopPropagation();
+    if (!window.confirm(`Are you sure you want to delete "${election.name}"? This will permanently remove the election and all associated seats and questions.`)) {
+      return;
+    }
+    const { error } = await deleteElection(election.id);
+    if (error) {
+      alert('Error deleting election: ' + error.message);
+      return;
+    }
+    if (selectedElection?.id === election.id) {
+      setSelectedElection(null);
+      setSearchParams({}, { replace: true });
+    }
+    await fetchElections();
+  };
+
   const handleFindMatching = async () => {
     if (!targetType) {
       setSeatStatus('Pick a target type first.');
@@ -296,6 +330,15 @@ export default function ElectionsAdmin() {
     }
     setPendingShapeIds(prev => {
       const next = new Set(prev);
+      (data || []).forEach(shape => next.add(shape.id));
+      return next;
+    });
+    // Same additive shape as pendingShapeIds above -- running "Find Matching
+    // Boundaries" again (e.g. for a second province) grows the restriction
+    // rather than replacing it, so the review list below shows the union of
+    // every container run instead of just the most recent one.
+    setMatchedShapeIds(prev => {
+      const next = new Set(prev || []);
       (data || []).forEach(shape => next.add(shape.id));
       return next;
     });
@@ -370,14 +413,18 @@ export default function ElectionsAdmin() {
   const removeNewOptionField = (i) => setNewQuestionOptions(prev => prev.filter((_, idx) => idx !== i));
 
   const handleAddQuestion = async () => {
-    const opts = newQuestionOptions.map(o => o.trim()).filter(Boolean);
-    if (!newQuestionText.trim() || opts.length < 2) {
-      setQuestionStatus('Error: question text and at least 2 options are required.');
+    const needsOptions = QUESTION_TYPE_NEEDS_OPTIONS.has(newQuestionType);
+    const opts = needsOptions ? newQuestionOptions.map(o => o.trim()).filter(Boolean) : [];
+    if (!newQuestionText.trim() || (needsOptions && opts.length < 2)) {
+      setQuestionStatus(needsOptions
+        ? 'Error: question text and at least 2 options are required.'
+        : 'Error: question text is required.');
       return;
     }
     const { data: q, error } = await createElectionQuestion({
       election_id: selectedElection.id,
       question_text: newQuestionText.trim(),
+      question_type: newQuestionType,
       required: newQuestionRequired,
       allow_context: newQuestionAllowContext,
       visible_to_public: newQuestionVisible,
@@ -388,13 +435,16 @@ export default function ElectionsAdmin() {
       return;
     }
 
-    const { error: optErr } = await createElectionQuestionOptions(opts.map((option_text, i) => ({ question_id: q.id, option_text, rank: i })));
-    if (optErr) {
-      setQuestionStatus('Error: ' + optErr.message);
-      return;
+    if (needsOptions) {
+      const { error: optErr } = await createElectionQuestionOptions(opts.map((option_text, i) => ({ question_id: q.id, option_text, rank: i })));
+      if (optErr) {
+        setQuestionStatus('Error: ' + optErr.message);
+        return;
+      }
     }
 
     setNewQuestionText('');
+    setNewQuestionType('single_choice');
     setNewQuestionOptions(['', '']);
     setNewQuestionRequired(true);
     setNewQuestionAllowContext(false);
@@ -428,10 +478,18 @@ export default function ElectionsAdmin() {
       <AdminSubNav active="elections" className="lg:col-span-2" />
 
       {/* LEFT: Elections list + create */}
-      <Card padding="md" className="self-start space-y-5">
-        <h2 className="text-xl font-bold text-text-main flex items-center gap-2"><Vote size={20} className="text-primary" /> Elections</h2>
+      <Card padding="md" className="self-start space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+            <Vote size={18} className="text-primary" /> Elections
+          </h2>
+          <span className="text-xs font-semibold text-text-muted bg-surface/60 px-2 py-0.5 rounded-md border border-border-light/20">
+            {elections.length} total
+          </span>
+        </div>
 
-        <Card variant="row" padding="sm" className="space-y-2.5">
+        <Card variant="row" padding="sm" className="space-y-2 bg-surface/30">
+          <p className="text-[11px] font-bold text-text-muted uppercase tracking-wider">Create Election</p>
           <Input
             type="text"
             size="sm"
@@ -445,31 +503,75 @@ export default function ElectionsAdmin() {
             value={newDate}
             onChange={e => setNewDate(e.target.value)}
           />
-          <Button onClick={handleCreateElection} className="w-full">
-            <Plus size={16} /> Create Election
+          <Button onClick={handleCreateElection} size="sm" className="w-full">
+            <Plus size={14} /> Create Election
           </Button>
           {createStatus && <p className="text-danger text-xs">{createStatus}</p>}
         </Card>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           {loadingElections ? (
             <div className="flex justify-center py-4"><Spinner size="sm" /></div>
           ) : elections.length === 0 ? (
             <p className="text-xs text-text-muted text-center py-4">No elections yet.</p>
           ) : (
-            elections.map(e => (
-              <button
-                key={e.id}
-                onClick={() => selectElection(e)}
-                className={`w-full text-left p-3 rounded-xl border transition-colors ${selectedElection?.id === e.id ? 'bg-primary/10 border-primary/40' : 'bg-surface/30 border-border-light/30 hover:bg-surface-hover'}`}
-              >
-                <p className="text-sm font-bold text-text-secondary truncate">{e.name}</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-[10px] text-text-muted">{e.election_date}</span>
-                  <Badge tone={ELECTION_STATUS_TONE[e.status] || 'neutral'}>{e.status.replace('_', ' ')}</Badge>
+            [
+              { key: 'active', label: 'Active', tone: 'emerald' },
+              { key: 'nominations_open', label: 'Nominations Open', tone: 'amber' },
+              { key: 'draft', label: 'Draft', tone: 'neutral' },
+              { key: 'closed', label: 'Closed', tone: 'neutral' }
+            ].map(group => {
+              const groupItems = elections.filter(e => e.status === group.key);
+              if (groupItems.length === 0) return null;
+              return (
+                <div key={group.key} className="space-y-1">
+                  <div className="flex items-center justify-between px-1 py-0.5">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
+                      <span className={`w-1.5 h-1.5 rounded-full ${
+                        group.key === 'active' ? 'bg-emerald-400' :
+                        group.key === 'nominations_open' ? 'bg-amber-400' :
+                        'bg-text-muted/60'
+                      }`} />
+                      {group.label}
+                    </span>
+                    <Badge tone={group.tone} size="sm">{groupItems.length}</Badge>
+                  </div>
+                  <div className="space-y-1">
+                    {groupItems.map(e => {
+                      const isSelected = selectedElection?.id === e.id;
+                      return (
+                        <div
+                          key={e.id}
+                          onClick={() => selectElection(e)}
+                          className={`group flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                            isSelected
+                              ? 'bg-primary/15 border-primary/40 shadow-sm'
+                              : 'bg-surface/30 border-border-light/20 hover:bg-surface-hover/60'
+                          }`}
+                        >
+                          <div className="min-w-0 flex-1">
+                            <p className={`text-xs font-semibold truncate leading-tight ${isSelected ? 'text-primary-light font-bold' : 'text-text-secondary'}`}>
+                              {e.name}
+                            </p>
+                            <p className="text-[10px] text-text-muted font-normal mt-0.5">
+                              {e.election_date}
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={(ev) => handleDeleteElection(e, ev)}
+                            title={`Delete ${e.name}`}
+                            className="p-1.5 text-danger/70 hover:text-danger hover:bg-danger/15 rounded-lg transition-colors shrink-0"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </button>
-            ))
+              );
+            })
           )}
         </div>
       </Card>
@@ -485,11 +587,16 @@ export default function ElectionsAdmin() {
                 <h2 className="text-xl font-bold text-text-main">{selectedElection.name}</h2>
                 <p className="text-xs text-text-muted mt-1">{selectedElection.election_date} · Status: <span className="font-semibold text-text-secondary">{selectedElection.status.replace('_', ' ')}</span></p>
               </div>
-              {STATUS_FLOW[selectedElection.status] && (
-                <Button onClick={advanceStatus}>
-                  {STATUS_LABEL[selectedElection.status]}
+              <div className="flex items-center gap-2 shrink-0">
+                {STATUS_FLOW[selectedElection.status] && (
+                  <Button onClick={advanceStatus}>
+                    {STATUS_LABEL[selectedElection.status]}
+                  </Button>
+                )}
+                <Button variant="secondary" tone="danger" size="sm" onClick={(ev) => handleDeleteElection(selectedElection, ev)}>
+                  <Trash2 size={14} /> Delete Election
                 </Button>
-              )}
+              </div>
             </Card>
 
             {/* CANDIDATE QUESTIONNAIRE */}
@@ -513,15 +620,18 @@ export default function ElectionsAdmin() {
                         <div className="min-w-0">
                           <p className="text-sm font-bold text-text-secondary">{i + 1}. {q.question_text}</p>
                           <div className="flex flex-wrap gap-1.5 mt-1.5">
+                            <Badge tone="neutral">{QUESTION_TYPE_LABEL[q.question_type] || q.question_type}</Badge>
                             {q.required && <Badge tone="amber">Required</Badge>}
                             {q.allow_context && <span className="text-[9px] bg-primary/15 text-primary-light px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">Context allowed</span>}
                             {!q.visible_to_public && <Badge tone="neutral">Hidden from voters</Badge>}
                           </div>
-                          <div className="flex flex-wrap gap-1.5 mt-2">
-                            {q.election_question_options.map(o => (
-                              <span key={o.id} className="text-xs px-2 py-1 bg-surface-hover/60 border border-border-light/30 rounded text-text-tertiary">{o.option_text}</span>
-                            ))}
-                          </div>
+                          {q.election_question_options.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5 mt-2">
+                              {q.election_question_options.map(o => (
+                                <span key={o.id} className="text-xs px-2 py-1 bg-surface-hover/60 border border-border-light/30 rounded text-text-tertiary">{o.option_text}</span>
+                              ))}
+                            </div>
+                          )}
                         </div>
                         <Button variant="icon" tone="danger" size="sm" onClick={() => handleDeleteQuestion(q.id)} className="shrink-0">
                           <Trash2 size={14} />
@@ -540,28 +650,37 @@ export default function ElectionsAdmin() {
                   value={newQuestionText}
                   onChange={e => setNewQuestionText(e.target.value)}
                 />
-                <div className="space-y-2">
-                  {newQuestionOptions.map((opt, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <Input
-                        type="text"
-                        size="sm"
-                        placeholder={`Option ${i + 1}`}
-                        value={opt}
-                        onChange={e => updateNewOptionField(i, e.target.value)}
-                        className="flex-1"
-                      />
-                      {newQuestionOptions.length > 2 && (
-                        <Button variant="icon" tone="danger" size="sm" onClick={() => removeNewOptionField(i)}>
-                          <Trash2 size={13} />
-                        </Button>
-                      )}
-                    </div>
-                  ))}
-                  <button onClick={addNewOptionField} className="text-xs font-semibold text-primary-light hover:text-primary transition-colors flex items-center gap-1">
-                    <Plus size={13} /> Add option
-                  </button>
-                </div>
+                <Select value={newQuestionType} onChange={e => setNewQuestionType(e.target.value)} size="sm" className="max-w-xs">
+                  {QUESTION_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
+                </Select>
+                {QUESTION_TYPE_NEEDS_OPTIONS.has(newQuestionType) ? (
+                  <div className="space-y-2">
+                    {newQuestionOptions.map((opt, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <Input
+                          type="text"
+                          size="sm"
+                          placeholder={`Option ${i + 1}`}
+                          value={opt}
+                          onChange={e => updateNewOptionField(i, e.target.value)}
+                          className="flex-1"
+                        />
+                        {newQuestionOptions.length > 2 && (
+                          <Button variant="icon" tone="danger" size="sm" onClick={() => removeNewOptionField(i)}>
+                            <Trash2 size={13} />
+                          </Button>
+                        )}
+                      </div>
+                    ))}
+                    <button onClick={addNewOptionField} className="text-xs font-semibold text-primary-light hover:text-primary transition-colors flex items-center gap-1">
+                      <Plus size={13} /> Add option
+                    </button>
+                  </div>
+                ) : newQuestionType === 'rating' ? (
+                  <p className="text-xs text-text-muted">Candidates will rate this on a fixed 1–5 scale — no options needed.</p>
+                ) : (
+                  <p className="text-xs text-text-muted">Candidates will type a free-form written answer — no options needed.</p>
+                )}
                 <div className="flex flex-wrap gap-4">
                   <label className="flex items-center gap-1.5 text-xs text-text-muted cursor-pointer">
                     <input type="checkbox" checked={newQuestionRequired} onChange={e => setNewQuestionRequired(e.target.checked)} />
@@ -653,6 +772,7 @@ export default function ElectionsAdmin() {
                       onChange={setPendingShapeIds}
                       countryFilter={seatCountry || undefined}
                       boundaryTypeFilter={[targetType]}
+                      restrictToIds={matchedShapeIds || undefined}
                       height="420px"
                     />
                   )}
@@ -712,9 +832,18 @@ export default function ElectionsAdmin() {
                   {seats.map(seat => (
                     <div key={seat.id} className="p-3.5 bg-surface/40 rounded-xl border border-border-light/30">
                       <div className="flex items-center justify-between gap-3 flex-wrap">
-                        <div className="flex items-center gap-2 min-w-0">
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
                           <MapPin size={14} className="text-accent shrink-0" />
-                          <span className="font-bold text-text-secondary text-sm truncate">{seat.role_title} — {seat.map_shapes?.name}</span>
+                          <a
+                            href={`/elections/seat/${seat.id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-bold text-text-secondary hover:text-primary transition-colors text-sm truncate flex items-center gap-1.5 group/seat"
+                            title="Open in Seat Administrator view"
+                          >
+                            <span className="group-hover/seat:underline">{seat.role_title} — {seat.map_shapes?.name}</span>
+                            <ExternalLink size={13} className="text-text-muted group-hover/seat:text-primary shrink-0 opacity-75 group-hover/seat:opacity-100" />
+                          </a>
                           <span className="text-[10px] text-text-muted shrink-0">({seat.map_shapes?.boundary_type})</span>
                         </div>
                         <div className="flex items-center gap-2 shrink-0">
@@ -869,8 +998,15 @@ export default function ElectionsAdmin() {
                                         {c.election_candidate_answers.map(a => (
                                           <div key={a.id} className="p-2 bg-surface-hover/30 rounded-lg">
                                             <p className="font-semibold text-text-secondary">{a.election_questions?.question_text}</p>
-                                            <p className="text-primary-light mt-0.5">{a.election_question_options?.option_text}</p>
+                                            <AnswerValue
+                                              questionType={a.election_questions?.question_type}
+                                              optionText={a.election_question_options?.option_text}
+                                              selectedOptionTexts={(a.election_candidate_answer_options || []).map(o => o.election_question_options?.option_text).filter(Boolean)}
+                                              textAnswer={a.text_answer}
+                                              ratingValue={a.rating_value}
+                                            />
                                             {a.context_text && <p className="text-text-muted mt-1 italic">"{a.context_text}"</p>}
+                                            {a.video_url && <video src={a.video_url} controls className="w-full max-h-48 rounded-lg mt-1.5 bg-black" />}
                                           </div>
                                         ))}
                                       </div>

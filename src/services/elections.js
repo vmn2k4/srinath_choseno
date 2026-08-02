@@ -5,9 +5,10 @@ const ADMIN_CANDIDATE_COLUMNS = `
   id, seat_id, statement, status, submitted_at, intro_video_url,
   profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id),
   election_candidate_answers(
-    id, context_text,
-    election_questions(id, question_text, rank),
-    election_question_options(option_text)
+    id, context_text, video_url, text_answer, rating_value,
+    election_questions(id, question_text, question_type, rank),
+    election_question_options(option_text),
+    election_candidate_answer_options(election_question_options(option_text))
   )
 `;
 
@@ -22,6 +23,10 @@ export async function createElection({ name, electionDate }) {
 
 export async function advanceElectionStatus(electionId, nextStatus) {
   return supabase.from('elections').update({ status: nextStatus }).eq('id', electionId);
+}
+
+export async function deleteElection(electionId) {
+  return supabase.from('elections').delete().eq('id', electionId);
 }
 
 // ── election_role_types ─────────────────────────────────────────────────
@@ -140,7 +145,7 @@ export async function getMyCandidacies(profileId) {
 export async function getCandidatesBySeatIds(seatIds) {
   return supabase
     .from('election_candidates')
-    .select('id, statement, seat_id, nomination_filed, profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id, politician_profiles(avatar_url))')
+    .select('id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id, politician_profiles(avatar_url))')
     .in('seat_id', seatIds);
 }
 
@@ -159,7 +164,7 @@ export async function getPublicCandidateById(candidateId) {
   return supabase
     .from('election_candidates')
     .select(`
-      id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id,
+      id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at,
       election_seats ( role_title, map_shapes ( name, boundary_type ), elections ( name, status ) ),
       profiles!election_candidates_politician_id_fkey ( full_name, current_ghost_id )
     `)
@@ -198,7 +203,7 @@ export async function submitCandidateApplication(candidateId) {
 export async function getElectionQuestions(electionId) {
   return supabase
     .from('election_questions')
-    .select('id, question_text, required, allow_context, visible_to_public, rank, election_question_options(id, option_text, rank)')
+    .select('id, question_text, question_type, required, allow_context, visible_to_public, rank, election_question_options(id, option_text, rank)')
     .eq('election_id', electionId)
     .order('rank');
 }
@@ -217,23 +222,58 @@ export async function createElectionQuestionOptions(rows) {
 
 // ── election_candidate_answers ──────────────────────────────────────────
 export async function getCandidateAnswers(candidateId) {
-  return supabase.from('election_candidate_answers').select('question_id, option_id, context_text').eq('candidate_id', candidateId);
+  return supabase
+    .from('election_candidate_answers')
+    .select('id, question_id, option_id, text_answer, rating_value, context_text, video_url, election_candidate_answer_options(option_id)')
+    .eq('candidate_id', candidateId);
 }
 
 export async function getPublicCandidateAnswers(candidateId) {
   return supabase
     .from('election_candidate_answers')
-    .select('id, context_text, election_questions(id, question_text, rank, visible_to_public), election_question_options(option_text)')
+    .select(`
+      id, context_text, video_url, text_answer, rating_value,
+      election_questions(id, question_text, question_type, rank, visible_to_public),
+      election_question_options(option_text),
+      election_candidate_answer_options(election_question_options(option_text)),
+      election_answer_comments(id, ghost_id, content, created_at)
+    `)
     .eq('candidate_id', candidateId);
 }
 
-export async function upsertCandidateAnswer(candidateId, questionId, optionId, contextText) {
+// fields: { optionId, textAnswer, ratingValue, contextText, videoUrl } -- an
+// options object rather than positional params since which fields are
+// meaningful depends on the question's type (see
+// 20260802000000_flexible_questionnaire.sql), so most calls only set one or
+// two of them. Returns the row (not just {error}) because multiple_choice
+// answers need the row's own id to write into
+// election_candidate_answer_options afterward.
+export async function upsertCandidateAnswer(candidateId, questionId, { optionId = null, textAnswer = null, ratingValue = null, contextText = null, videoUrl = null } = {}) {
   return supabase
     .from('election_candidate_answers')
     .upsert(
-      { candidate_id: candidateId, question_id: questionId, option_id: optionId, context_text: contextText },
+      { candidate_id: candidateId, question_id: questionId, option_id: optionId, text_answer: textAnswer, rating_value: ratingValue, context_text: contextText, video_url: videoUrl },
       { onConflict: 'candidate_id,question_id' }
-    );
+    )
+    .select()
+    .single();
+}
+
+// Replace-all for a multiple_choice answer's selected options -- simpler
+// than diffing against the previous selection, and this is a small set
+// (a handful of checkboxes) so a delete-then-insert is cheap.
+export async function setCandidateAnswerOptions(answerId, optionIds) {
+  const { error: deleteError } = await supabase.from('election_candidate_answer_options').delete().eq('answer_id', answerId);
+  if (deleteError) return { data: null, error: deleteError };
+  if (optionIds.length === 0) return { data: [], error: null };
+  return supabase.from('election_candidate_answer_options').insert(optionIds.map(optionId => ({ answer_id: answerId, option_id: optionId })));
+}
+
+// ── election_answer_comments — public discussion on a single candidate's
+// answer to a single question, separate from the general CandidacyWall post
+// feed (see 20260801000001_answer_video_and_comments.sql). ────────────────
+export async function createAnswerComment(answerId, ghostId, content) {
+  return supabase.from('election_answer_comments').insert({ answer_id: answerId, ghost_id: ghostId, content });
 }
 
 // ── resolve_region_names rpc ────────────────────────────────────────────
@@ -300,10 +340,11 @@ export async function reviewElectionAdminApplication(applicationId, approve) {
 }
 
 // ── unregistered (admin-added, unclaimed) candidates ────────────────────
-export async function addUnregisteredCandidate(seatId, { fullName, partyId, education, hometown, bio }) {
+export async function addUnregisteredCandidate(seatId, { fullName, partyId, education, hometown, bio, avatarUrl }) {
   return supabase.rpc('add_unregistered_candidate', {
     p_seat_id: seatId, p_full_name: fullName, p_party_id: partyId || null,
-    p_education: education || null, p_hometown: hometown || null, p_bio: bio || null
+    p_education: education || null, p_hometown: hometown || null, p_bio: bio || null,
+    p_avatar_url: avatarUrl || null
   });
 }
 
@@ -316,4 +357,50 @@ export async function updateUnregisteredCandidate(candidateId, { fullName, party
 
 export async function removeUnregisteredCandidate(candidateId) {
   return supabase.rpc('remove_unregistered_candidate', { p_candidate_id: candidateId });
+}
+
+// ── candidacy claim flow (see 20260802000001_candidacy_claims.sql) ──────
+// Flow A: an election admin emails the real candidate an invite link.
+//
+// functions.invoke()'s error on a non-2xx response is always a
+// FunctionsHttpError whose .message is the fixed string "Edge Function
+// returned a non-2xx status code" -- the edge function's actual { error }
+// body (e.g. "email rate limit exceeded") only lives on error.context, an
+// unread Response. Unwrap it here so callers reading error.message (same
+// as every other service function) get the real reason.
+export async function inviteCandidateToClaim(candidateId, email) {
+  const { data, error } = await supabase.functions.invoke('send-claim-invite', {
+    body: { candidateId, email, redirectOrigin: window.location.origin }
+  });
+  if (error?.context?.json) {
+    const body = await error.context.json().catch(() => null);
+    if (body?.error) return { data, error: { ...error, message: body.error } };
+  }
+  return { data, error };
+}
+
+export async function claimCandidacyViaToken(token) {
+  return supabase.rpc('claim_candidacy_via_token', { p_token: token });
+}
+
+// Flow B: a citizen/politician says "this is me" and an election admin (or
+// site admin) reviews it.
+export async function requestCandidacyClaim(candidateId, { motivation, contactEmail, socialMediaInfo }) {
+  return supabase.rpc('request_candidacy_claim', {
+    p_candidate_id: candidateId, p_motivation: motivation,
+    p_contact_email: contactEmail, p_social_media_info: socialMediaInfo || null
+  });
+}
+
+export async function getClaimRequestsForSeat(seatId) {
+  return supabase
+    .from('candidacy_claim_requests')
+    .select('id, candidate_id, motivation, contact_email, social_media_info, status, submitted_at, election_candidates!inner(seat_id, profiles!election_candidates_politician_id_fkey(full_name))')
+    .eq('election_candidates.seat_id', seatId)
+    .eq('status', 'pending')
+    .order('submitted_at', { ascending: true });
+}
+
+export async function reviewCandidacyClaim(requestId, approve) {
+  return supabase.rpc('review_candidacy_claim', { p_request_id: requestId, p_approve: approve });
 }

@@ -25,6 +25,9 @@ export default function BoundaryPicker({
   onChange,
   boundaryTypeFilter, // string[] optional
   countryFilter, // string optional
+  restrictToIds, // Set<id> optional -- narrows the fetched candidate pool down to exactly
+  // these ids (e.g. the result of a container-scoped RPC lookup) instead of showing every
+  // boundaryTypeFilter/countryFilter match. undefined/null means no restriction.
   height = '450px',
   showMap = true // false renders a plain list, no map column or geometry fetches
 }) {
@@ -120,14 +123,29 @@ export default function BoundaryPicker({
     }
   };
 
+  const restricted = useMemo(() => {
+    if (!restrictToIds) return boundaries;
+    return boundaries.filter(b => restrictToIds.has(b.id));
+  }, [boundaries, restrictToIds]);
+
   const filtered = useMemo(() => {
-    if (!searchTerm.trim()) return boundaries;
+    if (!searchTerm.trim()) return restricted;
     const term = searchTerm.toLowerCase();
-    return boundaries.filter(b => {
+    return restricted.filter(b => {
       const haystack = `${b.name || ''} ${JSON.stringify(b.properties || {})}`.toLowerCase();
       return haystack.includes(term);
     });
-  }, [boundaries, searchTerm]);
+  }, [restricted, searchTerm]);
+
+  const selectAllVisible = () => {
+    const next = new Set(selectedIds);
+    filtered.forEach(b => next.add(b.id));
+    onChange(next);
+  };
+  const clearVisible = () => {
+    const visibleIds = new Set(filtered.map(b => b.id));
+    onChange(new Set([...selectedIds].filter(id => !visibleIds.has(id))));
+  };
 
   const grouped = useMemo(() => {
     const acc = {};
@@ -167,10 +185,29 @@ export default function BoundaryPicker({
               className="pl-8"
             />
           </div>
-          {!loading && !eagerLoaded && boundaries.length > 0 && (
+          {!loading && !eagerLoaded && restricted.length > 0 && (
             <p className="text-[10px] text-warning mt-1.5">
-              {boundaries.length} candidates — too many to click-select on the map here, use the list.
+              {restricted.length} candidates — too many to click-select on the map here, use the list.
             </p>
+          )}
+          {mode === 'multi' && !loading && filtered.length > 0 && (
+            <div className="flex items-center gap-2 mt-1.5">
+              <button
+                type="button"
+                onClick={selectAllVisible}
+                className="text-[10px] font-semibold text-primary-light hover:text-primary transition-colors"
+              >
+                Select all ({filtered.length})
+              </button>
+              <span className="text-text-muted/40">·</span>
+              <button
+                type="button"
+                onClick={clearVisible}
+                className="text-[10px] font-semibold text-text-muted hover:text-danger transition-colors"
+              >
+                Clear
+              </button>
+            </div>
           )}
         </div>
 

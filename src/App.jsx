@@ -24,6 +24,7 @@ const ElectionSeatPage = lazy(() => import('./pages/ElectionSeatPage'));
 const PoliticianElections = lazy(() => import('./pages/PoliticianElections'));
 const CandidacyWall = lazy(() => import('./components/CandidacyWall'));
 const CandidateApplication = lazy(() => import('./pages/CandidateApplication'));
+const ClaimCandidacy = lazy(() => import('./pages/ClaimCandidacy'));
 
 // A simple protected route wrapper
 function ProtectedRoute({ children, requireAdmin, requireOnboarding = true }) {
@@ -163,6 +164,14 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <CandidateApplication />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="claim/:token"
+                  element={
+                    <ProtectedRoute requireOnboarding={false}>
+                      <ClaimCandidacy />
                     </ProtectedRoute>
                   }
                 />

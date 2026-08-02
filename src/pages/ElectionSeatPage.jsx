@@ -5,11 +5,12 @@ import CandidacyWall from '../components/CandidacyWall';
 import { getGhostDisplayName } from '../utils/ghostName';
 import {
   getSeatById, getCandidatesBySeatIds, getMyCandidacies, applyForSeat,
-  getSeatAdminStatus, applyForElectionAdmin, addUnregisteredCandidate
+  getSeatAdminStatus, applyForElectionAdmin, addUnregisteredCandidate,
+  inviteCandidateToClaim, getClaimRequestsForSeat, reviewCandidacyClaim
 } from '../services/elections';
 import { getPoliticalParties } from '../services/politicalParties';
-import { getProfileRole } from '../services/profile';
-import { Vote, MapPin, Users, Calendar, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { getProfileRole, uploadAvatarImage } from '../services/profile';
+import { Vote, MapPin, Users, Calendar, ShieldCheck, CheckCircle2, Mail, Check, X, Camera, RefreshCw } from 'lucide-react';
 import { Card, Button, Badge, Input, Textarea, Select, Spinner, EmptyState } from '../components/ui';
 
 export default function ElectionSeatPage() {
@@ -43,8 +44,19 @@ export default function ElectionSeatPage() {
   const [newCandidateEducation, setNewCandidateEducation] = useState('');
   const [newCandidateHometown, setNewCandidateHometown] = useState('');
   const [newCandidateBio, setNewCandidateBio] = useState('');
+  const [newCandidateAvatarUrl, setNewCandidateAvatarUrl] = useState('');
+  const [uploadingCandidateAvatar, setUploadingCandidateAvatar] = useState(false);
+  const [candidateAvatarError, setCandidateAvatarError] = useState('');
   const [addingCandidate, setAddingCandidate] = useState(false);
   const [addCandidateStatus, setAddCandidateStatus] = useState('');
+
+  // Invite an unclaimed candidate to claim their listing (Flow A), and
+  // review self-submitted claim requests (Flow B) — both election-admin-only.
+  const [inviteEmails, setInviteEmails] = useState({}); // { [candidateId]: email }
+  const [invitingCandidateId, setInvitingCandidateId] = useState(null);
+  const [inviteStatusByCandidate, setInviteStatusByCandidate] = useState({});
+  const [claimRequests, setClaimRequests] = useState([]);
+  const [reviewingRequestId, setReviewingRequestId] = useState(null);
 
   const fetchAll = async () => {
     setLoading(true);
@@ -68,10 +80,18 @@ export default function ElectionSeatPage() {
 
       const { data: seatAdminStatus } = await getSeatAdminStatus(seatId);
       setAdminStatus(seatAdminStatus);
+
+      if (myProfile?.role === 'admin' || seatAdminStatus?.my_application_status === 'approved') {
+        const { data: requests } = await getClaimRequestsForSeat(seatId);
+        setClaimRequests(requests || []);
+      } else {
+        setClaimRequests([]);
+      }
     } else {
       setRole(null);
       setMyCandidacies([]);
       setAdminStatus(null);
+      setClaimRequests([]);
     }
 
     if (seatRow?.map_shapes?.country) {
@@ -114,13 +134,31 @@ export default function ElectionSeatPage() {
     fetchAll();
   };
 
+  const handleCandidateAvatarSelect = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) return setCandidateAvatarError('Image must be less than 5MB');
+
+    setCandidateAvatarError('');
+    setUploadingCandidateAvatar(true);
+    const { publicUrl, error: uploadError } = await uploadAvatarImage(file, user.id);
+    setUploadingCandidateAvatar(false);
+
+    if (uploadError) {
+      setCandidateAvatarError('Failed to upload image. Please try again.');
+      return;
+    }
+    setNewCandidateAvatarUrl(publicUrl);
+  };
+
   const submitUnregisteredCandidate = async (e) => {
     e.preventDefault();
     setAddingCandidate(true);
     setAddCandidateStatus('');
     const { error } = await addUnregisteredCandidate(seatId, {
       fullName: newCandidateName, partyId: newCandidateParty || null,
-      education: newCandidateEducation, hometown: newCandidateHometown, bio: newCandidateBio
+      education: newCandidateEducation, hometown: newCandidateHometown, bio: newCandidateBio,
+      avatarUrl: newCandidateAvatarUrl
     });
     setAddingCandidate(false);
     if (error) {
@@ -132,7 +170,33 @@ export default function ElectionSeatPage() {
     setNewCandidateEducation('');
     setNewCandidateHometown('');
     setNewCandidateBio('');
+    setNewCandidateAvatarUrl('');
+    setCandidateAvatarError('');
     setShowAddCandidateForm(false);
+    fetchAll();
+  };
+
+  const sendClaimInvite = async (candidateId) => {
+    const email = inviteEmails[candidateId];
+    if (!email) return;
+    setInvitingCandidateId(candidateId);
+    setInviteStatusByCandidate(prev => ({ ...prev, [candidateId]: '' }));
+    const { error } = await inviteCandidateToClaim(candidateId, email);
+    setInvitingCandidateId(null);
+    setInviteStatusByCandidate(prev => ({
+      ...prev, [candidateId]: error ? 'Error: ' + error.message : 'Invite sent.'
+    }));
+    if (!error) setInviteEmails(prev => ({ ...prev, [candidateId]: '' }));
+  };
+
+  const handleReviewClaim = async (requestId, approve) => {
+    setReviewingRequestId(requestId);
+    const { error } = await reviewCandidacyClaim(requestId, approve);
+    setReviewingRequestId(null);
+    if (error) {
+      setStatus('Error: ' + error.message);
+      return;
+    }
     fetchAll();
   };
 
@@ -190,6 +254,11 @@ export default function ElectionSeatPage() {
                 {candidates.map(c => {
                   const name = c.profiles?.full_name || getGhostDisplayName(c.profiles?.current_ghost_id);
                   const isSelected = c.id === selectedCandidateId;
+                  const pol = c.profiles?.politician_profiles;
+                  const avatarUrl = Array.isArray(pol) ? pol[0]?.avatar_url : pol?.avatar_url;
+                  const initial = (name || '?').trim().charAt(0).toUpperCase();
+                  const hasPhoto = Boolean(avatarUrl);
+
                   return (
                     <button
                       key={c.id}
@@ -200,18 +269,31 @@ export default function ElectionSeatPage() {
                           : 'border-border-light bg-surface-hover/40 hover:border-primary/40 hover:bg-surface-hover'
                       }`}
                     >
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 overflow-hidden ${
-                        isSelected ? 'bg-primary/20 text-primary-light' : 'bg-surface-active text-text-muted'
-                      }`}>
-                        {c.profiles?.politician_profiles?.[0]?.avatar_url ? (
-                          <img src={c.profiles.politician_profiles[0].avatar_url} alt={name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
-                        ) : (
-                          <Users size={18} />
+                      <div className="relative shrink-0">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center overflow-hidden transition-all ${
+                          isSelected ? 'bg-primary/25 text-primary-light font-bold' : 'bg-surface-active text-text-secondary font-bold'
+                        }`}>
+                          {avatarUrl ? (
+                            <img src={avatarUrl} alt={name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                          ) : (
+                            <span className="text-base font-bold">{initial}</span>
+                          )}
+                        </div>
+                        {hasPhoto && (
+                          <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-emerald-500 text-white border-2 border-background flex items-center justify-center shadow-sm" title="Profile photo uploaded">
+                            <Camera size={9} />
+                          </span>
                         )}
                       </div>
+
                       <span className={`text-sm font-semibold whitespace-nowrap ${isSelected ? 'text-primary-light' : 'text-text-secondary'}`}>
                         {name}
                       </span>
+                      {hasPhoto && (
+                        <span className="text-[10px] bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.5 rounded-full font-semibold flex items-center gap-1 shrink-0" title="Candidate has profile photo">
+                          <Camera size={10} /> Photo
+                        </span>
+                      )}
                       {c.nomination_filed && (
                         <CheckCircle2 size={14} className="text-success shrink-0" title="Official nomination confirmed" />
                       )}
@@ -261,14 +343,14 @@ export default function ElectionSeatPage() {
               </Card>
             )}
 
-            {adminStatus && (
+            {(adminStatus || role === 'admin') && (
               <Card variant="row" padding="sm">
                 <div className="flex items-center gap-2 mb-1">
                   <ShieldCheck size={16} className="text-accent" />
                   <h3 className="text-sm font-bold text-text-main">Election Administrator</h3>
                 </div>
 
-                {adminStatus.my_application_status === 'approved' ? (
+                {(role === 'admin' || adminStatus?.my_application_status === 'approved') ? (
                   <>
                     <p className="text-sm text-text-secondary mt-2 mb-3">
                       You administer this seat. You can add an unclaimed candidate listing for someone running who hasn't claimed their profile on Choseno yet.
@@ -279,6 +361,34 @@ export default function ElectionSeatPage() {
                       </Button>
                     ) : (
                       <form onSubmit={submitUnregisteredCandidate} className="space-y-3 mt-3">
+                        <div className="flex items-center gap-3">
+                          <div className="relative w-12 h-12 rounded-full bg-surface-hover border border-border-light flex items-center justify-center overflow-hidden shrink-0">
+                            {newCandidateAvatarUrl ? (
+                              <img src={newCandidateAvatarUrl} alt="Candidate" className="w-full h-full object-cover" />
+                            ) : (
+                              <Camera size={16} className="text-text-muted" />
+                            )}
+                            {uploadingCandidateAvatar && (
+                              <div className="absolute inset-0 bg-surface/70 flex items-center justify-center">
+                                <RefreshCw size={14} className="animate-spin text-text-muted" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <input type="file" accept="image/*" id="candidate-avatar-upload" className="hidden" onChange={handleCandidateAvatarSelect} />
+                            <label htmlFor="candidate-avatar-upload">
+                              <Button as="span" variant="outline" size="sm" className="cursor-pointer">
+                                {newCandidateAvatarUrl ? 'Replace Photo' : 'Upload Photo'}
+                              </Button>
+                            </label>
+                            {newCandidateAvatarUrl && (
+                              <Button type="button" variant="ghost" size="sm" onClick={() => setNewCandidateAvatarUrl('')}>
+                                Remove
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                        {candidateAvatarError && <p className="text-danger-light text-xs">{candidateAvatarError}</p>}
                         <Input
                           type="text" required placeholder="Candidate's full name" value={newCandidateName}
                           onChange={e => setNewCandidateName(e.target.value)}
@@ -309,6 +419,75 @@ export default function ElectionSeatPage() {
                         </div>
                         {addCandidateStatus && <p className="text-danger text-xs">{addCandidateStatus}</p>}
                       </form>
+                    )}
+
+                    {candidates.some(c => c.added_by_election_admin_id && !c.claimed_at) && (
+                      <div className="mt-4 pt-4 border-t border-border-light/35 space-y-3">
+                        <p className="text-xs font-bold text-text-secondary uppercase tracking-wide">Invite Candidates to Claim</p>
+                        {candidates.filter(c => c.added_by_election_admin_id && !c.claimed_at).map(c => {
+                          const name = c.profiles?.full_name || getGhostDisplayName(c.profiles?.current_ghost_id);
+                          return (
+                            <div key={c.id} className="space-y-1.5">
+                              <p className="text-xs text-text-muted truncate">{name}</p>
+                              <div className="flex items-center gap-1.5">
+                                <Input
+                                  type="email" size="sm" placeholder="Candidate's email"
+                                  value={inviteEmails[c.id] || ''}
+                                  onChange={e => setInviteEmails(prev => ({ ...prev, [c.id]: e.target.value }))}
+                                  className="flex-1"
+                                />
+                                <Button
+                                  variant="icon" size="sm" tone="primary"
+                                  onClick={() => sendClaimInvite(c.id)}
+                                  disabled={invitingCandidateId === c.id || !inviteEmails[c.id]}
+                                  title="Send Claim Invite"
+                                >
+                                  <Mail size={14} />
+                                </Button>
+                              </div>
+                              {inviteStatusByCandidate[c.id] && (
+                                <p className={`text-[11px] ${inviteStatusByCandidate[c.id].startsWith('Error') ? 'text-danger' : 'text-success-light'}`}>
+                                  {inviteStatusByCandidate[c.id]}
+                                </p>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {claimRequests.length > 0 && (
+                      <div className="mt-4 pt-4 border-t border-border-light/35 space-y-3">
+                        <p className="text-xs font-bold text-text-secondary uppercase tracking-wide">Pending Claim Requests</p>
+                        {claimRequests.map(r => (
+                          <div key={r.id} className="p-2.5 bg-surface-hover/40 rounded-lg border border-border-light/30 space-y-1.5">
+                            <p className="text-xs font-semibold text-text-secondary truncate">
+                              {r.election_candidates?.profiles?.full_name || 'Unclaimed candidate'}
+                            </p>
+                            <p className="text-[11px] text-text-muted line-clamp-3">{r.motivation}</p>
+                            <p className="text-[11px] text-text-muted">{r.contact_email}</p>
+                            {r.social_media_info && <p className="text-[11px] text-text-muted truncate">{r.social_media_info}</p>}
+                            <div className="flex items-center gap-1.5 pt-1">
+                              <Button
+                                variant="icon" size="sm" tone="success"
+                                onClick={() => handleReviewClaim(r.id, true)}
+                                disabled={reviewingRequestId === r.id}
+                                title="Approve"
+                              >
+                                <Check size={14} />
+                              </Button>
+                              <Button
+                                variant="icon" size="sm" tone="danger"
+                                onClick={() => handleReviewClaim(r.id, false)}
+                                disabled={reviewingRequestId === r.id}
+                                title="Reject"
+                              >
+                                <X size={14} />
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     )}
                   </>
                 ) : adminStatus.my_application_status === 'pending' ? (
