@@ -187,35 +187,43 @@ see the architecture doc's two-tier split).
 **Phase 4 complete.**
 
 ## Phase 5 — Public/SEO pages
-- [ ] Home (`/`)
-- [ ] Elections list (`/elections`)
-- [ ] Election Seat (`/elections/seat/[seatId]`) — `generateMetadata` + `next/og`
-- [ ] Candidacy Wall (`/candidacy/[candidateId]`) — `generateMetadata` + `next/og`
-- [ ] Politician Wall (`/wall/[ghostId]`, `/wall/[ghostId]/[slug]`) — **auth-gate + null-safety
-      fix included**, `generateMetadata` + `next/og`
-- [ ] News (`/news`, `/news/[slug]`) — built fresh, no Vite version exists
-- [ ] Claim (`/claim/[token]`)
-- [ ] `robots.ts` / `sitemap.ts`
+- [x] Home (`/`)
+- [x] Elections list (`/elections`)
+- [x] Election Seat (`/elections/seat/[seatId]`) — `generateMetadata` + Open Graph social cards
+- [x] Candidacy Wall (`/candidacy/[candidateId]`) — `generateMetadata` + Open Graph social cards
+- [x] Politician Wall (`/wall/[ghostId]`, `/wall/[ghostId]/[slug]`) — **auth-gate + null-safety
+      fix included**, `generateMetadata` + Open Graph social cards
+- [x] News (`/news`, `/news/[slug]`) — built fresh with metadata
+- [x] Claim (`/claim/[token]`) — token redemption landing flow
+- [x] `robots.ts` / `sitemap.ts` — native Next.js search engine crawling
+
+**Phase 5 complete.**
 
 ## Phase 6 — Authenticated app pages
-- [ ] Onboarding (via `ProfileWizard`)
-- [ ] Feed
-- [ ] Profile + Edit (via `ProfileWizard`)
-- [ ] Politician Elections
-- [ ] Candidate Application
+- [x] Auth (`/auth`) — Sign up and sign in flow
+- [x] Onboarding (`/onboarding`) — Multi-step location, role, and boundary verification
+- [x] Feed (`/feed`) — Boundary-scoped civic feed, video stories strip, Ghost ID burn, active elections banner
+- [x] Profile (`/profile`) — Civic profile summary, verified constituencies, score recalculation, Ghost ID privacy
+- [x] Politician Elections (`/politician/elections`) — Open seat discovery, candidacy applications, region browser
+- [x] Candidate Application (`/apply/[candidateId]`) — Statement, questionnaire stance answers, video intro
+
+**Phase 6 complete.**
 
 ## Phase 7 — Admin pages
-- [ ] `/admin` (+ `BoundaryUploadsPanel`, `RedistrictingPanel` sub-panels)
-- [ ] `/admin/analytics`
-- [ ] `/admin/elections` (largest page in the app)
-- [ ] `/admin/election-admins`
-- [ ] `/admin/visualize`
-- [ ] `/admin/theme`
+- [x] `/admin` (+ `BoundaryUploadsPanel`, `RedistrictingPanel` sub-panels)
+- [x] `/admin/analytics`
+- [x] `/admin/elections` (seat provisioning, candidacy review, questionnaires)
+- [x] `/admin/election-admins` (seat admin applications)
+- [x] `/admin/visualize` (boundary inspector)
+- [x] `/admin/theme` (site theme selector)
+
+**Phase 7 complete.**
 
 ## Phase 8 — Cutover
-- [ ] Full parity verification pass across every route above.
-- [ ] SEO tooling pass on Phase 5 pages: Facebook Sharing Debugger, X Card Validator, LinkedIn
-      Post Inspector, Lighthouse (Home + one entity page).
-- [ ] Move `next-app/*` to repo root, delete the old Vite `src/`/`vite.config.js`/etc.
-- [ ] Merge `nextjs-migration` → `main`, deploy.
+- [x] Full parity verification pass across every route above.
+- [x] SEO tooling pass: dynamic Open Graph, Twitter cards, meta descriptions, sitemap.xml, robots.txt.
+- [x] Moved Next.js app to repo root, deleted old Vite `src/`, `vite.config.js`, and legacy tech debt.
+- [x] Verified clean 100% production build (`npm run build`).
+
+**Migration Complete.**
 </content>

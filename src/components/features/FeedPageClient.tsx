@@ -1,0 +1,783 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  MapPin,
+  Users,
+  Flame,
+  Image as ImageIcon,
+  Globe2,
+  Vote,
+  Layers,
+  Award,
+  RefreshCw,
+  Video,
+  ShieldAlert,
+  X,
+} from "lucide-react";
+import LinkPreview from "./LinkPreview";
+import PostCard, { PostWithComments } from "./PostCard";
+import StoryStrip, { StoryPost } from "./StoryStrip";
+import PoliticianSidebar from "./PoliticianSidebar";
+import VideoRecorder from "./VideoRecorder";
+import {
+  Card,
+  Button,
+  Badge,
+  Textarea,
+  Spinner,
+  EmptyState,
+  StoryViewerModal,
+  RemoveMediaButton,
+  ConfirmDialog,
+  Avatar,
+} from "@/components/primitives";
+import {
+  getOwnProfile,
+  getUserBoundaryMemberships,
+  calculateMyScore,
+  getPoliticianProfileFull,
+} from "@/lib/services/profile";
+import { getBoundaryTypesForCountries } from "@/lib/services/boundaries";
+import {
+  getMembershipScopedPosts,
+  getCountryScopedPosts,
+  getInternationalScopedPosts,
+  getFeedPostsForTab,
+  createFeedPost,
+  voteOnPost,
+  createComment,
+  uploadPostImage,
+  getActiveElectionsForUser,
+  dismissElectionNotification,
+  burnGhostIdentityViaRpc,
+} from "@/lib/services/feed";
+import { createClient } from "@/lib/supabase/client";
+
+interface MembershipShape {
+  id: number;
+  name: string;
+  country: string;
+  boundary_type: string;
+  rank?: number;
+}
+
+const MAX_IMAGE_SIZE_MB = 5;
+
+function sortByPoliticianEngagement<T extends { likes_count?: number | null; comments?: unknown[] | null }>(
+  list: T[]
+) {
+  return [...list].sort((a, b) => {
+    const scoreA = (a.likes_count ?? 0) + (a.comments?.length ?? 0);
+    const scoreB = (b.likes_count ?? 0) + (b.comments?.length ?? 0);
+    return scoreB - scoreA;
+  });
+}
+
+export default function FeedPageClient() {
+  const supabase = createClient();
+  const { user } = useAuth();
+  const router = useRouter();
+
+  const [profile, setProfile] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [memberships, setMemberships] = useState<MembershipShape[]>([]);
+  const [loadingMemberships, setLoadingMemberships] = useState(true);
+  const [activeTab, setActiveTab] = useState<string>("country");
+  const [masterFilter, setMasterFilter] = useState<string>("all");
+  const [activeElections, setActiveElections] = useState<any[]>([]);
+
+  const [posts, setPosts] = useState<PostWithComments[]>([]);
+  const [newPostContent, setNewPostContent] = useState("");
+  const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [burning, setBurning] = useState(false);
+  const [showBurnConfirm, setShowBurnConfirm] = useState(false);
+  const [score, setScore] = useState<number | null>(null);
+  const [scoring, setScoring] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  const [activeStoryUrl, setActiveStoryUrl] = useState<string | null>(null);
+  const [extractedUrl, setExtractedUrl] = useState<string | null>(null);
+  const [linkMetadata, setLinkMetadata] = useState<any>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageError, setImageError] = useState<string | null>(null);
+
+  const [showVideoRecorder, setShowVideoRecorder] = useState(false);
+  const [uploadedVideoUrl, setUploadedVideoUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function initData() {
+      if (!user) return;
+      setLoading(true);
+
+      const { data: profData } = await getOwnProfile(supabase, user.id);
+      const profRecord = profData as any;
+      if (isMounted) {
+        setProfile(profRecord);
+        setScore(profRecord?.cached_total_score ?? 0);
+      }
+
+      if (profRecord?.role === "politician") {
+        const { data: polData } = await getPoliticianProfileFull(supabase, user.id);
+        if (isMounted) setAvatarUrl(polData?.avatar_url || null);
+      }
+
+      const { data: freshScore } = await calculateMyScore(supabase);
+      if (isMounted && freshScore != null) setScore(freshScore);
+
+      // Memberships
+      setLoadingMemberships(true);
+      const { data: memData } = await getUserBoundaryMemberships(supabase, user.id);
+      const shapes = (memData || []).map((m: any) => m.map_shapes).filter(Boolean);
+
+      if (shapes.length > 0) {
+        const countries = [...new Set(shapes.map((s: any) => s.country))];
+        const { data: types } = await getBoundaryTypesForCountries(
+          supabase,
+          countries as string[]
+        );
+
+        const rankOf = (countryName: string, typeName: string) =>
+          types?.find(
+            (t: any) => t.country === countryName && t.type_name === typeName
+          )?.rank ?? 999;
+
+        const sorted = shapes
+          .map((s: any) => ({ ...s, rank: rankOf(s.country, s.boundary_type) }))
+          .sort((a: any, b: any) => a.rank - b.rank);
+
+        if (isMounted) {
+          setMemberships(sorted);
+          if (sorted.length > 0) {
+            const mostLocal = sorted[sorted.length - 1];
+            setActiveTab(`membership:${mostLocal.id}`);
+          }
+        }
+      } else {
+        if (isMounted) setMemberships([]);
+        // No local groups AND no derived country means the default "country"
+        // tab has nothing to show — land on International instead.
+        if (isMounted && !profRecord?.country) setActiveTab("international");
+      }
+      if (isMounted) setLoadingMemberships(false);
+
+      // Active elections banner
+      const { data: elecData } = await getActiveElectionsForUser(supabase);
+      if (isMounted && elecData) setActiveElections(elecData as any[]);
+
+      if (isMounted) setLoading(false);
+    }
+
+    initData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user, supabase]);
+
+  const loadFeedPosts = async () => {
+    if (!user || !profile) return;
+
+    if (activeTab === "master") {
+      const matchingMembershipIds = memberships
+        .filter((m) => masterFilter === "all" || m.boundary_type === masterFilter)
+        .map((m) => m.id);
+
+      const queries: Promise<any>[] = [];
+      if (matchingMembershipIds.length > 0) {
+        queries.push(getMembershipScopedPosts(supabase, matchingMembershipIds));
+      }
+      if ((masterFilter === "all" || masterFilter === "Country") && profile.country) {
+        queries.push(getCountryScopedPosts(supabase, profile.country));
+      }
+      if (masterFilter === "all" || masterFilter === "International") {
+        queries.push(getInternationalScopedPosts(supabase));
+      }
+
+      const results = await Promise.all(queries);
+      const combined: PostWithComments[] = [];
+      const seen = new Set<string>();
+
+      results.forEach(({ data }) => {
+        (data || []).forEach((post: any) => {
+          if (!seen.has(post.id)) {
+            seen.add(post.id);
+            combined.push(post as PostWithComments);
+          }
+        });
+      });
+
+      combined.sort(
+        (a, b) =>
+          new Date(b.created_at || 0).getTime() -
+          new Date(a.created_at || 0).getTime()
+      );
+
+      // Politicians want to see the most-engaged posts first.
+      setPosts(profile.role === "politician" ? sortByPoliticianEngagement(combined) : combined);
+    } else {
+      let tabType: "country" | "international" | "membership" = "country";
+      let shapeId: number | undefined;
+
+      if (activeTab === "international") {
+        tabType = "international";
+      } else if (activeTab.startsWith("membership:")) {
+        tabType = "membership";
+        shapeId = parseInt(activeTab.split(":")[1], 10);
+      }
+
+      const { data } = await getFeedPostsForTab(supabase, {
+        tab: tabType,
+        country: profile.country,
+        shapeId,
+      });
+      const fetched = (data as unknown as PostWithComments[]) || [];
+      setPosts(profile.role === "politician" ? sortByPoliticianEngagement(fetched) : fetched);
+    }
+  };
+
+  useEffect(() => {
+    if (profile && profile.role !== "admin") loadFeedPosts();
+  }, [activeTab, masterFilter, profile]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handlePostTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const text = e.target.value;
+    setNewPostContent(text);
+
+    const urlRegex = /(https?:\/\/[^\s]+)/;
+    const match = text.match(urlRegex);
+    if (match && match[1] !== extractedUrl) {
+      setExtractedUrl(match[1]);
+      setLinkMetadata(null);
+    } else if (!match) {
+      setExtractedUrl(null);
+      setLinkMetadata(null);
+    }
+  };
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > MAX_IMAGE_SIZE_MB * 1024 * 1024) {
+      setImageError(`Image must be less than ${MAX_IMAGE_SIZE_MB}MB`);
+      return;
+    }
+    setImageError(null);
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const handleCreatePost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newPostContent.trim() && !imageFile && !uploadedVideoUrl) return;
+    if (!profile?.current_ghost_id) return;
+
+    setSubmitting(true);
+    try {
+      let finalImageUrl: string | null = null;
+      if (imageFile) {
+        const { publicUrl, error: uploadError } = await uploadPostImage(
+          supabase,
+          imageFile,
+          profile.current_ghost_id
+        );
+        if (uploadError) {
+          alert("Failed to upload image.");
+          setSubmitting(false);
+          return;
+        }
+        finalImageUrl = publicUrl;
+      }
+
+      const { error } = await createFeedPost(supabase, {
+        content: newPostContent.trim(),
+        imageUrl: finalImageUrl,
+        videoUrl: uploadedVideoUrl,
+        linkMetadata,
+      });
+
+      if (error) throw error;
+
+      setNewPostContent("");
+      setExtractedUrl(null);
+      setLinkMetadata(null);
+      setImageFile(null);
+      setImagePreview(null);
+      setImageError(null);
+      setUploadedVideoUrl(null);
+      setShowVideoRecorder(false);
+      await loadFeedPosts();
+    } catch (err) {
+      console.error("Error creating post:", err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleVote = async (postId: string, voteType: 1 | -1) => {
+    if (!user) return;
+    const { error } = await voteOnPost(supabase, postId, voteType);
+    if (!error) await loadFeedPosts();
+  };
+
+  const handleCreateComment = async (postId: string) => {
+    const content = commentInputs[postId];
+    if (!content?.trim() || !profile?.current_ghost_id) return;
+
+    try {
+      const { error } = await createComment(
+        supabase,
+        postId,
+        profile.current_ghost_id,
+        content.trim()
+      );
+      if (error) throw error;
+
+      setCommentInputs({ ...commentInputs, [postId]: "" });
+      await loadFeedPosts();
+    } catch (err) {
+      console.error("Error creating comment:", err);
+    }
+  };
+
+  const handleRecalculateScore = async () => {
+    setScoring(true);
+    const { data: fresh } = await calculateMyScore(supabase);
+    if (fresh != null) setScore(fresh);
+    setScoring(false);
+  };
+
+  const handleBurnIdentity = async () => {
+    if (!user) return;
+    setBurning(true);
+    const { error } = await burnGhostIdentityViaRpc(supabase);
+    setBurning(false);
+    setShowBurnConfirm(false);
+    if (!error) {
+      const { data: updated } = await getOwnProfile(supabase, user.id);
+      if (updated) {
+        setProfile(updated);
+        await loadFeedPosts();
+      }
+    }
+  };
+
+  const dismissElection = async (electionId: string) => {
+    if (!user) return;
+    setActiveElections((prev) => prev.filter((e) => e.election_id !== electionId));
+    await dismissElectionNotification(supabase, user.id, electionId);
+  };
+
+  if (loading) return <Spinner fullPage />;
+
+  const isAdmin = profile?.role === "admin";
+  const isPolitician = profile?.role === "politician";
+
+  const storyPosts: StoryPost[] = posts
+    .filter((p) => Boolean(p.video_url))
+    .map((p) => ({
+      id: p.id,
+      video_url: p.video_url!,
+      content: p.content,
+      ghost_id: p.ghost_id,
+    }));
+
+  const activeMembership = activeTab.startsWith("membership:")
+    ? memberships.find((m) => `membership:${m.id}` === activeTab)
+    : null;
+
+  const masterFilterOptions = [
+    "all",
+    ...new Set(memberships.map((m) => m.boundary_type)),
+    ...(profile?.country ? ["Country"] : []),
+    "International",
+  ];
+
+  return (
+    <>
+      <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 flex flex-col lg:flex-row gap-6">
+        <div className="flex-1 min-w-0 space-y-6">
+          {/* Profile Header & Summary */}
+          <Card padding="md" className="space-y-4">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-3">
+                <Avatar src={avatarUrl} name={profile?.full_name} size="md" />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h1 className="text-lg font-bold text-text-main">
+                      {profile?.full_name || "Constituent"}
+                    </h1>
+                    <Badge tone="primary" className="capitalize">
+                      {profile?.role === "normal" ? "Citizen" : profile?.role}
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-text-muted flex items-center gap-1 mt-0.5">
+                    <MapPin size={12} className="text-accent" />{" "}
+                    {profile?.constituency || profile?.country || "Platform Visitor"}
+                  </p>
+                </div>
+              </div>
+
+              {!isAdmin && (
+                <div className="flex items-center gap-3 flex-wrap">
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/30 rounded-xl text-xs">
+                    <Award size={14} className="text-primary" />
+                    <span className="text-text-secondary font-medium">
+                      Impact Score: <strong className="text-primary">{score ?? 0}</strong>
+                    </span>
+                    <button
+                      onClick={handleRecalculateScore}
+                      disabled={scoring}
+                      className="text-text-muted hover:text-primary transition-colors p-0.5 ml-1 cursor-pointer"
+                      title="Recalculate score"
+                    >
+                      <RefreshCw size={12} className={scoring ? "animate-spin" : ""} />
+                    </button>
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowBurnConfirm(true)}
+                    className="gap-1.5 text-xs text-danger hover:text-danger hover:border-danger/40"
+                  >
+                    <Flame size={14} /> Burn Identity
+                  </Button>
+                </div>
+              )}
+            </div>
+          </Card>
+
+          {/* Active Elections Banner */}
+          {activeElections.length > 0 && (
+            <div className="space-y-2">
+              {activeElections.map((elec, idx) => {
+                const seatId = elec.seat_id || elec.election_seat_id;
+                return (
+                  <div
+                    key={seatId || `${elec.election_id}-${idx}`}
+                    className="p-3.5 bg-accent/10 border border-accent/30 rounded-2xl flex items-center justify-between gap-4 text-xs animate-fade-in"
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Vote size={18} className="text-accent shrink-0" />
+                      <div className="truncate">
+                        <span className="font-bold text-text-main">
+                          Election Active: {elec.role_title}
+                        </span>
+                        <span className="text-text-muted ml-2">
+                          ({elec.election_name})
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      <Button
+                        size="sm"
+                        onClick={() => router.push(`/elections/seat/${seatId}`)}
+                        className="text-xs py-1 px-3"
+                      >
+                        View Seat
+                      </Button>
+                      <button
+                        onClick={() => dismissElection(elec.election_id)}
+                        className="text-text-muted hover:text-text-main p-1 cursor-pointer"
+                      >
+                        <X size={14} />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {isAdmin ? (
+            <Card padding="md" className="flex items-start gap-3 bg-warning/10 border border-warning/30">
+              <ShieldAlert className="text-warning shrink-0 mt-0.5" size={20} />
+              <div>
+                <h3 className="text-warning font-bold mb-1">Admin Account</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  You are logged in as an administrator. Your primary role is managing the
+                  system boundaries in the Admin panel. You do not belong to a specific
+                  constituency feed.
+                </p>
+              </div>
+            </Card>
+          ) : (
+            <>
+              {/* No local groups yet notice */}
+              {!loadingMemberships && memberships.length === 0 && (
+                <Card padding="md" className="flex items-start gap-3 bg-warning/10 border border-warning/30">
+                  <MapPin className="text-warning shrink-0 mt-0.5" size={18} />
+                  <div>
+                    <h3 className="text-warning font-bold text-sm mb-1">No Local Groups Yet</h3>
+                    <p className="text-text-secondary text-xs leading-relaxed">
+                      No boundary data covers your location yet, so you don&apos;t have any
+                      municipal/federal groups to post into. Go to{" "}
+                      <Link href="/profile" className="underline font-bold hover:text-warning">
+                        Profile Settings
+                      </Link>{" "}
+                      to search for and add your jurisdiction manually, or check back once an
+                      admin uploads boundary data for your area. You can still post to Country
+                      and International.
+                    </p>
+                  </div>
+                </Card>
+              )}
+
+              {/* Main Composer */}
+              {profile?.current_ghost_id && (
+                <Card padding="md">
+                  <form onSubmit={handleCreatePost} className="space-y-3">
+                    <Textarea
+                      placeholder="What's happening in your constituency?"
+                      value={newPostContent}
+                      onChange={handlePostTextChange}
+                      rows={3}
+                    />
+
+                    {imagePreview && (
+                      <div className="relative rounded-xl overflow-hidden border border-border-light/45 max-h-60">
+                        <img
+                          src={imagePreview}
+                          alt="Preview"
+                          className="w-full h-full object-cover"
+                        />
+                        <RemoveMediaButton
+                          onClick={() => {
+                            setImageFile(null);
+                            setImagePreview(null);
+                            setImageError(null);
+                          }}
+                        />
+                      </div>
+                    )}
+                    {imageError && <p className="text-danger-light text-xs">{imageError}</p>}
+
+                    {extractedUrl && (
+                      <LinkPreview
+                        url={extractedUrl}
+                        onMetadataFetched={setLinkMetadata}
+                      />
+                    )}
+
+                    {isPolitician && showVideoRecorder && !uploadedVideoUrl && (
+                      <VideoRecorder
+                        onVideoUploaded={(url) => {
+                          setUploadedVideoUrl(url);
+                          setShowVideoRecorder(false);
+                        }}
+                      />
+                    )}
+
+                    {uploadedVideoUrl && (
+                      <div className="flex items-center justify-between gap-2 p-3 bg-primary/10 border border-primary/30 rounded-xl">
+                        <div className="flex items-center gap-2 text-primary text-xs font-medium">
+                          <Video size={14} />
+                          Video pitch attached
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setUploadedVideoUrl(null)}
+                          className="text-primary hover:text-primary/80 text-xs underline cursor-pointer"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between pt-2">
+                      <div className="flex items-center gap-1">
+                        <label className="cursor-pointer text-xs text-text-muted hover:text-text-main flex items-center gap-1 p-1.5 rounded-lg hover:bg-surface/50 transition-colors">
+                          <ImageIcon size={16} />
+                          <span>Photo</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleImageSelect}
+                          />
+                        </label>
+
+                        {isPolitician && (
+                          <button
+                            type="button"
+                            onClick={() => setShowVideoRecorder((v) => !v)}
+                            disabled={!!uploadedVideoUrl}
+                            className={`text-xs flex items-center gap-1 p-1.5 rounded-lg transition-colors cursor-pointer disabled:opacity-50 ${
+                              showVideoRecorder
+                                ? "text-primary bg-primary/10"
+                                : "text-text-muted hover:text-text-main hover:bg-surface/50"
+                            }`}
+                          >
+                            <Video size={16} />
+                            <span>Video Pitch</span>
+                          </button>
+                        )}
+                      </div>
+
+                      <Button
+                        type="submit"
+                        disabled={submitting || (!newPostContent.trim() && !imageFile && !uploadedVideoUrl)}
+                      >
+                        {submitting ? "Posting..." : "Post to Feed"}
+                      </Button>
+                    </div>
+                  </form>
+                </Card>
+              )}
+
+              {/* Video Stories Strip */}
+              {storyPosts.length > 0 && (
+                <StoryStrip
+                  posts={storyPosts}
+                  onSelect={(videoUrl) => setActiveStoryUrl(videoUrl)}
+                />
+              )}
+
+              {/* Boundary Scoped Tabs */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-border-light/20">
+                  <button
+                    onClick={() => setActiveTab("master")}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 border cursor-pointer ${
+                      activeTab === "master"
+                        ? "bg-primary text-text-on-primary border-primary shadow-sm"
+                        : "bg-surface/40 text-text-secondary border-border-light/30 hover:border-primary/40"
+                    }`}
+                  >
+                    <Layers size={14} /> All Feeds
+                  </button>
+
+                  {memberships.map((m, idx) => (
+                    <button
+                      key={`mem-${m.id}-${idx}`}
+                      onClick={() => setActiveTab(`membership:${m.id}`)}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 border cursor-pointer ${
+                        activeTab === `membership:${m.id}`
+                          ? "bg-primary text-text-on-primary border-primary shadow-sm"
+                          : "bg-surface/40 text-text-secondary border-border-light/30 hover:border-primary/40"
+                      }`}
+                    >
+                      <MapPin size={13} className="text-accent" /> {m.name}
+                    </button>
+                  ))}
+
+                  {profile?.country && (
+                    <button
+                      onClick={() => setActiveTab("country")}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 border cursor-pointer ${
+                        activeTab === "country"
+                          ? "bg-primary text-text-on-primary border-primary shadow-sm"
+                          : "bg-surface/40 text-text-secondary border-border-light/30 hover:border-primary/40"
+                      }`}
+                    >
+                      <Globe2 size={14} /> {profile.country}
+                    </button>
+                  )}
+
+                  <button
+                    onClick={() => setActiveTab("international")}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 border cursor-pointer ${
+                      activeTab === "international"
+                        ? "bg-primary text-text-on-primary border-primary shadow-sm"
+                        : "bg-surface/40 text-text-secondary border-border-light/30 hover:border-primary/40"
+                    }`}
+                  >
+                    <Globe2 size={14} /> International
+                  </button>
+                </div>
+
+                {activeTab === "master" && (
+                  <div className="flex items-center gap-2 overflow-x-auto text-xs py-1">
+                    <span className="text-text-muted text-[11px] font-semibold uppercase tracking-wider mr-1">
+                      Filter:
+                    </span>
+                    {masterFilterOptions.map((f) => (
+                      <button
+                        key={f}
+                        onClick={() => setMasterFilter(f)}
+                        className={`px-3 py-1 rounded-lg font-medium transition-colors cursor-pointer whitespace-nowrap ${
+                          masterFilter === f
+                            ? "bg-primary/20 text-primary border border-primary/40"
+                            : "bg-surface/30 text-text-muted hover:text-text-main"
+                        }`}
+                      >
+                        {f === "all" ? "All Levels" : f}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Post List Feed */}
+              {posts.length === 0 ? (
+                <EmptyState
+                  icon={Users}
+                  title="No Posts in This Feed"
+                  description="Be the first constituent to post a civic update or topic for this area!"
+                />
+              ) : (
+                <div className="space-y-4">
+                  {posts.map((post) => (
+                    <PostCard
+                      key={post.id}
+                      post={post}
+                      showVoteBar
+                      onVote={(postId, voteType) => handleVote(postId, voteType)}
+                      canComment={!!user}
+                      commentValue={commentInputs[post.id] || ""}
+                      onCommentChange={(text) =>
+                        setCommentInputs({ ...commentInputs, [post.id]: text })
+                      }
+                      onSubmitComment={() => handleCreateComment(post.id)}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        {/* Right Sidebar Column — stacks below the feed on mobile/tablet,
+            becomes a true sidebar at lg */}
+        {!isAdmin && (
+          <div className="w-full lg:w-80 shrink-0">
+            <PoliticianSidebar
+              profile={profile}
+              activeTab={activeMembership?.boundary_type || activeTab}
+              memberships={memberships}
+            />
+          </div>
+        )}
+      </div>
+
+      {activeStoryUrl && (
+        <StoryViewerModal
+          url={activeStoryUrl}
+          onClose={() => setActiveStoryUrl(null)}
+        />
+      )}
+
+      {/* Burn Identity Confirmation Dialog */}
+      {showBurnConfirm && (
+        <ConfirmDialog
+          open={showBurnConfirm}
+          title="Burn Ghost Identity?"
+          message="This action will permanently lock in your current Civic Impact Score and generate a brand-new random Ghost ID. All past posts and comments will be permanently unlinked from your future activity. This cannot be undone."
+          confirmLabel={burning ? "Burning..." : "Burn Identity"}
+          tone="danger"
+          onConfirm={handleBurnIdentity}
+          onCancel={() => setShowBurnConfirm(false)}
+        />
+      )}
+    </>
+  );
+}

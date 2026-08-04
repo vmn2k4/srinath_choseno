@@ -1,0 +1,460 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  getCandidateById,
+  getElectionQuestions,
+  getCandidateAnswers,
+  updateCandidateStatement,
+  upsertCandidateAnswer,
+  setCandidateAnswerOptions,
+  updateCandidateIntroVideoUrl,
+  submitCandidateApplication,
+} from "@/lib/services/elections";
+import { ArrowLeft, Send, Video, RefreshCw } from "lucide-react";
+import {
+  Card,
+  Button,
+  Badge,
+  Textarea,
+  Spinner,
+} from "@/components/primitives";
+import RatingScale from "@/components/features/RatingScale";
+import VideoRecorder from "@/components/features/VideoRecorder";
+import { createClient } from "@/lib/supabase/client";
+
+const STATUS_COPY: Record<string, { label: string; tone: "amber" | "emerald" | "rose" }> = {
+  pending: { label: "Pending Review", tone: "amber" },
+  approved: { label: "Approved", tone: "emerald" },
+  rejected: { label: "Not Approved", tone: "rose" },
+};
+
+function hasStartedAnswering(question: any, answer: any) {
+  if (!answer) return false;
+  switch (question.question_type) {
+    case "multiple_choice":
+      return (answer.optionIds || []).length > 0;
+    case "text":
+      return !!answer.textAnswer?.trim();
+    case "rating":
+      return answer.ratingValue != null;
+    default:
+      return !!answer.optionId;
+  }
+}
+
+interface CandidateApplicationClientProps {
+  candidateId: string;
+}
+
+export default function CandidateApplicationClient({
+  candidateId,
+}: CandidateApplicationClientProps) {
+  const supabase = createClient();
+  const { user } = useAuth();
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(true);
+  const [candidate, setCandidate] = useState<any>(null);
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [answers, setAnswers] = useState<Record<string, any>>({});
+  const [statement, setStatement] = useState("");
+  const [introVideoUrl, setIntroVideoUrl] = useState<string | null>(null);
+  const [showIntroRecorder, setShowIntroRecorder] = useState(false);
+  const [recordingQuestionId, setRecordingQuestionId] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+
+  const fetchAll = async () => {
+    if (!user || !candidateId) return;
+    setLoading(true);
+
+    const { data: c } = await getCandidateById(supabase, candidateId);
+
+    if (!c || c.politician_id !== user.id) {
+      setCandidate(null);
+      setLoading(false);
+      return;
+    }
+
+    setCandidate(c);
+    setStatement(c.statement || "");
+    setIntroVideoUrl(c.intro_video_url || null);
+
+    const electionId = c.election_seats?.elections?.id;
+    if (electionId) {
+      const { data: qs } = await getElectionQuestions(supabase, electionId);
+      setQuestions(
+        (qs || []).map((q: any) => ({
+          ...q,
+          election_question_options: [
+            ...(q.election_question_options || []),
+          ].sort((a, b) => a.rank - b.rank),
+        }))
+      );
+
+      const { data: existingAnswers } = await getCandidateAnswers(
+        supabase,
+        candidateId
+      );
+      const answerMap: Record<string, any> = {};
+      (existingAnswers || []).forEach((a: any) => {
+        answerMap[a.question_id] = {
+          answerId: a.id,
+          optionId: a.option_id,
+          optionIds: (a.election_candidate_answer_options || []).map(
+            (o: any) => o.option_id
+          ),
+          textAnswer: a.text_answer,
+          ratingValue: a.rating_value,
+          context: a.context,
+          videoUrl: a.video_url,
+        };
+      });
+      setAnswers(answerMap);
+    }
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchAll();
+  }, [user, candidateId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const saveStatement = async () => {
+    if (!candidateId) return;
+    await updateCandidateStatement(supabase, candidateId, statement);
+  };
+
+  const handleIntroVideoUploaded = async (url: string) => {
+    setIntroVideoUrl(url);
+    setShowIntroRecorder(false);
+    await updateCandidateIntroVideoUrl(supabase, candidateId, url);
+  };
+
+  const persistAnswer = async (questionId: string, partial: Record<string, any>) => {
+    const prev = answers[questionId] || {};
+    const merged = { ...prev, ...partial };
+    setAnswers((p) => ({ ...p, [questionId]: merged }));
+
+    const question = questions.find((q) => q.id === questionId);
+    const { data: answerRow, error } = await upsertCandidateAnswer(
+      supabase,
+      candidateId,
+      questionId,
+      {
+        optionId: merged.optionId,
+        textAnswer: merged.textAnswer,
+        ratingValue: merged.ratingValue,
+        contextText: merged.context,
+        videoUrl: merged.videoUrl,
+      }
+    );
+
+    const actualAnswerId = answerRow?.id || merged.answerId;
+    if (!error && actualAnswerId && !merged.answerId) {
+      setAnswers((p) => ({
+        ...p,
+        [questionId]: { ...p[questionId], answerId: actualAnswerId },
+      }));
+    }
+    if (question?.question_type === "multiple_choice" && actualAnswerId) {
+      await setCandidateAnswerOptions(supabase, actualAnswerId, merged.optionIds || []);
+    }
+  };
+
+  const selectOption = (questionId: string, optionId: string) =>
+    persistAnswer(questionId, { optionId });
+
+  const toggleMultiOption = (questionId: string, optionId: string) => {
+    const current = answers[questionId]?.optionIds || [];
+    const next = current.includes(optionId)
+      ? current.filter((id: string) => id !== optionId)
+      : [...current, optionId];
+    persistAnswer(questionId, { optionIds: next });
+  };
+
+  const selectRating = (questionId: string, value: number) =>
+    persistAnswer(questionId, { ratingValue: value });
+
+  const updateTextAnswer = (questionId: string, text: string) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [questionId]: { ...(prev[questionId] || {}), textAnswer: text },
+    }));
+  };
+
+  const saveTextAnswer = (questionId: string) => persistAnswer(questionId, {});
+
+  const updateContext = (questionId: string, text: string) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [questionId]: { ...(prev[questionId] || {}), context: text },
+    }));
+  };
+
+  const saveContext = (questionId: string) => persistAnswer(questionId, {});
+
+  const handleQuestionVideoUploaded = async (questionId: string, url: string) => {
+    setRecordingQuestionId(null);
+    await persistAnswer(questionId, { videoUrl: url });
+  };
+
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    setStatusMessage("");
+
+    await saveStatement();
+
+    const { data: result, error } = await submitCandidateApplication(
+      supabase,
+      candidateId
+    );
+    setSubmitting(false);
+
+    if (error) {
+      setStatusMessage("Error: " + error.message);
+      return;
+    }
+
+    const resAny = result as any;
+    if (resAny && resAny.success === false) {
+      setStatusMessage(`Please complete required questions: ${resAny.message}`);
+      return;
+    }
+
+    setStatusMessage("Application submitted successfully for admin review!");
+    await fetchAll();
+  };
+
+  if (loading) return <Spinner fullPage />;
+
+  if (!candidate) {
+    return (
+      <div className="w-full max-w-none px-4 lg:px-8 mt-10">
+        <Card padding="lg" className="text-center">
+          <p className="text-text-muted text-sm">
+            Candidacy record not found or you do not have permission to edit it.
+          </p>
+          <Button onClick={() => router.push("/politician/elections")} className="mt-4">
+            Back to My Elections
+          </Button>
+        </Card>
+      </div>
+    );
+  }
+
+  const statusCfg = STATUS_COPY[candidate.status] || STATUS_COPY.pending;
+
+  return (
+    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex items-center gap-3">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => router.push("/politician/elections")}
+            className="rounded-full"
+          >
+            <ArrowLeft size={18} />
+          </Button>
+          <div>
+            <h1 className="text-2xl font-bold text-text-main">
+              {candidate.election_seats?.role_title} Application
+            </h1>
+            <p className="text-xs text-text-muted">
+              {candidate.election_seats?.elections?.name} ·{" "}
+              {candidate.election_seats?.map_shapes?.name}
+            </p>
+          </div>
+        </div>
+
+        <Badge tone={statusCfg.tone}>{statusCfg.label}</Badge>
+      </div>
+
+      {/* Platform Statement */}
+      <Card padding="md" className="space-y-3">
+        <h3 className="text-sm font-bold text-text-main">
+          Platform Statement / Opening Message
+        </h3>
+        <Textarea
+          placeholder="Share your primary platform goals, vision, and reasons for running..."
+          value={statement}
+          onChange={(e) => setStatement(e.target.value)}
+          onBlur={saveStatement}
+          rows={4}
+        />
+      </Card>
+
+      {/* Intro Campaign Video */}
+      <Card padding="md" className="space-y-3">
+        <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
+          <Video size={18} className="text-primary" /> Introductory Campaign Video Pitch
+        </h3>
+        <p className="text-xs text-text-muted">
+          Record a 30-90 second video pitch introducing yourself to constituents.
+        </p>
+
+        {introVideoUrl && !showIntroRecorder && (
+          <div className="space-y-2">
+            <video src={introVideoUrl} controls className="w-full max-h-72 rounded-xl bg-black" />
+            <Button variant="outline" size="sm" onClick={() => setShowIntroRecorder(true)} className="gap-1.5 text-xs">
+              <RefreshCw size={14} /> Re-record Intro Video
+            </Button>
+          </div>
+        )}
+
+        {showIntroRecorder && (
+          <VideoRecorder maxDuration={90} onVideoUploaded={handleIntroVideoUploaded} />
+        )}
+
+        {!introVideoUrl && !showIntroRecorder && (
+          <Button onClick={() => setShowIntroRecorder(true)} className="gap-2 text-xs">
+            <Video size={16} /> Record Intro Video
+          </Button>
+        )}
+      </Card>
+
+      {/* Candidate Questionnaire */}
+      {questions.length > 0 && (
+        <div className="space-y-4">
+          <h2 className="text-sm font-bold text-text-muted uppercase tracking-wider">
+            Official Election Questionnaire ({questions.length} Questions)
+          </h2>
+
+          {questions.map((q) => {
+            const ans = answers[q.id] || {};
+            const started = hasStartedAnswering(q, ans);
+
+            return (
+              <Card key={q.id} padding="md" className="space-y-4">
+                <div>
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="font-bold text-text-main text-sm">
+                      {q.question_text}
+                    </h3>
+                    {q.is_required && <Badge tone="rose">Required</Badge>}
+                  </div>
+                  {q.description && (
+                    <p className="text-xs text-text-muted mt-1">{q.description}</p>
+                  )}
+                </div>
+
+                {/* Single Choice / Yes-No */}
+                {(q.question_type === "single_choice" ||
+                  q.question_type === "yes_no") && (
+                  <div className="flex flex-wrap gap-2">
+                    {q.election_question_options.map((opt: any) => (
+                      <button
+                        key={opt.id}
+                        onClick={() => selectOption(q.id, opt.id)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                          ans.optionId === opt.id
+                            ? "bg-primary text-text-on-primary border-primary shadow-sm"
+                            : "bg-surface-elevated text-text-secondary border-border-light/40 hover:border-primary/40"
+                        }`}
+                      >
+                        {opt.option_text}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Multiple Choice */}
+                {q.question_type === "multiple_choice" && (
+                  <div className="flex flex-wrap gap-2">
+                    {q.election_question_options.map((opt: any) => {
+                      const selected = (ans.optionIds || []).includes(opt.id);
+                      return (
+                        <button
+                          key={opt.id}
+                          onClick={() => toggleMultiOption(q.id, opt.id)}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                            selected
+                              ? "bg-primary text-text-on-primary border-primary shadow-sm"
+                              : "bg-surface-elevated text-text-secondary border-border-light/40 hover:border-primary/40"
+                          }`}
+                        >
+                          {opt.option_text}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/* Rating Scale */}
+                {q.question_type === "rating" && (
+                  <RatingScale
+                    value={ans.ratingValue ?? null}
+                    onChange={(val) => selectRating(q.id, val)}
+                  />
+                )}
+
+                {/* Free Text */}
+                {q.question_type === "text" && (
+                  <Textarea
+                    placeholder="Type your response..."
+                    value={ans.textAnswer || ""}
+                    onChange={(e) => updateTextAnswer(q.id, e.target.value)}
+                    onBlur={() => saveTextAnswer(q.id)}
+                    rows={3}
+                  />
+                )}
+
+                {/* Elaboration Context */}
+                {started && (
+                  <div className="pt-3 border-t border-border-light/20 space-y-2">
+                    <label className="block text-xs font-semibold text-text-muted">
+                      Optional Context / Elaboration:
+                    </label>
+                    <Textarea
+                      placeholder="Add specific context to clarify your stance..."
+                      value={ans.context || ""}
+                      onChange={(e) => updateContext(q.id, e.target.value)}
+                      onBlur={() => saveContext(q.id)}
+                      rows={2}
+                    />
+                  </div>
+                )}
+
+                {/* Per-Question Video Pitch */}
+                {started && (
+                  <div className="pt-2">
+                    {ans.videoUrl && recordingQuestionId !== q.id ? (
+                      <div className="space-y-2">
+                        <video src={ans.videoUrl} controls className="w-full max-h-48 rounded-xl bg-black" />
+                        <Button variant="outline" size="sm" onClick={() => setRecordingQuestionId(q.id)} className="gap-1.5 text-xs">
+                          <RefreshCw size={13} /> Re-record Video Answer
+                        </Button>
+                      </div>
+                    ) : recordingQuestionId === q.id ? (
+                      <VideoRecorder maxDuration={60} onVideoUploaded={(url) => handleQuestionVideoUploaded(q.id, url)} />
+                    ) : (
+                      <Button variant="ghost" size="sm" onClick={() => setRecordingQuestionId(q.id)} className="gap-1.5 text-xs">
+                        <Video size={14} /> Add 60s Video Stance Explanation (Optional)
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </Card>
+            );
+          })}
+        </div>
+      )}
+
+      {statusMessage && (
+        <p className="text-xs font-semibold text-text-main p-3 bg-surface-elevated rounded-xl border border-border-light/30">
+          {statusMessage}
+        </p>
+      )}
+
+      <div className="flex justify-end pt-4 border-t border-border-light/20">
+        <Button onClick={handleSubmit} disabled={submitting} className="gap-2 font-bold">
+          <Send size={15} /> {submitting ? "Submitting..." : "Submit Application"}
+        </Button>
+      </div>
+    </div>
+  );
+}

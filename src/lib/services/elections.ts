@@ -1,0 +1,547 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/lib/supabase/types";
+import { fetchAllPages } from "@/lib/utils/fetchAllPages";
+
+type Client = SupabaseClient<Database>;
+type ElectionSeatInsert = Database["public"]["Tables"]["election_seats"]["Insert"];
+type ElectionQuestionInsert = Database["public"]["Tables"]["election_questions"]["Insert"];
+type ElectionQuestionOptionInsert = Database["public"]["Tables"]["election_question_options"]["Insert"];
+type PostInsert = Database["public"]["Tables"]["posts"]["Insert"];
+
+const ADMIN_CANDIDATE_COLUMNS = `
+  id, seat_id, statement, status, submitted_at, intro_video_url,
+  profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id),
+  election_candidate_answers(
+    id, context_text, video_url, text_answer, rating_value,
+    election_questions(id, question_text, question_type, rank),
+    election_question_options(option_text),
+    election_candidate_answer_options(election_question_options(option_text))
+  )
+`;
+
+// ── elections ────────────────────────────────────────────────────────────
+export async function getElections(supabase: Client) {
+  return supabase.from("elections").select("*").order("created_at", { ascending: false });
+}
+
+export async function createElection(
+  supabase: Client,
+  { name, electionDate }: { name: string; electionDate: string }
+) {
+  return supabase.from("elections").insert({ name, election_date: electionDate }).select().single();
+}
+
+export async function advanceElectionStatus(supabase: Client, electionId: string, nextStatus: string) {
+  return supabase.from("elections").update({ status: nextStatus }).eq("id", electionId);
+}
+
+export async function deleteElection(supabase: Client, electionId: string) {
+  return supabase.from("elections").delete().eq("id", electionId);
+}
+
+// ── election_role_types ─────────────────────────────────────────────────
+export async function getElectionRoleTypes(supabase: Client, country: string, boundaryType: string) {
+  return supabase
+    .from("election_role_types")
+    .select("role_key, region_override, role_title")
+    .eq("country", country)
+    .eq("boundary_type", boundaryType);
+}
+
+// ── election_seats (admin) ──────────────────────────────────────────────
+export async function getElectionSeatsByElectionId(supabase: Client, electionId: string) {
+  return fetchAllPages((from, to) =>
+    supabase
+      .from("election_seats")
+      .select("id, role_title, map_shapes(id, name, boundary_type, country, code, properties)")
+      .eq("election_id", electionId)
+      .order("role_title")
+      .order("id")
+      .range(from, to)
+  );
+}
+
+// fetchAllPages alone paginates the *result* rows via .range(), but the
+// .in('seat_id', seatIds) filter itself was passed whole on every page --
+// fine for a small election, but for one with thousands of seats (e.g. a
+// municipal election) the filter clause alone can exceed 2000+ UUIDs.
+// Confirmed directly: at ~2300 ids the resulting request's headers exceed
+// 60KB and the request fails outright ("Failed sending data to the peer"),
+// which is what actually caused the ~1 minute load (the query doesn't just
+// get slow, it fails and the browser client retries). Chunking the id list
+// itself, not just the result pagination, fixes this at the root; chunks are
+// independent so they run in parallel rather than one giant sequential call.
+const SEAT_ID_CHUNK_SIZE = 200;
+
+export async function getElectionCandidatesBySeatIds(supabase: Client, seatIds: string[]) {
+  const chunks: string[][] = [];
+  for (let i = 0; i < seatIds.length; i += SEAT_ID_CHUNK_SIZE) {
+    chunks.push(seatIds.slice(i, i + SEAT_ID_CHUNK_SIZE));
+  }
+  const results = await Promise.all(
+    chunks.map((chunk) =>
+      fetchAllPages((from, to) =>
+        supabase
+          .from("election_candidates")
+          .select(ADMIN_CANDIDATE_COLUMNS)
+          .in("seat_id", chunk)
+          .order("id")
+          .range(from, to)
+      )
+    )
+  );
+  const failed = results.find((r) => r.error);
+  if (failed) return { data: null, error: failed.error };
+  return { data: results.flatMap((r) => r.data || []), error: null };
+}
+
+export async function createElectionSeats(supabase: Client, rows: ElectionSeatInsert[]) {
+  return supabase.from("election_seats").insert(rows);
+}
+
+export async function deleteElectionSeat(supabase: Client, seatId: string) {
+  return supabase.from("election_seats").delete().eq("id", seatId);
+}
+
+// ── election_seats (politician / voter facing) ──────────────────────────
+export async function getOpenSeatsNearShapeIds(supabase: Client, shapeIds: number[]) {
+  const today = new Date().toISOString().slice(0, 10);
+  return supabase
+    .from("election_seats")
+    .select(
+      "id, role_title, map_shape_id, map_shapes(name, boundary_type, country), elections!inner(id, name, election_date, status)"
+    )
+    .in("map_shape_id", shapeIds)
+    .in("elections.status", ["nominations_open", "active"])
+    .gte("elections.election_date", today)
+    .order("role_title");
+}
+
+export async function getActiveSeatsByShapeIds(supabase: Client, shapeIds: number[]) {
+  return supabase
+    .from("election_seats")
+    .select("id, role_title, map_shapes(name, boundary_type), elections!inner(id, name, election_date, status)")
+    .in("map_shape_id", shapeIds)
+    .in("elections.status", ["nominations_open", "active"]);
+}
+
+// Platform-wide active seats, unscoped by boundary membership — used for
+// public/anonymous browsing where there's no "my area" to filter by.
+export async function getActiveSeats(supabase: Client) {
+  return supabase
+    .from("election_seats")
+    .select("id, role_title, map_shapes(name, boundary_type), elections!inner(id, name, election_date, status)")
+    .in("elections.status", ["nominations_open", "active"])
+    .order("role_title");
+}
+
+export async function findOpenSeatsInContainer(supabase: Client, containerShapeId: number) {
+  return supabase.rpc("find_open_seats_in_container", { p_container_shape_id: containerShapeId });
+}
+
+export async function getSeatById(supabase: Client, seatId: string) {
+  return supabase
+    .from("election_seats")
+    .select("id, role_title, map_shapes(name, boundary_type, country), elections(id, name, election_date, status)")
+    .eq("id", seatId)
+    .maybeSingle();
+}
+
+// ── election_candidates ──────────────────────────────────────────────────
+export async function getMyCandidacies(supabase: Client, profileId: string) {
+  return supabase
+    .from("election_candidates")
+    .select("id, statement, seat_id, status, submitted_at, election_seats(role_title, map_shapes(name), elections(name, status))")
+    .eq("politician_id", profileId)
+    .order("created_at", { ascending: false });
+}
+
+export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]) {
+  return supabase
+    .from("election_candidates")
+    .select(
+      "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id, politician_profiles(avatar_url))"
+    )
+    .in("seat_id", seatIds);
+}
+
+export async function getCandidateById(supabase: Client, candidateId: string) {
+  return supabase
+    .from("election_candidates")
+    .select(
+      `
+      id, seat_id, statement, status, submitted_at, intro_video_url, politician_id,
+      election_seats ( role_title, map_shapes ( name ), elections ( id, name, election_date, status ) )
+    `
+    )
+    .eq("id", candidateId)
+    .maybeSingle();
+}
+
+export async function getPublicCandidateById(supabase: Client, candidateId: string) {
+  return supabase
+    .from("election_candidates")
+    .select(
+      `
+      id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at,
+      election_seats ( role_title, map_shapes ( name, boundary_type ), elections ( name, status ) ),
+      profiles!election_candidates_politician_id_fkey ( full_name, current_ghost_id )
+    `
+    )
+    .eq("id", candidateId)
+    .maybeSingle();
+}
+
+export async function applyForSeat(supabase: Client, seatId: string) {
+  // p_statement's generated type is a non-nullable `string` (no SQL
+  // DEFAULT), but the column/param is genuinely nullable at runtime --
+  // same codegen caveat as insertMapShape/addUnregisteredCandidate above.
+  return supabase.rpc("apply_for_seat", {
+    p_seat_id: seatId,
+    p_statement: null,
+  } as unknown as { p_seat_id: string; p_statement: string });
+}
+
+export async function deleteCandidacy(supabase: Client, candidateId: string) {
+  return supabase.from("election_candidates").delete().eq("id", candidateId);
+}
+
+export async function updateCandidateStatement(supabase: Client, candidateId: string, statement: string) {
+  return supabase.from("election_candidates").update({ statement }).eq("id", candidateId);
+}
+
+export async function updateCandidateIntroVideoUrl(supabase: Client, candidateId: string, url: string) {
+  return supabase.from("election_candidates").update({ intro_video_url: url }).eq("id", candidateId);
+}
+
+export async function reviewCandidateApplication(
+  supabase: Client,
+  candidateId: string,
+  { approve, reviewedBy }: { approve: boolean; reviewedBy: string }
+) {
+  return supabase
+    .from("election_candidates")
+    .update({ status: approve ? "approved" : "rejected", reviewed_at: new Date().toISOString(), reviewed_by: reviewedBy })
+    .eq("id", candidateId);
+}
+
+export async function submitCandidateApplication(supabase: Client, candidateId: string) {
+  return supabase.rpc("submit_candidate_application", { p_candidate_id: candidateId });
+}
+
+// ── election_questions / election_question_options ─────────────────────
+export async function getElectionQuestions(supabase: Client, electionId: string) {
+  return supabase
+    .from("election_questions")
+    .select("id, question_text, question_type, required, allow_context, visible_to_public, rank, election_question_options(id, option_text, rank)")
+    .eq("election_id", electionId)
+    .order("rank");
+}
+
+export async function createElectionQuestion(supabase: Client, fields: ElectionQuestionInsert) {
+  return supabase.from("election_questions").insert(fields).select().single();
+}
+
+export async function deleteElectionQuestion(supabase: Client, questionId: string) {
+  return supabase.from("election_questions").delete().eq("id", questionId);
+}
+
+export async function createElectionQuestionOptions(supabase: Client, rows: ElectionQuestionOptionInsert[]) {
+  return supabase.from("election_question_options").insert(rows);
+}
+
+// ── election_candidate_answers ──────────────────────────────────────────
+export async function getCandidateAnswers(supabase: Client, candidateId: string) {
+  return supabase
+    .from("election_candidate_answers")
+    .select("id, question_id, option_id, text_answer, rating_value, context_text, video_url, election_candidate_answer_options(option_id)")
+    .eq("candidate_id", candidateId);
+}
+
+export async function getPublicCandidateAnswers(supabase: Client, candidateId: string) {
+  return supabase
+    .from("election_candidate_answers")
+    .select(
+      `
+      id, context_text, video_url, text_answer, rating_value,
+      election_questions(id, question_text, question_type, rank, visible_to_public),
+      election_question_options(option_text),
+      election_candidate_answer_options(election_question_options(option_text)),
+      election_answer_comments(id, ghost_id, content, created_at)
+    `
+    )
+    .eq("candidate_id", candidateId);
+}
+
+// fields: { optionId, textAnswer, ratingValue, contextText, videoUrl } -- an
+// options object rather than positional params since which fields are
+// meaningful depends on the question's type (see
+// 20260802000000_flexible_questionnaire.sql), so most calls only set one or
+// two of them. Returns the row (not just {error}) because multiple_choice
+// answers need the row's own id to write into
+// election_candidate_answer_options afterward.
+export async function upsertCandidateAnswer(
+  supabase: Client,
+  candidateId: string,
+  questionId: string,
+  {
+    optionId = null,
+    textAnswer = null,
+    ratingValue = null,
+    contextText = null,
+    videoUrl = null,
+  }: {
+    optionId?: string | null;
+    textAnswer?: string | null;
+    ratingValue?: number | null;
+    contextText?: string | null;
+    videoUrl?: string | null;
+  } = {}
+) {
+  return supabase
+    .from("election_candidate_answers")
+    .upsert(
+      {
+        candidate_id: candidateId,
+        question_id: questionId,
+        option_id: optionId,
+        text_answer: textAnswer,
+        rating_value: ratingValue,
+        context_text: contextText,
+        video_url: videoUrl,
+      },
+      { onConflict: "candidate_id,question_id" }
+    )
+    .select()
+    .single();
+}
+
+// Replace-all for a multiple_choice answer's selected options -- simpler
+// than diffing against the previous selection, and this is a small set
+// (a handful of checkboxes) so a delete-then-insert is cheap.
+export async function setCandidateAnswerOptions(supabase: Client, answerId: string, optionIds: string[]) {
+  const { error: deleteError } = await supabase.from("election_candidate_answer_options").delete().eq("answer_id", answerId);
+  if (deleteError) return { data: null, error: deleteError };
+  if (optionIds.length === 0) return { data: [], error: null };
+  return supabase
+    .from("election_candidate_answer_options")
+    .insert(optionIds.map((optionId) => ({ answer_id: answerId, option_id: optionId })));
+}
+
+// ── election_answer_comments — public discussion on a single candidate's
+// answer to a single question, separate from the general CandidacyWall post
+// feed (see 20260801000001_answer_video_and_comments.sql). ────────────────
+export async function createAnswerComment(supabase: Client, answerId: string, ghostId: string, content: string) {
+  const res = await supabase.from("election_answer_comments").insert({ answer_id: answerId, ghost_id: ghostId, content });
+  if (res.error && (res.error.code === "42501" || res.error.message?.includes("row-level security"))) {
+    return supabase.rpc("create_answer_comment", {
+      p_answer_id: answerId,
+      p_ghost_id: ghostId,
+      p_content: content,
+    });
+  }
+  return res;
+}
+
+// ── resolve_region_names rpc ────────────────────────────────────────────
+export async function resolveRegionNames(supabase: Client, shapeIds: number[], country: string) {
+  return supabase.rpc("resolve_region_names", { p_shape_ids: shapeIds, p_country: country });
+}
+
+// ── posts scoped to a candidacy (CandidacyWall) ─────────────────────────
+// Matches on election_candidate_id (always known — it's the candidacy row
+// id, no join required) OR'd with the candidate's ghost id when resolvable,
+// so a candidacy's own discussion always shows even if the profiles join
+// that would normally supply ghostId gets RLS-blocked for this viewer (e.g.
+// a candidate whose profiles.role isn't 'politician' for whatever reason —
+// the "public can view politician profiles" policy doesn't cover them).
+// When ghostId IS resolvable this also pulls in the same person's permanent
+// wall posts, unifying the two views — see
+// 20260730000003_unify_candidacy_and_wall_posts.sql.
+export async function getCandidacyWallPosts(supabase: Client, candidateId: string, ghostId?: string | null) {
+  const filters = [`election_candidate_id.eq.${candidateId}`];
+  if (ghostId) filters.push(`ghost_id.eq.${ghostId}`, `wall_ghost_id.eq.${ghostId}`);
+  return supabase.from("posts").select("*, comments (*)").or(filters.join(",")).order("created_at", { ascending: false });
+}
+
+export async function createCandidatePost(supabase: Client, fields: PostInsert) {
+  return supabase.from("posts").insert(fields);
+}
+
+// ── nomination_filed (self-editable, direct update — same pattern as
+// updateCandidateStatement, no RPC needed) ──────────────────────────────
+export async function updateNominationFiled(supabase: Client, candidateId: string, filed: boolean) {
+  return supabase.from("election_candidates").update({ nomination_filed: filed }).eq("id", candidateId);
+}
+
+// ── election_administrators ─────────────────────────────────────────────
+export async function applyForElectionAdmin(
+  supabase: Client,
+  seatId: string,
+  { motivation, socialMediaInfo, contactEmail }: { motivation: string; socialMediaInfo?: string | null; contactEmail: string }
+) {
+  return supabase.rpc("apply_for_election_admin", {
+    p_seat_id: seatId,
+    p_motivation: motivation,
+    p_social_media_info: socialMediaInfo ?? null,
+    p_contact_email: contactEmail,
+  } as unknown as { p_seat_id: string; p_motivation: string; p_social_media_info: string; p_contact_email: string });
+}
+
+export async function getSeatAdminStatus(supabase: Client, seatId: string) {
+  const { data, error } = await supabase.rpc("get_seat_admin_status", { p_seat_id: seatId });
+  return { data: data?.[0] || null, error };
+}
+
+export async function getMyElectionAdminApplications(supabase: Client, profileId: string) {
+  return supabase
+    .from("election_administrators")
+    .select("id, seat_id, status, submitted_at, election_seats(role_title, map_shapes(name), elections(name, status))")
+    .eq("profile_id", profileId)
+    .order("submitted_at", { ascending: false });
+}
+
+export async function listPendingElectionAdminApplications(supabase: Client) {
+  return supabase
+    .from("election_administrators")
+    .select("id, seat_id, status, motivation, social_media_info, contact_email, submitted_at, election_seats(role_title, map_shapes(name), elections(name, status))")
+    .eq("status", "pending")
+    .order("submitted_at", { ascending: true });
+}
+
+export async function reviewElectionAdminApplication(supabase: Client, applicationId: string, approve: boolean) {
+  return supabase.rpc("review_election_admin_application", { p_application_id: applicationId, p_approve: approve });
+}
+
+// ── unregistered (admin-added, unclaimed) candidates ────────────────────
+export async function addUnregisteredCandidate(
+  supabase: Client,
+  seatId: string,
+  {
+    fullName,
+    partyId,
+    education,
+    hometown,
+    bio,
+    avatarUrl,
+  }: {
+    fullName: string;
+    partyId?: number | null;
+    education?: string | null;
+    hometown?: string | null;
+    bio?: string | null;
+    avatarUrl?: string | null;
+  }
+) {
+  // Same generated-type caveat as insertMapShape above: these RPC params
+  // have no SQL DEFAULT, so codegen marks them required/non-null even
+  // though Postgres happily accepts an explicit NULL at runtime (which is
+  // exactly what an admin adding a stub candidate with no bio/education
+  // etc. needs to send).
+  return supabase.rpc("add_unregistered_candidate", {
+    p_seat_id: seatId,
+    p_full_name: fullName,
+    p_party_id: partyId || null,
+    p_education: education || null,
+    p_hometown: hometown || null,
+    p_bio: bio || null,
+    p_avatar_url: avatarUrl || null,
+  } as unknown as {
+    p_seat_id: string;
+    p_full_name: string;
+    p_party_id: number;
+    p_education: string;
+    p_hometown: string;
+    p_bio: string;
+    p_avatar_url?: string;
+  });
+}
+
+export async function updateUnregisteredCandidate(
+  supabase: Client,
+  candidateId: string,
+  {
+    fullName,
+    partyId,
+    education,
+    hometown,
+    bio,
+  }: { fullName: string; partyId?: number | null; education?: string | null; hometown?: string | null; bio?: string | null }
+) {
+  return supabase.rpc("update_unregistered_candidate", {
+    p_candidate_id: candidateId,
+    p_full_name: fullName,
+    p_party_id: partyId || null,
+    p_education: education || null,
+    p_hometown: hometown || null,
+    p_bio: bio || null,
+  } as unknown as {
+    p_candidate_id: string;
+    p_full_name: string;
+    p_party_id: number;
+    p_education: string;
+    p_hometown: string;
+    p_bio: string;
+  });
+}
+
+export async function removeUnregisteredCandidate(supabase: Client, candidateId: string) {
+  return supabase.rpc("remove_unregistered_candidate", { p_candidate_id: candidateId });
+}
+
+// ── candidacy claim flow (see 20260802000001_candidacy_claims.sql) ──────
+// Flow A: an election admin emails the real candidate an invite link.
+//
+// functions.invoke()'s error on a non-2xx response is always a
+// FunctionsHttpError whose .message is the fixed string "Edge Function
+// returned a non-2xx status code" -- the edge function's actual { error }
+// body (e.g. "email rate limit exceeded") only lives on error.context, an
+// unread Response. Unwrap it here so callers reading error.message (same
+// as every other service function) get the real reason.
+export async function inviteCandidateToClaim(supabase: Client, candidateId: string, email: string) {
+  const { data, error } = await supabase.functions.invoke("send-claim-invite", {
+    body: { candidateId, email, redirectOrigin: window.location.origin },
+  });
+  if (error && "context" in error) {
+    const context = (error as { context?: { json?: () => Promise<{ error?: string }> } }).context;
+    if (context?.json) {
+      const body = await context.json().catch(() => null);
+      if (body?.error) return { data, error: { ...error, message: body.error } };
+    }
+  }
+  return { data, error };
+}
+
+export async function claimCandidacyViaToken(supabase: Client, token: string) {
+  return supabase.rpc("claim_candidacy_via_token", { p_token: token });
+}
+
+// Flow B: a citizen/politician says "this is me" and an election admin (or
+// site admin) reviews it.
+export async function requestCandidacyClaim(
+  supabase: Client,
+  candidateId: string,
+  { motivation, contactEmail, socialMediaInfo }: { motivation: string; contactEmail: string; socialMediaInfo?: string | null }
+) {
+  return supabase.rpc("request_candidacy_claim", {
+    p_candidate_id: candidateId,
+    p_motivation: motivation,
+    p_contact_email: contactEmail,
+    p_social_media_info: socialMediaInfo || null,
+  } as unknown as { p_candidate_id: string; p_motivation: string; p_contact_email: string; p_social_media_info: string });
+}
+
+export async function getClaimRequestsForSeat(supabase: Client, seatId: string) {
+  return supabase
+    .from("candidacy_claim_requests")
+    .select(
+      "id, candidate_id, motivation, contact_email, social_media_info, status, submitted_at, election_candidates!inner(seat_id, profiles!election_candidates_politician_id_fkey(full_name))"
+    )
+    .eq("election_candidates.seat_id", seatId)
+    .eq("status", "pending")
+    .order("submitted_at", { ascending: true });
+}
+
+export async function reviewCandidacyClaim(supabase: Client, requestId: string, approve: boolean) {
+  return supabase.rpc("review_candidacy_claim", { p_request_id: requestId, p_approve: approve });
+}
