@@ -49,12 +49,18 @@ export async function createFeedPost(
     linkMetadata,
   }: { content: string; imageUrl?: string | null; videoUrl?: string | null; linkMetadata?: Json | null }
 ) {
-  return supabase.rpc("create_post", {
-    p_content: content,
-    p_image_url: imageUrl ?? undefined,
-    p_video_url: videoUrl ?? undefined,
-    p_link_metadata: linkMetadata ?? undefined,
-  });
+  const args: {
+    p_content: string;
+    p_image_url?: string;
+    p_video_url?: string;
+    p_link_metadata?: Json;
+  } = { p_content: content };
+
+  if (imageUrl) args.p_image_url = imageUrl;
+  if (videoUrl) args.p_video_url = videoUrl;
+  if (linkMetadata) args.p_link_metadata = linkMetadata;
+
+  return supabase.rpc("create_post", args);
 }
 
 export async function voteOnPost(supabase: Client, postId: string, voteType: 1 | -1) {

@@ -25,5 +25,8 @@ dist-ssr
 .env
 src/graphify-out
 .vercel
+.next
+.next/
 
 certificates.next/
+

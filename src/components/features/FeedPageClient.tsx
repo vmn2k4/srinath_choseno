@@ -318,8 +318,10 @@ export default function FeedPageClient() {
       setUploadedVideoUrl(null);
       setShowVideoRecorder(false);
       await loadFeedPosts();
-    } catch (err) {
-      console.error("Error creating post:", err);
+    } catch (err: any) {
+      const msg = err?.message || err?.details || err?.hint || (typeof err === "object" ? JSON.stringify(err) : String(err));
+      console.error("Error creating post:", msg, err);
+      alert("Failed to create post: " + msg);
     } finally {
       setSubmitting(false);
     }

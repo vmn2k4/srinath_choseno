@@ -117,8 +117,6 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 GRANT EXECUTE ON FUNCTION public.create_post(TEXT, TEXT, TEXT, JSONB, UUID, UUID) TO authenticated;
--- Also re-grant the old 4-param signature so existing callers still work
-GRANT EXECUTE ON FUNCTION public.create_post(TEXT, TEXT, TEXT, JSONB) TO authenticated;
 
 -- ── 5. news-images storage bucket ────────────────────────────────────────
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)

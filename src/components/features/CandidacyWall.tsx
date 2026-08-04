@@ -828,7 +828,7 @@ export default function CandidacyWall({
                 <PostCard
                   key={post.id}
                   post={post}
-                  ownerGhostId={candidate?.profiles?.current_ghost_id}
+                  ownerGhostId={candidate?.profiles?.current_ghost_id ?? profile?.current_ghost_id}
                   ownerBadgeLabel="Candidate"
                   viewerIsOwner={isOwner}
                   canComment={!!user}

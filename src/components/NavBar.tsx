@@ -48,6 +48,16 @@ export default function NavBar() {
             <Link href="/feed" className={navLinkClass(isActive("/feed"))}>
               Local Feed
             </Link>
+            {profile?.role === "politician" && profile?.current_ghost_id && (
+              <Link
+                href={`/wall/${profile.current_ghost_id}`}
+                className={navLinkClass(
+                  pathname?.startsWith("/wall") ?? false
+                )}
+              >
+                My Wall
+              </Link>
+            )}
             {profile?.role !== "admin" && (
               <Link
                 href={
