@@ -8,6 +8,7 @@ interface ClaimPageProps {
 export const metadata: Metadata = {
   title: "Claim Candidacy | Choseno",
   description: "Redeem your candidate claim invitation on Choseno.",
+  robots: { index: false, follow: false },
 };
 
 export default async function ClaimPage({ params }: ClaimPageProps) {

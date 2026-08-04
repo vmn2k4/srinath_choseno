@@ -41,6 +41,7 @@ export async function generateMetadata({
   const name = candidate.profiles?.full_name || "Candidate";
   const roleTitle = candidate.election_seats?.role_title || "Office";
   const canonicalUrl = `${BASE_URL}/candidacy/${candidateId}`;
+  const ogImageUrl = `${BASE_URL}/candidacy/${candidateId}/opengraph-image`;
 
   const title = `${name} — Candidate for ${roleTitle} | Choseno`;
   const description = candidate.statement
@@ -57,11 +58,20 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "Choseno",
       type: "profile",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [ogImageUrl],
     },
   };
 }

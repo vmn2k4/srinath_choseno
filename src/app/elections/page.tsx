@@ -28,12 +28,21 @@ export const metadata: Metadata = {
     url: `${BASE_URL}/elections`,
     siteName: "Choseno",
     type: "website",
+    images: [
+      {
+        url: `${BASE_URL}/elections/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Active Elections & Races | Choseno",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Active Elections & Races | Choseno",
     description:
       "Discover active elections, open seats, and candidates in your electoral boundaries on Choseno.",
+    images: [`${BASE_URL}/elections/opengraph-image`],
   },
 };
 
@@ -107,11 +116,32 @@ export default async function ElectionsPage() {
     candidates: candidatesBySeat[s.id] || [],
   }));
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Active Elections & Races",
+    description: "Discover active electoral seats and candidate races on Choseno.",
+    url: `${BASE_URL}/elections`,
+    numberOfItems: seats.length,
+    itemListElement: seats.map((seat, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: `${seat.role_title} — ${seat.map_shapes?.name || ""}`,
+      url: `${BASE_URL}/elections/seat/${seat.id}`,
+    })),
+  };
+
   return (
-    <ElectionsPageClient
-      initialSeats={seats}
-      initialRole={role}
-      initialBoundaries={initialBoundaries}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ElectionsPageClient
+        initialSeats={seats}
+        initialRole={role}
+        initialBoundaries={initialBoundaries}
+      />
+    </>
   );
 }

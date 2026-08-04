@@ -119,3 +119,32 @@ export async function createWallPost(
 ) {
   return supabase.from("posts").insert(fields);
 }
+
+export async function getWallPostBySlugOrId(supabase: Client, ghostId: string, slug: string) {
+  const { data: exactPost } = await supabase
+    .from("posts")
+    .select(`*, comments (*)`)
+    .eq("id", slug)
+    .maybeSingle();
+
+  if (exactPost) {
+    return { data: exactPost };
+  }
+
+  const { data: posts } = await getWallPosts(supabase, ghostId);
+  if (!posts || posts.length === 0) {
+    return { data: null };
+  }
+
+  const slugifiedMatch = posts.find((p) => {
+    const postSlug = (p.content || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "")
+      .slice(0, 60);
+    return postSlug === slug || p.id === slug;
+  });
+
+  return { data: slugifiedMatch || posts[0] };
+}
+

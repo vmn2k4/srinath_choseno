@@ -35,12 +35,21 @@ export const metadata: Metadata = {
     url: BASE_URL,
     siteName: "Choseno",
     type: "website",
+    images: [
+      {
+        url: `${BASE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Choseno — Your voice, heard where you live",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Choseno — Scoped Civic Platform",
     description:
       "Choseno connects citizens and politicians inside real electoral boundaries.",
+    images: [`${BASE_URL}/opengraph-image`],
   },
 };
 

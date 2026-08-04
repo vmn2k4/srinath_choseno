@@ -1,7 +1,12 @@
 import { Metadata } from "next";
 import PoliticianWallClient from "@/components/features/PoliticianWallClient";
 import { createClient as createServerClient } from "@/lib/supabase/server";
-import { getWallOwnerProfile, getWallPosts, getSupporterCount } from "@/lib/services/politicianWall";
+import {
+  getWallOwnerProfile,
+  getWallPosts,
+  getWallPostBySlugOrId,
+  getSupporterCount,
+} from "@/lib/services/politicianWall";
 
 const BASE_URL = "https://choseno.com";
 
@@ -15,22 +20,45 @@ type WallOwner = {
   politician_profiles?: { bio?: string; avatar_url?: string } | null;
 };
 
+type WallPost = {
+  id: string;
+  content?: string;
+  image_url?: string;
+  created_at?: string;
+};
+
 export async function generateMetadata({
   params,
 }: WallSlugPageProps): Promise<Metadata> {
   const { ghostId, slug } = await params;
   const supabase = await createServerClient();
-  const { data } = await getWallOwnerProfile(supabase, ghostId);
-  const owner = data as unknown as WallOwner | null;
+
+  const [{ data: ownerData }, { data: postData }] = await Promise.all([
+    getWallOwnerProfile(supabase, ghostId),
+    getWallPostBySlugOrId(supabase, ghostId, slug),
+  ]);
+
+  const owner = ownerData as unknown as WallOwner | null;
+  const post = postData as WallPost | null;
 
   const name = owner?.full_name || "Politician";
-  const bio = owner?.politician_profiles?.bio || "";
   const canonicalUrl = `${BASE_URL}/wall/${ghostId}/${slug}`;
 
-  const title = `${name}'s Public Wall | Choseno`;
-  const description = bio
-    ? bio.slice(0, 160)
-    : `Official public wall, policy positions, and constituent updates for ${name} on Choseno.`;
+  const postExcerpt = post?.content
+    ? post.content.replace(/\s+/g, " ").trim()
+    : null;
+
+  const title = postExcerpt
+    ? `"${postExcerpt.slice(0, 60)}${postExcerpt.length > 60 ? "…" : ""}" — ${name}'s Wall | Choseno`
+    : `${name}'s Public Wall Thread | Choseno`;
+
+  const description = postExcerpt
+    ? postExcerpt.slice(0, 160)
+    : owner?.politician_profiles?.bio
+    ? owner.politician_profiles.bio.slice(0, 160)
+    : `Read official updates, policy statements, and constituent discussion for ${name} on Choseno.`;
+
+  const ogImageUrl = post?.image_url || `${BASE_URL}/wall/${ghostId}/${slug}/opengraph-image`;
 
   return {
     title,
@@ -41,47 +69,72 @@ export async function generateMetadata({
       description,
       url: canonicalUrl,
       siteName: "Choseno",
-      type: "profile",
+      type: "article",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [ogImageUrl],
     },
   };
 }
 
 export default async function WallSlugPage({ params }: WallSlugPageProps) {
-  const { ghostId } = await params;
+  const { ghostId, slug } = await params;
   const supabase = await createServerClient();
 
-  const { data: ownerData } = await getWallOwnerProfile(supabase, ghostId);
+  const [{ data: ownerData }, { data: postData }] = await Promise.all([
+    getWallOwnerProfile(supabase, ghostId),
+    getWallPostBySlugOrId(supabase, ghostId, slug),
+  ]);
   const owner = ownerData as unknown as WallOwner | null;
+  const post = postData as WallPost | null;
 
   const [{ data: posts }, supportCountRes] = await Promise.all([
     getWallPosts(supabase, ghostId),
     owner?.id ? getSupporterCount(supabase, owner.id) : Promise.resolve({ count: 0 }),
   ]);
 
-  const jsonLd = owner
-    ? {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        name: owner.full_name || "Politician",
-        description: owner.politician_profiles?.bio || undefined,
-        image: owner.politician_profiles?.avatar_url || undefined,
-        url: `${BASE_URL}/wall/${ghostId}`,
-      }
-    : null;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SocialMediaPosting",
+    headline: post?.content ? post.content.slice(0, 110) : `${owner?.full_name || "Politician"}'s Public Thread`,
+    articleBody: post?.content || undefined,
+    datePublished: post?.created_at || undefined,
+    url: `${BASE_URL}/wall/${ghostId}/${slug}`,
+    author: owner
+      ? {
+          "@type": "Person",
+          name: owner.full_name || "Politician",
+          url: `${BASE_URL}/wall/${ghostId}`,
+          image: owner.politician_profiles?.avatar_url || undefined,
+        }
+      : undefined,
+    publisher: {
+      "@type": "Organization",
+      name: "Choseno",
+      url: BASE_URL,
+    },
+    ...(post?.image_url && {
+      image: post.image_url,
+    }),
+  };
 
   return (
     <>
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <PoliticianWallClient
         ghostId={ghostId}
         initialWallOwner={owner as any}

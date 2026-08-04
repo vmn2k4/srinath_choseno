@@ -26,6 +26,7 @@ export async function generateMetadata({
   const name = owner?.full_name || "Politician";
   const bio = owner?.politician_profiles?.bio || "";
   const canonicalUrl = `${BASE_URL}/wall/${ghostId}`;
+  const ogImageUrl = `${BASE_URL}/wall/${ghostId}/opengraph-image`;
 
   const title = `${name}'s Public Wall | Choseno`;
   const description = bio
@@ -42,11 +43,20 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "Choseno",
       type: "profile",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [ogImageUrl],
     },
   };
 }

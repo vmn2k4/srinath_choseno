@@ -30,6 +30,7 @@ import {
   X,
   Camera,
   Plus,
+  Share2,
 } from "lucide-react";
 import {
   Card,
@@ -68,9 +69,34 @@ export default function ElectionSeatPageClient({
   const [loading, setLoading] = useState(!initialSeat);
   const [seat, setSeat] = useState<any>(initialSeat);
   const [candidates, setCandidates] = useState<any[]>(initialCandidates as any[]);
-  const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(
-    (initialCandidates as any[])[0]?.id || null
-  );
+  const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const candParam = params.get("candidate");
+      if (candParam && (initialCandidates as any[]).some((c) => c.id === candParam)) {
+        return candParam;
+      }
+    }
+    return (initialCandidates as any[])[0]?.id || null;
+  });
+  const [copiedShareLink, setCopiedShareLink] = useState(false);
+
+  const handleSelectCandidate = (candidateId: string) => {
+    setSelectedCandidateId(candidateId);
+    if (typeof window !== "undefined") {
+      const newUrl = `${window.location.pathname}?candidate=${candidateId}`;
+      window.history.replaceState(null, "", newUrl);
+    }
+  };
+
+  const handleCopyShareLink = () => {
+    if (typeof window !== "undefined" && selectedCandidateId) {
+      const shareUrl = `${window.location.origin}/elections/seat/${seatId}?candidate=${selectedCandidateId}`;
+      navigator.clipboard.writeText(shareUrl);
+      setCopiedShareLink(true);
+      setTimeout(() => setCopiedShareLink(false), 2500);
+    }
+  };
   const [role, setRole] = useState<string | null>(null);
   const [myCandidacies, setMyCandidacies] = useState<any[]>([]);
   const [applying, setApplying] = useState(false);
@@ -108,9 +134,6 @@ export default function ElectionSeatPageClient({
 
   const fetchAll = async () => {
     if (!seatId) return;
-    // Only show the full-page spinner on a true cold start (no server-seeded
-    // data) — when we already have initialSeat, this refetch runs quietly in
-    // the background for the auth-dependent extras.
     if (!seat) setLoading(true);
 
     const { data: seatRow } = await getSeatById(supabase, seatId);
@@ -119,7 +142,16 @@ export default function ElectionSeatPageClient({
     const { data: candidateRows } = await getCandidatesBySeatIds(supabase, [seatId]);
     const candItems = (candidateRows as any[]) || [];
     setCandidates(candItems);
-    setSelectedCandidateId(candItems[0]?.id || null);
+
+    const candParam = typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("candidate")
+      : null;
+
+    if (candParam && candItems.some((c) => c.id === candParam)) {
+      setSelectedCandidateId(candParam);
+    } else if (candItems.length > 0 && !selectedCandidateId) {
+      setSelectedCandidateId(candItems[0].id);
+    }
 
     if (user) {
       const { data: myProfile } = await getProfileRole(supabase, user.id);
@@ -339,7 +371,7 @@ export default function ElectionSeatPageClient({
                   return (
                     <button
                       key={c.id}
-                      onClick={() => setSelectedCandidateId(c.id)}
+                      onClick={() => handleSelectCandidate(c.id)}
                       className={`flex items-center gap-3 shrink-0 pl-2.5 pr-4 py-2 rounded-2xl border-2 transition-all cursor-pointer ${
                         isSelected
                           ? "border-primary bg-primary/10 shadow-[0_0_0_3px_rgba(233,235,158,0.12)]"
@@ -384,7 +416,25 @@ export default function ElectionSeatPageClient({
                 })}
               </div>
 
-              {selectedCandidateId && <CandidacyWall candidateId={selectedCandidateId} embedded />}
+              {selectedCandidateId && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between gap-3 px-1">
+                    <span className="text-xs font-semibold text-text-muted">
+                      Candidate {candidates.findIndex((c) => c.id === selectedCandidateId) + 1} of {candidates.length}
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleCopyShareLink}
+                      className="gap-1.5 text-xs border-primary/30 text-primary-light hover:bg-primary/10"
+                    >
+                      {copiedShareLink ? <Check size={13} className="text-success" /> : <Share2 size={13} />}
+                      {copiedShareLink ? "Direct Link Copied!" : "Share Candidate Link"}
+                    </Button>
+                  </div>
+                  <CandidacyWall candidateId={selectedCandidateId} embedded />
+                </div>
+              )}
             </div>
           )}
         </div>
