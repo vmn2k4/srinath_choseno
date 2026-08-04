@@ -91,6 +91,10 @@
     background-color: var(--color-background);
   }
 
+  main {
+    @apply pt-6 lg:pt-8;
+  }
+
   /* The ambient gradient lives on a fixed, viewport-sized layer instead of
      directly on body's background-image -- a plain body background scales
      to the page's full scrollable content height, so the exact same

@@ -62,27 +62,27 @@ export default async function NewsPage() {
             return (
               <Card
                 key={article.id}
+                as={Link}
+                href={`/news/${article.slug}`}
                 interactive
                 padding="none"
-                className="flex flex-col justify-between h-full overflow-hidden"
+                className="group flex flex-col justify-between h-full overflow-hidden cursor-pointer"
               >
                 {/* Hero image */}
                 {article.hero_image_url && (
-                  <Link href={`/news/${article.slug}`} className="block">
-                    <div className="relative h-40 w-full overflow-hidden">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={article.hero_image_url}
-                        alt={content?.heroImageAlt ?? article.headline}
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                      />
-                      {isBreaking && (
-                        <span className="absolute top-2 left-2 flex items-center gap-1 bg-danger text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                          <Zap size={10} /> BREAKING
-                        </span>
-                      )}
-                    </div>
-                  </Link>
+                  <div className="relative h-40 w-full overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={article.hero_image_url}
+                      alt={content?.heroImageAlt ?? article.headline}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    {isBreaking && (
+                      <span className="absolute top-2 left-2 flex items-center gap-1 bg-danger text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                        <Zap size={10} /> BREAKING
+                      </span>
+                    )}
+                  </div>
                 )}
 
                 <div className="flex flex-col flex-1 p-4 space-y-3">
@@ -108,7 +108,7 @@ export default async function NewsPage() {
                     </span>
                   )}
 
-                  <h2 className="text-base font-bold text-text-main leading-snug line-clamp-3">
+                  <h2 className="text-base font-bold text-text-main leading-snug line-clamp-3 group-hover:text-primary transition-colors">
                     {article.headline}
                   </h2>
 
@@ -118,12 +118,9 @@ export default async function NewsPage() {
                     </p>
                   )}
 
-                  <Link
-                    href={`/news/${article.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-hover transition-colors pt-2 mt-auto border-t border-border-light/20"
-                  >
+                  <div className="inline-flex items-center gap-1.5 text-xs font-bold text-primary group-hover:text-primary-hover transition-colors pt-2 mt-auto border-t border-border-light/20">
                     Read full article <ArrowRight size={13} />
-                  </Link>
+                  </div>
                 </div>
               </Card>
             );

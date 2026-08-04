@@ -26,6 +26,11 @@ export const metadata: Metadata = {
   title: "Choseno — A Framework for Future Democracy",
   description:
     "An anonymous civic social platform. Post under a rotating Ghost ID, scoped automatically to your real electoral and administrative boundaries.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -36,7 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <AuthProvider>
             <div className="flex flex-col min-h-screen">
               <NavBar />
-              <main className="flex-1 w-full">{children}</main>
+              <main className="flex-1 w-full pt-6 lg:pt-8">{children}</main>
             </div>
             {process.env.NODE_ENV !== "production" && <DebugUserSwitcher />}
           </AuthProvider>

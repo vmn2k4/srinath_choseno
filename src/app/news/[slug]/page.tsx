@@ -125,7 +125,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="w-full max-w-4xl mx-auto pb-20 px-4 lg:px-8 space-y-6">
+      <div className="w-full max-w-none pb-20 px-4 lg:px-8 space-y-6">
         {/* Back */}
         <Link
           href="/news"
