@@ -2,24 +2,27 @@
 
 ## Purpose
 
-Every Supabase call (`.from()`, `.rpc()`, `.storage`, `.auth`) lives in `src/services/`, one file per domain, one small named function per backend operation. Components never call `supabase` directly — they import and call a service function instead. This keeps each page's own code focused on UI/state, and gives the whole app one place that documents exactly what backend operations exist.
+Every Supabase call (`.from()`, `.rpc()`, `.storage`, `.auth`) lives in `src/lib/services/`, one file per domain, one small named function per backend operation. Components never call `supabase` directly — they import and call a service function instead. This keeps each page's own code focused on UI/state, and gives the whole app one place that documents exactly what backend operations exist.
+
+**Post-Next.js-migration note**: this whole layer moved from `src/services/*.js` to `src/lib/services/*.ts` (see [ARCHITECTURE.md §31](../ARCHITECTURE.md)) — same functions, same one-file-per-domain shape, now typed against the generated `src/lib/supabase/types.ts`. The table below uses the current `.ts` filenames; component names in the "Used by" column are still written as their pre-migration `.jsx` names where this doc predates the port (e.g. `FeedPage` = today's `FeedPageClient.tsx`) — see §31's rename table in ARCHITECTURE.md for the full mapping rather than duplicating it here.
 
 ## File map
 
 | File | Domain | Used by |
 |---|---|---|
-| `supabase.js` | Client init only | (imported by every other service file) |
-| `elections.js` | elections, election_seats, election_candidates, election_administrators, questions/options, candidate answers, candidacy claim invites/requests (§28), election RPCs, candidacy-wall posts (`getCandidacyWallPosts` — unified with the person's permanent wall, see `ARCHITECTURE.md` §27) | `ElectionsAdmin`, `ElectionAdminApplications`, `PoliticianElections`, `CandidateApplication`, `CandidacyWall`, `ElectionsPage`, `ElectionSeatPage`, `ClaimCandidacy` |
-| `boundaries.js` | countries, country_boundary_types, map_shapes, boundary_uploads, boundary RPCs (geojson, containers, redistricting, shape insert) | `BoundaryVisualizer`, `BoundaryUploadsPanel`, `RedistrictingPanel`, `BoundaryPicker`, `AdminPage`, `FeedPage`, `StepLocation`, plus `ElectionsAdmin`/`PoliticianElections` for country/type/shape lookups |
-| `politicalParties.js` | political_parties CRUD | `AdminPage`, `StepPolitician`, `ElectionSeatPage` |
-| `feed.js` | posts (main feed), comments, post-image storage, ghost-identity burn RPC, election notifications | `FeedPage`, `ProfilePage` (burn), plus `PoliticianWall`/`CandidacyWall` for the shared `createComment`/`uploadPostImage` helpers |
-| `politicianWall.js` | politician_supporters, wall-scoped profile/posts lookups, wall post creation (direct insert), realtime support-count subscription | `PoliticianWall`, plus `CandidacyWall` for the shared wall post helpers |
-| `profile.js` | profiles, user_locations, user_boundary_memberships, politician_profiles, civic score RPC, the AuthContext self-healing profile fetch | `ProfilePage`, `EditProfileFlow`, `OnboardingFlow`, `AuthContext`, `PoliticianSidebar`, plus `FeedPage`/`PoliticianWall`/`CandidacyWall`/`ElectionsPage`/`ElectionSeatPage`/`PoliticianElections` for profile/membership lookups |
-| `auth.js` | auth.signUp / signInWithPassword / signOut / getSession / onAuthStateChange | `AuthPage`, `AuthContext` |
-| `video.js` | storage upload/getPublicUrl for video (bucket-parameterized) | `VideoRecorder` |
-| `analytics.js` | read-only platform metrics (post/comment/user counts, DAU/WAU/MAU, roles breakdown) — computed client-side from several `count`/timestamp queries, not a single RPC | `Admin/AnalyticsPanel` |
-| `settings.js` | `site_settings` (single-row site-wide theme), cached via `src/utils/apiCache.js` | `ThemeContext` |
-| `candidateSync.js` | jurisdiction detection for a seat, official-candidate-source lookup/fetch (wraps the `fetch-candidates` Edge Function), one-click add of a fetched candidate (delegates to `elections.js`'s `addUnregisteredCandidate`) | `Admin/ElectionsAdmin` |
+| `supabase/client.ts` / `supabase/server.ts` | Client init only (browser vs. server-component clients) | (imported by every other service file, and directly by Server Components) |
+| `elections.ts` | elections, election_seats, election_candidates, election_administrators, questions/options, candidate answers, candidacy claim invites/requests (§28), election RPCs, candidacy-wall posts (`getCandidacyWallPosts` — unified with the person's permanent wall, see `ARCHITECTURE.md` §27) | `ElectionsAdminClient`, `ElectionAdminApplicationsClient`, `PoliticianElectionsClient`, `CandidateApplicationClient`, `CandidacyWall`, `elections/page.tsx`, `ElectionSeatPageClient`, `ClaimCandidacyClient` |
+| `boundaries.ts` | countries, country_boundary_types, map_shapes, boundary_uploads, boundary RPCs (geojson, containers, redistricting, shape insert) | `BoundaryVisualizerClient`, `BoundaryUploadsPanel`, `RedistrictingPanel`, `CascadingBoundarySelector`, admin boundaries page, `FeedPageClient`, `OnboardingFlowClient`, plus `ElectionsAdminClient`/`PoliticianElectionsClient` for country/type/shape lookups |
+| `politicalParties.ts` | political_parties CRUD | admin boundaries page, `OnboardingFlowClient`, `ElectionSeatPageClient` |
+| `feed.ts` | posts (main feed), comments, post-image storage, ghost-identity burn RPC, election notifications | `FeedPageClient`, `ProfilePageClient` (burn), plus `PoliticianWallClient`/`CandidacyWall` for the shared `createComment`/`uploadPostImage` helpers |
+| `politicianWall.ts` | politician_supporters, wall-scoped profile/posts lookups, wall post creation (direct insert), realtime support-count subscription | `PoliticianWallClient`, plus `CandidacyWall` for the shared wall post helpers |
+| `profile.ts` | profiles, user_locations, user_boundary_memberships, politician_profiles, civic score RPC, the AuthContext self-healing profile fetch | `ProfilePageClient`, `OnboardingFlowClient`, `AuthContext`, `PoliticianSidebar`, plus `FeedPageClient`/`PoliticianWallClient`/`CandidacyWall`/elections pages/`PoliticianElectionsClient` for profile/membership lookups |
+| `auth.ts` | auth.signUp / signInWithPassword / signOut / getSession / onAuthStateChange | `AuthPageClient`, `AuthContext` |
+| `video.ts` | storage upload/getPublicUrl for video (bucket-parameterized) | `VideoRecorder` |
+| `analytics.ts` | read-only platform metrics (post/comment/user counts, DAU/WAU/MAU, roles breakdown) — computed client-side from several `count`/timestamp queries, not a single RPC | `AnalyticsAdminClient` |
+| `settings.ts` | `site_settings` (single-row site-wide theme), cached via `src/lib/utils/apiCache.ts` | `ThemeContext` |
+| `candidateSync.ts` | jurisdiction detection for a seat, official-candidate-source lookup/fetch (wraps the `fetch-candidates` Edge Function), one-click add of a fetched candidate (delegates to `elections.ts`'s `addUnregisteredCandidate`) | `ElectionsAdminClient` |
+| `news.ts` | news_articles (list/detail queries scoped to `status='published'` or a scheduled article whose `published_at` has passed), reading-time estimation | `news/page.tsx`, `news/[slug]/page.tsx`, `AdminNewsPageClient` (admin CRUD + all statuses) |
 
 ## Conventions
 

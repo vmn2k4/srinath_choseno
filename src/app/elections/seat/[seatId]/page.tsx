@@ -3,7 +3,7 @@ import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
 
-const BASE_URL = "https://choseno.app";
+const BASE_URL = "https://choseno.com";
 
 interface SeatPageProps {
   params: Promise<{ seatId: string }>;

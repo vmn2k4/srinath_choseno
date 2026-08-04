@@ -184,7 +184,7 @@ export default function ElectionsAdminClient() {
   };
 
   useEffect(() => {
-    fetchElections();
+    Promise.resolve().then(() => fetchElections());
     getCountries(supabase).then(({ data }) => setCountries((data || []).map((c: any) => c.name)));
     listBoundaryTypes(supabase).then(({ data }) => setBoundaryTypes(data || []));
   }, [supabase]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -233,18 +233,20 @@ export default function ElectionsAdminClient() {
   };
 
   useEffect(() => {
-    if (selectedElection) {
-      fetchSeats(selectedElection.id);
-      fetchQuestions(selectedElection.id);
-      setExpandedCandidateId(null);
-      setPendingShapeIds(new Set());
-      setMatchedShapeIds(null);
-      setSelectedRoleKeys(new Set());
-      setSeatStatus("");
-    } else {
-      setSeats([]);
-      setQuestions([]);
-    }
+    Promise.resolve().then(() => {
+      if (selectedElection) {
+        fetchSeats(selectedElection.id);
+        fetchQuestions(selectedElection.id);
+        setExpandedCandidateId(null);
+        setPendingShapeIds(new Set());
+        setMatchedShapeIds(null);
+        setSelectedRoleKeys(new Set());
+        setSeatStatus("");
+      } else {
+        setSeats([]);
+        setQuestions([]);
+      }
+    });
   }, [selectedElection?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const typesForSeatCountry = seatCountry ? boundaryTypes.filter((t) => t.country === seatCountry) : [];
@@ -262,35 +264,39 @@ export default function ElectionsAdminClient() {
   // Country scopes both the container/target-type pickers and the manual
   // seat picker below — reset any selection tied to the previous country.
   useEffect(() => {
-    setTargetType("");
-    setContainerType("");
-    setContainerId("");
-    setContainerOptions([]);
-    setPendingShapeIds(new Set());
-    setMatchedShapeIds(null);
-    setBoundaryCandidates([]);
+    Promise.resolve().then(() => {
+      setTargetType("");
+      setContainerType("");
+      setContainerId("");
+      setContainerOptions([]);
+      setPendingShapeIds(new Set());
+      setMatchedShapeIds(null);
+      setBoundaryCandidates([]);
+    });
   }, [seatCountry]);
 
   useEffect(() => {
-    setContainerId("");
-    if (!seatCountry || !containerType) {
-      setContainerOptions([]);
-      return;
-    }
     let cancelled = false;
-    setLoadingContainers(true);
-    (async () => {
-      const { data } = await getMapShapesByType(supabase, {
-        country: seatCountry,
-        boundaryType: containerType,
-        columns: "id, name",
-        orderBy: "name",
-      });
-      if (!cancelled) {
-        setContainerOptions((data || []).map((s: any) => ({ value: String(s.id), label: s.name })));
-        setLoadingContainers(false);
+    Promise.resolve().then(() => {
+      setContainerId("");
+      if (!seatCountry || !containerType) {
+        setContainerOptions([]);
+        return;
       }
-    })();
+      setLoadingContainers(true);
+      (async () => {
+        const { data } = await getMapShapesByType(supabase, {
+          country: seatCountry,
+          boundaryType: containerType,
+          columns: "id, name",
+          orderBy: "name",
+        });
+        if (!cancelled) {
+          setContainerOptions((data || []).map((s: any) => ({ value: String(s.id), label: s.name })));
+          setLoadingContainers(false);
+        }
+      })();
+    });
     return () => {
       cancelled = true;
     };
@@ -300,41 +306,45 @@ export default function ElectionsAdminClient() {
   // both when it changes so a stale selection from a different boundary type
   // can't leak into seat creation.
   useEffect(() => {
-    setPendingShapeIds(new Set());
-    setMatchedShapeIds(null);
-    setSelectedRoleKeys(new Set());
-    setBoundarySearch("");
-    if (!seatCountry || !targetType) {
-      setBoundaryCandidates([]);
-      return;
-    }
     let cancelled = false;
-    setLoadingBoundaryCandidates(true);
-    (async () => {
-      const { data } = await getBoundaryCandidates(supabase, {
-        boundaryTypeFilter: [targetType],
-        countryFilter: seatCountry,
-      });
-      if (!cancelled) {
-        setBoundaryCandidates(data || []);
-        setLoadingBoundaryCandidates(false);
+    Promise.resolve().then(() => {
+      setPendingShapeIds(new Set());
+      setMatchedShapeIds(null);
+      setSelectedRoleKeys(new Set());
+      setBoundarySearch("");
+      if (!seatCountry || !targetType) {
+        setBoundaryCandidates([]);
+        return;
       }
-    })();
+      setLoadingBoundaryCandidates(true);
+      (async () => {
+        const { data } = await getBoundaryCandidates(supabase, {
+          boundaryTypeFilter: [targetType],
+          countryFilter: seatCountry,
+        });
+        if (!cancelled) {
+          setBoundaryCandidates(data || []);
+          setLoadingBoundaryCandidates(false);
+        }
+      })();
+    });
     return () => {
       cancelled = true;
     };
   }, [seatCountry, targetType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (!seatCountry || !targetType) {
-      setRoleTypes([]);
-      return;
-    }
     let cancelled = false;
-    (async () => {
-      const { data } = await getElectionRoleTypes(supabase, seatCountry, targetType);
-      if (!cancelled) setRoleTypes(data || []);
-    })();
+    Promise.resolve().then(() => {
+      if (!seatCountry || !targetType) {
+        setRoleTypes([]);
+        return;
+      }
+      (async () => {
+        const { data } = await getElectionRoleTypes(supabase, seatCountry, targetType);
+        if (!cancelled) setRoleTypes(data || []);
+      })();
+    });
     return () => {
       cancelled = true;
     };

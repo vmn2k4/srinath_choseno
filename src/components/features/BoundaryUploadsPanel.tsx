@@ -78,7 +78,7 @@ export default function BoundaryUploadsPanel({
   };
 
   useEffect(() => {
-    fetchUploads();
+    Promise.resolve().then(() => fetchUploads());
   }, [countryFilter, supabase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleExpand = async (uploadId: number) => {

@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import NavBar from "@/components/NavBar";
+import DebugUserSwitcher from "@/components/dev/DebugUserSwitcher";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
@@ -21,6 +22,7 @@ const bigShouldersDisplay = Big_Shoulders({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://choseno.com"),
   title: "Choseno — A Framework for Future Democracy",
   description:
     "An anonymous civic social platform. Post under a rotating Ghost ID, scoped automatically to your real electoral and administrative boundaries.",
@@ -36,6 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <NavBar />
               <main className="flex-1 w-full">{children}</main>
             </div>
+            {process.env.NODE_ENV !== "production" && <DebugUserSwitcher />}
           </AuthProvider>
         </ThemeProvider>
       </body>

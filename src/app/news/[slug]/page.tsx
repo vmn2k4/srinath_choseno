@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, Globe, User, ExternalLink, Zap } from "lucide-react";
-import { Card, Badge, Button } from "@/components/primitives";
+import { Card, Badge } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/server";
 import {
   getNewsArticleBySlug,
@@ -39,8 +39,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     article.summary ||
     (content?.body?.replace(/[#*`\[\]]/g, "").trim().slice(0, 160)) ||
     "";
-  const imageUrl = article.hero_image_url ?? undefined;
-  const canonicalUrl = `https://choseno.app/news/${slug}`;
+  const canonicalUrl = `https://choseno.com/news/${slug}`;
   const publishedTime = article.published_at ?? undefined;
 
   return {
@@ -54,15 +53,11 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       siteName: "Choseno",
       type: "article",
       publishedTime,
-      ...(imageUrl && {
-        images: [{ url: imageUrl, alt: content?.heroImageAlt ?? title }],
-      }),
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      ...(imageUrl && { images: [imageUrl] }),
     },
   };
 }
@@ -98,11 +93,11 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
       content?.metaDescription || article.summary || undefined,
     datePublished: article.published_at ?? article.created_at,
     dateModified: article.updated_at,
-    url: `https://choseno.app/news/${slug}`,
+    url: `https://choseno.com/news/${slug}`,
     publisher: {
       "@type": "Organization",
       name: "Choseno",
-      url: "https://choseno.app",
+      url: "https://choseno.com",
     },
     ...(article.hero_image_url && {
       image: {
@@ -142,6 +137,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
         {/* Hero image */}
         {article.hero_image_url && (
           <div className="relative rounded-2xl overflow-hidden h-56 sm:h-72 w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={article.hero_image_url}
               alt={content?.heroImageAlt ?? article.headline}
@@ -204,6 +200,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
           {content?.author?.name && (
             <div className="flex items-center gap-3 pb-5 border-b border-border-light/20">
               {content.author.photoUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={content.author.photoUrl}
                   alt={content.author.name}

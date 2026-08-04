@@ -3,7 +3,7 @@ import PoliticianWallClient from "@/components/features/PoliticianWallClient";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { getWallOwnerProfile, getWallPosts, getSupporterCount } from "@/lib/services/politicianWall";
 
-const BASE_URL = "https://choseno.app";
+const BASE_URL = "https://choseno.com";
 
 interface WallPageProps {
   params: Promise<{ ghostId: string }>;
@@ -25,7 +25,6 @@ export async function generateMetadata({
 
   const name = owner?.full_name || "Politician";
   const bio = owner?.politician_profiles?.bio || "";
-  const avatarUrl = owner?.politician_profiles?.avatar_url;
   const canonicalUrl = `${BASE_URL}/wall/${ghostId}`;
 
   const title = `${name}'s Public Wall | Choseno`;
@@ -42,14 +41,12 @@ export async function generateMetadata({
       description,
       url: canonicalUrl,
       siteName: "Choseno",
-      images: avatarUrl ? [{ url: avatarUrl }] : [],
       type: "profile",
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: avatarUrl ? [avatarUrl] : [],
     },
   };
 }

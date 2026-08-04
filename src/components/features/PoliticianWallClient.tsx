@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import LinkPreview from "./LinkPreview";
-import WallPostFeed, { WallPost } from "@/components/wall/WallPostFeed";
+import PostCard, { type PostWithComments } from "@/components/features/PostCard";
 import {
   Users,
   Heart,
@@ -38,6 +38,7 @@ import {
   Modal,
   RemoveMediaButton,
   Avatar,
+  EmptyState,
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 
@@ -63,7 +64,7 @@ interface PoliticianWallClientProps {
   // ElectionSeatPageClient, so the initial server HTML already has the
   // wall owner's real info and posts instead of a loading spinner.
   initialWallOwner?: WallOwnerRecord | null;
-  initialPosts?: WallPost[];
+  initialPosts?: PostWithComments[];
   initialSupportCount?: number;
 }
 
@@ -79,7 +80,7 @@ export default function PoliticianWallClient({
 
   const [wallOwner, setWallOwner] = useState<WallOwnerRecord | null>(initialWallOwner);
   const [profile, setProfile] = useState<{ id: string; current_ghost_id: string } | null>(null);
-  const [posts, setPosts] = useState<WallPost[]>(initialPosts);
+  const [posts, setPosts] = useState<PostWithComments[]>(initialPosts);
   const [loading, setLoading] = useState(!initialWallOwner);
   const [newPostContent, setNewPostContent] = useState("");
   const [extractedUrl, setExtractedUrl] = useState<string | null>(null);
@@ -102,7 +103,7 @@ export default function PoliticianWallClient({
     try {
       const { data, error } = await getWallPosts(supabase, ghostId);
       if (error) throw error;
-      setPosts((data as WallPost[]) || []);
+      setPosts((data as PostWithComments[]) || []);
     } catch (err) {
       console.error(err);
     } finally {
@@ -150,7 +151,7 @@ export default function PoliticianWallClient({
 
       const { data: postRows, error: postErr } = await getWallPosts(supabase, ghostId);
       if (!postErr && isMounted) {
-        setPosts((postRows as WallPost[]) || []);
+        setPosts((postRows as PostWithComments[]) || []);
       }
       if (isMounted) setLoading(false);
     }
@@ -355,6 +356,7 @@ export default function PoliticianWallClient({
 
             {imagePreview && (
               <div className="relative rounded-xl overflow-hidden border border-border-light/45 max-h-60">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={imagePreview}
                   alt="Preview"
@@ -445,19 +447,27 @@ export default function PoliticianWallClient({
       )}
 
       {/* Wall Post Feed */}
-      <WallPostFeed
-        posts={posts}
-        ownerGhostId={ghostId}
-        ownerBadgeLabel="Politician"
-        viewerIsOwner={isOwner}
-        emptyMessage="No posts on this wall yet."
-        canComment={!!user}
-        commentInputs={commentInputs}
-        onCommentInputChange={(postId, text) =>
-          setCommentInputs({ ...commentInputs, [postId]: text })
-        }
-        onSubmitComment={handleCreateComment}
-      />
+      {posts.length === 0 ? (
+        <EmptyState description="No posts on this wall yet." />
+      ) : (
+        <div className="space-y-6">
+          {posts.map((post) => (
+            <PostCard
+              key={post.id}
+              post={post}
+              ownerGhostId={ghostId}
+              ownerBadgeLabel="Politician"
+              viewerIsOwner={isOwner}
+              canComment={!!user}
+              commentValue={commentInputs[post.id] || ""}
+              onCommentChange={(text) =>
+                setCommentInputs({ ...commentInputs, [post.id]: text })
+              }
+              onSubmitComment={() => handleCreateComment(post.id)}
+            />
+          ))}
+        </div>
+      )}
 
       {/* QR Code Modal */}
       {showQr && (

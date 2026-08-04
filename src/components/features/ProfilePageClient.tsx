@@ -24,7 +24,7 @@ import { createClient } from "@/lib/supabase/client";
 
 export default function ProfilePageClient() {
   const supabase = createClient();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
@@ -87,8 +87,15 @@ export default function ProfilePageClient() {
   };
 
   useEffect(() => {
-    if (user) fetchProfile();
-  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (authLoading) return;
+    Promise.resolve().then(() => {
+      if (user) {
+        fetchProfile();
+      } else {
+        setLoading(false);
+      }
+    });
+  }, [user, authLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const burnGhostId = async () => {
     if (!user) return;
@@ -138,12 +145,16 @@ export default function ProfilePageClient() {
       : "Not set";
   const roleTone = profile?.role === "politician" ? "primary" : "accent";
 
-  const handleRoleSwitch = async () => {
+  // Citizen -> politician only. The reverse is permanently blocked at the database
+  // (guard_politician_role_downgrade trigger) since a politician account can have
+  // accumulated real state — candidacies, a public wall, supporters — that a downgrade
+  // would silently orphan, so this button (and the DB call it makes) is never offered
+  // once profile.role === "politician"; see the JSX below.
+  const switchToPolitician = async () => {
     if (!user || !profile) return;
-    const newRole = profile.role === "politician" ? "normal" : "politician";
     const { error } = await supabase
       .from("profiles")
-      .update({ role: newRole })
+      .update({ role: "politician" })
       .eq("id", user.id);
     if (error) {
       alert("Failed to switch role: " + error.message);
@@ -158,8 +169,8 @@ export default function ProfilePageClient() {
         title="Your Profile"
         subtitle="Manage your account details."
         action={
-          <Button variant="outline" onClick={() => router.push("/onboarding")}>
-            <Pencil size={15} /> Edit Boundary & Role
+          <Button variant="outline" onClick={() => router.push("/profile/edit")}>
+            <Pencil size={15} /> Edit Profile
           </Button>
         }
       />
@@ -170,12 +181,14 @@ export default function ProfilePageClient() {
           <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest">
             General Info
           </h3>
-          <button
-            onClick={handleRoleSwitch}
-            className="text-xs font-semibold text-text-muted hover:text-text-main hover:bg-surface-hover px-3 py-1.5 rounded-lg border border-border-light transition-colors cursor-pointer"
-          >
-            Switch to {profile?.role === "politician" ? "Citizen Account" : "Politician Account"}
-          </button>
+          {profile?.role !== "politician" && (
+            <button
+              onClick={switchToPolitician}
+              className="text-xs font-semibold text-text-muted hover:text-text-main hover:bg-surface-hover px-3 py-1.5 rounded-lg border border-border-light transition-colors cursor-pointer"
+            >
+              Switch to Politician Account
+            </button>
+          )}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>

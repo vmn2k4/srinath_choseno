@@ -36,7 +36,7 @@ export default function ElectionAdminApplicationsClient() {
   };
 
   useEffect(() => {
-    fetchApplications();
+    Promise.resolve().then(() => fetchApplications());
   }, [supabase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleReview = async (applicationId: string, approve: boolean) => {

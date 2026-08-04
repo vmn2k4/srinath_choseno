@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   title: "Civic News & Updates | Choseno",
   description:
     "Stay informed with the latest civic news, electoral boundary updates, and democratic technology from Choseno.",
-  alternates: { canonical: "https://choseno.app/news" },
+  alternates: { canonical: "https://choseno.com/news" },
   openGraph: {
     title: "Civic News & Updates | Choseno",
     description:
       "Stay informed with the latest civic news, electoral boundary updates, and democratic technology from Choseno.",
-    url: "https://choseno.app/news",
+    url: "https://choseno.com/news",
     siteName: "Choseno",
     type: "website",
   },
@@ -70,6 +70,7 @@ export default async function NewsPage() {
                 {article.hero_image_url && (
                   <Link href={`/news/${article.slug}`} className="block">
                     <div className="relative h-40 w-full overflow-hidden">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={article.hero_image_url}
                         alt={content?.heroImageAlt ?? article.headline}

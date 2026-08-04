@@ -6,7 +6,10 @@ built during it, how it's designed, and known gaps that were flagged but intenti
 unfixed. Written 2026-07-23, updated same day across four further work sessions (§§11–15), again
 2026-07-24 (§17), again 2026-07-25 across a sixth session (§§18–22), across several later
 sessions through 2026-07-29 (§§23–26), again 2026-07-30 (§27), twice more on
-2026-08-02 (§28, §29), and again 2026-08-03 (§30, a documentation-only backfill).
+2026-08-02 (§28, §29), 2026-08-03 (§30, a documentation-only backfill), and twice more on
+2026-08-04 (§31 — the Next.js migration cutover, a post-migration parity/SEO audit-and-fix
+pass, and debug-persona tooling; §32 — the onboarding/edit-profile flow, reported directly
+against the debug personas built in §31).
 
 ---
 
@@ -18,10 +21,20 @@ boundaries (federal riding, municipality, etc.) the poster's location falls insi
 conversation is naturally local, without anyone's real identity or address ever being exposed
 in the product surface.
 
-**Stack:** React 19 + Vite, Tailwind, `react-leaflet` + `@turf/turf` for maps, `shpjs` for
-client-side shapefile parsing, Supabase (Postgres 17 + PostGIS) for backend/auth/storage.
-No server code beyond Postgres functions (RPCs) — the client talks to Supabase directly via
-`supabase-js`, gated by Row Level Security (RLS) policies and `SECURITY DEFINER` functions.
+**Stack (current, post-migration):** Next.js 16 (App Router) + React 19 + TypeScript,
+Tailwind v4, `react-leaflet` + `@turf/turf` for maps, `shpjs` for client-side shapefile
+parsing, Supabase (Postgres 17 + PostGIS) for backend/auth/storage. The repo root **is** the
+Next.js app now — the original Vite `src/` tree described throughout most of this document
+(`.jsx` files, `react-router`) was deleted at migration cutover; every `.jsx` filename cited
+below (`FeedPage.jsx`, `ElectionsAdmin.jsx`, etc.) is historical and maps to a `.tsx`
+equivalent under `src/app/` or `src/components/features/` today — see §31 for the mapping
+and for what changed in the port itself. No server code beyond Postgres functions (RPCs) and
+a couple of Supabase Edge Functions (`send-claim-invite`, `fetch-candidates`) — the client
+(now split into Server and Client Components) talks to Supabase directly via `supabase-js`,
+gated by Row Level Security (RLS) policies and `SECURITY DEFINER` functions. This
+RPC/RLS-centric backend design is *why* the Next.js port was mechanical rather than a
+rewrite: no API routes were needed, every service-layer function just moved from a
+`.js`/Vite-env-var file to an equivalent `.ts` file reading `NEXT_PUBLIC_*` vars instead.
 
 ---
 
@@ -1520,3 +1533,186 @@ Rewriting `submit_candidate_application` for the type-aware required-question ch
 **Ghost ID rotation history**: `profiles` carries `burnCount`/`lastBurnedAt` (surfaced by `profile.js`'s existing profile fetch), shown on `ProfilePage.jsx` under Privacy & Ghost ID as "Rotated N times, last on `<date>`" beneath the Civic Impact Score. Not previously cross-referenced from §3's core anonymity model or §27's civic-score writeup — both still apply unchanged; this is purely a display of already-existing columns, not new schema.
 
 No code changes in this session — this section exists solely to close the gap between what `docs/SCREENS_AND_FEATURES.md`/`docs/SERVICES.md` described and what the app actually ships. Those two docs were updated in the same pass to add the Analytics and Theme (`/admin/theme` — mechanism already covered in `DESIGN.md`'s Theming section, just missing from the admin route list) admin screens, the civic-score UI on Feed/Profile, and a few stale `docs/SERVICES.md` "used by" references (`UserPage.jsx`, removed in §19, was still listed as a `boundaries.js` consumer; `ClaimCandidacy.jsx`, added in §28, was missing from `elections.js`'s).
+
+---
+
+## 31. Next.js migration cutover, then a parity & SEO readiness pass
+
+*Migration itself built across a separate multi-session effort tracked phase-by-phase in
+[`NEXTJS_MIGRATION.md`](NEXTJS_MIGRATION.md) — that file is the *how*/*progress log*; this
+section is the *current-state* summary plus what a later audit-and-fix session (2026-08-04)
+found and fixed once the port was functionally complete. Every `.jsx` component name cited
+in §§1–30 above is the pre-migration file; the table below is the rename/relocation map.**
+
+### What actually changed in the port
+
+Mechanical, not a rewrite — see §1's updated Stack note for why the RPC/RLS-centric backend
+made this possible. Component logic, service-layer function signatures, and the RLS/RPC
+backend itself are unchanged; what moved:
+
+| Pre-migration (Vite) | Post-migration (Next.js) |
+|---|---|
+| `src/pages/*.jsx`, `react-router` routes | `src/app/**/page.tsx`, App Router file-based routing |
+| `src/pages/Admin/*.jsx` | `src/components/features/*AdminClient.tsx`, thin `page.tsx` wrappers |
+| `src/services/*.js` | `src/lib/services/*.ts`, same functions, typed against generated `src/lib/supabase/types.ts` |
+| `src/components/ui/*.jsx` | `src/components/primitives/*.tsx` |
+| `VITE_SUPABASE_*` env vars | `NEXT_PUBLIC_SUPABASE_*` |
+| Fully client-rendered (SPA) | Server Components fetch real data server-side for public pages (§31's "SSR conversion" below); interactive pieces (composer, vote buttons, video recorder) stay `"use client"` islands seeded with server-fetched `initial*` props |
+
+The most consequential *behavioral* change: pre-migration, every page was client-rendered
+after a loading spinner, so a crawler (or a social-media unfurl bot) saw an empty shell.
+Post-migration, `/`, `/elections`, `/elections/seat/[seatId]`, `/candidacy/[candidateId]`,
+`/wall/[ghostId][/[slug]]`, and `/news[/[slug]]` all render real content server-side on
+first paint. Large existing Client Components (Candidacy Wall, Politician Wall, Election
+Seat — each 700+ lines) were **not** decomposed into Server+Client pairs to get this; instead
+their `page.tsx` fetches everything server-side and passes it in as `initial*` props, and the
+Client Component seeds its own `useState()` from those props (Next.js still server-renders
+Client Components on first pass, so this gets real content into the initial HTML without the
+cost/risk of a full rewrite). `/feed` and `/admin/*` are still pure client components gated
+by client-side auth checks, unchanged from the Vite version — not part of this SSR work,
+since neither is meant to be publicly crawlable.
+
+### 2026-08-04 audit-and-fix pass
+
+A full-repo audit (build/type/lint status, live-DB verification, rendering architecture,
+metadata coverage, line-by-line feature comparison against the retired Vite app) found and a
+follow-up session fixed:
+
+- **Production domain**: `https://choseno.app` (a guess baked into `sitemap.ts`, `robots.ts`,
+  and every page's canonical/OG metadata during the port) corrected to the real domain,
+  `https://choseno.com`, everywhere it was hardcoded, including the visible homepage copy.
+- **Dynamic OG images**: `src/lib/utils/og.tsx`'s `renderOgCard()` (a `next/og`
+  `ImageResponse`-based branded card — eyebrow/title/subtitle, optional circular photo, Satori
+  fetches the remote photo URL itself so no `next.config.ts` domain allow-listing was needed
+  for it specifically) plus an `opengraph-image.tsx` file-convention route per public segment:
+  static cards for `/`, `/elections`, `/news`; dynamic (server-fetched, real DB data) cards for
+  `/news/[slug]`, `/candidacy/[candidateId]`, `/wall/[ghostId]` (covers the nested
+  `/wall/[ghostId]/[slug]` too via Next's segment-inheritance), `/elections/seat/[seatId]`.
+  Old manual `openGraph.images`/`twitter.images` metadata fields were removed from the 4 pages
+  that had them so each route has exactly one image source. **Build-caught follow-on bug**:
+  `next build` warned `metadataBase` wasn't set, meaning every one of these OG image URLs (and
+  any other relative image resolution) would have resolved against `http://localhost:3000`
+  even in production — fixed by adding `metadataBase: new URL("https://choseno.com")` to the
+  root `layout.tsx` metadata export.
+- **`PostCard` unification** (closing a gap §5/§9's original port left open): Candidacy Wall
+  and Politician Wall now render posts through the same shared `PostCard` Feed already used,
+  instead of a separately-maintained `WallPostFeed.tsx` (now deleted). Both pages already
+  tracked comment-input state as `Record<postId, string>`, so this was a render-path swap
+  (map `posts` to `<PostCard>` with per-post closures, same pattern `FeedPageClient.tsx`
+  already used) plus a type change from a hand-rolled `WallPost` interface to `PostCard`'s own
+  `PostWithComments` (`PostRow & { comments }`) — both walls' post-fetch queries already
+  `select("*, comments (*)")`, so no data-shape change, type-only.
+- **Lint/type-quality cleanup**: `no-explicit-any` cleared in the three named service files
+  (`news.ts`, `boundaries.ts`, `elections.ts`); `no-unused-vars` cleared (14 dead imports/dead
+  state, including genuinely-dead `myAdminApplications`/`myShapeIds` state in
+  `PoliticianElectionsClient.tsx` that was set but never read anywhere); all 21 remaining
+  `react-hooks/set-state-in-effect` warnings fixed by deferring the offending call one
+  microtask tick (`Promise.resolve().then(() => fn())`) — the rule only flags setState calls
+  reachable *synchronously* from the effect body, so this satisfies it without changing
+  behavior; for the handful of effects with an existing `let cancelled = false; return () => {
+  cancelled = true }` cleanup guard, only the synchronous portion was wrapped, since React
+  requires the cleanup function itself to be returned synchronously from the effect, not from
+  inside a delayed `.then()`. **This microtask-defer pattern is now the standing convention
+  for this codebase** — apply it to any future `useEffect(() => { someAsyncFn(); }, [...])`
+  that trips this rule, rather than reaching for `eslint-disable`.
+- **`next/image` adoption**: only 1 of 8 raw `<img>` occurrences found was safe to convert
+  (`OnboardingFlowClient.tsx`'s avatar preview — sourced only from `uploadAvatarImage`'s
+  Supabase Storage `publicUrl`, never a blob or admin-editable URL); added
+  `images.remotePatterns` for `*.supabase.co/storage/v1/object/public/**` to `next.config.ts`
+  to support it. The other 7 stay `<img>` with an `eslint-disable-next-line` (matching the
+  style already used in `PostCard.tsx`/`AvatarUploader.tsx`) for real reasons: news
+  hero-image/author-photo fields are admin-editable free-text URL inputs (genuinely
+  arbitrary-domain), and the four post composers' image-preview state is
+  `URL.createObjectURL(file)` — `next/image` can't render `blob:` URLs at all.
+- **`/feed` and `/profile` infinite-spinner-for-anonymous-visitor bug**: both pages' data-load
+  effect started with `if (!user) return;` before ever calling `setLoading(false)`, so a
+  logged-out visitor never left the full-page spinner — a Next.js-migration-era regression
+  (the Vite versions gated this differently), not present in the original app. Fixed by
+  destructuring `loading: authLoading` from `useAuth()` in both files, gating the effect on it
+  (`if (authLoading) return;`), and explicitly calling `setLoading(false)` in the `!user`
+  branch. Both pages' render logic was already null-safe for `profile === null` (`profile?.`
+  used throughout), so no further changes were needed. Verified live in both the anonymous and
+  authenticated cases.
+
+### Debug tooling added in the same pass
+
+See `docs/adding-boundary-data.md`-style standalone doc reference pattern — kept here brief,
+full detail lives with the code: a fixed set of backend-seeded debug personas
+(`sql/seed_debug_personas.sql` — 1 election/seat, 2 candidates, 1 approved election
+administrator, 5 citizens, all `debug.*@choseno.test`) plus a dev-only floating user-switcher
+(`src/components/dev/DebugUserSwitcher.tsx`, rendered only when
+`NODE_ENV !== "production"`) for fast manual QA across roles without re-entering credentials
+each time. Unlike the standing `vmn2k4+admintest@gmail.com` QA account (§2) or the disposable
+per-session test data every other section in this document describes creating-and-deleting,
+these personas are meant to be **persistent** — re-running the seed script is idempotent
+(upserts by email), so they're safe to leave in the database indefinitely rather than
+cleaning up after each session.
+
+---
+
+## 32. Onboarding/edit-profile flow: a remount-on-every-keystroke bug, and reusing the signup wizard for edits
+
+*2026-08-04, same day as §31 — found by clicking through the app using the §31 debug
+personas, exactly the workflow they were built for.*
+
+**Bug 1 — typing in the politician "Your Public Name" step (and any other onboarding text
+field) looked like the page was refreshing after every character.** Root cause:
+`OnboardingFlowClient.tsx` defined `StepLocation`, `StepUsername`, and `StepPolitician` as
+components *inside* the parent's render body (`const StepUsername = () => {...}`, called as
+`<StepUsername />`). Every keystroke updates `formData` via `updateData()`, re-rendering the
+parent — which redefines those three functions as new identities on every render. React
+treats a changed component identity as a different component type and unmounts/remounts the
+whole subtree rather than reconciling it, which drops the `<Input>`'s DOM node (and its
+focus) on every single keystroke. This is a general React anti-pattern ("never define a
+component inside another component's render"), not something specific to this form — it
+would have hit every text field in the wizard, for every new politician signup, not just the
+one screen it was reported on.
+
+**Fix**: hoisted `StepRole`/`StepLocation`/`StepUsername`/`StepPolitician` to module-level
+components taking `formData`/`updateData`/`nextStep`/`prevStep`/`error`/`loading`/
+`submitOnboarding`/`supabase`/`user` as props instead of closing over parent scope. Verified
+directly: typed a full name character-by-character in the live app and confirmed both the
+accumulated input value and DOM focus survived every keystroke (previously, only closure
+capture obscured the bug in casual review — the component functions *looked* like normal
+helper functions, not proof of what actually breaks when used as JSX).
+
+**Bug 2 — "Edit Profile" pushed a politician through the full first-time-signup wizard,
+including a role picker that always fails.** `ProfilePageClient.tsx`'s edit button routed to
+`/onboarding` — the exact same component built for a brand-new account, with `formData`
+starting completely blank (not pre-filled from the existing profile) and a step-1 role picker
+that lets anyone pick "Citizen" regardless of their real current role. For an existing
+politician, submitting after that mis-click hits `submitOnboarding()`'s `upsertProfileCore()`
+call, which is rejected by the `guard_politician_role_downgrade()` trigger (§27) with `Cannot
+change a politician profile back to a citizen account` — and because `error` state is shared
+across the whole wizard and never cleared on `nextStep()`/`prevStep()`, that message kept
+showing on *every subsequent screen* even after the user went back and picked "Politician"
+correctly, looking like an unrelated, unexplained failure on a screen that had nothing to do
+with the actual mistake. (Historical note: the pre-migration Vite app already hit this exact
+problem and fixed it — `EditProfileFlow.jsx`'s `StepBasicInfo` took a `lockToPolitician` prop
+that hid the picker entirely for an existing politician, per §27. That dedicated edit flow —
+and its fix — was dropped during the Next.js port; `/profile`'s edit button was pointed at
+`/onboarding` as a shortcut instead, silently reintroducing the bug §27 had already closed.)
+
+**Fix**: built a real, separate edit experience instead of restoring the old stepper —
+`src/components/features/EditProfileClient.tsx` (`/profile/edit`), a single-page form, not a
+wizard: fetches and pre-fills the current profile (name, matched boundaries, and — for
+politicians — avatar/party/hometown/education/bio) in one effect, has **no role field or
+picker at all**, and saves everything in one `handleSave()` call that always passes the
+caller's *existing* `role` through to `upsertProfileCore()` unchanged — there is no code path
+in this component that could ever attempt a role change, downgrade or otherwise, so the
+trigger can never fire from here. `ProfilePageClient.tsx`'s edit button now points at
+`/profile/edit` (relabeled "Edit Profile"). Location re-verification still works from this
+page (reuses the same `InteractiveLocationPicker` + `findBoundariesByPoint`/
+`syncUserBoundaryMemberships` calls `StepLocation` uses) but is optional, not a forced step —
+existing boundaries stay untouched unless the user actively re-verifies.
+
+**Bug 3 (same underlying issue, closed at the source instead of patched around) — a
+"Switch to Citizen Account" button existed for politicians and would always fail.**
+`ProfilePageClient.tsx` had its own second path to the same doomed downgrade — a raw
+`supabase.from("profiles").update({ role: "normal" })` call, guarded only by the DB trigger,
+with no client-side check that it could ever succeed. Per this codebase's own established
+principle (client checks can be bypassed, but a UI control that *always* fails serves no one),
+the button itself is now conditionally rendered — `{profile?.role !== "politician" && (...)}`
+— so it only ever appears for citizens, offering the one-way citizen→politician upgrade the
+trigger actually allows. The handler was simplified to match (`switchToPolitician()`, no
+longer branches on current role).

@@ -9,7 +9,7 @@ import {
 import { getPoliticianProfile } from "@/lib/services/profile";
 import { getSupporterCount } from "@/lib/services/politicianWall";
 
-const BASE_URL = "https://choseno.app";
+const BASE_URL = "https://choseno.com";
 
 interface CandidatePageProps {
   params: Promise<{ candidateId: string }>;
@@ -40,7 +40,6 @@ export async function generateMetadata({
 
   const name = candidate.profiles?.full_name || "Candidate";
   const roleTitle = candidate.election_seats?.role_title || "Office";
-  const avatarUrl = candidate.profiles?.politician_profiles?.avatar_url;
   const canonicalUrl = `${BASE_URL}/candidacy/${candidateId}`;
 
   const title = `${name} — Candidate for ${roleTitle} | Choseno`;
@@ -57,14 +56,12 @@ export async function generateMetadata({
       description,
       url: canonicalUrl,
       siteName: "Choseno",
-      images: avatarUrl ? [{ url: avatarUrl }] : [],
       type: "profile",
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: avatarUrl ? [avatarUrl] : [],
     },
   };
 }

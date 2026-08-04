@@ -67,13 +67,15 @@ export default function InteractiveLocationPicker({
   const markerRef = useRef<any>(null);
 
   useEffect(() => {
-    if (currentLat) setManualLat(currentLat.toString());
-    if (currentLng) setManualLng(currentLng.toString());
+    Promise.resolve().then(() => {
+      if (currentLat) setManualLat(currentLat.toString());
+      if (currentLng) setManualLng(currentLng.toString());
+    });
   }, [currentLat, currentLng]);
 
   useEffect(() => {
     if (!addressQuery.trim() || addressQuery.trim().length < 3) {
-      setAddressSuggestions([]);
+      Promise.resolve().then(() => setAddressSuggestions([]));
       return;
     }
 
@@ -247,16 +249,30 @@ export default function InteractiveLocationPicker({
         <div ref={mapContainerRef} className="w-full h-full z-10" />
 
         <div className="absolute bottom-3 right-3 z-20">
+          {/* Fixed (not theme-token) colors deliberately — this button floats on top of the
+              Leaflet/CARTO map tiles, which are always pale regardless of which of the site's
+              12 themes is active. A translucent theme-colored background (the previous
+              bg-surface-elevated/90) barely tints a light map, so light-on-dark themes ended
+              up with near-white text on an almost-white backdrop. A solid white pill with dark
+              text/icon is the standard on-map-control convention (Google/Apple Maps) for
+              exactly this reason — it stays legible over any map imagery, independent of
+              in-app theming. */}
           <Button
             size="sm"
             onClick={autoDetectGPS}
             disabled={loading}
-            className="shadow-lg text-xs gap-1.5 bg-surface-elevated/90 backdrop-blur-md border border-border-light text-text-main hover:bg-surface-hover"
+            // `!` (important) modifiers are required here: Button's default variant="primary"
+            // already sets a text/background color (text-text-on-primary, bg-primary), and
+            // those utility classes win the cascade over a plain same-specificity override
+            // regardless of className string order, since Tailwind's generated CSS order (not
+            // JSX prop order) decides ties. Confirmed live — without `!`, computed color was
+            // still primary's white despite this className listing slate-800.
+            className="shadow-lg text-xs gap-1.5 !bg-white !border !border-black/10 !text-slate-800 hover:!bg-slate-50"
           >
             {loading ? (
-              <Loader2 size={14} className="animate-spin text-primary" />
+              <Loader2 size={14} className="animate-spin !text-blue-600" />
             ) : (
-              <Navigation size={14} className="text-primary" />
+              <Navigation size={14} className="!text-blue-600" />
             )}
             Auto-Detect GPS
           </Button>

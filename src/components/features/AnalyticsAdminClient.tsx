@@ -32,7 +32,7 @@ export default function AnalyticsAdminClient() {
   };
 
   useEffect(() => {
-    fetchMetrics();
+    Promise.resolve().then(() => fetchMetrics());
   }, [supabase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return <Spinner fullPage />;

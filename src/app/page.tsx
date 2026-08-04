@@ -21,7 +21,7 @@ import {
   PrimaryCtaLink,
 } from "@/components/features/home/HomeMotion";
 
-const BASE_URL = "https://choseno.app";
+const BASE_URL = "https://choseno.com";
 
 export const metadata: Metadata = {
   title: "Choseno — Your voice, heard where you live",
@@ -233,7 +233,7 @@ export default function HomePage() {
               <span className="w-2.5 h-2.5 rounded-full bg-primary/70" />
               <span className="w-2.5 h-2.5 rounded-full bg-accent/70" />
               <span className="ml-3 text-[11px] text-text-muted font-mono truncate">
-                choseno.app/elections
+                choseno.com/elections
               </span>
             </div>
             <div className="flex-1 overflow-hidden p-4 md:p-8 space-y-3">

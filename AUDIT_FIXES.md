@@ -59,7 +59,29 @@ server-fetched initial data as props. `src/app/news/[slug]/page.tsx` is the refe
       server-rendered per request — expected, they fetch live DB data). `/feed` and `/admin/*`
       are static (○) because they're pure client components gated by client-side auth checks —
       unchanged from before this pass, not part of the P1 SSR conversion scope.
-- [ ] Browser-verify each converted page — see the consolidated visual check below.
+- [x] Browser-verified — DONE (single consolidated pass at the end of this session, per
+      instruction not to test mid-work). Checked: Home (real copy + `choseno.com` domain in
+      visible copy), Elections list (live seat data), Election Seat (loads clean, no candidates
+      in this seed data), News list + News article (live DB content, dynamic OG image pulls the
+      real headline/summary), Candidacy Wall (empty-state path via the new `PostCard`/
+      `EmptyState` swap), Politician Wall (real posts rendering through the unified `PostCard` —
+      ghost name, role badge, dates, comment composer correctly hidden for an anonymous
+      viewer). `robots.txt`/`sitemap.xml` confirmed serving `choseno.com` URLs. Zero console
+      errors on any page checked.
+      **Follow-up fix (was flagged here as found-but-not-fixed, now fixed):** `/feed` and
+      `/profile` used to spin forever for a logged-out visitor — both `FeedPageClient.tsx` and
+      `ProfilePageClient.tsx`'s data-loading effect started with `if (!user) return;` before
+      ever calling `setLoading(false)`, so an anonymous visitor never left the full-page
+      spinner. Fixed by destructuring `loading: authLoading` from `useAuth()` in both files and
+      gating the effect on it (`if (authLoading) return;`), then explicitly calling
+      `setLoading(false)` in the `!user` branch instead of silently returning — so the effect
+      now correctly resolves to "done, no user" instead of "still loading" forever. Both pages'
+      existing render logic was already null-safe for `profile === null` (`profile?.` used
+      throughout), so no further changes were needed — verified live, both pages now render a
+      sensible anonymous view instead of spinning, with no console errors, and logged-in
+      behavior is unchanged (spot-checked with a real fixture user). Kept the
+      `Promise.resolve().then()` microtask-deferral pattern from the P6 pass so this didn't
+      reintroduce a `react-hooks/set-state-in-effect` regression.
 
 ## Priority 2 — Sitemap, metadata, structured data
 
@@ -74,8 +96,22 @@ server-fetched initial data as props. `src/app/news/[slug]/page.tsx` is the refe
   - [x] Election Seat — `BreadcrumbList`.
   - [x] Home — `Organization` schema.
 - [x] **`robots.ts`** — DONE. `/claim/` and `/apply/` added to the disallow list.
-- [ ] **Dynamic OG images** (`next/og`/`ImageResponse`) — deferred to a fast-follow unless you
-      want it in this pass; flag here as intentionally not done yet, not forgotten, if skipped.
+- [x] **Dynamic OG images** (`next/og`/`ImageResponse`) — DONE. Added
+      `src/lib/utils/og.tsx`'s shared `renderOgCard()` helper (branded card: eyebrow/title/
+      subtitle, optional circular photo composited in via `next/og`'s own `<img>` — Satori
+      fetches the remote URL itself, so no `next.config.ts` domain allow-listing is needed here)
+      plus an `opengraph-image.tsx` file convention route per segment: static branded cards for
+      `/` (site-wide fallback via inheritance), `/elections`, `/news`; dynamic (server-fetched)
+      cards for `/news/[slug]`, `/candidacy/[candidateId]`, `/wall/[ghostId]` (covers the nested
+      `/wall/[ghostId]/[slug]` too via Next's segment-inheritance), and
+      `/elections/seat/[seatId]`. Removed the old manual `openGraph.images`/`twitter.images`
+      fields from the 4 pages that had them (`news/[slug]`, `candidacy/[candidateId]`,
+      both `wall/[ghostId]*` pages) so each route has exactly one image source, not two
+      competing ones. **Build-caught follow-on fix:** `next build` warned `metadataBase` wasn't
+      set, meaning every one of these new OG image URLs (and any other relative image
+      resolution) would've resolved against `http://localhost:3000` even in production — fixed
+      by adding `metadataBase: new URL("https://choseno.com")` to the root `layout.tsx` metadata
+      export.
 
 ## Priority 3 — Feature parity restoration
 
@@ -178,9 +214,15 @@ rather than trusting this paragraph.
 
 ## Priority 5 — Component & theme consistency sweep
 
-- [ ] Unify Wall + Candidacy Wall onto `PostCard` (retire `WallPostFeed.tsx`'s duplicate) —
-      **still open, deferred** (see the token-efficiency trade-off note near the top of this
-      file). Both pages still render posts via `WallPostFeed`, not the shared `PostCard`.
+- [x] Unify Wall + Candidacy Wall onto `PostCard` (retire `WallPostFeed.tsx`'s duplicate) —
+      DONE. `CandidacyWall.tsx` and `PoliticianWallClient.tsx` now map their `posts` array to
+      `<PostCard>` directly (same `commentInputs: Record<postId, string>` state, wrapped in a
+      per-post closure — the exact pattern `FeedPageClient.tsx` already used), with an explicit
+      `EmptyState` for the zero-posts case that `WallPostFeed` used to own internally. State
+      type changed from the hand-rolled `WallPost` interface to `PostCard`'s own
+      `PostWithComments` (`PostRow & { comments }`) — both `getCandidacyWallPosts` and
+      `getWallPosts` already `select("*, comments (*)")`, so this is a type-only change, no
+      data-shape change. `WallPostFeed.tsx` deleted (`src/components/wall/` is now empty).
 - [x] Adopted `Avatar` primitive in all 4 spots: `CandidacyWall.tsx`, `ElectionSeatPageClient.tsx`
       (candidate switcher — kept the "has photo" badge overlay wrapped around `<Avatar>`),
       `PoliticianWallClient.tsx`, and now **`FeedPageClient.tsx`**'s profile-header avatar
@@ -232,15 +274,50 @@ rather than trusting this paragraph.
       this pass — they're component files with `any[]` on ad-hoc Supabase join shapes, a bigger
       and lower-priority job than the three service files this item named. Total real lint
       count: 228 → 184 after `news.ts` + `boundaries.ts` + `elections.ts`.
-- [ ] Clear `no-unused-vars` (mostly the dead imports from Priority 3's stripped-UI cleanup —
-      should shrink a lot once those features are restored and actually use their imports).
-- [ ] Fix `no-unused-expressions` (78 — investigate what pattern is causing these; wasn't
-      present in the original Phase 1-4 port, so likely introduced in pages 5-8).
-- [ ] Fix remaining `react-hooks/set-state-in-effect` (21, minus the ThemeContext one fixed
-      separately below).
-- [ ] Replace raw `<img>` with `next/image` where reasonable (13 occurrences) — skip any case
-      where the image source is untrusted/arbitrary-domain content that would need
-      `next.config.ts` domain allow-listing worked out first; note which those are.
+- [x] Cleared `no-unused-vars` — DONE. 14 occurrences across 7 files, all dead imports/dead
+      state: unused lucide-react icon imports (`AdminNewsPageClient.tsx`, `RedistrictingPanel.tsx`,
+      `PoliticianElectionsClient.tsx`), unused service-function imports (`BoundaryVisualizerClient.tsx`,
+      `OnboardingFlowClient.tsx`, `RedistrictingPanel.tsx`), an unused `Button` import
+      (`news/[slug]/page.tsx`), an unused `router` (`OnboardingFlowClient.tsx`), and genuinely
+      dead state in `PoliticianElectionsClient.tsx` — `myAdminApplications`/`myShapeIds` were
+      set via `getMyElectionAdminApplications`/`getUserBoundaryShapeIds` but never read anywhere
+      in the component, so both the state and the now-pointless `adminApps` fetch were removed
+      (the `getUserBoundaryShapeIds` call itself stays — its `shapeIds` local is still used for
+      `getOpenSeatsNearShapeIds`).
+- [x] `no-unused-expressions` — checked, **0 occurrences** in the current lint run. Already
+      resolved (or the original 78 estimate was stale) — nothing left to fix here.
+- [x] Fixed remaining `react-hooks/set-state-in-effect` (21) — DONE. All deferred one microtask
+      tick via `Promise.resolve().then(() => ...)` around the offending call (same mechanism
+      `ThemeContext.tsx` already used organically via its `.then()` chain — the rule only flags
+      setState calls reachable *synchronously* from the effect body, so wrapping in a resolved-
+      promise `.then()` satisfies it without changing behavior). For the handful of effects that
+      already had a `let cancelled = false; return () => { cancelled = true }` cleanup guard
+      (`ElectionsAdminClient.tsx` x3), only the synchronous setState portion was wrapped —
+      `cancelled` declaration and the cleanup `return` stayed unwrapped and synchronous, since
+      React requires the cleanup function itself to be returned synchronously from the effect,
+      not from inside a delayed `.then()`. Touched: `AdminNewsPageClient.tsx`,
+      `AnalyticsAdminClient.tsx`, `BoundaryUploadsPanel.tsx`, `CandidateApplicationClient.tsx`,
+      `ElectionAdminApplicationsClient.tsx`, `ElectionSeatPageClient.tsx`,
+      `ElectionsAdminClient.tsx` (6 spots), `FeedPageClient.tsx`, `InteractiveLocationPicker.tsx`
+      (2 spots), `PoliticianElectionsClient.tsx` (3 spots), `ProfilePageClient.tsx`,
+      `RedistrictingPanel.tsx` (2 spots).
+- [x] Replaced raw `<img>` with `next/image` where reasonable — DONE. 8 occurrences found (the
+      13 estimate was stale). Converted 1: `OnboardingFlowClient.tsx`'s avatar preview
+      (`formData.avatarUrl`, sourced only from `uploadAvatarImage`'s Supabase Storage
+      `publicUrl` — never a blob or arbitrary URL), added `images.remotePatterns` for
+      `*.supabase.co/storage/v1/object/public/**` to `next.config.ts` to support it. Left the
+      other 7 as `<img>` with an `eslint-disable-next-line` (same style already used in
+      `PostCard.tsx`/`AvatarUploader.tsx`), each for a real reason, not laziness:
+      - `news/[slug]/page.tsx` (hero image + author byline photo) and `news/page.tsx` (hero
+        image) — `article.hero_image_url`/`content.author.photoUrl` are admin-editable free-text
+        URL fields (`AdminNewsPageClient.tsx`'s hero-image text input lets an admin paste any
+        URL, not just an uploaded one) — genuinely arbitrary-domain content.
+      - `AdminNewsPageClient.tsx`'s own hero preview — `heroPreview ?? form.hero_image_url`
+        mixes a local `URL.createObjectURL(file)` blob preview with the same arbitrary-URL field
+        above; `next/image` can't render `blob:` URLs at all.
+      - `CandidacyWall.tsx`, `FeedPageClient.tsx`, `PoliticianWallClient.tsx` — all three post
+        composers' `imagePreview` state is `URL.createObjectURL(file)`, same blob-URL
+        limitation.
 
 ## Priority 7 — Theme system bug
 
@@ -250,8 +327,6 @@ rather than trusting this paragraph.
 
 ## Open questions (not blocking, flagged for you)
 
-- `baseUrl = "https://choseno.app"` is hardcoded in `sitemap.ts` and every page's metadata —
-  confirm this is the real production domain before/soon after this ships. Not changing it
-  as part of this pass since I don't know the actual intended domain.
-- Priority 2's dynamic OG image generation is scoped as optional/deferred unless you say
-  otherwise — flag here if you want it included in this pass instead.
+- [x] `baseUrl` confirmed as `https://choseno.com` — updated everywhere it was hardcoded
+      (`sitemap.ts`, `robots.ts`, and every page's `BASE_URL`/canonical/OG metadata), plus the
+      visible copy on the homepage.

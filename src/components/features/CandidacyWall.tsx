@@ -6,7 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import LinkPreview from "./LinkPreview";
 import AnswerValue from "./AnswerValue";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
-import WallPostFeed, { WallPost } from "@/components/wall/WallPostFeed";
+import PostCard, { type PostWithComments } from "@/components/features/PostCard";
 import {
   getPublicCandidateById,
   getPublicCandidateAnswers,
@@ -51,6 +51,7 @@ import {
   RemoveMediaButton,
   Avatar,
   Alert,
+  EmptyState,
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 
@@ -121,7 +122,7 @@ interface CandidacyWallProps {
   initialCandidate?: CandidateRecord | null;
   initialCandidateProfile?: unknown;
   initialAnswers?: QuestionnaireAnswer[];
-  initialPosts?: WallPost[];
+  initialPosts?: PostWithComments[];
   initialSupportCount?: number;
 }
 
@@ -142,7 +143,7 @@ export default function CandidacyWall({
   const [candidate, setCandidate] = useState<CandidateRecord | null>(initialCandidate);
   const [candidateProfile, setCandidateProfile] = useState<any>(initialCandidateProfile);
   const [answers, setAnswers] = useState<QuestionnaireAnswer[]>(initialAnswers);
-  const [posts, setPosts] = useState<WallPost[]>(initialPosts);
+  const [posts, setPosts] = useState<PostWithComments[]>(initialPosts);
   const [loading, setLoading] = useState(!initialCandidate);
 
   const [newPostContent, setNewPostContent] = useState("");
@@ -187,7 +188,7 @@ export default function CandidacyWall({
   const loadPosts = async (ghostId?: string) => {
     const targetGhostId = ghostId ?? candidate?.profiles?.current_ghost_id;
     const { data } = await getCandidacyWallPosts(supabase, candidateId, targetGhostId);
-    setPosts((data as WallPost[]) || []);
+    setPosts((data as PostWithComments[]) || []);
   };
 
   useEffect(() => {
@@ -242,7 +243,7 @@ export default function CandidacyWall({
       const targetGhostId = cand?.profiles?.current_ghost_id;
       const { data: postRows } = await getCandidacyWallPosts(supabase, candidateId, targetGhostId);
       if (isMounted) {
-        setPosts((postRows as WallPost[]) || []);
+        setPosts((postRows as PostWithComments[]) || []);
         setLoading(false);
       }
     }
@@ -771,6 +772,7 @@ export default function CandidacyWall({
 
                 {imagePreview && (
                   <div className="relative rounded-xl overflow-hidden border border-border-light/45 max-h-60">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={imagePreview}
                       alt="Preview"
@@ -818,19 +820,27 @@ export default function CandidacyWall({
             </Card>
           )}
 
-          <WallPostFeed
-            posts={posts}
-            ownerGhostId={candidate?.profiles?.current_ghost_id}
-            ownerBadgeLabel="Candidate"
-            viewerIsOwner={isOwner}
-            emptyMessage="No posts on this candidate wall yet."
-            canComment={!!user}
-            commentInputs={commentInputs}
-            onCommentInputChange={(postId, text) =>
-              setCommentInputs({ ...commentInputs, [postId]: text })
-            }
-            onSubmitComment={handleCreateComment}
-          />
+          {posts.length === 0 ? (
+            <EmptyState description="No posts on this candidate wall yet." />
+          ) : (
+            <div className="space-y-6">
+              {posts.map((post) => (
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  ownerGhostId={candidate?.profiles?.current_ghost_id}
+                  ownerBadgeLabel="Candidate"
+                  viewerIsOwner={isOwner}
+                  canComment={!!user}
+                  commentValue={commentInputs[post.id] || ""}
+                  onCommentChange={(text) =>
+                    setCommentInputs({ ...commentInputs, [post.id]: text })
+                  }
+                  onSubmitComment={() => handleCreateComment(post.id)}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

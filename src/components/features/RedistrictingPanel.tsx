@@ -10,9 +10,8 @@ import {
   suggestReplacedShapes,
   previewRetirementCoverageGap,
   retireShapes,
-  deleteShapes,
 } from "@/lib/services/boundaries";
-import { GitBranch, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { GitBranch } from "lucide-react";
 import { Card, Button, Select } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 
@@ -53,8 +52,10 @@ export default function RedistrictingPanel({
   }, [supabase]);
 
   useEffect(() => {
-    setFocusUploadId("");
-    setFocusType("");
+    Promise.resolve().then(() => {
+      setFocusUploadId("");
+      setFocusType("");
+    });
   }, [countryFilter]);
 
   const uploadsForCountry = countryFilter
@@ -65,7 +66,7 @@ export default function RedistrictingPanel({
     : [];
 
   useEffect(() => {
-    if (preselectedBatch) setFocusUploadId(String(preselectedBatch.id));
+    if (preselectedBatch) Promise.resolve().then(() => setFocusUploadId(String(preselectedBatch.id)));
   }, [preselectedBatch]);
 
   const resetSelection = (ids: Set<number>) => {

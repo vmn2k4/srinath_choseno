@@ -79,7 +79,7 @@ function sortByPoliticianEngagement<T extends { likes_count?: number | null; com
 
 export default function FeedPageClient() {
   const supabase = createClient();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const router = useRouter();
 
   const [profile, setProfile] = useState<any>(null);
@@ -114,7 +114,11 @@ export default function FeedPageClient() {
     let isMounted = true;
 
     async function initData() {
-      if (!user) return;
+      if (authLoading) return;
+      if (!user) {
+        if (isMounted) setLoading(false);
+        return;
+      }
       setLoading(true);
 
       const { data: profData } = await getOwnProfile(supabase, user.id);
@@ -180,7 +184,7 @@ export default function FeedPageClient() {
     return () => {
       isMounted = false;
     };
-  }, [user, supabase]);
+  }, [user, authLoading, supabase]);
 
   const loadFeedPosts = async () => {
     if (!user || !profile) return;
@@ -244,7 +248,7 @@ export default function FeedPageClient() {
   };
 
   useEffect(() => {
-    if (profile && profile.role !== "admin") loadFeedPosts();
+    if (profile && profile.role !== "admin") Promise.resolve().then(() => loadFeedPosts());
   }, [activeTab, masterFilter, profile]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handlePostTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -545,6 +549,7 @@ export default function FeedPageClient() {
 
                     {imagePreview && (
                       <div className="relative rounded-xl overflow-hidden border border-border-light/45 max-h-60">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={imagePreview}
                           alt="Preview"

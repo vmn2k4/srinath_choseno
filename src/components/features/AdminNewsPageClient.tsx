@@ -16,7 +16,7 @@ import {
 import {
   Newspaper, Plus, Trash2, Edit3, Eye, Save,
   X, ImagePlus, FileJson, ChevronDown, ChevronUp, Calendar,
-  Globe, AlignLeft, Tag, User, RefreshCw, Upload, ClipboardPaste,
+  Globe, AlignLeft, User, RefreshCw, Upload, ClipboardPaste,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import {
@@ -234,7 +234,9 @@ export default function AdminNewsPageClient() {
     setLoading(false);
   }, [supabase]);
 
-  useEffect(() => { loadArticles(); }, [loadArticles]);
+  useEffect(() => {
+    Promise.resolve().then(() => loadArticles());
+  }, [loadArticles]);
 
   // ── Form helpers ──────────────────────────────────────────────────────────
 
@@ -693,6 +695,7 @@ export default function AdminNewsPageClient() {
               <div className="space-y-4">
                 {(heroPreview || form.hero_image_url) && (
                   <div className="relative rounded-xl overflow-hidden border border-border-light/20 h-40">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={heroPreview ?? form.hero_image_url}
                       alt="Hero preview"

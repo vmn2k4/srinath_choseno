@@ -120,7 +120,7 @@ export default function CandidateApplicationClient({
   };
 
   useEffect(() => {
-    fetchAll();
+    Promise.resolve().then(() => fetchAll());
   }, [user, candidateId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const saveStatement = async () => {

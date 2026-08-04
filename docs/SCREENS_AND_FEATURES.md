@@ -16,10 +16,11 @@ Every route renders inside `MainLayout` — a top nav bar (Choseno logo, Feed, E
 Admin if applicable, Profile, Sign Out) that swaps its links based on session state and role:
 signed-out visitors only see "Log In / Sign Up"; citizens see Feed/Elections/Profile;
 politicians see Feed/**Politician** Elections/Profile; admins see Feed/**Admin**/Profile (no
-Elections link — admins don't belong to a constituency). Admin screens additionally get their
-own sub-nav (`AdminSubNav`): **Boundaries** / **Analytics** / **Elections** / **Election
-Admins** / **Visualizer** / **Theme**, since those six live on separate top-level routes, not
-tabs of one page.
+Elections link — admins don't belong to a constituency). **News** is visible to everyone,
+signed in or not. Admin screens additionally get their own sub-nav (`AdminSubNav`):
+**Boundaries** / **Analytics** / **Elections** / **Election Admins** / **Visualizer** /
+**Theme** / **News**, since those seven live on separate top-level routes, not tabs of one
+page.
 
 ---
 
@@ -38,6 +39,38 @@ signed out, or "Open your feed" (→ `/feed`) when already signed in.
 Single form, toggled between the two modes with one link at the bottom. Email + password
 only (no OAuth). A brand-new account is **not** dropped straight into the app — the very
 next thing that happens is onboarding.
+
+---
+
+## News
+
+Added during the Next.js migration — a civic-news feature distinct from the constituency
+Feed (editorial articles written by admins, not user posts), publicly discoverable without an
+account (linked from the nav bar for both signed-in and signed-out visitors, unlike
+Elections, which stays public-but-unlinked for logged-out visitors).
+
+### News list (`/news`)
+Public. Card grid of every published article (hero image, category badge, a 🔴 Breaking
+News badge on flagged articles even when there's no hero image to overlay it on), newest
+first.
+
+### Article (`/news/[slug]`)
+Public. Full markdown-rendered body (`NewsArticleBody`), hero image, category, published
+date, estimated reading time, and an optional author byline (name, photo, short bio) pulled
+from the article's own content JSON — a per-article credit, not tied to any `profiles` row.
+Structured data (`NewsArticle` JSON-LD) is emitted for search-engine rich results. A comment
+thread at the bottom (`NewsComments`) works exactly like a Feed/Wall comment thread —
+anonymous, Ghost-ID, sign-in required to post.
+
+### Admin → News (`/admin/news`)
+Article authoring and lifecycle management, gated to `role='admin'`. Each article has a
+status (`draft` → `scheduled` → `published`, or `archived`) — a scheduled article becomes
+publicly visible automatically once its `published_at` time passes, no manual "publish"
+click needed. The editor covers headline, slug, category, country/province scoping, hero
+image (upload or paste a URL — this is a plain free-text field, not restricted to uploaded
+images, which is why articles can reference arbitrary external image domains), a Breaking
+News toggle, the markdown body, SEO title/meta description, and the optional author
+byline fields. A raw-JSON paste mode exists as a power-user shortcut for the same fields.
 
 ---
 
@@ -225,7 +258,9 @@ separate their own updates from visitor feedback at a glance).
 
 ## Admin
 
-Six separate top-level routes (not tabs of one page), all gated to `profiles.role='admin'`.
+Seven separate top-level routes (not tabs of one page), all gated to `profiles.role='admin'`.
+(Admin → News is covered in the **News** section above, alongside the other two News screens,
+rather than repeated here.)
 
 ### Boundaries (`/admin`)
 The foundational data-management screen — everything else in the app depends on what's
@@ -336,10 +371,13 @@ These aren't separate screens, but show up across many of the ones above:
   place.
 - **`LinkPreview`** — turns a pasted URL into a rich preview card (title/image/description),
   used identically in the Feed composer, wall posts, and candidacy wall posts.
-- **`WallPostFeed`** — the shared post-list-with-comments renderer behind both the Politician
-  Wall and the Candidacy Wall, including the owner-reply-pinned-to-top comment ordering.
+- **`PostCard`** — the shared post-list-with-comments renderer behind the Feed, the
+  Politician Wall, and the Candidacy Wall alike (unified onto one component post-migration —
+  see [ARCHITECTURE.md §31](../ARCHITECTURE.md)), including the owner-reply-pinned-to-top
+  comment ordering; only the Feed turns on its optional vote-bar slot (Wall/Candidacy Wall
+  posts aren't voteable).
 - **`PoliticianSidebar`** (Feed page only) — surfaces politicians relevant to whichever tab
   is active.
-- **`src/components/ui/`** — the shared design-system primitives (`Card`, `Button`, `Badge`,
-  `Input`/`Textarea`/`Select`, `Spinner`, `EmptyState`, `PageHeader`) every screen above is
-  built from — one place controls look and feel platform-wide.
+- **`src/components/primitives/`** — the shared design-system primitives (`Card`, `Button`,
+  `Badge`, `Input`/`Textarea`/`Select`, `Spinner`, `EmptyState`, `PageHeader`) every screen
+  above is built from — one place controls look and feel platform-wide.

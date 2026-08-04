@@ -9,7 +9,6 @@ import {
   findOpenSeatsInContainer,
   applyForSeat,
   deleteCandidacy,
-  getMyElectionAdminApplications,
 } from "@/lib/services/elections";
 import {
   getCountries,
@@ -17,7 +16,7 @@ import {
   getMapShapesByType,
 } from "@/lib/services/boundaries";
 import { getUserBoundaryShapeIds } from "@/lib/services/profile";
-import { Vote, MapPin, ExternalLink, FileEdit, Search, X } from "lucide-react";
+import { Vote, MapPin, FileEdit, Search } from "lucide-react";
 import {
   Card,
   Button,
@@ -49,8 +48,6 @@ export default function PoliticianElectionsClient() {
   const [loading, setLoading] = useState(true);
   const [openSeats, setOpenSeats] = useState<any[]>([]);
   const [myCandidacies, setMyCandidacies] = useState<any[]>([]);
-  const [myAdminApplications, setMyAdminApplications] = useState<any[]>([]);
-  const [myShapeIds, setMyShapeIds] = useState<Set<number>>(new Set());
   const [applyingSeatId, setApplyingSeatId] = useState<string | null>(null);
   const [withdrawCandidateId, setWithdrawCandidateId] = useState<string | null>(
     null
@@ -79,7 +76,6 @@ export default function PoliticianElectionsClient() {
     const shapeIds = ((memberships || []) as Array<{ map_shape_id: number }>).map(
       (m) => m.map_shape_id
     );
-    setMyShapeIds(new Set(shapeIds));
 
     if (shapeIds.length > 0) {
       const { data: seats } = await getOpenSeatsNearShapeIds(supabase, shapeIds);
@@ -91,53 +87,51 @@ export default function PoliticianElectionsClient() {
     const { data: candidacies } = await getMyCandidacies(supabase, user.id);
     setMyCandidacies(candidacies || []);
 
-    const { data: adminApps } = await getMyElectionAdminApplications(
-      supabase,
-      user.id
-    );
-    setMyAdminApplications(adminApps || []);
-
     setLoading(false);
   };
 
   useEffect(() => {
-    if (user) fetchAll();
+    if (user) Promise.resolve().then(() => fetchAll());
     getCountries(supabase).then(({ data }) =>
       setCountries((data || []).map((c: any) => c.name))
     );
   }, [user, supabase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    setBrowseContainerType("");
-    setContainers([]);
-    setBrowseContainerId("");
-    setBrowseSeats(null);
-    if (!browseCountry) {
-      setContainerTypes([]);
-      return;
-    }
-    listBoundaryTypes(supabase, {
-      country: browseCountry,
-      isContainer: true,
-      columns: "type_name",
-    }).then(({ data }) =>
-      setContainerTypes((data || []).map((t: any) => t.type_name))
-    );
+    Promise.resolve().then(() => {
+      setBrowseContainerType("");
+      setContainers([]);
+      setBrowseContainerId("");
+      setBrowseSeats(null);
+      if (!browseCountry) {
+        setContainerTypes([]);
+        return;
+      }
+      listBoundaryTypes(supabase, {
+        country: browseCountry,
+        isContainer: true,
+        columns: "type_name",
+      }).then(({ data }) =>
+        setContainerTypes((data || []).map((t: any) => t.type_name))
+      );
+    });
   }, [browseCountry, supabase]);
 
   useEffect(() => {
-    setBrowseContainerId("");
-    setBrowseSeats(null);
-    if (!browseCountry || !browseContainerType) {
-      setContainers([]);
-      return;
-    }
-    getMapShapesByType(supabase, {
-      country: browseCountry,
-      boundaryType: browseContainerType,
-      columns: "id, name",
-      orderBy: "name",
-    }).then(({ data }) => setContainers(data || []));
+    Promise.resolve().then(() => {
+      setBrowseContainerId("");
+      setBrowseSeats(null);
+      if (!browseCountry || !browseContainerType) {
+        setContainers([]);
+        return;
+      }
+      getMapShapesByType(supabase, {
+        country: browseCountry,
+        boundaryType: browseContainerType,
+        columns: "id, name",
+        orderBy: "name",
+      }).then(({ data }) => setContainers(data || []));
+    });
   }, [browseCountry, browseContainerType, supabase]);
 
   const searchContainer = async () => {

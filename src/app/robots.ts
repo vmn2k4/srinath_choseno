@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/admin/", "/feed/", "/profile/", "/onboarding/", "/claim/", "/apply/"],
     },
-    sitemap: "https://choseno.app/sitemap.xml",
+    sitemap: "https://choseno.com/sitemap.xml",
   };
 }

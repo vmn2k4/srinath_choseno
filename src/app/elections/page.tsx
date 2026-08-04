@@ -10,7 +10,7 @@ import {
 } from "@/lib/services/elections";
 import { getProfileRole, getUserBoundaryShapeIds } from "@/lib/services/profile";
 
-const BASE_URL = "https://choseno.app";
+const BASE_URL = "https://choseno.com";
 
 export const metadata: Metadata = {
   title: "Active Elections | Choseno",

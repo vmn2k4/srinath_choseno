@@ -6,8 +6,6 @@ import {
   getCountries,
   listBoundaryTypes,
   getMapShapesByType,
-  findShapesInContainers,
-  getGeojsonShapes,
 } from "@/lib/services/boundaries";
 import { Eye, MapPin } from "lucide-react";
 import { Card, Button, Select, PageHeader } from "@/components/primitives";
