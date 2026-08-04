@@ -1,0 +1,412 @@
+@import "tailwindcss";
+
+/* Fonts are loaded via next/font/google in layout.tsx (not a CSS @import --
+   next/font self-hosts + preloads, avoiding the render-blocking Google
+   Fonts request the original Vite app made from index.css). Those loaders
+   set --font-sans/--font-display on <html> as font variables; this block
+   just declares the fallback stacks so raw var() reads still make sense
+   before hydration / in non-Next contexts. */
+@theme {
+  --font-sans: var(--font-public-sans), system-ui, sans-serif;
+  --font-display: var(--font-big-shoulders-display), system-ui, sans-serif;
+  --font-mono: 'Fira Code', monospace;
+
+  /* Brand Colors */
+  --color-coffee-bean: #14080e;
+  --color-vintage-grape: #49475b;
+  --color-cool-steel: #799496;
+  --color-muted-olive: #acc196;
+  --color-vanilla-custard: #e9eb9e;
+
+  /* Semantic Theme Variables */
+  --color-background: var(--color-coffee-bean);
+  --color-surface: #201a24;
+  --color-surface-hover: #322b37;
+  --color-surface-active: #443c4c;
+  --color-surface-elevated: rgba(73, 71, 91, 0.35);
+
+  --color-border: #3c3543;
+  --color-border-light: rgba(121, 148, 150, 0.25);
+
+  --color-text-main: #f4f5f0;
+  --color-text-secondary: var(--color-vanilla-custard);
+  --color-text-tertiary: var(--color-muted-olive);
+  --color-text-muted: var(--color-cool-steel);
+  --color-text-dark: var(--color-vintage-grape);
+  --color-text-darker: #2f2d3d;
+
+  /* Primary Brand (Vanilla Custard mapped) */
+  --color-primary: var(--color-vanilla-custard);
+  --color-primary-hover: #dbdd8d;
+  --color-primary-light: var(--color-muted-olive);
+  --color-primary-lighter: var(--color-cool-steel);
+
+  /* Secondary/Accent Brand (Muted Olive mapped) */
+  --color-accent: var(--color-muted-olive);
+  --color-accent-hover: #9bb185;
+
+  /* Danger/Alert (Rose mapped) */
+  --color-danger: var(--color-rose-500);
+  --color-danger-light: var(--color-rose-400);
+  --color-danger-lighter: var(--color-rose-300);
+
+  /* Warning/Notice (Amber mapped) */
+  --color-warning: var(--color-amber-500);
+  --color-warning-light: var(--color-amber-300);
+
+  /* Caution/destructive-lite (Orange mapped) — distinct warm hue from Warning,
+     used for irreversible-but-not-"danger" actions (e.g. burning an identity) */
+  --color-caution: var(--color-orange-500);
+  --color-caution-light: var(--color-orange-300);
+
+  /* Success (Emerald mapped) */
+  --color-success: var(--color-emerald-500);
+  --color-success-light: var(--color-emerald-300);
+
+  /* Text drawn on top of a solid primary/warning-colored surface (e.g. filled buttons) */
+  --color-text-on-primary: var(--color-slate-950);
+
+  /* Modal/overlay scrim */
+  --color-overlay: rgba(0, 0, 0, 0.6);
+  --color-overlay-heavy: rgba(0, 0, 0, 0.95);
+
+  /* Specular highlight for the top edge of a glass surface -- simulates light
+     catching the physical edge of the glass. Derived from --color-primary
+     (not plain white) so it reads as a visible fleck in every theme instead
+     of vanishing into a white-on-white surface in the light palettes. */
+  --color-glass-highlight: color-mix(in srgb, var(--color-primary) 30%, white);
+
+  /* Elevation — neutral depth shadows (offset + blur, never a colored halo) */
+  --shadow-elevated-md: 0 10px 30px -4px rgba(0, 0, 0, 0.45);
+  --shadow-elevated-lg: 0 14px 40px -6px rgba(0, 0, 0, 0.5);
+  --shadow-elevated-xl: 0 24px 70px -10px rgba(0, 0, 0, 0.55);
+  /* Stacked, extended shadow for large "floating" surfaces (e.g. device frames) */
+  --shadow-floating: 0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042,
+    0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003;
+}
+
+@layer base {
+  body {
+    @apply min-h-screen text-text-main antialiased font-sans m-0 p-0 box-border relative;
+    background-color: var(--color-background);
+  }
+
+  /* The ambient gradient lives on a fixed, viewport-sized layer instead of
+     directly on body's background-image -- a plain body background scales
+     to the page's full scrollable content height, so the exact same
+     gradient looked completely different from one page to the next purely
+     based on how much content that page happened to have. Pinning it to
+     the viewport makes it identical everywhere, the way a single shared
+     backdrop should be. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(circle at top right, color-mix(in srgb, var(--color-accent) 45%, var(--color-surface)), var(--color-surface) 45%, var(--color-background));
+  }
+}
+
+@layer utilities {
+  /* Z-axis elevation system for glass surfaces. Each level is a physical
+     metaphor, not just a bigger shadow: higher elevation means further from
+     the backdrop (more blur, since a farther pane of glass separates it from
+     what's behind it), more light passing through it (higher saturate, the
+     classic "frosted glass intensifies color" trick), a deeper cast shadow,
+     and a brighter specular highlight along its top edge (light catching the
+     glass). Pick a level by how close to the viewer the surface should feel,
+     not by trial and error:
+       1 -- inline/repeated surfaces (list rows, empty states)
+       2 -- standard cards, panels, the composer, the nav bar
+       3 -- hero panels, featured cards, floating badges
+       4 -- modals -- the topmost surface, closest to the viewer
+     backdrop-filter needs the -webkit- prefix for Safari; both are required. */
+  .elevation-1 {
+    backdrop-filter: blur(6px) saturate(140%);
+    -webkit-backdrop-filter: blur(6px) saturate(140%);
+    box-shadow: var(--shadow-elevated-md), inset 0 1px 0 var(--color-glass-highlight);
+  }
+  .elevation-2 {
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    box-shadow: var(--shadow-elevated-md), inset 0 1px 0 var(--color-glass-highlight);
+  }
+  .elevation-3 {
+    backdrop-filter: blur(16px) saturate(170%);
+    -webkit-backdrop-filter: blur(16px) saturate(170%);
+    box-shadow: var(--shadow-elevated-lg), inset 0 1px 0 var(--color-glass-highlight);
+  }
+  .elevation-4 {
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow: var(--shadow-elevated-xl), inset 0 1.5px 0 var(--color-glass-highlight);
+  }
+
+  /* Shape/color half of the recipe only -- pair with an .elevation-N class
+     at the call site for the blur/shadow/highlight half (kept separate
+     since @apply can't reach into another hand-written utility class). */
+  .glass-card {
+    @apply bg-surface-elevated border border-border-light rounded-3xl;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* ============ Home page animations ============ */
+/* Entrance/scroll-reveal/parallax motion lives in HomePage.jsx via
+   framer-motion. What's left here is purely static/decorative CSS. */
+
+/* Ambient floating orbs — position/size/color only; movement is driven by
+   framer-motion (scroll parallax + idle drift) in HomePage.jsx. */
+.orb {
+  position: absolute;
+  border-radius: var(--radius-full);
+  filter: blur(90px);
+  will-change: transform;
+}
+
+.orb-a { width: 480px; height: 480px; top: -10%; right: -5%; background: color-mix(in srgb, var(--color-accent) 14%, transparent); }
+.orb-b { width: 400px; height: 400px; bottom: -15%; left: -8%; background: color-mix(in srgb, var(--color-primary) 10%, transparent); animation-delay: -6s; }
+.orb-c { width: 320px; height: 320px; top: 35%; left: 20%; background: color-mix(in srgb, var(--color-primary-lighter) 10%, transparent); animation-delay: -12s; }
+.orb-d { width: 420px; height: 420px; top: 10%; right: 0; background: color-mix(in srgb, var(--color-primary-lighter) 8%, transparent); animation-delay: -4s; }
+.orb-e { width: 360px; height: 360px; top: -30%; left: 30%; background: color-mix(in srgb, var(--color-primary) 10%, transparent); animation-delay: -9s; }
+
+/* ============ Site-wide theme picker (admin-controlled, see Admin > Theme) ============ */
+/* Every theme below only overrides brand colors (primary/accent/text-on-primary) —
+   dark themes inherit the neutral scale from :root above, since the palettes were
+   designed with a shared dark base and just swap which brand color sits on top.
+   "civic-original" is the app's :root default, so it needs no block here. */
+
+[data-theme="electric-blue"] {
+  --color-primary: #3B82F6;
+  --color-primary-hover: #2f6fd6;
+  --color-primary-light: #7fb0fb;
+  --color-primary-lighter: #b7d5fd;
+  --color-accent: #22D3EE;
+  --color-accent-hover: #0fb8d4;
+  --color-text-on-primary: #ffffff;
+}
+
+[data-theme="vibrant-indigo"] {
+  --color-primary: #6366F1;
+  --color-primary-hover: #4f52d6;
+  --color-primary-light: #a5a7f6;
+  --color-primary-lighter: #c7c8fa;
+  --color-accent: #A78BFA;
+  --color-accent-hover: #8f6ef0;
+  --color-text-on-primary: #ffffff;
+}
+
+[data-theme="fresh-green"] {
+  --color-primary: #22C55E;
+  --color-primary-hover: #1aa34e;
+  --color-primary-light: #6ee0a0;
+  --color-primary-lighter: #a8edc4;
+  --color-accent: #4ADE80;
+  --color-accent-hover: #22c55e;
+  --color-text-on-primary: #062910;
+}
+
+[data-theme="sunset-coral"] {
+  --color-primary: #F5576C;
+  --color-primary-hover: #d63e52;
+  --color-primary-light: #f98fa0;
+  --color-primary-lighter: #fcb9c4;
+  --color-accent: #FFA45B;
+  --color-accent-hover: #ff8c33;
+  --color-text-on-primary: #2b0509;
+}
+
+[data-theme="bold-orange"] {
+  --color-primary: #FF6B1A;
+  --color-primary-hover: #e0570d;
+  --color-primary-light: #ffa066;
+  --color-primary-lighter: #ffc59e;
+  --color-accent: #FFB347;
+  --color-accent-hover: #ff9d1a;
+  --color-text-on-primary: #2b1200;
+}
+
+[data-theme="crimson-attention"] {
+  --color-primary: #EF4444;
+  --color-primary-hover: #d32f2f;
+  --color-primary-light: #f68f8f;
+  --color-primary-lighter: #fbc0c0;
+  --color-accent: #FCA5A5;
+  --color-accent-hover: #f87171;
+  --color-text-on-primary: #ffffff;
+}
+
+/* Light themes override the full neutral scale, not just brand colors — the
+   base ambiance (background/surface/border/text) actually flips direction
+   in light mode instead of just swapping an accent. */
+
+[data-theme="clean-sky-blue"] {
+  --color-background: #f7f9fc;
+  --color-surface: #ffffff;
+  --color-surface-hover: #eef2f8;
+  --color-surface-active: #e2e8f4;
+  --color-surface-elevated: rgba(37, 99, 235, 0.08);
+  --color-border: #dbe2ef;
+  --color-border-light: rgba(17, 24, 39, 0.12);
+  --color-text-main: #0f172a;
+  --color-text-secondary: #1e293b;
+  --color-text-tertiary: #334155;
+  --color-text-muted: #475569;
+  --color-text-dark: #64748b;
+  --color-text-darker: #cbd5e1;
+  --color-primary: #1d4ed8;
+  --color-primary-hover: #1e40af;
+  --color-primary-light: #1d4ed8;
+  --color-primary-lighter: #93c5fd;
+  --color-accent: #0284c7;
+  --color-accent-hover: #0369a1;
+  --color-text-on-primary: #ffffff;
+  --color-warning: #b45309;
+  --color-warning-light: #92400e;
+  --color-danger: #dc2626;
+  --color-danger-light: #991b1b;
+}
+
+[data-theme="soft-mint"] {
+  --color-background: #f4fbf7;
+  --color-surface: #ffffff;
+  --color-surface-hover: #e9f6ee;
+  --color-surface-active: #dcefe3;
+  --color-surface-elevated: rgba(22, 163, 74, 0.08);
+  --color-border: #d1e7d9;
+  --color-border-light: rgba(17, 24, 39, 0.12);
+  --color-text-main: #064e3b;
+  --color-text-secondary: #065f46;
+  --color-text-tertiary: #047857;
+  --color-text-muted: #0f766e;
+  --color-text-dark: #64748b;
+  --color-text-darker: #d1e7db;
+  --color-primary: #15803d;
+  --color-primary-hover: #166534;
+  --color-primary-light: #15803d;
+  --color-primary-lighter: #86efac;
+  --color-accent: #d97706;
+  --color-accent-hover: #b45309;
+  --color-text-on-primary: #ffffff;
+  --color-warning: #b45309;
+  --color-warning-light: #92400e;
+  --color-danger: #dc2626;
+  --color-danger-light: #991b1b;
+}
+
+[data-theme="warm-coral"] {
+  --color-background: #fff8f6;
+  --color-surface: #ffffff;
+  --color-surface-hover: #fdeeea;
+  --color-surface-active: #fbe0d9;
+  --color-surface-elevated: rgba(255, 90, 95, 0.08);
+  --color-border: #f3d5ce;
+  --color-border-light: rgba(31, 41, 55, 0.12);
+  --color-text-main: #4c0519;
+  --color-text-secondary: #881337;
+  --color-text-tertiary: #9f1239;
+  --color-text-muted: #be123c;
+  --color-text-dark: #9ca3af;
+  --color-text-darker: #f0dcd6;
+  --color-primary: #e11d48;
+  --color-primary-hover: #be123c;
+  --color-primary-light: #be123c;
+  --color-primary-lighter: #fda4af;
+  --color-accent: #d97706;
+  --color-accent-hover: #b45309;
+  --color-text-on-primary: #ffffff;
+  --color-warning: #b45309;
+  --color-warning-light: #92400e;
+  --color-danger: #dc2626;
+  --color-danger-light: #991b1b;
+}
+
+[data-theme="soft-lavender"] {
+  --color-background: #f8f7fd;
+  --color-surface: #ffffff;
+  --color-surface-hover: #efedfa;
+  --color-surface-active: #e3dff6;
+  --color-surface-elevated: rgba(124, 58, 237, 0.08);
+  --color-border: #dcd6f7;
+  --color-border-light: rgba(124, 58, 237, 0.15);
+  --color-text-main: #1e1b4b;
+  --color-text-secondary: #312e81;
+  --color-text-tertiary: #3730a3;
+  --color-text-muted: #4338ca;
+  --color-text-dark: #6366f1;
+  --color-text-darker: #e2dcf5;
+  --color-primary: #6d28d9;
+  --color-primary-hover: #5b21b6;
+  --color-primary-light: #5b21b6;
+  --color-primary-lighter: #ddd6fe;
+  --color-accent: #be185d;
+  --color-accent-hover: #9d174d;
+  --color-text-on-primary: #ffffff;
+  --color-warning: #b45309;
+  --color-warning-light: #92400e;
+  --color-danger: #dc2626;
+  --color-danger-light: #991b1b;
+}
+
+[data-theme="sky-cyan"] {
+  --color-background: #f0f9ff;
+  --color-surface: #ffffff;
+  --color-surface-hover: #e0f2fe;
+  --color-surface-active: #cdeafd;
+  --color-surface-elevated: rgba(14, 165, 233, 0.08);
+  --color-border: #bae6fd;
+  --color-border-light: rgba(17, 24, 39, 0.12);
+  --color-text-main: #0c4a6e;
+  --color-text-secondary: #075985;
+  --color-text-tertiary: #0369a1;
+  --color-text-muted: #0284c7;
+  --color-text-dark: #9ca3af;
+  --color-text-darker: #cfe9fa;
+  --color-primary: #0284c7;
+  --color-primary-hover: #0369a1;
+  --color-primary-light: #0369a1;
+  --color-primary-lighter: #bae6fd;
+  --color-accent: #7e22ce;
+  --color-accent-hover: #6b21a8;
+  --color-text-on-primary: #ffffff;
+  --color-warning: #b45309;
+  --color-warning-light: #92400e;
+  --color-danger: #dc2626;
+  --color-danger-light: #991b1b;
+}
+
+[data-theme="peach-amber"] {
+  --color-background: #fffaf0;
+  --color-surface: #ffffff;
+  --color-surface-hover: #fdf1de;
+  --color-surface-active: #fbe6c4;
+  --color-surface-elevated: rgba(245, 158, 11, 0.08);
+  --color-border: #fcd34d;
+  --color-border-light: rgba(31, 41, 55, 0.12);
+  --color-text-main: #451a03;
+  --color-text-secondary: #78350f;
+  --color-text-tertiary: #92400e;
+  --color-text-muted: #b45309;
+  --color-text-dark: #9ca3af;
+  --color-text-darker: #f2e3c8;
+  --color-primary: #d97706;
+  --color-primary-hover: #b45309;
+  --color-primary-light: #b45309;
+  --color-primary-lighter: #fde68a;
+  --color-accent: #a52e33;
+  --color-accent-hover: #881b1f;
+  --color-text-on-primary: #ffffff;
+  --color-warning: #b45309;
+  --color-warning-light: #92400e;
+  --color-danger: #dc2626;
+  --color-danger-light: #991b1b;
+}

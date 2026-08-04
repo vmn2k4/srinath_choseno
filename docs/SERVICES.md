@@ -9,14 +9,17 @@ Every Supabase call (`.from()`, `.rpc()`, `.storage`, `.auth`) lives in `src/ser
 | File | Domain | Used by |
 |---|---|---|
 | `supabase.js` | Client init only | (imported by every other service file) |
-| `elections.js` | elections, election_seats, election_candidates, election_administrators, questions/options, candidate answers, election RPCs, candidacy-wall posts (`getCandidacyWallPosts` — unified with the person's permanent wall, see `ARCHITECTURE.md` §27) | `ElectionsAdmin`, `ElectionAdminApplications`, `PoliticianElections`, `CandidateApplication`, `CandidacyWall`, `ElectionsPage`, `ElectionSeatPage` |
-| `boundaries.js` | countries, country_boundary_types, map_shapes, boundary_uploads, boundary RPCs (geojson, containers, redistricting, shape insert) | `BoundaryVisualizer`, `BoundaryUploadsPanel`, `RedistrictingPanel`, `BoundaryPicker`, `AdminPage`, `UserPage`, `StepLocation`, plus `ElectionsAdmin`/`PoliticianElections` for country/type/shape lookups |
-| `politicalParties.js` | political_parties CRUD | `AdminPage`, `StepPolitician` |
+| `elections.js` | elections, election_seats, election_candidates, election_administrators, questions/options, candidate answers, candidacy claim invites/requests (§28), election RPCs, candidacy-wall posts (`getCandidacyWallPosts` — unified with the person's permanent wall, see `ARCHITECTURE.md` §27) | `ElectionsAdmin`, `ElectionAdminApplications`, `PoliticianElections`, `CandidateApplication`, `CandidacyWall`, `ElectionsPage`, `ElectionSeatPage`, `ClaimCandidacy` |
+| `boundaries.js` | countries, country_boundary_types, map_shapes, boundary_uploads, boundary RPCs (geojson, containers, redistricting, shape insert) | `BoundaryVisualizer`, `BoundaryUploadsPanel`, `RedistrictingPanel`, `BoundaryPicker`, `AdminPage`, `FeedPage`, `StepLocation`, plus `ElectionsAdmin`/`PoliticianElections` for country/type/shape lookups |
+| `politicalParties.js` | political_parties CRUD | `AdminPage`, `StepPolitician`, `ElectionSeatPage` |
 | `feed.js` | posts (main feed), comments, post-image storage, ghost-identity burn RPC, election notifications | `FeedPage`, `ProfilePage` (burn), plus `PoliticianWall`/`CandidacyWall` for the shared `createComment`/`uploadPostImage` helpers |
-| `politicianWall.js` | politician_supporters, wall-scoped profile/posts lookups, wall post creation (direct insert) | `PoliticianWall` |
-| `profile.js` | profiles, user_locations, user_boundary_memberships, politician_profiles, civic score RPC, the AuthContext self-healing profile fetch | `ProfilePage`, `EditProfileFlow`, `OnboardingFlow`, `AuthContext`, plus `FeedPage`/`PoliticianWall`/`CandidacyWall`/`ElectionsPage` for profile/membership lookups |
+| `politicianWall.js` | politician_supporters, wall-scoped profile/posts lookups, wall post creation (direct insert), realtime support-count subscription | `PoliticianWall`, plus `CandidacyWall` for the shared wall post helpers |
+| `profile.js` | profiles, user_locations, user_boundary_memberships, politician_profiles, civic score RPC, the AuthContext self-healing profile fetch | `ProfilePage`, `EditProfileFlow`, `OnboardingFlow`, `AuthContext`, `PoliticianSidebar`, plus `FeedPage`/`PoliticianWall`/`CandidacyWall`/`ElectionsPage`/`ElectionSeatPage`/`PoliticianElections` for profile/membership lookups |
 | `auth.js` | auth.signUp / signInWithPassword / signOut / getSession / onAuthStateChange | `AuthPage`, `AuthContext` |
 | `video.js` | storage upload/getPublicUrl for video (bucket-parameterized) | `VideoRecorder` |
+| `analytics.js` | read-only platform metrics (post/comment/user counts, DAU/WAU/MAU, roles breakdown) — computed client-side from several `count`/timestamp queries, not a single RPC | `Admin/AnalyticsPanel` |
+| `settings.js` | `site_settings` (single-row site-wide theme), cached via `src/utils/apiCache.js` | `ThemeContext` |
+| `candidateSync.js` | jurisdiction detection for a seat, official-candidate-source lookup/fetch (wraps the `fetch-candidates` Edge Function), one-click add of a fetched candidate (delegates to `elections.js`'s `addUnregisteredCandidate`) | `Admin/ElectionsAdmin` |
 
 ## Conventions
 

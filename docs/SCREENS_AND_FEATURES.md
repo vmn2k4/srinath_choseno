@@ -17,8 +17,9 @@ Admin if applicable, Profile, Sign Out) that swaps its links based on session st
 signed-out visitors only see "Log In / Sign Up"; citizens see Feed/Elections/Profile;
 politicians see Feed/**Politician** Elections/Profile; admins see Feed/**Admin**/Profile (no
 Elections link — admins don't belong to a constituency). Admin screens additionally get their
-own sub-nav (`AdminSubNav`): **Boundaries** / **Elections** / **Election Admins** /
-**Visualizer**, since those four live on separate top-level routes, not tabs of one page.
+own sub-nav (`AdminSubNav`): **Boundaries** / **Analytics** / **Elections** / **Election
+Admins** / **Visualizer** / **Theme**, since those six live on separate top-level routes, not
+tabs of one page.
 
 ---
 
@@ -72,8 +73,10 @@ The main citizen/politician home screen — everything here is scoped to the con
 you belong to.
 
 - **Profile summary header**: avatar-initial, name, role badge, location, Ghost ID (first
-  segment shown), and a **Burn Identity** button (generates a new anonymous id, orphaning all
-  past posts/comments permanently — confirmed with a warning dialog first).
+  segment shown), a **Civic Impact Score** (10 pts/post, 5 pts/comment, +1/-1 per upvote/
+  downvote your posts receive, with a manual **recalculate** action), and a **Burn Identity**
+  button (generates a new anonymous id, orphaning all past posts/comments permanently — the
+  confirmation dialog locks in your current score first, then you get a brand new identity).
 - **Active-election banner** — one dismissible pill per election currently open in any of
   your boundaries (via `get_active_elections_for_user`), linking straight to that seat.
 - **Composer** — always visible. Post text, an optional image (5MB cap), an optional link
@@ -88,11 +91,9 @@ you belong to.
   thumbnail strip above the main feed (Instagram/TikTok-style), tap to open a full-screen
   player.
 - **Posts**: Ghost-ID byline, text, optional image/link-preview/video, upvote/downvote
-  counts, and a threaded comment box (also posted under a Ghost ID). Politicians see posts
-  sorted by engagement (likes + comments) instead of strictly newest-first, on every tab.
-- Every post/comment write silently triggers a background export of the user's own
-  post/comment ids and stats to Supabase Storage (a standing data-portability mechanism, not
-  a visible feature).
+  counts, a small civic-score badge (the poster's score at the time of posting), and a
+  threaded comment box (also posted under a Ghost ID). Politicians see posts sorted by
+  engagement (likes + comments) instead of strictly newest-first, on every tab.
 
 Admins see a locked-down version: no composer, no tabs, no memberships — just a notice that
 their job is the Admin panel, not a constituency feed.
@@ -201,8 +202,10 @@ Your own account settings — a read-only summary view plus an Edit modal.
 - **Political Details** (politicians only): party, hometown, bio, plus a one-click **Switch
   to Citizen Account** downgrade (no confirmation-heavy flow — citizens get the reciprocal
   "Become a Politician" prompt everywhere else in the app).
-- **Privacy & Ghost ID** (citizens only): current Ghost ID, and **Burn My Ghost ID** (same
-  destructive, confirmed action as the Feed page's version).
+- **Privacy & Ghost ID** (citizens only): current Ghost ID, the same **Civic Impact Score**
+  as the Feed page (with its own recalculate action), a rotation history line ("Rotated N
+  times, last on `<date>`"), and **Rotate Ghost ID** (same destructive, confirmed action as
+  the Feed page's version).
 - **Edit Profile** opens a modal wizard reusing the onboarding step components: Basic Info
   (name + role toggle) → Location (full `StepLocation`, re-detect or manually adjust) →
   Political Details (politicians only, 3 steps total vs. 2 for citizens).
@@ -222,7 +225,7 @@ separate their own updates from visitor feedback at a glance).
 
 ## Admin
 
-Four separate top-level routes (not tabs of one page), all gated to `profiles.role='admin'`.
+Six separate top-level routes (not tabs of one page), all gated to `profiles.role='admin'`.
 
 ### Boundaries (`/admin`)
 The foundational data-management screen — everything else in the app depends on what's
@@ -257,6 +260,15 @@ registered here.
   selection. **Confirm Retirement** (soft — stays intact for any election/post history that
   already references it) or **Delete Selected Permanently** (hard, blocked if anything
   references it, pointing you at retirement instead).
+
+### Analytics (`/admin/analytics`)
+Read-only platform engagement dashboard. Top row: total story posts, total comments, total
+registered accounts, and daily-new-users, each with a today/7d/30d breakdown where relevant.
+A DAU/WAU/MAU panel (unique users active in the past 24h/7d/30d, derived from post, comment,
+and profile-update timestamps) with a stickiness ratio (DAU ÷ MAU). Below that, a content
+creation velocity table and a user-roles breakdown (citizens / candidates & representatives /
+admins) as proportional bars. A manual **Refresh Metrics** button re-fetches everything;
+nothing here is editable.
 
 ### Elections (`/admin/elections`)
 Full election lifecycle management: create an election (name + date, starts in `draft`),
@@ -300,6 +312,12 @@ and see the result rendered directly on a map. A 500-shape render cap shows a pl
 with an explicit "Load Map Anyway" opt-in instead of silently fetching a huge geometry
 payload. Nothing here is selectable or editable — purely for sanity-checking what's actually
 loaded.
+
+### Theme (`/admin/theme`)
+Picks the site-wide active color theme every visitor sees — a grid of the app's switchable
+palettes (see [DESIGN.md](../DESIGN.md)'s Theming section for the mechanism), each rendered
+as a live mini feed-post mockup so the palette is judged in context, not as a bare swatch.
+Clicking one applies it immediately, site-wide, for every user.
 
 ---
 
