@@ -137,6 +137,17 @@ export default function CandidateApplicationClient({
           videoUrl: a.video_url,
         };
       });
+
+      // Initialize ranking answers: pre-populate all options in default order so they're counted as "started"
+      for (const q of (qs || [])) {
+        if (q.question_type === "ranking" && !answerMap[q.id]) {
+          const defaultOrder = (q.election_question_options || []).map((o: any) => o.id);
+          answerMap[q.id] = {
+            rankedOptionIds: defaultOrder,
+          };
+        }
+      }
+
       setAnswers(answerMap);
     }
 
@@ -202,6 +213,22 @@ export default function CandidateApplicationClient({
       await setCandidateAnswerRanking(supabase, actualAnswerId, merged.rankedOptionIds || []);
     }
   };
+
+  // Initialize ranking answers on first load: ensure answer row exists with all options ranked
+  const initializeRankingAnswers = async () => {
+    for (const q of questions) {
+      if (q.question_type === "ranking" && answers[q.id] && !answers[q.id].answerId) {
+        const defaultOrder = (q.election_question_options || []).map((o: any) => o.id);
+        await persistAnswer(q.id, { rankedOptionIds: defaultOrder });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (questions.length > 0 && answers && Object.keys(answers).length > 0 && !loading) {
+      initializeRankingAnswers();
+    }
+  }, [loading]);
 
   const selectOption = (questionId: string, optionId: string) =>
     persistAnswer(questionId, { optionId });
