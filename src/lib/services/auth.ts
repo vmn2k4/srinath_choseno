@@ -11,6 +11,16 @@ export async function signInWithPassword(supabase: Client, email: string, passwo
   return supabase.auth.signInWithPassword({ email, password });
 }
 
+export async function signInWithGoogle(supabase: Client) {
+  const redirectUrl = `${window.location.origin}/auth/callback`;
+  return supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: redirectUrl,
+    },
+  });
+}
+
 export async function signOut(supabase: Client) {
   return supabase.auth.signOut();
 }
