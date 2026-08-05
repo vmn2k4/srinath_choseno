@@ -165,7 +165,7 @@ export default function CandidateApplicationClient({
 
   const findUnansweredRequiredQuestion = () => {
     for (const q of questions) {
-      if (!q.is_required) continue;
+      if (!q.required) continue;
       const ans = answers[q.id];
       if (!hasStartedAnswering(q, ans)) {
         return q.id;
@@ -465,7 +465,7 @@ export default function CandidateApplicationClient({
                     <h3 className="font-bold text-text-main text-sm">
                       {q.question_text}
                     </h3>
-                    {q.is_required && <Badge tone="rose">Required</Badge>}
+                    {q.required && <Badge tone="rose">Required</Badge>}
                   </div>
                   {q.description && (
                     <p className="text-xs text-text-muted mt-1">{q.description}</p>
