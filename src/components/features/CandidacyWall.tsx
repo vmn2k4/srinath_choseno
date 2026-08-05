@@ -64,7 +64,7 @@ interface CandidateRecord {
   hometown?: string;
   education?: string;
   statement?: string;
-  video_url?: string;
+  intro_video_url?: string;
   avatar_url?: string;
   nomination_filed?: boolean;
   is_unregistered?: boolean;
@@ -612,14 +612,14 @@ export default function CandidacyWall({
             )}
 
             {/* Intro video */}
-            {candidate.video_url && (
+            {candidate.intro_video_url && (
               <div className="pt-3 border-t border-border-light/20 space-y-2">
                 <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
-                  <Video size={13} className="text-accent" /> Campaign Video
+                  <Video size={13} className="text-accent" /> Introductory Campaign Video Pitch
                 </h3>
                 <div className="rounded-xl overflow-hidden border border-border-light/40 bg-black">
                   <video
-                    src={candidate.video_url}
+                    src={candidate.intro_video_url}
                     controls
                     className="w-full max-h-64 object-contain"
                   />
