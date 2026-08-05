@@ -63,12 +63,45 @@ export default function NavBar() {
             Home
           </Link>
 
-          <Link
-            href="/news"
-            className={navLinkClass(pathname?.startsWith("/news") ?? false)}
-          >
-            News
-          </Link>
+          {session ? (
+            <>
+              {profile?.role === "politician" && profile?.current_ghost_id && (
+                <Link
+                  href={`/wall/${profile.current_ghost_id}`}
+                  className={`flex items-center gap-1.5 ${navLinkClass(
+                    pathname?.startsWith("/wall") ?? false
+                  )}`}
+                >
+                  <Sparkles size={15} />
+                  My Wall
+                </Link>
+              )}
+              {profile?.role !== "admin" && (
+                <Link
+                  href={
+                    profile?.role === "politician"
+                      ? "/politician/elections"
+                      : "/elections"
+                  }
+                  className={`flex items-center gap-1.5 ${navLinkClass(
+                    isActive("/elections") || isActive("/politician/elections")
+                  )}`}
+                >
+                  <Vote size={15} />
+                  Elections &amp; Races
+                </Link>
+              )}
+              {profile?.role === "admin" && (
+                <Link
+                  href="/admin"
+                  className={`flex items-center gap-1.5 ${navLinkClass(isActive("/admin"))}`}
+                >
+                  <Shield size={15} />
+                  Admin
+                </Link>
+              )}
+            </>
+          ) : null}
 
           <Link
             href="/find-my-district"
@@ -80,40 +113,16 @@ export default function NavBar() {
             Find District
           </Link>
 
+          <Link
+            href="/news"
+            className={`flex items-center gap-1.5 ${navLinkClass(pathname?.startsWith("/news") ?? false)}`}
+          >
+            <Newspaper size={15} />
+            News
+          </Link>
+
           {session ? (
             <>
-              <Link href="/feed" className={navLinkClass(isActive("/feed"))}>
-                Local Feed
-              </Link>
-              {profile?.role === "politician" && profile?.current_ghost_id && (
-                <Link
-                  href={`/wall/${profile.current_ghost_id}`}
-                  className={navLinkClass(
-                    pathname?.startsWith("/wall") ?? false
-                  )}
-                >
-                  My Wall
-                </Link>
-              )}
-              {profile?.role !== "admin" && (
-                <Link
-                  href={
-                    profile?.role === "politician"
-                      ? "/politician/elections"
-                      : "/elections"
-                  }
-                  className={navLinkClass(
-                    isActive("/elections") || isActive("/politician/elections")
-                  )}
-                >
-                  Elections &amp; Races
-                </Link>
-              )}
-              {profile?.role === "admin" && (
-                <Link href="/admin" className={navLinkClass(isActive("/admin"))}>
-                  Admin
-                </Link>
-              )}
               <Link
                 href="/profile"
                 className={`flex items-center gap-1.5 ${navLinkClass(
@@ -282,29 +291,8 @@ export default function NavBar() {
             Home
           </Link>
 
-          <Link
-            href="/news"
-            className={mobileNavLinkClass(pathname?.startsWith("/news") ?? false)}
-          >
-            <Newspaper size={18} />
-            News
-          </Link>
-
-          <Link
-            href="/find-my-district"
-            className={mobileNavLinkClass(isActive("/find-my-district"))}
-          >
-            <MapPin size={18} />
-            Find District
-          </Link>
-
           {session ? (
             <>
-              <Link href="/feed" className={mobileNavLinkClass(isActive("/feed"))}>
-                <Rss size={18} />
-                Local Feed
-              </Link>
-
               {profile?.role === "politician" && profile?.current_ghost_id && (
                 <Link
                   href={`/wall/${profile.current_ghost_id}`}
@@ -340,7 +328,27 @@ export default function NavBar() {
                   Admin
                 </Link>
               )}
+            </>
+          ) : null}
 
+          <Link
+            href="/find-my-district"
+            className={mobileNavLinkClass(isActive("/find-my-district"))}
+          >
+            <MapPin size={18} />
+            Find District
+          </Link>
+
+          <Link
+            href="/news"
+            className={mobileNavLinkClass(pathname?.startsWith("/news") ?? false)}
+          >
+            <Newspaper size={18} />
+            News
+          </Link>
+
+          {session ? (
+            <>
               <Link
                 href="/profile"
                 className={mobileNavLinkClass(isActive("/profile"))}

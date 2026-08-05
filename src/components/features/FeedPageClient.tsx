@@ -21,6 +21,7 @@ import {
 import LinkPreview from "./LinkPreview";
 import PostCard, { PostWithComments } from "./PostCard";
 import StoryStrip, { StoryPost } from "./StoryStrip";
+import PitchViewerModal from "./PitchViewerModal";
 import PoliticianSidebar from "./PoliticianSidebar";
 import VideoRecorder from "./VideoRecorder";
 import MediaThumbnail from "./MediaThumbnail";
@@ -47,7 +48,6 @@ import {
   getMembershipScopedPosts,
   getCountryScopedPosts,
   getInternationalScopedPosts,
-  getFeedPostsForTab,
   createFeedPost,
   voteOnPost,
   createComment,
@@ -81,6 +81,14 @@ function sortByPoliticianEngagement<T extends { likes_count?: number | null; com
   });
 }
 
+function getBoundaryNameFromPost(post: any): string | null {
+  const boundaries = post.post_boundaries as any[];
+  if (!boundaries || boundaries.length === 0) return null;
+  const first = boundaries[0];
+  if (first?.map_shapes?.name) return first.map_shapes.name;
+  return null;
+}
+
 export default function FeedPageClient() {
   const supabase = createClient();
   const { user, loading: authLoading } = useAuth();
@@ -90,7 +98,6 @@ export default function FeedPageClient() {
   const [loading, setLoading] = useState(true);
   const [memberships, setMemberships] = useState<MembershipShape[]>([]);
   const [loadingMemberships, setLoadingMemberships] = useState(true);
-  const [activeTab, setActiveTab] = useState<string>("country");
   const [masterFilter, setMasterFilter] = useState<string>("all");
   const [activeElections, setActiveElections] = useState<any[]>([]);
 
@@ -106,7 +113,7 @@ export default function FeedPageClient() {
   const [scoring, setScoring] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
-  const [activeStoryUrl, setActiveStoryUrl] = useState<string | null>(null);
+  const [activeStoryId, setActiveStoryId] = useState<string | null>(null);
   const [extractedUrl, setExtractedUrl] = useState<string | null>(null);
   const [linkMetadata, setLinkMetadata] = useState<any>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -115,7 +122,7 @@ export default function FeedPageClient() {
 
   const [showVideoRecorder, setShowVideoRecorder] = useState(false);
   const [uploadedVideoUrl, setUploadedVideoUrl] = useState<string | null>(null);
-  const [mediaPreviewUrl, setMediaPreviewUrl] = useState<string | null>(null);
+  const [mediaPreview, setMediaPreview] = useState<{ url: string; type: "image" | "video" } | null>(null);
 
   // Ticking clock for the ephemeral story strip (rule 6) — kept in state
   // and updated on an interval rather than calling Date.now() during render,
@@ -184,16 +191,9 @@ export default function FeedPageClient() {
 
         if (isMounted) {
           setMemberships(sorted);
-          if (sorted.length > 0) {
-            const mostLocal = sorted[sorted.length - 1];
-            setActiveTab(`membership:${mostLocal.id}`);
-          }
         }
       } else {
         if (isMounted) setMemberships([]);
-        // No local groups AND no derived country means the default "country"
-        // tab has nothing to show — land on International instead.
-        if (isMounted && !profRecord?.country) setActiveTab("international");
       }
       if (isMounted) setLoadingMemberships(false);
 
@@ -214,71 +214,49 @@ export default function FeedPageClient() {
   const loadFeedPosts = async () => {
     if (!user || !profile) return;
 
-    if (activeTab === "master") {
-      const matchingMembershipIds = memberships
-        .filter((m) => masterFilter === "all" || m.boundary_type === masterFilter)
-        .map((m) => m.id);
+    const matchingMembershipIds = memberships
+      .filter((m) => masterFilter === "all" || m.boundary_type === masterFilter)
+      .map((m) => m.id);
 
-      const queries: Promise<any>[] = [];
-      if (matchingMembershipIds.length > 0) {
-        queries.push(getMembershipScopedPosts(supabase, matchingMembershipIds));
-      }
-      if ((masterFilter === "all" || masterFilter === "Country") && profile.country) {
-        queries.push(getCountryScopedPosts(supabase, profile.country));
-      }
-      if (masterFilter === "all" || masterFilter === "International") {
-        queries.push(getInternationalScopedPosts(supabase));
-      }
-
-      const results = await Promise.all(queries);
-      const combined: PostWithComments[] = [];
-      const seen = new Set<string>();
-
-      results.forEach(({ data }) => {
-        (data || []).forEach((post: any) => {
-          if (!seen.has(post.id)) {
-            seen.add(post.id);
-            combined.push(post as PostWithComments);
-          }
-        });
-      });
-
-      combined.sort(
-        (a, b) =>
-          new Date(b.created_at || 0).getTime() -
-          new Date(a.created_at || 0).getTime()
-      );
-
-      // Politicians want to see the most-engaged posts first.
-      const finalPosts = profile.role === "politician" ? sortByPoliticianEngagement(combined) : combined;
-      setPosts(finalPosts);
-      setPoliticianAuthors(await hydratePoliticianAuthors(supabase, finalPosts));
-    } else {
-      let tabType: "country" | "international" | "membership" = "country";
-      let shapeId: number | undefined;
-
-      if (activeTab === "international") {
-        tabType = "international";
-      } else if (activeTab.startsWith("membership:")) {
-        tabType = "membership";
-        shapeId = parseInt(activeTab.split(":")[1], 10);
-      }
-
-      const { data } = await getFeedPostsForTab(supabase, {
-        tab: tabType,
-        country: profile.country,
-        shapeId,
-      });
-      const fetched = (data as unknown as PostWithComments[]) || [];
-      const finalPosts = profile.role === "politician" ? sortByPoliticianEngagement(fetched) : fetched;
-      setPosts(finalPosts);
-      setPoliticianAuthors(await hydratePoliticianAuthors(supabase, finalPosts));
+    const queries: Promise<any>[] = [];
+    if (matchingMembershipIds.length > 0) {
+      queries.push(getMembershipScopedPosts(supabase, matchingMembershipIds));
     }
+    if ((masterFilter === "all" || masterFilter === "Country") && profile.country) {
+      queries.push(getCountryScopedPosts(supabase, profile.country));
+    }
+    if (masterFilter === "all" || masterFilter === "International") {
+      queries.push(getInternationalScopedPosts(supabase));
+    }
+
+    const results = await Promise.all(queries);
+    const combined: PostWithComments[] = [];
+    const seen = new Set<string>();
+
+    results.forEach(({ data }) => {
+      (data || []).forEach((post: any) => {
+        if (!seen.has(post.id)) {
+          seen.add(post.id);
+          combined.push(post as PostWithComments);
+        }
+      });
+    });
+
+    combined.sort(
+      (a, b) =>
+        new Date(b.created_at || 0).getTime() -
+        new Date(a.created_at || 0).getTime()
+    );
+
+    // Politicians want to see the most-engaged posts first.
+    const finalPosts = profile.role === "politician" ? sortByPoliticianEngagement(combined) : combined;
+    setPosts(finalPosts);
+    setPoliticianAuthors(await hydratePoliticianAuthors(supabase, finalPosts));
   };
 
   useEffect(() => {
     if (profile && profile.role !== "admin") Promise.resolve().then(() => loadFeedPosts());
-  }, [activeTab, masterFilter, profile]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [masterFilter, memberships, profile]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handlePostTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
@@ -428,10 +406,6 @@ export default function FeedPageClient() {
       content: p.content,
       ghost_id: p.ghost_id,
     }));
-
-  const activeMembership = activeTab.startsWith("membership:")
-    ? memberships.find((m) => `membership:${m.id}` === activeTab)
-    : null;
 
   const masterFilterOptions = [
     "all",
@@ -593,7 +567,7 @@ export default function FeedPageClient() {
                               url={imagePreview}
                               type="image"
                               alt="Preview"
-                              onClick={() => setMediaPreviewUrl(imagePreview)}
+                              onClick={() => setMediaPreview({ url: imagePreview, type: "image" })}
                             />
                             <RemoveMediaButton
                               onClick={() => {
@@ -610,7 +584,7 @@ export default function FeedPageClient() {
                             <MediaThumbnail
                               url={uploadedVideoUrl}
                               type="video"
-                              onClick={() => setMediaPreviewUrl(uploadedVideoUrl)}
+                              onClick={() => setMediaPreview({ url: uploadedVideoUrl, type: "video" })}
                             />
                             <RemoveMediaButton
                               onClick={() => setUploadedVideoUrl(null)}
@@ -680,86 +654,39 @@ export default function FeedPageClient() {
               )}
 
               {/* Video Stories Strip */}
-              {storyPosts.length > 0 && (
-                <StoryStrip
-                  posts={storyPosts}
-                  onSelect={(videoUrl) => setActiveStoryUrl(videoUrl)}
-                />
-              )}
+              <StoryStrip
+                posts={storyPosts}
+                onSelect={(postId) => setActiveStoryId(postId)}
+              />
 
-              {/* Boundary Scoped Tabs */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 border-b border-border-light/20">
+              {/* Filter Bar - Always Visible */}
+              <div className="flex items-center gap-2 overflow-x-auto text-xs py-3 border-b border-border-light/20">
+                <span className="text-text-muted text-[11px] font-semibold uppercase tracking-wider mr-1">
+                  Filter:
+                </span>
+                <button
+                  onClick={() => setMasterFilter("all")}
+                  className={`px-3 py-1 rounded-lg font-medium transition-colors cursor-pointer whitespace-nowrap ${
+                    masterFilter === "all"
+                      ? "bg-primary/20 text-primary border border-primary/40"
+                      : "bg-surface/30 text-text-muted hover:text-text-main"
+                  }`}
+                >
+                  All Levels
+                </button>
+                {masterFilterOptions.filter((f) => f !== "all").map((f) => (
                   <button
-                    onClick={() => setActiveTab("master")}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 border cursor-pointer ${
-                      activeTab === "master"
-                        ? "bg-primary text-text-on-primary border-primary shadow-sm"
-                        : "bg-surface/40 text-text-secondary border-border-light/30 hover:border-primary/40"
+                    key={f}
+                    onClick={() => setMasterFilter(f)}
+                    className={`px-3 py-1 rounded-lg font-medium transition-colors cursor-pointer whitespace-nowrap ${
+                      masterFilter === f
+                        ? "bg-primary/20 text-primary border border-primary/40"
+                        : "bg-surface/30 text-text-muted hover:text-text-main"
                     }`}
                   >
-                    <Layers size={14} /> All Feeds
+                    {f.charAt(0).toUpperCase() + f.slice(1)}
                   </button>
-
-                  {memberships.map((m, idx) => (
-                    <button
-                      key={`mem-${m.id}-${idx}`}
-                      onClick={() => setActiveTab(`membership:${m.id}`)}
-                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 border cursor-pointer ${
-                        activeTab === `membership:${m.id}`
-                          ? "bg-primary text-text-on-primary border-primary shadow-sm"
-                          : "bg-surface/40 text-text-secondary border-border-light/30 hover:border-primary/40"
-                      }`}
-                    >
-                      <MapPin size={13} className="text-accent" /> {m.name}
-                    </button>
-                  ))}
-
-                  {profile?.country && (
-                    <button
-                      onClick={() => setActiveTab("country")}
-                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 border cursor-pointer ${
-                        activeTab === "country"
-                          ? "bg-primary text-text-on-primary border-primary shadow-sm"
-                          : "bg-surface/40 text-text-secondary border-border-light/30 hover:border-primary/40"
-                      }`}
-                    >
-                      <Globe2 size={14} /> {profile.country}
-                    </button>
-                  )}
-
-                  <button
-                    onClick={() => setActiveTab("international")}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 border cursor-pointer ${
-                      activeTab === "international"
-                        ? "bg-primary text-text-on-primary border-primary shadow-sm"
-                        : "bg-surface/40 text-text-secondary border-border-light/30 hover:border-primary/40"
-                    }`}
-                  >
-                    <Globe2 size={14} /> International
-                  </button>
-                </div>
-
-                {activeTab === "master" && (
-                  <div className="flex items-center gap-2 overflow-x-auto text-xs py-1">
-                    <span className="text-text-muted text-[11px] font-semibold uppercase tracking-wider mr-1">
-                      Filter:
-                    </span>
-                    {masterFilterOptions.map((f) => (
-                      <button
-                        key={f}
-                        onClick={() => setMasterFilter(f)}
-                        className={`px-3 py-1 rounded-lg font-medium transition-colors cursor-pointer whitespace-nowrap ${
-                          masterFilter === f
-                            ? "bg-primary/20 text-primary border border-primary/40"
-                            : "bg-surface/30 text-text-muted hover:text-text-main"
-                        }`}
-                      >
-                        {f === "all" ? "All Levels" : f}
-                      </button>
-                    ))}
-                  </div>
-                )}
+                ))}
               </div>
 
               {/* Post List Feed */}
@@ -783,10 +710,11 @@ export default function FeedPageClient() {
                         setCommentInputs({ ...commentInputs, [post.id]: text })
                       }
                       onSubmitComment={() => handleCreateComment(post.id)}
-                      onMediaClick={(url) => setMediaPreviewUrl(url)}
+                      onMediaClick={(url, type) => setMediaPreview({ url, type })}
                       politicianAuthor={politicianAuthors.get(post.ghost_id) ?? null}
                       onReport={handleReport}
                       commentError={commentErrors[post.id]}
+                      boundaryName={getBoundaryNameFromPost(post)}
                     />
                   ))}
                 </div>
@@ -801,20 +729,26 @@ export default function FeedPageClient() {
           <div className="w-full lg:w-80 shrink-0">
             <PoliticianSidebar
               profile={profile}
-              activeTab={activeMembership?.boundary_type || activeTab}
+              activeTab={masterFilter}
               memberships={memberships}
             />
           </div>
         )}
       </div>
 
-      {(activeStoryUrl || mediaPreviewUrl) && (
+      {activeStoryId && (
+        <PitchViewerModal
+          posts={storyPosts}
+          startId={activeStoryId}
+          onClose={() => setActiveStoryId(null)}
+        />
+      )}
+
+      {mediaPreview && (
         <StoryViewerModal
-          url={activeStoryUrl || mediaPreviewUrl || ""}
-          onClose={() => {
-            setActiveStoryUrl(null);
-            setMediaPreviewUrl(null);
-          }}
+          url={mediaPreview.url}
+          type={mediaPreview.type}
+          onClose={() => setMediaPreview(null)}
         />
       )}
 

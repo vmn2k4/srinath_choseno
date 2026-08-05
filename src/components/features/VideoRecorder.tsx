@@ -43,7 +43,15 @@ export default function VideoRecorder({
         return;
       }
 
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          aspectRatio: { ideal: 9 / 16 },
+          width: { ideal: 720 },
+          height: { ideal: 1280 },
+          facingMode: "user",
+        },
+        audio: true,
+      });
       streamRef.current = stream;
       if (videoPreviewRef.current) {
         videoPreviewRef.current.srcObject = stream;
@@ -149,12 +157,16 @@ export default function VideoRecorder({
 
   return (
     <div className="w-full max-w-sm mx-auto bg-surface-elevated/90 rounded-2xl p-4 border border-border-light/40 flex flex-col items-center justify-center gap-3 my-3 shadow-md">
-      {/* Compact Video Preview Box */}
-      <div className="relative w-full max-w-xs aspect-video bg-black/90 rounded-xl overflow-hidden border border-border-light/40 flex items-center justify-center shadow-inner">
+      {/* 9:16 Vertical Video Preview Box */}
+      <div
+        className="relative w-48 sm:w-56 bg-black/90 rounded-2xl overflow-hidden border border-border-light/40 flex items-center justify-center shadow-lg"
+        style={{ aspectRatio: "9 / 16" }}
+      >
         <video
           ref={videoPreviewRef}
-          className="w-full h-full object-contain"
+          className="w-full h-full object-cover bg-black"
           muted={isRecording}
+          playsInline
         />
 
         {!isRecording && !videoBlob && (

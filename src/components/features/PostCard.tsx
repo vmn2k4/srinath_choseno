@@ -40,6 +40,7 @@ export default function PostCard({
   politicianAuthor,
   onReport,
   commentError,
+  boundaryName,
 }: {
   post: PostWithComments;
   ownerGhostId?: string | null;
@@ -51,10 +52,11 @@ export default function PostCard({
   commentValue: string;
   onCommentChange: (value: string) => void;
   onSubmitComment: () => void;
-  onMediaClick?: (url: string) => void;
+  onMediaClick?: (url: string, type: "image" | "video") => void;
   politicianAuthor?: { fullName: string; wallHref: string } | null;
   onReport?: (targetType: ReportTargetType, targetId: string, abuseType: string) => Promise<{ error?: unknown }>;
   commentError?: string;
+  boundaryName?: string | null;
 }) {
   const [reportTarget, setReportTarget] = useState<{ targetType: ReportTargetType; targetId: string } | null>(null);
 
@@ -109,6 +111,11 @@ export default function PostCard({
             <span className="text-xs text-text-muted ml-2.5">
               {post.created_at ? new Date(post.created_at).toLocaleDateString() : ""}
             </span>
+            {boundaryName && (
+              <span className="text-xs text-accent ml-2.5 font-medium">
+                📍 {boundaryName}
+              </span>
+            )}
             {post.civic_score_snapshot != null && (
               <span
                 className="text-xs text-text-muted ml-2.5 inline-flex items-center gap-1"
@@ -142,7 +149,7 @@ export default function PostCard({
                 url={post.image_url}
                 type="image"
                 alt="Post Attachment"
-                onClick={() => onMediaClick?.(normalizeMediaUrl(post.image_url))}
+                onClick={() => onMediaClick?.(normalizeMediaUrl(post.image_url), "image")}
               />
             )}
 
@@ -150,7 +157,7 @@ export default function PostCard({
               <MediaThumbnail
                 url={post.video_url}
                 type="video"
-                onClick={() => onMediaClick?.(normalizeMediaUrl(post.video_url))}
+                onClick={() => onMediaClick?.(normalizeMediaUrl(post.video_url), "video")}
               />
             )}
           </div>

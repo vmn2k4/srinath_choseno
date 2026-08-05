@@ -94,7 +94,11 @@ export default function PoliticianSidebar({
         </div>
       ) : politicians.length === 0 ? (
         <EmptyState
-          description={`No candidates or representatives found for this ${activeTab?.toLowerCase()} area yet.`}
+          description={
+            activeTab && !["master", "country"].includes(activeTab.toLowerCase())
+              ? `No candidates or representatives found for this ${activeTab.toLowerCase()} area yet.`
+              : "No candidates or representatives found for your area yet."
+          }
         />
       ) : (
         <div className="space-y-3">

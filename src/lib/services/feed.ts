@@ -7,7 +7,7 @@ type Client = SupabaseClient<Database>;
 export async function getMembershipScopedPosts(supabase: Client, shapeIds: number[]) {
   return supabase
     .from("posts")
-    .select("*, comments(*), post_boundaries!inner(map_shape_id)")
+    .select("*, comments(*), post_boundaries!inner(map_shape_id, map_shapes(id, name))")
     .in("post_boundaries.map_shape_id", shapeIds);
 }
 
@@ -17,23 +17,6 @@ export async function getCountryScopedPosts(supabase: Client, country: string) {
 
 export async function getInternationalScopedPosts(supabase: Client) {
   return supabase.from("posts").select("*, comments(*)").eq("is_international", true);
-}
-
-// posts — single-tab feed view. tab: 'country' | 'international' | 'membership'.
-export async function getFeedPostsForTab(
-  supabase: Client,
-  { tab, country, shapeId }: { tab: "country" | "international" | "membership"; country?: string; shapeId?: number }
-) {
-  const isMembership = tab === "membership";
-  const selectStr = isMembership ? "*, comments (*), post_boundaries!inner(map_shape_id)" : "*, comments (*)";
-  let q = supabase.from("posts").select(selectStr).order("created_at", { ascending: false });
-  // country/shapeId are only actually optional in the type because they're
-  // irrelevant for the other two tabs -- the caller contract (same as the
-  // original JS) is that whichever one matches `tab` is always provided.
-  if (tab === "country") q = q.eq("is_country", true).eq("country", country!);
-  else if (tab === "international") q = q.eq("is_international", true);
-  else if (isMembership) q = q.eq("post_boundaries.map_shape_id", shapeId!);
-  return q;
 }
 
 // ── post creation / voting ───────────────────────────────────────────────

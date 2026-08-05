@@ -38,6 +38,7 @@ import {
   Textarea,
   Spinner,
   Modal,
+  StoryViewerModal,
   RemoveMediaButton,
   Avatar,
   EmptyState,
@@ -103,6 +104,7 @@ export default function PoliticianWallClient({
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
   const [commentErrors, setCommentErrors] = useState<Record<string, string>>({});
   const [showReportProfile, setShowReportProfile] = useState(false);
+  const [mediaPreview, setMediaPreview] = useState<{ url: string; type: "image" | "video" } | null>(null);
 
   const fetchPosts = async () => {
     try {
@@ -482,6 +484,7 @@ export default function PoliticianWallClient({
                 setCommentInputs({ ...commentInputs, [post.id]: text })
               }
               onSubmitComment={() => handleCreateComment(post.id)}
+              onMediaClick={(url, type) => setMediaPreview({ url, type })}
               onReport={handleReport}
               commentError={commentErrors[post.id]}
             />
@@ -551,6 +554,14 @@ export default function PoliticianWallClient({
             </div>
           </Card>
         </Modal>
+      )}
+
+      {mediaPreview && (
+        <StoryViewerModal
+          url={mediaPreview.url}
+          type={mediaPreview.type}
+          onClose={() => setMediaPreview(null)}
+        />
       )}
     </div>
   );

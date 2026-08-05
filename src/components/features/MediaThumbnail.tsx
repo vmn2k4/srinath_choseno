@@ -18,8 +18,12 @@ export default function MediaThumbnail({
     <button
       type="button"
       onClick={onClick}
-      className="relative rounded-lg overflow-hidden border border-border-light/45 w-28 sm:w-36 md:w-44 aspect-[5/7] shrink-0 group hover:shadow-md transition-shadow"
-      style={type === "video" ? { backgroundColor: "rgba(0, 0, 0, 0.2)" } : {}}
+      className={`relative rounded-xl overflow-hidden border border-border-light/45 shrink-0 group hover:shadow-md transition-all cursor-pointer ${
+        type === "video"
+          ? "w-28 sm:w-32 md:w-36 bg-black/90"
+          : "w-28 sm:w-36 md:w-44 bg-surface"
+      }`}
+      style={{ aspectRatio: type === "video" ? "9 / 16" : "5 / 7" }}
     >
       {type === "image" ? (
         <>
@@ -36,11 +40,13 @@ export default function MediaThumbnail({
         <>
           <video
             src={normalized}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
             preload="metadata"
           />
-          <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/50 transition-colors">
-            <Video size={20} className="text-white" />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+            <div className="w-10 h-10 rounded-full bg-black/60 border border-white/30 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <Video size={20} className="text-white" />
+            </div>
           </div>
         </>
       )}

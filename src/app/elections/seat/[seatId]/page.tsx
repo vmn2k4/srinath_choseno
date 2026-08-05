@@ -19,10 +19,11 @@ export async function generateMetadata({
   const { candidate: candidateId } = await searchParams;
   const supabase = await createServerClient();
 
-  const [{ data: seat }, { data: candidates }] = await Promise.all([
-    getSeatById(supabase, seatId),
-    getCandidatesBySeatIds(supabase, [seatId]),
-  ]);
+  const { data: seat } = await getSeatById(supabase, seatId);
+  const { data: candidates } = await getCandidatesBySeatIds(
+    supabase,
+    seat?.id ? [seat.id] : []
+  );
 
   if (!seat) {
     return {
@@ -90,10 +91,11 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
   const { seatId } = await params;
   const supabase = await createServerClient();
 
-  const [{ data: seat }, { data: candidates }] = await Promise.all([
-    getSeatById(supabase, seatId),
-    getCandidatesBySeatIds(supabase, [seatId]),
-  ]);
+  const { data: seat } = await getSeatById(supabase, seatId);
+  const { data: candidates } = await getCandidatesBySeatIds(
+    supabase,
+    seat?.id ? [seat.id] : []
+  );
 
   const jsonLd = seat
     ? {
@@ -120,7 +122,7 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
         />
       )}
       <ElectionSeatPageClient
-        seatId={seatId}
+        seatId={seat?.id || seatId}
         initialSeat={seat}
         initialCandidates={candidates || []}
       />

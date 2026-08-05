@@ -180,7 +180,7 @@ export default function CandidacyWall({
   const [submittingClaim, setSubmittingClaim] = useState(false);
   const [claimStatus, setClaimStatus] = useState("");
   const [claimSubmitted, setClaimSubmitted] = useState(false);
-  const [activeStoryUrl, setActiveStoryUrl] = useState<string | null>(null);
+  const [mediaPreview, setMediaPreview] = useState<{ url: string; type: "image" | "video" } | null>(null);
   const [showPositionsModal, setShowPositionsModal] = useState(false);
 
   const loadAnswers = async () => {
@@ -912,6 +912,7 @@ export default function CandidacyWall({
                     setCommentInputs({ ...commentInputs, [post.id]: text })
                   }
                   onSubmitComment={() => handleCreateComment(post.id)}
+                  onMediaClick={(url, type) => setMediaPreview({ url, type })}
                   onReport={handleReport}
                   commentError={commentErrors[post.id]}
                 />
@@ -922,10 +923,11 @@ export default function CandidacyWall({
       </div>
       )}
 
-      {activeStoryUrl && (
+      {mediaPreview && (
         <StoryViewerModal
-          url={activeStoryUrl}
-          onClose={() => setActiveStoryUrl(null)}
+          url={mediaPreview.url}
+          type={mediaPreview.type}
+          onClose={() => setMediaPreview(null)}
         />
       )}
     </div>
