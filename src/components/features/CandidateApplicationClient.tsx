@@ -87,6 +87,7 @@ export default function CandidateApplicationClient({
   const [submitting, setSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
   const [draggedItem, setDraggedItem] = useState<{ questionId: string; optionId: string } | null>(null);
+  const [highlightedQuestionId, setHighlightedQuestionId] = useState<string | null>(null);
 
   const fetchAll = async () => {
     if (!user || !candidateId) return;
@@ -149,6 +150,17 @@ export default function CandidateApplicationClient({
   const saveStatement = async () => {
     if (!candidateId) return;
     await updateCandidateStatement(supabase, candidateId, statement);
+  };
+
+  const findUnansweredRequiredQuestion = () => {
+    for (const q of questions) {
+      if (!q.required) continue;
+      const ans = answers[q.id];
+      if (!hasStartedAnswering(q, ans)) {
+        return q.id;
+      }
+    }
+    return null;
   };
 
   const handleIntroVideoUploaded = async (url: string) => {
@@ -293,6 +305,17 @@ export default function CandidateApplicationClient({
     const resAny = result as any;
     if (resAny && resAny.success === false) {
       setStatusMessage(`Please complete required questions: ${resAny.message}`);
+      const unansweredId = findUnansweredRequiredQuestion();
+      if (unansweredId) {
+        setHighlightedQuestionId(unansweredId);
+        setTimeout(() => {
+          const el = document.getElementById(`question-${unansweredId}`);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+          setTimeout(() => setHighlightedQuestionId(null), 2500);
+        }, 100);
+      }
       return;
     }
 
@@ -400,7 +423,16 @@ export default function CandidateApplicationClient({
             const started = hasStartedAnswering(q, ans);
 
             return (
-              <Card key={q.id} padding="md" className="space-y-4">
+              <Card
+                key={q.id}
+                id={`question-${q.id}`}
+                padding="md"
+                className={`space-y-4 transition-all ${
+                  highlightedQuestionId === q.id
+                    ? "ring-2 ring-rose-500 animate-pulse bg-rose-50/50"
+                    : ""
+                }`}
+              >
                 <div>
                   <div className="flex items-center justify-between gap-2">
                     <h3 className="font-bold text-text-main text-sm">
