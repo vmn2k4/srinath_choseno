@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import LinkPreview from "./LinkPreview";
 import AnswerValue from "./AnswerValue";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
+import { buildSeatSlug } from "@/lib/utils/slugs";
 import PostCard, { type PostWithComments } from "@/components/features/PostCard";
 import {
   getPublicCandidateById,
@@ -18,6 +19,7 @@ import {
 } from "@/lib/services/elections";
 import { getOwnProfile, getPoliticianProfile } from "@/lib/services/profile";
 import { uploadPostImage, createComment } from "@/lib/services/feed";
+import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import {
   getSupportStatus,
   getSupporterCount,
@@ -73,6 +75,10 @@ interface CandidateRecord {
     full_name?: string;
     current_ghost_id?: string;
   };
+  election_seats?: {
+    role_title?: string;
+    map_shapes?: { name?: string } | null;
+  } | null;
 }
 
 interface QuestionnaireAnswer {
@@ -155,6 +161,7 @@ export default function CandidacyWall({
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
+  const [commentErrors, setCommentErrors] = useState<Record<string, string>>({});
   const [expandedAnswerIds, setExpandedAnswerIds] = useState<Set<string>>(
     () => new Set()
   );
@@ -362,20 +369,22 @@ export default function CandidacyWall({
     const content = commentInputs[postId];
     if (!content?.trim() || !profile?.current_ghost_id) return;
 
+    setCommentErrors((prev) => ({ ...prev, [postId]: "" }));
     try {
-      const { error } = await createComment(
-        supabase,
-        postId,
-        profile.current_ghost_id,
-        content.trim()
-      );
+      const { error } = await createComment(supabase, postId, content.trim());
       if (error) throw error;
 
       setCommentInputs({ ...commentInputs, [postId]: "" });
       await loadPosts();
     } catch (err) {
+      const msg = (err as { message?: string })?.message || "Failed to post comment.";
       console.error("Error creating comment:", err);
+      setCommentErrors((prev) => ({ ...prev, [postId]: msg }));
     }
+  };
+
+  const handleReport = async (targetType: ReportTargetType, targetId: string, abuseType: string) => {
+    return reportContent(supabase, targetType, targetId, abuseType);
   };
 
   const handleCreateAnswerComment = async (answerId: string) => {
@@ -456,7 +465,11 @@ export default function CandidacyWall({
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => router.push(`/elections/seat/${candidate.seat_id}`)}
+            onClick={() =>
+              router.push(
+                `/elections/seat/${buildSeatSlug({ id: candidate.seat_id, ...candidate.election_seats })}`
+              )
+            }
             className="gap-2"
           >
             <ArrowLeft size={16} /> Back to Seat
@@ -899,6 +912,8 @@ export default function CandidacyWall({
                     setCommentInputs({ ...commentInputs, [post.id]: text })
                   }
                   onSubmitComment={() => handleCreateComment(post.id)}
+                  onReport={handleReport}
+                  commentError={commentErrors[post.id]}
                 />
               ))}
             </div>

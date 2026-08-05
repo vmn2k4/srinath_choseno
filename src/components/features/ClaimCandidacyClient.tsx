@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { claimCandidacyViaToken } from "@/lib/services/elections";
+import { buildCandidateSlug } from "@/lib/utils/slugs";
 import { CheckCircle2, ShieldAlert } from "lucide-react";
 import { Card, Button, Spinner } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
@@ -65,7 +66,9 @@ export default function ClaimCandidacyClient({
               questionnaire questions, and manage everything from here.
             </p>
             <Button
-              onClick={() => router.push(`/candidacy/${candidateId}`)}
+              onClick={() =>
+                router.push(`/candidacy/${buildCandidateSlug({ id: candidateId! })}`)
+              }
               className="w-full"
             >
               Go to My Campaign Page

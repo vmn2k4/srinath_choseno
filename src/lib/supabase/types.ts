@@ -189,6 +189,39 @@ export type Database = {
           },
         ]
       }
+      comment_rate_limits: {
+        Row: {
+          last_commented_at: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          last_commented_at?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          last_commented_at?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comment_rate_limits_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comment_rate_limits_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       comments: {
         Row: {
           content: string
@@ -196,6 +229,9 @@ export type Database = {
           ghost_id: string
           id: string
           post_id: string
+          removed_at: string | null
+          removed_by: string | null
+          removed_reason: string | null
         }
         Insert: {
           content: string
@@ -203,6 +239,9 @@ export type Database = {
           ghost_id: string
           id?: string
           post_id: string
+          removed_at?: string | null
+          removed_by?: string | null
+          removed_reason?: string | null
         }
         Update: {
           content?: string
@@ -210,6 +249,9 @@ export type Database = {
           ghost_id?: string
           id?: string
           post_id?: string
+          removed_at?: string | null
+          removed_by?: string | null
+          removed_reason?: string | null
         }
         Relationships: [
           {
@@ -217,6 +259,58 @@ export type Database = {
             columns: ["post_id"]
             isOneToOne: false
             referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_removed_by_fkey"
+            columns: ["removed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_reports: {
+        Row: {
+          abuse_type: string
+          created_at: string | null
+          id: string
+          reporter_id: string
+          status: string
+          target_id: string
+          target_type: string
+        }
+        Insert: {
+          abuse_type: string
+          created_at?: string | null
+          id?: string
+          reporter_id: string
+          status?: string
+          target_id: string
+          target_type: string
+        }
+        Update: {
+          abuse_type?: string
+          created_at?: string | null
+          id?: string
+          reporter_id?: string
+          status?: string
+          target_id?: string
+          target_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_reports_abuse_type_fkey"
+            columns: ["abuse_type"]
+            isOneToOne: false
+            referencedRelation: "moderation_rules"
+            referencedColumns: ["abuse_type"]
+          },
+          {
+            foreignKeyName: "content_reports_reporter_id_fkey"
+            columns: ["reporter_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -912,6 +1006,33 @@ export type Database = {
           },
         ]
       }
+      moderation_rules: {
+        Row: {
+          abuse_type: string
+          auto_remove_threshold: number
+          enabled: boolean
+          label: string
+          score_penalty: number
+          updated_at: string | null
+        }
+        Insert: {
+          abuse_type: string
+          auto_remove_threshold?: number
+          enabled?: boolean
+          label: string
+          score_penalty?: number
+          updated_at?: string | null
+        }
+        Update: {
+          abuse_type?: string
+          auto_remove_threshold?: number
+          enabled?: boolean
+          label?: string
+          score_penalty?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       news_articles: {
         Row: {
           category: string
@@ -1163,6 +1284,9 @@ export type Database = {
           likes_count: number | null
           link_metadata: Json | null
           news_article_id: string | null
+          removed_at: string | null
+          removed_by: string | null
+          removed_reason: string | null
           video_url: string | null
           wall_ghost_id: string | null
         }
@@ -1181,6 +1305,9 @@ export type Database = {
           likes_count?: number | null
           link_metadata?: Json | null
           news_article_id?: string | null
+          removed_at?: string | null
+          removed_by?: string | null
+          removed_reason?: string | null
           video_url?: string | null
           wall_ghost_id?: string | null
         }
@@ -1199,6 +1326,9 @@ export type Database = {
           likes_count?: number | null
           link_metadata?: Json | null
           news_article_id?: string | null
+          removed_at?: string | null
+          removed_by?: string | null
+          removed_reason?: string | null
           video_url?: string | null
           wall_ghost_id?: string | null
         }
@@ -1215,6 +1345,13 @@ export type Database = {
             columns: ["news_article_id"]
             isOneToOne: false
             referencedRelation: "news_articles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_removed_by_fkey"
+            columns: ["removed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -1371,17 +1508,26 @@ export type Database = {
       }
       site_settings: {
         Row: {
+          comment_cooldown_days: number
           id: number
+          politician_daily_post_limit: number
+          story_strip_hours: number
           theme: string
           updated_at: string | null
         }
         Insert: {
+          comment_cooldown_days?: number
           id?: number
+          politician_daily_post_limit?: number
+          story_strip_hours?: number
           theme?: string
           updated_at?: string | null
         }
         Update: {
+          comment_cooldown_days?: number
           id?: number
+          politician_daily_post_limit?: number
+          story_strip_hours?: number
           theme?: string
           updated_at?: string | null
         }
@@ -1776,6 +1922,32 @@ export type Database = {
             }
             Returns: string
           }
+      admin_dismiss_reports: {
+        Args: {
+          p_abuse_type?: string
+          p_target_id: string
+          p_target_type: string
+        }
+        Returns: undefined
+      }
+      admin_remove_content: {
+        Args: {
+          p_abuse_type: string
+          p_reason?: string
+          p_target_id: string
+          p_target_type: string
+        }
+        Returns: undefined
+      }
+      admin_update_moderation_rule: {
+        Args: {
+          p_abuse_type: string
+          p_auto_remove_threshold: number
+          p_enabled: boolean
+          p_score_penalty: number
+        }
+        Returns: undefined
+      }
       apply_for_election_admin: {
         Args: {
           p_contact_email: string
@@ -1865,73 +2037,98 @@ export type Database = {
         Args: { p_candidate_id: string; p_email: string }
         Returns: string
       }
-      create_post:
-        | {
-            Args: {
-              p_content: string
-              p_image_url?: string
-              p_link_metadata?: Json
-              p_video_url?: string
-            }
-            Returns: {
-              civic_score_snapshot: number | null
-              content: string
-              country: string | null
-              created_at: string | null
-              dislikes_count: number | null
-              election_candidate_id: string | null
-              ghost_id: string
-              id: string
-              image_url: string | null
-              is_country: boolean | null
-              is_international: boolean | null
-              likes_count: number | null
-              link_metadata: Json | null
-              news_article_id: string | null
-              video_url: string | null
-              wall_ghost_id: string | null
-            }
-            SetofOptions: {
-              from: "*"
-              to: "posts"
-              isOneToOne: true
-              isSetofReturn: false
-            }
-          }
-        | {
-            Args: {
-              p_content: string
-              p_election_candidate_id?: string
-              p_image_url?: string
-              p_link_metadata?: Json
-              p_news_article_id?: string
-              p_video_url?: string
-            }
-            Returns: {
-              civic_score_snapshot: number | null
-              content: string
-              country: string | null
-              created_at: string | null
-              dislikes_count: number | null
-              election_candidate_id: string | null
-              ghost_id: string
-              id: string
-              image_url: string | null
-              is_country: boolean | null
-              is_international: boolean | null
-              likes_count: number | null
-              link_metadata: Json | null
-              news_article_id: string | null
-              video_url: string | null
-              wall_ghost_id: string | null
-            }
-            SetofOptions: {
-              from: "*"
-              to: "posts"
-              isOneToOne: true
-              isSetofReturn: false
-            }
-          }
+      create_comment: {
+        Args: { p_content: string; p_post_id: string }
+        Returns: {
+          content: string
+          created_at: string | null
+          ghost_id: string
+          id: string
+          post_id: string
+          removed_at: string | null
+          removed_by: string | null
+          removed_reason: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "comments"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      create_post: {
+        Args: {
+          p_content: string
+          p_election_candidate_id?: string
+          p_image_url?: string
+          p_link_metadata?: Json
+          p_news_article_id?: string
+          p_video_url?: string
+        }
+        Returns: {
+          civic_score_snapshot: number | null
+          content: string
+          country: string | null
+          created_at: string | null
+          dislikes_count: number | null
+          election_candidate_id: string | null
+          ghost_id: string
+          id: string
+          image_url: string | null
+          is_country: boolean | null
+          is_international: boolean | null
+          likes_count: number | null
+          link_metadata: Json | null
+          news_article_id: string | null
+          removed_at: string | null
+          removed_by: string | null
+          removed_reason: string | null
+          video_url: string | null
+          wall_ghost_id: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "posts"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      create_wall_post: {
+        Args: {
+          p_content: string
+          p_image_url?: string
+          p_link_metadata?: Json
+          p_video_url?: string
+          p_wall_ghost_id?: string
+        }
+        Returns: {
+          civic_score_snapshot: number | null
+          content: string
+          country: string | null
+          created_at: string | null
+          dislikes_count: number | null
+          election_candidate_id: string | null
+          ghost_id: string
+          id: string
+          image_url: string | null
+          is_country: boolean | null
+          is_international: boolean | null
+          likes_count: number | null
+          link_metadata: Json | null
+          news_article_id: string | null
+          removed_at: string | null
+          removed_by: string | null
+          removed_reason: string | null
+          video_url: string | null
+          wall_ghost_id: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "posts"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       delete_boundary_upload: {
         Args: { p_upload_id: string }
         Returns: undefined
@@ -2146,6 +2343,19 @@ export type Database = {
               id: number
             }[]
           }
+      get_moderation_queue: {
+        Args: never
+        Returns: {
+          abuse_type: string
+          author_label: string
+          content_snippet: string
+          is_removed: boolean
+          last_reported_at: string
+          report_count: number
+          target_id: string
+          target_type: string
+        }[]
+      }
       get_seat_admin_status: {
         Args: { p_seat_id: string }
         Returns: {
@@ -2244,6 +2454,14 @@ export type Database = {
       }
       remove_unregistered_candidate: {
         Args: { p_candidate_id: string }
+        Returns: undefined
+      }
+      report_content: {
+        Args: {
+          p_abuse_type: string
+          p_target_id: string
+          p_target_type: string
+        }
         Returns: undefined
       }
       request_candidacy_claim: {

@@ -7,6 +7,7 @@ import AdminSubNav from "./AdminSubNav";
 import CascadingBoundarySelector from "./CascadingBoundarySelector";
 import AnswerValue from "./AnswerValue";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
+import { buildSeatSlug } from "@/lib/utils/slugs";
 import {
   getElections,
   createElection,
@@ -1633,7 +1634,7 @@ export default function ElectionsAdminClient() {
                         <div className="flex items-center gap-2 min-w-0 flex-1">
                           <MapPin size={14} className="text-accent shrink-0" />
                           <a
-                            href={`/elections/seat/${seat.id}`}
+                            href={`/elections/seat/${buildSeatSlug(seat)}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="font-bold text-text-secondary hover:text-primary transition-colors text-sm truncate flex items-center gap-1.5 group/seat"

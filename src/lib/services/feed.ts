@@ -38,8 +38,9 @@ export async function getFeedPostsForTab(
 
 // ── post creation / voting ───────────────────────────────────────────────
 // Feed posts go through the create_post RPC — DO NOT merge with
-// politicianWall.ts's createWallPost, which does a direct insert instead
-// (intentional divergence — the wall needs wall_ghost_id set).
+// politicianWall.ts's createWallPost, which goes through a separate
+// create_wall_post RPC instead (it also sets wall_ghost_id and is exempt
+// from the politician daily-post-limit create_post enforces).
 export async function createFeedPost(
   supabase: Client,
   {
@@ -67,9 +68,41 @@ export async function voteOnPost(supabase: Client, postId: string, voteType: 1 |
   return supabase.rpc("vote_on_post", { p_post_id: postId, p_vote_type: voteType });
 }
 
-// comments — shared by FeedPage and PoliticianWall (identical shape).
-export async function createComment(supabase: Client, postId: string, ghostId: string, content: string) {
-  return supabase.from("comments").insert({ post_id: postId, ghost_id: ghostId, content });
+// comments — shared by FeedPage, PoliticianWall, and CandidacyWall (identical
+// shape). Goes through the create_comment RPC, which resolves the ghost_id
+// server-side and enforces a 7-day per-(user, post) rate limit — direct
+// inserts are no longer permitted by RLS.
+export async function createComment(supabase: Client, postId: string, content: string) {
+  return supabase.rpc("create_comment", { p_post_id: postId, p_content: content });
+}
+
+// politician attribution — for feed posts authored by a politician, resolve
+// their real name + wall link so PostCard can show it instead of the
+// anonymous ghost label. Politicians never burn their identity (see rule 4),
+// so current_ghost_id is stable for them long-term, making this join safe.
+export async function hydratePoliticianAuthors(
+  supabase: Client,
+  posts: { ghost_id: string }[]
+): Promise<Map<string, { fullName: string; wallHref: string }>> {
+  const ghostIds = [...new Set(posts.map((p) => p.ghost_id))];
+  if (ghostIds.length === 0) return new Map();
+
+  const { data } = await supabase
+    .from("profiles")
+    .select("current_ghost_id, full_name")
+    .eq("role", "politician")
+    .in("current_ghost_id", ghostIds);
+
+  const map = new Map<string, { fullName: string; wallHref: string }>();
+  for (const row of data || []) {
+    if (row.current_ghost_id) {
+      map.set(row.current_ghost_id, {
+        fullName: row.full_name || "Politician",
+        wallHref: `/wall/${row.current_ghost_id}`,
+      });
+    }
+  }
+  return map;
 }
 
 // storage — post image upload, shared path pattern (posts/{ghostId}-{ts}.{ext}).

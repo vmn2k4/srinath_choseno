@@ -13,6 +13,7 @@ import {
   getProfileRole,
   getUserBoundaryMemberships,
 } from "@/lib/services/profile";
+import { buildSeatSlug } from "@/lib/utils/slugs";
 
 const BASE_URL = "https://choseno.com";
 
@@ -127,7 +128,7 @@ export default async function ElectionsPage() {
       "@type": "ListItem",
       position: index + 1,
       name: `${seat.role_title} — ${seat.map_shapes?.name || ""}`,
-      url: `${BASE_URL}/elections/seat/${seat.id}`,
+      url: `${BASE_URL}/elections/seat/${buildSeatSlug(seat)}`,
     })),
   };
 

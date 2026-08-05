@@ -103,8 +103,7 @@ export async function getSupportersList(supabase: Client, politicianId: string) 
     .order("created_at", { ascending: false });
 }
 
-// ── wall posts (direct insert — intentional divergence from feed.ts's
-// createFeedPost, which goes through the create_post RPC instead) ────────
+// ── wall posts ───────────────────────────────────────────────────────────
 export async function getWallPosts(supabase: Client, ghostId: string) {
   return supabase
     .from("posts")
@@ -113,11 +112,28 @@ export async function getWallPosts(supabase: Client, ghostId: string) {
     .order("created_at", { ascending: false });
 }
 
+// Goes through the create_wall_post RPC (resolves ghost_id from auth.uid()
+// server-side, and sets is_country/is_international/post_boundaries so the
+// post also shows up in the main feed) — exempt from the politician
+// daily-post-limit create_post() enforces, since Wall posting is meant to
+// stay unlimited.
 export async function createWallPost(
   supabase: Client,
-  fields: Database["public"]["Tables"]["posts"]["Insert"]
+  {
+    content,
+    imageUrl,
+    videoUrl,
+    linkMetadata,
+    wallGhostId,
+  }: { content: string; imageUrl?: string | null; videoUrl?: string | null; linkMetadata?: Database["public"]["Tables"]["posts"]["Row"]["link_metadata"]; wallGhostId?: string | null }
 ) {
-  return supabase.from("posts").insert(fields);
+  return supabase.rpc("create_wall_post", {
+    p_content: content,
+    p_image_url: imageUrl ?? undefined,
+    p_video_url: videoUrl ?? undefined,
+    p_link_metadata: linkMetadata ?? undefined,
+    p_wall_ghost_id: wallGhostId ?? undefined,
+  });
 }
 
 export async function getWallPostBySlugOrId(supabase: Client, ghostId: string, slug: string) {

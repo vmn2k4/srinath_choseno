@@ -112,7 +112,7 @@ export default async function CandidacyPage({ params }: CandidatePageProps) {
         description: candidate.statement || undefined,
         jobTitle: candidate.election_seats?.role_title || undefined,
         image: candidate.profiles?.politician_profiles?.avatar_url || undefined,
-        url: `${BASE_URL}/candidacy/${candidateId}`,
+        url: `${BASE_URL}/candidacy/${buildCandidateSlug(candidate)}`,
       }
     : null;
 

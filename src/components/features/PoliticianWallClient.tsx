@@ -12,6 +12,7 @@ import {
   Image as ImageIcon,
   X,
   Video,
+  Flag,
 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import VideoRecorder from "./VideoRecorder";
@@ -29,6 +30,7 @@ import {
   unsubscribeFromSupportChanges,
 } from "@/lib/services/politicianWall";
 import { uploadPostImage, createComment } from "@/lib/services/feed";
+import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import {
   Card,
   Button,
@@ -40,6 +42,7 @@ import {
   Avatar,
   EmptyState,
 } from "@/components/primitives";
+import ReportDialog from "./ReportDialog";
 import { createClient } from "@/lib/supabase/client";
 
 interface WallOwnerRecord {
@@ -98,6 +101,8 @@ export default function PoliticianWallClient({
   const [showQr, setShowQr] = useState(false);
 
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
+  const [commentErrors, setCommentErrors] = useState<Record<string, string>>({});
+  const [showReportProfile, setShowReportProfile] = useState(false);
 
   const fetchPosts = async () => {
     try {
@@ -228,12 +233,11 @@ export default function PoliticianWallClient({
       }
 
       const { error } = await createWallPost(supabase, {
-        ghost_id: profile.current_ghost_id,
         content: newPostContent.trim(),
-        wall_ghost_id: ghostId,
-        link_metadata: linkMetadata,
-        image_url: finalImageUrl,
-        video_url: videoUrl,
+        wallGhostId: ghostId,
+        linkMetadata,
+        imageUrl: finalImageUrl,
+        videoUrl,
       });
 
       if (error) throw error;
@@ -255,20 +259,22 @@ export default function PoliticianWallClient({
     const content = commentInputs[postId];
     if (!content?.trim() || !profile?.current_ghost_id) return;
 
+    setCommentErrors((prev) => ({ ...prev, [postId]: "" }));
     try {
-      const { error } = await createComment(
-        supabase,
-        postId,
-        profile.current_ghost_id,
-        content.trim()
-      );
+      const { error } = await createComment(supabase, postId, content.trim());
       if (error) throw error;
 
       setCommentInputs({ ...commentInputs, [postId]: "" });
       await fetchPosts();
     } catch (err) {
+      const msg = (err as { message?: string })?.message || "Failed to post comment.";
       console.error("Error creating comment:", err);
+      setCommentErrors((prev) => ({ ...prev, [postId]: msg }));
     }
+  };
+
+  const handleReport = async (targetType: ReportTargetType, targetId: string, abuseType: string) => {
+    return reportContent(supabase, targetType, targetId, abuseType);
   };
 
   if (loading) return <Spinner fullPage />;
@@ -329,6 +335,18 @@ export default function PoliticianWallClient({
             >
               <QrCode size={16} />
             </Button>
+
+            {!isOwner && wallOwner?.id && (
+              <Button
+                variant="icon"
+                size="sm"
+                tone="danger"
+                onClick={() => setShowReportProfile(true)}
+                title="Report this politician"
+              >
+                <Flag size={14} />
+              </Button>
+            )}
           </div>
         </div>
 
@@ -464,9 +482,20 @@ export default function PoliticianWallClient({
                 setCommentInputs({ ...commentInputs, [post.id]: text })
               }
               onSubmitComment={() => handleCreateComment(post.id)}
+              onReport={handleReport}
+              commentError={commentErrors[post.id]}
             />
           ))}
         </div>
+      )}
+
+      {showReportProfile && wallOwner?.id && (
+        <ReportDialog
+          targetType="politician_profile"
+          targetId={wallOwner.id}
+          onReport={handleReport}
+          onClose={() => setShowReportProfile(false)}
+        />
       )}
 
       {/* QR Code Modal */}

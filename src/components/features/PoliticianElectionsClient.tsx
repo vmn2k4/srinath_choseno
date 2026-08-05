@@ -16,6 +16,7 @@ import {
   getMapShapesByType,
 } from "@/lib/services/boundaries";
 import { getUserBoundaryShapeIds } from "@/lib/services/profile";
+import { buildSeatSlug } from "@/lib/utils/slugs";
 import { Vote, MapPin, FileEdit, Search } from "lucide-react";
 import {
   Card,
@@ -196,7 +197,17 @@ export default function PoliticianElectionsClient() {
             {myCandidacies.map((cand) => {
               const statusCfg = STATUS_COPY[cand.status] || STATUS_COPY.pending;
               return (
-                <Card key={cand.id} padding="md" className="space-y-3">
+                <Card
+                  key={cand.id}
+                  padding="md"
+                  interactive
+                  className="space-y-3 cursor-pointer"
+                  onClick={() =>
+                    router.push(
+                      `/elections/seat/${buildSeatSlug({ id: cand.seat_id, ...cand.election_seats })}`
+                    )
+                  }
+                >
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <h3 className="font-bold text-text-main text-base">
@@ -214,7 +225,10 @@ export default function PoliticianElectionsClient() {
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => router.push(`/apply/${cand.id}`)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push(`/apply/${cand.id}`);
+                      }}
                       className="gap-1.5"
                     >
                       <FileEdit size={13} /> Edit Application
@@ -223,7 +237,10 @@ export default function PoliticianElectionsClient() {
                     <Button
                       size="sm"
                       variant="ghost"
-                      onClick={() => setWithdrawCandidateId(cand.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setWithdrawCandidateId(cand.id);
+                      }}
                       className="text-danger hover:text-danger"
                     >
                       Withdraw
@@ -359,7 +376,13 @@ export default function PoliticianElectionsClient() {
             {openSeats.map((seat) => {
               const alreadyApplied = myCandidacySeatIds.has(seat.id);
               return (
-                <Card key={seat.id} padding="md" className="space-y-3">
+                <Card
+                  key={seat.id}
+                  padding="md"
+                  interactive
+                  className="space-y-3 cursor-pointer"
+                  onClick={() => router.push(`/elections/seat/${buildSeatSlug(seat)}`)}
+                >
                   <div>
                     <p className="text-[11px] text-text-muted mb-1">
                       {seat.elections?.name} · {seat.elections?.election_date}
@@ -380,7 +403,10 @@ export default function PoliticianElectionsClient() {
 
                     <Button
                       size="sm"
-                      onClick={() => startApplying(seat.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        startApplying(seat.id);
+                      }}
                       disabled={alreadyApplied || applyingSeatId === seat.id}
                     >
                       {alreadyApplied

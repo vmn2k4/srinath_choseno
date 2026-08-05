@@ -18,7 +18,7 @@ export default function MediaThumbnail({
     <button
       type="button"
       onClick={onClick}
-      className="relative rounded-lg overflow-hidden border border-border-light/45 w-20 h-28 shrink-0 group hover:shadow-md transition-shadow"
+      className="relative rounded-lg overflow-hidden border border-border-light/45 w-28 sm:w-36 md:w-44 aspect-[5/7] shrink-0 group hover:shadow-md transition-shadow"
       style={type === "video" ? { backgroundColor: "rgba(0, 0, 0, 0.2)" } : {}}
     >
       {type === "image" ? (

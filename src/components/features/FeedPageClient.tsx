@@ -55,7 +55,10 @@ import {
   getActiveElectionsForUser,
   dismissElectionNotification,
   burnGhostIdentityViaRpc,
+  hydratePoliticianAuthors,
 } from "@/lib/services/feed";
+import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
+import { getPlatformRuleSettings } from "@/lib/services/settings";
 import { createClient } from "@/lib/supabase/client";
 
 interface MembershipShape {
@@ -92,8 +95,10 @@ export default function FeedPageClient() {
   const [activeElections, setActiveElections] = useState<any[]>([]);
 
   const [posts, setPosts] = useState<PostWithComments[]>([]);
+  const [politicianAuthors, setPoliticianAuthors] = useState<Map<string, { fullName: string; wallHref: string }>>(new Map());
   const [newPostContent, setNewPostContent] = useState("");
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
+  const [commentErrors, setCommentErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [burning, setBurning] = useState(false);
   const [showBurnConfirm, setShowBurnConfirm] = useState(false);
@@ -111,6 +116,24 @@ export default function FeedPageClient() {
   const [showVideoRecorder, setShowVideoRecorder] = useState(false);
   const [uploadedVideoUrl, setUploadedVideoUrl] = useState<string | null>(null);
   const [mediaPreviewUrl, setMediaPreviewUrl] = useState<string | null>(null);
+
+  // Ticking clock for the ephemeral story strip (rule 6) — kept in state
+  // and updated on an interval rather than calling Date.now() during render,
+  // which would make the component impure (React purity rule).
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const interval = setInterval(() => setNow(Date.now()), 60_000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Admin-configurable (site_settings.story_strip_hours) — how long a video
+  // pitch stays in the ephemeral "Politician Pitches" strip.
+  const [storyStripHours, setStoryStripHours] = useState(24);
+  useEffect(() => {
+    getPlatformRuleSettings(supabase).then(({ data }) => {
+      if (data?.story_strip_hours) setStoryStripHours(data.story_strip_hours);
+    });
+  }, [supabase]);
 
   useEffect(() => {
     let isMounted = true;
@@ -227,7 +250,9 @@ export default function FeedPageClient() {
       );
 
       // Politicians want to see the most-engaged posts first.
-      setPosts(profile.role === "politician" ? sortByPoliticianEngagement(combined) : combined);
+      const finalPosts = profile.role === "politician" ? sortByPoliticianEngagement(combined) : combined;
+      setPosts(finalPosts);
+      setPoliticianAuthors(await hydratePoliticianAuthors(supabase, finalPosts));
     } else {
       let tabType: "country" | "international" | "membership" = "country";
       let shapeId: number | undefined;
@@ -245,7 +270,9 @@ export default function FeedPageClient() {
         shapeId,
       });
       const fetched = (data as unknown as PostWithComments[]) || [];
-      setPosts(profile.role === "politician" ? sortByPoliticianEngagement(fetched) : fetched);
+      const finalPosts = profile.role === "politician" ? sortByPoliticianEngagement(fetched) : fetched;
+      setPosts(finalPosts);
+      setPoliticianAuthors(await hydratePoliticianAuthors(supabase, finalPosts));
     }
   };
 
@@ -339,20 +366,22 @@ export default function FeedPageClient() {
     const content = commentInputs[postId];
     if (!content?.trim() || !profile?.current_ghost_id) return;
 
+    setCommentErrors((prev) => ({ ...prev, [postId]: "" }));
     try {
-      const { error } = await createComment(
-        supabase,
-        postId,
-        profile.current_ghost_id,
-        content.trim()
-      );
+      const { error } = await createComment(supabase, postId, content.trim());
       if (error) throw error;
 
       setCommentInputs({ ...commentInputs, [postId]: "" });
       await loadFeedPosts();
     } catch (err) {
+      const msg = (err as { message?: string })?.message || "Failed to post comment.";
       console.error("Error creating comment:", err);
+      setCommentErrors((prev) => ({ ...prev, [postId]: msg }));
     }
+  };
+
+  const handleReport = async (targetType: ReportTargetType, targetId: string, abuseType: string) => {
+    return reportContent(supabase, targetType, targetId, abuseType);
   };
 
   const handleRecalculateScore = async () => {
@@ -388,8 +417,11 @@ export default function FeedPageClient() {
   const isAdmin = profile?.role === "admin";
   const isPolitician = profile?.role === "politician";
 
+  // Story strip is ephemeral (like WhatsApp status) — only shows videos from
+  // the last 24h. The underlying post stays in the regular feed forever.
+  const storyWindowMs = storyStripHours * 60 * 60 * 1000;
   const storyPosts: StoryPost[] = posts
-    .filter((p) => Boolean(p.video_url))
+    .filter((p) => Boolean(p.video_url) && now - new Date(p.created_at || 0).getTime() < storyWindowMs)
     .map((p) => ({
       id: p.id,
       video_url: p.video_url!,
@@ -450,14 +482,16 @@ export default function FeedPageClient() {
                     </button>
                   </div>
 
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowBurnConfirm(true)}
-                    className="gap-1.5 text-xs text-danger hover:text-danger hover:border-danger/40"
-                  >
-                    <Flame size={14} /> Burn Identity
-                  </Button>
+                  {!isPolitician && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowBurnConfirm(true)}
+                      className="gap-1.5 text-xs text-danger hover:text-danger hover:border-danger/40"
+                    >
+                      <Flame size={14} /> Burn Identity
+                    </Button>
+                  )}
                 </div>
               )}
             </div>
@@ -750,6 +784,9 @@ export default function FeedPageClient() {
                       }
                       onSubmitComment={() => handleCreateComment(post.id)}
                       onMediaClick={(url) => setMediaPreviewUrl(url)}
+                      politicianAuthor={politicianAuthors.get(post.ghost_id) ?? null}
+                      onReport={handleReport}
+                      commentError={commentErrors[post.id]}
                     />
                   ))}
                 </div>

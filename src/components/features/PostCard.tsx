@@ -1,12 +1,17 @@
-import { Users, ShieldCheck, CornerDownRight, Award } from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
+import { Users, ShieldCheck, CornerDownRight, Award, Flag } from "lucide-react";
 import Card from "@/components/primitives/Card";
 import Badge from "@/components/primitives/Badge";
+import Button from "@/components/primitives/Button";
 import LinkPreview, { type LinkMetadata } from "./LinkPreview";
 import VoteBar from "./VoteBar";
 import CommentComposer from "./CommentComposer";
 import MediaThumbnail from "./MediaThumbnail";
+import ReportDialog from "./ReportDialog";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { normalizeMediaUrl } from "@/lib/services/video";
+import type { ReportTargetType } from "@/lib/services/moderation";
 import type { Database } from "@/lib/supabase/types";
 
 type PostRow = Database["public"]["Tables"]["posts"]["Row"];
@@ -32,6 +37,9 @@ export default function PostCard({
   onCommentChange,
   onSubmitComment,
   onMediaClick,
+  politicianAuthor,
+  onReport,
+  commentError,
 }: {
   post: PostWithComments;
   ownerGhostId?: string | null;
@@ -44,7 +52,12 @@ export default function PostCard({
   onCommentChange: (value: string) => void;
   onSubmitComment: () => void;
   onMediaClick?: (url: string) => void;
+  politicianAuthor?: { fullName: string; wallHref: string } | null;
+  onReport?: (targetType: ReportTargetType, targetId: string, abuseType: string) => Promise<{ error?: unknown }>;
+  commentError?: string;
 }) {
+  const [reportTarget, setReportTarget] = useState<{ targetType: ReportTargetType; targetId: string } | null>(null);
+
   const isOwnerPost = ownerGhostId != null && post.ghost_id === ownerGhostId;
   const comments = post.comments || [];
   const byDate = (a: CommentRow, b: CommentRow) =>
@@ -73,10 +86,21 @@ export default function PostCard({
           <div className="w-8 h-8 rounded-full bg-surface/50 flex items-center justify-center border border-border-light/30 shrink-0">
             <Users size={14} className="text-text-muted" />
           </div>
-          <div>
-            <span className="text-sm font-bold text-text-secondary font-mono">
-              {getGhostDisplayName(post.ghost_id)}
-            </span>
+          <div className="flex-1 min-w-0">
+            {politicianAuthor ? (
+              <>
+                <Link href={politicianAuthor.wallHref} className="text-sm font-bold text-primary hover:underline">
+                  {politicianAuthor.fullName}
+                </Link>
+                <Badge tone="primary" className="ml-2">
+                  Politician
+                </Badge>
+              </>
+            ) : (
+              <span className="text-sm font-bold text-text-secondary font-mono">
+                {getGhostDisplayName(post.ghost_id)}
+              </span>
+            )}
             {isOwnerPost && (
               <Badge tone="primary" className="ml-2">
                 {ownerBadgeLabel}
@@ -94,6 +118,17 @@ export default function PostCard({
               </span>
             )}
           </div>
+          {onReport && (
+            <Button
+              variant="icon"
+              size="sm"
+              tone="danger"
+              onClick={() => setReportTarget({ targetType: "post", targetId: post.id })}
+              title="Report this post"
+            >
+              <Flag size={14} />
+            </Button>
+          )}
         </div>
 
         <p className="text-text-tertiary text-sm whitespace-pre-wrap leading-relaxed mb-3">
@@ -182,7 +217,7 @@ export default function PostCard({
               </div>
             )}
             {commentsToDisplayInThread.map((comment) => (
-              <div key={comment.id} className="pl-3">
+              <div key={comment.id} className="pl-3 group/comment">
                 <div className="flex items-baseline gap-2 mb-0.5">
                   <span className="text-xs font-bold text-text-muted font-mono">
                     {getGhostDisplayName(comment.ghost_id)}
@@ -193,6 +228,16 @@ export default function PostCard({
                   <span className="text-[10px] text-text-muted/60">
                     {comment.created_at ? new Date(comment.created_at).toLocaleString() : ""}
                   </span>
+                  {onReport && (
+                    <button
+                      type="button"
+                      onClick={() => setReportTarget({ targetType: "comment", targetId: comment.id })}
+                      className="text-text-muted/40 hover:text-danger opacity-0 group-hover/comment:opacity-100 transition-opacity cursor-pointer"
+                      title="Report this comment"
+                    >
+                      <Flag size={11} />
+                    </button>
+                  )}
                 </div>
                 <p className="text-sm text-text-tertiary">{comment.content}</p>
               </div>
@@ -201,14 +246,26 @@ export default function PostCard({
         )}
 
         {canComment && (
-          <CommentComposer
-            value={commentValue}
-            onChange={onCommentChange}
-            onSubmit={onSubmitComment}
-            placeholder={viewerIsOwner ? "Reply officially as Candidate..." : "Write an anonymous comment..."}
-          />
+          <>
+            <CommentComposer
+              value={commentValue}
+              onChange={onCommentChange}
+              onSubmit={onSubmitComment}
+              placeholder={viewerIsOwner ? "Reply officially as Candidate..." : "Write an anonymous comment..."}
+            />
+            {commentError && <p className="text-danger-light text-xs mt-1.5">{commentError}</p>}
+          </>
         )}
       </div>
+
+      {reportTarget && onReport && (
+        <ReportDialog
+          targetType={reportTarget.targetType}
+          targetId={reportTarget.targetId}
+          onReport={onReport}
+          onClose={() => setReportTarget(null)}
+        />
+      )}
     </Card>
   );
 }

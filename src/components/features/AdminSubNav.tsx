@@ -11,6 +11,7 @@ const TABS = [
   { key: "visualizer", label: "Boundary Inspector", href: "/admin/visualize" },
   { key: "theme", label: "Site Theme", href: "/admin/theme" },
   { key: "news", label: "News", href: "/admin/news" },
+  { key: "moderation", label: "Moderation", href: "/admin/moderation" },
 ];
 
 export default function AdminSubNav({
