@@ -492,7 +492,7 @@ export default function CandidateApplicationClient({
                 padding="md"
                 className={`space-y-4 transition-all ${
                   highlightedQuestionId === q.id
-                    ? "ring-2 ring-rose-500 animate-pulse bg-rose-50/50"
+                    ? "!ring-2 !ring-red-500 !ring-offset-2 animate-pulse !bg-red-50"
                     : ""
                 }`}
               >
