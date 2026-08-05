@@ -23,6 +23,7 @@ import {
 } from "@/components/primitives";
 import InteractiveLocationPicker from "./InteractiveLocationPicker";
 import { createClient } from "@/lib/supabase/client";
+import { buildSeatSlug } from "@/lib/utils/slugs";
 import { findBoundariesByPoint } from "@/lib/services/boundaries";
 import {
   getActiveSeatsByShapeIds,
@@ -304,7 +305,7 @@ export default function ElectionsPageClient({
             <Card
               key={seat.id}
               as={Link}
-              href={`/elections/seat/${seat.id}`}
+              href={`/elections/seat/${buildSeatSlug(seat)}`}
               interactive
               className="w-full text-left overflow-hidden flex items-center justify-between gap-4 group"
             >

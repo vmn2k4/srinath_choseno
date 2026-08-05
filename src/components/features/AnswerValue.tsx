@@ -34,6 +34,22 @@ export default function AnswerValue({
     );
   }
 
+  if (questionType === "ranking") {
+    if (!selectedOptionTexts?.length) return null;
+    return (
+      <ol className="space-y-1 mt-1.5">
+        {selectedOptionTexts.map((t, i) => (
+          <li key={i} className="flex items-center gap-2 text-sm text-primary-light">
+            <span className="w-5 h-5 shrink-0 rounded-full bg-primary/15 text-[10px] font-bold flex items-center justify-center">
+              {i + 1}
+            </span>
+            {t}
+          </li>
+        ))}
+      </ol>
+    );
+  }
+
   if (questionType === "text") {
     if (!textAnswer) return null;
     return (

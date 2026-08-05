@@ -6,17 +6,14 @@ import { buildSeatSlug, buildCandidateSlug, extractIdFromSlug } from "@/lib/util
 
 const BASE_URL = "https://choseno.com";
 
-interface SeatPageProps {
-  params: Promise<{ seatId: string }>;
-  searchParams: Promise<{ candidate?: string }>;
+interface CandidateSeatPageProps {
+  params: Promise<{ seatId: string; candidateId: string }>;
 }
 
 export async function generateMetadata({
   params,
-  searchParams,
-}: SeatPageProps): Promise<Metadata> {
-  const { seatId } = await params;
-  const { candidate: candidateId } = await searchParams;
+}: CandidateSeatPageProps): Promise<Metadata> {
+  const { seatId, candidateId } = await params;
   const supabase = await createServerClient();
 
   const [{ data: seat }, { data: candidates }] = await Promise.all([
@@ -50,9 +47,7 @@ export async function generateMetadata({
   const seatSlug = buildSeatSlug(seat);
   const candSlug = selectedCandidate ? buildCandidateSlug(selectedCandidate) : candidateId;
 
-  const canonicalUrl = candidateId
-    ? `${BASE_URL}/elections/seat/${seatSlug}?candidate=${candSlug}`
-    : `${BASE_URL}/elections/seat/${seatSlug}`;
+  const canonicalUrl = `${BASE_URL}/elections/seat/${seatSlug}/candidate/${candSlug}`;
 
   const ogImageUrl = selectedCandidate
     ? `${BASE_URL}/candidacy/${selectedCandidate.id}/opengraph-image`
@@ -86,8 +81,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function ElectionSeatPage({ params }: SeatPageProps) {
-  const { seatId } = await params;
+export default async function CandidateSeatPage({ params }: CandidateSeatPageProps) {
+  const { seatId, candidateId } = await params;
   const supabase = await createServerClient();
 
   const [{ data: seat }, { data: candidates }] = await Promise.all([
@@ -95,35 +90,20 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
     getCandidatesBySeatIds(supabase, [seatId]),
   ]);
 
-  const jsonLd = seat
-    ? {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Elections", item: `${BASE_URL}/elections` },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: `${seat.role_title} — ${seat.map_shapes?.name || ""}`,
-            item: `${BASE_URL}/elections/seat/${seatId}`,
-          },
-        ],
-      }
+  const selectedCandidate = candidateId
+    ? (candidates as any[])?.find(
+        (c) => c.id === candidateId || extractIdFromSlug(candidateId) === c.id || buildCandidateSlug(c) === candidateId
+      )
     : null;
 
+  const realCandidateId = selectedCandidate?.id || candidateId;
+
   return (
-    <>
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      )}
-      <ElectionSeatPageClient
-        seatId={seatId}
-        initialSeat={seat}
-        initialCandidates={candidates || []}
-      />
-    </>
+    <ElectionSeatPageClient
+      seatId={seatId}
+      initialSeat={seat}
+      initialCandidates={candidates || []}
+      initialCandidateId={realCandidateId}
+    />
   );
 }

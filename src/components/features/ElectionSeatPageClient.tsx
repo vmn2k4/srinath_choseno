@@ -44,23 +44,20 @@ import {
   Avatar,
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
+import { buildSeatSlug, buildCandidateSlug, extractIdFromSlug } from "@/lib/utils/slugs";
 
 interface ElectionSeatPageClientProps {
   seatId: string;
-  // Seeded from the server (page.tsx) so the initial server-rendered HTML
-  // already contains the real seat/candidate content instead of a loading
-  // spinner — this is what makes the page's actual content visible to a
-  // crawler that doesn't run the fetchAll() effect below. fetchAll() still
-  // runs on mount to pick up auth-dependent extras (role, my candidacies,
-  // admin status, claim requests) and to refresh the seed if it's stale.
   initialSeat?: unknown | null;
   initialCandidates?: unknown[];
+  initialCandidateId?: string;
 }
 
 export default function ElectionSeatPageClient({
   seatId,
   initialSeat = null,
   initialCandidates = [],
+  initialCandidateId,
 }: ElectionSeatPageClientProps) {
   const supabase = createClient();
   const { user, loading: authLoading } = useAuth();
@@ -70,28 +67,39 @@ export default function ElectionSeatPageClient({
   const [seat, setSeat] = useState<any>(initialSeat);
   const [candidates, setCandidates] = useState<any[]>(initialCandidates as any[]);
   const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(() => {
+    if (initialCandidateId) return initialCandidateId;
     if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      const candParam = params.get("candidate");
-      if (candParam && (initialCandidates as any[]).some((c) => c.id === candParam)) {
-        return candParam;
+      const pathname = window.location.pathname;
+      const matchCandidateInPath = pathname.match(/\/candidate\/([^\/]+)/);
+      const candParam = matchCandidateInPath ? matchCandidateInPath[1] : new URLSearchParams(window.location.search).get("candidate");
+      if (candParam) {
+        const match = (initialCandidates as any[]).find(
+          (c) => c.id === candParam || extractIdFromSlug(candParam) === c.id || buildCandidateSlug(c) === candParam
+        );
+        if (match) return match.id;
       }
     }
     return (initialCandidates as any[])[0]?.id || null;
   });
   const [copiedShareLink, setCopiedShareLink] = useState(false);
 
-  const handleSelectCandidate = (candidateId: string) => {
+  const handleSelectCandidate = (candidate: any) => {
+    const candidateId = candidate.id;
     setSelectedCandidateId(candidateId);
     if (typeof window !== "undefined") {
-      const newUrl = `${window.location.pathname}?candidate=${candidateId}`;
+      const candSlug = buildCandidateSlug(candidate);
+      const seatSlug = seat ? buildSeatSlug(seat) : seatId;
+      const newUrl = `/elections/seat/${seatSlug}/candidate/${candSlug}`;
       window.history.replaceState(null, "", newUrl);
     }
   };
 
   const handleCopyShareLink = () => {
     if (typeof window !== "undefined" && selectedCandidateId) {
-      const shareUrl = `${window.location.origin}/elections/seat/${seatId}?candidate=${selectedCandidateId}`;
+      const activeCand = candidates.find((c) => c.id === selectedCandidateId);
+      const candSlug = activeCand ? buildCandidateSlug(activeCand) : selectedCandidateId;
+      const seatSlug = seat ? buildSeatSlug(seat) : seatId;
+      const shareUrl = `${window.location.origin}/elections/seat/${seatSlug}/candidate/${candSlug}`;
       navigator.clipboard.writeText(shareUrl);
       setCopiedShareLink(true);
       setTimeout(() => setCopiedShareLink(false), 2500);
@@ -144,11 +152,18 @@ export default function ElectionSeatPageClient({
     setCandidates(candItems);
 
     const candParam = typeof window !== "undefined"
-      ? new URLSearchParams(window.location.search).get("candidate")
+      ? (window.location.pathname.match(/\/candidate\/([^\/]+)/)?.[1] || new URLSearchParams(window.location.search).get("candidate"))
       : null;
 
-    if (candParam && candItems.some((c) => c.id === candParam)) {
-      setSelectedCandidateId(candParam);
+    if (candParam) {
+      const match = candItems.find(
+        (c) => c.id === candParam || extractIdFromSlug(candParam) === c.id || buildCandidateSlug(c) === candParam
+      );
+      if (match) {
+        setSelectedCandidateId(match.id);
+      } else if (candItems.length > 0 && !selectedCandidateId) {
+        setSelectedCandidateId(candItems[0].id);
+      }
     } else if (candItems.length > 0 && !selectedCandidateId) {
       setSelectedCandidateId(candItems[0].id);
     }
@@ -371,7 +386,7 @@ export default function ElectionSeatPageClient({
                   return (
                     <button
                       key={c.id}
-                      onClick={() => handleSelectCandidate(c.id)}
+                      onClick={() => handleSelectCandidate(c)}
                       className={`flex items-center gap-3 shrink-0 pl-2.5 pr-4 py-2 rounded-2xl border-2 transition-all cursor-pointer ${
                         isSelected
                           ? "border-primary bg-primary/10 shadow-[0_0_0_3px_rgba(233,235,158,0.12)]"

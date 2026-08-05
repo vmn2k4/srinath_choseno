@@ -10,10 +10,11 @@ import {
   updateCandidateStatement,
   upsertCandidateAnswer,
   setCandidateAnswerOptions,
+  setCandidateAnswerRanking,
   updateCandidateIntroVideoUrl,
   submitCandidateApplication,
 } from "@/lib/services/elections";
-import { ArrowLeft, Send, Video, RefreshCw } from "lucide-react";
+import { ArrowLeft, Send, Video, RefreshCw, ChevronUp, ChevronDown } from "lucide-react";
 import {
   Card,
   Button,
@@ -40,9 +41,28 @@ function hasStartedAnswering(question: any, answer: any) {
       return !!answer.textAnswer?.trim();
     case "rating":
       return answer.ratingValue != null;
+    case "ranking":
+      return (answer.rankedOptionIds || []).length > 0;
     default:
       return !!answer.optionId;
   }
+}
+
+type QuestionOption = { id: string; option_text: string; rank: number };
+
+// A "ranking" answer always has a full order once the question is shown
+// (defaults to the admin's option order until the candidate reorders it),
+// so this reads the working order rather than requiring rankedOptionIds to
+// already be populated in state.
+function getRankedOptions(
+  question: { election_question_options?: QuestionOption[] },
+  answer?: { rankedOptionIds?: string[] }
+): QuestionOption[] {
+  const options = question.election_question_options || [];
+  const order = answer?.rankedOptionIds?.length ? answer.rankedOptionIds : options.map((o) => o.id);
+  return order
+    .map((id) => options.find((o) => o.id === id))
+    .filter((o): o is QuestionOption => Boolean(o));
 }
 
 interface CandidateApplicationClientProps {
@@ -101,15 +121,17 @@ export default function CandidateApplicationClient({
       );
       const answerMap: Record<string, any> = {};
       (existingAnswers || []).forEach((a: any) => {
+        const answerOptions = a.election_candidate_answer_options || [];
         answerMap[a.question_id] = {
           answerId: a.id,
           optionId: a.option_id,
-          optionIds: (a.election_candidate_answer_options || []).map(
-            (o: any) => o.option_id
-          ),
+          optionIds: answerOptions.map((o: any) => o.option_id),
+          rankedOptionIds: [...answerOptions]
+            .sort((x: any, y: any) => (x.rank ?? 0) - (y.rank ?? 0))
+            .map((o: any) => o.option_id),
           textAnswer: a.text_answer,
           ratingValue: a.rating_value,
-          context: a.context,
+          context: a.context_text,
           videoUrl: a.video_url,
         };
       });
@@ -163,6 +185,9 @@ export default function CandidateApplicationClient({
     if (question?.question_type === "multiple_choice" && actualAnswerId) {
       await setCandidateAnswerOptions(supabase, actualAnswerId, merged.optionIds || []);
     }
+    if (question?.question_type === "ranking" && actualAnswerId) {
+      await setCandidateAnswerRanking(supabase, actualAnswerId, merged.rankedOptionIds || []);
+    }
   };
 
   const selectOption = (questionId: string, optionId: string) =>
@@ -178,6 +203,17 @@ export default function CandidateApplicationClient({
 
   const selectRating = (questionId: string, value: number) =>
     persistAnswer(questionId, { ratingValue: value });
+
+  const moveRankedOption = (questionId: string, optionId: string, delta: number) => {
+    const question = questions.find((q) => q.id === questionId);
+    const current = getRankedOptions(question, answers[questionId]).map((o) => o.id);
+    const idx = current.indexOf(optionId);
+    const nextIdx = idx + delta;
+    if (idx === -1 || nextIdx < 0 || nextIdx >= current.length) return;
+    const next = [...current];
+    [next[idx], next[nextIdx]] = [next[nextIdx], next[idx]];
+    persistAnswer(questionId, { rankedOptionIds: next });
+  };
 
   const updateTextAnswer = (questionId: string, text: string) => {
     setAnswers((prev) => ({
@@ -384,6 +420,42 @@ export default function CandidateApplicationClient({
                   </div>
                 )}
 
+                {/* Priority Ranking */}
+                {q.question_type === "ranking" && (
+                  <div className="space-y-1.5">
+                    {getRankedOptions(q, ans).map((opt, idx, arr) => (
+                      <div
+                        key={opt.id}
+                        className="flex items-center gap-2.5 px-3 py-2 bg-surface-elevated border border-border-light/40 rounded-xl"
+                      >
+                        <span className="w-6 h-6 shrink-0 rounded-full bg-primary/15 text-primary-light text-xs font-bold flex items-center justify-center">
+                          {idx + 1}
+                        </span>
+                        <span className="flex-1 text-xs font-medium text-text-secondary">{opt.option_text}</span>
+                        <button
+                          type="button"
+                          disabled={idx === 0}
+                          onClick={() => moveRankedOption(q.id, opt.id, -1)}
+                          className="text-text-muted hover:text-primary disabled:opacity-25 disabled:hover:text-text-muted transition-colors"
+                        >
+                          <ChevronUp size={16} />
+                        </button>
+                        <button
+                          type="button"
+                          disabled={idx === arr.length - 1}
+                          onClick={() => moveRankedOption(q.id, opt.id, 1)}
+                          className="text-text-muted hover:text-primary disabled:opacity-25 disabled:hover:text-text-muted transition-colors"
+                        >
+                          <ChevronDown size={16} />
+                        </button>
+                      </div>
+                    ))}
+                    <p className="text-[10px] text-text-muted">
+                      Ranked 1 (highest priority) to {q.election_question_options.length} (lowest) — use the arrows to reorder.
+                    </p>
+                  </div>
+                )}
+
                 {/* Rating Scale */}
                 {q.question_type === "rating" && (
                   <RatingScale
@@ -404,7 +476,7 @@ export default function CandidateApplicationClient({
                 )}
 
                 {/* Elaboration Context */}
-                {started && (
+                {started && q.allow_context && (
                   <div className="pt-3 border-t border-border-light/20 space-y-2">
                     <label className="block text-xs font-semibold text-text-muted">
                       Optional Context / Elaboration:
@@ -420,7 +492,7 @@ export default function CandidateApplicationClient({
                 )}
 
                 {/* Per-Question Video Pitch */}
-                {started && (
+                {started && q.allow_video && (
                   <div className="pt-2">
                     {ans.videoUrl && recordingQuestionId !== q.id ? (
                       <div className="space-y-2">

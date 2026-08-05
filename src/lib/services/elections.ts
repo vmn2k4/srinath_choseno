@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { fetchAllPages } from "@/lib/utils/fetchAllPages";
+import { extractIdFromSlug, buildSeatSlug, buildCandidateSlug, slugifyText } from "@/lib/utils/slugs";
 
 type Client = SupabaseClient<Database>;
 type ElectionSeatInsert = Database["public"]["Tables"]["election_seats"]["Insert"];
@@ -15,7 +16,7 @@ const ADMIN_CANDIDATE_COLUMNS = `
     id, context_text, video_url, text_answer, rating_value,
     election_questions(id, question_text, question_type, rank),
     election_question_options(option_text),
-    election_candidate_answer_options(election_question_options(option_text))
+    election_candidate_answer_options(rank, election_question_options(option_text))
   )
 `;
 
@@ -140,11 +141,36 @@ export async function findOpenSeatsInContainer(supabase: Client, containerShapeI
 }
 
 export async function getSeatById(supabase: Client, seatId: string) {
-  return supabase
+  const realSeatId = extractIdFromSlug(seatId);
+  if (realSeatId && realSeatId.length === 36) {
+    const res = await supabase
+      .from("election_seats")
+      .select("id, role_title, map_shapes(name, boundary_type, country), elections(id, name, election_date, status)")
+      .eq("id", realSeatId)
+      .maybeSingle();
+
+    if (res.data) return res;
+  }
+
+  const { data: seats } = await supabase
     .from("election_seats")
-    .select("id, role_title, map_shapes(name, boundary_type, country), elections(id, name, election_date, status)")
-    .eq("id", seatId)
-    .maybeSingle();
+    .select("id, role_title, map_shapes(name, boundary_type, country), elections(id, name, election_date, status)");
+
+  if (!seats || seats.length === 0) {
+    return { data: null };
+  }
+
+  const match = seats.find((s) => {
+    const seatSlug = buildSeatSlug(s as any);
+    return (
+      s.id === seatId ||
+      s.id === realSeatId ||
+      seatSlug === seatId ||
+      slugifyText(s.role_title) === seatId ||
+      (s.map_shapes && typeof s.map_shapes !== 'string' && 'name' in s.map_shapes && s.map_shapes.name && slugifyText(`${s.role_title}-${s.map_shapes.name}`) === seatId)
+    );
+  });
+  return { data: match || seats[0] || null };
 }
 
 // ── election_candidates ──────────────────────────────────────────────────
@@ -157,29 +183,76 @@ export async function getMyCandidacies(supabase: Client, profileId: string) {
 }
 
 export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]) {
+  const realSeatIds = seatIds.map(extractIdFromSlug).filter((id) => id && id.length === 36);
+
+  if (realSeatIds.length > 0) {
+    return supabase
+      .from("election_candidates")
+      .select(
+        "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id, politician_profiles(avatar_url))"
+      )
+      .in("seat_id", realSeatIds);
+  }
+
   return supabase
     .from("election_candidates")
     .select(
       "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id, politician_profiles(avatar_url))"
-    )
-    .in("seat_id", seatIds);
+    );
 }
 
 export async function getCandidateById(supabase: Client, candidateId: string) {
-  return supabase
+  const realCandidateId = extractIdFromSlug(candidateId);
+  if (realCandidateId && realCandidateId.length === 36) {
+    const res = await supabase
+      .from("election_candidates")
+      .select(
+        `
+        id, seat_id, statement, status, submitted_at, intro_video_url, politician_id,
+        election_seats ( role_title, map_shapes ( name ), elections ( id, name, election_date, status ) )
+      `
+      )
+      .eq("id", realCandidateId)
+      .maybeSingle();
+
+    if (res.data) return res;
+  }
+
+  const { data: cands } = await supabase
     .from("election_candidates")
     .select(
       `
       id, seat_id, statement, status, submitted_at, intro_video_url, politician_id,
       election_seats ( role_title, map_shapes ( name ), elections ( id, name, election_date, status ) )
     `
-    )
-    .eq("id", candidateId)
-    .maybeSingle();
+    );
+
+  const match = (cands || []).find((c) => {
+    const candSlug = buildCandidateSlug(c as any);
+    return c.id === candidateId || c.id === realCandidateId || candSlug === candidateId;
+  });
+  return { data: match || null };
 }
 
 export async function getPublicCandidateById(supabase: Client, candidateId: string) {
-  return supabase
+  const realCandidateId = extractIdFromSlug(candidateId);
+  if (realCandidateId && realCandidateId.length === 36) {
+    const res = await supabase
+      .from("election_candidates")
+      .select(
+        `
+        id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at,
+        election_seats ( role_title, map_shapes ( name, boundary_type ), elections ( name, status ) ),
+        profiles!election_candidates_politician_id_fkey ( full_name, current_ghost_id )
+      `
+      )
+      .eq("id", realCandidateId)
+      .maybeSingle();
+
+    if (res.data) return res;
+  }
+
+  const { data: cands } = await supabase
     .from("election_candidates")
     .select(
       `
@@ -187,9 +260,13 @@ export async function getPublicCandidateById(supabase: Client, candidateId: stri
       election_seats ( role_title, map_shapes ( name, boundary_type ), elections ( name, status ) ),
       profiles!election_candidates_politician_id_fkey ( full_name, current_ghost_id )
     `
-    )
-    .eq("id", candidateId)
-    .maybeSingle();
+    );
+
+  const match = (cands || []).find((c) => {
+    const candSlug = buildCandidateSlug(c as any);
+    return c.id === candidateId || c.id === realCandidateId || candSlug === candidateId;
+  });
+  return { data: match || null };
 }
 
 export async function applyForSeat(supabase: Client, seatId: string) {
@@ -233,13 +310,21 @@ export async function submitCandidateApplication(supabase: Client, candidateId: 
 export async function getElectionQuestions(supabase: Client, electionId: string) {
   return supabase
     .from("election_questions")
-    .select("id, question_text, question_type, required, allow_context, visible_to_public, rank, election_question_options(id, option_text, rank)")
+    .select("id, question_text, question_type, required, allow_context, allow_video, visible_to_public, rank, election_question_options(id, option_text, rank)")
     .eq("election_id", electionId)
     .order("rank");
 }
 
 export async function createElectionQuestion(supabase: Client, fields: ElectionQuestionInsert) {
   return supabase.from("election_questions").insert(fields).select().single();
+}
+
+export async function updateElectionQuestion(
+  supabase: Client,
+  questionId: string,
+  fields: Database["public"]["Tables"]["election_questions"]["Update"]
+) {
+  return supabase.from("election_questions").update(fields).eq("id", questionId).select().single();
 }
 
 export async function deleteElectionQuestion(supabase: Client, questionId: string) {
@@ -250,11 +335,23 @@ export async function createElectionQuestionOptions(supabase: Client, rows: Elec
   return supabase.from("election_question_options").insert(rows);
 }
 
+export async function updateElectionQuestionOption(
+  supabase: Client,
+  optionId: string,
+  fields: Database["public"]["Tables"]["election_question_options"]["Update"]
+) {
+  return supabase.from("election_question_options").update(fields).eq("id", optionId);
+}
+
+export async function deleteElectionQuestionOption(supabase: Client, optionId: string) {
+  return supabase.from("election_question_options").delete().eq("id", optionId);
+}
+
 // ── election_candidate_answers ──────────────────────────────────────────
 export async function getCandidateAnswers(supabase: Client, candidateId: string) {
   return supabase
     .from("election_candidate_answers")
-    .select("id, question_id, option_id, text_answer, rating_value, context_text, video_url, election_candidate_answer_options(option_id)")
+    .select("id, question_id, option_id, text_answer, rating_value, context_text, video_url, election_candidate_answer_options(option_id, rank)")
     .eq("candidate_id", candidateId);
 }
 
@@ -266,7 +363,7 @@ export async function getPublicCandidateAnswers(supabase: Client, candidateId: s
       id, context_text, video_url, text_answer, rating_value,
       election_questions(id, question_text, question_type, rank, visible_to_public),
       election_question_options(option_text),
-      election_candidate_answer_options(election_question_options(option_text)),
+      election_candidate_answer_options(rank, election_question_options(option_text)),
       election_answer_comments(id, ghost_id, content, created_at)
     `
     )
@@ -326,6 +423,19 @@ export async function setCandidateAnswerOptions(supabase: Client, answerId: stri
   return supabase
     .from("election_candidate_answer_options")
     .insert(optionIds.map((optionId) => ({ answer_id: answerId, option_id: optionId })));
+}
+
+// Replace-all for a "ranking" answer's option order -- orderedOptionIds[0]
+// is rank 1 (top priority). Same delete-then-insert shape as
+// setCandidateAnswerOptions; the partial unique index on (answer_id, rank)
+// (20260804000005_ranking_question_type.sql) guarantees no duplicate ranks.
+export async function setCandidateAnswerRanking(supabase: Client, answerId: string, orderedOptionIds: string[]) {
+  const { error: deleteError } = await supabase.from("election_candidate_answer_options").delete().eq("answer_id", answerId);
+  if (deleteError) return { data: null, error: deleteError };
+  if (orderedOptionIds.length === 0) return { data: [], error: null };
+  return supabase
+    .from("election_candidate_answer_options")
+    .insert(orderedOptionIds.map((optionId, i) => ({ answer_id: answerId, option_id: optionId, rank: i + 1 })));
 }
 
 // ── election_answer_comments — public discussion on a single candidate's

@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { getPublishedNewsArticles } from "@/lib/services/news";
 import { getActiveSeats, getCandidatesBySeatIds } from "@/lib/services/elections";
+import { buildSeatSlug, buildCandidateSlug } from "@/lib/utils/slugs";
 
 const baseUrl = "https://choseno.com";
 
@@ -27,9 +28,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const seatRows = (seats || []) as { id: string }[];
+  const seatRows = (seats || []) as Array<{ id: string; role_title?: string; map_shapes?: { name?: string } | null }>;
   const seatRoutes: MetadataRoute.Sitemap = seatRows.map((s) => ({
-    url: `${baseUrl}/elections/seat/${s.id}`,
+    url: `${baseUrl}/elections/seat/${buildSeatSlug(s)}`,
     lastModified: new Date(),
     changeFrequency: "daily",
     priority: 0.6,
@@ -41,12 +42,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       supabase,
       seatRows.map((s) => s.id)
     );
-    candidateRoutes = ((candidates || []) as { id: string }[]).map((c) => ({
-      url: `${baseUrl}/candidacy/${c.id}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.65,
-    }));
+    const candidateList = (candidates || []) as Array<{
+      id: string;
+      seat_id?: string;
+      display_name?: string;
+      profiles?: { full_name?: string } | null;
+    }>;
+
+    const seatMap = new Map(seatRows.map((s) => [s.id, s]));
+
+    candidateRoutes = candidateList.flatMap((c) => {
+      const candSlug = buildCandidateSlug(c);
+      const parentSeat = c.seat_id ? seatMap.get(c.seat_id) : null;
+      const seatSlug = parentSeat ? buildSeatSlug(parentSeat) : null;
+
+      const routes: MetadataRoute.Sitemap = [
+        {
+          url: `${baseUrl}/candidacy/${candSlug}`,
+          lastModified: new Date(),
+          changeFrequency: "weekly",
+          priority: 0.65,
+        },
+      ];
+
+      if (seatSlug) {
+        routes.push({
+          url: `${baseUrl}/elections/seat/${seatSlug}/candidate/${candSlug}`,
+          lastModified: new Date(),
+          changeFrequency: "weekly",
+          priority: 0.7,
+        });
+      }
+
+      return routes;
+    });
   }
 
   return [...staticRoutes, ...articleRoutes, ...seatRoutes, ...candidateRoutes];

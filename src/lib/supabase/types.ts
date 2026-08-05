@@ -396,16 +396,19 @@ export type Database = {
           answer_id: string
           id: string
           option_id: string
+          rank: number | null
         }
         Insert: {
           answer_id: string
           id?: string
           option_id: string
+          rank?: number | null
         }
         Update: {
           answer_id?: string
           id?: string
           option_id?: string
+          rank?: number | null
         }
         Relationships: [
           {
@@ -624,6 +627,7 @@ export type Database = {
       election_questions: {
         Row: {
           allow_context: boolean
+          allow_video: boolean
           created_at: string
           election_id: string
           id: string
@@ -635,6 +639,7 @@ export type Database = {
         }
         Insert: {
           allow_context?: boolean
+          allow_video?: boolean
           created_at?: string
           election_id: string
           id?: string
@@ -646,6 +651,7 @@ export type Database = {
         }
         Update: {
           allow_context?: boolean
+          allow_video?: boolean
           created_at?: string
           election_id?: string
           id?: string

@@ -93,6 +93,7 @@ interface QuestionnaireAnswer {
     option_text?: string;
   } | null;
   election_candidate_answer_options?: Array<{
+    rank?: number | null;
     election_question_options?: {
       option_text?: string;
     };
@@ -645,9 +646,10 @@ export default function CandidacyWall({
                     null;
                   const multipleOptionTexts =
                     answer.selected_option_texts ||
-                    (answer.election_candidate_answer_options || [])
+                    ([...(answer.election_candidate_answer_options || [])]
+                      .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0))
                       .map((o) => o.election_question_options?.option_text)
-                      .filter(Boolean) as string[];
+                      .filter(Boolean) as string[]);
 
                   return (
                     <div

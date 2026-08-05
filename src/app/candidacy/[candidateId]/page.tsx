@@ -8,6 +8,7 @@ import {
 } from "@/lib/services/elections";
 import { getPoliticianProfile } from "@/lib/services/profile";
 import { getSupporterCount } from "@/lib/services/politicianWall";
+import { buildCandidateSlug, extractIdFromSlug } from "@/lib/utils/slugs";
 
 const BASE_URL = "https://choseno.com";
 
@@ -27,8 +28,9 @@ export async function generateMetadata({
   params,
 }: CandidatePageProps): Promise<Metadata> {
   const { candidateId } = await params;
+  const realCandidateId = extractIdFromSlug(candidateId);
   const supabase = await createServerClient();
-  const { data } = await getPublicCandidateById(supabase, candidateId);
+  const { data } = await getPublicCandidateById(supabase, realCandidateId);
   const candidate = data as unknown as PublicCandidate | null;
 
   if (!candidate) {
@@ -40,8 +42,9 @@ export async function generateMetadata({
 
   const name = candidate.profiles?.full_name || "Candidate";
   const roleTitle = candidate.election_seats?.role_title || "Office";
-  const canonicalUrl = `${BASE_URL}/candidacy/${candidateId}`;
-  const ogImageUrl = `${BASE_URL}/candidacy/${candidateId}/opengraph-image`;
+  const slug = buildCandidateSlug(candidate);
+  const canonicalUrl = `${BASE_URL}/candidacy/${slug}`;
+  const ogImageUrl = `${BASE_URL}/candidacy/${realCandidateId}/opengraph-image`;
 
   const title = `${name} — Candidate for ${roleTitle} | Choseno`;
   const description = candidate.statement
@@ -78,14 +81,15 @@ export async function generateMetadata({
 
 export default async function CandidacyPage({ params }: CandidatePageProps) {
   const { candidateId } = await params;
+  const realCandidateId = extractIdFromSlug(candidateId);
   const supabase = await createServerClient();
 
-  const { data: candidateData } = await getPublicCandidateById(supabase, candidateId);
+  const { data: candidateData } = await getPublicCandidateById(supabase, realCandidateId);
   const candidate = candidateData as unknown as PublicCandidate | null;
 
   const [{ data: answers }, { data: posts }, supportCountRes] = await Promise.all([
-    getPublicCandidateAnswers(supabase, candidateId),
-    getCandidacyWallPosts(supabase, candidateId, candidate?.profiles?.current_ghost_id),
+    getPublicCandidateAnswers(supabase, realCandidateId),
+    getCandidacyWallPosts(supabase, realCandidateId, candidate?.profiles?.current_ghost_id),
     candidate?.politician_id
       ? getSupporterCount(supabase, candidate.politician_id)
       : Promise.resolve({ count: 0 }),

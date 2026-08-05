@@ -21,8 +21,11 @@ import {
   reviewCandidateApplication,
   getElectionQuestions,
   createElectionQuestion,
+  updateElectionQuestion,
   deleteElectionQuestion,
   createElectionQuestionOptions,
+  updateElectionQuestionOption,
+  deleteElectionQuestionOption,
   resolveRegionNames,
 } from "@/lib/services/elections";
 import {
@@ -51,18 +54,26 @@ import {
   ExternalLink,
   Download,
   Loader2,
+  FileJson,
+  Upload,
+  X,
+  Copy,
+  Check,
+  Pencil,
 } from "lucide-react";
 import {
   Card,
   Button,
   Badge,
   Input,
+  Textarea,
   Select,
   Checkbox,
   Spinner,
   EmptyState,
   PageHeader,
   ConfirmDialog,
+  Modal,
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 
@@ -96,11 +107,105 @@ const QUESTION_TYPES = [
   { value: "multiple_choice", label: "Multiple choice" },
   { value: "text", label: "Free text" },
   { value: "rating", label: "Rating (1–5)" },
+  { value: "ranking", label: "Priority ranking" },
 ] as const;
-const QUESTION_TYPE_NEEDS_OPTIONS = new Set(["single_choice", "multiple_choice"]);
+const QUESTION_TYPE_NEEDS_OPTIONS = new Set(["single_choice", "multiple_choice", "ranking"]);
 const QUESTION_TYPE_LABEL: Record<string, string> = Object.fromEntries(
   QUESTION_TYPES.map((t) => [t.value, t.label])
 );
+
+// Sample payload + prompt shown in the "Import from JSON" modal — the
+// instructions are written to be copy-pasted verbatim into an AI chat so it
+// can generate a matching questionnaire without seeing this codebase.
+const QUESTION_IMPORT_SAMPLE = {
+  questions: [
+    {
+      question_text: "Do you support the proposed transit levy?",
+      question_type: "single_choice",
+      required: true,
+      allow_context: true,
+      allow_video: true,
+      visible_to_public: true,
+      options: ["Yes", "No", "Undecided"],
+    },
+    {
+      question_text: "Which of the following issues are your top priorities? (select all that apply)",
+      question_type: "multiple_choice",
+      required: true,
+      allow_context: false,
+      allow_video: true,
+      visible_to_public: true,
+      options: ["Housing affordability", "Public transit", "Policing budget", "Climate action", "Local business support"],
+    },
+    {
+      question_text: "What is the single biggest issue facing this community, and how would you address it?",
+      question_type: "text",
+      required: true,
+      allow_context: false,
+      allow_video: false,
+      visible_to_public: true,
+    },
+    {
+      question_text: "How would you rate the current state of local infrastructure (roads, water, transit)?",
+      question_type: "rating",
+      required: false,
+      allow_context: true,
+      allow_video: false,
+      visible_to_public: true,
+    },
+    {
+      question_text: "Rank the following issues in order of priority for your term, from most to least important.",
+      question_type: "ranking",
+      required: true,
+      allow_context: true,
+      allow_video: false,
+      visible_to_public: true,
+      options: ["Housing affordability", "Public transit", "Public safety", "Climate action", "Economic development", "Parks & recreation"],
+    },
+  ],
+};
+
+const QUESTION_IMPORT_INSTRUCTIONS = `Generate a candidate questionnaire for a local election as a JSON object.
+
+Output ONLY valid JSON matching this exact shape (no markdown, no commentary):
+
+{
+  "questions": [
+    {
+      "question_text": string,               // the question shown to candidates
+      "question_type": "single_choice" | "multiple_choice" | "text" | "rating" | "ranking",
+      "required": boolean,                    // must candidates answer this before submitting?
+      "allow_context": boolean,                // let candidates add optional free-text elaboration to their answer?
+      "allow_video": boolean,                  // let candidates record/upload a short video answering this question?
+      "visible_to_public": boolean,            // shown to voters, or admin-only?
+      "options": string[]                      // for "single_choice" / "multiple_choice" / "ranking" — at least 2 strings. Omit for "text" and "rating".
+    }
+  ]
+}
+
+Rules:
+- "single_choice": candidate picks exactly one option from "options".
+- "multiple_choice": candidate can pick several options from "options".
+- "text": free-form written answer, no "options" field.
+- "rating": candidate rates on a fixed 1–5 scale, no "options" field.
+- "ranking": candidate orders every item in "options" from highest to lowest priority (no ties, every item must be placed) — use this for "rank these N issues" style questions, not "rating" (which is a single 1–5 score for one thing).
+- "allow_context" and "allow_video" apply to every question_type equally — they add an optional elaboration on top of however the primary answer is captured.
+- Use a healthy mix of question_type values — don't make every question the same type.
+- Write questions specific to the election/jurisdiction described below, covering policy positions, priorities, and background.
+- Keep each question_text concise and unambiguous (one clear question, not multiple questions joined together).
+- Aim for 6–12 questions total unless told otherwise.
+
+Election context: <describe the election here — e.g. "2026 Vancouver municipal election, city council seat">`;
+
+type ImportedQuestion = {
+  question_text?: string;
+  question_type?: string;
+  required?: boolean;
+  allow_context?: boolean;
+  allow_video?: boolean;
+  visible_to_public?: boolean;
+  options?: string[];
+};
 
 type ConfirmTarget =
   | { kind: "election"; id: string; label: string }
@@ -133,8 +238,29 @@ export default function ElectionsAdminClient() {
   const [newQuestionOptions, setNewQuestionOptions] = useState(["", ""]);
   const [newQuestionRequired, setNewQuestionRequired] = useState(true);
   const [newQuestionAllowContext, setNewQuestionAllowContext] = useState(false);
+  const [newQuestionAllowVideo, setNewQuestionAllowVideo] = useState(true);
   const [newQuestionVisible, setNewQuestionVisible] = useState(true);
   const [questionStatus, setQuestionStatus] = useState("");
+
+  // Editing an existing question in place (question_type stays fixed once
+  // created -- changing it would orphan already-collected answers)
+  const [editingQuestionId, setEditingQuestionId] = useState<string | null>(null);
+  const [editText, setEditText] = useState("");
+  const [editOptions, setEditOptions] = useState<{ id: string | null; text: string }[]>([]);
+  const [editRequired, setEditRequired] = useState(true);
+  const [editAllowContext, setEditAllowContext] = useState(false);
+  const [editAllowVideo, setEditAllowVideo] = useState(true);
+  const [editVisible, setEditVisible] = useState(true);
+  const [editStatus, setEditStatus] = useState("");
+  const [editBusy, setEditBusy] = useState(false);
+
+  // Bulk "Import from JSON" flow for the questionnaire
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [importJsonText, setImportJsonText] = useState("");
+  const [importStatus, setImportStatus] = useState("");
+  const [importBusy, setImportBusy] = useState(false);
+  const [showImportHelp, setShowImportHelp] = useState(false);
+  const [copiedKey, setCopiedKey] = useState<"instructions" | "sample" | null>(null);
 
   const [expandedCandidateId, setExpandedCandidateId] = useState<string | null>(null);
 
@@ -374,6 +500,21 @@ export default function ElectionsAdminClient() {
     });
   };
 
+  const selectAllVisibleShapeIds = () => {
+    setPendingShapeIds((prev) => {
+      const next = new Set(prev);
+      filteredBoundaryCandidates.forEach((shape) => next.add(shape.id));
+      return next;
+    });
+  };
+
+  const clearVisibleShapeIds = () => {
+    setPendingShapeIds((prev) => {
+      const visibleIds = new Set(filteredBoundaryCandidates.map((shape) => shape.id));
+      return new Set([...prev].filter((id) => !visibleIds.has(id)));
+    });
+  };
+
   const resolveRoleTitle = (roleKey: string, regionName?: string | null) => {
     const override =
       regionName && roleTypes.find((r) => r.role_key === roleKey && r.region_override === regionName);
@@ -550,6 +691,7 @@ export default function ElectionsAdminClient() {
       question_type: newQuestionType,
       required: newQuestionRequired,
       allow_context: newQuestionAllowContext,
+      allow_video: newQuestionAllowVideo,
       visible_to_public: newQuestionVisible,
       rank: questions.length,
     });
@@ -574,8 +716,208 @@ export default function ElectionsAdminClient() {
     setNewQuestionOptions(["", ""]);
     setNewQuestionRequired(true);
     setNewQuestionAllowContext(false);
+    setNewQuestionAllowVideo(true);
     setNewQuestionVisible(true);
     setQuestionStatus("");
+    fetchQuestions(selectedElection.id);
+  };
+
+  const startEditQuestion = (q: any) => {
+    setEditingQuestionId(q.id);
+    setEditText(q.question_text);
+    setEditRequired(q.required);
+    setEditAllowContext(q.allow_context);
+    setEditAllowVideo(q.allow_video !== false);
+    setEditVisible(q.visible_to_public);
+    setEditOptions(
+      [...(q.election_question_options || [])]
+        .sort((a: any, b: any) => a.rank - b.rank)
+        .map((o: any) => ({ id: o.id, text: o.option_text }))
+    );
+    setEditStatus("");
+  };
+
+  const cancelEditQuestion = () => setEditingQuestionId(null);
+
+  const updateEditOptionField = (i: number, val: string) =>
+    setEditOptions((prev) => prev.map((o, idx) => (idx === i ? { ...o, text: val } : o)));
+  const addEditOptionField = () => setEditOptions((prev) => [...prev, { id: null, text: "" }]);
+  const removeEditOptionField = (i: number) => setEditOptions((prev) => prev.filter((_, idx) => idx !== i));
+
+  const handleSaveQuestionEdit = async (q: any) => {
+    const needsOptions = QUESTION_TYPE_NEEDS_OPTIONS.has(q.question_type);
+    const trimmedOptions = needsOptions
+      ? editOptions.map((o) => ({ ...o, text: o.text.trim() })).filter((o) => o.text)
+      : [];
+    if (!editText.trim() || (needsOptions && trimmedOptions.length < 2)) {
+      setEditStatus(
+        needsOptions
+          ? "Error: question text and at least 2 options are required."
+          : "Error: question text is required."
+      );
+      return;
+    }
+
+    setEditBusy(true);
+    const { error } = await updateElectionQuestion(supabase, q.id, {
+      question_text: editText.trim(),
+      required: editRequired,
+      allow_context: editAllowContext,
+      allow_video: editAllowVideo,
+      visible_to_public: editVisible,
+    });
+    if (error) {
+      setEditBusy(false);
+      setEditStatus("Error: " + error.message);
+      return;
+    }
+
+    if (needsOptions) {
+      const keptIds = new Set(trimmedOptions.filter((o) => o.id).map((o) => o.id));
+      const removedIds = (q.election_question_options || [])
+        .map((o: any) => o.id)
+        .filter((id: string) => !keptIds.has(id));
+      for (const id of removedIds) {
+        await deleteElectionQuestionOption(supabase, id);
+      }
+      for (let i = 0; i < trimmedOptions.length; i++) {
+        const opt = trimmedOptions[i];
+        if (opt.id) await updateElectionQuestionOption(supabase, opt.id, { option_text: opt.text, rank: i });
+      }
+      const newOnes = trimmedOptions
+        .map((opt, i) => ({ text: opt.text, id: opt.id, rank: i }))
+        .filter((opt) => !opt.id);
+      if (newOnes.length > 0) {
+        await createElectionQuestionOptions(
+          supabase,
+          newOnes.map((o) => ({ question_id: q.id, option_text: o.text, rank: o.rank }))
+        );
+      }
+    }
+
+    setEditBusy(false);
+    setEditingQuestionId(null);
+    setQuestionStatus("Question updated.");
+    fetchQuestions(selectedElection.id);
+  };
+
+  const handleImportFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // allow re-selecting the same file
+    if (!file) return;
+    const text = await file.text();
+    setImportJsonText(text);
+    setImportStatus("");
+  };
+
+  const handleCopy = async (key: "instructions" | "sample", text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedKey(key);
+      setTimeout(() => setCopiedKey((prev) => (prev === key ? null : prev)), 2000);
+    } catch {
+      setImportStatus("Error: couldn't access the clipboard — copy the text manually.");
+    }
+  };
+
+  const handleImportQuestions = async () => {
+    if (!selectedElection) return;
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(importJsonText);
+    } catch {
+      setImportStatus("Error: that's not valid JSON.");
+      return;
+    }
+    const rawQuestions: ImportedQuestion[] | undefined = Array.isArray(parsed)
+      ? (parsed as ImportedQuestion[])
+      : (parsed as { questions?: ImportedQuestion[] })?.questions;
+    if (!Array.isArray(rawQuestions) || rawQuestions.length === 0) {
+      setImportStatus('Error: expected a "questions" array (or a top-level array) with at least one question.');
+      return;
+    }
+
+    const validTypes = new Set<string>(QUESTION_TYPES.map((t) => t.value));
+    const normalized: {
+      question_text: string;
+      question_type: (typeof QUESTION_TYPES)[number]["value"];
+      required: boolean;
+      allow_context: boolean;
+      allow_video: boolean;
+      visible_to_public: boolean;
+      options: string[];
+    }[] = [];
+    for (let i = 0; i < rawQuestions.length; i++) {
+      const item = rawQuestions[i];
+      const questionType = item?.question_type ?? "";
+      const needsOptions = QUESTION_TYPE_NEEDS_OPTIONS.has(questionType);
+      const text = item?.question_text?.trim();
+      if (!text) {
+        setImportStatus(`Error: question ${i + 1} is missing "question_text".`);
+        return;
+      }
+      if (!validTypes.has(questionType)) {
+        setImportStatus(
+          `Error: question ${i + 1} has an invalid "question_type" (${questionType || "(none)"}). Must be one of: ${QUESTION_TYPES.map((t) => t.value).join(", ")}.`
+        );
+        return;
+      }
+      const opts = (item.options || []).map((o) => o?.trim()).filter((o): o is string => Boolean(o));
+      if (needsOptions && opts.length < 2) {
+        setImportStatus(`Error: question ${i + 1} (${questionType}) needs an "options" array with at least 2 entries.`);
+        return;
+      }
+      normalized.push({
+        question_text: text,
+        question_type: questionType as (typeof QUESTION_TYPES)[number]["value"],
+        required: item.required ?? true,
+        allow_context: item.allow_context ?? false,
+        allow_video: item.allow_video ?? true,
+        visible_to_public: item.visible_to_public ?? true,
+        options: needsOptions ? opts : [],
+      });
+    }
+
+    setImportBusy(true);
+    setImportStatus("");
+    let created = 0;
+    for (let i = 0; i < normalized.length; i++) {
+      const item = normalized[i];
+      const { data: q, error } = await createElectionQuestion(supabase, {
+        election_id: selectedElection.id,
+        question_text: item.question_text,
+        question_type: item.question_type,
+        required: item.required,
+        allow_context: item.allow_context,
+        allow_video: item.allow_video,
+        visible_to_public: item.visible_to_public,
+        rank: questions.length + i,
+      });
+      if (error || !q) {
+        setImportBusy(false);
+        setImportStatus(`Error: failed to create question ${i + 1} (${error?.message || "unknown error"}). ${created} question(s) were imported before this failure.`);
+        fetchQuestions(selectedElection.id);
+        return;
+      }
+      if (item.options.length > 0) {
+        const { error: optErr } = await createElectionQuestionOptions(
+          supabase,
+          item.options.map((option_text, idx) => ({ question_id: q.id, option_text, rank: idx }))
+        );
+        if (optErr) {
+          setImportBusy(false);
+          setImportStatus(`Error: failed to create options for question ${i + 1} (${optErr.message}). ${created} question(s) were imported before this failure.`);
+          fetchQuestions(selectedElection.id);
+          return;
+        }
+      }
+      created++;
+    }
+
+    setImportBusy(false);
+    setImportJsonText("");
+    setShowImportModal(false);
+    setQuestionStatus(`Imported ${created} question(s) from JSON.`);
     fetchQuestions(selectedElection.id);
   };
 
@@ -605,8 +947,7 @@ export default function ElectionsAdminClient() {
 
   const filteredBoundaryCandidates = boundaryCandidates
     .filter((shape) => !matchedShapeIds || matchedShapeIds.has(shape.id))
-    .filter((shape) => !boundarySearch.trim() || shape.name?.toLowerCase().includes(boundarySearch.trim().toLowerCase()))
-    .slice(0, 500);
+    .filter((shape) => !boundarySearch.trim() || shape.name?.toLowerCase().includes(boundarySearch.trim().toLowerCase()));
 
   if (loadingElections) return <Spinner fullPage />;
 
@@ -753,14 +1094,27 @@ export default function ElectionsAdminClient() {
 
           {/* CANDIDATE QUESTIONNAIRE */}
           <Card padding="md" className="space-y-5">
-            <div>
-              <h3 className="text-lg font-bold text-text-main flex items-center gap-2">
-                <HelpCircle size={18} className="text-primary" /> Candidate Questionnaire
-              </h3>
-              <p className="text-xs text-text-muted mt-1">
-                Every candidate must answer required questions (and can add optional written context, if you
-                allow it) before submitting their application.
-              </p>
+            <div className="flex items-start justify-between gap-3 flex-wrap">
+              <div>
+                <h3 className="text-lg font-bold text-text-main flex items-center gap-2">
+                  <HelpCircle size={18} className="text-primary" /> Candidate Questionnaire
+                </h3>
+                <p className="text-xs text-text-muted mt-1">
+                  Every candidate must answer required questions (and can add optional written context, if you
+                  allow it) before submitting their application.
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setImportStatus("");
+                  setShowImportModal(true);
+                }}
+                className="shrink-0"
+              >
+                <FileJson size={14} /> Import from JSON
+              </Button>
             </div>
 
             {loadingQuestions ? (
@@ -773,50 +1127,130 @@ export default function ElectionsAdminClient() {
               </p>
             ) : (
               <div className="space-y-2.5">
-                {questions.map((q, i) => (
-                  <div key={q.id} className="p-3.5 bg-surface/40 rounded-xl border border-border-light/30">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <p className="text-sm font-bold text-text-secondary">
-                          {i + 1}. {q.question_text}
-                        </p>
-                        <div className="flex flex-wrap gap-1.5 mt-1.5">
-                          <Badge tone="neutral">{QUESTION_TYPE_LABEL[q.question_type] || q.question_type}</Badge>
-                          {q.required && <Badge tone="amber">Required</Badge>}
-                          {q.allow_context && (
-                            <span className="text-[9px] bg-primary/15 text-primary-light px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">
-                              Context allowed
-                            </span>
-                          )}
-                          {!q.visible_to_public && <Badge tone="neutral">Hidden from voters</Badge>}
-                        </div>
-                        {q.election_question_options?.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 mt-2">
-                            {q.election_question_options.map((o: any) => (
-                              <span
-                                key={o.id}
-                                className="text-xs px-2 py-1 bg-surface-hover/60 border border-border-light/30 rounded text-text-tertiary"
-                              >
-                                {o.option_text}
-                              </span>
-                            ))}
-                          </div>
-                        )}
+                {questions.map((q, i) =>
+                  editingQuestionId === q.id ? (
+                    <div key={q.id} className="p-3.5 bg-surface/60 rounded-xl border border-primary/30 space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Badge tone="neutral">{QUESTION_TYPE_LABEL[q.question_type] || q.question_type}</Badge>
+                        <span className="text-[10px] text-text-muted">Question type can&apos;t be changed after creation.</span>
                       </div>
-                      <Button
-                        variant="icon"
-                        tone="danger"
+                      <Input
+                        type="text"
                         size="sm"
-                        onClick={() =>
-                          setConfirmTarget({ kind: "question", id: q.id, label: q.question_text })
-                        }
-                        className="shrink-0"
-                      >
-                        <Trash2 size={14} />
-                      </Button>
+                        placeholder="Question text"
+                        value={editText}
+                        onChange={(e) => setEditText(e.target.value)}
+                      />
+                      {QUESTION_TYPE_NEEDS_OPTIONS.has(q.question_type) && (
+                        <div className="space-y-2">
+                          {q.question_type === "ranking" && (
+                            <p className="text-xs text-text-muted">Candidates will rank every item below.</p>
+                          )}
+                          {editOptions.map((opt, idx) => (
+                            <div key={opt.id ?? `new-${idx}`} className="flex items-center gap-2">
+                              <Input
+                                type="text"
+                                size="sm"
+                                placeholder={`Option ${idx + 1}`}
+                                value={opt.text}
+                                onChange={(e) => updateEditOptionField(idx, e.target.value)}
+                                className="flex-1"
+                              />
+                              {editOptions.length > 2 && (
+                                <Button variant="icon" tone="danger" size="sm" onClick={() => removeEditOptionField(idx)}>
+                                  <Trash2 size={13} />
+                                </Button>
+                              )}
+                            </div>
+                          ))}
+                          <button
+                            type="button"
+                            onClick={addEditOptionField}
+                            className="text-xs font-semibold text-primary-light hover:text-primary transition-colors flex items-center gap-1"
+                          >
+                            <Plus size={13} /> Add option
+                          </button>
+                        </div>
+                      )}
+                      <div className="flex flex-wrap gap-4">
+                        <Checkbox label="Required" checked={editRequired} onChange={(e) => setEditRequired(e.target.checked)} />
+                        <Checkbox
+                          label="Allow written context"
+                          checked={editAllowContext}
+                          onChange={(e) => setEditAllowContext(e.target.checked)}
+                        />
+                        <Checkbox
+                          label="Allow video answer"
+                          checked={editAllowVideo}
+                          onChange={(e) => setEditAllowVideo(e.target.checked)}
+                        />
+                        <Checkbox label="Visible to voters" checked={editVisible} onChange={(e) => setEditVisible(e.target.checked)} />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button size="sm" onClick={() => handleSaveQuestionEdit(q)} disabled={editBusy}>
+                          {editBusy ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />} Save
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={cancelEditQuestion} disabled={editBusy}>
+                          Cancel
+                        </Button>
+                      </div>
+                      {editStatus && <p className="text-danger text-xs">{editStatus}</p>}
                     </div>
-                  </div>
-                ))}
+                  ) : (
+                    <div key={q.id} className="p-3.5 bg-surface/40 rounded-xl border border-border-light/30">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="text-sm font-bold text-text-secondary">
+                            {i + 1}. {q.question_text}
+                          </p>
+                          <div className="flex flex-wrap gap-1.5 mt-1.5">
+                            <Badge tone="neutral">{QUESTION_TYPE_LABEL[q.question_type] || q.question_type}</Badge>
+                            {q.required && <Badge tone="amber">Required</Badge>}
+                            {q.allow_context && (
+                              <span className="text-[9px] bg-primary/15 text-primary-light px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">
+                                Context allowed
+                              </span>
+                            )}
+                            {q.allow_video && (
+                              <span className="text-[9px] bg-accent/15 text-accent-light px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">
+                                Video allowed
+                              </span>
+                            )}
+                            {!q.visible_to_public && <Badge tone="neutral">Hidden from voters</Badge>}
+                            {q.allow_video === false && <Badge tone="neutral">Video disabled</Badge>}
+                          </div>
+                          {q.election_question_options?.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5 mt-2">
+                              {q.election_question_options.map((o: any) => (
+                                <span
+                                  key={o.id}
+                                  className="text-xs px-2 py-1 bg-surface-hover/60 border border-border-light/30 rounded text-text-tertiary"
+                                >
+                                  {o.option_text}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1 shrink-0">
+                          <Button variant="icon" size="sm" onClick={() => startEditQuestion(q)}>
+                            <Pencil size={14} />
+                          </Button>
+                          <Button
+                            variant="icon"
+                            tone="danger"
+                            size="sm"
+                            onClick={() =>
+                              setConfirmTarget({ kind: "question", id: q.id, label: q.question_text })
+                            }
+                          >
+                            <Trash2 size={14} />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                )}
               </div>
             )}
 
@@ -842,6 +1276,11 @@ export default function ElectionsAdminClient() {
               </Select>
               {QUESTION_TYPE_NEEDS_OPTIONS.has(newQuestionType) ? (
                 <div className="space-y-2">
+                  {newQuestionType === "ranking" && (
+                    <p className="text-xs text-text-muted">
+                      Candidates will order every item below from 1 (top priority) to {Math.max(newQuestionOptions.length, 2)} (lowest) — add one item per thing you want ranked.
+                    </p>
+                  )}
                   {newQuestionOptions.map((opt, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <Input
@@ -888,6 +1327,11 @@ export default function ElectionsAdminClient() {
                   onChange={(e) => setNewQuestionAllowContext(e.target.checked)}
                 />
                 <Checkbox
+                  label="Allow video answer"
+                  checked={newQuestionAllowVideo}
+                  onChange={(e) => setNewQuestionAllowVideo(e.target.checked)}
+                />
+                <Checkbox
                   label="Visible to voters"
                   checked={newQuestionVisible}
                   onChange={(e) => setNewQuestionVisible(e.target.checked)}
@@ -896,9 +1340,122 @@ export default function ElectionsAdminClient() {
               <Button onClick={handleAddQuestion} size="sm">
                 <Plus size={16} /> Add Question
               </Button>
-              {questionStatus && <p className="text-danger text-xs">{questionStatus}</p>}
+              {questionStatus && (
+                <p className={`text-xs ${questionStatus.startsWith("Error") ? "text-danger" : "text-success"}`}>
+                  {questionStatus}
+                </p>
+              )}
             </div>
           </Card>
+
+          {/* IMPORT QUESTIONS FROM JSON */}
+          {showImportModal && (
+            <Modal onOverlayClick={() => !importBusy && setShowImportModal(false)}>
+              <Card padding="md" className="space-y-4 w-full max-w-2xl max-h-[85vh] overflow-y-auto">
+                <div className="flex justify-between items-center">
+                  <h3 className="font-bold text-sm text-text-main flex items-center gap-2">
+                    <FileJson size={16} className="text-primary" /> Import Questions from JSON
+                  </h3>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setShowImportModal(false)}
+                    disabled={importBusy}
+                  >
+                    <X size={14} />
+                  </Button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setShowImportHelp((v) => !v)}
+                  className="text-xs font-semibold text-primary-light hover:text-primary transition-colors flex items-center gap-1"
+                >
+                  {showImportHelp ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+                  Show sample JSON &amp; AI instructions
+                </button>
+
+                {showImportHelp && (
+                  <div className="space-y-3 p-3 bg-surface/40 rounded-xl border border-border-light/30">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <p className="text-[10px] font-semibold text-text-muted uppercase tracking-wider">
+                          Instructions — paste this into an AI chat
+                        </p>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleCopy("instructions", QUESTION_IMPORT_INSTRUCTIONS)}
+                        >
+                          {copiedKey === "instructions" ? <Check size={12} /> : <Copy size={12} />}
+                          {copiedKey === "instructions" ? "Copied" : "Copy"}
+                        </Button>
+                      </div>
+                      <pre className="text-[11px] whitespace-pre-wrap text-text-secondary bg-surface-hover/60 border border-border-light/20 rounded-lg p-2.5 max-h-56 overflow-y-auto">
+                        {QUESTION_IMPORT_INSTRUCTIONS}
+                      </pre>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <p className="text-[10px] font-semibold text-text-muted uppercase tracking-wider">
+                          Sample JSON (matches the expected shape)
+                        </p>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() =>
+                            handleCopy("sample", JSON.stringify(QUESTION_IMPORT_SAMPLE, null, 2))
+                          }
+                        >
+                          {copiedKey === "sample" ? <Check size={12} /> : <Copy size={12} />}
+                          {copiedKey === "sample" ? "Copied" : "Copy"}
+                        </Button>
+                      </div>
+                      <pre className="text-[11px] whitespace-pre-wrap text-text-secondary bg-surface-hover/60 border border-border-light/20 rounded-lg p-2.5 max-h-56 overflow-y-auto">
+                        {JSON.stringify(QUESTION_IMPORT_SAMPLE, null, 2)}
+                      </pre>
+                    </div>
+                  </div>
+                )}
+
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-xs font-semibold text-primary-light hover:text-primary transition-colors cursor-pointer w-fit">
+                    <Upload size={14} />
+                    Upload a .json file
+                    <input type="file" accept=".json,application/json" onChange={handleImportFileChange} className="hidden" />
+                  </label>
+                  <Textarea
+                    size="sm"
+                    rows={10}
+                    placeholder='Paste JSON here — either { "questions": [ ... ] } or a bare [ ... ] array'
+                    value={importJsonText}
+                    onChange={(e) => setImportJsonText(e.target.value)}
+                    className="font-mono text-xs"
+                  />
+                </div>
+
+                {importStatus && (
+                  <p className={`text-xs ${importStatus.startsWith("Error") ? "text-danger" : "text-success"}`}>
+                    {importStatus}
+                  </p>
+                )}
+
+                <div className="flex justify-end gap-2 pt-1">
+                  <Button variant="ghost" size="sm" onClick={() => setShowImportModal(false)} disabled={importBusy}>
+                    Cancel
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={handleImportQuestions}
+                    disabled={importBusy || !importJsonText.trim()}
+                  >
+                    {importBusy ? <Loader2 size={14} className="animate-spin" /> : <FileJson size={14} />}
+                    {importBusy ? "Importing..." : "Import Questions"}
+                  </Button>
+                </div>
+              </Card>
+            </Modal>
+          )}
 
           {/* SEAT-BUILDING WIZARD */}
           {selectedElection.status === "draft" && (
@@ -963,6 +1520,25 @@ export default function ElectionsAdminClient() {
                       onChange={(e) => setBoundarySearch(e.target.value)}
                       className="mb-2"
                     />
+                    {!loadingBoundaryCandidates && filteredBoundaryCandidates.length > 0 && (
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <button
+                          type="button"
+                          onClick={selectAllVisibleShapeIds}
+                          className="text-[10px] font-semibold text-primary-light hover:text-primary transition-colors"
+                        >
+                          Select all ({filteredBoundaryCandidates.length})
+                        </button>
+                        <span className="text-text-muted/40">·</span>
+                        <button
+                          type="button"
+                          onClick={clearVisibleShapeIds}
+                          className="text-[10px] font-semibold text-text-muted hover:text-danger transition-colors"
+                        >
+                          Clear
+                        </button>
+                      </div>
+                    )}
                     {loadingBoundaryCandidates ? (
                       <div className="flex justify-center py-6">
                         <Spinner size="sm" />
@@ -984,11 +1560,6 @@ export default function ElectionsAdminClient() {
                           ))
                         )}
                       </div>
-                    )}
-                    {boundaryCandidates.length > 500 && (
-                      <p className="text-[10px] text-text-muted mt-1">
-                        Showing first 500 matches — narrow with the filter above to find more.
-                      </p>
                     )}
                   </>
                 )}
@@ -1282,7 +1853,8 @@ export default function ElectionsAdminClient() {
                                             <AnswerValue
                                               questionType={a.election_questions?.question_type}
                                               optionText={a.election_question_options?.option_text}
-                                              selectedOptionTexts={(a.election_candidate_answer_options || [])
+                                              selectedOptionTexts={[...(a.election_candidate_answer_options || [])]
+                                                .sort((x: any, y: any) => (x.rank ?? 0) - (y.rank ?? 0))
                                                 .map((o: any) => o.election_question_options?.option_text)
                                                 .filter(Boolean)}
                                               textAnswer={a.text_answer}
