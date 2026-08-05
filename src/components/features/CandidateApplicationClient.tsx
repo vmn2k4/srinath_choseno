@@ -86,6 +86,7 @@ export default function CandidateApplicationClient({
   const [recordingQuestionId, setRecordingQuestionId] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
+  const [draggedItem, setDraggedItem] = useState<{ questionId: string; optionId: string } | null>(null);
 
   const fetchAll = async () => {
     if (!user || !candidateId) return;
@@ -213,6 +214,40 @@ export default function CandidateApplicationClient({
     const next = [...current];
     [next[idx], next[nextIdx]] = [next[nextIdx], next[idx]];
     persistAnswer(questionId, { rankedOptionIds: next });
+  };
+
+  const handleRankingDragStart = (questionId: string, optionId: string) => {
+    setDraggedItem({ questionId, optionId });
+  };
+
+  const handleRankingDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+  };
+
+  const handleRankingDrop = (questionId: string, targetOptionId: string) => {
+    if (!draggedItem || draggedItem.questionId !== questionId) return;
+    const { optionId: sourceOptionId } = draggedItem;
+    if (sourceOptionId === targetOptionId) {
+      setDraggedItem(null);
+      return;
+    }
+
+    const question = questions.find((q) => q.id === questionId);
+    const current = getRankedOptions(question, answers[questionId]).map((o) => o.id);
+    const sourceIdx = current.indexOf(sourceOptionId);
+    const targetIdx = current.indexOf(targetOptionId);
+
+    if (sourceIdx === -1 || targetIdx === -1) {
+      setDraggedItem(null);
+      return;
+    }
+
+    const next = [...current];
+    next.splice(sourceIdx, 1);
+    next.splice(targetIdx, 0, sourceOptionId);
+    persistAnswer(questionId, { rankedOptionIds: next });
+    setDraggedItem(null);
   };
 
   const updateTextAnswer = (questionId: string, text: string) => {
@@ -422,36 +457,51 @@ export default function CandidateApplicationClient({
 
                 {/* Priority Ranking */}
                 {q.question_type === "ranking" && (
-                  <div className="space-y-1.5">
-                    {getRankedOptions(q, ans).map((opt, idx, arr) => (
-                      <div
-                        key={opt.id}
-                        className="flex items-center gap-2.5 px-3 py-2 bg-surface-elevated border border-border-light/40 rounded-xl"
-                      >
-                        <span className="w-6 h-6 shrink-0 rounded-full bg-primary/15 text-primary-light text-xs font-bold flex items-center justify-center">
-                          {idx + 1}
-                        </span>
-                        <span className="flex-1 text-xs font-medium text-text-secondary">{opt.option_text}</span>
-                        <button
-                          type="button"
-                          disabled={idx === 0}
-                          onClick={() => moveRankedOption(q.id, opt.id, -1)}
-                          className="text-text-muted hover:text-primary disabled:opacity-25 disabled:hover:text-text-muted transition-colors"
+                  <div className="space-y-2">
+                    <div className="space-y-1.5">
+                      {getRankedOptions(q, ans).map((opt, idx, arr) => (
+                        <div
+                          key={opt.id}
+                          draggable
+                          onDragStart={() => handleRankingDragStart(q.id, opt.id)}
+                          onDragOver={handleRankingDragOver}
+                          onDrop={() => handleRankingDrop(q.id, opt.id)}
+                          onDragEnd={() => setDraggedItem(null)}
+                          className={`flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all cursor-move ${
+                            draggedItem?.optionId === opt.id
+                              ? "bg-primary/10 border-2 border-primary/50 opacity-60"
+                              : draggedItem && draggedItem.questionId === q.id
+                              ? "bg-surface-elevated/50 border border-border-light/20"
+                              : "bg-surface-elevated border border-border-light/40 hover:border-primary/30"
+                          }`}
                         >
-                          <ChevronUp size={16} />
-                        </button>
-                        <button
-                          type="button"
-                          disabled={idx === arr.length - 1}
-                          onClick={() => moveRankedOption(q.id, opt.id, 1)}
-                          className="text-text-muted hover:text-primary disabled:opacity-25 disabled:hover:text-text-muted transition-colors"
-                        >
-                          <ChevronDown size={16} />
-                        </button>
-                      </div>
-                    ))}
+                          <span className="w-6 h-6 shrink-0 rounded-full bg-primary/15 text-primary-light text-xs font-bold flex items-center justify-center">
+                            {idx + 1}
+                          </span>
+                          <span className="flex-1 text-xs font-medium text-text-secondary">{opt.option_text}</span>
+                          <button
+                            type="button"
+                            disabled={idx === 0}
+                            onClick={() => moveRankedOption(q.id, opt.id, -1)}
+                            className="text-text-muted hover:text-primary disabled:opacity-25 disabled:hover:text-text-muted transition-colors p-1"
+                            title="Move up"
+                          >
+                            <ChevronUp size={16} />
+                          </button>
+                          <button
+                            type="button"
+                            disabled={idx === arr.length - 1}
+                            onClick={() => moveRankedOption(q.id, opt.id, 1)}
+                            className="text-text-muted hover:text-primary disabled:opacity-25 disabled:hover:text-text-muted transition-colors p-1"
+                            title="Move down"
+                          >
+                            <ChevronDown size={16} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                     <p className="text-[10px] text-text-muted">
-                      Ranked 1 (highest priority) to {q.election_question_options.length} (lowest) — use the arrows to reorder.
+                      Ranked 1 (highest) to {q.election_question_options.length} (lowest) — drag items to reorder, or use the arrows.
                     </p>
                   </div>
                 )}
