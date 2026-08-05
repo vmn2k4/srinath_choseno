@@ -464,8 +464,179 @@ export default function CandidacyWall({
         </div>
       )}
 
-      {/* Main Two-Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      {/* Positions Full-Page View */}
+      {showPositionsModal ? (
+        <div className="space-y-6">
+          {/* Header */}
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowPositionsModal(false)}
+                className="gap-2 mb-4"
+              >
+                <ArrowLeft size={16} /> Back to Profile
+              </Button>
+              <h1 className="text-3xl font-bold text-text-main flex items-center gap-3">
+                <HelpCircle size={32} className="text-accent" />
+                {displayName}'s Positions
+              </h1>
+              <p className="text-sm text-text-muted mt-2">{answers.length} questions answered</p>
+            </div>
+          </div>
+
+          {/* Positions Grid */}
+          <div className="space-y-5">
+            {answers.map((answer, idx) => {
+              const q = answer.election_questions;
+              const isExpanded = expandedAnswerIds.has(answer.id);
+              const comments = answer.election_answer_comments || answer.comments || [];
+              const singleOptionText =
+                answer.option_text ||
+                answer.election_question_options?.option_text ||
+                null;
+              const multipleOptionTexts =
+                answer.selected_option_texts ||
+                ([...(answer.election_candidate_answer_options || [])]
+                  .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0))
+                  .map((o) => o.election_question_options?.option_text)
+                  .filter(Boolean) as string[]);
+
+              return (
+                <Card key={answer.id} padding="md" className="space-y-4 border-l-4 border-l-primary">
+                  {/* Question Number & Type Badge */}
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary-light text-sm font-bold">
+                          {idx + 1}
+                        </span>
+                        <Badge tone="neutral" className="text-xs">
+                          {q?.question_type === "single_choice"
+                            ? "Yes/No"
+                            : q?.question_type === "multiple_choice"
+                            ? "Multiple Choice"
+                            : q?.question_type === "ranking"
+                            ? "Priority Ranking"
+                            : q?.question_type === "rating"
+                            ? "Rating"
+                            : "Text"}
+                        </Badge>
+                      </div>
+                      <h3 className="text-lg font-bold text-text-main leading-snug">
+                        {q?.question_text}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Answer */}
+                  <div className="pt-4 border-t border-border-light/20">
+                    <AnswerValue
+                      questionType={q?.question_type}
+                      optionText={singleOptionText}
+                      selectedOptionTexts={multipleOptionTexts}
+                      textAnswer={answer.text_answer}
+                      ratingValue={answer.rating_value}
+                    />
+                  </div>
+
+                  {/* Context/Elaboration */}
+                  {answer.context_text && (
+                    <div className="pt-4 border-t border-border-light/20">
+                      <p className="text-xs font-semibold text-text-muted mb-2 uppercase tracking-wider">Context:</p>
+                      <p className="text-base text-text-secondary whitespace-pre-wrap leading-relaxed italic">
+                        "{answer.context_text}"
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Video Answer */}
+                  {answer.video_url && (
+                    <div className="pt-4 border-t border-border-light/20">
+                      <p className="text-xs font-semibold text-text-muted mb-2 uppercase tracking-wider">Video Explanation:</p>
+                      <div className="rounded-lg overflow-hidden border border-border-light/30 bg-black">
+                        <video
+                          src={answer.video_url}
+                          controls
+                          className="w-full max-h-96 object-contain"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Comments Section */}
+                  <div className="pt-4 border-t border-border-light/20">
+                    <button
+                      onClick={() => toggleAnswerExpand(answer.id)}
+                      className="flex items-center gap-2 text-sm text-text-muted hover:text-text-main transition-colors font-medium"
+                    >
+                      <MessageSquare size={16} />
+                      <span>
+                        {comments.length} comment{comments.length !== 1 ? "s" : ""}
+                      </span>
+                      {isExpanded ? (
+                        <ChevronUp size={16} />
+                      ) : (
+                        <ChevronDown size={16} />
+                      )}
+                    </button>
+
+                    {isExpanded && (
+                      <div className="mt-4 space-y-4 pl-4 border-l border-primary/20">
+                        {comments.map((c) => (
+                          <div key={c.id} className="space-y-1.5">
+                            <span className="font-mono font-bold text-text-muted text-xs">
+                              {getGhostDisplayName(c.ghost_id)}
+                            </span>
+                            <p className="text-sm text-text-secondary leading-relaxed">{c.content}</p>
+                          </div>
+                        ))}
+
+                        {user && (
+                          <div className="flex items-center gap-2 pt-3 mt-3 border-t border-border-light/15">
+                            <Input
+                              placeholder="Comment on this position..."
+                              value={answerCommentInputs[answer.id] || ""}
+                              onChange={(e) =>
+                                setAnswerCommentInputs({
+                                  ...answerCommentInputs,
+                                  [answer.id]: e.target.value,
+                                })
+                              }
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  e.preventDefault();
+                                  handleCreateAnswerComment(answer.id);
+                                }
+                              }}
+                              className="flex-1"
+                            />
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() =>
+                                handleCreateAnswerComment(answer.id)
+                              }
+                              disabled={
+                                !answerCommentInputs[answer.id]?.trim()
+                              }
+                            >
+                              <Send size={16} />
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        /* Main Two-Column Layout */
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Candidate Info & Campaign Details */}
         <div className="lg:col-span-5 space-y-6">
           <Card padding="md" className="space-y-4">
@@ -734,174 +905,6 @@ export default function CandidacyWall({
           )}
         </div>
       </div>
-
-      {/* Positions Modal */}
-      {showPositionsModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <Card padding="lg" className="w-full max-w-3xl max-h-[90vh] overflow-y-auto space-y-6">
-            {/* Header */}
-            <div className="flex items-center justify-between gap-4 sticky top-0 -m-6 mb-0 p-6 bg-surface/30 backdrop-blur-sm border-b border-border-light/20">
-              <h2 className="text-2xl font-bold text-text-main flex items-center gap-2">
-                <HelpCircle size={24} className="text-accent" />
-                {displayName}'s Positions
-              </h2>
-              <button
-                onClick={() => setShowPositionsModal(false)}
-                className="text-text-muted hover:text-text-main transition-colors p-2"
-              >
-                <span className="text-2xl">×</span>
-              </button>
-            </div>
-
-            {/* Positions Grid */}
-            <div className="space-y-5">
-              {answers.map((answer, idx) => {
-                const q = answer.election_questions;
-                const isExpanded = expandedAnswerIds.has(answer.id);
-                const comments = answer.election_answer_comments || answer.comments || [];
-                const singleOptionText =
-                  answer.option_text ||
-                  answer.election_question_options?.option_text ||
-                  null;
-                const multipleOptionTexts =
-                  answer.selected_option_texts ||
-                  ([...(answer.election_candidate_answer_options || [])]
-                    .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0))
-                    .map((o) => o.election_question_options?.option_text)
-                    .filter(Boolean) as string[]);
-
-                return (
-                  <Card key={answer.id} padding="md" className="space-y-4 border-l-4 border-l-primary">
-                    {/* Question Number & Type Badge */}
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary-light text-xs font-bold">
-                            {idx + 1}
-                          </span>
-                          <Badge tone="neutral" className="text-xs">
-                            {q?.question_type === "single_choice"
-                              ? "Yes/No"
-                              : q?.question_type === "multiple_choice"
-                              ? "Multiple Choice"
-                              : q?.question_type === "ranking"
-                              ? "Priority Ranking"
-                              : q?.question_type === "rating"
-                              ? "Rating"
-                              : "Text"}
-                          </Badge>
-                        </div>
-                        <h3 className="text-sm font-bold text-text-main leading-snug">
-                          {q?.question_text}
-                        </h3>
-                      </div>
-                    </div>
-
-                    {/* Answer */}
-                    <div className="pt-3 border-t border-border-light/20">
-                      <AnswerValue
-                        questionType={q?.question_type}
-                        optionText={singleOptionText}
-                        selectedOptionTexts={multipleOptionTexts}
-                        textAnswer={answer.text_answer}
-                        ratingValue={answer.rating_value}
-                      />
-                    </div>
-
-                    {/* Context/Elaboration */}
-                    {answer.context_text && (
-                      <div className="pt-3 border-t border-border-light/20">
-                        <p className="text-xs font-semibold text-text-muted mb-1.5">Context:</p>
-                        <p className="text-sm text-text-secondary whitespace-pre-wrap leading-relaxed italic">
-                          "{answer.context_text}"
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Video Answer */}
-                    {answer.video_url && (
-                      <div className="pt-3 border-t border-border-light/20">
-                        <p className="text-xs font-semibold text-text-muted mb-2">Video Explanation:</p>
-                        <div className="rounded-lg overflow-hidden border border-border-light/30 bg-black">
-                          <video
-                            src={answer.video_url}
-                            controls
-                            className="w-full max-h-64 object-contain"
-                          />
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Comments Section */}
-                    <div className="pt-3 border-t border-border-light/20">
-                      <button
-                        onClick={() => toggleAnswerExpand(answer.id)}
-                        className="flex items-center gap-2 text-xs text-text-muted hover:text-text-main transition-colors font-medium"
-                      >
-                        <MessageSquare size={14} />
-                        <span>
-                          {comments.length} comment{comments.length !== 1 ? "s" : ""}
-                        </span>
-                        {isExpanded ? (
-                          <ChevronUp size={14} />
-                        ) : (
-                          <ChevronDown size={14} />
-                        )}
-                      </button>
-
-                      {isExpanded && (
-                        <div className="mt-3 space-y-3 pl-4 border-l border-primary/20">
-                          {comments.map((c) => (
-                            <div key={c.id} className="text-xs space-y-1">
-                              <span className="font-mono font-bold text-text-muted text-[11px]">
-                                {getGhostDisplayName(c.ghost_id)}
-                              </span>
-                              <p className="text-text-secondary leading-relaxed">{c.content}</p>
-                            </div>
-                          ))}
-
-                          {user && (
-                            <div className="flex items-center gap-2 pt-2 mt-2 border-t border-border-light/15">
-                              <Input
-                                placeholder="Comment on this position..."
-                                value={answerCommentInputs[answer.id] || ""}
-                                onChange={(e) =>
-                                  setAnswerCommentInputs({
-                                    ...answerCommentInputs,
-                                    [answer.id]: e.target.value,
-                                  })
-                                }
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter") {
-                                    e.preventDefault();
-                                    handleCreateAnswerComment(answer.id);
-                                  }
-                                }}
-                                className="flex-1 text-xs"
-                              />
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={() =>
-                                  handleCreateAnswerComment(answer.id)
-                                }
-                                disabled={
-                                  !answerCommentInputs[answer.id]?.trim()
-                                }
-                              >
-                                <Send size={13} />
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
-          </Card>
-        </div>
       )}
 
       {activeStoryUrl && (
