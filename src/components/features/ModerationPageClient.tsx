@@ -65,7 +65,7 @@ export default function ModerationPageClient() {
   const [confirmRemove, setConfirmRemove] = useState<QueueRow | null>(null);
 
   const [ruleSettingsEdit, setRuleSettingsEdit] = useState<Record<keyof PlatformRuleSettings, string>>({
-    comment_cooldown_days: "",
+    comment_daily_limit_per_target: "",
     politician_daily_post_limit: "",
     story_strip_hours: "",
   });
@@ -100,7 +100,7 @@ export default function ModerationPageClient() {
     const { data } = await getPlatformRuleSettings(supabase);
     if (data) {
       setRuleSettingsEdit({
-        comment_cooldown_days: String(data.comment_cooldown_days),
+        comment_daily_limit_per_target: String(data.comment_daily_limit_per_target),
         politician_daily_post_limit: String(data.politician_daily_post_limit),
         story_strip_hours: String(data.story_strip_hours),
       });
@@ -155,7 +155,7 @@ export default function ModerationPageClient() {
   const handleSaveRuleSettings = async () => {
     setRuleSettingsStatus("");
     const parsed = {
-      comment_cooldown_days: parseInt(ruleSettingsEdit.comment_cooldown_days, 10),
+      comment_daily_limit_per_target: parseInt(ruleSettingsEdit.comment_daily_limit_per_target, 10),
       politician_daily_post_limit: parseInt(ruleSettingsEdit.politician_daily_post_limit, 10),
       story_strip_hours: parseInt(ruleSettingsEdit.story_strip_hours, 10),
     };
@@ -197,12 +197,12 @@ export default function ModerationPageClient() {
         ) : (
           <div className="flex flex-wrap gap-4 items-end text-xs">
             <label className="flex flex-col gap-1 text-text-muted">
-              Comment cooldown (days)
+              Comments per target / day
               <Input
                 type="number"
-                value={ruleSettingsEdit.comment_cooldown_days}
+                value={ruleSettingsEdit.comment_daily_limit_per_target}
                 onChange={(e) =>
-                  setRuleSettingsEdit((prev) => ({ ...prev, comment_cooldown_days: e.target.value }))
+                  setRuleSettingsEdit((prev) => ({ ...prev, comment_daily_limit_per_target: e.target.value }))
                 }
                 className="w-28 text-xs"
               />

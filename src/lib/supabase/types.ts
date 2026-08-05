@@ -189,39 +189,6 @@ export type Database = {
           },
         ]
       }
-      comment_rate_limits: {
-        Row: {
-          last_commented_at: string
-          post_id: string
-          user_id: string
-        }
-        Insert: {
-          last_commented_at?: string
-          post_id: string
-          user_id: string
-        }
-        Update: {
-          last_commented_at?: string
-          post_id?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "comment_rate_limits_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: false
-            referencedRelation: "posts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "comment_rate_limits_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       comments: {
         Row: {
           content: string
@@ -1508,7 +1475,7 @@ export type Database = {
       }
       site_settings: {
         Row: {
-          comment_cooldown_days: number
+          comment_daily_limit_per_target: number
           id: number
           politician_daily_post_limit: number
           story_strip_hours: number
@@ -1516,7 +1483,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
-          comment_cooldown_days?: number
+          comment_daily_limit_per_target?: number
           id?: number
           politician_daily_post_limit?: number
           story_strip_hours?: number
@@ -1524,7 +1491,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
-          comment_cooldown_days?: number
+          comment_daily_limit_per_target?: number
           id?: number
           politician_daily_post_limit?: number
           story_strip_hours?: number
@@ -1603,6 +1570,38 @@ export type Database = {
             columns: ["map_shape_id"]
             isOneToOne: false
             referencedRelation: "map_shapes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_actions: {
+        Row: {
+          action_count: number
+          action_date: string
+          action_type: string
+          politician_id: string
+          user_id: string
+        }
+        Insert: {
+          action_count?: number
+          action_date?: string
+          action_type: string
+          politician_id?: string
+          user_id: string
+        }
+        Update: {
+          action_count?: number
+          action_date?: string
+          action_type?: string
+          politician_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_actions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -2442,6 +2441,14 @@ export type Database = {
       }
       promote_expired_election_admin_applications: {
         Args: { p_seat_id?: string }
+        Returns: undefined
+      }
+      record_user_action: {
+        Args: {
+          p_action_type: string
+          p_politician_id?: string
+          p_user_id: string
+        }
         Returns: undefined
       }
       recompute_shape_containers_for_container: {
