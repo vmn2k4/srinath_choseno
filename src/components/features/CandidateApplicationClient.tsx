@@ -164,12 +164,22 @@ export default function CandidateApplicationClient({
   };
 
   const findUnansweredRequiredQuestion = () => {
+    const unanswered = [];
     for (const q of questions) {
       if (!q.required) continue;
       const ans = answers[q.id];
       if (!hasStartedAnswering(q, ans)) {
-        return q.id;
+        unanswered.push({
+          id: q.id,
+          text: q.question_text,
+          type: q.question_type,
+          answer: ans,
+        });
       }
+    }
+    if (unanswered.length > 0) {
+      console.warn("Unanswered required questions:", unanswered);
+      return unanswered[0].id;
     }
     return null;
   };
@@ -316,6 +326,16 @@ export default function CandidateApplicationClient({
     setSubmitting(true);
     setStatusMessage("");
 
+    // Debug: log all required questions and their answers
+    const requiredQuestions = questions.filter((q) => q.required);
+    console.log("Required questions:", requiredQuestions.map((q) => ({
+      id: q.id,
+      text: q.question_text,
+      type: q.question_type,
+      hasAnswer: !!answers[q.id],
+      answer: answers[q.id],
+    })));
+
     await saveStatement();
 
     const { data: result, error } = await submitCandidateApplication(
@@ -325,7 +345,23 @@ export default function CandidateApplicationClient({
     setSubmitting(false);
 
     if (error) {
-      setStatusMessage("Error: " + error.message);
+      // RPC validation failed - show which required questions are missing
+      if (error.message?.includes("Please answer all required questions")) {
+        setStatusMessage("Error: Please answer all required questions before submitting");
+        const unansweredId = findUnansweredRequiredQuestion();
+        if (unansweredId) {
+          setHighlightedQuestionId(unansweredId);
+          setTimeout(() => {
+            const el = document.getElementById(`question-${unansweredId}`);
+            if (el) {
+              el.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+            setTimeout(() => setHighlightedQuestionId(null), 2500);
+          }, 100);
+        }
+      } else {
+        setStatusMessage("Error: " + error.message);
+      }
       return;
     }
 
