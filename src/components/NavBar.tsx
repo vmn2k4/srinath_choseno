@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LogOut, User as UserIcon, Palette, Check, Menu, X, Newspaper, Rss, Vote, Shield, Sparkles } from "lucide-react";
+import { LogOut, User as UserIcon, Palette, Check, Menu, X, Newspaper, Rss, Vote, Shield, Sparkles, MapPin, Home } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme, THEMES, ThemeKey } from "@/contexts/ThemeContext";
 import ChosenoLogo from "@/components/primitives/ChosenoLogo";
@@ -45,8 +45,8 @@ export default function NavBar() {
     }`;
 
   return (
-    <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md elevation-2 border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+    <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md elevation-2 border-b border-border w-full">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
         <Link href="/" className="hover:opacity-90 transition-opacity">
           <ChosenoLogo size="md" />
         </Link>
@@ -54,10 +54,30 @@ export default function NavBar() {
         {/* Desktop Navigation */}
         <div className="hidden lg:flex gap-1.5 items-center">
           <Link
+            href={session && profile?.role !== "admin" ? "/feed" : "/"}
+            className={`flex items-center gap-1.5 ${navLinkClass(
+              isActive("/") || isActive("/feed")
+            )}`}
+          >
+            <Home size={15} />
+            Home
+          </Link>
+
+          <Link
             href="/news"
             className={navLinkClass(pathname?.startsWith("/news") ?? false)}
           >
             News
+          </Link>
+
+          <Link
+            href="/find-my-district"
+            className={`flex items-center gap-1.5 ${navLinkClass(
+              isActive("/find-my-district")
+            )}`}
+          >
+            <MapPin size={15} />
+            Find District
           </Link>
 
           {session ? (
@@ -125,7 +145,8 @@ export default function NavBar() {
             </>
           )}
 
-          {/* Theme Picker Dropdown */}
+          {/* Theme Picker Dropdown - Admin Only */}
+          {profile?.role === "admin" && (
           <div className="relative ml-1">
             <button
               onClick={() => setThemeOpen(!themeOpen)}
@@ -172,6 +193,7 @@ export default function NavBar() {
               </>
             )}
           </div>
+          )}
 
           {session && (
             <>
@@ -189,7 +211,8 @@ export default function NavBar() {
 
         {/* Mobile / Tablet Controls */}
         <div className="flex lg:hidden items-center gap-2">
-          {/* Theme Button for Mobile */}
+          {/* Theme Button for Mobile - Admin Only */}
+          {profile?.role === "admin" && (
           <div className="relative">
             <button
               onClick={() => setThemeOpen(!themeOpen)}
@@ -235,6 +258,7 @@ export default function NavBar() {
               </>
             )}
           </div>
+          )}
 
           {/* Hamburger Menu Toggle Button */}
           <button
@@ -251,11 +275,27 @@ export default function NavBar() {
       {mobileMenuOpen && (
         <div className="lg:hidden fixed left-0 right-0 top-[57px] z-50 bg-surface/95 backdrop-blur-xl border-b border-border shadow-2xl animate-fade-in max-h-[calc(100vh-60px)] overflow-y-auto p-4 flex flex-col gap-2">
           <Link
+            href={session && profile?.role !== "admin" ? "/feed" : "/"}
+            className={mobileNavLinkClass(isActive("/") || isActive("/feed"))}
+          >
+            <Home size={18} />
+            Home
+          </Link>
+
+          <Link
             href="/news"
             className={mobileNavLinkClass(pathname?.startsWith("/news") ?? false)}
           >
             <Newspaper size={18} />
             News
+          </Link>
+
+          <Link
+            href="/find-my-district"
+            className={mobileNavLinkClass(isActive("/find-my-district"))}
+          >
+            <MapPin size={18} />
+            Find District
           </Link>
 
           {session ? (

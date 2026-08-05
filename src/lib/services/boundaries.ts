@@ -185,6 +185,25 @@ export async function deleteMapShape(supabase: Client, shapeId: number) {
   return supabase.from("map_shapes").delete().eq("id", shapeId);
 }
 
+// map_shapes — single shape by id, for the public boundary directory page.
+export async function getMapShapeById(supabase: Client, shapeId: number | string) {
+  return supabase
+    .from("map_shapes")
+    .select("id, name, country, boundary_type, code, retired_at")
+    .eq("id", Number(shapeId))
+    .is("retired_at", null)
+    .single();
+}
+
+// shape_containers — the container shape(s) (e.g. a province) this shape
+// sits inside, for building a breadcrumb on the boundary directory page.
+export async function getShapeContainers(supabase: Client, shapeId: number | string) {
+  return supabase
+    .from("shape_containers")
+    .select("container_shape_id, map_shapes:container_shape_id(id, name, boundary_type)")
+    .eq("map_shape_id", Number(shapeId));
+}
+
 // map_shapes — canonical candidate-list query for BoundaryPicker: broad
 // columns, optional multi-type + country filters, excludes retired, paginated.
 export async function getBoundaryCandidates(
@@ -282,17 +301,24 @@ export async function insertMapShapesBatch(supabase: Client, shapes: Json) {
   return supabase.rpc("insert_map_shapes_batch", { p_shapes: shapes });
 }
 
-// map_shapes — debounced name search (StepLocation's manual jurisdiction search).
+// map_shapes — debounced name search (StepLocation's manual jurisdiction
+// search; also the office-holders admin picker, narrowed by country +
+// boundaryType there since a US House-sized type has 435+ rows).
 export async function searchMapShapesByName(
   supabase: Client,
   query: string,
-  { limit = 15 }: { limit?: number } = {}
+  { limit = 15, country, boundaryType }: { limit?: number; country?: string; boundaryType?: string } = {}
 ) {
-  return supabase
+  let q = supabase
     .from("map_shapes")
     .select("id, name, country, boundary_type")
+    .is("retired_at", null)
     .ilike("name", `%${query}%`)
+    .order("name")
     .limit(limit);
+  if (country) q = q.eq("country", country);
+  if (boundaryType) q = q.eq("boundary_type", boundaryType);
+  return q;
 }
 
 // rpc sync_user_boundary_memberships — side-effecting, syncs memberships from a lat/lng.

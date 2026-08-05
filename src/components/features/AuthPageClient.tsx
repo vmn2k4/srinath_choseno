@@ -8,14 +8,14 @@ import { Card, Input, Button, Alert } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { Mail } from "lucide-react";
 
-export default function AuthPageClient() {
+export default function AuthPageClient({ initialRole }: { initialRole?: "citizen" | "politician" }) {
   const supabase = createClient();
   const router = useRouter();
   const { session } = useAuth();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(Boolean(initialRole));
   const [message, setMessage] = useState<{ type: "error" | "success" | ""; text: string }>({
     type: "",
     text: "",
@@ -37,7 +37,7 @@ export default function AuthPageClient() {
         const { data, error } = await signUp(supabase, email, password);
         if (error) throw error;
         if (data?.session) {
-          router.push("/onboarding");
+          router.push(initialRole ? `/onboarding?role=${initialRole}` : "/onboarding");
           router.refresh();
         } else {
           setMessage({
@@ -104,9 +104,17 @@ export default function AuthPageClient() {
   return (
     <div className="w-full max-w-md mx-auto mt-10 sm:mt-14 px-4 pb-16">
       <Card padding="lg" className="shadow-2xl animate-fade-in border border-border-light/40">
-        <h2 className="text-2xl font-extrabold text-text-main mb-6 text-center">
+        <h1 className="text-2xl font-extrabold text-text-main text-center">
           {isSignUp ? "Create an Account" : "Welcome Back"}
-        </h2>
+        </h1>
+        {isSignUp && initialRole && (
+          <p className="text-center text-sm text-text-muted mt-1.5 mb-4">
+            {initialRole === "citizen"
+              ? "Setting up your citizen account — anonymous by default."
+              : "Setting up your politician account — you'll add candidacy details next."}
+          </p>
+        )}
+        {!(isSignUp && initialRole) && <div className="mb-6" />}
 
         <form onSubmit={handleAuth} className="flex flex-col gap-4">
           <div>

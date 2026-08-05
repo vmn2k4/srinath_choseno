@@ -8,7 +8,7 @@ import {
 } from "@/lib/services/elections";
 import { getPoliticianProfile } from "@/lib/services/profile";
 import { getSupporterCount } from "@/lib/services/politicianWall";
-import { buildCandidateSlug, extractIdFromSlug } from "@/lib/utils/slugs";
+import { buildCandidateSlug, buildSeatSlug, extractIdFromSlug } from "@/lib/utils/slugs";
 
 const BASE_URL = "https://choseno.com";
 
@@ -18,9 +18,10 @@ interface CandidatePageProps {
 
 type PublicCandidate = {
   id: string;
+  seat_id?: string;
   statement: string | null;
   politician_id: string;
-  election_seats?: { role_title?: string } | null;
+  election_seats?: { role_title?: string; map_shapes?: { name?: string } | null } | null;
   profiles?: { full_name?: string; current_ghost_id?: string; politician_profiles?: { avatar_url?: string } } | null;
 };
 
@@ -116,12 +117,48 @@ export default async function CandidacyPage({ params }: CandidatePageProps) {
       }
     : null;
 
+  const seatName = candidate?.election_seats?.role_title
+    ? `${candidate.election_seats.role_title} — ${candidate.election_seats.map_shapes?.name || ""}`
+    : null;
+  const seatUrl =
+    candidate?.seat_id && candidate.election_seats?.role_title
+      ? `${BASE_URL}/elections/seat/${buildSeatSlug({
+          id: candidate.seat_id,
+          role_title: candidate.election_seats.role_title,
+          map_shapes: { name: candidate.election_seats.map_shapes?.name },
+        })}`
+      : null;
+  const breadcrumbJsonLd = candidate
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Elections", item: `${BASE_URL}/elections` },
+          ...(seatName && seatUrl
+            ? [{ "@type": "ListItem", position: 2, name: seatName, item: seatUrl }]
+            : []),
+          {
+            "@type": "ListItem",
+            position: seatName && seatUrl ? 3 : 2,
+            name,
+            item: `${BASE_URL}/candidacy/${buildCandidateSlug(candidate)}`,
+          },
+        ],
+      }
+    : null;
+
   return (
     <div className="w-full max-w-none pb-20 px-4 lg:px-8">
       {jsonLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+        />
+      )}
+      {breadcrumbJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c") }}
         />
       )}
       <CandidacyWall

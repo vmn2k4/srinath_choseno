@@ -737,6 +737,7 @@ export type Database = {
           boundary_type: string
           country: string
           created_at: string | null
+          description: string | null
           id: string
           region_override: string
           role_key: string
@@ -746,6 +747,7 @@ export type Database = {
           boundary_type: string
           country: string
           created_at?: string | null
+          description?: string | null
           id?: string
           region_override?: string
           role_key: string
@@ -755,6 +757,7 @@ export type Database = {
           boundary_type?: string
           country?: string
           created_at?: string | null
+          description?: string | null
           id?: string
           region_override?: string
           role_key?: string
@@ -1050,6 +1053,77 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      office_holders: {
+        Row: {
+          bio: string | null
+          election_role_type_id: string
+          full_name: string
+          holding_since: string | null
+          id: string
+          map_shape_id: number
+          photo_url: string | null
+          political_party_id: number | null
+          source_url: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          bio?: string | null
+          election_role_type_id: string
+          full_name: string
+          holding_since?: string | null
+          id?: string
+          map_shape_id: number
+          photo_url?: string | null
+          political_party_id?: number | null
+          source_url?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          bio?: string | null
+          election_role_type_id?: string
+          full_name?: string
+          holding_since?: string | null
+          id?: string
+          map_shape_id?: number
+          photo_url?: string | null
+          political_party_id?: number | null
+          source_url?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "office_holders_election_role_type_id_fkey"
+            columns: ["election_role_type_id"]
+            isOneToOne: false
+            referencedRelation: "election_role_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "office_holders_map_shape_id_fkey"
+            columns: ["map_shape_id"]
+            isOneToOne: false
+            referencedRelation: "map_shapes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "office_holders_political_party_id_fkey"
+            columns: ["political_party_id"]
+            isOneToOne: false
+            referencedRelation: "political_parties"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "office_holders_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       political_parties: {
         Row: {

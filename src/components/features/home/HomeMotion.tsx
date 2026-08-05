@@ -181,23 +181,61 @@ export function CyclingBoundaryPill({ levels }: { levels: string[] }) {
 }
 
 // The one piece of the page that genuinely needs client-side auth state:
-// the CTA destination/label depends on whether a session exists. Kept as a
-// small island rather than making the whole page client-side for it.
-export function PrimaryCtaLink({ className }: { className?: string }) {
+// the CTA destination/label depends on whether a session exists. Signed-out
+// visitors get two role-segmented CTAs instead of one generic button, since
+// a citizen and a future candidate want to land in different places -- the
+// `role` query param carries through /auth -> /onboarding so the role step
+// there is pre-selected instead of asked twice. Kept as a small island
+// rather than making the whole page client-side for it.
+export function RoleSplitCta({ size = "lg" }: { size?: "lg" | "md" }) {
   const { session } = useAuth();
-  const cta = session
-    ? { to: "/feed", label: "Open your feed" }
-    : { to: "/auth", label: "Join Choseno" };
+  const big = size === "lg";
+  const pad = big ? "px-8 py-4.5 text-lg" : "px-6 py-3.5 text-sm";
+  const iconSize = big ? 20 : 16;
+
+  if (session) {
+    return (
+      <Link
+        href="/feed"
+        className={`group inline-flex items-center gap-3 ${
+          big ? "px-9 py-4.5 text-xl" : pad
+        } rounded-2xl bg-primary text-text-on-primary font-bold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md`}
+      >
+        Open your feed
+        <ArrowRight
+          size={big ? 22 : iconSize}
+          className="transition-transform duration-300 group-hover:translate-x-1.5"
+          aria-hidden="true"
+        />
+      </Link>
+    );
+  }
 
   return (
-    <Link href={cta.to} className={className}>
-      {cta.label}
-      <ArrowRight
-        size={22}
-        className="transition-transform duration-300 group-hover:translate-x-1.5"
-        aria-hidden="true"
-      />
-    </Link>
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <Link
+        href="/auth?role=citizen"
+        className={`group inline-flex items-center gap-3 ${pad} rounded-2xl bg-primary text-text-on-primary font-bold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md`}
+      >
+        I&apos;m a Citizen
+        <ArrowRight
+          size={iconSize}
+          className="transition-transform duration-300 group-hover:translate-x-1.5"
+          aria-hidden="true"
+        />
+      </Link>
+      <Link
+        href="/auth?role=politician"
+        className={`group inline-flex items-center gap-3 ${pad} rounded-2xl border-2 border-primary/50 bg-surface-elevated/70 text-text-main font-bold hover:bg-primary/10 hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer`}
+      >
+        I&apos;m Running for Office
+        <ArrowRight
+          size={iconSize}
+          className="transition-transform duration-300 group-hover:translate-x-1.5"
+          aria-hidden="true"
+        />
+      </Link>
+    </div>
   );
 }
 

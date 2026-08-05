@@ -133,7 +133,7 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
       <PoliticianWallClient
         ghostId={ghostId}

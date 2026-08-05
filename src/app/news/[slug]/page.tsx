@@ -133,7 +133,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
       {/* JSON-LD */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
 
       <div className="w-full max-w-none pb-20 px-4 lg:px-8 space-y-6">

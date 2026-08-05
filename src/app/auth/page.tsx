@@ -6,6 +6,14 @@ export const metadata: Metadata = {
   description: "Sign in to access your local constituency feed and electoral district updates.",
 };
 
-export default function AuthPage() {
-  return <AuthPageClient />;
+export default async function AuthPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams;
+  const roleParam = typeof params.role === "string" ? params.role : undefined;
+  const initialRole = roleParam === "citizen" || roleParam === "politician" ? roleParam : undefined;
+
+  return <AuthPageClient initialRole={initialRole} />;
 }

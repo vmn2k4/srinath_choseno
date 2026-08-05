@@ -47,8 +47,13 @@ function applyTheme(key: string) {
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [supabase] = useState(() => createClient());
-  const [theme, setThemeState] = useState<ThemeKey>("civic-original");
+  const [theme, setThemeState] = useState<ThemeKey>("sky-cyan");
   const [loading, setLoading] = useState(true);
+
+  // Apply default theme immediately on mount to prevent flash
+  useEffect(() => {
+    applyTheme("sky-cyan");
+  }, []);
 
   useEffect(() => {
     // Theme is one admin-controlled, site-wide value (site_settings) — not

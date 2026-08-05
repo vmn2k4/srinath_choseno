@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function OnboardingPage() {
-  return <OnboardingFlowClient />;
+export default async function OnboardingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams;
+  const roleParam = typeof params.role === "string" ? params.role : undefined;
+  const initialRole = roleParam === "citizen" || roleParam === "politician" ? roleParam : undefined;
+
+  return <OnboardingFlowClient initialRole={initialRole} />;
 }

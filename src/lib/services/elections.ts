@@ -44,9 +44,71 @@ export async function deleteElection(supabase: Client, electionId: string) {
 export async function getElectionRoleTypes(supabase: Client, country: string, boundaryType: string) {
   return supabase
     .from("election_role_types")
-    .select("role_key, region_override, role_title")
+    .select("id, role_key, region_override, role_title, description")
     .eq("country", country)
     .eq("boundary_type", boundaryType);
+}
+
+// ── office_holders (current officeholder shown on boundary directory pages) ──
+export async function getOfficeHoldersForShape(supabase: Client, mapShapeId: number | string) {
+  return supabase
+    .from("office_holders")
+    .select(
+      "id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since, political_parties(name)"
+    )
+    .eq("map_shape_id", Number(mapShapeId));
+}
+
+export async function getOfficeHolder(
+  supabase: Client,
+  mapShapeId: number | string,
+  electionRoleTypeId: string
+) {
+  return supabase
+    .from("office_holders")
+    .select("*")
+    .eq("map_shape_id", Number(mapShapeId))
+    .eq("election_role_type_id", electionRoleTypeId)
+    .maybeSingle();
+}
+
+export async function upsertOfficeHolder(
+  supabase: Client,
+  fields: {
+    mapShapeId: number | string;
+    electionRoleTypeId: string;
+    fullName: string;
+    politicalPartyId?: number | null;
+    bio?: string | null;
+    sourceUrl?: string | null;
+    photoUrl?: string | null;
+    holdingSince?: string | null;
+  },
+  updatedBy: string
+) {
+  return supabase
+    .from("office_holders")
+    .upsert(
+      {
+        map_shape_id: Number(fields.mapShapeId),
+        election_role_type_id: fields.electionRoleTypeId,
+        full_name: fields.fullName,
+        political_party_id: fields.politicalPartyId ?? null,
+        bio: fields.bio ?? null,
+        source_url: fields.sourceUrl ?? null,
+        photo_url: fields.photoUrl ?? null,
+        holding_since: fields.holdingSince ?? null,
+        updated_by: updatedBy,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "map_shape_id,election_role_type_id" }
+    )
+    .select()
+    .single();
+}
+
+export async function removeOfficeHolder(supabase: Client, officeHolderId: string) {
+  return supabase.from("office_holders").delete().eq("id", officeHolderId);
 }
 
 // ── election_seats (admin) ──────────────────────────────────────────────
@@ -131,7 +193,9 @@ export async function getActiveSeatsByShapeIds(supabase: Client, shapeIds: numbe
 export async function getActiveSeats(supabase: Client) {
   return supabase
     .from("election_seats")
-    .select("id, role_title, map_shapes(name, boundary_type), elections!inner(id, name, election_date, status)")
+    .select(
+      "id, role_title, map_shape_id, map_shapes(id, name, boundary_type), elections!inner(id, name, election_date, status)"
+    )
     .in("elections.status", ["nominations_open", "active"])
     .order("role_title");
 }
@@ -241,7 +305,7 @@ export async function getPublicCandidateById(supabase: Client, candidateId: stri
       .from("election_candidates")
       .select(
         `
-        id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at,
+        id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, seat_id,
         election_seats ( role_title, map_shapes ( name, boundary_type ), elections ( name, status ) ),
         profiles!election_candidates_politician_id_fkey ( full_name, current_ghost_id )
       `
@@ -256,7 +320,7 @@ export async function getPublicCandidateById(supabase: Client, candidateId: stri
     .from("election_candidates")
     .select(
       `
-      id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at,
+      id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, seat_id,
       election_seats ( role_title, map_shapes ( name, boundary_type ), elections ( name, status ) ),
       profiles!election_candidates_politician_id_fkey ( full_name, current_ghost_id )
     `

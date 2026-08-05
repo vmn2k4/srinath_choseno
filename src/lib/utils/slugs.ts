@@ -68,3 +68,26 @@ export function buildCandidateSlug(candidate: {
   const shortHash = candidate.id.replace(/-/g, "").slice(0, 6);
   return `${slugifyText(name)}-${shortHash}`;
 }
+
+/**
+ * Build clean SEO slug for a boundary directory page: surrey-42
+ * map_shapes.id is a plain bigint (not a UUID), so it's appended as-is
+ * rather than hashed -- extractShapeIdFromSlug below relies on that.
+ */
+export function buildBoundarySlug(shape: { id?: number | string; name?: string }): string {
+  if (shape?.id == null) return "";
+  const text = shape.name ? slugifyText(shape.name) : "boundary";
+  return `${text}-${shape.id}`;
+}
+
+/**
+ * Extracts a map_shapes numeric id from a raw id or a buildBoundarySlug string.
+ * Examples:
+ * - "surrey-42" -> "42"
+ * - "42" -> "42"
+ */
+export function extractShapeIdFromSlug(slugOrId: string | null | undefined): string {
+  if (!slugOrId) return "";
+  const match = slugOrId.match(/-?(\d+)$/);
+  return match ? match[1] : slugOrId;
+}

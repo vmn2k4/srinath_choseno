@@ -560,16 +560,22 @@ function StepPolitician({
 
 // ── Top-level wizard shell ────────────────────────────────────────────────────
 
-export default function OnboardingFlowClient() {
+export default function OnboardingFlowClient({
+  initialRole,
+}: {
+  initialRole?: "citizen" | "politician";
+}) {
   const supabase = createClient();
   const { user } = useAuth();
 
-  const [currentStep, setCurrentStep] = useState(1);
+  // Arriving with a role already picked (from the homepage's segmented CTA)
+  // skips the role step entirely instead of asking the same question twice.
+  const [currentStep, setCurrentStep] = useState(initialRole ? 2 : 1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<OnboardingFormData>({
-    role: "",
+    role: initialRole || "",
     lat: "",
     lng: "",
     matchedBoundaries: [],
