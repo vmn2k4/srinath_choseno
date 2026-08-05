@@ -174,6 +174,7 @@ export default function CandidacyWall({
   const [claimStatus, setClaimStatus] = useState("");
   const [claimSubmitted, setClaimSubmitted] = useState(false);
   const [activeStoryUrl, setActiveStoryUrl] = useState<string | null>(null);
+  const [showPositionsModal, setShowPositionsModal] = useState(false);
 
   const loadAnswers = async () => {
     const { data: answerRows } = await getPublicCandidateAnswers(supabase, candidateId);
@@ -626,134 +627,22 @@ export default function CandidacyWall({
                 </div>
               </div>
             )}
+
+            {/* CTA Button for Positions */}
+            {answers.length > 0 && (
+              <div className="pt-3 border-t border-border-light/20">
+                <Button
+                  onClick={() => setShowPositionsModal(true)}
+                  className="w-full"
+                  size="sm"
+                >
+                  <HelpCircle size={14} className="mr-1.5" />
+                  See How They Stand ({answers.length} Positions)
+                </Button>
+              </div>
+            )}
           </Card>
 
-          {/* Questionnaire Answers */}
-          {answers.length > 0 && (
-            <Card padding="md" className="space-y-4">
-              <h2 className="text-sm font-bold text-text-main flex items-center gap-2">
-                <HelpCircle size={16} className="text-accent" /> Candidate Positions
-              </h2>
-
-              <div className="space-y-4">
-                {answers.map((answer) => {
-                  const q = answer.election_questions;
-                  const isExpanded = expandedAnswerIds.has(answer.id);
-                  const comments = answer.election_answer_comments || answer.comments || [];
-                  const singleOptionText =
-                    answer.option_text ||
-                    answer.election_question_options?.option_text ||
-                    null;
-                  const multipleOptionTexts =
-                    answer.selected_option_texts ||
-                    ([...(answer.election_candidate_answer_options || [])]
-                      .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0))
-                      .map((o) => o.election_question_options?.option_text)
-                      .filter(Boolean) as string[]);
-
-                  return (
-                    <div
-                      key={answer.id}
-                      className="p-3 bg-surface/30 border border-border-light/20 rounded-xl space-y-2"
-                    >
-                      <p className="text-xs font-semibold text-text-secondary">
-                        {q?.question_text}
-                      </p>
-
-                      <AnswerValue
-                        questionType={q?.question_type}
-                        optionText={singleOptionText}
-                        selectedOptionTexts={multipleOptionTexts}
-                        textAnswer={answer.text_answer}
-                        ratingValue={answer.rating_value}
-                      />
-
-                      {answer.context_text && (
-                        <p className="text-xs text-text-muted mt-1 italic whitespace-pre-wrap">
-                          &quot;{answer.context_text}&quot;
-                        </p>
-                      )}
-
-                      {answer.video_url && (
-                        <div className="mt-2 rounded-lg overflow-hidden border border-border-light/30 bg-black">
-                          <video
-                            src={answer.video_url}
-                            controls
-                            className="w-full max-h-48 object-contain"
-                          />
-                        </div>
-                      )}
-
-                      <div className="pt-2 border-t border-border-light/15 flex items-center justify-between text-[11px] text-text-muted">
-                        <button
-                          onClick={() => toggleAnswerExpand(answer.id)}
-                          className="flex items-center gap-1 hover:text-text-main transition-colors"
-                        >
-                          <MessageSquare size={12} />
-                          <span>
-                            {comments.length} comment
-                            {comments.length !== 1 ? "s" : ""}
-                          </span>
-                          {isExpanded ? (
-                            <ChevronUp size={12} />
-                          ) : (
-                            <ChevronDown size={12} />
-                          )}
-                        </button>
-                      </div>
-
-                      {isExpanded && (
-                        <div className="pt-2 space-y-3 pl-2 border-l border-primary/20">
-                          {comments.map((c) => (
-                            <div key={c.id} className="text-xs space-y-0.5">
-                              <span className="font-mono font-bold text-text-muted text-[11px]">
-                                {getGhostDisplayName(c.ghost_id)}
-                              </span>
-                              <p className="text-text-tertiary">{c.content}</p>
-                            </div>
-                          ))}
-
-                          {user && (
-                            <div className="flex items-center gap-2 pt-1">
-                              <Input
-                                placeholder="Comment on this stance..."
-                                value={answerCommentInputs[answer.id] || ""}
-                                onChange={(e) =>
-                                  setAnswerCommentInputs({
-                                    ...answerCommentInputs,
-                                    [answer.id]: e.target.value,
-                                  })
-                                }
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter") {
-                                    e.preventDefault();
-                                    handleCreateAnswerComment(answer.id);
-                                  }
-                                }}
-                                className="flex-1 text-xs"
-                              />
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={() =>
-                                  handleCreateAnswerComment(answer.id)
-                                }
-                                disabled={
-                                  !answerCommentInputs[answer.id]?.trim()
-                                }
-                              >
-                                <Send size={13} />
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </Card>
-          )}
         </div>
 
         {/* Right Column: Wall Feed & Composer */}
@@ -845,6 +734,175 @@ export default function CandidacyWall({
           )}
         </div>
       </div>
+
+      {/* Positions Modal */}
+      {showPositionsModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <Card padding="lg" className="w-full max-w-3xl max-h-[90vh] overflow-y-auto space-y-6">
+            {/* Header */}
+            <div className="flex items-center justify-between gap-4 sticky top-0 -m-6 mb-0 p-6 bg-surface/30 backdrop-blur-sm border-b border-border-light/20">
+              <h2 className="text-2xl font-bold text-text-main flex items-center gap-2">
+                <HelpCircle size={24} className="text-accent" />
+                {displayName}'s Positions
+              </h2>
+              <button
+                onClick={() => setShowPositionsModal(false)}
+                className="text-text-muted hover:text-text-main transition-colors p-2"
+              >
+                <span className="text-2xl">×</span>
+              </button>
+            </div>
+
+            {/* Positions Grid */}
+            <div className="space-y-5">
+              {answers.map((answer, idx) => {
+                const q = answer.election_questions;
+                const isExpanded = expandedAnswerIds.has(answer.id);
+                const comments = answer.election_answer_comments || answer.comments || [];
+                const singleOptionText =
+                  answer.option_text ||
+                  answer.election_question_options?.option_text ||
+                  null;
+                const multipleOptionTexts =
+                  answer.selected_option_texts ||
+                  ([...(answer.election_candidate_answer_options || [])]
+                    .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0))
+                    .map((o) => o.election_question_options?.option_text)
+                    .filter(Boolean) as string[]);
+
+                return (
+                  <Card key={answer.id} padding="md" className="space-y-4 border-l-4 border-l-primary">
+                    {/* Question Number & Type Badge */}
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary-light text-xs font-bold">
+                            {idx + 1}
+                          </span>
+                          <Badge tone="neutral" className="text-xs">
+                            {q?.question_type === "single_choice"
+                              ? "Yes/No"
+                              : q?.question_type === "multiple_choice"
+                              ? "Multiple Choice"
+                              : q?.question_type === "ranking"
+                              ? "Priority Ranking"
+                              : q?.question_type === "rating"
+                              ? "Rating"
+                              : "Text"}
+                          </Badge>
+                        </div>
+                        <h3 className="text-sm font-bold text-text-main leading-snug">
+                          {q?.question_text}
+                        </h3>
+                      </div>
+                    </div>
+
+                    {/* Answer */}
+                    <div className="pt-3 border-t border-border-light/20">
+                      <AnswerValue
+                        questionType={q?.question_type}
+                        optionText={singleOptionText}
+                        selectedOptionTexts={multipleOptionTexts}
+                        textAnswer={answer.text_answer}
+                        ratingValue={answer.rating_value}
+                      />
+                    </div>
+
+                    {/* Context/Elaboration */}
+                    {answer.context_text && (
+                      <div className="pt-3 border-t border-border-light/20">
+                        <p className="text-xs font-semibold text-text-muted mb-1.5">Context:</p>
+                        <p className="text-sm text-text-secondary whitespace-pre-wrap leading-relaxed italic">
+                          "{answer.context_text}"
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Video Answer */}
+                    {answer.video_url && (
+                      <div className="pt-3 border-t border-border-light/20">
+                        <p className="text-xs font-semibold text-text-muted mb-2">Video Explanation:</p>
+                        <div className="rounded-lg overflow-hidden border border-border-light/30 bg-black">
+                          <video
+                            src={answer.video_url}
+                            controls
+                            className="w-full max-h-64 object-contain"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Comments Section */}
+                    <div className="pt-3 border-t border-border-light/20">
+                      <button
+                        onClick={() => toggleAnswerExpand(answer.id)}
+                        className="flex items-center gap-2 text-xs text-text-muted hover:text-text-main transition-colors font-medium"
+                      >
+                        <MessageSquare size={14} />
+                        <span>
+                          {comments.length} comment{comments.length !== 1 ? "s" : ""}
+                        </span>
+                        {isExpanded ? (
+                          <ChevronUp size={14} />
+                        ) : (
+                          <ChevronDown size={14} />
+                        )}
+                      </button>
+
+                      {isExpanded && (
+                        <div className="mt-3 space-y-3 pl-4 border-l border-primary/20">
+                          {comments.map((c) => (
+                            <div key={c.id} className="text-xs space-y-1">
+                              <span className="font-mono font-bold text-text-muted text-[11px]">
+                                {getGhostDisplayName(c.ghost_id)}
+                              </span>
+                              <p className="text-text-secondary leading-relaxed">{c.content}</p>
+                            </div>
+                          ))}
+
+                          {user && (
+                            <div className="flex items-center gap-2 pt-2 mt-2 border-t border-border-light/15">
+                              <Input
+                                placeholder="Comment on this position..."
+                                value={answerCommentInputs[answer.id] || ""}
+                                onChange={(e) =>
+                                  setAnswerCommentInputs({
+                                    ...answerCommentInputs,
+                                    [answer.id]: e.target.value,
+                                  })
+                                }
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    handleCreateAnswerComment(answer.id);
+                                  }
+                                }}
+                                className="flex-1 text-xs"
+                              />
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() =>
+                                  handleCreateAnswerComment(answer.id)
+                                }
+                                disabled={
+                                  !answerCommentInputs[answer.id]?.trim()
+                                }
+                              >
+                                <Send size={13} />
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+          </Card>
+        </div>
+      )}
 
       {activeStoryUrl && (
         <StoryViewerModal
