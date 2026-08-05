@@ -53,7 +53,6 @@ import {
   createComment,
   uploadPostImage,
   getActiveElectionsForUser,
-  dismissElectionNotification,
   burnGhostIdentityViaRpc,
   hydratePoliticianAuthors,
 } from "@/lib/services/feed";
@@ -384,12 +383,6 @@ export default function FeedPageClient() {
     }
   };
 
-  const dismissElection = async (electionId: string) => {
-    if (!user) return;
-    setActiveElections((prev) => prev.filter((e) => e.election_id !== electionId));
-    await dismissElectionNotification(supabase, user.id, electionId);
-  };
-
   if (loading) return <Spinner fullPage />;
 
   const isAdmin = profile?.role === "admin";
@@ -416,7 +409,7 @@ export default function FeedPageClient() {
 
   return (
     <>
-      <div className="w-full max-w-7xl mx-auto animate-fade-in pb-20 px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-6">
+      <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 flex flex-col lg:flex-row gap-6">
         <div className="flex-1 min-w-0 space-y-6">
           {/* Profile Header & Summary */}
           <Card padding="md" className="space-y-4">
@@ -471,42 +464,52 @@ export default function FeedPageClient() {
             </div>
           </Card>
 
-          {/* Active Elections Banner */}
+          {/* Active Elections Banner - Compact Multi-Pill Bar (up to 5 side-by-side) */}
           {activeElections.length > 0 && (
-            <div className="space-y-2">
+            <div className="flex items-center gap-3 overflow-x-auto pb-1 flex-wrap">
               {activeElections.map((elec, idx) => {
                 const seatId = elec.seat_id || elec.election_seat_id;
+                const formattedDate = elec.election_date
+                  ? new Date(elec.election_date + "T00:00:00").toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })
+                  : null;
+
                 return (
                   <div
                     key={seatId || `${elec.election_id}-${idx}`}
-                    className="p-3.5 bg-accent/10 border border-accent/30 rounded-2xl flex items-center justify-between gap-4 text-xs animate-fade-in"
+                    onClick={() => router.push(`/elections/seat/${seatId}`)}
+                    className="group relative flex-1 min-w-[210px] max-w-[270px] p-2.5 px-3 bg-primary/10 hover:bg-primary/20 border border-primary/30 hover:border-primary/50 rounded-2xl flex items-center gap-2.5 text-xs transition-all shadow-sm cursor-pointer hover:shadow-md animate-fade-in"
+                    title={`Click to view ${elec.role_title} seat page`}
                   >
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <Vote size={18} className="text-accent shrink-0" />
-                      <div className="truncate">
-                        <span className="font-bold text-text-main">
-                          Election Active: {elec.role_title}
-                        </span>
-                        <span className="text-text-muted ml-2">
-                          ({elec.election_name})
-                        </span>
-                      </div>
+                    <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform">
+                      <Vote size={15} />
                     </div>
-
-                    <div className="flex items-center gap-2 shrink-0">
-                      <Button
-                        size="sm"
-                        onClick={() => router.push(`/elections/seat/${seatId}`)}
-                        className="text-xs py-1 px-3"
-                      >
-                        View Seat
-                      </Button>
-                      <button
-                        onClick={() => dismissElection(elec.election_id)}
-                        className="text-text-muted hover:text-text-main p-1 cursor-pointer"
-                      >
-                        <X size={14} />
-                      </button>
+                    <div className="min-w-0 flex-1 space-y-0.5">
+                      {/* Line 1: Election Name / Boundary */}
+                      <div className="flex items-center gap-1.5 truncate">
+                        <span className="font-bold text-text-main truncate text-xs">
+                          {elec.election_name}
+                        </span>
+                        {elec.boundary_name && (
+                          <span className="text-[10px] text-accent font-medium truncate shrink-0">
+                            📍 {elec.boundary_name}
+                          </span>
+                        )}
+                      </div>
+                      {/* Line 2: Position & Date Pill */}
+                      <div className="flex items-center gap-1.5 text-[11px] truncate">
+                        <span className="text-primary font-semibold truncate">
+                          Pos: <strong className="text-text-main font-bold">{elec.role_title}</strong>
+                        </span>
+                        {formattedDate && (
+                          <span className="px-1.5 py-0.2 bg-primary/20 border border-primary/30 rounded-full text-[9px] font-bold text-primary tracking-wide shrink-0">
+                            📅 {formattedDate}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );

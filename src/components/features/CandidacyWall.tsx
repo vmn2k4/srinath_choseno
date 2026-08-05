@@ -18,7 +18,7 @@ import {
   requestCandidacyClaim,
 } from "@/lib/services/elections";
 import { getOwnProfile, getPoliticianProfile } from "@/lib/services/profile";
-import { uploadPostImage, createComment } from "@/lib/services/feed";
+import { uploadPostImage, createComment, hydratePoliticianAuthors } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import {
   getSupportStatus,
@@ -194,10 +194,18 @@ export default function CandidacyWall({
     setAnswers(visible);
   };
 
+  const [politicianAuthors, setPoliticianAuthors] = useState<Map<string, { fullName: string; wallHref: string }>>(new Map());
+
   const loadPosts = async (ghostId?: string) => {
     const targetGhostId = ghostId ?? candidate?.profiles?.current_ghost_id;
     const { data } = await getCandidacyWallPosts(supabase, candidateId, targetGhostId);
-    setPosts((data as PostWithComments[]) || []);
+    const rows = (data as PostWithComments[]) || [];
+    setPosts(rows);
+    const map = await hydratePoliticianAuthors(supabase, rows);
+    if (targetGhostId && candidate?.display_name) {
+      map.set(targetGhostId, { fullName: candidate.display_name, wallHref: `/wall/${targetGhostId}` });
+    }
+    setPoliticianAuthors(map);
   };
 
   useEffect(() => {
@@ -913,6 +921,12 @@ export default function CandidacyWall({
                   }
                   onSubmitComment={() => handleCreateComment(post.id)}
                   onMediaClick={(url, type) => setMediaPreview({ url, type })}
+                  politicianAuthor={
+                    politicianAuthors.get(post.ghost_id) ??
+                    (post.ghost_id === candidate?.profiles?.current_ghost_id && candidate?.display_name
+                      ? { fullName: candidate.display_name, wallHref: `/wall/${candidate.profiles.current_ghost_id}` }
+                      : null)
+                  }
                   onReport={handleReport}
                   commentError={commentErrors[post.id]}
                 />

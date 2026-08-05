@@ -164,7 +164,7 @@ export default function ProfilePageClient() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto mt-6 pb-20 animate-fade-in px-4 sm:px-6 lg:px-8 space-y-6">
+    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
       <PageHeader
         title="Your Profile"
         subtitle="Manage your account details."

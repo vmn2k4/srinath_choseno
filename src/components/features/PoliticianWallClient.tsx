@@ -29,7 +29,7 @@ import {
   subscribeToSupportChanges,
   unsubscribeFromSupportChanges,
 } from "@/lib/services/politicianWall";
-import { uploadPostImage, createComment } from "@/lib/services/feed";
+import { uploadPostImage, createComment, hydratePoliticianAuthors } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import {
   Card,
@@ -106,11 +106,19 @@ export default function PoliticianWallClient({
   const [showReportProfile, setShowReportProfile] = useState(false);
   const [mediaPreview, setMediaPreview] = useState<{ url: string; type: "image" | "video" } | null>(null);
 
+  const [politicianAuthors, setPoliticianAuthors] = useState<Map<string, { fullName: string; wallHref: string }>>(new Map());
+
   const fetchPosts = async () => {
     try {
       const { data, error } = await getWallPosts(supabase, ghostId);
       if (error) throw error;
-      setPosts((data as PostWithComments[]) || []);
+      const postRows = (data as PostWithComments[]) || [];
+      setPosts(postRows);
+      const map = await hydratePoliticianAuthors(supabase, postRows);
+      if (ghostId && wallOwner?.full_name) {
+        map.set(ghostId, { fullName: wallOwner.full_name, wallHref: `/wall/${ghostId}` });
+      }
+      setPoliticianAuthors(map);
     } catch (err) {
       console.error(err);
     } finally {
@@ -158,7 +166,13 @@ export default function PoliticianWallClient({
 
       const { data: postRows, error: postErr } = await getWallPosts(supabase, ghostId);
       if (!postErr && isMounted) {
-        setPosts((postRows as PostWithComments[]) || []);
+        const rows = (postRows as PostWithComments[]) || [];
+        setPosts(rows);
+        const map = await hydratePoliticianAuthors(supabase, rows);
+        if (ghostId && ownerRecord?.full_name) {
+          map.set(ghostId, { fullName: ownerRecord.full_name, wallHref: `/wall/${ghostId}` });
+        }
+        if (isMounted) setPoliticianAuthors(map);
       }
       if (isMounted) setLoading(false);
     }
@@ -485,6 +499,12 @@ export default function PoliticianWallClient({
               }
               onSubmitComment={() => handleCreateComment(post.id)}
               onMediaClick={(url, type) => setMediaPreview({ url, type })}
+              politicianAuthor={
+                politicianAuthors.get(post.ghost_id) ??
+                (post.ghost_id === ghostId && wallOwner?.full_name
+                  ? { fullName: wallOwner.full_name, wallHref: `/wall/${ghostId}` }
+                  : null)
+              }
               onReport={handleReport}
               commentError={commentErrors[post.id]}
             />

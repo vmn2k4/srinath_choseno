@@ -101,13 +101,43 @@ export async function uploadPostImage(supabase: Client, file: File, ghostId: str
   return { publicUrl, error: null };
 }
 
-// ── election notifications ──────────────────────────────────────────────
+// ── active elections for user ──────────────────────────────────────────────
 export async function getActiveElectionsForUser(supabase: Client) {
-  return supabase.rpc("get_active_elections_for_user");
-}
+  const { data: rpcData, error: rpcError } = await supabase.rpc("get_active_elections_for_user");
+  if (!rpcError && rpcData && rpcData.length > 0) {
+    return { data: rpcData, error: null };
+  }
 
-export async function dismissElectionNotification(supabase: Client, profileId: string, electionId: string) {
-  return supabase.from("election_notification_dismissals").insert({ profile_id: profileId, election_id: electionId });
+  const { data: authUser } = await supabase.auth.getUser();
+  if (!authUser.user) return { data: [], error: null };
+
+  const { data: memberships } = await supabase
+    .from("user_boundary_memberships")
+    .select("map_shape_id")
+    .eq("profile_id", authUser.user.id);
+
+  if (!memberships || memberships.length === 0) return { data: [], error: null };
+
+  const shapeIds = memberships.map((m: any) => m.map_shape_id);
+
+  const { data: seats, error } = await supabase
+    .from("election_seats")
+    .select("id, role_title, election_id, map_shape_id, map_shapes(name), elections!inner(id, name, election_date, status)")
+    .in("map_shape_id", shapeIds)
+    .in("elections.status", ["nominations_open", "active"]);
+
+  if (error || !seats) return { data: [], error };
+
+  const result = seats.map((s: any) => ({
+    seat_id: s.id,
+    election_id: s.election_id,
+    election_name: s.elections?.name,
+    election_date: s.elections?.election_date,
+    role_title: s.role_title,
+    boundary_name: s.map_shapes?.name,
+  }));
+
+  return { data: result, error: null };
 }
 
 // ── ghost identity ───────────────────────────────────────────────────────

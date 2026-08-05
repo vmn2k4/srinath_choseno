@@ -9,6 +9,7 @@ import VoteBar from "./VoteBar";
 import CommentComposer from "./CommentComposer";
 import MediaThumbnail from "./MediaThumbnail";
 import ReportDialog from "./ReportDialog";
+import PostHeader, { type PoliticianAuthorInfo } from "./PostHeader";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { normalizeMediaUrl } from "@/lib/services/video";
 import type { ReportTargetType } from "@/lib/services/moderation";
@@ -53,7 +54,7 @@ export default function PostCard({
   onCommentChange: (value: string) => void;
   onSubmitComment: () => void;
   onMediaClick?: (url: string, type: "image" | "video") => void;
-  politicianAuthor?: { fullName: string; wallHref: string } | null;
+  politicianAuthor?: PoliticianAuthorInfo | null;
   onReport?: (targetType: ReportTargetType, targetId: string, abuseType: string) => Promise<{ error?: unknown }>;
   commentError?: string;
   boundaryName?: string | null;
@@ -84,59 +85,16 @@ export default function PostCard({
   return (
     <Card interactive padding="none" className="overflow-hidden">
       <div className="p-5">
-        <div className="flex items-center gap-2.5 mb-3">
-          <div className="w-8 h-8 rounded-full bg-surface/50 flex items-center justify-center border border-border-light/30 shrink-0">
-            <Users size={14} className="text-text-muted" />
-          </div>
-          <div className="flex-1 min-w-0">
-            {politicianAuthor ? (
-              <>
-                <Link href={politicianAuthor.wallHref} className="text-sm font-bold text-primary hover:underline">
-                  {politicianAuthor.fullName}
-                </Link>
-                <Badge tone="primary" className="ml-2">
-                  Politician
-                </Badge>
-              </>
-            ) : (
-              <span className="text-sm font-bold text-text-secondary font-mono">
-                {getGhostDisplayName(post.ghost_id)}
-              </span>
-            )}
-            {isOwnerPost && (
-              <Badge tone="primary" className="ml-2">
-                {ownerBadgeLabel}
-              </Badge>
-            )}
-            <span className="text-xs text-text-muted ml-2.5">
-              {post.created_at ? new Date(post.created_at).toLocaleDateString() : ""}
-            </span>
-            {boundaryName && (
-              <span className="text-xs text-accent ml-2.5 font-medium">
-                📍 {boundaryName}
-              </span>
-            )}
-            {post.civic_score_snapshot != null && (
-              <span
-                className="text-xs text-text-muted ml-2.5 inline-flex items-center gap-1"
-                title="Poster's civic score at the time of posting"
-              >
-                <Award size={11} className="text-primary-light" /> {post.civic_score_snapshot}
-              </span>
-            )}
-          </div>
-          {onReport && (
-            <Button
-              variant="icon"
-              size="sm"
-              tone="danger"
-              onClick={() => setReportTarget({ targetType: "post", targetId: post.id })}
-              title="Report this post"
-            >
-              <Flag size={14} />
-            </Button>
-          )}
-        </div>
+        <PostHeader
+          ghostId={post.ghost_id}
+          createdAt={post.created_at}
+          politicianAuthor={politicianAuthor}
+          isOwnerPost={isOwnerPost}
+          ownerBadgeLabel={ownerBadgeLabel}
+          boundaryName={boundaryName}
+          civicScoreSnapshot={post.civic_score_snapshot}
+          onReport={onReport ? () => setReportTarget({ targetType: "post", targetId: post.id }) : undefined}
+        />
 
         <p className="text-text-tertiary text-sm whitespace-pre-wrap leading-relaxed mb-3">
           {post.content}

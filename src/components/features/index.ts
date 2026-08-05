@@ -6,6 +6,8 @@ export { default as ChipGroup } from "./ChipGroup";
 export type { Chip } from "./ChipGroup";
 export { default as PostCard } from "./PostCard";
 export type { PostWithComments } from "./PostCard";
+export { default as PostHeader } from "./PostHeader";
+export type { PoliticianAuthorInfo } from "./PostHeader";
 export { default as StoryStrip } from "./StoryStrip";
 export type { StoryPost } from "./StoryStrip";
 export { default as MediaAttachButton } from "./MediaAttachButton";
