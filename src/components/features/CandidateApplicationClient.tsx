@@ -165,7 +165,7 @@ export default function CandidateApplicationClient({
 
   const findUnansweredRequiredQuestion = () => {
     for (const q of questions) {
-      if (!q.required) continue;
+      if (!q.is_required) continue;
       const ans = answers[q.id];
       if (!hasStartedAnswering(q, ans)) {
         return q.id;
