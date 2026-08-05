@@ -442,7 +442,7 @@ export default function FeedPageClient() {
 
   return (
     <>
-      <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 flex flex-col lg:flex-row gap-6">
+      <div className="w-full max-w-7xl mx-auto animate-fade-in pb-20 px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-6">
         <div className="flex-1 min-w-0 space-y-6">
           {/* Profile Header & Summary */}
           <Card padding="md" className="space-y-4">
@@ -689,7 +689,7 @@ export default function FeedPageClient() {
 
               {/* Boundary Scoped Tabs */}
               <div className="space-y-3">
-                <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-border-light/20">
+                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 border-b border-border-light/20">
                   <button
                     onClick={() => setActiveTab("master")}
                     className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 border cursor-pointer ${

@@ -179,7 +179,7 @@ export default function ElectionsPageClient({
   };
 
   return (
-    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-8">
+    <div className="w-full max-w-7xl mx-auto animate-fade-in pb-20 px-4 sm:px-6 lg:px-8 space-y-8">
       <PageHeader icon={Vote} title="Elections &amp; Races" />
 
       {initialRole === "normal" && (

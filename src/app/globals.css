@@ -153,6 +153,33 @@
   .glass-card {
     @apply bg-surface-elevated border border-border-light rounded-3xl;
   }
+
+  /* Fluid typography and layout utilities */
+  .text-fluid-h1 {
+    font-size: clamp(1.75rem, 4vw + 1rem, 3rem);
+    line-height: 1.15;
+  }
+  .text-fluid-h2 {
+    font-size: clamp(1.35rem, 2.5vw + 0.8rem, 2.25rem);
+    line-height: 1.25;
+  }
+  .text-fluid-h3 {
+    font-size: clamp(1.1rem, 1.5vw + 0.75rem, 1.5rem);
+    line-height: 1.3;
+  }
+  .text-fluid-body {
+    font-size: clamp(0.875rem, 0.5vw + 0.75rem, 1.05rem);
+    line-height: 1.5;
+  }
+
+  /* Hide scrollbar for clean horizontal tab scrolling on mobile */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 @keyframes fadeIn {
