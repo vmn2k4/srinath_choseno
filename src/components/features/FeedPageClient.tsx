@@ -23,6 +23,7 @@ import PostCard, { PostWithComments } from "./PostCard";
 import StoryStrip, { StoryPost } from "./StoryStrip";
 import PoliticianSidebar from "./PoliticianSidebar";
 import VideoRecorder from "./VideoRecorder";
+import MediaThumbnail from "./MediaThumbnail";
 import {
   Card,
   Button,
@@ -109,6 +110,7 @@ export default function FeedPageClient() {
 
   const [showVideoRecorder, setShowVideoRecorder] = useState(false);
   const [uploadedVideoUrl, setUploadedVideoUrl] = useState<string | null>(null);
+  const [mediaPreviewUrl, setMediaPreviewUrl] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -549,23 +551,41 @@ export default function FeedPageClient() {
                       rows={3}
                     />
 
-                    {imagePreview && (
-                      <div className="relative rounded-xl overflow-hidden border border-border-light/45 max-h-60">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={imagePreview}
-                          alt="Preview"
-                          className="w-full h-full object-cover"
-                        />
-                        <RemoveMediaButton
-                          onClick={() => {
-                            setImageFile(null);
-                            setImagePreview(null);
-                            setImageError(null);
-                          }}
-                        />
+                    {(imagePreview || uploadedVideoUrl) && (
+                      <div className="flex gap-3 items-end flex-wrap">
+                        {imagePreview && (
+                          <div className="flex gap-2 items-end">
+                            <MediaThumbnail
+                              url={imagePreview}
+                              type="image"
+                              alt="Preview"
+                              onClick={() => setMediaPreviewUrl(imagePreview)}
+                            />
+                            <RemoveMediaButton
+                              onClick={() => {
+                                setImageFile(null);
+                                setImagePreview(null);
+                                setImageError(null);
+                              }}
+                            />
+                          </div>
+                        )}
+
+                        {uploadedVideoUrl && (
+                          <div className="flex gap-2 items-end">
+                            <MediaThumbnail
+                              url={uploadedVideoUrl}
+                              type="video"
+                              onClick={() => setMediaPreviewUrl(uploadedVideoUrl)}
+                            />
+                            <RemoveMediaButton
+                              onClick={() => setUploadedVideoUrl(null)}
+                            />
+                          </div>
+                        )}
                       </div>
                     )}
+
                     {imageError && <p className="text-danger-light text-xs">{imageError}</p>}
 
                     {extractedUrl && (
@@ -582,22 +602,6 @@ export default function FeedPageClient() {
                           setShowVideoRecorder(false);
                         }}
                       />
-                    )}
-
-                    {uploadedVideoUrl && (
-                      <div className="flex items-center justify-between gap-2 p-3 bg-primary/10 border border-primary/30 rounded-xl">
-                        <div className="flex items-center gap-2 text-primary text-xs font-medium">
-                          <Video size={14} />
-                          Video pitch attached
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => setUploadedVideoUrl(null)}
-                          className="text-primary hover:text-primary/80 text-xs underline cursor-pointer"
-                        >
-                          Remove
-                        </button>
-                      </div>
                     )}
 
                     <div className="flex items-center justify-between pt-2">
@@ -745,6 +749,7 @@ export default function FeedPageClient() {
                         setCommentInputs({ ...commentInputs, [post.id]: text })
                       }
                       onSubmitComment={() => handleCreateComment(post.id)}
+                      onMediaClick={(url) => setMediaPreviewUrl(url)}
                     />
                   ))}
                 </div>
@@ -766,10 +771,13 @@ export default function FeedPageClient() {
         )}
       </div>
 
-      {activeStoryUrl && (
+      {(activeStoryUrl || mediaPreviewUrl) && (
         <StoryViewerModal
-          url={activeStoryUrl}
-          onClose={() => setActiveStoryUrl(null)}
+          url={activeStoryUrl || mediaPreviewUrl || ""}
+          onClose={() => {
+            setActiveStoryUrl(null);
+            setMediaPreviewUrl(null);
+          }}
         />
       )}
 

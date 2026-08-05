@@ -4,6 +4,7 @@ import Badge from "@/components/primitives/Badge";
 import LinkPreview, { type LinkMetadata } from "./LinkPreview";
 import VoteBar from "./VoteBar";
 import CommentComposer from "./CommentComposer";
+import MediaThumbnail from "./MediaThumbnail";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { normalizeMediaUrl } from "@/lib/services/video";
 import type { Database } from "@/lib/supabase/types";
@@ -30,6 +31,7 @@ export default function PostCard({
   commentValue,
   onCommentChange,
   onSubmitComment,
+  onMediaClick,
 }: {
   post: PostWithComments;
   ownerGhostId?: string | null;
@@ -41,6 +43,7 @@ export default function PostCard({
   commentValue: string;
   onCommentChange: (value: string) => void;
   onSubmitComment: () => void;
+  onMediaClick?: (url: string) => void;
 }) {
   const isOwnerPost = ownerGhostId != null && post.ghost_id === ownerGhostId;
   const comments = post.comments || [];
@@ -97,15 +100,24 @@ export default function PostCard({
           {post.content}
         </p>
 
-        {post.image_url && (
-          <div className="mb-4 rounded-xl overflow-hidden border border-border-light/45">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={normalizeMediaUrl(post.image_url)}
-              alt="Post Attachment"
-              className="w-full max-h-[500px] object-cover"
-              loading="lazy"
-            />
+        {(post.image_url || post.video_url) && (
+          <div className="mb-4 flex gap-3 items-start flex-wrap">
+            {post.image_url && (
+              <MediaThumbnail
+                url={post.image_url}
+                type="image"
+                alt="Post Attachment"
+                onClick={() => onMediaClick?.(normalizeMediaUrl(post.image_url))}
+              />
+            )}
+
+            {post.video_url && (
+              <MediaThumbnail
+                url={post.video_url}
+                type="video"
+                onClick={() => onMediaClick?.(normalizeMediaUrl(post.video_url))}
+              />
+            )}
           </div>
         )}
 
@@ -118,12 +130,6 @@ export default function PostCard({
             <LinkPreview url={inlineUrlMatch[1]} />
           </div>
         ) : null}
-
-        {post.video_url && (
-          <div className="mt-3 rounded-xl overflow-hidden border border-border-light/45 bg-black">
-            <video src={normalizeMediaUrl(post.video_url)} controls className="w-full max-h-96 object-contain" />
-          </div>
-        )}
 
         {hasSpotlightResponse && (
           <div className="mt-4 p-4 bg-primary/10 border border-primary/30 rounded-xl space-y-3 shadow-sm">
