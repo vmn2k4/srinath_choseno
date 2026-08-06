@@ -1,4 +1,5 @@
 import { BetaAnalyticsDataClient } from "@google-analytics/data";
+import { DEFAULT_GA4_DATE_RANGE_DAYS, type Ga4DateRangeDays } from "@/lib/constants/ga4";
 
 // Server-only -- uses a service account private key, must never be imported
 // from a Client Component. Talks to the GA4 Data API (read-only reporting),
@@ -33,6 +34,8 @@ export type Ga4Overview = {
   topPages: { path: string; views: number }[];
   topEvents: { name: string; count: number }[];
   devices: { category: string; sessions: number }[];
+  topCountries: { country: string; sessions: number; activeUsers: number }[];
+  topCities: { city: string; country: string; sessions: number }[];
 };
 
 function metricNum(row: { metricValues?: { value?: string | null }[] | null } | undefined, index: number): number {
@@ -50,7 +53,9 @@ function formatGa4Date(raw: string): string {
   return `${raw.slice(0, 4)}-${raw.slice(4, 6)}-${raw.slice(6, 8)}`;
 }
 
-export async function getGa4Overview(): Promise<{ success: boolean; data?: Ga4Overview; error?: string }> {
+export async function getGa4Overview(
+  days: Ga4DateRangeDays = DEFAULT_GA4_DATE_RANGE_DAYS
+): Promise<{ success: boolean; data?: Ga4Overview; error?: string }> {
   if (!isGa4ReportingConfigured()) {
     return { success: false, error: "Google Analytics reporting is not configured yet." };
   }
@@ -58,9 +63,9 @@ export async function getGa4Overview(): Promise<{ success: boolean; data?: Ga4Ov
   try {
     const client = getClient();
     const property = `properties/${PROPERTY_ID}`;
-    const dateRanges = [{ startDate: "30daysAgo", endDate: "today" }];
+    const dateRanges = [{ startDate: `${days}daysAgo`, endDate: "today" }];
 
-    const [[totalsRes], [trendRes], [pagesRes], [eventsRes], [deviceRes]] = await Promise.all([
+    const [[totalsRes], [trendRes], [pagesRes], [eventsRes], [deviceRes], [countryRes], [cityRes]] = await Promise.all([
       client.runReport({
         property,
         dateRanges,
@@ -101,6 +106,22 @@ export async function getGa4Overview(): Promise<{ success: boolean; data?: Ga4Ov
         metrics: [{ name: "sessions" }],
         orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
       }),
+      client.runReport({
+        property,
+        dateRanges,
+        dimensions: [{ name: "country" }],
+        metrics: [{ name: "sessions" }, { name: "activeUsers" }],
+        orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
+        limit: 15,
+      }),
+      client.runReport({
+        property,
+        dateRanges,
+        dimensions: [{ name: "city" }, { name: "country" }],
+        metrics: [{ name: "sessions" }],
+        orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
+        limit: 10,
+      }),
     ]);
 
     const totalsRow = totalsRes.rows?.[0];
@@ -127,6 +148,16 @@ export async function getGa4Overview(): Promise<{ success: boolean; data?: Ga4Ov
       })),
       devices: (deviceRes.rows || []).map((row) => ({
         category: dimStr(row, 0) || "unknown",
+        sessions: metricNum(row, 0),
+      })),
+      topCountries: (countryRes.rows || []).map((row) => ({
+        country: dimStr(row, 0) || "Unknown",
+        sessions: metricNum(row, 0),
+        activeUsers: metricNum(row, 1),
+      })),
+      topCities: (cityRes.rows || []).map((row) => ({
+        city: dimStr(row, 0) || "Unknown",
+        country: dimStr(row, 1) || "",
         sessions: metricNum(row, 0),
       })),
     };
