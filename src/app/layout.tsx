@@ -7,6 +7,8 @@ import NavBar from "@/components/NavBar";
 import DebugUserSwitcher from "@/components/dev/DebugUserSwitcher";
 import FakeProductionToggle from "@/components/dev/FakeProductionToggle";
 
+import { SITE_URL } from "@/lib/constants/site";
+
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
   subsets: ["latin"],
@@ -23,7 +25,7 @@ const bigShouldersDisplay = Big_Shoulders({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://choseno.com"),
+  metadataBase: new URL(SITE_URL),
   title: "Choseno — A Framework for Future Democracy",
   description:
     "An anonymous civic social platform. Post under a rotating Ghost ID, scoped automatically to your real electoral and administrative boundaries.",

@@ -50,9 +50,12 @@ import { createClient } from "@/lib/supabase/client";
 interface WallOwnerRecord {
   id: string;
   full_name: string;
-  party_name?: string;
-  bio?: string;
-  avatar_url?: string;
+  politician_profiles?: {
+    political_target_role?: string;
+    target_boundary_name?: string;
+    bio?: string;
+    avatar_url?: string;
+  } | null;
 }
 
 interface SupporterRecord {
@@ -320,15 +323,17 @@ export default function PoliticianWallClient({
       <Card padding="md" className="space-y-4">
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-4">
-            <Avatar src={wallOwner?.avatar_url} name={wallOwner?.full_name || "P"} size="xl" />
+            <Avatar src={wallOwner?.politician_profiles?.avatar_url} name={wallOwner?.full_name || "P"} size="xl" />
             <div>
               <h1 className="text-2xl font-bold text-text-main flex items-center gap-2">
                 {wallOwner?.full_name || "Politician Wall"}
-                <Badge tone="primary">Politician</Badge>
+                <Badge tone="primary">
+                  {wallOwner?.politician_profiles?.political_target_role || "Politician"}
+                </Badge>
               </h1>
-              {wallOwner?.party_name && (
+              {wallOwner?.politician_profiles?.target_boundary_name && (
                 <p className="text-xs text-text-muted mt-0.5">
-                  {wallOwner.party_name}
+                  {wallOwner.politician_profiles.target_boundary_name}
                 </p>
               )}
             </div>
@@ -382,9 +387,9 @@ export default function PoliticianWallClient({
           </div>
         </div>
 
-        {wallOwner?.bio && (
+        {wallOwner?.politician_profiles?.bio && (
           <p className="text-sm text-text-secondary pt-3 border-t border-border-light/20 leading-relaxed">
-            {wallOwner.bio}
+            {wallOwner.politician_profiles.bio}
           </p>
         )}
 

@@ -7,8 +7,9 @@ import {
   getWallPostBySlugOrId,
   getSupporterCount,
 } from "@/lib/services/politicianWall";
+import { SITE_URL } from "@/lib/constants/site";
 
-const BASE_URL = "https://choseno.com";
+const BASE_URL = SITE_URL;
 
 interface WallSlugPageProps {
   params: Promise<{ ghostId: string; slug: string }>;

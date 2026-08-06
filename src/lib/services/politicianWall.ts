@@ -18,6 +18,7 @@ export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
        politician_profiles (
          political_target_role,
          target_boundary_name,
+         bio,
          avatar_url
        )
     `

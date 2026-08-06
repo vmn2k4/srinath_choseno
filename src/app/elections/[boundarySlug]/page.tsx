@@ -12,8 +12,9 @@ import {
 } from "@/lib/services/elections";
 import { buildBoundarySlug, buildSeatSlug, extractShapeIdFromSlug } from "@/lib/utils/slugs";
 import { Card, EmptyState } from "@/components/primitives";
+import { SITE_URL } from "@/lib/constants/site";
 
-const BASE_URL = "https://choseno.com";
+const BASE_URL = SITE_URL;
 
 interface PageProps {
   params: Promise<{ boundarySlug: string }>;

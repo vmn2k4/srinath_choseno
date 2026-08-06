@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 import HomePageClient from "@/components/features/HomePageClient";
+import { SITE_URL, SITE_NAME } from "@/lib/constants/site";
 
-const BASE_URL = "https://choseno.com";
+const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
   title: "Choseno — Anonymous Civic Network for Local Politics",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
     description:
       "An anonymous, hyperlocal civic network connecting citizens and independent candidates inside real electoral boundaries.",
     url: BASE_URL,
-    siteName: "Choseno",
+    siteName: SITE_NAME,
     type: "website",
     images: [
       {
@@ -34,5 +35,23 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <HomePageClient />;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: BASE_URL,
+    logo: `${BASE_URL}/icon.svg`,
+    description:
+      "Choseno connects citizens and independent candidates inside real, verified electoral boundaries — an anonymous, hyperlocal civic network free of party influence.",
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
+      <HomePageClient />
+    </>
+  );
 }

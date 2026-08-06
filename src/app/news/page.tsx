@@ -4,8 +4,9 @@ import { Newspaper, Calendar, ArrowRight, Globe, Zap } from "lucide-react";
 import { Card, PageHeader, Badge } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/server";
 import { getPublishedNewsArticles, type NewsArticleContent } from "@/lib/services/news";
+import { SITE_URL } from "@/lib/constants/site";
 
-const BASE_URL = "https://choseno.com";
+const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
   title: "Civic News & Updates | Choseno",

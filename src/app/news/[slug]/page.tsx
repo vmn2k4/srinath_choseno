@@ -12,6 +12,7 @@ import {
 } from "@/lib/services/news";
 import NewsArticleBody from "@/components/features/NewsArticleBody";
 import NewsComments from "@/components/features/NewsComments";
+import { SITE_URL, SITE_NAME } from "@/lib/constants/site";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -39,10 +40,10 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     article.summary ||
     (content?.body?.replace(/[#*`\[\]]/g, "").trim().slice(0, 160)) ||
     "";
-  const canonicalUrl = `https://choseno.com/news/${slug}`;
+  const canonicalUrl = `${SITE_URL}/news/${slug}`;
   const publishedTime = article.published_at ?? undefined;
 
-  const ogImageUrl = article.hero_image_url || `https://choseno.com/news/${slug}/opengraph-image`;
+  const ogImageUrl = article.hero_image_url || `${SITE_URL}/news/${slug}/opengraph-image`;
 
   return {
     title: `${title} | Choseno News`,
@@ -104,11 +105,11 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
       content?.metaDescription || article.summary || undefined,
     datePublished: article.published_at ?? article.created_at,
     dateModified: article.updated_at,
-    url: `https://choseno.com/news/${slug}`,
+    url: `${SITE_URL}/news/${slug}`,
     publisher: {
       "@type": "Organization",
-      name: "Choseno",
-      url: "https://choseno.com",
+      name: SITE_NAME,
+      url: SITE_URL,
     },
     ...(article.hero_image_url && {
       image: {

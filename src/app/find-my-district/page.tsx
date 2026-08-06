@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 import FindMyDistrictClient from "@/components/features/FindMyDistrictClient";
+import { SITE_URL } from "@/lib/constants/site";
 
-const BASE_URL = "https://choseno.com";
+const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
   title: "Find Your District & Constituency | Choseno",

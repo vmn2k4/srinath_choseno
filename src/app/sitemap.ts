@@ -3,8 +3,9 @@ import { createClient } from "@/lib/supabase/server";
 import { getPublishedNewsArticles } from "@/lib/services/news";
 import { getActiveSeats, getCandidatesBySeatIds } from "@/lib/services/elections";
 import { buildSeatSlug, buildCandidateSlug, buildBoundarySlug } from "@/lib/utils/slugs";
+import { SITE_URL } from "@/lib/constants/site";
 
-const baseUrl = "https://choseno.com";
+const baseUrl = SITE_URL;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [

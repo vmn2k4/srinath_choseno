@@ -14,8 +14,9 @@ import {
   getUserBoundaryMemberships,
 } from "@/lib/services/profile";
 import { buildSeatSlug } from "@/lib/utils/slugs";
+import { SITE_URL } from "@/lib/constants/site";
 
-const BASE_URL = "https://choseno.com";
+const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
   title: "Active Elections & Races | Choseno",

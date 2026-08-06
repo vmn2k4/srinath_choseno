@@ -21,8 +21,9 @@ import {
   CyclingBoundaryPill,
   RoleSplitCta,
 } from "@/components/features/home/HomeMotion";
+import { SITE_URL } from "@/lib/constants/site";
 
-const BASE_URL = "https://choseno.com";
+const BASE_URL = SITE_URL;
 
 const BOUNDARY_LEVELS = ["Polling District", "Federal Area", "Country", "International"];
 
