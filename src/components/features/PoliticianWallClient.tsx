@@ -46,6 +46,7 @@ import {
 } from "@/components/primitives";
 import ReportDialog from "./ReportDialog";
 import { createClient } from "@/lib/supabase/client";
+import { trackPostCreated, trackPostEngagement, trackCommentAdded, trackPoliticianViewed } from "@/lib/analytics/events";
 
 interface WallOwnerRecord {
   id: string;
@@ -86,6 +87,7 @@ export default function PoliticianWallClient({
   const { user } = useAuth();
   const router = useRouter();
 
+  const trackedGhostViewRef = React.useRef<string | null>(null);
   const [wallOwner, setWallOwner] = useState<WallOwnerRecord | null>(initialWallOwner);
   const [profile, setProfile] = useState<{ id: string; current_ghost_id: string } | null>(null);
   const [posts, setPosts] = useState<PostWithComments[]>(initialPosts);
@@ -149,6 +151,10 @@ export default function PoliticianWallClient({
 
       if (ownerRecord) {
         if (isMounted) setWallOwner(ownerRecord);
+        if (trackedGhostViewRef.current !== ghostId) {
+          trackedGhostViewRef.current = ghostId;
+          trackPoliticianViewed({ ghostId, source: "wall" });
+        }
         if (ownerRecord.id) {
           if (user) {
             const { data: mySupport } = await getSupportStatus(
@@ -271,6 +277,13 @@ export default function PoliticianWallClient({
 
       if (error) throw error;
 
+      trackPostCreated({
+        hasImage: Boolean(finalImageUrl),
+        hasVideo: Boolean(videoUrl),
+        hasLink: Boolean(linkMetadata),
+        contentLength: newPostContent.trim().length,
+      });
+
       setNewPostContent("");
       setExtractedUrl(null);
       setLinkMetadata(null);
@@ -287,7 +300,10 @@ export default function PoliticianWallClient({
   const handleVote = async (postId: string, voteType: 1 | -1) => {
     if (!user) return;
     const { error } = await voteOnPost(supabase, postId, voteType);
-    if (!error) await fetchPosts();
+    if (!error) {
+      trackPostEngagement(voteType === 1 ? "upvote" : "downvote", postId);
+      await fetchPosts();
+    }
   };
 
   const handleCreateComment = async (postId: string) => {
@@ -299,6 +315,7 @@ export default function PoliticianWallClient({
       const { error } = await createComment(supabase, postId, content.trim());
       if (error) throw error;
 
+      trackCommentAdded(postId, content.trim().length);
       setCommentInputs({ ...commentInputs, [postId]: "" });
       await fetchPosts();
     } catch (err) {

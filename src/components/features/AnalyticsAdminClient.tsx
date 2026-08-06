@@ -24,8 +24,14 @@ import {
   Check,
   Calendar,
   Filter,
+  BarChart3,
+  Eye,
+  Clock,
+  Smartphone,
+  AlertCircle,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import type { Ga4Overview } from "@/lib/analytics/ga4Reporting";
 
 export default function AnalyticsAdminClient() {
   const supabase = createClient();
@@ -39,6 +45,42 @@ export default function AnalyticsAdminClient() {
   const [roleFilter, setRoleFilter] = useState<string>("all");
   const [expandedDays, setExpandedDays] = useState<Record<string, boolean>>({});
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
+
+  // Google Analytics (GA4 Data API) -- fetched independently of the Supabase
+  // metrics above so a slow/unconfigured GA4 property never blocks the rest
+  // of this page from loading.
+  const [ga4Loading, setGa4Loading] = useState(true);
+  const [ga4Configured, setGa4Configured] = useState(true);
+  const [ga4Error, setGa4Error] = useState<string | null>(null);
+  const [ga4Data, setGa4Data] = useState<Ga4Overview | null>(null);
+
+  const fetchGa4 = async () => {
+    setGa4Loading(true);
+    setGa4Error(null);
+    try {
+      const res = await fetch("/api/admin/ga4");
+      const body = await res.json();
+      if (!res.ok) {
+        setGa4Error(body?.error || "Failed to load Google Analytics data.");
+      } else if (body.configured === false) {
+        setGa4Configured(false);
+      } else if (body.error) {
+        setGa4Configured(true);
+        setGa4Error(body.error);
+      } else {
+        setGa4Configured(true);
+        setGa4Data(body.data as Ga4Overview);
+      }
+    } catch (err) {
+      setGa4Error(err instanceof Error ? err.message : "Failed to load Google Analytics data.");
+    } finally {
+      setGa4Loading(false);
+    }
+  };
+
+  useEffect(() => {
+    Promise.resolve().then(() => fetchGa4());
+  }, []);
 
   const fetchMetrics = async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true);
@@ -231,6 +273,168 @@ export default function AnalyticsAdminClient() {
           </p>
         </Card>
       </div>
+
+      {/* Live Traffic — Google Analytics (GA4 Data API) */}
+      <Card padding="lg" className="space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-light/20 pb-4">
+          <div>
+            <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+              <BarChart3 size={20} className="text-primary" />
+              Live Traffic (Google Analytics)
+            </h2>
+            <p className="text-xs text-text-muted mt-1">
+              Real visitor traffic from GA4, last 30 days. Separate from the platform activity
+              metrics above, which come from Supabase.
+            </p>
+          </div>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={fetchGa4}
+            disabled={ga4Loading}
+            className="gap-1.5 text-xs shrink-0"
+          >
+            <RefreshCw size={14} className={ga4Loading ? "animate-spin" : ""} />
+            {ga4Loading ? "Loading..." : "Refresh"}
+          </Button>
+        </div>
+
+        {ga4Loading && !ga4Data ? (
+          <div className="flex justify-center py-10">
+            <Spinner />
+          </div>
+        ) : !ga4Configured ? (
+          <div className="text-center py-10 space-y-2 border border-dashed border-border-light/30 rounded-xl">
+            <BarChart3 size={32} className="mx-auto text-text-muted opacity-50" />
+            <p className="text-sm font-semibold text-text-main">Google Analytics isn&apos;t connected yet</p>
+            <p className="text-xs text-text-muted max-w-md mx-auto">
+              Set GA4_PROPERTY_ID, GA4_SERVICE_ACCOUNT_EMAIL, and GA4_SERVICE_ACCOUNT_PRIVATE_KEY
+              in your environment to enable this section.
+            </p>
+          </div>
+        ) : ga4Error ? (
+          <div className="text-center py-10 space-y-2 border border-dashed border-danger/30 rounded-xl">
+            <AlertCircle size={32} className="mx-auto text-danger opacity-70" />
+            <p className="text-sm font-semibold text-text-main">Couldn&apos;t load Google Analytics data</p>
+            <p className="text-xs text-text-muted max-w-md mx-auto font-mono">{ga4Error}</p>
+          </div>
+        ) : ga4Data ? (
+          <div className="space-y-6">
+            {/* KPI Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Card padding="md" className="border-l-4 border-l-primary space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-text-muted uppercase tracking-wider">Sessions</span>
+                  <Activity size={18} className="text-primary" />
+                </div>
+                <p className="text-2xl font-bold text-text-main">{ga4Data.totals.sessions.toLocaleString()}</p>
+              </Card>
+              <Card padding="md" className="border-l-4 border-l-success space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-text-muted uppercase tracking-wider">Active Users</span>
+                  <Users size={18} className="text-success" />
+                </div>
+                <p className="text-2xl font-bold text-text-main">{ga4Data.totals.activeUsers.toLocaleString()}</p>
+              </Card>
+              <Card padding="md" className="border-l-4 border-l-accent space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-text-muted uppercase tracking-wider">Page Views</span>
+                  <Eye size={18} className="text-accent" />
+                </div>
+                <p className="text-2xl font-bold text-text-main">{ga4Data.totals.pageViews.toLocaleString()}</p>
+              </Card>
+              <Card padding="md" className="border-l-4 border-l-warning space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-text-muted uppercase tracking-wider">Avg Engagement</span>
+                  <Clock size={18} className="text-warning" />
+                </div>
+                <p className="text-2xl font-bold text-text-main">
+                  {Math.floor(ga4Data.totals.avgEngagementSec / 60)}m {ga4Data.totals.avgEngagementSec % 60}s
+                </p>
+              </Card>
+            </div>
+
+            {/* Daily sessions trend — plain CSS bars, no charting lib in this project */}
+            {ga4Data.dailyTrend.length > 0 && (
+              <div>
+                <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3">
+                  Sessions, last 30 days
+                </h3>
+                <div className="flex items-end gap-0.5 h-24 bg-surface/30 rounded-lg p-2">
+                  {ga4Data.dailyTrend.map((day) => {
+                    const max = Math.max(...ga4Data.dailyTrend.map((d) => d.sessions), 1);
+                    const heightPct = Math.max((day.sessions / max) * 100, 2);
+                    return (
+                      <div
+                        key={day.date}
+                        title={`${day.date}: ${day.sessions} sessions`}
+                        className="flex-1 bg-primary/60 hover:bg-primary rounded-sm transition-colors"
+                        style={{ height: `${heightPct}%` }}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Top Pages */}
+              <div>
+                <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3">Top Pages</h3>
+                <div className="space-y-1.5">
+                  {ga4Data.topPages.length === 0 ? (
+                    <p className="text-xs text-text-muted">No page view data yet.</p>
+                  ) : (
+                    ga4Data.topPages.map((p) => (
+                      <div key={p.path} className="flex items-center justify-between text-xs gap-3">
+                        <span className="font-mono text-text-main truncate">{p.path}</span>
+                        <span className="text-text-muted font-semibold shrink-0">{p.views.toLocaleString()}</span>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Top Events — this is where our custom gtag events show up */}
+              <div>
+                <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3">Top Events</h3>
+                <div className="space-y-1.5">
+                  {ga4Data.topEvents.length === 0 ? (
+                    <p className="text-xs text-text-muted">No event data yet.</p>
+                  ) : (
+                    ga4Data.topEvents.map((e) => (
+                      <div key={e.name} className="flex items-center justify-between text-xs gap-3">
+                        <span className="font-mono text-text-main truncate">{e.name}</span>
+                        <span className="text-text-muted font-semibold shrink-0">{e.count.toLocaleString()}</span>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Device breakdown */}
+            {ga4Data.devices.length > 0 && (
+              <div>
+                <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                  <Smartphone size={13} /> Device Breakdown
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {ga4Data.devices.map((d) => {
+                    const total = ga4Data.devices.reduce((acc, x) => acc + x.sessions, 0) || 1;
+                    const pct = Math.round((d.sessions / total) * 100);
+                    return (
+                      <Badge key={d.category} tone="neutral" size="sm">
+                        {d.category}: {pct}%
+                      </Badge>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        ) : null}
+      </Card>
 
       {/* Daily User Signups & Email Audit Section */}
       <Card padding="lg" className="space-y-6">

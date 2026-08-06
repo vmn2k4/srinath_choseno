@@ -12,6 +12,7 @@ import {
 } from "@/lib/services/news";
 import NewsArticleBody from "@/components/features/NewsArticleBody";
 import NewsComments from "@/components/features/NewsComments";
+import NewsArticleViewTracker from "@/components/analytics/NewsArticleViewTracker";
 import { SITE_URL, SITE_NAME } from "@/lib/constants/site";
 
 interface ArticlePageProps {
@@ -136,6 +137,8 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
+
+      <NewsArticleViewTracker slug={slug} category={article.category} />
 
       <div className="w-full max-w-none pb-20 px-4 lg:px-8 space-y-6">
         {/* Back */}

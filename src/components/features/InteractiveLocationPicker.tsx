@@ -10,6 +10,7 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import { Card, Button, Input } from "@/components/primitives";
+import { trackSearch } from "@/lib/analytics/events";
 
 async function geocodeAddressFree(query: string) {
   if (!query || query.trim().length < 3) return [];
@@ -84,6 +85,7 @@ export default function InteractiveLocationPicker({
       const results = await geocodeAddressFree(addressQuery);
       setAddressSuggestions(results);
       setSearchingAddress(false);
+      trackSearch(addressQuery.trim());
     }, 450);
 
     return () => clearTimeout(timer);

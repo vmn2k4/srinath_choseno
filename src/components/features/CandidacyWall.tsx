@@ -56,6 +56,7 @@ import {
   EmptyState,
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
+import { trackPostCreated, trackPostEngagement, trackCommentAdded } from "@/lib/analytics/events";
 
 interface CandidateRecord {
   id: string;
@@ -360,6 +361,13 @@ export default function CandidacyWall({
 
       if (error) throw error;
 
+      trackPostCreated({
+        hasImage: Boolean(finalImageUrl),
+        hasVideo: false,
+        hasLink: Boolean(linkMetadata),
+        contentLength: newPostContent.trim().length,
+      });
+
       setNewPostContent("");
       setExtractedUrl(null);
       setLinkMetadata(null);
@@ -382,6 +390,7 @@ export default function CandidacyWall({
       const { error } = await createComment(supabase, postId, content.trim());
       if (error) throw error;
 
+      trackCommentAdded(postId, content.trim().length);
       setCommentInputs({ ...commentInputs, [postId]: "" });
       await loadPosts();
     } catch (err) {
@@ -394,7 +403,10 @@ export default function CandidacyWall({
   const handleVote = async (postId: string, voteType: 1 | -1) => {
     if (!user) return;
     const { error } = await voteOnPost(supabase, postId, voteType);
-    if (!error) await loadPosts();
+    if (!error) {
+      trackPostEngagement(voteType === 1 ? "upvote" : "downvote", postId);
+      await loadPosts();
+    }
   };
 
   const handleReport = async (targetType: ReportTargetType, targetId: string, abuseType: string) => {

@@ -59,6 +59,7 @@ import {
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import { getPlatformRuleSettings } from "@/lib/services/settings";
 import { createClient } from "@/lib/supabase/client";
+import { trackPostCreated, trackPostEngagement, trackCommentAdded } from "@/lib/analytics/events";
 
 interface MembershipShape {
   id: number;
@@ -369,6 +370,13 @@ export default function FeedPageClient() {
 
       if (error) throw error;
 
+      trackPostCreated({
+        hasImage: Boolean(finalImageUrl),
+        hasVideo: Boolean(uploadedVideoUrl),
+        hasLink: Boolean(linkMetadata),
+        contentLength: newPostContent.trim().length,
+      });
+
       setNewPostContent("");
       setExtractedUrl(null);
       setLinkMetadata(null);
@@ -390,7 +398,10 @@ export default function FeedPageClient() {
   const handleVote = async (postId: string, voteType: 1 | -1) => {
     if (!user) return;
     const { error } = await voteOnPost(supabase, postId, voteType);
-    if (!error) await loadFeedPosts();
+    if (!error) {
+      trackPostEngagement(voteType === 1 ? "upvote" : "downvote", postId);
+      await loadFeedPosts();
+    }
   };
 
   const handleCreateComment = async (postId: string) => {
@@ -402,6 +413,7 @@ export default function FeedPageClient() {
       const { error } = await createComment(supabase, postId, content.trim());
       if (error) throw error;
 
+      trackCommentAdded(postId, content.trim().length);
       setCommentInputs({ ...commentInputs, [postId]: "" });
       await loadFeedPosts();
     } catch (err) {

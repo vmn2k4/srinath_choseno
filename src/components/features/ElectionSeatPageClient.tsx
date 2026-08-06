@@ -45,6 +45,7 @@ import {
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { buildSeatSlug, buildCandidateSlug, extractIdFromSlug } from "@/lib/utils/slugs";
+import { trackElectionViewed } from "@/lib/analytics/events";
 
 interface ElectionSeatPageClientProps {
   seatId: string;
@@ -202,6 +203,13 @@ export default function ElectionSeatPageClient({
   useEffect(() => {
     if (!authLoading && seatId) Promise.resolve().then(() => fetchAll());
   }, [user?.id, authLoading, seatId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const trackedSeatViewRef = React.useRef<string | null>(null);
+  useEffect(() => {
+    if (!seat || trackedSeatViewRef.current === seatId) return;
+    trackedSeatViewRef.current = seatId;
+    trackElectionViewed({ seatId, roleTitle: seat.role_title, electionName: seat.elections?.name });
+  }, [seat, seatId]);
 
   const startApplying = async () => {
     setApplying(true);

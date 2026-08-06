@@ -7,6 +7,7 @@ import { LogOut, User as UserIcon, Palette, Check, Menu, X, Newspaper, Rss, Vote
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme, THEMES, ThemeKey } from "@/contexts/ThemeContext";
 import ChosenoLogo from "@/components/primitives/ChosenoLogo";
+import { trackLogout } from "@/lib/analytics/events";
 
 export default function NavBar() {
   const { session, profile, signOut } = useAuth();
@@ -23,6 +24,7 @@ export default function NavBar() {
   }, [pathname]);
 
   const handleSignOut = async () => {
+    trackLogout();
     await signOut();
     setMobileMenuOpen(false);
     router.push("/auth");

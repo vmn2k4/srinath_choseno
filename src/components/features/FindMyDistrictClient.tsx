@@ -8,6 +8,7 @@ import { findBoundariesByPoint } from "@/lib/services/boundaries";
 import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { Card, Spinner } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
+import { trackFindDistrictCompleted } from "@/lib/analytics/events";
 
 interface MatchedBoundary {
   id: number;
@@ -31,7 +32,9 @@ export default function FindMyDistrictClient() {
       setError("Couldn't look up boundaries for that location. Please try again.");
       return;
     }
-    setBoundaries((data as MatchedBoundary[] | null) || []);
+    const matched = (data as MatchedBoundary[] | null) || [];
+    trackFindDistrictCompleted({ found: matched.length > 0, boundaryCount: matched.length });
+    setBoundaries(matched);
   };
 
   return (

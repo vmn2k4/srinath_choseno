@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import NavBar from "@/components/NavBar";
 import DebugUserSwitcher from "@/components/dev/DebugUserSwitcher";
 import FakeProductionToggle from "@/components/dev/FakeProductionToggle";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
 import { SITE_URL } from "@/lib/constants/site";
 
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             )}
           </AuthProvider>
         </ThemeProvider>
+        <GoogleAnalytics />
       </body>
     </html>
   );

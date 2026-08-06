@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { signUp, signInWithPassword, signInWithGoogle } from "@/lib/services/auth";
 import { Card, Input, Button, Alert } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
+import { trackSignUp, trackLogin } from "@/lib/analytics/events";
 import { Mail } from "lucide-react";
 
 export default function AuthPageClient({ initialRole }: { initialRole?: "citizen" | "politician" }) {
@@ -36,6 +37,7 @@ export default function AuthPageClient({ initialRole }: { initialRole?: "citizen
       if (isSignUp) {
         const { data, error } = await signUp(supabase, email, password);
         if (error) throw error;
+        trackSignUp("email");
         if (data?.session) {
           router.push(initialRole ? `/onboarding?role=${initialRole}` : "/onboarding");
           router.refresh();
@@ -49,6 +51,7 @@ export default function AuthPageClient({ initialRole }: { initialRole?: "citizen
         const { data, error } = await signInWithPassword(supabase, email, password);
         if (error) throw error;
         if (data?.session) {
+          trackLogin("email");
           router.push("/feed");
           router.refresh();
         }
@@ -68,6 +71,10 @@ export default function AuthPageClient({ initialRole }: { initialRole?: "citizen
     setLoading(true);
     setMessage({ type: "", text: "" });
     try {
+      // Fires here, not after redirect: the OAuth handoff leaves the page,
+      // so this is the last point client-side JS runs in the flow.
+      if (isSignUp) trackSignUp("google");
+      else trackLogin("google");
       await signInWithGoogle(supabase);
     } catch (err: unknown) {
       const errorObj = err as { error_description?: string; message?: string };
@@ -88,6 +95,7 @@ export default function AuthPageClient({ initialRole }: { initialRole?: "citizen
       const { data, error } = await signInWithPassword(supabase, demoEmail, "password123");
       if (error) throw error;
       if (data?.session) {
+        trackLogin("demo");
         router.push("/feed");
         router.refresh();
       }
