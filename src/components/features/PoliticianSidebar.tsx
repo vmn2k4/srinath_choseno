@@ -80,9 +80,12 @@ export default function PoliticianSidebar({
       const filterType = selectedPill?.filterType || (activeTab === "all" ? "all" : activeTab === "international" ? "international" : "all");
       const shapeId = selectedPill?.shapeId;
 
+      const userShapeIds = memberships.map((m) => m.id);
+
       const { data, error } = await getInterestedPoliticians(supabase, {
         filterType,
         shapeId,
+        shapeIds: userShapeIds,
         country: profile?.country,
       });
 

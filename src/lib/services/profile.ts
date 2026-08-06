@@ -67,39 +67,49 @@ export async function getInterestedPoliticians(
     filterType?: "all" | "shape" | "country" | "international";
     country?: string | null;
   }
+export async function getInterestedPoliticians(
+  supabase: Client,
+  options?: {
+    filterType?: string;
+    shapeId?: number;
+    shapeIds?: number[];
+    country?: string | null;
+  }
 ) {
-  const { shapeId, filterType = "all", country } = options || {};
+  const { shapeId, shapeIds = [], filterType = "all", country } = options || {};
 
   if (filterType === "international") {
     return { data: [], error: null };
   }
 
-  // 1. Fetch shape name if filtering by specific shapeId
-  let shapeName: string | null = null;
-  if (filterType === "shape" && shapeId) {
+  // Determine active target shape IDs
+  const targetShapeIds: number[] = shapeId
+    ? [shapeId]
+    : shapeIds && shapeIds.length > 0
+    ? shapeIds
+    : [];
+
+  // 1. Fetch shape names for target shape IDs
+  let targetShapeNames: string[] = [];
+  if (targetShapeIds.length > 0) {
     const { data: shapeData } = await supabase
       .from("map_shapes")
       .select("name")
-      .eq("id", shapeId)
-      .single();
-    if (shapeData) shapeName = shapeData.name;
+      .in("id", targetShapeIds);
+    if (shapeData) {
+      targetShapeNames = shapeData.map((s) => s.name.toLowerCase());
+    }
   }
 
-  // 2. Two distinct "belongs to this shape" signals for a politician, kept
-  // separate so one never mislabels the other:
-  //   - residentPoliticianIds: lives in this exact shape (home-address
-  //     membership, same as any citizen) — shown as a generic "Politician"
-  //     for the area, regardless of what office (if any) they're running for.
-  //   - electionCandidateIds: formally running for a seat AT this shape via
-  //     Election Mode — can be anywhere, has nothing to do with residency.
+  // 2. Fetch resident politicians and election candidates for target shapes
   let residentPoliticianIds = new Set<string>();
   let electionCandidateIds = new Set<string>();
 
-  if (filterType === "shape" && shapeId) {
+  if (targetShapeIds.length > 0) {
     let residentsQuery = supabase
       .from("user_boundary_memberships")
       .select("profile_id, profiles!inner(role)")
-      .eq("map_shape_id", shapeId)
+      .in("map_shape_id", targetShapeIds)
       .eq("profiles.role", "politician");
     if (!isDevEnvironment()) residentsQuery = residentsQuery.eq("profiles.is_test", false);
     const { data: residents } = await residentsQuery;
@@ -108,7 +118,7 @@ export async function getInterestedPoliticians(
     const { data: seatCandidates } = await supabase
       .from("election_seats")
       .select("id, election_candidates(politician_id)")
-      .eq("map_shape_id", shapeId);
+      .in("map_shape_id", targetShapeIds);
 
     (seatCandidates || []).forEach((seat: any) => {
       (seat.election_candidates || []).forEach((cand: any) => {
@@ -136,9 +146,7 @@ export async function getInterestedPoliticians(
   if (!isDevEnvironment()) polProfilesQuery = polProfilesQuery.eq("profiles.is_test", false);
   const { data: polProfiles } = await polProfilesQuery;
 
-  // 4. Fetch profiles where role = 'politician' (profiles has no avatar_url
-  // column — that only lives on politician_profiles, which is joined in
-  // separately above).
+  // 4. Fetch profiles where role = 'politician'
   let userQuery = supabase
     .from("profiles")
     .select("id, current_ghost_id, full_name, country, role")
@@ -170,15 +178,11 @@ export async function getInterestedPoliticians(
     }
   };
 
-  // Add rawPoliticians first as generic "belongs to this boundary" entries —
-  // residency (or a formal election candidacy elsewhere) only ever earns a
-  // generic "Politician" placeholder here, never someone else's specific
-  // candidacy details. Processed before polProfiles so a real candidacy
-  // record (added below) can overwrite this placeholder with specifics.
+  // Add rawPoliticians first
   (rawPoliticians || []).forEach((user: any) => {
     if (!user.current_ghost_id) return;
 
-    if (filterType === "shape" && shapeId) {
+    if (targetShapeIds.length > 0) {
       const isResident = residentPoliticianIds.has(user.id);
       const isElectionCandidate = electionCandidateIds.has(user.id);
       if (!isResident && !isElectionCandidate) return;
@@ -187,33 +191,32 @@ export async function getInterestedPoliticians(
     addOrMerge(user.id, user.current_ghost_id, {
       id: user.id,
       political_target_role: "Politician",
-      target_boundary_name: shapeName || user.country || "",
+      target_boundary_name: targetShapeNames.length > 0 ? targetShapeNames.join(", ") : user.country || "",
       target_boundary_type: "Representative",
       avatar_url: null,
       profiles: user,
     });
   });
 
-  // Add polProfiles second — an explicit candidacy declaration for this exact
-  // shape (by id, by name, or a formal election-mode candidacy), which can
-  // target any boundary regardless of where the politician actually lives.
-  // Never matched by residency, so it can't attach an unrelated boundary's
-  // candidacy card the way the old logic did.
+  // Add polProfiles second
   (polProfiles || []).forEach((pol: any) => {
     const prof = pol.profiles;
     if (!prof || !prof.current_ghost_id) return;
 
-    if (filterType === "shape" && shapeId) {
-      const matchesId = pol.target_boundary_id === shapeId || String(pol.target_boundary_id) === String(shapeId);
+    if (targetShapeIds.length > 0) {
+      const matchesId = targetShapeIds.some(
+        (tsId) => pol.target_boundary_id === tsId || String(pol.target_boundary_id) === String(tsId)
+      );
       const matchesName =
-        !!shapeName &&
+        targetShapeNames.length > 0 &&
         !!pol.target_boundary_name &&
         pol.target_boundary_name
           .split(",")
-          .some((segment: string) => segment.trim().toLowerCase() === shapeName!.toLowerCase());
+          .some((segment: string) => targetShapeNames.includes(segment.trim().toLowerCase()));
       const matchesElection = electionCandidateIds.has(prof.id);
+      const matchesResident = residentPoliticianIds.has(prof.id);
 
-      if (!matchesId && !matchesName && !matchesElection) return;
+      if (!matchesId && !matchesName && !matchesElection && !matchesResident) return;
     } else if (filterType === "country" && country) {
       if (pol.target_boundary_type !== "Country" && prof.country !== country) return;
     }
@@ -221,7 +224,7 @@ export async function getInterestedPoliticians(
     addOrMerge(prof.id, prof.current_ghost_id, {
       id: pol.id,
       political_target_role: pol.political_target_role || "Candidate",
-      target_boundary_name: pol.target_boundary_name || shapeName || prof.country || "",
+      target_boundary_name: pol.target_boundary_name || prof.country || "",
       target_boundary_type: pol.target_boundary_type || "Local",
       avatar_url: pol.avatar_url,
       profiles: prof,
