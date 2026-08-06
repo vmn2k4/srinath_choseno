@@ -249,21 +249,19 @@ export async function getMyCandidacies(supabase: Client, profileId: string) {
 
 export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]) {
   const realSeatIds = seatIds.map(extractIdFromSlug).filter((id) => id && id.length === 36);
+  // profiles joined via !inner so a test-flagged candidate's row drops out
+  // entirely in production, instead of surviving with a null-embedded
+  // profile (the default to-one embed behavior when an .eq() filter on the
+  // embed doesn't match).
+  const columns =
+    "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(full_name, current_ghost_id, politician_profiles(avatar_url))";
 
-  if (realSeatIds.length > 0) {
-    return supabase
-      .from("election_candidates")
-      .select(
-        "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id, politician_profiles(avatar_url))"
-      )
-      .in("seat_id", realSeatIds);
-  }
-
-  return supabase
-    .from("election_candidates")
-    .select(
-      "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey(full_name, current_ghost_id, politician_profiles(avatar_url))"
-    );
+  let query =
+    realSeatIds.length > 0
+      ? supabase.from("election_candidates").select(columns).in("seat_id", realSeatIds)
+      : supabase.from("election_candidates").select(columns);
+  if (!isDevEnvironment()) query = query.eq("profiles.is_test", false);
+  return query;
 }
 
 export async function getCandidateById(supabase: Client, candidateId: string) {
@@ -300,32 +298,28 @@ export async function getCandidateById(supabase: Client, candidateId: string) {
 }
 
 export async function getPublicCandidateById(supabase: Client, candidateId: string) {
+  // profiles joined via !inner so a test-flagged candidate drops out
+  // entirely in production rather than surviving with a null-embedded
+  // profile (the default to-one embed behavior when an .eq() filter on the
+  // embed doesn't match).
+  const columns = `
+    id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, seat_id,
+    election_seats ( role_title, map_shapes ( name, boundary_type ), elections ( name, status ) ),
+    profiles!election_candidates_politician_id_fkey!inner ( full_name, current_ghost_id )
+  `;
+
   const realCandidateId = extractIdFromSlug(candidateId);
   if (realCandidateId && realCandidateId.length === 36) {
-    const res = await supabase
-      .from("election_candidates")
-      .select(
-        `
-        id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, seat_id,
-        election_seats ( role_title, map_shapes ( name, boundary_type ), elections ( name, status ) ),
-        profiles!election_candidates_politician_id_fkey ( full_name, current_ghost_id )
-      `
-      )
-      .eq("id", realCandidateId)
-      .maybeSingle();
+    let query = supabase.from("election_candidates").select(columns).eq("id", realCandidateId);
+    if (!isDevEnvironment()) query = query.eq("profiles.is_test", false);
+    const res = await query.maybeSingle();
 
     if (res.data) return res;
   }
 
-  const { data: cands } = await supabase
-    .from("election_candidates")
-    .select(
-      `
-      id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, seat_id,
-      election_seats ( role_title, map_shapes ( name, boundary_type ), elections ( name, status ) ),
-      profiles!election_candidates_politician_id_fkey ( full_name, current_ghost_id )
-    `
-    );
+  let listQuery = supabase.from("election_candidates").select(columns);
+  if (!isDevEnvironment()) listQuery = listQuery.eq("profiles.is_test", false);
+  const { data: cands } = await listQuery;
 
   const match = (cands || []).find((c) => {
     const candSlug = buildCandidateSlug(c as any);

@@ -5,6 +5,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import NavBar from "@/components/NavBar";
 import DebugUserSwitcher from "@/components/dev/DebugUserSwitcher";
+import FakeProductionToggle from "@/components/dev/FakeProductionToggle";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
@@ -43,7 +44,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <NavBar />
               <main className="flex-1 w-full pt-6 lg:pt-8">{children}</main>
             </div>
-            {process.env.NODE_ENV !== "production" && <DebugUserSwitcher />}
+            {process.env.NODE_ENV !== "production" && (
+              <>
+                <DebugUserSwitcher />
+                <FakeProductionToggle />
+              </>
+            )}
           </AuthProvider>
         </ThemeProvider>
       </body>

@@ -167,6 +167,11 @@ export default function PoliticianWallClient({
             });
           });
         }
+      } else if (isMounted) {
+        // Owner came back hidden (e.g. is_test filtering) on a re-fetch after
+        // initialWallOwner was already set from SSR -- clear the stale data
+        // instead of leaving the previous (now-hidden) owner on screen.
+        setWallOwner(null);
       }
 
       const { data: postRows, error: postErr } = await getWallPosts(supabase, ghostId);

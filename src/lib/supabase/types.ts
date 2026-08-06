@@ -1417,6 +1417,7 @@ export type Database = {
           designation: string | null
           full_name: string | null
           id: string
+          is_test: boolean
           last_burned_at: string | null
           onboarding_completed: boolean | null
           role: string | null
@@ -1432,6 +1433,7 @@ export type Database = {
           designation?: string | null
           full_name?: string | null
           id: string
+          is_test?: boolean
           last_burned_at?: string | null
           onboarding_completed?: boolean | null
           role?: string | null
@@ -1447,6 +1449,7 @@ export type Database = {
           designation?: string | null
           full_name?: string | null
           id?: string
+          is_test?: boolean
           last_burned_at?: string | null
           onboarding_completed?: boolean | null
           role?: string | null

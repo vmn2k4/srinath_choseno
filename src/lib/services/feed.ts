@@ -78,11 +78,13 @@ export async function hydratePoliticianAuthors(
   const ghostIds = [...new Set(posts.map((p) => p.ghost_id))];
   if (ghostIds.length === 0) return new Map();
 
-  const { data } = await supabase
+  let query = supabase
     .from("profiles")
     .select("current_ghost_id, full_name")
     .eq("role", "politician")
     .in("current_ghost_id", ghostIds);
+  if (!isDevEnvironment()) query = query.eq("is_test", false);
+  const { data } = await query;
 
   const map = new Map<string, { fullName: string; wallHref: string }>();
   for (const row of data || []) {

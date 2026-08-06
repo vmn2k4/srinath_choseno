@@ -6,7 +6,7 @@ type Client = SupabaseClient<Database>;
 
 // profiles — wall owner lookup by ghost_id, with nested politician_profiles.
 export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
-  return supabase
+  let query = supabase
     .from("profiles")
     .select(
       `
@@ -22,8 +22,9 @@ export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
        )
     `
     )
-    .eq("current_ghost_id", ghostId)
-    .single();
+    .eq("current_ghost_id", ghostId);
+  if (!isDevEnvironment()) query = query.eq("is_test", false);
+  return query.single();
 }
 
 // ── politician_supporters ────────────────────────────────────────────────
@@ -93,12 +94,16 @@ export function unsubscribeFromSupportChanges(
 }
 
 export async function getSupportersList(supabase: Client, politicianId: string) {
+  // profiles joined via !inner so a test-flagged supporter's row drops out
+  // of the result entirely in production, instead of surviving with a
+  // null-embedded profile (the default to-one embed behavior when an
+  // .eq() filter on the embed doesn't match).
   let query = supabase
     .from("politician_supporters")
     .select(
       `
       created_at,
-      profiles!politician_supporters_supporter_id_fkey (
+      profiles!politician_supporters_supporter_id_fkey!inner (
         full_name,
         current_ghost_id
       )
@@ -106,7 +111,7 @@ export async function getSupportersList(supabase: Client, politicianId: string) 
     )
     .eq("politician_id", politicianId)
     .order("created_at", { ascending: false });
-  if (!isDevEnvironment()) query = query.eq("is_test", false);
+  if (!isDevEnvironment()) query = query.eq("is_test", false).eq("profiles.is_test", false);
   return query;
 }
 

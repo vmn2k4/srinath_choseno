@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
+import { isDevEnvironment } from "@/lib/utils/environment";
 
 type Client = SupabaseClient<Database>;
 
@@ -95,11 +96,13 @@ export async function getInterestedPoliticians(
   let electionCandidateIds = new Set<string>();
 
   if (filterType === "shape" && shapeId) {
-    const { data: residents } = await supabase
+    let residentsQuery = supabase
       .from("user_boundary_memberships")
       .select("profile_id, profiles!inner(role)")
       .eq("map_shape_id", shapeId)
       .eq("profiles.role", "politician");
+    if (!isDevEnvironment()) residentsQuery = residentsQuery.eq("profiles.is_test", false);
+    const { data: residents } = await residentsQuery;
     (residents || []).forEach((r: any) => residentPoliticianIds.add(r.profile_id));
 
     const { data: seatCandidates } = await supabase
@@ -115,7 +118,7 @@ export async function getInterestedPoliticians(
   }
 
   // 3. Fetch politician_profiles joined with profiles
-  const { data: polProfiles } = await supabase.from("politician_profiles").select(`
+  let polProfilesQuery = supabase.from("politician_profiles").select(`
     id,
     target_boundary_id,
     political_target_role,
@@ -130,6 +133,8 @@ export async function getInterestedPoliticians(
       role
     )
   `);
+  if (!isDevEnvironment()) polProfilesQuery = polProfilesQuery.eq("profiles.is_test", false);
+  const { data: polProfiles } = await polProfilesQuery;
 
   // 4. Fetch profiles where role = 'politician' (profiles has no avatar_url
   // column — that only lives on politician_profiles, which is joined in
@@ -142,6 +147,7 @@ export async function getInterestedPoliticians(
   if (filterType === "country" && country) {
     userQuery = userQuery.eq("country", country);
   }
+  if (!isDevEnvironment()) userQuery = userQuery.eq("is_test", false);
 
   const { data: rawPoliticians } = await userQuery;
 
