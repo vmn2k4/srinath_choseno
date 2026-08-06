@@ -271,10 +271,6 @@ export default function FeedPageClient() {
       if (matchingMembershipIds.length > 0) {
         queries.push(getMembershipScopedPosts(supabase, matchingMembershipIds));
       }
-      if (profile.country) {
-        queries.push(getCountryScopedPosts(supabase, profile.country));
-      }
-      queries.push(getInternationalScopedPosts(supabase));
     } else if (selectedPill.filterType === "shape" && selectedPill.shapeId) {
       queries.push(getMembershipScopedPosts(supabase, [selectedPill.shapeId]));
     } else if (selectedPill.filterType === "country" && profile.country) {
