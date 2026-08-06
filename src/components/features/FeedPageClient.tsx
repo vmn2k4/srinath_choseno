@@ -230,11 +230,21 @@ export default function FeedPageClient() {
       },
     ];
 
-    memberships
+    const boundaryTypeRank = (type?: string): number => {
+      if (!type) return 99;
+      const t = type.toLowerCase();
+      if (t.includes("federal") || t.includes("congressional") || t.includes("commons")) return 1;
+      if (t.includes("provincial") || t.includes("state") || t.includes("territorial")) return 2;
+      if (t.includes("municipal") || t.includes("city") || t.includes("county") || t.includes("town")) return 3;
+      return 4;
+    };
+
+    [...memberships]
       .filter((m) => {
         const bType = (m.boundary_type || "").toLowerCase();
         return !bType.includes("polling");
       })
+      .sort((a, b) => boundaryTypeRank(a.boundary_type) - boundaryTypeRank(b.boundary_type))
       .forEach((m) => {
         pills.push({
           key: `shape-${m.id}`,
