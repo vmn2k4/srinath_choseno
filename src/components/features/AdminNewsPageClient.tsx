@@ -597,7 +597,7 @@ export default function AdminNewsPageClient() {
     }
   }
 
-  // ── Publish ───────────────────────────────────────────────────────────────
+  // ── Publish/Unpublish ─────────────────────────────────────────────────────
 
   async function handleQuickPublish(id: string) {
     const article = articles.find((a) => a.id === id);
@@ -611,6 +611,20 @@ export default function AdminNewsPageClient() {
       setStatusMsg({ type: "error", msg: error.message });
     } else {
       setStatusMsg({ type: "success", msg: `"${article.headline}" published!` });
+      await loadArticles();
+    }
+  }
+
+  async function handleQuickUnpublish(id: string) {
+    const article = articles.find((a) => a.id === id);
+    if (!article) return;
+    const { error } = await updateNewsArticle(supabase, id, {
+      status: "draft",
+    });
+    if (error) {
+      setStatusMsg({ type: "error", msg: error.message });
+    } else {
+      setStatusMsg({ type: "success", msg: `"${article.headline}" unpublished.` });
       await loadArticles();
     }
   }
@@ -710,6 +724,17 @@ export default function AdminNewsPageClient() {
                       title="Publish this article"
                     >
                       <Zap size={13} />
+                    </Button>
+                  )}
+                  {a.status === "published" && (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-amber hover:text-amber-light"
+                      onClick={() => handleQuickUnpublish(a.id)}
+                      title="Unpublish this article"
+                    >
+                      <Eye size={13} className="line-through" />
                     </Button>
                   )}
                   <Button size="sm" variant="ghost" as="a" href={`/news/${a.slug}`} target="_blank" rel="noopener noreferrer">
