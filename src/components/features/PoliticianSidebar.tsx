@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Users, ChevronRight, Landmark, ArrowRight, UserCheck } from "lucide-react";
 import { Card, Spinner, EmptyState, Avatar, Badge } from "@/components/primitives";
 import { getInterestedPoliticians } from "@/lib/services/profile";
-import { getOfficeHoldersForShapes } from "@/lib/services/elections";
+import { getOfficeHoldersForShapes, getFeaturedOfficeHolders } from "@/lib/services/elections";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { createClient } from "@/lib/supabase/client";
@@ -100,11 +100,19 @@ export default function PoliticianSidebar({
 
       if (targetShapeIds.length > 0) {
         const { data, error } = await getOfficeHoldersForShapes(supabase, targetShapeIds);
-        if (!error && data && isMounted) {
+        if (!error && data && data.length > 0 && isMounted) {
           setOfficeHolders(data as unknown as OfficeHolderItem[]);
+        } else if (isMounted) {
+          const { data: featuredData } = await getFeaturedOfficeHolders(supabase, profile?.country);
+          if (featuredData && isMounted) {
+            setOfficeHolders(featuredData as unknown as OfficeHolderItem[]);
+          }
         }
       } else if (isMounted) {
-        setOfficeHolders([]);
+        const { data: featuredData } = await getFeaturedOfficeHolders(supabase, profile?.country);
+        if (featuredData && isMounted) {
+          setOfficeHolders(featuredData as unknown as OfficeHolderItem[]);
+        }
       }
       if (isMounted) setLoadingHolders(false);
     }

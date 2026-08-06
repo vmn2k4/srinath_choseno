@@ -792,16 +792,14 @@ export default function FeedPageClient() {
 
         {/* Right Sidebar Column — stacks below the feed on mobile/tablet,
             becomes a true sidebar at lg */}
-        {!isAdmin && (
-          <div className="w-full lg:w-80 shrink-0">
-            <PoliticianSidebar
-              profile={profile}
-              activeTab={masterFilter}
-              selectedPill={filterPills.find((p) => p.key === masterFilter) || filterPills[0]}
-              memberships={memberships}
-            />
-          </div>
-        )}
+        <div className="w-full lg:w-80 shrink-0">
+          <PoliticianSidebar
+            profile={profile}
+            activeTab={masterFilter}
+            selectedPill={filterPills.find((p) => p.key === masterFilter) || filterPills[0]}
+            memberships={memberships}
+          />
+        </div>
       </div>
 
       {activeStoryId && (

@@ -83,6 +83,31 @@ export async function getOfficeHoldersForShapes(
     .in("map_shape_id", ids);
 }
 
+export async function getFeaturedOfficeHolders(
+  supabase: Client,
+  country?: string | null
+) {
+  let query = supabase
+    .from("office_holders")
+    .select(
+      `id, map_shape_id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
+       contact_email, contact_phone, linked_profile_id,
+       map_shapes!inner(id, name, boundary_type, country),
+       election_role_types(role_title, role_key),
+       political_parties(name),
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id)`
+    )
+    .not("photo_url", "is", null)
+    .order("updated_at", { ascending: false })
+    .limit(10);
+
+  if (country) {
+    query = query.eq("map_shapes.country", country);
+  }
+
+  return query;
+}
+
 export async function getOfficeHolderByRole(
   supabase: Client,
   mapShapeId: number | string,
