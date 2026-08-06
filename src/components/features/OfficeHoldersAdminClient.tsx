@@ -211,7 +211,7 @@ export default function OfficeHoldersAdminClient() {
       setStatus("Error: " + error.message);
       return;
     }
-    setHolders((prev) => ({ ...prev, [role.id]: data as Holder }));
+    setHolders((prev) => ({ ...prev, [role.id]: (data as unknown) as Holder }));
     setEditingRoleId(null);
   };
 

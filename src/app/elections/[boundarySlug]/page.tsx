@@ -77,7 +77,7 @@ export default async function BoundaryDirectoryPage({ params }: PageProps) {
   });
 
   const seatByRoleTitle = new Map(seatRows.map((s) => [s.role_title, s]));
-  const officeHolderList = (holders || []) as Array<{
+  const officeHolderList = (holders as unknown) as Array<{
     id: string;
     election_role_type_id: string;
     full_name: string;
@@ -145,10 +145,10 @@ export default async function BoundaryDirectoryPage({ params }: PageProps) {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <Badge variant="primary" size="sm">
+              <Badge tone="primary" size="sm">
                 {shape.boundary_type}
               </Badge>
-              <Badge variant="outline" size="sm">
+              <Badge tone="neutral" size="sm">
                 {shape.country}
               </Badge>
             </div>
@@ -226,11 +226,11 @@ export default async function BoundaryDirectoryPage({ params }: PageProps) {
                       <div className="space-y-1">
                         <div className="flex items-center gap-2 flex-wrap">
                           <h3 className="text-xl font-extrabold text-text-main">{holder.full_name}</h3>
-                          <Badge variant="primary" size="sm" className="font-bold">
+                          <Badge tone="primary" size="sm" className="font-bold">
                             {roleTitle}
                           </Badge>
                           {partyName && (
-                            <Badge variant="secondary" size="sm">
+                            <Badge tone="neutral" size="sm">
                               {partyName}
                             </Badge>
                           )}

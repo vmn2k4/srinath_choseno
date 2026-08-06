@@ -55,7 +55,7 @@ export default function CurrentOfficeHolderCard({
       setLoading(true);
       const { data, error } = await getOfficeHoldersByShapeAndRole(supabase, mapShapeId, roleTitle);
       if (!error && data && Array.isArray(data) && data.length > 0) {
-        setHolder(data[0] as OfficeHolder);
+        setHolder((data[0] as unknown) as OfficeHolder);
       }
       setLoading(false);
     };

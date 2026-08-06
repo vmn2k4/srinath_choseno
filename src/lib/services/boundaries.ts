@@ -45,7 +45,7 @@ export async function listBoundaryTypes(
 ) {
   const cacheKey = `boundary_types:${country || "all"}:${adminOnly}:${isContainer}:${electionEligible}:${columns}:${orderBy}`;
   return fetchWithCache(cacheKey, () => {
-    let q = supabase.from("country_boundary_types").select(columns).order("country").order(orderBy);
+    let q = (supabase as any).from("country_boundary_types").select(columns).order("country").order(orderBy);
     if (country) q = q.eq("country", country);
     if (adminOnly !== undefined) q = q.eq("admin_only", adminOnly);
     if (isContainer !== undefined) q = q.eq("is_container", isContainer);
@@ -58,7 +58,7 @@ export async function listBoundaryTypes(
 export async function getBoundaryTypesForCountries(supabase: Client, countries: string[]) {
   const sortedKey = [...(countries || [])].sort().join(",");
   return fetchWithCache(`boundary_types_for:${sortedKey}`, () =>
-    supabase.from("country_boundary_types").select("country, type_name, rank").in("country", countries)
+    (supabase as any).from("country_boundary_types").select("country, type_name, rank").in("country", countries)
   );
 }
 
@@ -85,7 +85,7 @@ export async function createBoundaryType(
   }
 ) {
   invalidateCache("boundary_types");
-  return supabase.from("country_boundary_types").insert({
+  return (supabase as any).from("country_boundary_types").insert({
     country,
     type_name: typeName,
     rank,
@@ -121,7 +121,7 @@ export async function updateBoundaryType(
   if (termLimits !== undefined) fields.term_limits = termLimits;
   if (votingMethod !== undefined) fields.voting_method = votingMethod;
   if (description !== undefined) fields.description = description;
-  return supabase.from("country_boundary_types").update(fields).eq("id", String(typeId));
+  return (supabase as any).from("country_boundary_types").update(fields).eq("id", String(typeId));
 }
 
 // entity_types — per-shape classification, distinct from country_boundary_types
@@ -135,7 +135,7 @@ export async function updateBoundaryType(
 export async function listEntityTypes(supabase: Client, { country }: { country?: string } = {}) {
   const cacheKey = `entity_types:${country || "all"}`;
   return fetchWithCache(cacheKey, () => {
-    let q = supabase
+    let q = (supabase as any)
       .from("entity_types")
       .select("id, country, name, election_eligible, description")
       .order("country")
@@ -150,7 +150,7 @@ export async function createEntityType(
   { country, name, electionEligible = true, description }: { country: string; name: string; electionEligible?: boolean; description?: string | null }
 ) {
   invalidateCache("entity_types");
-  return supabase.from("entity_types").insert({ country, name, election_eligible: electionEligible, description: description ?? null });
+  return (supabase as any).from("entity_types").insert({ country, name, election_eligible: electionEligible, description: description ?? null });
 }
 
 export async function updateEntityType(
@@ -162,12 +162,12 @@ export async function updateEntityType(
   const fields: Record<string, unknown> = {};
   if (electionEligible !== undefined) fields.election_eligible = electionEligible;
   if (description !== undefined) fields.description = description;
-  return supabase.from("entity_types").update(fields).eq("id", typeId);
+  return (supabase as any).from("entity_types").update(fields).eq("id", typeId);
 }
 
 export async function deleteEntityType(supabase: Client, typeId: string) {
   invalidateCache("entity_types");
-  return supabase.from("entity_types").delete().eq("id", typeId);
+  return (supabase as any).from("entity_types").delete().eq("id", typeId);
 }
 
 // "Standard set" quick-seed: National / State-Province / Municipal at ranks 1-3.

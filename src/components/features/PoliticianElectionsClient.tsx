@@ -116,7 +116,7 @@ export default function PoliticianElectionsClient() {
         isContainer: true,
         columns: "type_name",
       }).then(({ data }) =>
-        setContainerTypes((data || []).map((t: any) => t.type_name))
+        setContainerTypes(((data as any[]) || []).map((t: any) => t.type_name))
       );
     });
   }, [browseCountry, supabase]);

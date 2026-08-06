@@ -350,10 +350,11 @@ export async function getPoliticianProfileFull(supabase: Client, userId: string)
 // resolving that link back to a display name) goes through this SECURITY
 // DEFINER function instead of a plain client-side select.
 export async function adminSearchProfiles(supabase: Client, query: string) {
-  return supabase.rpc("admin_search_profiles", { p_query: query });
+  return (supabase.rpc as any)("admin_search_profiles", { p_query: query });
 }
 
 export async function adminGetProfileById(supabase: Client, profileId: string) {
-  const { data, error } = await supabase.rpc("admin_search_profiles", { p_id: profileId });
-  return { data: data?.[0] || null, error };
+  const { data, error } = await (supabase.rpc as any)("admin_search_profiles", { p_id: profileId });
+  const row = Array.isArray(data) ? data[0] : data;
+  return { data: row || null, error };
 }

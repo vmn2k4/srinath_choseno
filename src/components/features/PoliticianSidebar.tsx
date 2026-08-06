@@ -188,7 +188,7 @@ export default function PoliticianSidebar({
                     <div className="flex items-center justify-between gap-1">
                       <h4 className="text-text-main text-xs font-semibold truncate">{holder.full_name}</h4>
                       {holder.linked_profile_id && (
-                        <Badge variant="primary" size="sm" className="text-[10px] px-1 py-0 shrink-0">
+                        <Badge tone="primary" size="sm" className="text-[10px] px-1 py-0 shrink-0">
                           On Choseno
                         </Badge>
                       )}

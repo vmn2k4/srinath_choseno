@@ -181,7 +181,7 @@ export default function FeedPageClient() {
         );
 
         const rankOf = (countryName: string, typeName: string) =>
-          types?.find(
+          (types as any[])?.find(
             (t: any) => t.country === countryName && t.type_name === typeName
           )?.rank ?? 999;
 

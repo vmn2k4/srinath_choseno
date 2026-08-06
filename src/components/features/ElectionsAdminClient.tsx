@@ -317,8 +317,8 @@ export default function ElectionsAdminClient() {
   useEffect(() => {
     Promise.resolve().then(() => fetchElections());
     getCountries(supabase).then(({ data }) => setCountries((data || []).map((c: any) => c.name)));
-    listBoundaryTypes(supabase).then(({ data }) => setBoundaryTypes(data || []));
-    listEntityTypes(supabase).then(({ data }) => setEntityTypes(data || []));
+    listBoundaryTypes(supabase).then(({ data }) => setBoundaryTypes((data as any[]) || []));
+    listEntityTypes(supabase).then(({ data }) => setEntityTypes((data as any[]) || []));
   }, [supabase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchSeats = async (electionId: string) => {

@@ -48,7 +48,7 @@ export default function RedistrictingPanel({
     listBoundaryTypes(supabase, {
       columns: "country, type_name",
       orderBy: "type_name",
-    }).then(({ data }) => setBoundaryTypes(data || []));
+    }).then(({ data }) => setBoundaryTypes((data as any[]) || []));
   }, [supabase]);
 
   useEffect(() => {
