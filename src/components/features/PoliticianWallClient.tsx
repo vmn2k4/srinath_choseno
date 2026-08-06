@@ -327,9 +327,11 @@ export default function PoliticianWallClient({
             <div>
               <h1 className="text-2xl font-bold text-text-main flex items-center gap-2">
                 {wallOwner?.full_name || "Politician Wall"}
-                <Badge tone="primary">
-                  {wallOwner?.politician_profiles?.political_target_role || "Politician"}
-                </Badge>
+                {wallOwner?.politician_profiles?.political_target_role && (
+                  <Badge tone="primary">
+                    Aspiring {wallOwner.politician_profiles.political_target_role}
+                  </Badge>
+                )}
               </h1>
               {wallOwner?.politician_profiles?.target_boundary_name && (
                 <p className="text-xs text-text-muted mt-0.5">
@@ -354,14 +356,24 @@ export default function PoliticianWallClient({
             </Button>
 
             {isOwner && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={loadSupportersDashboard}
-                className="gap-1 text-xs"
-              >
-                <Users size={14} /> Supporters Dashboard
-              </Button>
+              <>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => router.push("/profile/edit")}
+                  className="gap-1 text-xs"
+                >
+                  ✎ Edit Profile
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={loadSupportersDashboard}
+                  className="gap-1 text-xs"
+                >
+                  <Users size={14} /> Supporters Dashboard
+                </Button>
+              </>
             )}
 
             <Button

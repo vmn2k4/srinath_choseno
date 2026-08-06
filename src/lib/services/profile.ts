@@ -267,6 +267,7 @@ export async function upsertPoliticianProfile(
     hometown,
     bio,
     avatarUrl,
+    politicalTargetRole,
   }: {
     targetBoundaryId?: string | null;
     targetBoundaryName?: string | null;
@@ -275,6 +276,7 @@ export async function upsertPoliticianProfile(
     hometown?: string | null;
     bio?: string | null;
     avatarUrl?: string | null;
+    politicalTargetRole?: string | null;
   },
   fallbackBoundaryId?: string | null
 ) {
@@ -282,6 +284,7 @@ export async function upsertPoliticianProfile(
     id: userId,
     target_boundary_id: targetBoundaryId ?? fallbackBoundaryId,
     target_boundary_name: targetBoundaryName,
+    political_target_role: politicalTargetRole || null,
     political_party_id: politicalPartyId || null,
     education: education || null,
     hometown: hometown || null,
@@ -341,7 +344,7 @@ export async function getPoliticianProfile(supabase: Client, politicianId: strin
 export async function getPoliticianProfileFull(supabase: Client, userId: string) {
   return supabase
     .from("politician_profiles")
-    .select("target_boundary_id, target_boundary_name, political_party_id, political_parties(name), education, hometown, bio, avatar_url")
+    .select("target_boundary_id, target_boundary_name, political_target_role, political_party_id, political_parties(name), education, hometown, bio, avatar_url")
     .eq("id", userId)
     .maybeSingle();
 }

@@ -50,6 +50,7 @@ export default function EditProfileClient() {
   const [education, setEducation] = useState("");
   const [bio, setBio] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
+  const [politicalTargetRole, setPoliticalTargetRole] = useState("");
   const [targetBoundaryId, setTargetBoundaryId] = useState<string | null>(null);
   const [parties, setParties] = useState<any[]>([]);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
@@ -76,6 +77,7 @@ export default function EditProfileClient() {
         setEducation(pd?.education || "");
         setBio(pd?.bio || "");
         setAvatarUrl(pd?.avatar_url || "");
+        setPoliticalTargetRole(pd?.political_target_role || "");
         setTargetBoundaryId(pd?.target_boundary_id ?? null);
       }
 
@@ -166,6 +168,7 @@ export default function EditProfileClient() {
             hometown,
             bio,
             avatarUrl,
+            politicalTargetRole: politicalTargetRole || null,
           },
           targetBoundaryId
         );
@@ -301,6 +304,17 @@ export default function EditProfileClient() {
               </div>
             </div>
             {avatarError && <p className="text-danger text-xs mt-1">{avatarError}</p>}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-text-tertiary mb-2">
+              Aspiring Position <span className="text-text-dark text-xs">(e.g. City Councillor, Mayor)</span>
+            </label>
+            <Input
+              placeholder="e.g. City Councillor, Member of Parliament"
+              value={politicalTargetRole}
+              onChange={(e) => setPoliticalTargetRole(e.target.value)}
+            />
           </div>
 
           <div>
