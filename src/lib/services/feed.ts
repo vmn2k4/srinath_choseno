@@ -1,22 +1,29 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database, Json } from "@/lib/supabase/types";
+import { isDevEnvironment } from "@/lib/utils/environment";
 
 type Client = SupabaseClient<Database>;
 
 // ── posts — master feed (3 independently-fetched sections, merged by the caller) ──
 export async function getMembershipScopedPosts(supabase: Client, shapeIds: number[]) {
-  return supabase
+  let query = supabase
     .from("posts")
     .select("*, comments(*), post_boundaries!inner(map_shape_id, map_shapes(id, name))")
     .in("post_boundaries.map_shape_id", shapeIds);
+  if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
+  return query;
 }
 
 export async function getCountryScopedPosts(supabase: Client, country: string) {
-  return supabase.from("posts").select("*, comments(*)").eq("is_country", true).eq("country", country);
+  let query = supabase.from("posts").select("*, comments(*)").eq("is_country", true).eq("country", country);
+  if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
+  return query;
 }
 
 export async function getInternationalScopedPosts(supabase: Client) {
-  return supabase.from("posts").select("*, comments(*)").eq("is_international", true);
+  let query = supabase.from("posts").select("*, comments(*)").eq("is_international", true);
+  if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
+  return query;
 }
 
 // ── post creation / voting ───────────────────────────────────────────────
@@ -38,7 +45,8 @@ export async function createFeedPost(
     p_image_url?: string;
     p_video_url?: string;
     p_link_metadata?: Json;
-  } = { p_content: content };
+    p_is_test: boolean;
+  } = { p_content: content, p_is_test: isDevEnvironment() };
 
   if (imageUrl) args.p_image_url = imageUrl;
   if (videoUrl) args.p_video_url = videoUrl;
@@ -56,7 +64,7 @@ export async function voteOnPost(supabase: Client, postId: string, voteType: 1 |
 // server-side and enforces a 7-day per-(user, post) rate limit — direct
 // inserts are no longer permitted by RLS.
 export async function createComment(supabase: Client, postId: string, content: string) {
-  return supabase.rpc("create_comment", { p_post_id: postId, p_content: content });
+  return supabase.rpc("create_comment", { p_post_id: postId, p_content: content, p_is_test: isDevEnvironment() });
 }
 
 // politician attribution — for feed posts authored by a politician, resolve

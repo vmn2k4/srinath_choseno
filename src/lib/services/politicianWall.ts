@@ -1,5 +1,6 @@
 import type { SupabaseClient, RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
+import { isDevEnvironment } from "@/lib/utils/environment";
 
 type Client = SupabaseClient<Database>;
 
@@ -36,10 +37,12 @@ export async function getSupportStatus(supabase: Client, politicianId: string, s
 }
 
 export async function getSupporterCount(supabase: Client, politicianId: string) {
-  return supabase
+  let query = supabase
     .from("politician_supporters")
     .select("*", { count: "exact", head: true })
     .eq("politician_id", politicianId);
+  if (!isDevEnvironment()) query = query.eq("is_test", false);
+  return query;
 }
 
 export async function withdrawSupport(supabase: Client, politicianId: string, supporterId: string) {
@@ -51,7 +54,9 @@ export async function withdrawSupport(supabase: Client, politicianId: string, su
 }
 
 export async function addSupport(supabase: Client, politicianId: string, supporterId: string) {
-  return supabase.from("politician_supporters").insert({ politician_id: politicianId, supporter_id: supporterId });
+  return supabase
+    .from("politician_supporters")
+    .insert({ politician_id: politicianId, supporter_id: supporterId, is_test: isDevEnvironment() });
 }
 
 // Realtime subscription wrapper — keeps the raw supabase.channel()/
@@ -88,7 +93,7 @@ export function unsubscribeFromSupportChanges(
 }
 
 export async function getSupportersList(supabase: Client, politicianId: string) {
-  return supabase
+  let query = supabase
     .from("politician_supporters")
     .select(
       `
@@ -101,15 +106,19 @@ export async function getSupportersList(supabase: Client, politicianId: string) 
     )
     .eq("politician_id", politicianId)
     .order("created_at", { ascending: false });
+  if (!isDevEnvironment()) query = query.eq("is_test", false);
+  return query;
 }
 
 // ── wall posts ───────────────────────────────────────────────────────────
 export async function getWallPosts(supabase: Client, ghostId: string) {
-  return supabase
+  let query = supabase
     .from("posts")
     .select(`*, comments (*)`)
     .or(`ghost_id.eq.${ghostId},wall_ghost_id.eq.${ghostId}`)
     .order("created_at", { ascending: false });
+  if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
+  return query;
 }
 
 // Goes through the create_wall_post RPC (resolves ghost_id from auth.uid()
@@ -133,15 +142,17 @@ export async function createWallPost(
     p_video_url: videoUrl ?? undefined,
     p_link_metadata: linkMetadata ?? undefined,
     p_wall_ghost_id: wallGhostId ?? undefined,
+    p_is_test: isDevEnvironment(),
   });
 }
 
 export async function getWallPostBySlugOrId(supabase: Client, ghostId: string, slug: string) {
-  const { data: exactPost } = await supabase
+  let exactQuery = supabase
     .from("posts")
     .select(`*, comments (*)`)
-    .eq("id", slug)
-    .maybeSingle();
+    .eq("id", slug);
+  if (!isDevEnvironment()) exactQuery = exactQuery.eq("is_test", false).eq("comments.is_test", false);
+  const { data: exactPost } = await exactQuery.maybeSingle();
 
   if (exactPost) {
     return { data: exactPost };

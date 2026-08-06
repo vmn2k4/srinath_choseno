@@ -58,34 +58,37 @@ export async function getAdminAnalyticsMetrics(
     const past7d = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
     const past30d = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString();
 
+    // Admin analytics reflects real platform activity regardless of which
+    // build (dev or prod) the admin is viewing it from -- unlike the
+    // user-facing feed/wall queries, this always excludes is_test content.
     const [
       { count: totalPosts },
       { count: totalComments },
       { count: totalUsers },
       { count: dnuCount },
     ] = await Promise.all([
-      supabase.from("posts").select("id", { count: "exact", head: true }),
-      supabase.from("comments").select("id", { count: "exact", head: true }),
+      supabase.from("posts").select("id", { count: "exact", head: true }).eq("is_test", false),
+      supabase.from("comments").select("id", { count: "exact", head: true }).eq("is_test", false),
       supabase.from("profiles").select("id", { count: "exact", head: true }),
       supabase.from("profiles").select("id", { count: "exact", head: true }).gte("created_at", startOfToday),
     ]);
 
     const [{ count: postsToday }, { count: posts7d }, { count: posts30d }] = await Promise.all([
-      supabase.from("posts").select("id", { count: "exact", head: true }).gte("created_at", startOfToday),
-      supabase.from("posts").select("id", { count: "exact", head: true }).gte("created_at", past7d),
-      supabase.from("posts").select("id", { count: "exact", head: true }).gte("created_at", past30d),
+      supabase.from("posts").select("id", { count: "exact", head: true }).eq("is_test", false).gte("created_at", startOfToday),
+      supabase.from("posts").select("id", { count: "exact", head: true }).eq("is_test", false).gte("created_at", past7d),
+      supabase.from("posts").select("id", { count: "exact", head: true }).eq("is_test", false).gte("created_at", past30d),
     ]);
 
     const [{ count: commentsToday }, { count: comments7d }, { count: comments30d }] = await Promise.all([
-      supabase.from("comments").select("id", { count: "exact", head: true }).gte("created_at", startOfToday),
-      supabase.from("comments").select("id", { count: "exact", head: true }).gte("created_at", past7d),
-      supabase.from("comments").select("id", { count: "exact", head: true }).gte("created_at", past30d),
+      supabase.from("comments").select("id", { count: "exact", head: true }).eq("is_test", false).gte("created_at", startOfToday),
+      supabase.from("comments").select("id", { count: "exact", head: true }).eq("is_test", false).gte("created_at", past7d),
+      supabase.from("comments").select("id", { count: "exact", head: true }).eq("is_test", false).gte("created_at", past30d),
     ]);
 
     const uniqueUserSet = async (since: string) => {
       const [posts, comments, profiles] = await Promise.all([
-        supabase.from("posts").select("ghost_id").gte("created_at", since),
-        supabase.from("comments").select("ghost_id").gte("created_at", since),
+        supabase.from("posts").select("ghost_id").eq("is_test", false).gte("created_at", since),
+        supabase.from("comments").select("ghost_id").eq("is_test", false).gte("created_at", since),
         supabase.from("profiles").select("id").gte("updated_at", since),
       ]);
       return new Set([

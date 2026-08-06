@@ -195,6 +195,7 @@ export type Database = {
           created_at: string | null
           ghost_id: string
           id: string
+          is_test: boolean
           post_id: string
           removed_at: string | null
           removed_by: string | null
@@ -205,6 +206,7 @@ export type Database = {
           created_at?: string | null
           ghost_id: string
           id?: string
+          is_test?: boolean
           post_id: string
           removed_at?: string | null
           removed_by?: string | null
@@ -215,6 +217,7 @@ export type Database = {
           created_at?: string | null
           ghost_id?: string
           id?: string
+          is_test?: boolean
           post_id?: string
           removed_at?: string | null
           removed_by?: string | null
@@ -1220,16 +1223,19 @@ export type Database = {
       politician_supporters: {
         Row: {
           created_at: string | null
+          is_test: boolean
           politician_id: string
           supporter_id: string
         }
         Insert: {
           created_at?: string | null
+          is_test?: boolean
           politician_id: string
           supporter_id: string
         }
         Update: {
           created_at?: string | null
+          is_test?: boolean
           politician_id?: string
           supporter_id?: string
         }
@@ -1322,6 +1328,7 @@ export type Database = {
           image_url: string | null
           is_country: boolean | null
           is_international: boolean | null
+          is_test: boolean
           likes_count: number | null
           link_metadata: Json | null
           news_article_id: string | null
@@ -1343,6 +1350,7 @@ export type Database = {
           image_url?: string | null
           is_country?: boolean | null
           is_international?: boolean | null
+          is_test?: boolean
           likes_count?: number | null
           link_metadata?: Json | null
           news_article_id?: string | null
@@ -1364,6 +1372,7 @@ export type Database = {
           image_url?: string | null
           is_country?: boolean | null
           is_international?: boolean | null
+          is_test?: boolean
           likes_count?: number | null
           link_metadata?: Json | null
           news_article_id?: string | null
@@ -2111,12 +2120,13 @@ export type Database = {
         Returns: string
       }
       create_comment: {
-        Args: { p_content: string; p_post_id: string }
+        Args: { p_content: string; p_is_test?: boolean; p_post_id: string }
         Returns: {
           content: string
           created_at: string | null
           ghost_id: string
           id: string
+          is_test: boolean
           post_id: string
           removed_at: string | null
           removed_by: string | null
@@ -2134,6 +2144,7 @@ export type Database = {
           p_content: string
           p_election_candidate_id?: string
           p_image_url?: string
+          p_is_test?: boolean
           p_link_metadata?: Json
           p_news_article_id?: string
           p_video_url?: string
@@ -2150,6 +2161,7 @@ export type Database = {
           image_url: string | null
           is_country: boolean | null
           is_international: boolean | null
+          is_test: boolean
           likes_count: number | null
           link_metadata: Json | null
           news_article_id: string | null
@@ -2170,6 +2182,7 @@ export type Database = {
         Args: {
           p_content: string
           p_image_url?: string
+          p_is_test?: boolean
           p_link_metadata?: Json
           p_video_url?: string
           p_wall_ghost_id?: string
@@ -2186,6 +2199,7 @@ export type Database = {
           image_url: string | null
           is_country: boolean | null
           is_international: boolean | null
+          is_test: boolean
           likes_count: number | null
           link_metadata: Json | null
           news_article_id: string | null
@@ -2517,20 +2531,20 @@ export type Database = {
         Args: { p_seat_id?: string }
         Returns: undefined
       }
-      record_user_action: {
-        Args: {
-          p_action_type: string
-          p_politician_id?: string
-          p_user_id: string
-        }
-        Returns: undefined
-      }
       recompute_shape_containers_for_container: {
         Args: { p_container_id: number }
         Returns: undefined
       }
       recompute_shape_containers_for_shape: {
         Args: { p_shape_id: number }
+        Returns: undefined
+      }
+      record_user_action: {
+        Args: {
+          p_action_type: string
+          p_politician_id?: string
+          p_user_id: string
+        }
         Returns: undefined
       }
       remove_unregistered_candidate: {

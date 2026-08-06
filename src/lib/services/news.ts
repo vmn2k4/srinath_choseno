@@ -1,5 +1,6 @@
 import type { SupabaseClient, PostgrestError } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
+import { isDevEnvironment } from "@/lib/utils/environment";
 
 type Client = SupabaseClient<Database>;
 type NewsArticleRow = Database["public"]["Tables"]["news_articles"]["Insert"];
@@ -171,11 +172,13 @@ export async function uploadNewsHeroImage(supabase: Client, file: File, slug: st
 // ── News article comments (via create_post RPC) ───────────────────────────
 
 export async function getNewsArticleComments(supabase: Client, articleId: string) {
-  return supabase
+  let query = supabase
     .from("posts")
     .select("*, comments(*)")
     .eq("news_article_id", articleId)
     .order("created_at", { ascending: false });
+  if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
+  return query;
 }
 
 export async function createNewsArticleComment(
@@ -192,6 +195,7 @@ export async function createNewsArticleComment(
     p_image_url: imageUrl ?? undefined,
     p_video_url: videoUrl ?? undefined,
     p_news_article_id: articleId,
+    p_is_test: isDevEnvironment(),
   });
 }
 

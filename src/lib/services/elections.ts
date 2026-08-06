@@ -2,6 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { fetchAllPages } from "@/lib/utils/fetchAllPages";
 import { extractIdFromSlug, buildSeatSlug, buildCandidateSlug, slugifyText } from "@/lib/utils/slugs";
+import { isDevEnvironment } from "@/lib/utils/environment";
 
 type Client = SupabaseClient<Database>;
 type ElectionSeatInsert = Database["public"]["Tables"]["election_seats"]["Insert"];
@@ -535,11 +536,13 @@ export async function resolveRegionNames(supabase: Client, shapeIds: number[], c
 export async function getCandidacyWallPosts(supabase: Client, candidateId: string, ghostId?: string | null) {
   const filters = [`election_candidate_id.eq.${candidateId}`];
   if (ghostId) filters.push(`ghost_id.eq.${ghostId}`, `wall_ghost_id.eq.${ghostId}`);
-  return supabase.from("posts").select("*, comments (*)").or(filters.join(",")).order("created_at", { ascending: false });
+  let query = supabase.from("posts").select("*, comments (*)").or(filters.join(",")).order("created_at", { ascending: false });
+  if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
+  return query;
 }
 
 export async function createCandidatePost(supabase: Client, fields: PostInsert) {
-  return supabase.from("posts").insert(fields);
+  return supabase.from("posts").insert({ ...fields, is_test: isDevEnvironment() });
 }
 
 // ── nomination_filed (self-editable, direct update — same pattern as
