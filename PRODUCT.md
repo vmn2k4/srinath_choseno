@@ -19,17 +19,18 @@ Location-aware, boundary-verified anonymous civic engagement powered by rotatabl
 Web application evaluated on modern mobile and desktop web browsers. Features continuous feed scanning, interactive map exploration, boundary-scoped voting, civic posts, and identity management ("burn ghost ID").
 
 ## Capabilities and Constraints
-- **Stack**: React 19, Vite, Tailwind CSS, Leaflet (`react-leaflet` + `@turf/turf`), Supabase (Postgres 17 + PostGIS, RLS, RPCs).
-- **Architecture**: Layered design (`Routing -> Pages -> Components -> Context -> Services -> Utils -> Backend`). Pages and components never invoke Supabase directly; all data access is encapsulated in `src/services/`.
-- **Identity Model**: Posts and comments are tied exclusively to rotatable `ghost_id` UUIDs rather than permanent profile IDs. Executing `burn_ghost_identity()` breaks identity linkage for future posts while retaining historical posts under orphaned ghost IDs.
+- **Stack**: Next.js 16 (App Router), React 19, TypeScript, Tailwind v4, Leaflet (`react-leaflet` + `@turf/turf`), Supabase (Postgres 17 + PostGIS, RLS, RPCs).
+- **Architecture**: Layered App Router design (`App Routes -> Feature Components -> Service Layer -> Backend RPCs/RLS`). Data access is encapsulated in `src/lib/services/`.
+- **Identity & Representative Model**: Posts and comments are tied exclusively to rotatable `ghost_id` UUIDs. Every elected official across 7,448 North American boundaries automatically receives a dedicated **Politician Wall** (`/wall/[ghostId]/[slug]`), linkable to verified accounts when claimed.
+- **Office Holder Coverage**: Complete multi-tier coverage for US Representatives, US Senators, State Governors, 50-State Legislators (Upper & Lower Chambers), Canadian MPs, and Provincial MLAs/MPPs/MHAs.
 
 ## Brand Commitments
 - Name: **Choseno**
-- Core ethos: Privacy, anonymity, local civic empowerment, and authentic regional boundaries.
+- Core ethos: Privacy, anonymity, local civic empowerment, authentic regional boundaries, and transparent representative accountability.
 
 ## Evidence on Hand
-- Full codebase with layered React architecture, maps integration, and Supabase migrations.
-- Detailed reference documentation in [ARCHITECTURE.md](file:///Users/vmn2k4/Coding/Choseno/ARCHITECTURE.md), [CLAUDE.md](file:///Users/vmn2k4/Coding/Choseno/CLAUDE.md), and `docs/`.
+- Full codebase with Next.js App Router architecture, maps integration, Supabase migrations, and automated office holder data pipelines.
+- Detailed reference documentation in [ARCHITECTURE.md](file:///Users/vmn2k4/Coding/Choseno/ARCHITECTURE.md), [OFFICE_HOLDERS_DATA_GUIDE.md](file:///Users/vmn2k4/Coding/Choseno/OFFICE_HOLDERS_DATA_GUIDE.md), and `docs/`.
 
 ## Product Principles
 1. **Privacy & Anonymity First**: Protect user identity with un-linkable ghost IDs and boundary-level spatial resolution.

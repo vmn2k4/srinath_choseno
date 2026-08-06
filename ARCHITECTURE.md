@@ -1799,3 +1799,54 @@ working end-to-end.
   values)
 - `src/components/features/ElectionsAdminClient.tsx` (+20 lines container-scoping logic,
   error handling)
+
+---
+
+## 34. Complete Active Office Holder Pipeline, Schema Fixes & Politician Wall Integration
+
+*2026-08-06, building upon the election mode and boundary directory systems.*
+
+This update establishes nationwide and international active office holder coverage (7,448 elected officials), resolves critical database foreign key & PostgREST query bugs, integrates automatic Politician Wall profile generation for all office holders, and upgrades the Feed and Boundary Directory UI components.
+
+### 1. Data Ingestion Pipeline & Coverage
+
+- **Automated Pipeline**: `scripts/populate-all-office-holders.py` aggregates data across:
+  - **Canada Federal & Provincial**: OpenNorth Represent API (342 MPs, 591 MLAs/MPPs/MHAs).
+  - **US Federal & State Executives**: `unitedstates/congress-legislators` & Civil Services (431 US Reps, 50 US Senators, 50 Governors).
+  - **US State Legislatures**: OpenStates 50-state open-data repository (1,814 State Senators, 4,169 State Representatives).
+- **PostGIS Boundary Mapping**: Performs fuzzy string and FIPS matching against `map_shapes` to assign exact `map_shape_id`s.
+- **CSV Ground Truth**: Exports clean compiled data to `scripts/office-holders-data.csv`.
+- **Documentation**: Added `OFFICE_HOLDERS_DATA_GUIDE.md` detailing pipeline execution, manual CSV updates, and admin UI options.
+
+### 2. Auto-Generated Politician Wall Profiles
+
+- Executed a database initialization transaction (`DO` block) that created 7,448 linked `profiles` rows (`role = 'politician'`, `current_ghost_id`) and `politician_profiles` entries for all office holders.
+- Linked `office_holders.linked_profile_id = profiles.id`.
+- **Politician Wall Route**: Every office holder now possesses a fully functioning Politician Wall page (`/wall/[ghostId]/[slug]`) displaying their official photo, role title, party affiliation, bio, boundary context, and constituency feed posts.
+- **Seamless Account Claiming**: When real politicians register or claim their profile on Choseno, their existing wall profile seamlessly pairs with their verified account via `linked_profile_id`.
+
+### 3. Database Foreign Key & PostgREST Query Repair
+
+- **Foreign Key Fix**: Resolved a schema misconfiguration where `office_holders_linked_profile_id_fkey` pointed to `office_holders(linked_profile_id)` instead of `profiles(id)`.
+- **PostgREST Query Column Cleaning**: Fixed `getOfficeHoldersForShape`, `getOfficeHoldersForShapes`, and `getOfficeHolderByRole` in `src/lib/services/elections.ts` to remove non-existent column requests (`color_hex`, `avatar_url`, `term_start`, `term_end`), eliminating PostgREST 42703 SQL errors.
+
+### 4. UI Components & Directory Upgrades
+
+- **`PoliticianSidebar.tsx`**:
+  - Rendered a **Current Office Holders** section directly above `Candidates & Representatives`.
+  - Displays active incumbents for the user's active district or boundary memberships.
+  - Decoupled `fetchHolders` from `profile` loading state so office holders render instantly.
+  - Added direct action links (`View Full Office Holder Directory →`) and links directly to each representative's Politician Wall page.
+- **`src/app/elections/[boundarySlug]/page.tsx`**:
+  - Fixed `ReferenceError: slugifyText is not defined` import error.
+  - Upgraded boundary directory pages to render parent container badges (*British Columbia*, *Canada*), active representative count badges, contact email/phone, official website links, and direct **`Politician Wall →`** buttons for all incumbent representatives.
+
+### Files Changed / Added
+
+- `OFFICE_HOLDERS_DATA_GUIDE.md` (new)
+- `scripts/populate-all-office-holders.py` (new)
+- `scripts/office-holders-data.csv` (new)
+- `src/lib/services/elections.ts` (query column fixes, `getOfficeHoldersForShapes` added)
+- `src/components/features/PoliticianSidebar.tsx` (Current Office Holders section & Wall links)
+- `src/app/elections/[boundarySlug]/page.tsx` (import fix, rich boundary rendering)
+- `PRODUCT.md` (updated capabilities and commitments)
