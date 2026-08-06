@@ -7,10 +7,10 @@ import type { ReactNode } from "react";
 const TONES = {
   primary: "bg-primary/20 text-primary-light font-bold border border-primary/30",
   accent: "bg-accent/20 text-accent-hover font-bold border border-accent/30",
-  amber: "bg-amber-500/20 text-amber-900 dark:text-amber-300 font-bold border border-amber-500/40",
+  amber: "bg-amber-500/20 text-amber-900 dark:text-amber-50 font-bold border border-amber-500/40",
   emerald:
-    "bg-emerald-500/20 text-emerald-950 dark:text-emerald-300 font-bold border border-emerald-500/40",
-  rose: "bg-rose-500/20 text-rose-950 dark:text-rose-300 font-bold border border-rose-500/40",
+    "bg-emerald-500/20 text-emerald-950 dark:text-emerald-50 font-bold border border-emerald-500/40",
+  rose: "bg-rose-500/20 text-rose-950 dark:text-rose-50 font-bold border border-rose-500/40",
   neutral: "bg-surface-active text-text-main font-semibold border border-border-light",
 } as const;
 

@@ -164,3 +164,18 @@ export async function getWallPostBySlugOrId(supabase: Client, ghostId: string, s
   return { data: slugifiedMatch || posts[0] };
 }
 
+export async function getActiveCandidacies(supabase: Client, profileId: string) {
+  return supabase
+    .from("election_candidates")
+    .select(
+      `id, seat_id, status,
+       election_seats(
+         id, role_title,
+         map_shapes(name, boundary_type),
+         elections(id, name, status, election_date)
+       )`
+    )
+    .eq("politician_id", profileId)
+    .order("created_at", { ascending: false });
+}
+

@@ -28,8 +28,9 @@ import {
   createWallPost,
   subscribeToSupportChanges,
   unsubscribeFromSupportChanges,
+  getActiveCandidacies,
 } from "@/lib/services/politicianWall";
-import { uploadPostImage, createComment, hydratePoliticianAuthors } from "@/lib/services/feed";
+import { uploadPostImage, createComment, hydratePoliticianAuthors, voteOnPost } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import {
   Card,
@@ -107,6 +108,7 @@ export default function PoliticianWallClient({
   const [mediaPreview, setMediaPreview] = useState<{ url: string; type: "image" | "video" } | null>(null);
 
   const [politicianAuthors, setPoliticianAuthors] = useState<Map<string, { fullName: string; wallHref: string }>>(new Map());
+  const [candidacies, setCandidacies] = useState<any[]>([]);
 
   const fetchPosts = async () => {
     try {
@@ -155,6 +157,9 @@ export default function PoliticianWallClient({
           }
           const { count } = await getSupporterCount(supabase, ownerRecord.id);
           if (isMounted) setSupportCount(count || 0);
+
+          const { data: cands } = await getActiveCandidacies(supabase, ownerRecord.id);
+          if (isMounted) setCandidacies((cands || []) as any[]);
 
           supportChannel = subscribeToSupportChanges(supabase, ownerRecord.id, () => {
             getSupporterCount(supabase, ownerRecord.id).then(({ count }) => {
@@ -271,6 +276,12 @@ export default function PoliticianWallClient({
     }
   };
 
+  const handleVote = async (postId: string, voteType: 1 | -1) => {
+    if (!user) return;
+    const { error } = await voteOnPost(supabase, postId, voteType);
+    if (!error) await fetchPosts();
+  };
+
   const handleCreateComment = async (postId: string) => {
     const content = commentInputs[postId];
     if (!content?.trim() || !profile?.current_ghost_id) return;
@@ -370,6 +381,36 @@ export default function PoliticianWallClient({
           <p className="text-sm text-text-secondary pt-3 border-t border-border-light/20 leading-relaxed">
             {wallOwner.bio}
           </p>
+        )}
+
+        {candidacies.length > 0 && (
+          <div className="pt-4 border-t border-border-light/20 space-y-2">
+            <p className="text-xs font-bold text-text-muted uppercase tracking-widest mb-2">
+              Currently Running For
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {candidacies.map((cand) => {
+                const seat = cand.election_seats as any;
+                const election = seat?.elections as any;
+                const shape = seat?.map_shapes as any;
+                const isActive = election?.status === "active";
+
+                if (!isActive) return null;
+
+                return (
+                  <a
+                    key={cand.id}
+                    href={`/elections/${election?.id}/seats/${cand.seat_id}`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-hover border border-border-light/60 rounded-full hover:bg-surface-active hover:border-primary/40 transition-all text-xs font-semibold text-text-secondary"
+                  >
+                    <span>{seat?.role_title}</span>
+                    <span className="text-text-muted">•</span>
+                    <span className="text-text-muted">{shape?.name}</span>
+                  </a>
+                );
+              }).filter(Boolean)}
+            </div>
+          </div>
         )}
       </Card>
 
@@ -492,6 +533,8 @@ export default function PoliticianWallClient({
               ownerGhostId={ghostId}
               ownerBadgeLabel="Politician"
               viewerIsOwner={isOwner}
+              showVoteBar
+              onVote={(postId, voteType) => handleVote(postId, voteType)}
               canComment={!!user}
               commentValue={commentInputs[post.id] || ""}
               onCommentChange={(text) =>

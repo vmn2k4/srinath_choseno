@@ -50,6 +50,7 @@ export default function EditProfileClient() {
   const [education, setEducation] = useState("");
   const [bio, setBio] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
+  const [targetBoundaryId, setTargetBoundaryId] = useState<string | null>(null);
   const [parties, setParties] = useState<any[]>([]);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [avatarError, setAvatarError] = useState<string | null>(null);
@@ -75,6 +76,7 @@ export default function EditProfileClient() {
         setEducation(pd?.education || "");
         setBio(pd?.bio || "");
         setAvatarUrl(pd?.avatar_url || "");
+        setTargetBoundaryId(pd?.target_boundary_id ?? null);
       }
 
       const { data: locRows } = await getLatestUserLocation(supabase, user.id);
@@ -158,13 +160,14 @@ export default function EditProfileClient() {
           supabase,
           user.id,
           {
+            targetBoundaryName: matchedNames,
             politicalPartyId: politicalParty ? Number(politicalParty) : null,
             education,
             hometown,
             bio,
             avatarUrl,
           },
-          null
+          targetBoundaryId
         );
         if (polError) throw polError;
       }

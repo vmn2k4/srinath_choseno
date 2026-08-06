@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
@@ -210,21 +210,75 @@ export default function FeedPageClient() {
     };
   }, [user, authLoading, supabase]);
 
+  const filterPills = useMemo(() => {
+    interface FilterPillItem {
+      key: string;
+      districtName: string;
+      divisionType: string;
+      filterType: "all" | "shape" | "country" | "international";
+      shapeId?: number;
+      boundaryType?: string;
+    }
+
+    const pills: FilterPillItem[] = [
+      {
+        key: "all",
+        districtName: "All Districts",
+        divisionType: "All Levels",
+        filterType: "all",
+      },
+    ];
+
+    memberships.forEach((m) => {
+      pills.push({
+        key: `shape-${m.id}`,
+        districtName: m.name || m.boundary_type,
+        divisionType: m.boundary_type,
+        filterType: "shape",
+        shapeId: m.id,
+        boundaryType: m.boundary_type,
+      });
+    });
+
+    if (profile?.country) {
+      pills.push({
+        key: "country",
+        districtName: profile.country,
+        divisionType: "Country",
+        filterType: "country",
+      });
+    }
+
+    pills.push({
+      key: "international",
+      districtName: "Global",
+      divisionType: "International",
+      filterType: "international",
+    });
+
+    return pills;
+  }, [memberships, profile?.country]);
+
   const loadFeedPosts = async () => {
     if (!user || !profile) return;
 
-    const matchingMembershipIds = memberships
-      .filter((m) => masterFilter === "all" || m.boundary_type === masterFilter)
-      .map((m) => m.id);
-
+    const selectedPill = filterPills.find((p) => p.key === masterFilter) || filterPills[0];
     const queries: Promise<any>[] = [];
-    if (matchingMembershipIds.length > 0) {
-      queries.push(getMembershipScopedPosts(supabase, matchingMembershipIds));
-    }
-    if ((masterFilter === "all" || masterFilter === "Country") && profile.country) {
+
+    if (selectedPill.key === "all") {
+      const matchingMembershipIds = memberships.map((m) => m.id);
+      if (matchingMembershipIds.length > 0) {
+        queries.push(getMembershipScopedPosts(supabase, matchingMembershipIds));
+      }
+      if (profile.country) {
+        queries.push(getCountryScopedPosts(supabase, profile.country));
+      }
+      queries.push(getInternationalScopedPosts(supabase));
+    } else if (selectedPill.filterType === "shape" && selectedPill.shapeId) {
+      queries.push(getMembershipScopedPosts(supabase, [selectedPill.shapeId]));
+    } else if (selectedPill.filterType === "country" && profile.country) {
       queries.push(getCountryScopedPosts(supabase, profile.country));
-    }
-    if (masterFilter === "all" || masterFilter === "International") {
+    } else if (selectedPill.filterType === "international") {
       queries.push(getInternationalScopedPosts(supabase));
     }
 
@@ -662,34 +716,32 @@ export default function FeedPageClient() {
                 onSelect={(postId) => setActiveStoryId(postId)}
               />
 
-              {/* Filter Bar - Always Visible */}
-              <div className="flex items-center gap-2 overflow-x-auto text-xs py-3 border-b border-border-light/20">
-                <span className="text-text-muted text-[11px] font-semibold uppercase tracking-wider mr-1">
+              {/* Filter Bar - Two-Line District / Level Pills */}
+              <div className="flex items-center gap-2.5 overflow-x-auto text-xs py-3 border-b border-border-light/20 scrollbar-none">
+                <span className="text-text-muted text-[11px] font-semibold uppercase tracking-wider shrink-0 mr-0.5">
                   Filter:
                 </span>
-                <button
-                  onClick={() => setMasterFilter("all")}
-                  className={`px-3 py-1 rounded-lg font-medium transition-colors cursor-pointer whitespace-nowrap ${
-                    masterFilter === "all"
-                      ? "bg-primary/20 text-primary border border-primary/40"
-                      : "bg-surface/30 text-text-muted hover:text-text-main"
-                  }`}
-                >
-                  All Levels
-                </button>
-                {masterFilterOptions.filter((f) => f !== "all").map((f) => (
-                  <button
-                    key={f}
-                    onClick={() => setMasterFilter(f)}
-                    className={`px-3 py-1 rounded-lg font-medium transition-colors cursor-pointer whitespace-nowrap ${
-                      masterFilter === f
-                        ? "bg-primary/20 text-primary border border-primary/40"
-                        : "bg-surface/30 text-text-muted hover:text-text-main"
-                    }`}
-                  >
-                    {f.charAt(0).toUpperCase() + f.slice(1)}
-                  </button>
-                ))}
+                {filterPills.map((pill) => {
+                  const isActive = masterFilter === pill.key;
+                  return (
+                    <button
+                      key={pill.key}
+                      onClick={() => setMasterFilter(pill.key)}
+                      className={`px-3.5 py-1.5 rounded-xl text-left transition-all cursor-pointer whitespace-nowrap shrink-0 border ${
+                        isActive
+                          ? "bg-primary/20 text-primary border-primary/40 shadow-sm"
+                          : "bg-surface/40 hover:bg-surface-hover text-text-muted hover:text-text-main border-border-light/30"
+                      }`}
+                    >
+                      <div className="text-[12px] font-bold text-text-main truncate leading-tight">
+                        {pill.districtName}
+                      </div>
+                      <div className="text-[10px] font-semibold text-primary/80 uppercase tracking-wider leading-tight">
+                        {pill.divisionType}
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Post List Feed */}
@@ -733,6 +785,7 @@ export default function FeedPageClient() {
             <PoliticianSidebar
               profile={profile}
               activeTab={masterFilter}
+              selectedPill={filterPills.find((p) => p.key === masterFilter) || filterPills[0]}
               memberships={memberships}
             />
           </div>

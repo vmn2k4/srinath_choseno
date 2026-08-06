@@ -14,7 +14,9 @@ import {
   getCountries,
   listBoundaryTypes,
   getMapShapesByType,
+  findBoundariesByPoint,
 } from "@/lib/services/boundaries";
+import InteractiveLocationPicker from "./InteractiveLocationPicker";
 import { getUserBoundaryShapeIds } from "@/lib/services/profile";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 import { Vote, MapPin, FileEdit, Search } from "lucide-react";
@@ -56,6 +58,7 @@ export default function PoliticianElectionsClient() {
 
   // Browse a different area
   const [browsing, setBrowsing] = useState(false);
+  const [browseMode, setBrowseMode] = useState<"map" | "dropdown">("map");
   const [countries, setCountries] = useState<string[]>([]);
   const [browseCountry, setBrowseCountry] = useState("");
   const [containerTypes, setContainerTypes] = useState<string[]>([]);
@@ -151,6 +154,49 @@ export default function PoliticianElectionsClient() {
     setBrowseSeats(data || []);
     if ((data || []).length === 0) {
       setBrowseStatus("No open seats found there.");
+    }
+  };
+
+  const handleMapLocationSelect = async (lat: number, lng: number) => {
+    setBrowseLoading(true);
+    setBrowseStatus("Searching for electoral boundaries at selected map location...");
+    setBrowseSeats(null);
+
+    const { data: bData, error: bErr } = await findBoundariesByPoint(supabase, lat, lng);
+    if (bErr || !bData || bData.length === 0) {
+      setBrowseLoading(false);
+      setBrowseStatus("No mapped electoral boundaries found for that map location yet.");
+      return;
+    }
+
+    const shapeIds = (bData as any[]).map((b) => b.id);
+    const { data: seatsData, error: seatsErr } = await getOpenSeatsNearShapeIds(supabase, shapeIds);
+    setBrowseLoading(false);
+
+    if (seatsErr) {
+      setBrowseStatus("Error searching seats: " + seatsErr.message);
+      return;
+    }
+
+    const seatsList = (seatsData || []).map((s: any) => ({
+      seat_id: s.id,
+      role_title: s.role_title,
+      shape_name: s.map_shapes?.name || s.shape_name,
+      election_name: s.elections?.name,
+      election_date: s.elections?.election_date,
+    }));
+
+    setBrowseSeats(seatsList);
+
+    if (seatsList.length === 0) {
+      const boundaryNames = (bData as any[]).map((b) => b.name).filter(Boolean).join(", ");
+      setBrowseStatus(
+        `Electoral boundaries found (${boundaryNames}), but no active open election seats exist for them right now.`
+      );
+    } else {
+      setBrowseStatus(
+        `Found ${seatsList.length} open seat(s) for location (${lat.toFixed(4)}, ${lng.toFixed(4)}).`
+      );
     }
   };
 
@@ -270,95 +316,141 @@ export default function PoliticianElectionsClient() {
           </Button>
         </div>
 
-        {/* Browse different area container selector */}
+        {/* Browse different area container selector & interactive map */}
         {browsing && (
-          <Card padding="md" className="space-y-4 bg-surface/40">
-            <h3 className="text-xs font-bold text-text-main">
-              Browse Seats in Another Jurisdiction
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-              <Select
-                value={browseCountry}
-                onChange={(e) => setBrowseCountry(e.target.value)}
-              >
-                <option value="">Select Country...</option>
-                {countries.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </Select>
-
-              <Select
-                value={browseContainerType}
-                onChange={(e) => setBrowseContainerType(e.target.value)}
-                disabled={!browseCountry}
-              >
-                <option value="">Select Region Type...</option>
-                {containerTypes.map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </Select>
-
-              <Select
-                value={browseContainerId}
-                onChange={(e) => setBrowseContainerId(e.target.value)}
-                disabled={!browseContainerType}
-              >
-                <option value="">Select Region...</option>
-                {containers.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.name}
-                  </option>
-                ))}
-              </Select>
+          <Card padding="md" className="space-y-4 bg-surface/40 animate-fade-in">
+            <div className="flex items-center justify-between gap-4 flex-wrap border-b border-border-light/20 pb-3">
+              <h3 className="text-xs font-bold text-text-main uppercase tracking-wider">
+                Browse Seats in Another Area
+              </h3>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setBrowseMode("map")}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    browseMode === "map"
+                      ? "bg-primary text-text-on-primary shadow-sm"
+                      : "bg-surface-hover/80 text-text-muted hover:text-text-main"
+                  }`}
+                >
+                  📍 Point on Map / Search Address
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBrowseMode("dropdown")}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    browseMode === "dropdown"
+                      ? "bg-primary text-text-on-primary shadow-sm"
+                      : "bg-surface-hover/80 text-text-muted hover:text-text-main"
+                  }`}
+                >
+                  🔍 Jurisdiction Dropdowns
+                </button>
+              </div>
             </div>
 
-            <Button
-              size="sm"
-              onClick={searchContainer}
-              disabled={!browseContainerId || browseLoading}
-            >
-              {browseLoading ? "Searching..." : "Find Open Seats"}
-            </Button>
+            {browseMode === "map" ? (
+              <div className="space-y-3">
+                <p className="text-xs text-text-muted">
+                  Click/point anywhere on the map or search an address to discover active election seats in that location:
+                </p>
+                <InteractiveLocationPicker
+                  onLocationSelect={handleMapLocationSelect}
+                  loading={browseLoading}
+                  error={browseStatus.startsWith("Error") ? browseStatus : ""}
+                />
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                  <Select
+                    value={browseCountry}
+                    onChange={(e) => setBrowseCountry(e.target.value)}
+                  >
+                    <option value="">Select Country...</option>
+                    {countries.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
+                  </Select>
+
+                  <Select
+                    value={browseContainerType}
+                    onChange={(e) => setBrowseContainerType(e.target.value)}
+                    disabled={!browseCountry}
+                  >
+                    <option value="">Select Region Type...</option>
+                    {containerTypes.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </Select>
+
+                  <Select
+                    value={browseContainerId}
+                    onChange={(e) => setBrowseContainerId(e.target.value)}
+                    disabled={!browseContainerType}
+                  >
+                    <option value="">Select Region...</option>
+                    {containers.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </Select>
+                </div>
+
+                <Button
+                  size="sm"
+                  onClick={searchContainer}
+                  disabled={!browseContainerId || browseLoading}
+                >
+                  {browseLoading ? "Searching..." : "Find Open Seats"}
+                </Button>
+              </div>
+            )}
 
             {browseStatus && (
-              <p className="text-xs text-text-muted">{browseStatus}</p>
+              <p className={`text-xs ${browseStatus.startsWith("Error") ? "text-danger font-semibold" : "text-text-muted"}`}>
+                {browseStatus}
+              </p>
             )}
 
             {browseSeats && browseSeats.length > 0 && (
               <div className="space-y-3 pt-3 border-t border-border-light/20">
-                {browseSeats.map((seat) => (
-                  <div
-                    key={seat.id}
-                    className="flex items-center justify-between gap-4 p-3 bg-surface-elevated rounded-xl border border-border-light/30 text-xs"
-                  >
-                    <div>
-                      <span className="font-bold text-text-main">
-                        {seat.role_title}
-                      </span>
-                      <span className="text-text-muted ml-2">
-                        ({seat.map_shapes?.name})
-                      </span>
-                    </div>
+                {browseSeats.map((seat: any) => {
+                  const sId = seat.seat_id || seat.id;
+                  const shapeName = seat.shape_name || seat.map_shapes?.name || "";
+                  const isApplied = myCandidacySeatIds.has(sId);
 
-                    <Button
-                      size="sm"
-                      onClick={() => startApplying(seat.id)}
-                      disabled={
-                        myCandidacySeatIds.has(seat.id) ||
-                        applyingSeatId === seat.id
-                      }
+                  return (
+                    <div
+                      key={sId}
+                      className="flex items-center justify-between gap-4 p-3 bg-surface-elevated rounded-xl border border-border-light/30 text-xs"
                     >
-                      {myCandidacySeatIds.has(seat.id)
-                        ? "Applied"
-                        : "Apply to Run"}
-                    </Button>
-                  </div>
-                ))}
+                      <div>
+                        <span className="font-bold text-text-main">
+                          {seat.role_title}
+                        </span>
+                        {shapeName && (
+                          <span className="text-text-muted ml-2">
+                            ({shapeName})
+                          </span>
+                        )}
+                      </div>
+
+                      <Button
+                        size="sm"
+                        onClick={() => startApplying(sId)}
+                        disabled={isApplied || applyingSeatId === sId}
+                      >
+                        {isApplied ? "Applied" : "Apply to Run"}
+                      </Button>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </Card>

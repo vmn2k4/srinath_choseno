@@ -18,7 +18,7 @@ import {
   requestCandidacyClaim,
 } from "@/lib/services/elections";
 import { getOwnProfile, getPoliticianProfile } from "@/lib/services/profile";
-import { uploadPostImage, createComment, hydratePoliticianAuthors } from "@/lib/services/feed";
+import { uploadPostImage, createComment, hydratePoliticianAuthors, voteOnPost } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import {
   getSupportStatus,
@@ -389,6 +389,12 @@ export default function CandidacyWall({
       console.error("Error creating comment:", err);
       setCommentErrors((prev) => ({ ...prev, [postId]: msg }));
     }
+  };
+
+  const handleVote = async (postId: string, voteType: 1 | -1) => {
+    if (!user) return;
+    const { error } = await voteOnPost(supabase, postId, voteType);
+    if (!error) await loadPosts();
   };
 
   const handleReport = async (targetType: ReportTargetType, targetId: string, abuseType: string) => {
@@ -914,6 +920,8 @@ export default function CandidacyWall({
                   ownerGhostId={candidate?.profiles?.current_ghost_id ?? profile?.current_ghost_id}
                   ownerBadgeLabel="Candidate"
                   viewerIsOwner={isOwner}
+                  showVoteBar
+                  onVote={(postId, voteType) => handleVote(postId, voteType)}
                   canComment={!!user}
                   commentValue={commentInputs[post.id] || ""}
                   onCommentChange={(text) =>

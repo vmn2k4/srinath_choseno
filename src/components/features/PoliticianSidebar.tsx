@@ -33,10 +33,18 @@ interface InterestedPolitician {
 export default function PoliticianSidebar({
   profile,
   activeTab,
+  selectedPill,
   memberships = [],
 }: {
   profile: { country?: string | null } | null;
   activeTab: string;
+  selectedPill?: {
+    key: string;
+    districtName: string;
+    divisionType: string;
+    filterType: "all" | "shape" | "country" | "international";
+    shapeId?: number;
+  };
   memberships?: MembershipShape[];
 }) {
   const supabase = createClient();
@@ -49,25 +57,17 @@ export default function PoliticianSidebar({
 
     async function fetchPoliticians() {
       setLoading(true);
-      const boundaryIds = memberships.map((m) => m.id);
-      const { data, error } = await getInterestedPoliticians(supabase, boundaryIds);
+      const filterType = selectedPill?.filterType || (activeTab === "all" ? "all" : activeTab === "international" ? "international" : "all");
+      const shapeId = selectedPill?.shapeId;
+
+      const { data, error } = await getInterestedPoliticians(supabase, {
+        filterType,
+        shapeId,
+        country: profile?.country,
+      });
 
       if (!error && data && isMounted) {
-        const rows = data as unknown as InterestedPolitician[];
-        const filtered = rows.filter((pol) => {
-          if (pol.target_boundary_type === "Country") {
-            return pol.profiles?.country === profile?.country;
-          }
-          return true;
-        });
-
-        const sorted = filtered.sort((a, b) => {
-          if (a.target_boundary_type === "Federal" && b.target_boundary_type !== "Federal") return -1;
-          if (b.target_boundary_type === "Federal" && a.target_boundary_type !== "Federal") return 1;
-          return 0;
-        });
-
-        setPoliticians(sorted);
+        setPoliticians(data as unknown as InterestedPolitician[]);
       }
       if (isMounted) setLoading(false);
     }
@@ -76,10 +76,9 @@ export default function PoliticianSidebar({
     return () => {
       isMounted = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile, activeTab, memberships, supabase]);
+  }, [profile, activeTab, selectedPill, supabase]);
 
-  if (activeTab?.toLowerCase() === "international") return null;
+  if (activeTab?.toLowerCase() === "international" || selectedPill?.filterType === "international") return null;
 
   return (
     <Card variant="composer" padding="sm" className="sticky top-24">
@@ -93,13 +92,7 @@ export default function PoliticianSidebar({
           <Spinner size="sm" />
         </div>
       ) : politicians.length === 0 ? (
-        <EmptyState
-          description={
-            activeTab && !["master", "country"].includes(activeTab.toLowerCase())
-              ? `No candidates or representatives found for this ${activeTab.toLowerCase()} area yet.`
-              : "No candidates or representatives found for your area yet."
-          }
-        />
+        <EmptyState description="No candidates or representatives found for your area yet." />
       ) : (
         <div className="space-y-3">
           {politicians.map((pol) => {

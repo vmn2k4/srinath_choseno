@@ -58,29 +58,172 @@ export async function getUserBoundaryMemberships(supabase: Client, profileId: st
     .eq("profile_id", profileId);
 }
 
-// politician_profiles — directory of politicians/candidates matching a set of
-// boundary ids (or Country-level, always included) — PoliticianSidebar's feed.
-export async function getInterestedPoliticians(supabase: Client, boundaryIds: number[] = []) {
-  let query = supabase.from("politician_profiles").select(`
-      id,
-      political_target_role,
-      target_boundary_name,
-      target_boundary_type,
-      avatar_url,
-      profiles!inner (
-        current_ghost_id,
-        full_name,
-        country
-      )
-    `);
+// politician_profiles & profiles directory of politicians/candidates.
+export async function getInterestedPoliticians(
+  supabase: Client,
+  options?: {
+    shapeId?: number;
+    filterType?: "all" | "shape" | "country" | "international";
+    country?: string | null;
+  }
+) {
+  const { shapeId, filterType = "all", country } = options || {};
 
-  if (boundaryIds.length > 0) {
-    query = query.or(`target_boundary_id.in.(${boundaryIds.join(",")}),target_boundary_type.eq.Country`);
-  } else {
-    query = query.eq("target_boundary_type", "Country");
+  if (filterType === "international") {
+    return { data: [], error: null };
   }
 
-  return query;
+  // 1. Fetch shape name if filtering by specific shapeId
+  let shapeName: string | null = null;
+  if (filterType === "shape" && shapeId) {
+    const { data: shapeData } = await supabase
+      .from("map_shapes")
+      .select("name")
+      .eq("id", shapeId)
+      .single();
+    if (shapeData) shapeName = shapeData.name;
+  }
+
+  // 2. Two distinct "belongs to this shape" signals for a politician, kept
+  // separate so one never mislabels the other:
+  //   - residentPoliticianIds: lives in this exact shape (home-address
+  //     membership, same as any citizen) — shown as a generic "Politician"
+  //     for the area, regardless of what office (if any) they're running for.
+  //   - electionCandidateIds: formally running for a seat AT this shape via
+  //     Election Mode — can be anywhere, has nothing to do with residency.
+  let residentPoliticianIds = new Set<string>();
+  let electionCandidateIds = new Set<string>();
+
+  if (filterType === "shape" && shapeId) {
+    const { data: residents } = await supabase
+      .from("user_boundary_memberships")
+      .select("profile_id, profiles!inner(role)")
+      .eq("map_shape_id", shapeId)
+      .eq("profiles.role", "politician");
+    (residents || []).forEach((r: any) => residentPoliticianIds.add(r.profile_id));
+
+    const { data: seatCandidates } = await supabase
+      .from("election_seats")
+      .select("id, election_candidates(politician_id)")
+      .eq("map_shape_id", shapeId);
+
+    (seatCandidates || []).forEach((seat: any) => {
+      (seat.election_candidates || []).forEach((cand: any) => {
+        if (cand.politician_id) electionCandidateIds.add(cand.politician_id);
+      });
+    });
+  }
+
+  // 3. Fetch politician_profiles joined with profiles
+  const { data: polProfiles } = await supabase.from("politician_profiles").select(`
+    id,
+    target_boundary_id,
+    political_target_role,
+    target_boundary_name,
+    target_boundary_type,
+    avatar_url,
+    profiles!inner (
+      id,
+      current_ghost_id,
+      full_name,
+      country,
+      role
+    )
+  `);
+
+  // 4. Fetch profiles where role = 'politician' (profiles has no avatar_url
+  // column — that only lives on politician_profiles, which is joined in
+  // separately above).
+  let userQuery = supabase
+    .from("profiles")
+    .select("id, current_ghost_id, full_name, country, role")
+    .eq("role", "politician");
+
+  if (filterType === "country" && country) {
+    userQuery = userQuery.eq("country", country);
+  }
+
+  const { data: rawPoliticians } = await userQuery;
+
+  // Deduplicate strictly by current_ghost_id
+  const deduplicatedMap = new Map<string, any>();
+
+  const addOrMerge = (profId: string, ghostId: string, item: any) => {
+    if (!ghostId) return;
+    if (!deduplicatedMap.has(ghostId)) {
+      deduplicatedMap.set(ghostId, item);
+    } else {
+      const existing = deduplicatedMap.get(ghostId);
+      deduplicatedMap.set(ghostId, {
+        ...existing,
+        ...item,
+        political_target_role: item.political_target_role || existing.political_target_role,
+        target_boundary_name: item.target_boundary_name || existing.target_boundary_name,
+        avatar_url: item.avatar_url || existing.avatar_url,
+      });
+    }
+  };
+
+  // Add rawPoliticians first as generic "belongs to this boundary" entries —
+  // residency (or a formal election candidacy elsewhere) only ever earns a
+  // generic "Politician" placeholder here, never someone else's specific
+  // candidacy details. Processed before polProfiles so a real candidacy
+  // record (added below) can overwrite this placeholder with specifics.
+  (rawPoliticians || []).forEach((user: any) => {
+    if (!user.current_ghost_id) return;
+
+    if (filterType === "shape" && shapeId) {
+      const isResident = residentPoliticianIds.has(user.id);
+      const isElectionCandidate = electionCandidateIds.has(user.id);
+      if (!isResident && !isElectionCandidate) return;
+    }
+
+    addOrMerge(user.id, user.current_ghost_id, {
+      id: user.id,
+      political_target_role: "Politician",
+      target_boundary_name: shapeName || user.country || "",
+      target_boundary_type: "Representative",
+      avatar_url: null,
+      profiles: user,
+    });
+  });
+
+  // Add polProfiles second — an explicit candidacy declaration for this exact
+  // shape (by id, by name, or a formal election-mode candidacy), which can
+  // target any boundary regardless of where the politician actually lives.
+  // Never matched by residency, so it can't attach an unrelated boundary's
+  // candidacy card the way the old logic did.
+  (polProfiles || []).forEach((pol: any) => {
+    const prof = pol.profiles;
+    if (!prof || !prof.current_ghost_id) return;
+
+    if (filterType === "shape" && shapeId) {
+      const matchesId = pol.target_boundary_id === shapeId || String(pol.target_boundary_id) === String(shapeId);
+      const matchesName =
+        !!shapeName &&
+        !!pol.target_boundary_name &&
+        pol.target_boundary_name
+          .split(",")
+          .some((segment: string) => segment.trim().toLowerCase() === shapeName!.toLowerCase());
+      const matchesElection = electionCandidateIds.has(prof.id);
+
+      if (!matchesId && !matchesName && !matchesElection) return;
+    } else if (filterType === "country" && country) {
+      if (pol.target_boundary_type !== "Country" && prof.country !== country) return;
+    }
+
+    addOrMerge(prof.id, prof.current_ghost_id, {
+      id: pol.id,
+      political_target_role: pol.political_target_role || "Candidate",
+      target_boundary_name: pol.target_boundary_name || shapeName || prof.country || "",
+      target_boundary_type: pol.target_boundary_type || "Local",
+      avatar_url: pol.avatar_url,
+      profiles: prof,
+    });
+  });
+
+  const list = Array.from(deduplicatedMap.values());
+  return { data: list, error: null };
 }
 
 // profiles — role/full_name/country/constituency upsert, shared by

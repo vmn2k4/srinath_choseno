@@ -51,7 +51,7 @@ export default function PostHeader({
             {getGhostDisplayName(ghostId)}
           </span>
         )}
-        {isOwnerPost && (
+        {isOwnerPost && !politicianAuthor && (
           <Badge tone="primary" className="ml-2">
             {ownerBadgeLabel}
           </Badge>

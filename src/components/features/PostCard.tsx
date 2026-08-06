@@ -31,7 +31,7 @@ export default function PostCard({
   ownerGhostId,
   ownerBadgeLabel = "Candidate",
   viewerIsOwner = false,
-  showVoteBar = false,
+  showVoteBar = true,
   onVote,
   canComment = true,
   commentValue,
