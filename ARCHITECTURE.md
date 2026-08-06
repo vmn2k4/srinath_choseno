@@ -1850,3 +1850,36 @@ This update establishes nationwide and international active office holder covera
 - `src/components/features/PoliticianSidebar.tsx` (Current Office Holders section & Wall links)
 - `src/app/elections/[boundarySlug]/page.tsx` (import fix, rich boundary rendering)
 - `PRODUCT.md` (updated capabilities and commitments)
+
+---
+
+## 35. Canadian Municipal Mayors & Multi-Councillor Pipeline & Database Uniqueness Update
+
+*2026-08-06, extending representative coverage to municipal governments across Canada.*
+
+This update ingests 2,642 active Canadian municipal elected officials (359 Mayors and 2,249 Councillors across 479 cities/towns), modifies PostgreSQL table constraints to support multiple councillors per municipality, and auto-links ghost profile walls for all municipal officials.
+
+### 1. Database Schema Constraint Adjustment (Multi-Councillor Support)
+
+- **Problem**: `office_holders` previously had a UNIQUE constraint on `(map_shape_id, election_role_type_id)`. While valid for single-seat offices (MP, MLA, Governor, Mayor), this prevented storing multiple councillors for a single city (e.g. 10 City Councillors in Vancouver, 25 Ward Councillors in Toronto, 14 Ward Councillors in Calgary).
+- **Fix**: Dropped `office_holders_map_shape_id_election_role_type_id_key` constraint and created `office_holders_map_shape_id_role_full_name_key` defined as `UNIQUE (map_shape_id, election_role_type_id, full_name)`.
+
+### 2. Ingestion Pipeline & Coverage (`scripts/populate-canadian-municipal.py`)
+
+- **OpenNorth API Query**: Paged through OpenNorth's representative endpoint (`https://represent.opennorth.ca/representatives/`) to pull all municipal Mayors, Reeves, Maires, City Councillors, Regional Councillors, and Conseillers.
+- **Fuzzy Shape Matching**: Matched municipal district titles and representative set names against 5,159 Canadian `Municipal` boundary shapes in PostGIS.
+- **Matched Official Count**: Successfully matched **2,642 active Canadian municipal officials** (359 Mayors & 2,249 Councillors) across 479 cities, towns, and regional municipalities (Vancouver, Toronto, Calgary, Edmonton, Ottawa, Surrey, Montreal, Winnipeg, Mississauga, Brampton, Victoria, Halifax, etc.).
+- **CSV & Database Upsert**: Appended clean municipal records to `scripts/office-holders-data.csv` (10,055 total records) and executed batched SQL upserts into `office_holders`.
+
+### 3. Ghost Profiles & Politician Wall Generation
+
+- Executed a PostgreSQL transaction block generating linked `profiles` rows (`role = 'politician'`, `current_ghost_id`) and `politician_profiles` entries for all 2,642 newly inserted municipal office holders.
+- Linked `office_holders.linked_profile_id = profiles.id`.
+- Every Canadian Mayor and Councillor now possesses a dedicated **Politician Wall** (`/wall/[ghostId]/[slug]`).
+
+### Files Changed / Added
+
+- `scripts/populate-canadian-municipal.py` (new)
+- `scripts/office-holders-data.csv` (appended 2,642 Canadian municipal records)
+- `OFFICE_HOLDERS_DATA_GUIDE.md` (updated total count to 10,055 officials)
+- `PRODUCT.md` (updated active office holder scope)

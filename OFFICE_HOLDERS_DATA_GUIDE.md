@@ -6,7 +6,7 @@ This document explains where Choseno's active office holder data comes from, how
 
 ## 1. Overview & Data Scope
 
-Choseno maintains **7,448 active elected officials** across Canada and the United States, fully mapped to PostGIS electoral boundary shapes (`map_shapes`) and linked to dedicated **Politician Wall Profiles** (`/wall/[ghostId]/[slug]`).
+Choseno maintains **10,055 active elected officials** across Canada and the United States, fully mapped to PostGIS electoral boundary shapes (`map_shapes`) and linked to dedicated **Politician Wall Profiles** (`/wall/[ghostId]/[slug]`).
 
 ### Breakdown by Geography & Tier
 
@@ -14,21 +14,24 @@ Choseno maintains **7,448 active elected officials** across Canada and the Unite
 | :--- | :--- | :--- | :---: |
 | **Canada** | **Federal** (House of Commons) | Member of Parliament (MP) | **342** |
 | **Canada** | **Provincial** (BC, AB, SK, MB, ON, QC, NB, NS, PEI, NL, YK, NWT) | MLA / MPP / MHA | **591** |
+| **Canada** | **Municipal** (479 Cities / Towns / Municipalities) | Mayor / Maire | **359** |
+| **Canada** | **Municipal** (City & Regional Councils across Canada) | Councillor / Conseiller | **2,249** |
 | **USA** | **Federal** (House of Representatives) | U.S. Representative | **431** |
 | **USA** | **State Executive** | Governor | **50** |
 | **USA** | **State Federal** | U.S. Senator | **50** |
 | **USA** | **State Senate** (Upper Chamber) | State Senator | **1,814** |
 | **USA** | **State House** (Lower Chamber) | State Representative | **4,169** |
-| **TOTAL** | | | **7,447** |
+| **TOTAL** | | | **10,055** |
 
 ---
 
 ## 2. Data Sources & Repositories
 
-### Canadian Federal & Provincial Office Holders
+### Canadian Federal, Provincial & Municipal Office Holders
 - **Data Provider**: [OpenNorth Represent API](https://represent.opennorth.ca/) (`https://represent.opennorth.ca/representatives/`)
-- **Coverage**: Canadian Members of Parliament (MPs) and Provincial Legislators (MLAs, MPPs, MHAs).
-- **Extracted Fields**: Full Name, Electoral District / Riding Name, Party Affiliation, Official Email, Constituency Telephone, Official Government URL, Official Headshot Photo URL.
+- **Coverage**: Canadian Members of Parliament (MPs), Provincial Legislators (MLAs, MPPs, MHAs), and Canadian Municipal Officials (Mayors, City Councillors, Regional Councillors, Reeves).
+- **Extracted Fields**: Full Name, Municipality / District Name, Role Title (Mayor vs Councillor), Party Affiliation, Official Email, Phone, Government Source URL, Official Headshot Photo URL.
+- **Municipal Multi-Councillor Support**: Support for multiple councillors per municipality (e.g. 10 Councillors for Vancouver, 25 Councillors for Toronto, 14 Councillors for Calgary, 8 Councillors for Surrey). Unique constraint configured as `UNIQUE (map_shape_id, election_role_type_id, full_name)`.
 
 ### US Federal Congress & State Governors
 - **Data Provider**: [unitedstates / congress-legislators](https://github.com/unitedstates/congress-legislators) & Civil Services Executive Governors Dataset.
@@ -44,14 +47,15 @@ Choseno maintains **7,448 active elected officials** across Canada and the Unite
 
 ## 3. How the Pipeline Works
 
-The complete end-to-end data pipeline is located at:
-[`scripts/populate-all-office-holders.py`](file:///Users/vmn2k4/Coding/Choseno/scripts/populate-all-office-holders.py)
+The end-to-end data pipelines are located at:
+- National / State / Federal Pipeline: [`scripts/populate-all-office-holders.py`](file:///Users/vmn2k4/Coding/Choseno/scripts/populate-all-office-holders.py)
+- Canadian Municipal Pipeline: [`scripts/populate-canadian-municipal.py`](file:///Users/vmn2k4/Coding/Choseno/scripts/populate-canadian-municipal.py)
 
 ### Pipeline Execution Flow
 
 ```mermaid
 flowchart TD
-    A[1. Fetch Map Shapes from Supabase DB] --> B[2. Query OpenNorth API for CA MPs & MLAs]
+    A[1. Fetch Map Shapes from Supabase DB] --> B[2. Query OpenNorth API for CA MPs, MLAs & Municipal Mayors/Councillors]
     A --> C[3. Fetch US Congress & Governors Data]
     A --> D[4. Parse OpenStates 50-State Legislators Dataset]
     B --> E[5. Perform Fuzzy & FIPS Name Matching to map_shapes]
@@ -62,9 +66,9 @@ flowchart TD
     G --> H[8. Auto-Generate & Link Ghost Profiles + Politician Walls]
 ```
 
-1. **Boundary Matching**: Queries `map_shapes` in PostgreSQL to build high-performance lookup dictionaries matching shape names, FIPS codes, and riding titles.
+1. **Boundary Matching**: Queries `map_shapes` in PostgreSQL to build high-performance lookup dictionaries matching shape names, FIPS codes, and riding/city titles.
 2. **Data Aggregation**: Merges data from OpenNorth, Congress-Legislators, and OpenStates into a unified schema.
-3. **CSV Export**: Writes a clean, standardized 7,448-row export file:
+3. **CSV Export**: Writes a clean, standardized 10,055-row export file:
    [`scripts/office-holders-data.csv`](file:///Users/vmn2k4/Coding/Choseno/scripts/office-holders-data.csv)
 4. **Database Upsert**: Executes batched SQL statements into the `office_holders` Supabase table.
 5. **Politician Wall Sync**: Auto-generates a `profiles` record (`role: 'politician'`, `current_ghost_id`) and `politician_profiles` entry for every office holder so that clicking any representative opens their official **Politician Wall** (`/wall/[ghostId]/[slug]`).
@@ -73,12 +77,16 @@ flowchart TD
 
 ## 4. How to Update Data in the Future
 
-### Option A: Re-Run the Automated Pipeline (Recommended)
+### Option A: Re-Run Automated Ingestion Pipelines (Recommended)
 
-When elections occur or representative data changes, run the main Python pipeline to re-fetch the latest data sources and update the database:
+When municipal elections or legislative changes occur, re-run the python pipeline scripts:
 
 ```bash
+# Update Federal, Provincial, US Congress, Governors, State Legislatures
 python3 scripts/populate-all-office-holders.py
+
+# Update Canadian Municipal Mayors & Councillors across all cities
+python3 scripts/populate-canadian-municipal.py
 ```
 
 This script automatically:
@@ -116,7 +124,8 @@ Admins can also add, edit, or delete individual office holders interactively wit
 ## 5. Related Files & Artifacts
 
 - **Data File**: [`scripts/office-holders-data.csv`](file:///Users/vmn2k4/Coding/Choseno/scripts/office-holders-data.csv)
-- **Python Data Pipeline**: [`scripts/populate-all-office-holders.py`](file:///Users/vmn2k4/Coding/Choseno/scripts/populate-all-office-holders.py)
+- **Canadian Municipal Ingestion Pipeline**: [`scripts/populate-canadian-municipal.py`](file:///Users/vmn2k4/Coding/Choseno/scripts/populate-canadian-municipal.py)
+- **National / State Ingestion Pipeline**: [`scripts/populate-all-office-holders.py`](file:///Users/vmn2k4/Coding/Choseno/scripts/populate-all-office-holders.py)
 - **Node CSV Importer**: [`scripts/import-to-db.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/import-to-db.js)
 - **Elections & Office Holders Service**: [`src/lib/services/elections.ts`](file:///Users/vmn2k4/Coding/Choseno/src/lib/services/elections.ts)
 - **Politician Sidebar Component**: [`src/components/features/PoliticianSidebar.tsx`](file:///Users/vmn2k4/Coding/Choseno/src/components/features/PoliticianSidebar.tsx)
