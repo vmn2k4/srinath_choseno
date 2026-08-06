@@ -56,12 +56,31 @@ export async function getOfficeHoldersForShape(supabase: Client, mapShapeId: num
     .from("office_holders")
     .select(
       `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
-       contact_email, contact_phone, linked_profile_id, term_start, term_end,
+       contact_email, contact_phone, linked_profile_id,
        election_role_types(role_title, role_key),
-       political_parties(name, color_hex),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, avatar_url, current_ghost_id)`
+       political_parties(name),
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id)`
     )
     .eq("map_shape_id", Number(mapShapeId));
+}
+
+export async function getOfficeHoldersForShapes(
+  supabase: Client,
+  mapShapeIds: (number | string)[]
+) {
+  if (!mapShapeIds.length) return { data: [], error: null };
+  const ids = mapShapeIds.map(Number);
+  return supabase
+    .from("office_holders")
+    .select(
+      `id, map_shape_id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
+       contact_email, contact_phone, linked_profile_id,
+       map_shapes(id, name, boundary_type, country),
+       election_role_types(role_title, role_key),
+       political_parties(name),
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id)`
+    )
+    .in("map_shape_id", ids);
 }
 
 export async function getOfficeHolderByRole(
@@ -73,10 +92,10 @@ export async function getOfficeHolderByRole(
     .from("office_holders")
     .select(
       `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
-       contact_email, contact_phone, linked_profile_id, term_start, term_end,
+       contact_email, contact_phone, linked_profile_id,
        election_role_types(role_title, role_key),
-       political_parties(name, color_hex),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, avatar_url, current_ghost_id)`
+       political_parties(name),
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id)`
     )
     .eq("map_shape_id", Number(mapShapeId))
     .eq("election_role_type_id", electionRoleTypeId)
@@ -130,7 +149,7 @@ export async function upsertOfficeHolder(
         linked_profile_id: fields.linkedProfileId ?? null,
         updated_by: updatedBy,
         updated_at: new Date().toISOString(),
-      },
+      } as any,
       { onConflict: "map_shape_id,election_role_type_id" }
     )
     .select()
@@ -146,10 +165,10 @@ export async function getOfficeHoldersByShapeAndRole(
     .from("office_holders")
     .select(
       `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
-       contact_email, contact_phone, linked_profile_id, term_start, term_end,
+       contact_email, contact_phone, linked_profile_id,
        election_role_types(role_title, role_key),
-       political_parties(name, color_hex),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, avatar_url, current_ghost_id)`
+       political_parties(name),
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id)`
     )
     .eq("map_shape_id", Number(mapShapeId));
 
