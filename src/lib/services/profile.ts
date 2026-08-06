@@ -63,13 +63,6 @@ export async function getUserBoundaryMemberships(supabase: Client, profileId: st
 export async function getInterestedPoliticians(
   supabase: Client,
   options?: {
-    shapeId?: number;
-    filterType?: "all" | "shape" | "country" | "international";
-    country?: string | null;
-  }
-export async function getInterestedPoliticians(
-  supabase: Client,
-  options?: {
     filterType?: string;
     shapeId?: number;
     shapeIds?: number[];
