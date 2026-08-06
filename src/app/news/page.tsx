@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Newspaper, Calendar, ArrowRight, Globe, Zap } from "lucide-react";
 import { Card, PageHeader, Badge } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/server";
-import { getPublishedNewsArticles, type NewsArticleContent } from "@/lib/services/news";
+import { getPublishedNewsArticles, isBreakingNewsActive, type NewsArticleContent } from "@/lib/services/news";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -84,7 +84,7 @@ export default async function NewsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {items.map((article) => {
               const content = article.content as NewsArticleContent;
-              const isBreaking = content?.breakingNews;
+              const isBreaking = isBreakingNewsActive(article);
               const displayDate = article.published_at
                 ? new Date(article.published_at).toLocaleDateString("en-CA", {
                     year: "numeric",

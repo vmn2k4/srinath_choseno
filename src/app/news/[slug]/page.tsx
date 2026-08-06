@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/server";
 import {
   getNewsArticleBySlug,
   estimateReadingMinutes,
+  isBreakingNewsActive,
   type NewsArticle,
   type NewsArticleContent,
 } from "@/lib/services/news";
@@ -88,6 +89,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
 
   const article = data as unknown as NewsArticle;
   const content = article.content as NewsArticleContent;
+  const isBreaking = isBreakingNewsActive(article);
   const readingTime = estimateReadingMinutes(content?.body);
   const displayDate = article.published_at
     ? new Date(article.published_at).toLocaleDateString("en-CA", {
@@ -158,7 +160,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
               alt={content?.heroImageAlt ?? article.headline}
               className="w-full h-full object-cover"
             />
-            {content?.breakingNews && (
+            {isBreaking && (
               <span className="absolute top-3 left-3 flex items-center gap-1 bg-danger text-white text-xs font-bold px-3 py-1 rounded-full shadow">
                 <Zap size={11} /> BREAKING
               </span>
@@ -176,7 +178,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
           <div className="space-y-3 pb-5 border-b border-border-light/20">
             <div className="flex items-center flex-wrap gap-2">
               <Badge tone="primary">{article.category}</Badge>
-              {content?.breakingNews && !article.hero_image_url && (
+              {isBreaking && !article.hero_image_url && (
                 <span className="inline-flex items-center gap-1 bg-danger/10 text-danger text-xs font-bold px-2 py-0.5 rounded-full">
                   <Zap size={10} /> BREAKING
                 </span>

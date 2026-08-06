@@ -55,6 +55,28 @@ export interface NewsArticleInsert {
   content?: NewsArticleContent;
 }
 
+// ── Breaking news ────────────────────────────────────────────────────────
+//
+// No cron job or stored expiry column -- "breaking" status is computed
+// lazily from published_at each time an article is read, the same pattern
+// used elsewhere in this codebase (see promote_expired_election_admin_
+// applications in 20260729000007_election_administrators.sql). Whoever set
+// breakingNews: true never has to remember to unset it.
+
+export const BREAKING_NEWS_ACTIVE_HOURS = 3;
+
+export function isBreakingNewsActive(article: {
+  content?: unknown;
+  published_at?: string | null;
+}): boolean {
+  const content = article.content as NewsArticleContent | null | undefined;
+  if (!content?.breakingNews) return false;
+  if (!article.published_at) return true; // not yet published -- nothing to expire
+  const publishedMs = new Date(article.published_at).getTime();
+  if (Number.isNaN(publishedMs)) return true;
+  return Date.now() < publishedMs + BREAKING_NEWS_ACTIVE_HOURS * 60 * 60 * 1000;
+}
+
 // ── Public queries ────────────────────────────────────────────────────────
 
 export async function getPublishedNewsArticles(
@@ -105,7 +127,7 @@ export async function listAllNewsArticlesForAdmin(
 ): Promise<{ data: Partial<NewsArticle>[] | null; error: PostgrestError | null }> {
   return supabase
     .from("news_articles")
-    .select("id, slug, headline, category, country, province, status, published_at, created_at, updated_at")
+    .select("id, slug, headline, category, country, province, status, published_at, content, created_at, updated_at")
     .order("created_at", { ascending: false }) as unknown as Promise<{
     data: Partial<NewsArticle>[] | null;
     error: PostgrestError | null;
@@ -132,6 +154,33 @@ export async function createNewsArticle(
     .insert(article as unknown as NewsArticleRow)
     .select()
     .single();
+}
+
+/**
+ * Insert several articles from one AI-generated batch JSON paste. Runs
+ * sequentially (not Promise.all) so a slug collision on article 3 doesn't
+ * abort articles 4+, and so `failed` can report which ones actually broke.
+ */
+export async function createNewsArticlesBatch(
+  supabase: Client,
+  articles: NewsArticleInsert[]
+): Promise<{
+  created: NewsArticle[];
+  failed: Array<{ headline: string; error: string }>;
+}> {
+  const created: NewsArticle[] = [];
+  const failed: Array<{ headline: string; error: string }> = [];
+
+  for (const article of articles) {
+    const { data, error } = await createNewsArticle(supabase, article);
+    if (error || !data) {
+      failed.push({ headline: article.headline || "(untitled)", error: error?.message ?? "Unknown error" });
+    } else {
+      created.push(data);
+    }
+  }
+
+  return { created, failed };
 }
 
 export async function updateNewsArticle(

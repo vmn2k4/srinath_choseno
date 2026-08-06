@@ -16,20 +16,24 @@ import {
 import {
   Newspaper, Plus, Trash2, Edit3, Eye, Save,
   X, ImagePlus, FileJson, ChevronDown, ChevronUp, Calendar,
-  Globe, AlignLeft, User, RefreshCw, Upload, ClipboardPaste,
+  Globe, AlignLeft, User, RefreshCw, Upload, ClipboardPaste, Zap, Copy, List,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import {
   listAllNewsArticlesForAdmin,
   getNewsArticleByIdForAdmin,
   createNewsArticle,
+  createNewsArticlesBatch,
   updateNewsArticle,
   deleteNewsArticle,
   uploadNewsHeroImage,
+  isBreakingNewsActive,
+  BREAKING_NEWS_ACTIVE_HOURS,
   type NewsArticle,
   type NewsArticleContent,
   type NewsArticleInsert,
 } from "@/lib/services/news";
+import { normalizeCountryCode, normalizeProvinceCode } from "@/lib/utils/newsGeography";
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -53,6 +57,7 @@ interface ArticleFormData {
   authorName: string;
   authorBio: string;
   authorPhotoUrl: string;
+  sources: string; // one per line: "Label | https://url"
 }
 
 const EMPTY_FORM: ArticleFormData = {
@@ -62,8 +67,8 @@ const EMPTY_FORM: ArticleFormData = {
   category: "General",
   country: "",
   province: "",
-  status: "draft",
-  published_at: "",
+  status: "published",
+  published_at: new Date().toISOString().slice(0, 16),
   hero_image_url: "",
   seoTitle: "",
   metaDescription: "",
@@ -75,6 +80,7 @@ const EMPTY_FORM: ArticleFormData = {
   authorName: "",
   authorBio: "",
   authorPhotoUrl: "",
+  sources: "",
 };
 
 const STATUS_CONFIG: Record<string, { label: string; tone: "primary" | "accent" | "amber" | "emerald" | "rose" | "neutral" }> = {
@@ -90,6 +96,25 @@ const CATEGORY_OPTIONS = [
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────────────
+
+/** "Label | https://url" per line <-> [{label, url}] -- the admin form's
+ * plain-text stand-in for a structured source-citation editor. */
+function parseSourcesText(text: string): Array<{ label: string; url: string }> | undefined {
+  const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
+  if (lines.length === 0) return undefined;
+  const sources = lines
+    .map((line) => {
+      const [label, url] = line.split("|").map((s) => s.trim());
+      return { label: label || url || "Source", url: url || "" };
+    })
+    .filter((s) => s.url);
+  return sources.length > 0 ? sources : undefined;
+}
+
+function formatSourcesText(sources?: Array<{ label: string; url: string }>): string {
+  if (!sources || sources.length === 0) return "";
+  return sources.map((s) => `${s.label} | ${s.url}`).join("\n");
+}
 
 function formToInsert(f: ArticleFormData): NewsArticleInsert {
   const content: NewsArticleContent = {
@@ -109,6 +134,7 @@ function formToInsert(f: ArticleFormData): NewsArticleInsert {
           photoUrl: f.authorPhotoUrl || undefined,
         }
       : undefined,
+    sources: parseSourcesText(f.sources),
   };
 
   return {
@@ -149,6 +175,7 @@ function articleToForm(a: NewsArticle): ArticleFormData {
     authorName:    c?.author?.name   ?? "",
     authorBio:     c?.author?.bio    ?? "",
     authorPhotoUrl:c?.author?.photoUrl??"",
+    sources:       formatSourcesText(c?.sources),
   };
 }
 
@@ -161,16 +188,161 @@ function generateSlug(headline: string): string {
     .slice(0, 80);
 }
 
+function getAiPrompt(mode: "single" | "batch" = "single"): string {
+  if (mode === "batch") {
+    return getBatchAiPrompt();
+  }
+  return `You are an expert, objective news writer and senior editor. When I provide a news article topic, source text, or headline, you will generate a complete, publication-ready news story based strictly on the provided input.
+
+The output must strictly be a valid JSON object matching the schema below, with no markdown code blocks outside of the JSON formatting (or pure JSON text).
+
+### Strict Guidelines:
+1. **Tone & Objectivity:** The content must be strictly neutral, fact-based, and objective. Avoid bias, loaded language, or sensationalism while maintaining plain, accessible language for a general audience.
+
+2. **Anti-Hallucination & Accuracy Rules:**
+   - Never invent names, quotes, statistics, dates, locations, sources, or details not present in the input.
+   - If information is unavailable, explicitly omit it or state uncertainty rather than filling gaps with plausible assumptions.
+
+3. **Factual Openings (No Sensationalism):** Open the body immediately with a standard journalistic dateline (e.g., \`CITY, Prov. — \`) followed by a concrete, factual scene or verified statistic from the source material. Avoid dramatic metaphors or clickbait.
+
+4. **Verified Quotes Only:** Integrate direct quotes or attributions *only* when explicitly provided in the source material. If no verified quotes are available, summarize perspectives using neutral paraphrasing without quotation marks.
+
+5. **Structure & Readability:** Break up sections into shorter, digestible subsections with punchy, action-oriented subheads tailored to the specific story topic.
+
+6. **Format & Schema:** Fill out every field in the JSON accurately. The \`body\` must use standard Markdown formatting.
+
+### Required JSON Structure:
+{
+  "slug": "url-friendly-hyphenated-slug",
+  "headline": "Compelling, accurate news headline",
+  "summary": "Short, punchy card excerpt summarizing the core development",
+  "category": "Choose one: ${CATEGORY_OPTIONS.join(", ")}",
+  "country": "CA — ISO-2 code (CA, US, GB…); full names like \\"Canada\\" also work and get normalized. Blank = global",
+  "province": "ON — province/state code (ON, BC, NY, CA…); full names like \\"Ontario\\" also work. Blank = country-wide",
+  "status": "Choose one: ${Object.keys(STATUS_CONFIG).join(", ")}",
+  "published_at": "2026-08-06T00:00:00Z",
+  "body": "CITY, Prov. — [Concrete, factual opening based strictly on source material...]\\n\\n## [Action-Oriented Subhead]\\n\\n[Core details, verified facts, and bullet points for metrics...]\\n\\n## Outlook\\n\\n[Forward-looking context grounded strictly in the source material...]",
+  "seoTitle": "Optimized SEO Title under 60 characters",
+  "metaDescription": "Concise meta description under 160 characters summarizing the article for search engines",
+  "tags": ["tag1", "tag2", "tag3"],
+  "breakingNews": false,
+  "author": {
+    "name": "Jane Doe",
+    "bio": "Civic and investigative reporter",
+    "photoUrl": "https://... — OPTIONAL, omit if not provided"
+  },
+  "sources": [
+    {
+      "label": "Source Name",
+      "url": "https://example.com/source"
+    }
+  ],
+  "hero_image_url": "https://example.com/photo.jpg — OPTIONAL. Only include if the source material explicitly provides an image URL. Never invent, guess, or reuse a stock URL — omit this field entirely if no image was given.",
+  "heroImageAlt": "Accessible description of what's in the image — REQUIRED whenever hero_image_url is set, omit otherwise",
+  "heroImageCaption": "Photo credit / caption shown under the image — OPTIONAL, only if provided in source material"
+}
+
+### Key Points:
+- Headline: 60-80 characters, compelling but factual
+- Summary: 100-150 characters, card-friendly excerpt
+- Body: Use Markdown formatting with ## for subheadings
+- Category: MUST be exactly one of: ${CATEGORY_OPTIONS.join(", ")} — any other value will be miscategorized on the site
+- Status: MUST be exactly one of: ${Object.keys(STATUS_CONFIG).join(", ")} — any other value will be rejected when saving
+- SEO Title: 50-60 characters, include primary keyword
+- Meta Description: 150-160 characters, write for CTR not gaming
+- Tags: 3-5 tags, relevant to the story
+- Breaking News: Only mark as true if article is <6 hours old and unexpected. The badge auto-clears itself ${BREAKING_NEWS_ACTIVE_HOURS} hours after publish, so never set it for older or evergreen stories.
+- Country/Province: prefer ISO-2 codes (CA, US, ON, BC…), but full names are accepted too
+- Sources: cite every source the input material actually came from — this renders as a "Sources" section on the published article. Omit the array entirely if no sources were given, never invent one.
+- Images: Never fabricate a hero_image_url — only set it if the source material gives you a real image URL and its photo credit. No image? Omit all three image fields; it can be uploaded manually afterward in the admin panel.
+- All timestamps in ISO 8601 format with timezone
+
+### Common Mistakes to Avoid:
+❌ DON'T invent quotes, statistics, or details not in source material
+❌ DON'T use sensational language ("Shocking", "Bombshell", "Massive")
+❌ DON'T bury the lede - start with the news, not background
+❌ DON'T assume or fill gaps with reasonable inferences
+❌ DON'T include editorializing or opinion
+
+✅ DO start with verified facts and datelines
+✅ DO quote only when explicitly provided in source
+✅ DO attribute opinion: "According to X, [opinion]"
+✅ DO explain complex topics in plain language
+✅ DO let the facts speak - no editorializing
+
+Here is my news topic/headline and source details:`;
+}
+
+function getBatchAiPrompt(): string {
+  return `You are an expert news curator and batch article generator. Your task is to generate multiple high-quality, publication-ready news articles in a single JSON batch format.
+
+When provided with today's top news stories, key events, or a list of topics, you will generate between 3-10 complete news articles covering different angles, regions, or story types.
+
+### Output Format - Batch Array:
+
+The output MUST be a valid JSON object with a batch array:
+
+{
+  "batch": [
+    {
+      "slug": "url-friendly-slug-1",
+      "headline": "Compelling headline",
+      "summary": "Short excerpt for card",
+      "category": "${CATEGORY_OPTIONS.join("|")}",
+      "country": "CA|US|GB",
+      "province": "ON|BC|NY|TX",
+      "status": "${Object.keys(STATUS_CONFIG).join("|")}",
+      "published_at": "2026-08-06T14:30:00Z",
+      "body": "CITY, Prov. — [Content in Markdown...]",
+      "seoTitle": "SEO title under 60 chars",
+      "metaDescription": "Meta description under 160 chars",
+      "tags": ["tag1", "tag2", "tag3"],
+      "breakingNews": false,
+      "author": { "name": "Author", "bio": "Role", "photoUrl": "https://... — OPTIONAL" },
+      "sources": [{ "label": "Source", "url": "https://..." }],
+      "hero_image_url": "https://... — OPTIONAL, only if source material gives a real image URL. Omit otherwise, never invent one.",
+      "heroImageAlt": "Accessible description — REQUIRED if hero_image_url is set",
+      "heroImageCaption": "Photo credit / caption — OPTIONAL"
+    },
+    { /* article 2 */ },
+    { /* article 3 */ }
+  ]
+}
+
+### Strict Guidelines:
+
+1. **Diversity:** Cover different topics, regions, categories, or angles. Avoid repetition.
+
+2. **Anti-Hallucination:** Never invent facts, quotes, or statistics not in source material.
+
+3. **Category:** MUST be exactly one of ${CATEGORY_OPTIONS.join(", ")} for every article — no other values, they won't display correctly on the site.
+
+4. **Status:** MUST be exactly one of ${Object.keys(STATUS_CONFIG).join(", ")} — any other value will be rejected when saving.
+
+5. **Country/Province:** Prefer ISO-2 codes — CA/US/GB for country, ON/BC/NY/CA for province or state. Full names ("Canada", "Ontario") are accepted too and get normalized automatically, but codes are more reliable. Leave "province" blank for country-wide stories, and "country" blank for global stories.
+
+6. **Factual & Neutral:** Start with dateline, no sensationalism, use Markdown formatting.
+
+7. **Sources:** Cite every source each article's input actually came from — renders as a "Sources" section on the published page. Omit the array for an article with no sources, never invent one.
+
+8. **Breaking News:** Only set \`breakingNews: true\` on articles that are genuinely <6 hours old and represent a sudden, unexpected development. The badge auto-clears itself ${BREAKING_NEWS_ACTIVE_HOURS} hours after \`published_at\` — never set it on older or evergreen stories in the batch.
+
+9. **Images:** Never fabricate a hero_image_url for any article in the batch. Only set it (with heroImageAlt) when the source material actually supplies an image URL — otherwise omit all three image fields for that article; images can be added manually afterward in the admin panel.
+
+Here are today's news stories and topics:`;
+}
+
 function applyJsonToForm(parsed: any, prev: ArticleFormData): ArticleFormData {
   const flat = { ...parsed, ...(parsed.content ?? {}) };
+  const country = flat.country ? normalizeCountryCode(flat.country) : prev.country;
   return {
     ...prev,
     slug:           flat.slug           ?? prev.slug,
     headline:       flat.headline       ?? flat.title ?? prev.headline,
     summary:        flat.summary        ?? prev.summary,
     category:       flat.category       ?? prev.category,
-    country:        flat.country        ?? prev.country,
-    province:       flat.province       ?? prev.province,
+    country,
+    province:       flat.province ? normalizeProvinceCode(flat.province, country) : prev.province,
     status:         flat.status         ?? prev.status,
     published_at:   flat.published_at
       ? new Date(flat.published_at).toISOString().slice(0, 16)
@@ -188,6 +360,9 @@ function applyJsonToForm(parsed: any, prev: ArticleFormData): ArticleFormData {
     authorName:     flat.author?.name   ?? flat.authorName  ?? prev.authorName,
     authorBio:      flat.author?.bio    ?? flat.authorBio   ?? prev.authorBio,
     authorPhotoUrl: flat.author?.photoUrl ?? flat.authorPhotoUrl ?? prev.authorPhotoUrl,
+    sources: Array.isArray(flat.sources)
+      ? formatSourcesText(flat.sources)
+      : (flat.sources ?? prev.sources),
   };
 }
 
@@ -213,6 +388,16 @@ export default function AdminNewsPageClient() {
   const [jsonPasteMode, setJsonPasteMode] = useState(false);
   const [jsonPasteText, setJsonPasteText] = useState("");
   const [jsonPasteError, setJsonPasteError] = useState("");
+
+  // Batch import state — populated when the pasted JSON has a top-level
+  // `batch` array instead of a single article.
+  const [batchPreview, setBatchPreview] = useState<NewsArticleInsert[] | null>(null);
+  const [batchImporting, setBatchImporting] = useState(false);
+
+  // AI Prompt state
+  const [showAiPrompt, setShowAiPrompt] = useState(false);
+  const [promptCopied, setPromptCopied] = useState(false);
+  const [promptTab, setPromptTab] = useState<"single" | "batch">("single");
 
   const [sectionsOpen, setSectionsOpen] = useState({
     core: true,
@@ -254,6 +439,7 @@ export default function AdminNewsPageClient() {
     setJsonPasteMode(false);
     setJsonPasteText("");
     setJsonPasteError("");
+    setBatchPreview(null);
   }
 
   async function openEditForm(id: string) {
@@ -268,6 +454,7 @@ export default function AdminNewsPageClient() {
     setJsonPasteMode(false);
     setJsonPasteText("");
     setJsonPasteError("");
+    setBatchPreview(null);
   }
 
   function closeForm() {
@@ -276,16 +463,27 @@ export default function AdminNewsPageClient() {
   }
 
   // ── JSON import ───────────────────────────────────────────────────────────
+  // A pasted object with a top-level `batch` array (the multi-story AI
+  // prompt's output shape) populates batchPreview instead of the single
+  // form — each item goes through the same applyJsonToForm/formToInsert
+  // mapping as a single paste, just run once per array entry.
 
-  function parseAndApplyJson(jsonString: string): boolean {
+  function parseAndApplyJson(jsonString: string): { ok: boolean; batchCount?: number } {
     try {
       const parsed = JSON.parse(jsonString);
+      if (parsed && Array.isArray(parsed.batch)) {
+        const drafts = parsed.batch.map((item: any) => formToInsert(applyJsonToForm(item, EMPTY_FORM)));
+        setBatchPreview(drafts);
+        setJsonPasteError("");
+        return { ok: true, batchCount: drafts.length };
+      }
+      setBatchPreview(null);
       setForm((prev) => applyJsonToForm(parsed, prev));
       setJsonPasteError("");
-      return true;
+      return { ok: true };
     } catch {
       setJsonPasteError("Invalid JSON — check your syntax and try again.");
-      return false;
+      return { ok: false };
     }
   }
 
@@ -294,8 +492,15 @@ export default function AdminNewsPageClient() {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = (ev) => {
-      const ok = parseAndApplyJson(ev.target?.result as string);
-      if (ok) setStatusMsg({ type: "success", msg: "JSON imported — review fields and save." });
+      const result = parseAndApplyJson(ev.target?.result as string);
+      if (result.ok) {
+        setStatusMsg({
+          type: "success",
+          msg: result.batchCount
+            ? `Loaded ${result.batchCount} articles — review below and click "Import All".`
+            : "JSON imported — review fields and save.",
+        });
+      }
     };
     reader.readAsText(file);
     e.target.value = "";
@@ -303,11 +508,38 @@ export default function AdminNewsPageClient() {
 
   function handleJsonPasteApply() {
     if (!jsonPasteText.trim()) { setJsonPasteError("Paste some JSON first."); return; }
-    const ok = parseAndApplyJson(jsonPasteText);
-    if (ok) {
-      setStatusMsg({ type: "success", msg: "JSON applied — review fields and save." });
+    const result = parseAndApplyJson(jsonPasteText);
+    if (result.ok) {
+      setStatusMsg({
+        type: "success",
+        msg: result.batchCount
+          ? `Loaded ${result.batchCount} articles — review below and click "Import All".`
+          : "JSON applied — review fields and save.",
+      });
       setJsonPasteMode(false);
       setJsonPasteText("");
+    }
+  }
+
+  async function handleBatchImport() {
+    if (!batchPreview || batchPreview.length === 0) return;
+    setBatchImporting(true);
+    setStatusMsg(null);
+    const { created, failed } = await createNewsArticlesBatch(supabase, batchPreview);
+    setBatchImporting(false);
+
+    if (failed.length === 0) {
+      setStatusMsg({ type: "success", msg: `Imported ${created.length} article${created.length === 1 ? "" : "s"}.` });
+      setBatchPreview(null);
+      await loadArticles();
+      closeForm();
+    } else {
+      setStatusMsg({
+        type: created.length > 0 ? "success" : "error",
+        msg: `Imported ${created.length}, ${failed.length} failed — ${failed.map((f) => `"${f.headline}": ${f.error}`).join("; ")}`,
+      });
+      setBatchPreview(null);
+      if (created.length > 0) await loadArticles();
     }
   }
 
@@ -365,6 +597,24 @@ export default function AdminNewsPageClient() {
     }
   }
 
+  // ── Publish ───────────────────────────────────────────────────────────────
+
+  async function handleQuickPublish(id: string) {
+    const article = articles.find((a) => a.id === id);
+    if (!article) return;
+    const now = new Date().toISOString();
+    const { error } = await updateNewsArticle(supabase, id, {
+      status: "published",
+      published_at: article.published_at || now,
+    });
+    if (error) {
+      setStatusMsg({ type: "error", msg: error.message });
+    } else {
+      setStatusMsg({ type: "success", msg: `"${article.headline}" published!` });
+      await loadArticles();
+    }
+  }
+
   // ── Delete ────────────────────────────────────────────────────────────────
 
   async function handleDelete(id: string) {
@@ -380,6 +630,12 @@ export default function AdminNewsPageClient() {
 
   function toggleSection(key: keyof typeof sectionsOpen) {
     setSectionsOpen((prev) => ({ ...prev, [key]: !prev[key] }));
+  }
+
+  function handleCopyPrompt() {
+    navigator.clipboard.writeText(getAiPrompt(promptTab));
+    setPromptCopied(true);
+    setTimeout(() => setPromptCopied(false), 2000);
   }
 
   // ── Render ────────────────────────────────────────────────────────────────
@@ -426,9 +682,10 @@ export default function AdminNewsPageClient() {
                   <div className="flex items-center gap-2 flex-wrap">
                     <Badge tone={s.tone}>{s.label}</Badge>
                     <Badge tone="primary">{a.category}</Badge>
+                    {isBreakingNewsActive(a) && <Badge tone="rose">🔴 Breaking</Badge>}
                     {a.country && (
                       <span className="text-xs text-text-muted flex items-center gap-1">
-                        <Globe size={11} /> {a.country.toUpperCase()}
+                        <Globe size={11} /> {a.country}{a.province ? `-${a.province}` : ""}
                       </span>
                     )}
                   </div>
@@ -444,6 +701,17 @@ export default function AdminNewsPageClient() {
                   )}
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
+                  {a.status !== "published" && (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-emerald hover:text-emerald-light"
+                      onClick={() => handleQuickPublish(a.id)}
+                      title="Publish this article"
+                    >
+                      <Zap size={13} />
+                    </Button>
+                  )}
                   <Button size="sm" variant="ghost" as="a" href={`/news/${a.slug}`} target="_blank" rel="noopener noreferrer">
                     <Eye size={13} />
                   </Button>
@@ -480,6 +748,9 @@ export default function AdminNewsPageClient() {
               </h2>
               <div className="flex items-center gap-2">
                 <input ref={jsonFileRef} type="file" accept=".json" className="hidden" onChange={handleJsonFileUpload} />
+                <Button size="sm" variant="ghost" onClick={() => setShowAiPrompt(true)} title="View AI prompt for generating news">
+                  <Zap size={13} /> AI Prompt
+                </Button>
                 <Button size="sm" variant="ghost" onClick={() => { setJsonPasteMode((v) => !v); setJsonPasteError(""); }}>
                   <ClipboardPaste size={13} /> Paste JSON
                 </Button>
@@ -506,12 +777,12 @@ export default function AdminNewsPageClient() {
             {jsonPasteMode && (
               <FormSection title="Paste JSON" icon={<ClipboardPaste size={13} />}>
                 <p className="text-xs text-text-muted mb-2">
-                  Paste any JSON object. Top-level keys like <code className="text-primary text-xs bg-surface px-1 rounded">headline</code>, <code className="text-primary text-xs bg-surface px-1 rounded">body</code>, <code className="text-primary text-xs bg-surface px-1 rounded">tags</code>, etc. will be mapped into the form fields automatically.
+                  Paste a single article object, or a batch of them as <code className="text-primary text-xs bg-surface px-1 rounded">{'{ "batch": [...] }'}</code>. Keys like <code className="text-primary text-xs bg-surface px-1 rounded">headline</code>, <code className="text-primary text-xs bg-surface px-1 rounded">body</code>, <code className="text-primary text-xs bg-surface px-1 rounded">tags</code>, etc. are mapped automatically; <code className="text-primary text-xs bg-surface px-1 rounded">country</code>/<code className="text-primary text-xs bg-surface px-1 rounded">province</code> are normalized to ISO codes.
                 </p>
                 <Textarea
                   value={jsonPasteText}
                   onChange={(e) => { setJsonPasteText(e.target.value); setJsonPasteError(""); }}
-                  placeholder={'{\n  "headline": "My article",\n  "body": "## Intro\\n\\nContent here…",\n  "status": "published",\n  "published_at": "2026-08-04T00:00:00Z"\n}'}
+                  placeholder={'{\n  "headline": "My article",\n  "body": "## Intro\\n\\nContent here…",\n  "status": "published",\n  "published_at": "2026-08-04T00:00:00Z"\n}\n\n— or —\n\n{ "batch": [ { "headline": "…", … }, { "headline": "…", … } ] }'}
                   rows={10}
                   className="font-mono text-xs"
                 />
@@ -520,6 +791,39 @@ export default function AdminNewsPageClient() {
                   <Button size="sm" onClick={handleJsonPasteApply}>Apply JSON</Button>
                   <Button size="sm" variant="ghost" onClick={() => { setJsonPasteMode(false); setJsonPasteText(""); setJsonPasteError(""); }}>
                     Cancel
+                  </Button>
+                </div>
+              </FormSection>
+            )}
+
+            {/* Batch Import Preview */}
+            {batchPreview && batchPreview.length > 0 && (
+              <FormSection title={`Batch Preview (${batchPreview.length} articles)`} icon={<List size={13} />}>
+                <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                  {batchPreview.map((a, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-border-light/20"
+                      style={{ backgroundColor: "var(--color-surface-hover)" }}
+                    >
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-text-main truncate">{a.headline || "(no headline)"}</p>
+                        <p className="text-xs text-text-muted font-mono truncate">{a.slug || "(no slug)"}</p>
+                      </div>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {a.country && <Badge tone="neutral">{a.country}{a.province ? `-${a.province}` : ""}</Badge>}
+                        {a.content?.breakingNews && <Badge tone="rose">🔴 Breaking</Badge>}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex gap-2 mt-3">
+                  <Button size="sm" onClick={handleBatchImport} disabled={batchImporting}>
+                    {batchImporting ? <Spinner size="sm" /> : <Upload size={13} />}
+                    {batchImporting ? "Importing…" : `Import All (${batchPreview.length})`}
+                  </Button>
+                  <Button size="sm" variant="ghost" onClick={() => setBatchPreview(null)} disabled={batchImporting}>
+                    Discard
                   </Button>
                 </div>
               </FormSection>
@@ -581,12 +885,21 @@ export default function AdminNewsPageClient() {
                   />
                 </FieldGroup>
 
-                <FieldGroup label="Country (ISO-2)">
+                <FieldGroup label="Country">
                   <Input
                     value={form.country}
-                    onChange={(e) => setField("country", e.target.value.toUpperCase())}
-                    placeholder="CA, US, GB — blank = global"
-                    maxLength={2}
+                    onChange={(e) => setField("country", e.target.value)}
+                    onBlur={(e) => setField("country", normalizeCountryCode(e.target.value))}
+                    placeholder="Canada, CA, United States… — blank = global"
+                  />
+                </FieldGroup>
+
+                <FieldGroup label="Province / State">
+                  <Input
+                    value={form.province}
+                    onChange={(e) => setField("province", e.target.value)}
+                    onBlur={(e) => setField("province", normalizeProvinceCode(e.target.value, form.country))}
+                    placeholder="Ontario, ON, California… — blank = country-wide"
                   />
                 </FieldGroup>
 
@@ -609,7 +922,7 @@ export default function AdminNewsPageClient() {
                     style={{ accentColor: "var(--color-primary)" }}
                   />
                   <label htmlFor="breakingNews" className="text-sm text-text-main cursor-pointer select-none">
-                    🔴 Breaking News
+                    🔴 Breaking News <span className="text-text-muted font-normal">(auto-clears {BREAKING_NEWS_ACTIVE_HOURS}h after publish)</span>
                   </label>
                 </div>
               </div>
@@ -644,6 +957,15 @@ export default function AdminNewsPageClient() {
                     value={form.tags}
                     onChange={(e) => setField("tags", e.target.value)}
                     placeholder="elections, privacy, technology"
+                  />
+                </FieldGroup>
+                <FieldGroup label="Sources (one per line: Label | https://url)">
+                  <Textarea
+                    value={form.sources}
+                    onChange={(e) => setField("sources", e.target.value)}
+                    placeholder={"City of Toronto Press Release | https://toronto.ca/news/...\nStatistics Canada | https://statcan.gc.ca/..."}
+                    rows={3}
+                    className="font-mono text-xs"
                   />
                 </FieldGroup>
               </div>
@@ -749,6 +1071,118 @@ export default function AdminNewsPageClient() {
                 {saving ? <Spinner size="sm" /> : <Save size={14} />}
                 {saving ? "Saving…" : editingId ? "Update Article" : "Create Article"}
               </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* AI Prompt Modal */}
+      {showAiPrompt && (
+        <div className="fixed inset-0 z-50 overflow-y-auto flex items-start justify-center py-8 px-4"
+          style={{ backgroundColor: "var(--color-overlay-heavy)" }}>
+          <div className="w-full max-w-2xl space-y-3">
+            <div
+              className="flex items-center justify-between gap-4 px-5 py-4 rounded-2xl border border-border-light/30"
+              style={{ backgroundColor: "var(--color-surface)" }}
+            >
+              <h2 className="text-base font-bold text-text-main flex items-center gap-2">
+                <Zap size={18} /> AI Prompt for News Generation
+              </h2>
+              <button
+                onClick={() => setShowAiPrompt(false)}
+                className="p-1.5 rounded-lg text-text-muted hover:text-text-main hover:bg-surface-hover transition-colors"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            {/* Prompt Mode Tabs */}
+            <div className="flex gap-2 px-2">
+              <button
+                onClick={() => setPromptTab("single")}
+                className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
+                  promptTab === "single"
+                    ? "bg-primary text-white"
+                    : "bg-surface-hover text-text-main hover:bg-surface"
+                }`}
+              >
+                📰 Single Article
+              </button>
+              <button
+                onClick={() => setPromptTab("batch")}
+                className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
+                  promptTab === "batch"
+                    ? "bg-primary text-white"
+                    : "bg-surface-hover text-text-main hover:bg-surface"
+                }`}
+              >
+                <List size={14} className="inline mr-1" />
+                Batch (Multi-Story)
+              </button>
+            </div>
+
+            <div
+              className="p-5 rounded-2xl border border-border-light/30 space-y-3"
+              style={{ backgroundColor: "var(--color-surface)" }}
+            >
+              <div className="space-y-2">
+                <p className="text-sm text-text-muted">
+                  {promptTab === "single"
+                    ? "👇 Copy this prompt and paste it into Claude, ChatGPT, or your preferred AI service. Provide your news topic/source material and it will generate publication-ready JSON you can paste directly into the \"Paste JSON\" field."
+                    : "👇 Copy this prompt to generate 3-10 news articles at once. Provide today's top stories or key topics, and it will generate a batch JSON you can paste directly into \"Paste JSON\"."}
+                </p>
+              </div>
+
+              <div className="relative">
+                <textarea
+                  readOnly
+                  value={getAiPrompt(promptTab)}
+                  className="w-full h-96 p-4 rounded-lg border border-border-light/30 bg-surface-hover font-mono text-xs resize-none"
+                  style={{ color: "var(--color-text-main)" }}
+                />
+                <Button
+                  size="sm"
+                  onClick={handleCopyPrompt}
+                  className="absolute top-3 right-3"
+                >
+                  <Copy size={13} /> {promptCopied ? "Copied!" : "Copy Prompt"}
+                </Button>
+              </div>
+
+              <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 space-y-1">
+                <p className="text-xs font-semibold text-primary">📝 Workflow</p>
+                <ol className="text-xs text-text-muted space-y-1 list-decimal list-inside">
+                  <li>Copy the prompt above</li>
+                  <li>Open Claude, ChatGPT, or Gemini</li>
+                  <li>Paste the prompt as the system instruction</li>
+                  {promptTab === "single" ? (
+                    <>
+                      <li>Provide your news topic/source material</li>
+                      <li>Copy the JSON output from the AI</li>
+                    </>
+                  ) : (
+                    <>
+                      <li>Describe today&apos;s top stories or key topics</li>
+                      <li>Specify number of articles needed (3-10)</li>
+                      <li>Copy the batch JSON output from the AI</li>
+                    </>
+                  )}
+                  <li>Click &quot;Paste JSON&quot; and paste the output</li>
+                  <li>Review and click &quot;{promptTab === "batch" ? "Import All" : "Save"}&quot;</li>
+                </ol>
+              </div>
+
+              <div className="bg-amber/10 border border-amber/20 rounded-lg p-3 text-xs text-text-muted space-y-1">
+                <p className="font-semibold text-amber">✨ Country/Province Auto-Normalization</p>
+                <p>The system automatically converts country names (Canada → CA, United States → US) and province names (Ontario → ON, California → CA) to ISO-2 codes.</p>
+              </div>
+
+              <div className="flex justify-end gap-2">
+                <Button variant="ghost" onClick={() => setShowAiPrompt(false)}>Close</Button>
+                <Button onClick={handleCopyPrompt}>
+                  <Copy size={13} /> {promptCopied ? "Copied!" : "Copy Prompt"}
+                </Button>
+              </div>
             </div>
           </div>
         </div>
