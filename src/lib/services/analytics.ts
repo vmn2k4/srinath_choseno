@@ -146,3 +146,35 @@ export async function getAdminAnalyticsMetrics(
     };
   }
 }
+
+export type DailyUserSignup = {
+  id: string;
+  email: string;
+  full_name: string;
+  role: string;
+  created_at: string;
+};
+
+export type DailyUserSignupsGroup = {
+  signup_date: string;
+  user_count: number;
+  users: DailyUserSignup[];
+};
+
+export async function getAdminDailyUserSignups(
+  supabase: Client
+): Promise<{ success: boolean; data: DailyUserSignupsGroup[]; error?: string }> {
+  try {
+    const { data, error } = await supabase.rpc("get_admin_daily_user_signups" as any);
+    if (error) throw error;
+    return { success: true, data: (data as unknown as DailyUserSignupsGroup[]) || [] };
+  } catch (err) {
+    console.error("Failed to fetch admin daily user signups:", err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : String(err),
+      data: [],
+    };
+  }
+}
+
