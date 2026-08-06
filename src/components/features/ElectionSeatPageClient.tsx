@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import CandidacyWall from "./CandidacyWall";
+import CurrentOfficeHolderCard from "./CurrentOfficeHolderCard";
 import {
   getSeatById,
   getCandidatesBySeatIds,
@@ -366,6 +367,15 @@ export default function ElectionSeatPageClient({
           </Card>
 
           {status && <p className="text-danger text-xs mb-4">{status}</p>}
+
+          {/* Current Office Holder */}
+          {seat?.map_shape_id && (
+            <CurrentOfficeHolderCard
+              mapShapeId={seat.map_shape_id}
+              roleTitle={seat.role_title}
+              className="mb-8"
+            />
+          )}
 
           {/* Candidate Switcher Roster */}
           {candidates.length === 0 ? (

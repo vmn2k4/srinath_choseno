@@ -10,7 +10,9 @@
     "lint": "eslint",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:e2e:report": "playwright show-report"
+    "test:e2e:report": "playwright show-report",
+    "import:office-holders": "ts-node scripts/import-office-holders.ts scripts/office-holders-data.csv",
+    "import:office-holders:custom": "ts-node scripts/import-office-holders.ts"
   },
   "dependencies": {
     "@google-analytics/data": "^6.1.0",

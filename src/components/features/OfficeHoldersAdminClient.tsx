@@ -5,7 +5,8 @@ import AdminSubNav from "./AdminSubNav";
 import { getCountries, listBoundaryTypes, searchMapShapesByName } from "@/lib/services/boundaries";
 import { getElectionRoleTypes, getOfficeHoldersForShape, upsertOfficeHolder, removeOfficeHolder } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
-import { UserCheck, Search, Save, Trash2, X } from "lucide-react";
+import { adminSearchProfiles, adminGetProfileById } from "@/lib/services/profile";
+import { UserCheck, Search, Save, Trash2, X, Link2 } from "lucide-react";
 import { Card, Button, Input, Textarea, Select, Spinner, PageHeader } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
 import { createClient } from "@/lib/supabase/client";
@@ -25,6 +26,9 @@ interface Holder {
   bio: string | null;
   source_url: string | null;
   holding_since: string | null;
+  contact_email: string | null;
+  contact_phone: string | null;
+  linked_profile_id: string | null;
   political_parties?: { name: string } | null;
 }
 
@@ -35,7 +39,24 @@ interface ShapeOption {
   boundary_type: string;
 }
 
-const emptyForm = { fullName: "", politicalPartyId: "", bio: "", sourceUrl: "", holdingSince: "" };
+interface ProfileMatch {
+  id: string;
+  full_name: string | null;
+  avatar_url: string | null;
+  role: string | null;
+}
+
+const emptyForm = {
+  fullName: "",
+  politicalPartyId: "",
+  bio: "",
+  sourceUrl: "",
+  holdingSince: "",
+  contactEmail: "",
+  contactPhone: "",
+  linkedProfileId: "",
+  linkedProfileName: "",
+};
 
 export default function OfficeHoldersAdminClient() {
   const supabase = createClient();
@@ -59,6 +80,10 @@ export default function OfficeHoldersAdminClient() {
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState("");
+
+  const [profileQuery, setProfileQuery] = useState("");
+  const [profileResults, setProfileResults] = useState<ProfileMatch[]>([]);
+  const [searchingProfile, setSearchingProfile] = useState(false);
 
   useEffect(() => {
     getCountries(supabase).then(({ data }) => setCountries(data || []));
@@ -98,6 +123,22 @@ export default function OfficeHoldersAdminClient() {
     return () => clearTimeout(id);
   }, [runSearch]);
 
+  const runProfileSearch = useCallback(async () => {
+    if (profileQuery.trim().length < 2) {
+      setProfileResults([]);
+      return;
+    }
+    setSearchingProfile(true);
+    const { data } = await adminSearchProfiles(supabase, profileQuery.trim());
+    setProfileResults((data as ProfileMatch[] | null) || []);
+    setSearchingProfile(false);
+  }, [supabase, profileQuery]);
+
+  useEffect(() => {
+    const id = setTimeout(runProfileSearch, 300);
+    return () => clearTimeout(id);
+  }, [runProfileSearch]);
+
   const selectShape = async (shape: ShapeOption) => {
     setSelectedShape(shape);
     setShapeOptions([]);
@@ -126,11 +167,23 @@ export default function OfficeHoldersAdminClient() {
             bio: existing.bio || "",
             sourceUrl: existing.source_url || "",
             holdingSince: existing.holding_since || "",
+            contactEmail: existing.contact_email || "",
+            contactPhone: existing.contact_phone || "",
+            linkedProfileId: existing.linked_profile_id || "",
+            linkedProfileName: "",
           }
         : emptyForm
     );
+    setProfileQuery("");
+    setProfileResults([]);
     setEditingRoleId(role.id);
     setStatus("");
+
+    if (existing?.linked_profile_id) {
+      adminGetProfileById(supabase, existing.linked_profile_id).then(({ data }) => {
+        if (data) setForm((f) => ({ ...f, linkedProfileName: data.full_name || "Unnamed profile" }));
+      });
+    }
   };
 
   const saveHolder = async (role: RoleType) => {
@@ -147,6 +200,9 @@ export default function OfficeHoldersAdminClient() {
         bio: form.bio.trim() || null,
         sourceUrl: form.sourceUrl.trim() || null,
         holdingSince: form.holdingSince || null,
+        contactEmail: form.contactEmail.trim() || null,
+        contactPhone: form.contactPhone.trim() || null,
+        linkedProfileId: form.linkedProfileId || null,
       },
       user.id
     );
@@ -274,9 +330,10 @@ export default function OfficeHoldersAdminClient() {
                         <div className="flex items-center gap-2">
                           {existing ? (
                             <>
-                              <span className="text-xs font-semibold text-text-secondary">
+                              <span className="text-xs font-semibold text-text-secondary flex items-center gap-1">
                                 {existing.full_name}
                                 {existing.political_parties?.name ? ` (${existing.political_parties.name})` : ""}
+                                {existing.linked_profile_id && <Link2 size={12} className="text-accent" />}
                               </span>
                               <Button size="sm" variant="outline" onClick={() => startEdit(role)}>
                                 Edit
@@ -326,6 +383,76 @@ export default function OfficeHoldersAdminClient() {
                           value={form.holdingSince}
                           onChange={(e) => setForm((f) => ({ ...f, holdingSince: e.target.value }))}
                         />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                          <Input
+                            type="email"
+                            placeholder="Contact email (optional)"
+                            value={form.contactEmail}
+                            onChange={(e) => setForm((f) => ({ ...f, contactEmail: e.target.value }))}
+                          />
+                          <Input
+                            type="tel"
+                            placeholder="Contact phone (optional)"
+                            value={form.contactPhone}
+                            onChange={(e) => setForm((f) => ({ ...f, contactPhone: e.target.value }))}
+                          />
+                        </div>
+
+                        <div className="pt-1">
+                          <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-1.5">
+                            Link registered profile (optional)
+                          </p>
+                          {form.linkedProfileId ? (
+                            <div className="flex items-center gap-2 text-xs bg-accent/10 text-accent font-semibold px-3 py-1.5 rounded-xl w-fit">
+                              <Link2 size={13} />
+                              {form.linkedProfileName || "Linked profile"}
+                              <button
+                                onClick={() =>
+                                  setForm((f) => ({ ...f, linkedProfileId: "", linkedProfileName: "" }))
+                                }
+                                className="hover:text-danger cursor-pointer"
+                              >
+                                <X size={13} />
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="relative">
+                              <Input
+                                placeholder="Search registered users by name..."
+                                value={profileQuery}
+                                onChange={(e) => setProfileQuery(e.target.value)}
+                              />
+                              {searchingProfile && (
+                                <Spinner size="sm" className="absolute right-3 top-1/2 -translate-y-1/2" />
+                              )}
+                              {profileResults.length > 0 && (
+                                <div className="mt-1.5 border border-border-light/40 rounded-xl divide-y divide-border-light/30 overflow-hidden">
+                                  {profileResults.map((p) => (
+                                    <button
+                                      key={p.id}
+                                      onClick={() => {
+                                        setForm((f) => ({
+                                          ...f,
+                                          linkedProfileId: p.id,
+                                          linkedProfileName: p.full_name || "Unnamed profile",
+                                        }));
+                                        setProfileQuery("");
+                                        setProfileResults([]);
+                                      }}
+                                      className="w-full text-left px-3 py-2 text-xs hover:bg-surface-hover transition-colors cursor-pointer"
+                                    >
+                                      {p.full_name || "Unnamed profile"}{" "}
+                                      {p.role === "politician" && (
+                                        <span className="text-text-muted">(politician)</span>
+                                      )}
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+
                         <div className="flex items-center gap-2 pt-1">
                           <Button size="sm" onClick={() => saveHolder(role)} disabled={saving || !form.fullName.trim()} className="gap-1">
                             <Save size={14} /> Save

@@ -1,0 +1,36 @@
+map_shape_id,role_title,full_name,political_party,bio,contact_email,contact_phone,term_start,term_end,source_url,photo_url
+# SAMPLE DATA - Replace with actual officeholder information
+# This file demonstrates the CSV format for importing office holders
+#
+# Instructions:
+# 1. Find map_shape_id by querying: SELECT id, name FROM map_shapes WHERE name ILIKE 'riding_name'
+# 2. role_title must exist in election_role_types for that country/boundary_type
+# 3. political_party must exist in political_parties
+# 4. All other fields are optional
+#
+# CANADIAN FEDERAL EXAMPLES (Member of Parliament)
+# Uncomment and replace with actual data
+# 1001,Member of Parliament,John Smith,Liberal Party of Canada,Lawyer and community advocate,john.smith@parl.gc.ca,(613) 992-1234,2021-09-20,,https://www.parliament.ca/members/...,https://example.com/photo.jpg
+# 1002,Member of Parliament,Sarah Johnson,Conservative Party of Canada,Business owner and policy expert,sarah.johnson@parl.gc.ca,(613) 992-5678,2021-09-20,,https://www.parliament.ca/members/...,https://example.com/photo.jpg
+# 1003,Member of Parliament,Michael Chen,New Democratic Party,Teacher and community organizer,michael.chen@parl.gc.ca,(613) 992-9999,2021-09-20,,https://www.parliament.ca/members/...,https://example.com/photo.jpg
+#
+# CANADIAN PROVINCIAL EXAMPLES (Member of Legislative Assembly)
+# Uncomment and replace with actual data
+# 2001,Member of Legislative Assembly,Patricia Brown,BC New Democrats,Healthcare professional,patricia.brown@leg.bc.ca,(250) 123-4567,2020-10-24,,https://www.leg.bc.ca/...,https://example.com/photo.jpg
+# 2002,Member of Legislative Assembly,David Martinez,BC Liberals,Retired engineer,david.martinez@leg.bc.ca,(250) 234-5678,2020-10-24,,https://www.leg.bc.ca/...,https://example.com/photo.jpg
+# 2003,Member of Legislative Assembly,Emma Wilson,BC Greens,Environmental scientist,emma.wilson@leg.bc.ca,(250) 345-6789,2020-10-24,,https://www.leg.bc.ca/...,https://example.com/photo.jpg
+#
+# US SENATE EXAMPLES (Senator)
+# Uncomment and replace with actual data
+# 3001,Senator,Robert Thompson,Democratic Party,Former governor and author,robert.thompson@senate.gov,(202) 224-1234,2023-01-03,,https://www.senate.gov/senators/...,https://example.com/photo.jpg
+# 3002,Senator,Jennifer Lee,Republican Party,Business executive and philanthropist,jennifer.lee@senate.gov,(202) 224-5678,2023-01-03,,https://www.senate.gov/senators/...,https://example.com/photo.jpg
+#
+# US HOUSE EXAMPLES (Representative)
+# Uncomment and replace with actual data
+# 4001,Representative,Mark Johnson,Democratic Party,Civil rights attorney,mark.johnson@house.gov,(202) 225-1234,2023-01-03,,https://www.house.gov/representatives/...,https://example.com/photo.jpg
+# 4002,Representative,Lisa Rodriguez,Republican Party,Small business owner,lisa.rodriguez@house.gov,(202) 225-5678,2023-01-03,,https://www.house.gov/representatives/...,https://example.com/photo.jpg
+#
+# US GOVERNOR EXAMPLES
+# Uncomment and replace with actual data
+# 5001,Governor,William Cooper,Democratic Party,Former mayor and education advocate,"",,(2019-01-14),,https://governor.example.com/william-cooper,https://example.com/photo.jpg
+# 5002,Governor,Angela Pierce,Republican Party,Business leader and nonprofit director,"",,(2021-01-11),,https://governor.example.com/angela-pierce,https://example.com/photo.jpg

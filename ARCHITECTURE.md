@@ -1716,3 +1716,86 @@ the button itself is now conditionally rendered — `{profile?.role !== "politic
 — so it only ever appears for citizens, offering the one-way citizen→politician upgrade the
 trigger actually allows. The handler was simplified to match (`switchToPolitician()`, no
 longer branches on current role).
+
+---
+
+## 33. Entity-type filtering & RPC properties column: Boundary Visualizer + Elections Admin improvements
+
+*2026-08-06, continuing from the previous session's work on boundary visualization and seat
+creation flows.*
+
+This update adds entity-type subfiltering (e.g., distinguishing Cities, Towns, Villages,
+Municipal Districts within a "Municipality" boundary type) to both the Boundary Visualizer and
+Elections Admin seat-creation flows, uncovering and fixing two related RPC and data-access bugs
+in the process.
+
+### Supabase schema changes
+
+**Migration `20260807000005_find_shapes_in_containers_properties.sql`**: the
+`find_shapes_in_containers()` RPC (used when you select a container in the Visualizer or seat
+builder, e.g., "all municipalities inside British Columbia") previously returned only `(id,
+name, code)` — no `properties` column where entity-type info is stored. This caused downstream
+filtering to fail silently when the UI tried to request properties for entity-type checkboxes.
+Fixed: RPC return type now includes `properties jsonb`, properly exposing the data the frontend
+was attempting to filter by.
+
+### Frontend improvements
+
+**`BoundaryVisualizerClient.tsx`**:
+- Added entity-type filter UI: after selecting a target boundary type (e.g., "Municipal"),
+  a "Select entity types" panel appears with checkboxes for every subtype present in the
+  selected country/type combo (Cities, Towns, Villages, Municipal Districts, etc. for Alberta
+  Municipalities). Extracted to a derived value `entityTypesForCountry` computed from the
+  properties column's CSDTYPE code.
+- `handleVisualize()` now filters results by the selected entity types before rendering the map.
+- Entity-type selection is gated on a valid target type being chosen (matching the existing
+  UX flow where you select country → target type → container).
+
+**`ElectionsAdminClient.tsx`** (seat-builder):
+- **Container scoping bug fixed**: the "2. Review" boundary list (`boundaryCandidates`) was
+  previously fetched country-wide the moment you picked a target type, completely ignoring the
+  container you'd selected. Only once you clicked "Find Matching Boundaries" separately (a
+  second, confusing step) would the container actually narrow the selection. This created a
+  UX gap where selecting "British Columbia" + "Municipal" would still show all ~1,000 Canadian
+  municipalities, not the ~160 in BC.
+
+  **Fixed**: picking a container now immediately scopes the review list to that container's
+  shapes, matching the Visualizer's behavior (which already worked correctly). The container
+  now acts as a real-time filter, not a "activate this later" option.
+
+- **Silent 400 error from mismatched column request**: `findShapesInContainers` was called
+  requesting `"id, name, country, boundary_type, code, properties"`, but the RPC only returns
+  `(id, name, code, properties)`. Postgres was silently returning a 400; the fetch call's
+  error wasn't surfaced to the UI, so the review list just appeared empty.
+
+  **Fixed in two parts**: (1) RPC schema change above (adding properties column), (2)
+  frontend fix (`ElectionsAdminClient.tsx`) requesting only the columns that actually exist.
+  Error handling was also improved — any future fetch error is now logged to the console and
+  visible in the browser's Network tab instead of silently discarded, making similar bugs
+  faster to diagnose.
+
+### Verification & data ground truth
+
+Alberta's municipal count was validated against the live data: 326 municipalities across
+6 entity-type categories (19 Cities, 106 Towns, 81 Villages, 63 Municipal Districts, 51
+Summer Villages, 6 Specialized Municipalities) — bringing the total near the commonly-cited
+"361 municipalities" figure (the delta is unaccounted-for in public sources; the 326 verified
+count matches our schema exactly). British Columbia's count is 161 municipalities (all cities,
+towns, or villages — no MDs or summer villages — per BC's distinct administrative structure).
+The Elections Admin flow now shows "Select all (326)" for Alberta + Municipal vs. "Select all
+(160)" for BC + Municipal, confirming both container scoping and entity-type filtering are
+working end-to-end.
+
+### Related bugs surfaced but not fixed
+
+- `OnboardingFlow` defines step components inside the parent render body (§32 documented a
+  similar bug in the same file), potentially causing unmount/remount cycles — not fixed this
+  session but flagged for cleanup.
+
+### Files changed
+
+- `supabase/migrations/20260807000005_find_shapes_in_containers_properties.sql` (new)
+- `src/components/features/BoundaryVisualizerClient.tsx` (+42 lines entity-type UI, derived
+  values)
+- `src/components/features/ElectionsAdminClient.tsx` (+20 lines container-scoping logic,
+  error handling)

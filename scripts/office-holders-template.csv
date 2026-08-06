@@ -1,0 +1,16 @@
+map_shape_id,role_title,full_name,political_party,bio,contact_email,contact_phone,term_start,term_end,source_url,photo_url
+# Format: CSV with headers
+# map_shape_id: The ID of the boundary (riding/district) from map_shapes table
+# role_title: MLA, MP, Senator, Representative, Governor, etc.
+# full_name: Official full name
+# political_party: Party name (must match existing party in political_parties table)
+# bio: Short biography or background (optional)
+# contact_email: Official email (optional)
+# contact_phone: Office phone (optional)
+# term_start: YYYY-MM-DD format (optional)
+# term_end: YYYY-MM-DD format (optional)
+# source_url: Link to official government page (optional)
+# photo_url: URL to official photo - will be downloaded and stored in Supabase (optional)
+#
+# Example rows (uncomment and modify):
+# For finding map_shape_id: SELECT id, name, boundary_type, country FROM map_shapes WHERE name ILIKE 'riding_name' AND boundary_type LIKE '%Federal%' AND country = 'Canada';

@@ -310,11 +310,14 @@ Full election lifecycle management: create an election (name + date, starts in `
 advance its status (`draft → nominations_open → active → closed`), and per election:
 - **Seat creation**: pick a country → an optional container to scope by (e.g. one province/
   state — or leave blank for "every {type} in the whole country") → a target boundary type →
-  "Find Matching Boundaries" (bulk-adds every match) or hand-pick shapes on an interactive
-  map → pick one or more roles from the catalog for that country+type (e.g. Ontario ridings
-  show MPP; USA State shows Governor *and* U.S. Senator as separate checkboxes) → Create
-  Seats. Region-correct role titles are resolved per-shape, not assumed uniform across a
-  mixed-region batch.
+  optionally filter by entity-type subtypes (e.g. "Municipality" with checkboxes for City, 
+  Town, Village, etc. — the review list now immediately respects the container scope instead 
+  of showing all boundaries nationally until "Find Matching Boundaries" is clicked). The "2. 
+  Review" list updates in real-time as you select/deselect entity types, then either "Create 
+  Seats" directly from that list or hand-pick shapes on an interactive map → pick one or more 
+  roles from the catalog for that country+type (e.g. Ontario ridings show MPP; USA State shows 
+  Governor *and* U.S. Senator as separate checkboxes) → Create Seats. Region-correct role 
+  titles are resolved per-shape, not assumed uniform across a mixed-region batch.
 - **Per-seat "Fetch candidates"**: for any seat whose jurisdiction has been researched (see
   [ELECTION_DATA_SOURCES.md](ELECTION_DATA_SOURCES.md)), a "view official source" link always
   appears once known; a working **Fetch candidates** button additionally appears for
@@ -343,10 +346,12 @@ still needs a manual call.
 ### Visualizer (`/admin/visualize`)
 A read-only map tool: pick a country, optionally narrow to every boundary inside a specific
 container (e.g. every municipality inside one province/state), pick a target boundary type,
-and see the result rendered directly on a map. A 500-shape render cap shows a plain name list
-with an explicit "Load Map Anyway" opt-in instead of silently fetching a huge geometry
-payload. Nothing here is selectable or editable — purely for sanity-checking what's actually
-loaded.
+and optionally filter by entity-type subtypes (e.g. "Municipality" with checkboxes for City,
+Town, Village, etc. — populated dynamically per country/type and filtered via the 
+`find_shapes_in_containers` RPC's `properties` column). See the result rendered directly on a 
+map. A 500-shape render cap shows a plain name list with an explicit "Load Map Anyway" opt-in 
+instead of silently fetching a huge geometry payload. Nothing here is selectable or editable — 
+purely for sanity-checking what's actually loaded.
 
 ### Theme (`/admin/theme`)
 Picks the site-wide active color theme every visitor sees — a grid of the app's switchable

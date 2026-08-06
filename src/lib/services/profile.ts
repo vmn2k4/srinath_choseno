@@ -348,3 +348,16 @@ export async function getPoliticianProfileFull(supabase: Client, userId: string)
     .eq("id", userId)
     .maybeSingle();
 }
+
+// admin_search_profiles RPC — profiles has no public/admin SELECT-all RLS
+// policy, so linking an office_holder to a registered profile (and later
+// resolving that link back to a display name) goes through this SECURITY
+// DEFINER function instead of a plain client-side select.
+export async function adminSearchProfiles(supabase: Client, query: string) {
+  return supabase.rpc("admin_search_profiles", { p_query: query });
+}
+
+export async function adminGetProfileById(supabase: Client, profileId: string) {
+  const { data, error } = await supabase.rpc("admin_search_profiles", { p_id: profileId });
+  return { data: data?.[0] || null, error };
+}

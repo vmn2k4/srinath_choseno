@@ -31,22 +31,25 @@ export async function listBoundaryTypes(
     country,
     adminOnly,
     isContainer,
-    columns = "country, type_name, rank, admin_only, is_container",
+    electionEligible,
+    columns = "id, country, type_name, rank, admin_only, is_container, election_eligible, term_length_months, term_limits, voting_method, description",
     orderBy = "rank",
   }: {
     country?: string;
     adminOnly?: boolean;
     isContainer?: boolean;
+    electionEligible?: boolean;
     columns?: string;
     orderBy?: string;
   } = {}
 ) {
-  const cacheKey = `boundary_types:${country || "all"}:${adminOnly}:${isContainer}:${columns}:${orderBy}`;
+  const cacheKey = `boundary_types:${country || "all"}:${adminOnly}:${isContainer}:${electionEligible}:${columns}:${orderBy}`;
   return fetchWithCache(cacheKey, () => {
     let q = supabase.from("country_boundary_types").select(columns).order("country").order(orderBy);
     if (country) q = q.eq("country", country);
     if (adminOnly !== undefined) q = q.eq("admin_only", adminOnly);
     if (isContainer !== undefined) q = q.eq("is_container", isContainer);
+    if (electionEligible !== undefined) q = q.eq("election_eligible", electionEligible);
     return q;
   });
 }
@@ -61,10 +64,110 @@ export async function getBoundaryTypesForCountries(supabase: Client, countries: 
 
 export async function createBoundaryType(
   supabase: Client,
-  { country, typeName, rank }: { country: string; typeName: string; rank: number }
+  {
+    country,
+    typeName,
+    rank,
+    electionEligible,
+    termLengthMonths,
+    termLimits,
+    votingMethod,
+    description,
+  }: {
+    country: string;
+    typeName: string;
+    rank: number;
+    electionEligible?: boolean;
+    termLengthMonths?: number | null;
+    termLimits?: number | null;
+    votingMethod?: string | null;
+    description?: string | null;
+  }
 ) {
   invalidateCache("boundary_types");
-  return supabase.from("country_boundary_types").insert({ country, type_name: typeName, rank });
+  return supabase.from("country_boundary_types").insert({
+    country,
+    type_name: typeName,
+    rank,
+    ...(electionEligible !== undefined && { election_eligible: electionEligible }),
+    term_length_months: termLengthMonths ?? null,
+    term_limits: termLimits ?? null,
+    voting_method: votingMethod ?? null,
+    description: description ?? null,
+  });
+}
+
+export async function updateBoundaryType(
+  supabase: Client,
+  typeId: number | string,
+  {
+    electionEligible,
+    termLengthMonths,
+    termLimits,
+    votingMethod,
+    description,
+  }: {
+    electionEligible?: boolean;
+    termLengthMonths?: number | null;
+    termLimits?: number | null;
+    votingMethod?: string | null;
+    description?: string | null;
+  }
+) {
+  invalidateCache("boundary_types");
+  const fields: Record<string, unknown> = {};
+  if (electionEligible !== undefined) fields.election_eligible = electionEligible;
+  if (termLengthMonths !== undefined) fields.term_length_months = termLengthMonths;
+  if (termLimits !== undefined) fields.term_limits = termLimits;
+  if (votingMethod !== undefined) fields.voting_method = votingMethod;
+  if (description !== undefined) fields.description = description;
+  return supabase.from("country_boundary_types").update(fields).eq("id", String(typeId));
+}
+
+// entity_types — per-shape classification, distinct from country_boundary_types
+// (which types a whole boundary_type, e.g. "Municipal"). A boundary_type can
+// contain a mix of entity types from a single shapefile upload (e.g. BC's
+// "Municipal" type mixes real municipalities with Indian reserves and
+// regional district electoral areas) -- entity_types is the small fixed set
+// of categories used to filter within that mix. See
+// src/lib/utils/censusSubdivisionEntityTypes.ts for how a shape's raw source
+// code maps to one of these category names.
+export async function listEntityTypes(supabase: Client, { country }: { country?: string } = {}) {
+  const cacheKey = `entity_types:${country || "all"}`;
+  return fetchWithCache(cacheKey, () => {
+    let q = supabase
+      .from("entity_types")
+      .select("id, country, name, election_eligible, description")
+      .order("country")
+      .order("name");
+    if (country) q = q.eq("country", country);
+    return q;
+  });
+}
+
+export async function createEntityType(
+  supabase: Client,
+  { country, name, electionEligible = true, description }: { country: string; name: string; electionEligible?: boolean; description?: string | null }
+) {
+  invalidateCache("entity_types");
+  return supabase.from("entity_types").insert({ country, name, election_eligible: electionEligible, description: description ?? null });
+}
+
+export async function updateEntityType(
+  supabase: Client,
+  typeId: string,
+  { electionEligible, description }: { electionEligible?: boolean; description?: string | null }
+) {
+  invalidateCache("entity_types");
+  const fields: Record<string, unknown> = {};
+  if (electionEligible !== undefined) fields.election_eligible = electionEligible;
+  if (description !== undefined) fields.description = description;
+  return supabase.from("entity_types").update(fields).eq("id", typeId);
+}
+
+export async function deleteEntityType(supabase: Client, typeId: string) {
+  invalidateCache("entity_types");
+  return supabase.from("entity_types").delete().eq("id", typeId);
 }
 
 // "Standard set" quick-seed: National / State-Province / Municipal at ranks 1-3.

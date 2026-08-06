@@ -55,9 +55,32 @@ export async function getOfficeHoldersForShape(supabase: Client, mapShapeId: num
   return supabase
     .from("office_holders")
     .select(
-      "id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since, political_parties(name)"
+      `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
+       contact_email, contact_phone, linked_profile_id, term_start, term_end,
+       election_role_types(role_title, role_key),
+       political_parties(name, color_hex),
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, avatar_url, current_ghost_id)`
     )
     .eq("map_shape_id", Number(mapShapeId));
+}
+
+export async function getOfficeHolderByRole(
+  supabase: Client,
+  mapShapeId: number | string,
+  electionRoleTypeId: string
+) {
+  return supabase
+    .from("office_holders")
+    .select(
+      `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
+       contact_email, contact_phone, linked_profile_id, term_start, term_end,
+       election_role_types(role_title, role_key),
+       political_parties(name, color_hex),
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, avatar_url, current_ghost_id)`
+    )
+    .eq("map_shape_id", Number(mapShapeId))
+    .eq("election_role_type_id", electionRoleTypeId)
+    .maybeSingle();
 }
 
 export async function getOfficeHolder(
@@ -84,6 +107,9 @@ export async function upsertOfficeHolder(
     sourceUrl?: string | null;
     photoUrl?: string | null;
     holdingSince?: string | null;
+    contactEmail?: string | null;
+    contactPhone?: string | null;
+    linkedProfileId?: string | null;
   },
   updatedBy: string
 ) {
@@ -99,6 +125,9 @@ export async function upsertOfficeHolder(
         source_url: fields.sourceUrl ?? null,
         photo_url: fields.photoUrl ?? null,
         holding_since: fields.holdingSince ?? null,
+        contact_email: fields.contactEmail ?? null,
+        contact_phone: fields.contactPhone ?? null,
+        linked_profile_id: fields.linkedProfileId ?? null,
         updated_by: updatedBy,
         updated_at: new Date().toISOString(),
       },
@@ -106,6 +135,29 @@ export async function upsertOfficeHolder(
     )
     .select()
     .single();
+}
+
+export async function getOfficeHoldersByShapeAndRole(
+  supabase: Client,
+  mapShapeId: number | string,
+  roleTitle?: string
+) {
+  let query = supabase
+    .from("office_holders")
+    .select(
+      `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
+       contact_email, contact_phone, linked_profile_id, term_start, term_end,
+       election_role_types(role_title, role_key),
+       political_parties(name, color_hex),
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, avatar_url, current_ghost_id)`
+    )
+    .eq("map_shape_id", Number(mapShapeId));
+
+  if (roleTitle) {
+    query = query.eq("election_role_types.role_title", roleTitle);
+  }
+
+  return query;
 }
 
 export async function removeOfficeHolder(supabase: Client, officeHolderId: string) {
@@ -210,7 +262,7 @@ export async function getSeatById(supabase: Client, seatId: string) {
   if (realSeatId && realSeatId.length === 36) {
     const res = await supabase
       .from("election_seats")
-      .select("id, role_title, map_shapes(name, boundary_type, country), elections(id, name, election_date, status)")
+      .select("id, map_shape_id, role_title, map_shapes(name, boundary_type, country), elections(id, name, election_date, status)")
       .eq("id", realSeatId)
       .maybeSingle();
 
@@ -219,7 +271,7 @@ export async function getSeatById(supabase: Client, seatId: string) {
 
   const { data: seats } = await supabase
     .from("election_seats")
-    .select("id, role_title, map_shapes(name, boundary_type, country), elections(id, name, election_date, status)");
+    .select("id, map_shape_id, role_title, map_shapes(name, boundary_type, country), elections(id, name, election_date, status)");
 
   if (!seats || seats.length === 0) {
     return { data: null };

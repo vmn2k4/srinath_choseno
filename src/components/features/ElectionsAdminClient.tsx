@@ -35,7 +35,9 @@ import {
   getMapShapesByType,
   findShapesInContainers,
   getBoundaryCandidates,
+  listEntityTypes,
 } from "@/lib/services/boundaries";
+import { getEntityTypeNameForShape } from "@/lib/utils/censusSubdivisionEntityTypes";
 import {
   getCandidateSourceInfoForSeats,
   fetchOfficialCandidates,
@@ -276,6 +278,8 @@ export default function ElectionsAdminClient() {
   const [countries, setCountries] = useState<string[]>([]);
   const [seatCountry, setSeatCountry] = useState("");
   const [boundaryTypes, setBoundaryTypes] = useState<any[]>([]);
+  const [entityTypes, setEntityTypes] = useState<any[]>([]);
+  const [selectedEntityTypeNames, setSelectedEntityTypeNames] = useState<Set<string>>(new Set());
   const [containerType, setContainerType] = useState("");
   const [containerId, setContainerId] = useState("");
   const [containerOptions, setContainerOptions] = useState<{ value: string; label: string }[]>([]);
@@ -314,6 +318,7 @@ export default function ElectionsAdminClient() {
     Promise.resolve().then(() => fetchElections());
     getCountries(supabase).then(({ data }) => setCountries((data || []).map((c: any) => c.name)));
     listBoundaryTypes(supabase).then(({ data }) => setBoundaryTypes(data || []));
+    listEntityTypes(supabase).then(({ data }) => setEntityTypes(data || []));
   }, [supabase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchSeats = async (electionId: string) => {
@@ -385,8 +390,25 @@ export default function ElectionsAdminClient() {
   const containerTypeOptions = typesForSeatCountry
     .filter((t) => t.is_container)
     .map((t) => ({ value: t.type_name, label: t.type_name }));
-  const targetTypeOptions = typesForSeatCountry.filter((t) => !t.admin_only);
+  // election_eligible excludes non-electoral entities uploaded at the same
+  // rank as real municipalities (e.g. regional district electoral areas,
+  // Indigenous reserves) from ever being offered as a seat target.
+  const targetTypeOptions = typesForSeatCountry.filter((t) => !t.admin_only && t.election_eligible);
+  const selectedTargetTypeInfo = typesForSeatCountry.find((t) => t.type_name === targetType);
   const countryOptions = countries.map((c) => ({ value: c, label: c }));
+
+  // entity_types further splits a single boundary_type (e.g. BC's "Municipal"
+  // mixes real municipalities with Indian reserves and electoral areas from
+  // one shapefile upload) -- these checkboxes let the admin narrow which of
+  // those to include when matching/creating seats for this election.
+  const entityTypesForSeatCountry = seatCountry ? entityTypes.filter((t) => t.country === seatCountry) : [];
+
+  const isShapeEntityTypeSelected = (shape: any) => {
+    if (entityTypesForSeatCountry.length === 0) return true;
+    const categoryName = getEntityTypeNameForShape(shape.properties);
+    if (!categoryName) return true; // no classifiable code on this shape (e.g. a Federal riding) -- unaffected
+    return selectedEntityTypeNames.has(categoryName);
+  };
 
   // Country scopes both the container/target-type pickers and the manual
   // seat picker below — reset any selection tied to the previous country.
@@ -399,8 +421,12 @@ export default function ElectionsAdminClient() {
       setPendingShapeIds(new Set());
       setMatchedShapeIds(null);
       setBoundaryCandidates([]);
+      const defaults = entityTypes
+        .filter((t) => t.country === seatCountry && t.election_eligible)
+        .map((t) => t.name);
+      setSelectedEntityTypeNames(new Set(defaults));
     });
-  }, [seatCountry]);
+  }, [seatCountry]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     let cancelled = false;
@@ -429,9 +455,14 @@ export default function ElectionsAdminClient() {
     };
   }, [seatCountry, containerType]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Target type scopes both the shape selection and the role catalog — reset
-  // both when it changes so a stale selection from a different boundary type
-  // can't leak into seat creation.
+  // Target type (and container, once picked) scopes both the shape selection
+  // and the role catalog — reset both when either changes so a stale
+  // selection from a different boundary type/container can't leak into seat
+  // creation. When a container is selected, the browsable pool is scoped to
+  // it immediately (matching BoundaryVisualizerClient's single-step
+  // behavior) rather than only narrowing once "Find Matching Boundaries" is
+  // clicked — previously this list stayed country-wide even with a
+  // container picked, which looked like the container filter wasn't working.
   useEffect(() => {
     let cancelled = false;
     Promise.resolve().then(() => {
@@ -445,11 +476,19 @@ export default function ElectionsAdminClient() {
       }
       setLoadingBoundaryCandidates(true);
       (async () => {
-        const { data } = await getBoundaryCandidates(supabase, {
-          boundaryTypeFilter: [targetType],
-          countryFilter: seatCountry,
-        });
+        const { data, error } = containerId
+          ? await findShapesInContainers(supabase, {
+              containerShapeIds: [Number(containerId)],
+              targetBoundaryType: targetType,
+              country: seatCountry,
+              columns: "id, name, code, properties",
+            })
+          : await getBoundaryCandidates(supabase, {
+              boundaryTypeFilter: [targetType],
+              countryFilter: seatCountry,
+            });
         if (!cancelled) {
+          if (error) setSeatStatus("Error loading boundaries: " + (error as any).message);
           setBoundaryCandidates(data || []);
           setLoadingBoundaryCandidates(false);
         }
@@ -458,7 +497,7 @@ export default function ElectionsAdminClient() {
     return () => {
       cancelled = true;
     };
-  }, [seatCountry, targetType]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [seatCountry, targetType, containerId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     let cancelled = false;
@@ -574,15 +613,24 @@ export default function ElectionsAdminClient() {
           containerShapeIds,
           targetBoundaryType: targetType,
           country: seatCountry,
+          columns: "id, properties",
         })
-      : await getMapShapesByType(supabase, { country: seatCountry, boundaryType: targetType, paginated: true });
+      : await getMapShapesByType(supabase, {
+          country: seatCountry,
+          boundaryType: targetType,
+          columns: "id, properties",
+          paginated: true,
+        });
     if (error) {
       setSeatStatus("Error: " + ((error as any).message || "Operation failed"));
       return;
     }
+    // Entity-type checkboxes narrow matches within a single boundary_type
+    // (e.g. exclude Indian reserves / electoral areas from BC's "Municipal").
+    const matches = (data || []).filter((shape: any) => isShapeEntityTypeSelected(shape));
     setPendingShapeIds((prev) => {
       const next = new Set(prev);
-      (data || []).forEach((shape: any) => next.add(shape.id));
+      matches.forEach((shape: any) => next.add(shape.id));
       return next;
     });
     // Additive: running "Find Matching Boundaries" again grows the
@@ -590,12 +638,15 @@ export default function ElectionsAdminClient() {
     // union of every run instead of just the most recent one.
     setMatchedShapeIds((prev) => {
       const next = new Set(prev || []);
-      (data || []).forEach((shape: any) => next.add(shape.id));
+      matches.forEach((shape: any) => next.add(shape.id));
       return next;
     });
     const scopeLabel = containerShapeIds.length > 0 ? "the selected container" : `all of ${seatCountry}`;
+    const excludedCount = (data?.length || 0) - matches.length;
     setSeatStatus(
-      `Added ${data?.length || 0} matching boundaries (from ${scopeLabel}) to the selection below — review and deselect any stragglers before creating seats.`
+      `Added ${matches.length} matching boundaries (from ${scopeLabel}) to the selection below` +
+        (excludedCount > 0 ? ` — ${excludedCount} excluded by the entity-type filter` : "") +
+        ` — review and deselect any stragglers before creating seats.`
     );
   };
 
@@ -948,7 +999,8 @@ export default function ElectionsAdminClient() {
 
   const filteredBoundaryCandidates = boundaryCandidates
     .filter((shape) => !matchedShapeIds || matchedShapeIds.has(shape.id))
-    .filter((shape) => !boundarySearch.trim() || shape.name?.toLowerCase().includes(boundarySearch.trim().toLowerCase()));
+    .filter((shape) => !boundarySearch.trim() || shape.name?.toLowerCase().includes(boundarySearch.trim().toLowerCase()))
+    .filter((shape) => isShapeEntityTypeSelected(shape));
 
   if (loadingElections) return <Spinner fullPage />;
 
@@ -1505,6 +1557,56 @@ export default function ElectionsAdminClient() {
                   Find Matching Boundaries
                 </Button>
               </div>
+
+              {selectedTargetTypeInfo &&
+                (selectedTargetTypeInfo.term_length_months ||
+                  selectedTargetTypeInfo.term_limits ||
+                  selectedTargetTypeInfo.voting_method) && (
+                  <p className="text-[10px] text-text-muted -mt-2">
+                    {selectedTargetTypeInfo.term_length_months && (
+                      <span>Term: {selectedTargetTypeInfo.term_length_months} mo</span>
+                    )}
+                    {selectedTargetTypeInfo.term_limits && (
+                      <span>
+                        {selectedTargetTypeInfo.term_length_months ? " · " : ""}
+                        Limit: {selectedTargetTypeInfo.term_limits} terms
+                      </span>
+                    )}
+                    {selectedTargetTypeInfo.voting_method && (
+                      <span>
+                        {selectedTargetTypeInfo.term_length_months || selectedTargetTypeInfo.term_limits
+                          ? " · "
+                          : ""}
+                        Voting: {selectedTargetTypeInfo.voting_method}
+                      </span>
+                    )}
+                  </p>
+                )}
+
+              {entityTypesForSeatCountry.length > 0 && (
+                <div>
+                  <p className="text-[10px] font-semibold text-text-muted uppercase tracking-wider mb-1.5">
+                    Entity types included (a single boundary type can mix several — e.g. real municipalities alongside Indian reserves and electoral areas)
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    {entityTypesForSeatCountry.map((t) => (
+                      <Checkbox
+                        key={t.id}
+                        label={t.name}
+                        checked={selectedEntityTypeNames.has(t.name)}
+                        onChange={(e) =>
+                          setSelectedEntityTypeNames((prev) => {
+                            const next = new Set(prev);
+                            if (e.target.checked) next.add(t.name);
+                            else next.delete(t.name);
+                            return next;
+                          })
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div>
                 <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
