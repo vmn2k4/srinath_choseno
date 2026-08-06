@@ -230,16 +230,21 @@ export default function FeedPageClient() {
       },
     ];
 
-    memberships.forEach((m) => {
-      pills.push({
-        key: `shape-${m.id}`,
-        districtName: m.name || m.boundary_type,
-        divisionType: m.boundary_type,
-        filterType: "shape",
-        shapeId: m.id,
-        boundaryType: m.boundary_type,
+    memberships
+      .filter((m) => {
+        const bType = (m.boundary_type || "").toLowerCase();
+        return !bType.includes("polling");
+      })
+      .forEach((m) => {
+        pills.push({
+          key: `shape-${m.id}`,
+          districtName: m.name || m.boundary_type,
+          divisionType: m.boundary_type,
+          filterType: "shape",
+          shapeId: m.id,
+          boundaryType: m.boundary_type,
+        });
       });
-    });
 
     if (profile?.country) {
       pills.push({
