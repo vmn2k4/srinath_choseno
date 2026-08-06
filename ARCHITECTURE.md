@@ -1883,3 +1883,33 @@ This update ingests 2,642 active Canadian municipal elected officials (359 Mayor
 - `scripts/office-holders-data.csv` (appended 2,642 Canadian municipal records)
 - `OFFICE_HOLDERS_DATA_GUIDE.md` (updated total count to 10,055 officials)
 - `PRODUCT.md` (updated active office holder scope)
+
+---
+
+## 36. US Municipal Mayors & Council Members Pipeline & National Coverage Expansion
+
+*2026-08-06, expanding representative coverage to US municipal local governments.*
+
+This update ingests 606 active US municipal elected officials (598 Mayors and 8 City Council Members across 571 US cities), bringing the platform's total active office holder database count to **10,661 elected officials**, and auto-links ghost profile walls for all US municipal officials.
+
+### 1. Ingestion Pipeline & Data Scope (`scripts/populate-us-municipal.py`)
+
+- **OpenStates Municipal YAML Processing**: Cloned `openstates/people` repository and parsed municipal YAML files (`data/*/municipalities/*.yml`) across all 50 US states.
+- **Data Extracted**: Full Name, Role Title (`Mayor` vs `Council Member`), Role Type ID (`53d611c8...` for Mayor, `3ecded5c...` for Council Member), City Name, State Code, Contact Email, Voice Phone, Office Address, Source Website URL, Headshot Photo URL.
+- **State-Aware Boundary Matching**: Matched state code and normalized city names against 32,612 US `Municipal` PostGIS boundary shapes in `map_shapes`.
+- **Major City Coverage**: Ingested Mayors and Council Members for major US cities including New York City, Los Angeles, Chicago, Houston, Phoenix, Philadelphia, San Antonio, San Diego, Dallas, Austin, San Jose, Seattle, Miami, Anchorage, Akron, Allentown, Amarillo, and 571+ US municipal jurisdictions.
+- **CSV Export & Database Upsert**: Appended clean records to `scripts/office-holders-data.csv` (10,661 total records) and executed batched SQL upserts into `office_holders`.
+
+### 2. Auto-Generated Politician Wall Profiles
+
+- Executed a PostgreSQL transaction block generating linked `profiles` rows (`role = 'politician'`, `current_ghost_id`) and `politician_profiles` entries for all 606 newly inserted US municipal office holders.
+- Linked `office_holders.linked_profile_id = profiles.id`.
+- Every US Mayor and Municipal Council Member now possesses a dedicated **Politician Wall** (`/wall/[ghostId]/[slug]`).
+
+### Files Changed / Added
+
+- `scripts/populate-us-municipal.py` (new)
+- `scripts/us_muni_import.sql` (new)
+- `scripts/office-holders-data.csv` (appended US municipal records, 10,661 total rows)
+- `OFFICE_HOLDERS_DATA_GUIDE.md` (updated total count to 10,661 officials)
+- `PRODUCT.md` (updated capabilities)

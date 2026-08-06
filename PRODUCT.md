@@ -21,8 +21,8 @@ Web application evaluated on modern mobile and desktop web browsers. Features co
 ## Capabilities and Constraints
 - **Stack**: Next.js 16 (App Router), React 19, TypeScript, Tailwind v4, Leaflet (`react-leaflet` + `@turf/turf`), Supabase (Postgres 17 + PostGIS, RLS, RPCs).
 - **Architecture**: Layered App Router design (`App Routes -> Feature Components -> Service Layer -> Backend RPCs/RLS`). Data access is encapsulated in `src/lib/services/`.
-- **Identity & Representative Model**: Posts and comments are tied exclusively to rotatable `ghost_id` UUIDs. Every elected official across 7,448 North American boundaries automatically receives a dedicated **Politician Wall** (`/wall/[ghostId]/[slug]`), linkable to verified accounts when claimed.
-- **Office Holder Coverage**: Complete multi-tier coverage for US Representatives, US Senators, State Governors, 50-State Legislators (Upper & Lower Chambers), Canadian MPs, and Provincial MLAs/MPPs/MHAs.
+- **Identity & Representative Model**: Posts and comments are tied exclusively to rotatable `ghost_id` UUIDs. Every elected official across 10,661 North American boundaries automatically receives a dedicated **Politician Wall** (`/wall/[ghostId]/[slug]`), linkable to verified accounts when claimed.
+- **Office Holder Coverage**: Complete multi-tier coverage for US Representatives, US Senators, State Governors, 50-State Legislators, US Municipal Mayors & Council Members, Canadian MPs, Provincial MLAs/MPPs/MHAs, and Canadian Municipal Mayors & Councillors.
 
 ## Brand Commitments
 - Name: **Choseno**
