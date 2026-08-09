@@ -1,9 +1,13 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 
 // New primitive — the "image, or an initial-letter circle on a gradient
 // fallback" pattern was independently reimplemented in CandidacyWall,
 // ElectionSeatPage's candidate switcher, PoliticianWall's header, and
 // FeedPage's profile summary. One shared component from here on.
+import { useState } from "react";
+
 const SIZES = {
   sm: { box: "w-8 h-8", text: "text-xs" },
   md: { box: "w-10 h-10", text: "text-sm" },
@@ -29,12 +33,17 @@ export default function Avatar({
   className?: string;
 }) {
   const { box, text } = SIZES[size] || SIZES.md;
+  // A non-empty src can still 404 (stale/broken storage URL). Track load
+  // failure so we fall back to the initial-letter circle instead of the
+  // browser rendering a broken-image glyph or overflowing alt text.
+  const [failed, setFailed] = useState(false);
 
-  if (src) {
+  if (src && !failed) {
     return (
       <img
         src={src}
         alt={name || "Avatar"}
+        onError={() => setFailed(true)}
         className={`${box} rounded-full object-cover shrink-0 border border-border-light ${className}`.trim()}
       />
     );

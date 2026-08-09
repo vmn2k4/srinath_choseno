@@ -33,36 +33,36 @@ const BOUNDARY_LEVELS = ["Polling District", "Federal Area", "Country", "Interna
 const BRIDGE_STEPS = [
   {
     icon: Search,
-    title: "Search",
-    text: "Find your representative by district — no address forms.",
+    title: "Find",
+    text: "Search for who represents you — no lengthy forms.",
   },
   {
     icon: MessageSquare,
     title: "Read",
-    text: "See what verified neighbors are actually saying.",
+    text: "Listen to what people around you really think.",
   },
   {
     icon: Vote,
-    title: "Decide",
-    text: "Vote with confidence, not guesswork.",
+    title: "Vote",
+    text: "Make your choice with confidence, not guesses.",
   },
 ];
 
 const STEPS = [
   {
     icon: MapPin,
-    title: "Verify your district",
-    text: "Share your location once. PostGIS automatically matches your coordinates with official electoral boundaries — no address forms, zero identity leakage.",
+    title: "Find your voting area",
+    text: "Share your location once. We instantly match it to your real voting area — no forms to fill out, your privacy stays completely safe.",
   },
   {
     icon: Layers,
-    title: "Explore local feeds",
-    text: "Access civic conversations scoped strictly to where you live. Seamlessly switch between polling district, municipal, federal, and international levels.",
+    title: "Join neighborhood conversations",
+    text: "Read real discussions from people in your voting area. Easily switch between your street, city, province, country, or global conversations.",
   },
   {
     icon: Megaphone,
-    title: "Signal constituent support",
-    text: "Participate anonymously and endorse key local issues. Representatives receive verified constituent signals rather than out-of-district noise.",
+    title: "Speak up on what matters",
+    text: "Share your opinion anonymously. Show your elected officials which local issues you care about most. They see real people speaking up, not bots or outsiders.",
   },
 ];
 
@@ -73,108 +73,108 @@ const MOCK_SEATS = [
 ];
 
 const TRUST_CHIPS = [
-  { icon: Flame, label: "Anonymous by design" },
-  { icon: MapPin, label: "PostGIS-verified boundaries" },
-  { icon: Scale, label: "No party ranking" },
-  { icon: ThumbsUp, label: "One verified endorsement per resident" },
+  { icon: Flame, label: "Speak freely, stay hidden" },
+  { icon: MapPin, label: "Real voting areas verified" },
+  { icon: Scale, label: "No favorite parties" },
+  { icon: ThumbsUp, label: "Real people, real votes" },
 ];
 
 const AUDIENCES = [
   {
     icon: Users,
-    label: "For Citizens",
+    label: "For Voters",
     accent: "text-accent",
-    pitch: "Get heard in the race that actually decides your street, not the one dominating the news cycle.",
+    pitch: "Be heard on issues that affect your neighborhood — not just the big national news.",
     points: [
-      "A civic feed locked to your real electoral boundary — polling district up to federal",
-      "Post and comment under a rotating, anonymous Ghost ID",
-      "Burn your Ghost ID any time for a completely fresh identity",
-      "One verified endorsement per resident — signals that can't be bot-farmed",
+      "See all discussions from your area in one place",
+      "Post and comment with a private anonymous name",
+      "Change your anonymous name anytime for a fresh start",
+      "Real votes only — one person, one vote. No fake accounts allowed",
     ],
     ctaHref: "/auth?role=citizen",
-    ctaLabel: "Join your district",
+    ctaLabel: "Join your area",
     secondaryHref: "/find-my-district",
-    secondaryLabel: "not sure which district you're in? find out",
+    secondaryLabel: "not sure your voting area? find it now",
   },
   {
     icon: Landmark,
-    label: "For Future Politicians",
+    label: "For People Who Want to Run",
     accent: "text-primary",
-    pitch: "Run without a party machine behind you — Choseno never ranks candidates by party, only by what constituents ask them directly.",
+    pitch: "Run for office without needing a party. The voters decide who they like, not party bosses.",
     points: [
-      "A public campaign wall generated automatically once you nominate",
-      "Your replies always surface above the rest of the thread — no dodging a hard question",
-      "Record video position statements directly in-browser",
-      "A side-by-side questionnaire so voters compare substance, not spin",
+      "Your own public page where voters can learn about you",
+      "Answer voter questions directly — no avoiding tough questions",
+      "Record short videos explaining your ideas, right on the site",
+      "See exactly what voters are asking and decide how to answer",
     ],
     ctaHref: "/auth?role=politician",
     ctaLabel: "Run for office",
     secondaryHref: "/elections",
-    secondaryLabel: "or browse open seats near you",
+    secondaryLabel: "or see open races near you",
   },
 ];
 
 const FEATURES = [
   {
     icon: Flame,
-    title: "Rotatable Ghost IDs",
-    text: "Participate freely. Posts use a privacy-preserving ghost UUID — burn it anytime for a completely fresh identity.",
+    title: "Anonymous names you can change",
+    text: "Use a private name when you post. Switch to a new anonymous name anytime you want a fresh start.",
   },
   {
     icon: Video,
-    title: "Direct video statements",
-    text: "Representatives post video messages in-browser, ensuring position statements remain authentic and unedited.",
+    title: "Real video answers",
+    text: "Politicians record video answers to voter questions. You get their real voice, not just written words.",
   },
   {
     icon: ThumbsUp,
-    title: "Constituent endorsements",
-    text: "One verified constituent, one endorsement. Prevents bot farms, brigading, and out-of-district manipulation.",
+    title: "Real votes only",
+    text: "One person gets one vote. No fake accounts, no outsiders. Just real people from your area.",
   },
   {
     icon: Globe2,
-    title: "4-Tier boundary scoping",
-    text: "From your immediate polling district to federal and international levels, debate happens where it belongs.",
+    title: "Talk at every level",
+    text: "Discuss your street, your city, your province, your country — or think globally. Pick what matters to you.",
   },
   {
     icon: MessageSquare,
-    title: "Hyper-local threads",
-    text: "Discussion threads remain scoped to your actual district, connecting you with verified local neighbours.",
+    title: "Neighbors talking together",
+    text: "Conversations stay local. You're talking with real people from your area who care about the same issues.",
   },
   {
     icon: MapPin,
-    title: "PostGIS boundary matching",
-    text: "Feeds use official spatial geometry matched to your coordinates with exact point-in-polygon precision.",
+    title: "Verified voting areas",
+    text: "We make sure you see discussions only from your actual voting area. No confusion about who represents you.",
   },
 ];
 
 const FAQS = [
   {
     q: "Is Choseno really anonymous?",
-    a: "Yes. Every post and comment is tied to a rotating Ghost ID, not your real profile — and you can burn it at any time for a completely fresh identity, permanently unlinking everything you've posted before.",
+    a: "Yes. Your posts appear under a fake name, not your real one. You can get a new fake name anytime you want, and your old posts get disconnected from your profile.",
   },
   {
-    q: "Can my representative — or an admin — see who I really am?",
-    a: "No. Posts are public under your Ghost ID and civic score, never your name. Choseno deliberately never stores a link between your profile and your posts, specifically so that link can't exist to be looked up later.",
+    q: "Can politicians or staff see who I really am?",
+    a: "No. Nobody sees your real name. Your posts and profile are completely separate — even staff can't connect them. That's by design.",
   },
   {
-    q: "What actually happens when I burn my Ghost ID?",
-    a: "Your civic score earned under that identity is banked into your permanent total first. After that, every post and comment tied to the old Ghost ID becomes permanently unlinkable from your account, and you start posting under a brand-new one.",
+    q: "What happens when I get a new anonymous name?",
+    a: "Your old posts stay online but get a fresh start. When you switch to a new name, you're making a clean break from your past posts.",
   },
   {
-    q: "How do you verify where I live without an address form?",
-    a: "You share your location once, and PostGIS matches your coordinates against real electoral boundary shapes — resolving every jurisdiction you belong to at once, from polling district up to federal, with no address ever typed in.",
+    q: "How do you know where I live without asking for my address?",
+    a: "We just need your location once. We match it to your voting area automatically — no forms, no typing an address.",
   },
   {
-    q: "Is Choseno affiliated with a political party?",
-    a: "No. A politician's party is optional profile information, but Choseno never uses it to rank, filter, or promote candidates — every candidate in a race is shown on equal footing.",
+    q: "Is Choseno run by a political party?",
+    a: "No. We show all candidates equally. A candidate's party doesn't matter to us — voters decide who they like.",
   },
   {
-    q: "I want to run for local office — do I need party backing first?",
-    a: "No. Any verified resident can nominate themselves for an open seat in their district once nominations open, complete a short application and questionnaire, and get a public campaign wall — no party required.",
+    q: "Can I run for office without party support?",
+    a: "Yes. Any local resident can run. You just share a little about yourself, voters ask you questions, and you get your own campaign page.",
   },
   {
-    q: "My area isn't showing any boundaries yet — what do I do?",
-    a: "During location setup you can search for your district by name or enter coordinates directly. If nothing matches, that region's boundary data hasn't been added yet — coverage expands as new regions are mapped.",
+    q: "What if my area isn't on the map yet?",
+    a: "You can search for your area by name or use your location. If it's not there yet, we're still adding new areas. Check back soon.",
   },
 ];
 
@@ -216,7 +216,7 @@ export default function HomePage() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
           </span>
-          A framework for future democracy
+          The real voice of voters
         </span>
 
         <h1 className="font-display text-6xl sm:text-7xl md:text-8xl font-extrabold leading-[1.02] mt-8 tracking-tight drop-shadow-2xl">
@@ -242,7 +242,7 @@ export default function HomePage() {
       </HeroSection>
 
       {/* ============ TRUST BAR ============ */}
-      <section className="relative px-6 pb-6" aria-label="Trust and privacy at a glance">
+      <section className="relative px-6 py-6" aria-label="Trust and privacy at a glance">
         <Reveal className="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-3">
           {TRUST_CHIPS.map((chip) => (
             <span
@@ -300,7 +300,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-16">
             <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
-              From coordinates to community
+              Three simple steps to get started
             </h2>
           </Reveal>
 

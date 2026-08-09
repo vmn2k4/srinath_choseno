@@ -63,11 +63,19 @@
   --color-success: var(--color-emerald-500);
   --color-success-light: var(--color-emerald-300);
 
+  /* Status/Notice text — semantic color for messages with good contrast
+     Use for status alerts, notices, and information that needs to stand out */
+  --color-status-text: var(--color-text-main);
+  --color-status-highlight: var(--color-vanilla-custard);
+
+  /* Section labels — high contrast for readability */
+  --color-label-text: var(--color-text-secondary);
+
   /* Text drawn on top of a solid primary/warning-colored surface (e.g. filled buttons) */
   --color-text-on-primary: var(--color-slate-950);
 
-  /* Modal/overlay scrim */
-  --color-overlay: rgba(0, 0, 0, 0.6);
+  /* Modal/overlay scrim — subtle, lets bright background show through */
+  --color-overlay: rgba(0, 0, 0, 0.25);
   --color-overlay-heavy: rgba(0, 0, 0, 0.95);
 
   /* Specular highlight for the top edge of a glass surface -- simulates light

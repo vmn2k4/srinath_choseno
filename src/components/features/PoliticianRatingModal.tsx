@@ -134,14 +134,14 @@ export default function PoliticianRatingModal({
 
   return (
     <Modal onOverlayClick={onClose}>
-      <Card padding="md" className="space-y-4 w-full max-w-md max-h-[85vh] overflow-y-auto">
+      <Card padding="lg" className="space-y-6 w-[90vw] max-w-4xl max-h-[85vh] overflow-y-auto">
         <div className="flex justify-between items-start">
-          <div>
-            <h3 className="font-bold text-sm text-text-main">{politicianName}</h3>
-            <StarRating value={ratingSummary.avg} count={ratingSummary.count} size="sm" className="mt-1" />
+          <div className="flex-1">
+            <h2 className="font-bold text-lg text-text-main">{politicianName}</h2>
+            <StarRating value={ratingSummary.avg} count={ratingSummary.count} size="sm" className="mt-2" />
           </div>
           <Button size="sm" variant="ghost" onClick={onClose}>
-            <X size={14} />
+            <X size={16} />
           </Button>
         </div>
 
@@ -152,60 +152,76 @@ export default function PoliticianRatingModal({
         ) : (
           <>
             {isOwner ? (
-              <p className="text-xs text-text-muted italic pb-3 border-b border-border-light/20">
+              <p className="text-sm text-text-muted italic py-4 px-3 bg-surface/30 rounded-2xl border border-border-light/20">
                 You can&apos;t rate your own profile.
               </p>
             ) : !user ? (
-              <Button size="sm" className="w-full" onClick={() => router.push("/auth")}>
-                Log in to leave a rating
+              <Button size="md" className="w-full font-semibold" onClick={() => router.push("/auth")}>
+                Sign in to share your feedback
               </Button>
             ) : isRatingLocked ? (
-              <div className="p-3 bg-surface/40 rounded-xl border border-border-light/30 text-xs text-text-muted">
-                You&apos;ve already rated this politician. You can rate again on{" "}
-                <span className="font-semibold text-text-secondary">
-                  {ratingCooldownEnd?.toLocaleDateString()}
-                </span>
-                .
+              <div className="p-5 bg-primary/10 rounded-2xl border-2 border-primary/30">
+                <p className="font-bold text-base text-status-text mb-2">You already rated this person</p>
+                <p className="text-base text-status-text leading-relaxed">Come back on <span className="font-bold text-status-highlight">{ratingCooldownEnd?.toLocaleDateString()}</span> to rate again.</p>
               </div>
             ) : (
-              <div className="space-y-3 pb-4 border-b border-border-light/20">
-                <div className="flex justify-center py-1">
-                  <StarRating value={rateValue} size="lg" onChange={setRateValue} />
+              <div className="space-y-5 pb-6 border-b border-border-light/20">
+                <div>
+                  <p className="text-sm font-semibold text-label-text uppercase tracking-wide mb-4">Rate their performance</p>
+                  <div className="flex justify-center py-4 bg-surface/30 rounded-2xl">
+                    <StarRating value={rateValue} size="lg" onChange={setRateValue} />
+                  </div>
                 </div>
-                <Textarea
-                  placeholder="Share your experience with this politician's performance (optional)..."
-                  value={rateComment}
-                  onChange={(e) => setRateComment(e.target.value)}
-                  rows={3}
-                />
-                {ratingError && <p className="text-danger text-xs">{ratingError}</p>}
-                <Button type="button" className="w-full" disabled={ratingSubmitting} onClick={handleSubmitRating}>
-                  {ratingSubmitting ? "Submitting..." : "Submit Rating"}
+                <div>
+                  <p className="text-sm font-semibold text-text-muted uppercase tracking-wide mb-3">Share your thoughts (optional)</p>
+                  <Textarea
+                    placeholder="What's your experience? E.g., 'Listened to my concerns' or 'Needs to do better on local issues'..."
+                    value={rateComment}
+                    onChange={(e) => setRateComment(e.target.value)}
+                    rows={4}
+                    className="resize-none text-base"
+                  />
+                </div>
+                {ratingError && <p className="text-danger text-sm font-semibold px-2">{ratingError}</p>}
+                <Button
+                  type="button"
+                  className="w-full font-semibold text-base"
+                  disabled={ratingSubmitting}
+                  onClick={handleSubmitRating}
+                  size="lg"
+                >
+                  {ratingSubmitting ? "Submitting..." : "Submit Your Rating"}
                 </Button>
               </div>
             )}
 
-            <div className="space-y-3">
-              {ratingsList.length === 0 ? (
-                <p className="text-xs text-text-muted text-center py-4">No reviews yet — be the first.</p>
-              ) : (
-                ratingsList.map((review) => (
-                  <div
-                    key={review.id}
-                    className="p-3 bg-surface/30 rounded-xl border border-border-light/20 space-y-1.5"
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <StarRating value={review.rating} size="xs" />
-                      <span className="text-[10px] text-text-muted">
-                        {new Date(review.updated_at).toLocaleDateString()}
-                      </span>
-                    </div>
-                    {review.comment && (
-                      <p className="text-sm text-text-secondary leading-relaxed">{review.comment}</p>
-                    )}
+            <div>
+              <p className="text-sm font-semibold text-label-text uppercase tracking-wide mb-4">Community feedback</p>
+              <div className="space-y-3">
+                {ratingsList.length === 0 ? (
+                  <div className="text-center py-8 px-4 bg-surface/20 rounded-2xl border border-border-light/30">
+                    <p className="text-sm font-semibold text-text-muted mb-1">No feedback yet</p>
+                    <p className="text-xs text-text-muted">Be the first to share what you think.</p>
                   </div>
-                ))
-              )}
+                ) : (
+                  ratingsList.map((review) => (
+                    <div
+                      key={review.id}
+                      className="p-4 bg-surface/40 rounded-2xl border border-border-light/30 hover:border-border-light/50 transition-colors space-y-2"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <StarRating value={review.rating} size="xs" />
+                        <span className="text-[11px] font-medium text-text-muted">
+                          {new Date(review.updated_at).toLocaleDateString()}
+                        </span>
+                      </div>
+                      {review.comment && (
+                        <p className="text-sm text-text-secondary leading-relaxed">{review.comment}</p>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           </>
         )}

@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import CandidacyWall from "./CandidacyWall";
-import CurrentOfficeHolderCard from "./CurrentOfficeHolderCard";
 import {
   getSeatById,
   getCandidatesBySeatIds,
@@ -16,6 +16,7 @@ import {
   inviteCandidateToClaim,
   getClaimRequestsForSeat,
   reviewCandidacyClaim,
+  getOfficeHoldersByShapeAndRole,
 } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { getProfileRole, uploadAvatarImage } from "@/lib/services/profile";
@@ -33,6 +34,8 @@ import {
   Camera,
   Plus,
   Share2,
+  Landmark,
+  ArrowRight,
 } from "lucide-react";
 import {
   Card,
@@ -143,6 +146,8 @@ export default function ElectionSeatPageClient({
   const [inviteStatusByCandidate, setInviteStatusByCandidate] = useState<Record<string, string>>({});
   const [claimRequests, setClaimRequests] = useState<any[]>([]);
   const [reviewingRequestId, setReviewingRequestId] = useState<string | null>(null);
+  const [officeHolders, setOfficeHolders] = useState<any[]>([]);
+  const [loadingHolders, setLoadingHolders] = useState(false);
   const [engagementSummaries, setEngagementSummaries] = useState<
     Map<string, { supporterCount: number; avgRating: number; ratingCount: number; commentCount: number }>
   >(new Map());
@@ -153,6 +158,18 @@ export default function ElectionSeatPageClient({
 
     const { data: seatRow } = await getSeatById(supabase, seatId);
     setSeat(seatRow || null);
+
+    // Fetch office holders
+    if (seatRow?.map_shape_id) {
+      setLoadingHolders(true);
+      const { data: holdersData } = await getOfficeHoldersByShapeAndRole(
+        supabase,
+        seatRow.map_shape_id,
+        seatRow.role_title
+      );
+      setOfficeHolders((holdersData as any[]) || []);
+      setLoadingHolders(false);
+    }
 
     const { data: candidateRows } = await getCandidatesBySeatIds(supabase, [seatId]);
     const candItems = (candidateRows as any[]) || [];
@@ -406,15 +423,6 @@ export default function ElectionSeatPageClient({
 
           {status && <p className="text-danger text-xs mb-4">{status}</p>}
 
-          {/* Current Office Holder */}
-          {seat?.map_shape_id && (
-            <CurrentOfficeHolderCard
-              mapShapeId={seat.map_shape_id}
-              roleTitle={seat.role_title}
-              className="mb-8"
-            />
-          )}
-
           {/* Candidate Switcher Roster */}
           {candidates.length === 0 ? (
             <EmptyState
@@ -539,6 +547,86 @@ export default function ElectionSeatPageClient({
         {/* Right Sidebar: Visitor Actions & Seat Administrator Panel */}
         {hasSidebar && (
           <div className="w-full lg:w-72 shrink-0 space-y-4 lg:sticky lg:top-6">
+            {/* Current Office Holders */}
+            <Card padding="sm" className="bg-primary/5 border-primary/20">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-text-main font-bold flex items-center gap-2 text-sm">
+                  <Landmark size={16} className="text-primary" />
+                  Current Office Holders
+                </h3>
+              </div>
+
+              {loadingHolders ? (
+                <div className="flex justify-center py-4">
+                  <Spinner size="sm" />
+                </div>
+              ) : officeHolders.length === 0 ? (
+                <p className="text-text-muted text-xs">No active office holders for this seat yet.</p>
+              ) : (
+                <div className="space-y-2">
+                  {officeHolders.slice(0, 5).map((holder) => {
+                    const roleTitle = holder.election_role_types?.role_title || "Incumbent";
+                    const partyName = holder.political_parties?.name;
+                    const engagement = holder.profiles?.id ? engagementSummaries.get(holder.profiles.id) : undefined;
+
+                    const content = (
+                      <div className="flex items-start gap-2 p-2 rounded-lg bg-surface-hover/40 border border-border-light/30 hover:border-primary/30 transition-all">
+                        <Avatar src={holder.photo_url} name={holder.full_name} size="sm" />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-1">
+                            <h4 className="text-text-main text-xs font-semibold truncate">{holder.full_name}</h4>
+                            {holder.linked_profile_id && (
+                              <Badge tone="primary" size="sm" className="text-[10px] px-1 py-0 shrink-0">
+                                On Choseno
+                              </Badge>
+                            )}
+                          </div>
+                          {holder.profiles?.id && (
+                            <PoliticianEngagementStats
+                              politicianId={holder.profiles.id}
+                              politicianName={holder.full_name}
+                              supporterCount={engagement?.supporterCount ?? 0}
+                              avgRating={engagement?.avgRating ?? 0}
+                              ratingCount={engagement?.ratingCount ?? 0}
+                              commentCount={engagement?.commentCount ?? 0}
+                              size="xs"
+                              className="mt-0.5"
+                            />
+                          )}
+                          <p className="text-text-muted text-[11px] truncate mt-0.5">
+                            <span className="font-medium text-primary">{roleTitle}</span>
+                            {partyName ? ` · ${partyName}` : ""}
+                          </p>
+                        </div>
+                      </div>
+                    );
+
+                    if (holder.profiles?.current_ghost_id) {
+                      const slug = `${holder.full_name}-${roleTitle}`
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, "-")
+                        .replace(/(^-|-$)+/g, "");
+                      return (
+                        <Link key={holder.id} href={`/wall/${holder.profiles.current_ghost_id}/${slug}`} className="block">
+                          {content}
+                        </Link>
+                      );
+                    }
+
+                    if (holder.source_url) {
+                      return (
+                        <a key={holder.id} href={holder.source_url} target="_blank" rel="noopener noreferrer" className="block">
+                          {content}
+                        </a>
+                      );
+                    }
+
+                    return <div key={holder.id}>{content}</div>;
+                  })}
+                </div>
+              )}
+            </Card>
+
             {!user ? (
               <Card padding="sm" className="bg-primary/10 border-primary/25 text-center">
                 <p className="text-xs text-text-secondary mb-3">
