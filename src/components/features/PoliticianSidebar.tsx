@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Users, ChevronRight, Landmark, ArrowRight, UserCheck } from "lucide-react";
 import { Card, Spinner, EmptyState, Avatar, Badge } from "@/components/primitives";
+import PoliticianEngagementStats from "./PoliticianEngagementStats";
 import { getInterestedPoliticians } from "@/lib/services/profile";
 import { getOfficeHoldersForShapes, getFeaturedOfficeHolders } from "@/lib/services/elections";
+import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { createClient } from "@/lib/supabase/client";
@@ -24,6 +26,7 @@ interface InterestedPolitician {
   target_boundary_type: string | null;
   avatar_url: string | null;
   profiles: {
+    id: string;
     current_ghost_id: string | null;
     full_name: string | null;
     country: string | null;
@@ -67,6 +70,9 @@ export default function PoliticianSidebar({
   const [officeHolders, setOfficeHolders] = useState<OfficeHolderItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingHolders, setLoadingHolders] = useState(true);
+  const [engagementSummaries, setEngagementSummaries] = useState<
+    Map<string, { supporterCount: number; avgRating: number; ratingCount: number; commentCount: number }>
+  >(new Map());
 
   useEffect(() => {
     let isMounted = true;
@@ -128,6 +134,46 @@ export default function PoliticianSidebar({
     };
   }, [profile, activeTab, selectedPill, memberships, supabase]);
 
+  // Batch-fetch supporter/rating/comment summaries for every politician
+  // shown across both sections, once per render of the underlying lists —
+  // one round trip instead of one query per card.
+  useEffect(() => {
+    let isMounted = true;
+    const ids = [
+      ...officeHolders.map((h) => h.profiles?.id),
+      ...politicians.map((p) => p.profiles?.id),
+    ].filter((id): id is string => Boolean(id));
+
+    if (ids.length === 0) return;
+
+    getPoliticianEngagementSummaries(supabase, ids).then(({ data }) => {
+      if (!isMounted || !data) return;
+      const map = new Map<
+        string,
+        { supporterCount: number; avgRating: number; ratingCount: number; commentCount: number }
+      >();
+      for (const row of data as {
+        politician_id: string;
+        supporter_count: number;
+        avg_rating: number;
+        rating_count: number;
+        comment_count: number;
+      }[]) {
+        map.set(row.politician_id, {
+          supporterCount: row.supporter_count,
+          avgRating: row.avg_rating,
+          ratingCount: row.rating_count,
+          commentCount: row.comment_count,
+        });
+      }
+      setEngagementSummaries(map);
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [officeHolders, politicians, supabase]);
+
   if (activeTab?.toLowerCase() === "international" || selectedPill?.filterType === "international") return null;
 
   // Active shape for direct boundary office holder page link
@@ -180,6 +226,7 @@ export default function PoliticianSidebar({
               const partyName = holder.political_parties?.name;
               const boundaryName = holder.map_shapes?.name || "";
               const profileGhostId = holder.profiles?.current_ghost_id;
+              const engagement = holder.profiles?.id ? engagementSummaries.get(holder.profiles.id) : undefined;
 
               const content = (
                 <div className="flex items-start gap-2.5 p-2.5 rounded-lg bg-surface-hover/40 border border-border-light/40 hover:border-primary/30 transition-all">
@@ -193,6 +240,18 @@ export default function PoliticianSidebar({
                         </Badge>
                       )}
                     </div>
+                    {holder.profiles?.id && (
+                      <PoliticianEngagementStats
+                        politicianId={holder.profiles.id}
+                        politicianName={holder.full_name}
+                        supporterCount={engagement?.supporterCount ?? 0}
+                        avgRating={engagement?.avgRating ?? 0}
+                        ratingCount={engagement?.ratingCount ?? 0}
+                        commentCount={engagement?.commentCount ?? 0}
+                        size="xs"
+                        className="mt-0.5"
+                      />
+                    )}
                     <p className="text-text-muted text-[11px] truncate mt-0.5">
                       <span className="font-medium text-primary">{roleTitle}</span>
                       {partyName ? ` · ${partyName}` : ""}
@@ -264,6 +323,7 @@ export default function PoliticianSidebar({
                 .toLowerCase()
                 .replace(/[^a-z0-9]+/g, "-")
                 .replace(/(^-|-$)+/g, "");
+              const engagement = pol.profiles?.id ? engagementSummaries.get(pol.profiles.id) : undefined;
 
               return (
                 <Link
@@ -274,6 +334,18 @@ export default function PoliticianSidebar({
                   <Avatar src={pol.avatar_url} name={name} size="sm" />
                   <div className="flex-1 min-w-0">
                     <h4 className="text-text-secondary text-xs font-medium truncate">{name}</h4>
+                    {pol.profiles?.id && (
+                      <PoliticianEngagementStats
+                        politicianId={pol.profiles.id}
+                        politicianName={name}
+                        supporterCount={engagement?.supporterCount ?? 0}
+                        avgRating={engagement?.avgRating ?? 0}
+                        ratingCount={engagement?.ratingCount ?? 0}
+                        commentCount={engagement?.commentCount ?? 0}
+                        size="xs"
+                        className="mt-0.5"
+                      />
+                    )}
                     <p className="text-text-muted text-[11px] truncate">{pol.political_target_role}</p>
                   </div>
                   <ChevronRight size={16} className="text-text-darker group-hover:text-primary-light transition-colors" />

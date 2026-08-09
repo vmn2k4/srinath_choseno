@@ -350,7 +350,7 @@ export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]
   // profile (the default to-one embed behavior when an .eq() filter on the
   // embed doesn't match).
   const columns =
-    "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(full_name, current_ghost_id, politician_profiles(avatar_url))";
+    "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url))";
 
   let query =
     realSeatIds.length > 0

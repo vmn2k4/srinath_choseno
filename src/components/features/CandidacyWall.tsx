@@ -18,6 +18,8 @@ import {
   requestCandidacyClaim,
 } from "@/lib/services/elections";
 import { getOwnProfile, getPoliticianProfile } from "@/lib/services/profile";
+import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
+import PoliticianRatingModal from "./PoliticianRatingModal";
 import { uploadPostImage, createComment, hydratePoliticianAuthors, voteOnPost } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import {
@@ -54,6 +56,7 @@ import {
   Avatar,
   Alert,
   EmptyState,
+  StarRating,
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { trackPostCreated, trackPostEngagement, trackCommentAdded } from "@/lib/analytics/events";
@@ -172,6 +175,8 @@ export default function CandidacyWall({
 
   const [supportCount, setSupportCount] = useState(initialSupportCount);
   const [isSupporting, setIsSupporting] = useState(false);
+  const [ratingSummary, setRatingSummary] = useState<{ avg: number; count: number } | null>(null);
+  const [showRatingModal, setShowRatingModal] = useState(false);
 
   // Claim request state
   const [showClaimForm, setShowClaimForm] = useState(false);
@@ -244,6 +249,10 @@ export default function CandidacyWall({
           }
           const { count } = await getSupporterCount(supabase, cand.politician_id);
           if (isMounted) setSupportCount(count || 0);
+
+          const { data: summaries } = await getPoliticianEngagementSummaries(supabase, [cand.politician_id]);
+          const summary = (summaries || [])[0] as { avg_rating: number; rating_count: number } | undefined;
+          if (isMounted) setRatingSummary(summary ? { avg: summary.avg_rating, count: summary.rating_count } : null);
         }
 
         const { data: answerRows } = await getPublicCandidateAnswers(supabase, candidateId);
@@ -687,6 +696,16 @@ export default function CandidacyWall({
                   <h1 className="text-xl font-bold text-text-main flex items-center gap-2">
                     {displayName}
                   </h1>
+                  {ratingSummary && candidate?.politician_id && (
+                    <button
+                      type="button"
+                      onClick={() => setShowRatingModal(true)}
+                      className="mt-1 cursor-pointer hover:opacity-80 transition-opacity"
+                      title="View ratings and reviews"
+                    >
+                      <StarRating value={ratingSummary.avg} count={ratingSummary.count} size="sm" />
+                    </button>
+                  )}
                   {partyName && (
                     <Badge tone="primary" className="mt-1">
                       {partyName}
@@ -962,6 +981,15 @@ export default function CandidacyWall({
           url={mediaPreview.url}
           type={mediaPreview.type}
           onClose={() => setMediaPreview(null)}
+        />
+      )}
+
+      {showRatingModal && candidate?.politician_id && (
+        <PoliticianRatingModal
+          politicianId={candidate.politician_id}
+          politicianName={displayName}
+          onClose={() => setShowRatingModal(false)}
+          onChange={(summary) => setRatingSummary({ avg: summary.avgRating, count: summary.ratingCount })}
         />
       )}
     </div>

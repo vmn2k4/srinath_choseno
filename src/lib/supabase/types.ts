@@ -311,28 +311,43 @@ export type Database = {
           admin_only: boolean
           country: string
           created_at: string | null
+          description: string | null
+          election_eligible: boolean
           id: string
           is_container: boolean
           rank: number
+          term_length_months: number | null
+          term_limits: number | null
           type_name: string
+          voting_method: string | null
         }
         Insert: {
           admin_only?: boolean
           country: string
           created_at?: string | null
+          description?: string | null
+          election_eligible?: boolean
           id?: string
           is_container?: boolean
           rank: number
+          term_length_months?: number | null
+          term_limits?: number | null
           type_name: string
+          voting_method?: string | null
         }
         Update: {
           admin_only?: boolean
           country?: string
           created_at?: string | null
+          description?: string | null
+          election_eligible?: boolean
           id?: string
           is_container?: boolean
           rank?: number
+          term_length_months?: number | null
+          term_limits?: number | null
           type_name?: string
+          voting_method?: string | null
         }
         Relationships: [
           {
@@ -850,6 +865,41 @@ export type Database = {
           },
         ]
       }
+      entity_types: {
+        Row: {
+          country: string
+          created_at: string
+          description: string | null
+          election_eligible: boolean
+          id: string
+          name: string
+        }
+        Insert: {
+          country: string
+          created_at?: string
+          description?: string | null
+          election_eligible?: boolean
+          id?: string
+          name: string
+        }
+        Update: {
+          country?: string
+          created_at?: string
+          description?: string | null
+          election_eligible?: boolean
+          id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "entity_types_country_fkey"
+            columns: ["country"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["name"]
+          },
+        ]
+      }
       federal_election_candidates: {
         Row: {
           candidate_name: string
@@ -1060,10 +1110,13 @@ export type Database = {
       office_holders: {
         Row: {
           bio: string | null
+          contact_email: string | null
+          contact_phone: string | null
           election_role_type_id: string
           full_name: string
           holding_since: string | null
           id: string
+          linked_profile_id: string | null
           map_shape_id: number
           photo_url: string | null
           political_party_id: number | null
@@ -1073,10 +1126,13 @@ export type Database = {
         }
         Insert: {
           bio?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
           election_role_type_id: string
           full_name: string
           holding_since?: string | null
           id?: string
+          linked_profile_id?: string | null
           map_shape_id: number
           photo_url?: string | null
           political_party_id?: number | null
@@ -1086,10 +1142,13 @@ export type Database = {
         }
         Update: {
           bio?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
           election_role_type_id?: string
           full_name?: string
           holding_since?: string | null
           id?: string
+          linked_profile_id?: string | null
           map_shape_id?: number
           photo_url?: string | null
           political_party_id?: number | null
@@ -1103,6 +1162,13 @@ export type Database = {
             columns: ["election_role_type_id"]
             isOneToOne: false
             referencedRelation: "election_role_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "office_holders_linked_profile_id_fkey"
+            columns: ["linked_profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {
@@ -1216,6 +1282,57 @@ export type Database = {
             columns: ["political_party_id"]
             isOneToOne: false
             referencedRelation: "political_parties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      politician_ratings: {
+        Row: {
+          comment: string | null
+          created_at: string
+          ghost_id: string
+          id: string
+          is_test: boolean
+          politician_id: string
+          rater_id: string
+          rating: number
+          updated_at: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          ghost_id: string
+          id?: string
+          is_test?: boolean
+          politician_id: string
+          rater_id: string
+          rating: number
+          updated_at?: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          ghost_id?: string
+          id?: string
+          is_test?: boolean
+          politician_id?: string
+          rater_id?: string
+          rating?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "politician_ratings_politician_id_fkey"
+            columns: ["politician_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "politician_ratings_rater_id_fkey"
+            columns: ["rater_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -2024,6 +2141,15 @@ export type Database = {
         }
         Returns: undefined
       }
+      admin_search_profiles: {
+        Args: { p_id?: string; p_query?: string }
+        Returns: {
+          avatar_url: string
+          full_name: string
+          id: string
+          role: string
+        }[]
+      }
       admin_update_moderation_rule: {
         Args: {
           p_abuse_type: string
@@ -2223,6 +2349,10 @@ export type Database = {
         Args: { p_upload_id: string }
         Returns: undefined
       }
+      delete_politician_rating: {
+        Args: { p_politician_id: string }
+        Returns: undefined
+      }
       delete_shapes: { Args: { p_shape_ids: number[] }; Returns: undefined }
       disablelongtransactions: { Args: never; Returns: string }
       dropgeometrycolumn:
@@ -2296,6 +2426,7 @@ export type Database = {
           code: string
           id: number
           name: string
+          properties: Json
         }[]
       }
       find_shapes_within: {
@@ -2411,11 +2542,20 @@ export type Database = {
       get_active_elections_for_user: {
         Args: never
         Returns: {
+          boundary_name: string
           election_date: string
           election_id: string
           election_name: string
           role_title: string
           seat_id: string
+        }[]
+      }
+      get_admin_daily_user_signups: {
+        Args: never
+        Returns: {
+          signup_date: string
+          user_count: number
+          users: Json
         }[]
       }
       get_geojson_shapes:
@@ -2444,6 +2584,24 @@ export type Database = {
           report_count: number
           target_id: string
           target_type: string
+        }[]
+      }
+      get_politician_engagement_summaries: {
+        Args: { p_include_test?: boolean; p_politician_ids: string[] }
+        Returns: {
+          avg_rating: number
+          comment_count: number
+          politician_id: string
+          rating_count: number
+          supporter_count: number
+        }[]
+      }
+      get_politician_rating_summaries: {
+        Args: { p_include_test?: boolean; p_politician_ids: string[] }
+        Returns: {
+          avg_rating: number
+          politician_id: string
+          rating_count: number
         }[]
       }
       get_seat_admin_status: {
@@ -3319,6 +3477,31 @@ export type Database = {
           table_name: string
         }
         Returns: string
+      }
+      upsert_politician_rating: {
+        Args: {
+          p_comment?: string
+          p_is_test?: boolean
+          p_politician_id: string
+          p_rating: number
+        }
+        Returns: {
+          comment: string | null
+          created_at: string
+          ghost_id: string
+          id: string
+          is_test: boolean
+          politician_id: string
+          rater_id: string
+          rating: number
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "politician_ratings"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
       vote_on_post: {
         Args: { p_post_id: string; p_vote_type: number }

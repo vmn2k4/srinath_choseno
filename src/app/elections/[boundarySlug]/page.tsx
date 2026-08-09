@@ -10,6 +10,8 @@ import {
   getActiveSeatsByShapeIds,
   getCandidatesBySeatIds,
 } from "@/lib/services/elections";
+import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
+import PoliticianEngagementStats from "@/components/features/PoliticianEngagementStats";
 import { buildBoundarySlug, buildSeatSlug, extractShapeIdFromSlug, slugifyText } from "@/lib/utils/slugs";
 import { Card, EmptyState, Avatar, Badge } from "@/components/primitives";
 import { SITE_URL } from "@/lib/constants/site";
@@ -92,6 +94,27 @@ export default async function BoundaryDirectoryPage({ params }: PageProps) {
   }>;
 
   const holderByRoleTypeId = new Map(officeHolderList.map((h) => [h.election_role_type_id, h]));
+  const holderProfileIds = officeHolderList.map((h) => h.profiles?.id).filter((id): id is string => Boolean(id));
+  const { data: engagementRows } = await getPoliticianEngagementSummaries(supabase, holderProfileIds);
+  const engagementByPoliticianId = new Map(
+    (
+      (engagementRows || []) as {
+        politician_id: string;
+        supporter_count: number;
+        avg_rating: number;
+        rating_count: number;
+        comment_count: number;
+      }[]
+    ).map((r) => [
+      r.politician_id,
+      {
+        supporterCount: r.supporter_count,
+        avgRating: r.avg_rating,
+        ratingCount: r.rating_count,
+        commentCount: r.comment_count,
+      },
+    ])
+  );
   const containerList = (containers || []) as Array<{ map_shapes?: { id?: number; name?: string; boundary_type?: string } | null }>;
   const containerNames = containerList
     .map((c) => c.map_shapes?.name)
@@ -217,6 +240,7 @@ export default async function BoundaryDirectoryPage({ params }: PageProps) {
               const ghostId = holder.profiles?.current_ghost_id;
               const seat = seatByRoleTitle.get(roleTitle);
               const candidateCount = seat ? candidateCountBySeat.get(seat.id) || 0 : 0;
+              const engagement = holder.profiles?.id ? engagementByPoliticianId.get(holder.profiles.id) : undefined;
 
               return (
                 <Card key={holder.id} padding="lg" className="space-y-4 border-l-4 border-l-primary hover:shadow-md transition-shadow">
@@ -235,6 +259,18 @@ export default async function BoundaryDirectoryPage({ params }: PageProps) {
                             </Badge>
                           )}
                         </div>
+
+                        {holder.profiles?.id && (
+                          <PoliticianEngagementStats
+                            politicianId={holder.profiles.id}
+                            politicianName={holder.full_name}
+                            supporterCount={engagement?.supporterCount ?? 0}
+                            avgRating={engagement?.avgRating ?? 0}
+                            ratingCount={engagement?.ratingCount ?? 0}
+                            commentCount={engagement?.commentCount ?? 0}
+                            size="sm"
+                          />
+                        )}
 
                         {holder.bio && (
                           <p className="text-sm text-text-muted leading-relaxed pt-0.5">{holder.bio}</p>

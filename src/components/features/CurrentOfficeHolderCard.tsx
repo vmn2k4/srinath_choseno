@@ -4,8 +4,10 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Mail, Phone, Globe, MapPin, Calendar, Badge as BadgeIcon } from "lucide-react";
 import { Card, Avatar, Button } from "@/components/primitives";
+import PoliticianEngagementStats from "./PoliticianEngagementStats";
 import { createClient } from "@/lib/supabase/client";
 import { getOfficeHoldersByShapeAndRole } from "@/lib/services/elections";
+import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 
 interface CurrentOfficeHolderCardProps {
   mapShapeId: number | string;
@@ -49,13 +51,33 @@ export default function CurrentOfficeHolderCard({
   const supabase = createClient();
   const [holder, setHolder] = useState<OfficeHolder | null>(null);
   const [loading, setLoading] = useState(true);
+  const [engagement, setEngagement] = useState<
+    { supporterCount: number; avgRating: number; ratingCount: number; commentCount: number } | null
+  >(null);
 
   useEffect(() => {
     const fetchOfficeHolder = async () => {
       setLoading(true);
       const { data, error } = await getOfficeHoldersByShapeAndRole(supabase, mapShapeId, roleTitle);
       if (!error && data && Array.isArray(data) && data.length > 0) {
-        setHolder((data[0] as unknown) as OfficeHolder);
+        const record = (data[0] as unknown) as OfficeHolder;
+        setHolder(record);
+        if (record.profiles?.id) {
+          const { data: summaries } = await getPoliticianEngagementSummaries(supabase, [record.profiles.id]);
+          const summary = (summaries || [])[0] as
+            | { supporter_count: number; avg_rating: number; rating_count: number; comment_count: number }
+            | undefined;
+          setEngagement(
+            summary
+              ? {
+                  supporterCount: summary.supporter_count,
+                  avgRating: summary.avg_rating,
+                  ratingCount: summary.rating_count,
+                  commentCount: summary.comment_count,
+                }
+              : null
+          );
+        }
       }
       setLoading(false);
     };
@@ -139,6 +161,18 @@ export default function CurrentOfficeHolderCard({
               )}
             </div>
             <p className="text-sm font-semibold text-primary mt-1">{role}</p>
+            {holder.profiles?.id && (
+              <PoliticianEngagementStats
+                politicianId={holder.profiles.id}
+                politicianName={displayName}
+                supporterCount={engagement?.supporterCount ?? 0}
+                avgRating={engagement?.avgRating ?? 0}
+                ratingCount={engagement?.ratingCount ?? 0}
+                commentCount={engagement?.commentCount ?? 0}
+                size="sm"
+                className="mt-1.5"
+              />
+            )}
 
             {/* Party Badge */}
             {partyName && (

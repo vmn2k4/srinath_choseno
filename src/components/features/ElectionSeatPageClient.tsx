@@ -19,6 +19,7 @@ import {
 } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { getProfileRole, uploadAvatarImage } from "@/lib/services/profile";
+import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import {
   Vote,
   MapPin,
@@ -44,6 +45,7 @@ import {
   EmptyState,
   Avatar,
 } from "@/components/primitives";
+import PoliticianEngagementStats from "./PoliticianEngagementStats";
 import { createClient } from "@/lib/supabase/client";
 import { buildSeatSlug, buildCandidateSlug, extractIdFromSlug } from "@/lib/utils/slugs";
 import { trackElectionViewed } from "@/lib/analytics/events";
@@ -141,6 +143,9 @@ export default function ElectionSeatPageClient({
   const [inviteStatusByCandidate, setInviteStatusByCandidate] = useState<Record<string, string>>({});
   const [claimRequests, setClaimRequests] = useState<any[]>([]);
   const [reviewingRequestId, setReviewingRequestId] = useState<string | null>(null);
+  const [engagementSummaries, setEngagementSummaries] = useState<
+    Map<string, { supporterCount: number; avgRating: number; ratingCount: number; commentCount: number }>
+  >(new Map());
 
   const fetchAll = async () => {
     if (!seatId) return;
@@ -204,6 +209,39 @@ export default function ElectionSeatPageClient({
   useEffect(() => {
     if (!authLoading && seatId) Promise.resolve().then(() => fetchAll());
   }, [user?.id, authLoading, seatId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    let isMounted = true;
+    const ids = candidates.map((c) => c.profiles?.id).filter((id): id is string => Boolean(id));
+    if (ids.length === 0) return;
+
+    getPoliticianEngagementSummaries(supabase, ids).then(({ data }) => {
+      if (!isMounted || !data) return;
+      const map = new Map<
+        string,
+        { supporterCount: number; avgRating: number; ratingCount: number; commentCount: number }
+      >();
+      for (const row of data as {
+        politician_id: string;
+        supporter_count: number;
+        avg_rating: number;
+        rating_count: number;
+        comment_count: number;
+      }[]) {
+        map.set(row.politician_id, {
+          supporterCount: row.supporter_count,
+          avgRating: row.avg_rating,
+          ratingCount: row.rating_count,
+          commentCount: row.comment_count,
+        });
+      }
+      setEngagementSummaries(map);
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [candidates, supabase]);
 
   const trackedSeatViewRef = React.useRef<string | null>(null);
   useEffect(() => {
@@ -400,11 +438,24 @@ export default function ElectionSeatPageClient({
                   const pol = c.profiles?.politician_profiles;
                   const avatarUrl = Array.isArray(pol) ? pol[0]?.avatar_url : pol?.avatar_url;
                   const hasPhoto = Boolean(avatarUrl);
+                  const engagement = c.profiles?.id ? engagementSummaries.get(c.profiles.id) : undefined;
 
                   return (
-                    <button
+                    // A <div role="button">, not a <button> — it now wraps
+                    // PoliticianEngagementStats, which is itself a <button>;
+                    // nesting <button> inside <button> gets silently
+                    // auto-closed by the HTML parser and breaks the layout.
+                    <div
                       key={c.id}
+                      role="button"
+                      tabIndex={0}
                       onClick={() => handleSelectCandidate(c)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          handleSelectCandidate(c);
+                        }
+                      }}
                       className={`flex items-center gap-3 shrink-0 pl-2.5 pr-4 py-2 rounded-2xl border-2 transition-all cursor-pointer ${
                         isSelected
                           ? "border-primary bg-primary/10 shadow-[0_0_0_3px_rgba(233,235,158,0.12)]"
@@ -423,12 +474,25 @@ export default function ElectionSeatPageClient({
                         )}
                       </div>
 
-                      <span
-                        className={`text-sm font-semibold whitespace-nowrap ${
-                          isSelected ? "text-primary-light" : "text-text-secondary"
-                        }`}
-                      >
-                        {name}
+                      <span className="flex flex-col items-start min-w-0">
+                        <span
+                          className={`text-sm font-semibold whitespace-nowrap ${
+                            isSelected ? "text-primary-light" : "text-text-secondary"
+                          }`}
+                        >
+                          {name}
+                        </span>
+                        {c.profiles?.id && (
+                          <PoliticianEngagementStats
+                            politicianId={c.profiles.id}
+                            politicianName={name}
+                            supporterCount={engagement?.supporterCount ?? 0}
+                            avgRating={engagement?.avgRating ?? 0}
+                            ratingCount={engagement?.ratingCount ?? 0}
+                            commentCount={engagement?.commentCount ?? 0}
+                            size="xs"
+                          />
+                        )}
                       </span>
                       {hasPhoto && (
                         <span
@@ -444,7 +508,7 @@ export default function ElectionSeatPageClient({
                           className="text-success shrink-0"
                         />
                       )}
-                    </button>
+                    </div>
                   );
                 })}
               </div>

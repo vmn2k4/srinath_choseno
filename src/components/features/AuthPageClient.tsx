@@ -219,41 +219,43 @@ export default function AuthPageClient({ initialRole }: { initialRole?: "citizen
           </button>
         </div>
 
-        {/* Quick Demo Logins for Fast Local Testing */}
-        <div className="mt-8 pt-6 border-t border-border-light/20 text-center">
-          <p className="text-[11px] font-semibold text-text-muted uppercase tracking-wider mb-3">
-            Quick Local Demo Access
-          </p>
-          <div className="flex flex-wrap gap-2 justify-center">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleDemoSignIn("voter@example.com")}
-              disabled={loading}
-              className="text-xs"
-            >
-              Demo Voter
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleDemoSignIn("politician@example.com")}
-              disabled={loading}
-              className="text-xs"
-            >
-              Demo Politician
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleDemoSignIn("admin@example.com")}
-              disabled={loading}
-              className="text-xs"
-            >
-              Demo Admin
-            </Button>
+        {/* Quick Demo Logins for Fast Local Testing - Dev Only */}
+        {process.env.NODE_ENV === "development" && (
+          <div className="mt-8 pt-6 border-t border-border-light/20 text-center">
+            <p className="text-[11px] font-semibold text-text-muted uppercase tracking-wider mb-3">
+              Quick Local Demo Access
+            </p>
+            <div className="flex flex-wrap gap-2 justify-center">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleDemoSignIn("voter@example.com")}
+                disabled={loading}
+                className="text-xs"
+              >
+                Demo Voter
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleDemoSignIn("politician@example.com")}
+                disabled={loading}
+                className="text-xs"
+              >
+                Demo Politician
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleDemoSignIn("admin@example.com")}
+                disabled={loading}
+                className="text-xs"
+              >
+                Demo Admin
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
       </Card>
     </div>
   );

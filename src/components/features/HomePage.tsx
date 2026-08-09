@@ -12,6 +12,9 @@ import {
   Layers,
   Scale,
   CheckCircle2,
+  Search,
+  Vote,
+  ArrowRight,
 } from "lucide-react";
 import { ContainerScroll } from "@/components/primitives";
 import {
@@ -26,6 +29,24 @@ import { SITE_URL } from "@/lib/constants/site";
 const BASE_URL = SITE_URL;
 
 const BOUNDARY_LEVELS = ["Polling District", "Federal Area", "Country", "International"];
+
+const BRIDGE_STEPS = [
+  {
+    icon: Search,
+    title: "Search",
+    text: "Find your representative by district — no address forms.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Read",
+    text: "See what verified neighbors are actually saying.",
+  },
+  {
+    icon: Vote,
+    title: "Decide",
+    text: "Vote with confidence, not guesswork.",
+  },
+];
 
 const STEPS = [
   {
@@ -199,15 +220,15 @@ export default function HomePage() {
         </span>
 
         <h1 className="font-display text-6xl sm:text-7xl md:text-8xl font-extrabold leading-[1.02] mt-8 tracking-tight drop-shadow-2xl">
-          Your voice, heard
+          Rate Your Politicians&apos; Performance.
           <br />
-          <span className="text-primary">where you live.</span>
+          <span className="text-primary">Like Yelp, but for Democracy.</span>
         </h1>
 
         <p className="text-xl md:text-2xl text-text-main/90 font-medium max-w-3xl mx-auto mt-7 leading-relaxed">
-          Choseno connects citizens and independent candidates inside real electoral
-          boundaries. Local issues, anonymous voices, honest support signals —
-          democracy at the resolution of your street.
+          A secure, anonymous space to hold local leaders accountable. Share your
+          experience, read what your neighbors think, and walk into the booth
+          informed — no toxicity, just accountability.
         </p>
 
         <div className="mt-9 flex items-center justify-center gap-3 text-base text-text-muted">
@@ -233,6 +254,45 @@ export default function HomePage() {
             </span>
           ))}
         </Reveal>
+      </section>
+
+      {/* ============ CONCEPT BRIDGE — Yelp analogy ============ */}
+      <section className="relative py-24 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <Reveal>
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
+              Democracy, simplified.
+            </h2>
+            <p className="mt-4 text-lg text-text-muted max-w-xl mx-auto">
+              Same as picking a restaurant — except this time you&apos;re choosing who
+              represents you.
+            </p>
+          </Reveal>
+
+          <Reveal
+            delay={120}
+            className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-3"
+          >
+            {BRIDGE_STEPS.map((step, i) => (
+              <div key={step.title} className="contents">
+                <div className="flex flex-col items-center gap-3 w-full sm:w-44">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                    <step.icon size={22} className="text-primary" aria-hidden="true" />
+                  </div>
+                  <h3 className="text-lg font-bold text-text-main">{step.title}</h3>
+                  <p className="text-sm text-text-muted leading-relaxed">{step.text}</p>
+                </div>
+                {i < BRIDGE_STEPS.length - 1 && (
+                  <ArrowRight
+                    size={22}
+                    className="text-primary/40 rotate-90 sm:rotate-0 shrink-0"
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
+            ))}
+          </Reveal>
+        </div>
       </section>
 
       {/* ============ HOW IT WORKS ============ */}
@@ -423,11 +483,11 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto">
           <Reveal>
             <h2 className="font-display text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight">
-              Ready to take back <span className="text-primary">local civic life?</span>
+              Join your district. <span className="text-primary">Vote informed.</span>
             </h2>
             <p className="mt-6 text-xl text-text-muted max-w-2xl mx-auto">
-              Join your constituency feed today and experience democracy at the
-              resolution of your neighborhood.
+              See what your neighbors are already saying, then walk into the booth
+              knowing exactly who you&apos;re choosing.
             </p>
 
             <div className="mt-10">

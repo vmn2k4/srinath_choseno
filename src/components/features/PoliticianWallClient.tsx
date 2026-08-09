@@ -13,6 +13,7 @@ import {
   X,
   Video,
   Flag,
+  Star,
 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import VideoRecorder from "./VideoRecorder";
@@ -32,6 +33,8 @@ import {
 } from "@/lib/services/politicianWall";
 import { uploadPostImage, createComment, hydratePoliticianAuthors, voteOnPost } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
+import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
+import PoliticianRatingModal from "./PoliticianRatingModal";
 import {
   Card,
   Button,
@@ -43,6 +46,7 @@ import {
   RemoveMediaButton,
   Avatar,
   EmptyState,
+  StarRating,
 } from "@/components/primitives";
 import ReportDialog from "./ReportDialog";
 import { createClient } from "@/lib/supabase/client";
@@ -100,6 +104,9 @@ export default function PoliticianWallClient({
   const [isSupporting, setIsSupporting] = useState(false);
   const [showSupporters, setShowSupporters] = useState(false);
   const [supportersList, setSupportersList] = useState<SupporterRecord[]>([]);
+
+  const [ratingSummary, setRatingSummary] = useState<{ avg: number; count: number }>({ avg: 0, count: 0 });
+  const [showReviewsModal, setShowReviewsModal] = useState(false);
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -169,6 +176,10 @@ export default function PoliticianWallClient({
 
           const { data: cands } = await getActiveCandidacies(supabase, ownerRecord.id);
           if (isMounted) setCandidacies((cands || []) as any[]);
+
+          const { data: summaries } = await getPoliticianEngagementSummaries(supabase, [ownerRecord.id]);
+          const summary = (summaries || [])[0] as { avg_rating: number; rating_count: number } | undefined;
+          if (isMounted) setRatingSummary({ avg: summary?.avg_rating || 0, count: summary?.rating_count || 0 });
 
           supportChannel = subscribeToSupportChanges(supabase, ownerRecord.id, () => {
             getSupporterCount(supabase, ownerRecord.id).then(({ count }) => {
@@ -355,6 +366,14 @@ export default function PoliticianWallClient({
                   {wallOwner.politician_profiles.target_boundary_name}
                 </p>
               )}
+              <button
+                type="button"
+                onClick={() => setShowReviewsModal(true)}
+                className="mt-1.5 cursor-pointer hover:opacity-80 transition-opacity"
+                title="View ratings and reviews"
+              >
+                <StarRating value={ratingSummary.avg} count={ratingSummary.count} size="sm" />
+              </button>
             </div>
           </div>
 
@@ -370,6 +389,16 @@ export default function PoliticianWallClient({
                 className={isSupporting ? "fill-current" : ""}
               />
               {supportCount > 0 ? supportCount : "Support"}
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowReviewsModal(true)}
+              className="gap-1.5"
+            >
+              <Star size={14} />
+              Ratings
             </Button>
 
             {isOwner && (
@@ -600,6 +629,15 @@ export default function PoliticianWallClient({
           targetId={wallOwner.id}
           onReport={handleReport}
           onClose={() => setShowReportProfile(false)}
+        />
+      )}
+
+      {showReviewsModal && wallOwner?.id && (
+        <PoliticianRatingModal
+          politicianId={wallOwner.id}
+          politicianName={wallOwner.full_name || "This politician"}
+          onClose={() => setShowReviewsModal(false)}
+          onChange={(summary) => setRatingSummary({ avg: summary.avgRating, count: summary.ratingCount })}
         />
       )}
 

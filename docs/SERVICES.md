@@ -23,6 +23,7 @@ Every Supabase call (`.from()`, `.rpc()`, `.storage`, `.auth`) lives in `src/lib
 | `settings.ts` | `site_settings` (single-row site-wide theme), cached via `src/lib/utils/apiCache.ts` | `ThemeContext` |
 | `candidateSync.ts` | jurisdiction detection for a seat, official-candidate-source lookup/fetch (wraps the `fetch-candidates` Edge Function), one-click add of a fetched candidate (delegates to `elections.ts`'s `addUnregisteredCandidate`) | `ElectionsAdminClient` |
 | `news.ts` | news_articles (list/detail queries scoped to `status='published'` or a scheduled article whose `published_at` has passed), reading-time estimation | `news/page.tsx`, `news/[slug]/page.tsx`, `AdminNewsPageClient` (admin CRUD + all statuses) |
+| `ratings.ts` | politician_ratings (1-5 stars + optional comment), upsert/delete via `upsert_politician_rating`/`delete_politician_rating` RPCs, batch avg+count via `get_politician_rating_summaries` RPC | `PoliticianWallClient` (full rate/review UI), `PoliticianSidebar`, `CurrentOfficeHolderCard`, `ElectionSeatPageClient`, `CandidacyWall`, `elections/[boundarySlug]/page.tsx` (read-only summary badge under each politician's name) |
 
 ## Conventions
 
