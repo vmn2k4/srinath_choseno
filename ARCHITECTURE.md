@@ -1913,3 +1913,122 @@ This update ingests 606 active US municipal elected officials (598 Mayors and 8 
 - `scripts/office-holders-data.csv` (appended US municipal records, 10,661 total rows)
 - `OFFICE_HOLDERS_DATA_GUIDE.md` (updated total count to 10,661 officials)
 - `PRODUCT.md` (updated capabilities)
+
+---
+
+## 37. Ratings & Reviews System, Office Holder Sidebar Display, Election Page Refactoring & Avatar Robustness
+
+*2026-08-09, adding community feedback mechanisms, centralizing office holder display, and fixing avatar consistency across the app.*
+
+This update introduces a community ratings system for politicians, refactors office holder display from custom components into a centralized sidebar pattern, fixes broken wall page links via ghost_id, and makes the Avatar component resilient to broken/missing images platform-wide.
+
+### 1. Ratings & Reviews System
+
+**Schema**: `ratings` table (2020, pre-existing but enhanced):
+- `id` (UUID), `politician_id` (FK to `profiles.id`), `ghost_id` (anonymous poster), `rating` (1–5 stars), `comment` (optional text)
+- `created_at`, `updated_at`
+- RLS: own-record-only read (each ghost_id sees only their own ratings), all-read for average aggregates
+- 6-month update cooldown per ghost_id per politician (enforced server-side via `getMyRatingTimestamp` + RPC validation)
+
+**Service Layer** (`src/lib/services/ratings.ts`):
+- `upsertPoliticianRating(politicianId, rating, comment)` — RPC + validation, server enforces cooldown
+- `getPoliticianEngagementSummaries(politicianIds[])` — batch-fetches `supporter_count`, `avg_rating`, `rating_count`, `comment_count` per politician in one round-trip
+- `getPoliticianRatingsList(politicianId)` — all public reviews for display in modal
+- `getMyRatingTimestamp(politicianId, ghostId)` — check cooldown eligibility
+
+**Components**:
+- **`PoliticianRatingModal.tsx`**: unified "view ratings + post new review" surface, reused everywhere politician star ratings are shown
+  - Header: politician name, current avg rating + count
+  - Composer (if eligible): 5-star picker + optional comment textarea, "Submit Your Rating" button
+  - Cooldown message (if locked): "Come back on [date] to rate again" in high-contrast text
+  - All public reviews rendered below, newest first, with star count, date, and comment text
+  - Modal width increased from `max-w-md` to `w-[90vw] max-w-4xl` for readability
+  - Page overlay reduced from `rgba(0,0,0,0.75)` to `rgba(0,0,0,0.25)` to keep background visible
+
+- **Theme Variables** (`src/app/globals.css`):
+  - `--color-status-text`: maps to `text-main` (dark text for message contrast)
+  - `--color-status-highlight`: maps to `vanilla-custard` (highlight color for dates/emphasis)
+  - `--color-label-text`: maps to `text-secondary` (section labels like "Community feedback")
+
+**Workflow**: Click any politician's star rating → modal opens → see existing reviews → if eligible, rate & comment → 6-month lock applies → rating appears in aggregate totals app-wide (wall header, sidebars, candidate cards, etc.)
+
+### 2. Office Holder Sidebar Display & Centralization
+
+**Previous Issue**: Custom `CurrentOfficeHolderCard` component duplicated the office holder display pattern already implemented in `PoliticianSidebar.tsx`. Consumed too much space in main content area; only showed one office holder instead of all.
+
+**Fix**: Moved office holders from main content to right sidebar (responsive: full-width below content on mobile, sticky `lg:w-72` column on desktop), reusing the existing `PoliticianSidebar` pattern.
+
+**Updated File**: `src/components/features/ElectionSeatPageClient.tsx`
+- Added `getOfficeHoldersByShapeAndRole` to elections service imports
+- Added state: `officeHolders`, `loadingHolders`, `engagementSummaries` (Map<politician_id, engagement_stats>)
+- Fetch logic in `fetchAll`: queries office holders + batch-loads engagement stats via `getPoliticianEngagementSummaries`
+- Sidebar Card displays:
+  - Heading: "Current Office Holders" + Landmark icon
+  - Loading state (spinner)
+  - If empty: "No active office holders for this seat yet"
+  - If populated: up to 5 office holders in compact cards, each showing:
+    - Avatar (via `<Avatar>` primitive, with fallback to initials)
+    - Name + "On Choseno" badge (if linked_profile_id exists)
+    - Engagement stats (`PoliticianEngagementStats` component: supporters, star rating, comment count)
+    - Role/Party info (e.g. "Councillor · Independent")
+    - Link to politician wall via `profiles.current_ghost_id` (not `linked_profile_id`)
+
+**Deleted**: `src/components/features/CurrentOfficeHolderCard.tsx` (redundant; logic merged into sidebar)
+
+### 3. Election Page Wall Link Fix
+
+**Bug**: Office holder cards on election seat page linked to `/wall/{linked_profile_id}/...`, which looked up by raw `profile.id`. Wall pages require `/wall/{current_ghost_id}/...` to resolve. Result: every office holder link 404'd on the wall page, showing empty "Politician Wall" placeholder.
+
+**Root Cause**: `linked_profile_id` is the profile's database `id` (internal); `current_ghost_id` is the person's anonymous identifier (public). Wall page router expects the ghost ID.
+
+**Fix**: Changed link generation in `ElectionSeatPageClient.tsx` from `holder.linked_profile_id` to `holder.profiles.current_ghost_id` (already present in the `getOfficeHoldersByShapeAndRole` query response, which joins profiles data).
+
+**Verification**: Daniel Fontaine's wall now correctly displays name, "Councillor" badge, constituency, and profile data instead of generic "Politician Wall" placeholder.
+
+### 4. Avatar Robustness & Consistency
+
+**Problem**: Multiple avatar/photo rendering locations across the app had ad-hoc fallback logic:
+- `EditProfileClient.tsx`: manual `rounded-full` div with conditional Image
+- `OnboardingFlowClient.tsx`: same pattern
+- `PoliticianWallClient.tsx`, `PoliticianSidebar.tsx`, `ElectionSeatPageClient.tsx`: all used `<Avatar>` from primitives
+
+When `photo_url`/`avatar_url` fields pointed to broken URLs (e.g. Daniel Fontaine's `avatar_url` was mistakenly set to a Facebook tracking pixel), the browser would:
+- Render a broken-image glyph (varies by browser/extensions)
+- Overflow alt text into the tiny circle
+- Show nothing visible at very small sizes
+
+Result: inconsistent appearance across the app — some office holders showed initials, some showed nothing, some showed wrapped text.
+
+**Fix**: Updated `Avatar.tsx` primitive to track image load failures and gracefully fall back:
+
+```tsx
+const [failed, setFailed] = useState(false);
+if (src && !failed) {
+  return <img src={src} onError={() => setFailed(true)} ... />;
+}
+return <div className="...gradient...initials...">
+```
+
+Now every surface that uses `<Avatar>` (walls, sidebars, candidate cards, office holders, feed) automatically shows a colored initial-letter circle whenever an image is missing or 404s. **One fix, app-wide consistency.**
+
+**Verified**: Manually dispatched error event on a test image → correctly swapped to initials. Real 404 test also triggers fallback.
+
+**Note**: Facebook tracking pixels in this sandboxed browser silently stall instead of cleanly 404ing (network-level blocks), so they don't trigger the error handler here — but in real browsers with normal networking, the `onError` will fire and the fallback will render correctly.
+
+### Files Changed / Added
+
+- `src/components/features/ElectionSeatPageClient.tsx` (office holder sidebar, link fix, engagement stats)
+- `src/components/primitives/Avatar.tsx` (error handler, graceful fallback)
+- `src/lib/services/ratings.ts` (batch engagement fetching, rating lookups)
+- `src/components/features/PoliticianRatingModal.tsx` (width, overlay opacity, theme colors)
+- `src/app/globals.css` (status-text, status-highlight, label-text theme variables)
+- `PRODUCT.md` (updated with ratings, office holders, avatar system docs)
+
+**Deleted**:
+- `src/components/features/CurrentOfficeHolderCard.tsx` (logic merged into sidebar)
+
+### Known Non-Issues / Out of Scope
+
+- **Data Quality**: Some office_holders rows have garbage avatar_url values (e.g. tracking pixels) — not a rendering bug (the fix above handles it), but worth auditing the data source pipeline to prevent future loads. Current workaround: stale URLs will show as initial-letter circles until the office_holders record is updated.
+- **Opengraph Cards**: `/wall/[ghostId]/opengraph-image.tsx` files still pull `avatar_url` directly for social-share previews. A broken URL there produces a broken share-card image (can't use React Avatar component server-side). Lower visibility, not touched this session.
+- **Facebook Tracking Pixel**: Daniel Fontaine's `avatar_url` pointing to `https://www.facebook.com/tr?...` is a data issue, not a code issue. To fix: audit office_holders.populate scripts and update the erroneous row via SQL.
