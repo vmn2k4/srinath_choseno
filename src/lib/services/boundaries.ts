@@ -292,7 +292,7 @@ export async function deleteMapShape(supabase: Client, shapeId: number) {
 export async function getMapShapeById(supabase: Client, shapeId: number | string) {
   return supabase
     .from("map_shapes")
-    .select("id, name, country, boundary_type, code, retired_at")
+    .select("id, name, country, boundary_type, code, properties, retired_at")
     .eq("id", Number(shapeId))
     .is("retired_at", null)
     .single();

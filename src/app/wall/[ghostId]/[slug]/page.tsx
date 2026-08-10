@@ -7,14 +7,20 @@ import {
   getWallPostBySlugOrId,
   getSupporterCount,
   getSEOProfileSummary,
+  getSEOProfileSummaryBySlug,
 } from "@/lib/services/politicianWall";
 import { SITE_URL } from "@/lib/constants/site";
+import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 import { redirect } from "next/navigation";
 
 const BASE_URL = SITE_URL;
 
 interface WallSlugPageProps {
   params: Promise<{ ghostId: string; slug: string }>;
+}
+
+function isUuid(value: string) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
 
 type WallPost = {
@@ -30,13 +36,15 @@ export async function generateMetadata({
   const { ghostId, slug } = await params;
   const supabase = await createServerClient();
 
-  const [{ owner, activeCandidacy, partyName }, { data: postData }] = await Promise.all([
-    getSEOProfileSummary(supabase, ghostId),
-    getWallPostBySlugOrId(supabase, ghostId, slug),
-  ]);
-
+  const { owner, activeCandidacy, partyName } = isUuid(ghostId)
+    ? await getSEOProfileSummary(supabase, ghostId)
+    : await getSEOProfileSummaryBySlug(supabase, ghostId);
   const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
+  if (owner?.current_ghost_id && isUuid(ghostId) && wallSlug) redirect(`/wall/${wallSlug}/${slug}`);
   if (wallSlug && slug === wallSlug) redirect(`/wall/${wallSlug}`);
+
+  const { data: postData } = await getWallPostBySlugOrId(supabase, owner?.current_ghost_id || ghostId, slug);
+
 
   const post = postData as WallPost | null;
   const name = owner?.full_name || "Politician";
@@ -53,7 +61,8 @@ export async function generateMetadata({
   const partyLabel = partyName ? ` (${partyName})` : "";
   const locationLabel = boundaryName ? ` in ${boundaryName}` : "";
 
-  const canonicalUrl = `${BASE_URL}/wall/${ghostId}/${slug}`;
+  const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
+  const canonicalUrl = `${BASE_URL}/wall/${canonicalWallSlug}/${slug}`;
 
   const postExcerpt = post?.content
     ? post.content.replace(/\s+/g, " ").trim()
@@ -71,7 +80,7 @@ export async function generateMetadata({
     ? `Read updates, constituent feedback, and campaign positions for ${name}, candidate for ${roleTitle}${locationLabel}${partyLabel} on Choseno.`
     : `Read official updates, policy statements, and constituent discussion for ${name} (${roleTitle}${locationLabel}) on Choseno.`;
 
-  const ogImageUrl = post?.image_url || `${BASE_URL}/wall/${ghostId}/${slug}/opengraph-image`;
+  const ogImageUrl = post?.image_url || `${BASE_URL}/wall/${canonicalWallSlug}/${slug}/opengraph-image`;
 
   return {
     title,
@@ -105,18 +114,21 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
   const { ghostId, slug } = await params;
   const supabase = await createServerClient();
 
-  const [{ owner, activeCandidacy, partyName, rating }, { data: postData }] = await Promise.all([
-    getSEOProfileSummary(supabase, ghostId),
-    getWallPostBySlugOrId(supabase, ghostId, slug),
-  ]);
-
+  const summary = isUuid(ghostId)
+    ? await getSEOProfileSummary(supabase, ghostId)
+    : await getSEOProfileSummaryBySlug(supabase, ghostId);
+  const { owner, activeCandidacy, partyName, rating } = summary;
   const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
+  if (owner?.current_ghost_id && isUuid(ghostId) && wallSlug) redirect(`/wall/${wallSlug}/${slug}`);
   if (wallSlug && slug === wallSlug) redirect(`/wall/${wallSlug}`);
+
+  const { data: postData } = await getWallPostBySlugOrId(supabase, owner?.current_ghost_id || ghostId, slug);
+
 
   const post = postData as WallPost | null;
 
   const [{ data: posts }, supportCountRes] = await Promise.all([
-    getWallPosts(supabase, ghostId),
+    getWallPosts(supabase, owner?.current_ghost_id || ghostId),
     owner?.id ? getSupporterCount(supabase, owner.id) : Promise.resolve({ count: 0 }),
   ]);
 
@@ -125,7 +137,8 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
     activeCandidacy?.election_seats?.role_title ||
     (owner?.politician_profiles as any)?.political_target_role ||
     "Representative";
-  const canonicalUrl = `${BASE_URL}/wall/${ghostId}/${slug}`;
+  const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
+  const canonicalUrl = `${BASE_URL}/wall/${canonicalWallSlug}/${slug}`;
 
   const jsonLd = [
     {
@@ -140,7 +153,7 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
             "@type": "Person",
             name: name,
             jobTitle: roleTitle,
-            url: `${BASE_URL}/wall/${ghostId}`,
+            url: `${BASE_URL}/wall/${canonicalWallSlug}`,
             image: owner.politician_profiles?.avatar_url || undefined,
             ...(partyName && {
               memberOf: {
@@ -188,7 +201,7 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
           "@type": "ListItem",
           position: 3,
           name: `${name} Wall`,
-          item: `${BASE_URL}/wall/${ghostId}`,
+          item: `${BASE_URL}/wall/${canonicalWallSlug}`,
         },
         {
           "@type": "ListItem",
@@ -207,7 +220,7 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
       <PoliticianWallClient
-        ghostId={ghostId}
+        ghostId={owner?.current_ghost_id || ghostId}
         initialWallOwner={owner as any}
         initialPosts={(posts as any) || []}
         initialSupportCount={"count" in supportCountRes ? (supportCountRes as any).count || 0 : 0}

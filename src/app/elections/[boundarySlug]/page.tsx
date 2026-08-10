@@ -24,7 +24,7 @@ interface PageProps {
   searchParams: Promise<{ view?: string }>;
 }
 
-type ShapeRow = { id: number; name: string; country: string; boundary_type: string };
+type ShapeRow = { id: number; name: string; country: string; boundary_type: string; properties?: unknown };
 
 type OfficeHolderRow = {
   id: string;
@@ -352,7 +352,7 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
             {seatRows.map((seat) => (
               <Link
                 key={seat.id}
-                href={`/elections/seat/${buildSeatSlug({ id: seat.id, role_title: seat.role_title, map_shapes: { name: shape.name } })}`}
+                href={`/elections/seat/${buildSeatSlug({ id: seat.id, role_title: seat.role_title, map_shapes: { name: shape.name, properties: shape.properties } })}`}
                 className="flex items-center justify-between gap-2 p-3 rounded-xl bg-surface-hover/40 hover:bg-primary/10 border border-border-light/40 hover:border-primary/30 transition-all text-sm"
               >
                 <span className="font-semibold text-text-main">{seat.role_title}</span>

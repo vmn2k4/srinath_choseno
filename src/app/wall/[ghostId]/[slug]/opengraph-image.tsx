@@ -1,6 +1,6 @@
 import { renderOgCard, OG_IMAGE_SIZE, OG_IMAGE_CONTENT_TYPE } from "@/lib/utils/og";
 import { createClient as createServerClient } from "@/lib/supabase/server";
-import { getWallOwnerProfile, getWallPostBySlugOrId } from "@/lib/services/politicianWall";
+import { getWallOwnerProfile, getWallPostBySlugOrId, getWallOwnerProfileBySlug } from "@/lib/services/politicianWall";
 
 export const alt = "Candidate Wall Thread | Choseno";
 export const size = OG_IMAGE_SIZE;
@@ -19,10 +19,12 @@ export default async function Image({ params }: Props) {
   const { ghostId, slug } = await params;
   const supabase = await createServerClient();
 
-  const [{ data: ownerData }, { data: postData }] = await Promise.all([
-    getWallOwnerProfile(supabase, ghostId),
-    getWallPostBySlugOrId(supabase, ghostId, slug),
-  ]);
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(ghostId);
+  const { data: ownerData } = isUuid
+    ? await getWallOwnerProfile(supabase, ghostId)
+    : await getWallOwnerProfileBySlug(supabase, ghostId);
+  const resolvedGhostId = ownerData?.current_ghost_id || ghostId;
+  const { data: postData } = await getWallPostBySlugOrId(supabase, resolvedGhostId, slug);
 
   const owner = ownerData as unknown as WallOwner | null;
   const name = owner?.full_name || "Politician";

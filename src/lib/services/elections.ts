@@ -341,7 +341,7 @@ export async function getSeatById(supabase: Client, seatId: string) {
 export async function getMyCandidacies(supabase: Client, profileId: string) {
   return supabase
     .from("election_candidates")
-    .select("id, statement, seat_id, status, submitted_at, election_seats(role_title, map_shapes(name), elections(name, status))")
+    .select("id, statement, seat_id, status, submitted_at, election_seats(role_title, map_shapes(name, properties), elections(name, status))")
     .eq("politician_id", profileId)
     .order("created_at", { ascending: false });
 }
@@ -390,7 +390,7 @@ export async function getCandidateById(supabase: Client, candidateId: string) {
       .select(
         `
         id, seat_id, statement, status, submitted_at, intro_video_url, politician_id,
-        election_seats ( role_title, map_shapes ( name ), elections ( id, name, election_date, status ) )
+        election_seats ( role_title, map_shapes ( name, properties ), elections ( id, name, election_date, status ) )
       `
       )
       .eq("id", realCandidateId)
@@ -404,7 +404,7 @@ export async function getCandidateById(supabase: Client, candidateId: string) {
     .select(
       `
       id, seat_id, statement, status, submitted_at, intro_video_url, politician_id,
-      election_seats ( role_title, map_shapes ( name ), elections ( id, name, election_date, status ) )
+      election_seats ( role_title, map_shapes ( name, properties ), elections ( id, name, election_date, status ) )
     `
     );
 
@@ -422,7 +422,7 @@ export async function getPublicCandidateById(supabase: Client, candidateId: stri
   // embed doesn't match).
   const columns = `
     id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, seat_id,
-    election_seats ( role_title, map_shapes ( name, boundary_type ), elections ( name, status ) ),
+    election_seats ( role_title, map_shapes ( name, boundary_type, properties ), elections ( name, status ) ),
     profiles!election_candidates_politician_id_fkey!inner ( full_name, current_ghost_id )
   `;
 
@@ -685,7 +685,7 @@ export async function getSeatAdminStatus(supabase: Client, seatId: string) {
 export async function getMyElectionAdminApplications(supabase: Client, profileId: string) {
   return supabase
     .from("election_administrators")
-    .select("id, seat_id, status, submitted_at, election_seats(role_title, map_shapes(name), elections(name, status))")
+    .select("id, seat_id, status, submitted_at, election_seats(role_title, map_shapes(name, properties), elections(name, status))")
     .eq("profile_id", profileId)
     .order("submitted_at", { ascending: false });
 }
@@ -693,7 +693,7 @@ export async function getMyElectionAdminApplications(supabase: Client, profileId
 export async function listPendingElectionAdminApplications(supabase: Client) {
   return supabase
     .from("election_administrators")
-    .select("id, seat_id, status, motivation, social_media_info, contact_email, submitted_at, election_seats(role_title, map_shapes(name), elections(name, status))")
+    .select("id, seat_id, status, motivation, social_media_info, contact_email, submitted_at, election_seats(role_title, map_shapes(name, properties), elections(name, status))")
     .eq("status", "pending")
     .order("submitted_at", { ascending: true });
 }

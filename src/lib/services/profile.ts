@@ -279,9 +279,10 @@ export async function upsertPoliticianProfile(
 ) {
   const { data: profile } = await getOwnProfile(supabase, userId, { columns: "full_name" });
   const profileName = (profile as { full_name?: string | null } | null)?.full_name;
-  return supabase.from("politician_profiles").upsert({
+  const wallSlug = buildPoliticianWallSlug(profileName, politicalTargetRole);
+  const result = await supabase.from("politician_profiles").upsert({
     id: userId,
-    wall_slug: buildPoliticianWallSlug(profileName, politicalTargetRole),
+    wall_slug: wallSlug,
     target_boundary_id: targetBoundaryId ?? fallbackBoundaryId,
     target_boundary_name: targetBoundaryName,
     political_target_role: politicalTargetRole || null,
@@ -292,6 +293,10 @@ export async function upsertPoliticianProfile(
     avatar_url: avatarUrl || null,
     updated_at: new Date().toISOString(),
   });
+  if (!result.error) {
+    await supabase.from("profiles").update({ wall_slug: wallSlug }).eq("id", userId);
+  }
+  return result;
 }
 
 // storage — optional politician profile photo upload, mirrors feed.ts's

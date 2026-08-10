@@ -1037,6 +1037,7 @@ export type Database = {
           label: string
           score_penalty: number
           updated_at: string | null
+          wall_slug: string | null
         }
         Insert: {
           abuse_type: string
@@ -1045,6 +1046,7 @@ export type Database = {
           label: string
           score_penalty?: number
           updated_at?: string | null
+          wall_slug?: string | null
         }
         Update: {
           abuse_type?: string
@@ -1053,6 +1055,7 @@ export type Database = {
           label?: string
           score_penalty?: number
           updated_at?: string | null
+          wall_slug?: string | null
         }
         Relationships: []
       }
@@ -1586,6 +1589,7 @@ export type Database = {
           onboarding_completed: boolean | null
           role: string | null
           updated_at: string | null
+          wall_slug: string | null
         }
         Insert: {
           burn_count?: number
@@ -1602,6 +1606,7 @@ export type Database = {
           onboarding_completed?: boolean | null
           role?: string | null
           updated_at?: string | null
+          wall_slug?: string | null
         }
         Update: {
           burn_count?: number
@@ -1618,6 +1623,7 @@ export type Database = {
           onboarding_completed?: boolean | null
           role?: string | null
           updated_at?: string | null
+          wall_slug?: string | null
         }
         Relationships: []
       }

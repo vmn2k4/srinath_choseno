@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database, Json } from "@/lib/supabase/types";
 import { isDevEnvironment } from "@/lib/utils/environment";
+import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 
 type Client = SupabaseClient<Database>;
 
@@ -93,7 +94,7 @@ export async function hydratePoliticianAuthors(
         fullName: row.full_name || "Politician",
         wallHref: row.politician_profiles?.wall_slug
           ? `/wall/${row.politician_profiles.wall_slug}`
-          : `/wall/${row.current_ghost_id}`,
+          : `/wall/${buildPoliticianWallSlug(row.full_name)}`,
       });
     }
   }

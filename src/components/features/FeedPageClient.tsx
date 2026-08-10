@@ -58,6 +58,8 @@ import {
 } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import { getPlatformRuleSettings } from "@/lib/services/settings";
+import { getSeatById } from "@/lib/services/elections";
+import { buildSeatSlug } from "@/lib/utils/slugs";
 import { createClient } from "@/lib/supabase/client";
 import { trackPostCreated, trackPostEngagement, trackCommentAdded } from "@/lib/analytics/events";
 
@@ -557,7 +559,11 @@ export default function FeedPageClient() {
                 return (
                   <div
                     key={seatId || `${elec.election_id}-${idx}`}
-                    onClick={() => router.push(`/elections/seat/${seatId}`)}
+                    onClick={async () => {
+                      if (!seatId) return;
+                      const { data: seat } = await getSeatById(supabase, seatId);
+                      router.push(`/elections/seat/${buildSeatSlug(seat || { id: seatId })}`);
+                    }}
                     className="group relative flex-1 min-w-[210px] max-w-[270px] p-2.5 px-3 bg-primary/10 hover:bg-primary/20 border border-primary/30 hover:border-primary/50 rounded-2xl flex items-center gap-2.5 text-xs transition-all shadow-sm cursor-pointer hover:shadow-md animate-fade-in"
                     title={`Click to view ${elec.role_title} seat page`}
                   >

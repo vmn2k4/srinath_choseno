@@ -84,7 +84,7 @@ export async function generateMetadata({
 
   const ogImageUrl = selectedCandidate
     ? `${BASE_URL}/candidacy/${selectedCandidate.id}/opengraph-image`
-    : `${BASE_URL}/elections/seat/${seat.id}/opengraph-image`;
+    : `${BASE_URL}/elections/seat/${seatSlug}/opengraph-image`;
 
   return {
     title,
@@ -126,12 +126,18 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
 
   const roleTitle = seat?.role_title || "Electoral Seat";
   const boundaryName = seat?.map_shapes?.name || "District";
+  const electionYear = seat?.elections?.election_date?.slice(0, 4) || "2026";
   const seatSlug = seat ? buildSeatSlug(seat) : seatId;
   const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(seatId);
   if (seat && isUuid && seatSlug !== seatId) {
     redirect(`/elections/seat/${seatSlug}`);
   }
   const canonicalUrl = `${BASE_URL}/elections/seat/${seatSlug}`;
+
+  const candList = (candidates as any[]) || [];
+  const candidateNames = candList
+    .map((c) => c.display_name || c.profiles?.full_name)
+    .filter(Boolean);
 
   const jsonLd = seat
     ? [
@@ -141,6 +147,45 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
           name: `${roleTitle} Candidates — ${boundaryName}`,
           description: `View candidates, policy positions, and constituent discussion for ${roleTitle} in ${boundaryName}.`,
           url: canonicalUrl,
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: `2026 ${roleTitle} Candidates — ${boundaryName}`,
+          description: `List of official candidates running for ${roleTitle} in ${boundaryName} on Choseno.`,
+          numberOfItems: candList.length,
+          itemListElement: candList.map((c, idx) => {
+            const candName = c.display_name || c.profiles?.full_name || "Candidate";
+            const candGhostId = c.profiles?.current_ghost_id;
+            const candSlug = buildCandidateSlug(c);
+            const candUrl = candGhostId
+              ? `${BASE_URL}/wall/${candGhostId}/${candSlug}`
+              : `${canonicalUrl}/candidate/${candSlug}`;
+
+            return {
+              "@type": "ListItem",
+              position: idx + 1,
+              name: candName,
+              url: candUrl,
+            };
+          }),
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            {
+              "@type": "Question",
+              name: `Who is running for ${roleTitle} in ${boundaryName} in ${electionYear}?`,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text:
+                  candidateNames.length > 0
+                    ? `Official candidates running for ${roleTitle} in ${boundaryName} (${electionYear} Elections) on Choseno include: ${candidateNames.join(", ")}.`
+                    : `Candidates for ${roleTitle} in ${boundaryName} are being updated on Choseno as nominations are filed.`,
+              },
+            },
+          ],
         },
         {
           "@context": "https://schema.org",
@@ -167,6 +212,52 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
       )}
+
+      {/* SSR Content Snapshot for AI Crawlers (ChatGPT, Perplexity, Gemini) */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          width: "1px",
+          height: "1px",
+          padding: 0,
+          margin: "-1px",
+          overflow: "hidden",
+          clip: "rect(0,0,0,0)",
+          whiteSpace: "nowrap",
+          border: 0,
+        }}
+      >
+        <h1>
+          2026 {roleTitle} Candidates — {boundaryName}
+        </h1>
+        <p>
+          Who is running for {roleTitle} in {boundaryName} in {electionYear}?
+        </p>
+        {candidateNames.length > 0 ? (
+          <p>
+            Official candidates running for {roleTitle} in {boundaryName} on Choseno:{" "}
+            {candidateNames.join(", ")}.
+          </p>
+        ) : (
+          <p>
+            Nominations for {roleTitle} in {boundaryName} are currently active on Choseno.
+          </p>
+        )}
+        {candList.length > 0 && (
+          <ul>
+            {candList.map((c: any) => {
+              const candName = c.display_name || c.profiles?.full_name || "Candidate";
+              return (
+                <li key={c.id}>
+                  {candName} — Candidate for {roleTitle} ({boundaryName})
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
+
       <ElectionSeatPageClient
         seatId={seatId}
         initialSeat={seat}

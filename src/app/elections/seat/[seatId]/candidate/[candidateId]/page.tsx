@@ -57,7 +57,7 @@ export async function generateMetadata({
 
   const ogImageUrl = selectedCandidate
     ? `${BASE_URL}/candidacy/${selectedCandidate.id}/opengraph-image`
-    : `${BASE_URL}/elections/seat/${seat.id}/opengraph-image`;
+    : `${BASE_URL}/elections/seat/${seatSlug}/opengraph-image`;
 
   return {
     title,

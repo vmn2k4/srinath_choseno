@@ -11,6 +11,7 @@ import {
 import { redirect } from "next/navigation";
 import { notFound } from "next/navigation";
 import { SITE_URL } from "@/lib/constants/site";
+import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 
 const BASE_URL = SITE_URL;
 
@@ -49,9 +50,6 @@ export async function generateMetadata({
   const partyLabel = partyName ? ` (${partyName})` : "";
   const locationLabel = boundaryName ? ` in ${boundaryName}` : "";
 
-  const canonicalUrl = `${BASE_URL}/wall/${wallSlug || ghostId}`;
-  const ogImageUrl = `${BASE_URL}/wall/${wallSlug || ghostId}/opengraph-image`;
-
   const title = activeCandidacy
     ? `${name}${partyLabel} — ${electionYear} ${roleTitle} Candidate${locationLabel} & Voter Ratings | Choseno`
     : `${name}${partyLabel} — ${roleTitle}${locationLabel} | Voter Ratings & Feedback | Choseno`;
@@ -64,6 +62,9 @@ export async function generateMetadata({
   const description = activeCandidacy
     ? `${ratingPrefix}What do ${boundaryName || "local"} voters really think of ${name}? Read anonymous constituent reviews, ${electionYear} ${roleTitle} stances${partyLabel ? ` (${partyName})` : ""}, ratings & submit your feedback on Choseno.`
     : `${ratingPrefix}What do constituents really think of ${name}? See approval ratings, constituent feedback, policy stances and join the discussion — anonymous and free on Choseno.`;
+  const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
+  const canonicalUrl = `${BASE_URL}/wall/${canonicalWallSlug}`;
+  const ogImageUrl = `${BASE_URL}/wall/${canonicalWallSlug}/opengraph-image`;
 
   return {
     title,
@@ -116,7 +117,8 @@ export default async function WallPage({ params }: WallPageProps) {
     activeCandidacy?.election_seats?.role_title ||
     (owner?.politician_profiles as any)?.political_target_role ||
     "Representative";
-  const canonicalUrl = `${BASE_URL}/wall/${wallSlug || ghostId}`;
+  const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
+  const canonicalUrl = `${BASE_URL}/wall/${canonicalWallSlug}`;
 
   const jsonLd = owner
     ? [
