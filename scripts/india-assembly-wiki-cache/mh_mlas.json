@@ -1,0 +1,2018 @@
+[
+  {
+    "district": "Nandurbar",
+    "no": "1",
+    "constituency": "Akkalkuwa",
+    "name": "Aamshya Padavi",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Nandurbar",
+    "no": "2",
+    "constituency": "Shahada",
+    "name": "Rajesh Padvi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nandurbar",
+    "no": "3",
+    "constituency": "Nandurbar",
+    "name": "Vijaykumar Gavit",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nandurbar",
+    "no": "4",
+    "constituency": "Navapur",
+    "name": "Shirishkumar Naik",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Dhule",
+    "no": "5",
+    "constituency": "Sakri",
+    "name": "Manjula Gavit",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Dhule",
+    "no": "6",
+    "constituency": "Dhule Rural",
+    "name": "Raghavendra Patil",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Dhule",
+    "no": "7",
+    "constituency": "Dhule City",
+    "name": "Anup Agrawal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Dhule",
+    "no": "8",
+    "constituency": "Sindkheda",
+    "name": "Jayakumar Rawal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Dhule",
+    "no": "9",
+    "constituency": "Shirpur",
+    "name": "Kashiram Pawara",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Jalgaon",
+    "no": "10",
+    "constituency": "Chopda",
+    "name": "Chandrakant Sonawane",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Jalgaon",
+    "no": "11",
+    "constituency": "Raver",
+    "name": "Amol Jawale",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Jalgaon",
+    "no": "12",
+    "constituency": "Bhusawal",
+    "name": "Sanjay Savkare",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Jalgaon",
+    "no": "13",
+    "constituency": "Jalgaon City",
+    "name": "Suresh Bhole",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Jalgaon",
+    "no": "14",
+    "constituency": "Jalgaon Rural",
+    "name": "Gulabrao Patil",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Jalgaon",
+    "no": "15",
+    "constituency": "Amalner",
+    "name": "Anil Bhaidas Patil",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Jalgaon",
+    "no": "16",
+    "constituency": "Erandol",
+    "name": "Amol Patil",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Jalgaon",
+    "no": "17",
+    "constituency": "Chalisgaon",
+    "name": "Mangesh Chavan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Jalgaon",
+    "no": "18",
+    "constituency": "Pachora",
+    "name": "Kishor Appa Patil",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Jalgaon",
+    "no": "19",
+    "constituency": "Jamner",
+    "name": "Girish Mahajan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Jalgaon",
+    "no": "20",
+    "constituency": "Muktainagar",
+    "name": "Chandrakant Nimba Patil",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Buldana",
+    "no": "21",
+    "constituency": "Malkapur",
+    "name": "Chainsukh Sancheti",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Buldana",
+    "no": "22",
+    "constituency": "Buldhana",
+    "name": "Sanjay Gaikwad",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Buldana",
+    "no": "23",
+    "constituency": "Chikhali",
+    "name": "Shweta Mahale",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Buldana",
+    "no": "24",
+    "constituency": "Sindkhed Raja",
+    "name": "Manoj Kayande",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Buldana",
+    "no": "25",
+    "constituency": "Mehkar",
+    "name": "Siddharth Kharat",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Buldana",
+    "no": "26",
+    "constituency": "Khamgaon",
+    "name": "Akash Fundkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Buldana",
+    "no": "27",
+    "constituency": "Jalgaon (Jamod)",
+    "name": "Sanjay Kute",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Akola",
+    "no": "28",
+    "constituency": "Akot",
+    "name": "Prakash Bharsakale",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Akola",
+    "no": "29",
+    "constituency": "Balapur",
+    "name": "Nitin Tale",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Akola",
+    "no": "30",
+    "constituency": "Akola West",
+    "name": "Sajid Khan Pathan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Akola",
+    "no": "31",
+    "constituency": "Akola East",
+    "name": "Randhir Savarkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Akola",
+    "no": "32",
+    "constituency": "Murtizapur",
+    "name": "Harish Pimple",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Washim",
+    "no": "33",
+    "constituency": "Risod",
+    "name": "Amit Zanak",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Washim",
+    "no": "34",
+    "constituency": "Washim",
+    "name": "Shyam Khode",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Washim",
+    "no": "35",
+    "constituency": "Karanja",
+    "name": "Sai Prakash Dahake",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Amravati",
+    "no": "36",
+    "constituency": "Dhamangaon Railway",
+    "name": "Pratap Adsad",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Amravati",
+    "no": "37",
+    "constituency": "Badnera",
+    "name": "Ravi Rana",
+    "party": "Rashtriya Yuva Swabhiman Party"
+  },
+  {
+    "district": "Amravati",
+    "no": "38",
+    "constituency": "Amravati",
+    "name": "Sulbha Khodke",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Amravati",
+    "no": "39",
+    "constituency": "Teosa",
+    "name": "Rajesh Wankhade",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Amravati",
+    "no": "40",
+    "constituency": "Daryapur",
+    "name": "Gajanan Lawate",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Amravati",
+    "no": "41",
+    "constituency": "Melghat",
+    "name": "Kewalram Kale",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Amravati",
+    "no": "42",
+    "constituency": "Achalpur",
+    "name": "Pravin Tayade",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Amravati",
+    "no": "43",
+    "constituency": "Morshi",
+    "name": "Chandu Yawalkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Wardha",
+    "no": "44",
+    "constituency": "Arvi",
+    "name": "Sumit Wankhede",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Wardha",
+    "no": "45",
+    "constituency": "Deoli",
+    "name": "Rajesh Bakane",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Wardha",
+    "no": "46",
+    "constituency": "Hinganghat",
+    "name": "Samir Kunawar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Wardha",
+    "no": "47",
+    "constituency": "Wardha",
+    "name": "Pankaj Bhoyar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nagpur",
+    "no": "48",
+    "constituency": "Katol",
+    "name": "Charansing Thakur",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nagpur",
+    "no": "49",
+    "constituency": "Savner",
+    "name": "Ashish Deshmukh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nagpur",
+    "no": "50",
+    "constituency": "Hingna",
+    "name": "Sameer Meghe",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nagpur",
+    "no": "51",
+    "constituency": "Umred",
+    "name": "Sanjay Meshram",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nagpur",
+    "no": "52",
+    "constituency": "Nagpur South West",
+    "name": "Devendra Fadnavis",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nagpur",
+    "no": "53",
+    "constituency": "Nagpur South",
+    "name": "Mohan Mate",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nagpur",
+    "no": "54",
+    "constituency": "Nagpur East",
+    "name": "Krishna Khopde",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nagpur",
+    "no": "55",
+    "constituency": "Nagpur Central",
+    "name": "Pravin Datke",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nagpur",
+    "no": "56",
+    "constituency": "Nagpur West",
+    "name": "Vikas Thakre",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nagpur",
+    "no": "57",
+    "constituency": "Nagpur North",
+    "name": "Nitin Raut",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nagpur",
+    "no": "58",
+    "constituency": "Kamthi",
+    "name": "Chandrashekhar Bawankule",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nagpur",
+    "no": "59",
+    "constituency": "Ramtek",
+    "name": "Ashish Jaiswal",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Bhandara",
+    "no": "60",
+    "constituency": "Tumsar",
+    "name": "Raju Karemore",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Bhandara",
+    "no": "61",
+    "constituency": "Bhandara",
+    "name": "Narendra Bhondekar",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Bhandara",
+    "no": "62",
+    "constituency": "Sakoli",
+    "name": "Nana Patole",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Gondia",
+    "no": "63",
+    "constituency": "Arjuni Morgaon",
+    "name": "Rajkumar Badole",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Gondia",
+    "no": "64",
+    "constituency": "Tirora",
+    "name": "Vijay Rahangdale",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gondia",
+    "no": "65",
+    "constituency": "Gondiya",
+    "name": "Vinod Agrawal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gondia",
+    "no": "66",
+    "constituency": "Amgaon",
+    "name": "Sanjay Puram",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gadchiroli",
+    "no": "67",
+    "constituency": "Armori",
+    "name": "Ramdas Masram",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Gadchiroli",
+    "no": "68",
+    "constituency": "Gadchiroli",
+    "name": "Milind Narote",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gadchiroli",
+    "no": "69",
+    "constituency": "Aheri",
+    "name": "Dharamrao Baba Atram",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Chandrapur",
+    "no": "70",
+    "constituency": "Rajura",
+    "name": "Deorao Bhongle",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chandrapur",
+    "no": "71",
+    "constituency": "Chandrapur",
+    "name": "Kishor Jorgewar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chandrapur",
+    "no": "72",
+    "constituency": "Ballarpur",
+    "name": "Sudhir Mungantiwar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chandrapur",
+    "no": "73",
+    "constituency": "Bramhapuri",
+    "name": "Vijay Wadettiwar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Chandrapur",
+    "no": "74",
+    "constituency": "Chimur",
+    "name": "Bunty Bhangdiya",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chandrapur",
+    "no": "75",
+    "constituency": "Warora",
+    "name": "Karan Deotale",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Yavatmal",
+    "no": "76",
+    "constituency": "Wani",
+    "name": "Sanjay Derkar",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Yavatmal",
+    "no": "77",
+    "constituency": "Ralegaon",
+    "name": "Ashok Uike",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Yavatmal",
+    "no": "78",
+    "constituency": "Yavatmal",
+    "name": "Balasaheb Mangulkar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Yavatmal",
+    "no": "79",
+    "constituency": "Digras",
+    "name": "Sanjay Rathod",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Yavatmal",
+    "no": "80",
+    "constituency": "Arni",
+    "name": "Raju Todsam",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Yavatmal",
+    "no": "81",
+    "constituency": "Pusad",
+    "name": "Indranil Naik",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Yavatmal",
+    "no": "82",
+    "constituency": "Umarkhed",
+    "name": "Kisan Wankhede",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nanded",
+    "no": "83",
+    "constituency": "Kinwat",
+    "name": "Bhimrao Keram",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nanded",
+    "no": "84",
+    "constituency": "Hadgaon",
+    "name": "Baburao Kadam",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Nanded",
+    "no": "85",
+    "constituency": "Bhokar",
+    "name": "Sreejaya Chavan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nanded",
+    "no": "86",
+    "constituency": "Nanded North",
+    "name": "Balaji Kalyankar",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Nanded",
+    "no": "87",
+    "constituency": "Nanded South",
+    "name": "Anand Tidke",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Nanded",
+    "no": "88",
+    "constituency": "Loha",
+    "name": "Prataprao Chikhalikar",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Nanded",
+    "no": "89",
+    "constituency": "Naigaon",
+    "name": "Rajesh Pawar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nanded",
+    "no": "90",
+    "constituency": "Deglur",
+    "name": "Jitesh Antapurkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nanded",
+    "no": "91",
+    "constituency": "Mukhed",
+    "name": "Tushar Rathod",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Hingoli",
+    "no": "92",
+    "constituency": "Basmath",
+    "name": "Chandrakant Nawghare",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Hingoli",
+    "no": "93",
+    "constituency": "Kalamnuri",
+    "name": "Santosh Bangar",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Hingoli",
+    "no": "94",
+    "constituency": "Hingoli",
+    "name": "Tanaji Mutkule",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Parbhani",
+    "no": "95",
+    "constituency": "Jintur",
+    "name": "Meghana Bordikar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Parbhani",
+    "no": "96",
+    "constituency": "Parbhani",
+    "name": "Rahul Vedprakash Patil",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Parbhani",
+    "no": "97",
+    "constituency": "Gangakhed",
+    "name": "Ratnakar Gutte",
+    "party": "Rashtriya Samaj Paksha"
+  },
+  {
+    "district": "Parbhani",
+    "no": "98",
+    "constituency": "Pathri",
+    "name": "Rajesh Vitekar",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Jalna",
+    "no": "99",
+    "constituency": "Partur",
+    "name": "Babanrao Lonikar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Jalna",
+    "no": "100",
+    "constituency": "Ghansawangi",
+    "name": "Hikmat Udhan",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Jalna",
+    "no": "101",
+    "constituency": "Jalna",
+    "name": "Arjun Khotkar",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Jalna",
+    "no": "102",
+    "constituency": "Badnapur",
+    "name": "Narayan Kuche",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Jalna",
+    "no": "103",
+    "constituency": "Bhokardan",
+    "name": "Santosh Danve",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chhatrapati Sambhaji Nagar",
+    "no": "104",
+    "constituency": "Sillod",
+    "name": "Abdul Sattar",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Chhatrapati Sambhaji Nagar",
+    "no": "105",
+    "constituency": "Kannad",
+    "name": "Sanjana Jadhav",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Chhatrapati Sambhaji Nagar",
+    "no": "106",
+    "constituency": "Phulambri",
+    "name": "Anuradha Chavan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chhatrapati Sambhaji Nagar",
+    "no": "107",
+    "constituency": "Aurangabad Central",
+    "name": "Pradeep Jaiswal",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Chhatrapati Sambhaji Nagar",
+    "no": "108",
+    "constituency": "Aurangabad West",
+    "name": "Sanjay Shirsat",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Chhatrapati Sambhaji Nagar",
+    "no": "109",
+    "constituency": "Aurangabad East",
+    "name": "Atul Save",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chhatrapati Sambhaji Nagar",
+    "no": "110",
+    "constituency": "Paithan",
+    "name": "Vilas Bhumre",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Chhatrapati Sambhaji Nagar",
+    "no": "111",
+    "constituency": "Gangapur",
+    "name": "Prashant Bamb",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chhatrapati Sambhaji Nagar",
+    "no": "112",
+    "constituency": "Vaijapur",
+    "name": "Ramesh Bornare",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Nashik",
+    "no": "113",
+    "constituency": "Nandgaon",
+    "name": "Suhas Kande",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Nashik",
+    "no": "114",
+    "constituency": "Malegaon Central",
+    "name": "Ismail Abdul Khalique",
+    "party": "AIMIM"
+  },
+  {
+    "district": "Nashik",
+    "no": "115",
+    "constituency": "Malegaon Outer",
+    "name": "Dadaji Bhuse",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Nashik",
+    "no": "116",
+    "constituency": "Baglan",
+    "name": "Dilip Borse",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nashik",
+    "no": "117",
+    "constituency": "Kalwan",
+    "name": "Nitin Pawar",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Nashik",
+    "no": "118",
+    "constituency": "Chandwad",
+    "name": "Rahul Aher",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nashik",
+    "no": "119",
+    "constituency": "Yevla",
+    "name": "Chhagan Bhujbal",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Nashik",
+    "no": "120",
+    "constituency": "Sinnar",
+    "name": "Manikrao Kokate",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Nashik",
+    "no": "121",
+    "constituency": "Niphad",
+    "name": "Diliprao Bankar",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Nashik",
+    "no": "122",
+    "constituency": "Dindori",
+    "name": "Narhari Zirwal",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Nashik",
+    "no": "123",
+    "constituency": "Nashik East",
+    "name": "Rahul Dhikale",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nashik",
+    "no": "124",
+    "constituency": "Nashik Central",
+    "name": "Devayani Farande",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nashik",
+    "no": "125",
+    "constituency": "Nashik West",
+    "name": "Seema Hiray",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nashik",
+    "no": "126",
+    "constituency": "Deolali",
+    "name": "Saroj Ahire",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Nashik",
+    "no": "127",
+    "constituency": "Igatpuri",
+    "name": "Hiraman Khoskar",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Palghar",
+    "no": "128",
+    "constituency": "Dahanu",
+    "name": "Vinod Bhiva Nikole",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Palghar",
+    "no": "129",
+    "constituency": "Vikramgad",
+    "name": "Harishchandra Bhoye",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Palghar",
+    "no": "130",
+    "constituency": "Palghar",
+    "name": "Rajendra Gavit",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Palghar",
+    "no": "131",
+    "constituency": "Boisar",
+    "name": "Vilas Tare",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Palghar",
+    "no": "132",
+    "constituency": "Nalasopara",
+    "name": "Rajan Naik",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Palghar",
+    "no": "133",
+    "constituency": "Vasai",
+    "name": "Sneha Pandit",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thane",
+    "no": "134",
+    "constituency": "Bhiwandi Rural",
+    "name": "Shantaram More",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Thane",
+    "no": "135",
+    "constituency": "Shahapur",
+    "name": "Daulat Daroda",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Thane",
+    "no": "136",
+    "constituency": "Bhiwandi West",
+    "name": "Mahesh Choughule",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thane",
+    "no": "137",
+    "constituency": "Bhiwandi East",
+    "name": "Rais Shaikh",
+    "party": "Samajwadi Party"
+  },
+  {
+    "district": "Thane",
+    "no": "138",
+    "constituency": "Kalyan West",
+    "name": "Vishwanath Bhoir",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Thane",
+    "no": "139",
+    "constituency": "Murbad",
+    "name": "Kisan Kathore",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thane",
+    "no": "140",
+    "constituency": "Ambernath",
+    "name": "Balaji Kinikar",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Thane",
+    "no": "141",
+    "constituency": "Ulhasnagar",
+    "name": "Kumar Ailani",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thane",
+    "no": "142",
+    "constituency": "Kalyan East",
+    "name": "Sulbha Gaikwad",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thane",
+    "no": "143",
+    "constituency": "Dombivli",
+    "name": "Ravindra Chavan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thane",
+    "no": "144",
+    "constituency": "Kalyan Rural",
+    "name": "Rajesh More",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Thane",
+    "no": "145",
+    "constituency": "Mira Bhayandar",
+    "name": "Narendra Mehta",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thane",
+    "no": "146",
+    "constituency": "Ovala-Majiwada",
+    "name": "Pratap Sarnaik",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Thane",
+    "no": "147",
+    "constituency": "Kopri-Pachpakhadi",
+    "name": "Eknath Shinde",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Thane",
+    "no": "148",
+    "constituency": "Thane",
+    "name": "Sanjay Kelkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thane",
+    "no": "149",
+    "constituency": "Mumbra-Kalwa",
+    "name": "Jitendra Awhad",
+    "party": "Nationalist Congress Party (Sharadchandra Pawar)"
+  },
+  {
+    "district": "Thane",
+    "no": "150",
+    "constituency": "Airoli",
+    "name": "Ganesh Naik",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thane",
+    "no": "151",
+    "constituency": "Belapur",
+    "name": "Manda Mhatre",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "152",
+    "constituency": "Borivali",
+    "name": "Sanjay Upadhyay",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "153",
+    "constituency": "Dahisar",
+    "name": "Manisha Chaudhary",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "154",
+    "constituency": "Magathane",
+    "name": "Prakash Surve",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "155",
+    "constituency": "Mulund",
+    "name": "Mihir Kotecha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "156",
+    "constituency": "Vikhroli",
+    "name": "Sunil Raut",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "157",
+    "constituency": "Bhandup West",
+    "name": "Ashok Patil",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "158",
+    "constituency": "Jogeshwari East",
+    "name": "Anant Nar",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "159",
+    "constituency": "Dindoshi",
+    "name": "Sunil Prabhu",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "160",
+    "constituency": "Kandivali East",
+    "name": "Atul Bhatkhalkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "161",
+    "constituency": "Charkop",
+    "name": "Yogesh Sagar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "162",
+    "constituency": "Malad West",
+    "name": "Aslam Shaikh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "163",
+    "constituency": "Goregaon",
+    "name": "Vidya Thakur",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "164",
+    "constituency": "Versova",
+    "name": "Haroon Rashid Khan",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "165",
+    "constituency": "Andheri West",
+    "name": "Ameet Satam",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "166",
+    "constituency": "Andheri East",
+    "name": "Murji Patel",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "167",
+    "constituency": "Vile Parle",
+    "name": "Parag Alavani",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "168",
+    "constituency": "Chandivali",
+    "name": "Dilip Lande",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "169",
+    "constituency": "Ghatkopar West",
+    "name": "Ram Kadam",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "170",
+    "constituency": "Ghatkopar East",
+    "name": "Parag Shah",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "171",
+    "constituency": "Mankhurd Shivaji Nagar",
+    "name": "Abu Asim Azmi",
+    "party": "Samajwadi Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "172",
+    "constituency": "Anushakti Nagar",
+    "name": "Sana Malik",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "173",
+    "constituency": "Chembur",
+    "name": "Tukaram Kate",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "174",
+    "constituency": "Kurla",
+    "name": "Mangesh Kudalkar",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "175",
+    "constituency": "Kalina",
+    "name": "Sanjay Potnis",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "176",
+    "constituency": "Vandre East",
+    "name": "Varun Sardesai",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Mumbai Suburban",
+    "no": "177",
+    "constituency": "Vandre West",
+    "name": "Ashish Shelar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai City",
+    "no": "178",
+    "constituency": "Dharavi",
+    "name": "Jyoti Gaikwad",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Mumbai City",
+    "no": "179",
+    "constituency": "Sion Koliwada",
+    "name": "R. Tamil Selvan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai City",
+    "no": "180",
+    "constituency": "Wadala",
+    "name": "Kalidas Kolambkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai City",
+    "no": "181",
+    "constituency": "Mahim",
+    "name": "Mahesh Sawant",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Mumbai City",
+    "no": "182",
+    "constituency": "Worli",
+    "name": "Aaditya Thackeray",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Mumbai City",
+    "no": "183",
+    "constituency": "Shivadi",
+    "name": "Ajay Choudhari",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Mumbai City",
+    "no": "184",
+    "constituency": "Byculla",
+    "name": "Manoj Jamsutkar",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Mumbai City",
+    "no": "185",
+    "constituency": "Malabar Hill",
+    "name": "Mangal Lodha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mumbai City",
+    "no": "186",
+    "constituency": "Mumbadevi",
+    "name": "Amin Patel",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Mumbai City",
+    "no": "187",
+    "constituency": "Colaba",
+    "name": "Rahul Narwekar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Raigad",
+    "no": "188",
+    "constituency": "Panvel",
+    "name": "Prashant Thakur",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Raigad",
+    "no": "189",
+    "constituency": "Karjat",
+    "name": "Mahendra Thorve",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Raigad",
+    "no": "190",
+    "constituency": "Uran",
+    "name": "Mahesh Baldi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Raigad",
+    "no": "191",
+    "constituency": "Pen",
+    "name": "Ravisheth Patil",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Raigad",
+    "no": "192",
+    "constituency": "Alibag",
+    "name": "Mahendra Dalvi",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Raigad",
+    "no": "193",
+    "constituency": "Shrivardhan",
+    "name": "Aditi Tatkare",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Raigad",
+    "no": "194",
+    "constituency": "Mahad",
+    "name": "Bharatshet Gogawale",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Pune",
+    "no": "195",
+    "constituency": "Junnar",
+    "name": "Sharaddada Sonavane",
+    "party": "Independent"
+  },
+  {
+    "district": "Pune",
+    "no": "196",
+    "constituency": "Ambegaon",
+    "name": "Dilip Walse Patil",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Pune",
+    "no": "197",
+    "constituency": "Khed Alandi",
+    "name": "Babaji Kale",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Pune",
+    "no": "198",
+    "constituency": "Shirur",
+    "name": "Dnyaneshwar Katke",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Pune",
+    "no": "199",
+    "constituency": "Daund",
+    "name": "Rahul Kul",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Pune",
+    "no": "200",
+    "constituency": "Indapur",
+    "name": "Dattatray Bharne",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Pune",
+    "no": "201",
+    "constituency": "Baramati",
+    "name": "Sunetra Pawar",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Pune",
+    "no": "202",
+    "constituency": "Purandar",
+    "name": "Vijay Shivtare",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Pune",
+    "no": "203",
+    "constituency": "Bhor",
+    "name": "Shankar Mandekar",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Pune",
+    "no": "204",
+    "constituency": "Maval",
+    "name": "Sunil Shelke",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Pune",
+    "no": "205",
+    "constituency": "Chinchwad",
+    "name": "Shankar Jagtap",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Pune",
+    "no": "206",
+    "constituency": "Pimpri",
+    "name": "Anna Bansode",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Pune",
+    "no": "207",
+    "constituency": "Bhosari",
+    "name": "Mahesh Landge",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Pune",
+    "no": "208",
+    "constituency": "Vadgaon Sheri",
+    "name": "Bapusaheb Pathare",
+    "party": "Nationalist Congress Party (Sharadchandra Pawar)"
+  },
+  {
+    "district": "Pune",
+    "no": "209",
+    "constituency": "Shivajinagar",
+    "name": "Siddharth Shirole",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Pune",
+    "no": "210",
+    "constituency": "Kothrud",
+    "name": "Chandrakant Patil",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Pune",
+    "no": "211",
+    "constituency": "Khadakwasala",
+    "name": "Bhimrao Tapkir",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Pune",
+    "no": "212",
+    "constituency": "Parvati",
+    "name": "Madhuri Misal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Pune",
+    "no": "213",
+    "constituency": "Hadapsar",
+    "name": "Chetan Tupe",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Pune",
+    "no": "214",
+    "constituency": "Pune Cantonment",
+    "name": "Sunil Kamble",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Pune",
+    "no": "215",
+    "constituency": "Kasba Peth",
+    "name": "Hemant Rasane",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Ahmednagar",
+    "no": "216",
+    "constituency": "Akole",
+    "name": "Kiran Lahamate",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Ahmednagar",
+    "no": "217",
+    "constituency": "Sangamner",
+    "name": "Amol Khatal",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Ahmednagar",
+    "no": "218",
+    "constituency": "Shirdi",
+    "name": "Radhakrishna Vikhe Patil",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Ahmednagar",
+    "no": "219",
+    "constituency": "Kopargaon",
+    "name": "Ashutosh Kale",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Ahmednagar",
+    "no": "220",
+    "constituency": "Shrirampur",
+    "name": "Hemant Ogale",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ahmednagar",
+    "no": "221",
+    "constituency": "Nevasa",
+    "name": "Vitthalrao Langhe",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Ahmednagar",
+    "no": "222",
+    "constituency": "Shevgaon",
+    "name": "Monika Rajale",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Ahmednagar",
+    "no": "223",
+    "constituency": "Rahuri",
+    "name": "Akshay Shivajirao Kardile",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Ahmednagar",
+    "no": "224",
+    "constituency": "Parner",
+    "name": "Kashinath Date",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Ahmednagar",
+    "no": "225",
+    "constituency": "Ahmednagar City",
+    "name": "Sangram Jagtap",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Ahmednagar",
+    "no": "226",
+    "constituency": "Shrigonda",
+    "name": "Vikram Pachpute",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Ahmednagar",
+    "no": "227",
+    "constituency": "Karjat Jamkhed",
+    "name": "Rohit Pawar",
+    "party": "Nationalist Congress Party (Sharadchandra Pawar)"
+  },
+  {
+    "district": "Beed",
+    "no": "228",
+    "constituency": "Georai",
+    "name": "Vijaysinh Pandit",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Beed",
+    "no": "229",
+    "constituency": "Majalgaon",
+    "name": "Prakashdada Solanke",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Beed",
+    "no": "230",
+    "constituency": "Beed",
+    "name": "Sandeep Kshirsagar",
+    "party": "Nationalist Congress Party (Sharadchandra Pawar)"
+  },
+  {
+    "district": "Beed",
+    "no": "231",
+    "constituency": "Ashti",
+    "name": "Suresh Dhas",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Beed",
+    "no": "232",
+    "constituency": "Kaij",
+    "name": "Namita Mundada",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Beed",
+    "no": "233",
+    "constituency": "Parli",
+    "name": "Dhananjay Munde",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Latur",
+    "no": "234",
+    "constituency": "Latur Rural",
+    "name": "Ramesh Karad",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Latur",
+    "no": "235",
+    "constituency": "Latur City",
+    "name": "Amit Deshmukh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Latur",
+    "no": "236",
+    "constituency": "Ahmadpur",
+    "name": "Babasaheb Patil",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Latur",
+    "no": "237",
+    "constituency": "Udgir",
+    "name": "Sanjay Bansode",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Latur",
+    "no": "238",
+    "constituency": "Nilanga",
+    "name": "Sambhaji Patil Nilangekar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Latur",
+    "no": "239",
+    "constituency": "Ausa",
+    "name": "Abhimanyu Pawar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Dharashiv",
+    "no": "240",
+    "constituency": "Umarga",
+    "name": "Pravin Virbhadrayya Swami",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Dharashiv",
+    "no": "241",
+    "constituency": "Tuljapur",
+    "name": "Ranajagjitsinha Patil",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Dharashiv",
+    "no": "242",
+    "constituency": "Dharashiv",
+    "name": "Kailas Patil",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Dharashiv",
+    "no": "243",
+    "constituency": "Paranda",
+    "name": "Tanaji Sawant",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Solapur",
+    "no": "244",
+    "constituency": "Karmala",
+    "name": "Narayan Patil",
+    "party": "Nationalist Congress Party (Sharadchandra Pawar)"
+  },
+  {
+    "district": "Solapur",
+    "no": "245",
+    "constituency": "Madha",
+    "name": "Abhijeet Patil",
+    "party": "Nationalist Congress Party (Sharadchandra Pawar)"
+  },
+  {
+    "district": "Solapur",
+    "no": "246",
+    "constituency": "Barshi",
+    "name": "Dilip Sopal",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Solapur",
+    "no": "247",
+    "constituency": "Mohol",
+    "name": "Raju Khare",
+    "party": "Nationalist Congress Party (Sharadchandra Pawar)"
+  },
+  {
+    "district": "Solapur",
+    "no": "248",
+    "constituency": "Solapur City North",
+    "name": "Vijay Deshmukh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Solapur",
+    "no": "249",
+    "constituency": "Solapur City Central",
+    "name": "Devendra Kothe",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Solapur",
+    "no": "250",
+    "constituency": "Akkalkot",
+    "name": "Sachin Kalyanshetti",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Solapur",
+    "no": "251",
+    "constituency": "Solapur South",
+    "name": "Subhash Deshmukh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Solapur",
+    "no": "252",
+    "constituency": "Pandharpur",
+    "name": "Samadhan Autade",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Solapur",
+    "no": "253",
+    "constituency": "Sangola",
+    "name": "Babasaheb Deshmukh",
+    "party": "Peasants and Workers Party of India"
+  },
+  {
+    "district": "Solapur",
+    "no": "254",
+    "constituency": "Malshiras",
+    "name": "Uttamrao Jankar",
+    "party": "Nationalist Congress Party (Sharadchandra Pawar)"
+  },
+  {
+    "district": "Satara",
+    "no": "255",
+    "constituency": "Phaltan",
+    "name": "Sachin Patil",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Satara",
+    "no": "256",
+    "constituency": "Wai",
+    "name": "Makrand Jadhav - Patil",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Satara",
+    "no": "257",
+    "constituency": "Koregaon",
+    "name": "Mahesh Shinde",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Satara",
+    "no": "258",
+    "constituency": "Man",
+    "name": "Jaykumar Gore",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Satara",
+    "no": "259",
+    "constituency": "Karad North",
+    "name": "Manoj Ghorpade",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Satara",
+    "no": "260",
+    "constituency": "Karad South",
+    "name": "Atulbaba Bhosale",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Satara",
+    "no": "261",
+    "constituency": "Patan",
+    "name": "Shambhuraj Desai",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Satara",
+    "no": "262",
+    "constituency": "Satara",
+    "name": "Shivendra Raje Bhosale",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Ratnagiri",
+    "no": "263",
+    "constituency": "Dapoli",
+    "name": "Yogesh Kadam",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Ratnagiri",
+    "no": "264",
+    "constituency": "Guhagar",
+    "name": "Bhaskar Jadhav",
+    "party": "Shiv Sena (Uddhav Balasaheb Thackeray)"
+  },
+  {
+    "district": "Ratnagiri",
+    "no": "265",
+    "constituency": "Chiplun",
+    "name": "Shekhar Nikam",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Ratnagiri",
+    "no": "266",
+    "constituency": "Ratnagiri",
+    "name": "Uday Samant",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Ratnagiri",
+    "no": "267",
+    "constituency": "Rajapur",
+    "name": "Kiran Samant",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Sindhudurg",
+    "no": "268",
+    "constituency": "Kankavli",
+    "name": "Nitesh Rane",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sindhudurg",
+    "no": "269",
+    "constituency": "Kudal",
+    "name": "Nilesh Rane",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Sindhudurg",
+    "no": "270",
+    "constituency": "Sawantwadi",
+    "name": "Deepak Kesarkar",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Kolhapur",
+    "no": "271",
+    "constituency": "Chandgad",
+    "name": "Shivaji Patil",
+    "party": "Independent"
+  },
+  {
+    "district": "Kolhapur",
+    "no": "272",
+    "constituency": "Radhanagari",
+    "name": "Prakashrao Abitkar",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Kolhapur",
+    "no": "273",
+    "constituency": "Kagal",
+    "name": "Hasan Mushrif",
+    "party": "Nationalist Congress Party"
+  },
+  {
+    "district": "Kolhapur",
+    "no": "274",
+    "constituency": "Kolhapur South",
+    "name": "Amal Mahadik",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kolhapur",
+    "no": "275",
+    "constituency": "Karvir",
+    "name": "Chandradip Narke",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Kolhapur",
+    "no": "276",
+    "constituency": "Kolhapur North",
+    "name": "Rajesh Kshirsagar",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Kolhapur",
+    "no": "277",
+    "constituency": "Shahuwadi",
+    "name": "Vinay Kore",
+    "party": "Jan Surajya Shakti"
+  },
+  {
+    "district": "Kolhapur",
+    "no": "278",
+    "constituency": "Hatkanangle",
+    "name": "Ashokrao Mane",
+    "party": "Jan Surajya Shakti"
+  },
+  {
+    "district": "Kolhapur",
+    "no": "279",
+    "constituency": "Ichalkaranji",
+    "name": "Rahul Awade",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kolhapur",
+    "no": "280",
+    "constituency": "Shirol",
+    "name": "Rajendra Patil Yadravkar",
+    "party": "Rajendra Patil"
+  },
+  {
+    "district": "Sangli",
+    "no": "281",
+    "constituency": "Miraj",
+    "name": "Suresh Khade",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sangli",
+    "no": "282",
+    "constituency": "Sangli",
+    "name": "Sudhir Gadgil",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sangli",
+    "no": "283",
+    "constituency": "Islampur",
+    "name": "Jayant Patil",
+    "party": "Nationalist Congress Party (Sharadchandra Pawar)"
+  },
+  {
+    "district": "Sangli",
+    "no": "284",
+    "constituency": "Shirala",
+    "name": "Satyajit Deshmukh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sangli",
+    "no": "285",
+    "constituency": "Palus-Kadegaon",
+    "name": "Vishwajeet Kadam",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Sangli",
+    "no": "286",
+    "constituency": "Khanapur",
+    "name": "Suhas Babar",
+    "party": "Shiv Sena (2022\u2013present)"
+  },
+  {
+    "district": "Sangli",
+    "no": "287",
+    "constituency": "Tasgaon-Kavathe Mahankal",
+    "name": "Rohit Patil",
+    "party": "Nationalist Congress Party (Sharadchandra Pawar)"
+  },
+  {
+    "district": "Sangli",
+    "no": "288",
+    "constituency": "Jat",
+    "name": "Gopichand Padalkar",
+    "party": "Bharatiya Janata Party"
+  }
+]

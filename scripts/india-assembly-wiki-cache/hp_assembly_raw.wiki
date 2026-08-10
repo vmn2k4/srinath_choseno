@@ -1,0 +1,627 @@
+{{Short description|Indian state legislature from 2022}}
+{{Use dmy dates|date=August 2024}}
+{{Use Indian English|date=August 2024}}
+{{Infobox legislature
+ | name              = 14th Legislative Assembly
+ | native_name       = 
+ | legislature       = [[Himachal Pradesh Legislative Assembly]]
+ | preceded_by       =[[13th Himachal Pradesh Assembly|13th Legislative Assembly]]
+| succeeded_by       = 
+ | coa_pic           =
+ | coa_res           =300px
+ | term_limits       = 5 years
+ | house_type        = Unicameral
+ | leader1_type      = [[List of speakers of the Himachal Pradesh Legislative Assembly|Speaker]]
+ | leader1           = [[Kuldeep Singh Pathania]]
+ | party1            = [[Indian National Congress|INC]]
+ | election1         = [[2022 Himachal Pradesh Legislative Assembly election|05 January 2023]]
+ | leader2_type      = Deputy Speaker
+ | leader2           = 
+ | party2            = 
+ | election2         = 
+ | leader3_type      = Leader of the House <br /> ([[List of Chief Ministers of Himachal Pradesh|Chief Minister]])
+ | leader3           = [[Sukhvinder Singh Sukhu]]
+ | party3            = [[Indian National Congress|INC]]
+ | election3         = [[2022 Himachal Pradesh Legislative Assembly election|2022]]
+ | leader4_type      = [[List of deputy chief ministers of Himachal Pradesh|Deputy Chief Minister]]<br /> (Deputy Leader of the House)
+ | leader4           = [[Mukesh Agnihotri]]
+ | party4            = [[Indian National Congress|INC]]
+ | election4         = [[2022 Himachal Pradesh Legislative Assembly election|2022]]
+ | members           = '''[[List of constituencies of the Himachal Pradesh Legislative Assembly|68]]'''
+ | structure1        = 14th Himachal Pradesh Assembly.svg
+ | structure1_res    = 300px
+ | political_groups1 = 
+'''[[Government of Himachal Pradesh|Government]] (40)'''
+* {{Color box|#00BFFF}} [[Indian National Congress|INC]] (40)
+'''Opposition (28)'''
+* {{Color box|#FF9933}} [[Bharatiya Janata Party|BJP]] (28)
+| voting_system1    = [[First-past-the-post voting|First past the post]]
+ | last_election1    = [[2022 Himachal Pradesh Legislative Assembly election|12 November 2022]]
+ | next_election1    = [[Next Himachal Pradesh Legislative Assembly election|2027]]
+ | session_room      =
+ | session_res       = 
+ | meeting_place     = Himachal Pradesh Legislative Assembly, [[Dharamshala]], [[Himachal Pradesh]], [[India]]
+ | session_room2      =
+ | session_res2       = 
+ | meeting_place2     = Himachal Pradesh Legislative Assembly, [[Shimla]], [[Himachal Pradesh]], [[India]]
+ | website           = [https://hpvidhansabha.nic.in/ Himachal Pradesh Legislative Assembly]
+|leader5_type=[[List of leaders of the opposition in the Himachal Pradesh Legislative Assembly|Leader of the Opposition]]|leader5=[[Jai Ram Thakur]]|party5=[[Bharatiya Janata Party|BJP]]|election5=[[2022 Himachal Pradesh Legislative Assembly election|25 December 2022]]}}
+<section end="Infobox" />
+The '''14th Legislative Assembly of Himachal Pradesh'''<ref>{{cite web|url=https://prsindia.org/legislatures/state/vital-stats/profile-of-the-14th-himachal-pradesh-legislative-assembly|title=Vital Stats|website=PRS Legislative Research}}</ref><ref>{{cite web|url=https://ddnews.gov.in/national/filing-nominations-14th-legislative-assembly-elections-himachal-pradesh-end-today-tuesday |title=Filing nominations for 14th Legislative Assembly elections in Himachal Pradesh to end today on tuesday |publisher=DD News |date=2022-10-25 |accessdate=2022-12-09}}</ref><ref>{{cite web|url=https://timesofindia.indiatimes.com/city/shimla/himachal-pradesh-assembly-election-2022-live-updates-election-commission-bjp-congress-aap-november-14/liveblog/95495967.cms|title=Himachal Pradesh Election 2022 Live Updates: Election Commission prohibits exit polls for assembly polls in state|website=The Times of India|date=14 November 2022 }}</ref> is formed following the [[2022 Himachal Pradesh Legislative Assembly election|2022 Assembly election]] for all [[List of constituencies of the Himachal Pradesh Legislative Assembly|68 seats]] in the [[unicameral]] legislature. In December 2027, the 14th Assembly's term will come to an end.
+
+In the 2022 elections, the Congress had gained a significant majority of 40 seats. In early 2024, the BJP won a Rajya Sabha election with the cross-voting of 6 Congress MLAs.<ref name="6 INC MLAs disqualified" /> These MLAs led a rebellion against Sukhu, were disqualified and joined the BJP. However, in the bypolls which followed, Congress won four seats and BJP won only two.<ref>{{Cite news |date=2024-06-05 |title=Double delight for Sukhvinder Singh: Govt saved, position fortified |url=https://timesofindia.indiatimes.com/city/shimla/double-delight-for-sukhvinder-singh-govt-saved-position-fortified/articleshow/110721396.cms |access-date=2024-06-09 |work=The Times of India |issn=0971-8257}}</ref>
+
+== Notable positions ==
+{| class="wikitable sortable"
+!Position
+!Portrait
+!Name
+! colspan="2" |Party
+!Constituency
+!Office Taken
+|-
+| Speaker
+|
+|[[Kuldeep Singh Pathania]]
+| rowspan="1" style="background:{{party color|Indian National Congress}}" |
+| rowspan="1" |[[Indian National Congress|INC]]
+|[[Bhattiyat Assembly constituency|Bhattiyat]]
+|5 January 2023
+|-
+|Deputy Speaker 
+| colspan="7" |''Vacant''
+|-
+|Leader of the House ([[List of chief ministers of Himachal Pradesh|Chief Minister]])
+|[[File:Sukhvinder_Singh_Sukhu.jpg|frameless|134x134px]]
+|[[Sukhvinder Singh Sukhu]]
+| rowspan="2" style="background:{{party color|Indian National Congress}}" |
+| rowspan="2" |[[Indian National Congress|INC]]
+|[[Nadaun Assembly constituency|Nadaun]]
+| rowspan="2" |11 December 2022<ref>{{Cite web |title=Sukhvinder Singh Sukhu takes oath as 15th Chief Minister of Himachal Pradesh |url=https://timesofindia.indiatimes.com/city/shimla/sukhvinder-singh-sukhu-takes-oath-as-15th-chief-minister-of-himachal-pradesh/articleshow/96148254.cms |archive-url=https://web.archive.org/web/20221211100133/https://timesofindia.indiatimes.com/city/shimla/sukhvinder-singh-sukhu-takes-oath-as-15th-chief-minister-of-himachal-pradesh/articleshow/96148254.cms |url-status=dead |archive-date=2022-12-11 |access-date=2022-12-15 |website=The Times of India}}</ref>
+|-
+|Deputy Leader of the house (Deputy Chief Minister) 
+|[[File:Mukesh_Agnihotri_(cropped).jpg|frameless|110x110px]]
+|[[Mukesh Agnihotri]]
+|[[Haroli Assembly constituency|Haroli]]
+|-
+|Leader of the opposition & deputy 
+|[[File:JRThakur.jpg|frameless|133x133px]]
+|[[Jai Ram Thakur]]  & unknown 
+|style="background:{{party color|Bharatiya Janata Party}}" |
+|[[Bharatiya Janata Party|BJP]]
+|[[Seraj Assembly constituency|Seraj]] 
+|25 December 2022
+|-
+|Chief Whip 
+|-
+|Minister of Parliamentary affairs 
+|}
+
+== Members of Legislative Assembly ==
+<section begin="MLA Header" />
+{| class="wikitable sortable"
+!District
+!Constituency
+
+!Name
+! colspan="2" |Party
+!Remarks
+<section end="MLA Header" />
+!Lok Sabha constituency
+|-
+
+|rowspan="5" |[[Chamba district|Chamba]]
+<section begin="Chamba district" />
+
+|[[Churah Assembly constituency|Churah]] (SC)
+|[[Hans Raj (politician)|Hans Raj]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+| rowspan="9" |[[Kangra Lok Sabha constituency|'''Kangra''']]
+|-
+
+|[[Bharmour Assembly constituency|Bharmour]] (ST)
+|[[Janak Raj (politician)|Janak Raj]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Chamba Assembly constituency|Chamba]]
+|[[Neeraj Nayar]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Dalhousie Assembly constituency|Dalhousie]]
+|[[D S Thakur]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Bhattiyat Assembly constituency|Bhattiyat]]
+|[[Kuldeep Singh Pathania]]
+|{{Full party name with color|Indian National Congress}}
+|'''Speaker'''
+|-
+
+|rowspan="17"|[[Kangra district|Kangra]]
+
+|[[Nurpur Assembly constituency|Nurpur]]
+|[[Ranbir Singh Nikka|Ranveer Singh]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Indora Assembly constituency|Indora]] (SC)
+|[[Malender Rajan]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Fatehpur, Himachal Pradesh Assembly constituency|Fatehpur]]
+|[[Bhawani Singh Pathania]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Jawali Assembly constituency|Jawali]]
+|[[Chander Kumar]]
+|{{Full party name with color|Indian National Congress}}
+|'''Cabinet Minister'''
+|-
+
+| rowspan=2|[[Dehra Assembly constituency|Dehra]]
+|[[Hoshyar Singh]]
+|{{Party name with color|Independent politician}}
+|Resigned on 22 March 2024<ref name="Times of India">{{cite news|url=https://timesofindia.indiatimes.com/india/more-trouble-for-congress-in-himachal-pradesh-3-independent-mlas-resign-set-to-join-bjp/articleshow/108712215.cms|title=More trouble for Congress in Himachal Pradesh? 3 Independent MLAs resign, set to join BJP|work=Times of India|date=22 March 2024 |accessdate=22 March 2024}}</ref>
+| rowspan="3" |'''[[Hamirpur, Himachal Pradesh Lok Sabha constituency|Hamirpur]]'''
+|-
+|[[Kamlesh Thakur]] 
+|{{Full party name with color|Indian National Congress}}
+| Elected on 13 Jul 2024
+|-
+
+|[[Jaswan-Pragpur Assembly constituency|Jaswan-Pragpur]]
+|[[Bikram Singh (politician)|Bikram Thakur]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Jawalamukhi Assembly constituency|Jawalamukhi]]
+|[[Sanjay Rattan]]
+|{{Full party name with color|Indian National Congress}}
+|
+| rowspan="10" |'''[[Kangra Lok Sabha constituency|Kangra]]'''
+|-
+
+|[[Jaisinghpur Assembly constituency|Jaisinghpur]] (SC)
+|[[Yadvinder Goma]]
+|{{Full party name with color|Indian National Congress}}
+|
+'''Cabinet Minister'''
+|-
+
+|[[Sullah Assembly constituency|Sullah]]
+|[[Vipin Singh Parmar]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Nagrota, Himachal Pradesh Assembly constituency|Nagrota]]
+|[[Raghubir Singh Bali]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Kangra Assembly constituency|Kangra]]
+|[[Pawan Kumar Kajal]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Shahpur, Himachal Pradesh Assembly constituency|Shahpur]]
+|[[Kewal Singh Pathania]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|rowspan=2|[[Dharamshala Assembly constituency|Dharamshala]]
+|[[Sudhir Sharma]]
+|{{Full party name with color|Indian National Congress}}
+|Disqualified on 28 February 2024<ref name="6 INC MLAs disqualified">{{Cite web |url=https://www.ndtv.com/india-news/6-congress-mlas-who-cross-voted-in-favour-of-bjp-in-himachal-pradesh-rajya-sabha-polls-disqualified-5148484 |title=6 Himachal Congress MLAs, Who Cross-Voted In Rajya Sabha Polls, Disqualified|access-date=28 February 2024|website=NDTV|language=en}}</ref>
+|-
+|[[Sudhir Sharma]]
+|{{Full party name with color|Bharatiya Janata Party}}
+| Elected on 4 Jun 2024 <ref name="Himachal Assembly bypolls 2024">{{Cite news |url=https://www.thehindu.com/elections/himachal-pradesh-assembly/himachal-assembly-bypoll-results-2024/article68250698.ece |title= Himachal Assembly bypoll results 2024: Congress wins 4 of 6 seats in Himachal Assembly bypolls, MLA strength reaches 38|agency=PTI|date=4 June 2024|access-date=14 August 2024|newspaper=The Hindu|language=en}}</ref>
+|-
+
+|[[Palampur Assembly constituency|Palampur]]
+|[[Ashish Butail]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Baijnath Assembly constituency|Baijnath]] (SC)
+
+|[[Kishori Lal (Baijnath politician)|Kishori Lal]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|rowspan=2|[[Lahaul and Spiti district|Lahaul and Spiti]]
+
+|rowspan=2|[[Lahaul and Spiti Assembly constituency|Lahaul and Spiti]] (ST)
+|[[Ravi Thakur (politician)|Ravi Thakur]]
+|{{Full party name with color|Indian National Congress}}
+|Disqualified on 28 February 2024<ref name="6 INC MLAs disqualified"/>
+| rowspan="12" |[[Mandi Lok Sabha constituency|'''Mandi''']]
+|-
+| [[Anuradha Rana]]
+|{{Full party name with color|Indian National Congress}}
+| Elected on 4 Jun 2024 <ref name="Himachal Assembly bypolls 2024" />
+|-
+
+|rowspan="4"|[[Kullu district|Kullu]]
+
+|[[Manali Assembly constituency|Manali]]
+|[[Bhuvneshwar Gaur]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Kullu Assembly constituency|Kullu]]
+|[[Sunder Singh Thakur]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Banjar Assembly constituency|Banjar]]
+|[[Surender Shourie]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Anni Assembly constituency|Anni]] (SC)
+|[[Lokender Kumar|Lokendra Kumar]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|rowspan="10" |[[Mandi district|Mandi]]
+
+|[[Karsog Assembly constituency|Karsog]] (SC)
+|[[Deep Raj (politician)|Deepraj Kapoor]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Sundernagar Assembly constituency|Sundernagar]]
+|[[Rakesh Jamwal]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Nachan Assembly constituency|Nachan]] (SC)
+|[[Vinod Kumar (politician)]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Seraj Assembly constituency|Seraj]]
+|[[Jai Ram Thakur]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|'''Leader of Opposition'''
+|-
+
+|[[Darang Assembly constituency|Darang]]
+|[[Puranchand Thakur]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Jogindernagar Assembly constituency|Jogindernagar]]
+|[[Prakash Rana]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Dharampur, Himachal Pradesh Assembly constituency|Dharampur]]
+|[[Chandershekhar (Himachal Pradesh politician)|Chandershekhar]]
+|{{Full party name with color|Indian National Congress}}
+|
+|'''[[Hamirpur, Himachal Pradesh Lok Sabha constituency|Hamirpur]]'''
+|-
+
+|[[Mandi Assembly constituency|Mandi]]
+|[[Anil Sharma (Himachal Pradesh politician)|Anil Sharma]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+| rowspan="3" |'''[[Mandi Lok Sabha constituency|Mandi]]'''
+|-
+
+|[[Balh Assembly constituency|Balh]] (SC)
+|[[Inder Singh Gandhi]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Sarkaghat Assembly constituency|Sarkaghat]]
+|[[Dalip Thakur]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|rowspan="8"|[[Hamirpur district, Himachal Pradesh|Hamirpur]]
+
+|[[Bhoranj Assembly constituency|Bhoranj]] (SC)
+|[[Suresh Kumar (Himachal Pradesh politician)|Suresh Kumar]]
+|{{Full party name with color|Indian National Congress}}
+|
+| rowspan="19" |'''[[Hamirpur, Himachal Pradesh Lok Sabha constituency|Hamirpur]]'''
+|-
+
+|rowspan=2|[[Sujanpur (Himachal Pradesh Assembly constituency)|Sujanpur]]
+|[[Rajinder Rana|Rajinder Singh Rana]]
+|{{Full party name with color|Indian National Congress}}
+|Disqualified on 28 February 2024<ref name="6 INC MLAs disqualified"/>
+|-
+|[[Ranjit Singh]]
+|{{Full party name with color|Indian National Congress}}
+| Elected on 4 Jun 2024 <ref name="Himachal Assembly bypolls 2024" />
+|-
+
+|rowspan=2|[[Hamirpur (Himachal Pradesh Assembly constituency)|Hamirpur]]
+|[[Ashish Sharma (politician)|Ashish Sharma]]
+|{{Party name with color|Independent politician}}
+|Resigned on 22 March 2024<ref name="Times of India"/>
+|-
+|[[Ashish Sharma (politician)|Ashish Sharma]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Elected on 13 July 2024
+|-
+
+|rowspan=2|[[Barsar Assembly constituency|Barsar]]
+|[[Inder Dutt Lakhanpal]]
+|{{Full party name with color|Indian National Congress}}
+|Disqualified on 28 February 2024<ref name="6 INC MLAs disqualified"/>
+|-
+|[[Inder Dutt Lakhanpal]]
+|{{Full party name with color|Bharatiya Janata Party}}
+| Elected on 4 Jun 2024 <ref name="Himachal Assembly bypolls 2024" />
+|-
+
+|[[Nadaun Assembly constituency|Nadaun]]
+|[[Sukhvinder Singh Sukhu]]
+|{{Full party name with color|Indian National Congress}}
+|'''Chief Minister'''
+|-
+
+|rowspan="7"|[[Una district|Una]]
+
+|[[Chintpurni Assembly constituency|Chintpurni]] (SC)
+|[[Sudarshan Singh Babloo]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|rowspan=2|[[Gagret Assembly constituency|Gagret]]
+|[[Chaitanya Sharma]]<ref>{{cite web |title=Neurosurgeon, U’khand ex-CS son among five first-time winners |url=https://www.hindustantimes.com/cities/chandigarh-news/neurosurgeon-u-khand-ex-cs-son-among-five-first-time-winners-101670530060667-amp.html |website=Hindustan Times |language=en |date=9 December 2022}}</ref>
+|{{Full party name with color|Indian National Congress}}
+|Disqualified on 28 February 2024<ref name="6 INC MLAs disqualified"/>
+|-
+|[[Rakesh Kalia]] 
+|{{Full party name with color|Indian National Congress}}
+| Elected on 4 Jun 2024 <ref name="Himachal Assembly bypolls 2024" />
+|-
+
+|[[Haroli Assembly constituency|Haroli]]
+|[[Mukesh Agnihotri]]
+|{{Full party name with color|Indian National Congress}}
+|'''Deputy Chief Minister'''
+|-
+
+|[[Una (Himachal Pradesh Assembly constituency)|Una]]
+|[[Satpal Singh Satti]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|rowspan=2|[[Kutlehar Assembly constituency|Kutlehar]]
+|[[Devender Kumar Bhutto]]
+|{{Full party name with color|Indian National Congress}}
+|Disqualified on 28 February 2024<ref name="6 INC MLAs disqualified"/>
+|-
+|[[Vivek Sharma]] 
+|{{Full party name with color|Indian National Congress}}
+| Elected on 4 Jun 2024 <ref name="Himachal Assembly bypolls 2024" />
+|-
+
+|rowspan="4" |[[Bilaspur district, Himachal Pradesh|Bilaspur]]
+
+|[[Jhanduta Assembly constituency|Jhanduta]] (SC)
+|[[Jeet Ram Katwal]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Ghumarwin Assembly constituency|Ghumarwin]]
+|[[Rajesh Dharmani]]
+|{{Full party name with color|Indian National Congress}}
+|'''Cabinet Minister'''
+|-
+
+|[[Bilaspur (Himachal Pradesh Assembly constituency)|Bilaspur]]
+|[[Trilok Jamwal]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Sri Naina Deviji Assembly constituency|Sri Naina Deviji]]
+|[[Randhir Sharma]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|rowspan="6"|[[Solan district|Solan]]
+
+|[[Arki Assembly constituency|Arki]]
+|[[Sanjay Awasthy]]
+|{{Full party name with color|Indian National Congress}}
+|
+| rowspan="20" |'''[[Shimla Lok Sabha constituency|Shimla]]'''
+|-
+
+|rowspan=2|[[Nalagarh Assembly constituency|Nalagarh]]
+|[[Krishan Lal Thakur|K.L. Thakur]]
+|{{Party name with color|Independent politician}}
+||Resigned on 22 March 2024<ref name="Times of India"/>
+|-
+|[[Hardeep Singh Bawa]]
+|{{Full party name with color|Indian National Congress}}
+|Elected on 13 July 2024
+|-
+
+|[[Doon Assembly constituency|Doon]]
+|[[Ram Kumar Chaudhary]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Solan Assembly constituency|Solan]] (SC)
+|[[Dhani Ram Shandil]]
+|{{Full party name with color|Indian National Congress}}
+|'''Cabinet Minister'''
+|-
+
+|[[Kasauli Assembly constituency|Kasauli]] (SC)
+|[[Vinod Sultanpuri]]
+|{{Full party name with color|Indian National Congress}}
+|
+<section begin="Sirmaur district" />
+|-
+|rowspan="5"|[[Sirmaur district|Sirmaur]]
+|[[Pachhad Assembly constituency|Pachhad]] (SC)
+|[[Reena Kashyap]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Nahan Assembly constituency|Nahan]]
+|[[Ajay Solanki]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Sri Renukaji Assembly constituency|Sri Renukaji]] (SC)
+|[[Vinay Kumar (politician)|Vinay Kumar]]
+|{{Full party name with color|Indian National Congress}}
+|'''Ex Deputy Speaker'''
+|-
+
+|[[Paonta Sahib Assembly constituency|Paonta Sahib]]
+|[[Sukh Ram Chaudhary]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Shillai Assembly constituency|Shillai]]
+|[[Harshwardhan Chauhan]]
+|{{Full party name with color|Indian National Congress}}
+|'''Cabinet Minister'''
+|-
+<section end="Sirmaur district" />
+|rowspan="8" |[[Shimla district|Shimla]]
+
+|[[Chopal Assembly constituency|Chopal]]
+|[[Balbir Singh Verma]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+
+|[[Theog Assembly constituency|Theog]]
+|[[Kuldeep Singh Rathore]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Kasumpti Assembly constituency|Kasumpti]]
+|[[Anirudh Singh (Himachal Pradesh politician)|Anirudh Singh]]
+|{{Full party name with color|Indian National Congress}}
+|'''Cabinet Minister'''
+|-
+
+|[[Shimla Assembly constituency|Shimla]]
+|[[Harish Janartha]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Shimla Rural Assembly constituency|Shimla Rural]]
+|[[Vikramaditya Singh (Himachal Pradesh politician)|Vikramaditya Singh]]
+|{{Full party name with color|Indian National Congress}}
+|'''Cabinet minister'''
+|-
+
+|[[Jubbal-Kotkhai Assembly constituency|Jubbal-Kotkhai]]
+|[[Rohit Thakur (politician)|Rohit Thakur]]
+|{{Full party name with color|Indian National Congress}}
+|'''Cabinet minister''' 
+|-
+
+|[[Rampur (Himachal Pradesh Assembly constituency)|Rampur]] (SC)
+|[[Nand Lal (Himachal Pradesh politician)|Nand Lal]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Rohru Assembly constituency|Rohru]] (SC)
+|[[Mohan Lal Brakta]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+
+|[[Kinnaur district|Kinnaur]]
+
+|[[Kinnaur Assembly constituency|Kinnaur]] (ST)
+|[[Jagat Singh Negi]]
+|{{Full party name with color|Indian National Congress}}
+|'''Cabinet Minister'''
+|}
+
+==Lok Sabha constituency-wise composition==
+{| class="wikitable"
+! Lok Sabha Constituency
+! Number of Cabinet Ministers, Speaker and Deputy Speaker
+! Name of Ministers, Speaker and Deputy Speaker
+! Name of Constituencies (Respectively)
+|-
+| Kangra Lok Sabha Constituency
+| 3
+| Kuldeep Singh Pathania ('''Speaker'''), Chander Kumar, Yadvinder Goma
+| Bhattiyat, Jawali, Jaisinghpur (SC)
+|-
+| Mandi Lok Sabha Constituency
+| 0
+| -
+| -
+|-
+| Hamirpur Lok Sabha Constituency
+| 3
+| Sukhvinder Singh Sukhu ('''Chief Minister'''), Mukesh Agnihotri ('''Deputy Chief Minister'''), Rajesh Dharmani
+| Nadaun, Haroli, Ghumarwin
+|-
+| Shimla Lok Sabha Constituency
+| 6
+| Dhani Ram Shandil, Harshwardhan Chauhan, Anirudh Singh, Vikramaditya Singh, Rohit Thakur, Jagat Singh Negi
+| Solan (SC), Shillai, Kasumpti, Shimla Rural, Jubbal-Kotkhai, Kinnaur (ST)
+|}
+
+== References ==
+{{reflist}}
+{{Current Indian assemblies}}<!--
+{{Members of the 14th Vidhan Sabha from Himachal Pradesh}}
+-->
+
+[[Category:Lists of current Indian state and territorial assemblies|Himachal Pradesh]]
+[[Category:Terms of the Himachal Pradesh Legislative Assembly]]
+[[Category:Himachal Pradesh MLAs 2022–2027| ]]

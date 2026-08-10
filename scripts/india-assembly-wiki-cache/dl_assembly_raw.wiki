@@ -1,0 +1,504 @@
+{{Short description|Eighth Legislative Assembly of Delhi}}
+{{Use Indian English|date=February 2025}}
+{{Use dmy dates|date=February 2025}}
+{{refimprove|date=April 2025}}
+{{Infobox legislative term
+| name = Eighth Delhi Legislative Assembly
+| before = [[7th Delhi Assembly]]
+| after = [[9th Delhi Assembly]]
+| image = Seal of the National Capital Territory of Delhi.svg
+| image_size = 100px
+| body = [[Delhi Legislative Assembly]]
+| meeting_place = Old Secretariat, Vikram Nagar, [[Civil Lines, Delhi]]
+| term_start = {{Start date|2025|02|20|df=y}}
+| term_end = 
+| election = [[2025 Delhi Legislative Assembly election]]
+| government = {{Party index link|Bharatiya Janata Party}}
+| opposition = {{Party index link|Aam Aadmi Party}}
+| website = {{URL|https://delhiassembly.delhi.gov.in/}}
+| membership1 = 70
+| chamber1 = 
+| chamber1_image = India Delhi Legislative Assembly Election 2025.svg
+| chamber1_image_size = 
+| chamber1_leader1_type = [[List of speakers of the Delhi Legislative Assembly|Speaker]]
+| chamber1_leader1 = [[Vijender Gupta]]
+| chamber1_leader2_type = Deputy Speaker
+| chamber1_leader2 = [[Mohan Singh Bisht]]
+| chamber1_leader3_type = [[List of chief ministers of Delhi|Chief Minister]]
+| chamber1_leader3 = [[Rekha Gupta]]
+| chamber1_leader4_type = [[List of deputy chief ministers of Delhi|Deputy Chief Minister]]
+| chamber1_leader4 = [[Parvesh Verma]]
+| chamber1_leader5_type = [[List of leaders of the opposition in the Delhi Legislative Assembly|Leader of the Opposition]]
+| chamber1_leader5 = [[Atishi Marlena]]
+| chamber1_leader6_type = [[List of leaders of the opposition in the Delhi Legislative Assembly|Deputy Leader of the Opposition]]
+| chamber1_leader6 = [[Anil Jha Vats]]
+| chamber1_image_caption = '''[[Government of Delhi|Government]] (48)'''
+:{{Color box|{{Party color|Bharatiya Janata Party}}}} [[Bharatiya Janata Party|BJP]] (48)<br/>
+'''[[Official Opposition|Opposition]] (22)'''
+:{{Color box|{{Party color|Aam Aadmi Party}}}} [[Aam Aadmi Party |AAP]] (22)
+}}
+
+The '''Eighth [[Delhi Legislative Assembly]]''' was constituted on 20 February 2025 after the [[2025 Delhi Legislative Assembly election]]s were concluded earlier on 5 February 2025 and the results were announced on 8 February 2025. It is the legislative arm of the [[Government of Delhi]].
+
+== History ==
+
+=== Election and government formation ===
+
+<!-- this section is transcluded on Delhi Legislative Assembly  --> <section begin="Composition"/> 
+Elections for 70 assembly seats in Delhi were concluded on [[2025 Delhi Legislative Assembly election|5 February 2025]] and results were announced on 8 February 2025. The [[Bharatiya Janata Party]] emerged as the single largest party by winning 48 out of 70 seats and formed a government in Delhi after 27 years.<ref>{{Cite web |date=2025-02-08|title=ECI Delhi Election Results 2025 LIVE Updates: Arvind Kejriwal loses big as BJP makes Delhi comeback |url=https://indianexpress.com/article/india/election-commission-of-india-eci-delhi-election-results-2025-live-updates-on-eciresults-nic-in-results-eci-gov-in-aap-kejriwal-bjp-9823664/|access-date=2025-02-08|website=Indian express|language=en}}</ref>
+
+== Office bearers ==
+
+{|class="wikitable" style="text-align:center"
+|-
+!Office 
+!Holder
+!Since
+|-
+|[[List of speakers of the Delhi Legislative Assembly|Speaker]]
+|[[Vijender Gupta]]
+|20 February 2025
+|-
+|[[List of speakers of the Delhi Legislative Assembly#List of the Deputy Speakers|Deputy Speaker]]
+|[[Mohan Singh Bisht]]
+|20 February 2025
+|-
+|Leader of the House<br/><small>[[List of chief ministers of Delhi|(Chief Minister)]]</small>
+|[[Rekha Gupta]]
+|20 February 2025
+
+|-
+|[[List of leaders of the opposition in the Delhi Legislative Assembly|Leader of the Opposition]]
+|[[Atishi Marlena]]
+|25 February 2025
+|}
+
+== Members of Legislative Assembly ==
+
+{|class="sortable wikitable" 
+|-
+! District
+! No.
+! Constituency
+! Name
+! colspan="2" |Party
+! Remarks
+|-
+|[[North Delhi district|North Delhi]]
+|1
+|[[Narela, Delhi Assembly constituency|Narela]]
+|[[Raj Karan Khatri]]
+|{{full party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="2"|[[Central Delhi district|Central Delhi]]
+|2
+|[[Burari Assembly constituency|Burari]]
+|[[Sanjeev Jha]]
+|{{full party name with color|Aam Aadmi Party}}
+|
+|-
+|3
+|[[Timarpur Assembly constituency|Timarpur]]
+|[[Surya Prakash Khatri]]
+|{{full party name with color|Bharatiya Janata Party|rowspan=6}}
+|
+|-
+|rowspan="2"|[[North Delhi district|North Delhi]]
+|4
+|[[Adarsh Nagar, Delhi Assembly constituency|Adarsh Nagar]]
+|[[Raj Kumar Bhatia]]
+|
+|-
+|5
+|[[Badli, Delhi Assembly constituency|Badli]]
+|[[Deepak Chaudhary]]
+|
+|-
+|[[North West Delhi district|North West Delhi]]
+|6
+|[[Rithala Assembly constituency|Rithala]]
+|[[Kulwant Rana]]
+|
+|-
+|[[North Delhi district|North Delhi]]
+|7
+|[[Bawana Assembly constituency|Bawana]] (SC)
+|[[Ravinder Indraj Singh]]
+|Cabinet minister
+|-
+|rowspan="3"|[[North West Delhi district|North West Delhi]]
+|8
+|[[Mundka Assembly constituency|Mundka]]
+|[[Gajender Drall]]
+|
+|-
+|9
+|[[Kirari Assembly constituency|Kirari]]
+|[[Anil Jha Vats]]
+|{{full party name with color|Aam Aadmi Party|rowspan=2}}
+|
+|-
+|10
+|[[Sultanpur Majra Assembly constituency|Sultanpur Majra]] (SC)
+|[[Mukesh Kumar Ahlawat]]
+|
+|-
+|[[West Delhi district|West Delhi]]
+|11
+|[[Nangloi Jat Assembly constituency|Nangloi Jat]]
+|[[Manoj Kumar Shokeen]]
+|{{full party name with color|Bharatiya Janata Party|rowspan=8}}
+|
+|-
+|[[North West Delhi district|North West Delhi]]
+|12
+|[[Mangol Puri Assembly constituency|Mangol Puri]] (SC)
+|[[Raj Kumar Chauhan]]
+|
+|-
+|[[North Delhi district|North Delhi]]
+|13
+|[[Rohini Assembly constituency|Rohini]]
+|[[Vijender Gupta]]
+|Speaker
+|-
+|[[North West Delhi district|North West Delhi]]
+|14
+|[[Shalimar Bagh Assembly constituency|Shalimar Bagh]]
+|[[Rekha Gupta]]
+|Chief Minister
+|-
+|[[North Delhi district|North Delhi]]
+|15
+|[[Shakur Basti Assembly constituency|Shakur Basti]]
+|[[Karnail Singh (politician)|Karnail Singh]]
+|
+|-
+|[[North West Delhi district|North West Delhi]]
+|16
+|[[Tri Nagar Assembly constituency|Tri Nagar]]
+|[[Tilak Ram Gupta]]
+|
+|-
+|rowspan="2"|[[North Delhi district|North Delhi]]
+|17
+|[[Wazirpur Assembly constituency|Wazirpur]]
+|[[Poonam Sharma]]
+|
+|-
+|18
+|[[Model Town Assembly constituency|Model Town]]
+|[[Ashok Goel (politician)|Ashok Goel]]
+|
+|-
+|rowspan="5"|[[Central Delhi district|Central Delhi]]
+|19
+|[[Sadar Bazar Assembly constituency|Sadar Bazar]]
+|[[Som Dutt]]
+|{{full party name with color|Aam Aadmi Party|rowspan=6}}
+|
+|-
+|20
+|[[Chandni Chowk Assembly constituency|Chandni Chowk]]
+|[[Punardeep Sawhney]]
+|
+|-
+|21
+|[[Matia Mahal Assembly constituency|Matia Mahal]]
+|[[Aaley Mohammad Iqbal]]
+|
+|-
+|22
+|[[Ballimaran Assembly constituency|Ballimaran]]
+|[[Imran Hussain (Indian politician)|Imran Hussain]]
+|
+|-
+|23
+|[[Karol Bagh Assembly constituency|Karol Bagh]] (SC)
+|[[Vishesh Ravi]]
+|
+|-
+|[[New Delhi district|New Delhi]]
+|24
+|[[Patel Nagar Assembly constituency|Patel Nagar]] (SC)
+|[[Pravesh Ratn]]
+|
+|-
+|rowspan="6"|[[West Delhi district|West Delhi]]
+|25
+|[[Moti Nagar Assembly constituency|Moti Nagar]]
+|[[Harish Khurana]]
+|{{full party name with color|Bharatiya Janata Party|rowspan=4}}
+|
+|-
+|26
+|[[Madipur Assembly constituency|Madipur]] (SC)
+|[[Kailash Gangwal]]
+|
+|-
+|27
+|[[Rajouri Garden Assembly constituency|Rajouri Garden]]
+|[[Manjinder Singh Sirsa]]
+|Cabinet minister
+|-
+|28
+|[[Hari Nagar Assembly constituency|Hari Nagar]]
+|[[Shyam Sharma (politician)|Shyam Sharma]]
+|
+|-
+|29
+|[[Tilak Nagar Assembly constituency|Tilak Nagar]]
+|[[Jarnail Singh (politician, born 1981)|Jarnail Singh]]
+|{{full party name with color|Aam Aadmi Party}}
+|
+|-
+|30
+|[[Janakpuri Assembly constituency|Janakpuri]]
+|[[Ashish Sood]]
+|{{full party name with color|Bharatiya Janata Party|rowspan=8}}
+|Cabinet minister
+|-
+|rowspan="7"|[[South West Delhi district|South West Delhi]]
+|31
+|[[Vikaspuri Assembly constituency|Vikaspuri]]
+|[[Pankaj Kumar Singh (politician)|Pankaj Kumar Singh]]
+|Cabinet minister
+|-
+|32
+|[[Uttam Nagar Assembly constituency|Uttam Nagar]]
+|[[Pawan Sharma]]
+|
+|-
+|33
+|[[Dwarka, Delhi Assembly constituency|Dwarka]]
+|[[Pradyuman Rajput]]
+|
+|-
+|34
+|[[Matiala Assembly constituency|Matiala]]
+|[[Sandeep Sehrawat]]
+|
+|-
+|35
+|[[Najafgarh Assembly constituency|Najafgarh]]
+|[[Neelam Pahalwan]]
+|
+|-
+|36
+|[[Bijwasan Assembly constituency|Bijwasan]]
+|[[Kailash Gahlot]]
+|
+|-
+|37
+|[[Palam Assembly constituency|Palam]]
+|[[Kuldeep Solanki]]
+|
+|-
+|rowspan="3"|[[New Delhi district|New Delhi]]
+|38
+|[[Delhi Cantonment Assembly constituency|Delhi Cantonment]]
+|[[Virender Singh Kadian]]
+|{{full party name with color|Aam Aadmi Party}}
+|
+|-
+|39
+|[[Rajinder Nagar Assembly constituency|Rajinder Nagar]]
+|[[Umang Bajaj]]
+|{{full party name with color|Bharatiya Janata Party|rowspan=8}}
+|
+|-
+|40
+|[[New Delhi Assembly constituency|New Delhi]]
+|[[Parvesh Verma|Parvesh Sahib Singh Verma]]
+|Cabinet Minister
+|-
+|rowspan="2"|[[South East Delhi district|South East Delhi]]
+|41
+|[[Jangpura Assembly constituency|Jangpura]]
+|[[Tarvinder Singh Marwah]]
+|
+|-
+|42
+|[[Kasturba Nagar Assembly constituency|Kasturba Nagar]]
+|[[Neeraj Basoya]]
+|
+|-
+|[[South Delhi district|South Delhi]]
+|43
+|[[Malviya Nagar, Delhi Assembly constituency|Malviya Nagar]]
+|[[Satish Upadhyay]]
+|
+|-
+|[[New Delhi district|New Delhi]]
+|44
+|[[R. K. Puram Assembly constituency|R. K. Puram]]
+|[[Anil Kumar Sharma (Delhi politician)|Anil Kumar Sharma]]
+|
+|-
+|rowspan="4"|[[South Delhi district|South Delhi]]
+|45
+|[[Mehrauli Assembly constituency|Mehrauli]]
+|[[Gajender Yadav]]
+|
+|-
+| 46
+| [[Chhatarpur, Delhi Assembly constituency|Chhatarpur]]
+|[[Kartar Singh Tanwar]]
+|
+|-
+|47
+|[[Deoli, Delhi Assembly constituency|Deoli]] (SC)
+|[[Prem Chauhan]]
+|{{full party name with color|Aam Aadmi Party|rowspan=2}}
+|
+|-
+|48
+|[[Ambedkar Nagar Assembly constituency|Ambedkar Nagar]] (SC)
+|[[Ajay Dutt]]
+|
+|-
+|[[South East Delhi district|South East Delhi]]
+|49
+|[[Sangam Vihar Assembly constituency|Sangam Vihar]]
+|[[Chandan Kumar Choudhary]]
+|{{full party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|[[New Delhi district|New Delhi]]
+|50
+|[[Greater Kailash Assembly constituency|Greater Kailash]]
+|[[Shikha Roy]]
+|
+|-
+|rowspan="4"|[[South East Delhi district|South East Delhi]]
+|51
+|[[Kalkaji Assembly constituency|Kalkaji]]
+|[[Atishi Marlena]]
+|{{full party name with color|Aam Aadmi Party|rowspan=4}}
+|Leader of Opposition
+|-
+|52
+|[[Tughlakabad Assembly constituency|Tughlakabad]]
+|[[Sahi Ram]]
+|
+|-
+|53
+|[[Badarpur, Delhi Assembly constituency|Badarpur]]
+|[[Ram Singh Netaji]]
+|
+|-
+|54
+|[[Okhla Assembly constituency|Okhla]]
+|[[Amanatullah Khan]]
+|
+|-
+|rowspan="4"|[[East Delhi district|East Delhi]]
+|55
+|[[Trilokpuri Assembly constituency|Trilokpuri]] (SC)
+|[[Ravikant Ujjain]]
+|{{full party name with color|Bharatiya Janata Party}}
+|
+|-
+|56
+|[[Kondli Assembly constituency|Kondli]] (SC)
+|[[Kuldeep Kumar]]
+|{{full party name with color|Aam Aadmi Party}}
+|
+|-
+|57
+|[[Patparganj Assembly constituency|Patparganj]]
+|[[Ravinder Singh Negi]]
+|{{full party name with color|Bharatiya Janata Party|rowspan=6}}
+|
+|-
+|58
+|[[Laxmi Nagar Assembly constituency|Laxmi Nagar]]
+|[[Abhay Verma (politician)|Abhay Verma]]
+|
+|-
+|[[Shahdara district|Shahdara]]
+|59
+|[[Vishwas Nagar Assembly constituency|Vishwas Nagar]]
+|[[Om Prakash Sharma (Delhi politician)|Om Prakash Sharma]]
+|
+|-
+|rowspan="2"|[[East Delhi district|East Delhi]]
+|60
+|[[Krishna Nagar Assembly constituency|Krishna Nagar]]
+|[[Anil Goyal]]
+|
+|-
+|61
+|[[Gandhi Nagar, Delhi Assembly constituency|Gandhi Nagar]]
+|[[Arvinder Singh Lovely]]
+|Pro tem Speaker
+|-
+|rowspan="3"|[[Shahdara district|Shahdara]]
+|62
+|[[Shahdara Assembly constituency|Shahdara]]
+|[[Sanjay Goyal]]
+|
+|-
+| 63
+|[[Seemapuri Assembly constituency|Seemapuri]] (SC)
+|[[Veer Singh Dhingan]]
+|{{full party name with color|Aam Aadmi Party}}
+|
+|-
+|64
+|[[Rohtas Nagar Assembly constituency|Rohtas Nagar]]
+|[[Jitender Mahajan]]
+|{{full party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="2"|[[North East Delhi district|North East Delhi]]
+|65
+|[[Seelampur Assembly constituency|Seelampur]]
+|[[Chaudhary Zubair Ahmad]]
+|{{full party name with color|Aam Aadmi Party}}
+|
+|-
+|66
+|[[Ghonda Assembly constituency|Ghonda]]
+|[[Ajay Mahawar]]
+|{{full party name with color|Bharatiya Janata Party}}
+|
+|-
+|[[Shahdara district|Shahdara]]
+|67
+|[[Babarpur Assembly constituency|Babarpur]]
+|[[Gopal Rai]]
+|{{full party name with color|Aam Aadmi Party|rowspan=2}}
+|
+|-
+|rowspan="3"|[[North East Delhi district|North East Delhi]]
+|68
+|[[Gokalpur Assembly constituency|Gokalpur]]
+|[[Surendra Kumar]]
+|
+|-
+|69
+|[[Mustafabad Assembly constituency|Mustafabad]]
+|[[Mohan Singh Bisht]]
+|{{full party name with color|Bharatiya Janata Party|rowspan=2}}
+|Deputy Speaker
+|-
+|70
+|[[Karawal Nagar Assembly constituency|Karawal Nagar]]
+|[[Kapil Mishra]]
+|Cabinet Minister
+|}
+
+== References ==
+
+{{Reflist}}
+
+{{Delhi Assemblies}}
+{{Current Indian assemblies}}
+{{Portal bar|India|Politics}}
+
+[[Category:Terms of the Delhi Legislative Assembly]]
+[[Category:Lists of current Indian state and territorial assemblies|Delhi]]
+[[Category:2025 establishments in Delhi]]
+[[Category:Delhi MLAs 2025–2030| ]]

@@ -1,0 +1,2060 @@
+[
+  {
+    "district": "Cooch Behar",
+    "no": "1",
+    "constituency": "Mekliganj",
+    "name": "Paresh Adhikary",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Cooch Behar",
+    "no": "2",
+    "constituency": "Mathabhanga",
+    "name": "Sushil Barman",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Cooch Behar",
+    "no": "3",
+    "constituency": "Cooch Behar Uttar",
+    "name": "Sukumar Roy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Cooch Behar",
+    "no": "4",
+    "constituency": "Cooch Behar Dakshin",
+    "name": "Nikhil Ranjan Dey",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Cooch Behar",
+    "no": "5",
+    "constituency": "Sitalkuchi",
+    "name": "Baren Chandra Barman",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Cooch Behar",
+    "no": "6",
+    "constituency": "Sitai",
+    "name": "Sangita Roy",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Cooch Behar",
+    "no": "7",
+    "constituency": "Dinhata",
+    "name": "Udayan Guha",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Cooch Behar",
+    "no": "8",
+    "constituency": "Natabari",
+    "name": "Mihir Goswami",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Cooch Behar",
+    "no": "9",
+    "constituency": "Tufanganj",
+    "name": "Malati Rava Roy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Alipurduar",
+    "no": "10",
+    "constituency": "Kumargram",
+    "name": "Manoj Kumar Oraon",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Alipurduar",
+    "no": "11",
+    "constituency": "Kalchini",
+    "name": "Bishal Lama",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Alipurduar",
+    "no": "12",
+    "constituency": "Alipurduars",
+    "name": "Suman Kanjilal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Alipurduar",
+    "no": "13",
+    "constituency": "Falakata",
+    "name": "Dipak Barman",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Alipurduar",
+    "no": "14",
+    "constituency": "Madarihat",
+    "name": "Jay Prakash Toppo",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Jalpaiguri",
+    "no": "15",
+    "constituency": "Dhupguri",
+    "name": "Nirmal Chandra Roy",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Jalpaiguri",
+    "no": "16",
+    "constituency": "Maynaguri",
+    "name": "Kaushik Roy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Jalpaiguri",
+    "no": "17",
+    "constituency": "Jalpaiguri",
+    "name": "Pradip Kumar Barma",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Jalpaiguri",
+    "no": "18",
+    "constituency": "Rajganj",
+    "name": "Khageshwar Roy",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Jalpaiguri",
+    "no": "19",
+    "constituency": "Dabgram-Phulbari",
+    "name": "Shikha Chatterjee",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Jalpaiguri",
+    "no": "20",
+    "constituency": "Mal",
+    "name": "Bulu Chik Baraik",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Jalpaiguri",
+    "no": "21",
+    "constituency": "Nagrakata",
+    "name": "Puna Bhengra",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kalimpong",
+    "no": "22",
+    "constituency": "Kalimpong",
+    "name": "Ruden Sada Lepcha",
+    "party": "Bharatiya Gorkha Prajatantrik Morcha"
+  },
+  {
+    "district": "Darjeeling",
+    "no": "23",
+    "constituency": "Darjeeling",
+    "name": "Neeraj Zimba",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Darjeeling",
+    "no": "24",
+    "constituency": "Kurseong",
+    "name": "Bishnu Prasad Sharma",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Darjeeling",
+    "no": "25",
+    "constituency": "Matigara-Naxalbari",
+    "name": "Anandamay Barman",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Darjeeling",
+    "no": "26",
+    "constituency": "Siliguri",
+    "name": "Shankar Ghosh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Darjeeling",
+    "no": "27",
+    "constituency": "Phansidewa",
+    "name": "Durga Murmu",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Uttar Dinajpur",
+    "no": "28",
+    "constituency": "Chopra",
+    "name": "Hamidul Rahman",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Uttar Dinajpur",
+    "no": "29",
+    "constituency": "Islampur",
+    "name": "Abdul Karim Chowdhury",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Uttar Dinajpur",
+    "no": "30",
+    "constituency": "Goalpokhar",
+    "name": "Md. Ghulam Rabbani",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Uttar Dinajpur",
+    "no": "31",
+    "constituency": "Chakulia",
+    "name": "Minhajul Arfin Azad",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Uttar Dinajpur",
+    "no": "32",
+    "constituency": "Karandighi",
+    "name": "Goutam Paul",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Uttar Dinajpur",
+    "no": "33",
+    "constituency": "Hemtabad",
+    "name": "Satyajit Barman",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Uttar Dinajpur",
+    "no": "34",
+    "constituency": "Kaliaganj",
+    "name": "Soumen Roy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Uttar Dinajpur",
+    "no": "35",
+    "constituency": "Raiganj",
+    "name": "Krishna Kalyani",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Uttar Dinajpur",
+    "no": "36",
+    "constituency": "Itahar",
+    "name": "Mosaraf Hussen",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Dakshin Dinajpur",
+    "no": "37",
+    "constituency": "Kushmandi",
+    "name": "Rekha Roy",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Dakshin Dinajpur",
+    "no": "38",
+    "constituency": "Kumarganj",
+    "name": "Toraf Hossain Mandal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Dakshin Dinajpur",
+    "no": "39",
+    "constituency": "Balurghat",
+    "name": "Ashok Lahiri",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Dakshin Dinajpur",
+    "no": "40",
+    "constituency": "Tapan",
+    "name": "Budhrai Tudu",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Dakshin Dinajpur",
+    "no": "41",
+    "constituency": "Gangarampur",
+    "name": "Satyendra Nath Ray",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Dakshin Dinajpur",
+    "no": "42",
+    "constituency": "Harirampur",
+    "name": "Biplab Mitra",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Malda",
+    "no": "43",
+    "constituency": "Habibpur",
+    "name": "Joyel Murmu",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Malda",
+    "no": "44",
+    "constituency": "Gazole",
+    "name": "Chinmoy Deb Barman",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Malda",
+    "no": "45",
+    "constituency": "Chanchal",
+    "name": "Nihar Ranjan Ghosh",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Malda",
+    "no": "46",
+    "constituency": "Harishchandrapur",
+    "name": "Tajmul Hossain",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Malda",
+    "no": "47",
+    "constituency": "Malatipur",
+    "name": "Abdur Rahim Boxi",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Malda",
+    "no": "48",
+    "constituency": "Ratua",
+    "name": "Samar Mukherjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Malda",
+    "no": "49",
+    "constituency": "Manikchak",
+    "name": "Sabitri Mitra",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Malda",
+    "no": "50",
+    "constituency": "Maldaha",
+    "name": "Gopal Chandra Saha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Malda",
+    "no": "51",
+    "constituency": "English Bazar",
+    "name": "Sreerupa Mitra Chaudhury",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Malda",
+    "no": "52",
+    "constituency": "Mothabari",
+    "name": "Sabina Yeasmin",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Malda",
+    "no": "53",
+    "constituency": "Sujapur",
+    "name": "Muhammad Abdul Ghani",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Malda",
+    "no": "54",
+    "constituency": "Baisnabnagar",
+    "name": "Chandana Sarkar",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "55",
+    "constituency": "Farakka",
+    "name": "Manirul Islam",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "56",
+    "constituency": "Samserganj",
+    "name": "Amirul Islam",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "57",
+    "constituency": "Suti",
+    "name": "Emani Biswas",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "58",
+    "constituency": "Jangipur",
+    "name": "Jakir Hossain",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "59",
+    "constituency": "Raghunathganj",
+    "name": "Akhruzzaman",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "60",
+    "constituency": "Sagardighi",
+    "name": "Bayron Biswas",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "61",
+    "constituency": "Lalgola",
+    "name": "Ali Mohammad",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "62",
+    "constituency": "Bhagabangola",
+    "name": "Reyat Hossain Sarkar",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "63",
+    "constituency": "Raninagar",
+    "name": "Abdul Soumik Hossain",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "64",
+    "constituency": "Murshidabad",
+    "name": "Gouri Sankar Ghosh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "65",
+    "constituency": "Nabagram",
+    "name": "Kanai Chandra Mondal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "66",
+    "constituency": "Khargram",
+    "name": "Ashish Marjit",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "67",
+    "constituency": "Burwan",
+    "name": "Jiban Krishna Saha",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "68",
+    "constituency": "Kandi",
+    "name": "Apurba Sarkar",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "69",
+    "constituency": "Bharatpur",
+    "name": "Humayun Kabir",
+    "party": "Aam Janata Unnayan Party"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "70",
+    "constituency": "Rejinagar",
+    "name": "Rabiul Alam Chowdhury",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "71",
+    "constituency": "Beldanga",
+    "name": "Hasanuzzaman Sheikh",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "72",
+    "constituency": "Baharampur",
+    "name": "Subrata Maitra",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "73",
+    "constituency": "Hariharpara",
+    "name": "Niamot Sheikh",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "74",
+    "constituency": "Naoda",
+    "name": "Sahina Mumtaz Begum",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "75",
+    "constituency": "Domkal",
+    "name": "Jafikul Islam",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Murshidabad",
+    "no": "76",
+    "constituency": "Jalangi",
+    "name": "Abdur Razzak",
+    "party": "Independent"
+  },
+  {
+    "district": "Nadia",
+    "no": "77",
+    "constituency": "Karimpur",
+    "name": "Bimalendu Sinha Roy",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Nadia",
+    "no": "78",
+    "constituency": "Tehatta",
+    "name": "Tapas Kumar Saha",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Nadia",
+    "no": "79",
+    "constituency": "Palashipara",
+    "name": "Manik Bhattacharya",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Nadia",
+    "no": "80",
+    "constituency": "Kaliganj",
+    "name": "Alifa Ahmed",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Nadia",
+    "no": "81",
+    "constituency": "Nakashipara",
+    "name": "Kallol Khan",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Nadia",
+    "no": "82",
+    "constituency": "Chapra",
+    "name": "Rukbanur Rahman",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Nadia",
+    "no": "83",
+    "constituency": "Krishnanagar Uttar",
+    "name": "Mukul Roy",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Nadia",
+    "no": "84",
+    "constituency": "Nabadwip",
+    "name": "Pundarikakhsa Saha",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Nadia",
+    "no": "85",
+    "constituency": "Krishnanagar Dakshin",
+    "name": "Ujjal Biswas",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Nadia",
+    "no": "86",
+    "constituency": "Santipur",
+    "name": "Braja Kishore Goswami",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Nadia",
+    "no": "87",
+    "constituency": "Ranaghat Uttar Paschim",
+    "name": "Parthasarathi Chatterjee",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nadia",
+    "no": "88",
+    "constituency": "Krishnaganj",
+    "name": "Ashis Kumar Biswas",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nadia",
+    "no": "89",
+    "constituency": "Ranaghat Uttar Purba",
+    "name": "Ashim Biswas",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nadia",
+    "no": "90",
+    "constituency": "Ranaghat Dakshin",
+    "name": "Mukut Mani Adhikari",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Nadia",
+    "no": "91",
+    "constituency": "Chakdaha",
+    "name": "Bankim Chandra Ghosh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nadia",
+    "no": "92",
+    "constituency": "Kalyani",
+    "name": "Ambika Roy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nadia",
+    "no": "93",
+    "constituency": "Haringhata",
+    "name": "Ashim Kumar Sarkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "94",
+    "constituency": "Bagdah",
+    "name": "Madhuparna Thakur",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "95",
+    "constituency": "Bangaon Uttar",
+    "name": "Ashok Kirtania",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "96",
+    "constituency": "Bangaon Dakshin",
+    "name": "Swapan Majumder",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "97",
+    "constituency": "Gaighata",
+    "name": "Subrata Thakur",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "98",
+    "constituency": "Swarupnagar",
+    "name": "Bina Mondal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "99",
+    "constituency": "Baduria",
+    "name": "Abdur Rahim Quazi",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "100",
+    "constituency": "Habra",
+    "name": "Jyotipriya Mallick",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "101",
+    "constituency": "Ashokenagar",
+    "name": "Narayan Goswami",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "102",
+    "constituency": "Amdanga",
+    "name": "Rafiqur Rahaman",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "103",
+    "constituency": "Bijpur",
+    "name": "Subodh Adhikary",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "104",
+    "constituency": "Naihati",
+    "name": "Sanat Dey",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "105",
+    "constituency": "Bhatpara",
+    "name": "Pawan Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "106",
+    "constituency": "Jagatdal",
+    "name": "Somenath Shyam Ichini",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "107",
+    "constituency": "Noapara",
+    "name": "Manju Basu",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "108",
+    "constituency": "Barrackpore",
+    "name": "Raj Chakraborty",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "109",
+    "constituency": "Khardaha",
+    "name": "Sovandeb Chattopadhyay",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "110",
+    "constituency": "Dum Dum Uttar",
+    "name": "Chandrima Bhattacharya",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "111",
+    "constituency": "Panihati",
+    "name": "Nirmal Ghosh",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "112",
+    "constituency": "Kamarhati",
+    "name": "Madan Mitra",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "113",
+    "constituency": "Baranagar",
+    "name": "Sayantika Banerjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "114",
+    "constituency": "Dum Dum",
+    "name": "Bratya Basu",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "115",
+    "constituency": "Rajarhat New Town",
+    "name": "Tapash Chatterjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "116",
+    "constituency": "Bidhannagar",
+    "name": "Sujit Bose",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "117",
+    "constituency": "Rajarhat Gopalpur",
+    "name": "Aditi Munshi",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "118",
+    "constituency": "Madhyamgram",
+    "name": "Rathin Ghosh",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "119",
+    "constituency": "Barasat",
+    "name": "Chiranjeet Chakraborty",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "120",
+    "constituency": "Deganga",
+    "name": "Rahima Mondal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "121",
+    "constituency": "Haroa",
+    "name": "Sheikh Rabiul Islam",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "122",
+    "constituency": "Minakhan",
+    "name": "Usha Rani Mondal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "123",
+    "constituency": "Sandeshkhali",
+    "name": "Sukumar Mahata",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "124",
+    "constituency": "Basirhat Dakshin",
+    "name": "Saptarshi Banerjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "125",
+    "constituency": "Basirhat Uttar",
+    "name": "Rafikul Islam Mondal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "North 24 Parganas",
+    "no": "126",
+    "constituency": "Hingalganj",
+    "name": "Debesh Mondal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "127",
+    "constituency": "Gosaba",
+    "name": "Subrata Mondal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "128",
+    "constituency": "Basanti",
+    "name": "Shyamal Mondal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "129",
+    "constituency": "Kultali",
+    "name": "Ganesh Chandra Mondal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "130",
+    "constituency": "Patharpratima",
+    "name": "Samir Kumar Jana",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "131",
+    "constituency": "Kakdwip",
+    "name": "Manturam Pakhira",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "132",
+    "constituency": "Sagar",
+    "name": "Bankim Chandra Hazra",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "133",
+    "constituency": "Kulpi",
+    "name": "Jogaranjan Halder",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "134",
+    "constituency": "Raidighi",
+    "name": "Aloke Jaldata",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "135",
+    "constituency": "Mandirbazar",
+    "name": "Joydeb Halder",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "136",
+    "constituency": "Jaynagar",
+    "name": "Biswanath Das",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "137",
+    "constituency": "Baruipur Purba",
+    "name": "Bivas Sardar",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "138",
+    "constituency": "Canning Paschim",
+    "name": "Paresh Ram Das",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "139",
+    "constituency": "Canning Purba",
+    "name": "Saokat Molla",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "140",
+    "constituency": "Baruipur Paschim",
+    "name": "Biman Banerjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "141",
+    "constituency": "Magrahat Purba",
+    "name": "Namita Saha",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "142",
+    "constituency": "Magrahat Paschim",
+    "name": "Giasuddin Molla",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "143",
+    "constituency": "Diamond Harbour",
+    "name": "Pannalal Halder",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "144",
+    "constituency": "Falta",
+    "name": "Sankar Kumar Naskar",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "145",
+    "constituency": "Satgachia",
+    "name": "Mohan Chandra Naskar",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "146",
+    "constituency": "Bishnupur",
+    "name": "Dilip Mondal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "147",
+    "constituency": "Sonarpur Dakshin",
+    "name": "Arundhuti Maitra",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "148",
+    "constituency": "Bhangar",
+    "name": "Nawsad Siddique",
+    "party": "Indian Secular Front"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "149",
+    "constituency": "Kasba",
+    "name": "Javed Ahmed Khan",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "150",
+    "constituency": "Jadavpur",
+    "name": "Debabrata Majumdar",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "151",
+    "constituency": "Sonarpur Uttar",
+    "name": "Firdousi Begum",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "152",
+    "constituency": "Tollygunge",
+    "name": "Aroop Biswas",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "153",
+    "constituency": "Behala Purba",
+    "name": "Ratna Chatterjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "154",
+    "constituency": "Behala Paschim",
+    "name": "Partha Chatterjee",
+    "party": "Independent"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "155",
+    "constituency": "Maheshtala",
+    "name": "Dulal Chandra Das",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "156",
+    "constituency": "Budge Budge",
+    "name": "Ashok Kumar Deb",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "South 24 Parganas",
+    "no": "157",
+    "constituency": "Metiaburuz",
+    "name": "Abdul Khaleque Molla",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Kolkata",
+    "no": "158",
+    "constituency": "Kolkata Port",
+    "name": "Firhad Hakim",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Kolkata",
+    "no": "159",
+    "constituency": "Bhabanipur",
+    "name": "Mamata Banerjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Kolkata",
+    "no": "160",
+    "constituency": "Rashbehari",
+    "name": "Debasish Kumar",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Kolkata",
+    "no": "161",
+    "constituency": "Ballygunge",
+    "name": "Babul Supriyo",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Kolkata",
+    "no": "162",
+    "constituency": "Chowrangee",
+    "name": "Nayna Bandyopadhyay",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Kolkata",
+    "no": "163",
+    "constituency": "Entally",
+    "name": "Swarna Kamal Saha",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Kolkata",
+    "no": "164",
+    "constituency": "Beleghata",
+    "name": "Paresh Paul",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Kolkata",
+    "no": "165",
+    "constituency": "Jorasanko",
+    "name": "Vivek Gupta",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Kolkata",
+    "no": "166",
+    "constituency": "Shyampukur",
+    "name": "Shashi Panja",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Kolkata",
+    "no": "167",
+    "constituency": "Maniktala",
+    "name": "Supti Pandey",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Kolkata",
+    "no": "168",
+    "constituency": "Kashipur-Belgachhia",
+    "name": "Atin Ghosh",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "169",
+    "constituency": "Bally",
+    "name": "Rana Chatterjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "170",
+    "constituency": "Howrah Uttar",
+    "name": "Gautam Chowdhuri",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "171",
+    "constituency": "Howrah Madhya",
+    "name": "Arup Roy",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "172",
+    "constituency": "Shibpur",
+    "name": "Manoj Tiwary",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "173",
+    "constituency": "Howrah Dakshin",
+    "name": "Nandita Chowdhury",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "174",
+    "constituency": "Sankrail",
+    "name": "Priya Paul",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "175",
+    "constituency": "Panchla",
+    "name": "Gulshan Mullick",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "176",
+    "constituency": "Uluberia Purba",
+    "name": "Bidesh Ranjan Bose",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "177",
+    "constituency": "Uluberia Uttar",
+    "name": "Nirmal Maji",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "178",
+    "constituency": "Uluberia Dakshin",
+    "name": "Pulak Roy",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "179",
+    "constituency": "Shyampur",
+    "name": "Kalipada Mondal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "180",
+    "constituency": "Bagnan",
+    "name": "Arunava Sen",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "181",
+    "constituency": "Amta",
+    "name": "Sukanta Kumar Paul",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "182",
+    "constituency": "Udaynarayanpur",
+    "name": "Samir Kumar Panja",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "183",
+    "constituency": "Jagatballavpur",
+    "name": "Sitanath Ghosh",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Howrah",
+    "no": "184",
+    "constituency": "Domjur",
+    "name": "Kalyan Ghosh",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "185",
+    "constituency": "Uttarpara",
+    "name": "Kanchan Mullick",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "186",
+    "constituency": "Sreerampur",
+    "name": "Sudipto Roy",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "187",
+    "constituency": "Champdani",
+    "name": "Arindam Guin",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "188",
+    "constituency": "Singur",
+    "name": "Becharam Manna",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "189",
+    "constituency": "Chandannagar",
+    "name": "Indranil Sen",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "190",
+    "constituency": "Chunchura",
+    "name": "Asit Mazumdar",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "191",
+    "constituency": "Balagarh",
+    "name": "Manoranjan Byapari",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "192",
+    "constituency": "Pandua",
+    "name": "Ratna De Nag",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "193",
+    "constituency": "Saptagram",
+    "name": "Tapan Dasgupta",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "194",
+    "constituency": "Chanditala",
+    "name": "Swati Khandoker",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "195",
+    "constituency": "Jangipara",
+    "name": "Snehasis Chakraborty",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "196",
+    "constituency": "Haripal",
+    "name": "Karabi Manna",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "197",
+    "constituency": "Dhanekhali",
+    "name": "Ashima Patra",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "198",
+    "constituency": "Tarakeswar",
+    "name": "Ramendu Sinharay",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Hooghly",
+    "no": "199",
+    "constituency": "Pursurah",
+    "name": "Biman Ghosh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Hooghly",
+    "no": "200",
+    "constituency": "Arambagh",
+    "name": "Madhusudan Bag",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Hooghly",
+    "no": "201",
+    "constituency": "Goghat",
+    "name": "Biswanath Karak",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Hooghly",
+    "no": "202",
+    "constituency": "Khanakul",
+    "name": "Susanta Ghosh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "203",
+    "constituency": "Tamluk",
+    "name": "Soumen Mahapatra",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "204",
+    "constituency": "Panskura Purba",
+    "name": "Biplab Roy Chowdhury",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "205",
+    "constituency": "Panskura Paschim",
+    "name": "Firoja Bibi",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "206",
+    "constituency": "Moyna",
+    "name": "Ashoke Dinda",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "207",
+    "constituency": "Nandakumar",
+    "name": "Sukumar De",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "208",
+    "constituency": "Mahisadal",
+    "name": "Tilak Kumar Chakraborty",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "209",
+    "constituency": "Haldia",
+    "name": "Tapasi Mondal",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "210",
+    "constituency": "Nandigram",
+    "name": "Suvendu Adhikari",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "211",
+    "constituency": "Chandipur",
+    "name": "Soham Chakraborty",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "212",
+    "constituency": "Patashpur",
+    "name": "Uttam Barik",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "213",
+    "constituency": "Kanthi Uttar",
+    "name": "Sumita Sinha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "214",
+    "constituency": "Bhagabanpur",
+    "name": "Rabindranath Maity",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "215",
+    "constituency": "Khejuri",
+    "name": "Santanu Pramanik",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "216",
+    "constituency": "Kanthi Dakshin",
+    "name": "Arup Kumar Das",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "217",
+    "constituency": "Ramnagar",
+    "name": "Akhil Giri",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Medinipur",
+    "no": "218",
+    "constituency": "Egra",
+    "name": "Tarun Kumar Maity",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "219",
+    "constituency": "Dantan",
+    "name": "Bikram Chandra Pradhan",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Jhargram",
+    "no": "220",
+    "constituency": "Nayagram",
+    "name": "Dulal Murmu",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Jhargram",
+    "no": "221",
+    "constituency": "Gopiballavpur",
+    "name": "Khagendra Nath Mahata",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Jhargram",
+    "no": "222",
+    "constituency": "Jhargram",
+    "name": "Birbaha Hansda",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "223",
+    "constituency": "Keshiary",
+    "name": "Paresh Murmu",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "224",
+    "constituency": "Kharagpur Sadar",
+    "name": "Hiran Chatterjee",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "225",
+    "constituency": "Narayangarh",
+    "name": "Surja Kanta Atta",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "226",
+    "constituency": "Sabang",
+    "name": "Manas Bhunia",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "227",
+    "constituency": "Pingla",
+    "name": "Ajit Maity",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "228",
+    "constituency": "Kharagpur",
+    "name": "Dinen Roy",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "229",
+    "constituency": "Debra",
+    "name": "Humayun Kabir",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "230",
+    "constituency": "Daspur",
+    "name": "Mamata Bhunia",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "231",
+    "constituency": "Ghatal",
+    "name": "Sital Kapat",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "232",
+    "constituency": "Chandrakona",
+    "name": "Arup Dhara",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "233",
+    "constituency": "Garbeta",
+    "name": "Uttara Singha",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "234",
+    "constituency": "Salboni",
+    "name": "Srikanta Mahata",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "235",
+    "constituency": "Keshpur",
+    "name": "Seuli Saha",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "no": "236",
+    "constituency": "Medinipur",
+    "name": "Sujoy Hazra",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Jhargram",
+    "no": "237",
+    "constituency": "Binpur",
+    "name": "Debnath Hansda",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purulia",
+    "no": "238",
+    "constituency": "Bandwan",
+    "name": "Rajib Lochan Saren",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purulia",
+    "no": "239",
+    "constituency": "Balarampur",
+    "name": "Baneswar Mahato",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purulia",
+    "no": "240",
+    "constituency": "Baghmundi",
+    "name": "Sushanta Mahato",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purulia",
+    "no": "241",
+    "constituency": "Joypur",
+    "name": "Narahari Mahato",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purulia",
+    "no": "242",
+    "constituency": "Purulia",
+    "name": "Sudip Kumar Mukherjee",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purulia",
+    "no": "243",
+    "constituency": "Manbazar",
+    "name": "Sandhya Rani Tudu",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purulia",
+    "no": "244",
+    "constituency": "Kashipur",
+    "name": "Kamalakanta Hansda",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purulia",
+    "no": "245",
+    "constituency": "Para",
+    "name": "Nadiar Chand Bouri",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purulia",
+    "no": "246",
+    "constituency": "Raghunathpur",
+    "name": "Vivekananda Bauri",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bankura",
+    "no": "247",
+    "constituency": "Saltora",
+    "name": "Chandana Bauri",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bankura",
+    "no": "248",
+    "constituency": "Chhatna",
+    "name": "Satyanarayan Mukhopadhyay",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bankura",
+    "no": "249",
+    "constituency": "Ranibandh",
+    "name": "Jyotsna Mandi",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Bankura",
+    "no": "250",
+    "constituency": "Raipur",
+    "name": "Mrityunjoy Murmu",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Bankura",
+    "no": "251",
+    "constituency": "Taldangra",
+    "name": "Falguni Singhababu",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Bankura",
+    "no": "252",
+    "constituency": "Bankura",
+    "name": "Niladri Sekhar Dana",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bankura",
+    "no": "253",
+    "constituency": "Barjora",
+    "name": "Alok Mukherjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Bankura",
+    "no": "254",
+    "constituency": "Onda",
+    "name": "Amarnath Shakha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bankura",
+    "no": "255",
+    "constituency": "Bishnupur",
+    "name": "Tanmay Ghosh",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Bankura",
+    "no": "256",
+    "constituency": "Katulpur",
+    "name": "Harakali Protiher",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Bankura",
+    "no": "257",
+    "constituency": "Indas",
+    "name": "Nirmal Kumar Dhara",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bankura",
+    "no": "258",
+    "constituency": "Sonamukhi",
+    "name": "Dibakar Gharami",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "259",
+    "constituency": "Khandaghosh",
+    "name": "Nabin Chandra Bag",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "260",
+    "constituency": "Bardhaman Dakshin",
+    "name": "Khokan Das",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "261",
+    "constituency": "Raina",
+    "name": "Shampa Dhara",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "262",
+    "constituency": "Jamalpur",
+    "name": "Alok Kumar Majhi",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "263",
+    "constituency": "Monteswar",
+    "name": "Siddiqullah Chowdhury",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "264",
+    "constituency": "Kalna",
+    "name": "Deboprasad Bag",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "265",
+    "constituency": "Memari",
+    "name": "Madhusudan Bhattacharya",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "266",
+    "constituency": "Bardhaman Uttar",
+    "name": "Nisith Kumar Malik",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "267",
+    "constituency": "Bhatar",
+    "name": "Mangobinda Adhikari",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "268",
+    "constituency": "Purbasthali Dakshin",
+    "name": "Swapan Debnath",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "269",
+    "constituency": "Purbasthali Uttar",
+    "name": "Tapan Chatterjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "270",
+    "constituency": "Katwa",
+    "name": "Rabindranath Chatterjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "271",
+    "constituency": "Ketugram",
+    "name": "Sekh Sahonawez",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "272",
+    "constituency": "Mangalkot",
+    "name": "Apurba Chowdhury",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "273",
+    "constituency": "Ausgram",
+    "name": "Abhedananda Thander",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Purba Bardhaman",
+    "no": "274",
+    "constituency": "Galsi",
+    "name": "Nepal Ghorui",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Bardhaman",
+    "no": "275",
+    "constituency": "Pandabeswar",
+    "name": "Narendranath Chakraborty",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Bardhaman",
+    "no": "276",
+    "constituency": "Durgapur Purba",
+    "name": "Pradip Mazumdar",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Bardhaman",
+    "no": "277",
+    "constituency": "Durgapur Paschim",
+    "name": "Lakshman Chandra Ghorui",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Paschim Bardhaman",
+    "no": "278",
+    "constituency": "Raniganj",
+    "name": "Tapas Banerjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Bardhaman",
+    "no": "279",
+    "constituency": "Jamuria",
+    "name": "Hareram Singh",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Bardhaman",
+    "no": "280",
+    "constituency": "Asansol Dakshin",
+    "name": "Agnimitra Paul",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Paschim Bardhaman",
+    "no": "281",
+    "constituency": "Asansol Uttar",
+    "name": "Moloy Ghatak",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Paschim Bardhaman",
+    "no": "282",
+    "constituency": "Kulti",
+    "name": "Ajay Kumar Poddar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Paschim Bardhaman",
+    "no": "283",
+    "constituency": "Barabani",
+    "name": "Bidhan Upadhyay",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Birbhum",
+    "no": "284",
+    "constituency": "Dubrajpur",
+    "name": "Anup Kumar Saha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Birbhum",
+    "no": "285",
+    "constituency": "Suri",
+    "name": "Bikash Roychoudhury",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Birbhum",
+    "no": "286",
+    "constituency": "Bolpur",
+    "name": "Chandranath Singha",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Birbhum",
+    "no": "287",
+    "constituency": "Nanoor",
+    "name": "Bidhan Chandra Majhi",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Birbhum",
+    "no": "288",
+    "constituency": "Labpur",
+    "name": "Abhijit Sinha",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Birbhum",
+    "no": "289",
+    "constituency": "Sainthia",
+    "name": "Nilabati Saha",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Birbhum",
+    "no": "290",
+    "constituency": "Mayureswar",
+    "name": "Abhijit Roy",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Birbhum",
+    "no": "291",
+    "constituency": "Rampurhat",
+    "name": "Asish Banerjee",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Birbhum",
+    "no": "292",
+    "constituency": "Hansan",
+    "name": "Asok Kumar Chattopadhyay",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Birbhum",
+    "no": "293",
+    "constituency": "Nalhati",
+    "name": "Rajendra Prasad Singh",
+    "party": "Trinamool Congress"
+  },
+  {
+    "district": "Birbhum",
+    "no": "294",
+    "constituency": "Murarai",
+    "name": "Mosarraf Hossain",
+    "party": "Trinamool Congress"
+  }
+]

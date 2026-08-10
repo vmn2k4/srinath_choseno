@@ -1,0 +1,910 @@
+{{Short description|Indian state legislature since 2021}}
+{{Use dmy dates|date=May 2026}}
+{{Use Indian English|date=May 2026}}
+{{Infobox legislative term
+| name = 16th Assam Assembly
+| before = [[15th Assam Assembly|15th Assembly]]
+| after = [[17th Assam Assembly|17th Assembly]]
+| image = [[File:India 16th Assam Legislative Assembly Election 2026.svg|300px]]
+| image_size = 300
+| caption = 
+| body = [[Assam Legislative Assembly]]
+| election = [[2026 Assam Legislative Assembly election|2026]]
+| government = [[Second Sarma ministry|Sarma II]]
+| opposition = [[Indian National Congress]]
+| term_start = 2026
+| term_end = present
+| website = <!-- {{URL|example.com}} -->
+| membership1 = 126
+| control1 = [[National Democratic Alliance]]
+| chamber1_leader1_type = [[List of speakers of the Assam Legislative Assembly|Speaker]]
+| chamber1_leader1 = [[Ranjeet Kumar Dass]]
+| chamber1_leader2_type = Deputy Speaker
+| chamber1_leader2 = [[Habbey Teron]]
+| chamber1_leader3_type = [[List of chief ministers of Assam|Leader of the House]]
+| chamber1_leader3 = [[Himanta Biswa Sarma]]
+| chamber1_leader4_type = [[List of leaders of the opposition in the Assam Legislative Assembly|Leader of the Opposition]]
+| chamber1_leader4 = ''TBA''
+}}
+
+The '''16th Legislative Assembly of Assam''' succeeds the 15th Assembly of Assam and will be constituted sooner following the [[National Democratic Alliance]]'s victory in the [[2026 Assam Legislative Assembly election|2026 assembly election]] that was held on 9 April 2026.
+
+== Office bearers ==
+
+{| class="wikitable sortable" style="text-align:center;"
+!S.No
+!Position
+!Portrait
+!Name
+!colspan="2" |Party
+!Constituency
+!Office Taken
+!Reference
+|-
+!1
+|[[List of speakers of the Assam Legislative Assembly|Speaker]]
+|[[File:Ranjeet Kumar Dass official portrait.jpg|80px]]
+|[[Ranjeet Kumar Dass]]
+|{{party name with color|Bharatiya Janata Party|rowspan=3}}
+|[[Bhowanipur–Sorbhog Assembly constituency|Bhowanipur–Sorbhog]]
+|21 May 2026
+|
+|-
+!2
+|[[List of deputy speakers of the Assam Legislative Assembly#Deputy speakers of the Assembly|Deputy Speaker]]
+|
+|[[Habbey Teron]]
+|[[Amri Assembly constituency| Amri (ST)]]
+|21 June 2026
+|
+|-
+!3
+|Leader of the House<br>([[Chief Minister of Assam|Chief Minister]])
+|[[File:Himanta Biswa Sarma in 2026.jpg|80px]]
+|[[Himanta Biswa Sarma]]
+|[[Jalukbari Assembly   constituency| Jalukbari]]
+|12 May 2026
+|
+|-
+!4
+|[[List of leaders of the opposition in the Assam Legislative Assembly|Leader of the Opposition]]
+|[[File:Wazed Ali Choudhury.jpg|80px]]
+|[[Wazed Ali Choudhury]]
+|{{party name with color|Indian National Congress|rowspan=2}}
+|
+|
+|
+|-
+!5
+|[[Assam Legislative Assembly#Deputy Leader of Opposition|Deputy Leader of the Opposition]]
+|
+|[[Joy Prakash Das]]
+|
+|
+|
+|-
+|}
+
+== Members of the Legislative Assembly ==
+
+{| class="wikitable sortable"
+|+Source:<ref>{{Cite news |author=<!--Not stated--> |date=2026-05-04 |title=Assam Assembly Election 2026: Full list of winners |url=https://www.thehindu.com/elections/assam-assembly/assam-assembly-election-2026-results-full-list-of-winners/article70938261.ece |access-date=2026-05-05 |work=The Hindu |language=en-IN |issn=0971-751X}}</ref><ref>{{Cite web |date=2026-05-04 |title=Assam Assembly Election Results 2026 Winners: BJP wins 82 seats, Congress 19 – Check Constituency-Wise, Party-Wise Full List |url=https://indianexpress.com/article/india/assam-assembly-election-results-2026-winners-list-constituency-wise-seat-wise-10663920/ |access-date=2026-05-05 |website=The Indian Express |language=en}}</ref>
+
+!District
+!No.
+!Constituency
+!Name
+!colspan="2" |Party
+!colspan="2" |Alliance 
+!Remarks
+|-
+| rowspan="5" |[[Kokrajhar district|Kokrajhar]]
+!1
+|[[Gossaigaon Assembly constituency|Gossaigaon]]
+|[[Sabharam Basumatary]]
+|{{Party name with color|Bodoland People's Front|rowspan=4}}
+|{{Party name with color|National Democratic Alliance|rowspan=4}}
+|
+|-
+!2
+|[[Dotma Assembly constituency|Dotma]] (ST)
+|[[Rabiram Narzary]]
+|
+|-
+!3
+|[[Kokrajhar Assembly constituency|Kokrajhar]] (ST)
+|[[Sewli Mohilary]]
+|
+|-
+!4
+|[[Baokhungri Assembly constituency|Baokhungri]]
+|[[Rupam Chandra Roy]]
+|
+|-
+!5
+|[[Parbatjhora Assembly constituency|Parbatjhora]]
+|[[Md. Ashraful Islam Sheikh|Md Ashraful Islam Sheikh]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Asom Sonmilito Morcha}}
+|
+|-
+| rowspan="5" |[[Dhubri district|Dhubri]]
+!6
+|[[Golakganj Assembly constituency|Golakganj]]
+|[[Ashwini Roy Sarkar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+!7
+|[[Gauripur Assembly constituency|Gauripur]]
+|[[Abdus Sobahan Ali Sarkar]]
+|{{Party name with color|Indian National Congress|rowspan=3}}
+|{{Party name with color|Asom Sonmilito Morcha|rowspan=3}}
+|
+|-
+!8
+|[[Dhubri Assembly constituency|Dhubri]]
+|[[Baby Begum]]
+|
+|-
+!9
+|[[Birsing Jarua Assembly constituency|Birsing Jarua]]
+|[[Wazed Ali Choudhury]]
+|
+|-
+!10
+|[[Bilasipara Assembly constituency|Bilasipara]]
+|[[Jibesh Rai]]
+|{{Party name with color|Asom Gana Parishad}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|[[South Salmara-Mankachar district|South Salmara-Mankachar]]
+!11
+|[[Mankachar Assembly constituency|Mankachar]]
+|[[Mohibur Rohman]]
+|{{Party name with color|Indian National Congress|rowspan=2}}
+|{{Party name with color|Asom Sonmilito Morcha|rowspan=2}}
+|
+|-
+| rowspan="4" |[[Goalpara district|Goalpara]]
+!12
+|[[Jaleswar, Assam Assembly constituency|Jaleshwar]]
+|[[Aftabuddin|Aftab Uddin Mollah]]
+|
+|-
+!13
+|[[Goalpara West Assembly constituency|Goalpara West]] (ST)
+|[[Pabitra Rabha (politician)|Pabitra Rabha]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+!14
+|[[Goalpara East Assembly constituency|Goalpara East]]
+|[[Abul Kalam Rasheed Alam]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Asom Sonmilito Morcha}}
+|
+|-
+!15
+|[[Dudhnai Assembly constituency|Dudhnai]] (ST)
+|[[Tankeswar Rabha]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| rowspan="3" |[[Bongaigaon district|Bongaigaon]]
+!16
+|[[Abhayapuri Assembly constituency|Abhayapuri]]
+|[[Bhupen Roy]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|-
+!17
+|[[Srijangram Assembly constituency|Srijangram]]
+|[[Md. Nurul Islam (Assam politician)|Md. Nurul Islam]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Asom Sonmilito Morcha}}
+|
+|-
+!18
+|[[Bongaigaon Assembly constituency|Bongaigaon]]
+|[[Diptimayee Choudhury]]
+|{{Party name with color|Asom Gana Parishad}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| rowspan="2" |[[Chirang district|Chirang]]
+!19
+|[[Sidli–Chirang Assembly constituency|Sidli–Chirang]] (ST)
+|[[Paniram Brahma]]
+|{{Party name with color|Bodoland People's Front}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!20
+|[[Bijni Assembly constituency|Bijni]]
+|[[Arup Kumar Dey]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="1" |[[Bajali district|Bajali]]
+!21
+|[[Bhowanipur–Sorbhog Assembly constituency|Bhowanipur–Sorbhog]]
+|[[Ranjeet Kumar Dass]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|-
+| rowspan="4" |[[Barpeta district|Barpeta]]
+!22
+|[[Mandia Assembly constituency|Mandia]]
+|[[Sherman Ali Ahmed]]
+|{{Party name with color|Trinamool Congress}}
+|{{Party name with color|Independent politician|shortname=None}}
+|
+|-
+!23
+|[[Chenga Assembly constituency|Chenga]]
+|[[Abdur Rahim Ahmed]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Asom Sonmilito Morcha}}
+|
+|-
+!24
+|[[Barpeta Assembly constituency|Barpeta]] (SC)
+|[[Kumar Deepak Das|Dipak Kumar Das]]
+|{{Party name with color|Asom Gana Parishad}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+!25
+|[[Pakabetbari Assembly constituency|Pakabetbari]]
+|[[Jakir Hussain Sikdar]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Asom Sonmilito Morcha}}
+|
+|-
+| rowspan="1" |[[Bajali district|Bajali]]
+!26
+|[[Bajali Assembly constituency|Bajali]]
+|[[Dharmeswar Roy]]
+|{{Party name with color|Asom Gana Parishad}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| rowspan="6" |[[Kamrup district|Kamrup]]
+!27
+|[[Chamaria Assembly constituency|Chamaria]]
+|[[Rekibuddin Ahmed]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Asom Sonmilito Morcha}}
+|
+|-
+!28
+|[[Boko–Chaygaon Assembly constituency|Boko–Chaygaon]] (ST)
+|[[Raju Mesh]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=5}}
+|
+|-
+!29
+|[[Palasbari Assembly constituency|Palasbari]]
+|[[Himangshu Shekhar Baishya]]
+|
+|-
+!30
+|[[Hajo–Sualkuchi Assembly constituency|Hajo–Sualkuchi]] (SC)
+|[[Prakash Chandra Das (Assam politician)|Prakash Chandra Das]]
+|{{Party name with color|Asom Gana Parishad}}
+|
+|-
+!31
+|[[Rangiya Assembly constituency|Rangiya]]
+|[[Bhabesh Kalita]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+!32
+|[[Kamalpur, Assam Assembly constituency|Kamalpur]]
+|[[Diganta Kalita]]
+|-
+| rowspan="5" |[[Kamrup Metropolitan district|Kamrup Metropolitan]]
+!33
+|[[Dispur Assembly constituency|Dispur]]
+|[[Pradyut Bordoloi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=5}}
+|
+|-
+!34
+|[[Dimoria Assembly constituency|Dimoria]] (SC)
+|[[Tapan Das (politician)|Tapan Das]]
+|{{Party name with color|Asom Gana Parishad}}
+|
+|-
+!35
+|[[New Guwahati Assembly constituency|New Guwahati]]
+|[[Diplu Ranjan Sarmah]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+!36
+|[[Guwahati Central Assembly constituency|Guwahati Central]]
+|[[Vijay Kumar Gupta]]
+|
+|-
+!37
+|[[Jalukbari Assembly constituency|Jalukbari]]
+|[[Himanta Biswa Sarma]]
+|Chief minister
+|-
+| rowspan="3" |[[Nalbari district|Nalbari]]
+!38
+|[[Barkhetri Assembly constituency|Barkhetri]]
+|[[Narayan Deka]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+!39
+|[[Nalbari Assembly constituency|Nalbari]]
+|[[Jayanta Malla Baruah]]
+|
+|-
+!40
+|[[Tihu Assembly constituency|Tihu]]
+|[[Chandra Mohan Patowary]]
+|-
+| rowspan="2" |[[Baksa district|Baksa]]
+!41
+|[[Manas Assembly constituency|Manas]]
+|[[Thaneswar Basumatary]]
+|{{Party name with color|Bodoland People's Front|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!42
+|[[Baksa Assembly constituency|Baksa]] (ST)
+|[[Maneswar Brahma]]
+|
+|-
+| rowspan="2" |[[Tamulpur district|Tamulpur]]
+!43
+|[[Tamulpur Assembly constituency|Tamulpur]] (ST)
+|[[Biswajit Daimary]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!44
+|[[Goreswar Assembly constituency|Goreshwar]]
+|[[Victor Kumar Das]]
+|-
+| rowspan="4" |[[Udalguri district|Udalguri]]
+!45
+|[[Bhergaon Assembly constituency|Bhergaon]]
+|[[Maheswar Baro]]
+|{{Party name with color|Bodoland People's Front|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=4}}
+|
+|-
+!46
+|[[Udalguri Assembly constituency|Udalguri]] (ST)
+|[[Rihon Daimary]]
+|
+|-
+!47
+|[[Majbat Assembly constituency|Majbat]]
+|[[Charan Boro]]
+|
+|-
+!48
+|[[Tangla Assembly constituency|Tangla]]
+|[[Bikan Chandra Deka]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="3" |[[Darrang district|Darrang]]
+!49
+|[[Sipajhar Assembly constituency|Sipajhar]]
+|[[Paramananda Rajbongshi]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!50
+|[[Mangaldai Assembly constituency|Mangaldai]]
+|[[Nilima Devi]]
+|
+|-
+!51
+|[[Dalgaon Assembly constituency|Dalgaon]]
+|[[Mazibur Rahman]]
+|{{Party name with color|All India United Democratic Front}}
+|{{Party name with color|Independent politician|shortname=None}}
+|
+|-
+| rowspan="3" |[[Morigaon district|Morigaon]]
+!52
+|[[Jagiroad Assembly constituency|Jagiroad]] (SC)
+|[[Pijush Hazarika]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+!53
+|[[Laharighat Assembly constituency|Laharighat]]
+|[[Asif Mohammad Nazar]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Asom Sonmilito Morcha}}
+|
+|-
+!54
+|[[Morigaon Assembly constituency|Morigaon]]
+|[[Rama Kanta Dewri|Rama Kantha Dewri]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| rowspan="7" |[[Nagaon district|Nagaon]]
+!55
+|[[Dhing Assembly constituency|Dhing]]
+|[[Mehboob Muktar|Mehboob Mukhtar]]
+|{{Party name with color|Raijor Dal}}
+|{{Party name with color|Asom Sonmilito Morcha|rowspan=2}}
+|
+|-
+!56
+|[[Rupohihat Assembly constituency|Rupohihat]]
+|[[Nurul Huda (Assamese politician)|Nurul Huda]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!57
+|[[Kaliabor Assembly constituency|Kaliabor]]
+|[[Keshab Mahanta]]
+|{{Party name with color|Asom Gana Parishad}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+!58
+|[[Samaguri Assembly constituency|Samaguri]]
+|[[Tanzil Hussain]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Asom Sonmilito Morcha}}
+|
+|-
+!59
+|[[Barhampur Assembly constituency|Barhampur]]
+|[[Jitu Goswami]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+!60
+|[[Nagaon–Batadraba Assembly constituency|Nagaon–Batadraba]]
+|[[Rupak Sarmah]]
+|
+|-
+!61
+|[[Raha Assembly constituency|Raha]] (SC)
+|[[Sashi Kanta Das]]
+|-
+| rowspan="3" |[[Hojai district|Hojai]]
+!62
+|[[Binnakandi Assembly constituency|Binnakandi]]
+|[[Badruddin Ajmal|Mohammed Badruddin Ajmal]]
+|{{Party name with color|All India United Democratic Front}}
+|{{Party name with color|Independent politician|shortname=None}}
+|
+|-
+!63
+|[[Hojai Assembly constituency|Hojai]]
+|[[Shiladitya Dev]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!64
+|[[Lumding Assembly constituency|Lumding]]
+|[[Sibu Misra]]
+|-
+| rowspan="5" |[[Sonitpur district|Sonitpur]]
+!65
+|[[Dhekiajuli Assembly constituency|Dhekiajuli]]
+|[[Ashok Singhal (politician)|Ashok Singhal]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!66
+|[[Barchalla Assembly constituency|Barchalla]]
+|[[Ritu Baran Sarmah]]
+|
+|-
+!67
+|[[Tezpur Assembly constituency|Tezpur]]
+|[[Prithiraj Rava]]
+|{{Party name with color|Asom Gana Parishad}}
+|{{Party name with color|National Democratic Alliance}}
+|-
+!68
+|[[Rangapara Assembly constituency|Rangapara]]
+|[[Krishna Kamal Tanti]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!69
+|[[Nadaur Assembly constituency|Nadaur]]
+|[[Padma Hazarika]]
+|
+|-
+| rowspan="3" |[[Biswanath district|Biswanath]]
+!70
+|[[Biswanath Assembly constituency|Biswanath]]
+|[[Pallab Lochan Das]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+!71
+|[[Behali Assembly constituency|Behali]] (SC)
+|[[Munindra Das]]
+|
+|-
+!72
+|[[Gohpur Assembly constituency|Gohpur]]
+|[[Utpal Borah]]
+|
+|-
+| rowspan="5" |[[Lakhimpur district|Lakhimpur]]
+!73
+|[[Bihpuria Assembly constituency|Bihpuria]]
+|[[Bhupen Kumar Borah]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!74
+|[[Rongonadi Assembly constituency|Rongonadi]]
+|[[Rishiraj Hazarika]]
+|
+|-
+!75
+|[[Naoboicha Assembly constituency|Naoboicha]] (SC)
+|[[Joy Prakash Das]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Asom Sonmilito Morcha}}
+|
+|-
+!76
+|[[Lakhimpur, Assam Assembly constituency|Lakhimpur]]
+|[[Manab Deka]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!77
+|[[Dhakuakhana Assembly constituency|Dhakuakhana]] (ST)
+|[[Naba Kumar Doley]]
+|
+|-
+| rowspan="3" |[[Dhemaji district|Dhemaji]]
+!78
+|[[Dhemaji Assembly constituency|Dhemaji]] (ST)
+|[[Ranoj Pegu]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+!79
+|[[Sissiborgaon Assembly constituency|Sissiborgaon]]
+|[[Jiban Gogoi]]
+|
+|-
+!80
+|[[Jonai Assembly constituency|Jonai]] (ST)
+|[[Bhubon Pegu]]
+|
+|-
+| rowspan="6" |[[Tinsukia district|Tinsukia]]
+!81
+|[[Sadiya Assembly constituency|Sadiya]]
+|[[Bolin Chetia]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=6}}
+|{{Party name with color|National Democratic Alliance|rowspan=6}}
+|
+|-
+!82
+|[[Doom Dooma Assembly constituency|Doom Dooma]]
+|[[Rupesh Gowala]]
+|
+|-
+!83
+|[[Margherita Assembly constituency|Margherita]]
+|[[Bhaskar Sharma]]
+|
+|-
+!84
+|[[Digboi Assembly constituency|Digboi]]
+|[[Suren Phukan]]
+|
+|-
+!85
+|[[Makum Assembly constituency|Makum]]
+|[[Sanjoy Kishan]]
+|
+|-
+!86
+|[[Tinsukia Assembly constituency|Tinsukia]]
+|[[Pulok Gohain]]
+|
+|-
+| rowspan="6" |[[Dibrugarh district|Dibrugarh]]
+!87
+|[[Chabua–Lahowal Assembly constituency|Chabua–Lahowal]]
+|[[Binod Hazarika]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=6}}
+|{{Party name with color|National Democratic Alliance|rowspan=6}}
+|
+|-
+!88
+|[[Dibrugarh Assembly constituency|Dibrugarh]]
+|[[Prasanta Phukan]]
+|
+|-
+!89
+|[[Khowang Assembly constituency|Khowang]]
+|[[Chakradhar Gogoi]]
+|
+|-
+!90
+|[[Duliajan Assembly constituency|Duliajan]]
+|[[Rameswar Teli]]
+|
+|-
+!91
+|[[Tingkhong Assembly constituency|Tingkhong]]
+|[[Bimal Bora|Bimal Borah]]
+|
+|-
+!92
+|[[Naharkatia Assembly constituency|Naharkatia]]
+|[[Taranga Gogoi]]
+|
+|-
+| rowspan="2" |[[Charaideo district|Charaideo]]
+!93
+|[[Sonari Assembly constituency|Sonari]]
+|[[Dharmeswar Konwar|Dhormeswar Konwar]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!94
+|[[Mahmora Assembly constituency|Mahmora]]
+|[[Suruj Dehingia]]
+|
+|-
+| rowspan="3" |[[Sibsagar district|Sibsagar]]
+!95
+|[[Demow Assembly constituency|Demow]]
+|[[Sushanta Borgohain|Susanta Borgohain]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+!96
+|[[Sibsagar Assembly constituency|Sibsagar]]
+|[[Akhil Gogoi]]
+|{{Party name with color|Raijor Dal}}
+|{{Party name with color|Asom Sonmilito Morcha}}
+|
+|-
+!97
+|[[Nazira Assembly constituency|Nazira]]
+|[[Mayur Borgohain]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|[[Majuli district|Majuli]]
+!98
+|[[Majuli Assembly constituency|Majuli]] (ST)
+|[[Bhuban Gam]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| rowspan="4" |[[Jorhat district|Jorhat]]
+!99
+|[[Teok Assembly constituency|Teok]]
+|[[Bikash Saikia]]
+|{{Party name with color|Asom Gana Parishad}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+!100
+|[[Jorhat Assembly constituency|Jorhat]]
+|[[Hitendra Nath Goswami]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+!101
+|[[Mariani Assembly constituency|Mariani]]
+|[[Rupjyoti Kurmi]]
+|
+|-
+!102
+|[[Titabar Assembly constituency|Titabor]]
+|[[Dhiraj Gowala]]
+|
+|-
+| rowspan="5" |[[Golaghat district|Golaghat]]
+!103
+|[[Golaghat Assembly constituency|Golaghat]]
+|[[Ajanta Neog]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!104
+|[[Dergaon Assembly constituency|Dergaon]]
+|[[Mridul Kumar Dutta]]
+|
+|-
+!105
+|[[Bokakhat Assembly constituency|Bokakhat]]
+|[[Atul Bora (AGP politician)|Atul Bora]]
+|{{Party name with color|Asom Gana Parishad}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+!106
+|[[Khumtai Assembly constituency|Khumtai]]
+|[[Mrinal Saikia]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!107
+|[[Sarupathar Assembly constituency|Sarupathar]]
+|[[Biswajit Phukan]]
+|
+|-
+| rowspan="3" |[[Karbi Anglong district|Karbi Anglong]]
+!108
+|[[Bokajan Assembly constituency|Bokajan]] (ST)
+|[[Surjya Rongphar]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+!109
+|[[Howraghat Assembly constituency|Howraghat]] (ST)
+|[[Lunsing Teron]]
+|
+|-
+!110
+|[[Diphu Assembly constituency|Diphu]] (ST)
+|[[Niso Terangpi]]
+|
+|-
+| rowspan="2" |[[West Karbi Anglong district|West Karbi Anglong]]
+!111
+|[[Rongkhang Assembly constituency|Rongkhang]] (ST)
+|[[Tuliram Ronghang]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+!112
+|[[Amri Assembly constituency|Amri]] (ST)
+|[[Habbey Teron]]
+|
+|-
+|[[Dima Hasao district|Dima Hasao]]
+!113
+|[[Haflong Assembly constituency|Haflong]] (ST)
+|[[Rupali Langthasa]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| rowspan="7" |[[Cachar district|Cachar]]
+!114
+|[[Lakhipur Assembly constituency|Lakhipur]]
+|[[Kaushik Rai]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=5}}
+|{{Party name with color|National Democratic Alliance|rowspan=5}}
+|
+|-
+!115
+|[[Udharbond Assembly constituency|Udharbond]]
+|[[Rajdeep Goala]]
+|
+|-
+!116
+|[[Katigorah Assembly constituency|Katigorah]]
+|[[Kamalakhya Dey Purkayastha]]
+|
+|-
+!117
+|[[Borkhola Assembly constituency|Borkhola]]
+|[[Kishor Nath]]
+|
+|-
+!118
+|[[Silchar Assembly constituency|Silchar]]
+|[[Rajdeep Roy|Dr. Rajdeep Roy]]
+|
+|-
+!119
+|[[Sonai Assembly constituency|Sonai]]
+|[[Aminul Haque Laskar]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Asom Sonmilito Morcha}}
+|
+|-
+!120
+|[[Dholai Assembly constituency|Dholai]] (SC)
+|[[Amiya Kanti Das]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| rowspan="2" |[[Hailakandi district|Hailakandi]]
+!121
+|[[Hailakandi Assembly constituency|Hailakandi]]
+|[[Milon Das|Dr. Milon Das]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+!122
+|[[Algapur–Katlicherra Assembly constituency|Algapur–Katlicherra]]
+|[[Zubair Anam Mazumder]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Asom Sonmilito Morcha}}
+|
+|-
+| rowspan="4" |[[Karimganj district|Sribhumi]]
+!123
+|[[Karimganj North Assembly constituency|Karimganj North]]
+|[[Jakaria Ahmed]]
+|{{Party name with color|Indian National Congress|rowspan=2}}
+|{{Party name with color|Asom Sonmilito Morcha|rowspan=2}}
+|
+|-
+!124
+|[[Karimganj South Assembly constituency|Karimganj South]]
+|[[Aminur Rashid Choudhury]]
+|
+|-
+!125
+|[[Patharkandi Assembly constituency|Patharkandi]]
+|[[Krishnendu Paul]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+!126
+|[[Ram Krishna Nagar Assembly constituency|Ram Krishna Nagar]] (SC)
+|[[Bijoy Malakar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|}
+
+== References ==
+
+{{Reflist}}{{Current Indian assemblies}}
+
+[[Category:Terms of the Assam Legislative Assembly]]
+[[Category:Assam MLAs 2026–2031| ]]
+[[Category:Lists of current Indian state and territorial assemblies|Assam]]

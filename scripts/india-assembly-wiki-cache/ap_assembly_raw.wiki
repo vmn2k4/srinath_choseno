@@ -1,0 +1,1214 @@
+{{Short description|2024 Andhra Pradesh lower house}}
+{{Use dmy dates|date=November 2021}}
+{{Use Indian English|date=September 2019}}
+{{Infobox legislative term
+| name = 16th Legislative Assembly of Andhra Pradesh
+| before = [[15th Andhra Pradesh Legislative Assembly|15th]]
+| after = 
+| image = Andhra Pradesh Secretariat.jpg
+| image_size = 
+| caption = Assembly Building, [[Amaravati]], [[Andhra Pradesh]], [[India]]
+| body = [[Andhra Pradesh Legislature]]
+| election = [[2024 Andhra Pradesh Legislative Assembly election]]
+| government = [[Fourth N. Chandrababu Naidu ministry|N. Chandrababu Naidu ministry]]
+| opposition = None
+| term_start = 21 June 2024
+| term_end = 
+| website = {{URL|https://www.aplegislature.org/|Andhra Pradesh Legislative Assembly}}
+| chamber2 = Andhra Pradesh Legislative Assembly
+| chamber2_image = India Andhra Pradesh Legislative Assembly 2024.svg
+| chamber2_image_size = 350px
+| chamber2_alt = 
+| membership2 = 175
+| control2 = [[Kutami]]
+| chamber2_leader1_type = [[List of speakers of the Andhra Pradesh Legislative Assembly|Speaker]]
+| chamber2_leader1 = [[Chintakayala Ayyanna Patrudu]]
+| chamber2_leader2_type = Deputy Speaker
+| chamber2_leader2 = [[Raghu Rama Krishna Raju]]
+| chamber2_leader3_type = Leader of the House
+| chamber2_leader3 = [[N. Chandrababu Naidu|Nara Chandrababu Naidu]]
+| chamber2_leader4_type = [[List of Chief Ministers of Andhra Pradesh|Chief Minister]]
+| chamber2_leader4 = [[N. Chandrababu Naidu|Nara Chandrababu Naidu]]
+| chamber2_leader5_type = [[List of deputy chief ministers of Andhra Pradesh|Deputy Chief Minister]]
+| chamber2_leader5 = [[Pawan Kalyan|Konidala Pawan Kalyan]]
+| chamber2_leader6_type = [[List of leaders of the opposition in the Andhra Pradesh Legislative Assembly|Leader of the Opposition]]
+| chamber2_leader6 = ''[[Casual vacancy|Vacant]]''
+| chamber1 = [[Governor (India)|Nominal Executive]]
+| chamber1_leader1_type = [[List of governors of Andhra Pradesh|Governor]]
+| chamber1_leader1 = [[Syed Abdul Nazeer]]
+| chamber1_alt = 
+| membership1 = 
+| control1 = 
+}}
+
+{{Politics of India}}
+The '''Sixteenth Legislative Assembly of Andhra Pradesh''' was formed by the members elected in the [[2024 Andhra Pradesh Legislative Assembly election]].<ref name="result">{{Cite web|url=http://results.eci.gov.in/pc/en/partywise/index.htm|title=General Election 2019 - Election Commission of India|website=results.eci.gov.in|access-date=23 May 2019|archive-url=https://web.archive.org/web/20190525080857/http://results.eci.gov.in/pc/en/partywise/index.htm|archive-date=25 May 2019|url-status=dead}}</ref> Election to [[Andhra Pradesh Legislative Assembly]] took place in a single phase on 13 May 2024 by the [[Election Commission of India]]. Counting started officially on the morning of 4 June 2024 and the results were declared on the same day.
+
+== Presiding officers ==
+{| class="wikitable"
+|+
+|-
+!Designation 
+!Portrait
+!Name
+|-
+|[[List of Governors of Andhra Pradesh|Governor]] 
+| [[File:Justice Syed Abdul Nazeer.jpg|center|75x75px]]
+|[[Syed Abdul Nazeer]]
+|-
+|[[List of speakers of the Andhra Pradesh Legislative Assembly|Speaker]]
+|[[File:Ch. Ayyanna Patrudu.jpg|centre|100x100px]]
+|[[Chintakayala Ayyanna Patrudu]]<br/>{{small|([[Telugu Desam Party|TDP]])}} 
+|-
+|Deputy Speaker
+|[[File:Raghu Rama Krishna Raju (cropped).jpg|centre|100x100px]]
+|[[Raghu Rama Krishna Raju]]<br/>{{small|([[Telugu Desam Party|TDP]])}}
+|-
+|[[List of chief ministers of Andhra Pradesh|Leader of the House]]
+|[[File:The_portrait_of_CM_Shri_Nara_Chandrababu_Naidu.jpg|centre|100x100px]]
+|[[N. Chandrababu Naidu|Nara Chandrababu Naidu]]<br/>{{small|([[Telugu Desam Party|TDP]])}}
+|-
+|[[List of leaders of the opposition in the Andhra Pradesh Legislative Assembly|Leader of the Opposition]]
+|
+|Y S Jagan
+Mohan Reddy
+(YSRCP)
+|}
+
+=== Panel of speakers ===
+{| class="wikitable"
+|+Members of the Panel of Speakers for 2024{{Ndash}}2029 term
+!Sl.no
+!Speaker
+! colspan="2" |Party
+!Constituency
+!Term start
+!Term end
+!Appointed by
+|-
+|1.
+|[[Nandyala Varada Rajulu Reddy|Nandyala Varada Rajula Reddy]]
+|{{Full party name with color|Telugu Desam Party}}
+|[[Proddatur Assembly constituency|Proddatur]]
+| rowspan="9" |{{Start date|2024|07|25|df=yes}}
+| rowspan="9" |''Incumbent''
+| rowspan="9" |[[Chintakayala Ayyanna Patrudu]]
+|-
+|2.
+|[[Jyothula Nehru]]
+|{{Full party name with color|Telugu Desam Party}}
+|[[Jaggampeta Assembly constituency|Jaggampeta]]
+|-
+|3.
+|[[Kolla Lalitha Kumari]]
+|{{Full party name with color|Telugu Desam Party}}
+|[[Srungavarapukota Assembly constituency|Srungavarapukota]]
+|-
+|4.
+|[[Mandali Buddha Prasad]]
+|{{Full party name with color|Janasena Party}}
+|[[Avanigadda Assembly constituency|Avanigadda]]
+|-
+|5.
+|[[Dasari Sudha]]
+|{{Full party name with color|YSR Congress Party}}
+|[[Badvel Assembly constituency|Badvel]] 
+|-
+|6.
+|[[Penmetsa Vishnu Kumar Raju]]
+|{{party name with colour|Bharatiya Janata Party}}
+|[[Visakhapatnam North Assembly constituency|Visakhapatnam North]]
+|-
+|}
+
+==Composition==
+{|class="wikitable"
+!colspan=2|Alliance
+!colspan=2|Political party
+!No. of MLAs
+!Floor Leader
+|-
+|rowspan=3 {{party color cell|Telugu Desam Party}}
+|rowspan=3 style="text-align:center;"|'''Government<br/>[[Kutami]]'''<br/>Seats: '''164'''
+|{{party color cell|Telugu Desam Party}}
+|[[Telugu Desam Party]]
+|style="text-align:center;"|135
+|[[N. Chandrababu Naidu]]<br/><small>''([[Chief Minister of Andhra Pradesh|Chief Minister]])''</small>
+|-
+|{{party color cell|Janasena Party}}
+|[[Janasena Party]]
+|style="text-align:center;"|21
+|[[Pawan Kalyan]]<br/><small>''([[Deputy Chief Minister of Andhra Pradesh|Deputy Chief Minister]])''</small>
+|-
+|{{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|style="text-align:center;"|8
+|[[Penmetsa Vishnu Kumar Raju|P. Vishnu Kumar Raju]]
+|-
+|rowspan=1 {{party color cell|Others}}
+|rowspan=1 style="text-align:center;"|'''Opposition<br/>[[Vacancy (politics)|None]]'''<br/>Seats: '''0'''
+|{{party color cell|Casual vacancy}}
+|colspan=3|[[Vacancy (politics)|Vacant]]
+|-
+|rowspan=1 {{party color cell|YSR Congress Party}}
+|rowspan=1 style="text-align:center;"|'''Others'''<br/>Seats: '''11'''
+|{{party color cell|YSR Congress Party}}
+|[[YSR Congress Party]]
+|style="text-align:center;"|11
+|[[Y. S. Jagan Mohan Reddy]]
+|-
+!colspan=4|Total
+!colspan=2|175
+|}
+
+== List of the Members of the Legislative Assembly ==
+{| class="wikitable sortable"
+!District
+!No.
+!Constituency
+!Name
+!colspan=2|Party
+!colspan=2|Alliance
+!Remarks<section end="MLA Header"/><!-- this section is transcluded on the district article--> <section begin="Srikakulam District"/>
+|-
+| rowspan="8" |[[Srikakulam district|Srikakulam]]
+|1
+|[[Ichchapuram Assembly constituency|Ichchapuram]]
+|[[Ashok Bendalam]]
+|{{party name with color|Telugu Desam Party|rowspan=6}}
+|{{party name with color|National Democratic Alliance|rowspan=27}}
+| Whip
+|-
+|2
+|[[Palasa Assembly constituency|Palasa]]
+|[[Gouthu Sireesha]]
+|
+|-
+|3
+|[[Tekkali Assembly constituency|Tekkali]]
+|[[Kinjarapu Atchannaidu]]
+|[[Ministry of Agriculture (Andhra Pradesh)|Minister of Agriculture]], [[Ministry of Co-operation (Andhra Pradesh)|Co-operation]], Marketing, [[Ministry of Animal Husbandry, Dairy Development and Fisheries|Animal Husbandry, Dairy development & Fisheries]]
+|-
+|4
+|[[Pathapatnam Assembly constituency|Pathapatnam]]
+|[[Mamidi Govinda Rao]]
+|
+|-
+|5
+|[[Srikakulam Assembly constituency|Srikakulam]]
+|[[Gondu Shankar]]
+|
+|-
+|6
+|[[Amadalavalasa Assembly constituency|Amadalavalasa]]
+|[[Koona Ravi Kumar]]
+|
+|-
+|7
+|[[Etcherla Assembly constituency|Etcherla]]
+|[[Nadukuditi Eswara Rao]]
+|{{party name with color|Bharatiya Janata Party}}
+|
+|-
+|8
+|[[Narasannapeta Assembly constituency|Narasannapeta]]
+|[[Baggu Ramanamurthy]]
+|{{party name with color|Telugu Desam Party|rowspan=2}}
+|<section end="Srikakulam district"/><section begin="Vizinagaram district"/>
+|-
+|[[Vizianagaram district|Vizianagaram]]
+|9
+|[[Rajam Assembly constituency|Rajam]] (SC)
+|[[Kondru Murali Mohan]]
+|<section end="Vizinagaram district"/><section begin="Parvathipuram Manyam district"/>
+|-
+| rowspan="4" |[[Parvathipuram Manyam district|Parvathipuram Manyam]]
+|10
+|[[Palakonda Assembly constituency|Palakonda]] (ST)
+|[[Nimmaka Jaya Krishna]]
+|{{party name with color|Janasena Party}}
+|
+|-
+|11
+|[[Kurupam Assembly constituency|Kurupam]] (ST)
+|[[Jagadeeswari Thoyaka]]
+|{{party name with color|Telugu Desam Party|rowspan=6}}
+|Whip
+|-
+|12
+|[[Parvathipuram Assembly constituency|Parvathipuram]] (SC)
+|[[Bonela Vijaya Chandra]]
+|
+|-
+|13
+|[[Salur Assembly constituency|Salur]] (ST)
+|[[Gummadi Sandhya Rani]]
+|[[Ministry of Women and Child Welfare|Minister of Women & Child Welfare]], [[List of Ministers of Tribal Welfare of Andhra Pradesh|Tribal Welfare]] <section end="Parvathipuram Manyam district"/><section begin="Vizinagaram district"/>
+|-
+| rowspan="6" |[[Vizianagaram district|Vizianagaram]]
+|14
+|[[Bobbili Assembly constituency|Bobbili]]
+|[[R. V. Sujay Krishna Ranga Rao|R. V. S. K. K. Ranga Rao]]
+|
+|-
+|15
+|[[Cheepurupalli Assembly constituency|Cheepurupalli]]
+|[[Kimidi Kalavenkata Rao]]
+|
+|-
+|16
+|[[Gajapathinagaram Assembly constituency|Gajapathinagaram]]
+|[[Kondapalli Srinivas]]
+|[[Fourth N. Chandrababu Naidu ministry|Minister of MSME, SERP, NRI Empowerment and Relations]]
+|-
+|17
+|[[Nellimarla Assembly constituency|Nellimarla]]
+|[[Lokam Naga Madhavi]]
+|{{party name with color|Janasena Party}}
+| 
+|-
+|18
+|[[Vizianagaram Assembly constituency|Vizianagaram]]
+|[[Pusapati Aditi Vijayalakshmi]]
+|{{party name with color|Telugu Desam Party|rowspan=4}}
+|
+|-
+|19
+|[[Srungavarapukota Assembly constituency|Srungavarapukota]]
+|[[Kolla Lalitha Kumari]]
+|<section end="Vizinagaram district"/><section begin="Visakhapatnam district"/>
+|-
+| rowspan="6" |[[Visakhapatnam district|Visakhapatnam]]
+|20
+|[[Bheemili Assembly constituency|Bhimili]]
+|[[Ganta Srinivasa Rao]]
+|
+|-
+|21
+|[[Visakhapatnam East Assembly constituency|Visakhapatnam East]]
+|[[Velagapudi Ramakrishna Babu]]
+|
+|-
+|22
+|[[Visakhapatnam South Assembly constituency|Visakhapatnam South]]
+|[[Vamsi Krishna Srinivasa Yadav]]
+|{{party name with colour|Janasena Party}}
+|
+|-
+|23
+|[[Visakhapatnam North Assembly constituency|Visakhapatnam North]]
+|[[Penmetsa Vishnu Kumar Raju]]
+|{{party name with colour|Bharatiya Janata Party}} 
+|BJP Floor Leader
+|-
+|24
+|[[Visakhapatnam West Assembly constituency|Visakhapatnam West]]
+|[[P. G. V. R. Naidu]]
+|{{party name with color|Telugu Desam Party|rowspan=4}}
+|Whip
+|-
+|25
+|[[Gajuwaka Assembly constituency|Gajuwaka]]
+|[[Palla Srinivasa Rao]]
+|[[Telugu Desam Party|President of Telugu Desam Party]]<section end="Visakhapatnam district"/><section begin="Anakapalli district"/>
+|-
+| rowspan="2" |[[Anakapalli district|Anakapalli]]
+|26
+|[[Chodavaram Assembly constituency|Chodavaram]]
+|[[Kalidindi Suryana Naga Sanyasi Raju]]
+|
+|-
+|27
+|[[Madugula Assembly constituency|Madugula]]
+|[[Bandaru Satyanarayana Murthy]]
+|<section end="Anakapalli district"/><section begin="Alluri Sitharama Raju district"/>
+|-
+| rowspan="2" |[[Alluri Sitharama Raju district|Alluri Sitharama Raju]]
+|28
+|[[Araku Valley Assembly constituency|Araku Valley]] (ST)
+|[[Regam Matyalingam]]
+|{{party name with color|YSR Congress Party|rowspan=2}}
+|{{Party name with color|Not applicable|shortname=None|rowspan=2}}
+|
+|-
+|29
+|[[Paderu Assembly constituency|Paderu]] (ST)
+|[[Matsyarasa Visweswara Raju]]
+|<section end="Alluri Sitharama Raju district"/><section begin="Anakapalli district"/>
+|-
+|[[Anakapalli district|Anakapalli]]
+|30
+|[[Anakapalli Assembly constituency|Anakapalli]]
+|[[Konathala Ramakrishna]]
+|{{party name with color|Janasena Party|rowspan=3}}
+|{{party name with color|National Democratic Alliance|rowspan=72}}
+|<section end="Anakapalli district"/><section begin="Visakhapatnam district"/>
+|-
+|[[Visakhapatnam district|Visakhapatnam]]
+|31
+|[[Pendurthi Assembly constituency|Pendurthi]]
+|[[Panchakarla Ramesh Babu]]
+|<section end="Visakhapatnam district"/><section begin="Anakapalli district"/>
+|-
+| rowspan="3" |[[Anakapalli district|Anakapalli]]
+|32
+|[[Elamanchili Assembly constituency|Yelamanchili]]
+|[[Sundarapu Vijay Kumar]]
+|
+|-
+|33
+|[[Payakaraopet Assembly constituency|Payakaraopet]] (SC)
+|[[Vangalapudi Anitha]]
+|{{party name with color|Telugu Desam Party|rowspan=4}}
+||[[List of home ministers of Andhra Pradesh|Minister of Home & Disaster Management]]
+|-
+|34
+|[[Narsipatnam Assembly constituency|Narsipatnam]]
+|[[Chintakayala Ayyanna Patrudu|Chintakayala Ayyannapatrudu]]
+|[[List of speakers of the Andhra Pradesh Legislative Assembly|Speaker of the Andhra Pradesh Legislative Assembly]]<section end="Anakapalli district"/><section begin="Kakinada district"/>
+|-
+| rowspan="5" |[[Kakinada district|Kakinada]]
+|35
+|[[Tuni Assembly constituency|Tuni]]
+|[[Yanamala Divya]]
+|Whip
+|-
+|36
+|[[Prathipadu, Kakinada Assembly constituency|Prathipadu (Kakinada)]]
+|[[Varupula Satyaprabha|Varapula Sathyaprabha]]
+|
+|-
+|37
+|[[Pithapuram Assembly constituency|Pithapuram]]
+|[[Pawan Kalyan|Konidela Pawan Kalyan]]
+|{{party name with color|Janasena Party|rowspan=2}}
+|
+* [[List of deputy chief ministers of Andhra Pradesh|Deputy Chief Minister of Andhra Pradesh]]
+* [[Ministry of Panchayat Raj and Rural Development|Minister of Panchayat Raj, Rural Development & Rural Water Supply]], [[Ministry of Environment, Forest, Science and Technology|Environment, Forest, Science and Technology]] 
+* [[Janasena Party|Founder and President of Janasena Party]]
+*JSP Floor Leader
+|-
+|38
+|[[Kakinada Rural Assembly constituency|Kakinada Rural]]
+|[[Pantham Venkateswara Rao]]
+|
+|-
+|39
+|[[Peddapuram Assembly constituency|Peddapuram]]
+|[[Nimmakayala Chinarajappa]]
+|{{party name with color|Telugu Desam Party}}
+|<section end="Kakinada district"/><section begin="East Godavari district"/>
+|-
+|[[East Godavari district|East Godavari]]
+|40
+|[[Anaparthy Assembly constituency|Anaparthy]]
+|[[Ramakrishna Reddy Nallamilli]]
+|{{party name with color|Bharatiya Janata Party}}
+|<section end="East Godavari district"/><section begin="Kakinada district"/>
+|-
+|[[Kakinada district|Kakinada]]
+|41
+|[[Kakinada City Assembly constituency|Kakinada City]]
+|[[Vanamadi Venkateswara Rao]]
+|{{party name with color|Telugu Desam Party|rowspan=4}}
+|<section end="Kakinada district"/><section begin="Konaseema district"/>
+|-
+| rowspan="7" |[[Konaseema district|Konaseema]]
+|42
+|[[Ramachandrapuram Assembly constituency|Ramachandrapuram]]
+|[[Vasamsetti Subhash]]
+||[[List of Ministers of Labour of Andhra Pradesh|Minister of Labour]], [[List of Ministers of Factories of Andhra Pradesh|Factories]], [[Fourth N. Chandrababu Naidu ministry|Boilers & Insurance Medical Services]]
+|-
+|43
+|[[Mummidivaram Assembly constituency|Mummidivaram]]
+|[[Datla Subbaraju]]
+|Whip
+|-
+|44
+|[[Amalapuram Assembly constituency|Amalapuram]] (SC)
+|[[Aithabathula Anandarao]]
+|
+|-
+|45
+|[[Razole Assembly constituency|Razole]] (SC)
+|[[Deva Varaprasad]]
+|{{party name with color|Janasena Party|rowspan=2}}
+|
+|-
+|46
+|[[Gannavaram, Konaseema Assembly constituency|Gannavaram (Konaseema)]] (SC)
+|[[Giddi Satyanarayana]]
+|
+|-
+|47
+|[[Kothapeta Assembly constituency|Kothapeta]]
+|[[Bandaru Satyananda Rao]]
+|{{party name with color|Telugu Desam Party|rowspan=2}}
+|
+|-
+|48
+|[[Mandapeta Assembly constituency|Mandapeta]]
+|[[V. Jogeswara Rao]]
+|<section end="Konaseema district"/><section begin="East Godavari district"/>
+|-
+| rowspan="3" |[[East Godavari district|East Godavari]]
+|49
+|[[Rajanagaram Assembly constituency|Rajanagaram]]
+|[[Bathula Balaramakrishna]]
+|{{party name with color|Janasena Party}}
+|
+|-
+|50
+|[[Rajahmundry City Assembly constituency|Rajahmundry City]]
+|[[Adireddy Srinivas]]
+|{{party name with color|Telugu Desam Party|rowspan=5}}
+|
+|-
+|51
+|[[Rajahmundry Rural Assembly constituency|Rajahmundry Rural]]
+|[[Gorantla Butchaiah Chowdary]]
+|<section end="East Godavari district"/><section begin="Kakinada district"/>
+|-
+|[[Kakinada district|Kakinada]]
+|52
+|[[Jaggampeta Assembly constituency|Jaggampeta]]
+|[[Jyothula Nehru]]
+|<section end="Kakinada district"/><section begin="Alluri Sitharama Raju district"/>
+|-
+|[[Alluri Sitharama Raju district|Alluri Sitharama Raju]]
+|53
+|[[Rampachodavaram Assembly constituency|Rampachodavaram]] (ST)
+|[[Miriyala Sirisha Devi]]
+|<section end="Alluri Sitharama Raju district"/><section begin="East Godavari district"/>
+|-
+| rowspan="2" |[[East Godavari district|East Godavari]]
+|54
+|[[Kovvur Assembly constituency|Kovvur]] (SC)
+|[[Muppidi Venkateswara Rao]]
+|
+|-
+|55
+|[[Nidadavole Assembly constituency|Nidadavole]]
+|[[Kandula Durgesh]]
+|{{party name with color|Janasena Party}}
+|[[Ministry of Tourism (Andhra Pradesh)|Minister of Tourism]]  [[List of Ministers of Culture of Andhra Pradesh|& Culture]], [[Ministry of Cinematography (Andhra Pradesh)|Cinematography]]<section end="East Godavari district"/><section begin="West Godavari district"/>
+|-
+| rowspan="7" |[[West Godavari district|West Godavari]]
+|56
+|[[Achanta Assembly constituency|Achanta]]
+|[[Satyanarayana Pithani]]
+|{{party name with color|Telugu Desam Party|rowspan=2}}
+|
+|-
+|57
+|[[Palakollu Assembly constituency|Palakollu]]
+|[[Nimmala Rama Naidu]]
+|[[Ministry of Water Resources Development|Minister of Water Resources Development]]
+|-
+|58
+|[[Narasapuram Assembly constituency|Narasapuram]]
+|[[Bommidi Narayana Nayakar]]
+|{{party name with color|Janasena Party|rowspan=2}}
+|Whip
+|-
+|59
+|[[Bhimavaram Assembly constituency|Bhimavaram]]
+|[[Pulaparthi Ramanjaneyulu]]
+|
+|-
+|60
+|[[Undi Assembly constituency|Undi]]
+|[[Raghu Rama Krishna Raju]]
+|{{party name with color|Telugu Desam Party|rowspan=2}}
+|Deputy Speaker
+|-
+|61
+|[[Tanuku Assembly constituency|Tanuku]]
+|[[Arimilli Radha Krishna]]
+|
+|-
+|62
+|[[Tadepalligudem Assembly constituency|Tadepalligudem]]
+|[[Bolisetti Srinivas]]
+|{{party name with color|Janasena Party|rowspan=2}}
+|Whip<section end="West Godavari district"/><section begin="Eluru district"/>
+|-
+| rowspan="3" |[[Eluru district|Eluru]]
+|63
+|[[Unguturu Assembly constituency|Unguturu]]
+|[[Dharmaraju Patsamatla]]
+|
+|-
+|64
+|[[Denduluru Assembly constituency|Denduluru]]
+|[[Chintamaneni Prabhakar]]
+|{{party name with color|Telugu Desam Party|rowspan=3}}
+|
+|-
+|65
+|[[Eluru Assembly constituency|Eluru]]
+|[[Radha Krishnayya Badeti]]
+|<section end="Eluru district"/><section begin="East Godavari district"/>
+|-
+|[[East Godavari district|East Godavari]]
+|66
+|[[Gopalapuram Assembly constituency|Gopalapuram]] (SC)
+|[[Maddipati Venkata Raju]]
+|<section end="East Godavari district"/><section begin="Eluru district"/>
+|-
+| rowspan="2" |[[Eluru district|Eluru]]
+|67
+|[[Polavaram Assembly constituency|Polavaram]] (ST)
+|[[Chirri Balaraju]]
+|{{party name with color|Janasena Party}}
+|
+|-
+|68
+|[[Chintalapudi Assembly constituency|Chintalapudi]] (SC)
+|[[Roshan Kumar Songa]]
+|{{party name with color|Telugu Desam Party|rowspan=5}}
+|<section end="Eluru district"/><section begin="NTR district"/>
+|-
+|[[NTR District|NTR]]
+|69
+|[[Tiruvuru Assembly constituency|Tiruvuru]] (SC)
+|[[Kolikapudi Srinivasa Rao]]
+|<section end="NTR district"/><section begin="Eluru district"/>
+|-
+|[[Eluru district|Eluru]]
+|70
+|[[Nuzvid Assembly constituency|Nuzvid]]
+|[[Kolusu Parthasarathy]]
+|[[List of Ministers of Housing of Andhra Pradesh|Minister of Housing]], [[List of Ministers of Information & Public Relations of Andhra Pradesh|Information & Public Relations]]<section end="Eluru district"/><section begin="Krishna district"/>
+|-
+| rowspan="2" |[[Krishna district|Krishna]]
+|71
+|[[Gannavaram, Krishna Assembly constituency|Gannavaram (Krishna)]]
+|[[Yarlagadda Venkata Rao]]
+|Whip
+|-
+|72
+|[[Gudivada Assembly constituency|Gudivada]]
+|[[Venigandla Ramu]]
+|<section end="Krishna district"/><section begin="Eluru district"/>
+|-
+|[[Eluru district|Eluru]]
+|73
+|[[Kaikalur Assembly constituency|Kaikalur]]
+|[[Kamineni Srinivas]]
+|{{party name with color|Bharatiya Janata Party}}
+|<section end="Eluru district"/><section begin="Krishna district"/>
+|-
+| rowspan="5" |[[Krishna district|Krishna]]
+|74
+|[[Pedana Assembly constituency|Pedana]]
+|[[Kagitha Krishna Prasad]]
+|{{party name with color|Telugu Desam Party|rowspan=2}}
+|
+|-
+|75
+|[[Machilipatnam Assembly constituency|Machilipatnam]]
+|[[Kollu Ravindra]]
+|[[Ministry of Mines and Geology|Minister of Mines & Geology]], [[Ministry of Excise|Excise]]
+|-
+|76
+|[[Avanigadda Assembly constituency|Avanigadda]]
+|[[Mandali Buddha Prasad]]
+|{{party name with color|Janasena Party}}
+|
+|-
+|77
+|[[Pamarru Assembly constituency|Pamarru]] (SC)
+|[[Varla Kumar Raja]]
+|{{party name with color|Telugu Desam Party|rowspan=2}}
+|
+|-
+|78
+|[[Penamaluru Assembly constituency|Penamaluru]]
+|[[Bode Prasad]]
+|<section end="Krishna district"/><section begin="NTR district"/>
+|-
+| rowspan="6" |[[NTR district|NTR]]
+|79
+|[[Vijayawada West Assembly constituency|Vijayawada West]]
+|[[Sujana Chowdary]]
+|{{party name with color|Bharatiya Janata Party}}
+|
+|-
+|80
+|[[Vijayawada Central Assembly constituency|Vijayawada Central]]
+|[[Bonda Umamaheswara Rao]]
+|{{party name with color|Telugu Desam Party|rowspan=11}}
+|Whip
+|-
+|81
+|[[Vijayawada East Assembly constituency|Vijayawada East]]
+|[[Gadde Ramamohan]]
+|
+|-
+|82
+|[[Mylavaram Assembly constituency|Mylavaram]]
+|[[Vasantha Venkata Krishna Prasad]]
+|
+|-
+|83
+|[[Nandigama Assembly constituency|Nandigama]] (SC)
+|[[Tangirala Sowmya]]
+|Whip
+|-
+|84
+|[[Jaggayyapeta Assembly constituency|Jaggayyapeta]]
+|[[Rajagopal Sreeram]]
+|<section end="NTR district"/><section begin="Palnadu district"/>
+|-
+|[[Palnadu district|Palnadu]]
+|85
+|[[Pedakurapadu Assembly constituency|Pedakurapadu]]
+|[[Bhashyam Praveen]]
+|<section end="Palnadu district"/><section begin="Guntur district"/>
+|-
+| rowspan="3" |[[Guntur district|Guntur]]
+|86
+|[[Tadikonda Assembly constituency|Tadikonda]] (SC)
+|[[Tenali Sravan Kumar]]
+|
+|-
+|87
+|[[Mangalagiri Assembly constituency|Mangalagiri]]
+|[[Nara Lokesh]]
+|
+*[[List of education ministers of Andhra Pradesh|Minister of Human Resources Development]], [[List of information technology ministers of Andhra Pradesh|Information Technology]], [[Fourth N. Chandrababu Naidu ministry|Electronics & Communication]], [[Real Time Governance Society|Real Time Governance]]
+*[[Telugu Desam Party|National Working President of Telugu Desam Party]]
+|-
+|88
+|[[Ponnur Assembly constituency|Ponnuru]]
+|[[Dhulipalla Narendra Kumar]]
+|<section end="Guntur district"/><section begin="Bapatla district"/>
+|-
+| rowspan="2" |[[Bapatla district|Bapatla]]
+|89
+|[[Vemuru Assembly constituency|Vemuru]] (SC)
+|[[Nakka Ananda Babu]]
+|
+|-
+|90
+|[[Repalle Assembly constituency|Repalle]]
+|[[Anagani Satya Prasad]]
+|[[List of Ministers of Revenue, Registration & Stamps of Andhra Pradesh|Minister of Revenue, Registration & Stamps]]<section end="Bapatla district"/><section begin="Guntur district"/>
+|-
+|[[Guntur district|Guntur]]
+|91
+|[[Tenali Assembly constituency|Tenali]]
+|[[Nadendla Manohar]]
+|{{party name with color|Janasena Party}}
+|
+*[[Ministry of Civil Supplies, Food and Consumer Affairs|Minister of Food & Civil Supplies, Consumer Affairs]]
+*[[Janasena Party|Political Affairs Committee (PAC) Chairman of the Janasena Party]] 
+*JSP Deputy Floor Leader<section end="Guntur district"/><section begin="Bapatla district"/>
+|-
+|[[Bapatla district|Bapatla]]
+|92
+|[[Bapatla Assembly constituency|Bapatla]]
+|[[Vegesana Narendra Varma Raju]]
+|{{party name with color|Telugu Desam Party|rowspan=10}}
+|<section end="Bapatla district"/><section begin="Guntur district"/>
+|-
+| rowspan="3" |[[Guntur district|Guntur]]
+|93
+|[[Prathipadu, Guntur Assembly constituency|Prathipadu (Guntur)]] (SC)
+|[[Burla Ramanjaneyulu]]
+|
+|-
+|94
+|[[Guntur West Assembly constituency|Guntur West]]
+|[[Galla Madhavi]]
+|
+|-
+|95
+|[[Guntur East Assembly constituency|Guntur East]]
+|[[Mohammed Naseer Ahmed]]
+|<section end="Guntur district"/><section begin="Palnadu district"/>
+|-
+| rowspan="6" |[[Palnadu district|Palnadu]]
+|96
+|[[Chilakaluripet Assembly constituency|Chilakaluripet]]
+|[[Prathipati Pulla Rao]]
+|
+|-
+|97
+|[[Narasaraopet Assembly constituency|Narasaraopet]]
+|[[Chadalavada Aravinda Babu]]
+|
+|-
+|98
+|[[Sattenapalle Assembly constituency|Sattenapalle]]
+|[[Kanna Lakshminarayana|Kanna Lakshminaraya]]
+|
+|-
+|99
+|[[Vinukonda Assembly constituency|Vinukonda]]
+|[[G. V. Anjaneyulu]]
+|Chief Whip
+|-
+|100
+|[[Gurazala Assembly constituency|Gurazala]]
+|[[Yarapathineni Srinivasa Rao]]
+|
+|-
+|101
+|[[Macherla Assembly constituency|Macherla]]
+|[[Julakanti Brahmananda Reddy]]
+|<section end="Palnadu district"/><section begin="Prakasam district"/>
+|-
+| rowspan="2" |[[Prakasam district|Prakasam]]
+|102
+|[[Yerragondapalem Assembly constituency|Yerragondapalem]] (SC)
+|[[Tatiparthi Chandrasekhar]]
+|{{party name with color|YSR Congress Party|rowspan=2}}
+|{{party name with color|Not applicable|shortname=None|rowspan=2}}
+|
+|-
+|103
+|[[Darsi Assembly constituency|Darsi]]
+|[[Buchepalli Siva Prasad Reddy]]
+|<section end="Prakasam district"/><section begin="Bapatla district"/>
+|-
+| rowspan="3" |[[Bapatla district|Bapatla]]
+|104
+|[[Parchur Assembly constituency|Parchur]]
+|[[Yeluri Sambasiva Rao]]
+|{{party name with color|Telugu Desam Party|rowspan=20}}
+|{{party name with color|National Democratic Alliance|rowspan=20}}
+|
+|-
+|105
+|[[Addanki Assembly constituency|Addanki]]
+|[[Gottipati Ravi Kumar]]
+|[[List of Ministers of Energy of Andhra Pradesh|Minister of Energy]]
+|-
+|106
+|[[Chirala Assembly constituency|Chirala]]
+|[[Madduluri Malakondaiah Yadav]]
+|<section end="Bapatla district"/><section begin="Prakasam district"/>
+|-
+| rowspan="2" |[[Prakasam district|Prakasam]]
+|107
+|[[Santhanuthalapadu Assembly constituency|Santhanuthalapadu]] (SC)
+|[[B. N. Vijay Kumar]]
+|
+|-
+|108
+|[[Ongole Assembly constituency|Ongole]]
+|[[Damacharla Janardhana Rao]]
+|<section end="Prakasam district"/><section begin="Nellore district"/>
+|-
+|[[Nellore district|Nellore]]
+|109
+|[[Kandukur Assembly constituency|Kandukur]]
+|[[Inturi Nageswara Rao]]
+|<section end="Nellore district"/><section begin="Prakasam district"/>
+|-
+| rowspan="4" |[[Prakasam district|Prakasam]]
+|110
+|[[Kondapi Assembly constituency|Kondapi]] (SC)
+|[[Dola Sree Bala Veeranjaneya Swamy]]
+|[[Ministry of Social Welfare (Andhra Pradesh)|Minister of Social Welfare]], [[Ministry of Disabled & Senior Citizen Welfare (Andhra Pradesh)|Disabled & Senior Citizen Welfare]], [[Fourth N. Chandrababu Naidu ministry|Affairs of Sachivalayam & Village Volunteer]] 
+|-
+|111
+|[[Markapuram Assembly constituency|Markapuram]]
+|[[Kandula Narayana Reddy]]
+|
+|-
+|112
+|[[Giddalur Assembly constituency|Giddalur]]
+|[[Muthumula Ashok Reddy]]
+|
+|-
+|113
+|[[Kanigiri Assembly constituency|Kanigiri]]
+|[[Mukku Ugra Narasimha Reddy]]
+|<section end="Prakasam district"/><section begin="Nellore district"/>
+|-
+| rowspan="6" |[[Nellore district|Nellore]]
+|114
+|[[Kavali Assembly constituency|Kavali]]
+|[[Dagumati Venkata Krishna Reddy]]
+|
+|-
+|115
+|[[Atmakur Assembly constituency|Atmakur]]
+|[[Anam Ramanarayana Reddy]]
+|[[List of endowments ministers of Andhra Pradesh|Minister of Endowments]]
+|-
+|116
+|[[Kovur Assembly constituency|Kovur]]
+|[[Vemireddy Prashanti Reddy]]
+|
+|-
+|117
+|[[Nellore City Assembly constituency|Nellore City]]
+|[[Ponguru Narayana]]
+|[[Ministry of Municipal Administration and Urban Development|Minister of Urban Development & Municipal Administration]]
+|-
+|118
+|[[Nellore Rural Assembly constituency|Nellore Rural]]
+|[[Kotamreddy Sridhar Reddy]]
+|
+|-
+|119
+|[[Sarvepalli Assembly constituency|Sarvepalli]]
+|[[Somireddy Chandra Mohan Reddy]]
+|<section end="Nellore district"/><section begin="Tirupati district"/>
+|-
+| rowspan="3" |[[Tirupati district|Tirupati]]
+|120
+|[[Gudur Assembly constituency|Gudur]] (SC)
+|[[Pasam Sunil Kumar]]
+|
+|-
+|121
+|[[Sullurpeta Assembly constituency|Sullurpeta]] (SC)
+|[[Nelavala Vijayasree]]
+|
+|-
+|122
+|[[Venkatagiri Assembly constituency|Venkatagiri]]
+|[[Kurugondla Ramakrishna]]
+|<section end="Tirupati district"/><section begin="Nellore district"/>
+|-
+|[[Nellore district|Nellore]]
+|123
+|[[Udayagiri Assembly constituency|Udayagiri]]
+|[[Kakarla Suresh]]
+|<section end="Nellore district"/><section begin="Kadapa district"/>
+|-
+|[[Kadapa district|YSR Kadapa]]
+|124
+|[[Badvel Assembly constituency|Badvel]] (SC)
+|[[Dasari Sudha]]
+|{{party name with color|YSR Congress Party|rowspan=2}}
+|{{party name with color|Not applicable|shortname=None|rowspan=2}}
+|<section end="Kadapa district"/><section begin="Annamayya district"/>
+|-
+|[[Annamayya district|Annamayya]]
+|125
+|[[Rajampet Assembly constituency|Rajampet]]
+|[[Akepati Amarnath Reddy]]
+|<section end="Annamayya district"/><section begin="Kadapa district"/>
+|-
+|[[Kadapa district|YSR Kadapa]]
+|126
+|[[Kadapa Assembly constituency|Kadapa]]
+|[[Reddeppagari Madhavi]]
+|{{party name with color|Telugu Desam Party}}
+|{{party name with color|National Democratic Alliance|rowspan=3}}
+|Whip<section end="Kadapa district"/><section begin="Annamayya district"/>
+|-
+| rowspan="2" |[[Annamayya district|Annamayya]]
+|127
+|[[Kodur Assembly constituency|Kodur]] (SC)
+|[[Arava Sreedhar]]
+|{{party name with color|Janasena Party}}
+|Whip
+|-
+|128
+|[[Rayachoti Assembly constituency|Rayachoti]]
+|[[Mandipalli Ramprasad Reddy]]
+|{{party name with color|Telugu Desam Party}}
+|[[Ministry of Transport (Andhra Pradesh)|Minister of Transport]], [[List of Ministers for Youth & Sports of Andhra Pradesh|Youth & Sports]]<section end="Annamayya district"/><section begin="Kadapa district"/>
+|-
+| rowspan="5" |[[Kadapa district|YSR Kadapa]]
+|129
+|[[Pulivendla Assembly constituency|Pulivendula]]
+|[[Y. S. Jagan Mohan Reddy]]
+|{{party name with color|YSR Congress Party}}
+|{{party name with color|Not applicable|shortname=None}}
+|[[YSR Congress Party|President of YSR Congress Party]], YSRCP Floor Leader
+|-
+|130
+|[[Kamalapuram Assembly constituency|Kamalapuram]]
+|[[Putha Krishna Chaitanya Reddy]]
+|{{party name with color|Telugu Desam Party}}
+|{{party name with color|National Democratic Alliance|rowspan=15}}
+|
+|-
+|131
+|[[Jammalamadugu Assembly constituency|Jammalamadugu]]
+|[[Ch. Adinarayana Reddy]]
+|{{party name with color|Bharatiya Janata Party}}
+| BJP Whip
+|-
+|132
+|[[Proddatur Assembly constituency|Proddatur]]
+|[[Nandyala Varada Rajulu Reddy|Nandyala Varada Rajula Reddy]]
+|{{party name with color|Telugu Desam Party|rowspan=13}}
+|
+|-
+|133
+|[[Mydukur Assembly constituency|Mydukur]]
+|[[Putta Sudhakar Yadav]]
+|<section end="Kadapa district"/><section begin="Nandyal district"/>
+|-
+| rowspan="3" |[[Nandyal district|Nandyal]]
+|134
+|[[Allagadda Assembly constituency|Allagadda]]
+|[[Bhuma Akhila Priya]]
+|
+|-
+|135
+|[[Srisailam Assembly constituency|Srisailam]]
+|[[Budda Rajasekhar Reddy]]
+|
+|-
+|136
+|[[Nandikotkur Assembly constituency|Nandikotkur]] (SC)
+|[[Githa Jayasurya]]
+|<section end="Nandyal district"/><section begin="Kurnool district"/>
+|-
+| rowspan="2" |[[Kurnool district|Kurnool]]
+|137
+|[[Kurnool Assembly constituency|Kurnool]]
+|[[T. G. Bharath]]
+|[[List of Ministers of Industries & Commerce of Andhra Pradesh|Minister of Industries & Commerce]], [[Fourth N. Chandrababu Naidu ministry|Food Processing]] 
+|-
+|138
+|[[Panyam Assembly constituency|Panyam]]
+|[[Gowru Charitha Reddy]]
+|<section end="Kurnool district"/><section begin="Nandyal district"/>
+|-
+| rowspan="3" |[[Nandyal district|Nandyal]]
+|139
+|[[Nandyal Assembly constituency|Nandyal]]
+|[[N. M. D. Farooq]]
+|[[Ministry of Minority Welfare|Minister of Minority Welfare]], [[Fourth N. Chandrababu Naidu ministry|Law & Justice]]
+|-
+|140
+|[[Banaganapalle Assembly constituency|Banaganapalle]]
+|[[B. C. Janardhan Reddy]]
+|[[List of roads and buildings ministers of Andhra Pradesh|Minister of Roads & Buildings]], [[Ministry of Infrastructure and Investments|Infrastructure & Investments]]
+|-
+|141
+|[[Dhone Assembly constituency|Dhone]]
+|[[Kotla Jayasurya Prakasha Reddy]]
+|<section end="Nandyal district"/><section begin="Kurnool district"/>
+|-
+| rowspan="6" |[[Kurnool district|Kurnool]]
+|142
+|[[Pattikonda Assembly constituency|Pattikonda]]
+|[[K. E. Shyam Babu]]
+|
+|-
+|143
+|[[Kodumur Assembly constituency|Kodumur]] (SC)
+|[[Boggula Dastagiri]]
+|
+|-
+|144
+|[[Yemmiganur Assembly constituency|Yemmiganur]]
+|[[Jaya Nageswara Reddy]]
+|
+|-
+|145
+|[[Mantralayam Assembly constituency|Mantralayam]]
+|[[Y. Balanagi Reddy]]
+|{{party name with color|YSR Congress Party}}
+|{{party name with color|Not applicable|shortname=None}}
+|
+|-
+|146
+|[[Adoni Assembly constituency|Adoni]]
+|[[P. V. Parthasarathi]]
+|{{party name with color|Bharatiya Janata Party}}
+|{{party name with color|National Democratic Alliance}}
+|
+|-
+|147
+|[[Alur Assembly constituency|Alur]]
+|[[Busine Virupakshi]]
+|{{party name with color|YSR Congress Party}}
+|{{party name with color|Not applicable|shortname=None}}
+|<section end="Kurnool district"/><section begin="Anantapur district"/>
+|-
+| rowspan="8" |[[Anantapur district|Anantapur]]
+|148
+|[[Rayadurg Assembly constituency|Rayadurg]]
+|[[Kalava Srinivasulu]]
+|{{party name with color|Telugu Desam Party|rowspan=12}}
+|{{party name with color|National Democratic Alliance|rowspan=14}}
+|Whip
+|-
+|149
+|[[Uravakonda Assembly constituency|Uravakonda]]
+|[[Payyavula Keshav]]
+|[[List of finance ministers of Andhra Pradesh|Minister of Finance, Planning]], [[List of Ministers of Commercial Taxes of Andhra Pradesh|Commercial Taxes]] & [[List of Ministers of Legislative Affairs of Andhra Pradesh|Legislative Affairs]]
+|-
+|150
+|[[Guntakal Assembly constituency|Guntakal]]
+|[[Gummanur Jayaram]]
+|
+|-
+|151
+|[[Tadpatri Assembly constituency|Tadipatri]]
+|[[J. C. Ashmit Reddy]]
+|
+|-
+|152
+|[[Singanamala Assembly constituency|Singanamala]] (SC)
+|[[Bandaru Sravani Sree]]
+|
+|-
+|153
+|[[Anantapur Urban Assembly constituency|Anantapur Urban]]
+|[[Daggupati Venkateswara Prasad]]
+|
+|-
+|154
+|[[Kalyandurg Assembly constituency|Kalyandurg]]
+|[[Amilineni Surendra Babu]]
+|
+|-
+|155
+|[[Raptadu Assembly constituency|Raptadu]]
+|[[Paritala Sunitha]]
+|<section end="Anantapur district"/><section begin="Sri Sathya Sai district"/>
+|-
+| rowspan="6" |[[Sri Sathya Sai district|Sri Sathya Sai]]
+|156
+|[[Madakasira Assembly constituency|Madakasira]] (SC)
+|[[M. S. Raju (politician)|M. S. Raju]]
+|
+|-
+|157
+|[[Hindupur Assembly constituency|Hindupur]]
+|[[Nandamuri Balakrishna]]
+|
+|-
+|158
+|[[Penukonda Assembly constituency|Penukonda]]
+|[[S. Savitha]]
+|[[Ministry of Backward Classes Welfare|Minister of B.C. Welfare]], [[Fourth N. Chandrababu Naidu ministry|Economically Weaker Sections Welfare, Handlooms & Textiles]]
+|-
+|159
+|[[Puttaparthi Assembly constituency|Puttaparthi]]
+|[[Palle Sindhura Reddy]]
+|
+|-
+|160
+|[[Dharmavaram Assembly constituency|Dharmavaram]]
+|[[Satya Kumar Yadav]]
+|{{party name with color|Bharatiya Janata Party}}
+|[[Ministry of Health, Family Welfare and Medical Education|Minister of Health & Family Welfare, Medical Education]]
+|-
+|161
+|[[Kadiri Assembly constituency|Kadiri]]
+|[[Kandikunta Venkata Prasad]]
+|{{party name with color|Telugu Desam Party}}
+|<section end="Sri Sathya Sai district"/><section begin="Annamayya district"/>
+|-
+| rowspan="3" |[[Annamayya district|Annamayya]]
+|162
+|[[Thamballapalle Assembly constituency|Thamballapalle]]
+|[[Peddireddy Dwarakanatha Reddy]]
+|{{party name with color|YSR Congress Party}}
+|{{party name with color|Not applicable|shortname=None}}
+|
+|-
+|163
+|[[Pileru Assembly constituency|Pileru]]
+|[[N. Kishore Kumar Reddy|Nallari Kishore Kumar Reddy]]
+|{{party name with color|Telugu Desam Party|rowspan=2}}
+|{{party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|164
+|[[Madanapalle Assembly constituency|Madanapalle]]
+|[[Shahjahan Basha]]
+|<section end="Annamayya district"/><section begin="Chittoor district"/>
+|-
+|[[Chittoor district|Chittoor]]
+|165
+|[[Punganur Assembly constituency|Punganur]]
+|[[Peddireddy Ramachandra Reddy]]
+|{{party name with color|YSR Congress Party}}
+|{{party name with color|Not applicable|shortname=None}}
+|<section end="Chittoor district"/><section begin="Tirupati district"/>
+|-
+| rowspan="4" |[[Tirupati district|Tirupati]]
+|166
+|[[Chandragiri Assembly constituency|Chandragiri]]
+|[[Pulivarthi Venkata Mani Prasad]]
+|{{party name with color|Telugu Desam Party}}
+|{{party name with color|National Democratic Alliance|rowspan=10}}
+|
+|-
+|167
+|[[Tirupati Assembly constituency|Tirupati]]
+|[[Arani Srinivasulu]]
+|{{party name with color|Janasena Party}}
+|
+|-
+|168
+|[[Srikalahasti Assembly constituency|Srikalahasti]]
+|[[Bojjala Sudhir Reddy|Bojjala Venkata Sudhir Reddy]]
+|{{party name with color|Telugu Desam Party|rowspan=8}}
+|
+|-
+|169
+|[[Satyavedu Assembly constituency|Satyavedu]] (SC)
+|[[Koneti Adimulam]]
+|<section end="Tirupati district"/><section begin="Chittoor district"/>
+|-
+| rowspan="6" |[[Chittoor district|Chittoor]]
+|170
+|[[Nagari Assembly constituency|Nagari]]
+|[[Gali Bhanu Prakash]]
+|
+|-
+|171
+|[[Gangadhara Nellore Assembly constituency|Gangadhara Nellore]] (SC)
+|[[V. M. Thomas]]
+|Whip
+|-
+|172
+|[[Chittoor Assembly constituency|Chittoor]]
+|[[Gurajala Jagan Mohan]]
+|
+|-
+|173
+|[[Puthalapattu Assembly constituency|Puthalapattu]] (SC)
+|[[Kalikiri Murali Mohan]]
+|
+|-
+|174
+|[[Palamaner Assembly constituency|Palamaner]]
+|[[N. Amarnath Reddy]]
+|
+|-
+|175
+|[[Kuppam Assembly constituency|Kuppam]]
+|[[N. Chandrababu Naidu]]
+|
+*[[List of chief ministers of Andhra Pradesh|Chief Minister of Andhra Pradesh]]
+*[[Telugu Desam Party|National President of Telugu Desam Party]]<section end="Chittoor district"/>
+|}
+
+== See also==
+{{portal|India}}
+
+* [[Andhra Pradesh Legislature]]
+
+==References==
+{{Reflist}}
+
+==External links==
+* [https://eci.gov.in/ Official website] of the [[Election Commission of India]]
+
+{{Andhra Pradesh Legislature}}{{Andhra Pradesh Legislative Assembly}}{{Current Indian assemblies}}
+
+{{Government of Andhra Pradesh}}
+
+[[Category:Andhra Pradesh MLAs 2024–2029]]
+[[Category:2024 establishments in India]]
+[[Category:2020s in Andhra Pradesh]]
+[[Category:Terms of the Andhra Pradesh Legislative Assembly]]
+[[Category:Lists of current Indian state and territorial assemblies|Andhra Pradesh]]

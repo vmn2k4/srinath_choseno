@@ -1,0 +1,1998 @@
+{{Short description|17th Bihar Legislative Assembly}}
+{{Use dmy dates|date=June 2023}}
+{{Infobox legislature
+| name               = Seventeenth Legislative Assembly of Bihar
+| native_name        = Bihar Vidhan Sabha
+| coa_pic            = Seal of Bihar.svg
+| coa_res            =
+| houses             = [[Bicameral]]
+| house_type         = Lower house
+| body               = Bihar
+| preceded_by        = [[16th Bihar Assembly]]
+| succeeded_by       = [[18th Bihar Assembly]]
+| leader1_type       = [[List of speakers of the Bihar Legislative Assembly|Speaker]]
+| leader1            = 
+| party1             = 
+| term_length        = 2020–2025
+| election1          = (2024-2025)
+| leader2_type       = Deputy Speaker
+| leader2            = 
+| party2             = 
+| election2          = 
+| leader3_type       = Leader of the House<br>{{small|([[List of Chief Ministers of Bihar|Chief Minister]])}}
+| leader3            = [[Nitish Kumar]]
+| party3             = [[Janata Dal (United)|JD(U)]]
+| election3          = (2020-2025)
+| leader4_type       = [[List of deputy chief ministers of Bihar|Deputy Chief Minister]]<br /> (Deputy Leader of the House)
+| leader4            = [[Samrat Chaudhary]]<br>[[Vijay Kumar Sinha]]
+| party4             = [[Bharatiya Janata Party|BJP]]
+| election4          = (2024-2025)
+| leader5_type       = [[List of leaders of the opposition in the Bihar Legislative Assembly|Leader of the Opposition]]
+| leader5            = 
+| party5             = 
+| election5          = [[2020 Bihar Legislative Assembly election|28 January 2024]]
+| members            = '''243'''
+| structure1         = 
+| structure1_res     = 300px
+| political_groups1  = 
+'''[[Government of Bihar|Government]] (138)''' <br/>'''[[National Democratic Alliance (India)|NDA]] (138)'''
+*{{Color box|{{Party color|Bharatiya Janata Party}}}} [[Bharatiya Janata Party|BJP]] (84)
+*{{Color box|{{Party color|Janata Dal (United)}}}} [[Janata Dal (United)|JD(U)]] (48)
+*{{Color box|{{Party color|Hindustani Awam Morcha}}}} [[Hindustani Awam Morcha|HAM(S)]] (4)<ref>{{Cite web|url=https://www.newindianexpress.com/nation/2023/Jun/21/jitan-ram-manjhishindustani-awam-morcha-joins-nda-2587235.html|title=Jitan Ram Manjhi's Hindustani Awam Morcha joins NDA}}</ref>
+*{{Color box|#B2B2B2}} [[Independent politician|IND]] (2)
+
+'''Official Opposition (105)'''<br>'''[[Mahagathbandhan (Bihar)|MGB]] (104)'''
+*{{Color box|{{Party color|Rashtriya Janata Dal}}}} [[Rashtriya Janata Dal|RJD]] (72)
+*{{Color box|{{Party color|Indian National Congress}}}} [[Indian National Congress|INC]] (17)
+*{{Color box|{{Party color|Communist Party of India (Marxist–Leninist) Liberation}}}} [[Communist Party of India (Marxist–Leninist) Liberation|CPI(ML)L]] (11)
+*{{Color box|{{Party color|Communist Party of India}}}} [[Communist Party of India|CPI]] (2)
+*{{Color box|{{Party color|Communist Party of India (Marxist)}}}} [[Communist Party of India (Marxist)|CPI(M)]] (2)
+
+'''[[Parliamentary Opposition|Other Opposition]] (1)'''
+*{{Color box|{{Party color|All India Majlis-e-Ittehadul Muslimeen}}}} [[All India Majlis-e-Ittehadul Muslimeen|AIMIM]] (1)
+
+| voting_system1 = [[First-past-the-post]]
+| last_election1 = [[2020 Bihar Legislative Assembly election|2020]]
+| next_election1 = [[2025 Bihar Legislative Assembly election|2025]]
+}}
+The '''Seventeenth Legislative Assembly of Bihar''' (Seventeenth Vidhan Sabha of Bihar) was constituted on 23 November 2020 as a result of [[2020 Bihar Legislative Assembly election|Bihar Legislative Assembly election, 2020]] held between 28 October 2020 to 7 November 2020.<ref>{{Cite web|url=https://www.oneindia.com/elections/bihar-mlas-list/|title=Bihar MLA's List 2020: Full List of Winners From RJD, BJP, Others and More - Oneindia|website=www.oneindia.com}}</ref><ref>{{Cite web|url=https://www.india.com/news/india/bihar-assembly-election-results-2020-full-complete-list-of-winners-candidates-vidhan-sabha-seats-live-news-latest-updates-nda-mahagathbandhan-congress-ljp-rjd-jdu-bjp-download-pdf-4204813/|title=Bihar Assembly Election Results 2020: Full List of Winners For 243 Vidhan Sabha Seats|first=|last=|date=November 10, 2020|website=www.india.com}}</ref>
+
+==Composition==
+<!-- this section is transcluded on Bihar Legislative Assembly  --><section begin="Composition"/>
+=== 2022 ===
+Following is the former composition of the [[Bihar Legislative Assembly]] which is after some elected members changed parties, various by-elections and after [[Nitish Kumar]] left [[National Democratic Alliance|NDA]] and formed alliance with [[Mahagathbandhan (Bihar)|Mahagathbandhan]] on 10 August 2022.
+{| class="wikitable"
+! colspan="2" |Alliance
+! colspan="2" |Party
+!Seats
+!Total
+|-
+| rowspan="7" {{Party color cell|Mahagathbandhan (Bihar)}}
+! rowspan="7" |[[Mahagathbandhan (Bihar)|MGB]]
+|{{party color cell|Rashtriya Janata Dal}}
+|[[Rashtriya Janata Dal|RJD]]
+|79
+| rowspan="7" |160
+|-
+|{{party color cell|Janata Dal (United)}}
+|[[Janata Dal (United)|JD(U)]]
+|45
+|-
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress|INC]]
+|19
+|-
+|bgcolor="red"|
+|[[Communist Party of India (Marxist–Leninist) Liberation|CPI(ML)L]]
+|12
+|-
+|bgcolor="red"|
+|[[Communist Party of India|CPI]]
+|2
+|-
+|bgcolor="red"|
+|[[Communist Party of India (Marxist)|CPI(M)]]
+|2
+|-
+| {{party color cell|Independent|shortname=IND politician}}
+|[[Independent politician|IND]]
+|1
+|-
+|rowspan="2" {{Party color cell|BJP}}
+! rowspan="2" |[[National Democratic Alliance|NDA]]
+|{{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party|BJP]]
+|78
+|rowspan="2" |82
+|-
+|{{party color cell|Hindustani Awam Morcha}}
+|[[Hindustani Awam Morcha|HAM(S)]]
+|4
+|-
+| rowspan="1" {{party color cell|Others}}
+!rowspan="1" |OTH
+|{{party color cell|All India Majlis-e-Ittehadul Muslimeen}}
+|[[All India Majlis-e-Ittehadul Muslimeen|AIMIM]]
+|1
+|1
+|}
+
+=== 2024 ===
+Following was the composition of the [[Bihar Legislative Assembly]] after [[2024 Bihar political crisis]].
+{| class="wikitable"
+! colspan="2" |Alliance
+! colspan="2" |Party
+!Seats
+!Total
+|-
+|rowspan="5" {{Party color cell|BJP}}
+!rowspan="5" |[[National Democratic Alliance|NDA]]
+|{{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party|BJP]]
+|78
+|rowspan="5" |132
+|-
+|{{party color cell|Janata Dal (United)}}
+|[[Janata Dal (United)|JD(U)]]
+|45
+|-
+|{{party color cell|Hindustani Awam Morcha}}
+|[[Hindustani Awam Morcha|HAM(S)]]
+|4
+|-
+|{{party color cell|Rashtriya Janata Dal}}
+|[[Rashtriya Janata Dal|RJD]](Rebel)
+|4
+|-
+|{{party color cell|Independent|shortname=IND politician}}
+|[[Independent politician|IND]]
+|1
+|-
+| rowspan="5" {{Party color cell|Mahagathbandhan (Bihar)}}
+! rowspan="5" |[[Mahagathbandhan (Bihar)|MGB]]
+|{{party color cell|Rashtriya Janata Dal}}
+|[[Rashtriya Janata Dal|RJD]]
+|75
+| rowspan="5" |110
+|-
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress|INC]]
+|19
+|-
+|bgcolor="red"|
+|[[Communist Party of India (Marxist–Leninist) Liberation|CPI(ML)L]]
+|12
+|-
+|bgcolor="red"|
+|[[Communist Party of India|CPI]]
+|2
+|-
+|bgcolor="red"|
+|[[Communist Party of India (Marxist)|CPI(M)]]
+|2
+|-
+| rowspan="1" {{party color cell|Others}}
+!rowspan="1" |OTH
+|{{party color cell|All India Majlis-e-Ittehadul Muslimeen}}
+|[[All India Majlis-e-Ittehadul Muslimeen|AIMIM]]
+|1
+|1
+|}
+
+== Members of Legislative Assembly ==
+<!-- DO NOT REMOVE THIS LINE, as this section is transcluded on the District article--> <section begin="MLA Header"/>
+{| class="wikitable sortable"
+!District
+!No.
+!Constituency
+!Name
+! colspan="2" |Party
+! colspan="2" |Alliance
+! Remarks
+|- <section end="MLA Header"/><section begin="West Champaran district"/>
+|rowspan="9" | [[West Champaran district|West Champaran]] <!-- this section is transcluded on the District article-->
+| 1
+|[[Valmiki Nagar Assembly constituency|Valmiki Nagar]]
+|[[Dhirendra Pratap Singh]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|2
+|[[Ramnagar, Bihar Assembly constituency|Ramnagar]]
+|[[Bhagirathi Devi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|3
+|[[Narkatiaganj Assembly constituency|Narkatiaganj]]
+|[[Rashmi Varma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|4
+|[[Bagaha Assembly constituency|Bagaha]]
+|[[Ram Singh (politician)|Ram Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|5
+|[[Lauriya Assembly constituency|Lauriya]]
+|[[Vinay Bihari]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|6
+|[[Nautan Assembly constituency|Nautan]]
+|[[Narayan Prasad]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|7
+|[[Chanpatia Assembly constituency|Chanpatia]]
+|[[Umakant Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|8
+|[[Bettiah Assembly constituency|Bettiah]]
+|[[Renu Devi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|9
+|[[Sikta Assembly constituency|Sikta]]
+|[[Birendra Prasad Gupta]]
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="West Champaran district"/>
+|- <section begin="East Champaran district"/>
+|rowspan=12 | [[East Champaran district|East Champaran]] <!-- this section is transcluded on the District article-->
+|10
+|[[Raxaul Assembly constituency|Raxaul]]
+|[[Pramod Kumar Sinha]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|11
+|[[Sugauli Assembly constituency|Sugauli]]
+|[[Shashi Bhushan Singh]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|12
+|[[Narkatiya Assembly constituency|Narkatiya]]
+|[[Shamim Ahmad]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|13
+|[[Harsidhi Assembly constituency|Harsidhi]]
+|[[Krishnanandan Paswan]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|14
+|[[Govindganj Assembly constituency|Govindganj]]
+|[[Sunil Mani Tiwari]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|15
+|[[Kesaria Assembly constituency|Kesaria]]
+|[[Shalini Mishra]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|16
+|[[Kalyanpur, Purvi Champaran Assembly constituency|Kalyanpur]]
+|[[Manoj Kumar Yadav (Bihar politician)|Manoj Kumar Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|17
+|[[Pipra, Purvi Champaran Assembly constituency|Pipra]]
+|[[Shyambabu Prasad Yadav]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|18
+|[[Madhuban, Bihar Assembly constituency|Madhuban]]
+|[[Rana Randhir|Rana Randhir Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|19
+|[[Motihari Assembly constituency|Motihari]]
+|[[Pramod Kumar (Bihar politician)|Pramod Kumar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|20
+|[[Chiraia Assembly constituency|Chiraia]]
+|[[Lal Babu Prasad Gupta]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|21
+|[[Dhaka Assembly constituency|Dhaka]]
+|[[Pawan Jaiswal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+| <section end="East Champaran district"/>
+|- <section begin="Sheohar district"/>
+|[[Sheohar district|Sheohar]] <!-- this section is transcluded on the District article-->
+|22
+|[[Sheohar Assembly constituency|Sheohar]]
+|[[Chetan Anand (politician)|Chetan Anand]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|Switched from RJD to JDU<section end="Sheohar district"/>
+|- <section begin="Sitamarhi district"/>
+|rowspan="8" | [[Sitamarhi district|Sitamarhi]] <!-- this section is transcluded on the District article-->
+|23
+|[[Riga Assembly constituency|Riga]]
+|[[Moti Lal Prasad]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|24
+|[[Bathnaha Assembly constituency|Bathnaha]]
+|[[Anil Kumar (Bihar politician)|Anil Kumar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|25
+|[[Parihar Assembly constituency|Parihar]]
+|[[Gayatri Devi (Bihar politician)|Gayatri Devi Yadav]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|26
+|[[Sursand Assembly constituency|Sursand]]
+|[[Dilip Kumar Ray]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|27
+|[[Bajpatti Assembly constituency|Bajpatti]]
+|[[Mukesh Kumar Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|28
+|[[Sitamarhi Assembly constituency|Sitamarhi]]
+|[[Mithilesh Kumar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|29
+|[[Runnisaidpur Assembly constituency|Runnisaidpur]]
+|[[Pankaj Kumar Mishra]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|30
+|[[Belsand Assembly constituency|Belsand]]
+|[[Sanjay Kumar Gupta (RJD politician)|Sanjay Kumar Gupta]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Sitamarhi district"/>
+|- <section begin="Madhubani district"/>
+|rowspan="10" | [[Madhubani district|Madhubani]] <!-- this section is transcluded on the District article-->
+|31
+|[[Harlakhi Assembly constituency|Harlakhi]]
+|[[Sudhanshu Shekhar]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|32
+|[[Benipatti Assembly constituency|Benipatti]]
+|[[Vinod Narayan Jha]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|33
+|[[Khajauli Assembly constituency|Khajauli]]
+|[[Arun Shankar Prasad]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|34
+|[[Babubarhi Assembly constituency|Babubarhi]]
+|[[Mina Kumari]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|35
+|[[Bisfi Assembly constituency|Bisfi]]
+|[[Haribhushan Thakur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|36
+|[[Madhubani Assembly constituency|Madhubani]]
+|[[Samir Kumar Mahaseth]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|37
+|[[Rajnagar, Bihar Assembly constituency|Rajnagar]]
+|[[Ram Prit Paswan (Indian politician)|Ram Prit Paswan]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|38
+|[[Jhanjharpur Assembly constituency|Jhanjharpur]]
+|[[Nitish Mishra]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|39
+|[[Phulparas Assembly constituency|Phulparas]]
+|[[Sheela Kumari|Sheela Kumari Mandal]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|40
+|[[Laukaha Assembly constituency|Laukaha]]
+|[[Bharat Bhushan Mandal]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Madhubani district"/>
+|- <section begin="Supaul district"/>
+|rowspan="5" | [[Supaul district|Supaul]] <!-- this section is transcluded on the District article-->
+|41
+|[[Nirmali Assembly constituency|Nirmali]]
+|[[Aniruddha Prasad Yadav]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|42
+|[[Pipra, Supaul Assembly constituency|Pipra]]
+|[[Rambilash Kamat]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|43
+|[[Supaul Assembly constituency|Supaul]]
+|[[Bijendra Prasad Yadav]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|44
+|[[Triveniganj Assembly constituency|Triveniganj]]
+|[[Veena Bharti]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|45
+|[[Chhatapur Assembly constituency|Chhatapur]]
+|[[Neeraj Kumar Singh Bablu|Neeraj Kumar Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Supaul district"/>
+|- <section begin="Araria district"/>
+|rowspan="6"| [[Araria district|Araria]] <!-- this section is transcluded on the District article-->
+|46
+|[[Narpatganj Assembly constituency|Narpatganj]]
+|[[Jai Prakash Yadav (politician)|Jai Prakash Yadav]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|47
+|[[Raniganj, Bihar Assembly constituency|Raniganj]]
+|[[Achmit Rishidev]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|48
+|[[Forbesganj Assembly constituency|Forbesganj]]
+|[[Vidya Sagar Keshri]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|49
+|[[Araria Assembly constituency|Araria]]
+|[[Avidur Rahman]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|50
+|[[Jokihat Assembly constituency|Jokihat]]
+|[[Mohammed Shahnawaz Alam]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|Switched from AIMIM to RJD<ref name=":1"/><!-- repeat reference definition for transcluded sections -->
+|-
+|51
+|[[Sikti Assembly constituency|Sikti]]
+|[[Vijay Kumar Mandal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Araria district"/>
+|- <section begin="Kishanganj district"/>
+| rowspan="4" | [[Kishanganj district|Kishanganj]] <!-- this section is transcluded on the District article-->
+|52
+|[[Bahadurganj Assembly constituency|Bahadurganj]]
+|[[Mohammad Anzar Nayeemi]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|Switched from AIMIM to RJD<ref name=":1"/><!-- repeat reference definition for transcluded sections -->
+|-
+|53
+|[[Thakurganj Assembly constituency|Thakurganj]]
+|[[Saud Alam]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|54
+|[[Kishanganj, Bihar Assembly constituency|Kishanganj]]
+|[[Ijaharul Hussain]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|55
+|[[Kochadhaman Assembly constituency|Kochadhaman]]
+|[[Muhammad Izhar Asfi]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|Switched from AIMIM to RJD<ref name=":1"/><!-- repeat reference definition for transcluded sections --><section end="Kishanganj district"/>
+|- <section begin="Purnia district"/>
+|rowspan="8" | [[Purnia district|Purnia]] <!-- this section is transcluded on the District article-->
+|56
+|[[Amour Assembly constituency|Amour]]
+|[[Akhtarul Iman]]
+|{{Party name with color|All India Majlis-e-Ittehadul Muslimeen}}
+| bgcolor=#DCDCDC|
+| None
+|
+|-
+|57
+|[[Baisi Assembly constituency|Baisi]]
+|[[Syed Ruknuddin Ahmad]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|Switched from AIMIM to RJD<ref name=":1">{{Cite web |date=2022-06-30 |title=Bihar: Four of five AIMIM MLAs join RJD, making it single-largest party again with 80 seats |url=https://indianexpress.com/article/cities/patna/bihar-four-of-five-aimim-mlas-join-rjd-single-largest-party-80-seats-7998912/ |access-date=2022-07-09 |website=The Indian Express |language=en}}</ref>
+|-
+|58
+|[[Kasba, Bihar Assembly constituency|Kasba]]
+|[[Md Afaque Alam]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|59
+|[[Banmankhi Assembly constituency|Banmankhi]]
+|[[Krishna Kumar Rishi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|rowspan="2" |60
+|rowspan="2" |[[Rupauli Assembly constituency|Rupauli]]
+|[[Bima Bharti]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|Switched from JD(U) to RJD.
+|-
+|[[Shankar Singh (Bihar politician)|Shankar Singh]]
+|{{Party name with color|Independent|shortname=IND}}
+|{{Party name with color no link|None}}
+|Elected on 13 July 2024 in [[2024 elections in India#Bihar|By-election 2024]]
+|-
+|61
+|[[Dhamdaha Assembly constituency|Dhamdaha]]
+|[[Leshi Singh]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|62
+|[[Purnia Assembly constituency|Purnia]]
+|[[Vijay Kumar Khemka]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Purnia district"/>
+|- <section begin="Katihar district"/>
+|rowspan="7" | [[Katihar district|Katihar]] <!-- this section is transcluded on the District article-->
+|63
+|[[Katihar Assembly constituency|Katihar]]
+|[[Tarkishore Prasad]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|64
+|[[Kadwa Assembly constituency|Kadwa]]
+|[[Shakeel Ahmad Khan]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|65
+|[[Balrampur, Bihar Assembly constituency|Balrampur]]
+|[[Mahbub Alam (politician)|Mahbub Alam]]
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|66
+|[[Pranpur Assembly constituency|Pranpur]]
+|[[Nisha Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|67
+|[[Manihari Assembly constituency|Manihari]]
+|[[Manohar Prasad Singh]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|68
+|[[Barari Assembly constituency|Barari]]
+|[[Bijay Singh]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|69
+|[[Korha Assembly constituency|Korha]]
+|[[Kavita Devi (politician)|Kavita Devi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Katihar district"/>
+|- <section begin="Madhepura district"/>
+|rowspan="4" | [[Madhepura district|Madhepura]] <!-- this section is transcluded on the District article-->
+|70
+|[[Alamnagar Assembly constituency|Alamnagar]]
+|[[Narendra Narayan Yadav]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|71
+|[[Bihariganj Assembly constituency|Bihariganj]]
+|[[Niranjan Kumar Mehta]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|72
+|[[Singheshwar Assembly constituency|Singheshwar]]
+|[[Chandrahas Chaupal]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|73
+|[[Madhepura Assembly constituency|Madhepura]]
+|[[Chandrashekhar Yadav|Chandra Shekhar Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Madhepura district"/>
+|- <section begin="Saharsa district"/>
+|rowspan="4" | [[Saharsa district|Saharsa]] <!-- this section is transcluded on the District article-->
+|74
+|[[Sonbarsha Assembly constituency|Sonbarsha]]
+|[[Ratnesh Sada]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|75
+|[[Saharsa Assembly constituency|Saharsa]]
+|[[Alok Ranjan Jha]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|76
+|[[Simri Bakhtiarpur Assembly constituency|Simri Bakhtiarpur]]
+|[[Yusuf Salahuddin]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|77
+|[[Mahishi Assembly constituency|Mahishi]]
+|[[Gunjeshwar Sah]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Saharsa district"/>
+|- <section begin="Darbhanga district"/>
+|rowspan="11" | [[Darbhanga district|Darbhanga]] <!-- this section is transcluded on the District article-->
+|rowspan="2" |78
+|rowspan="2" |[[Kusheshwar Asthan Assembly constituency|Kusheshwar Asthan]]
+|[[Shashi Bhushan Hazari]]
+|{{Party name with color|Janata Dal (United)|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|Died in 1 July 2021
+|-
+|[[Aman Bhushan Hajari]]
+|Elected on 2 November 2021 in [[2021 Bihar Legislative Assembly by-elections|by-election]]
+|-
+|79
+|[[Gaura Bauram Assembly constituency|Gaura Bauram]]
+|[[Swarna Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Switched from VIP to BJP<ref name="The Hindu">{{Cite news|date=23 March 2022 |title=All 3 VIP MLAs join BJP in Bihar making it the largest party in Assembly |language=en-IN |work=The Hindu |url=https://www.thehindu.com/news/national/other-states/all-3-vip-mlas-join-bjp-in-bihar-making-it-the-largest-party-in-assembly/article65253402.ece |access-date=23 March 2022 |issn=0971-751X}}</ref><!-- note that this reference must be repeated since it is transcluded in various sections -->
+|-
+|80
+|[[Benipur Assembly constituency|Benipur]]
+|[[Binay Kumar Choudhary]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|81
+|[[Alinagar Assembly constituency|Alinagar]]
+|[[Mishrilal Yadav]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Switched from VIP to BJP<ref name="The Hindu"/><!-- note that this reference must be repeated since it is transcluded in various sections -->
+|-
+|82
+|[[Darbhanga Rural Assembly constituency|Darbhanga Rural]]
+|[[Lalit Kumar Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|83
+|[[Darbhanga Assembly constituency|Darbhanga]]
+|[[Sanjay Saraogi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|84
+|[[Hayaghat Assembly constituency|Hayaghat]]
+|Ram Chandra Prasad
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|85
+|[[Bahadurpur Assembly constituency|Bahadurpur]]
+|[[Madan Sahni]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|86
+|[[Keoti Assembly constituency|Keoti]]
+|[[Murari Mohan Jha]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|87
+|[[Jale Assembly constituency|Jale]]
+|[[Jibesh Kumar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Darbhanga district"/>
+|- <section begin="Muzaffarpur district"/>
+|rowspan="13" | [[Muzaffarpur district|Muzaffarpur]] <!-- this section is transcluded on the District article-->
+|88
+|[[Gaighat Assembly constituency|Gaighat]]
+|Niranjan Roy
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|89
+|[[Aurai, Bihar Assembly constituency|Aurai]]
+|[[Ram Surat Rai]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|90
+|[[Minapur Assembly constituency|Minapur]]
+|[[Munna Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|rowspan="2" | 91
+|rowspan="2" | [[Bochahan Assembly constituency|Bochahan]]
+|[[Musafir Paswan]]
+|{{Party name with color|Vikassheel Insaan Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Died in November 2021
+|-
+|[[Amar Kumar Paswan]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|Won in 2022 by-poll necessitated after the death of [[Musafir Paswan]].
+|-
+|92
+|[[Sakra Assembly constituency|Sakra]]
+|Ashok Kumar Choudhary
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| rowspan="2" |93
+| rowspan="2" |[[Kurhani Assembly constituency|Kurhani]]
+|Anil Kumar Sahni
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|Disqualified on 14 October 2022 after criminal conviction<ref>{{Cite web |date=14 October 2022 |title=Bihar: RJD MLA Anil Kumar Sahni disqualified upon conviction by CBI court |url=https://www.telegraphindia.com/india/bihar-rashtriya-janata-dal-mla-anil-kumar-sahni-disqualified-upon-conviction-by-central-bureau-of-investigation-court/cid/1892037 |access-date=2022-11-03 |website=www.telegraphindia.com}}</ref>
+|-
+|[[Kedar Prasad Gupta]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Won by-poll in 2022.<ref>{{Cite web |title=BJP wins from Kurhani |url=https://www.ndtv.com/india-news/bjp-wins-key-bihar-election-in-kurhani-after-close-contest-with-nitish-kumars-jd-u-3588796/amp/1&ved=2ahUKEwj_47fz9-n7AhXMaGwGHcCvAigQ0PADKAB6BAgKEAE&usg=AOvVaw2KuYZUEAlyMsgtdOVLeH-G |access-date=2022-12-08 |website=www.ndtv.com}}</ref>
+|-
+|94
+|[[Muzaffarpur Assembly constituency|Muzaffarpur]]
+|Bijendra Chaudhary
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|95
+|[[Kanti Assembly constituency|Kanti]]
+|[[Mohammad Israil Mansuri]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|96
+|[[Baruraj Assembly constituency|Baruraj]]
+|[[Arun Kumar Singh (politician)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|97
+|[[Paroo Assembly constituency|Paroo]]
+|[[Ashok Kumar Singh (Paroo)|Ashok Kumar Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|98
+|[[Sahebganj Assembly constituency|Sahebganj]]
+|[[Raju Kumar Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Switched from VIP to BJP<ref name="The Hindu"/><!-- note that this reference must be repeated since it is transcluded in various sections -->
+<section end="Muzaffarpur district"/>
+|- <section begin="Gopalganj district, India"/>
+|rowspan="7" | [[Gopalganj district, India|Gopalganj]] <!-- this section is transcluded on the District article-->
+|99
+|[[Baikunthpur, Bihar Assembly constituency|Baikunthpur]]
+|[[Prem Shankar Prasad|Prem Shankar Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|100
+|[[Barauli, Bihar Assembly constituency|Barauli]]
+|[[Rampravesh Rai]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| rowspan="2" |101
+| rowspan="2" |[[Gopalganj Assembly constituency|Gopalganj]]
+| [[Subhash Singh (Bihar politician)|Subhash Singh]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+| Death of [[Subhash Singh (Bihar politician)|Subhash Singh]]<ref>{{Cite news |agency=PTI |date=2022-08-16 |title=Bihar BJP MLA Subhash Singh passes away |language=en-IN |work=The Hindu |url=https://www.thehindu.com/news/national/other-states/bihar-bjp-mla-subhash-singh-passes-away/article65774230.ece |access-date=2022-08-27 |issn=0971-751X}}</ref>
+|-
+|Kusum Devi
+|Won in [[2022 elections in India|2022 bypoll]]
+|-
+|102
+|[[Kuchaikote Assembly constituency|Kuchaikote]]
+|[[Amrendra Kumar Pandey]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|103
+|[[Bhore Assembly constituency|Bhore]]
+|[[Sunil Kumar (born 1988)|Sunil Kumar]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|104
+|[[Hathua Assembly constituency|Hathua]]
+|[[Rajesh Singh Kushwaha|Rajesh Kumar Singh]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Gopalganj district, India"/>
+|- <section begin="Siwan district"/>
+|rowspan="8" | [[Siwan district|Siwan]] <!-- this section is transcluded on the District article--> 
+|105
+|[[Siwan Assembly constituency|Siwan]]
+|[[Awadh Bihari Choudhary|Awadh Bihari Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|106
+|[[Ziradei Assembly constituency|Ziradei]]
+|[[Amarjeet Kushwaha]]
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|107
+|[[Darauli Assembly constituency|Darauli]]
+|[[Satyadeo Ram]]
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|108
+|[[Raghunathpur, Bihar Assembly constituency|Raghunathpur]]
+|[[Hari Shankar Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|109
+|[[Daraunda Assembly constituency|Daraunda]]
+|[[Karanjeet Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|110
+|[[Barharia Assembly constituency|Barharia]]
+|Bachcha Pandey
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|111
+|[[Goriakothi Assembly constituency|Goriakothi]]
+|Devesh Kant Singh
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|112
+|[[Maharajganj, Bihar Assembly constituency|Maharajganj]]
+|[[Vijay Shanker Dubey]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Siwan district"/>
+|- <section begin="Saran district"/>
+|rowspan="10" | [[Saran district|Saran]] <!-- this section is transcluded on the District article-->
+|113
+|[[Ekma Assembly constituency|Ekma]]
+|[[Srikant Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|114
+|[[Manjhi Assembly constituency|Manjhi]]
+|[[Satyendra Yadav]]
+|{{Party name with color|Communist Party of India (Marxist)}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|115
+|[[Baniapur Assembly constituency|Baniapur]]
+|[[Kedar Nath Singh (Baniapur politician)|Kedar Nath Singh]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|116
+|[[Taraiya Assembly constituency|Taraiya]]
+|[[Janak Singh (politician)|Janak Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|117
+|[[Marhaura Assembly constituency|Marhaura]]
+|[[Jitendra Kumar Ray]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|118
+|[[Chapra, Bihar Assembly constituency|Chapra]]
+|[[C. N. Gupta]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|119
+|[[Garkha Assembly constituency|Garkha]]
+|Surendra Ram
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|120
+|[[Amnour Assembly constituency|Amnour]]
+|[[Krishna Kumar Mantoo|Krishan Kumar Mantoo]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|121
+|[[Parsa Assembly constituency|Parsa]]
+|[[Chhote Lal Ray]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|122
+|[[Sonpur Assembly constituency|Sonpur]]
+|[[Ramanuj Prasad Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Saran district"/>
+|- <section begin="Vaishali district"/>
+|rowspan=8 | [[Vaishali district|Vaishali]] <!-- this section is transcluded on the District article-->
+|123
+|[[Hajipur Assembly constituency|Hajipur]]
+|[[Awadhesh Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|124
+|[[Lalganj, Bihar Assembly constituency|Lalganj]]
+|Sanjay Kumar Singh
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|125
+|[[Vaishali Assembly constituency|Vaishali]]
+|Siddharth Patel
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|126
+|[[Mahua Assembly constituency|Mahua]]
+|[[Mukesh Kumar Raushan|Mukesh Raushan Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|127
+|[[Raja Pakar Assembly constituency|Raja Pakar]]
+|Pratima Kumari
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|128
+|[[Raghopur Assembly constituency|Raghopur]]
+|[[Tejashwi Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|129
+|[[Mahnar Assembly constituency|Mahnar]]
+|Bina Singh
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|130
+|[[Patepur Assembly constituency|Patepur]]
+|Lakhendra Kumar Raushan
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Vaishali district"/>
+|- <section begin="Samastipur district"/>
+|rowspan="10" | [[Samastipur district|Samastipur]] <!-- this section is transcluded on the District article-->
+|131
+|[[Kalyanpur, Samastipur Assembly constituency|Kalyanpur]]
+|[[Maheshwar Hazari]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|132
+|[[Warisnagar Assembly constituency|Warisnagar]]
+|[[Ashok Kumar (Warisnagar politician)|Ashok Kumar]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|133
+|[[Samastipur Assembly constituency|Samastipur]]
+|[[Akhtarul Islam Sahin]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|134
+|[[Ujiarpur Assembly constituency|Ujiarpur]]
+|[[Alok Kumar Mehta]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|135
+|[[Morwa Assembly constituency|Morwa]]
+|Ranvijay Sahu
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|136
+|[[Sarairanjan Assembly constituency|Sarairanjan]]
+|[[Vijay Kumar Chaudhary]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|137 
+|[[Mohiuddinnagar Assembly constituency|Mohiuddinnagar]]
+|Rajesh Kumar Singh
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|138
+|[[Bibhutipur Assembly constituency|Bibhutipur]]
+|Ajay Kumar
+|{{Party name with color|Communist Party of India (Marxist)}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|139
+|[[Rosera Assembly constituency|Rosera]]
+|Birendra Kumar
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|140
+|[[Hasanpur, Bihar Assembly constituency|Hasanpur]]
+|[[Tej Pratap Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Samastipur district"/>
+|- <section begin="Begusarai district"/>
+|rowspan="7" | [[Begusarai district|Begusarai]] <!-- this section is transcluded on the District article-->
+|141
+|[[Cheria-Bariarpur Assembly constituency|Cheria-Bariarpur]]
+|[[Raj Banshi Mahto]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|142
+|[[Bachhwara Assembly constituency|Bachhwara]]
+|[[Surendra Mehata]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|143
+|[[Teghra Assembly constituency|Teghra]]
+|[[Ram Ratan Singh]]
+|{{Party name with color|Communist Party of India}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|144
+|[[Matihani Assembly constituency|Matihani]]
+|[[Rajkumar Singh (politician)|Raj Kumar Singh]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|Switched from LJP to JD(U)<ref>{{Cite web |date=7 April 2021 |title=Lone Lok Janshakti Party MLA Raj Kumar Singh joins JD(U) in Bihar |url=https://www.hindustantimes.com/cities/patna-news/lone-lok-janshakti-party-mla-raj-kumar-singh-joins-jd-u-in-bihar-101617768444228.html |access-date=27 February 2022 |website=Hindustan Times |language=en}}</ref>
+|-
+|145
+|[[Sahebpur Kamal Assembly constituency|Sahebpur Kamal]]
+|[[Satanand Sambuddha|Sadanand Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|146
+|[[Begusarai Assembly constituency|Begusarai]]
+|Kundan Kumar
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|147
+|[[Bakhri Assembly constituency|Bakhri]]
+|[[Suryakant Paswan]]
+|{{Party name with color|Communist Party of India}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Begusarai district"/>
+|- <section begin="Khagaria district"/>
+|rowspan="4" | [[Khagaria district|Khagaria]]
+|148
+|[[Alauli Assembly constituency|Alauli]]
+|[[Ramvrikish Sada]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|149
+|[[Khagaria Assembly constituency|Khagaria]]
+|[[Chhatrapati Yadav]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|150
+|[[Beldaur Assembly constituency|Beldaur]]
+|Panna Lal Singh Patel
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|151
+|[[Parbatta Assembly constituency|Parbatta]]
+|[[Sanjeev Kumar (politician born 1979)|Sanjeev Kumar]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Khagaria district"/>
+|- <section begin="Bhagalpur district"/>
+|rowspan="7" | [[Bhagalpur district|Bhagalpur]] <!-- this section is transcluded on the District article-->
+|152
+|[[Bihpur Assembly constituency|Bihpur]]
+|Kumar Shailendra
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|153
+|[[Gopalpur, Bihar Assembly constituency|Gopalpur]]
+|Narendra Kumar Niraj
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|154
+|[[Pirpainti Assembly constituency|Pirpainti]]
+|Lalan Kumar
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|155
+|[[Kahalgaon Assembly constituency|Kahalgaon]]
+|[[Pawan Yadav|Pawan Kumar Yadav]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|156
+|[[Bhagalpur Assembly constituency|Bhagalpur]]
+|[[Ajeet Sharma]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|157
+|[[Sultanganj Assembly constituency|Sultanganj]]
+|Lalit Narayan Mandal
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|158
+|[[Nathnagar Assembly constituency|Nathnagar]]
+|[[Ali Ashraf Siddiqui]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Bhagalpur district"/>
+|- <section begin="Banka district"/>
+|rowspan="5" | [[Banka district|Banka]] <!-- this section is transcluded on the District article-->
+|159
+|[[Amarpur, Bihar Assembly constituency|Amarpur]]
+|[[Jayant Raj Kushwaha]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|160
+|[[Dhoraiya Assembly constituency|Dhoraiya]]
+|[[Bhudeo Choudhary]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{party color cell|Rashtriya Janata Dal}}
+|[[Mahagathbandhan (Bihar)|MGB]]
+|
+|-
+|161
+|[[Banka Assembly constituency|Banka]]
+|[[Ramnarayan Mandal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|162
+|[[Katoria Assembly constituency|Katoria]]
+|Nikki Hembrom
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|163
+|[[Belhar Assembly constituency|Belhar]]
+|[[Manoj Yadav (politician)|Manoj Yadav]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Banka district"/>
+|- <section begin="Munger district"/>
+| rowspan="4" | [[Munger district|Munger]] <!-- this section is transcluded on the District article-->
+| rowspan="2" |164
+| rowspan="2" |[[Tarapur Assembly constituency|Tarapur]]
+|[[Mewalal Chaudhary|Mewa Lal Choudhary]]
+|{{Party name with color|Janata Dal (United)|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|Died on 19 April 2021 due to COVID-19
+|-
+|[[Rajeev Kumar Singh (Bihar politician)|Rajeev Kumar Singh]]
+|Elected on 2 November 2021 in [[2021 Bihar Legislative Assembly by-elections|by-election]]
+|-
+|165
+|[[Munger Assembly constituency|Munger]]
+|[[Pranav Kumar Yadav]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|166
+|[[Jamalpur, Bihar Assembly constituency|Jamalpur]]
+|[[Ajay Kumar Singh (Bihar politician, Indian National Congress)|Ajay Kumar Singh]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Munger district"/>
+|- <section begin="Lakhisarai district"/>
+|rowspan="2" | [[Lakhisarai district|Lakhisarai]] <!-- this section is transcluded on the District article-->
+|167
+|[[Suryagarha Assembly constituency|Suryagarha]]
+|[[Prahlad Yadav]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|Switched from RJD to JDU
+|-
+|168
+|[[Lakhisarai Assembly constituency|Lakhisarai]]
+|[[Vijay Kumar Sinha]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Deputy Leader of BJP
+<section end="Lakhisarai district"/>
+|- <section begin="Sheikhpura district"/>
+|rowspan="2" | [[Sheikhpura district|Sheikhpura]] <!-- this section is transcluded on the District article-->
+|169
+|[[Sheikhpura Assembly constituency|Sheikhpura]]
+|[[Vijay Kumar Yadav (Sheikhpura)|Vijay Kumar Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|170
+|[[Barbigha Assembly constituency|Barbigha]]
+|Sudarshan Kumar
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Sheikhpura district"/>
+|- <section begin="Nalanda district"/>
+|rowspan="7" | [[Nalanda district|Nalanda]] <!-- this section is transcluded on the District article-->
+|171
+|[[Asthawan Assembly constituency|Asthawan]]
+|Jitendra Kumar
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|172
+|[[Biharsharif Assembly constituency|Biharsharif]]
+|[[Sunil Kumar (born 1957)|Sunil Kumar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|173
+|[[Rajgir, Bihar Assembly constituency|Rajgir]]
+|Kaushal Kishore
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|174
+|[[Islampur, Bihar Assembly constituency|Islampur]]
+|[[Rakesh Kumar Raushan|Rakesh Raushan Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|175
+|[[Hilsa Assembly constituency|Hilsa]]
+|[[Krishna Murari Sharan]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|176
+|[[Nalanda Assembly constituency|Nalanda]]
+|[[Shrawan Kumar (politician)|Shrawan Kumar]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|177
+|[[Harnaut Assembly constituency|Harnaut]]
+|Hari Narayan Singh
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Nalanda district"/>
+|- <section begin="Patna district"/>
+|rowspan="15" | [[Patna district|Patna]] <!-- this section is transcluded on the District article-->
+|rowspan="2" |178
+|rowspan="2" |[[Mokama Assembly constituency|Mokama]]
+|[[Anant Kumar Singh]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|Disqualified in July 2022 due to criminal conviction<ref>{{Cite web |date=2022-07-15 |title=Anant Singh loses assembly membership, RJD tally down to 79 |url=https://www.hindustantimes.com/cities/patna-news/anant-singh-loses-assembly-membership-rjd-tally-down-to-79-101657902430209.html |access-date=2022-08-27 |website=Hindustan Times |language=en}}</ref>
+|-
+|[[Nilam Devi]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|*Won in [[2022 elections in India|2022 bypoll]]
+*Switched from RJD to JDU
+|-
+|179
+|[[Barh Assembly constituency|Barh]]
+|[[Gyanendra Kumar Singh Gyanu|Gyanendra Kumar Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|180
+|[[Bakhtiarpur Assembly constituency|Bakhtiarpur]]
+|[[Aniruddh Kumar Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|181
+|[[Digha Assembly constituency|Digha]]
+|[[Sanjeev Chaurasiya]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|182
+|[[Bankipur Assembly constituency|Bankipur]]
+|[[Nitin Nabin]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|183
+|[[Kumhrar Assembly constituency|Kumhrar]]
+|[[Arun Kumar Sinha (politician)|Arun Kumar Sinha]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|184
+|[[Patna Sahib Assembly constituency|Patna Sahib]]
+|[[Nand Kishore Yadav]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|185
+|[[Fatuha Assembly constituency|Fatuha]]
+|[[Rama Nand Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|186
+|[[Danapur Assembly constituency|Danapur]]
+|[[Ritlal Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|187
+|[[Maner Assembly constituency|Maner]]
+|[[Bhai Virendra|Bhai Virendra Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|188
+|[[Phulwari Assembly constituency|Phulwari]]
+|[[Gopal Ravidas]]
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|189
+|[[Masaurhi Assembly constituency|Masaurhi]]
+|[[Rekha Devi]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|190
+|[[Paliganj Assembly constituency|Paliganj]]
+|[[Sandeep Saurav|Sandeep Yadav]]
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|191
+|[[Bikram Assembly constituency|Bikram]]
+|[[Siddharth Saurav]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Switched from INC to BJP
+<section end="Patna district"/>
+|- <section begin="Bhojpur District, Bihar"/>
+|rowspan="9" | [[Bhojpur District, Bihar|Bhojpur]] <!-- this section is transcluded on the District article-->
+|192
+|[[Sandesh Assembly constituency|Sandesh]]
+|[[Kiran Devi Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|193
+|[[Barhara Assembly constituency|Barhara]]
+|[[Raghvendra Pratap Singh (Bihar politician)|Raghvendra Pratap Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|194
+|[[Arrah Assembly constituency|Arrah]]
+|[[Amrendra Pratap Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|rowspan=2|195
+|rowspan=2|[[Agiaon Assembly constituency|Agiaon]]
+|[[Manoj Manzil]]
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|Disqualified on 16 February 2024 due to criminal conviction <ref>{{Cite web|url=https://www.newindianexpress.com/nation/2024/Feb/16/cpi-ml-mla-manoj-manzil-disqualified-from-bihar-assembly|title=CPI-ML MLA Manoj Manzil disqualified from Bihar assembly|website=Indian Express}}</ref>
+|-
+|Shiv Prakash Ranjan
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|rowspan=2|196
+|rowspan=2|[[Tarari Assembly constituency|Tarari]]
+|[[Sudama Prasad]]
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|[[Vishal Prashant]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Won in [[2024 elections in India|2024 bypoll]]
+|-
+|197
+|[[Jagdishpur, Bihar Assembly constituency|Jagdishpur]]
+|[[Ram Vishnun Singh|Ram Vishnun Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|198
+|[[Shahpur, Bihar Assembly constituency|Shahpur]]
+|[[Rahul Tiwari]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Bhojpur District, Bihar"/>
+|- <section begin="Buxar district"/>
+|rowspan="4" | [[Buxar district|Buxar]] <!-- this section is transcluded on the District article-->
+|199
+|[[Brahampur Assembly constituency|Brahampur]]
+|[[Shambhu Nath Singh Yadav|Shambhu Nath Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|200
+|[[Buxar Assembly constituency|Buxar]]
+|[[Sanjay Kumar Tiwari]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|201
+|[[Dumraon Assembly constituency|Dumraon]]
+|Ajit Kumar Singh
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|202
+|[[Rajpur, Bihar Assembly constituency|Rajpur]]
+|Vishwanath Ram
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Buxar district"/>
+|- <section begin="Kaimur district"/>
+|rowspan="5" | [[Kaimur district|Kaimur]] <!-- this section is transcluded on the District article-->
+|rowspan="2" | 203
+|rowspan="2" |[[Ramgarh, Bihar Assembly constituency|Ramgarh]]
+|[[Sudhakar Singh (Bihar politician)|Sudhakar Singh]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|[[Ashok Kumar Singh (Ramgarh)|Ashok Kumar Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Won in [[2024 elections in India|2024 bypoll]]
+|-
+|204
+|[[Mohania Assembly constituency|Mohania]]
+|Sangita Kumari
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Switched from RJD to BJP
+|-
+| 205
+| [[Bhabua Assembly constituency|Bhabua]]
+| Bharat Bind
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Switched from RJD to BJP
+|-
+|206
+|[[Chainpur Assembly constituency|Chainpur]]
+|[[Mohd Zama Khan]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|Switched from BSP to JD(U)<ref>{{Cite web|title=BSP's lone MLA in Bihar Md Zama Khan joins ruling JD(U) after meeting with CM Nitish Kumar {{!}} Patna News - Times of India |url=https://timesofindia.indiatimes.com/city/patna/bsps-lone-mla-in-bihar-md-zama-khan-joins-ruling-jdu-after-meeting-with-cm-nitish-kumar/articleshow/80410728.cms |access-date=27 February 2022 |website=The Times of India |language=en}}</ref><section end="Kaimur district"/>
+|- <section begin="Rohtas district"/>
+|rowspan="7" | [[Rohtas district|Rohtas]] <!-- this section is transcluded on the District article--> 
+|207
+|[[Chenari Assembly constituency|Chenari]]
+|[[Murari Prasad Gautam]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Switched from INC to BJP
+|-
+|208
+|[[Sasaram Assembly constituency|Sasaram]]
+|Rajesh Kumar Gupta
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|209
+|[[Kargahar Assembly constituency|Kargahar]]
+|Santhosh Kumar Mishra
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|210
+|[[Dinara Assembly constituency|Dinara]]
+|[[Vijay Mandal|Vijay Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|211
+|[[Nokha, Bihar Assembly constituency|Nokha]]
+|Anita Devi
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|212
+|[[Dehri Assembly constituency|Dehri]]
+|[[Fateh Bahadur Kushwaha|Fateh Bahadur Singh]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|213
+|[[Karakat Assembly constituency|Karakat]]
+|[[Arun Singh Kushwaha|Arun Singh]]
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Rohtas district"/>
+|- <section begin="Arwal district"/>
+|rowspan="2" | [[Arwal district|Arwal]] <!-- this section is transcluded on the District article-->
+|214
+|[[Arwal Assembly constituency|Arwal]]
+|[[Maha Nand Singh]]
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|215
+|[[Kurtha Assembly constituency|Kurtha]]
+|[[Bagi Kumar Verma]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Arwal district"/>
+|- <section begin="Jehanabad district"/>
+|rowspan="3" | [[Jehanabad district|Jehanabad]] <!-- this section is transcluded on the District article-->
+|216
+|[[Jehanabad Assembly constituency|Jehanabad]]
+|[[Suday Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|217
+|[[Ghosi, Bihar Assembly constituency|Ghosi]]
+|[[Ram Bali Singh Yadav]]
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|218
+|[[Makhdumpur Assembly constituency|Makhdumpur]]
+|Satish Kumar
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Jehanabad district"/>
+|- <section begin="Aurangabad district, Bihar"/>
+|rowspan="6" | [[Aurangabad district, Bihar|Aurangabad]] <!-- this section is transcluded on the District article-->
+|219
+|[[Goh Assembly constituency|Goh]]
+|[[Bhim Kumar Singh]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|220
+|[[Obra, Bihar Assembly constituency|Obra]]
+|[[Rishi Singh Yadav|Rishi Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|221
+|[[Nabinagar Assembly constituency|Nabinagar]]
+|[[Vijay Kumar Singh (Bihar)|Vijay Kumar Singh]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|222
+|[[Kutumba Assembly constituency|Kutumba]]
+|[[Rajesh Kumar (born 1969)|Rajesh Kumar]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|223
+|[[Aurangabad (Bihar Vidhan Sabha constituency)|Aurangabad]]
+|[[Anand Shankar Singh]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|224
+|[[Rafiganj Assembly constituency|Rafiganj]]
+|[[Mohammad Nehaluddin|MD Nehaluddin]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|<section end="Aurangabad district, Bihar"/>
+|- <section begin="Gaya district"/>
+|rowspan="12" | [[Gaya district|Gaya]] <!-- this section is transcluded on the District article-->
+|225
+|[[Gurua Assembly constituency|Gurua]]
+|[[Vinay Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|226
+|[[Sherghati Assembly constituency|Sherghati]]
+|[[Manju Agrawal]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|rowspan="2" |227
+|rowspan="2" |[[Imamganj Assembly constituency|Imamganj]]
+|[[Jitan Ram Manjhi]]
+|{{Party name with color|Hindustani Awam Morcha}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|[[Deepa Manjhi]]
+|{{Party name with color|Hindustani Awam Morcha}}
+|{{Party name with color|National Democratic Alliance}}
+|Won in [[2024 elections in India|2024 bypoll]]
+|-
+|228
+|[[Barachatti Assembly constituency|Barachatti]]
+|[[Jyoti Devi]]
+|{{Party name with color|Hindustani Awam Morcha}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|229
+|[[Bodh Gaya Assembly constituency|Bodh Gaya]]
+|[[Kumar Sarvjeet]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|230
+|[[Gaya Town Assembly constituency|Gaya Town]]
+|[[Prem Kumar (politician)|Prem Kumar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|231
+|[[Tikari Assembly constituency|Tikari]]
+|[[Anil Kumar (Bihar politician)|Anil Kumar]]
+|{{Party name with color|Hindustani Awam Morcha}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|rowspan="2" |232
+|rowspan="2" |[[Belaganj Assembly constituency|Belaganj]]
+|[[Surendra Prasad Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|[[Manorama Devi]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|Won in [[2024 elections in India|2024 bypoll]]
+|-
+|233
+|[[Atri Assembly constituency|Atri]]
+|[[Ajay Kumar Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|234
+|[[Wazirganj Assembly constituency|Wazirganj]]
+|[[Birendra Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Gaya district"/>
+|- <section begin="Nawada district"/>
+|rowspan="5" | [[Nawada district|Nawada]] <!-- this section is transcluded on the District article-->
+|235
+|[[Rajauli Assembly constituency|Rajauli]]
+|[[Prakash Veer]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|236
+|[[Hisua Assembly constituency|Hisua]]
+|[[Nitu Kumari]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|237
+|[[Nawada Assembly constituency|Nawada]]
+|[[Vibha Devi Yadav]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|238
+|[[Gobindpur Assembly constituency|Gobindpur]]
+|[[Md Kamran]]
+|{{Party name with color|Rashtriya Janata Dal}}
+|{{Party name with color|Mahagathbandhan (Bihar)}}
+|
+|-
+|239
+|[[Warisaliganj Assembly constituency|Warsaliganj]]
+|[[Aruna Devi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|<section end="Nawada district"/>
+|- <section begin="Jamui district"/>
+|rowspan="4" | [[Jamui district|Jamui]] <!-- this section is transcluded on the District article-->
+|240
+|[[Sikandra, Bihar Assembly constituency|Sikandra]]
+|Prafull Kumar Manjhi
+|{{Party name with color|Hindustani Awam Morcha}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|241
+|[[Jamui Assembly constituency|Jamui]]
+|[[Shreyasi Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|242
+|[[Jhajha Assembly constituency|Jhajha]]
+|[[Damodar Rawat]]
+|{{Party name with color|Janata Dal (United)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|243
+|[[Chakai Assembly constituency|Chakai]]
+|[[Sumit Kumar Singh]]
+|{{Party name with color|Independent|shortname=IND}}
+|{{party name with color|National Democratic Alliance}}
+|<section end="Jamui district"/>
+|}
+
+==References==
+<references></references>
+
+
+[[Category:Terms of the Bihar Legislative Assembly]]
+[[Category:Bihar MLAs 2020–2025| ]]

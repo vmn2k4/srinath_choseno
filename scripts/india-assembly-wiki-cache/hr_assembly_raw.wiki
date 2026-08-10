@@ -1,0 +1,619 @@
+{{Short description|Indian state assembly}}
+{{Use dmy dates|date=August 2024}}
+{{Use Indian English|date=August 2024}}
+{{Infobox legislative term
+| name = 15th Haryana Assembly
+| before = [[14th Haryana Assembly|14th Assembly]]
+| after = 
+| image = India Haryana Legislative Assembly 2024.svg
+| image_size = 300
+| caption = 
+| body = [[Haryana Legislative Assembly]]
+| election = [[2024 Haryana Legislative Assembly election]]
+| government = [[Second Saini ministry]]
+| opposition = [[Indian National Congress]]
+| term_start = 25 October 2024
+| term_end = 2029
+| website = <!-- {{URL|example.com}} -->
+| membership1 = '''90'''
+| control1 = [[Bharatiya Janata Party]]
+| chamber1_leader1_type = [[List of speakers of the Haryana Legislative Assembly|Speaker]]
+| chamber1_leader1 = [[Harvinder Kalyan]]
+| chamber1_leader2_type = Deputy Speaker
+| chamber1_leader2 = [[Krishan Lal Middha]]
+| chamber1_leader3_type = [[List of chief ministers of Haryana|Leader of the House]]
+| chamber1_leader3 = [[Nayab Singh Saini]]
+| chamber1_leader4_type = [[List of leaders of the opposition in the Haryana Legislative Assembly|Leader of the Opposition]]
+| chamber1_leader4 = [[Bhupinder Singh Hooda]]
+}}
+
+The '''Fifteenth Legislative Assembly of Haryana''' constituted after the [[2024 Haryana Legislative Assembly election|2024 Haryana Legislative Assembly elections]]. Legislative Assembly [[election]] was held in [[Haryana]] on 5 October 2024 to elect 90 members of the [[Haryana Legislative Assembly]].<ref>{{cite news |date=31 August 2024 |title=Haryana Poll Date Moved To October 5; J&K and Haryana Results Now On October 8 |url=https://www.timesnownews.com/india/haryana-poll-date-moved-to-october-5-jk-and-haryana-results-now-set-for-october-8-article-112952021 |url-status=live |archive-url=https://web.archive.org/web/20240831134119/https://www.timesnownews.com/india/haryana-poll-date-moved-to-october-5-jk-and-haryana-results-now-set-for-october-8-article-112952021 |archive-date=31 August 2024 |access-date=31 August 2024 |work=[[Times Now]]}}</ref> The results were announced on 8 October 2024.<ref>{{cite news |date=31 August 2024 |title=Haryana Assembly Election: EC Revises Polling Date To October 5, Counting On October 8 |url=https://www.thedailyjagran.com/india/haryana-assembly-election-date-revised-ec-shifts-polling-date-to-october-5-counting-on-october8-10184539 |url-status=live |archive-url=https://web.archive.org/web/20240831134119/https://english.jagran.com/india/haryana-assembly-election-date-revised-ec-shifts-polling-date-to-october-5-counting-on-october8-10184539 |archive-date=31 August 2024 |access-date=31 August 2024 |work=[[Jagran Prakashan|English Jagran]]}}</ref>
+
+== Members of Legislative Assembly ==
+{| class="wikitable sortable" style="text-align:left;"
+|-
+! District 
+! No
+! Constituency Name
+! Name
+! colspan="2" |[[List of political parties in India|Political Party]]
+! colspan="2" |[[List of political groups by country#India|Political Group]]
+|-
+| rowspan="2" | [[Panchkula district|Panchkula]] 
+| 1
+| [[Kalka Assembly constituency|Kalka]]
+| [[Shakti Rani Sharma]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|2
+| [[Panchkula Assembly constituency|Panchkula]]
+| [[Chander Mohan]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+| rowspan="4" | [[Ambala district|Ambala]] 
+|3
+| [[Naraingarh Assembly constituency|Naraingarh]]
+| [[Shalley Chaudhary]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|4
+| [[Ambala Cantonment Assembly constituency|Ambala Cantt]]
+| [[Anil Vij]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|5
+| [[Ambala City Assembly constituency|Ambala City]]
+| [[Nirmal Singh (Haryana politician)|Nirmal Singh]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|6
+| [[Mulana Assembly constituency|Mulana]] (SC)
+| [[Pooja Chaudhary]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+| rowspan="4" | [[Yamunanagar district|Yamunanagar]] 
+|7
+| [[Sadhaura Assembly constituency|Sadhaura]] (SC)
+| [[Renu Bala]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|8
+| [[Jagadhri Assembly constituency|Jagadhri]]
+| [[Akram Khan (politician)|Akram Khan]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|9
+| [[Yamunanagar Assembly constituency|Yamunanagar]]
+| [[Ghanshyam Dass]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+| 10
+| [[Radaur Assembly constituency|Radaur]]
+| [[Shyam Singh Rana]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+| rowspan="4" | [[Kurukshetra district|Kurukshetra]] 
+| 11
+| [[Ladwa Assembly constituency|Ladwa]]
+| [[Nayab Singh Saini]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|12
+| [[Shahbad Assembly constituency|Shahbad]] (SC)
+| [[Ram Karan]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|13
+| [[Thanesar Assembly constituency|Thanesar]]
+| [[Ashok Kumar Arora]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|14
+| [[Pehowa Assembly constituency|Pehowa]]
+| [[Mandeep Chatha]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+| rowspan="4" | [[Kaithal district|Kaithal]] 
+|15
+| [[Guhla Assembly constituency|Guhla]] (SC)
+| [[Devender Hans]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|16
+| [[Kalayat Assembly constituency|Kalayat]]
+| [[Vikas Saharan]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|17
+| [[Kaithal Assembly constituency|Kaithal]]
+| [[Aditya Surjewala]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|18
+| [[Pundri Assembly constituency|Pundri]]
+| [[Satpal Jamba]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+| rowspan="5" | [[Karnal district|Karnal]] 
+|19
+| [[Nilokheri Assembly constituency|Nilokheri]] (SC)
+| [[Bhagwan Das KabirPanthi|Bhagwan Das]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|20
+| [[Indri Assembly constituency|Indri]]
+| [[Ram Kumar Kashyap]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|21
+| [[Karnal Assembly constituency|Karnal]]
+| [[Jagmohan Anand]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|22
+| [[Gharaunda Assembly constituency|Gharaunda]]
+| [[Harvinder Kalyan]] (Speaker)
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|23
+| [[Assandh Assembly constituency|Assandh]]
+| [[Yogender Singh Rana]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+| rowspan="4" | [[Panipat district|Panipat]] 
+|24
+| [[Panipat Rural Assembly constituency|Panipat Rural]]
+| [[Mahipal Dhanda]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|25
+| [[Panipat City Assembly constituency|Panipat City]]
+| [[Parmod Kumar Vij]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|26
+| [[Israna Assembly constituency|Israna]] (SC)
+| [[Krishan Lal Panwar]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|27
+| [[Samalkha Assembly constituency|Samalkha]]
+| [[Manmohan Bhadana]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+| rowspan="6" | [[Sonipat district|Sonipat]] 
+|28
+| [[Ganaur Assembly constituency|Ganaur]]
+| [[Devender Kadyan]]
+| {{Party name with color|Independent (politician)}}
+|
+|-
+|29
+| [[Rai Assembly constituency|Rai]]
+| [[Krishna Gahlawat]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|30
+| [[Kharkhauda Assembly constituency|Kharkhauda]] (SC)
+| [[Pawan Kharkhoda|Pawan Kharkhauda]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|31
+| [[Sonipat Assembly constituency|Sonipat]]
+| [[Nikhil Madan]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|32
+| [[Gohana Assembly constituency|Gohana]]
+| [[Arvind Kumar Sharma]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|33
+| [[Baroda Assembly constituency|Baroda]]
+| [[Indu Raj Narwal]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+| rowspan="5" | [[Jind district|Jind]]
+|34
+| [[Julana Assembly constituency|Julana]]
+| [[Vinesh Phogat]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|35
+| [[Safidon Assembly constituency|Safidon]]
+| [[Ram Kumar Gautam]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|36
+| [[Jind Assembly constituency|Jind]]
+| [[Krishan Lal Middha]] (Deputy Speaker)
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|37
+| [[Uchana Kalan Assembly constituency|Uchana Kalan]]
+| [[Devender Attri]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|38
+| [[Narwana Assembly constituency|Narwana]] (SC)
+| [[Krishan Kumar (Narwana politician)|Krishan Kumar]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+| rowspan="3" | [[Fatehabad district|Fatehabad]]
+|39
+| [[Tohana Assembly constituency|Tohana]]
+| [[Paramvir Singh (politician)|Paramvir Singh]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|40
+| [[Fatehabad (Haryana Assembly constituency)|Fatehabad]]
+| [[Balwan Singh Daulatpuria]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|41
+| [[Ratia Assembly constituency|Ratia]] (SC)
+| [[Jarnail Singh (Haryana politician)|Jarnail Singh]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+| rowspan="5" | [[Sirsa district|Sirsa]] 
+|42
+| [[Kalanwali Assembly constituency|Kalanwali]] (SC)
+| [[Shishpal Singh]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|43
+| [[Dabwali Assembly constituency|Dabwali]]
+| [[Aditya Devilal]]
+| style="background-color: {{party color|Indian National Lok Dal}}" |
+| [[Indian National Lok Dal]]
+| style="background-color: {{party color|Indian National Lok Dal}}" |
+| [[Indian National Lok Dal|INLD]]+
+|-
+|44
+| [[Rania Assembly constituency|Rania]]
+| [[Arjun Chautala]]
+| style="background-color: {{party color|Indian National Lok Dal}}" |
+| [[Indian National Lok Dal]]
+| style="background-color: {{party color|Indian National Lok Dal}}" |
+| [[Indian National Lok Dal|INLD]]+
+|-
+|45
+| [[Sirsa Assembly constituency|Sirsa]]
+| [[Gokul Setia]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|46
+| [[Ellenabad Assembly constituency|Ellenabad]]
+| [[Bharat Singh Beniwal]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+| rowspan="7" | [[Hisar district|Hisar]]
+|47
+| [[Adampur, Haryana Assembly constituency|Adampur]]
+| [[Chander Prakash Jangra]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|48
+| [[Uklana Assembly constituency|Uklana]] (SC)
+| [[Naresh Selwal]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|49
+| [[Narnaund Assembly constituency|Narnaund]]
+| [[Jassi Petwar]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|50
+| [[Hansi Assembly constituency|Hansi]]
+| [[Vinod Bhayana]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|51
+| [[Barwala Assembly constituency|Barwala]]
+| [[Ranbir Singh Gangwa]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|52
+| [[Hisar Assembly constituency|Hisar]]
+| [[Savitri Jindal]]
+| {{Party name with color|Independent (politician)}}
+|
+|-
+|53
+| [[Nalwa Assembly constituency|Nalwa]]
+| [[Randhir Parihar]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+| [[Bhiwani district|Bhiwani]]
+|54
+| [[Loharu Assembly constituency|Loharu]]
+| [[Rajbir Singh Fartiya]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+| rowspan="2" | [[Charkhi Dadri district|Charkhi Dadri]] 
+|55
+| [[Badhra Assembly constituency|Badhra]]
+| [[Umed Singh (Haryana politician)|Umed Singh]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|56
+| [[Dadri (Haryana Vidhan Sabha constituency)|Dadri]]
+| [[Sunil Satpal Sangwan]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+| rowspan="3" | [[Bhiwani district|Bhiwani]] 
+|57
+| [[Bhiwani Assembly constituency|Bhiwani]]
+| [[Ghanshyam Saraf]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|58
+| [[Tosham Assembly constituency|Tosham]]
+| [[Shruti Choudhry]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|59
+| [[Bawani Khera Assembly constituency|Bawani Khera]] (SC)
+| [[Kapoor Singh|Kapoor Valmiki]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+| rowspan="4" | [[Rohtak district|Rohtak]] 
+|60
+| [[Meham Assembly constituency|Meham]]
+| [[Balram Dangi]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|61
+| [[Garhi Sampla-Kiloi Assembly constituency|Garhi Sampla-Kiloi]]
+| [[Bhupinder Singh Hooda]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|62
+| [[Rohtak Assembly constituency|Rohtak]]
+| [[Bharat Bhushan Batra]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|63
+| [[Kalanaur Assembly constituency|Kalanaur]] (SC)
+| [[Shakuntla Khatak]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+| rowspan="4" | [[Jhajjar district|Jhajjar]] 
+| 64
+| [[Bahadurgarh Assembly constituency|Bahadurgarh]]
+| [[Rajesh Joon]]
+| {{Party name with color|Independent (politician)}}
+|
+|-
+|65
+| [[Badli, Haryana Assembly constituency|Badli]]
+| [[Kuldeep Vats]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|66
+| [[Jhajjar Assembly constituency|Jhajjar]] (SC)
+| [[Geeta Bhukkal]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|67
+| [[Beri Assembly constituency|Beri]]
+| [[Raghuvir Singh Kadian]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+| rowspan="4" | [[Mahendragarh district|Mahendragarh]] 
+|68
+| [[Ateli Assembly constituency|Ateli]]
+| [[Arti Singh Rao]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|69
+| [[Mahendragarh Assembly constituency|Mahendragarh]]
+| [[Kanwar Singh Yadav]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|70
+| [[Narnaul Assembly constituency|Narnaul]]
+| [[Om Parkash Yadav]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|71
+| [[Nangal Chaudhry Assembly constituency|Nangal Chaudhry]]
+| [[Manju Choudhary (politician)|Manju Chaudhary]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+| rowspan="3" | [[Rewari district|Rewari]]
+|72
+| [[Bawal Assembly constituency|Bawal]] (SC)
+| [[Krishan Kumar (Bawal politician)|Krishan Kumar]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|73
+| [[Kosli Assembly constituency|Kosli]]
+| [[Anil Yadav]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|74
+| [[Rewari Assembly constituency|Rewari]]
+| [[Laxman Singh Yadav]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+| rowspan="4" | [[Gurgaon district|Gurgaon]]
+|75
+| [[Pataudi Assembly constituency|Pataudi]] (SC)
+| [[Bimla Chaudhary]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|76
+| [[Badshahpur Assembly constituency|Badshahpur]]
+| [[Rao Narbir Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|77
+| [[Gurgaon Assembly constituency|Gurgaon]]
+| [[Mukesh Sharma (Haryana politician)|Mukesh Sharma]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|78
+| [[Sohna Assembly constituency|Sohna]]
+| [[Tejpal Tawar|Tejpal Tanwar]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+| rowspan="3" | [[Nuh district|Nuh]]
+|79
+| [[Nuh Assembly constituency|Nuh]]
+| [[Aftab Ahmed (Indian politician)|Aftab Ahmed]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|80
+| [[Ferozepur Jhirka Assembly constituency|Ferozepur Jhirka]]
+| [[Mamman Khan]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|81
+| [[Punahana Assembly constituency|Punahana]]
+| [[Mohammad Ilyas (Indian politician)|Mohammad Ilyas]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+| rowspan="3" | [[Palwal district|Palwal]]
+|82
+| [[Hathin Assembly constituency|Hathin]]
+| [[Mohd Israil]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|83
+| [[Hodal Assembly constituency|Hodal]] (SC)
+| [[Harinder Singh (Haryana politician)|Harinder Singh]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|84
+| [[Palwal Assembly constituency|Palwal]]
+| [[Gaurav Gautam]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+| rowspan="6" | [[Faridabad district|Faridabad]]
+|85
+| [[Prithla Assembly constituency|Prithla]]
+| [[Raghubir Tewatia]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Indian National Developmental Inclusive Alliance}}
+|-
+|86
+| [[Faridabad NIT Assembly constituency|Faridabad NIT]]
+| [[Satish Kumar Phagna]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|87
+| [[Badkhal Assembly constituency|Badkhal]]
+| [[Dhanesh Adlakha]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|88
+| [[Ballabgarh Assembly constituency|Ballabgarh]]
+| [[Mool Chand Sharma]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|89
+| [[Faridabad Assembly constituency|Faridabad]]
+| [[Vipul Goel]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|90
+| [[Tigaon Assembly constituency|Tigaon]]
+| [[Rajesh Nagar]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|-
+|}
+{{notelist}}
+
+== References ==
+{{Reflist}}
+
+{{Current Indian assemblies}}
+
+[[Category:Terms of the Haryana Legislative Assembly]]
+[[Category:Haryana MLAs 2024–2029| ]]
+[[Category:Lists of current Indian state and territorial assemblies|Haryana]]

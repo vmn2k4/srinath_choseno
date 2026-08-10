@@ -1,0 +1,647 @@
+{{Short description|Legislature of Uttarakhand, India, 2022–}}
+{{Use dmy dates|date=August 2024}}
+{{Use Indian English|date=August 2024}}
+{{Infobox legislature
+| name               = Fifth Uttarakhand Legislative Assembly
+| native_name        = 
+| native_name_lang   =
+| transcription_name = 
+| legislature        = 
+| coa_pic            = [[file:Seal_of_Uttarakhand.svg|150px]]
+| coa_res            = 
+| coa_alt            = 
+| house_type         = [[Unicameral]]
+| term_length        = 2022–2027
+| body               = 
+| houses             = [[Uttarakhand Legislative Assembly]]
+| preceded_by        = [[4th Uttarakhand Assembly]]
+| succeeded_by       = 
+| leader1_type       = [[Speaker of the Uttarakhand Legislative Assembly#List of the Speakers of Uttarakhand|Speaker]]
+| leader1            = [[Ritu Khanduri Bhushan]] 
+| party1             = [[Bharatiya Janata Party|BJP]]
+| election1          = 26 March 2022
+| leader2_type       = Deputy Speaker
+| leader2            = '''Vacant'''
+| party2             =
+| election2          = 10 March 2022
+| leader3_type       = '''[[Chief Minister of Uttarakhand|Leader of the House]]'''
+| leader3            = [[Pushkar Singh Dhami]]
+| party3             = [[Bharatiya Janata Party|BJP]]
+| election3          = 4 July 2021
+| leader4_type       = [[Leader of the Opposition in the Uttarakhand Legislative Assembly|Leader of the Opposition]]
+| leader4            = [[Yashpal Arya]]
+| party4             = [[Indian National Congress|INC]]
+| election4          = 10 April 2022
+| leader5_type       = Deputy Leader of the Opposition
+| leader5            = [[Bhuwan Chandra Kapri]]
+| party5             = [[Indian National Congress|INC]]
+| election5          = 10 April 2022
+| leader6_type       = [[Chief Secretary  of Uttarakhand|Chief Secretary]]
+| leader6            = Anand Bardhan, [[Indian Administrative Service|IAS]]<ref>{{Cite web |date=2021-07-05|title=SS Sandhu is Uttarakhand chief secy; Gadkari hails his tenure as NHAI chief |url=https://www.tribuneindia.com/news/nation/ss-sandhu-is-uttarakhand-chief-secy-gadkari-hails-his-tenure-as-nhai-chief-278595|access-date=2022-10-08|website=Tribuneindia News Service |language=en}}</ref>
+| committees1        = 
+| committees2        = 
+| joint_committees   = 
+| voting_system1     = [[First-past-the-post voting|first-past-the-post]]
+| voting_system2     = 
+| last_election1     = [[2022 Uttarakhand Legislative Assembly election|14 February 2022]]
+| next_election1     = 2027
+| members            = '''70'''
+| structure1         = [[File:Bharat Uttarakhand Vidhan Sabha 2024.svg|200px|India Uttarakhand Vidhan Sabha 2022]]
+| structure1_res     = 300px
+| political_groups1  = '''[[Government of Uttarakhand|Government]] (47)'''<br> '''[[National Democratic Alliance|NDA]] (47)'''
+*{{Color box|#FF9933}} [[Bharatiya Janata Party|BJP]] (47)
+'''Opposition (23)'''
+*{{Color box|#00BFFF}} [[Indian National Congress|INC]] (20)
+*{{Color box|#22409A}} [[Bahujan Samaj Party|BSP]] (1)
+*{{Color box|#DDDDDD}} [[Independent politician|IND]] (2)
+| website            = [https://ukvidhansabha.uk.gov.in/ Uttarakhand Legislative Assembly]
+| constitution       = [[Constitution of India]]
+| session_room       = 
+| session_res        = 
+| session_alt        = 
+| meeting_place      = Vidhan Bhavan, [[Bhararisain]] {{small|(Summer)}}<br>Vidhan Bhavan, [[Dehradun]] {{small|(Winter)}}
+| footnotes          =
+}}
+{{Politics of Uttarakhand}}
+
+The [[2022 Uttarakhand Legislative Assembly election]] had elected the incumbent fifth [[Uttarakhand Legislative Assembly]]. Currently, the incubment [[Bharatiya Janata Party]] has 47 seats and the official opposition [[Indian National Congress]] has 20.<ref>{{Cite web|url=https://www.amarujala.com/live/dehradun/uttarakhand-assembly-election-result-2022-live-vote-counting-today-bjp-congress-aap-win-loss-seats-news-updates-in-hindi|title = Uttarakhand Election Result Live: 70 में 46 सीटों पर भाजपा और 20 पर कांग्रेस को मिली जीत, पीएम मोदी बोले- उत्तराखंड में रचा नया इतिहास}}</ref> 
+
+==Party position of the Assembly==
+{| class="wikitable sortable"
+|-
+! style="text-align:center;"| Party
+! style="text-align:center;"| Abbr.
+! style="text-align:center;"| Seats 
+! style="text-align:center;"| Leader in the House
+|-style="background: #90EE90;"
+| align="left" |[[Bharatiya Janata Party]]||BJP||'''47'''||[[Pushkar Singh Dhami]]
+|-
+| align="left" |[[Indian National Congress]]||INC||'''20'''||[[Yashpal Arya]]
+|-
+| align="left" |[[Bahujan Samaj Party]]||BSP||'''01'''|| [[Muhammad Shahzad (politician)|Muhammad Shahzad]]
+|-
+| align="left" |[[Independent politician|Independent]]||Ind.||'''02'''||N/A
+|-
+| align="centre" |'''Total '''|| ||'''70'''||
+|}
+
+== Key post holders in the assembly ==
+{| class="wikitable sortable"
+!S.No.
+!Position
+!Portrait
+!Name
+! colspan="2" |Party
+!Constituency
+!Office Taken
+!Ref
+|-
+!1
+| [[List of speakers of the Uttarakhand Legislative Assembly|Speaker]] 
+| 
+|'''[[Ritu Khanduri Bhushan]]'''
+| style="background:{{party color|Bharatiya Janata Party}}" |
+|[[Bharatiya Janata Party]]
+|[[Kotdwar Assembly constituency|Kotdwar]]
+|26 March 2022
+|<ref name="auto">{{cite web | url=https://www.amarujala.com/dehradun/ritu-khanduri-filed-nomination-on-march-26-uttarakhand-will-get-first-woman-assembly-speaker | title=रितु खंडूरी ने भरा नामांकन: 26 मार्च को उत्तराखंड को मिल जाएगी पहली महिला विधानसभा अध्यक्ष }}</ref>
+|-
+!2
+| [[List of speakers of the Uttarakhand Legislative Assembly|Deputy Speaker]] 
+| colspan="7" |''Vacant''
+|-
+!3
+|Leader of the House
+|[[File:Pushkar Dhami.jpg|frameless|154x154px]]
+|'''[[Pushkar Singh Dhami]]'''<br/>{{small|(''[[List of chief ministers of Uttarakhand|Chief Minister]]'')}}
+| rowspan="2" style="background:{{party color|Bharatiya Janata Party}}" |
+| rowspan="2" |[[Bharatiya Janata Party]]
+|[[Champawat Assembly constituency|Champawat]]
+| 23 March 2022
+|<ref>{{cite web | url=https://timesofindia.indiatimes.com/city/dehradun/dhami-takes-oath-as-12th-cm-8-member-cabinet-sworn-in/articleshow/90407843.cms | title=Dhami: Dhami Takes Oath as 12th Cm, 8-member Cabinet Sworn in &#124; Dehradun News - Times of India | website=[[The Times of India]] }}</ref>
+|-
+!4
+|Deputy Leader of the House
+|
+|'''[[Subodh Uniyal]]'''<br/>{{small|(''Parliamentary Affairs and Forest Minister'')}}
+| [[Narendranagar Assembly constituency|Narendranagar]]
+| 13 August 2025
+|<ref>{{cite web | url=https://www.etvbharat.com/hi/!state/uttarakhand-government-given-responsibility-of-parliamentary-affairs-minister-to-cabinet-minister-subodh-uniyal-uttarakhand-news-uts25081306462 | title=कैबिनेट मंत्री सुबोध उनियाल को संसदीय कार्य मंत्री की जिम्मेदारी, धामी सरकार ने जारी किए आदेश| website=ETV Bharat }}</ref>
+|-
+!5
+|[[List of leaders of the opposition in the Uttarakhand Legislative Assembly|Leader of Opposition]]
+|[[File:Yashpal Arya LOP Uttarakhand Assembly.jpg|frameless|149x149px]]
+|'''[[Yashpal Arya]]'''
+| style="background:{{party color|Indian National Congress}}" |
+|[[Indian National Congress]]
+| [[Bajpur Assembly constituency|Bajpur]]
+|18 April 2022
+|<ref>{{Cite web|url=https://ukvidhansabha.uk.gov.in/adminVips/biodata/biodataE16-09-2022-05-42-41.pdf|title=Yashpal Arya - Biodata |website=ukvidhansabha.uk.gov.in}}</ref>
+|-
+!6
+|[[List of leaders of the opposition in the Uttarakhand Legislative Assembly|Deputy Leader of Opposition]]
+| 
+|'''[[Bhuwan Chandra Kapri]]'''
+| style="background:{{party color|Indian National Congress}}" |
+|[[Indian National Congress]]
+| [[Khatima Assembly constituency|Khatima]]
+|18 April 2022
+|<ref>{{Cite web|url=https://indianexpress.com/article/india/congress-names-its-uttarakhand-state-unit-chief-clp-leader-7863070/|title=Congress names its Uttarakhand state unit chief, CLP leader|date=11 April 2022|access-date=6 August 2023}}</ref>
+|}
+
+== Members of the Fifth Uttarakhand Assembly ==
+{| class="wikitable sortable"
+|+
+|-
+!District
+!No.
+!Constituency
+!Name
+!colspan="2"|Party
+!Remarks
+|-
+| rowspan="3" | [[Uttarkashi district|Uttarkashi]]
+|1
+|[[Purola (Uttarakhand Assembly constituency)|Purola]] (SC)
+|[[Durgeshwar Lal]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|2
+|[[Yamunotri (Uttarakhand Assembly constituency)|Yamunotri]]
+|[[Sanjay Dobhal]]
+|{{Party name with color| Independent politician}}
+|
+|- 
+|3
+|[[Gangotri (Uttarakhand Assembly constituency)|Gangotri]]
+|[[Suresh Singh Chauhan]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="4" | [[Chamoli district|Chamoli]]
+|rowspan=2|4
+|rowspan=2|[[Badrinath (Uttarakhand Assembly constituency)|Badrinath]]
+|[[Rajendra Singh Bhandari]]
+|{{Full party name with color|Indian National Congress|rowspan=2}} 
+|Resigned on 17 March 2024
+|-
+|[[Lakhpat Singh Butola]]
+|Elected on 13 July 2024
+|-
+|5
+|[[Tharali (Uttarakhand Assembly constituency)|Tharali]] (SC)
+|[[Bhupal Ram Tamta]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+|6
+|[[Karnaprayag (Uttarakhand Assembly constituency)|Karnaprayag]]
+|[[Anil Nautiyal]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="3" | [[Rudraprayag district|Rudraprayag]]
+|rowspan=2|7
+|rowspan=2|[[Kedarnath (Uttarakhand Assembly constituency)|Kedarnath]]
+|[[Shaila Rani Rawat]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=2}}
+|Died on 9 July 2024
+|-
+|[[Asha Nautiyal]]||Elected in [[2024 elections in India#Uttarakhand|November 2024 by-election]]<ref>{{cite web|url=https://www.indiatvnews.com/news/india/uttarakhand-byopoll-election-results-for-kedarnath-seat-leading-trailing-candidates-consituency-wise-bjp-asha-nautiyal-congress-manoj-rawat-2024-11-23-962584|title=Uttarakhand Bypoll Results 2024: BJP's Asha Nautiyal wins Kedarnath seat by 5,622 votes margin|work=India TV|accessdate=23 November 2024}}</ref>
+|-
+|8
+|[[Rudraprayag (Uttarakhand Assembly constituency)|Rudraprayag]]
+|[[Bharat Singh Chaudhary]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Cabinet Minister
+|- 
+| rowspan="6" | [[Tehri Garhwal district|Tehri Garhwal]]
+|9
+|[[Ghansali (Uttarakhand Assembly constituency)|Ghansali]] (SC)
+|[[Shakti Lal Shah]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+|10
+|[[Devprayag (Uttarakhand Assembly constituency)|Devprayag]]
+|[[Vinod Kandari]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+|
+|-
+|11
+|[[Narendranagar (Uttarakhand Assembly constituency)|Narendranagar]]
+|[[Subodh Uniyal]]
+|{{Full party name with color|Bharatiya Janata Party}}
+| Cabinet Minister
+|- 
+|12
+|[[Pratapnagar (Uttarakhand Assembly constituency)|Pratapnagar]]
+|[[Vikram Singh Negi]]
+|{{Full party name with color|Indian National Congress}}
+|
+|- 
+|13
+|[[Tehri (Uttarakhand Assembly constituency)|Tehri]]
+|[[Kishore Upadhyaya]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+|14
+|[[Dhanaulti (Uttarakhand Assembly constituency)|Dhanaulti]]
+|[[Pritam Singh Panwar]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+| rowspan="10" | [[Dehradun district|Dehradun]]
+|15
+|[[Chakrata (Uttarakhand Assembly constituency)|Chakrata]] (ST)
+|[[Pritam Singh (Uttarakhand politician)|Pritam Singh]]
+|{{Full party name with color|Indian National Congress}} 
+|
+|- 
+|16
+|[[Vikasnagar (Uttarakhand Assembly constituency)|Vikasnagar]]
+|[[Munna Singh Chauhan]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+|17
+|[[Sahaspur (Uttarakhand Assembly constituency)|Sahaspur]]
+|[[Sahdev Singh Pundir]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+|
+|-
+|18
+|[[Dharampur (Uttarakhand Assembly constituency)|Dharampur]]
+|[[Vinod Chamoli]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+|
+|- 
+|19
+|[[Raipur (Uttarakhand Assembly constituency)|Raipur]]
+|[[Umesh Sharma|Umesh Sharma 'Kau']]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+|20
+|[[Rajpur Road (Uttarakhand Assembly constituency)|Rajpur Road]] (SC)
+|[[Khajan Dass]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+|Cabinet Minister
+|- 
+|21
+|[[Dehradun Cantonment (Uttarakhand Assembly constituency)|Dehradun Cantonment]]
+|[[Savita Kapoor]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+|
+|- 
+|22
+|[[Mussoorie (Uttarakhand Assembly constituency)|Mussoorie]]
+|[[Ganesh Joshi]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+| Cabinet Minister
+|- 
+|23
+|[[Doiwala (Uttarakhand Assembly constituency)|Doiwala]]
+|[[Brij Bhushan Gairola]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+|
+|- 
+|24
+|[[Rishikesh (Uttarakhand Assembly constituency)|Rishikesh]]
+|[[Premchand Aggarwal]]
+|{{Full party name with color|Bharatiya Janata Party}}
+| Former Cabinet Minister
+|- 
+| rowspan="12" | [[Haridwar district|Haridwar]]
+|25
+|[[Haridwar (Uttarakhand Assembly constituency)|Haridwar]]
+|[[Madan Kaushik]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Cabinet Minister
+|- 
+|26
+|[[BHEL Ranipur (Uttarakhand Assembly constituency)|BHEL Ranipur]]
+|[[Adesh Chauhan]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+|27
+|[[Jwalapur (Uttarakhand Assembly constituency)|Jwalapur]] (SC)
+|[[Ravi Bahadur]]
+|{{Full party name with color|Indian National Congress}}
+|
+|- 
+|28
+|[[Bhagwanpur (Uttarakhand Assembly constituency)|Bhagwanpur]] (SC)
+|[[Mamta Rakesh]]
+|{{Full party name with color|Indian National Congress}} 
+|
+|- 
+|29
+|[[Jhabrera (Uttarakhand Assembly constituency)|Jhabrera]] (SC)
+|[[Virendra Kumar (Uttarakhand politician)|Virendra Kumar]]
+|{{Full party name with color|
+Indian National Congress}} 
+|
+|- 
+|30
+|[[Piran Kaliyar (Uttarakhand Assembly constituency)|Piran Kaliyar]]
+|[[Furqan Ahmad]]
+|{{Full party name with color|Indian National Congress}} 
+|
+|- 
+|31
+|[[Roorkee (Uttarakhand Assembly constituency)|Roorkee]]
+|[[Pradip Batra]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Cabinet Minister
+|- 
+|32
+|[[Khanpur (Uttarakhand Assembly constituency)|Khanpur]]
+|[[Umesh Kumar]]
+|{{Party name with color|Independent politician}} 
+|
+|- 
+| rowspan=2|33
+| rowspan=2|[[Manglaur (Uttarakhand Assembly constituency)|Manglaur]]
+|[[Sarwat Karim Ansari]]
+|{{Full party name with color|Bahujan Samaj Party}}
+|Died on 30 October 2023<ref>{{Cite news |date=2023-10-31 |title=BSP legislator Sarwat Karim Ansari dies at 66 |work=The Times of India |url=https://timesofindia.indiatimes.com/city/dehradun/bsp-legislator-sarwat-karim-ansari-dies-at-66/articleshow/104842842.cms |access-date=2023-12-19 |issn=0971-8257}}</ref>
+|-
+|[[Muhammad Nizamuddin]]
+|{{Full party name with color|Indian National Congress}}
+|Elected on 13 July 2024
+|-
+|34
+|[[Laksar (Uttarakhand Assembly constituency)|Laksar]]
+|[[Muhammad Shahzad (politician)|Muhammad Shahzad]]
+|{{Full party name with color|Bahujan Samaj Party}} 
+|
+|- 
+|35
+|[[Haridwar Rural (Uttarakhand Assembly constituency)|Haridwar Rural]]
+|[[Anupama Rawat]]
+|{{Full party name with color|Indian National Congress}} 
+|
+|- 
+| rowspan="6" | [[Pauri Garhwal district|Pauri Garhwal]]
+|36
+|[[Yamkeshwar (Uttarakhand Assembly constituency)|Yamkeshwar]]
+|[[Renu Bisht]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+|
+|- 
+|37
+|[[Pauri (Uttarakhand Assembly constituency)|Pauri]] (SC)
+|[[Rajkumar Pori]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+|
+|- 
+|38
+|[[Srinagar (Uttarakhand Assembly constituency)|Srinagar]]
+|[[Dhan Singh Rawat]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+| Cabinet Minister
+|- 
+|39
+|[[Chaubattakhal (Uttarakhand Assembly constituency)|Chaubattakhal]]
+|[[Satpal Maharaj]]
+|{{Full party name with color|Bharatiya Janata Party}}
+| Cabinet Minister
+|- 
+|40
+|[[Lansdowne (Uttarakhand Assembly constituency)|Lansdowne]]
+|[[Dilip Singh Rawat]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+|
+|- 
+|41
+|[[Kotdwar (Uttarakhand Assembly constituency)|Kotdwar]]
+|[[Ritu Khanduri Bhushan]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+| Speaker
+|- 
+| rowspan="4" | [[Pithoragarh district|Pithoragarh]]
+|42
+|[[Dharchula (Uttarakhand Assembly constituency)|Dharchula]]
+|[[Harish Singh Dhami]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+|43
+|[[Didihat (Uttarakhand Assembly constituency)|Didihat]]
+|[[Bishan Singh Chuphal]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+|
+|- 
+|44
+|[[Pithoragarh (Uttarakhand Assembly constituency)|Pithoragarh]]
+|[[Mayukh Singh Mahar]]
+|{{Full party name with color|Indian National Congress}} 
+|
+|- 
+|45
+|[[Gangolihat (Uttarakhand Assembly constituency)|Gangolihat]] (SC)
+|[[Fakir Ram Tamta]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+| rowspan="3" | [[Bageshwar district|Bageshwar]]
+|46
+|[[Kapkot (Uttarakhand Assembly constituency)|Kapkot]]
+|[[Suresh Singh Gariya|Suresh Singh Garhia]]
+|{{Full party name with color|Bharatiya Janata Party}} 
+|
+|- 
+|rowspan=2|47
+|rowspan=2|[[Bageshwar (Uttarakhand Assembly constituency)|Bageshwar]] (SC)
+|[[Chandan Ram Das]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=2}}
+| Died on 26 April 2023<ref>{{Cite web |date=2023-04-26 |title=Uttarakhand minister Chandan Ram Dass dies at 65 |url=https://www.news9live.com/india/uttarakhand-minister-chandan-ram-dass-dies-at-65-au2257-2118387 |access-date=2023-04-26 |website=News9live |language=en-US}}</ref>
+|-
+|[[Parwati Das]]
+|Elected on 8 September 2023
+|-
+| rowspan="6" | [[Almora district|Almora]]
+|48
+|[[Dwarahat (Uttarakhand Assembly constituency)|Dwarahat]]
+|[[Madan Singh Bisht]]
+|{{Full party name with color|Indian National Congress}}
+|
+|- 
+|49
+|[[Salt (Uttarakhand Assembly constituency)|Salt]]
+|[[Mahesh Singh Jeena]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+|50
+|[[Ranikhet (Uttarakhand Assembly constituency)|Ranikhet]]
+|[[Pramod Nainwal]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+|51
+|[[Someshwar (Uttarakhand Assembly constituency)|Someshwar]] (SC)
+|[[Rekha Arya]]
+|{{Full party name with color|Bharatiya Janata Party}}
+| Cabinet Minister
+|- 
+|52
+|[[Almora (Uttarakhand Assembly constituency)|Almora]]
+|[[Manoj Tiwari (Uttarakhand politician)|Manoj Tiwari]]
+|{{Full party name with color|Indian National Congress}}
+|  
+|- 
+|53
+|[[Jageshwar (Uttarakhand Assembly constituency)|Jageshwar]]
+|[[Mohan Singh Mahara]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+| rowspan="3" | [[Champawat district|Champawat]]
+|54
+|[[Lohaghat (Uttarakhand Assembly constituency)|Lohaghat]]
+|[[Khushal Singh Adhikari]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+| rowspan=2|55
+| rowspan=2|[[Champawat (Uttarakhand Assembly constituency)|Champawat]]
+| [[Kailash Chandra Gahtori]]
+| {{Full party name with color|Bharatiya Janata Party|rowspan=2}}
+| Resigned on 21 April 2022
+|- 
+|[[Pushkar Singh Dhami]]
+|Elected on 3 June 2022
+|-
+| rowspan="6" | [[Nainital district|Nainital]]
+|56
+|[[Lalkuan (Uttarakhand Assembly constituency)|Lalkuan]]
+|[[Mohan Singh Bisht (Uttarakhand politician)|Mohan Singh Bisht]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+|57
+|[[Bhimtal (Uttarakhand Assembly constituency)|Bhimtal]]
+|[[Ram Singh Kaira]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Cabinet Minister
+|- 
+|58
+|[[Nainital (Uttarakhand Assembly constituency)|Nainital]] (SC)
+|[[Sarita Arya]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|59
+|[[Haldwani (Uttarakhand Assembly constituency)|Haldwani]]
+|[[Sumit Hridayesh]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+|60
+|[[Kaladhungi (Uttarakhand Assembly constituency)|Kaladhungi]]
+|[[Banshidhar Bhagat]]
+|{{Full party name with color|Bharatiya Janata Party}}
+| 
+|- 
+|61
+|[[Ramnagar (Uttarakhand Assembly constituency)|Ramnagar]]
+|[[Diwan Singh Bisht]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+| rowspan="9" | [[Udham Singh Nagar district|Udham Singh Nagar]]
+|62
+|[[Jaspur (Uttarakhand Assembly constituency)|Jaspur]]
+|[[Adesh Singh Chauhan]]
+|{{Full party name with color|Indian National Congress}} 
+|
+|- 
+|63
+|[[Kashipur, Uttarakhand Assembly constituency|Kashipur]]
+|[[Trilok Singh Cheema]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+|64
+|[[Bajpur (Uttarakhand Assembly constituency)|Bajpur]] (SC)
+|[[Yashpal Arya]]
+|{{Full party name with color|Indian National Congress}}
+|Leader of Opposition
+|-
+|65
+|[[Gadarpur (Uttarakhand Assembly constituency)|Gadarpur]]
+|[[Arvind Pandey]]
+|{{Full party name with color|Bharatiya Janata Party}}
+| 
+|- 
+|66
+|[[Rudrapur (Uttarakhand Assembly constituency)|Rudrapur]]
+|[[Shiv Arora]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|- 
+|67
+|[[Kichha (Uttarakhand Assembly constituency)|Kichha]]
+|[[Tilak Raj Behar]]
+|{{Full party name with color|Indian National Congress}}
+|
+|- 
+|68
+|[[Sitarganj (Uttarakhand Assembly constituency)|Sitarganj]]
+|[[Saurabh Bahuguna]]
+|{{Full party name with color|Bharatiya Janata Party}}
+| Cabinet Minister
+|- 
+|69
+|[[Nanakmatta (Uttarakhand Assembly constituency)|Nanakmatta]] (ST)
+|[[Gopal Singh Rana]]
+|{{Full party name with color|Indian National Congress}}
+|
+|-
+|70
+|[[Khatima (Uttarakhand Assembly constituency)|Khatima]]
+|[[Bhuwan Chandra Kapri]]
+|{{Full party name with color|Indian National Congress}}
+|Deputy Leader of Opposition
+|}<section end="Composition"/>
+
+===By-elections===
+
+{| class="wikitable sortable"
+|- style="background:#E9E9E9;"
+!S. No. 
+!Constituency
+!Elected Member
+!Party affiliation
+|-
+|55||[[Champawat (Uttarakhand Assembly constituency)|Champawat]] ||[[Pushkar Singh Dhami]]<ref>{{cite web|url=https://indianexpress.com/article/india/uttarakhand-cm-pushkar-singh-dhami-wins-champawat-bypoll-7950353/|title=Pushkar Singh Dhami wins Champawat bypolls by 55,000 votes, retains CM post|work=The Indian Express|date=3 June 2022 |accessdate=3 June 2022}}</ref> ||bgcolor=#FF9933|BJP
+|-
+|47||[[Bageshwar (Uttarakhand Assembly constituency)|Bageshwar]]||[[Parwati Das]]||bgcolor=#FF9933|BJP
+|-
+|4||[[Badrinath (Uttarakhand Assembly constituency)|Badrinath]]||[[Lakhpat Singh Butola]]||bgcolor=#00BFFF|INC
+|-
+|33||[[Manglaur (Uttarakhand Assembly constituency)|Manglaur]]||[[Muhammad Nizamuddin]]||bgcolor=#00BFFF|INC
+|-
+|7||[[Kedarnath (Uttarakhand Assembly constituency)|Kedarnath]]||[[Asha Nautiyal]]||bgcolor=#FF9933|BJP
+|}
+
+==See also==
+* [[2022 Uttarakhand Legislative Assembly election]]
+* [[Second Dhami ministry]]
+* [[Politics of Uttarakhand]]
+
+==References==
+{{reflist}}
+
+{{Uttarakhand Assemblies}}
+{{Current Indian assemblies}}
+{{Portal bar|India|Politics}}
+
+[[Category:Uttarakhand Legislative Assembly]]
+[[Category:Lists of current Indian state and territorial assemblies|Uttarakhand]]
+[[Category:Terms of the Uttarakhand Legislative Assembly]]

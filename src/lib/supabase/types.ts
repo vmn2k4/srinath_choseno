@@ -2606,6 +2606,10 @@ export type Database = {
           users: Json
         }[]
       }
+      get_or_create_political_party: {
+        Args: { p_country: string; p_name: string }
+        Returns: number
+      }
       get_geojson_shapes:
         | {
             Args: never

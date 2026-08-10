@@ -1,0 +1,222 @@
+{{Short description|Legislature of Sikkim from 2024}}
+{{Use dmy dates|date=August 2024}}
+{{Use Indian English|date=August 2024}}
+{{Infobox legislative term
+|name=11th Sikkim Assembly
+|before=[[10th Sikkim Assembly|10th Assembly]]
+|after=12th Assembly
+|image=
+|image_size=300
+|caption=
+|body=[[Sikkim Legislative Assembly]]
+|election=[[2024 Sikkim Legislative Assembly election]]
+|government=
+|opposition=''None''
+|term_start=
+|term_end=
+|website=<!-- {{URL|example.com}} -->
+|membership1='''32'''
+|control1=[[Sikkim Krantikari Morcha]]
+|chamber1_leader1_type=Speaker
+|chamber1_leader1=
+|chamber1_leader2_type=[[List of chief ministers of Sikkim|Leader of the House]]
+|chamber1_leader2=
+|chamber1_leader4_type=Leader of the Opposition
+|chamber1_leader4=''Vacant''{{efn|No party secured 10% of seats to form official opposition.}}
+}}
+
+[[File:Sikkim_Assembly_Gangtok.jpg | thumb | right | Sikkim Legislative Assembly building in Gangtok]]
+The '''Eleventh Legislative Assembly of Sikkim''' constituted after the [[2024 Sikkim Legislative Assembly election]]. The results being declared on 2 June 2024.<ref name=":0">{{Cite web |title=Sikkim's Ruling SKM Sweeps Polls, BJP Scores Himalayan Arunachal Win |url=https://www.ndtv.com/india-news/arunachal-pradesh-sikkim-assembly-election-results-live-counting-today-for-sikkim-arunachal-pradesh-assembly-polls-10-points-5796508 |access-date=2024-06-02 |website=NDTV.com}}</ref>
+
+== Members of Legislative Assembly ==
+The '''Eleventh''' assembly was elected in [[2024 Sikkim Legislative Assembly election]]. The current members are listed below: 
+{| class="wikitable sortable"
+!District
+!No.
+!Constituency
+!Name
+! colspan="2" |Party
+!Remarks
+|-
+| rowspan="4"|[[Gyalshing district|Gyalshing]]
+| 1
+| [[Yoksam–Tashiding Assembly constituency|Yoksam–Tashiding]] (BL)
+| [[Tshering Thendup Bhutia]]
+| {{Full party name with color|Sikkim Krantikari Morcha|rowspan=34}}
+|
+|-
+| 2
+| [[Yangthang Assembly constituency|Yangthang]]
+| [[Bhim Hang Limboo]]
+|
+|-
+| 3
+| [[Maneybong–Dentam Assembly constituency|Maneybong–Dentam]]
+| [[Sudesh Kumar Subba]]
+|
+|-
+| 4
+| [[Gyalshing–Barnyak Assembly constituency|Gyalshing–Barnyak]]
+| [[Lok Nath Sharma]]
+|
+|-
+| rowspan="5" |[[Soreng district|Soreng]]
+| 5
+| [[Rinchenpong Assembly constituency|Rinchenpong]] (BL)
+| [[Erung Tenzing Lepcha]]
+|
+|-
+| 6
+| [[Daramdin Assembly constituency|Daramdin]] (BL)
+| [[Mingma Narbu Sherpa]]
+|
+|-
+|rowspan=2| 7
+|rowspan=2| [[Soreng–Chakung Assembly constituency|Soreng–Chakung]]
+| [[Prem Singh Tamang]]
+|Resigned on 14 June 2024<ref>{{Cite news |last=Singh |first=Bikash |date=2024-06-14 |title=Sikkim CM Prem Singh Tamang relinquishes Soreng Chakung seat |url=https://economictimes.indiatimes.com/news/politics-and-nation/sikkim-cm-prem-singh-tamang-relinquishes-soreng-chakung-seat/articleshow/111002685.cms?from=mdr |access-date=2024-06-14 |work=The Economic Times |issn=0013-0389}}</ref><ref>{{Cite web |last=PTI |title=Sikkim Assembly Elections 2024 {{!}} Elected from two constituencies, Sikkim CM vacates Soreng-Chakung |url=https://www.deccanherald.com/elections/sikkim/sikkim-assembly-elections-2024-elected-from-two-constituencies-sikkim-cm-vacates-soreng-chakung-3067001 |access-date=2024-06-14 |website=Deccan Herald |language=en}}</ref>
+|-
+|[[Aditya Tamang]]||Elected unopposed in [[2024 elections in India#Sikkim|2024 by-election]]<ref name="2024 Sikkim by-election result">{{cite web|url=https://www.newindianexpress.com/nation/2024/Oct/29/sikkim-by-polls-ruling-skm-wins-both-seats-uncontested|title=Sikkim by-polls: Ruling SKM wins both seats uncontested|work=New Indian Express|accessdate=30 October 2024}}</ref>
+|-
+| 8
+| [[Salghari–Zoom Assembly constituency|Salghari–Zoom]] (SC)
+| [[Madan Cintury]]
+|
+|-
+| rowspan="9" |[[Namchi district|Namchi]]
+| 9
+| [[Barfung Assembly constituency|Barfung]] (BL)
+| [[Rikshal Dorjee Bhutia]]
+|
+|-
+| 10
+| [[Poklok–Kamrang Assembly constituency|Poklok–Kamrang]]
+| [[Bhoj Raj Rai]]
+|
+|-
+|rowspan=2| 11
+|rowspan=2| [[Namchi–Singhithang Assembly constituency|Namchi–Singhithang]]
+| [[Krishna Kumari Rai]]
+|Resigned on 13 June 2024<ref>{{Cite web |title=Sikkim CM's Wife Quits MLA Post Just a Day After Oath {{!}} Politics |url=https://www.devdiscourse.com/article/politics/2981642-sikkim-cms-wife-quits-mla-post-just-a-day-after-oath |access-date=2024-06-13 |website=Devdiscourse |language=en}}</ref><ref>{{Cite web |last=Dhungel |first=Pankaj |date=2024-06-13 |title=Sikkim: Day after taking oath, CM's wife resigns as MLA |url=http://www.eastmojo.com/sikkim/2024/06/13/sikkim-day-after-taking-oath-cms-wife-resigns-as-mla/ |access-date=2024-06-13 |website=EastMojo |language=en-US}}</ref><ref>{{Cite web |last=PTI |date=2024-06-13 |title=Day after taking oath, Sikkim CM's wife Krishna Kumari Rai quits as MLA |url=https://www.newindianexpress.com/nation/2024/Jun/13/day-after-taking-oath-sikkim-cms-wife-krishna-kumari-rai-quits-as-mla |access-date=2024-06-13 |website=The New Indian Express |language=en}}</ref>
+|-
+|[[Satish Chandra Rai (politician)|Satish Chandra Rai]]||Elected unopposed in [[2024 elections in India#Sikkim|2024 by-election]]<ref name="2024 Sikkim by-election result"/>
+|-
+| 12
+| [[Melli Assembly constituency|Melli]]
+| [[Nar Bahadur Pradhan]]
+|
+|-
+| 13
+| [[Namthang–Rateypani Assembly constituency|Namthang–Rateypani]]
+| [[Sanjit Kharel]]
+|
+|-
+| 14
+| [[Temi–Namphing Assembly constituency|Temi–Namphing]]
+| [[Bedu Singh Panth]]
+|
+|-
+| 15
+| [[Rangang–Yangang Assembly constituency|Rangang–Yangang]]
+| [[Raj Kumari Thapa]]
+|
+|-
+| 16
+| [[Tumin–Lingee Assembly constituency|Tumin–Lingee]] (BL)
+| [[Samdup Tshering Bhutia]]
+|
+|-
+| [[Gangtok district|Gangtok]]
+| 17
+| [[Khamdong–Singtam Assembly constituency|Khamdong–Singtam]]
+| [[Nar Bahadur Dahal]]
+|
+|-
+| rowspan="5" |[[Pakyong district|Pakyong]]
+| 18
+| [[West Pendam Assembly constituency|West Pendam]] (SC)
+| [[Lall Bahadur Das]]
+|
+|-
+| 19
+| [[Rhenock Assembly constituency|Rhenock]]
+| [[Prem Singh Tamang]]
+| Chief Minister 
+|-
+| 20
+| [[Chujachen Assembly constituency|Chujachen]]
+| [[Puran Kumar Gurung]]
+|
+|-
+| 21
+| [[Gnathang–Machong Assembly constituency|Gnathang–Machong]] (BL)
+| [[Pamin Lepcha]]
+|
+|-
+| 22
+| [[Namchaybong Assembly constituency|Namchaybong]]
+| [[Raju Basnet]]
+|
+|-
+| rowspan="6" |[[Gangtok district|Gangtok]]
+| 23
+| [[Shyari Assembly constituency|Shyari]] (BL)
+| [[Tenzing Norbu Lamtha]]
+|Switch from SDF to SKM<ref>{{Cite news |last=PTI |date=2024-07-10 |title=Lone SDF MLA in Sikkim Assembly Tenzing Norbu Lamtha joins ruling SKM |url=https://www.thehindu.com/news/national/sikkim/lone-sdf-mla-in-sikkim-assembly-tenzing-norbu-lamtha-joins-ruling-skm/article68388258.ece |access-date=2024-07-10 |work=The Hindu |language=en-IN |issn=0971-751X}}</ref>
+|-
+| 24
+| [[Martam–Rumtek Assembly constituency|Martam–Rumtek]] (BL)
+| [[Sonam Venchungpa]]
+|
+|-
+| 25
+| [[Upper Tadong Assembly constituency|Upper Tadong]]
+| [[G.T. Dhungel]]
+|
+|-
+| 26
+| [[Arithang Assembly constituency|Arithang]]
+| [[Arun Kumar Upreti]]
+|
+|-
+| 27
+| [[Gangtok Assembly constituency|Gangtok]] (BL)
+| [[Delay Namgyal Barfungpa]]
+|
+|-
+| 28
+| [[Upper Burtuk Assembly constituency|Upper Burtuk]]
+| [[Kala Rai]]
+|
+|-
+| rowspan="3" |[[Mangan district|Mangan]]
+| 29
+| [[Kabi–Lungchok Assembly constituency|Kabi–Lungchok]] (BL)
+| [[Thenlay Tshering Bhutia]]
+|
+|-
+| 30
+| [[Djongu Assembly constituency|Djongu]] (BL)
+| [[Pintso Namgyal Lepcha]]
+|
+|-
+| 31
+| [[Lachen–Mangan Assembly constituency|Lachen–Mangan]] (BL)
+| [[Samdup Lepcha]]
+|
+|-
+| Buddhist Monasteries
+| 32
+| [[Sangha Assembly constituency|Sangha]]
+| [[Sonam Lama (Sikkim politician)|Sonam Lama]]
+|
+|}
+
+==Notes==
+{{notelist}}
+
+== References ==
+{{Reflist}}{{Current Indian assemblies}}
+[[Category:Terms of the Sikkim Legislative Assembly]]
+[[Category:Lists of current Indian state and territorial assemblies|Sikkim]]
+[[Category:Sikkim MLAs 2024–2029| ]]

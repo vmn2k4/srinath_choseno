@@ -1,0 +1,1068 @@
+{{Short description|2023 legislature of Telangana, India}}
+{{More citations needed|date=December 2023}}
+{{Use dmy dates|date=August 2024}}
+{{Use Indian English|date=August 2024}}
+{{Infobox legislative term
+| name = 3rd Telangana Legislative Assembly
+| image = Andhra Pradesh Legislative Assembly.jpg
+| image_size = 250px
+| alt = 
+| caption = Telangana Legislative Assembly Building
+| body = [[Telangana Legislative Assembly]]
+| meeting_place = 
+| election = [[2023 Telangana Legislative Assembly election]]
+| government = [[Indian National Congress]]
+| opposition = '''Official opposition (17)'''
+*{{colorbox|{{party color|Bharat Rashtra Samithi}}}} [[Bharat Rashtra Samithi|BRS]] (17)
+'''[[Parliamentary opposition|Other opposition]] (15)'''
+*{{colorbox|{{party color|Bhartiya Janata Party}}}} [[BJP]] (7)
+*{{colorbox|{{party color|All India Majlis-e-Ittehadul Muslimeen}}}} [[All India Majlis-e-Ittehadul Muslimeen|AIMIM]] (7)
+*{{colorbox|{{party color|Independent}}}} [[Independent politician|IND]] (1)
+| term_start = {{Start date|2023|12|07|df=y}}
+| term_end = <!-- {{End date|YYYY|mm|D|df=y}} -->
+| before = [[2nd Telangana Assembly|2nd Assembly]]
+| after = 
+| website = {{URL|https://legislature.telangana.gov.in/web/legislative-assembly/home|Telangana Legislative Assembly}}
+| chamber1 = [[Governor (India)|Nominal Executive]]
+| chamber1_image = 
+| chamber1_image_size = 
+| chamber1_alt = 
+| membership1 = 
+| control1 = 
+| chamber1_leader1_type = [[List of governors of Telangana|Governor]]
+| chamber1_leader1 = [[Jishnu Dev Varma]]
+| chamber1_leader2_type = 
+| chamber1_leader2 = 
+| chamber1_leader3_type = 
+| chamber1_leader3 = 
+| chamber1_leader4_type = 
+| chamber1_leader4 = 
+| chamber2 = Telangana Legislative Assembly
+| chamber2_image = [[File:India Telangana Legislative Assembly November 2025.svg]]
+| chamber2_image_size = 350px
+| chamber2_alt = 
+| membership2 = 119
+| control2 = [[Indian National Congress]]
+| chamber2_leader1_type = [[List of speakers of the Telangana Legislative Assembly|Speaker]]
+| chamber2_leader1 = {{plainlist|
+* [[Gaddam Prasad Kumar]] (2023 – present)
+}}
+| chamber2_leader2_type = [[List of speakers of the Telangana Legislative Assembly#List_of_Deputy_Speakers|Deputy Speaker]]
+| chamber2_leader2 = [[Jatoth Ram Chander Naik]]
+| chamber2_leader3_type = [[List of chief ministers of Telangana|Chief Minister]]
+| chamber2_leader3 = [[Anumula Revanth Reddy]]<br>7 December 2023
+| chamber2_leader4_type = [[List of deputy chief ministers of Telangana|Deputy Chief Minister]]
+| chamber2_leader4 = [[Mallu Bhatti Vikramarka|Bhatti Vikramarka Mallu]] (2023 – present)
+| chamber2_leader5_type = Leader of the House
+| chamber2_leader5 = [[Anumula Revanth Reddy]]
+| chamber2_leader6_type = [[List of leaders of the opposition in the Telangana Legislative Assembly|Leader of the Opposition]]
+| chamber2_leader6 = [[K. Chandrashekar Rao]], [[Bharat Rashtra Samithi|BRS]]
+| session1_start = 
+| session1_end = 
+}}
+The '''Third Legislative Assembly of Telangana''' was constituted after the [[2023 Telangana Legislative Assembly election|2023 Telangana Legislative Assembly elections]] which were concluded on 5 December 2023. Polling took place on 30 November 2023.
+
+The majority needed to form the government is 60 seats in the assembly of 119 MLAs. The incumbent Congress crossed the majority of 60 seats needed in the assembly by winning a total of 64 seats.
+
+==History==
+===Election results===
+{{main|2023 Telangana Legislative Assembly election}}
+The results of the [[2023 Telangana Legislative Assembly election]] were announced on 3 December 2023. The majority needed to form the government is 60 seats in the assembly of 119 MLAs. 
+== Notable members ==
+{| class="wikitable sortable"
+!S.No
+!Position
+!Portrait
+!Name
+! colspan="2" |Party
+!Constituency
+!Office Taken
+|-
+!1
+| [[List of speakers of the Telangana Legislative Assembly|Speaker]]
+| [[File:Gaddam_Prasad_Kumar.jpg|frameless|100x100px]] 
+| [[Gaddam Prasad Kumar]]
+| style="background:{{party color|Indian National Congress}}"|
+| [[Indian National Congress]]
+| [[Vikarabad Assembly constituency|Vikarabad]] (SC)
+| 14 December 2023
+|-
+!2
+|[[List of speakers of the Telangana Legislative Assembly|Deputy Speaker]]
+|<!-- [[File:|frameless|100x100px]] -->
+| [[Jatoth Ram Chander Naik]]
+| style="background:{{party color|Indian National Congress}}"|
+| [[Indian National Congress]]
+| [[Dornakal Assembly constituency|Dornakal]] (ST)
+| 8 June 2025
+|-
+!3
+|Leader of the House
+|[[File:Revanth_Reddy.png|frameless|100x100px]]
+|[[Revanth Reddy]]<br><small>[[Chief Minister of Telangana|''(Chief Minister)'']]</small>
+|style="background:{{party color|Indian National Congress}}" |
+|[[Indian National Congress]]
+|[[Kodangal Assembly constituency|Kodangal]]
+|7 December 2023
+|-
+!4
+|[[List of leaders of the opposition in the Telangana Legislative Assembly|Leader of Opposition]]
+| [[File:Kalvakuntla_Chandrashekar_Rao.png|frameless|100x100px]] 
+| [[Kalvakuntla Chandrashekar Rao]]
+| style="background:{{party color|Bharat Rashtra Samithi}}" |
+| [[Bharat Rashtra Samiti]]
+| [[Gajwel Assembly constituency|Gajwel]]
+| 9 December 2023
+|}
+
+== Members ==
+Source: <ref>{{cite web |url=https://indianexpress.com/article/cities/hyderabad/telangana-assembly-election-results-2023-full-list-of-winners-9050593/ |title=Telangana Election Results 2023: Full list of winners |date= 4 Dec 2023 |access-date= 6 December 2023}}</ref>
+{| class="sortable wikitable"
+|+
+!District
+!No.
+!Constituency
+!Name
+! colspan="2" |Party
+!Remarks
+|-
+|Kumuram Bheem Asifabad
+|1
+|[[Sirpur Assembly constituency|Sirpur]]
+| [[Palvai Harish Babu]]
+| {{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|BJP Deputy Floor Leader 
+|-
+| rowspan="3" |Mancherial
+|2
+|[[Chennur Assembly constituency|Chennur]] (SC)
+|[[Gaddam Vivek Venkatswamy]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|3
+|[[Bellampalli Assembly constituency|Bellampalli]] (SC)
+|[[Gaddam Vinod Kumar|Gaddam Vinod]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|4
+|[[Mancherial Assembly constituency|Mancherial]]
+|[[Kokkirala Premsagar Rao]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|Kumuram Bheem Asifabad
+|5
+|[[Asifabad Assembly constituency|Asifabad]] (ST)
+|[[Kova Laxmi]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|Nirmal
+|6
+|[[Khanapur, Telangana Assembly constituency|Khanapur]] (ST)
+|[[Vedma Bhojju]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="2" |Adilabad
+|7
+|[[Adilabad Assembly constituency|Adilabad]]
+|[[Payal Shankar|Payal Shanker]]
+| {{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|
+|-
+|8
+|[[Boath Assembly constituency|Boath (ST)]]
+|[[Anil Jadhav]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+| rowspan="2" |Nirmal
+|9
+|[[Nirmal Assembly constituency|Nirmal]]
+|[[Alleti Maheshwar Reddy]]
+| {{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|BJP Floor Leader 
+|-
+|10
+|[[Mudhole Assembly constituency|Mudhole]]
+|[[Rama Rao Pawar|Pawar Ramarao Patel]]
+| {{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|
+|-
+| rowspan="2" |Nizambad
+|11
+|[[Armur Assembly constituency|Armur]]
+|[[Paidi Rakesh Reddy]]
+| {{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|
+|-
+|12
+|[[Bodhan Assembly constituency|Bodhan]]
+|[[Podduturi Sudarshan Reddy]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|Kamareddy
+|13
+|[[Jukkal Assembly constituency|Jukkal]] (SC)
+|[[Thota Laxmi Kantha Rao]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|rowspan=2 |Nizambad
+|rowspan=2 |14
+|rowspan=2 |[[Banswada Assembly constituency|Banswada]]
+|rowspan=2 |[[Pocharam Srinivas Reddy]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|rowspan=2|Defected BRS to join INC<ref>{{Cite news |last=Reddy |first=R. Ravikanth |date=2024-06-21 |title=Former Speaker Pocharam Srinivas Reddy fourth BRS MLA to switch to Congress |url=https://www.thehindu.com/news/national/telangana/brs-mla-and-former-speaker-pocharam-srinivas-reddy-defects-to-congress/article68315584.ece |access-date=2024-06-21 |work=The Hindu |language=en-IN |issn=0971-751X}}</ref>
+|-
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|-
+| rowspan="2" |Kamareddy
+|15
+|[[Yellareddy Assembly constituency|Yellareddy]]
+|[[K. Madan Mohan Rao]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|16
+|[[Kamareddy Assembly constituency|Kamareddy]]
+| [[K. V. Ramana Reddy]]
+| {{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|BJP Deputy Floor Leader
+|-
+| rowspan="3" |Nizambad
+|17
+|[[Nizamabad Urban Assembly constituency|Nizamabad Urban)]]
+|[[Dhanpal Suryanarayana Gupta]]
+| {{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|
+|-
+|18
+|[[Nizamabad Rural Assembly constituency|Nizamabad Rural]]
+|[[Rekulapally Bhoopathi Reddy]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|19
+|[[Balkonda Assembly constituency|Balkonda]]
+|[[Vemula Prashanth Reddy]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+| rowspan="4" |Jagital
+|20
+|[[Koratla Assembly constituency|Koratla]]
+|[[Kalvakuntla Sanjay]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|rowspan=2|21
+|rowspan=2|[[Jagtial Assembly constituency|Jagtial]]
+|rowspan=2|[[M. Sanjay Kumar]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|rowspan=2|Defected BRS to join INC<ref>{{Cite news | date=2024-06-23 |title=Jagtial MLA quits BRS, joins Congress |url=https://www.thehindu.com/news/national/telangana/jagtial-mla-quits-brs-joins-congress/article68325174.ece |access-date=2024-06-28 |newspaper=The Hindu |language=en-IN |issn=0971-751X}}</ref>
+|-
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|-
+|22
+|[[Dharmapuri, Telangana Assembly constituency|Dharmapuri]]
+|[[Adluri Laxman Kumar]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="3" |Peddapalli
+|23
+|[[Ramagundam Assembly constituency|Ramagundam]]
+|Makkan Singh Raj Thakur
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|24
+|[[Manthani Assembly constituency|Manthani]]
+|[[Sridhar Babu|Duddilla Sridhar Babu]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|Cabinet Minister
+|-
+|25
+|[[Peddapalle Assembly constituency|Peddapalle]]
+|Chinthakunta Vijaya Ramana Rao
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="2" |Karimnagar
+|26
+|[[Karimnagar Assembly constituency|Karimnagar]]
+|[[Gangula Kamalakar]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|27
+|[[Choppadandi Assembly constituency|Choppadandi]] (SC)
+|[[Medipally Sathyam]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="2" |Rajanna Sircilla
+|28
+|[[Vemulawada Assembly constituency|Vemulawada]]
+|Aadi Srinivas
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|29
+|[[Sircilla Assembly constituency|Sircilla]]
+|[[K. T. Rama Rao]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+| rowspan="2" |Karimnagar
+|30
+|[[Manakondur Assembly constituency|Manakondur]] (SC)
+|Kavvampally Satyanarayana
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|31
+|[[Huzurabad Assembly constituency|Huzurabad]]
+|Padi Kaushik Reddy
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+| rowspan="2" |Siddipet
+|32
+|[[Husnabad Assembly constituency|Husnabad]]
+|[[Ponnam Prabhakar]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|Cabinet Minister 
+|-
+|33
+|[[Siddipet Assembly constituency|Siddipet]]
+|[[T. Harish Rao]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|Medak
+|34
+|[[Medak Assembly constituency|Medak]]
+||[[Mynampally Rohit|Mynampally Rohith]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="2" |Sangareddy
+|35
+|[[Narayankhed Assembly constituency|Narayankhed]]
+|Patlolla Sanjeeva Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|36
+|[[Andole Assembly constituency|Andole]] (SC)
+|[[Damodar Raja Narasimha]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|Cabinet Minister
+|-
+|Medak
+|37
+|[[Narsapur Assembly constituency|Narsapur]]
+|[[Vakiti Sunitha Laxma Reddy]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+| rowspan="4" |Sangareddy
+|38
+|[[Zahirabad Assembly constituency|Zahirabad]] (SC)
+|Koninty Manik Rao
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|39
+|[[Sangareddy Assembly constituency|Sangareddy]]
+|Chintha Prabhakar
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|rowspan=2 |40
+|rowspan=2 |[[Patancheru Assembly constituency|Patancheru]]
+|rowspan=2 |[[Gudem Mahipal Reddy]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|rowspan=2|Defected BRS to join INC
+|-
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|-
+| rowspan="2" |Siddipet
+|41
+|[[Dubbak Assembly constituency|Dubbak]]
+|[[Kotha Prabhakar Reddy]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|42
+|[[Gajwel Assembly constituency|Gajwel]]
+|[[K. Chandrashekar Rao]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|Leader of Opposition
+|-
+| rowspan="5" |Medchal Malkajgiri
+|43
+|[[Medchal Assembly constituency|Medchal]]
+|[[Malla Reddy]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|44
+|[[Malkajgiri Assembly constituency|Malkajgiri]]
+|Marri Rajashekar Reddy
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|45
+|[[Quthbullapur Assembly constituency|Quthbullapur]]
+|[[K. P. Vivekanand Goud]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|46
+|[[Kukatpally Assembly constituency|Kukatpally]]
+|[[Madhavaram Krishna Rao]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|47
+|[[Uppal Assembly constituency|Uppal]]
+|Bandari Lakshma Reddy
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+| rowspan="9" |Ranga Reddy
+|48
+|[[Ibrahimpatnam Assembly constituency|Ibrahimpatnam]]
+|Malreddy Ranga Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|49
+|[[Lal Bahadur Nagar Assembly constituency|L. B. Nagar]]
+|[[Devireddy Sudheer Reddy]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|50
+|[[Maheshwaram Assembly constituency|Maheshwaram]]
+|[[Sabitha Indra Reddy]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|rowspan=2|51
+|rowspan=2|[[Rajendranagar Assembly constituency|Rajendranagar]]
+|rowspan=2|[[T. Prakash Goud]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|rowspan=2|Defected BRS to join INC
+|-
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|-
+|rowspan=2|52
+|rowspan=2|[[Serilingampally Assembly constituency|Serilingampally]]
+|rowspan=2|[[Arekapudi Gandhi]]
+|  {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|rowspan=2|Defected BRS to join INC
+|-
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|-
+|rowspan=2 |53
+|rowspan=2 |[[Chevella Assembly constituency|Chevella]] (SC)
+|rowspan=2 |[[Kale Yadaiah]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|rowspan=2|Defected BRS to join INC
+|-
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|-
+| rowspan="3" |Vikarabad
+|54
+|[[Pargi Assembly constituency|Pargi]]
+|T. Ram Mohan Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|55
+|[[Vikarabad Assembly constituency|Vikarabad]] (SC)
+|[[Gaddam Prasad Kumar]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|56
+|[[Tandur Assembly constituency|Tandur]]
+|B. Manohar Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="19" |Hyderabad
+|57
+|[[Musheerabad Assembly constituency|Musheerabad]]
+|Muta Gopal
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|58
+|[[Malakpet Assembly constituency|Malakpet]]
+|[[Ahmed bin Abdullah Balala|Ahmed Bin Abdullah Balala]]
+| {{party color cell|All India Majlis-e-Ittehadul Muslimeen}}
+|[[All India Majlis-e-Ittehadul Muslimeen]]
+|
+|-
+|59
+|[[Amberpet Assembly constituency|Amberpet]]
+|Kaleru Venkatesh
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|rowspan=2 |60
+|rowspan=2 |[[Khairatabad Assembly constituency|Khairatabad]]
+|rowspan=2 |[[Danam Nagender]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|rowspan=2|Defected BRS to join INC<ref>{{Cite web | date=2024-03-17 |title=Telangana: Chevella BRS MP Ranjith Reddy, Khairatabad BRS MLA Danam Nagender Join Congress |url=https://news.abplive.com/elections/telangana-chevella-brs-mp-ranjith-reddy-khairatabad-brs-mla-danam-nagender-join-congress-lok-sabha-elections-2024-1672636 |access-date=2024-06-28 |website=news.abplive.com |language=en}}</ref>
+|-
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|-
+|rowspan=2|61
+|rowspan=2|[[Jubilee Hills Assembly constituency|Jubilee Hills]] 
+| [[Maganti Gopinath]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|Died on 08 June 2025<ref>https://www.thehindu.com/news/national/telangana/jubilee-hills-mla-maganti-gopinath-passes-away-at-63/article69670631.ece/</ref>
+|-
+| [[Naveen Yadav|Vallala Naveen Yadav ]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+| Won By-election 
+|-
+|62
+|[[Sanathnagar Assembly constituency|Sanathnagar]]
+|[[Talasani Srinivas Yadav]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|63
+|[[Nampally Assembly constituency|Nampally]]
+|[[Mohammad Majid Hussain]]
+| {{party color cell|All India Majlis-e-Ittehadul Muslimeen}}
+|[[All India Majlis-e-Ittehadul Muslimeen]]
+|
+|-
+|64
+|[[Karwan Assembly constituency|Karwan]]
+|[[Kausar Mohiuddin]]
+| {{party color cell|All India Majlis-e-Ittehadul Muslimeen}}
+|[[All India Majlis-e-Ittehadul Muslimeen]]
+|
+|-
+|rowspan="2"|65
+|rowspan="2"|[[Goshamahal Assembly constituency|Goshamahal]]
+|rowspan="2"|[[T. Raja Singh]]
+| {{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|-
+| {{party color cell|Independent}}  
+|[[Independent politician|Independent]]
+|Resigned from BJP in 2025
+|-
+|66
+|[[Charminar Assembly constituency|Charminar]]
+|[[Mir Zulfeqar Ali]]
+| {{party color cell|All India Majlis-e-Ittehadul Muslimeen}}
+|[[All India Majlis-e-Ittehadul Muslimeen]]
+|
+|-
+|67
+|[[Chandrayangutta Assembly constituency|Chandrayangutta]]
+|[[Akbaruddin Owaisi]]
+| {{party color cell|All India Majlis-e-Ittehadul Muslimeen}}
+|[[All India Majlis-e-Ittehadul Muslimeen]]
+|AIMIM Floor Leader
+|-
+|68
+|[[Yakutpura Assembly constituency|Yakutpura]]
+|[[Jaffer Hussain]]
+| {{party color cell|All India Majlis-e-Ittehadul Muslimeen}}
+|[[All India Majlis-e-Ittehadul Muslimeen]]
+|
+|-
+|69
+|[[Bahadurpura Assembly constituency|Bahadurpura]]
+|[[Mohammed Mubeen]]
+| {{party color cell|All India Majlis-e-Ittehadul Muslimeen}}
+|[[All India Majlis-e-Ittehadul Muslimeen]]
+|
+|-
+|70
+|[[Secunderabad Assembly constituency|Secunderabad]]
+|[[T. Padma Rao Goud]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|rowspan=2|71
+|rowspan=2|[[Secunderabad Cantonment Assembly constituency|Secunderabad Cantt.]] (SC)
+| [[G. Lasya Nanditha]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|Died on 23 February 2024<ref>https://www.deccanchronicle.com/news/cantonment-mla-lasya-nandita-death-in-patancheru-orr-883043</ref>
+|-
+| [[Sri Ganesh (Politician)|Narayanan Sri Ganesh]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+| Won By-election 
+|-
+|Vikarabad
+|72
+|[[Kodangal Assembly constituency|Kodangal]]
+|[[Anumula Revanth Reddy]] 
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|[[Chief Minister of Telangana]]
+|-
+|Narayanpet
+|73
+|[[Narayanpet Assembly constituency|Narayanpet]]
+|Chittem Parinika Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="3" |Mahabubnagar
+|74
+|[[Mahbubnagar Assembly constituency|Mahbubnagar]]
+|Yennam Srinivas Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|75
+|[[Jadcherla Assembly constituency|Jadcherla]]
+|Janampalli Anirudh Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|76
+|[[Devarkadra Assembly constituency|Devarkadra]]
+|Gavinolla Madhusudan Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|Narayanpet
+|77
+|[[Makthal Assembly constituency|Makthal]]
+|Vakiti Srihari
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|Wanaparty
+|78
+|[[Wanaparthy Assembly constituency|Wanaparthy]]
+|Tudi Megha Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="2" |Jogulamba Gadwal
+|79
+|[[Gadwal Assembly constituency|Gadwal]]
+|[[Bandla Krishna Mohan Reddy]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|80
+|[[Alampur Assembly constituency|Alampur]] (SC)
+|Vijayudu
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+| rowspan="2" |Nagarkurnool
+|81
+|[[Nagarkurnool Assembly constituency|Nagarkurnool]]
+|Kuchkulla Rajesh Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|82
+|[[Achampet Assembly constituency|Achampet]] (SC)
+|Chikkudu Vamshi Krishna
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="2" |Ranga Reddy
+|83
+|[[Kalwakurthy Assembly constituency|Kalwakurthy]]
+|Kasireddy Narayan Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|84
+|[[Shadnagar Assembly constituency|Shadnagar]]
+|K. Shankaraiah
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|Nagarkurnool
+|85
+|[[Kollapur Assembly constituency|Kollapur]]
+|[[Jupally Krishna Rao]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|Cabinet Minister
+|-
+| rowspan="3" |Nalgonda
+|86
+|[[Devarakonda Assembly constituency|Devarakonda]] (ST)
+|Nenavath Balu Naik
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|87
+|[[Nagarjuna Sagar Assembly constituency|Nagarjuna Sagar]]
+|Kunduru Jayaveer Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|88
+|[[Miryalaguda Assembly constituency|Miryalaguda]]
+|Bathula Laxma Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="3" |Suryapet
+|89
+|[[Huzurnagar Assembly constituency|Huzurnagar]]
+|[[Nalamada Uttam Kumar Reddy]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|Cabinet Minister
+|-
+|90
+|[[Kodad Assembly constituency|Kodad]]
+|[[Nalamada Padmavathi Reddy]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|91
+|[[Suryapet Assembly constituency|Suryapet]]
+|[[Guntakandla Jagadish Reddy]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+| rowspan="2" |Nalgonda
+|92
+|[[Nalgonda Assembly constituency|Nalgonda]]
+|[[Komatireddy Venkat Reddy]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|Cabinet Minister 
+|-
+|93
+|[[Munugode Assembly constituency|Munugode]]
+|[[Komatireddy Raj Gopal Reddy]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|Yadadri Bhuvanagari
+|94
+|[[Bhongir Assembly constituency|Bhongir]]
+|Kumbam Anil Kumar Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|Nalgonda
+|95
+|[[Nakrekal Assembly constituency|Nakrekal]] (SC)
+|[[Vemula Veeresham]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|Suryapet
+|96
+|[[Thungathurthi Assembly constituency|Thungathurthi]] (SC)
+|Mandula Samual
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|Yadadri Bhuvanagari
+|97
+|[[Alair Assembly constituency|Alair]]
+|[[Beerla Ilaiah]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="4" |Jangoan
+|98
+|[[Jangaon Assembly constituency|Jangaon]]
+|[[Palla Rajeshwar Reddy]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|
+|-
+|rowspan=2 |99
+|rowspan=2 |[[Ghanpur Station Assembly constituency|Ghanpur (Station)]] (SC)
+|rowspan=2 |[[Kadiyam Srihari]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|rowspan=2|Defected BRS to join INC<ref>{{Cite news |last=Reddy |first=R. Ravikanth |date=2024-03-31 |title=Kadiyam Srihari, daughter Kavya desert BRS, join Congress |url=https://www.thehindu.com/elections/lok-sabha/kadiyam-srihari-daughter-kavya-desert-brs-join-congress/article68012431.ece |access-date=2024-06-28 |work=The Hindu |language=en-IN |issn=0971-751X}}</ref>
+|-
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|-
+|100
+|[[Palakurthi Assembly constituency|Palakurthi]]
+|[[Mamidala Yashaswini Reddy]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="2" |Mahabubabad
+|101
+|[[Dornakal Assembly constituency|Dornakal]] (ST)
+|[[Jatoth Ram Chander Naik]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|102
+|[[Mahabubabad Assembly constituency|Mahabubabad]] (ST)
+|Murali Naik Bhukya
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="5" |Warangal Rural
+|103
+|[[Narsampet Assembly constituency|Narsampet]]
+|Donthi Madhava Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|104
+|[[Parkal Assembly constituency|Parkal]]
+|Revuri Prakash Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|105
+|[[Warangal West Assembly constituency|Warangal West]]
+|Naini Rajender Reddy
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|106
+|[[Warangal East Assembly constituency|Warangal East]]
+|[[Konda Surekha]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|Cabinet Minister
+|-
+|107
+|[[Waradhanapet Assembly constituency|Waradhanapet]] (SC)
+|K. R. Nagaraj
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|Jayashankar Bhupalpalle
+|108
+|[[Bhupalpalle Assembly constituency|Bhupalpalle]]
+|Gandra Satyanarayana Rao
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|Mulug
+|109
+|[[Mulug Assembly constituency|Mulug]] (ST)
+|[[Seethakka|Dansari Anasuya (Seethakka)]] 
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|Cabinet Minister
+|-
+| rowspan="2" |Bhadradri Kothagudem
+|110
+|[[Pinapaka Assembly constituency|Pinapaka]] (ST)
+|Payam Venkateswarlu
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|111
+|[[Yellandu Assembly constituency|Yellandu]] (ST)
+|[[Koram Kanakaiah]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="5" |Khammam
+|112
+|[[Khammam Assembly constituency|Khammam]]
+|[[Thummala Nageswara Rao]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|Cabinet Minister
+|-
+|113
+|[[Palair Assembly constituency|Palair]]
+|[[Ponguleti Srinivasa Reddy]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|Cabinet Minister
+|-
+|114
+|[[Madhira Assembly constituency|Madhira]] (SC)
+|[[Mallu Bhatti Vikramarka]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|Deputy Chief Minister Of Telangana.
+|-
+|115
+|[[Wyra Assembly constituency|Wyra]] (ST)
+|Maloth Ramdas
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|116
+|[[Sathupalli Assembly constituency|Sathupalli]] (SC)
+|[[Matta Ragamayee]]
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+| rowspan="4" |Bhadradri Kothagudem
+|117
+|[[Kothagudem (Assembly constituency)|Kothagudem]]
+|[[Kunamneni Sambasiva Rao]]
+| {{party color cell|Communist Party of India}}
+|[[Communist Party of India]]
+|
+|-
+|118
+|[[Aswaraopeta Assembly constituency|Aswaraopeta]] (ST)
+|Jare Adinarayana
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|
+|-
+|rowspan=2 |119
+|rowspan=2 |[[Bhadrachalam Assembly constituency|Bhadrachalam]] (ST)
+|rowspan=2 |[[Tellam Venkata Rao]]
+| {{party color cell|Bharat Rashtra Samithi}}
+|[[Bharat Rashtra Samithi]]
+|rowspan=2|Defected BRS to join INC<ref>{{Cite news |date=2024-04-08 |title=Exodus continues from BRS as MLA Tellam joins Congress in Telangana |url=https://timesofindia.indiatimes.com/city/hyderabad/exodus-continues-from-brs-as-mla-tellam-joins-cong/articleshow/109117092.cms |access-date=2024-06-28 |work=The Times of India |issn=0971-8257}}</ref>
+|-
+| {{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|}
+
+== See also ==
+
+* [[2nd Telangana Assembly|2nd Telangana Legislative Assembly]]
+
+== References ==
+{{reflist}}
+
+{{Telangana elections}}
+{{Telangana topics}}
+{{Legislatures of India}}
+{{Current Indian assemblies}}
+
+[[Category:Terms of the Telangana Legislative Assembly]]
+[[Category:Lists of current Indian state and territorial assemblies|Telangana ]]
+[[Category:2023 establishments in Telangana]]
+[[Category:Telangana MLAs 2023–2028| ]]

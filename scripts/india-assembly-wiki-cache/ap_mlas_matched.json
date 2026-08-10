@@ -1,0 +1,1577 @@
+[
+  {
+    "district": "Srikakulam",
+    "no": "1",
+    "constituency": "Ichchapuram",
+    "name": "Ashok Bendalam",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65469,
+    "shape_name": "Ichchapuram"
+  },
+  {
+    "district": "Srikakulam",
+    "no": "2",
+    "constituency": "Palasa",
+    "name": "Gouthu Sireesha",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65470,
+    "shape_name": "Palasa"
+  },
+  {
+    "district": "Srikakulam",
+    "no": "3",
+    "constituency": "Tekkali",
+    "name": "Kinjarapu Atchannaidu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65471,
+    "shape_name": "Tekkali"
+  },
+  {
+    "district": "Srikakulam",
+    "no": "4",
+    "constituency": "Pathapatnam",
+    "name": "Mamidi Govinda Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65472,
+    "shape_name": "Pathapatnam"
+  },
+  {
+    "district": "Srikakulam",
+    "no": "5",
+    "constituency": "Srikakulam",
+    "name": "Gondu Shankar",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65473,
+    "shape_name": "Srikakulam"
+  },
+  {
+    "district": "Srikakulam",
+    "no": "6",
+    "constituency": "Amadalavalasa",
+    "name": "Koona Ravi Kumar",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65474,
+    "shape_name": "Amadalavalasa"
+  },
+  {
+    "district": "Srikakulam",
+    "no": "7",
+    "constituency": "Etcherla",
+    "name": "Nadukuditi Eswara Rao",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65475,
+    "shape_name": "Etcherla"
+  },
+  {
+    "district": "Srikakulam",
+    "no": "8",
+    "constituency": "Narasannapeta",
+    "name": "Baggu Ramanamurthy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65476,
+    "shape_name": "Narasannapeta"
+  },
+  {
+    "district": "Vizianagaram",
+    "no": "9",
+    "constituency": "Rajam",
+    "name": "Kondru Murali Mohan",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65477,
+    "shape_name": "Rajam (SC)"
+  },
+  {
+    "district": "Parvathipuram Manyam",
+    "no": "10",
+    "constituency": "Palakonda",
+    "name": "Nimmaka Jaya Krishna",
+    "party": "Janasena Party",
+    "map_shape_id": 65478,
+    "shape_name": "Palakonda (ST)"
+  },
+  {
+    "district": "Parvathipuram Manyam",
+    "no": "11",
+    "constituency": "Kurupam",
+    "name": "Jagadeeswari Thoyaka",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65479,
+    "shape_name": "Kurupam (ST)"
+  },
+  {
+    "district": "Parvathipuram Manyam",
+    "no": "12",
+    "constituency": "Parvathipuram",
+    "name": "Bonela Vijaya Chandra",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65480,
+    "shape_name": "Parvathipuram (SC)"
+  },
+  {
+    "district": "Parvathipuram Manyam",
+    "no": "13",
+    "constituency": "Salur",
+    "name": "Gummadi Sandhya Rani",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65481,
+    "shape_name": "Salur (ST)"
+  },
+  {
+    "district": "Vizianagaram",
+    "no": "14",
+    "constituency": "Bobbili",
+    "name": "R. V. S. K. K. Ranga Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65482,
+    "shape_name": "Bobbili"
+  },
+  {
+    "district": "Vizianagaram",
+    "no": "16",
+    "constituency": "Gajapathinagaram",
+    "name": "Kondapalli Srinivas",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65484,
+    "shape_name": "Gajapathinagaram"
+  },
+  {
+    "district": "Vizianagaram",
+    "no": "17",
+    "constituency": "Nellimarla",
+    "name": "Lokam Naga Madhavi",
+    "party": "Janasena Party",
+    "map_shape_id": 65485,
+    "shape_name": "Nellimarla"
+  },
+  {
+    "district": "Vizianagaram",
+    "no": "18",
+    "constituency": "Vizianagaram",
+    "name": "Pusapati Aditi Vijayalakshmi",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65486,
+    "shape_name": "Vizianagaram"
+  },
+  {
+    "district": "Vizianagaram",
+    "no": "19",
+    "constituency": "Srungavarapukota",
+    "name": "Kolla Lalitha Kumari",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65487,
+    "shape_name": "Srungavarapukota"
+  },
+  {
+    "district": "Visakhapatnam",
+    "no": "20",
+    "constituency": "Bhimili",
+    "name": "Ganta Srinivasa Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65488,
+    "shape_name": "Bhimili"
+  },
+  {
+    "district": "Visakhapatnam",
+    "no": "21",
+    "constituency": "Visakhapatnam East",
+    "name": "Velagapudi Ramakrishna Babu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65489,
+    "shape_name": "Visakhapatnam East"
+  },
+  {
+    "district": "Visakhapatnam",
+    "no": "22",
+    "constituency": "Visakhapatnam South",
+    "name": "Vamsi Krishna Srinivasa Yadav",
+    "party": "Janasena Party",
+    "map_shape_id": 65490,
+    "shape_name": "Visakhapatnam South"
+  },
+  {
+    "district": "Visakhapatnam",
+    "no": "23",
+    "constituency": "Visakhapatnam North",
+    "name": "Penmetsa Vishnu Kumar Raju",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65491,
+    "shape_name": "Visakhapatnam North"
+  },
+  {
+    "district": "Visakhapatnam",
+    "no": "24",
+    "constituency": "Visakhapatnam West",
+    "name": "P. G. V. R. Naidu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65492,
+    "shape_name": "Visakhapatnam West"
+  },
+  {
+    "district": "Visakhapatnam",
+    "no": "25",
+    "constituency": "Gajuwaka",
+    "name": "Palla Srinivasa Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65493,
+    "shape_name": "Gajuwaka"
+  },
+  {
+    "district": "Anakapalli",
+    "no": "26",
+    "constituency": "Chodavaram",
+    "name": "Kalidindi Suryana Naga Sanyasi Raju",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65494,
+    "shape_name": "Chodavaram"
+  },
+  {
+    "district": "Anakapalli",
+    "no": "27",
+    "constituency": "Madugula",
+    "name": "Bandaru Satyanarayana Murthy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65495,
+    "shape_name": "Madugula"
+  },
+  {
+    "district": "Alluri Sitharama Raju",
+    "no": "28",
+    "constituency": "Araku Valley",
+    "name": "Regam Matyalingam",
+    "party": "YSR Congress Party",
+    "map_shape_id": 67427,
+    "shape_name": "Araku Valley (ST)"
+  },
+  {
+    "district": "Alluri Sitharama Raju",
+    "no": "29",
+    "constituency": "Paderu",
+    "name": "Matsyarasa Visweswara Raju",
+    "party": "YSR Congress Party",
+    "map_shape_id": 67365,
+    "shape_name": "Paderu (ST)"
+  },
+  {
+    "district": "Visakhapatnam",
+    "no": "31",
+    "constituency": "Pendurthi",
+    "name": "Panchakarla Ramesh Babu",
+    "party": "Janasena Party",
+    "map_shape_id": 65497,
+    "shape_name": "Pendurthi"
+  },
+  {
+    "district": "Anakapalli",
+    "no": "32",
+    "constituency": "Yelamanchili",
+    "name": "Sundarapu Vijay Kumar",
+    "party": "Janasena Party",
+    "map_shape_id": 65498,
+    "shape_name": "Yelamanchili"
+  },
+  {
+    "district": "Anakapalli",
+    "no": "33",
+    "constituency": "Payakaraopet",
+    "name": "Vangalapudi Anitha",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65499,
+    "shape_name": "Payakaraopet (SC)"
+  },
+  {
+    "district": "Anakapalli",
+    "no": "34",
+    "constituency": "Narsipatnam",
+    "name": "Chintakayala Ayyannapatrudu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65500,
+    "shape_name": "Narsipatnam"
+  },
+  {
+    "district": "Kakinada",
+    "no": "35",
+    "constituency": "Tuni",
+    "name": "Yanamala Divya",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65501,
+    "shape_name": "Tuni"
+  },
+  {
+    "district": "Kakinada",
+    "no": "36",
+    "constituency": "Prathipadu (Kakinada)",
+    "name": "Varapula Sathyaprabha",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65502,
+    "shape_name": "Prathipadu"
+  },
+  {
+    "district": "Kakinada",
+    "no": "37",
+    "constituency": "Pithapuram",
+    "name": "Konidela Pawan Kalyan",
+    "party": "Janasena Party",
+    "map_shape_id": 65503,
+    "shape_name": "Pithapuram"
+  },
+  {
+    "district": "Kakinada",
+    "no": "38",
+    "constituency": "Kakinada Rural",
+    "name": "Pantham Venkateswara Rao",
+    "party": "Janasena Party",
+    "map_shape_id": 65504,
+    "shape_name": "Kakinada Rural"
+  },
+  {
+    "district": "Kakinada",
+    "no": "39",
+    "constituency": "Peddapuram",
+    "name": "Nimmakayala Chinarajappa",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65505,
+    "shape_name": "Peddapuram"
+  },
+  {
+    "district": "East Godavari",
+    "no": "40",
+    "constituency": "Anaparthy",
+    "name": "Ramakrishna Reddy Nallamilli",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65506,
+    "shape_name": "Anaparthy"
+  },
+  {
+    "district": "Kakinada",
+    "no": "41",
+    "constituency": "Kakinada City",
+    "name": "Vanamadi Venkateswara Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65507,
+    "shape_name": "Kakinada City"
+  },
+  {
+    "district": "Konaseema",
+    "no": "42",
+    "constituency": "Ramachandrapuram",
+    "name": "Vasamsetti Subhash",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65508,
+    "shape_name": "Ramachandrapuram"
+  },
+  {
+    "district": "Konaseema",
+    "no": "43",
+    "constituency": "Mummidivaram",
+    "name": "Datla Subbaraju",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 67435,
+    "shape_name": "Mummidivaram"
+  },
+  {
+    "district": "Konaseema",
+    "no": "44",
+    "constituency": "Amalapuram",
+    "name": "Aithabathula Anandarao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65509,
+    "shape_name": "Amalapuram (SC)"
+  },
+  {
+    "district": "Konaseema",
+    "no": "45",
+    "constituency": "Razole",
+    "name": "Deva Varaprasad",
+    "party": "Janasena Party",
+    "map_shape_id": 65510,
+    "shape_name": "Razole (SC)"
+  },
+  {
+    "district": "Konaseema",
+    "no": "46",
+    "constituency": "Gannavaram (Konaseema)",
+    "name": "Giddi Satyanarayana",
+    "party": "Janasena Party",
+    "map_shape_id": 65511,
+    "shape_name": "Gannavaram (SC)"
+  },
+  {
+    "district": "Konaseema",
+    "no": "47",
+    "constituency": "Kothapeta",
+    "name": "Bandaru Satyananda Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65512,
+    "shape_name": "Kothapeta"
+  },
+  {
+    "district": "Konaseema",
+    "no": "48",
+    "constituency": "Mandapeta",
+    "name": "V. Jogeswara Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65513,
+    "shape_name": "Mandapeta"
+  },
+  {
+    "district": "East Godavari",
+    "no": "49",
+    "constituency": "Rajanagaram",
+    "name": "Bathula Balaramakrishna",
+    "party": "Janasena Party",
+    "map_shape_id": 65514,
+    "shape_name": "Rajanagaram"
+  },
+  {
+    "district": "East Godavari",
+    "no": "50",
+    "constituency": "Rajahmundry City",
+    "name": "Adireddy Srinivas",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65515,
+    "shape_name": "Rajahmundry City"
+  },
+  {
+    "district": "East Godavari",
+    "no": "51",
+    "constituency": "Rajahmundry Rural",
+    "name": "Gorantla Butchaiah Chowdary",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65516,
+    "shape_name": "Rajahmundry Rural"
+  },
+  {
+    "district": "Kakinada",
+    "no": "52",
+    "constituency": "Jaggampeta",
+    "name": "Jyothula Nehru",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65517,
+    "shape_name": "Jaggampeta"
+  },
+  {
+    "district": "Alluri Sitharama Raju",
+    "no": "53",
+    "constituency": "Rampachodavaram",
+    "name": "Miriyala Sirisha Devi",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 67511,
+    "shape_name": "Rampachodavaram (ST)"
+  },
+  {
+    "district": "East Godavari",
+    "no": "54",
+    "constituency": "Kovvur",
+    "name": "Muppidi Venkateswara Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65518,
+    "shape_name": "Kovvur (SC)"
+  },
+  {
+    "district": "East Godavari",
+    "no": "55",
+    "constituency": "Nidadavole",
+    "name": "Kandula Durgesh",
+    "party": "Janasena Party",
+    "map_shape_id": 65519,
+    "shape_name": "Nidadavole"
+  },
+  {
+    "district": "West Godavari",
+    "no": "56",
+    "constituency": "Achanta",
+    "name": "Satyanarayana Pithani",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65520,
+    "shape_name": "Achanta"
+  },
+  {
+    "district": "West Godavari",
+    "no": "57",
+    "constituency": "Palakollu",
+    "name": "Nimmala Rama Naidu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65521,
+    "shape_name": "Palacole"
+  },
+  {
+    "district": "West Godavari",
+    "no": "58",
+    "constituency": "Narasapuram",
+    "name": "Bommidi Narayana Nayakar",
+    "party": "Janasena Party",
+    "map_shape_id": 65522,
+    "shape_name": "Narasapuram"
+  },
+  {
+    "district": "West Godavari",
+    "no": "59",
+    "constituency": "Bhimavaram",
+    "name": "Pulaparthi Ramanjaneyulu",
+    "party": "Janasena Party",
+    "map_shape_id": 65523,
+    "shape_name": "Bhimavaram"
+  },
+  {
+    "district": "West Godavari",
+    "no": "60",
+    "constituency": "Undi",
+    "name": "Raghu Rama Krishna Raju",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65524,
+    "shape_name": "Undi"
+  },
+  {
+    "district": "West Godavari",
+    "no": "61",
+    "constituency": "Tanuku",
+    "name": "Arimilli Radha Krishna",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65525,
+    "shape_name": "Tanuku"
+  },
+  {
+    "district": "West Godavari",
+    "no": "62",
+    "constituency": "Tadepalligudem",
+    "name": "Bolisetti Srinivas",
+    "party": "Janasena Party",
+    "map_shape_id": 65526,
+    "shape_name": "Tadepalligudem"
+  },
+  {
+    "district": "Eluru",
+    "no": "64",
+    "constituency": "Denduluru",
+    "name": "Chintamaneni Prabhakar",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65528,
+    "shape_name": "Denduluru"
+  },
+  {
+    "district": "Eluru",
+    "no": "65",
+    "constituency": "Eluru",
+    "name": "Radha Krishnayya Badeti",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65529,
+    "shape_name": "Eluru"
+  },
+  {
+    "district": "East Godavari",
+    "no": "66",
+    "constituency": "Gopalapuram",
+    "name": "Maddipati Venkata Raju",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65530,
+    "shape_name": "Gopalapuram (SC)"
+  },
+  {
+    "district": "Eluru",
+    "no": "67",
+    "constituency": "Polavaram",
+    "name": "Chirri Balaraju",
+    "party": "Janasena Party",
+    "map_shape_id": 67389,
+    "shape_name": "Polavaram (ST)"
+  },
+  {
+    "district": "Eluru",
+    "no": "68",
+    "constituency": "Chintalapudi",
+    "name": "Roshan Kumar Songa",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65531,
+    "shape_name": "Chintalapudi (SC)"
+  },
+  {
+    "district": "NTR",
+    "no": "69",
+    "constituency": "Tiruvuru",
+    "name": "Kolikapudi Srinivasa Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65532,
+    "shape_name": "Tiruvuru (SC)"
+  },
+  {
+    "district": "Eluru",
+    "no": "70",
+    "constituency": "Nuzvid",
+    "name": "Kolusu Parthasarathy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65533,
+    "shape_name": "Nuzvid"
+  },
+  {
+    "district": "Krishna",
+    "no": "71",
+    "constituency": "Gannavaram (Krishna)",
+    "name": "Yarlagadda Venkata Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65534,
+    "shape_name": "Gannavaram"
+  },
+  {
+    "district": "Krishna",
+    "no": "72",
+    "constituency": "Gudivada",
+    "name": "Venigandla Ramu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65535,
+    "shape_name": "Gudivada"
+  },
+  {
+    "district": "Eluru",
+    "no": "73",
+    "constituency": "Kaikalur",
+    "name": "Kamineni Srinivas",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65536,
+    "shape_name": "Kaikalur"
+  },
+  {
+    "district": "Krishna",
+    "no": "74",
+    "constituency": "Pedana",
+    "name": "Kagitha Krishna Prasad",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65537,
+    "shape_name": "Pedana"
+  },
+  {
+    "district": "Krishna",
+    "no": "75",
+    "constituency": "Machilipatnam",
+    "name": "Kollu Ravindra",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65538,
+    "shape_name": "Machilipatnam"
+  },
+  {
+    "district": "Krishna",
+    "no": "76",
+    "constituency": "Avanigadda",
+    "name": "Mandali Buddha Prasad",
+    "party": "Janasena Party",
+    "map_shape_id": 65539,
+    "shape_name": "Avanigadda"
+  },
+  {
+    "district": "Krishna",
+    "no": "77",
+    "constituency": "Pamarru",
+    "name": "Varla Kumar Raja",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65540,
+    "shape_name": "Pamarru (SC)"
+  },
+  {
+    "district": "Krishna",
+    "no": "78",
+    "constituency": "Penamaluru",
+    "name": "Bode Prasad",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65541,
+    "shape_name": "Penamaluru"
+  },
+  {
+    "district": "NTR",
+    "no": "79",
+    "constituency": "Vijayawada West",
+    "name": "Sujana Chowdary",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65542,
+    "shape_name": "Vijayawada West"
+  },
+  {
+    "district": "NTR",
+    "no": "80",
+    "constituency": "Vijayawada Central",
+    "name": "Bonda Umamaheswara Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65543,
+    "shape_name": "Vijayawada Central"
+  },
+  {
+    "district": "NTR",
+    "no": "81",
+    "constituency": "Vijayawada East",
+    "name": "Gadde Ramamohan",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65544,
+    "shape_name": "Vijayawada East"
+  },
+  {
+    "district": "NTR",
+    "no": "82",
+    "constituency": "Mylavaram",
+    "name": "Vasantha Venkata Krishna Prasad",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65545,
+    "shape_name": "Mylavaram"
+  },
+  {
+    "district": "NTR",
+    "no": "83",
+    "constituency": "Nandigama",
+    "name": "Tangirala Sowmya",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65546,
+    "shape_name": "Nandigama (SC)"
+  },
+  {
+    "district": "NTR",
+    "no": "84",
+    "constituency": "Jaggayyapeta",
+    "name": "Rajagopal Sreeram",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65547,
+    "shape_name": "Jaggayyapeta"
+  },
+  {
+    "district": "Palnadu",
+    "no": "85",
+    "constituency": "Pedakurapadu",
+    "name": "Bhashyam Praveen",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65548,
+    "shape_name": "Pedakurapadu"
+  },
+  {
+    "district": "Guntur",
+    "no": "86",
+    "constituency": "Tadikonda",
+    "name": "Tenali Sravan Kumar",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65549,
+    "shape_name": "Tadikonda (SC)"
+  },
+  {
+    "district": "Guntur",
+    "no": "87",
+    "constituency": "Mangalagiri",
+    "name": "Nara Lokesh",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65550,
+    "shape_name": "Mangalagiri"
+  },
+  {
+    "district": "Bapatla",
+    "no": "89",
+    "constituency": "Vemuru",
+    "name": "Nakka Ananda Babu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65552,
+    "shape_name": "Vemuru (SC)"
+  },
+  {
+    "district": "Bapatla",
+    "no": "90",
+    "constituency": "Repalle",
+    "name": "Anagani Satya Prasad",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65553,
+    "shape_name": "Repalle"
+  },
+  {
+    "district": "Guntur",
+    "no": "91",
+    "constituency": "Tenali",
+    "name": "Nadendla Manohar",
+    "party": "Janasena Party",
+    "map_shape_id": 65554,
+    "shape_name": "Tenali"
+  },
+  {
+    "district": "Bapatla",
+    "no": "92",
+    "constituency": "Bapatla",
+    "name": "Vegesana Narendra Varma Raju",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65555,
+    "shape_name": "Bapatla"
+  },
+  {
+    "district": "Guntur",
+    "no": "93",
+    "constituency": "Prathipadu (Guntur)",
+    "name": "Burla Ramanjaneyulu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65556,
+    "shape_name": "Prathipadu (SC)"
+  },
+  {
+    "district": "Guntur",
+    "no": "94",
+    "constituency": "Guntur West",
+    "name": "Galla Madhavi",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65557,
+    "shape_name": "Guntur West"
+  },
+  {
+    "district": "Guntur",
+    "no": "95",
+    "constituency": "Guntur East",
+    "name": "Mohammed Naseer Ahmed",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65558,
+    "shape_name": "Guntur East"
+  },
+  {
+    "district": "Palnadu",
+    "no": "96",
+    "constituency": "Chilakaluripet",
+    "name": "Prathipati Pulla Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65559,
+    "shape_name": "Chilakaluripet"
+  },
+  {
+    "district": "Palnadu",
+    "no": "97",
+    "constituency": "Narasaraopet",
+    "name": "Chadalavada Aravinda Babu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65560,
+    "shape_name": "Narasaraopet"
+  },
+  {
+    "district": "Palnadu",
+    "no": "98",
+    "constituency": "Sattenapalle",
+    "name": "Kanna Lakshminaraya",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65561,
+    "shape_name": "Sattenapalle"
+  },
+  {
+    "district": "Palnadu",
+    "no": "99",
+    "constituency": "Vinukonda",
+    "name": "G. V. Anjaneyulu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65562,
+    "shape_name": "Vinukonda"
+  },
+  {
+    "district": "Palnadu",
+    "no": "101",
+    "constituency": "Macherla",
+    "name": "Julakanti Brahmananda Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65564,
+    "shape_name": "Macherla"
+  },
+  {
+    "district": "Prakasam",
+    "no": "102",
+    "constituency": "Yerragondapalem",
+    "name": "Tatiparthi Chandrasekhar",
+    "party": "YSR Congress Party",
+    "map_shape_id": 65565,
+    "shape_name": "Yerragondapalem (SC)"
+  },
+  {
+    "district": "Prakasam",
+    "no": "103",
+    "constituency": "Darsi",
+    "name": "Buchepalli Siva Prasad Reddy",
+    "party": "YSR Congress Party",
+    "map_shape_id": 65566,
+    "shape_name": "Darsi"
+  },
+  {
+    "district": "Bapatla",
+    "no": "104",
+    "constituency": "Parchur",
+    "name": "Yeluri Sambasiva Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65567,
+    "shape_name": "Parchur"
+  },
+  {
+    "district": "Bapatla",
+    "no": "105",
+    "constituency": "Addanki",
+    "name": "Gottipati Ravi Kumar",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65568,
+    "shape_name": "Addanki"
+  },
+  {
+    "district": "Bapatla",
+    "no": "106",
+    "constituency": "Chirala",
+    "name": "Madduluri Malakondaiah Yadav",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65569,
+    "shape_name": "Chirala"
+  },
+  {
+    "district": "Prakasam",
+    "no": "107",
+    "constituency": "Santhanuthalapadu",
+    "name": "B. N. Vijay Kumar",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65570,
+    "shape_name": "Santhanuthalapadu (SC)"
+  },
+  {
+    "district": "Prakasam",
+    "no": "108",
+    "constituency": "Ongole",
+    "name": "Damacharla Janardhana Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65571,
+    "shape_name": "Ongole"
+  },
+  {
+    "district": "Nellore",
+    "no": "109",
+    "constituency": "Kandukur",
+    "name": "Inturi Nageswara Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65572,
+    "shape_name": "Kandukur"
+  },
+  {
+    "district": "Prakasam",
+    "no": "110",
+    "constituency": "Kondapi",
+    "name": "Dola Sree Bala Veeranjaneya Swamy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65573,
+    "shape_name": "Kondapi (SC)"
+  },
+  {
+    "district": "Prakasam",
+    "no": "111",
+    "constituency": "Markapuram",
+    "name": "Kandula Narayana Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65574,
+    "shape_name": "Markapuram"
+  },
+  {
+    "district": "Prakasam",
+    "no": "112",
+    "constituency": "Giddalur",
+    "name": "Muthumula Ashok Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65575,
+    "shape_name": "Giddalur"
+  },
+  {
+    "district": "Prakasam",
+    "no": "113",
+    "constituency": "Kanigiri",
+    "name": "Mukku Ugra Narasimha Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65576,
+    "shape_name": "Kanigiri"
+  },
+  {
+    "district": "Nellore",
+    "no": "114",
+    "constituency": "Kavali",
+    "name": "Dagumati Venkata Krishna Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65577,
+    "shape_name": "Kavali"
+  },
+  {
+    "district": "Nellore",
+    "no": "115",
+    "constituency": "Atmakur",
+    "name": "Anam Ramanarayana Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65578,
+    "shape_name": "Atmakur"
+  },
+  {
+    "district": "Nellore",
+    "no": "116",
+    "constituency": "Kovur",
+    "name": "Vemireddy Prashanti Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65579,
+    "shape_name": "Kovur"
+  },
+  {
+    "district": "Nellore",
+    "no": "117",
+    "constituency": "Nellore City",
+    "name": "Ponguru Narayana",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65580,
+    "shape_name": "Nellore City"
+  },
+  {
+    "district": "Nellore",
+    "no": "118",
+    "constituency": "Nellore Rural",
+    "name": "Kotamreddy Sridhar Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65581,
+    "shape_name": "Nellore Rural"
+  },
+  {
+    "district": "Nellore",
+    "no": "119",
+    "constituency": "Sarvepalli",
+    "name": "Somireddy Chandra Mohan Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65582,
+    "shape_name": "Sarvepalli"
+  },
+  {
+    "district": "Tirupati",
+    "no": "120",
+    "constituency": "Gudur",
+    "name": "Pasam Sunil Kumar",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65583,
+    "shape_name": "Gudur (SC)"
+  },
+  {
+    "district": "Tirupati",
+    "no": "121",
+    "constituency": "Sullurpeta",
+    "name": "Nelavala Vijayasree",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65584,
+    "shape_name": "Sullurpeta (SC)"
+  },
+  {
+    "district": "Tirupati",
+    "no": "122",
+    "constituency": "Venkatagiri",
+    "name": "Kurugondla Ramakrishna",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65585,
+    "shape_name": "Venkatagiri"
+  },
+  {
+    "district": "Nellore",
+    "no": "123",
+    "constituency": "Udayagiri",
+    "name": "Kakarla Suresh",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65586,
+    "shape_name": "Udayagiri"
+  },
+  {
+    "district": "YSR Kadapa",
+    "no": "124",
+    "constituency": "Badvel",
+    "name": "Dasari Sudha",
+    "party": "YSR Congress Party",
+    "map_shape_id": 65587,
+    "shape_name": "Badvel (SC)"
+  },
+  {
+    "district": "Annamayya",
+    "no": "125",
+    "constituency": "Rajampet",
+    "name": "Akepati Amarnath Reddy",
+    "party": "YSR Congress Party",
+    "map_shape_id": 65588,
+    "shape_name": "Rajampet"
+  },
+  {
+    "district": "YSR Kadapa",
+    "no": "126",
+    "constituency": "Kadapa",
+    "name": "Reddeppagari Madhavi",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65589,
+    "shape_name": "Kadapa"
+  },
+  {
+    "district": "Annamayya",
+    "no": "127",
+    "constituency": "Kodur",
+    "name": "Arava Sreedhar",
+    "party": "Janasena Party",
+    "map_shape_id": 65590,
+    "shape_name": "Kodur (SC)"
+  },
+  {
+    "district": "Annamayya",
+    "no": "128",
+    "constituency": "Rayachoti",
+    "name": "Mandipalli Ramprasad Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65591,
+    "shape_name": "Rayachoti"
+  },
+  {
+    "district": "YSR Kadapa",
+    "no": "130",
+    "constituency": "Kamalapuram",
+    "name": "Putha Krishna Chaitanya Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65593,
+    "shape_name": "Kamalapuram"
+  },
+  {
+    "district": "YSR Kadapa",
+    "no": "131",
+    "constituency": "Jammalamadugu",
+    "name": "Ch. Adinarayana Reddy",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65594,
+    "shape_name": "Jammalamadugu"
+  },
+  {
+    "district": "YSR Kadapa",
+    "no": "132",
+    "constituency": "Proddatur",
+    "name": "Nandyala Varada Rajula Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65595,
+    "shape_name": "Proddatur"
+  },
+  {
+    "district": "YSR Kadapa",
+    "no": "133",
+    "constituency": "Mydukur",
+    "name": "Putta Sudhakar Yadav",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65596,
+    "shape_name": "Mydukur"
+  },
+  {
+    "district": "Nandyal",
+    "no": "134",
+    "constituency": "Allagadda",
+    "name": "Bhuma Akhila Priya",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65597,
+    "shape_name": "Allagadda"
+  },
+  {
+    "district": "Nandyal",
+    "no": "135",
+    "constituency": "Srisailam",
+    "name": "Budda Rajasekhar Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65598,
+    "shape_name": "Srisailam"
+  },
+  {
+    "district": "Nandyal",
+    "no": "136",
+    "constituency": "Nandikotkur",
+    "name": "Githa Jayasurya",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65599,
+    "shape_name": "Nandikotkur (SC)"
+  },
+  {
+    "district": "Kurnool",
+    "no": "137",
+    "constituency": "Kurnool",
+    "name": "T. G. Bharath",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65600,
+    "shape_name": "Kurnool"
+  },
+  {
+    "district": "Kurnool",
+    "no": "138",
+    "constituency": "Panyam",
+    "name": "Gowru Charitha Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65601,
+    "shape_name": "Panyam"
+  },
+  {
+    "district": "Nandyal",
+    "no": "139",
+    "constituency": "Nandyal",
+    "name": "N. M. D. Farooq",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65602,
+    "shape_name": "Nandyal"
+  },
+  {
+    "district": "Nandyal",
+    "no": "140",
+    "constituency": "Banaganapalle",
+    "name": "B. C. Janardhan Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65603,
+    "shape_name": "Banaganapalle"
+  },
+  {
+    "district": "Nandyal",
+    "no": "141",
+    "constituency": "Dhone",
+    "name": "Kotla Jayasurya Prakasha Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65604,
+    "shape_name": "Dhone"
+  },
+  {
+    "district": "Kurnool",
+    "no": "142",
+    "constituency": "Pattikonda",
+    "name": "K. E. Shyam Babu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65605,
+    "shape_name": "Pattikonda"
+  },
+  {
+    "district": "Kurnool",
+    "no": "143",
+    "constituency": "Kodumur",
+    "name": "Boggula Dastagiri",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65606,
+    "shape_name": "Kodumur (SC)"
+  },
+  {
+    "district": "Kurnool",
+    "no": "144",
+    "constituency": "Yemmiganur",
+    "name": "Jaya Nageswara Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65607,
+    "shape_name": "Yemmiganur"
+  },
+  {
+    "district": "Kurnool",
+    "no": "145",
+    "constituency": "Mantralayam",
+    "name": "Y. Balanagi Reddy",
+    "party": "YSR Congress Party",
+    "map_shape_id": 65608,
+    "shape_name": "Mantralayam"
+  },
+  {
+    "district": "Kurnool",
+    "no": "146",
+    "constituency": "Adoni",
+    "name": "P. V. Parthasarathi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65609,
+    "shape_name": "Adoni"
+  },
+  {
+    "district": "Kurnool",
+    "no": "147",
+    "constituency": "Alur",
+    "name": "Busine Virupakshi",
+    "party": "YSR Congress Party",
+    "map_shape_id": 65610,
+    "shape_name": "Alur"
+  },
+  {
+    "district": "Anantapur",
+    "no": "148",
+    "constituency": "Rayadurg",
+    "name": "Kalava Srinivasulu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65611,
+    "shape_name": "Rayadurg"
+  },
+  {
+    "district": "Anantapur",
+    "no": "149",
+    "constituency": "Uravakonda",
+    "name": "Payyavula Keshav",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65612,
+    "shape_name": "Uravakonda"
+  },
+  {
+    "district": "Anantapur",
+    "no": "150",
+    "constituency": "Guntakal",
+    "name": "Gummanur Jayaram",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65613,
+    "shape_name": "Guntakal"
+  },
+  {
+    "district": "Anantapur",
+    "no": "152",
+    "constituency": "Singanamala",
+    "name": "Bandaru Sravani Sree",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65615,
+    "shape_name": "Singanamala (SC)"
+  },
+  {
+    "district": "Anantapur",
+    "no": "153",
+    "constituency": "Anantapur Urban",
+    "name": "Daggupati Venkateswara Prasad",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65616,
+    "shape_name": "Anantapur Urban"
+  },
+  {
+    "district": "Anantapur",
+    "no": "154",
+    "constituency": "Kalyandurg",
+    "name": "Amilineni Surendra Babu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65617,
+    "shape_name": "Kalyandurg"
+  },
+  {
+    "district": "Anantapur",
+    "no": "155",
+    "constituency": "Raptadu",
+    "name": "Paritala Sunitha",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65618,
+    "shape_name": "Raptadu"
+  },
+  {
+    "district": "Sri Sathya Sai",
+    "no": "156",
+    "constituency": "Madakasira",
+    "name": "M. S. Raju",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65619,
+    "shape_name": "Madakasira (SC)"
+  },
+  {
+    "district": "Sri Sathya Sai",
+    "no": "157",
+    "constituency": "Hindupur",
+    "name": "Nandamuri Balakrishna",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65620,
+    "shape_name": "Hindupur"
+  },
+  {
+    "district": "Sri Sathya Sai",
+    "no": "158",
+    "constituency": "Penukonda",
+    "name": "S. Savitha",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65621,
+    "shape_name": "Penukonda"
+  },
+  {
+    "district": "Sri Sathya Sai",
+    "no": "159",
+    "constituency": "Puttaparthi",
+    "name": "Palle Sindhura Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65622,
+    "shape_name": "Puttaparthi"
+  },
+  {
+    "district": "Sri Sathya Sai",
+    "no": "160",
+    "constituency": "Dharmavaram",
+    "name": "Satya Kumar Yadav",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65623,
+    "shape_name": "Dharmavaram"
+  },
+  {
+    "district": "Sri Sathya Sai",
+    "no": "161",
+    "constituency": "Kadiri",
+    "name": "Kandikunta Venkata Prasad",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65624,
+    "shape_name": "Kadiri"
+  },
+  {
+    "district": "Annamayya",
+    "no": "162",
+    "constituency": "Thamballapalle",
+    "name": "Peddireddy Dwarakanatha Reddy",
+    "party": "YSR Congress Party",
+    "map_shape_id": 65625,
+    "shape_name": "Thamballapalle"
+  },
+  {
+    "district": "Annamayya",
+    "no": "163",
+    "constituency": "Pileru",
+    "name": "Nallari Kishore Kumar Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65626,
+    "shape_name": "Pileru"
+  },
+  {
+    "district": "Annamayya",
+    "no": "164",
+    "constituency": "Madanapalle",
+    "name": "Shahjahan Basha",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65627,
+    "shape_name": "Madanapalle"
+  },
+  {
+    "district": "Chittoor",
+    "no": "165",
+    "constituency": "Punganur",
+    "name": "Peddireddy Ramachandra Reddy",
+    "party": "YSR Congress Party",
+    "map_shape_id": 65628,
+    "shape_name": "Punganur"
+  },
+  {
+    "district": "Tirupati",
+    "no": "166",
+    "constituency": "Chandragiri",
+    "name": "Pulivarthi Venkata Mani Prasad",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65629,
+    "shape_name": "Chandragiri"
+  },
+  {
+    "district": "Tirupati",
+    "no": "167",
+    "constituency": "Tirupati",
+    "name": "Arani Srinivasulu",
+    "party": "Janasena Party",
+    "map_shape_id": 65630,
+    "shape_name": "Tirupati"
+  },
+  {
+    "district": "Tirupati",
+    "no": "168",
+    "constituency": "Srikalahasti",
+    "name": "Bojjala Venkata Sudhir Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65631,
+    "shape_name": "Srikalahasti"
+  },
+  {
+    "district": "Tirupati",
+    "no": "169",
+    "constituency": "Satyavedu",
+    "name": "Koneti Adimulam",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65632,
+    "shape_name": "Satyavedu (SC)"
+  },
+  {
+    "district": "Chittoor",
+    "no": "170",
+    "constituency": "Nagari",
+    "name": "Gali Bhanu Prakash",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65633,
+    "shape_name": "Nagari"
+  },
+  {
+    "district": "Chittoor",
+    "no": "171",
+    "constituency": "Gangadhara Nellore",
+    "name": "V. M. Thomas",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65634,
+    "shape_name": "Gangadhara Nellore (SC)"
+  },
+  {
+    "district": "Chittoor",
+    "no": "172",
+    "constituency": "Chittoor",
+    "name": "Gurajala Jagan Mohan",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65635,
+    "shape_name": "Chittoor"
+  },
+  {
+    "district": "Chittoor",
+    "no": "173",
+    "constituency": "Puthalapattu",
+    "name": "Kalikiri Murali Mohan",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65636,
+    "shape_name": "Puthalapattu (SC)"
+  },
+  {
+    "district": "Chittoor",
+    "no": "174",
+    "constituency": "Palamaner",
+    "name": "N. Amarnath Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65637,
+    "shape_name": "Palamaner"
+  },
+  {
+    "district": "Chittoor",
+    "no": "175",
+    "constituency": "Kuppam",
+    "name": "N. Chandrababu Naidu",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65638,
+    "shape_name": "Kuppam"
+  },
+  {
+    "district": "Vizianagaram",
+    "no": "15",
+    "constituency": "Cheepurupalli",
+    "name": "Kimidi Kalavenkata Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65483,
+    "shape_name": "Cheepurupalle"
+  },
+  {
+    "district": "Anakapalli",
+    "no": "30",
+    "constituency": "Anakapalli",
+    "name": "Konathala Ramakrishna",
+    "party": "Janasena Party",
+    "map_shape_id": 65496,
+    "shape_name": "Anakapalle"
+  },
+  {
+    "district": "Eluru",
+    "no": "63",
+    "constituency": "Unguturu",
+    "name": "Dharmaraju Patsamatla",
+    "party": "Janasena Party",
+    "map_shape_id": 65527,
+    "shape_name": "Ungutur"
+  },
+  {
+    "district": "Guntur",
+    "no": "88",
+    "constituency": "Ponnuru",
+    "name": "Dhulipalla Narendra Kumar",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65551,
+    "shape_name": "Ponnur"
+  },
+  {
+    "district": "Palnadu",
+    "no": "100",
+    "constituency": "Gurazala",
+    "name": "Yarapathineni Srinivasa Rao",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65563,
+    "shape_name": "Gurajala"
+  },
+  {
+    "district": "YSR Kadapa",
+    "no": "129",
+    "constituency": "Pulivendula",
+    "name": "Y. S. Jagan Mohan Reddy",
+    "party": "YSR Congress Party",
+    "map_shape_id": 65592,
+    "shape_name": "Pulivendla"
+  },
+  {
+    "district": "Anantapur",
+    "no": "151",
+    "constituency": "Tadipatri",
+    "name": "J. C. Ashmit Reddy",
+    "party": "Telugu Desam Party",
+    "map_shape_id": 65614,
+    "shape_name": "Tadpatri"
+  }
+]

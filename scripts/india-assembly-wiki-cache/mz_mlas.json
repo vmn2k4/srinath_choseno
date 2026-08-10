@@ -1,0 +1,282 @@
+[
+  {
+    "district": "Mamit",
+    "no": "1",
+    "constituency": "Hachhek",
+    "name": "Robert Romawia Royte",
+    "party": "Mizo National Front"
+  },
+  {
+    "district": "Mamit",
+    "no": "2",
+    "constituency": "Dampa",
+    "name": "R. Lalthangliana",
+    "party": "Mizo National Front"
+  },
+  {
+    "district": "Mamit",
+    "no": "3",
+    "constituency": "Mamit",
+    "name": "H. Lalzirliana",
+    "party": "Mizo National Front"
+  },
+  {
+    "district": "Kolasib",
+    "no": "4",
+    "constituency": "Tuirial",
+    "name": "K. Laldawngliana",
+    "party": "Mizo National Front"
+  },
+  {
+    "district": "Kolasib",
+    "no": "5",
+    "constituency": "Kolasib",
+    "name": "Lalfamkima",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Kolasib",
+    "no": "6",
+    "constituency": "Serlui",
+    "name": "Lalrinsanga Ralte",
+    "party": "Mizo National Front"
+  },
+  {
+    "district": "Aizawl",
+    "no": "7",
+    "constituency": "Tuivawl",
+    "name": "Lalchhandama Ralte",
+    "party": "Mizo National Front"
+  },
+  {
+    "district": "Aizawl",
+    "no": "8",
+    "constituency": "Chalfilh",
+    "name": "Lalbiakzama",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Aizawl",
+    "no": "9",
+    "constituency": "Tawi",
+    "name": "Lalnilawma",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Aizawl",
+    "no": "10",
+    "constituency": "Aizawl North 1",
+    "name": "Vanlalhlana",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Aizawl",
+    "no": "11",
+    "constituency": "Aizawl North 2",
+    "name": "Vanlalthlana",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Aizawl",
+    "no": "12",
+    "constituency": "Aizawl North 3",
+    "name": "K. Sapdanga",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Aizawl",
+    "no": "13",
+    "constituency": "Aizawl East 1",
+    "name": "Lalthansanga",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Aizawl",
+    "no": "14",
+    "constituency": "Aizawl East 2",
+    "name": "B. Lalchhanzova",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Aizawl",
+    "no": "15",
+    "constituency": "Aizawl West 1",
+    "name": "T. B. C. Lalvenchhunga",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Aizawl",
+    "no": "16",
+    "constituency": "Aizawl West 2",
+    "name": "Lalnghinglova Hmar",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Aizawl",
+    "no": "17",
+    "constituency": "Aizawl West 3",
+    "name": "V. L. Zaithanzama",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Aizawl",
+    "no": "18",
+    "constituency": "Aizawl South 1",
+    "name": "C. Lalsawivunga",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Aizawl",
+    "no": "19",
+    "constituency": "Aizawl South 2",
+    "name": "Lalchhuanthanga",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Aizawl",
+    "no": "20",
+    "constituency": "Aizawl South 3",
+    "name": "Baryl Vanneihsangi",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Champhai",
+    "no": "21",
+    "constituency": "Lengteng",
+    "name": "F. Rodingliana",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Champhai",
+    "no": "22",
+    "constituency": "Tuichang",
+    "name": "W. Chhuanawma",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Champhai",
+    "no": "23",
+    "constituency": "Champhai North",
+    "name": "H. Ginzalala",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Champhai",
+    "no": "24",
+    "constituency": "Champhai South",
+    "name": "C. Lalhmingthanga",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Champhai",
+    "no": "25",
+    "constituency": "East Tuipui",
+    "name": "Ramthanmawia",
+    "party": "Mizo National Front"
+  },
+  {
+    "district": "Serchhip",
+    "no": "26",
+    "constituency": "Serchhip",
+    "name": "Lalduhoma",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Serchhip",
+    "no": "27",
+    "constituency": "Tuikum",
+    "name": "P. C. Vanlalruata",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Serchhip",
+    "no": "28",
+    "constituency": "Hrangturzo",
+    "name": "Lalmuanpuia Punte",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Lunglei",
+    "no": "29",
+    "constituency": "South Tuipui",
+    "name": "Jeje Lalpekhlua",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Lunglei",
+    "no": "30",
+    "constituency": "Lunglei North",
+    "name": "V. Malsawmtluanga",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Lunglei",
+    "no": "31",
+    "constituency": "Lunglei East",
+    "name": "Lalrinpuii",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Lunglei",
+    "no": "32",
+    "constituency": "Lunglei West",
+    "name": "T. Lalhlimpuia",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Lunglei",
+    "no": "33",
+    "constituency": "Lunglei South",
+    "name": "Lalramliana Papuia",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Lunglei",
+    "no": "34",
+    "constituency": "Thorang",
+    "name": "R. Rohmingliana",
+    "party": "Mizo National Front"
+  },
+  {
+    "district": "Lunglei",
+    "no": "35",
+    "constituency": "West Tuipui",
+    "name": "Prova Chakma",
+    "party": "Mizo National Front"
+  },
+  {
+    "district": "Lawngtlai",
+    "no": "36",
+    "constituency": "Tuichawng",
+    "name": "Rasik Mohan Chakma",
+    "party": "Mizo National Front"
+  },
+  {
+    "district": "Lawngtlai",
+    "no": "37",
+    "constituency": "Lawngtlai West",
+    "name": "C. Ngunlianchunga",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Lawngtlai",
+    "no": "38",
+    "constituency": "Lawngtlai East",
+    "name": "L. Lalpekliana Chinzah",
+    "party": "Zoram People's Movement"
+  },
+  {
+    "district": "Saiha",
+    "no": "39",
+    "constituency": "Saiha",
+    "name": "K. Beichhua",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Saiha",
+    "no": "40",
+    "constituency": "Palak",
+    "name": "Pushpa K. Hrahmo",
+    "party": "Bharatiya Janata Party"
+  }
+]

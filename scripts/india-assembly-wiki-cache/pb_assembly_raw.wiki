@@ -1,0 +1,1090 @@
+{{Short description|Current Legislative Assembly since 2022}}
+{{Use Indian English|date=November 2023}}
+{{Use dmy dates|date=November 2023}}
+{{Infobox legislature
+| name              = Sixteenth Legislative Assembly of Punjab
+| native_name       =
+| coa_pic           =  
+| coa_res           =  
+| session_room      = 
+| established       = 11 March 2022
+| preceded_by       = [[Fifteenth Legislative Assembly of Punjab|15th Punjab Legislative Assembly]]
+| house_type        = [[Unicameral]]
+| term_length       = 5 years
+| leader1_type      = [[List of governors of Punjab, India|Governor]]
+| leader1           = '''[[Gulab Chand Kataria]]'''
+| party1            = 
+| election1         = 31 August 2021
+| leader2_type      = [[List of Speakers of Punjab Legislative Assembly#Speaker|Speaker]]
+| leader2           = '''[[Kultar Singh Sandhwan]]'''
+| party2            = [[Aam Aadmi Party|AAP]]
+| election2         = 21 March 2022
+| leader3_type      = Deputy Speaker
+| leader3           = '''[[Jai Krishan Singh]]'''
+| party3            = [[Aam Aadmi Party|AAP]]
+| election3         = 30 June 2022
+| leader4_type      = [[Leader of the House of Punjab Legislative Assembly|Leader of the House]]<br>([[List of chief ministers of Punjab, India|Chief Minister]])
+| leader4           = '''[[Bhagwant Mann]]'''
+| party4            = [[Aam Admi Party|AAP]]
+| election4         = 16 March 2022
+| leader5_type      = [[Government of Punjab, India|Deputy Leader of the House]]<br>([[Government of Punjab, India|Cabinet Minister]])
+| leader5           = '''[[Harpal Singh Cheema]]'''
+| party5            = [[Aam Aadmi Party|AAP]]
+| election5         = April 2022
+| leader6_type      = [[Government of Punjab, India|Minister of Legislative Affairs]]
+| leader6           = '''[[Balkar Singh]]'''
+| party6            = [[Aam Admi Party|AAP]]
+| election6         = 31 May 2023
+| leader7_type      = [[List of Leader of Opposition in Punjab Legislative Assembly|Leader of the Opposition]]
+| leader7           = '''[[Partap Singh Bajwa]]'''
+| party7            = [[Indian National Congress|INC]]
+| election7         = 9 April 2022
+| members           = '''117'''
+| political_groups1 = <!-- Do not make changes to Party totals without making corresponding changes under section 'Members of Legislative Assembly' -->
+'''[[Government of Punjab, India|Government]] (94)'''
+*{{Color box|{{Party color|Aam Aadmi Party}}}} [[Aam Aadmi Party|AAP]] (94)
+'''Official Opposition (16)'''
+*{{Color box|{{Party color|Indian National Congress}}}} [[Indian National Congress|INC]] (16)
+'''[[Parliamentary opposition|Other opposition]] (7)'''
+*{{Color box|{{Party color|Shiromani Akali Dal}}}} [[Shiromani Akali Dal|SAD]] (2)
+*{{Color box|{{Party color|Bharatiya Janata Party}}}} [[Bharatiya Janata Party|BJP]] (2)
+*{{Color box|{{Party color|Independent politician}}}} [[Independent politician|IND]] (1)<ref name="Sandeep Jakhar suspended by INC">{{cite web|url=https://www.hindustantimes.com/cities/chandigarh-news/congress-mla-sandeep-jakhar-suspended-for-anti-party-activities-after-supporting-bjp-chief-uncle-statement-101692472746203.html|title=Congress suspends Abohar MLA Sandeep Jakhar for ‘anti-party’ activities|work=Hindustan Times|accessdate=20 August 2023|archive-date=20 August 2023|archive-url=https://web.archive.org/web/20230820060018/https://www.hindustantimes.com/cities/chandigarh-news/congress-mla-sandeep-jakhar-suspended-for-anti-party-activities-after-supporting-bjp-chief-uncle-statement-101692472746203.html|url-status=live}}</ref>
+*{{Color box|{{Party color|Bahujan Samaj Party}}}} [[Bahujan Samaj Party|BSP]] (1)
+| structure1     = 
+| structure1_res = 300px 
+| voting_system1 = [[First-past-the-post]]
+| last_election1 = [[2022 Punjab Legislative Assembly election|20 February 2022]]
+| next_election1 = [[Next Punjab Legislative Assembly election|February 2027 or earlier]] 
+| meeting_place  = [[File:Palace of Assembly Chandigarh 2006.jpg|thumb|[[Palace of Assembly]], [[Chandigarh]], [[India]]]]
+| website       = {{URL|https://punjabassembly.gov.in/|Punjab Legislative Assembly}}
+| constitution  = [[Constitution of India]]
+}}
+
+Election for the '''Sixteenth Legislative Assembly''' was held in the Indian state of [[Punjab (India)|Punjab]]. Polling was done on 20 February 2022 to elect the 117 members of the [[Punjab Legislative Assembly]]. The counting of votes declaration of results was done on 10 March 2022.<ref name="List Financialexpress">{{cite news |title=Punjab election 2022, Punjab election results 2022, Punjab election winners list, Punjab election 2022 full list of winners, Punjab election winning candidates, Punjab election 2022 winners, Punjab election 2022 winning candidates constituency wise |url=https://www.financialexpress.com/india-news/punjab-assembly-election-results-2022-check-full-list-of-winners-constituency-wise-complete-list-of-punjab-results-2022-bjp-congress-akali-dal-aap/2456066/ |access-date=10 March 2022 |work=Financialexpress |language=en |archive-date=10 March 2022 |archive-url=https://web.archive.org/web/20220310065739/https://www.financialexpress.com/india-news/punjab-assembly-election-results-2022-check-full-list-of-winners-constituency-wise-complete-list-of-punjab-results-2022-bjp-congress-akali-dal-aap/2456066/ |url-status=live }}</ref><ref name="2022 Winner list">{{cite news |title=All Winners List of Punjab Assembly Election 2022 {{!}} Punjab Vidhan Sabha Elections |url=https://www.news18.com/assembly-elections-2022/punjab/all-winners/ |access-date=10 March 2022 |work=News18 |language=en |archive-date=27 October 2022 |archive-url=https://web.archive.org/web/20221027091043/https://www.news18.com/assembly-elections-2022/punjab/all-winners/ |url-status=live }}</ref><ref>{{cite news |title=Punjab election 2022 result constituency-wise: Check full list of winners |url=https://www.hindustantimes.com/elections/punjab-assembly-election/punjab-election-result-2022-check-constituency-wise-leading-trailing-candidates-full-list-of-winners-aap-bhagwant-mann-congress-charanjit-singh-channi-bjp-akalis-election-news-today-101646877618898.html |access-date=10 March 2022 |work=Hindustan Times |date=10 March 2022 |language=en |archive-date=10 March 2022 |archive-url=https://web.archive.org/web/20220310030153/https://www.hindustantimes.com/elections/punjab-assembly-election/punjab-election-result-2022-check-constituency-wise-leading-trailing-candidates-full-list-of-winners-aap-bhagwant-mann-congress-charanjit-singh-channi-bjp-akalis-election-news-today-101646877618898.html |url-status=live }}</ref> The [[15th Punjab Assembly|Fifteenth Punjab assembly]] was dissolved on 11 March 2022. The dissolution was necessitated after the results of the election was declared on 10 March.<ref name="Dissolved 11 March 2022">{{cite news |title=Punjab Governor dissolves 15th Punjab Assembly |url=https://www.thestatesman.com/states/punjab-governor-dissolves-15th-punjab-assembly-1503051390.html |access-date=27 March 2022 |work=The Statesman |date=11 March 2022 |archive-date=23 May 2022 |archive-url=https://web.archive.org/web/20220523111347/https://www.thestatesman.com/states/punjab-governor-dissolves-15th-punjab-assembly-1503051390.html |url-status=live }}</ref><ref name="recommends dissolution 11 March 2022">{{cite news |title=Punjab Cabinet recommends Governor for dissolution of 15th Punjab Assembly |url=https://www.thestatesman.com/cities/chandigarh/punjab-cabinet-recommends-governor-dissolution-15th-punjab-assembly-1503051314.html |access-date=27 March 2022 |work=The Statesman |date=11 March 2022 |archive-date=13 March 2022 |archive-url=https://web.archive.org/web/20220313041249/https://www.thestatesman.com/cities/chandigarh/punjab-cabinet-recommends-governor-dissolution-15th-punjab-assembly-1503051314.html |url-status=live }}</ref>
+<!-- this section is transcluded on Punjab Legislative Assembly  -->
+<section begin="Composition of Sixteenth Punjab Legislative Assembly"/><section begin="Parties and leaders"/>
+In the Sixteenth Punjab Legislative Assembly, 94 members of the ruling [[Aam Aadmi Party]] form the treasury benches. The main [[Opposition (politics)|opposition]] party in the assembly is [[Indian National Congress]] with 14 seats. The other parties which are in opposition are the [[Shiromani Akali Dal]], the [[Bharatiya Janata Party]], the [[Bahujan Samaj Party]] and [[Independent politician|independents]]. AAP MLA, [[Kultar Singh Sandhwan]] was announced as the speaker of the assembly.<ref>{{cite news |title=Punjab Cabinet swearing-in Live Updates: From uprooting corruption to tackling drug addiction in Punjab — newly-inducted Ministers set targets |url=https://indianexpress.com/article/cities/chandigarh/punjab-cabinet-swearing-in-live-updates-bhagwant-mann-7826467/ |access-date=19 March 2022 |work=The Indian Express |date=19 March 2022 |language=en |archive-date=19 March 2022 |archive-url=https://web.archive.org/web/20220319063815/https://indianexpress.com/article/cities/chandigarh/punjab-cabinet-swearing-in-live-updates-bhagwant-mann-7826467/ |url-status=live }}</ref>
+
+Incumbent Chief Minister Bhagwant Mann took the oath of office on 16 March at Khatkar Kalan, the ancestral village of [[Bhagat Singh]]. [[Inderbir Singh Nijjar]] took the oath as pro tem Speaker. On 17 March Nijjar administered the oath of office to all the 117 legislators of the Sixteenth Punjab Legislative assembly.<ref name="Cabinet NDTV 21 March 2022">{{cite news |title=In Punjab Cabinet, Bhagwant Mann Keeps Home, Harpal Cheema Gets Finance |url=https://www.ndtv.com/india-news/in-punjab-cabinet-bhagwant-mann-keeps-home-harpal-cheema-gets-finance-2834331 |access-date=21 March 2022 |work=NDTV.com |date=21 March 2022 |archive-date=21 March 2022 |archive-url=https://web.archive.org/web/20220321120858/https://www.ndtv.com/india-news/in-punjab-cabinet-bhagwant-mann-keeps-home-harpal-cheema-gets-finance-2834331 |url-status=live }}</ref> Other 10 cabinet ministers of the [[Mann ministry]], took oath on 19 March.
+
+On 22 June 2022, Speaker Kultar Singh Sandhwan announced that the legislators will get answers on all issues that they raise during the Assembly debates. The answers would be provided during the Zero Hour. This was done for the first time in the history of Punjab Assembly.<ref name="Zero Hour 23 June">{{cite news |last1=Service |first1=Tribune News |title=All Zero Hour questions to be answered: Punjab Speaker Kultar Singh Sandhwan |url=https://www.tribuneindia.com/news/punjab/all-zero-hour-questions-to-be-answered-punjab-speaker-kultar-singh-sandhwan-406168 |access-date=23 June 2022 |work=Tribuneindia News Service |date=22 June 2022 |language=en}}</ref>
+
+==Leaders==
+{| class="wikitable" style="text-align:center"
+|+
+!Title
+!Name
+!Portrait
+!Since
+|-
+! colspan="4" |Constitutional Posts
+|-
+|[[List of governors of Punjab (India)|Governor]]
+| [[Gulab Chand Kataria]]
+
+|[[File:Gulab_Chand_Kataria_(cropped).jpg|75px]]
+
+|30 July 2024
+
+
+|-
+|[[List of speakers of the Punjab Legislative Assembly|Speaker]]
+|[[Kultar Singh Sandhwan]]<ref>{{Cite web |date=2022-03-18 |title=AAP nominates party MLA Kultar Singh Sandhwan as next Punjab assembly speaker |url=https://www.hindustantimes.com/elections/punjab-assembly-election/aap-nominates-party-mla-kultar-singh-sandhwan-as-next-punjab-assembly-speaker-101647621201993.html |access-date=2022-03-18 |website=Hindustan Times |language=en |archive-date=18 March 2022 |archive-url=https://web.archive.org/web/20220318181636/https://www.hindustantimes.com/elections/punjab-assembly-election/aap-nominates-party-mla-kultar-singh-sandhwan-as-next-punjab-assembly-speaker-101647621201993.html |url-status=live }}</ref>
+|[[File:S._Kultar_Singh_Sandhwan.jpg|75px]]
+|21 March 2022
+|-
+|[[List of speakers of the Punjab Legislative Assembly#Deputy Speaker|Deputy speaker]]
+|[[Jai Krishan Singh]]<ref name="Deputy Speaker">{{cite news |date=30 June 2022 |title=Jai Krishan Singh Rouri is new Deputy Speaker of Punjab assembly |language=en |work=The Indian Express |url=https://indianexpress.com/article/cities/chandigarh/jai-krishan-singh-rouri-is-new-deputy-speaker-of-punjab-assembly-8000854/ |access-date=30 June 2022 |archive-date=30 June 2022 |archive-url=https://web.archive.org/web/20220630112831/https://indianexpress.com/article/cities/chandigarh/jai-krishan-singh-rouri-is-new-deputy-speaker-of-punjab-assembly-8000854/ |url-status=live }}</ref>
+|
+|30 June 2022
+|-
+|Leader of the House<br/><small>([[List of chief ministers of Punjab (India)|Chief Minister]])</small>
+|[[Bhagwant Mann]]
+|[[File:Bhagwant_Mann_2026.jpg|75px]]
+|16 March 2022
+|-
+|[[List of leaders of the opposition in the Punjab Legislative Assembly|Leader of Opposition]]
+|[[Pratap Singh Bajwa]]
+|[[File:Pratap_Singh_Bajwa.jpg|75px]]
+|9 April 2022
+|-
+! colspan="4" |Political posts
+|-
+|Leader of [[Aam Aadmi Party|AAP]] legislature party
+|[[Bhagwant Mann]]
+|[[File:Bhagwant_Mann_2026.jpg|75px]]
+|16 March 2022
+|-
+<!--
+|[[List of deputy chief ministers of Punjab, India|Deputy Chief Minister]]
+|TBA
+|
+|
+|- -->
+|Leader of [[Indian National Congress|INC]] legislature party
+|[[Pratap Singh Bajwa]]
+|[[File:Pratap_Singh_Bajwa.jpg|75px]]
+|9 April 2022
+|-
+|Leader of [[Shiromani Akali Dal|SAD]] legislature party
+|[[Manpreet Singh Ayali]]
+|[[File:Manpreet Singh Ayali new.jpg|75px]]
+|April 2022
+|-
+|Leader of [[Bharatiya Janata Party|BJP]] legislature party
+|[[Ashwani Kumar Sharma (Punjab politician)|Ashwani Kumar Sharma]]
+|
+|April 2022
+|-
+|Leader of [[Bahujan Samaj Party|BSP]] legislature party
+|[[Nachhatar Pal]]
+|
+|April 2022
+|}<section end="Parties and leaders" />
+
+==Committees== 
+List of committees and chairpersons for the term 2022–2023.<ref name="HT Appointment 22">{{cite news |title=Punjab speaker appoints heads of House committees |url=https://www.hindustantimes.com/cities/chandigarh-news/punjab-speaker-appoints-heads-of-house-committees-101653170285870.html |access-date=11 June 2022 |work=Hindustan Times |date=22 May 2022 |language=en |archive-date=22 May 2022 |archive-url=https://web.archive.org/web/20220522184912/https://www.hindustantimes.com/cities/chandigarh-news/punjab-speaker-appoints-heads-of-house-committees-101653170285870.html |url-status=live }}</ref>
+
+{|class="wikitable sortable" style="text-align:center"
+|-
+! Committee<ref>{{cite web |title=Committees |url=http://punjabassembly.nic.in/index.php/committies |website=punjabassembly.nic.in |access-date=11 June 2022 |archive-date=21 May 2022 |archive-url=https://web.archive.org/web/20220521194853/http://www.punjabassembly.nic.in/index.php/committies |url-status=live }}</ref>
+! Chairperson 
+! colspan=2| Party or Organization
+|-
+|[[Committee on Local Bodies]]
+|[[Jagroop Singh Gill]]
+|{{Full party name with color|Aam Aadmi Party}}
+|-
+|Committee on Public Accounts
+|[[Sukhbinder Singh Sarkaria]]
+|{{Full party name with color|Indian National Congress}} 
+|- 
+|[[Punjab Assembly Committee on Estimates|Committee on Estimates]]
+|[[Aman Arora]]
+| {{Full party name with color|Aam Aadmi Party}}  
+|-
+|[[Punjab Assembly Committee on Public Undertakings|Committee on Public Undertakings]]
+|[[Budh Ram]]
+| {{Full party name with color|Aam Aadmi Party}}  
+|-
+|[[Punjab Assembly Committee on Welfare of Scheduled Castes, Scheduled Tribes and Backward Classes|Committee on Welfare of Scheduled Castes,<br>Scheduled Tribes and Backward Classes]]
+|[[Manjit Singh Bilaspur]]
+| {{Full party name with color|Aam Aadmi Party}} 
+|-
+|[[Punjab Assembly Committee on Privileges|Committee on Privileges]]
+|[[Kulwant Singh Pandori]]
+| {{Full party name with color|Aam Aadmi Party}}  
+|-
+|[[Punjab Assembly Committee on Government Assurances|Committee on Government Assurances]]
+|[[Kunwar Vijay Pratap Singh]]
+| {{Full party name with color|Aam Aadmi Party}}  
+|-
+|[[Punjab Assembly Committee on Local Bodies|Committee on Local Bodies]]
+|[[Jagroop Singh Gill]]
+| {{Full party name with color|Aam Aadmi Party}} 
+|-
+|[[Punjab Assembly Committee on Panchayati Raj Institutions|Committee on Panchayati Raj Institutions]]
+|[[Gurmeet Singh Khudian]]
+| {{Full party name with color|Aam Aadmi Party}} 
+|-
+|[[Punjab Assembly Committee on Subordinate Legislation|Committee on Subordinate Legislation]]
+|[[Barinder Kumar Goyal Vakeel]]
+| {{Full party name with color|Aam Aadmi Party}} 
+|-
+|[[Punjab Assembly Committee on Papers Laid/to be Laid on the Table and Library|Committee on Papers Laid/to be Laid on the Table and Library]]
+|[[Jagdeep Kamboj Goldy]]
+| {{Full party name with color|Aam Aadmi Party}} 
+|-
+|[[Punjab Assembly Committee on Petitions|Committee on Petitions]]
+|[[Mohammad Jamil Ur Rahman]]
+| {{Full party name with color|Aam Aadmi Party}} 
+|-
+|[[Punjab Assembly House Committee|House Committee]]
+|[[Jai Krishan Singh]]<br><small>Deputy speaker (Ex-Officio Chairperson)</small>
+| {{Full party name with color|Aam Aadmi Party}} 
+|-
+|[[Punjab Assembly Committee on Questions & References|Committee on Questions & References]]
+|[[Baljinder Kaur (politician)|Baljinder Kaur]]
+| {{Full party name with color|Aam Aadmi Party}} 
+|-
+|Press Gallery Committee
+|Naresh Sharma
+|bgcolor="white"|
+|{{left|[[Punjab Kesari]]}}
+|-
+|[[Punjab Assembly Committee on Co-operation and its allied activities|Committee on Co-operation and its allied activities]]
+|[[Sarvjit Kaur Manuke]]
+| {{Full party name with color|Aam Aadmi Party}} 
+|-
+|[[Punjab Assembly Committee on Agriculture and its allied activities|Committee on Agriculture and its allied activities]]
+|[[Gurpreet Singh Banawali]]
+| {{Full party name with color|Aam Aadmi Party}} 
+|}
+
+==Composition==
+{{Further|2022 Punjab Legislative Assembly election#Results}}
+{{Pie chart
+|thumb = right
+|caption = '''Seat Share''' 
+|label2 = [[Indian National Congress|INC]] - 16
+|value2 = 13.9
+|color2 = {{party color|Indian National Congress}}|
+|label3 = [[Shiromani Akali Dal|SAD]] - 2
+|value3 = 1.8
+|color3 = {{party color|Shiromani Akali Dal}}|
+|label1 = [[Aam Aadmi Party|AAP]] - 94
+|value1 = 80.8
+|color1 = {{party color|Aam Aadmi Party}}|
+|label4 = [[Bharatiya Janata Party|BJP]] - 2
+|value4 = 1.8
+|color4 = {{party color|Bharatiya Janata Party}}|
+|label5 = [[Bahujan Samaj Party|BSP]] - 1
+|value5 = 0.9
+|color5 = {{party color|Bahujan Samaj Party}}|
+|label6 = [[Independent politician|IND]] - 1
+|value6 = 0.9
+|color6 = #DDDDDD
+}}
+
+=== By alliance and party ===
+ 
+{| class="wikitable"
+! colspan="2" rowspan="2" |Alliance
+! colspan="2" rowspan="2" |Party
+! colspan="2" |Seats
+! rowspan="2" |Legislative
+Party Leader
+! colspan="3" rowspan="2" |Bench
+|-
+!Won <ref>{{cite web |title=Punjab Results Live |url=https://results.eci.gov.in/ResultAcGenMar2022/partywiseresult-S19.htm?st=S19 |website=results.eci.gov.in |publisher=Election Commission of India |access-date=10 March 2022 |archive-date=10 March 2022 |archive-url=https://web.archive.org/web/20220310024225/https://results.eci.gov.in/ResultAcGenMar2022/partywiseresult-S19.htm?st=S19 |url-status=live }}</ref>
+!Change{{efn|As compare with previous result of [[2017 Punjab Legislative Assembly election|2017]]}}
+|-
+|bgcolor="{{Party color|Aam Aadmi Party}}"|
+|colspan="3"|[[Aam Aadmi Party|AAP]]
+|92
+|{{increase}} 72
+|[[Bhagwant Mann|Bhagwant Singh Mann]]<ref>{{Cite web |url=https://www.indiatvnews.com/elections/news/punjab-election-result-2022-aap-bhagwant-mann-elected-leader-of-legislative-party-2022-03-11-763908 |title=Bhagwant Mann elected leader of legislative party leader |access-date=17 March 2022 |archive-date=17 March 2022 |archive-url=https://web.archive.org/web/20220317141139/https://www.indiatvnews.com/elections/news/punjab-election-result-2022-aap-bhagwant-mann-elected-leader-of-legislative-party-2022-03-11-763908 |url-status=live }}</ref>
+| rowspan="1" |94
+|  rowspan="1" bgcolor="{{Party color|Aam Aadmi Party}}|
+| rowspan="1" |Government
+|-
+|bgcolor="{{Party color|Indian National Congress}}"|
+|colspan="3"|[[Indian National Congress|INC]]
+|18
+|{{decrease}} 59
+|[[Partap Singh Bajwa]]
+| rowspan="1" |16
+|  rowspan="1" bgcolor="{{Party color|United Progressive Alliance}}|
+| rowspan="1" |Main Opposition
+|-
+|bgcolor="{{Party color|Shiromani Akali Dal}}"|
+|colspan="3"|[[Shiromani Akali Dal|SAD]]
+|3
+|{{decrease}} 12
+|[[Manpreet Singh Ayali]]<ref>{{Cite web |url=https://www.babushahi.com/full-news.php?id=142234&headline=SAD-appoints-its-new-leader-of-Legislative-Party-and-Chief-Whip |title=SAD appoints its new leader of legislative party |access-date=17 March 2022 |archive-date=8 May 2022 |archive-url=https://web.archive.org/web/20220508115855/https://www.babushahi.com/full-news.php?id=142234&headline=SAD-appoints-its-new-leader-of-Legislative-Party-and-Chief-Whip |url-status=live }}</ref>
+|rowspan=4|7
+|rowspan=4 bgcolor={{Party color|Others}}|
+|rowspan=4|Other Opposition
+|-
+|bgcolor="{{Party color|Bharatiya Janata Party}}"|
+|colspan="3"|[[Bharatiya Janata Party|BJP]]
+|2
+|{{decrease}} 1
+|[[Ashwani Kumar Sharma (Punjab politician)|Ashwani Kumar Sharma]]
+|-
+|bgcolor="{{Party color|Bahujan Samaj Party}}"|
+|colspan="3"|[[Bahujan Samaj Party|BSP]]
+|1
+|{{increase}} 1
+|[[Nachhatar Pal]]
+|-
+|bgcolor="{{Party color|Independent politician}}"|
+|colspan="3"|[[Independent (politician)|IND]]
+|1
+|{{increase}} 1
+|[[Rana Inder Partap Singh]]
+|-
+! colspan = 4|Total
+!117
+!colspan="2" style="background-color:#E9E9E9"|
+!117
+!colspan="2" style="background-color:#E9E9E9"|
+|}
+
+=== By constituency ===
+{| class="wikitable sortable"
+!District
+!No.
+!Constituency
+!Name
+!colspan=2|Party
+!Remarks
+|-
+| rowspan="3" |[[Pathankot district|Pathankot]]
+|1
+|[[Sujanpur, Punjab Assembly constituency|Sujanpur]]
+| Naresh Puri
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|2
+|[[Bhoa Assembly constituency|Bhoa]] (SC)
+| [[Lal Chand Kataruchakk]] 
+|{{Party name with color|Aam Aadmi Party}}
+|
+|-
+|3
+|[[Pathankot Assembly constituency|Pathankot]]
+| [[Ashwani Kumar Sharma (Punjab politician)|Ashwani Kumar Sharma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="8" | [[Gurdaspur district|Gurdaspur]]
+|4
+|[[Gurudaspur Assembly constituency|Gurdaspur]]
+| [[Barindermeet Singh Pahra]]
+|{{Party name with color|Indian National Congress|rowspan=3}}
+|
+|-
+|5
+|[[Dina Nagar Assembly constituency|Dina Nagar]] (SC)
+| [[Aruna Chaudhary]]
+|[[List of leaders of the opposition in the Punjab Legislative Assembly#Deputy leader of the opposition|Dy. Leader of Opposition]]
+|-
+|6
+|[[Qadian Assembly constituency|Qadian]]
+| [[Partap Singh Bajwa]]
+|[[List of leaders of the opposition in the Punjab Legislative Assembly|Leader of the Opposition]]
+|-
+|7
+|[[Batala Assembly constituency|Batala]]
+| [[Amansher Singh|Amansher Singh (Shery Kalsi)]]
+|{{Party name with color|Aam Aadmi Party|rowspan=2}}
+|
+|-
+|8
+|[[Sri Hargobindpur Assembly constituency|Sri Hargobindpur]] (SC)
+| [[Amarpal Singh]]
+|
+|-
+|9
+|[[Fatehgarh Churian Assembly constituency|Fatehgarh Churian]]
+| [[Tripat Rajinder Singh Bajwa]]
+|{{Party name with color|Indian National Congress|rowspan=2}}
+|
+|-
+|rowspan=2 |10
+|rowspan=2 |[[Dera Baba Nanak Assembly constituency|Dera Baba Nanak]]
+| [[Sukhjinder Singh Randhawa]]
+|Elected to [[18th Lok Sabha]] in June 2024
+|-
+|[[Gurdeep Singh Randhawa]]
+|{{Party name with color|Aam Aadmi Party}}
+|
+|-
+| rowspan="10" | [[Amritsar district|Amritsar]]
+|11
+|[[Ajnala Assembly constituency|Ajnala]]
+|[[Kuldeep Singh Dhaliwal|Kuldip Singh Dhaliwal]]
+|{{Party name with color|Aam Aadmi Party}}
+|
+|-
+|-
+|12
+|[[Raja Sansi Assembly constituency|Rajasansi]]
+|[[Sukhbinder Singh Sarkaria]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|13 
+|[[Majitha Assembly constituency|Majitha]]
+| [[Ganieve Kaur Majithia]]
+| {{Party name with color|Shiromani Akali Dal}} 
+|
+|-
+|14
+|[[Jandiala Assembly constituency|Jandiala]] (SC) 
+| [[Harbhajan Singh E.T.O.]]
+|{{Party name with color|Aam Aadmi Party|rowspan=7}}
+|
+|-
+|15 
+|[[Amritsar North Assembly constituency|Amritsar North]]
+| [[Kunwar Vijay Pratap Singh]]
+|
+|-
+|16
+|[[Amritsar West Assembly constituency|Amritsar West]] (SC)
+| [[Jasbir Singh Sandhu]]
+|
+|-
+|17
+|[[Amritsar Central Assembly constituency|Amritsar Central]]
+|[[Ajay Gupta]]
+|
+|-
+|18
+|[[Amritsar East Assembly constituency|Amritsar East]]
+|[[Jeevan Jyot Kaur]]
+|
+|-
+|19
+|[[Amritsar South Assembly constituency|Amritsar South]]
+|[[Inderbir Singh Nijjar]]
+|
+|-
+|20
+|[[Attari Assembly constituency|Attari]] (SC)
+|[[Jaswinder Singh (politician)|Jaswinder Singh]]
+|
+|-
+| rowspan="4" | [[Tarn Taran district|Tarn Taran]]
+|21
+|[[Tarn Taran Assembly constituency|Tarn Taran]]
+|[[Harmeet Singh Sandhu]]
+|{{Party name with color|Aam Aadmi Party|rowspan=4}}
+|
+|-
+|22
+|[[Khemkaran Assembly constituency|Khemkaran]]
+| [[Sarvan Singh Dhun]]
+|
+|-
+|23 
+|[[Patti, Punjab Assembly constituency|Patti]]
+| [[Laljit Singh Bhullar]]
+|
+|-
+|24 
+|[[Khadoor Sahib Assembly constituency|Khadoor Sahib]]
+|[[Manjinder Singh Lalpura]]
+|
+|-
+| [[Amritsar district|Amritsar]]
+|25
+|[[Baba Bakala Assembly constituency|Baba Bakala]] (SC) 
+|[[Dalbir Singh Tong]]
+|{{Party name with color|Aam Aadmi Party}}
+|
+|-
+| rowspan="4" | [[Kapurthala district|Kapurthala]]
+|26
+|[[Bholath Assembly constituency|Bholath]]
+| [[Sukhpal Singh Khaira]]
+|{{Party name with color|Indian National Congress|rowspan=2}}
+|
+|-
+|27
+|[[Kapurthala Assembly constituency|Kapurthala]]
+| [[Rana Gurjeet Singh]]
+|
+|-
+|28
+|[[Sultanpur Lodhi Assembly constituency|Sultanpur Lodhi]]
+| [[Rana Inder Pratap Singh]]
+| {{Party name with color|Independent|shortname=IND}} 
+|
+|-
+|29
+|[[Phagwara Assembly constituency|Phagwara]] (SC)
+|Balwinder Singh Dhaliwal
+|{{Party name with color|Indian National Congress}}
+|
+|-
+| rowspan="11" |[[Jalandhar district|Jalandhar]]
+|rowspan=2 |30
+|rowspan=2 |[[Phillaur Assembly constituency|Phillaur]] (SC)
+|rowspan=2 |[[Vikramjit Singh Chaudhary]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|{{Party name with color|Independent|shortname=IND}}
+|Suspended by [[Indian National Congress|INC]] in April 2024.<ref>{{cite web|url=https://indianexpress.com/article/cities/chandigarh/congress-suspends-phillaur-mla-vikramjit-chaudhary-for-anti-party-activities-9289470/|title=Congress suspends Phillaur MLA Vikramjit Chaudhary for anti-party activities|work=Indian Express|accessdate=25 April 2024}}</ref>
+|-
+|31
+|[[Nakodar Assembly constituency|Nakodar]]
+| [[Inderjit Kaur Mann]]
+|{{Party name with color|Aam Aadmi Party}}
+|
+|-
+|32
+|[[Shahkot Assembly constituency|Shahkot]]
+|Hardev Singh Laddi
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|33
+| [[Kartarpur Assembly constituency|Kartarpur]] (SC) 
+| [[Balkar Singh]]
+|{{Party name with color|Aam Aadmi Party|rowspan=4}}
+|
+|-
+|rowspan=2 |34
+|rowspan=2 |[[Jalandhar West Assembly constituency|Jalandhar West (SC)]] 
+|[[Sheetal Angural]]
+|rowspan=2 |
+|-
+|Mohinder Pal Bhagat
+|-
+|35
+|[[Jalandhar Central Assembly constituency|Jalandhar Central]]
+| [[Raman Arora]]
+|
+|-
+|36
+|[[Jalandhar North Assembly constituency|Jalandhar North]]
+| [[Avtar Singh Junior]]
+|{{Party name with color|Indian National Congress|rowspan=3}}
+|
+|-
+|37
+|[[Jalandhar Cantonment Assembly constituency|Jalandhar Cantonment]]
+| [[Pargat Singh]]
+|
+|-
+|38
+|[[Adampur, Punjab Assembly constituency|Adampur]] (SC)
+|[[Sukhwinder Singh Kotli]]
+|
+|-
+| rowspan="8" | [[Hoshiarpur district|Hoshiarpur]]
+|39
+|[[Mukerian Assembly constituency|Mukerian]]
+| Jangi Lal Mahajan
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|40
+|[[Dasuya Assembly constituency|Dasuya]]
+| [[Karambir Singh Ghuman]]
+|{{Party name with color|Aam Aadmi Party|rowspan=4}}
+|
+|-
+|41
+|[[Urmar Assembly constituency|Urmar]]
+| [[Jasvir Singh Raja Gill]]
+|
+|-
+|42
+|[[Sham Chaurasi Assembly constituency|Sham Chaurasi]] (SC)
+| [[Ravjot Singh]]
+|[[Government of Punjab, India|Minister of Legislative Affairs]]
+|-
+|43
+|[[Hoshiarpur Assembly constituency|Hoshiarpur]]
+|[[Brahm Shankar Jimpa|Bram Shanker]]
+|
+|-
+|Rowspan=2|44
+|Rowspan=2|[[Chabbewal Assembly constituency|Chabbewal]] (SC)
+| [[Raj Kumar Chabbewal]]
+|{{Party name with color|Indian National Congress}}
+|Elected to [[18th Lok Sabha]] in June 2024
+|-
+| [[Ishank Kumar Chabbewal|Ishank Kumar]]
+|{{Party name with color|Aam Aadmi Party|rowspan=2}}
+|
+|-
+|45
+|[[Garhshankar Assembly constituency|Garhshankar]]
+| [[Jai Krishan Singh]]
+|[[List of speakers of the Punjab Legislative Assembly#Deputy Speaker|Dy. Speaker]]
+|-
+| rowspan="3" | [[Shaheed Bhagat Singh Nagar district|Shaheed Bhagat Singh Nagar]]
+|46
+|[[Banga Assembly constituency|Banga]] (SC)
+| [[Sukhwinder Kumar]]
+| {{Party name with color|Aam Aadmi Party}} 
+| Defected from SAD to AAP
+|-
+|47
+|[[Nawan Shahr Assembly constituency|Nawan Shahr]]
+|[[Nachhatar Pal]] 
+|{{Party name with color|Bahujan Samaj Party}}
+|
+|-
+|48
+|[[Balachaur Assembly constituency|Balachaur]]
+|[[Santosh Kumari Katariaa|Santosh Katariaa]]
+| {{Party name with color|Aam Aadmi Party}}
+|
+|-
+| rowspan="3" | [[Rupnagar district|Rupnagar]]
+|49
+| [[Anandpur Sahib Assembly constituency|Anandpur Sahib]]
+|[[Harjot Singh Bains]]
+| {{Party name with color|Aam Aadmi Party|rowspan=3}}
+|
+|-
+|50
+|[[Rupnagar Assembly constituency|Rupnagar]]
+|[[Dinesh Chadha]]
+|
+|-
+|51
+| [[Chamkaur Sahib Assembly constituency|Chamkaur Sahib]] (SC)
+| [[Charanjit Singh (politician)|Dr Charanjit Singh]]
+|
+|-
+| rowspan="2" | [[Sahibzada Ajit Singh Nagar district|Sahibzada Ajit Singh Nagar]]
+|52
+|[[Kharar Assembly constituency|Kharar]]
+| [[Anmol Gagan Maan]]
+| {{Party name with color|Aam Aadmi Party|rowspan=2}}
+|
+|-
+|53
+|[[Sahibzada Ajit Singh Nagar Assembly constituency|S.A.S. Nagar]]
+| [[Kulwant Singh (politician)|Kulwant Singh]]
+|
+|-
+| rowspan="3" | [[Fatehgarh Sahib district|Fatehgarh Sahib]]
+|54
+|[[Bassi Pathana Assembly constituency|Bassi Pathana]] (SC)
+| [[Rupinder Singh]]
+| {{Party name with color|Aam Aadmi Party|rowspan=3}}
+|
+|-
+|55
+|[[Fatehgarh Sahib Assembly constituency|Fatehgarh Sahib]]
+| [[Lakhbir Singh Rai]]
+|
+|-
+|56
+|[[Amloh Assembly constituency|Amloh]]
+|[[Gurinder Singh Garry]]
+|
+|-
+| rowspan="14" | [[Ludhiana district|Ludhiana]]
+|57
+|[[Khanna Assembly constituency|Khanna]]
+| [[Tarunpreet Singh Sond]]
+| {{Party name with color|Aam Aadmi Party|rowspan=11}}
+|
+|-
+|58
+|[[Samrala Assembly constituency|Samrala]]
+| [[Jagtar Singh]]
+|
+|-
+|59
+|[[Sahnewal Assembly constituency|Sahnewal]]
+|[[Hardeep Singh Mundian]]
+|
+|-
+|60
+|[[Ludhiana East Assembly constituency|Ludhiana East]]
+|[[Daljit Singh Grewal]]
+|
+|-
+|61
+|[[Ludhiana South Assembly constituency|Ludhiana South]]
+|[[Rajinder Pal Kaur Chhina]]
+|
+|-
+|62
+|[[Atam Nagar Assembly constituency|Atam Nagar]]
+|[[Kulwant Singh Sidhu]]
+|
+|-
+|63
+|[[Ludhiana Central Assembly constituency|Ludhiana Central]]
+| [[Ashok Prashar Pappi]]
+|
+|-
+|64
+|[[Ludhiana West Assembly constituency|Ludhiana West]]
+| [[Sanjeev Arora (politician)|Sanjeev Arora]]
+|
+|-
+|65
+|[[Ludhiana North Assembly constituency|Ludhiana North]]
+|[[Madan Lal Bagga]]
+|
+|-
+|66
+|[[Gill Assembly constituency|Gill]] (SC)
+|[[Jiwan Singh Sangowal]]
+|
+|-
+|67
+|[[Payal Assembly constituency|Payal]] (SC)
+|[[Manwinder Singh Gyaspura]]
+|
+|-
+|68
+|[[Dakha Assembly constituency|Dakha]]
+|[[Manpreet Singh Ayali]]
+|{{Party name with color|Akali Dal (Waris Punjab De)}}
+|Joined AD(WPD) from SAD.
+|-
+|69
+|[[Raikot Assembly constituency|Raikot]] (SC)
+|[[Hakam Singh Thekedar]]
+| {{Party name with color|Aam Aadmi Party|rowspan=2}}
+|
+|-
+|70
+|[[Jagraon Assembly constituency|Jagraon]] (SC)
+|[[Saravjit Kaur Manuke]]
+|
+|-
+| rowspan="4" |[[Moga district|Moga]]
+|71
+|[[Nihal Singh Wala Assembly constituency|Nihal Singh Wala]] (SC)
+|[[Manjit Singh Bilaspur]]
+| {{Party name with color|Aam Aadmi Party|rowspan=4}}
+|
+|-
+|72
+|[[Bhagha Purana Assembly constituency|Bhagha Purana]]
+|[[Amritpal Singh Sukhanand]]
+|
+|-
+|73
+|[[Moga Assembly constituency|Moga]]
+|[[Amandeep Kaur Arora]]
+|
+|-
+|74
+|[[Dharamkot Assembly constituency|Dharamkot]]
+|[[Devinder Singh Laddi Dhos]]
+|
+|-
+| rowspan="4" |[[Ferozpur district|Ferozpur]]
+|75
+|[[Zira Assembly constituency|Zira]]
+|[[Naresh Kataria]]
+| {{Party name with color|Aam Aadmi Party|rowspan=4}}
+|
+|-
+|76
+|[[Firozpur City Assembly constituency|Firozpur City]]
+|[[Ranveer Singh Bhullar]]
+|
+|-
+|77
+|[[Firozpur Rural Assembly constituency|Firozpur Rural]] (SC)
+|[[Rajnish Dahiya]]
+|
+|-
+|78
+|[[Guru Har Sahai Assembly constituency|Guru Har Sahai]]
+|[[Fauja Singh Sarari]]
+|
+|-
+| rowspan="5" | [[Fazilka district|Fazilka]]
+|79
+|[[Jalalabad (Punjab Assembly constituency)|Jalalabad]]
+|[[Jagdeep Kamboj Goldy]]
+| {{Party name with color|Aam Aadmi Party|rowspan=2}}
+|
+|-
+|80
+|[[Fazilka Assembly constituency|Fazilka]]
+|[[Narinderpal Singh Sawna]]
+|
+|-
+|rowspan=2|81
+|rowspan=2|[[Abohar Assembly constituency|Abohar]]
+|rowspan=2|[[Sandeep Jakhar]]
+|{{Party name with color|Indian National Congress}}
+| 
+|-
+|{{Party name with color|Independent|shortname=IND}} 
+|Suspended by [[Indian National Congress|INC]] in August 2023.<ref name="Sandeep Jakhar suspended by INC"/>
+|-
+|82
+|[[Balluana Assembly constituency|Balluana]] (SC)
+|[[Amandeep Singh Musafir|Amandeep Singh ‘Goldy’ Musafir]]
+| {{Party name with color|Aam Aadmi Party}}
+|
+|-
+| rowspan="5" | [[Sri Muktsar Sahib district|Sri Muktsar Sahib]]
+|83
+|[[Lambi Assembly constituency|Lambi]]
+| [[Gurmeet Singh Khudian]]
+| {{Party name with color|Aam Aadmi Party}}
+|
+|-
+|rowspan=2 |84
+|rowspan=2 |[[Gidderbaha Assembly constituency|Gidderbaha]]
+| [[Amrinder Singh Raja Warring]]
+|{{Party name with color|Indian National Congress}}
+|Elected to [[18th Lok Sabha]] in June 2024
+|-
+|[[Hardeep Singh Dhillon]]
+|{{Party name with color|Aam Aadmi Party|rowspan=3}}
+|
+|-
+|85
+|[[Malout Assembly constituency|Malout]] (SC)
+|[[Baljit Kaur]]
+|
+|-
+|86
+|[[Muktsar Assembly constituency|Muktsar]]
+|[[Jagdeep Singh Brar]]
+|
+|-
+| rowspan="3" | [[Faridkot district|Faridkot]]
+|87
+|[[Faridkot Assembly constituency|Faridkot]]
+|[[Gurdit Singh Sekhon]]
+| {{Party name with color|Aam Aadmi Party|rowspan=3}}
+|
+|-
+|88
+|[[Kotkapura Assembly constituency|Kotkapura]]
+|[[Kultar Singh Sandhwan]]
+|[[List of speakers of the Punjab Legislative Assembly#Speaker|Speaker]]
+|-
+|89
+|[[Jaitu Assembly constituency|Jaitu]] (SC)
+|[[Amolak Singh]]
+|
+|-
+| rowspan="6" | [[Bathinda district|Bathinda]]
+|90
+|[[Rampura Phul Assembly constituency|Rampura Phul]]
+| [[Balkar Singh Sidhu]]
+| {{Party name with color|Aam Aadmi Party|rowspan=6}}
+|
+|-
+|91
+|[[Bhucho Mandi Assembly constituency|Bhucho Mandi]] (SC)
+|[[Master Jagsir Singh]]
+|
+|-
+|92
+|[[Bathinda Urban Assembly constituency|Bathinda Urban]]
+|[[Jagroop Singh Gill]]
+|
+|-
+|93
+|[[Bathinda Rural Assembly constituency|Bathinda Rural]] (SC)
+|[[Amit Rattan Kotfatta]]
+|
+|-
+|94
+|[[Talwandi Sabo Assembly constituency|Talwandi Sabo]]
+|[[Baljinder Kaur (Punjab politician)|Baljinder Kaur]]
+|
+|-
+|95
+|[[Maur Assembly constituency|Maur]]
+|[[Sukhvir Maiser Khana]]
+|
+|-
+| rowspan="3" | [[Mansa district, Punjab|Mansa]]
+|96
+|[[Mansa, Punjab Assembly constituency|Mansa]]
+|[[Dr Vijay Singla|Vijay Singla]]
+| {{Party name with color|Aam Aadmi Party|rowspan=3}}
+|
+|-
+|97
+|[[Sardulgarh Assembly constituency|Sardulgarh]]
+|[[Gurpreet Singh Banawali]]
+|
+|-
+|98
+|[[Budhalada Assembly constituency|Budhlada]] (SC)
+|[[Budhram Singh]]
+|
+|-
+| rowspan="7" | [[Sangrur district|Sangrur]]
+|99
+|[[Lehra Assembly constituency|Lehragaga]]
+| [[Barinder Kumar Goyal]]
+| {{Party name with color|Aam Aadmi Party|rowspan=7}}
+|
+|-
+|100
+|[[Dirba Assembly constituency|Dirba]] (SC)
+|[[Harpal Singh Cheema]]
+|[[List of deputy chief ministers of Punjab, India#Deputy leader of the house|Dy. Leader of the House]]
+|-
+|101
+|[[Sunam Assembly constituency|Sunam]]
+|[[Aman Arora]]
+|
+|-
+|102
+|[[Malerkotla Assembly constituency|Malerkotla]]
+|[[Mohammad Jamil Ur Rehman]]
+|
+|-
+|103
+|[[Amargarh Assembly constituency|Amargarh]]
+| [[Jaswant Singh Gajjan Majra]]
+|
+|-
+|104
+|[[Dhuri Assembly constituency|Dhuri]]
+| [[Bhagwant Mann]]
+|[[Chief Minister of Punjab, India|Chief Minister]]
+|-
+|105
+|[[Sangrur Assembly constituency|Sangrur]]
+| [[Narinder Kaur Bharaj]]
+|
+|-
+| rowspan="4" | [[Barnala district|Barnala]]
+|106
+|[[Bhadaur Assembly constituency|Bhadaur]] (SC)
+|[[Labh Singh Ugoke]]
+| {{Party name with color|Aam Aadmi Party|rowspan=2}}
+|
+|-
+|rowspan=2 |107
+|rowspan=2 |[[Barnala Assembly constituency|Barnala]]
+|[[Gurmeet Singh Meet Hayer]]
+|Elected to [[18th Lok Sabha]] in June 2024
+|-
+|[[Kuldeep Singh Dhillon]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|108
+|[[Mehal Kalan Assembly constituency|Mehal Kalan]] (SC)
+|[[Kulwant Singh Pandori]]
+| {{Party name with color|Aam Aadmi Party}}
+|
+|-
+| rowspan="3" | [[Patiala district|Patiala]]
+|109
+|[[Nabha Assembly constituency|Nabha]] (SC)
+| [[Gurdev Singh Mann|Gurdev Singh Dev Maan]]
+| {{Party name with color|Aam Aadmi Party|rowspan=3}}
+|
+|-
+|110
+|[[Patiala Rural Assembly constituency|Patiala Rural]]
+|[[Dr. Balbir Singh|Balbir Singh]]
+|
+|-
+|111
+|[[Rajpura Assembly constituency|Rajpura]]
+| [[Neena Mittal]]
+|
+|-
+| [[Sahibzada Ajit Singh Nagar district|Sahibzada Ajit Singh Nagar]]
+|112
+|[[Dera Bassi Assembly constituency|Dera Bassi]]
+| [[Kuljit Singh Randhawa]]
+| {{Party name with color|Aam Aadmi Party}}
+|
+|-
+| rowspan="5" | [[Patiala district|Patiala]]
+|113
+|[[Ghanaur Assembly constituency|Ghanaur]]
+| [[Gurlal Ghanaur]]
+| {{Party name with color|Aam Aadmi Party|rowspan=5}}
+|
+|-
+|114
+|[[Sanour Assembly constituency|Sanour]]
+| [[Harmit Singh Pathanmajra]]
+|
+|-
+|115.
+|[[Patiala Assembly constituency|Patiala]]
+| [[Ajit Pal Singh Kohli]]
+|
+|-
+|116
+|[[Samana Assembly constituency|Samana]]
+|[[Chetan Singh Jaura Majra]]
+|
+|-
+|117
+|[[Shutrana Assembly constituency|Shutrana]] (SC)
+| [[Kulwant Singh Bazigar]]
+|
+|}
+<section end="Composition of Sixteenth Punjab Legislative Assembly"/>
+
+==Resolutions passed==
+On 22 March 2022, the assembly unanimously passed a resolution to install the statues of [[Bhagat Singh|Shaheed Bhagat Singh]], [[B. R. Ambedkar|Dr. Bhim Rao Ambedkar]] and [[Ranjit Singh|Maharaja Ranjit Singh]] in the assembly complex.<ref>{{Cite web |date=2022-03-23 |title=Punjab assembly to have statues of Bhagat Singh, Dr Ambedkar, Maharaja Ranjit Singh |url=https://www.hindustantimes.com/cities/chandigarh-news/punjab-assembly-to-have-statues-of-bhagat-singh-dr-ambedkar-maharaja-ranjit-singh-101647977142441.html |access-date=2022-08-16 |website=Hindustan Times |language=en |archive-date=16 August 2022 |archive-url=https://web.archive.org/web/20220816200921/https://www.hindustantimes.com/cities/chandigarh-news/punjab-assembly-to-have-statues-of-bhagat-singh-dr-ambedkar-maharaja-ranjit-singh-101647977142441.html |url-status=live }}</ref>
+
+On 1 April 2022, the assembly unanimously passed a resolution to immediately transfer union territory of Chandigarh — the joint capital of Punjab and Haryana, to Punjab.<ref>{{Cite news |last=Vasudeva |first=Vikas |date=2022-04-01 |title=Punjab assembly passes resolution; asks Centre to transfer Chandigarh to Punjab |language=en-IN |work=The Hindu |url=https://www.thehindu.com/news/national/other-states/bhagwant-mann-moves-resolution-urging-centre-to-immediately-transfer-chandigarh-to-punjab/article65280761.ece |access-date=2022-08-16 |issn=0971-751X |archive-date=16 August 2022 |archive-url=https://web.archive.org/web/20220816195232/https://www.thehindu.com/news/national/other-states/bhagwant-mann-moves-resolution-urging-centre-to-immediately-transfer-chandigarh-to-punjab/article65280761.ece |url-status=live }}</ref><ref>{{Cite web |last=Service |first=Tribune News |title=Punjab Vidhan Sabha passes resolution asking for Chandigarh to be given to Punjab |url=https://www.tribuneindia.com/news/punjab/1-day-special-assembly-session-today-382474 |access-date=2022-08-16 |website=Tribuneindia News Service |language=en |archive-date=13 May 2022 |archive-url=https://web.archive.org/web/20220513030335/https://www.tribuneindia.com/news/punjab/1-day-special-assembly-session-today-382474 |url-status=live }}</ref>
+
+On 30 June 2022, the assembly passed a resolution recommending the state government that it urges the [[Government of India]] to immediately rollback the [[Agnipath Scheme|Agnipath scheme]]. The resolution was opposed by BJP members of the assembly who were in minority. Punjab was the only state to pass such a resolution.<ref>{{cite news |title=Amid opposition by BJP MLAs, Punjab Vidhan Sabha passes resolution against Agnipath scheme |url=https://www.tribuneindia.com/news/punjab/amid-opposition-by-bjp-mlas-punjab-vidhan-sabha-passes-resolution-against-agnipath-scheme-408286 |access-date=1 July 2022 |work=Tribuneindia News Service |date=30 June 2022 |language=en |archive-date=1 July 2022 |archive-url=https://web.archive.org/web/20220701022203/https://www.tribuneindia.com/news/punjab/amid-opposition-by-bjp-mlas-punjab-vidhan-sabha-passes-resolution-against-agnipath-scheme-408286 |url-status=live }}</ref>
+
+On 30 June 2022, the assembly passed a resolution recommending the state government that it urges the [[Government of India]] to not alter the nature and character of [[Panjab University]]. The resolution was opposed by BJP members of the assembly who were in minority.<ref>{{Cite web |date=2022-07-01 |title=Punjab Assembly passes resolution against any bid to change ‘nature, character’ of PU |url=https://indianexpress.com/article/cities/chandigarh/punjab-assembly-passes-resolution-against-any-bid-to-change-nature-character-of-pu-8002194/ |access-date=2022-08-16 |website=The Indian Express |language=en}}</ref>
+
+==Bypolls 2022-2026==
+
+{|class="wikitable sortable" style="text-align:center;"
+!Date
+!colspan="2"|Constituency
+!colspan="3"|Previous MLA 
+!Reason
+!colspan="3"|Elected MLA
+|-
+|10 July 2024
+!34
+|[[Jalandhar West Assembly constituency|Jalandhar West]]
+|[[Sheetal Angural]]
+|{{Full party name with color|Aam Aadmi Party}}
+|Resigned on 28 March 2024<ref>{{Cite web |date=29 March 2024 |title=Sheetal Angural resigns as Punjab MLA |url=https://www.hindustantimes.com/cities/chandigarh-news/sheetal-angural-resigns-as-punjab-mla-101711653994908.html |access-date=27 April 2024 |website=Hindustan Times |language=en}}</ref>
+|[[Mohinder Bhagat]]
+|{{Full party name with color|Aam Aadmi Party|rowspan=4}}
+|-
+|rowspan="4" |20 November 2024
+!44
+|[[Chabbewal Assembly constituency|Chabbewal]] 
+|[[Raj Kumar Chabbewal]] 
+|{{Full party name with color|Indian National Congress|rowspan=3}}
+|Resigned on 15 March 2024<ref>{{Cite web |date=15 March 2024 |title=Raj Kumar Chabbewal Resigns from Congress Primary Membership and MLA Position |url=https://www.lokmattimes.com/national/raj-kumar-chabbewal-resigns-from-congress-primary-membership-and-mla-position-likely-to-join-aap-a517/ |access-date=16 April 2024 |website=Lokmat Times |language=en}}</ref>
+|[[Ishank Kumar Chabbewal|Ishank Kumar]]
+|-
+!10
+|[[Dera Baba Nanak Assembly constituency|Dera Baba Nanak]]
+|[[Sukhjinder Singh Randhawa]]
+| rowspan=3|Elected to Lok Sabha on 4 June 2024
+|[[Gurdeep Singh Randhawa]]
+|-
+!84
+|[[Gidderbaha Assembly constituency|Gidderbaha]]
+|[[Amrinder Singh Raja Warring]]
+|[[Hardeep Singh Dimpy Dhillon]]
+|-
+!103
+|[[Barnala Assembly constituency|Barnala]]
+|[[Gurmeet Singh Meet Hayer]]
+|{{Full party name with color|Aam Aadmi Party|rowspan=3}}
+|[[Kuldeep Singh Dhillon]]
+|{{Full party name with color|Indian National Congress}}
+|-
+|19 June 2025
+!64
+|[[Ludhiana West Assembly constituency|Ludhiana West]]
+|[[Gurpreet Gogi]]
+|Died on 11 January 2025<ref>{{cite news |title=AAP Punjab MLA Gurpreet Gogi Bassi found dead due to gunshot wound under ‘mysterious circumstances’ |url=https://www.hindustantimes.com/india-news/aap-punjab-mla-gurpreet-gogi-bassi-found-dead-under-mysterious-circumstances-101736541308411.html |work=Hindustan Times |date=11 January 2025 |access-date=11 January 2025}}</ref>
+|[[Sanjeev Arora (politician)|Sanjeev Arora]]
+|{{Full party name with color|Aam Aadmi Party}}
+|-
+|11 November 2025
+!21
+|[[Tarn Taran Assembly constituency|Tarn Taran]]
+|[[Kashmir Singh Sohal]]
+|Died on 27 June 2025 <ref>[https://www.hindustantimes.com/cities/chandigarh-news/punjab-tarn-taran-aap-mla-dr-kashmir-singh-sohal-passes-away-at-62-101751017900835.html Punjab: Tarn Taran AAP MLA Dr Kashmir Singh Sohal passes away at 62 — Hindustan Times]</ref>
+|[[Harmeet Singh Sandhu]]
+| {{Full party name with color|Aam Aadmi Party}}
+|}
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{Reflist}}
+{{Punjab Legislative Assembly|state=expanded}}
+{{Current Indian assemblies}}
+{{Authority control}}
+
+[[Category:Terms of the Punjab Legislative Assembly|16th]]
+[[Category:2022 establishments in Punjab, India]]
+[[Category:Punjab, India MLAs 2022–2027| ]]
+[[Category:Lists of current Indian state and territorial assemblies|punjab]]

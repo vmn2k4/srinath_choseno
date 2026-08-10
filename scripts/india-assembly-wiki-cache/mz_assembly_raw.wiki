@@ -1,0 +1,211 @@
+{{Short description|2024 legislature of Mizoram, India}}
+{{Use dmy dates|date=August 2024}}
+{{Use Indian English|date=August 2024}}
+The '''9th Mizoram Legislative Assembly''' was constituted in January, 2023. It represents the northeastern state of [[Mizoram]], India.<ref>{{Cite web |title=Mizoram Legislative Assembly |url=https://www.mizoramassembly.in/ |access-date=2024-03-14 |website=www.mizoramassembly.in}}</ref> Election results were announced on 4 December 2023. The [[Zoram People's Movement]], which was not represented in the 8th Assembly, won a majority of seats. The 9th [[Mizoram Legislative Assembly|Assembly]] marks the first time that more than one woman was elected to represent Mizoram since elections began in 1972.<ref>{{Cite web |title=Vital Stats |url=https://prsindia.org/legislatures/state/vital-stats/profile-of-the-9th-mizoram-legislative-assembly |access-date=2024-03-14 |website=PRS Legislative Research |language=en-US}}</ref>
+
+==Members of Legislative Assembly==
+{| class="wikitable sortable" 
+|-
+! District
+! No.
+! Constituency
+! Name<ref>{{Cite web |title=Election Commission of India |url=https://results.eci.gov.in/AcResultGenDecNew2023/statewiseS161.htm |access-date=2023-12-04 |website=results.eci.gov.in}}</ref>
+! colspan="2" |Party
+! Remarks
+|-
+| rowspan="4" | [[Mamit district|Mamit]]
+|1
+| [[Hachhek Assembly constituency|Hachhek]]||[[Robert Romawia Royte]] 
+| {{Full party name with color|Mizo National Front}}
+|
+|-
+|rowspan=2|2
+|rowspan=2|[[Dampa Assembly constituency|Dampa]]||[[Lalrintluanga Sailo]]
+| {{Full party name with color|Mizo National Front|rowspan=2}}
+| Died on 21 July 2025
+|-
+|[[R. Lalthangliana]]
+| Elected on 14 November 2025
+|-
+|3
+| [[Mamit Assembly constituency|Mamit]]||[[H. Lalzirliana]]
+| {{Full party name with color|Mizo National Front|rowspan=2}}
+|
+|-
+| rowspan="3" | [[Kolasib district|Kolasib]]
+|4
+|[[Tuirial Assembly constituency|Tuirial]]
+|[[K. Laldawngliana]]
+|
+|-
+|5
+| [[Kolasib Assembly constituency|Kolasib]]||[[Lalfamkima]]
+| {{Full party name with color|Zoram People's Movement}}
+|
+|-
+|6
+| [[Serlui Assembly constituency|Serlui]]||[[Lalrinsanga Ralte]]
+| {{Full party name with color|Mizo National Front|rowspan=2}}
+|
+|-
+| rowspan="14" | [[Aizawl district|Aizawl]]
+|7
+| [[Tuivawl Assembly constituency|Tuivawl]]||[[Lalchhandama Ralte]]
+|[[List_of_leaders_of_the_opposition_in_the_Mizoram_Legislative_Assembly|Leader of Opposition]]
+|-
+|8
+| [[Chalfilh Assembly constituency|Chalfilh]]||[[Lalbiakzama]]
+| {{Full party name with color|Zoram People's Movement|rowspan=17}}
+|
+|-
+|9
+| [[Tawi Assembly constituency|Tawi]]||[[Lalnilawma]]
+|
+|-
+|10
+| [[Aizawl North 1 Assembly constituency|Aizawl North 1]]|| [[Vanlalhlana]]
+|
+|-
+|11
+| [[Aizawl North 2 Assembly constituency|Aizawl North 2]]||[[Vanlalthlana]]
+|
+|-
+|12
+| [[Aizawl North 3 Assembly constituency|Aizawl North 3]]||[[K. Sapdanga]]
+|
+|-
+|13
+| [[Aizawl East 1 Assembly constituency|Aizawl East 1]]||[[Lalthansanga]]
+|
+|-
+|14
+| [[Aizawl East 2 Assembly constituency|Aizawl East 2]]||[[B. Lalchhanzova]]
+|
+|-
+|15
+|[[Aizawl West 1 Assembly constituency|Aizawl West 1]]
+|[[T. B. C. Lalvenchhunga]]
+|
+|-
+|16
+| [[Aizawl West 2 Assembly constituency|Aizawl West 2]]||[[Lalnghinglova Hmar]]
+|
+|-
+|17
+| [[Aizawl West 3 Assembly constituency|Aizawl West 3]]||[[V. L. Zaithanzama]]
+|
+|-
+|18
+| [[Aizawl South 1 Assembly constituency|Aizawl South 1]]||[[C. Lalsawivunga]]
+|
+|-
+|19
+| [[Aizawl South 2 Assembly constituency|Aizawl South 2]]||[[Lalchhuanthanga]]
+|
+|-
+|20
+| [[Aizawl South 3 Assembly constituency|Aizawl South 3]]||[[Baryl Vanneihsangi]]
+|
+|-
+| rowspan="5" | [[Champhai district|Champhai]]
+|21
+| [[Lengteng Assembly constituency|Lengteng]]||[[F. Rodingliana]]
+|
+|-
+|22
+| [[Tuichang Assembly constituency|Tuichang]]||[[W. Chhuanawma]]
+|
+|-
+|23
+| [[Champhai North Assembly constituency|Champhai North]]||[[H. Ginzalala]]
+|
+|-
+|24
+| [[Champhai South Assembly constituency|Champhai South]]||[[Clement Lalhmingthanga|C. Lalhmingthanga]]
+|
+|-
+|25
+| [[East Tuipui Assembly constituency|East Tuipui]]||[[Ramthanmawia]]
+| {{Full party name with color|Mizo National Front}}
+|
+|-
+| rowspan="3" | [[Serchhip district|Serchhip]]
+|26
+| [[Serchhip Assembly constituency|Serchhip]]|| [[Lalduhoma]]
+| {{Full party name with color|Zoram People's Movement|rowspan=8}}
+|[[List of Chief Ministers of Mizoram|Chief Minister]]
+|-
+|27
+| [[Tuikum Assembly constituency|Tuikum]]||[[P. C. Vanlalruata]]
+|
+|-
+|28
+| [[Hrangturzo Assembly constituency|Hrangturzo]]||[[Lalmuanpuia Punte]]
+|
+|-
+| rowspan="7" | [[Lunglei district|Lunglei]]
+|29
+| [[South Tuipui Assembly constituency|South Tuipui]]||[[Jeje Lalpekhlua]]
+|
+|-
+|30
+| [[Lunglei North Assembly constituency|Lunglei North]]||[[V. Malsawmtluanga]]
+|
+|-
+|31
+| [[Lunglei East Assembly constituency|Lunglei East]]||[[Lalrinpuii]]
+|
+|-
+|32
+| [[Lunglei West Assembly constituency|Lunglei West]]||[[T. Lalhlimpuia]]
+|
+|-
+|33
+| [[Lunglei South Assembly constituency|Lunglei South]]||[[Lalramliana Papuia]]
+|
+|-
+|34
+| [[Thorang Assembly constituency|Thorang]]||[[R. Rohmingliana]]
+| {{Full party name with color|Mizo National Front|rowspan=3}}
+|
+|-
+|35
+| [[West Tuipui Assembly constituency|West Tuipui]]||[[Prova Chakma]]
+|
+|-
+| rowspan="3" | [[Lawngtlai district|Lawngtlai]]
+|36
+| [[Tuichawng Assembly constituency|Tuichawng]]||[[Rasik Mohan Chakma]]
+|
+|-
+|37
+| [[Lawngtlai West Assembly constituency|Lawngtlai West]]||[[C. Ngunlianchunga]]
+| {{Full party name with color|Indian National Congress}}
+|
+|-
+|38
+| [[Lawngtlai East Assembly constituency|Lawngtlai East]]||[[Lorrain Lalpekliana Chinzah|L. Lalpekliana Chinzah]]
+| {{Full party name with color|Zoram People's Movement}}
+|
+|-
+| rowspan="2" | [[Siaha district|Saiha]]
+|39
+| [[Saiha Assembly constituency|Saiha]]||[[K. Beichhua]]
+| {{Full party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|40
+| [[Palak Assembly constituency|Palak]]||[[K. Hrahmo|Pushpa K. Hrahmo]]
+|
+|}
+
+== References ==
+{{reflist}}
+
+<!--{{Mizoram Legislative Assembly}}--> 
+{{Current Indian assemblies}}
+
+[[Category:Terms of the Mizoram Legislative Assembly]]
+[[Category:Mizoram MLAs 2023–2028| ]]
+[[Category:2023 establishments in Mizoram]]
+[[Category:Lists of current Indian state and territorial assemblies|Mizoram]]

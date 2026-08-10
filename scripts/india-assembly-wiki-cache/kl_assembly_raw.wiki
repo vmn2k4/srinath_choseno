@@ -1,0 +1,1064 @@
+{{Short description|2026–2031 Kerala Assembly term}}
+{{Use dmy dates|date=May 2026}}
+
+{{Infobox legislative term
+| name = 16th Kerala Assembly
+| before = [[15th Kerala Assembly|15th]]
+| after = [[17th Kerala Assembly|17th]]
+| image = Government of Kerala Logo.svg
+| image_size = 200
+| caption = 
+| body = [[Kerala Legislative Assembly]]
+| term_start = 21 May 2026
+| term_end = 
+| election = [[2026 Kerala Legislative Assembly election]]
+| government = [[Satheesan ministry]]
+| control1 = {{Party legend|United Democratic Front (Kerala)}}
+| membership1 = 140
+| chamber1_leader1_type = [[List of speakers of the Kerala Legislative Assembly|Speaker]]
+| chamber1_leader1 = [[Thiruvanchoor Radhakrishnan]]
+| chamber1_leader2_type = [[List of speakers of the Kerala Legislative Assembly|Deputy Speaker]]
+| chamber1_leader2 = [[Shanimol Osman]]
+| chamber1_leader3_type = [[List of chief ministers of Kerala|Leader of the House]]
+| chamber1_leader3 = [[V. D. Satheesan]]
+| chamber1_leader4_type = [[List of leaders of the opposition in the Kerala Legislative Assembly|Leader of the Opposition]]
+| chamber1_leader4 = [[Pinarayi Vijayan]]
+| chamber1_leader5_type = Deputy Leader of the Opposition
+| chamber1_leader5 = ''TBA''
+| chamber1_leader6_type = [[Chief Whip]]
+| chamber1_leader6 = [[Apu John Joseph]]
+| opposition = {{Party legend|Left Democratic Front (Kerala)}}
+}}
+
+The '''16th Assembly of Kerala''' is elected in the [[2026 Kerala Legislative Assembly election]]. The Speaker is [[Thiruvanchoor Radhakrishnan]] of [[Indian National Congress|INC]]. The Deputy Speaker is [[Shanimol Osman]] of [[Indian National Congress|INC]]. The Leader of the Assembly is [[V. D. Satheesan]] from [[Indian National Congress|INC]]. The Leader of Opposition is [[Pinarayi Vijayan]] of [[Communist Party of India (Marxist)|CPI(M)]]. The Government Chief Whip is [[Apu John Joseph]] of [[Kerala Congress]].
+
+== Composition ==
+
+{|class="wikitable"
+!colspan=2|Alliance
+!colspan=2|Political party
+!No. of MLAs
+!Leader
+|-
+|rowspan=9 {{party color cell|United Democratic Front (Kerala)}}
+|rowspan=9 style="text-align:center;"|'''Government<br/>[[United Democratic Front (Kerala)|UDF]]'''<br/>Seats: '''102'''
+|{{party color cell|Indian National Congress}}
+| [[Indian National Congress]]
+|style="text-align:center;"| 63
+|[[V. D. Satheesan]]
+|-
+|{{party color cell|Indian Union Muslim League}}
+| [[Indian Union Muslim League]]
+|style="text-align:center;"| 22
+|[[P. K. Kunhalikutty]]
+|-
+|{{party color cell|Kerala Congress}}
+| [[Kerala Congress]]
+|style="text-align:center;"| 7
+|[[Mons Joseph]]
+|-
+|{{party color cell|Revolutionary Socialist Party (India)}}
+| [[Revolutionary Socialist Party (India)|Revolutionary Socialist Party]]
+|style="text-align:center;"| 3
+|[[Shibu Baby John]]
+|-
+|{{party color cell|Kerala Congress (Jacob)}}
+| [[Kerala Congress (Jacob)]]
+|style="text-align:center;"| 1
+|[[Anoop Jacob]]
+|-
+|{{party color cell|Revolutionary Marxist Party of India}}
+| [[Revolutionary Marxist Party of India]]
+|style="text-align:center;"| 1
+|[[K. K. Rema]]
+|-
+|{{party color cell|Communist Marxist Party}}
+| [[Communist Marxist Party]]
+|style="text-align:center;"| 1
+|[[C. P. John]]
+|-
+|{{party color cell|Kerala Democratic Party}}
+| [[Kerala Democratic Party]]
+|style="text-align:center;"| 1
+|[[Mani C. Kappan]]
+|-
+|{{party color cell|Independent (politician)}}
+| [[Independent (politician)|Independent]]
+|style="text-align:center;"| 3
+|
+|-
+|rowspan=3 {{party color cell|Left Democratic Front (Kerala)}}
+|rowspan=3 style="text-align:center;"|'''Opposition<br/>[[Left Democratic Front (Kerala)|LDF]]'''<br/>Seats: '''35'''
+|{{party color cell|Communist Party of India (Marxist)}}
+| [[Communist Party of India (Marxist)]]
+|style="text-align:center;"| 26
+|[[Pinarayi Vijayan]]
+|-
+|{{party color cell|Communist Party of India}}
+| [[Communist Party of India]]
+|style="text-align:center;"| 8
+|[[K. Rajan (politician)|K. Rajan]]
+|-
+|{{party color cell|Rashtriya Janata Dal}}
+| [[Rashtriya Janata Dal]]
+|style="text-align:center;"| 1
+|[[P. K. Praveen]]
+|-
+|{{party color cell|National Democratic Alliance}}
+|style="text-align:center;"|'''Other Opposition<br/>[[National Democratic Alliance|NDA]]'''<br/>Seats: '''3'''
+|{{party color cell|Bharatiya Janata Party}}
+| [[Bharatiya Janata Party]]
+|style="text-align:center;"| 3
+|[[B. B. Gopakumar]]
+|-
+|}
+
+== Members of Legislative Assembly ==
+
+<section begin="MLA Header"/>
+{| class="wikitable sortable"
+|+ Source:<ref>{{Cite web |date=4 May 2026 |title=Kerala Election Results Winners List 2026: Congress Wins 63 Seats as CPI(M) Shrinks to 26. Full Constituency-Wise Data Here |url=https://indianexpress.com/article/india/kerala-election-results-2026-winners-constituency-wise-full-list-party-wise-seat-tally-10665881/ |access-date=14 May 2026 |website=The Indian Express |language=en}}</ref><ref>{{Cite web |title=Kerala Assembly Election Results 2026: Get Constituency-wise, Party-wise Results of Kerala Polls |url=https://indianexpress.com/elections/kerala-assembly-election/result/ |access-date=14 May 2026 |website=The Indian Express |language=en}}</ref><ref>{{Cite news |date=4 May 2026 |title=Kerala Election Results 2026: Full list of winners and losers; Congress-led UDF breaks LDF's decade-long dominance |url=https://timesofindia.indiatimes.com/india/kerala-election-results-2026-full-list-of-winners-and-losers-congress-led-udf-set-for-historic-comeback-ldf-pinarayi-vijayan/articleshow/130780992.cms |access-date=14 May 2026 |work=The Times of India |issn=0971-8257}}</ref>
+!District 
+!No. 
+!Constituency 
+!Name 
+!colspan=2|Party 
+!colspan=2|Alliance 
+!Remarks<section end="MLA Header"/><section begin="Kasaragod district"/>
+|-
+| rowspan="5" | [[Kasaragod district|Kasaragod]]
+! 1
+| [[Manjeshwaram Assembly constituency|Manjeshwaram]]
+| [[A. K. M. Ashraf]]
+|{{party name with color|Indian Union Muslim League|rowspan=2}}
+|{{party name with color|United Democratic Front (Kerala)|rowspan=3}}
+|
+|-
+! 2
+| [[Kasaragod Assembly constituency|Kasaragod]]
+| [[Kallatra Mahin]]
+|
+|-
+! 3
+| [[Udma Assembly constituency|Udma]]
+| [[K. Neelakandan]]
+|{{party name with color|Indian National Congress}}
+|
+|-
+! 4
+| [[Kanhangad Assembly constituency|Kanhangad]]
+|[[Govindan Pallikappil]]
+| style="background: {{party color|Communist Party of India}}" |
+|[[Communist Party of India|CPI]]
+| style="background: {{party color|Left Democratic Front (Kerala)}}" |
+|[[Left Democratic Front|LDF]]
+|
+|-
+! 5
+| [[Thrikaripur Assembly constituency|Thrikaripur]]
+| [[Sandeep Varier]]
+|{{Party name with color|Indian National Congress}}
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+|<section end="Kasaragod district"/><section begin="Kannur district"/>
+|-
+| rowspan="11" | [[Kannur district|Kannur]]
+! 6
+| [[Payyanur Assembly constituency|Payyanur]]
+| [[V. Kunhikrishnan]]
+| style="background: {{party color|Independent politician}}" |
+|[[Independent politician|IND]]
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+|
+|-
+! 7
+| [[Kalliasseri Assembly constituency|Kalliasseri]]
+| [[M. Vijin]]
+| style="background: {{party color|Communist Party of India (Marxist)}}" |
+|[[Communist Party of India (Marxist)|CPI(M)]]
+| style="background: {{party color|Left Democratic Front (Kerala)}}" |
+|[[Left Democratic Front (Kerala)|LDF]]
+|
+|-
+! 8
+| [[Taliparamba Assembly constituency|Taliparamba]]
+| [[T K Govindan Master]]
+| style="background: {{party color|Independent politician}}" |
+|[[Independent politician|IND]]
+|{{party name with color|United Democratic Front (Kerala)|rowspan=2}}
+|
+|-
+! 9
+| [[Irikkur Assembly constituency|Irikkur]]
+| [[Sajeev Joseph]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+! 10
+| [[Azhikode Assembly constituency|Azhikode]]
+| [[K. V. Sumesh]]
+| style="background: {{party color|Communist Party of India (Marxist)}}" |
+|[[Communist Party of India (Marxist)|CPI(M)]]
+| style="background: {{party color|Left Democratic Front (Kerala)}}" |
+|[[Left Democratic Front (Kerala)|LDF]]
+|
+|-
+! 11
+| [[Kannur Assembly constituency|Kannur]]
+| [[T.O Mohanan]]
+|{{Party name with color|Indian National Congress}}
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+|
+|-
+! 12
+| [[Dharmadam Assembly constituency|Dharmadom]]
+| [[Pinarayi Vijayan]]
+| {{party name with color|Communist Party of India (Marxist)|rowspan=2}}
+| {{party name with color|Left Democratic Front (Kerala)|rowspan=4}}
+|[[Leader of the Opposition]]
+|-
+! 13
+| [[Thalassery Assembly constituency|Thalassery]]
+| [[Karayi Rajan]]
+|
+|-
+! 14
+| [[Kuthuparamba Assembly constituency|Kuthuparamba]]
+| [[P. K. Praveen]]
+| {{party name with color|Rashtriya Janata Dal}}
+|
+|-
+! 15
+| [[Mattanur Assembly constituency|Mattanur]]
+| [[V. K. Sanoj]]
+| {{party name with color|Communist Party of India (Marxist)}}
+|
+|-
+! 16
+| [[Peravoor Assembly constituency|Peravoor]]
+|[[Sunny Joseph (politician)|Adv Sunny Joseph]]
+|{{Party name with color|Indian National Congress}}
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+|Minister for Electricity, Environment & Parliamentary Affairs
+|-
+| rowspan="3" | [[Wayanad district|Wayanad]]
+! 17
+| [[Mananthavady Assembly constituency|Mananthavady]] (ST)
+| [[Usha Vijayan]]
+|{{Party name with color|Indian National Congress|rowspan=3}}
+| {{party name with color|United Democratic Front (Kerala)|rowspan=3}}
+|
+|-
+! 18
+| [[Sulthan Bathery Assembly constituency|Sulthan Bathery]] (ST)
+| [[I. C. Balakrishnan]]
+|
+|-
+! 19
+| [[Kalpetta Assembly constituency|Kalpetta]]
+| [[T. Siddique]] 
+|Minister for Agriculture
+|-
+| rowspan="13" | [[Kozhikode district|Kozhikode]]
+! 20
+| [[Vadakara Assembly constituency|Vatakara]]
+| [[K. K. Rema]]
+| {{party name with color|Revolutionary Marxist Party of India}}
+| {{party name with  color|United Democratic Front (Kerala)|rowspan=9}}
+|
+|-
+! 21
+| [[Kuttiady Assembly constituency|Kuttiady]]
+| [[Parakkal Abdulla]]
+| {{party name with color|Indian Union Muslim League}}
+|
+|-
+! 22
+| [[Nadapuram Assembly constituency|Nadapuram]]
+| [[K. M. Abhijith]]
+| {{party name with color|Indian National Congress|rowspan=2}}
+|
+|-
+! 23
+| [[Quilandy Assembly constituency|Koyilandy]]
+| [[K. Praveen Kumar]]
+|
+|-
+! 24
+| [[Perambra Assembly constituency|Perambra]]
+| [[Fathima Thahiliya]]
+| {{party name with color|Indian Union Muslim League}}
+|
+|-
+! 25
+| [[Balussery Assembly constituency|Balussery]] (SC)
+| [[V. T. Sooraj]]
+| {{party name with color|Indian National Congress|rowspan=3}}
+|
+|-
+! 26
+| [[Elathur Assembly constituency|Elathur]]
+| [[Vidya Balakrishnan]]
+|
+|-
+! 27
+| [[Kozhikode North Assembly constituency|Kozhikode North]]
+| [[K.Jayanth]]
+|
+|-
+! 28
+| [[Kozhikode South Assembly constituency|Kozhikode South]]
+| [[Fyzal Babu]]
+| {{party name with color|Indian Union Muslim League}}
+|
+|-
+! 29
+| [[Beypore Assembly constituency|Beypore]]
+| [[P. A. Mohammed Riyas]]
+| style="background: {{party color|Communist Party of India (Marxist)}}" |
+|[[Communist Party of India (Marxist)|CPI(M)]]
+| style="background: {{party color|Left Democratic Front (Kerala)}}" |
+|[[Left Democratic Front (Kerala)|LDF]]
+|
+|-
+! 30
+| [[Kunnamangalam Assembly constituency|Kunnamangalam]]
+| [[M. A. Razak Master]]
+| {{party name with color|Indian Union Muslim League|rowspan=3}}
+| {{party name with color|United Democratic Front (Kerala)|rowspan=3}}
+|
+|-
+! 31
+| [[Koduvally Assembly constituency|Koduvally]]
+| [[P. K. Firos]]
+|
+|-
+! 32
+| [[Thiruvambady Assembly constituency|Thiruvambady]]
+| [[C. K. Kasim]] 
+|<section end="Kozhikode district"/><section begin="Malappuram district"/>
+|-
+| rowspan="16" | [[Malappuram district|Malappuram]]
+! 33
+| [[Kondotty Assembly constituency|Kondotty]]
+| [[T. P Ashrafali]]
+| {{party name with color|Indian Union Muslim League|rowspan=2}}
+| {{party name with color|United Democratic Front (Kerala)|rowspan=16}}
+|
+|-
+! 34
+| [[Eranad Assembly constituency|Eranad]]
+| [[P. K. Basheer]]
+|Minister for Public Works Department
+|-
+! 35
+| [[Nilambur Assembly constituency|Nilambur]]
+| [[Aryadan Shoukath]]
+| {{party name with color|Indian National Congress|rowspan=2}}
+|
+|-
+! 36
+| [[Wandoor Assembly constituency|Wandoor]] (SC)
+| [[A. P. Anil Kumar]]
+|Minister for Revenue
+|-
+! 37
+| [[Manjeri Assembly constituency|Manjeri]]
+| [[M. Rahmathulla]]
+| {{party name with color|Indian Union Muslim League|rowspan=10}}
+|
+|-
+! 38
+| [[Perinthalmanna Assembly constituency|Perinthalmanna]]
+| [[Najeeb Kanthapuram]]
+|
+|-
+! 39
+| [[Mankada Assembly constituency|Mankada]]
+| [[Manjalamkuzhi Ali]]
+|
+|-
+! 40
+| [[Malappuram Assembly constituency|Malappuram]]
+| [[P. K. Kunhalikutty]]
+|Minister for Industries, and Information Technology 
+|-
+! 41
+| [[Vengara Assembly constituency|Vengara]]
+| [[K. M. Shaji]]
+|Minister for Local Self Governments
+|-
+! 42
+| [[Vallikunnu Assembly constituency|Vallikkunnu]]
+| [[T. V. Ibrahim]]
+|
+|-
+! 43
+| [[Tirurangadi Assembly constituency|Tirurangadi]]
+| [[P. M. A. Sameer]]
+|
+|-
+! 44
+| [[Tanur Assembly constituency|Tanur]]
+| [[P. K. Navas]]
+|
+|-
+! 45
+| [[Tirur Assembly constituency|Tirur]]
+| [[Kurukkoli Moideen]]
+|
+|-
+! 46
+| [[Kottakkal Assembly constituency|Kottakkal]]
+| [[K. K. Abid Hussain Thangal]]
+|
+|-
+! 47
+| [[Thavanur Assembly constituency|Thavanur]]
+| [[V. S Joy]]
+| {{party name with color|Indian National Congress|rowspan=2}}
+|
+|-
+! 48
+| [[Ponnani Assembly constituency|Ponnani]]
+| [[K. P. Noushad Ali|K. P Noushad Ali]]
+|<section end="Malappuram district"/><section begin="Palakkad district"/>
+|-
+| rowspan="12" | [[Palakkad district|Palakkad]]
+! 49
+| [[Thrithala Assembly constituency|Thrithala]]
+|[[V. T. Balram]]
+|{{Party name with color|Indian National Congress}}
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+|
+|-
+! 50
+| [[Pattambi Assembly constituency|Pattambi]]
+| [[Muhammed Muhsin]]
+| style="background: {{party color|Communist Party of India}}" |
+| [[Communist Party of India|CPI]]
+| {{party name with color|Left Democratic Front (Kerala)|rowspan=3}}
+|
+|-
+! 51
+| [[Shornur Assembly constituency|Shornur]]
+| [[P. Mammikutty]]
+| {{party name with color|Communist Party of India (Marxist)|rowspan=2}}
+|
+|-
+! 52
+| [[Ottapalam Assembly constituency|Ottapalam]]
+| [[K. Premkumar]]
+|
+|-
+! 53
+| [[Kongad Assembly constituency|Kongad]] (SC)
+| [[Thulasi Teacher|K. A. Thulasi]]
+| {{party name with color|Indian National Congress}}
+| {{party name with color|United Democratic Front (Kerala)|rowspan=2}}
+|Minister of Scheduled Castes, Scheduled Tribes and Backward Classes Welfare
+|-
+! 54
+| [[Mannarkkad Assembly constituency|Mannarkkad]]
+| [[N. Samsudheen]]
+| {{party name with color|Indian Union Muslim League}}
+|Minister for General Education, and Minority Affairs
+|-
+! 55
+| [[Malampuzha Assembly constituency|Malampuzha]]
+| [[A. Prabhakaran]]
+| style="background: {{party color|Communist Party of India (Marxist)}}" |
+|[[Communist Party of India (Marxist)|CPI(M)]]
+| style="background: {{party color|Left Democratic Front (Kerala)}}" |
+|[[Left Democratic Front (Kerala)|LDF]]
+|
+|-
+! 56
+| [[Palakkad Assembly constituency|Palakkad]]
+| [[Ramesh Pisharody]]
+|{{Party name with color|Indian National Congress}}
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+|
+|-
+! 57
+| [[Tarur Assembly constituency|Tarur]] (SC)
+| [[P. P. Sumod|Sumod]]
+| style="background: {{party color|Communist Party of India (Marxist)}}" |
+|[[Communist Party of India (Marxist)|CPI(M)]]
+| style="background: {{party color|Left Democratic Front (Kerala)}}" |
+|[[Left Democratic Front (Kerala)|LDF]]
+|
+|-
+! 58
+| [[Chittur Assembly constituency|Chittur]]
+| [[Sumesh Achuthan]]
+|{{Party name with color|Indian National Congress}}
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+|
+|-
+! 59
+| [[Nenmara Assembly constituency|Nenmara]]
+| [[K. Preman]]
+| {{party name with color|Communist Party of India (Marxist)|rowspan=2}}
+| {{party name with color|Left Democratic Front (Kerala)|rowspan=2}}
+|
+|-
+! 60
+| [[Alathur Assembly constituency|Alathur]]
+| [[T. M. Sasi]]
+|<section end="Palakkad district"/><section begin="Thrissur district"/>
+|-
+| rowspan="13" | [[Thrissur district|Thrissur]]
+! 61
+| [[Chelakkara Assembly constituency|Chelakkara]] (SC)
+| [[U. R. Pradeep]]
+| {{party name with color|Communist Party of India (Marxist)|rowspan=5}}
+| {{party name with color|Left Democratic Front (Kerala)|rowspan=6}}
+|
+|-
+! 62
+| [[Kunnamkulam Assembly constituency|Kunnamkulam]]
+| [[A. C. Moideen]]
+|
+|-
+! 63
+| [[Guruvayur Assembly constituency|Guruvayur]]
+| [[N. K. Akbar]]
+|
+|-
+! 64
+| [[Manalur Assembly constituency|Manalur]]
+| [[C. Raveendranath]]
+|
+|-
+! 65
+| [[Wadakkanchery Assembly constituency|Wadakkanchery]]
+| [[Xavier Chittilappilly]]
+|
+|-
+! 66
+| [[Ollur Assembly constituency|Ollur]]
+| [[K. Rajan (politician)|K. Rajan]]
+| {{party name with color|Communist Party of India}}
+|
+|-
+! 67
+| [[Thrissur Assembly constituency|Thrissur]]
+| [[Rajan Pallan]]
+| {{party name with color|Indian National Congress}}
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+| [[United Democratic Front (Kerala)|UDF]]
+|
+|-
+! 68
+| [[Nattika Assembly constituency|Nattika]] (SC)
+| [[Geetha Gopi]]
+| {{party name with color|Communist Party of India|rowspan=2}}
+| {{party name with color|Left Democratic Front (Kerala)|rowspan=2}}
+|
+|-
+! 69
+| [[Kaipamangalam Assembly constituency|Kaipamangalam]]
+| [[K. K. Valsaraj]]
+|
+|-
+! 70
+| [[Irinjalakuda Assembly constituency|Irinjalakuda]]
+| [[Thomas Unniyadan]]
+| style="background: {{party color|Kerala Congress}}" |
+|[[Kerala Congress|KC]]
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+|
+|-
+! 71
+| [[Puthukkad Assembly constituency|Puthukkad]]
+| [[K. K. Ramachandran]]
+| style="background: {{party color|Communist Party of India (Marxist)}}" |
+|[[Communist Party of India (Marxist)|CPI(M)]]
+| style="background: {{party color|Left Democratic Front (Kerala)}}" |
+|[[Left Democratic Front (Kerala)|LDF]]
+|
+|-
+! 72
+| [[Chalakudy Assembly constituency|Chalakudy]]
+| [[T. J. Saneesh Kumar Joseph]]
+| {{party name with color|Indian National Congress|rowspan=2}}
+| {{party name with color|United Democratic Front (Kerala)|rowspan=2}}
+|
+|-
+! 73
+| [[Kodungallur Assembly constituency|Kodungallur]]
+| [[O. J. Janeesh]]
+|Minister of Youth Affairs, Sports, Registration & Museum
+|<section end="Thrissur district"/><section begin="Ernakulam district"/>
+|-
+| rowspan="14" | [[Ernakulam district|Ernakulam]]
+! 74
+| [[Perumbavoor Assembly constituency|Perumbavoor]]
+| [[Manoj Moothedan]]
+| {{party name with color|Indian National Congress|rowspan=3}}
+| {{party name with color|United Democratic Front (Kerala)|rowspan=14}}
+|
+|-
+! 75
+| [[Angamaly Assembly constituency|Angamaly]]
+| [[Roji M. John]]
+|Minister for Higher Education
+|-
+! 76
+| [[Aluva Assembly constituency|Aluva]]
+| [[Anwar Sadath]]
+|
+|-
+! 77
+| [[Kalamassery Assembly constituency|Kalamassery]]
+|[[V. E. Abdul Gafoor]]
+| {{party name with color|Indian Union Muslim League}}
+|Minister for Fisheries, Social Justice & Harbour Engineering
+|-
+! 78
+| [[Paravur Assembly constituency|Paravur]]
+| [[V. D. Satheesan]]
+| {{party name with color|Indian National Congress|rowspan=7}}
+| [[Chief Minister of Kerala]]
+|-
+! 79
+| [[Vypen Assembly constituency|Vypin]]
+| [[Tony Chammany]]
+|
+|-
+! 80
+| [[Kochi Assembly constituency|Kochi]]
+| [[Mohammad Shiyas]]
+|
+|-
+! 81
+| [[Thrippunithura Assembly constituency|Thrippunithura]]
+| [[Deepak Joy]]
+|
+|-
+! 82
+| [[Ernakulam Assembly constituency|Ernakulam]]
+| [[T. J. Vinod]]
+|
+|-
+! 83
+| [[Thrikkakara Assembly constituency|Thrikkakara]]
+| [[Uma Thomas]]
+|
+|-
+! 84
+| [[Kunnathunad Assembly constituency|Kunnathunad]] (SC)
+|[[V. P. Sajeendran]]
+|
+|-
+! 85
+| [[Piravom Assembly constituency|Piravom]]
+| [[Anoop Jacob]]
+| {{party name with color|Kerala Congress (Jacob)}}
+|Minister of Food, Civil Supplies & Consumer Affairs
+|-
+! 86
+| [[Muvattupuzha Assembly constituency|Muvattupuzha]]
+| [[Mathew Kuzhalnadan]]
+| {{party name with color|Indian National Congress}}
+|
+|-
+! 87
+| [[Kothamangalam Assembly constituency|Kothamangalam]]
+| [[Shibu Thekkumpuram]]
+| {{party name with color|Kerala Congress}}
+|<section end="Ernakulam district"/><section begin="Idukki district"/>
+|-
+| rowspan="5" | [[Idukki district|Idukki]]
+! 88
+| [[Devikulam Assembly constituency|Devikulam]] (SC)
+| [[F. Raja|F Raja]]
+| {{party name with color|Indian National Congress|rowspan=2}}
+| {{party name with color|United Democratic Front (Kerala)|rowspan=5}}
+|
+|-
+! 89
+| [[Udumbanchola Assembly constituency|Udumbanchola]]
+| [[Senapathy Venu]]
+|
+|-
+! 90
+| [[Thodupuzha Assembly constituency|Thodupuzha]]
+| [[Apu John Joseph]]
+| style="background: {{party color|Kerala Congress}}" |
+| [[Kerala Congress|KC]]
+|Government Chief Whip
+|-
+! 91
+| [[Idukki Assembly constituency|Idukki]]
+| [[Roy K Paulose]]
+| {{party name with color|Indian National Congress|rowspan=2}}
+|
+|-
+! 92
+| [[Peerumade Assembly constituency|Peerumade]]
+| [[Cyriac Thomas]]
+|<section end="Idukki district"/><section begin="Kottayam district"/>
+|-
+| rowspan="9" | [[Kottayam district|Kottayam]]
+! 93
+| [[Pala Assembly constituency|Pala]]
+| [[Mani C. Kappan]]
+| {{party name with color|Kerala Democratic Party}}
+| {{party name with color|United Democratic Front (Kerala)|rowspan=9}}
+|
+|-
+! 94
+| [[Kaduthuruthy Assembly constituency|Kaduthuruthy]]
+| [[Mons Joseph]]
+| {{party name with color|Kerala Congress}}
+|Minister of Irrigation & Housing
+|-
+! 95
+| [[Vaikom Assembly constituency|Vaikom]] (SC)
+| [[K. Binimon]]
+| {{party name with color|Indian National Congress|rowspan=4}}
+|
+|-
+! 96
+| [[Ettumanoor Assembly constituency|Ettumanoor]]
+| [[Nattakom Suresh]]
+|
+|-
+! 97
+| [[Kottayam Assembly constituency|Kottayam]]
+| [[Thiruvanchoor Radhakrishnan]]
+| [[List of speakers of the Kerala Legislative Assembly|Speaker]]
+|-
+! 98
+| [[Puthuppally Assembly constituency|Puthuppally]]
+| [[Chandy Oommen]]
+|
+|-
+! 99
+| [[Changanassery Assembly constituency|Changanassery]]
+| [[Vinu Job Kuzhimannil]]
+| {{party name with color|Kerala Congress}}
+|
+|-
+! 100
+| [[Kanjirappally Assembly constituency|Kanjirappally]]
+| [[Rony K Baby]]
+| {{party name with color|Indian National Congress|rowspan=2}}
+|
+|-
+! 101
+| [[Poonjar Assembly constituency|Poonjar]]
+| [[Sebastian M. J.]]
+|<section end="Kottayam district"/><section begin="Alappuzha district"/>
+|-
+| rowspan="9" | [[Alappuzha district|Alappuzha]]
+! 102
+| [[Aroor Assembly constituency|Aroor]]
+|| [[Shanimol Osman]]
+| style="background: {{party color|Indian National Congress}}" |
+|[[Indian National Congress|INC]]
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+| [[List of speakers of the Kerala Legislative Assembly|Deputy Speaker]]
+|-
+! 103
+| [[Cherthala Assembly constituency|Cherthala]]
+|[[P. Prasad]]
+| style="background: {{party color|Communist Party of India}}" |
+|[[Communist Party of India|CPI]]
+| style="background: {{party color|Left Democratic Front (Kerala)}}" |
+|[[Left Democratic Front|LDF]]
+|
+|-
+! 104
+| [[Alappuzha Assembly constituency|Alappuzha]]
+| [[A.D.Thomas]]
+| {{party name with color|Indian National Congress}}
+| {{party name with color|United Democratic Front (Kerala)|rowspan=5}}
+|
+|-
+! 105
+| [[Ambalappuzha Assembly constituency|Ambalappuzha]]
+|[[G. Sudhakaran]]
+| style="background: {{party color|Independent politician}}" |
+|[[Independent politician|IND]]
+|
+|-
+! 106
+| [[Kuttanad Assembly constituency|Kuttanad]]
+| [[Reji Cheriyan]]
+| style="background: {{party color|Kerala Congress}}" |
+| [[Kerala Congress|KC]]
+|
+|-
+! 107
+| [[Haripad Assembly constituency|Haripad]]
+| [[Ramesh Chennithala]]
+| {{party name with color|Indian National Congress|rowspan=2}}
+|Minister for Home, Vigilance, and Coir
+|-
+! 108
+| [[Kayamkulam Assembly constituency|Kayamkulam]]
+| [[M. Liju]]
+|Minister of Excise & Cooperation
+|-
+! 109
+| [[Mavelikara Assembly constituency|Mavelikara]] (SC)
+| [[M. S. Arun Kumar]]
+| {{party name with color|Communist Party of India (Marxist)|rowspan=2}}
+| {{party name with color|Left Democratic Front (Kerala)|rowspan=2}}
+|
+|-
+! 110
+| [[Chengannur Assembly constituency|Chengannur]]
+| [[Saji Cherian]]
+|<section end="Alappuzha district"/><section begin="Pathanamthitta district"/>
+|-
+| rowspan="5" | [[Pathanamthitta district|Pathanamthitta]]
+! 111
+| [[Thiruvalla Assembly constituency|Thiruvalla]]
+| [[Varghese Mammen]]
+| style="background: {{party color|Kerala Congress}}" |
+| [[Kerala Congress|KC]]
+| {{party name with color|United Democratic Front (Kerala)|rowspan=3}}
+|
+|-
+! 112
+| [[Ranni Assembly constituency|Ranni]]
+| [[Pazhakulam Madhu]]
+| {{party name with  color|Indian National Congress|rowspan=2}}
+|
+|-
+! 113
+| [[Aranmula Assembly constituency|Aranmula]]
+| [[Abin Varkey]]
+|
+|-
+! 114
+| [[Konni Assembly constituency|Konni]]
+| [[K. U. Jenish Kumar]]
+| style="background: {{party color|Communist Party of India (Marxist)}}" |
+| [[Communist Party of India (Marxist)|CPI(M)]]
+| style="background: {{party color|Left Democratic Front (Kerala)}}" |
+| [[Left Democratic Front (Kerala)|LDF]]
+|
+|-
+! 115
+| [[Adoor Assembly constituency|Adoor]] (SC)
+|[[C. V. Santhakumar|Adv. C. V. Santhakumar]]
+| style="background: {{party color|Indian National Congress}}" |
+|[[Indian National Congress|INC]]
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+|<section end="Pathanamthitta district"/><section begin="Kollam district"/>
+|-
+| rowspan="11" | [[Kollam district|Kollam]]
+! 116
+| [[Karunagappally Assembly constituency|Karunagapally]]
+| [[C. R. Mahesh]]
+| style="background: {{party color|Indian National Congress}}" |
+| [[Indian National Congress|INC]]
+| {{party name with color|United Democratic Front (Kerala)|rowspan=3}}
+|
+|-
+! 117
+| [[Chavara Assembly constituency|Chavara]]
+| [[Shibu Baby John]]
+| {{party name with color|Revolutionary Socialist Party (India)|rowspan=2}}
+|Minister of Forests & Widlife Protection
+|-
+! 118
+| [[Kunnathur, Kerala Assembly constituency|Kunnathur]] (SC)
+| [[Ullas Kovur|Ullas Kovoor]]
+|
+|-
+! 119
+| [[Kottarakkara Assembly constituency|Kottarakkara]]
+| [[K. N. Balagopal]]
+| style="background: {{party color|Communist Party of India (Marxist)}}" |
+|[[Communist Party of India (Marxist)|CPI(M)]]
+| style="background: {{party color|Left Democratic Front (Kerala)}}" |
+|[[Left Democratic Front (Kerala)|LDF]]
+|
+|-
+! 120
+| [[Pathanapuram Assembly constituency|Pathanapuram]]
+|[[Jyothi Kumar Chamakkala]]
+| style="background: {{party color|Indian National Congress}}" |
+|[[Indian National Congress|INC]]
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+|
+|-
+! 121
+| [[Punalur Assembly constituency|Punalur]]
+|[[C. Ajayaprasad]]
+| style="background: {{party color|Communist Party of India}}" |
+|[[Communist Party of India|CPI]]
+| style="background: {{party color|Left Democratic Front (Kerala)}}" |
+|[[Left Democratic Front (Kerala)|LDF]]
+|
+|-
+! 122
+| [[Chadayamangalam Assembly constituency|Chadayamangalam]]
+| [[M. M. Naseer]]
+| {{party name with color|Indian National Congress|rowspan=3}}
+| {{party name with color|United Democratic Front (Kerala)|rowspan=4}}
+|
+|-
+! 123
+| [[Kundara Assembly constituency|Kundara]]
+| [[P. C. Vishnunadh]]
+|Minister of Tourism, Culture & Cinema
+|-
+! 124
+| [[Kollam Assembly constituency|Kollam]]
+| [[Bindu Krishna]]
+|Minister of Labour, Dairy Development, Women & Child Development & Animal Husbandary
+|-
+! 125
+| [[Eravipuram Assembly constituency|Eravipuram]]
+| [[Vishnu Mohan (politician)|Vishnu Mohan]]
+| {{party name with color|Revolutionary Socialist Party (India)}}
+|
+|-
+! 126
+| [[Chathannoor Assembly constituency|Chathannoor]]
+|[[B. B. Gopakumar]]
+| style="background: {{party color|Bharatiya Janata Party}}" |
+|[[Bharatiya Janata Party|BJP]]
+| style="background: {{party color|Bharatiya Janata Party}}" |
+|[[National Democratic Alliance|NDA]]
+|BJP parliamentary party leader of Kerala.<section end="Kollam district"/><section begin="Thiruvananthapuram district"/>
+|-
+| rowspan="14" | [[Thiruvananthapuram district|Thiruvananthapuram]]
+! 127
+| [[Varkala Assembly constituency|Varkala]]
+| [[V. Joy]]
+| {{party name with color|Communist Party of India (Marxist)|rowspan=2}}
+| {{party name with color|Left Democratic Front (Kerala)|rowspan=2}}
+|
+|-
+! 128
+| [[Attingal Assembly constituency|Attingal]]
+| [[O. S. Ambika]]
+|
+|-
+! 129
+| [[Chirayinkeezhu Assembly constituency|Chirayinkeezhu]] (SC)
+| [[Ramya Haridas]]
+| style="background: {{party color|Indian National Congress}}" |
+|[[Indian National Congress|INC]]
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+|
+|-
+! 130
+| [[Nedumangad Assembly constituency|Nedumangad]]
+| [[G. R. Anil]]
+| style="background: {{party color|Communist Party of India}}" |
+|[[Communist Party of India|CPI]]
+| style="background: {{party color|Left Democratic Front (Kerala)}}" |
+|[[Left Democratic Front (Kerala)|LDF]]
+|
+|-
+! 131
+| [[Vamanapuram Assembly constituency|Vamanapuram]]
+| [[Sudheersha Palode]]
+| style="background: {{party color|Indian National Congress}}" |
+|[[Indian National Congress|INC]]
+| style="background: {{party color|United Democratic Front (Kerala)}}" |
+|[[United Democratic Front (Kerala)|UDF]]
+|
+|-
+! 132
+| [[Kazhakootam Assembly constituency|Kazhakkoottam]]
+|[[V. Muraleedharan]]
+| style="background: {{party color|Bharatiya Janata Party}}" |
+|[[Bharatiya Janata Party|BJP]]
+| style="background: {{party color|Bharatiya Janata Party}}" |
+|[[National Democratic Alliance|NDA]]
+|
+|-
+! 133
+| [[Vattiyoorkavu Assembly constituency|Vattiyoorkavu]]
+| [[K. Muraleedharan]]
+| style="background: {{party color|Indian National Congress}}" |
+|[[Indian National Congress|INC]]
+| {{party name with color|United Democratic Front (Kerala)|rowspan=2}}
+|Minister of Health & Devaswoms
+|-
+! 134
+| [[Thiruvananthapuram Assembly constituency|Thiruvananthapuram]]
+| [[C. P. John]]
+| style="background: {{party color|Communist Marxist Party}}" |
+|[[Communist Marxist Party|CMP]]
+|Minister of Transport
+|-
+! 135
+| [[Nemom Assembly constituency|Nemom]]
+|[[Rajeev Chandrasekhar]]
+| style="background: {{party color|Bharatiya Janata Party}}" |
+|[[Bharatiya Janata Party|BJP]]
+| style="background: {{party color|Bharatiya Janata Party}}" |
+|[[National Democratic Alliance|NDA]]
+|
+|-
+! 136
+| [[Aruvikkara Assembly constituency|Aruvikkara]]
+| [[G. Steephen]]
+| {{party name with color|Communist Party of India (Marxist)|rowspan=2}}
+| {{party name with color|Left Democratic Front (Kerala)|rowspan=2}}
+|
+|-
+! 137
+| [[Parassala Assembly constituency|Parassala]]
+| [[C. K. Hareendran]]
+|
+|-
+! 138
+| [[Kattakada Assembly constituency|Kattakkada]]
+| [[M. R. Baiju]]
+| {{party name with color|Indian National Congress|rowspan=3}}
+| {{party name with color|United Democratic Front (Kerala)|rowspan=3}}
+|
+|-
+! 139
+| [[Kovalam Assembly constituency|Kovalam]]
+| [[M. Vincent]]
+|
+|-
+! 140
+| [[Neyyattinkara Assembly constituency|Neyyattinkara]]
+| [[N. Sakthan]]
+|
+|}
+<section end="Thiruvananthapuram district"/>
+
+== References ==
+
+{{Reflist}}
+
+== External links ==
+
+* [http://www.niyamasabha.org niyamasabha.org]
+* [http://www.keralaassembly.org Election Database]
+* [http://www.klaproceedings.niyamasabha.org klaproceedings.niyamasabha.org]
+* [http://niyamasabha.org/codes/legislatorsupto2006.pdf Legislators up to 2006]
+
+{{Current Indian assemblies}}
+{{Authority control}}
+
+[[Category:Lists of current Indian state and territorial assemblies|K]]
+[[Category:Terms of the Kerala Legislative Assembly]]
+[[Category:2026 establishments in Kerala]]
+[[Category:Kerala MLAs 2026–2031| ]]

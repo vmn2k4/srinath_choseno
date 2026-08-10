@@ -1,0 +1,1504 @@
+{{short description|Sixteenth Madhya Pradesh Legislative Assembly}}
+{{Use Indian English|date=November 2023}}
+{{Use dmy dates|date=November 2023}}
+{{Infobox legislative term
+| name = 16th Madhya Pradesh Legislative Assembly
+| before = [[15th Madhya Pradesh Assembly|15th Assembly]]
+| after = <!--[[17th Assembly]]-->
+| image = 
+| image_size = 300
+| caption = 
+| body = [[Madhya Pradesh Legislative Assembly]]
+| election = [[2023 Madhya Pradesh Legislative Assembly election]]
+| government = [[Mohan Yadav ministry]]
+| opposition = [[Indian National Congress]]
+| term_start = 3 December 2023
+| term_end = 
+| website = {{URL|https://www.mpvidhansabha.nic.in|Madhya Pradesh Legislative Assembly}}
+| membership1 = '''230'''
+| control1 = 
+| chamber1_leader1_type = [[List of speakers of the Madhya Pradesh Legislative Assembly|Speaker]]
+| chamber1_leader1 = [[Narendra Singh Tomar]]
+| chamber1_leader2_type = [[List of chief ministers of Madhya Pradesh|Leader of the House]]
+| chamber1_leader2 = [[Mohan Yadav]]
+| chamber1_leader4_type = [[List of leaders of the opposition in the Madhya Pradesh Legislative Assembly|Leader of the Opposition]]
+| chamber1_leader4 = [[Umang Singhar]]
+| chamber1_leader5_type = Chief Whip
+| chamber1_leader6_type = Minister of Parliamentary affairs
+| chamber1_leader3_type = [[List of deputy chief ministers of Madhya Pradesh|Deputy CM]]
+| chamber1_leader3 = Jagdish Devda & Rajendra Shukla, BJP
+}}
+The '''Sixteenth Legislative Assembly of Madhya Pradesh''' was constituted after the [[2023 Madhya Pradesh Legislative Assembly election|2023 Madhya Pradesh Legislative Assembly Election]] which were concluded in November 2023.<ref>{{Cite news|title=Madhya Pradesh election 2023 dates, full schedule, result: All you need to know|url=https://www.indiatoday.in/elections/madhya-pradesh-assembly-polls-2023/story/madhya-pradesh-assembly-election-dates-counting-of-votes-poll-schedule-2446397-2023-10-09|website=India Today|language=en|date=9 October 2023}}</ref> The results was declared on 3 December 2023.<ref>{{Cite news|title=Madhya Pradesh To Vote In Single Phase On November 17, Result On December 3|url=https://news.abplive.com/elections/mp-election-2023-dates-madhya-pradesh-assembly-elections-2023-full-schedule-voting-counting-result-date-1633554|website=ABP LIVE|language=en|date=9 October 2023}}</ref>
+
+==Members of Legislative Assembly==
+{|class="wikitable sortable"
+!rowspan="2"|District
+!colspan="2"|Constituency
+! colspan="3" |Member of Legislative Assembly<ref>{{Cite news |title=Ex-359 |url=https://govtpressmp.nic.in/pdf/extra/2023-12-04-Ex-359.pdf}}</ref>
+! rowspan="2" |Remarks
+|-
+!No.
+!Name
+!colspan="2"|Party
+!Member
+|-
+|rowspan="3"|[[Sheopur district|Sheopur]]
+!1
+|[[Sheopur Assembly constituency|Sheopur]]
+|{{Party name with color|Indian National Congress}}
+|[[Babu Jandel]]
+|
+|-
+!Rowspan=2|2
+|Rowspan=2|[[Vijaypur, Madhya Pradesh Assembly constituency|Vijaypur]]
+|{{Party name with color|Indian National Congress|rowspan=2}}
+|[[Ramnivas Rawat]]
+|Resigned on 8 July 2024.<ref>{{cite web|url=https://www.ndtv.com/india-news/in-big-blow-for-congress-in-madhya-pradesh-6-time-mla-ramniwas-rawat-joins-bjp-5556522|title=In Big Blow For Congress In Madhya Pradesh, 6-Time MLA Joins BJP|work=NDTV|accessdate=30 April 2024}}</ref>
+|-
+|[[Mukesh Malhotra]]
+|Elected on 23 November 2024
+|-
+|rowspan="6"|[[Morena district|Morena]]
+!3
+|[[Sabalgarh Assembly constituency|Sabalgarh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Sarla Vijendra Rawat]]
+|
+|-
+!4
+|[[Joura Assembly constituency|Joura]]
+|{{Party name with color|Indian National Congress}}
+|[[Pankaj Upadhyay]]
+|
+|-
+!5
+|[[Sumawali Assembly constituency|Sumawali]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Adal Singh Kansana]]
+|
+|-
+!6
+|[[Morena Assembly constituency|Morena]]
+|{{Party name with color|Indian National Congress}}
+|[[Dinesh Gurjar]]
+|
+|-
+!7
+|[[Dimani Assembly constituency|Dimani]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Narendra Singh Tomar]]
+|Speaker
+|-
+!8
+|[[Ambah Assembly constituency|Ambah (SC)]]
+|{{Party name with color|Indian National Congress}}
+|[[Devendra Sakhwar]]
+|
+|-
+|rowspan="5"|[[Bhind district|Bhind]]
+!9
+|[[Ater Assembly constituency|Ater]]
+|{{Party name with color|Indian National Congress}}
+|[[Hemant Katare]]
+|Deputy Leader of Opposition 
+|-
+!10
+|[[Bhind Assembly constituency|Bhind]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Narendra Singh Kushwah]]
+|
+|-
+!11
+|[[Lahar Assembly constituency|Lahar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Ambrish Sharma]]
+|
+|-
+!12
+|[[Mehgaon Assembly constituency|Mehgaon]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Rakesh Shukla (politician)|Rakesh Shukla]]
+|
+|-
+!13
+|[[Gohad Assembly constituency|Gohad (SC)]]
+|{{Party name with color|Indian National Congress}}
+|[[Keshav Desai]]
+|
+|-
+|rowspan="6"|[[Gwalior district|Gwalior]]
+!14
+|[[Gwalior Rural Assembly constituency|Gwalior Rural]]
+|{{Party name with color|Indian National Congress}}
+|[[Sahab Singh Gurjar]]
+|
+|-
+!15
+|[[Gwalior Assembly constituency|Gwalior]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Pradhuman Singh Tomar]]
+|
+|-
+!16
+|[[Gwalior East Assembly constituency|Gwalior East]]
+|{{Party name with color|Indian National Congress}}
+|[[Satish Sikarwar]]
+|
+|-
+!17
+|[[Gwalior South Assembly constituency|Gwalior South]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Narayan Singh Kushwah]]
+|
+|-
+!18
+|[[Bhitarwar Assembly constituency|Bhitarwar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Mohan Singh Rathore]]
+|
+|-
+!19
+|[[Dabra Assembly constituency|Dabra (SC)]]
+|{{Party name with color|Indian National Congress}}
+|[[Suresh Raje]]
+|
+|-
+|rowspan="3"|[[Datia district|Datia]]
+!20
+|[[Sewda Assembly constituency|Sewda]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Pradeep Agrawal]]
+|
+|-
+!21
+|[[Bhander Assembly constituency|Bhander (SC)]]
+|{{Party name with color|Indian National Congress}}
+|[[Phool Singh Baraiya]]
+|
+|-
+!22
+|[[Datia Assembly constituency|Datia]]
+|{{Party name with color|Indian National Congress}}
+|[[Rajendra Bharti]] 
+|
+|-
+|rowspan="5"|[[Shivpuri district|Shivpuri]]
+!23
+|[[Karera Assembly constituency|Karera (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Ramesh Prasad Khatik]]
+|
+|-
+!24
+|[[Pohari Assembly constituency|Pohari]]
+|{{Party name with color|Indian National Congress}}
+|[[Kailash Kushwah]]
+|
+|-
+!25
+|[[Shivpuri Assembly constituency|Shivpuri]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Devendra Kumar Jain]]
+|
+|-
+!26
+|[[Pichhore Assembly constituency|Pichhore]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Preetam Lodhi]]
+|
+|-
+!27
+|[[Kolaras Assembly constituency|Kolaras]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Mahendra Singh Yadav]]
+|
+|-
+|rowspan="4"|[[Guna district|Guna]]
+!28
+|[[Bamori Assembly constituency|Bamori]]
+|{{Party name with color|Indian National Congress}}
+|[[Rishi Agrawal|Rishi Agarwal]]
+|
+|-
+!29
+|[[Guna Assembly constituency|Guna (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Panna Lal Shakya]]
+|
+|-
+!30
+|[[Chachoura Assembly constituency|Chachoura]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Priyanka Penchi]]
+|
+|-
+!31
+|[[Raghogarh Assembly constituency|Raghogarh]]
+|{{Party name with color|Indian National Congress}}
+|[[Jaivardhan Singh]]
+|
+|-
+|rowspan="3"|[[Ashoknagar district|Ashoknagar]]
+!32
+|[[Ashok Nagar Assembly constituency|Ashok Nagar (SC)]]
+|{{Party name with color|Indian National Congress}}
+|[[Haribaboo Rai]]
+|
+|-
+!33
+|[[Chanderi Assembly constituency|Chanderi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Jagannath Singh Raghuwanshi]]
+|
+|-
+!34
+|[[Mungaoli Assembly constituency|Mungaoli]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Brajendra Singh Yadav]]
+|
+|-
+|rowspan="8"|[[Sagar district|Sagar]]
+!35
+|[[Bina Assembly constituency|Bina (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Nirmla Sapre]]
+|Defected to [[Bharatiya Janata Party|BJP]] in May 2024.<ref>{{cite web|url=https://www.amarujala.com/madhya-pradesh/sagar/mp-news-another-blow-to-congress-in-madhya-pradesh-bina-mla-nirmala-sapre-joins-bjp-in-sagar-2024-05-05|title=MP News: Another blow to Congress in Madhya Pradesh, Bina MLA Nirmala joins BJP|work=Amar Ujala|accessdate=5 May 2024|language=hi}}</ref>
+|-
+!36
+|[[Khurai, Madhya Pradesh Assembly constituency|Khurai]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Bhupendra Singh (Madhya Pradesh politician)|Bhupendra Singh]]
+|
+|-
+!37
+|[[Surkhi Assembly constituency|Surkhi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Govind Singh Rajput]]
+|
+|-
+!38
+|[[Deori Assembly constituency|Deori]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Brijbihari Pateriya]]
+|
+|-
+!39
+|[[Rehli Assembly constituency|Rehli]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Gopal Bhargava]]
+|
+|-
+!40
+|[[Naryoli Assembly constituency|Naryoli]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Pradeep Lariya]]
+|
+|-
+!41
+|[[Sagar, Madhya Pradesh Assembly constituency|Sagar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Shailendra Kumar Jain]]
+|
+|-
+!42
+|[[Banda, Madhya Pradesh Assembly constituency|Banda]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Veerendra Singh Lodhi]]
+|
+|-
+|rowspan="2"|[[Tikamgarh district|Tikamgarh]]
+!43
+|[[Tikamgarh Assembly constituency|Tikamgarh]]
+|{{Party name with color|Indian National Congress}}
+|[[Yadvendra Singh]]
+|
+|-
+!44
+|[[Jatara (Vidhan Sabha constituency)|Jatara (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Harishankar Khatik]]
+|
+|-
+|rowspan="2"|[[Niwari district|Niwari]]
+!45
+|[[Prithvipur Assembly constituency|Prithvipur]]
+|{{Party name with color|Indian National Congress}}
+|[[Nitendra Singh Rathore]]
+|
+|-
+!46
+|[[Niwari Assembly constituency|Niwari]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Anil Jain (Madhya Pradesh politician)|Anil Jain]]
+|
+|-
+|[[Tikamgarh district|Tikamgarh]]
+!47
+|[[Khargapur Assembly constituency|Khargapur]]
+|{{Party name with color|Indian National Congress}}
+|[[Chanda Singh Gaur]]
+|
+|-
+|rowspan="6"|[[Chhatarpur district|Chhatarpur]]
+!48
+|[[Maharajpur, Madhya Pradesh Assembly constituency|Maharajpur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Kamakhya Pratap Singh]]
+|
+|-
+!49
+|[[Chandla Assembly constituency|Chandla (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Dileep Ahirwar]]
+|
+|-
+!50
+|[[Rajnagar, Madhya Pradesh Assembly constituency|Rajnagar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Arvind Pateriya]]
+|
+|-
+!51
+|[[Chhatarpur, Madhya Pradesh Assembly constituency|Chhatarpur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Lalita Yadav]]
+|
+|-
+!52
+|[[Bijawar Assembly constituency|Bijawar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Rajesh Kumar (Madhya Pradesh politician)|Rajesh Kumar Shukla]]
+|
+|-
+!53
+|[[Malhara Assembly constituency|Malhara]]
+|{{Party name with color|Indian National Congress}}
+|[[Ramsiya Bharti]]
+|
+|-
+|rowspan="4"|[[Damoh district|Damoh]]
+!54
+|[[Pathariya Assembly constituency|Pathariya]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Lakhan Patel]]
+|
+|-
+!55
+|[[Damoh Assembly constituency|Damoh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Jayant Malaiya]]
+|
+|-
+!56
+|[[Jabera Assembly constituency|Jabera]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Dharmendra Bhav Singh Lodhi]]
+|
+|-
+!57
+|[[Hatta Assembly constituency|Hatta (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Uma Devi Khatik]]
+|
+|-
+|rowspan="3"|[[Panna district|Panna]]
+!58
+|[[Pawai Assembly constituency|Pawai]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Prahlad Lodhi]]
+|
+|-
+!59
+|[[Gunnaor Assembly constituency|Gunnaor (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Rajesh Kumar Verma
+|
+|-
+!60
+|[[Panna Assembly constituency|Panna]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Brijendra Pratap Singh]]
+|
+|-
+|rowspan="7"|[[Satna district|Satna]]
+!61
+|[[Chitrakoot, Madhya Pradesh Assembly constituency|Chitrakoot]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Surendra Singh Gaharwar]]
+|
+|-
+!62
+|[[Raigaon Assembly constituency|Raigaon (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Pratima Bagri]]
+|
+|-
+!63
+|[[Satna Assembly constituency|Satna]]
+|{{Party name with color|Indian National Congress}}
+|[[Siddharth Sukhlal Kushwaha|Dabbu Siddharth Sukhlal Kushwah]]
+|
+|-
+!64
+|[[Nagod Assembly constituency|Nagod]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Nagendra Singh]]
+|
+|-
+!65
+|[[Maihar Assembly constituency|Maihar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Shrikant Chaturvedi]]
+|
+|-
+!66
+|[[Amarpatan Assembly constituency|Amarpatan]]
+|{{Party name with color|Indian National Congress}}
+|[[Rajendra Kumar Singh]]
+|
+|-
+!67
+|[[Rampur-Baghelan Assembly constituency|Rampur-Baghelan]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Vikram Singh (Madhya Pradesh politician)|Vikram Singh]]
+|
+|-
+| rowspan="3" |[[Rewa district|Rewa]]
+!68
+|[[Sirmour Assembly constituency|Sirmour]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Divyaraj Singh]]
+|
+|-
+!69
+|[[Semariya Assembly constituency|Semariya]]
+|{{Party name with color|Indian National Congress}}
+|[[Abhay Mishra]]
+|
+|-
+!70
+|[[Teonthar Assembly constituency|Teonthar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Siddharth Tiwari]]
+|
+|-
+| rowspan="2" |[[Mauganj district|Mauganj]]
+!71
+|[[Mauganj Assembly constituency|Mauganj]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Pradeep Patel]]
+|
+|-
+!72
+|[[Deotalab Assembly constituency|Deotalab]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Girish Gautam]]
+|
+|-
+| rowspan="3" |[[Rewa district|Rewa]]
+!73
+|[[Mangawan Assembly constituency|Mangawan (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Narendra Prajapati]]
+|
+|-
+!74
+|[[Rewa Assembly constituency|Rewa]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Rajendra Shukla (politician)|Rajendra Shukla]]
+|Deputy Chief Minister
+|-
+!75
+|[[Gurh Assembly constituency|Gurh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Nagendra Singh]]
+|
+|-
+|rowspan="3"|[[Sidhi district|Sidhi]]
+!76
+|[[Churhat Assembly constituency|Churhat]]
+|{{Party name with color|Indian National Congress}}
+|[[Ajay Arjun Singh]]
+|
+|-
+!77
+|[[Sidhi Assembly constituency|Sidhi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Riti Pathak]]
+|
+|-
+!78
+|[[Sihawal Assembly constituency|Sihawal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Vishwamitra Pathak]]
+|
+|-
+|rowspan="3"|[[Singrauli district|Singrauli]]
+!79
+|[[Chitrangi Assembly constituency|Chitrangi (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Radha Ravindra Singh]]
+|
+|-
+!80
+|[[Singrauli Assembly constituency|Singrauli]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Ram Niwas Shah]]
+|
+|-
+!81
+|[[Devsar, Madhya Pradesh Assembly constituency|Devsar (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Rajendra Meshram]]
+|
+|-
+|[[Sidhi district|Sidhi]]
+!82
+|[[Dhauhani Assembly constituency|Dhauhani (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Kunwar Singh Tekam]]
+|
+|-
+|rowspan="3"|[[Shahdol district|Shahdol]]
+!83
+|[[Beohari Assembly constituency|Beohari (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Sharad Juglal Kol]]
+|
+|-
+!84
+|[[Jaisingnagar Assembly constituency|Jaisingnagar (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Manisha Singh (politician)|Manisha Singh]]
+|
+|-
+!85
+|[[Jaitpur Assembly constituency|Jaitpur (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Jaisingh Maravi]]
+|
+|-
+|rowspan="3"|[[Anuppur district|Anuppur]]
+!86
+|[[Kotma Assembly constituency|Kotma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Dilip Jaiswal]]
+|
+|-
+!87
+|[[Anuppur Assembly constituency|Anuppur (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Bisahulal Singh]]
+|
+|-
+!88
+|[[Pushprajgarh Assembly constituency|Pushprajgarh (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Phundelal Singh Marko|Phundelal Marko]]
+|
+|-
+|rowspan="2"|[[Umaria district|Umaria]]
+!89
+|[[Bandhavgarh Assembly constituency|Bandhavgarh (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Shivnarayan Singh|Shivnarayan Gyan Singh]]
+|
+|-
+!90
+|[[Manpur Assembly constituency|Manpur (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Meena Singh (Manpur politician)|Meena Singh]]
+|
+|-
+|rowspan="4"|[[Katni district|Katni]]
+!91
+|[[Barwara Assembly constituency|Barwara (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Dhirendra Bahadur Singh]]
+|
+|-
+!92
+|[[Vijayraghavgarh Assembly constituency|Vijayraghavgarh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Sanjay Pathak]]
+|
+|-
+!93
+|[[Murwara Assembly constituency|Murwara]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Sandeep Shriprasad Jaiswal]]
+|
+|-
+!94
+|[[Bahoriband Assembly constituency|Bahoriband]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Pranay Prabhat Pandey]]
+|
+|-
+|rowspan="8"|[[Jabalpur district|Jabalpur]]
+!95
+|[[Patan, Madhya Pradesh Assembly constituency|Patan]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Ajay Vishnoi]]
+|
+|-
+!96
+|[[Bargi Assembly constituency|Bargi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Neeraj Singh Lodhi]]
+|
+|-
+!97
+|[[Jabalpur East Assembly constituency|Jabalpur East (SC)]]
+|{{Party name with color|Indian National Congress}}
+|[[Lakhan Ghanghoriya|Lakhan Ghanghoria]]
+|
+|-
+!98
+|[[Jabalpur North Assembly constituency|Jabalpur North]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Abhilash Pandey]] 
+|
+|-
+!99
+|[[Jabalpur Cantonment Assembly constituency|Jabalpur Cantonment]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Ashok Rohani]]
+|
+|-
+!100
+|[[Jabalpur West Assembly constituency|Jabalpur West]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Rakesh Singh (politician)|Rakesh Singh]]
+|
+|-
+!101
+|[[Panagar Assembly constituency|Panagar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Sushil Kumar Tiwari]]
+|
+|-
+!102
+|[[Sihora Assembly constituency|Sihora (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Santosh Varkade]]
+|
+|-
+|rowspan="2"|[[Dindori district|Dindori]]
+!103
+|[[Shahpura, Madhya Pradesh Assembly constituency|Shahpura (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Om Prakash Dhurve]]
+|
+|-
+!104
+|[[Dindori, Madhya Pradesh Assembly constituency|Dindori (SC)]]
+|{{Party name with color|Indian National Congress}}
+|[[Omkar Markam|Omkar Singh Markam]]
+|
+|-
+|rowspan="3"|[[Mandla district|Mandla]]
+!105
+|[[Bichhiya Assembly constituency|Bichhiya (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Narayan Singh Patta]]
+|
+|-
+!106
+|[[Niwas Assembly constituency|Niwas (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Chainsingh Warkade]]
+|
+|-
+!107
+|[[Mandla Assembly constituency|Mandla (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Sampatiya Uikey]]
+|
+|-
+|rowspan="6"|[[Balaghat district|Balaghat]]
+!108
+|[[Baihar Assembly constituency|Baihar (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Sanjay Uikey]]
+|
+|-
+!109
+|[[Lanji Assembly constituency|Lanji]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Rajkumar Karrahe]]
+|
+|-
+!110
+|[[Paraswada Assembly constituency|Paraswada]]
+|{{Party name with color|Indian National Congress}}
+|[[Madhu Bhagat|Madhu Bhau Bhagat]]
+|
+|-
+!111
+|[[Balaghat Assembly constituency|Balaghat]]
+|{{Party name with color|Indian National Congress}}
+|[[Anubha Munjare]]
+|
+|-
+!112
+|[[Waraseoni Assembly constituency|Waraseoni]]
+|{{Party name with color|Indian National Congress}}
+|[[Vivek Vicky Patel]]
+|
+|-
+!113
+|[[Katangi Assembly constituency|Katangi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Gaurav Singh Pardhi]]
+|
+|-
+|rowspan="4"|[[Seoni district|Seoni]]
+!114
+|[[Barghat Assembly constituency|Barghat (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Kamal Marskole]]
+|
+|-
+!115
+|[[Seoni Assembly constituency|Seoni]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Dinesh Rai Munmun]]
+|
+|-
+!116
+|[[Keolari Assembly constituency|Keolari]]
+|{{Party name with color|Indian National Congress}}
+|[[Rajneesh Harvansh Singh]]
+|
+|-
+!117
+|[[Lakhnadon Assembly constituency|Lakhnadon (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Yogendra Singh (politician)|Yogendra Singh Baba]]
+|
+|-
+|rowspan="4"|[[Narsinghpur district|Narsinghpur]]
+!118
+|[[Gotegaon Assembly constituency|Gotegaon (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Mahendra Nagesh]]
+|
+|-
+!119
+|[[Narsingpur Assembly constituency|Narsingpur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Prahlad Singh Patel]]
+|
+|-
+!120
+|[[Tendukheda Assembly constituency|Tendukheda]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Vishwanath Singh Patel|Vishwanath Singh]]
+|
+|-
+!121
+|[[Gadarwara Assembly constituency|Gadarwara]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Uday Pratap Singh (Madhya Pradesh politician)|Uday Pratap Singh]]
+|
+|-
+|rowspan="8"|[[Chhindwara district|Chhindwara]]
+!122
+|[[Junnardeo Assembly constituency|Junnardeo (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Sunil Uikey]]
+|
+|-
+!Rowspan=2|123
+|Rowspan=2|[[Amarwara Assembly constituency|Amarwara (ST)]]
+|{{Party name with color|Indian National Congress}}
+|rowspan=2|[[Kamlesh Shah]]
+|Resigned on 29 March 2024.<ref>{{cite web | title=BJP aims to win Amarwara assembly seat bypoll after defeating Nakul Nath in Chhindwara stronghold | url=https://www.deccanherald.com/india/madhya-pradesh/bjp-aims-to-win-amarwara-assembly-seat-bypoll-after-defeating-nakul-nath-in-chhindwara-stronghold-3060043 }}</ref>
+|-
+|{{Party name with color|Bharatiya Janata Party}}
+|Elected in 2024 by-election
+|-
+!124
+|[[Chourai Assembly constituency|Chourai]]
+|{{Party name with color|Indian National Congress}}
+|[[Choudhary Sujeet Mersingh]]
+|
+|-
+!125
+|[[Saunsar Assembly constituency|Saunsar]]
+|{{Party name with color|Indian National Congress}}
+|[[Vijay Revnath Chore]]
+|
+|-
+!126
+|[[Chhindwara Assembly constituency|Chhindwara]]
+|{{Party name with color|Indian National Congress}}
+|[[Kamal Nath]]
+|
+|-
+!127
+|[[Parasia Assembly constituency|Parasia (SC)]]
+|{{Party name with color|Indian National Congress}}
+|[[Sohanlal Valmik|Sohanlal Balmik]]
+|
+|-
+!128
+|[[Pandhurna Assembly constituency|Pandhurna (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Neelesh Pusaram Uikey]]
+|
+|-
+|rowspan="5"|[[Betul district|Betul]]
+!129
+|[[Multai Assembly constituency|Multai]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Chandrashekhar Deshmukh]]
+|
+|-
+!130
+|[[Amla Assembly constituency|Amla]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Yogesh Pandagre]]
+|
+|-
+!131
+|[[Betul Assembly constituency|Betul]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Hemant Khandelwal]]
+|
+|-
+!132
+|[[Ghoradongri Assembly constituency|Ghoradongri (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Ganga Sajjan Singh Uikey]]
+|
+|-
+!133
+|[[Bhainsdehi Assembly constituency|Bhainsdehi (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Mahendra Singh Chouhan]]
+|
+|-
+|rowspan="2"|[[Harda district|Harda]]
+!134
+|[[Timarni Assembly constituency|Timarni (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Abhijeet Shah]]
+|
+|-
+!135
+|[[Harda Assembly constituency|Harda]]
+|{{Party name with color|Indian National Congress}}
+|[[Ram Kishore Dogne]]
+|
+|-
+|rowspan="4"|[[Hoshangabad district|Hoshangabad]]
+!136
+|[[Seoni-Malwa Assembly constituency|Seoni-Malwa]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Premshankar Verma|Prem Shankar Kunjilal Verma]]
+|
+|-
+!137
+|[[Hoshangabad Assembly constituency|Hoshangabad]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Sitasharan Sharma]]
+|
+|-
+!138
+|[[Sohagpur Assembly constituency|Sohagpur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Vijaypal Singh (politician)|Vijaypal Singh]]
+|
+|-
+!139
+|[[Pipariya Assembly constituency|Pipariya (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Thakurdas Nagwanshi]]
+|
+|-
+|rowspan="4"|[[Raisen district|Raisen]]
+!140
+|[[Udaipura Assembly constituency|Udaipura]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Narendra Shivaji Patel]] 
+|
+|-
+!141
+|[[Bhojpur, Madhya Pradesh Assembly constituency|Bhojpur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Surendra Patwa]]
+|
+|-
+!142
+|[[Sanchi Assembly constituency|Sanchi (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Prabhuram Choudhary]]
+|
+|-
+!143
+|[[Silwani Assembly constituency|Silwani]]
+|{{Party name with color|Indian National Congress}}
+|[[Devendra Patel]]
+|
+|-
+|rowspan="5"|[[Vidisha district|Vidisha]]
+!144
+|[[Vidisha Assembly constituency|Vidisha]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Mukesh Tandan]]
+|
+|-
+!145
+|[[Basoda Assembly constituency|Basoda]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Hari Singh Raghuwanshi]]
+|
+|-
+!146
+|[[Kurwai Assembly constituency|Kurwai (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Hari Singh Sapre]]
+|
+|-
+!147
+|[[Sironj Assembly constituency|Sironj]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Umakant Sharma]]
+|
+|-
+!148
+|[[Shamshabad Assembly constituency|Shamshabad]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Surya Prakash Meena]]
+|
+|-
+|rowspan="7"|[[Bhopal district|Bhopal]]
+!149
+|[[Berasia Assembly constituency|Berasia (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Vishnu Khatri]]
+|
+|-
+!150
+|[[Bhopal Uttar Assembly constituency|Bhopal Uttar]]
+|{{Party name with color|Indian National Congress}}
+|[[Arif Aqueel|Atif Arif Aqueel]]
+|
+|-
+!151
+|[[Narela, Madhya Pradesh Assembly constituency|Narela]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Vishvas Sarang]]
+|
+|-
+!152
+|[[Bhopal Dakshin-Paschim Assembly constituency|Bhopal Dakshin-Paschim]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Bhagwandas Sabnani]]
+|
+|-
+!153
+|[[Bhopal Madhya Assembly constituency|Bhopal Madhya]]
+|{{Party name with color|Indian National Congress}}
+|[[Arif Masood]]
+|
+|-
+!154
+|[[Govindpura Assembly constituency|Govindpura]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Krishna Gaur]]
+|
+|-
+!155
+|[[Huzur Assembly constituency|Huzur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Rameshwar Sharma]]
+|
+|-
+|rowspan="5"|[[Sehore district|Sehore]]
+!Rowspan=2|156
+|Rowspan=2|[[Budhni Assembly constituency|Budhni]]
+|{{Party name with color|Bharatiya Janta Party|rowspan=2}}
+|[[Shivraj Singh Chouhan]]
+|Elected as [[Member of Parliament (India)|Member of Parliament]], [[Lok Sabha]]
+|-
+|[[Ramakant Bhargava]]
+|Elected on 23 November 2024
+|-
+!157
+|[[Ashta Assembly constituency|Ashta (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Gopal Singh Engineer]]
+|
+|-
+!158
+|[[Ichhawar Assembly constituency|Ichhawar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Karan Singh Verma]]
+|
+|-
+!159
+|[[Sehore Assembly constituency|Sehore]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Sudesh Rai]]
+|
+|-
+|rowspan="5"|[[Rajgarh district|Rajgarh]]
+!160
+|[[Narsinghgarh Assembly constituency|Narsinghgarh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Mohan Sharma]]
+|
+|-
+!161
+|[[Biaora Assembly constituency|Biaora]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Narayan Singh Panwar]]
+|
+|-
+!162
+|[[Rajgarh Assembly constituency|Rajgarh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Amar Singh Yadav]]
+|
+|-
+!163
+|[[Khilchipur Assembly constituency|Khilchipur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Hajari Lal Dangi]]
+|
+|-
+!164
+|[[Sarangpur Assembly constituency|Sarangpur (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Gotam Tetwal]]
+|
+|-
+|rowspan="2"|[[Agar Malwa district|Agar Malwa]]
+!165
+|[[Susner Assembly constituency|Susner]]
+|{{Party name with color|Indian National Congress}}
+|[[Bhairon Singh]]
+|
+|-
+!166
+|[[Agar Assembly constituency|Agar (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Madhav Singh]]
+|
+|-
+|rowspan="3"|[[Shajapur district|Shajapur]]
+!167
+|[[Shajapur Assembly constituency|Shajapur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Arun Bhimawad]]
+|
+|-
+!168
+|[[Shujalpur Assembly constituency|Shujalpur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Inder Singh Parmar]]
+|
+|-
+!169
+|[[Kalapipal Assembly constituency|Kalapipal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Ghanshyam Chandravanshi]]
+|
+|-
+|rowspan="5"|[[Dewas district|Dewas]]
+!170
+|[[Sonkatch Assembly constituency|Sonkatch (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Rajesh Sonkar]]
+|
+|-
+!171
+|[[Dewas Assembly constituency|Dewas]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Gayatri Raje Pawar]]
+|
+|-
+!172
+|[[Hatpipliya Assembly constituency|Hatpipliya]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Manoj Choudhary]]
+|
+|-
+!173
+|[[Khategaon Assembly constituency|Khategaon]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Aashish Govind Sharma]]
+|
+|-
+!174
+|[[Bagli Assembly constituency|Bagli (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Murli Bhawara]]
+|
+|-
+|rowspan="4"|[[Khandwa district|Khandwa]]
+!175
+|[[Mandhata Assembly constituency|Mandhata]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Narayan Patel (Madhya Pradesh politician)|Narayan Patel]]
+|
+|-
+!176
+|[[Harsud Assembly constituency|Harsud (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Kunwar Vijay Shah]]
+|
+|-
+!177
+|[[Khandwa Assembly constituency|Khandwa (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Kanchan Mukesh Tanve]]
+|
+|-
+!178
+|[[Pandhana Assembly constituency|Pandhana (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Chaya More]]
+|
+|-
+|rowspan="2"|[[Burhanpur district|Burhanpur]]
+!179
+|[[Nepanagar Assembly constituency|Nepanagar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Manju Rajendra Dadu]]
+|
+|-
+!180
+|[[Burhanpur Assembly constituency|Burhanpur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Archana Chitnis]]
+|
+|-
+|rowspan="6"|[[Khargone district|Khargone]]
+!181
+|[[Bhikangaon Assembly constituency|Bhikangaon (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Jhuma Solanki]]
+|
+|-
+!182
+|[[Badwaha Assembly constituency|Barwah]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Sachin Birla]]
+|
+|-
+!183
+|[[Maheshwar Assembly constituency|Maheshwar (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Rajkumar Mev]]
+|
+|-
+!184
+|[[Kasrawad Assembly constituency|Kasrawad]]
+|{{Party name with color|Indian National Congress}}
+|[[Sachin Yadav (Madhya Pradesh politician)|Sachin Yadav]]
+|
+|-
+!185
+|[[Khargone Assembly constituency|Khargone]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Balkrishan Patidar]]
+|
+|-
+!186
+|[[Bhagwanpura Assembly constituency|Bhagwanpura (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Kedar Chidabhai Dawar]]
+|
+|-
+|rowspan="4"|[[Barwani district|Barwani]]
+!187
+|[[Sendhawa Assembly constituency|Sendhawa (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Montu Solanki]]
+|
+|-
+!188
+|[[Rajpur, Madhya Pradesh Assembly constituency|Rajpur (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Bala Bachchan]]
+|
+|-
+!189
+|[[Pansemal Assembly constituency|Pansemal (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Shyam Barde]]
+|
+|-
+!190
+|[[Barwani Assembly constituency|Barwani (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Rajan Mandloi]]
+|
+|-
+|rowspan="2"|[[Alirajpur district|Alirajpur]]
+!191
+|[[Alirajpur Assembly constituency|Alirajpur (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Nagar Singh Chouhan]]
+|
+|-
+!192
+|[[Jobat Assembly constituency|Jobat (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Sena Mahesh Patel]]
+|
+|-
+|rowspan="3"|[[Jhabua district|Jhabua]]
+!193
+|[[Jhabua Assembly constituency|Jhabua (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Vikrant Bhuria]]
+|
+|-
+!194
+|[[Thandla Assembly constituency|Thandla (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Veer Singh Bhuriya]]
+|
+|-
+!195
+|[[Petlawad Assembly constituency|Petlawad (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Nirmala Bhuria|Nirmala Dileep Singh Bhuria]]
+|
+|-
+|rowspan="7"|[[Dhar district, India|Dhar]]
+!196
+|[[Sardarpur Assembly constituency|Sardarpur (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Pratap Grewal]]
+|
+|-
+!197
+|[[Gandhwani Assembly constituency|Gandhwani (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Umang Singhar]]
+|Leader of Opposition 
+|-
+!198
+|[[Kukshi Assembly constituency|Kukshi (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Surendra Singh Baghel]]
+|
+|-
+!199
+|[[Manawar Assembly constituency|Manawar (ST)]]
+|{{Party name with color|Indian National Congress}}
+|[[Hiralal Alawa]]
+|
+|-
+!200
+|[[Dharampuri Assembly constituency|Dharampuri (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Kaul Singh Thakur|Kalu Singh Thakur]]
+|
+|-
+!201
+|[[Dhar Assembly constituency|Dhar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Neena Verma]]
+|
+|-
+!202
+|[[Badnawar Assembly constituency|Badnawar]]
+|{{Party name with color|Indian National Congress}}
+|[[Bhanwar Singh Shekhawat]]
+|
+|-
+|rowspan="9"|[[Indore district|Indore]]
+!203
+|[[Depalpur Assembly constituency|Depalpur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Manoj Nirbhay Singh Patel]]
+|
+|-
+!204
+|[[Indore-1 Assembly constituency|Indore-1]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Kailash Vijayvargiya]]
+|-
+!205
+|[[Indore-2 Assembly constituency|Indore-2]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Ramesh Mendola]]
+|
+|-
+!206
+|[[Indore-3 Assembly constituency|Indore-3]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Golu Shukla]]
+|
+|-
+!207
+|[[Indore-4 Assembly constituency|Indore-4]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Malini Gaur]]
+|
+|-
+!208
+|[[Indore-5 Assembly constituency|Indore-5]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Mahendra Hardia]]
+|
+|-
+!209
+|[[Dr. Ambedkar Nagar-Mhow Assembly constituency|Dr. Ambedkar Nagar-Mhow]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Usha Thakur]]
+|
+|-
+!210
+|[[Rau Assembly constituency|Rau]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Madhu Verma (politician)|Madhu Verma]]
+|
+|-
+!211
+|[[Sanwer Assembly constituency|Sanwer (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Tulsi Silawat]]
+|
+|-
+|rowspan="7"|[[Ujjain district|Ujjain]]
+!212
+|[[Nagda-Khachrod Assembly constituency|Nagda-Khachrod]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Tej Bahadur Singh Chauhan]]
+|
+|-
+!213
+|[[Mahidpur Assembly constituency|Mahidpur]]
+|{{Party name with color|Indian National Congress}}
+|[[Dinesh Jain Boss|Dinesh Jain]]
+|
+|-
+!214
+|[[Tarana Assembly constituency|Tarana (SC)]]
+|{{Party name with color|Indian National Congress}}
+|[[Mahesh Parmar]]
+|
+|-
+!215
+|[[Ghatiya Assembly constituency|Ghatiya (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Satish Malviya]]
+|
+|-
+!216
+|[[Ujjain North Assembly constituency|Ujjain North]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Anil Jain Kaluheda]]
+|
+|-
+!217
+|[[Ujjain South Assembly constituency|Ujjain South]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Mohan Yadav]]
+|Chief Minister
+|-
+!218
+|[[Badnagar Assembly constituency|Badnagar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Jitendra Pandya]]
+|
+|-
+|rowspan="5"|[[Ratlam district|Ratlam]]
+!219
+|[[Ratlam Rural Assembly constituency|Ratlam Rural (ST)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Mathuralal Damar]]
+|
+|-
+!220
+|[[Ratlam City Assembly constituency|Ratlam City]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Chetanya Kasyap|Chetanya Kashyap]]
+|
+|-
+!221
+|[[Sailana Assembly constituency|Sailana]]
+|{{Party name with color|Bharat Adivasi Party}}
+|[[Kamleshwar Dodiyar]]
+|
+|-
+!222
+|[[Jaora Assembly constituency|Jaora]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Rajendra Pandey (Indian politician)|Rajendra Pandey]]
+|
+|-
+!223
+|[[Alot Assembly constituency|Alot (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Chintamani Malviya]]
+|
+|-
+|rowspan="4"|[[Mandsaur district|Mandsaur]]
+!224
+|[[Mandsaur Assembly constituency|Mandsaur]]
+|{{Party name with color|Indian National Congress}}
+|[[Vipin Jain]]
+|
+|-
+!225
+|[[Malhargarh Assembly constituency|Malhargarh (SC)]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Jagdish Devda]]
+|Deputy Chief Minister 
+|-
+!226
+|[[Suwasra Assembly constituency|Suwasra]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Hardeep Singh Dang]]
+|
+|-
+!227
+|[[Garoth Assembly constituency|Garoth]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Chandar Singh Sisodiya]]
+|
+|-
+|rowspan="3"|[[Neemuch district|Neemuch]]
+!228
+|[[Manasa Assembly constituency|Manasa]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Aniruddha Maroo]]
+|
+|-
+!229
+|[[Neemuch Assembly constituency|Neemuch]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Dilip Singh Parihar]]
+|
+|-
+!230
+|[[Jawad Assembly constituency|Jawad]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Om Prakash Sakhlecha]]
+|
+|-
+|}
+
+==See also==
+
+* [[Madhya Pradesh Legislative Assembly]]
+* [[2023 Madhya Pradesh Legislative Assembly election]]
+
+==References==
+{{Reflist}}
+
+{{Madhya Pradesh}} 
+{{Current Indian assemblies}}
+
+[[Category:Terms of the Madhya Pradesh Legislative Assembly]]
+[[Category:Lists of current Indian state and territorial assemblies|Madhya Pradesh]]
+[[Category:Madhya Pradesh MLAs 2023–2028| ]]

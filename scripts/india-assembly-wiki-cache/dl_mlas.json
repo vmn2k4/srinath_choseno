@@ -1,0 +1,492 @@
+[
+  {
+    "district": "North Delhi",
+    "no": "1",
+    "constituency": "Narela",
+    "name": "Raj Karan Khatri",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Central Delhi",
+    "no": "2",
+    "constituency": "Burari",
+    "name": "Sanjeev Jha",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Central Delhi",
+    "no": "3",
+    "constituency": "Timarpur",
+    "name": "Surya Prakash Khatri",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Delhi",
+    "no": "4",
+    "constituency": "Adarsh Nagar",
+    "name": "Raj Kumar Bhatia",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Delhi",
+    "no": "5",
+    "constituency": "Badli",
+    "name": "Deepak Chaudhary",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North West Delhi",
+    "no": "6",
+    "constituency": "Rithala",
+    "name": "Kulwant Rana",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Delhi",
+    "no": "7",
+    "constituency": "Bawana",
+    "name": "Ravinder Indraj Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North West Delhi",
+    "no": "8",
+    "constituency": "Mundka",
+    "name": "Gajender Drall",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North West Delhi",
+    "no": "9",
+    "constituency": "Kirari",
+    "name": "Anil Jha Vats",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "North West Delhi",
+    "no": "10",
+    "constituency": "Sultanpur Majra",
+    "name": "Mukesh Kumar Ahlawat",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "West Delhi",
+    "no": "11",
+    "constituency": "Nangloi Jat",
+    "name": "Manoj Kumar Shokeen",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North West Delhi",
+    "no": "12",
+    "constituency": "Mangol Puri",
+    "name": "Raj Kumar Chauhan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Delhi",
+    "no": "13",
+    "constituency": "Rohini",
+    "name": "Vijender Gupta",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North West Delhi",
+    "no": "14",
+    "constituency": "Shalimar Bagh",
+    "name": "Rekha Gupta",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Delhi",
+    "no": "15",
+    "constituency": "Shakur Basti",
+    "name": "Karnail Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North West Delhi",
+    "no": "16",
+    "constituency": "Tri Nagar",
+    "name": "Tilak Ram Gupta",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Delhi",
+    "no": "17",
+    "constituency": "Wazirpur",
+    "name": "Poonam Sharma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Delhi",
+    "no": "18",
+    "constituency": "Model Town",
+    "name": "Ashok Goel",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Central Delhi",
+    "no": "19",
+    "constituency": "Sadar Bazar",
+    "name": "Som Dutt",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Central Delhi",
+    "no": "20",
+    "constituency": "Chandni Chowk",
+    "name": "Punardeep Sawhney",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Central Delhi",
+    "no": "21",
+    "constituency": "Matia Mahal",
+    "name": "Aaley Mohammad Iqbal",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Central Delhi",
+    "no": "22",
+    "constituency": "Ballimaran",
+    "name": "Imran Hussain",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Central Delhi",
+    "no": "23",
+    "constituency": "Karol Bagh",
+    "name": "Vishesh Ravi",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "New Delhi",
+    "no": "24",
+    "constituency": "Patel Nagar",
+    "name": "Pravesh Ratn",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "West Delhi",
+    "no": "25",
+    "constituency": "Moti Nagar",
+    "name": "Harish Khurana",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Delhi",
+    "no": "26",
+    "constituency": "Madipur",
+    "name": "Kailash Gangwal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Delhi",
+    "no": "27",
+    "constituency": "Rajouri Garden",
+    "name": "Manjinder Singh Sirsa",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Delhi",
+    "no": "28",
+    "constituency": "Hari Nagar",
+    "name": "Shyam Sharma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Delhi",
+    "no": "29",
+    "constituency": "Tilak Nagar",
+    "name": "Jarnail Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "West Delhi",
+    "no": "30",
+    "constituency": "Janakpuri",
+    "name": "Ashish Sood",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South West Delhi",
+    "no": "31",
+    "constituency": "Vikaspuri",
+    "name": "Pankaj Kumar Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South West Delhi",
+    "no": "32",
+    "constituency": "Uttam Nagar",
+    "name": "Pawan Sharma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South West Delhi",
+    "no": "33",
+    "constituency": "Dwarka",
+    "name": "Pradyuman Rajput",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South West Delhi",
+    "no": "34",
+    "constituency": "Matiala",
+    "name": "Sandeep Sehrawat",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South West Delhi",
+    "no": "35",
+    "constituency": "Najafgarh",
+    "name": "Neelam Pahalwan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South West Delhi",
+    "no": "36",
+    "constituency": "Bijwasan",
+    "name": "Kailash Gahlot",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South West Delhi",
+    "no": "37",
+    "constituency": "Palam",
+    "name": "Kuldeep Solanki",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "New Delhi",
+    "no": "38",
+    "constituency": "Delhi Cantonment",
+    "name": "Virender Singh Kadian",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "New Delhi",
+    "no": "39",
+    "constituency": "Rajinder Nagar",
+    "name": "Umang Bajaj",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "New Delhi",
+    "no": "40",
+    "constituency": "New Delhi",
+    "name": "Parvesh Sahib Singh Verma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South East Delhi",
+    "no": "41",
+    "constituency": "Jangpura",
+    "name": "Tarvinder Singh Marwah",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South East Delhi",
+    "no": "42",
+    "constituency": "Kasturba Nagar",
+    "name": "Neeraj Basoya",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Delhi",
+    "no": "43",
+    "constituency": "Malviya Nagar",
+    "name": "Satish Upadhyay",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "New Delhi",
+    "no": "44",
+    "constituency": "R. K. Puram",
+    "name": "Anil Kumar Sharma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Delhi",
+    "no": "45",
+    "constituency": "Mehrauli",
+    "name": "Gajender Yadav",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Delhi",
+    "no": "46",
+    "constituency": "Chhatarpur",
+    "name": "Kartar Singh Tanwar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Delhi",
+    "no": "47",
+    "constituency": "Deoli",
+    "name": "Prem Chauhan",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "South Delhi",
+    "no": "48",
+    "constituency": "Ambedkar Nagar",
+    "name": "Ajay Dutt",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "South East Delhi",
+    "no": "49",
+    "constituency": "Sangam Vihar",
+    "name": "Chandan Kumar Choudhary",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "New Delhi",
+    "no": "50",
+    "constituency": "Greater Kailash",
+    "name": "Shikha Roy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South East Delhi",
+    "no": "51",
+    "constituency": "Kalkaji",
+    "name": "Atishi Marlena",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "South East Delhi",
+    "no": "52",
+    "constituency": "Tughlakabad",
+    "name": "Sahi Ram",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "South East Delhi",
+    "no": "53",
+    "constituency": "Badarpur",
+    "name": "Ram Singh Netaji",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "South East Delhi",
+    "no": "54",
+    "constituency": "Okhla",
+    "name": "Amanatullah Khan",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "East Delhi",
+    "no": "55",
+    "constituency": "Trilokpuri",
+    "name": "Ravikant Ujjain",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Delhi",
+    "no": "56",
+    "constituency": "Kondli",
+    "name": "Kuldeep Kumar",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "East Delhi",
+    "no": "57",
+    "constituency": "Patparganj",
+    "name": "Ravinder Singh Negi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Delhi",
+    "no": "58",
+    "constituency": "Laxmi Nagar",
+    "name": "Abhay Verma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Shahdara",
+    "no": "59",
+    "constituency": "Vishwas Nagar",
+    "name": "Om Prakash Sharma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Delhi",
+    "no": "60",
+    "constituency": "Krishna Nagar",
+    "name": "Anil Goyal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Delhi",
+    "no": "61",
+    "constituency": "Gandhi Nagar",
+    "name": "Arvinder Singh Lovely",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Shahdara",
+    "no": "62",
+    "constituency": "Shahdara",
+    "name": "Sanjay Goyal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Shahdara",
+    "no": "63",
+    "constituency": "Seemapuri",
+    "name": "Veer Singh Dhingan",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Shahdara",
+    "no": "64",
+    "constituency": "Rohtas Nagar",
+    "name": "Jitender Mahajan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North East Delhi",
+    "no": "65",
+    "constituency": "Seelampur",
+    "name": "Chaudhary Zubair Ahmad",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "North East Delhi",
+    "no": "66",
+    "constituency": "Ghonda",
+    "name": "Ajay Mahawar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Shahdara",
+    "no": "67",
+    "constituency": "Babarpur",
+    "name": "Gopal Rai",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "North East Delhi",
+    "no": "68",
+    "constituency": "Gokalpur",
+    "name": "Surendra Kumar",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "North East Delhi",
+    "no": "69",
+    "constituency": "Mustafabad",
+    "name": "Mohan Singh Bisht",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North East Delhi",
+    "no": "70",
+    "constituency": "Karawal Nagar",
+    "name": "Kapil Mishra",
+    "party": "Bharatiya Janata Party"
+  }
+]

@@ -1,0 +1,1376 @@
+{{Short description|16th Legislative Assembly of Rajasthan}}
+{{Use Indian English|date=December 2023}}
+{{Use dmy dates|date=December 2023}}
+{{Infobox legislative term   
+| name          = 16th Rajasthan Assembly
+| body          = [[Rajasthan Legislative Assembly]]
+| before        = [[15th Rajasthan Assembly|15th Assembly]]
+| after         = <!--[[17th Rajasthan Assembly|17th Assembly]]-->
+| state         = [[Rajasthan]]
+| country       = [[India]]
+| image         = 
+| image_size    = 300px
+| election      = [[2023 Rajasthan Legislative Assembly election]]
+| term          = 5 years
+| membership1   = 200
+| government    = [[Bharatiya Janata Party]]
+| opposition    = [[Indian National Congress]]
+| website               = {{URL|https://rajassembly.nic.in|Rajasthan Legislative Assembly}}
+| meeting_place         = [[Vidhan Bhavan, Jaipur|Vidhan Bhavan]], [[Jaipur]], [[Rajasthan]], [[India]]
+| term_start            = 2023
+| term_end              = 2028
+| chamber1_leader1_type = [[List of speakers of the Rajasthan Legislative Assembly|Speaker]]
+| chamber1_leader1      = '''[[Vasudev Devnani]]'''
+| chamber1_leader2_type = [[List of deputy speakers of the Rajasthan Legislative Assembly|Deputy Speaker]]
+| chamber1_leader2      = ''vacant''
+| chamber1_leader3_type = [[List of chief ministers of Rajasthan|Chief Minister]]
+| chamber1_leader3      = '''[[Bhajan Lal Sharma]]'''
+| chamber1_leader4_type = [[List of deputy chief ministers of Rajasthan|Deputy Chief Minister]]
+| chamber1_leader4      = '''[[Diya Kumari]]''' &<br>'''[[Prem Chand Bairwa]]'''
+| chamber1_leader5_type = [[List of leaders of the opposition in the Rajasthan Legislative Assembly|Leader of the Opposition]]
+| chamber1_leader5      = '''[[Tika Ram Jully]]'''
+}}
+The '''Sixteenth Legislative Assembly of Rajasthan''' was constituted after the [[2023 Rajasthan Legislative Assembly election]]s which were concluded in November 2023 and the results were declared on 3 December 2023.<ref>{{Cite news|title=Rajasthan Election Results 2023: BJP wins 115 seats, Congress 69; 'had confidence in the people of Rajasthan,' says Modi|url=https://www.thehindu.com/elections/rajasthan-assembly/rajasthan-election-results-december-3-2023-bjp-congress-live-updates/article67597833.ece|website=The Hindu|language=en|date=December 2023|access-date=4 December 2023|archive-date=4 December 2023|archive-url=https://web.archive.org/web/20231204175230/https://www.thehindu.com/elections/rajasthan-assembly/rajasthan-election-results-december-3-2023-bjp-congress-live-updates/article67597833.ece|url-status=live}}</ref>
+
+==Composition==
+As of 2025:<ref name="ResultIndiaToday">{{cite news|last1=India Today|title=Rajasthan Election Results 2023: Full list of winners|url=https://www.indiatoday.in/elections/story/rajasthan-election-results-2023-full-list-of-winners-2471236-2023-12-03|accessdate=8 January 2024|date=4 December 2023|archiveurl=https://web.archive.org/web/20231212114953/https://www.indiatoday.in/elections/story/rajasthan-election-results-2023-full-list-of-winners-2471236-2023-12-03|archivedate=12 December 2023|language=en}}</ref><ref name="ResultIndiaTv">{{cite news|last1=India TV|first1=|last2=|title=Rajasthan Election Result 2023: Constituency-wise full list of BJP, Congress, BSP and RLP winners|url=https://www.indiatvnews.com/rajasthan/rajasthan-assembly-election-results-2023-complete-winners-list-constituency-wise-with-names-2023-12-03-905390|accessdate=12 December 2023|work=|date=3 December 2023|archiveurl=https://web.archive.org/web/20231212115222/https://www.indiatvnews.com/rajasthan/rajasthan-assembly-election-results-2023-complete-winners-list-constituency-wise-with-names-2023-12-03-905390|archivedate=12 December 2023|language=en}}</ref><ref name="Karanpur">{{cite web |last1=Khan |first1=Hamza |title=Days after his induction, BJP minister loses election in Rajasthan |url=https://indianexpress.com/article/political-pulse/congresss-rupinder-kooner-wins-karanpur-assembly-poll-in-rajasthan-defeating-bjp-minister-surenderpal-singh-9099849/ |website=[[The Indian Express]] |access-date=8 January 2024 |language=en |date=8 January 2024 |archive-date=9 January 2024 |archive-url=https://web.archive.org/web/20240109044241/https://indianexpress.com/article/political-pulse/congresss-rupinder-kooner-wins-karanpur-assembly-poll-in-rajasthan-defeating-bjp-minister-surenderpal-singh-9099849/ |url-status=live }}</ref>
+
+{|class="wikitable"
+!colspan=2|Alliance
+!colspan=2|Political party
+!No. of MLAs
+!Leader of the party
+|-
+|rowspan=4 {{party color cell|National Democratic Alliance}}
+|rowspan=4 style="text-align:center;"|'''Government<br/>[[National Democratic Alliance|NDA]]'''<br/>Seats: '''129'''
+|{{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|style="text-align:center;"|118
+|[[Bhajan Lal Sharma]]<br/><small>''([[Chief Minister of Rajasthan|Chief Minister]])''</small>
+|-
+|{{party color cell|Shiv Sena (2022–present)}}
+|[[Shiv Sena (2022–present)|Shiv Sena]]
+|style="text-align:center;"|2
+|[[Jaswant Singh Gurjar]]
+|-
+|{{party color cell|Rashtriya Lok Dal}}
+|[[Rashtriya Lok Dal]]
+|style="text-align:center;"|1
+|[[Subhash Garg]]
+|-
+|{{party color cell|Independent politician}}
+|[[Independent politician|Independent]]
+|style="text-align:center;"|8
+|{{n/a}}
+|-
+|rowspan=2 {{party color cell|Indian National Developmental Inclusive Alliance}}
+|rowspan=2 style="text-align:center;"|'''Opposition<br/>[[Indian National Developmental Inclusive Alliance|INDIA]]'''<br/>Seats: '''70'''
+|{{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|style="text-align:center;"|66
+|[[Ashok Gehlot]]<br/><small>''([[Leader of the Opposition in the Rajasthan Legislative Assembly|Leader of the Opposition]])''</small>
+|-
+|{{party color cell|Bharat Adivasi Party}}
+|[[Bharat Adivasi Party]]
+|style="text-align:center;"|4
+|[[Rajkumar Roat]]
+|-
+!colspan=4|Total
+!colspan=2|200
+|}<section end="Composition"/>
+
+==Members of Legislative Assembly==
+{|class="wikitable sortable"
+|+Source:<ref>{{Cite news|title=Rajasthan Election Result 2023: Constituency-wise full list of winners|url=https://www.indiatvnews.com/rajasthan/rajasthan-assembly-election-results-2023-complete-winners-list-constituency-wise-with-names-2023-12-03-905390|website=India TV|language=en|date=4 December 2023|access-date=4 December 2023|archive-date=12 December 2023|archive-url=https://web.archive.org/web/20231212115222/https://www.indiatvnews.com/rajasthan/rajasthan-assembly-election-results-2023-complete-winners-list-constituency-wise-with-names-2023-12-03-905390|url-status=live}}</ref>
+!rowspan="2"|District
+!colspan="2"|Constituency
+!colspan="3"|Member of Legislative Assembly
+!rowspan="2"|Remarks
+|-
+!No.
+!Name
+!Name
+! colspan="2" |Party
+|-
+|rowspan="6"|[[Sri Ganganagar district|Sri Ganganagar]]
+!1
+|[[Sadulshahar (Rajasthan Assembly constituency)|Sadulshahar]] 
+|[[Gurveer Singh Brar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!2
+|[[Ganganagar (Rajasthan Assembly constituency)|Ganganagar]]
+|[[Jaydeep Bihani]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!3
+|[[Karanpur (Rajasthan Assembly constituency)|Karanpur]]
+|[[Rupinder Singh Kooner]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!4
+|[[Suratgarh (Rajasthan Assembly constituency)|Suratgarh]]
+|[[Dungar Ram Gedar]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!5
+|[[Raisinghnagar (Rajasthan Assembly constituency)|Raisinghnagar (SC)]]
+|[[Sohan Lal Nayak]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!6
+|[[Anupgarh (Rajasthan Assembly constituency)|Anupgarh (SC)]]
+|[[Shimla Devi]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|rowspan="5"|[[Hanumangarh district|Hanumangarh]]
+!7
+|[[Sangaria (Rajasthan Assembly constituency)|Sangaria]]
+|[[Abhimanyu Poonia]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!8
+|[[Hanumangarh (Rajasthan Assembly constituency)|Hanumangarh]]
+|[[Ganeshraj Bansal|Ganesh Raj Bansal]]
+|{{Party name with color|Independent politician|shortname=IND}}
+|
+|-
+!9
+|[[Pilibanga (Rajasthan Assembly constituency)|Pilibanga (SC)]]
+|[[Vinod Gothwal]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!10
+|[[Nohar (Rajasthan Assembly constituency)|Nohar]]
+|[[Amit Chachan]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!11
+|[[Bhadra (Rajasthan Assembly constituency)|Bhadra]]
+|[[Sanjeev Beniwal|Sanjeev Kumar Beniwal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="7"|[[Bikaner district|Bikaner]]
+!12
+|[[Khajuwala (Rajasthan Assembly constituency)|Khajuwala (SC)]]
+|[[Vishwanath Meghwal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!13
+|[[Bikaner West (Rajasthan Assembly constituency)|Bikaner West]]
+|[[Jethanand Vyas]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!14
+|[[Bikaner East (Rajasthan Assembly constituency)|Bikaner East]]
+|[[Sidhi Kumari|Siddhi Kumari]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!15
+|[[Kolayat (Rajasthan Assembly constituency)|Kolayat]]
+|[[Anshuman Singh Bhati]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!16
+|[[Lunkaransar (Rajasthan Assembly constituency)|Lunkaransar]]
+|[[Sumit Godara]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Cabinet Minister
+|-
+!17
+|[[Dungargarh (Rajasthan Assembly constituency)|Dungargarh]]
+|[[Tarachand Saraswat]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!18
+|[[Nokha (Rajasthan Assembly constituency)|Nokha]]
+|[[Sushila Dudi|Sushila Rameshwar Dudi]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|rowspan="6"|[[Churu district|Churu]]
+!19
+|[[Sadulpur (Rajasthan Assembly constituency)|Sadulpur]]
+|[[Manoj Nyangli]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|Merged With Shiv Sena From BSP
+|-
+!20
+|[[Taranagar (Rajasthan Assembly constituency)|Taranagar]]
+|[[Narendra Budania]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!21
+|[[Sardarshahar (Rajasthan Assembly constituency)|Sardarshahar]]
+|[[Anil Kumar Sharma (Rajasthan politician)|Anil Kumar Sharma]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!22
+|[[Churu Assembly constituency|Churu]]
+|[[Harlal Saharan]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!23
+|[[Ratangarh (Rajasthan Assembly constituency)|Ratangarh]]
+|[[Poosaram Godara]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!24
+|[[Sujangarh (Rajasthan Assembly constituency)|Sujangarh (SC)]]
+|[[Manoj Meghwal]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|rowspan="8"|[[Jhunjhunu district|Jhunjhunu]]
+!25
+|[[Pilani (Rajasthan Assembly constituency)|Pilani (SC)]]
+|[[Pitram Singh Kala]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!26
+|[[Surajgarh (Rajasthan Assembly constituency)|Surajgarh]]
+|[[Sharwan Kumar]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!Rowspan=2|27
+|Rowspan=2|[[Jhunjhunu (Rajasthan Assembly constituency)|Jhunjhunu]]
+|[[Brijendra Singh Ola]]
+|{{Party name with color|Indian National Congress}}
+|Resigned on 5 June 2024
+|-
+|[[Rajendra Bhamboo]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Elected on 23 November 2024
+|-
+!28
+|[[Mandawa (Rajasthan Assembly constituency)|Mandawa]]
+|[[Rita Choudhary]] 
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!29
+|[[Nawalgarh (Rajasthan Assembly constituency)|Nawalgarh]]
+|[[Vikram Singh Jakhal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!30
+|[[Udaipurwati (Rajasthan Assembly constituency)|Udaipurwati]]
+|[[Bhagawana Ram Saini]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!31
+|[[Khetri (Rajasthan Assembly constituency)|Khetri]]
+|[[Dharmpal Gurjar|Dharampal Gurjar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="8"|[[Sikar district|Sikar]]
+!32
+|[[Fatehpur (Rajasthan Assembly constituency)|Fatehpur]]
+|[[Hakam Ali Khan]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!33
+|[[Lachhmangarh (Rajasthan Assembly constituency)|Lachhmangarh]]
+|[[Govind Singh Dotasra]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!34
+|[[Dhod (Rajasthan Assembly constituency)|Dhod (SC)]]
+|[[Gordhan Verma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!35
+|[[Sikar (Rajasthan Assembly constituency)|Sikar]]
+|[[Rajendra Pareek]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!36
+|[[Danta Ramgarh (Rajasthan Assembly constituency)|Dantaramgarh]]
+|[[Virendra Singh (Danta Ramgarh)|Virendra Singh]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!37
+|[[Khandela (Rajasthan Assembly constituency)|Khandela]]
+|[[Subhash Meel]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!38
+|[[Neem Ka Thana (Rajasthan Assembly constituency)|Neem Ka Thana]]
+|[[Suresh Modi]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!39
+|[[Sri Madhopur (Rajasthan Assembly constituency)|Srimadhopur]]
+|[[Jhabar Singh Kharra]]
+|{{Party name with color|Bharatiya Janata Party}}
+|MoS (I/C)
+|-
+|rowspan="19"|[[Jaipur district|Jaipur]]
+!40
+|[[Kotputli (Rajasthan Assembly constituency)|Kotputli]]
+|[[Hansraj Patel]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!41
+|[[Viratnagar (Rajasthan Assembly constituency)|Viratnagar]]
+|[[Kuldeep Dhankad]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!42
+|[[Shahpura, Jaipur (Rajasthan Assembly constituency)|Shahpura]]
+|[[Manish Yadav]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!43
+|[[Chomu (Rajasthan Assembly constituency)|Chomu]]
+|[[Shikha Meel Barala]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!44
+|[[Phulera (Rajasthan Assembly constituency)|Phulera]]
+|[[Vidhyadhar Singh]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!45
+|[[Dudu (Rajasthan Assembly constituency)|Dudu]] (SC)
+|[[Prem Chand Bairwa]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Deputy Chief Minister
+|-
+!46
+|[[Jhotwara Assembly constituency|Jhotwara]]
+|[[Rajyavardhan Singh Rathore]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Cabinet Minister
+|-
+!47
+|[[Amber (Rajasthan Assembly constituency)|Amber]]
+|[[Prashant Sharma (politician)|Prashant Sharma]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!48
+|[[Jamwa Ramgarh (Rajasthan Assembly constituency)|Jamwa Ramgarh]] (ST)
+|[[Mahendra Pal Meena]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!49
+|[[Hawa Mahal (Rajasthan Assembly constituency)|Hawa Mahal]]
+|[[Balmukund Acharya]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!50
+|[[Vidhyadhar Nagar (Rajasthan Assembly constituency)|Vidhyadhar Nagar]]
+|[[Diya Kumari]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Deputy Chief Minister
+|-
+!51
+|[[Civil Lines (Rajasthan Assembly constituency)|Civil Lines]]
+|[[Gopal Sharma (Indian politician)|Gopal Sharma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!52
+|[[Kishanpole (Rajasthan Assembly constituency)|Kishanpole]]
+|[[Aminuddin Kagzi]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!53
+|[[Adarsh Nagar (Rajasthan Assembly constituency)|Adarsh Nagar]]
+|[[Rafeek Khan]]
+|{{party name with color|Indian National Congress}}
+|
+|-
+!54
+|[[Malviya Nagar (Rajasthan Assembly constituency)|Malviya Nagar]]
+|[[Kali Charan Saraf]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!55
+|[[Sanganer (Rajasthan Assembly constituency)|Sanganer]]
+|[[Bhajan Lal Sharma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|[[Chief Minister of Rajasthan|Chief Minister]]
+|-
+!56
+|[[Bagru (Rajasthan Assembly constituency)|Bagru]] (SC)
+|[[Kailash Chand Verma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!57
+|[[Bassi (Rajasthan Assembly constituency)|Bassi]] (ST)
+|[[Laxman Meena]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!58
+|[[Chaksu (Rajasthan Assembly constituency)|Chaksu (SC)]]
+|[[Ramavatar Bairwa|Ramavtar Bairwa]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="12"|[[Alwar district|Alwar]]
+!59
+|[[Tijara (Rajasthan Assembly constituency)|Tijara]]
+|[[Mahant Balaknath]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!60
+|[[Kishangarh Bas (Rajasthan Assembly constituency)|Kishangarh Bas]]
+|[[Deepchand Khairiya]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!61
+|[[Mundawar (Rajasthan Assembly constituency)|Mundawar]]
+|[[Lalit Yadav (politician)|Lalit Yadav]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!62
+|[[Behror (Rajasthan Assembly constituency)|Behror]]
+|[[Jaswant Singh Yadav]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!63
+|[[Bansur (Rajasthan Assembly constituency)|Bansur]]
+|[[Devi Singh Shekhawat]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!64
+|[[Thanagazi (Rajasthan Assembly constituency)|Thanagazi]]
+|[[Kanti Prasad Meena]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!65
+|[[Alwar Rural (Rajasthan Assembly constituency)|Alwar Rural]] (SC)
+|[[Tika Ram Jully]]
+|{{Party name with color|Indian National Congress}}
+|[[List of leaders of the opposition in the Rajasthan Legislative Assembly|Leader of the opposition]]
+|-
+!66
+|[[Alwar Urban (Rajasthan Assembly constituency)|Alwar Urban]]
+|[[Sanjay Sharma (politician)|Sanjay Sharma]]
+|{{Party name with color|Bhartiya Janata Party}}
+|MoS (I/C)
+|-
+! rowspan="2"| 67
+| rowspan="2"| [[Ramgarh (Rajasthan Assembly constituency)|Ramgarh]]
+|[[Zubair Khan (Indian politician)|Zubair Khan]]
+|{{Party name with color|Indian National Congress}}
+|Died on 14 September 2024
+|-
+|[[Sukhavant Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Elected on 23 November 2024
+|-
+!68
+|[[Rajgarh Laxmangarh Assembly constituency|Rajgarh-Laxmangarh]] (ST)
+|[[Mangelal Meena]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!69
+|[[Kathumar (Rajasthan Assembly constituency)|Kathumar]] (SC)
+|[[Ramesh Khinchi]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+|rowspan="7"|[[Bharatpur district|Bharatpur]]
+!70
+|[[Kaman (Rajasthan Assembly constituency)|Kaman]]
+|[[Nauksham Chaudhary]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!71
+|[[Nagar (Rajasthan Assembly constituency)|Nagar]]
+|[[Jawahar Singh Bedham]]
+|{{Party name with color|Bhartiya Janata Party}}
+|MoS
+|-
+!72
+|[[Deeg-Kumher (Rajasthan Assembly constituency)|Deeg-Kumher]]
+|[[Shailesh Singh]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!73
+|[[Bharatpur (Rajasthan Assembly constituency)|Bharatpur]]
+|[[Subhash Garg]]
+|{{Party name with color|Rashtriya Lok Dal}}
+|
+|-
+!74
+|[[Nadbai (Rajasthan Assembly constituency)|Nadbai]]
+|[[Jagat Singh (politician)|Jagat Singh]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!75
+|[[Weir (Rajasthan Assembly constituency)|Weir]] (SC)
+|[[Bahadur Singh Koli]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!76
+|[[Bayana (Rajasthan Assembly constituency)|Bayana]] (SC)
+|[[Ritu Banawat]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|rowspan="4"|[[Dholpur district|Dholpur]]
+!77
+|[[Baseri (Rajasthan Assembly constituency)|Baseri]] (SC)
+|[[Sanjay Kumar Jatav]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!78
+|[[Bari (Rajasthan Assembly constituency)|Bari]]
+|[[Jaswant Singh Gurjar]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|Merged With Shiv Sena From BSP
+|-
+!79
+|[[Dholpur (Rajasthan Assembly constituency)|Dholpur]]
+|[[Shobha Rani Kushwaha]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!80
+|[[Rajakhera (Rajasthan Assembly constituency)|Rajakhera]]
+|[[Rohit Bohra]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|rowspan="4"|[[Karauli district|Karauli]]
+!81
+|[[Todabhim (Rajasthan Assembly constituency)|Todabhim]] (ST)
+|[[Ghanshyam Mahar]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!82
+|[[Hindaun (Rajasthan Assembly constituency)|Hindaun]] (SC)
+|[[Anita Jatav]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!83
+|[[Karauli (Rajasthan Assembly constituency)|Karauli]]
+|[[Darshan Singh Gurjar]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!84
+|[[Sapotra (Rajasthan Assembly constituency)|Sapotra]] (ST)
+|[[Hansraj Meena]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+|rowspan="6"|[[Dausa district|Dausa]]
+!85
+|[[Bandikui (Rajasthan Assembly constituency)|Bandikui]]
+|[[Bhagchand Saini Tankda]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!86
+|[[Mahuwa (Rajasthan Assembly constituency)|Mahuwa]]
+|[[Rajendra Meena]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!87
+|[[Sikrai (Rajasthan Assembly constituency)|Sikrai]] (SC)
+|[[Vikram Bansiwal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!Rowspan=2|88
+|Rowspan=2|[[Dausa (Rajasthan Assembly constituency)|Dausa]]
+|[[Murari Lal Meena]]
+|{{Party name with color|Indian National Congress|rowspan=2}}
+|Resigned on 5 June 2024
+|-
+|[[Deen Dayal Bairwa]]
+|Elected on 23 November 2024
+|-
+!89
+|[[Lalsot (Rajasthan Assembly constituency)|Lalsot]] (ST)
+|[[Rambilas Meena]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="4"|[[Sawai Madhopur district|Sawai Madhopur]]
+!90
+|[[Gangapur, Rajasthan Assembly constituency|Gangapur]]
+|[[Ramkesh Meena]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!91
+|[[Bamanwas (Rajasthan Assembly constituency)|Bamanwas]] (ST)
+|[[Indira Meena]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!92
+|[[Sawai Madhopur (Rajasthan Assembly constituency)|Sawai Madhopur]]
+|[[Kirodi Lal Meena]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Cabinet Minister
+|-
+!93
+|[[Khandar (Rajasthan Assembly constituency)|Khandar]] (SC)
+|[[Jitendra Kumar Gothwal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="5"|[[Tonk district|Tonk]]
+!94
+|[[Malpura (Rajasthan Assembly constituency)|Malpura]]
+|[[Kanhaiya Lal Choudhary]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Cabinet Minister
+|-
+!95
+|[[Niwai (Rajasthan Assembly constituency)|Niwai]] (SC)
+|[[Ram Sahay Varma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!96
+|[[Tonk (Rajasthan Assembly constituency)|Tonk]]
+|[[Sachin Pilot]]
+|{{party name with color|Indian National Congress}}
+|
+|-
+!Rowspan=2|97
+|Rowspan=2|[[Deoli-Uniara (Rajasthan Assembly constituency)|Deoli-Uniara]]
+|[[Harish Meena|Harish Chandra Meena]]
+|{{party name with color|Indian National Congress}}
+|Resigned on 6 June 2024
+|-
+|[[Rajendra Gurjar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Elected on 23 November 2024
+|-
+|rowspan="8"|[[Ajmer district|Ajmer]]
+!98
+|[[Kishangarh (Rajasthan Assembly constituency)|Kishangarh]]
+|[[Vikash Choudhary]]
+|{{party name with color|Indian National Congress}}
+|
+|-
+!99
+|[[Pushkar (Rajasthan Assembly constituency)|Pushkar]]
+|[[Suresh Singh Rawat]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Cabinet Minister
+|-
+!100
+|[[Ajmer North (Rajasthan Assembly constituency)|Ajmer North]]
+|[[Vasudev Devnani]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Speaker
+|-
+!101
+|[[Ajmer South (Rajasthan Assembly constituency)|Ajmer South]] (SC)
+|[[Anita Bhadel]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!102
+|[[Nasirabad (Rajasthan Assembly constituency)|Nasirabad]]
+|[[Ramswaroop Lamba]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!103
+|[[Beawar (Rajasthan Assembly constituency)|Beawar]]
+|[[Shankar Singh Rawat]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!104
+|[[Masuda (Rajasthan Assembly constituency)|Masuda]]
+|[[Virendra Singh (Rajasthan politician)|Virendra Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!105
+|[[Kekri (Rajasthan Assembly constituency)|Kekri]]
+|[[Shatrughan Gautam]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="11"|[[Nagaur district|Nagaur]]
+!106
+|[[Ladnun (Rajasthan Assembly constituency)|Ladnun]]
+|[[Mukesh Bhakar]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!107
+|[[Deedwana (Rajasthan Assembly constituency)|Deedwana]]
+|[[Yunus Khan (politician)|Yoonus Khan]]
+|{{Party name with color|Independent politician|shortname=IND}}
+|
+|-
+!108
+|[[Jayal (Rajasthan Assembly constituency)|Jayal]] (SC)
+|[[Manju Baghmar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|MoS
+|-
+!109
+|[[Nagaur (Rajasthan Assembly constituency)|Nagaur]]
+|[[Harendra Mirdha]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!Rowspan=2|110
+|Rowspan=2|[[Khinwsar Assembly constituency|Khinwsar]]
+|[[Hanuman Beniwal]]
+|{{Party name with color|Rashtriya Loktantrik Party}}
+|Resigned on 18 June 2024<ref>{{Cite web |title=Rajasthan Politics: लोकसभा में जीत के बाद हनुमान बेनीवाल ने विधायक पद से दिया इस्तीफा,उपचुनाव को लेकर दे दिया बड़ा बयान |url=https://zeenews.india.com/hindi/india/rajasthan/jaipur/rajasthan-politics-hanuman-beniwal-resigned-from-post-of-mla-after-winning-lok-sabha-elections/2297587 |access-date=2024-08-26 |website=Zee News |language=hi}}</ref>
+|-
+|[[Rewant Ram Danga]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Elected on 23 November 2024
+|-
+!111
+|[[Merta (Rajasthan Assembly constituency)|Merta]] (SC)
+|[[Laxmanram Meghwal|Laxman Ram Meghwal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!112
+|[[Degana (Rajasthan Assembly constituency)|Degana]]
+|[[Ajay Singh Kilak|Ajay Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!113
+|[[Makrana (Rajasthan Assembly constituency)|Makrana]]
+|[[Zakir Hussain Gesawat]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!114
+|[[Parbatsar (Rajasthan Assembly constituency)|Parbatsar]]
+|[[Ramniwas Gawriya]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!115
+|[[Nawan (Rajasthan Assembly constituency)|Nawan]]
+|[[Vijay Singh Chaudhary]]
+|{{Party name with color|Bhartiya Janata Party}}
+|MoS
+|-
+|rowspan="6"|[[Pali district|Pali]]
+!116
+|[[Jaitaran (Rajasthan Assembly constituency)|Jaitaran]]
+|[[Avinash Gehlot]]
+|{{Party name with color|Bhartiya Janata Party}}
+|Cabinet Minister
+|-
+!117
+|[[Sojat (Rajasthan Assembly constituency)|Sojat]] (SC)
+|[[Shobha Chauhan]] 
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!118
+|[[Pali (Rajasthan Assembly constituency)|Pali]]
+|[[Bheem Raj Bhati]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!119
+|[[Marwar Junction (Rajasthan Assembly constituency)|Marwar Junction]]
+|[[Kesaram Choudhary]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!120
+|[[Bali (Rajasthan Assembly constituency)|Bali]]
+|[[Pushpendra Singh]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!121
+|[[Sumerpur (Rajasthan Assembly constituency)|Sumerpur]]
+|[[Joraram Kumawat]]
+|{{Party name with color|Bhartiya Janata Party}}
+|Cabinet Minister
+|-
+|rowspan="10"|[[Jodhpur district|Jodhpur]]
+!122
+|[[Phalodi (Rajasthan Assembly constituency)|Phalodi]]
+|[[Pabba Ram Bishnoi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!123
+|[[Lohawat (Rajasthan Assembly constituency)|Lohawat]]
+|[[Gajendra Singh Khimsar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Cabinet Minister
+|-
+!124
+|[[Shergarh (Rajasthan Assembly constituency)|Shergarh]]
+|[[Babu Singh (Rajasthan politician)|Babu Singh Rathore]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!125
+|[[Osian (Rajasthan Assembly constituency)|Osian]]
+|[[Bhairaram Chaudhary]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!126
+|[[Bhopalgarh (Rajasthan Assembly constituency)|Bhopalgarh]] (SC)
+|[[Geeta Barwar]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!127
+|[[Sardarpura (Rajasthan Assembly constituency)|Sardarpura]]
+|[[Ashok Gehlot]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!128
+|[[Jodhpur (Rajasthan Assembly constituency)|Jodhpur]]
+|[[Atul Bhansali]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!129
+|[[Soorsagar (Rajasthan Assembly constituency)|Soorsagar]]
+|[[Devendra Joshi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!130
+|[[Luni (Rajasthan Assembly constituency)|Luni]]
+|[[Jogaram Patel]]
+|{{Party name with color|Bhartiya Janata Party}}
+|Cabinet Minister
+|-
+!131
+|[[Bilara (Rajasthan Assembly constituency)|Bilara]] (SC)
+|[[Arjun Lal Garg]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+|rowspan="2"|[[Jaisalmer district|Jaisalmer]]
+!132
+|[[Jaisalmer (Rajasthan Assembly constituency)|Jaisalmer]]
+|[[Chhotu Singh Bhati]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!133
+|[[Pokaran (Rajasthan Assembly constituency)|Pokaran]]
+|[[Pratap Puriji Maharaj|Pratap Puri]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="7"|[[Barmer district|Barmer]]
+!134
+|[[Sheo (Rajasthan Assembly constituency)|Sheo]]
+|[[Ravindra Singh Bhati]]
+|{{Party name with color|Independent |shortname=IND}}
+|
+|-
+!135
+|[[Barmer (Rajasthan Assembly constituency)|Barmer]]
+|[[Priyanka Chowdhary]]
+|{{Party name with color|Independent |shortname=IND}}
+|
+|-
+!136
+|[[Baytoo (Rajasthan Assembly constituency)|Baytoo]]
+|[[Harish Chaudhary]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!137
+|[[Pachpadra (Rajasthan Assembly constituency)|Pachpadra]]
+|[[Arun Choudhary]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!138
+|[[Siwana (Rajasthan Assembly constituency)|Siwana]]
+|[[Hameersingh Bhayal|Hameer Singh Bhayal]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!139
+|[[Gudamalani (Rajasthan Assembly constituency)|Gudamalani]]
+|[[KK Vishnoi]]
+|{{Party name with color|Bhartiya Janata Party}}
+|MoS
+|-
+!140
+|[[Chohtan (Rajasthan Assembly constituency)|Chohtan]] (SC)
+|[[Aduram Meghwal]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+|rowspan="5"|[[Jalore district|Jalore]]
+!141
+|[[Ahore (Rajasthan Assembly constituency)|Ahore]]
+|[[Chhagan Singh|Chhagan Singh Rajpurohit]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!142
+|[[Jalore (Rajasthan Assembly constituency)|Jalore]] (SC)
+|[[Jogeshwar Garg]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!143
+|[[Bhinmal (Rajasthan Assembly constituency)|Bhinmal]]
+|[[Samarjit Singh]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!144
+|[[Sanchore (Rajasthan Assembly constituency)|Sanchore]]
+|[[Jivaram Choudhary]]
+|{{Party name with color|Independent |shortname=IND}}
+|
+|-
+!145
+|[[Raniwara (Rajasthan Assembly constituency)|Raniwara]]
+|[[Ratan Dewasi Desai|Ratan Devasi]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|rowspan="3"|[[Sirohi district|Sirohi]]
+!146
+|[[Sirohi (Rajasthan Assembly constituency)|Sirohi]]
+|[[Otaram Dewasi|Ota Ram Dewasi]]
+|{{Party name with color|Bhartiya Janata Party}}
+|MoS
+|-
+!147
+|[[Pindwara-Abu (Rajasthan Assembly constituency)|Pindwara-Abu]] (ST)
+|[[Samaram Garasiya]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!148
+|[[Reodar (Rajasthan Assembly constituency)|Reodar]] (SC)
+|[[Motiram Koli]] 
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|rowspan="9"|[[Udaipur district|Udaipur]]
+!149
+|[[Gogunda (Rajasthan Assembly constituency)|Gogunda]] (ST)
+|[[Pratap Lal Bheel]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!150
+|[[Jhadol (Rajasthan Assembly constituency)|Jhadol]] (ST)
+|[[Babulal Kharadi]]
+|{{Party name with color|Bhartiya Janata Party}}
+|Cabinet Minister
+|-
+!151
+|[[Kherwara (Rajasthan Assembly constituency)|Kherwara]] (ST)
+|[[Dayaram Parmar]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!152
+|[[Udaipur Rural (Rajasthan Assembly constituency)|Udaipur Rural]] (ST)
+|[[Phool Singh Meena]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!153
+|[[Udaipur (Rajasthan Assembly constituency)|Udaipur]]
+|[[Tarachand Jain]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!154
+|[[Mavli (Rajasthan Assembly constituency)|Mavli]]
+|[[Pushkar Lal Dangi]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!155
+|[[Vallabhnagar (Rajasthan Assembly constituency)|Vallabhnagar]]
+|[[Udailal Dangi]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+! rowspan="2"| 156
+| rowspan="2"| [[Salumber (Rajasthan Assembly constituency)|Salumber]] (ST)
+|[[Amrit Lal Meena]]
+|{{Party name with color|Bhartiya Janata Party|rowspan=2}}
+|Died on 8 August 2024
+|-
+|[[Shanta Meena|Shanta Amrit Meena]]
+|Elected on 23 November 2024
+|-
+|[[Pratapgarh district, Rajasthan|Pratapgarh]]
+!157
+|[[Dhariawad (Rajasthan Assembly constituency)|Dhariawad]] (ST)
+|[[Thavar Chand Meena]]
+|{{Party name with color|Bharat Adivasi Party}}
+|
+|-
+|rowspan="5"|[[Dungarpur district|Dungarpur]]
+!158
+|[[Dungarpur (Rajasthan Assembly constituency)|Dungarpur]] (ST)
+|[[Ganesh Ghogra]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!159
+|[[Aspur (Rajasthan Assembly constituency)|Aspur]] (ST)
+|[[Umesh Meena]]
+|{{Party name with color|Bharat Adivasi Party}}
+|
+|-
+!160
+|[[Sagwara (Rajasthan Assembly constituency)|Sagwara]] (ST)
+|[[Shankarlal Decha]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!Rowspan=2|161
+|Rowspan=2|[[Chorasi (Rajasthan Assembly constituency)|Chorasi]] (ST)
+|[[Rajkumar Roat]]
+|{{Party name with color|Bharat Adivasi Party|rowspan=2}}
+|Resigned On 5 June 2024
+|-
+|[[Anil Kumar Katara]]
+|Elected on 23 November 2024
+|-
+|rowspan="6"|[[Banswara district|Banswara]]
+!162
+|[[Ghatol (Rajasthan Assembly constituency)|Ghatol]] (ST)
+|[[Nanalal Ninama]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!163
+|[[Garhi (Rajasthan Assembly constituency)|Garhi]] (ST)
+|[[Kailash Chandra Meena]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!164
+|[[Banswara (Rajasthan Assembly constituency)|Banswara]] (ST)
+|[[Arjun Singh Bamniya|Arjun Singh Bamaniya]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!Rowspan=2|165
+|Rowspan=2|[[Bagidora (Rajasthan Assembly constituency)|Bagidora]] (ST)
+|[[Mahendrajeet Singh Malviya|Mahendra Jeet Singh Malviya]]
+|{{Party name with color|Indian National Congress}}
+|Resigned On 19 February 2024
+|-
+|[[Jaikrishn Patel]]
+|{{Party name with color|Bharat Adivasi Party}}
+|Elected on 4 June 2024
+|-
+!166
+|[[Kushalgarh (Rajasthan Assembly constituency)|Kushalgarh]] (ST)
+|[[Ramila Khadiya]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|rowspan="5"|[[Chittorgarh district|Chittorgarh]]
+!167
+|[[Kapasan (Rajasthan Assembly constituency)|Kapasan]] (SC)
+|[[Arjun Lal Jingar]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!168
+|[[Begun (Rajasthan Assembly constituency)|Begun]]
+|[[Suresh Dhaker|Suresh Dhakar]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!169
+|[[Chittorgarh (Rajasthan Assembly constituency)|Chittorgarh]]
+|[[Chandrabhan Singh Aakya]]
+|{{Party name with color|Independent (politician)|shortname=IND}}
+|
+|-
+!170
+|[[Nimbahera (Rajasthan Assembly constituency)|Nimbahera]]
+|[[Shrichand Kriplani]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!171
+|[[Bari Sadri (Rajasthan Assembly constituency)|Bari Sadri]]
+|[[Gautam Kumar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|MoS (I/C)
+|-
+|[[Pratapgarh district, Rajasthan|Pratapgarh]]
+!172
+|[[Pratapgarh (Rajasthan Assembly constituency)|Pratapgarh]] (ST)
+|[[Hemant Meena]]
+|{{Party name with color|Bhartiya Janata Party}}
+|Cabinet Minister
+|-
+|rowspan="4"|[[Rajsamand district|Rajsamand]]
+!173
+|[[Bhim (Rajasthan Assembly constituency)|Bhim]]
+|[[Harisingh Rawat]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!174
+|[[Kumbhalgarh (Rajasthan Assembly constituency)|Kumbhalgarh]]
+|[[Surendra Singh Rathore]] 
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!175
+|[[Rajsamand (Rajasthan Assembly constituency)|Rajsamand]]
+|[[Deepti Kiran Maheshwari|Deepti Maheshwari]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!176
+|[[Nathdwara (Rajasthan Assembly constituency)|Nathdwara]]
+|[[Vishvaraj Singh Mewar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="7"|[[Bhilwara district|Bhilwara]]
+!177
+|[[Asind (Rajasthan Assembly constituency)|Asind]]
+|[[Jabbar Singh Sankhala]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!178
+|[[Mandal (Rajasthan Assembly constituency)|Mandal]]
+|[[Udai Lal Bhadana]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!179
+|[[Sahara (Rajasthan Assembly constituency)|Sahara]]
+|[[Ladu Lal Pitliya]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!180
+|[[Bhilwara (Rajasthan Assembly constituency)|Bhilwara]]
+|[[Ashok Kumar Kothari]]
+|{{Party name with color|Independent politician|shortname=IND}}
+|
+|-
+!181
+|[[Shahpura, Bhilwara (Rajasthan Assembly constituency)|Shahpura]]
+|[[Lalaram Bairwa]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!182
+|[[Jahazpur (Rajasthan Assembly constituency)|Jahazpur]]
+|[[Gopichand Meena]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!183
+|[[Mandalgarh (Rajasthan Assembly constituency)|Mandalgarh]]
+|[[Gopal Lal Sharma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="3"|[[Bundi district|Bundi]]
+!184
+|[[Hindoli (Rajasthan Assembly constituency)|Hindoli]]
+|[[Ashok Chandna]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!185
+|[[Keshoraipatan (Rajasthan Assembly constituency)|Keshoraipatan]] (SC)
+|[[C. L. Premi Bairwa]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!186
+|[[Bundi (Rajasthan Assembly constituency)|Bundi]]
+|[[Harimohan Sharma]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|rowspan="6"|[[Kota district|Kota]]
+!187
+|[[Pipalda (Rajasthan Assembly constituency)|Pipalda]]
+|[[Chetan Patel Kolana]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!188
+|[[Sangod (Rajasthan Assembly constituency)|Sangod]]
+|[[Heeralal Nagar]]
+|{{Party name with color|Bhartiya Janata Party}}
+|MoS (I/C)
+|-
+!189
+|[[Kota North (Rajasthan Assembly constituency)|Kota North]]
+|[[Shanti Kumar Dhariwal|Shanti Dhariwal]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!190
+|[[Kota South (Rajasthan Assembly constituency)|Kota South]]
+|[[Sandeep Sharma (politician)|Sandeep Sharma]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!191
+|[[Ladpura (Rajasthan Assembly constituency)|Ladpura]]
+|[[Kalpana Devi (politician)|Kalpana Devi]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!192
+|[[Ramganj Mandi (Rajasthan Assembly constituency)|Ramganj Mandi]] (SC)
+|[[Madan Dilawar]]
+|{{Party name with color|Bhartiya Janata Party}}
+|Cabinet Minister
+|-
+| rowspan="5" |[[Baran district|Baran]]
+! rowspan="2" |193
+| rowspan="2" |[[Anta (Rajasthan Assembly constituency)|Anta]]
+|[[Kanwar Lal Meena]]
+|{{Party name with color|Bhartiya Janata Party}}
+|Disqualified on 23 May 2025<ref>{{Cite web |last=Service |first=Statesman News |date=2025-05-23 |title=Anta BJP MLA Kanwar Lal Meena disqualified following conviction in 20-year-old criminal case |url=https://www.thestatesman.com/india/anta-bjp-mla-kanwar-lal-meena-disqualified-following-conviction-in-20-year-old-criminal-case-1503436333.html |access-date=2025-05-23 |website=The Statesman |language=en}}</ref>
+|-
+|[[Pramod Jain Bhaya]]
+|{{Party name with color|Indian National Congress}}
+|Elected on 14 November 2025
+|-
+!194
+|[[Kishanganj (Rajasthan Assembly constituency)|Kishanganj]] (ST)
+|[[Lalit Meena]] 
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!195
+|[[Baran-Atru (Rajasthan Assembly constituency)|Baran-Atru]] (SC)
+|[[Radheyshayam Bairwa]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!196
+|[[Chhabra (Rajasthan Assembly constituency)|Chhabra]]
+|[[Pratap Singh Singhvi]] 
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+|rowspan="4"|[[Jhalawar district|Jhalawar]]
+!197
+|[[Dag (Rajasthan Assembly constituency)|Dag]] (SC)
+|[[Kaluram Meghwal]]
+|{{Party name with color|Bhartiya Janata Party}}
+|
+|-
+!198
+|[[Jhalrapatan (Rajasthan Assembly constituency)|Jhalrapatan]]
+|[[Vasundhara Raje]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!199
+|[[Khanpur (Rajasthan Assembly constituency)|Khanpur]]
+|[[Suresh Gurjar]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!200
+|[[Manohar Thana (Rajasthan Assembly constituency)|Manohar Thana]]
+|[[Govind Prasad]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|}
+
+==See also==
+* [[List of constituencies of Rajasthan Legislative Assembly]]
+* [[Bhajan Lal Sharma ministry]]
+
+==References==
+{{Reflist}}
+
+{{Rajasthan}} 
+{{Current Indian assemblies}}
+
+[[Category:Terms of the Rajasthan Legislative Assembly]]
+[[Category:Lists of current Indian state and territorial assemblies|Rajasthan]]
+[[Category:Rajasthan MLAs 2023–2028| ]]

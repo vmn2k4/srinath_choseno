@@ -1,0 +1,1737 @@
+{{Short description|Indian state assembly, 2021–26}}
+{{Use dmy dates|date=March 2022}}
+{{Use Indian English|date=March 2022}}
+{{Infobox legislative term
+| name                  = 17th West Bengal Assembly
+| before                = [[16th West Bengal Assembly|16th Assembly]]
+| after                 = [[18th West Bengal Assembly|18th Assembly]] 
+| image                 = 
+| image_size            = 300
+| caption               = 
+| body                  = [[West Bengal Legislative Assembly]]
+| election              = [[2021 West Bengal Legislative Assembly election]]
+| government            = [[Third Banerjee ministry]]
+| opposition            = [[Bharatiya Janata Party]]
+| term_start            = 8 May 2021
+| term_end              = 7 May 2026
+| website               = <!-- {{URL|example.com}} -->
+| membership1           = 294
+| control1              = [[Trinamool Congress]] 
+| chamber1_leader1_type = [[List of speakers of the West Bengal Legislative Assembly|Speaker of the House]]
+| chamber1_leader1      = [[Biman Banerjee]] 
+| chamber1_leader2_type = [[List of deputy speakers of the West Bengal Legislative Assembly|Deputy Speaker of the House]]
+| chamber1_leader2      = [[Asish Banerjee|Ashish Banerjee]]          
+| chamber1_leader3_type = [[List of chief ministers of West Bengal|Leader of the House]]
+| chamber1_leader3      = [[Mamata Banerjee]]
+| chamber1_leader4_type = Deputy Leader of the House
+| chamber1_leader4      = [[Sovandeb Chattopadhyay]]
+| chamber1_leader5_type = [[List of leaders of the opposition in the West Bengal Legislative Assembly|Leader of the Opposition]]
+| chamber1_leader5      = [[Suvendu Adhikari]] 
+| chamber1_leader6_type = [[List of leaders of the opposition in the West Bengal Legislative Assembly#Deputy|Deputy Leader of the Opposition]]
+| chamber1_leader6      = [[Mihir Goswami]]
+}}
+
+The '''Seventeenth Legislative Assembly of West Bengal''' constituted after the [[2021 West Bengal Legislative Assembly election]]s which were concluded on 29 April 2021 and the results announced on 2 May 2021.<ref>{{Cite web |title=West Bengal Election 2021: Voting dates, election results, full poll schedule, timings, all FAQs |url=https://www.businesstoday.in/latest/economy-politics/story/west-bengal-assembly-election-2021-date-voting-time-poll-result-faqs-full-schedule-291693-2021-03-24 |access-date=2022-04-08 |website=Business Today |language=en}}</ref> The tenure of West Bengal Legislative Assembly ended on 7 May 2026.<ref>{{Cite web|title=West Bengal Governor dissolves legislative assembly effective from May 7|url=https://www.newsonair.gov.in/wb-governor-dissolves-assembly-political-parleys-on-to-form-governments-in-tamil-nadu-and-keralam/|website=Akashvani News|language=en-IN}}</ref>
+
+== Members of Legislative Assembly ==
+<section begin="MLA Header"/>
+{| class="wikitable sortable"
+!District
+!No.
+!Constituency
+!Name
+! colspan="2" |Party
+!Remarks<section end="MLA Header"/>
+|-
+| rowspan="11" | [[Cooch Behar district|Cooch Behar]]
+|1
+|[[Mekliganj Assembly constituency|Mekliganj]]
+|[[Paresh Chandra Adhikary|Paresh Adhikary]]
+|{{Full party name with color|Trinamool Congress}}
+|
+|-
+|2
+|[[Mathabhanga Assembly constituency|Mathabhanga]]
+|[[Sushil Barman]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=4}}
+|
+|-
+|3
+|[[Cooch Behar Uttar]]
+|[[Sukumar Roy (politician)|Sukumar Roy]]
+|
+|-
+|4
+|[[Cooch Behar Dakshin]]
+|[[Nikhil Ranjan Dey]]
+|
+|-
+|5
+|[[Sitalkuchi Assembly constituency|Sitalkuchi]]
+|[[Baren Chandra Barman]]
+|
+|-
+|rowspan=2|6
+|rowspan=2|[[Sitai Assembly constituency|Sitai]]
+|[[Jagadish Chandra Barma Basunia|Jagadish Basunia]]
+|{{Full party name with color|Trinamool Congress|rowspan=2}}
+|Elected to Lok Sabha in June 2024
+|-
+| [[Sangita Roy]] 
+|Won in November 2024 bypoll
+|-
+| rowspan="2" |7
+| rowspan="2" |[[Dinhata Assembly constituency|Dinhata]]
+|[[Nisith Pramanik]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Resigned in May 2021<ref name="MPs resign">{{Cite web |title=Two West Bengal BJP MPs resign as MLAs after directive from party leadership |url=https://www.newindianexpress.com/nation/2021/may/12/two-west-bengal-bjp-mps-resign-as-mlas-after-directivefrom-party-leadership-2301747.html |access-date=2022-04-08 |website=The New Indian Express}}</ref>
+|-
+|[[Udayan Guha]]
+|{{Full party name with color|Trinamool Congress}}
+|Won in October 2021 bypoll
+|-
+|8
+|[[Natabari Assembly constituency|Natabari]]
+|[[Mihir Goswami]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=4}}
+|'''Deputy Leader of Opposition'''
+|-
+|9
+|[[Tufanganj Assembly constituency|Tufanganj]]
+|[[Malati Rava Roy]]
+|
+<section end="Cooch Behar district"/>
+|-
+| rowspan="6" | [[Alipurduar district|Alipurduar]]
+|10
+|[[Kumargram Assembly constituency|Kumargram]]
+|[[Manoj Kumar Oraon]]
+|
+|-
+|11
+|[[Kalchini Assembly constituency|Kalchini]]
+|[[Bishal Lama]]
+|
+|-
+|12
+|[[Alipurduars Assembly constituency|Alipurduars]]
+|[[Suman Kanjilal]]
+|{{Full party name with color|Trinamool Congress}}
+|Defected from BJP to AITC<ref>{{Cite web |date=2023-02-05 |title=West Bengal: BJP's Alipurduar MLA Joins TMC Ahead Of Panchayat Election |url=https://news.abplive.com/news/india/west-bengal-bjp-alipurduar-mla-suman-kanjilal-joins-tmc-ahead-of-panchayat-election-1580282 |access-date=2023-12-19 |website=news.abplive.com |language=en}}</ref>
+|-
+|13
+|[[Falakata Assembly constituency|Falakata]]
+|[[Dipak Barman]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan=2|14
+|rowspan=2|[[Madarihat Assembly constituency|Madarihat]]
+|[[Manoj Tigga]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Elected to Lok Sabha in June 2024
+|-
+|[[Jay Prakash Toppo]] 
+|{{Full party name with color|Trinamool Congress}}
+| Won in November 2024 bypoll
+|-
+| rowspan="8" | [[Jalpaiguri district|Jalpaiguri]]
+| rowspan="2" |15
+| rowspan="2" |[[Dhupguri Assembly constituency|Dhupguri]]
+|[[Bishnu Pada Roy]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Died on 25 July 2023<ref>{{Cite news |date=2023-07-25 |title=Bengal BJP MLA Bishnu Pada Roy dies at 61 |language=en-IN |work=The Hindu |url=https://www.thehindu.com/news/national/other-states/bengal-bjp-mla-bishnu-pada-roy-dies-at-61/article67119121.ece |access-date=2023-12-19 |issn=0971-751X}}</ref>
+|-
+|[[Nirmal Chandra Roy]]
+|{{Full party name with color|Trinamool Congress}}
+|Won in 2023 bypoll
+|-
+|16
+|[[Maynaguri Assembly constituency|Maynaguri]]
+|[[Kaushik Roy (politician)|Kaushik Roy]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|17
+|[[Jalpaiguri Assembly constituency|Jalpaiguri]]
+|[[Pradip Kumar Barma]]
+|{{Full party name with color|Trinamool Congress|rowspan=2}}
+|
+|-
+|18
+|[[Rajganj Assembly constituency|Rajganj]]
+|[[Khageswar Roy|Khageshwar Roy]]
+|
+|-
+|19
+|[[Dabgram-Phulbari Assembly constituency|Dabgram-Phulbari]]
+|[[Sikha Chatterjee|Shikha Chatterjee]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|20
+|[[Mal Assembly constituency|Mal]]
+|[[Bulu Chik Baraik]]
+|{{Full party name with color|Trinamool Congress}}
+|
+|-
+|21
+|[[Nagrakata Assembly constituency|Nagrakata]]
+|[[Puna Bhengra]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+<section end="Jalpaiguri district"/>
+|-
+|[[Kalimpong district|Kalimpong]]
+|22
+|[[Kalimpong Assembly constituency|Kalimpong]]
+|[[Ruden Sada Lepcha]]
+|{{Full party name with color|Bharatiya Gorkha Prajatantrik Morcha}}
+|Switched from GJM to BGPM<ref>{{Cite web |title=Confine Kalimpong from GTA, demands MLA |url=https://www.telegraphindia.com/west-bengal/confine-kalimpong-from-gta-demands-mla/cid/1856702 |access-date=2023-12-19 |website=www.telegraphindia.com |language=en}}</ref> <section end="Kalimpong district"/>
+|-
+| rowspan="5" | [[Darjeeling district|Darjeeling]]
+|23
+|[[Darjeeling Assembly constituency|Darjeeling]]
+|[[Neeraj Zimba]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=1}}
+|
+|-
+|24
+|[[Kurseong Assembly constituency|Kurseong]]
+|[[Bishnu Prasad Sharma]]
+|{{Full party name with color|Trinamool Congress|rowspan=1}}
+|Defected from BJP to AITC.<ref>{{Cite web |title=B.P.Sharma joins TMC |url=https://indianexpress.com/article/cities/kolkata/didi-is-now-my-leader-kurseong-bjp-mla-b-p-sharma-joins-tmc-attacks-saffron-party-for-doing-nothing-for-gorkhas-10540939/ |access-date=2026-02-19 |language=en}}</ref> 
+|-
+|25
+|[[Matigara-Naxalbari]]
+|[[Anandamoy Barman|Anandamay Barman]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|26
+|[[Siliguri Assembly constituency|Siliguri]]
+|[[Sankar Ghosh (politician)|Shankar Ghosh]]
+|
+|-
+|27
+|[[Phansidewa Assembly constituency|Phansidewa]]
+|[[Durga Murmu]]
+|
+<section end="Darjeeling district"/>
+|-
+| rowspan="10" | [[Uttar Dinajpur district|Uttar Dinajpur]]
+|28
+|[[Chopra Assembly constituency|Chopra]]
+|[[Hamidul Rahman]]
+|{{Full party name with color|Trinamool Congress|rowspan=6}}
+|
+|-
+|29
+|[[Islampur, West Bengal Assembly constituency|Islampur]]
+|[[Abdul Karim Chowdhury]]
+|
+|-
+|30
+|[[Goalpokhar Assembly constituency|Goalpokhar]]
+|[[Md. Ghulam Rabbani]]
+|
+|-
+|31
+|[[Chakulia Assembly constituency|Chakulia]]
+|[[Minhajul Arfin Azad]]
+|
+|-
+|32
+|[[Karandighi Assembly constituency|Karandighi]]
+|[[Goutam Paul]]
+|
+|-
+|33
+|[[Hemtabad Assembly constituency|Hemtabad]]
+|[[Satyajit Barman]]
+|
+|-
+|34
+|[[Kaliaganj Assembly constituency|Kaliaganj]]
+|[[Soumen Roy]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Defected from BJP to AITC; later returned<ref>{{Cite web |last=Pal |first=Satyen |date=2024-02-28 |title=ফের বিজেপিতে ফিরলেন কালিয়াগঞ্জের বিধায়ক, পার্থর হাত ধরে গিয়েছিলেন তৃণমূলে! |url=https://bangla.hindustantimes.com/bengal/districts/kaliyaganj-mla-soumen-roy-returns-to-bjp-again-31709120441307.html |archive-url=https://web.archive.org/web/20240228144615/https://bangla.hindustantimes.com/bengal/districts/kaliyaganj-mla-soumen-roy-returns-to-bjp-again-31709120441307.html |url-status=dead |archive-date=28 February 2024 |access-date=2024-02-28 |website=Hindustantimes Bangla |language=bn}}</ref>
+|-
+|rowspan=2|35
+|rowspan=2|[[Raiganj Assembly constituency|Raiganj]]
+|rowspan=2|[[Krishna Kalyani]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Defected from BJP to AITC; later resigned<ref>{{Cite web |date=2021-10-27 |title=News18 Evening Digest: BJP MLA Krishna Kalyani Joins TMC And Other Top Stories |url=https://www.news18.com/news/india/news18-evening-digest-bjp-mla-krishna-kalyani-joins-tmc-and-other-top-stories-4371341.html |access-date=2021-10-27 |website=News18 |language=en}}</ref>
+|-
+|{{Full party name with color|Trinamool Congress}}
+|Won in July 2024 bypoll
+|-
+|36
+|[[Itahar Assembly constituency|Itahar]]
+|[[Mosaraf Hussen]]
+|{{Full party name with color|Trinamool Congress|rowspan=3}}
+|
+<section end="Uttar Dinajpur district"/>
+|-
+| rowspan="6" | [[Dakshin Dinajpur district|Dakshin Dinajpur]]
+|37
+|[[Kushmandi Assembly constituency|Kushmandi]]
+|[[Rekha Roy]]
+|
+|-
+|38
+|[[Kumarganj Assembly constituency|Kumarganj]]
+|[[Toraf Hossain Mandal]]
+|
+|-
+|39
+|[[Balurghat Assembly constituency|Balurghat]]
+|[[Ashok Lahiri]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|40
+|[[Tapan Assembly constituency|Tapan]]
+|[[Budhrai Tudu]]
+|
+|-
+|41
+|[[Gangarampur Assembly constituency|Gangarampur]]
+|[[Satyendra Nath Ray]]
+|
+|-
+|42
+|[[Harirampur Assembly constituency|Harirampur]]
+|[[Biplab Mitra]]
+|{{Full party name with color|Trinamool Congress}}
+|
+<section end="Dakshin Dinajpur district"/>
+|-
+| rowspan="12" | [[Malda district|Malda]]
+|43
+|[[Habibpur Assembly constituency|Habibpur]]
+|[[Joyel Murmu]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|44
+|[[Gazole Assembly constituency|Gazole]]
+|[[Chinmoy Deb Barman]]
+|
+|-
+|45
+|[[Chanchal Assembly constituency|Chanchal]]
+|[[Nihar Ranjan Ghosh]]
+|{{Full party name with color|Trinamool Congress|rowspan=5}}
+|
+|-
+|46
+|[[Harishchandrapur Assembly constituency|Harishchandrapur]]
+|[[Tajmul Hossain]]
+|
+|-
+|47
+|[[Malatipur Assembly constituency|Malatipur]]
+|[[Abdur Rahim Boxi]]
+|
+|-
+|48
+|[[Ratua Assembly constituency|Ratua]]
+|[[Samar Mukherjee (Malda politician)|Samar Mukherjee]]
+|
+|-
+|49
+|[[Manikchak Assembly constituency|Manikchak]]
+|[[Sabitri Mitra]]
+|
+|-
+|50
+|[[Maldaha Assembly constituency|Maldaha]]
+|[[Gopal Chandra Saha]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|51
+|[[English Bazar Assembly constituency|English Bazar]]
+|[[Sreerupa Mitra Chaudhury]]
+|
+|-
+|52
+|[[Mothabari Assembly constituency|Mothabari]]
+|[[Sabina Yeasmin]]
+|{{Full party name with color|Trinamool Congress|rowspan=13}}
+|
+|-
+|53
+|[[Sujapur Assembly constituency|Sujapur]]
+|[[Abdul Ghani (Indian politician)|Muhammad Abdul Ghani]]
+|
+|-
+|54
+|[[Baisnabnagar Assembly constituency|Baisnabnagar]]
+|[[Chandana Sarkar]]
+|
+<section end="Malda district"/>
+|-
+| rowspan="24" | [[Murshidabad district|Murshidabad]]
+|55
+|[[Farakka Assembly constituency|Farakka]]
+|[[Manirul Islam (Indian politician)|Manirul Islam]]
+|
+|-
+|56
+|[[Samserganj Assembly constituency|Samserganj]]
+|[[Amirul Islam (politician)|Amirul Islam]]
+|
+|-
+|57
+|[[Suti Assembly constituency|Suti]]
+|[[Emani Biswas]]
+|
+|-
+|58
+|[[Jangipur, West Bengal Assembly constituency|Jangipur]]
+|[[Jakir Hossain (Indian politician)|Jakir Hossain]]
+|
+|-
+|59
+|[[Raghunathganj Assembly constituency|Raghunathganj]]
+|[[Akhruzzaman]]
+|
+|-
+| rowspan="2" |60
+| rowspan="2" |[[Sagardighi Assembly constituency|Sagardighi]]
+|[[Subrata Saha]]
+|Died on 29 December 2022<ref>{{Cite web |title=Bengal minister Subrata Saha dies of cardiac arrest |url=https://www.deccanherald.com/india/bengal-minister-subrata-saha-dies-of-cardiac-arrest-1176254.html |access-date=2023-12-19 |website=Deccan Herald |language=en}}</ref>
+|-
+|[[Bayron Biswas]]
+|Won in 2023 bypoll as INC candidate, later defected to AITC<ref>{{Cite news |date=2023-05-30 |title=3 months after bypoll win, lone Congress MLA in West Bengal Bayron Biswas joins TMC |work=The Times of India |url=https://timesofindia.indiatimes.com/city/kolkata/3-months-after-bypoll-win-lone-congress-mla-in-west-bengal-joins-tmc/articleshow/100603113.cms?from=mdr |access-date=2023-12-19 |issn=0971-8257}}</ref>
+|-
+|61
+|[[Lalgola Assembly constituency|Lalgola]]
+|[[Ali Mohammad (West Bengal politician)|Ali Mohammad]]
+|
+|-
+|62
+|[[Bhagabangola Assembly constituency|Bhagabangola]]
+|[[Reyat Hossain Sarkar]]
+|Won in May 2024 bypoll
+|-
+|63
+|[[Raninagar Assembly constituency|Raninagar]]
+|[[Abdul Soumik Hossain]]
+|
+|-
+|64
+|[[Murshidabad Assembly constituency|Murshidabad]]
+|[[Gouri Shankar Ghosh|Gouri Sankar Ghosh]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|65
+|[[Nabagram Assembly constituency|Nabagram]]
+|[[Kanai Chandra Mondal]]
+|Defected from AITC to BJP
+|-
+|66
+|[[Khargram Assembly constituency|Khargram]]
+|[[Ashis Marjit|Ashish Marjit]]
+|{{Full party name with color|Trinamool Congress|rowspan=3}}
+|
+|-
+|67
+|[[Burwan Assembly constituency|Burwan]]
+|[[Jiban Krishna Saha]]
+|
+|-
+|68
+|[[Kandi Assembly constituency|Kandi]]
+|[[Apurba Sarkar]]
+|
+|-
+|69
+|[[Bharatpur, West Bengal Assembly constituency|Bharatpur]]
+|[[Humayun Kabir (Bharatpur politician)|Humayun Kabir]]
+|{{Full party name with color|Aam Janata Unnayan Party|color=#8AB800}}
+|Suspended from AITC, formed JUP
+|-
+|70
+|[[Rejinagar Assembly constituency|Rejinagar]]
+|[[Rabiul Alam Chowdhury]]
+|{{Full party name with color|Trinamool Congress|rowspan=2}}
+|
+|-
+|71
+|[[Beldanga Assembly constituency|Beldanga]]
+|[[Hasanuzzaman Sk|Hasanuzzaman Sheikh]]
+|
+|-
+|72
+|[[Baharampur Assembly constituency|Baharampur]]
+|[[Subrata Maitra (politician)|Subrata Maitra]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|73
+|[[Hariharpara Assembly constituency|Hariharpara]]
+|[[Niamot Sheikh]]
+|{{Full party name with color|Trinamool Congress|rowspan=3}}
+|
+|-
+|74
+|[[Naoda Assembly constituency|Naoda]]
+|[[Sahina Mumtaz Begum]]
+|
+|-
+|rowspan="2" |75
+|rowspan="2" |[[Domkal Assembly constituency|Domkal]]
+|[[Jafikul Islam]]
+|Died on 4 September 2025<ref>{{cite web|url=https://www.deccanchronicle.com/nation/trinamul-congress-mla-jafikul-islam-passes-away-at-private-hospital-1901657|title=Trinamool Congress MLA Jafikul Islam Passes Away at Private Hospital|work=Deccan Chronicle|accessdate=4 September 2025}}</ref>
+|-
+!colspan="3"|Vacant
+|-
+|76
+|[[Jalangi Assembly constituency|Jalangi]]
+|[[Abdur Razzak (Murshidabad politician)|Abdur Razzak]]
+|{{Full party name with color|Independent|rowspan=1}}
+|Resigned from AITC amid candidate change
+<section end="Murshidabad district"/>
+|-
+| rowspan="22" | [[Nadia district|Nadia]]
+|77
+|[[Karimpur Assembly constituency|Karimpur]]
+|[[Bimalendu Sinha Roy]]
+|{{Full party name with color|Trinamool Congress|rowspan=2}}
+|
+|-
+|rowspan="2" |78
+|rowspan="2" |[[Tehatta Assembly constituency|Tehatta]]
+|[[Tapas Kumar Saha]]
+|Died on 15 May 2025<ref>{{cite web|url=https://www.thehindu.com/news/national/west-bengal/tmc-mla-tapas-saha-dies-of-brain-haemorrhage/article69578043.ece|title=Trinamool Tehatta MLA Tapas Kumar Saha passes away at 66|work=The Hindu|accessdate=15 May 2025}}</ref>
+|-
+!colspan="3"|Vacant
+|-
+|79
+|[[Palashipara Assembly constituency|Palashipara]]
+|[[Manik Bhattacharya]]
+|{{Full party name with color|Trinamool Congress|rowspan=6}}
+|
+|-
+|rowspan="2" |80
+|rowspan="2" |[[Kaliganj Assembly constituency|Kaliganj]]
+|[[Nasiruddin Ahamed]]
+|Died on 1 February 2025<ref>{{cite web|date=2025-02-02|title=Veteran TMC MLA Nasiruddin Ahmed dies of cardiac arrest in West Bengal|url=https://timesofindia.indiatimes.com/city/kolkata/veteran-tmc-mla-nasiruddin-ahmed-dies-of-cardiac-arrest-in-west-bengal/articleshow/117852069.cms|access-date=2025-02-02|website=The Times of India|language=en}}</ref>
+|-
+|[[Alifa Ahmed]]
+|Elected in June 2025 bypoll
+|-
+|81
+|[[Nakashipara Assembly constituency|Nakashipara]]
+|[[Kallol Khan]]
+|
+|-
+|82
+|[[Chapra, West Bengal Assembly constituency|Chapra]]
+|[[Rukbanur Rahman]]
+|
+|-
+|rowspan="2" |83
+|rowspan="2" |[[Krishnanagar Uttar Assembly constituency|Krishnanagar Uttar]]
+|[[Mukul Roy]]
+|Defected from BJP to AITC;<ref>{{Cite web |date=March 23, 2022 |title=Mukul Roy: I Am A Bjp Mla, Mukul Says In Affidavit To Hc  |url=https://timesofindia.indiatimes.com/city/kolkata/i-am-a-bjp-mla-mukul-says-in-affidavit-to-hc/articleshow/90384916.cms |access-date=2022-04-09 |website=The Times of India |language=en}}</ref> Died on 23 February 2026<ref>{{cite web|url=https://www.deccanherald.com/india/west-bengal/former-railway-minister-tmc-leader-mukul-roy-passes-away-at-71-3908193|title=Former Railway Minister, TMC leader Mukul Roy passes away at 71|work=Deccan Herald|accessdate=23 February 2026}}</ref>
+|-
+!colspan="3"|Vacant
+|-
+|84
+|[[Nabadwip Assembly constituency|Nabadwip]]
+|[[Pundarikakhsa Saha]]
+|{{Full party name with color|Trinamool Congress|rowspan=2}}
+|
+|-
+|85
+|[[Krishnanagar Dakshin Assembly constituency|Krishnanagar Dakshin]]
+|[[Ujjal Biswas]]
+|
+|-
+| rowspan="2" |86
+| rowspan="2" |[[Santipur Assembly constituency|Santipur]]
+|[[Jagannath Sarkar (BJP politician)|Jagannath Sarkar]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Resigned in May 2021<ref name="MPs resign" />
+|-
+|[[Braja Kishore Goswami]]
+|{{Full party name with color|Trinamool Congress}}
+|Won in October 2021 bypoll
+|-
+|87
+|[[Ranaghat Uttar Paschim Assembly constituency|Ranaghat Uttar Paschim]]
+|[[Parthasarathi Chatterjee]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|88
+|[[Krishnaganj Assembly constituency|Krishnaganj]]
+|[[Ashis Kumar Biswas]]
+|
+|-
+|89
+|[[Ranaghat Uttar Purba Assembly constituency|Ranaghat Uttar Purba]]
+|[[Ashim Biswas (politician)|Ashim Biswas]]
+|
+|-
+|rowspan=2|90
+|rowspan=2|[[Ranaghat Dakshin Assembly constituency|Ranaghat Dakshin]]
+|rowspan=2|[[Mukut Mani Adhikari]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Defected from BJP to AITC; later resigned
+|-
+|{{Full party name with color|Trinamool Congress}}
+|Won in July 2024 bypoll
+|-
+|91
+|[[Chakdaha Assembly constituency|Chakdaha]]
+|[[Bankim Chandra Ghosh]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|92
+|[[Kalyani Assembly constituency|Kalyani]]
+|[[Ambika Roy]]
+|
+|-
+|93
+|[[Haringhata Assembly constituency|Haringhata]]
+|[[Ashim Kumar Sarkar]]
+|
+<section end="Nadia district"/>
+|-
+| rowspan="38" | [[North 24 Parganas district|North 24 Parganas]]
+|rowspan=2|94
+|rowspan=2|[[Bagdah Assembly constituency|Bagdah]]
+|[[Biswajit Das (politician)|Biswajit Das]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|Defected from BJP to AITC; later resigned<ref>{{Cite web |date=2021-08-31 |title=Bengal BJP MLA Biswajit Das rejoins TMC, third leader to return after Mamata Banerjee's win |url=https://indianexpress.com/article/cities/kolkata/bengal-bjp-mla-biswajit-das-joins-tmc-kolkata-7480197/ |access-date=2021-09-07 |website=The Indian Express |language=en}}</ref>
+|-
+|[[Madhuparna Thakur]]
+|{{Full party name with color|Trinamool Congress}}
+|Won in July 2024 bypoll
+|-
+|95
+|[[Bangaon Uttar Assembly constituency|Bangaon Uttar]]
+|[[Ashok Kirtania]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|96
+|[[Bangaon Dakshin Assembly constituency|Bangaon Dakshin]]
+|[[Swapan Majumder]]
+|
+|-
+|97
+|[[Gaighata Assembly constituency|Gaighata]]
+|[[Subrata Thakur]]
+|
+|-
+|98
+|[[Swarupnagar Assembly constituency|Swarupnagar]]
+|[[Bina Mondal]]
+|{{Full party name with color|Trinamool Congress}}
+|
+|-
+|99
+|[[Baduria Assembly constituency|Baduria]]
+|[[Abdur Rahim Quazi]]
+|{{Full party name with color|Indian National Congress}}
+|Defected from [[Trinamool Congress|AITC]] to [[Indian National Congress|INC]]<ref>{{Cite web |last= |first= |title=Press Trust Of India |url=https://www.ptinews.com/story/national/day-after-quitting-tmc-west-bengal-mla-joins-congress/3512957 |access-date=2026-03-30 |website=www.ptinews.com |language=en}}</ref>
+|-
+|100
+|[[Habra Assembly constituency|Habra]]
+|[[Jyotipriya Mallick]]
+|{{Full party name with color|Trinamool Congress|rowspan=6}}
+|
+|-
+|101
+|[[Ashoknagar Assembly constituency|Ashokenagar]]
+|[[Narayan Goswami]]
+|
+|-
+|102
+|[[Amdanga Assembly constituency|Amdanga]]
+|[[Rafiqur Rahaman]]
+|
+|-
+|103
+|[[Bijpur Assembly constituency|Bijpur]]
+|[[Subodh Adhikary]]
+|
+|-
+|rowspan=2|104
+|rowspan=2|[[Naihati Assembly constituency|Naihati]]
+|[[Partha Bhowmick]]
+|Elected to Lok Sabha in June 2024
+|-
+|[[Sanat Dey]]
+|Won in November 2024 bypoll
+|-
+|105
+|[[Bhatpara Assembly constituency|Bhatpara]]
+|[[Pawan Singh (politician)|Pawan Singh]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|106
+|[[Jagatdal Assembly constituency|Jagatdal]]
+|[[Somenath Shyam Ichini]]
+|{{Full party name with color|Trinamool Congress|rowspan=46}}
+|
+|-
+|107
+|[[Noapara Assembly constituency|Noapara]]
+|[[Manju Basu]]
+|
+|-
+|108
+|[[Barrackpore Assembly constituency|Barrackpore]]
+|[[Raj Chakraborty]]
+|
+|-
+| rowspan="2" |109
+| rowspan="2" |[[Khardaha Assembly constituency|Khardaha]]
+|[[Kajal Sinha]]
+|Died on 25 April 2021<ref>{{Cite web |last=Jaiswal |first=Priya |date=2021-04-25 |title=TMC candidate Kajal Sinha passes away due to COVID-19 at Kolkata hospital |url=https://www.indiatvnews.com/news/india/tmc-candidate-kajal-sinha-passes-away-covid-19-at-kolkata-hospital-700320 |access-date=2022-04-08 |website=www.indiatvnews.com |language=en}}</ref>
+|-
+|[[Sovandeb Chattopadhyay]]
+|[[Third Banerjee ministry#Chief Minister & Cabinet Ministers|Cabinet Minister]]; won in October 2021 bypoll
+|-
+|110
+|[[Dum Dum Uttar Assembly constituency|Dum Dum Uttar]]
+|[[Chandrima Bhattacharya]]
+|
+|-
+|111
+|[[Panihati Assembly constituency|Panihati]]
+|[[Nirmal Ghosh]]
+|
+|-
+|112
+|[[Kamarhati Assembly constituency|Kamarhati]]
+|[[Madan Mitra]]
+|
+|-
+|rowspan="2" |113
+|rowspan="2" |[[Baranagar Assembly constituency|Baranagar]]
+|[[Tapas Roy]]
+|Resigned on 4 March 2024
+|-
+|[[Sayantika Banerjee]]
+|Won in June 2024 bypoll
+|-
+|114
+|[[Dum Dum Assembly constituency|Dum Dum]]
+|[[Bratya Basu]]
+|[[Third Banerjee ministry#Chief Minister & Cabinet Ministers|Cabinet Minister]]
+|-
+|115
+|[[Rajarhat New Town Assembly constituency|Rajarhat New Town]]
+|[[Tapash Chatterjee]]
+|
+|-
+|116
+|[[Bidhannagar Assembly constituency|Bidhannagar]]
+|[[Sujit Bose (politician)|Sujit Bose]]
+|
+|-
+|117
+|[[Rajarhat Gopalpur Assembly constituency|Rajarhat Gopalpur]]
+|[[Aditi Munshi]]
+|
+|-
+|118
+|[[Madhyamgram Assembly constituency|Madhyamgram]]
+|[[Rathin Ghosh]]
+|[[Third Banerjee ministry#Chief Minister & Cabinet Ministers|Cabinet Minister]]
+|-
+|119
+|[[Barasat Assembly constituency|Barasat]]
+|[[Chiranjeet Chakraborty]]
+|
+|-
+|120
+|[[Deganga Assembly constituency|Deganga]]
+|[[Rahima Mondal]]
+|
+|-
+|rowspan=2|121
+|rowspan=2|[[Haroa Assembly constituency|Haroa]]
+|[[Haji Nurul Islam]]
+|Elected to Lok Sabha in June 2024
+|-
+|[[Sheikh Rabiul Islam]]
+|Won in November 2024 bypoll
+|-
+|122
+|[[Minakhan Assembly constituency|Minakhan]]
+|[[Usha Rani Mondal]]
+|
+|-
+|123
+|[[Sandeshkhali Assembly constituency|Sandeshkhali]]
+|[[Sukumar Mahata]]
+|
+|-
+|124
+|[[Basirhat Dakshin Assembly constituency|Basirhat Dakshin]]
+|[[Saptarshi Banerjee]]
+|
+|-
+|125
+|[[Basirhat Uttar Assembly constituency|Basirhat Uttar]]
+|[[Rafikul Islam Mondal]]
+|
+|-
+|126
+|[[Hingalganj Assembly constituency|Hingalganj]]
+|[[Debes Mondal|Debesh Mondal]]
+|
+<section end="North 24 Parganas district"/>
+|-
+| rowspan="32" |[[South 24 Parganas district|South 24 Parganas]]
+| rowspan="2" |127
+| rowspan="2" |[[Gosaba Assembly constituency|Gosaba]]
+|[[Jayanta Naskar]]
+|Died on 19 June 2021<ref>{{Cite web |date=2021-06-20 |title=Trinamool's Jayanta Naskar, MLA from Gosaba, dies after testing Covid negative |url=https://www.hindustantimes.com/cities/kolkata-news/trinamools-jayanta-naskar-mla-from-gosaba-dies-after-testing-negative-for-covid19-101624154681698.html |access-date=2023-12-19 |website=Hindustan Times |language=en}}</ref>
+|-
+|Subrata Mondal
+|Won in October 2021 bypoll
+|-
+|128
+|[[Basanti Assembly constituency|Basanti]]
+|[[Shyamal Mondal]]
+|
+|-
+|129
+|[[Kultali Assembly constituency|Kultali]]
+|[[Ganesh Chandra Mondal]]
+|
+|-
+|130
+|[[Patharpratima Assembly constituency|Patharpratima]]
+|[[Samir Kumar Jana]]
+|
+|-
+|131
+|[[Kakdwip Assembly constituency|Kakdwip]]
+|[[Manturam Pakhira]]
+|
+|-
+|132
+|[[Sagar, West Bengal Assembly constituency|Sagar]]
+|[[Bankim Chandra Hazra]]
+|
+|-
+|133
+|[[Kulpi Assembly constituency|Kulpi]]
+|[[Jogaranjan Halder]]
+|
+|-
+|134
+|[[Raidighi Assembly constituency|Raidighi]]
+|[[Aloke Jaldata]]
+|
+|-
+|135
+|[[Mandirbazar Assembly constituency|Mandirbazar]]
+|[[Joydeb Halder]]
+|
+|-
+|136
+|[[Jaynagar Assembly constituency|Jaynagar]]
+|[[Biswanath Das]]
+|
+|-
+|137
+|[[Baruipur Purba Assembly constituency|Baruipur Purba]]
+|[[Bivas Sardar]]
+|
+|-
+|138
+|[[Canning Paschim Assembly constituency|Canning Paschim]]
+|[[Paresh Ram Das]]
+|
+|-
+|139
+|[[Canning Purba Assembly constituency|Canning Purba]]
+|[[Saokat Molla]]
+|
+|-
+|140
+|[[Baruipur Paschim Assembly constituency|Baruipur Paschim]]
+|[[Biman Banerjee]]
+|'''Speaker'''
+|-
+|141
+|[[Magrahat Purba Assembly constituency|Magrahat Purba]]
+|[[Namita Saha]]
+|
+|-
+|142
+|[[Magrahat Paschim Assembly constituency|Magrahat Paschim]]
+|[[Giasuddin Molla]]
+|
+|-
+|143
+|[[Diamond Harbour Assembly constituency|Diamond Harbour]]
+|[[Pannalal Halder]]
+|
+|-
+|144
+|[[Falta Assembly constituency|Falta]]
+|[[Sankar Kumar Naskar]]
+|
+|-
+|145
+|[[Satgachhia Assembly constituency|Satgachia]]
+|[[Mohan Chandra Naskar]]
+|
+|-
+|146
+|[[Bishnupur, South 24 Parganas Assembly constituency|Bishnupur]]
+|[[Dilip Mondal]]
+|
+|-
+|147
+|[[Sonarpur Dakshin Assembly constituency|Sonarpur Dakshin]]
+|[[Arundhuti Maitra]]
+|
+|-
+|148
+|[[Bhangar Assembly constituency|Bhangar]]
+|[[Nawsad Siddique]]
+|{{Full party name with color|Indian Secular Front}}
+|
+|-
+|149
+|[[Kasba, West Bengal Assembly constituency|Kasba]]
+|[[Javed Ahmed Khan]]
+|{{Full party name with color|Trinamool Congress|rowspan=5}}
+|
+|-
+|150
+|[[Jadavpur Assembly constituency|Jadavpur]]
+|[[Debabrata Majumdar]]
+|
+|-
+|151
+|[[Sonarpur Uttar Assembly constituency|Sonarpur Uttar]]
+|[[Firdousi Begum]]
+|
+|-
+|152
+|[[Tollyganj Assembly constituency|Tollygunge]]
+|[[Aroop Biswas]]
+|[[Third Banerjee ministry#Chief Minister & Cabinet Ministers|Cabinet Minister]]
+|-
+|153
+|[[Behala Purba Assembly constituency|Behala Purba]]
+|[[Ratna Chatterjee]]
+|
+|-
+|154
+|[[Behala Paschim Assembly constituency|Behala Paschim]]
+|[[Partha Chatterjee (politician)|Partha Chatterjee]]
+|{{Party name with color|Independent}}
+|Suspended from AITC
+|-
+|155
+|[[Maheshtala Assembly constituency|Maheshtala]]
+|[[Dulal Chandra Das]]
+|{{Full party name with color|Trinamool Congress|rowspan=47}}
+|
+|-
+|156
+|[[Budge Budge Assembly constituency|Budge Budge]]
+|[[Ashok Kumar Deb]]
+|
+|-
+|157
+|[[Metiaburuz Assembly constituency|Metiaburuz]]
+|[[Abdul Khaleque Molla]]
+|
+<section end="South 24 Parganas district"/>
+|-
+| rowspan="14" | [[Kolkata district|Kolkata]]
+|158
+|[[Kolkata Port Assembly constituency|Kolkata Port]]
+|[[Firhad Hakim]]
+|[[Third Banerjee ministry#Chief Minister & Cabinet Ministers|Cabinet Minister]] & Mayor of Kolkata 
+|-
+| rowspan="2" |159
+| rowspan="2" |[[Bhabanipur, West Bengal Assembly constituency|Bhabanipur]]
+|[[Sovandeb Chattopadhyay]]
+|Resigned on 21 May 2021<ref>{{Cite web |date=2021-05-21 |title=Bengal minister quits assembly to help CM Mamata contest old seat |url=https://www.hindustantimes.com/india-news/bengal-minister-quits-assembly-to-help-cm-mamata-contest-old-seat-101621603849670.html |access-date=2023-12-19 |website=Hindustan Times |language=en}}</ref>
+|-
+|[[Mamata Banerjee]]
+|[[List of chief ministers of West Bengal|'''Chief Minister''']]; won in September 2021 bypoll
+|-
+|160
+|[[Rashbehari Assembly constituency|Rashbehari]]
+|[[Debasish Kumar]]
+|
+|-
+| rowspan="2" |161
+| rowspan="2" |[[Ballygunge Assembly constituency|Ballygunge]]
+|[[Subrata Mukherjee]]
+|Died in 2021<ref>{{Cite news |last= |first= |date=2021-11-04 |title=Bengal Minister Subrata Mukherjee dies at 75 |language=en-IN |work=The Hindu |url=https://www.thehindu.com/news/national/other-states/bengal-minister-subrata-mukherjee-dies-at-75/article37335811.ece |access-date=2022-01-14 |issn=0971-751X}}</ref>
+|-
+|[[Babul Supriyo]]
+|Won in April 2022 bypoll
+|-
+|162
+|[[Chowrangee Assembly constituency|Chowrangee]]
+|[[Nayna Bandyopadhyay]]
+|
+|-
+|163
+|[[Entally Assembly constituency|Entally]]
+|[[Swarna Kamal Saha]]
+|
+|-
+|164
+|[[Beleghata Assembly constituency|Beleghata]]
+|[[Paresh Paul]]
+|
+|-
+|165
+|[[Jorasanko Assembly constituency|Jorasanko]]
+|[[Vivek Gupta (politician)|Vivek Gupta]]
+|
+|-
+|166
+|[[Shyampukur Assembly constituency|Shyampukur]]
+|[[Shashi Panja]]
+|
+|-
+| rowspan="2" |167
+| rowspan="2" |[[Maniktala Assembly constituency|Maniktala]]
+|[[Sadhan Pande]]
+|Died on 20 February 2022<ref>{{Cite web |date=2022-02-20 |title=West Bengal Cabinet Minister Sadhan Pande passes away at 71 |url=https://indianexpress.com/article/cities/kolkata/west-bengal-cabinet-minister-sadhan-pande-dead-7782167/ |access-date=2022-02-20 |website=The Indian Express |language=en}}</ref>
+|-
+|[[Supti Pandey]]
+|Won in July 2024 bypoll
+|-
+|168
+|[[Kashipur-Belgachhia]]
+|[[Atin Ghosh]]
+|
+<section end="Kolkata district"/>
+|-
+| rowspan="16" | [[Howrah district|Howrah]]
+|169
+|[[Bally Assembly constituency|Bally]]
+|[[Rana Chatterjee]]
+|
+|-
+|170
+|[[Howrah Uttar]]
+|[[Gautam Chowdhuri]]
+|
+|-
+|171
+|[[Howrah Madhya]]
+|[[Arup Roy]]
+|[[Third Banerjee ministry#Chief Minister & Cabinet Ministers|Cabinet Minister]]
+|-
+|172
+|[[Shibpur Assembly constituency|Shibpur]]
+|[[Manoj Tiwary (cricketer)|Manoj Tiwary]]
+|[[Third Banerjee ministry#Chief Minister & Cabinet Ministers|Cabinet Minister]]
+|-
+|173
+|[[Howrah Dakshin]]
+|[[Nandita Chowdhury]]
+|
+|-
+|174
+|[[Sankrail Assembly constituency|Sankrail]]
+|[[Priya Paul]]
+|
+|-
+|175
+|[[Panchla Assembly constituency|Panchla]]
+|[[Gulsan Mullick|Gulshan Mullick]]
+|
+|-
+|176
+|[[Uluberia Purba]]
+|[[Bidesh Ranjan Bose]]
+|
+|-
+|177
+|[[Uluberia Uttar]]
+|[[Nirmal Maji]]
+|
+|-
+|178
+|[[Uluberia Dakshin]]
+|[[Pulak Roy]]
+|
+|-
+|179
+|[[Shyampur Assembly constituency|Shyampur]]
+|[[Kalipada Mandal|Kalipada Mondal]]
+|
+|-
+|180
+|[[Bagnan Assembly constituency|Bagnan]]
+|[[Arunava Sen (politician)|Arunava Sen]]
+|
+|-
+|181
+|[[Amta Assembly constituency|Amta]]
+|[[Sukanta Kumar Paul]]
+|
+|-
+|182
+|[[Udaynarayanpur Assembly constituency|Udaynarayanpur]]
+|[[Samir Kumar Panja]]
+|
+|-
+|183
+|[[Jagatballavpur Assembly constituency|Jagatballavpur]]
+|[[Sitanath Ghosh]]
+|
+|-
+|184
+|[[Domjur Assembly constituency|Domjur]]
+|[[Kalyan Ghosh (politician)|Kalyan Ghosh]]
+|
+<section end="Howrah district"/>
+|-
+| rowspan="18" | [[Hooghly district|Hooghly]]
+|185
+|[[Uttarpara Assembly constituency|Uttarpara]]
+|[[Kanchan Mullick]]
+|
+|-
+|186
+|[[Sreerampur Assembly constituency|Sreerampur]]
+|[[Sudipto Roy]]
+|
+|-
+|187
+|[[Champdani Assembly constituency|Champdani]]
+|[[Arindam Guin]]
+|
+|-
+|188
+|[[Singur Assembly constituency|Singur]]
+|[[Becharam Manna]]
+|
+|-
+|189
+|[[Chandannagar Assembly constituency|Chandannagar]]
+|[[Indranil Sen]]
+|
+|-
+|190
+|[[Chunchura Assembly constituency|Chunchura]]
+|[[Asit Mazumdar]]
+|
+|-
+|191
+|[[Balagarh Assembly constituency|Balagarh]]
+|[[Manoranjan Byapari]]
+|
+|-
+|192
+|[[Pandua Assembly constituency|Pandua]]
+|[[Ratna De|Ratna De Nag]]
+|
+|-
+|193
+|[[Saptagram Assembly constituency|Saptagram]]
+|[[Tapan Dasgupta]]
+|
+|-
+|194
+|[[Chanditala Assembly constituency|Chanditala]]
+|[[Swati Khandoker]]
+|
+|-
+|195
+|[[Jangipara Assembly constituency|Jangipara]]
+|[[Snehasis Chakraborty]]
+|
+|-
+|196
+|[[Haripal Assembly constituency|Haripal]]
+|[[Karabi Manna]]
+|
+|-
+|197
+|[[Dhanekhali Assembly constituency|Dhanekhali]]
+|[[Ashima Patra]]
+|
+|-
+|198
+|[[Tarakeswar Assembly constituency|Tarakeswar]]
+|[[Ramendu Sinharay]]
+|
+|-
+|199
+|[[Pursurah Assembly constituency|Pursurah]]
+|[[Bimal Ghosh (politician)|Biman Ghosh]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=4}}
+|
+|-
+|200
+|[[Arambag Assembly constituency|Arambagh]]
+|[[Madhusudan Bag]]
+|
+|-
+|201
+|[[Goghat Assembly constituency|Goghat]]
+|[[Biswanath Karak]]
+|
+|-
+|202
+|[[Khanakul Assembly constituency|Khanakul]]
+|[[Susanta Ghosh (politician)|Susanta Ghosh]]
+|
+<section end="Hooghly district"/>
+|-
+| rowspan="16" | [[Purba Medinipur district|Purba Medinipur]]
+|203
+|[[Tamluk Assembly constituency|Tamluk]]
+|[[Soumen Mahapatra]]
+|{{Full party name with color|Trinamool Congress|rowspan=3}}
+|
+|-
+|204
+|[[Panskura Purba]]
+|[[Biplab Roy Chowdhury]]
+|
+|-
+|205
+|[[Panskura Paschim]]
+|[[Firoja Bibi]]
+|
+|-
+|206
+|[[Moyna Assembly constituency|Moyna]]
+|[[Ashoke Dinda]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|207
+|[[Nandakumar Assembly constituency|Nandakumar]]
+|[[Sukumar De]]
+|{{Full party name with color|Trinamool Congress|rowspan=3}}
+|
+|-
+|208
+|[[Mahisadal Assembly constituency|Mahisadal]]
+|[[Tilak Kumar Chakraborty]]
+|
+|-
+|209
+|[[Haldia Assembly constituency|Haldia]]
+|[[Tapasi Mondal]]
+|Defected from BJP to AITC
+|-
+|210
+|[[Nandigram Assembly constituency|Nandigram]]
+|[[Suvendu Adhikari]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|'''Leader of the Opposition'''
+|-
+|211
+|[[Chandipur Assembly constituency|Chandipur]]
+|[[Soham Chakraborty]]
+|{{Full party name with color|Trinamool Congress|rowspan=2}}
+|
+|-
+|212
+|[[Patashpur Assembly constituency|Patashpur]]
+|[[Uttam Barik]]
+|
+|-
+|213
+|[[Kanthi Uttar Assembly constituency|Kanthi Uttar]]
+|[[Sumita Sinha]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=4}}
+|
+|-
+|214
+|[[Bhagabanpur Assembly constituency|Bhagabanpur]]
+|[[Rabindranath Maity]]
+|
+|-
+|215
+|[[Khejuri Assembly constituency|Khejuri]]
+|[[Santanu Pramanik]]
+|
+|-
+|216
+|[[Kanthi Dakshin Assembly constituency|Kanthi Dakshin]]
+|[[Arup Kumar Das]]
+|
+|-
+|217
+|[[Ramnagar, Purba Medinipur Assembly constituency|Ramnagar]]
+|[[Akhil Giri]]
+|{{Full party name with color|Trinamool Congress|rowspan=7}}
+|
+|-
+|218
+|[[Egra Assembly constituency|Egra]]
+|[[Tarun Kumar Maity]]
+|
+<section end="Purba Medinipur district"/>
+|-
+|[[Paschim Medinipur district|Paschim Medinipur]]
+|219
+|[[Dantan Assembly constituency|Dantan]]
+|[[Bikram Chandra Pradhan]]
+|
+<section end="Paschim Medinipur district 1"/>
+|-
+| rowspan="3" | [[Jhargram district|Jhargram]]
+|220
+|[[Nayagram Assembly constituency|Nayagram]]
+|[[Dulal Murmu]]
+|
+|-
+|221
+|[[Gopiballavpur Assembly constituency|Gopiballavpur]]
+|[[Khagendra Nath Mahata]]
+|
+|-
+|222
+|[[Jhargram Assembly constituency|Jhargram]]
+|[[Birbaha Hansda]]
+|
+<section end="Jhargram district 1"/>
+|-
+| rowspan="15" | [[Paschim Medinipur district|Paschim Medinipur]]
+|223
+|[[Keshiary Assembly constituency|Keshiary]]
+|[[Paresh Murmu]]
+|
+|-
+|224
+|[[Kharagpur Sadar Assembly constituency|Kharagpur Sadar]]
+|[[Hiran Chatterjee]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|225
+|[[Narayangarh Assembly constituency|Narayangarh]]
+|[[Surja Kanta Atta]]
+|{{Full party name with color|Trinamool Congress|rowspan=6}}
+|
+|-
+|226
+|[[Sabang Assembly constituency|Sabang]]
+|[[Manas Bhunia]]
+|
+|-
+|227
+|[[Pingla Assembly constituency|Pingla]]
+|[[Ajit Maity]]
+|
+|-
+|228
+|[[Kharagpur Assembly constituency|Kharagpur]]
+|[[Dinen Roy]]
+|
+|-
+|229
+|[[Debra Assembly constituency|Debra]]
+|[[Humayun Kabir (Debra politician)|Humayun Kabir]]
+|
+|-
+|230
+|[[Daspur Assembly constituency|Daspur]]
+|[[Mamata Bhunia]]
+|
+|-
+|231
+|[[Ghatal Assembly constituency|Ghatal]]
+|[[Sital Kapat]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|232
+|[[Chandrakona Assembly constituency|Chandrakona]]
+|[[Arup Dhara]]
+|{{Full party name with color|Trinamool Congress|rowspan=8}}
+|
+|-
+|233
+|[[Garbeta Assembly constituency|Garbeta]]
+|[[Uttara Singha]]
+|
+|-
+|234
+|[[Salboni Assembly constituency|Salboni]]
+|[[Srikanta Mahata]]
+|
+|-
+|235
+|[[Keshpur Assembly constituency|Keshpur]]
+|[[Seuli Saha]]
+|
+|-
+|rowspan=2|236
+|rowspan=2|[[Medinipur Assembly constituency|Medinipur]]
+|[[June Malia]]
+|Elected to Lok Sabha in June 2024
+|-
+|[[Sujoy Hazra]]
+|Won in November 2024 bypoll
+|-
+|[[Jhargram district|Jhargram]]
+|237
+|[[Binpur Assembly constituency|Binpur]]
+|[[Debnath Hansda]]
+|
+<section end="Jhargram district 2"/>
+|-
+| rowspan="9" | [[Purulia district|Purulia]]
+|238
+|[[Bandwan Assembly constituency|Bandwan]]
+|[[Rajib Lochan Saren]]
+|
+|-
+|239
+|[[Balarampur, Purulia Assembly constituency|Balarampur]]
+|[[Baneswar Mahato]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|240
+|[[Baghmundi Assembly constituency|Baghmundi]]
+|[[Sushanta Mahato]]
+|{{Full party name with color|Trinamool Congress}}
+|
+|-
+|241
+|[[Joypur, Purulia Assembly constituency|Joypur]]
+|[[Narahari Mahato]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|242
+|[[Purulia Assembly constituency|Purulia]]
+|[[Sudip Kumar Mukherjee]]
+|
+|-
+|243
+|[[Manbazar Assembly constituency|Manbazar]]
+|[[Sandhya Rani Tudu]]
+|{{Full party name with color|Trinamool Congress}}
+|
+|-
+|244
+|[[Kashipur, West Bengal Assembly constituency|Kashipur]]
+|[[Kamalakanta Hansda]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=5}}
+|
+|-
+|245
+|[[Para Assembly constituency|Para]]
+|[[Nadiar Chand Bouri]]
+|
+|-
+|246
+|[[Raghunathpur, West Bengal Assembly constituency|Raghunathpur]]
+|[[Vivekananda Bauri]]
+|
+<section end="Purulia district"/>
+|-
+| rowspan="13" | [[Bankura district|Bankura]]
+|247
+|[[Saltora Assembly constituency|Saltora]]
+|[[Chandana Bauri]]
+|
+|-
+|248
+|[[Chhatna Assembly constituency|Chhatna]]
+|[[Satyanarayan Mukhopadhyay]]
+|
+|-
+|249
+|[[Ranibandh Assembly constituency|Ranibandh]]
+|[[Jyotsna Mandi]]
+|{{Full party name with color|Trinamool Congress|rowspan=4}}
+|
+|-
+|250
+|[[Raipur, Bankura Assembly constituency|Raipur]]
+|[[Mrityunjoy Murmu]]
+|
+|-
+|rowspan=2|251
+|rowspan=2|[[Taldangra Assembly constituency|Taldangra]]
+|[[Arup Chakraborty (politician)|Arup Chakraborty]]
+|Elected to Lok Sabha in June 2024
+|-
+|[[Falguni Singhababu]]
+|Won in November 2024 bypoll
+|-
+|252
+|[[Bankura Assembly constituency|Bankura]]
+|[[Niladri Sekhar Dana]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|253
+|[[Barjora Assembly constituency|Barjora]]
+|[[Alok Mukherjee (politician)|Alok Mukherjee]]
+|{{Full party name with color|Trinamool Congress}}
+|
+|-
+|254
+|[[Onda Assembly constituency|Onda]]
+|[[Amarnath Shakha]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|255
+|[[Bishnupur, Bankura Assembly constituency|Bishnupur]]
+|[[Tanmay Ghosh]]
+|{{Full party name with color|Trinamool Congress|rowspan=2}}
+|Defected from BJP to AITC<ref>{{Cite news |last= |first= |date=2021-08-30 |title=BJP MLA Tanmoy Ghosh joins Trinamool Congress |language=en-IN |work=The Hindu |url=https://www.thehindu.com/news/national/other-states/bjp-mla-tanmoy-ghosh-joins-trinamool-congress/article36179312.ece |access-date=2021-09-07 |issn=0971-751X}}</ref>
+|-
+|256
+|[[Katulpur]]
+|[[Harakali Protiher]]
+|Defected from BJP to AITC<ref>{{Cite web |title=Bengal BJP MLA Harakali Protiher joins Trinamool Congress |url=https://www.indiatoday.in/india/story/west-bengal-bjp-mla-harakali-protiher-joins-tmc-ahead-of-lok-sabha-polls-2454122-2023-10-26 |access-date=2023-12-19 |website=India Today |language=en}}</ref>
+|-
+|257
+|[[Indas Assembly constituency|Indas]]
+|[[Nirmal Kumar Dhara]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|258
+|[[Sonamukhi Assembly constituency|Sonamukhi]]
+|[[Dibakar Gharami]]
+|
+<section end="Bankura district"/>
+|-
+| rowspan="16" |[[Purba Bardhaman district|Purba Bardhaman]]
+|259
+|[[Khandaghosh Assembly constituency|Khandaghosh]]
+|[[Nabin Chandra Bag]]
+|{{Full party name with color|Trinamool Congress|rowspan=18}}
+|
+|-
+|260
+|[[Bardhaman Dakshin]]
+|[[Khokan Das]]
+|
+|-
+|261
+|[[Raina Assembly constituency|Raina]]
+|[[Shampa Dhara]]
+|
+|-
+|262
+|[[Jamalpur, West Bengal Assembly constituency|Jamalpur]]
+|[[Alok Kumar Majhi]]
+|
+|-
+|263
+|[[Monteswar Assembly constituency|Monteswar]]
+|[[Siddiqullah Chowdhury]]
+|
+|-
+|264
+|[[Kalna Assembly constituency|Kalna]]
+|[[Deboprasad Bag]]
+|
+|-
+|265
+|[[Memari Assembly constituency|Memari]]
+|[[Madhusudan Bhattacharya]]
+|
+|-
+|266
+|[[Bardhaman Uttar]]
+|[[Nisith Kumar Malik]]
+|
+|-
+|267
+|[[Bhatar Assembly constituency|Bhatar]]
+|[[Mangobinda Adhikari]]
+|
+|-
+|268
+|[[Purbasthali Dakshin]]
+|[[Swapan Debnath]]
+|
+|-
+|269
+|[[Purbasthali Uttar]]
+|[[Tapan Chatterjee (politician)|Tapan Chatterjee]]
+|
+|-
+|270
+|[[Katwa Assembly constituency|Katwa]]
+|[[Rabindranath Chatterjee]]
+|
+|-
+|271
+|[[Ketugram Assembly constituency|Ketugram]]
+|[[Sekh Sahonawez]]
+|
+|-
+|272
+|[[Mangalkot Assembly constituency|Mangalkot]]
+|[[Apurba Chowdhury]]
+|
+|-
+|273
+|[[Ausgram Assembly constituency|Ausgram]]
+|[[Abhedananda Thander]]
+|
+|-
+|274
+|[[Galsi Assembly constituency|Galsi]]
+|[[Nepal Ghorui]]
+|
+<section end="Purba Bardhaman district"/>
+|-
+| rowspan="9" | [[Paschim Bardhaman district|Paschim Bardhaman]]
+|275
+|[[Pandabeswar Assembly constituency|Pandabeswar]]
+|[[Narendranath Chakraborty]]
+|
+|-
+|276
+|[[Durgapur Purba]]
+|[[Pradip Mazumdar]]
+|
+|-
+|277
+|[[Durgapur Paschim]]
+|[[Lakshman Chandra Ghorui]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|278
+|[[Raniganj, West Bengal Assembly constituency|Raniganj]]
+|[[Tapas Banerjee]]
+|{{Full party name with color|Trinamool Congress|rowspan=2}}
+|
+|-
+|279
+|[[Jamuria Assembly constituency|Jamuria]]
+|[[Hareram Singh]]
+|
+|-
+|280
+|[[Asansol Dakshin Assembly constituency|Asansol Dakshin]]
+|[[Agnimitra Paul]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|281
+|[[Asansol Uttar Assembly constituency|Asansol Uttar]]
+|[[Moloy Ghatak]]
+|{{Full party name with color|Trinamool Congress}}
+|
+|-
+|282
+|[[Kulti Assembly constituency|Kulti]]
+|[[Ajay Kumar Poddar]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|283
+|[[Barabani Assembly constituency|Barabani]]
+|[[Bidhan Upadhyay]]
+|{{Full party name with color|Trinamool Congress}}
+|
+<section end="Paschim Bardhaman district"/>
+|-
+| rowspan="11" | [[Birbhum district|Birbhum]]
+|284
+|[[Dubrajpur Assembly constituency|Dubrajpur]]
+|[[Anup Kumar Saha]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|285
+|[[Suri Assembly constituency|Suri]]
+|[[Bikash Roychoudhury]]
+|{{Full party name with color|Trinamool Congress|rowspan=10}}
+|
+|-
+|286
+|[[Bolpur Assembly constituency|Bolpur]]
+|[[Chandranath Singha]]
+|
+|-
+|287
+|[[Nanoor Assembly constituency|Nanoor]]
+|[[Bidhan Chandra Majhi]]
+|
+|-
+|288
+|[[Labpur Assembly constituency|Labpur]]
+|[[Abhijit Sinha]]
+|
+|-
+|289
+|[[Sainthia Assembly constituency|Sainthia]]
+|[[Nilabati Saha]]
+|
+|-
+|290
+|[[Mayureswar Assembly constituency|Mayureswar]]
+|[[Abhijit Roy (politician)|Abhijit Roy]]
+|
+|-
+|291
+|[[Rampurhat Assembly constituency|Rampurhat]]
+|[[Asish Banerjee]]
+|'''Deputy Speaker'''
+|-
+|292
+|[[Hansan Assembly constituency|Hansan]]
+|[[Asok Kumar Chattopadhyay]]
+|
+|-
+|293
+|[[Nalhati Assembly constituency|Nalhati]]
+|[[Rajendra Prasad Singh (Birbhum politician)|Rajendra Prasad Singh]]
+|
+|-
+|294
+|[[Murarai Assembly constituency|Murarai]]
+|[[Mosarraf Hossain]]
+|
+<section end="Birbhum district"/>
+|}
+Source<ref>{{Cite web |title=Election Commission of India |url=https://results.eci.gov.in/ResultAcOct2021/ConstituencywiseS2556.htm?ac=56 |access-date=2022-04-06 |website=results.eci.gov.in}}</ref>
+
+== See also ==
+
+*[[West Bengal Legislative Assembly]]
+*[[2021 West Bengal Legislative Assembly election|2021 West Bengal Legislative Assembly Elections]]
+*[[West Bengal]]
+*[[Mamata Banerjee]]
+
+== References ==
+<references />
+{{West Bengal elections}}
+{{West Bengal topics}}
+{{Legislatures of India}}
+
+[[Category:West Bengal MLAs 2021–2026| ]]
+[[Category:2021 West Bengal Legislative Assembly election]]
+[[Category:West Bengal Legislative Assembly]]
+[[Category:Terms of the West Bengal Legislative Assembly]]

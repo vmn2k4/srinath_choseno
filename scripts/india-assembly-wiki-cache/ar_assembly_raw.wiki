@@ -1,0 +1,408 @@
+
+{{Short description|Arunachal Pradesh Assembly}}{{Use Indian English|date=March 2022}}
+{{Use dmy dates|date=May 2024}}{{Infobox legislature|name=Arunachal Pradesh Legislative Assembly|legislature=11th Legislative Assembly of Arunachal Pradesh|coa_pic=|coa_res=200px|house_type=Unicameral|term_limits=5 years|leader1=|leader2=|leader3=|leader4=|leader5=|leader1_type=Speaker|party1=|election1=[[2024 Arunachal Pradesh Legislative Assembly election|May 2024]]|leader2_type=Deputy Speaker|party2=|election2=[[2024 Arunachal Pradesh Legislative Assembly election|May 2024]]|leader3_type=Leader of the House <br /> ([[List of Chief Ministers of Arunachal Pradesh|Chief Minister]])|party3=|election3=[[2024 Arunachal Pradesh Legislative Assembly election|May 2024]]|leader4_type=Deputy Leader of the House <br /> ([[List of deputy chief ministers of Arunachal Pradesh|Deputy Chief Minister]])|party4=|election4=[[2024 Arunachal Pradesh Legislative Assembly election|May 2024]]|leader5_type=Leader of the Opposition|party5=|structure1=|political_groups1=|members='''60'''|structure1_res=300px|voting_system1=[[First past the post]]|last_election1=[[2024 Arunachal Pradesh Legislative Assembly election|May 2024]]|next_election1=[[Next Arunachal Pradesh Legislative Assembly election|May 2029]]|session_room=|meeting_place=Vidhan Bhavan, [[Itanagar]], [[Arunachal Pradesh]]|session_res=|session_alt=|website={{URL|https://arla.neva.gov.in/}}}}
+
+The '''Eleventh Legislative Assembly of Arunachal Pradesh''' is constituted after the [[2024 Arunachal Pradesh Legislative Assembly election|2024 Arunachal Pradesh Legislative Assembly elections]], which were concluded on 19 April 2024.<ref>{{Cite web |title=Terms of the Houses |url=https://eci.gov.in/elections/term-of-houses/ |archive-url=https://web.archive.org/web/20220328103956/https://eci.gov.in/elections/term-of-houses/ |archive-date=28 March 2022 |access-date=2022-02-13 |website=Election Commission of India |language=en-IN}}</ref>
+
+== Notable positions ==
+The present assembly is the Eleventh Legislative Assembly of Arunachal Pradesh.
+
+== Members of Legislative Assembly ==
+{| class="wikitable sortable"   
+!District
+!No.
+!Constituency
+!Reserved
+!Name
+! colspan="2" |Party
+! colspan="2" |Alliance
+!Remarks
+|-
+| rowspan="3" |[[Tawang district|Tawang]]
+|1
+|[[Lumla Assembly constituency|Lumla]]
+|rowspan=48|ST
+|[[Tsering Lhamu]]
+| {{Full party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance|rowspan=7}}
+|
+|-
+|2
+|[[Tawang Assembly constituency|Tawang]]
+|[[Namgey Tsering]]
+| {{Full party name with color|People's Party of Arunachal}}
+|Switched from NPP to PPA
+|-
+|3
+|[[Mukto Assembly constituency|Mukto]]
+|[[Pema Khandu]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=3}}
+|'''[[List of chief ministers of Arunachal Pradesh|Chief Minister]]'''
+|-
+| rowspan="4" |[[West Kameng district|West Kameng]]
+|4
+|[[Dirang Assembly constituency|Dirang]]
+|[[Phurpa Tsering]]
+|
+|-
+|5
+|[[Kalaktang Assembly constituency|Kalaktang]]
+|[[Tseten Chombay Kee]]
+|
+|-
+|6
+|[[Thrizino-Buragaon Assembly constituency|Thrizino-Buragaon]]
+|[[Tenzin Nyima Glow]]
+|{{Party name with color|Independent}}
+|
+|-
+|7
+|[[Bomdila Assembly constituency|Bomdila]]
+|[[Dongru Siongju]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="4" |[[East Kameng district|East Kameng]]
+|8
+|[[Bameng Assembly constituency|Bameng]]
+|[[Kumar Waii]]
+|{{Full party name with color|Indian National Congress}}
+|{{Party name with color|Indian National Developmental Inclusive Alliance}}
+|
+|-
+|9
+|[[Chayangtajo Assembly constituency|Chayangtajo]]
+|[[Hayeng Mangfi]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=5}}
+|{{Party name with color|National Democratic Alliance|rowspan=52}}
+|
+|-
+|10
+|[[Seppa East Assembly constituency|Seppa East]]
+|[[Ealing Tallang]]
+|
+|-
+|11
+|[[Seppa West Assembly constituency|Seppa West]]
+|[[Mama Natung]]
+|
+|-
+|[[Pakke-Kessang district|Pakke-Kessang]]
+|12
+|[[Pakke-Kessang Assembly constituency|Pakke-Kessang]]
+|[[Biyuram Wahge]]
+|
+|-
+| rowspan="3" |[[Papum Pare district|Papum Pare]]
+|13
+|[[Itanagar Assembly constituency|Itanagar]]
+|[[Techi Kaso]]
+|
+|-
+|14
+|[[Doimukh Assembly constituency|Doimukh]]
+|[[Nabam Vivek]]
+|{{Full party name with color|People's Party of Arunachal}}
+|
+|-
+|15
+|[[Sagalee Assembly constituency|Sagalee]]
+|[[Ratu Techi]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="2" |[[Lower Subansiri district|Lower Subansiri]]
+|16
+|[[Yachuli Assembly constituency|Yachuli]]
+|[[Toko Tatung]]
+| {{Full party name with color|Nationalist Congress Party}}
+|
+|-
+|17
+|[[Ziro–Hapoli Assembly constituency|Ziro–Hapoli]]
+|[[Hage Appa]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=10}}
+|
+|-
+|[[Kra Daadi district|Kra-Daadi]]
+|18
+|[[Palin Assembly constituency|Palin]]
+|[[Balo Raja]]
+|
+|-
+|[[Kurung Kumey district|Kurung Kumey]]
+|19
+|[[Nyapin Assembly constituency|Nyapin]]
+|[[Tai Nikio]]
+|
+|-
+|[[Kra Daadi district|Kra-Daadi]]
+|20
+|[[Tali Assembly constituency|Tali]]
+|[[Jikke Tako]]
+|
+|-
+|[[Kurung Kumey district|Kurung Kumey]]
+|21
+|[[Koloriang Assembly constituency|Koloriang]]
+|[[Pani Taram]]
+|
+|-
+| rowspan="3" |[[Upper Subansiri district|Upper Subansiri]]
+|22
+|[[Nacho Assembly constituency|Nacho]]
+|[[Nakap Nalo]]
+|
+|-
+|23
+|[[Taliha Assembly constituency|Taliha]]
+|[[Nyato Rigia]]
+|
+|-
+|24
+|[[Daporijo Assembly constituency|Daporijo]]
+|[[Taniya Soki]]
+|
+|-
+|[[Kamle district|Kamle]]
+|25
+|[[Raga Assembly constituency|Raga]]
+|[[Rotom Tebin]]
+|
+|-
+|[[Upper Subansiri district|Upper Subansiri]]
+|26
+|[[Dumporijo Assembly constituency|Dumporijo]]
+|[[Rode Bui]]
+|
+|-
+|[[West Siang district|West Siang]]
+|27
+|[[Liromoba Assembly constituency|Liromoba]]
+|[[Pesi Jilen]]
+|{{Full party name with color|People's Party of Arunachal}}
+|Switched from NPP to PPA 
+|-
+|[[Lower Siang district|Lower Siang]]
+|28
+|[[Likabali Assembly constituency|Likabali]]
+|[[Kardo Nyigyor]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=10}}
+|
+|-
+|[[Lepa Rada district|Lepa Rada]]
+|29
+|[[Basar Assembly constituency|Basar]]
+|[[Nyabi Jini Dirchi]]
+|
+|-
+| rowspan="2" |[[West Siang district|West Siang]]
+|30
+|[[Along West Assembly constituency|Along West]]
+|[[Topin Ete]]
+|
+|-
+|31
+|[[Along East Assembly constituency|Along East]]
+|[[Kento Jini]]
+|
+|-
+|[[Siang district|Siang]]
+|32
+|[[Rumgong Assembly constituency|Rumgong]]
+|[[Talem Taboh]]
+|
+|-
+|[[Shi Yomi district|Shi Yomi]]
+|33
+|[[Mechuka Assembly constituency|Mechuka]]
+|[[Pasang Dorjee Sona]]
+|
+|-
+|[[Upper Siang district|Upper Siang]]
+|34
+|[[Tuting–Yingkiong Assembly constituency|Tuting–Yingkiong]]
+|[[Alo Libang]]
+|
+|-
+|[[Siang district|Siang]]
+|35
+|[[Pangin Assembly constituency|Pangin]]
+|[[Ojing Tasing]]
+|
+|-
+|[[Lower Siang district|Lower Siang]]
+|36
+|[[Nari-Koyu Assembly constituency|Nari-Koyu]]
+|[[Tojir Kadu]]
+|
+|-
+| rowspan="3" |[[East Siang district|East Siang]]
+|37
+|[[Pasighat West Assembly constituency|Pasighat West]]
+|[[Ninong Ering]]
+|
+|-
+|38
+|[[Pasighat East Assembly constituency|Pasighat East]]
+|[[Tapi Darang]]
+| {{Full party name with color|People's Party of Arunachal|rowspan=3}}
+|Switched from NPP to PPA 
+|-
+|39
+|[[Mebo Assembly constituency|Mebo]]
+|[[Oken Tayeng]]
+|
+|-
+|[[Upper Siang district|Upper Siang]]
+|40
+|[[Mariyang-Geku Assembly constituency|Mariyang-Geku]]
+|[[Oni Panyang]]
+|Switched from NPP to PPA 
+|-
+|[[Dibang Valley district|Dibang Valley]]
+|41
+|[[Anini Assembly constituency|Anini]]
+|[[Mopi Mihu]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=7}}
+|
+|-
+| rowspan="2" |[[Lower Dibang Valley district|Lower Dibang Valley]]
+|42
+|[[Dambuk Assembly constituency|Dambuk]]
+|[[Puinnyo Apum]]
+|
+|-
+|43
+|[[Roing Assembly constituency|Roing]]
+|[[Mutchu Mithi]]
+|
+|-
+|[[Lohit district|Lohit]]
+|44
+|[[Tezu Assembly constituency|Tezu]]
+|[[Mahesh Chai]]
+|
+|-
+|[[Anjaw district|Anjaw]]
+|45
+|[[Hayuliang Assembly constituency|Hayuliang]]
+|[[Dasanglu Pul]]
+|
+|-
+| rowspan="3" |[[Namsai district|Namsai]]
+|46
+|[[Chowkham Assembly constituency|Chowkham]]
+|[[Chowna Mein]]
+|'''[[List of deputy chief ministers of Arunachal Pradesh|Deputy Chief Minister]]'''
+|-
+|47
+|[[Namsai Assembly constituency|Namsai]]
+|[[Chau Zingnu Namchoom]]
+|
+|-
+|48
+|[[Lekang Assembly constituency|Lekang]]
+|[[Likha Soni|Lekhiya Soni]]
+|{{Full party name with color|Nationalist Congress Party|rowspan=2}}
+|
+|-
+| rowspan="5" |[[Changlang district|Changlang]]
+|49
+|[[Bordumsa-Diyun Assembly constituency|Bordumsa-Diyun]]
+|None
+|[[Nikh Kamin]]
+|
+|-
+|50
+|[[Miao Assembly constituency|Miao]]
+|rowspan=11|ST
+|[[Kamlung Mossang]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|51
+|[[Nampong Assembly constituency|Nampong]]
+|[[Laisam Simai]]
+|{{Party name with color|Independent}}
+|
+|-
+|52
+|[[Changlang South Assembly constituency|Changlang South]]
+|[[Hamjong Tangha]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|53
+|[[Changlang North Assembly constituency|Changlang North]]
+|[[Tesam Pongte]]
+|
+|-
+| rowspan="4" |[[Tirap district|Tirap]]
+|54
+|[[Namsang Assembly constituency|Namsang]]
+|[[Wangki Lowang]]
+|
+|-
+|55
+|[[Khonsa East Assembly constituency|Khonsa East]]
+|[[Wanglam Sawin]]
+|{{Party name with color|Independent}}
+|
+|-
+|56
+|[[Khonsa West Assembly constituency|Khonsa West]]
+|[[Chakat Aboh]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|57
+|[[Borduria–Bagapani Assembly constituency|Borduria–Bagapani]]
+|[[Wanglin Lowangdong]]
+|
+|-
+| rowspan="3" |[[Longding district|Longding]]
+|58
+|[[Kanubari Assembly constituency|Kanubari]]
+|[[Gabriel Denwang Wangsu]]
+|
+|-
+|59
+|[[Longding–Pumao Assembly constituency|Longding–Pumao]]
+|[[Thangwang Wangham]]
+|{{Full party name with color|National People's Party (India)}}
+|
+|-
+|60
+|[[Pongchau-Wakka Assembly constituency|Pongchau-Wakka]]
+|[[Honchun Ngandam]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+|}
+
+Source<ref>{{Cite web |title=State Assembly Members, Arunachal Pradesh |url=https://www.arunachalpradesh.gov.in/state-assembly/}}</ref>
+
+== See also ==
+
+* [[2024 Arunachal Pradesh Legislative Assembly election]]
+* [[Arunachal Pradesh Legislative Assembly]]
+* [[List of constituencies of the Arunachal Pradesh Legislative Assembly]]
+* [[Government of Arunachal Pradesh]]
+* [[List of governors of Arunachal Pradesh]]
+* [[List of chief ministers of Arunachal Pradesh]]
+
+== References ==
+{{Reflist}}
+
+== External links ==
+
+* {{Official website|https://arla.neva.gov.in/}}
+{{Legislatures of India}}{{Current Indian assemblies}}
+{{Authority control}}
+
+
+
+[[Category:Terms of the Arunachal Pradesh Legislative Assembly]]
+[[Category:Lists of current Indian state and territorial assemblies|Arunachal Pradesh]]
+[[Category:Arunachal Pradesh MLAs 2024–2029| ]]

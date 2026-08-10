@@ -1,0 +1,532 @@
+{{Short description|Indian state assembly since 2022}}
+{{Use dmy dates|date=July 2022}}
+{{Infobox legislature
+| body              = Manipur Legislative Assembly
+| name              = Manipur Legislative Assembly
+| legislature       = 
+| preceded_by       = [[11th Manipur Assembly]]
+| foundation        = <!-- {{Start date|YYYY|MM|DD}} -->
+| disbanded         = <!-- {{End date|YYYY|MM|DD}} -->
+| succeeded_by      = 
+| coa_pic           = Kanglasa.svg
+| coa_res           = 150px
+| house_type        = Unicameral
+| term_limits       = 5 years
+| leader1_type      = [[List of governors of Manipur|Governor]]
+| leader1           = [[Ajay Kumar Bhalla]]    
+| leader2_type      = [[List of speakers of the Manipur Legislative Assembly|Speaker]]
+| leader2           = '''[[Thokchom Satyabrata Singh]]'''
+| party2            = [[Bharatiya Janata Party|BJP]]
+| election2         = 22 March 2022
+| leader3_type      = Deputy Speaker
+| leader3           = '''[[Kongkham Robindro Singh]]'''
+| party3            = [[Bharatiya Janata Party|BJP]]
+| election3         = 22 March 2022
+| leader4_type      = [[List of Chief Ministers of Manipur|Chief Minister]] <br /> (Leader of the House)
+| leader4           = '''[[Yumnam Khemchand Singh|Y. Khemchand Singh]]'''
+| party4            = [[Bharatiya Janata Party|BJP]]
+| election4         = 4 February 2026<ref name="New Manipur Govt">{{cite web|url=https://www.business-standard.com/india-news/y-khemchand-singh-will-be-next-manipur-cm-woman-kuki-mla-to-be-deputy-cm-126020301598_1.html|title=Y Khemchand Singh will be next Manipur CM; woman Kuki MLA to be deputy CM|work=Business Standard|accessdate=3 February 2026}}</ref>
+| leader5_type      = [[List of deputy chief ministers of Manipur|Deputy Chief Ministers]]<br/>(Deputy Leaders of the house)
+| leader5           = '''[[Nemcha Kipgen]]''', [[Bharatiya Janata Party|BJP]] <br /> '''[[Losii Dikho]]'''
+| party5            = [[Naga People's Front|NPF]]
+| election5         = 4 February 2026<ref name="New Manipur Govt"/><ref name="auto1">{{cite web|url=https://www.ndtv.com/india-news/yumnam-khemchand-singh-sworn-in-as-manipur-chief-minister-after-presidents-rule-ends-10945800|title=Yumnam Khemchand Singh Sworn In As Manipur Chief Minister, Gets 2 Deputies|work=NDTV|accessdate=4 February 2026}}</ref>
+| leader6_type      = Leader of the Opposition
+| leader6           = '''Vacant'''
+| election6         = 30 March 2022
+| structure1        = India Manipur Legislative Assembly 2026.svg
+| structure1_res    = 300px       
+| political_groups1 = 
+'''[[Government of Manipur|Government]] (51)'''
+:{{Color box|{{party color|National Democratic Alliance}}}} [[National Democratic Alliance|NDA]] (52)
+:* {{Color box|#FF9933}} [[Bharatiya Janata Party|BJP]] (36)
+:*{{colorbox|{{party color|National People's Party (India)}}}} [[National People's Party (India)|NPP]] (6)
+:* {{color box|{{Party color|Naga People's Front}}}} [[Naga People's Front|NPF]] (5)<ref>{{Cite web |title=NPF joins Manipur cabinet, triggers ministry hope for other BJP allies |url=https://www.newindianexpress.com/nation/2022/mar/22/npf-joins-manipur-cabinet-triggers-ministry-hope-for-other-bjp-allies-2433028.html |access-date=2023-12-16 |website=The New Indian Express|date=22 March 2022 }}</ref>
+:* {{Color box|#003366}} [[Janata Dal (United)|JD(U)]] (1)
+:* {{Color box|#B2B2B2}} [[Independent politician|IND]] (3)<ref>{{Cite web |date=2022-03-18 |title=2 independents pledge support to BJP in Manipur |url=https://www.hindustantimes.com/india-news/kuki-people-s-alliance-which-won-2-seats-pledges-support-to-bjp-in-manipur-101647610294430.html |access-date=2023-12-16 |website=Hindustan Times |language=en}}</ref>
+''' Opposition (7)'''
+:{{Color box|#00BFFF}} [[Manipur Progressive Secular Alliance|MPSA]] (7)
+:*{{Color box|#00BBFF}} [[Indian National Congress|INC]] (5)
+:*{{Color box|#1E2E3D}} [[Kuki People's Alliance|KPA]] (2)<ref>{{Cite news |date=2023-08-06 |title=NDA ally Kuki People's Alliance withdraws support to Biren Singh government in Manipur |language=en-IN |work=The Hindu |url=https://www.thehindu.com/news/national/other-states/nda-ally-kuki-peoples-alliance-withdraws-support-from-biren-singh-govt-in-manipur/article67165575.ece |access-date=2023-12-16 |issn=0971-751X}}</ref>
+'''Vacant (2)'''
+:*{{Color box|#FFFFFF}} Vacant (2)
+| voting_system1    = [[First-past-the-post voting|First past the post]]
+| last_election1    = [[2022 Manipur Legislative Assembly election|28 February – 5 March 2022]]
+| next_election1    = February – March 2027
+| session_room      = 
+| session_res       = 
+| session_alt       = 
+| meeting_place     = Manipur Legislative Assembly, Capital Complex, [[Thangmeiband]], [[Imphal]], [[Manipur]], [[India]]-795001
+| website           = [https://www.assembly.mn.gov.in/ Manipur Legislative Assembly]
+}}
+
+Election for the '''Twelfth Legislative Assembly''' was held in the Indian state of [[Manipur]] from 28 February to 5 March 2022 in two phases, to elect 60 members of the [[Manipur Legislative Assembly]]. The result of the [[2022 Manipur Legislative Assembly election]] was declared on 10 March 2022.
+
+The [[11th Manipur Assembly|11th Manipur Legislative Assembly]] was dissolved in March 2022. The dissolution was necessitated after the results of the 12th Legislative Assembly election were declared on 10 March. The tenure of 11th [[Manipur Legislative Assembly]] was scheduled to end on 19 March 2022.<ref>{{Cite web|title=Terms of the Houses|url=https://eci.gov.in/elections/term-of-houses/|access-date=2021-10-04|website=Election Commission of India|language=en-IN}}</ref><!-- this section is transcluded on Punjab Legislative Assembly  --><section begin="Composition"/><section begin="Parties and leaders"/>
+<!--In the Sixteenth Punjab Legislative Assembly, 92 members of the ruling [[Aam Aadmi Party]] form the treasury benches. The main [[Opposition (politics)|opposition]] party in the assembly is [[Indian National Congress]] with 18 seats. The other parties which are in opposition are [[Shiromani Akali Dal]] [[Bharatiya Janata Party]] [[Bahujan Samaj Party]] and [[Independent politician|Independent]]. AAP MLA, [[Kultar Singh Sandhwan]] was announced as the speaker of the assembly.<ref>{{Cite news |title=Punjab Cabinet swearing-in Live Updates: From uprooting corruption to tackling drug addiction in Punjab — newly-inducted Ministers set targets |url=https://indianexpress.com/article/cities/chandigarh/punjab-cabinet-swearing-in-live-updates-bhagwant-mann-7826467/ |access-date=19 March 2022 |work=The Indian Express |date=19 March 2022 |language=en}}</ref>
+
+Chief Minister Bhagwant Mann took the oath of office on March 16 at Khatkar Kalan, the ancestral village of [[Bhagat Singh]]. [[Inderbir Singh Nijjar]] took the oath as Protem Speaker. On 17 March Nijjar administered the oath of office to all the 117 legislators of the Sixteenth Punjab Legislative assembly.<ref name="Cabinet NDTV 21 March 2022">{{Cite news |title=In Punjab Cabinet, Bhagwant Mann Keeps Home, Harpal Cheema Gets Finance |url=https://www.ndtv.com/india-news/in-punjab-cabinet-bhagwant-mann-keeps-home-harpal-cheema-gets-finance-2834331 |access-date=21 March 2022 |work=NDTV.com |date=21 March 2022 |archive-date=21 March 2022 |archive-url=https://web.archive.org/web/20220321120858/https://www.ndtv.com/india-news/in-punjab-cabinet-bhagwant-mann-keeps-home-harpal-cheema-gets-finance-2834331 |url-status=live }}</ref> Other 10  cabinet ministers of the [[Mann ministry]], took oath on 19 March.-->
+
+== Office bearers ==
+{| class="wikitable sortable" style="text-align:center;"
+!S.No
+!Position
+!Portrait
+!Name
+!colspan="2" |Party
+!Constituency
+!Office Taken
+!Reference
+|-
+!1
+|'''Speaker'''
+| 
+|[[Thokchom Satyabrata Singh]]
+|{{party name with color|Bharatiya Janata Party|rowspan=4}}
+|[[Yaiskul Assembly constituency|Yaiskul]]
+|rowspan=2|22 March 2022
+|<ref name="auto">{{Cite web |date=2022-03-24 |title=Thokchom Satyabrata Singh elected as new Manipur assembly Speaker |url=https://www.hindustantimes.com/india-news/thokchom-satyabrata-singh-elected-as-new-manipur-assembly-speaker-101648100756789.html |access-date=2022-03-24 |website=Hindustan Times |language=en}}</ref> 
+|-
+!2
+|'''Deputy Speaker'''
+| 
+|[[Kongkham Robindro Singh]] 
+|[[Mayang Imphal Assembly constituency|Mayang Imphal]]
+|<ref name="auto"/> 
+|-
+!3
+|'''Leader of the House''' <br /> '''([[Chief Minister of Manipur|Chief Minister]])'''
+| [[File:YumnamKhemchandSingh.webp|70px]]
+|[[Yumnam Khemchand Singh]]
+|[[Singjamei Assembly constituency|Singjamei]]
+|rowspan=3|4 February 2026
+|<ref name="New Manipur Govt"/>
+|-
+!4
+|rowspan=2|'''Deputy Leaders of the House''' <br /> '''([[List of deputy chief ministers of Manipur|Deputy Chief Ministers]])'''
+| 
+|[[Nemcha Kipgen]]
+|[[Kangpokpi Assembly constituency|Kangpokpi]]
+|<ref name="New Manipur Govt"/>
+|-
+!5
+|
+|[[Losii Dikho]]
+|{{party name with color|Naga People's Front}}
+|[[Mao Assembly constituency|Mao]]
+|<ref name="auto1"/>
+|-
+!6
+|'''Leader of the Opposition'''
+| 
+|'''Vacant'''
+|colspan=2|'''N/A'''
+|'''N/A'''
+|'''N/A'''
+|
+|-                                                       
+|}
+
+== Members of Legislative Assembly ==
+{| class="wikitable sortable"
+|-
+! District
+! No.
+! Constituency
+! Name
+! colspan="2" | Party
+! colspan="2" | Alliance
+! Remarks
+|-
+| rowspan="8" | [[Imphal East district|Imphal East]]
+| 1
+| [[Khundrakpam Assembly constituency|Khundrakpam]]
+| [[Thokchom Lokeshwar Singh|T. Lokeshwar Singh]]
+| {{party name with color|Indian National Congress}}
+| {{Party name with colour|Manipur Progressive Secular Alliance|shortname=MPSA|color=#00BFFF}}
+|
+|-
+| 2
+| [[Heingang Assembly constituency|Heingang]]
+| [[N. Biren Singh]]
+| {{party name with color|Bharatiya Janata Party|rowspan=2}}
+| {{Party name with colour|National Democratic Alliance|rowspan=31}}
+| Resigned On 9 February 2025 as [[List of chief ministers of Manipur|Chief Minister]].<ref>{{Cite news |date=9 February 2025 |title=Biren Singh Quits As Chief Minister 2 Years After Manipur Violence Began. |url=https://www.ndtv.com/video/biren-singh-quits-as-chief-minister-2-years-after-manipur-violence-began-900302 |access-date=9 February 2025 |work=NDTV}}</ref>
+|-
+| 3
+| [[Khurai, Manipur Assembly constituency|Khurai]]
+| [[Leishangthem Susindro Meitei|L. Susindro Meitei]]
+|
+|-
+| 4
+| [[Kshetrigao Assembly constituency|Kshetrigao]]
+| [[Sheikh Noorul Hassan]]
+| {{party name with color|National People's Party (India)}}
+|
+|-
+| 5
+| [[Thongju Assembly constituency|Thongju]]
+| [[Thongam Biswajit Singh|T. Biswajit Singh]]
+| {{party name with color|Bharatiya Janata Party|rowspan=4}}
+|
+|-
+| 6
+| [[Keirao Assembly constituency|Keirao]]
+| [[Lourembam Rameshwor Meetei|L. Rameshwor Meitei]]
+|
+|-
+| 7
+| [[Andro Assembly constituency|Andro]]
+| [[Thounaojam Shyamkumar Singh|T. Shyamkumar Singh]]
+|
+|-
+| 8
+| [[Lamlai Assembly constituency|Lamlai]]
+| [[Khongbantabam Ibomcha|K. Ibomcha]]
+|
+|-
+| rowspan="6" |[[Imphal West district|Imphal West]]
+| rowspan="2" |9
+| rowspan="2" |[[Thangmeiband Assembly constituency|Thangmeiband]]
+| rowspan="2" |[[Khumukcham Joykishan|K. Joykisan Singh]]
+| {{Party name with color|Janata Dal (United)}}
+| rowspan="2" |Switched from JD(U) to BJP<ref name=":0">{{Cite web |date=2022-09-02 |title=Five JD(U) MLAs join BJP in Manipur |url=https://www.etvbharat.com/english/national/bharat/five-jd-u-mlas-join-bjp-in-manipur/na20220902222533200200269 |access-date=2022-09-02 |website=ETV Bharat News}}</ref>
+|-
+|{{party name with color|Bharatiya Janata Party}}
+|-
+| 10
+| [[Uripok Assembly constituency|Uripok]]
+| [[Khwairakpam Raghumani Singh|K. Raghumani Singh]]
+| {{party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+| 11
+| [[Sagolband Assembly constituency|Sagolband]]
+| [[Rajkumar Imo Singh]]
+|
+|-
+| 12
+| [[Keishamthong Assembly constituency|Keishamthong]]
+| [[Sapam Nishikant Singh]]
+| {{Party name with color|Independent|shortname=IND}}
+|
+|-
+| 13
+| [[Singjamei Assembly constituency|Singjamei]]
+| [[Yumnam Khemchand Singh]]
+| {{party name with color|Bharatiya Janata Party|rowspan=2}}
+| [[List of chief ministers of Manipur|Chief Minister]] since 4 February 2026
+|-
+| rowspan="3" | [[Imphal East district|Imphal East]]
+| 14
+| [[Yaiskul Assembly constituency|Yaiskul]]
+| [[Thokchom Satyabrata Singh|T. Satyabrata Singh]]
+|
+|-
+| rowspan="2" |15
+| rowspan="2" |[[Wangkhei Assembly constituency|Wangkhei]]
+| rowspan="2" |[[Thangjam Arunkumar]]
+| {{Party name with color|Janata Dal (United)}}
+| rowspan="2" |Switched from JD(U) to BJP<ref name=":0" />
+|-
+| {{party name with color|Bharatiya Janata Party}}
+|-
+| rowspan="8" | [[Imphal West district|Imphal West]]
+| 16
+| [[Sekmai Assembly constituency|Sekmai]] (SC)
+| [[Heikham Dingo Singh]]
+| {{party name with color|Bharatiya Janata Party|rowspan=6}}
+|
+|-
+| 17
+| [[Lamsang Assembly constituency|Lamsang]]
+| [[Sorokhaibam Rajen]]
+|
+|-
+| 18
+| [[Konthoujam Assembly constituency|Konthoujam]]
+| Sapam Ranjan Singh
+|
+|-
+| 19
+| [[Patsoi Assembly constituency|Patsoi]]
+| [[Sapam Kunjakeswor Singh]]
+|
+|-
+| 20
+| [[Langthabal Assembly constituency|Langthabal]]
+| [[Karam Shyam]]
+|
+|-
+| 21
+| [[Naoriya Pakhanglakpa Assembly constituency|Naoriya Pakhanglakpa]]
+| [[Soraisam Kebi Devi]]
+|
+|-
+| 22
+| [[Wangoi Assembly constituency|Wangoi]]
+| [[Khuraijam Loken Singh]]
+| {{party name with color|National People's Party (India)}}
+|
+|-
+| 23
+| [[Mayang Imphal Assembly constituency|Mayang Imphal]]
+| [[Kongkham Robindro Singh]]
+| {{party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+| rowspan="6" | [[Bishnupur district|Bishnupur]]
+| 24
+| [[Nambol Assembly constituency|Nambol]]
+| [[Thounaojam Basanta Kumar Singh|T. Basanta Kumar Singh]]
+|
+|-
+| 25
+| [[Oinam Assembly constituency|Oinam]]
+| [[Irengbam Nalini Devi]]
+| {{party name with color|National People's Party (India)}}
+|
+|-
+| 26
+| [[Bishnupur, Manipur Assembly constituency|Bishnupur]]
+| [[Govindas Konthoujam]]
+| {{party name with color|Bharatiya Janata Party}}
+|
+|-
+| 27
+| [[Moirang Assembly constituency|Moirang]]
+| [[Thongam Shanti Singh]]
+| {{party name with color|National People's Party (India)}}
+|
+|-
+| 28
+| [[Thanga Assembly constituency|Thanga]]
+| [[Tongbram Robindro Singh]]
+| {{party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+| 29
+| [[Kumbi Assembly constituency|Kumbi]]
+| [[Sanasam Premachandra Singh|S. Premachandra Singh]]
+|
+|-
+| rowspan="10" | [[Thoubal district|Thoubal]]
+| 30
+| [[Lilong Assembly constituency|Lilong]]
+| [[Muhammad Abdul Nasir]]
+| {{Party name with color|Janata Dal (United)}}
+|
+|-
+| 31
+| [[Thoubal Assembly constituency|Thoubal]]
+| [[Okram Ibobi Singh]]
+| {{party name with color|Indian National Congress|rowspan=2}}
+| {{Party name with colour|Manipur Progressive Secular Alliance|shortname=MPSA|color=#00BFFF|rowspan=2}}
+|
+|-
+| 32
+| [[Wangkhem Assembly constituency|Wangkhem]]
+| [[Keisham Meghachandra Singh|K. Meghachandra Singh]]
+|
+|-
+| 33
+| [[Heirok Assembly constituency|Heirok]]
+| [[Thokchom Radheshyam Singh|T. Radheshyam Singh]]
+| {{party name with color|Bharatiya Janata Party|rowspan=2}}
+| {{Party name with colour|National Democratic Alliance|rowspan=2}}
+|
+|-
+| 34
+| [[Wangjing Tentha Assembly constituency|Wangjing Tentha]]
+| [[Paonam Brojen]]
+|
+|-
+| 35
+| [[Khangabok Assembly constituency|Khangabok]]
+| [[Surjakumar Okram]]
+| {{party name with color|Indian National Congress}}
+| {{Party name with colour|Manipur Progressive Secular Alliance|shortname=MPSA|color=#00BFFF}}
+|
+|-
+| 36
+| [[Wabgai Assembly constituency|Wabgai]]
+| [[Usham Deben Singh]]
+| {{party name with color|Bharatiya Janata Party}}
+| {{Party name with colour|National Democratic Alliance|rowspan=3}}
+|
+|-
+| 37
+| [[Kakching Assembly constituency|Kakching]]
+| [[Mayanglambam Rameshwar Singh|M. Rameshwar Singh]]
+| {{party name with color|National People's Party (India)}}
+|
+|-
+| 38
+| [[Hiyanglam Assembly constituency|Hiyanglam]]
+| [[Yumnam Radheshyam]]
+| {{party name with color|Bharatiya Janata Party}}
+|
+|-
+| 39
+| [[Sugnu Assembly constituency|Sugnu]]
+| [[Kangujam Ranjit Singh]]
+| {{party name with color|Indian National Congress}}
+| {{Party name with colour|Manipur Progressive Secular Alliance|shortname=MPSA|color=#00BFFF}}
+|
+|-
+| rowspan="2" |[[Imphal East district|Imphal East]]
+| rowspan="2" |40
+| rowspan="2" |[[Jiribam Assembly constituency|Jiribam]]
+| rowspan="2" |[[Ashab Uddin (politician)|Ashab Uddin]]
+| {{Party name with color|Janata Dal (United)}}
+| {{Party name with colour|National Democratic Alliance|rowspan=7}}
+| rowspan="2" |Switched from JD(U) to BJP<ref name=":0" />
+|-
+| {{party name with color|Bharatiya Janata Party}}
+|-
+| rowspan="2" | [[Chandel district|Chandel]]
+| 41
+| [[Chandel Assembly constituency|Chandel]] (ST)
+| [[Olish Shilshi]]
+| {{party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+| 42
+| [[Tengnoupal Assembly constituency|Tengnoupal]] (ST)
+| [[Letpao Haokip]]
+|
+|-
+| rowspan="3" | [[Ukhrul district|Ukhrul]]
+| 43
+| [[Phungyar Assembly constituency|Phungyar]] (ST)
+| [[Leishiyo Keishing]]
+| {{party name with color|Naga People's Front|rowspan=3}}
+|
+|-
+| 44
+| [[Ukhrul Assembly constituency|Ukhrul]] (ST)
+| [[Ram Muivah]]
+|
+|-
+| 45
+| [[Chingai Assembly constituency|Chingai]] (ST)
+| [[Khashim Vashum]]
+|
+|-
+| rowspan="7" | [[Senapati district|Senapati]]
+| 46
+| [[Saikul Assembly constituency|Saikul]] (ST)
+| [[Kimneo Haokip Hangshing|K. Haokip Hangshing]]
+| {{Party name with color|Kuki People's Alliance}}
+| {{Party name with colour|Independent politician|shortname=Others}}
+|
+|-
+| 47
+| [[Karong Assembly constituency|Karong]] (ST)
+| [[J. Kumo Sha]]
+| {{Party name with color|Independent politician|shortname=IND}}
+| {{Party name with colour|National Democratic Alliance|rowspan=3}}
+|
+|-
+| 48
+| [[Mao Assembly constituency|Mao]] (ST)
+| [[Losii Dikho]]
+| {{party name with color|Naga People's Front}}
+| [[List of deputy chief ministers of Manipur|Deputy Chief Minister]] since 4 February 2026
+|-
+| rowspan=2| 49
+| rowspan=2|[[Tadubi Assembly constituency|Tadubi]] (ST)
+| [[N. Kayisii]]
+| {{party name with color|National People's Party (India)}}
+| Died on 18 January 2025<ref>{{cite web|url=https://www.indiatoday.in/india/story/manipur-mla-n-kayisii-dies-prolonged-illness-58-2666786-2025-01-18|title=Manipur MLA N Kayisii dies at 58 after prolonged illness|work=India Today|accessdate=18 January 2025}}</ref>
+|-
+! colspan=6|Vacant
+|-
+| 50
+| [[Kangpokpi Assembly constituency|Kangpokpi]]
+| [[Nemcha Kipgen]]
+| {{party name with color|Bharatiya Janata Party}}
+| {{Party name with colour|National Democratic Alliance|rowspan=8}}
+| [[List of deputy chief ministers of Manipur|Deputy Chief Minister]] since 4 February 2026
+|-
+| 51
+| [[Saitu Assembly constituency|Saitu]] (ST)
+| [[Haokholet Kipgen]]
+| {{Party name with color|Independent|shortname=IND}}
+|
+|-
+| rowspan="3" | [[Tamenglong district|Tamenglong]]
+| 52
+| [[Tamei Assembly constituency|Tamei]] (ST)
+| [[Awangbow Newmai]]
+| {{party name with color|Naga People's Front}}
+|
+|-
+| 53
+| [[Tamenglong Assembly constituency|Tamenglong]] (ST)
+| [[Janghemlung Panmei]]
+| {{party name with color|National People's Party (India)}}
+|
+|-
+| 54
+| [[Nungba Assembly constituency|Nungba]] (ST)
+| [[Dinganglung Gangmei]]
+| {{party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="9" |[[Churachandpur district|Churachandpur]]
+| rowspan="2" |55
+| rowspan="2" |[[Tipaimukh Assembly constituency|Tipaimukh]] (ST)
+| rowspan="2" |[[Ngursanglur Sanate]]
+| {{Party name with color|Janata Dal (United)}}
+| rowspan="2" |Switched from JD(U) to BJP<ref name=":0" />
+|-
+| {{party name with color|Bharatiya Janata Party}}
+|-
+| rowspan=2| 56
+| rowspan=2| [[Thanlon Assembly constituency|Thanlon]] (ST)
+| [[Vungzagin Valte]]
+| {{party name with color|Bharatiya Janata Party}}
+| Died on 20 February 2026<ref>{{Cite news |date=20 February 2026 |title=Manipur BJP MLA Vungzagin Valte Passes Away |work=Northeast Live |url=https://northeastlivetv.com/around-ne/manipur/breaking-news-manipur-bjp-mla-vungzagin-valte-passes-away/}}</ref>
+|-
+! colspan=6|Vacant
+|-
+| 57
+| [[Henglep Assembly constituency|Henglep]] (ST)
+| [[Letzamang Haokip]]
+| {{party name with color|Bharatiya Janata Party}}
+| {{Party name with colour|National Democratic Alliance|rowspan=4}}
+|
+|-
+| rowspan="2" |58
+| rowspan="2" |[[Churachandpur Assembly constituency|Churachandpur]] (ST)
+| rowspan="2" |[[L. M. Khaute]]
+| {{Party name with color|Janata Dal (United)}}
+| rowspan="2" |Switched from JD(U) to BJP<ref name=":0" />
+|-
+| {{party name with color|Bharatiya Janata Party}}
+|-
+| 59
+| [[Saikot Assembly constituency|Saikot]] (ST)
+| [[Paolienlal Haokip]]
+| {{party name with color|Bharatiya Janata Party}}
+|
+|-
+| 60
+| [[Singhat Assembly constituency|Singhat]] (ST)
+| [[Chinlunthang|Chinlunthang Manlun]]
+| {{party name with color|Kuki People's Alliance}}
+| {{Party name with colour|Independent politician|shortname=Others}}
+|
+|-
+|}<section end="Composition"/>
+
+== References ==
+{{Reflist}}
+
+{{Current Indian assemblies}}
+{{Authority control}}
+
+[[Category:Terms of the Manipur Legislative Assembly|12th]]
+[[Category:2022 establishments in Manipur]]
+[[Category:Manipur MLAs 2022–2027| ]]
+[[Category:Lists of current Indian state and territorial assemblies|Manipur]]

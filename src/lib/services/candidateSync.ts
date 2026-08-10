@@ -340,7 +340,10 @@ export async function fetchOfficialCandidates(supabase: Client, seatId: string) 
 // source only gives us a free-text party name/abbreviation, not one of our
 // political_parties rows -- best-effort match it by name for this seat's
 // country so the stub profile's party comes through structured when
-// possible; falls back to no party rather than guessing wrong.
+// possible. If nothing matches, this is a genuinely new party for that
+// country (not a bad guess) -- add it via get_or_create_political_party
+// (admin-only RPC, upserts on (country, name)) rather than dropping the
+// party onto the bio as unstructured text.
 export async function addFetchedCandidate(
   supabase: Client,
   seatId: string,
@@ -355,12 +358,19 @@ export async function addFetchedCandidate(
       (p) => p.name.toLowerCase() === needle || p.name.toLowerCase().includes(needle) || needle.includes(p.name.toLowerCase())
     );
     partyId = match?.id ?? null;
+    if (!partyId) {
+      const { data: newPartyId } = await supabase.rpc("get_or_create_political_party", {
+        p_country: country,
+        p_name: candidate.party.trim(),
+      });
+      partyId = newPartyId ?? null;
+    }
   }
   return addUnregisteredCandidate(supabase, seatId, {
     fullName: candidate.name,
     partyId,
     education: null,
     hometown: null,
-    bio: partyId ? null : candidate.party ? `Party (from official source): ${candidate.party}` : null,
+    bio: null,
   });
 }

@@ -1,0 +1,715 @@
+{{Short description|Legislature of Jammu and Kashmir, 2024–present}}
+{{Use dmy dates|date=May 2025}}{{Use Indian English|date=May 2025}}
+{{Infobox legislative term
+| name                  = 13th Jammu and Kashmir Assembly
+| before                = [[12th Jammu and Kashmir Assembly]] (state)
+| after                 = 
+| image                 = 
+| image_size            = 100px
+| caption               = 
+| body                  = [[Jammu and Kashmir Legislative Assembly]]
+| election              = [[2024 Jammu and Kashmir Legislative Assembly election]]
+| government            = [[Second Omar Abdullah ministry]]
+| opposition            =
+| term_start            = October 2024
+| term_end              = Present 
+| chamber1              = 
+| chamber1_image        = 
+| chamber1_image_size   = 
+| chamber1_alt          = 
+| membership1           = 
+| control1              = 
+| chamber2              = 
+| chamber2_image         = 
+| chamber2_image_size   = 350px
+| chamber2_alt          = 
+| membership2           = 90 elected + 5 appointed
+| control2              = [[Jammu and Kashmir National Conference]]<ref>{{cite news | url=https://www.thehindu.com/elections/jammu-and-kashmir-assembly/jammu-and-kashmir-assembly-election-results-omar-abdullah-nc-pdp-live-updates-october-8/article68729051.ece | title=Jammu and Kashmir Election Results 2024 Highlights: Results for all 90 seats declared | newspaper=The Hindu }}</ref>
+| chamber2_leader1_type =  [[List of speakers of the Jammu and Kashmir Legislative Assembly|Speaker]]
+| chamber2_leader1      = [[Abdul Rahim Rather (born 1944)|Abdul Rahim Rather]]
+| chamber2_leader2_type =  Deputy Speaker
+| chamber2_leader2      = ''vacant''
+| chamber2_leader3_type = [[List of chief ministers of Jammu and Kashmir|Chief Minister]]
+| chamber2_leader3      = [[Omar Abdullah]]
+| chamber2_leader4_type =  [[List of deputy chief ministers of Jammu and Kashmir|Deputy Chief Minister]]
+| chamber2_leader4      = [[Surinder Kumar Choudhary]]
+| chamber2_leader5_type = [[List of leaders of the opposition in the Jammu and Kashmir Legislative Assembly|Leader of the Opposition]]
+| chamber2_leader5      =  [[Sunil Kumar Sharma (Jammu and Kashmir)|Sunil Kumar Sharma]]
+| chamber2_leader6_type = [[List of current Indian opposition leaders#Legislatures of the States and Union territories|Deputy Leaders of the Opposition]]
+| chamber2_leader6      = [[Surjeet Singh Slathia]], [[Bharatiya Janata Party|BJP]]<br>[[Pawan Kumar Gupta]]
+| session1_start         = 
+| session1_end           = 
+}}
+
+The '''Thirteenth [[Jammu and Kashmir Legislative Assembly]]''' was convened following the [[2024 Jammu and Kashmir Legislative Assembly election]] held in September and October 2024.
+
+==Office bearers==
+{|class="wikitable" style="text-align:center"
+|-
+!Office 
+!Holder
+!Since
+|-
+|Speaker 
+|[[Abdul Rahim Rather (born 1944)|Abdul Rahim Rather]]
+|4 November 2024
+|-
+|Leader of the House<br /><small>[[List of chief ministers of Jammu and Kashmir|(Chief Minister)]]</small>
+|[[Omar Abdullah]]<ref>{{Cite news |last=Adnal |first=Madhuri |date=11 October 2024 |title=NC Legislators Thumbs Up Omar Abdullah for J&K Chief Minister |url=https://www.oneindia.com/india/nc-legislators-thumbs-up-omar-abdullah-for-j-k-chief-minister-011-3958009.html |access-date=26 November 2024 |work=[[Oneindia]]}}</ref>
+|16 October 2024
+|-
+|[[List of deputy chief ministers of Jammu and Kashmir|Deputy Chief Minister]]
+|[[Surinder Kumar Choudhary]]
+|16 October 2024
+|-
+|[[List of current Indian opposition leaders#Legislatures of the States and Union territories|Leader of the Opposition]]
+|[[Sunil Kumar Sharma (Jammu and Kashmir)|Sunil Kumar Sharma]]
+|3 November 2024
+|-
+|}
+
+==Membership by party==
+[[File:India Jammu and Kashmir Legislative Assembly 2025.svg |thumb|Membership by party in the 13th Jammu and Kashmir Assembly]]
+The membership of the assembly by party is as follows:<ref>{{Cite web |date=October 2024 |title=Jammu & Kashmir |url=https://results.eci.gov.in/AcResultGenOct2024/partywiseresult-U08.htm |website=Election Commission of India}}</ref>
+
+{| class="wikitable" style="text-align:Left;"
+!colspan=2| Party 
+!MLAs
+|-
+|{{Party color cell|Jammu & Kashmir National Conference}} 
+|[[Jammu & Kashmir National Conference]]
+|41
+|-
+|{{Party color cell|Bharatiya Janata Party}} 
+|[[Bharatiya Janata Party]]
+|29
+|-
+|{{Party color cell|Indian National Congress}} 
+|[[Indian National Congress]]
+|6
+|-
+|{{Party color cell|Jammu and Kashmir People's Democratic Party}} 
+|[[Jammu and Kashmir People's Democratic Party]]
+|4
+|-
+|{{Party color cell|Aam Aadmi Party}} 
+|[[Aam Aadmi Party]]
+|1
+|-
+|{{Party color cell|Communist Party of India (Marxist)}} 
+|[[Communist Party of India (Marxist)]]
+|1
+|-
+|{{Party color cell|Green}} 
+|[[Jammu and Kashmir Awami Ittehad Party]]
+|1
+|-
+|{{Party color cell|Jammu and Kashmir People's Conference}} 
+|[[Jammu and Kashmir People's Conference]]
+|1
+|-
+|{{Party color cell|Independent politician}} 
+|[[Independent politician|Independent]]
+|6
+|-
+|{{Party color cell|Nominated }} 
+|[[Nominated]]
+|5
+|-
+! colspan=2|Total 
+! 95
+|}
+
+== Members of Legislative Assembly (MLA) ==
+The membership of the assembly is as follows:<ref>{{Cite web |date=October 2024 |title=Status Known For 90 out of 90 Constituencies |url=https://results.eci.gov.in/AcResultGenOct2024/statewiseU081.htm |website=Election Commission of India}}</ref>
+
+{|class="wikitable sortable" style="text-align:center;"
+! rowspan="2" |District
+! colspan="2" |Constituency
+! rowspan="2" |Name
+! colspan="2" rowspan="2" |Party 
+! rowspan="2" |Remarks
+|-
+! No.
+! Name
+|-
+| rowspan="6" | [[Kupwara district|Kupwara]]
+!1
+||[[Karnah Assembly constituency|Karnah]]
+|[[Javaid Ahmad Mirchal]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+!2
+| [[Trehgam Assembly constituency|Trehgam]]
+|[[Saifullah Mir]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+!3
+| [[Kupwara Assembly constituency|Kupwara]]
+|[[Mir Mohammad Fayaz]]
+|{{party name with color|Jammu and Kashmir People's Democratic Party}}
+|
+|-
+!4
+| [[Lolab Assembly constituency|Lolab]]
+|[[Qaysar Jamshaid Lone]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+!5
+| [[Handwara Assembly constituency|Handwara]]
+|[[Sajjad Gani Lone|Sajad Gani Lone]]
+|{{party name with color|Jammu and Kashmir People's Conference}}
+|
+|-
+!6
+| [[Langate Assembly constituency|Langate]]
+|[[Khursheed Ahmed Sheikh]]
+|{{party color cell|Green}}
+|[[Jammu and Kashmir Awami Ittehad Party|AIP]]<ref>Elected as Independent, Primary member of AIP </ref>
+|
+|-
+|rowspan="7" | [[Baramulla district|Baramulla]]
+!7
+| [[Sopore Assembly constituency|Sopore]]
+|[[Irshad Rasool Kar]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+!8
+| [[Rafiabad Assembly constituency|Rafiabad]]
+|[[Javid Ahmad Dar]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|''Cabinet Minister''
+|-
+!9
+|[[Uri Assembly constituency|Uri]]
+|[[Sajjad Safi]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+!10
+|[[Baramulla Assembly constituency|Baramulla]]
+|[[Javid Hassan Baig]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+!11
+|[[Gulmarg Assembly constituency|Gulmarg]]
+|[[Pirzada Farooq Ahmed Shah]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+!12
+|[[Wagoora–Kreeri Assembly constituency|Wagoora–Kreeri]]
+|[[Irfan Hafiz Lone]]
+|{{party name with color|Indian National Congress}}
+|
+|-
+!13
+|[[Pattan Assembly constituency|Pattan]]
+|[[Javaid Riyaz]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+|rowspan="3"| [[Bandipora district|Bandipora]]
+!14
+| [[Sonawari Assembly constituency|Sonawari]]
+|[[Hilal Akbar Lone]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+!15
+| [[Bandipora Assembly constituency|Bandipora]]
+|[[Nizam Uddin Bhat]]
+|{{party name with color|Indian National Congress}}
+|
+|-
+!16
+| [[Gurez Assembly constituency|Gurez]] (ST)
+|[[Nazir Ahmad Khan (Indian politician)|Nazir Ahmed Khan]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+|rowspan="2" | [[Ganderbal district|Ganderbal]]
+!17
+| [[Kangan Assembly constituency|Kangan]] (ST) 
+|[[Mian Mehar Ali]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+!18
+| [[Ganderbal Assembly constituency|Ganderbal]]
+|[[Omar Abdullah]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|''Chief Minister''
+|-
+|rowspan="8"| [[Srinagar district|Srinagar]]
+!19
+| [[Hazratbal Assembly constituency|Hazratbal]]
+|[[Salman Sagar]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!20
+| [[Khanyar Assembly constituency|Khanyar]]
+|[[Ali Mohammad Sagar]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!21
+| [[Habba Kadal Assembly constituency|Habba Kadal]]
+|[[Shamim Firdous]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!22
+| [[Lal Chowk Assembly constituency|Lal Chowk]]
+|[[Sheikh Ahsan Ahmed]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!23
+| [[Chanapora Assembly constituency|Chanapora]]
+|[[Mushtaq Guroo]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!24
+| [[Zadibal Assembly constituency|Zadibal]]
+|[[Tanvir Sadiq]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!25
+| [[Eidgah Assembly constituency|Eidgah]]
+|[[Mubarak Gul|Mubarik Gul]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!26
+|[[Central Shalteng Assembly constituency|Central Shalteng]]
+|[[Tariq Hameed Karra]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|rowspan="6" | [[Budgam district|Budgam]]
+! rowspan="2"| 27
+| rowspan="2"|[[Budgam Assembly constituency|Budgam]]
+|[[Omar Abdullah]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|Resigned on 21 October 2024<ref>{{Cite news |date=2024-10-21 |title=Omar Abdullah Steps Down From Budgam Seat, Retains Ganderbal In Assembly|url=https://www.ndtv.com/india-news/omar-abdullah-steps-down-from-budgam-seat-retains-ganderbal-in-assembly-6840344 |access-date=2024-10-21 |work=NDTV|issn=}}</ref>
+|-
+|[[Aga Syed Muntazir Mehdi]]
+|{{Party name with color|Jammu and Kashmir Peoples Democratic Party}}
+|Elected in by-election
+|-
+!28
+| [[Beerwah Assembly constituency|Beerwah]]
+|[[Shafi Ahmad Wani]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!29
+| [[Khan Sahib Assembly constituency|Khan Sahib]]
+|[[Saif Ud Din Bhat]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!30
+| [[Charari Sharief Assembly constituency|Charari Sharief]]
+|[[Abdul Rahim Rather (born 1944)|Abdul Rahim Rather]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|Speaker 
+|-
+!31
+| [[Chadoora Assembly constituency|Chadoora]]
+|[[Ali Mohammad Dar]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+|rowspan="4"| [[Pulwama district|Pulwama]]
+!32
+| [[Pampore Assembly constituency|Pampore]]
+|[[Hasnain Masoodi]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!33
+| [[Tral Assembly constituency|Tral]]
+|[[Rafiq Ahmad Naik]]
+|{{Party name with color|Jammu and Kashmir People's Democratic Party}}
+|
+|-
+!34
+| [[Pulwama Assembly constituency|Pulwama]]
+|[[Waheed Ur Rehman Para]]
+|{{Party name with color|Jammu & Kashmir People's Democratic Party}}
+|
+|-
+!35
+| [[Rajpora Assembly constituency|Rajpora]]
+|[[Ghulam Mohi Uddin Mir|Ghulam Mohit Uddin Mir]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+| rowspan="2" |[[Shopian district|Shopian]]
+!36
+| [[Zainapora Assembly constituency|Zainapora]]
+|[[Showkat Hussain]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!37
+|[[Shopian Assembly constituency|Shopian]]
+|[[Shabir Ahmad Kullay]]
+|{{Party name with color|Independent|shortname=IND}}
+|
+|-
+| rowspan="3" |[[Kulgam district|Kulgam]]
+!38
+|[[Damhal Hanji Pora Assembly constituency|DH Pora]]
+|[[Sakina Itoo]]
+|{{party name with color|Jammu and Kashmir National Conference}}
+|''Cabinet Minister''
+|-
+!39
+|[[Kulgam Assembly constituency|Kulgam]]
+|[[Mohamad Yusuf Tarigami|Mohammad Yusuf Tarigami]]
+|{{Party name with color|Communist Party of India (Marxist)}}
+|
+|-
+!40
+|[[Devsar, Jammu and Kashmir Assembly constituency|Devsar]]
+|[[Peerzada Feroze Ahamad]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+|rowspan="7" |[[Anantnag district|Anantnag]] 
+!41
+|[[Dooru Assembly constituency|Dooru]]
+|[[Ghulam Ahmad Mir|Gulam Ahmad Mir]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!42
+|[[Kokernag Assembly constituency|Kokernag]] (ST) 
+|[[Zafar Ali Khatana]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!43
+|[[Anantnag West Assembly constituency|Anantnag West]]
+|[[Abdul Majeed Bhat]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!44
+|[[Anantnag Assembly constituency|Anantnag]]
+|[[Peerzada Mohammad Syed]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!45
+|[[Srigufwara–Bijbehara Assembly constituency|Srigufwara–Bijbehara]]
+|[[Bashir Ahmad Shah Veeri|Bashir Ahmed Shah Veeri]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!46
+|[[Shangus–Anantnag East Assembly constituency|Shangus–Anantnag East]]
+|[[Reyaz Ahmad Khan]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!47
+|[[Pahalgam Assembly constituency|Pahalgam]]
+|[[Altaf Ahmad Wani]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+| rowspan="3" |[[Kishtwar district|Kishtawar]]
+!48
+|[[Inderwal Assembly constituency|Inderwal]]
+|[[Payare Lal Sharma]]
+|{{Party name with color|Independent|shortname=IND}}
+|Supports JKNC<ref name="4 Independent MLAs extend support to JKNC">{{cite web|url=https://www.indiatvnews.com/jammu-and-kashmir/national-conference-secures-majority-jammu-and-kashmir-elections-mlas-omar-abdullah-nc-congress-alliance-2024-10-10-956483|title=Omar Abdullah's NC touches majority mark without Congress after 4 J-K independent MLAs extend support|work=India TV|date=10 October 2024 |accessdate=12 October 2024}}</ref>
+|-
+!49
+|[[Kishtwar Assembly constituency|Kishtwar]]
+|[[Shagun Parihar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!50
+|[[Padder–Nagseni Assembly constituency|Padder–Nagseni]]
+|[[Sunil Kumar Sharma (Jammu and Kashmir)|Sunil Kumar Sharma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|''Leader of Opposition''
+|-
+| rowspan="3" |[[Doda district|Doda]] 
+!51
+|[[Bhaderwah Assembly constituency|Bhadarwah]]
+|[[Daleep Singh Parihar|Daleep Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!52
+|[[Doda Assembly constituency|Doda]]
+|[[Mehraj Malik]]
+|{{Party name with color|Aam Aadmi Party}}
+|
+|-
+!53
+|[[Doda West Assembly constituency|Doda West]]
+|[[Shakti Raj|Shakti Raj Parihar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="2" |[[Ramban district|Ramban]]
+!54
+|[[Ramban Assembly constituency|Ramban]]
+|[[Arjun Singh Raju]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!55
+|[[Banihal Assembly constituency|Banihal]]
+|[[Sajad Shaheen]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+| rowspan="3" |[[Reasi district|Reasi]]
+!56
+|[[Gulabgarh Assembly constituency|Gulabgarh]] (ST)
+|[[Khurshied Ahmed]]
+|{{Party name with color|Jammu & Kashmir National Conference}}
+|
+|-
+!57
+|[[Reasi Assembly constituency|Reasi]]
+|[[Kuldeep Raj Dubey]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!58
+|[[Shri Mata Vaishno Devi Assembly constituency|Shri Mata Vaishno Devi]]
+|[[Baldev Raj Sharma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="4" |[[Udhampur district|Udhampur]] 
+!59
+|[[Udhampur West Assembly constituency|Udhampur West]]
+|[[Pawan Kumar Gupta]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!60
+|[[Udhampur East Assembly constituency|Udhampur East]]
+|[[Ranbir Singh Pathania]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!61
+|[[Chanani Assembly constituency|Chenani]]
+|[[Balwant Singh Mankotia]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!62
+|[[Ramnagar, Jammu and Kashmir Assembly constituency|Ramnagar]] (SC)
+|[[Sunil Bhardwaj]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="6" |[[Kathua district|Kathua]]
+!63
+|[[Bani Assembly constituency|Bani]]
+|[[Rameshwar Singh (politician)|Rameshwar Singh Thakur]]
+|{{Party name with color|Independent|shortname=IND}}
+|Supports JKNC<ref name="4 Independent MLAs extend support to JKNC"/>
+|-
+!64
+|[[Billawar Assembly constituency|Billawar]]
+|[[Satish Kumar Sharma (politician)|Satish Kumar Sharma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!65
+|[[Basohli Assembly constituency|Basohli]]
+|[[Darshan Kumar (politician)|Thakur Darshan Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!66
+|[[Jasrota Assembly constituency|Jasrota]]
+|[[Rajiv Jasrotia]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!67
+|[[Kathua Assembly constituency|Kathua]] (SC)
+|[[Bharat Bhushan (politician)|Bharat Bhushan]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!68
+|[[Hiranagar Assembly constituency|Hiranagar]]
+|[[Vijay Kumar (Jammu and Kashmir politician)|Vijay Kumar Sharma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="3" |[[Samba district|Samba]] 
+!69
+|[[Ramgarh, Jammu and Kashmir Assembly constituency|Ramgarh]] (SC)
+|[[Devinder Kumar Manyal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!70
+|[[Samba Assembly constituency|Samba]]
+|[[Surjeet Singh Slathia]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!71
+|[[Vijaypur, Jammu and Kashmir Assembly constituency|Vijaypur]]
+|[[Chander Prakash (politician)|Chander Prakash Ganga]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="12" |[[Jammu district|Jammu]] 
+!72
+|[[Bishnah Assembly constituency|Bishnah]] (SC) 
+|[[Rajeev Kumar (Jammu & Kashmir politician)|Rajeev Kumar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!73
+|[[Suchetgarh Assembly constituency|Suchetgarh]] (SC)
+|[[Gharu Ram Bhagat]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!74
+|[[Ranbir Singh Pora–Jammu South Assembly constituency|RS Pora–Jammu South]]
+|[[Narinder Singh Raina]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!75
+|[[Bahu Assembly constituency|Bahu]]
+|[[Vikram Randhawa]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!76
+|[[Jammu East Assembly constituency|Jammu East]]
+|[[Yudhvir Sethi]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!rowspan="2"|77
+|rowspan="2"|[[Nagrota, Jammu and Kashmir Assembly constituency|Nagrota]]
+|[[Devender Singh Rana]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Died on 31 October 2024<ref>{{cite web|url=https://www.hindustantimes.com/india-news/jk-bjp-mla-devender-singh-rana-passes-away-101730401593502.html|title=J&K BJP MLA Devender Singh Rana passes away|work=Hindustan Times|accessdate=31 October 2024}}</ref>
+|-
+|[[Devyani Singh Rana]]
+|{{Party name with color|Bharatiya Janata Party}}
+|Elected in by-election
+|-
+!78
+|[[Jammu West Assembly constituency|Jammu West]]
+|[[Arvind Gupta (politician)|Arvind Gupta]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!79
+|[[Jammu North Assembly constituency|Jammu North]]
+|[[Sham Lal Sharma]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!80
+|[[Marh Assembly constituency|Marh]] (SC)
+|[[Surinder Kumar (politician)|Surinder Kumar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!81
+|[[Akhnoor Assembly constituency|Akhnoor]] (SC) 
+|[[Mohan Lal (politician)|Mohan Lal]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!82
+|[[Chhamb Assembly constituency|Chhamb]]
+|[[Satish Sharma (politician)|Satish Sharma]]
+|{{Party name with color|Independent|shortname=IND}}
+|Supports JKNC<ref name="4 Independent MLAs extend support to JKNC" /><br>''Cabinet Minister''
+|-
+| rowspan="5" |[[Rajouri district|Rajouri]]
+!83
+|[[Kalakote–Sunderbani Assembly constituency|Kalakote–Sunderbani]]
+|[[Randhir Singh (politician)|Randhir Singh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+!84
+|[[Nowshera Assembly constituency|Nowshera]]
+|[[Surinder Kumar Choudhary|Surinder Choudhary]]
+|{{Party name with color|Jammu and Kashmir National Conference}}
+| ''Deputy Chief Minister''
+|-
+!85
+|[[Rajouri Assembly constituency|Rajouri]] (ST)
+|[[Iftkar Ahmed]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+!86
+|[[Budhal Assembly constituency|Budhal]] (ST)
+|[[Javaid Iqbal (politician)|Javaid Iqbal]]
+|{{Party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+!87
+|[[Thanamandi Assembly constituency|Thanamandi]] (ST)
+|[[Muzaffar Iqbal Khan]]
+|{{Party name with color|Independent|shortname=IND}}
+|
+|-
+| rowspan="3" |[[Poonch district, India|Poonch]]
+!88
+|[[Surankote Assembly constituency|Surankote]] (ST)
+|[[Choudhary Mohammad Akram|Choudhary Mohammed Akram]]
+|{{Party name with color|Independent|shortname=IND}}
+|Supports JKNC<ref name="4 Independent MLAs extend support to JKNC"/>
+|-
+!89
+|[[Poonch Haveli Assembly constituency|Poonch Haveli]]
+|[[Ajaz Ahmed Jan]]
+|{{Party name with color|Jammu and Kashmir National Conference}}
+|
+|-
+!90
+|[[Mendhar Assembly constituency|Mendhar]] (ST)
+|[[Javed Ahmed Rana]]
+|{{Party name with color|Jammu and Kashmir National Conference}}
+|''Cabinet Minister''
+|-
+|}
+
+
+== References ==
+{{Reflist}}
+
+{{Current Indian assemblies}}
+
+[[Category:Jammu and Kashmir MLAs 2024–2029| ]]
+[[Category:Lists of current Indian state and territorial assemblies|J]]
+[[Category:Terms of the Jammu and Kashmir Legislative Assembly]]

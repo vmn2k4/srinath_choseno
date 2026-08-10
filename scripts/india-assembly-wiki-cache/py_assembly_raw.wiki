@@ -1,0 +1,379 @@
+{{short description|Government assembly in India}}
+{{Use dmy dates|date=May 2026}}
+{{Use Indian English|date=May 2026}}
+{{Infobox legislative term
+| name = 16th Puducherry Assembly
+| image = 
+| image_size = 
+| caption = Legislative Assembly Building, rue Victor Simonel, [[Puducherry (city)|Puducherry]], [[India]]
+| body = [[Pondicherry Legislative Assembly]]
+| election = [[2026 Puducherry Legislative Assembly election]]
+| before = [[15th Puducherry Assembly]]
+| after = [[17th Puducherry Assembly]]
+| government = [[Fifth Rangaswamy ministry|Rangaswamy V]]
+| opposition = [[Dravida Munetra Kazhagam]]
+| term_start = {{Start date|2026|||df=y}}
+| term_end = 
+| membership1 = 30+3
+| chamber1_leader1_type = [[List of speakers of the Puducherry Legislative Assembly|Speaker]]
+| chamber1_leader1 = 
+| chamber1_leader2_type = Deputy Speaker
+| chamber1_leader2 = 
+| chamber1_leader3_type = [[List of chief ministers of Puducherry|Chief Minister]]
+| chamber1_leader3 = [[N. Rangasamy]]
+| chamber1_leader4_type = [[List of leaders of the opposition in the Puducherry Legislative Assembly|Leader of the Opposition]]
+| chamber1_leader4 = 
+}}
+
+The '''Sixteenth Assembly of Puducherry''' succeeds the 15th Assembly of Puducherry and will be constituted sooner following the victory of [[National Democratic Alliance]] in the [[2026 Puducherry Legislative Assembly election|2026 assembly election]] that was held on 9 April 2026.
+
+== Important members ==
+
+* '''[[List of speakers of the Puducherry Legislative Assembly|Speaker]]:'''
+** ''TBA''
+* '''Deputy Speaker''':
+** ''TBA''
+* '''[[Chief Minister of Puducherry|Chief Minister]]:'''
+** [[N. Rangasamy]] since 7 May 2021.
+* '''[[List of leaders of the opposition in the Puducherry Legislative Assembly|Leader of opposition]]:'''
+** ''TBA''
+
+== Composition ==
+
+{|class="wikitable"
+!colspan=2|Alliance
+!colspan=2|Party
+!No. of MLAs
+!Leader of the party
+|-
+|rowspan=5 {{party color cell|National Democratic Alliance}}
+|rowspan=5 style="text-align:center;"|'''Government<br/>[[National Democratic Alliance|NDA]]'''<br/>Seats: '''20'''
+|{{party color cell|All India N.R. Congress}}
+|[[All India N.R. Congress]]
+|style="text-align:center;"|12
+|[[N. Rangasamy]]
+|-
+|{{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|style="text-align:center;"|4
+|[[A. Namassivayam]]
+|-
+|{{party color cell|All India Anna Dravida Munnetra Kazhagam}}
+|[[All India Anna Dravida Munnetra Kazhagam]]
+|style="text-align:center;"|1
+|[[A. Anbalagan]]
+|-
+| style="background:#002395"|
+|[[Latchiya Jananayaga Katchi]]
+|style="text-align:center;"|1
+|[[Jose Charles Martin]]
+|-
+|{{party color cell|Independent politician}}
+|[[Independent politician|Independent]]
+|style="text-align:center;"|2
+|N/A
+|-
+|-
+|rowspan=1 {{party color cell|Dravida Munnetra Kazhagam}}
+|rowspan=1 style="text-align:center;"|'''Official Opposition<br/>[[Dravida Munnetra Kazhagam|DMK]]'''<br/>Seats: '''5'''
+|{{party color cell|Dravida Munnetra Kazhagam}}
+|[[Dravida Munnetra Kazhagam]]
+|style="text-align:center;"|5
+|TBA
+|-
+|rowspan=3 {{party color cell|Tamilaga Vettri Kazhagam}}
+|rowspan=3 style="text-align:center;"|'''Other Opposition<br/>[[TVK-led Alliance|TVK+]]'''<br/>Seats: '''4'''
+|{{party color cell|Tamilaga Vettri Kazhagam}}
+|[[Tamilaga Vettri Kazhagam]]
+|style="text-align:center;"|2
+|[[A. K. Sai J. Saravanan Kumar]]
+|-
+|{{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|style="text-align:center;"|1
+|[[P. Karthikeyan (Puducherry politician)|P. Karthikeyan]]
+|-
+| style="background:#FFFF00"|
+|[[Neyam Makkal Kazhagam]]
+|style="text-align:center;"|1
+|[[G. Nehru Kuppusamy]]
+|-
+|{{party color cell|Independent politician}}
+|Others
+|{{party color cell|Independent politician}}
+|[[Independent politician|Independent]]
+|style="text-align:center;"|1
+|N/A
+|-
+|}
+
+== Members of Legislative Assembly ==
+
+{| class="wikitable sortable"
+|+Source:<ref>{{Cite news |author=<!--Not stated--> |date=2026-05-04 |title=Puducherry Assembly Election 2026: Full list of winners |url=https://www.thehindu.com/elections/puducherry-assembly/puducherry-election-2026-results-full-list-of-winners/article70915984.ece |access-date=2026-05-05 |work=The Hindu |language=en-IN |issn=0971-751X}}</ref><ref>{{Cite web |date=2026-05-04 |title=Puducherry Election Results 2026: Full List of constituency-wise winners |url=https://indianexpress.com/article/india/puducherry-election-results-2026-winners-list-constituency-wise-seats-list-10664163/ |access-date=2026-05-05 |website=The Indian Express |language=en}}</ref>
+!District
+!No.
+!Constituency 
+!Name
+!colspan="2"|Party
+!colspan="2"|Alliance
+!Remarks
+|-
+| rowspan="23" | [[Puducherry district|Puducherry]]
+| 1
+| [[Mannadipet Assembly constituency|Mannadipet]]
+|[[A. Namassivayam]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Cabinet Minister
+|-
+| 2
+| [[Thirubuvanai Assembly constituency|Thirubuvanai (SC)]]
+|[[A. K. Sai J. Saravanan Kumar]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+| style="background:#A00000"|
+| align=left|[[TVK-led Alliance|TVK+]]
+|
+|- 
+| 3
+| [[Ossudu Assembly constituency|Ossudu (SC)]]
+|[[P. Karthikeyan (Puducherry politician)|P. Karthikeyan]]
+|{{Party name with color|Indian National Congress}}
+| style="background:#A00000"|
+| align=left|[[TVK-led Alliance|TVK+]]
+|Won as SPA candidate; party switched to TVK+ post-election
+|-
+|4
+| [[Mangalam Assembly constituency|Mangalam]]
+|[[N. Rangaswamy]]
+|{{Party name with color|All India N.R. Congress}}
+|{{Party name with color|National Democratic Alliance}}
+|[[Chief Minister of Puducherry|Chief Minister]]
+|-
+| 5
+| [[Villianur Assembly constituency|Villianur]]
+|[[B. Ravicoumar]]
+|{{Party name with color|All India N.R. Congress}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| 6
+| [[Ozhukarai Assembly constituency|Ozhukarai]]
+|[[K. Narayanasamy]]
+|{{Party name with color|All India N.R. Congress}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| 7
+| [[Kadirkamam Assembly constituency|Kadirkamam]]
+|[[Azhaganantham]]
+|{{Party color cell|Independent politician}}
+| align="left" |[[Independent (politician)|Ind]]
+|{{Party name with color|Independent politician}}
+|
+|-
+| 8
+| [[Indira Nagar Assembly constituency|Indira Nagar]]
+|[[A. K. D. Arumugam]]
+|{{Party name with color|All India N.R. Congress}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|9
+| [[Thattanchavady Assembly constituency|Thattanchavady]]
+|
+|{{Party name with color|Casual vacancy}}
+|{{Party name with color|Casual vacancy }}
+|Vacated by N.Rangaswamy,
+Retained Mangalam
+|-
+|10
+| [[Kamaraj Nagar Assembly constituency|Kamaraj Nagar]]
+|[[Jose Charles Martin]]
+|bgcolor=#002395|
+| align="left" |LJK
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| 11
+| [[Lawspet Assembly constituency|Lawspet]]
+|[[V. P. Sivakolundhu]]
+|{{Party name with color|All India N.R. Congress}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|12
+| [[Kalapet Assembly constituency|Kalapet]]
+|[[Ramesh (politician)|Ramesh]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+| 13
+| [[Muthialpet Assembly constituency|Muthialpet]]
+|[[Vaiyapuri Manikandan]]
+|{{Party name with color|All India N.R. Congress}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| 14
+| [[Raj Bhavan Assembly constituency|Raj Bhavan]]
+|[[Vignesh Kannan]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+| 15
+| [[Oupalam Assembly constituency|Oupalam]]
+|[[A. Anbalagan]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| 16
+| [[Orleampeth Assembly constituency|Orleampeth]]
+|[[G. Nehru Kuppusamy]]
+|{{Party name with color|Neyam Makkal Kazhagam|shortname=NMK|color=#FFFF00}}
+| style="background:#A00000"|
+| align=left|[[TVK-led Alliance|TVK+]]
+|
+|-
+| 17
+| [[Nellithope Assembly constituency|Nellithope]]
+|V. Karthikeyan
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+| 18
+| [[Mudaliarpet Assembly constituency|Mudaliarpet]]
+|[[A. Johnkumar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| 19
+| [[Ariankuppam Assembly constituency|Ariankuppam]]
+|Aiyappan
+|{{Party name with color|All India N.R. Congress}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| 20
+| [[Manavely Assembly constituency|Manavely]]
+|[[B. Ramu]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+| style="background:#A00000"|
+| align=left|[[TVK-led Alliance|TVK+]]
+|
+|-
+| 21
+| [[Embalam Assembly constituency|Embalam (SC)]]
+|[[E. Mohandoss|E. Mohandaoss]]
+|{{Party name with color|All India N.R. Congress}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| 22
+| [[Nettapakkam Assembly constituency|Nettapakkam (SC)]]
+|[[P. Rajavelu|Rajavelu]]
+|{{Party name with color|All India N.R. Congress}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| 23
+| [[Bahour Assembly constituency|Bahour]]
+|[[R. Senthilkumar]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+| rowspan="5" | [[Karaikal district|Karaikal]]
+| 24
+|[[Nedungadu Assembly constituency|Nedungadu (SC)]]
+|[[V. Vigneswaran]]
+|{{Party color cell|Independent politician}}
+| align="left" |[[Independent (politician)|Ind]]
+|{{Party name with color|Independent politician}}
+|
+|-
+| 25
+| [[Thirunallar Assembly constituency|Thirunallar]]
+|[[G. N. S. Rajasekaran]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| 26
+| [[Karaikal North Assembly constituency|Karaikal North]]
+|[[P. R. N. Thirumurugan]]
+|{{Party name with color|All India N.R. Congress}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+| 27
+| [[Karaikal South Assembly constituency|Karaikal South]]
+|[[A. M. H. Nazeem]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|[[List of leaders of the opposition in the Puducherry Legislative Assembly|Leader of the Opposition]]
+|-
+| 28
+| [[Neravy T. R. Pattinam Assembly constituency|Neravy T. R. Pattinam]]
+|[[T. K. S. M. Meenatchisundaram]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|[[Mahé district|Mahe]]
+| 29
+|  [[Mahe Assembly constituency|Mahe]]
+|[[T. Ashok Kumar]]
+|{{Party color cell|Independent politician}}
+| align="left" |[[Independent (politician)|Ind]]
+|{{Party name with color|Independent politician}}
+|
+|-
+|[[Yanam district|Yanam]]
+| 30
+| [[Yanam Assembly constituency|Yanam]]
+|[[Malladi Krishna Rao]]
+|{{Party name with color|All India N.R. Congress}}
+|{{Party name with color|National Democratic Alliance}}
+|Cabinet Minister
+|-
+| rowspan="3" | N/A
+| 31
+|Rowspan="3"|Nominated
+|
+|
+|
+|
+|-
+| 32
+|
+|
+|
+|
+|-
+| 33
+|
+|
+|
+|
+|}
+
+== Notes ==
+
+{{Notelist}}
+
+== References ==
+
+{{Reflist}}
+
+{{Legislature of the Puducherry}}
+{{Current Indian assemblies}}
+
+[[Category:Terms of the Puducherry Legislative Assembly]]
+[[Category:Puducherry MLAs 2026–2031| ]]
+[[Category:Lists of current Indian state and territorial assemblies|Puducherry]]

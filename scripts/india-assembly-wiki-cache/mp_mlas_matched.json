@@ -1,0 +1,2072 @@
+[
+  {
+    "district": "Sheopur",
+    "no": "1",
+    "constituency": "Sheopur",
+    "name": "Babu Jandel",
+    "party": "Indian National Congress",
+    "map_shape_id": 64905,
+    "shape_name": "Sheopur"
+  },
+  {
+    "district": "Sheopur",
+    "no": "2",
+    "constituency": "Vijaypur",
+    "name": "Mukesh Malhotra",
+    "party": "Indian National Congress",
+    "map_shape_id": 67384,
+    "shape_name": "Vijaypur"
+  },
+  {
+    "district": "Morena",
+    "no": "4",
+    "constituency": "Joura",
+    "name": "Pankaj Upadhyay",
+    "party": "Indian National Congress",
+    "map_shape_id": 64907,
+    "shape_name": "Jaura"
+  },
+  {
+    "district": "Morena",
+    "no": "5",
+    "constituency": "Sumawali",
+    "name": "Adal Singh Kansana",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64908,
+    "shape_name": "Sumaoli"
+  },
+  {
+    "district": "Morena",
+    "no": "6",
+    "constituency": "Morena",
+    "name": "Dinesh Gurjar",
+    "party": "Indian National Congress",
+    "map_shape_id": 64909,
+    "shape_name": "Morena"
+  },
+  {
+    "district": "Morena",
+    "no": "7",
+    "constituency": "Dimani",
+    "name": "Narendra Singh Tomar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64910,
+    "shape_name": "Dimani"
+  },
+  {
+    "district": "Morena",
+    "no": "8",
+    "constituency": "Ambah (SC)",
+    "name": "Devendra Sakhwar",
+    "party": "Indian National Congress",
+    "map_shape_id": 64911,
+    "shape_name": "Ambah"
+  },
+  {
+    "district": "Bhind",
+    "no": "9",
+    "constituency": "Ater",
+    "name": "Hemant Katare",
+    "party": "Indian National Congress",
+    "map_shape_id": 64912,
+    "shape_name": "Ater"
+  },
+  {
+    "district": "Bhind",
+    "no": "10",
+    "constituency": "Bhind",
+    "name": "Narendra Singh Kushwah",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64913,
+    "shape_name": "Bhind"
+  },
+  {
+    "district": "Bhind",
+    "no": "11",
+    "constituency": "Lahar",
+    "name": "Ambrish Sharma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64914,
+    "shape_name": "Lahar"
+  },
+  {
+    "district": "Bhind",
+    "no": "12",
+    "constituency": "Mehgaon",
+    "name": "Rakesh Shukla",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64915,
+    "shape_name": "Mehgaon"
+  },
+  {
+    "district": "Bhind",
+    "no": "13",
+    "constituency": "Gohad (SC)",
+    "name": "Keshav Desai",
+    "party": "Indian National Congress",
+    "map_shape_id": 64916,
+    "shape_name": "Gohad"
+  },
+  {
+    "district": "Gwalior",
+    "no": "14",
+    "constituency": "Gwalior Rural",
+    "name": "Sahab Singh Gurjar",
+    "party": "Indian National Congress",
+    "map_shape_id": 64917,
+    "shape_name": "Gwalior Rural"
+  },
+  {
+    "district": "Gwalior",
+    "no": "15",
+    "constituency": "Gwalior",
+    "name": "Pradhuman Singh Tomar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64918,
+    "shape_name": "Gwalior"
+  },
+  {
+    "district": "Gwalior",
+    "no": "16",
+    "constituency": "Gwalior East",
+    "name": "Satish Sikarwar",
+    "party": "Indian National Congress",
+    "map_shape_id": 64919,
+    "shape_name": "Gwalior East"
+  },
+  {
+    "district": "Gwalior",
+    "no": "17",
+    "constituency": "Gwalior South",
+    "name": "Narayan Singh Kushwah",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64920,
+    "shape_name": "Gwalior South"
+  },
+  {
+    "district": "Gwalior",
+    "no": "19",
+    "constituency": "Dabra (SC)",
+    "name": "Suresh Raje",
+    "party": "Indian National Congress",
+    "map_shape_id": 64922,
+    "shape_name": "Dabra"
+  },
+  {
+    "district": "Datia",
+    "no": "20",
+    "constituency": "Sewda",
+    "name": "Pradeep Agrawal",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64923,
+    "shape_name": "Seondha"
+  },
+  {
+    "district": "Datia",
+    "no": "21",
+    "constituency": "Bhander (SC)",
+    "name": "Phool Singh Baraiya",
+    "party": "Indian National Congress",
+    "map_shape_id": 64924,
+    "shape_name": "Bhander"
+  },
+  {
+    "district": "Datia",
+    "no": "22",
+    "constituency": "Datia",
+    "name": "Rajendra Bharti",
+    "party": "Indian National Congress",
+    "map_shape_id": 64925,
+    "shape_name": "Datia"
+  },
+  {
+    "district": "Shivpuri",
+    "no": "23",
+    "constituency": "Karera (SC)",
+    "name": "Ramesh Prasad Khatik",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64926,
+    "shape_name": "Karera"
+  },
+  {
+    "district": "Shivpuri",
+    "no": "24",
+    "constituency": "Pohari",
+    "name": "Kailash Kushwah",
+    "party": "Indian National Congress",
+    "map_shape_id": 64927,
+    "shape_name": "Pohari"
+  },
+  {
+    "district": "Shivpuri",
+    "no": "25",
+    "constituency": "Shivpuri",
+    "name": "Devendra Kumar Jain",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67437,
+    "shape_name": "Shivpuri"
+  },
+  {
+    "district": "Shivpuri",
+    "no": "26",
+    "constituency": "Pichhore",
+    "name": "Preetam Lodhi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67502,
+    "shape_name": "Pichhore"
+  },
+  {
+    "district": "Shivpuri",
+    "no": "27",
+    "constituency": "Kolaras",
+    "name": "Mahendra Singh Yadav",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64928,
+    "shape_name": "Kolaras"
+  },
+  {
+    "district": "Guna",
+    "no": "28",
+    "constituency": "Bamori",
+    "name": "Rishi Agarwal",
+    "party": "Indian National Congress",
+    "map_shape_id": 64929,
+    "shape_name": "Bamori"
+  },
+  {
+    "district": "Guna",
+    "no": "29",
+    "constituency": "Guna (SC)",
+    "name": "Panna Lal Shakya",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64930,
+    "shape_name": "Guna"
+  },
+  {
+    "district": "Ashoknagar",
+    "no": "32",
+    "constituency": "Ashok Nagar (SC)",
+    "name": "Haribaboo Rai",
+    "party": "Indian National Congress",
+    "map_shape_id": 64933,
+    "shape_name": "Ashok Nagar"
+  },
+  {
+    "district": "Ashoknagar",
+    "no": "33",
+    "constituency": "Chanderi",
+    "name": "Jagannath Singh Raghuwanshi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64934,
+    "shape_name": "Chanderi"
+  },
+  {
+    "district": "Ashoknagar",
+    "no": "34",
+    "constituency": "Mungaoli",
+    "name": "Brajendra Singh Yadav",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64935,
+    "shape_name": "Mungaoli"
+  },
+  {
+    "district": "Sagar",
+    "no": "35",
+    "constituency": "Bina (SC)",
+    "name": "Nirmla Sapre",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64936,
+    "shape_name": "Bina"
+  },
+  {
+    "district": "Sagar",
+    "no": "36",
+    "constituency": "Khurai",
+    "name": "Bhupendra Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64937,
+    "shape_name": "Khurai"
+  },
+  {
+    "district": "Sagar",
+    "no": "37",
+    "constituency": "Surkhi",
+    "name": "Govind Singh Rajput",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67556,
+    "shape_name": "Surkhi"
+  },
+  {
+    "district": "Sagar",
+    "no": "38",
+    "constituency": "Deori",
+    "name": "Brijbihari Pateriya",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64938,
+    "shape_name": "Deori"
+  },
+  {
+    "district": "Sagar",
+    "no": "39",
+    "constituency": "Rehli",
+    "name": "Gopal Bhargava",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64939,
+    "shape_name": "Rehli"
+  },
+  {
+    "district": "Sagar",
+    "no": "40",
+    "constituency": "Naryoli",
+    "name": "Pradeep Lariya",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67390,
+    "shape_name": "Naryawali"
+  },
+  {
+    "district": "Sagar",
+    "no": "41",
+    "constituency": "Sagar",
+    "name": "Shailendra Kumar Jain",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64940,
+    "shape_name": "Sagar"
+  },
+  {
+    "district": "Sagar",
+    "no": "42",
+    "constituency": "Banda",
+    "name": "Veerendra Singh Lodhi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67470,
+    "shape_name": "Banda"
+  },
+  {
+    "district": "Tikamgarh",
+    "no": "43",
+    "constituency": "Tikamgarh",
+    "name": "Yadvendra Singh",
+    "party": "Indian National Congress",
+    "map_shape_id": 64941,
+    "shape_name": "Tikamgarh"
+  },
+  {
+    "district": "Tikamgarh",
+    "no": "44",
+    "constituency": "Jatara (SC)",
+    "name": "Harishankar Khatik",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67407,
+    "shape_name": "Jatara"
+  },
+  {
+    "district": "Niwari",
+    "no": "45",
+    "constituency": "Prithvipur",
+    "name": "Nitendra Singh Rathore",
+    "party": "Indian National Congress",
+    "map_shape_id": 64942,
+    "shape_name": "Prithvipur"
+  },
+  {
+    "district": "Niwari",
+    "no": "46",
+    "constituency": "Niwari",
+    "name": "Anil Jain",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67495,
+    "shape_name": "Niwari"
+  },
+  {
+    "district": "Tikamgarh",
+    "no": "47",
+    "constituency": "Khargapur",
+    "name": "Chanda Singh Gaur",
+    "party": "Indian National Congress",
+    "map_shape_id": 64943,
+    "shape_name": "Khargapur"
+  },
+  {
+    "district": "Chhatarpur",
+    "no": "48",
+    "constituency": "Maharajpur",
+    "name": "Kamakhya Pratap Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67489,
+    "shape_name": "Maharajpur"
+  },
+  {
+    "district": "Chhatarpur",
+    "no": "49",
+    "constituency": "Chandla (SC)",
+    "name": "Dileep Ahirwar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64944,
+    "shape_name": "Chandla"
+  },
+  {
+    "district": "Chhatarpur",
+    "no": "50",
+    "constituency": "Rajnagar",
+    "name": "Arvind Pateriya",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64945,
+    "shape_name": "Rajnagar"
+  },
+  {
+    "district": "Chhatarpur",
+    "no": "51",
+    "constituency": "Chhatarpur",
+    "name": "Lalita Yadav",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64946,
+    "shape_name": "Chhatarpur"
+  },
+  {
+    "district": "Chhatarpur",
+    "no": "52",
+    "constituency": "Bijawar",
+    "name": "Rajesh Kumar Shukla",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67455,
+    "shape_name": "Bijawar"
+  },
+  {
+    "district": "Chhatarpur",
+    "no": "53",
+    "constituency": "Malhara",
+    "name": "Ramsiya Bharti",
+    "party": "Indian National Congress",
+    "map_shape_id": 67432,
+    "shape_name": "Malhara"
+  },
+  {
+    "district": "Damoh",
+    "no": "54",
+    "constituency": "Pathariya",
+    "name": "Lakhan Patel",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64947,
+    "shape_name": "Pathariya"
+  },
+  {
+    "district": "Damoh",
+    "no": "55",
+    "constituency": "Damoh",
+    "name": "Jayant Malaiya",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64948,
+    "shape_name": "Damoh"
+  },
+  {
+    "district": "Damoh",
+    "no": "56",
+    "constituency": "Jabera",
+    "name": "Dharmendra Bhav Singh Lodhi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64949,
+    "shape_name": "Jabera"
+  },
+  {
+    "district": "Panna",
+    "no": "58",
+    "constituency": "Pawai",
+    "name": "Prahlad Lodhi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67562,
+    "shape_name": "Pawai"
+  },
+  {
+    "district": "Panna",
+    "no": "59",
+    "constituency": "Gunnaor (SC)",
+    "name": "Rajesh Kumar Verma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64950,
+    "shape_name": "Gunnaor"
+  },
+  {
+    "district": "Panna",
+    "no": "60",
+    "constituency": "Panna",
+    "name": "Brijendra Pratap Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67481,
+    "shape_name": "Panna"
+  },
+  {
+    "district": "Satna",
+    "no": "61",
+    "constituency": "Chitrakoot",
+    "name": "Surendra Singh Gaharwar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67555,
+    "shape_name": "Chitrakoot"
+  },
+  {
+    "district": "Satna",
+    "no": "62",
+    "constituency": "Raigaon (SC)",
+    "name": "Pratima Bagri",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64951,
+    "shape_name": "Raigaon"
+  },
+  {
+    "district": "Satna",
+    "no": "63",
+    "constituency": "Satna",
+    "name": "Dabbu Siddharth Sukhlal Kushwah",
+    "party": "Indian National Congress",
+    "map_shape_id": 64952,
+    "shape_name": "Satna"
+  },
+  {
+    "district": "Satna",
+    "no": "64",
+    "constituency": "Nagod",
+    "name": "Nagendra Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64953,
+    "shape_name": "Nagod"
+  },
+  {
+    "district": "Satna",
+    "no": "65",
+    "constituency": "Maihar",
+    "name": "Shrikant Chaturvedi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64954,
+    "shape_name": "Maihar"
+  },
+  {
+    "district": "Satna",
+    "no": "66",
+    "constituency": "Amarpatan",
+    "name": "Rajendra Kumar Singh",
+    "party": "Indian National Congress",
+    "map_shape_id": 64955,
+    "shape_name": "Amarpatan"
+  },
+  {
+    "district": "Satna",
+    "no": "67",
+    "constituency": "Rampur-Baghelan",
+    "name": "Vikram Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64956,
+    "shape_name": "Rampur Baghelan"
+  },
+  {
+    "district": "Rewa",
+    "no": "68",
+    "constituency": "Sirmour",
+    "name": "Divyaraj Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64957,
+    "shape_name": "Sirmour"
+  },
+  {
+    "district": "Rewa",
+    "no": "69",
+    "constituency": "Semariya",
+    "name": "Abhay Mishra",
+    "party": "Indian National Congress",
+    "map_shape_id": 64958,
+    "shape_name": "Semariya"
+  },
+  {
+    "district": "Rewa",
+    "no": "70",
+    "constituency": "Teonthar",
+    "name": "Siddharth Tiwari",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67378,
+    "shape_name": "Teonthar"
+  },
+  {
+    "district": "Mauganj",
+    "no": "71",
+    "constituency": "Mauganj",
+    "name": "Pradeep Patel",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64959,
+    "shape_name": "Mauganj"
+  },
+  {
+    "district": "Mauganj",
+    "no": "72",
+    "constituency": "Deotalab",
+    "name": "Girish Gautam",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64960,
+    "shape_name": "Deotalab"
+  },
+  {
+    "district": "Rewa",
+    "no": "73",
+    "constituency": "Mangawan (SC)",
+    "name": "Narendra Prajapati",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64961,
+    "shape_name": "Mangawan"
+  },
+  {
+    "district": "Rewa",
+    "no": "74",
+    "constituency": "Rewa",
+    "name": "Rajendra Shukla",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64962,
+    "shape_name": "Rewa"
+  },
+  {
+    "district": "Rewa",
+    "no": "75",
+    "constituency": "Gurh",
+    "name": "Nagendra Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64963,
+    "shape_name": "Gurh"
+  },
+  {
+    "district": "Sidhi",
+    "no": "76",
+    "constituency": "Churhat",
+    "name": "Ajay Arjun Singh",
+    "party": "Indian National Congress",
+    "map_shape_id": 64964,
+    "shape_name": "Churhat"
+  },
+  {
+    "district": "Sidhi",
+    "no": "77",
+    "constituency": "Sidhi",
+    "name": "Riti Pathak",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64965,
+    "shape_name": "Sidhi"
+  },
+  {
+    "district": "Sidhi",
+    "no": "78",
+    "constituency": "Sihawal",
+    "name": "Vishwamitra Pathak",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64966,
+    "shape_name": "Sihawal"
+  },
+  {
+    "district": "Shahdol",
+    "no": "83",
+    "constituency": "Beohari (ST)",
+    "name": "Sharad Juglal Kol",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64971,
+    "shape_name": "Beohari"
+  },
+  {
+    "district": "Shahdol",
+    "no": "85",
+    "constituency": "Jaitpur (ST)",
+    "name": "Jaisingh Maravi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64973,
+    "shape_name": "Jaitpur"
+  },
+  {
+    "district": "Anuppur",
+    "no": "87",
+    "constituency": "Anuppur (ST)",
+    "name": "Bisahulal Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64975,
+    "shape_name": "Anuppur"
+  },
+  {
+    "district": "Umaria",
+    "no": "89",
+    "constituency": "Bandhavgarh (ST)",
+    "name": "Shivnarayan Gyan Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64977,
+    "shape_name": "Bandhavgarh"
+  },
+  {
+    "district": "Umaria",
+    "no": "90",
+    "constituency": "Manpur (ST)",
+    "name": "Meena Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64978,
+    "shape_name": "Manpur"
+  },
+  {
+    "district": "Katni",
+    "no": "92",
+    "constituency": "Vijayraghavgarh",
+    "name": "Sanjay Pathak",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64980,
+    "shape_name": "Vijayraghavgarh"
+  },
+  {
+    "district": "Katni",
+    "no": "94",
+    "constituency": "Bahoriband",
+    "name": "Pranay Prabhat Pandey",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67515,
+    "shape_name": "Bahoriband"
+  },
+  {
+    "district": "Jabalpur",
+    "no": "95",
+    "constituency": "Patan",
+    "name": "Ajay Vishnoi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64982,
+    "shape_name": "Patan"
+  },
+  {
+    "district": "Jabalpur",
+    "no": "96",
+    "constituency": "Bargi",
+    "name": "Neeraj Singh Lodhi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64983,
+    "shape_name": "Bargi"
+  },
+  {
+    "district": "Jabalpur",
+    "no": "97",
+    "constituency": "Jabalpur East (SC)",
+    "name": "Lakhan Ghanghoria",
+    "party": "Indian National Congress",
+    "map_shape_id": 64984,
+    "shape_name": "Jabalpur East"
+  },
+  {
+    "district": "Jabalpur",
+    "no": "98",
+    "constituency": "Jabalpur North",
+    "name": "Abhilash Pandey",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64985,
+    "shape_name": "Jabalpur North"
+  },
+  {
+    "district": "Jabalpur",
+    "no": "100",
+    "constituency": "Jabalpur West",
+    "name": "Rakesh Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64987,
+    "shape_name": "Jabalpur West"
+  },
+  {
+    "district": "Jabalpur",
+    "no": "101",
+    "constituency": "Panagar",
+    "name": "Sushil Kumar Tiwari",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67372,
+    "shape_name": "Panagar"
+  },
+  {
+    "district": "Jabalpur",
+    "no": "102",
+    "constituency": "Sihora (ST)",
+    "name": "Santosh Varkade",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64988,
+    "shape_name": "Sihora"
+  },
+  {
+    "district": "Dindori",
+    "no": "103",
+    "constituency": "Shahpura (ST)",
+    "name": "Om Prakash Dhurve",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67516,
+    "shape_name": "Shahpura"
+  },
+  {
+    "district": "Dindori",
+    "no": "104",
+    "constituency": "Dindori (SC)",
+    "name": "Omkar Singh Markam",
+    "party": "Indian National Congress",
+    "map_shape_id": 67517,
+    "shape_name": "Dindori"
+  },
+  {
+    "district": "Mandla",
+    "no": "105",
+    "constituency": "Bichhiya (ST)",
+    "name": "Narayan Singh Patta",
+    "party": "Indian National Congress",
+    "map_shape_id": 67387,
+    "shape_name": "Bichhiya"
+  },
+  {
+    "district": "Mandla",
+    "no": "106",
+    "constituency": "Niwas (ST)",
+    "name": "Chainsingh Warkade",
+    "party": "Indian National Congress",
+    "map_shape_id": 67399,
+    "shape_name": "Niwas"
+  },
+  {
+    "district": "Mandla",
+    "no": "107",
+    "constituency": "Mandla (ST)",
+    "name": "Sampatiya Uikey",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64989,
+    "shape_name": "Mandla"
+  },
+  {
+    "district": "Balaghat",
+    "no": "108",
+    "constituency": "Baihar (ST)",
+    "name": "Sanjay Uikey",
+    "party": "Indian National Congress",
+    "map_shape_id": 67442,
+    "shape_name": "Baihar"
+  },
+  {
+    "district": "Balaghat",
+    "no": "109",
+    "constituency": "Lanji",
+    "name": "Rajkumar Karrahe",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64990,
+    "shape_name": "Lanji"
+  },
+  {
+    "district": "Balaghat",
+    "no": "110",
+    "constituency": "Paraswada",
+    "name": "Madhu Bhau Bhagat",
+    "party": "Indian National Congress",
+    "map_shape_id": 64991,
+    "shape_name": "Paraswada"
+  },
+  {
+    "district": "Balaghat",
+    "no": "111",
+    "constituency": "Balaghat",
+    "name": "Anubha Munjare",
+    "party": "Indian National Congress",
+    "map_shape_id": 64992,
+    "shape_name": "Balaghat"
+  },
+  {
+    "district": "Balaghat",
+    "no": "112",
+    "constituency": "Waraseoni",
+    "name": "Vivek Vicky Patel",
+    "party": "Indian National Congress",
+    "map_shape_id": 64993,
+    "shape_name": "Waraseoni"
+  },
+  {
+    "district": "Balaghat",
+    "no": "113",
+    "constituency": "Katangi",
+    "name": "Gaurav Singh Pardhi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64994,
+    "shape_name": "Katangi"
+  },
+  {
+    "district": "Seoni",
+    "no": "114",
+    "constituency": "Barghat (ST)",
+    "name": "Kamal Marskole",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64995,
+    "shape_name": "Barghat"
+  },
+  {
+    "district": "Seoni",
+    "no": "115",
+    "constituency": "Seoni",
+    "name": "Dinesh Rai Munmun",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64996,
+    "shape_name": "Seoni"
+  },
+  {
+    "district": "Seoni",
+    "no": "116",
+    "constituency": "Keolari",
+    "name": "Rajneesh Harvansh Singh",
+    "party": "Indian National Congress",
+    "map_shape_id": 67355,
+    "shape_name": "Keolari"
+  },
+  {
+    "district": "Seoni",
+    "no": "117",
+    "constituency": "Lakhnadon (ST)",
+    "name": "Yogendra Singh Baba",
+    "party": "Indian National Congress",
+    "map_shape_id": 67370,
+    "shape_name": "Lakhnadon"
+  },
+  {
+    "district": "Narsinghpur",
+    "no": "118",
+    "constituency": "Gotegaon (SC)",
+    "name": "Mahendra Nagesh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64997,
+    "shape_name": "Gotegaon"
+  },
+  {
+    "district": "Narsinghpur",
+    "no": "119",
+    "constituency": "Narsingpur",
+    "name": "Prahlad Singh Patel",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64998,
+    "shape_name": "Narsingpur"
+  },
+  {
+    "district": "Narsinghpur",
+    "no": "120",
+    "constituency": "Tendukheda",
+    "name": "Vishwanath Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64999,
+    "shape_name": "Tendukheda"
+  },
+  {
+    "district": "Narsinghpur",
+    "no": "121",
+    "constituency": "Gadarwara",
+    "name": "Uday Pratap Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65000,
+    "shape_name": "Gadarwara"
+  },
+  {
+    "district": "Chhindwara",
+    "no": "122",
+    "constituency": "Junnardeo (ST)",
+    "name": "Sunil Uikey",
+    "party": "Indian National Congress",
+    "map_shape_id": 67403,
+    "shape_name": "Junnardeo"
+  },
+  {
+    "district": "Chhindwara",
+    "no": "123",
+    "constituency": "Amarwara (ST)",
+    "name": "Kamlesh Shah",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67398,
+    "shape_name": "Amarwara"
+  },
+  {
+    "district": "Chhindwara",
+    "no": "126",
+    "constituency": "Chhindwara",
+    "name": "Kamal Nath",
+    "party": "Indian National Congress",
+    "map_shape_id": 65003,
+    "shape_name": "Chhindwara"
+  },
+  {
+    "district": "Chhindwara",
+    "no": "128",
+    "constituency": "Pandhurna (ST)",
+    "name": "Neelesh Pusaram Uikey",
+    "party": "Indian National Congress",
+    "map_shape_id": 67434,
+    "shape_name": "Pandhurna"
+  },
+  {
+    "district": "Betul",
+    "no": "129",
+    "constituency": "Multai",
+    "name": "Chandrashekhar Deshmukh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65005,
+    "shape_name": "Multai"
+  },
+  {
+    "district": "Betul",
+    "no": "130",
+    "constituency": "Amla",
+    "name": "Yogesh Pandagre",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65006,
+    "shape_name": "Amla"
+  },
+  {
+    "district": "Betul",
+    "no": "131",
+    "constituency": "Betul",
+    "name": "Hemant Khandelwal",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65007,
+    "shape_name": "Betul"
+  },
+  {
+    "district": "Betul",
+    "no": "133",
+    "constituency": "Bhainsdehi (ST)",
+    "name": "Mahendra Singh Chouhan",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67479,
+    "shape_name": "Bhainsdehi"
+  },
+  {
+    "district": "Harda",
+    "no": "134",
+    "constituency": "Timarni (ST)",
+    "name": "Abhijeet Shah",
+    "party": "Indian National Congress",
+    "map_shape_id": 65008,
+    "shape_name": "Timarni"
+  },
+  {
+    "district": "Harda",
+    "no": "135",
+    "constituency": "Harda",
+    "name": "Ram Kishore Dogne",
+    "party": "Indian National Congress",
+    "map_shape_id": 65009,
+    "shape_name": "Harda"
+  },
+  {
+    "district": "Hoshangabad",
+    "no": "136",
+    "constituency": "Seoni-Malwa",
+    "name": "Prem Shankar Kunjilal Verma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65010,
+    "shape_name": "Seoni Malwa"
+  },
+  {
+    "district": "Hoshangabad",
+    "no": "137",
+    "constituency": "Hoshangabad",
+    "name": "Sitasharan Sharma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65011,
+    "shape_name": "Hoshangabad"
+  },
+  {
+    "district": "Hoshangabad",
+    "no": "138",
+    "constituency": "Sohagpur",
+    "name": "Vijaypal Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65012,
+    "shape_name": "Sohagpur"
+  },
+  {
+    "district": "Hoshangabad",
+    "no": "139",
+    "constituency": "Pipariya (SC)",
+    "name": "Thakurdas Nagwanshi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65013,
+    "shape_name": "Pipariya"
+  },
+  {
+    "district": "Raisen",
+    "no": "140",
+    "constituency": "Udaipura",
+    "name": "Narendra Shivaji Patel",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65014,
+    "shape_name": "Udaipura"
+  },
+  {
+    "district": "Raisen",
+    "no": "141",
+    "constituency": "Bhojpur",
+    "name": "Surendra Patwa",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65015,
+    "shape_name": "Bhojpur"
+  },
+  {
+    "district": "Raisen",
+    "no": "142",
+    "constituency": "Sanchi (SC)",
+    "name": "Prabhuram Choudhary",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67523,
+    "shape_name": "Sanchi"
+  },
+  {
+    "district": "Raisen",
+    "no": "143",
+    "constituency": "Silwani",
+    "name": "Devendra Patel",
+    "party": "Indian National Congress",
+    "map_shape_id": 67547,
+    "shape_name": "Silwani"
+  },
+  {
+    "district": "Vidisha",
+    "no": "144",
+    "constituency": "Vidisha",
+    "name": "Mukesh Tandan",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65016,
+    "shape_name": "Vidisha"
+  },
+  {
+    "district": "Vidisha",
+    "no": "145",
+    "constituency": "Basoda",
+    "name": "Hari Singh Raghuwanshi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65017,
+    "shape_name": "Basoda"
+  },
+  {
+    "district": "Vidisha",
+    "no": "146",
+    "constituency": "Kurwai (SC)",
+    "name": "Hari Singh Sapre",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65018,
+    "shape_name": "Kurwai"
+  },
+  {
+    "district": "Vidisha",
+    "no": "147",
+    "constituency": "Sironj",
+    "name": "Umakant Sharma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65019,
+    "shape_name": "Sironj"
+  },
+  {
+    "district": "Vidisha",
+    "no": "148",
+    "constituency": "Shamshabad",
+    "name": "Surya Prakash Meena",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65020,
+    "shape_name": "Shamshabad"
+  },
+  {
+    "district": "Bhopal",
+    "no": "149",
+    "constituency": "Berasia (SC)",
+    "name": "Vishnu Khatri",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67364,
+    "shape_name": "Berasia"
+  },
+  {
+    "district": "Bhopal",
+    "no": "150",
+    "constituency": "Bhopal Uttar",
+    "name": "Atif Arif Aqueel",
+    "party": "Indian National Congress",
+    "map_shape_id": 65021,
+    "shape_name": "Bhopal Uttar"
+  },
+  {
+    "district": "Bhopal",
+    "no": "151",
+    "constituency": "Narela",
+    "name": "Vishvas Sarang",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65022,
+    "shape_name": "Narela"
+  },
+  {
+    "district": "Bhopal",
+    "no": "153",
+    "constituency": "Bhopal Madhya",
+    "name": "Arif Masood",
+    "party": "Indian National Congress",
+    "map_shape_id": 65024,
+    "shape_name": "Bhopal Madhya"
+  },
+  {
+    "district": "Bhopal",
+    "no": "154",
+    "constituency": "Govindpura",
+    "name": "Krishna Gaur",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65025,
+    "shape_name": "Govindpura"
+  },
+  {
+    "district": "Bhopal",
+    "no": "155",
+    "constituency": "Huzur",
+    "name": "Rameshwar Sharma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65026,
+    "shape_name": "Huzur"
+  },
+  {
+    "district": "Sehore",
+    "no": "156",
+    "constituency": "Budhni",
+    "name": "Ramakant Bhargava",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65027,
+    "shape_name": "Budhni"
+  },
+  {
+    "district": "Sehore",
+    "no": "157",
+    "constituency": "Ashta (SC)",
+    "name": "Gopal Singh Engineer",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65028,
+    "shape_name": "Ashta"
+  },
+  {
+    "district": "Sehore",
+    "no": "158",
+    "constituency": "Ichhawar",
+    "name": "Karan Singh Verma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65029,
+    "shape_name": "Ichhawar"
+  },
+  {
+    "district": "Sehore",
+    "no": "159",
+    "constituency": "Sehore",
+    "name": "Sudesh Rai",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65030,
+    "shape_name": "Sehore"
+  },
+  {
+    "district": "Rajgarh",
+    "no": "160",
+    "constituency": "Narsinghgarh",
+    "name": "Mohan Sharma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65031,
+    "shape_name": "Narsinghgarh"
+  },
+  {
+    "district": "Rajgarh",
+    "no": "161",
+    "constituency": "Biaora",
+    "name": "Narayan Singh Panwar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65032,
+    "shape_name": "Biaora"
+  },
+  {
+    "district": "Rajgarh",
+    "no": "162",
+    "constituency": "Rajgarh",
+    "name": "Amar Singh Yadav",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65033,
+    "shape_name": "Rajgarh"
+  },
+  {
+    "district": "Rajgarh",
+    "no": "163",
+    "constituency": "Khilchipur",
+    "name": "Hajari Lal Dangi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65034,
+    "shape_name": "Khilchipur"
+  },
+  {
+    "district": "Rajgarh",
+    "no": "164",
+    "constituency": "Sarangpur (SC)",
+    "name": "Gotam Tetwal",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65035,
+    "shape_name": "Sarangpur"
+  },
+  {
+    "district": "Agar Malwa",
+    "no": "165",
+    "constituency": "Susner",
+    "name": "Bhairon Singh",
+    "party": "Indian National Congress",
+    "map_shape_id": 65036,
+    "shape_name": "Susner"
+  },
+  {
+    "district": "Agar Malwa",
+    "no": "166",
+    "constituency": "Agar (SC)",
+    "name": "Madhav Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65037,
+    "shape_name": "Agar"
+  },
+  {
+    "district": "Shajapur",
+    "no": "167",
+    "constituency": "Shajapur",
+    "name": "Arun Bhimawad",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65038,
+    "shape_name": "Shajapur"
+  },
+  {
+    "district": "Shajapur",
+    "no": "168",
+    "constituency": "Shujalpur",
+    "name": "Inder Singh Parmar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65039,
+    "shape_name": "Shujalpur"
+  },
+  {
+    "district": "Shajapur",
+    "no": "169",
+    "constituency": "Kalapipal",
+    "name": "Ghanshyam Chandravanshi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65040,
+    "shape_name": "Kalapipal"
+  },
+  {
+    "district": "Dewas",
+    "no": "170",
+    "constituency": "Sonkatch (SC)",
+    "name": "Rajesh Sonkar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65041,
+    "shape_name": "Sonkatch"
+  },
+  {
+    "district": "Dewas",
+    "no": "171",
+    "constituency": "Dewas",
+    "name": "Gayatri Raje Pawar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65042,
+    "shape_name": "Dewas"
+  },
+  {
+    "district": "Dewas",
+    "no": "172",
+    "constituency": "Hatpipliya",
+    "name": "Manoj Choudhary",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65043,
+    "shape_name": "Hatpipliya"
+  },
+  {
+    "district": "Dewas",
+    "no": "173",
+    "constituency": "Khategaon",
+    "name": "Aashish Govind Sharma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67488,
+    "shape_name": "Khategaon"
+  },
+  {
+    "district": "Dewas",
+    "no": "174",
+    "constituency": "Bagli (ST)",
+    "name": "Murli Bhawara",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67513,
+    "shape_name": "Bagli"
+  },
+  {
+    "district": "Khandwa",
+    "no": "175",
+    "constituency": "Mandhata",
+    "name": "Narayan Patel",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65044,
+    "shape_name": "Mandhata"
+  },
+  {
+    "district": "Khandwa",
+    "no": "176",
+    "constituency": "Harsud (ST)",
+    "name": "Kunwar Vijay Shah",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65045,
+    "shape_name": "Harsud"
+  },
+  {
+    "district": "Khandwa",
+    "no": "177",
+    "constituency": "Khandwa (SC)",
+    "name": "Kanchan Mukesh Tanve",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65046,
+    "shape_name": "Khandwa"
+  },
+  {
+    "district": "Khandwa",
+    "no": "178",
+    "constituency": "Pandhana (ST)",
+    "name": "Chaya More",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65047,
+    "shape_name": "Pandhana"
+  },
+  {
+    "district": "Burhanpur",
+    "no": "179",
+    "constituency": "Nepanagar",
+    "name": "Manju Rajendra Dadu",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65048,
+    "shape_name": "Nepanagar"
+  },
+  {
+    "district": "Burhanpur",
+    "no": "180",
+    "constituency": "Burhanpur",
+    "name": "Archana Chitnis",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65049,
+    "shape_name": "Burhanpur"
+  },
+  {
+    "district": "Khargone",
+    "no": "181",
+    "constituency": "Bhikangaon (ST)",
+    "name": "Jhuma Solanki",
+    "party": "Indian National Congress",
+    "map_shape_id": 65050,
+    "shape_name": "Bhikangaon"
+  },
+  {
+    "district": "Khargone",
+    "no": "182",
+    "constituency": "Barwah",
+    "name": "Sachin Birla",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65051,
+    "shape_name": "Badwaha"
+  },
+  {
+    "district": "Khargone",
+    "no": "183",
+    "constituency": "Maheshwar (SC)",
+    "name": "Rajkumar Mev",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65052,
+    "shape_name": "Maheshwar"
+  },
+  {
+    "district": "Khargone",
+    "no": "184",
+    "constituency": "Kasrawad",
+    "name": "Sachin Yadav",
+    "party": "Indian National Congress",
+    "map_shape_id": 65053,
+    "shape_name": "Kasrawad"
+  },
+  {
+    "district": "Khargone",
+    "no": "185",
+    "constituency": "Khargone",
+    "name": "Balkrishan Patidar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65054,
+    "shape_name": "Khargone"
+  },
+  {
+    "district": "Khargone",
+    "no": "186",
+    "constituency": "Bhagwanpura (ST)",
+    "name": "Kedar Chidabhai Dawar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65055,
+    "shape_name": "Bhagwanpura"
+  },
+  {
+    "district": "Barwani",
+    "no": "188",
+    "constituency": "Rajpur (ST)",
+    "name": "Bala Bachchan",
+    "party": "Indian National Congress",
+    "map_shape_id": 65057,
+    "shape_name": "Rajpur"
+  },
+  {
+    "district": "Barwani",
+    "no": "189",
+    "constituency": "Pansemal (ST)",
+    "name": "Shyam Barde",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65058,
+    "shape_name": "Pansemal"
+  },
+  {
+    "district": "Barwani",
+    "no": "190",
+    "constituency": "Barwani (ST)",
+    "name": "Rajan Mandloi",
+    "party": "Indian National Congress",
+    "map_shape_id": 65059,
+    "shape_name": "Barwani"
+  },
+  {
+    "district": "Alirajpur",
+    "no": "191",
+    "constituency": "Alirajpur (ST)",
+    "name": "Nagar Singh Chouhan",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65060,
+    "shape_name": "Alirajpur"
+  },
+  {
+    "district": "Alirajpur",
+    "no": "192",
+    "constituency": "Jobat (ST)",
+    "name": "Sena Mahesh Patel",
+    "party": "Indian National Congress",
+    "map_shape_id": 67451,
+    "shape_name": "Jobat"
+  },
+  {
+    "district": "Jhabua",
+    "no": "193",
+    "constituency": "Jhabua (ST)",
+    "name": "Vikrant Bhuria",
+    "party": "Indian National Congress",
+    "map_shape_id": 65061,
+    "shape_name": "Jhabua"
+  },
+  {
+    "district": "Jhabua",
+    "no": "194",
+    "constituency": "Thandla (ST)",
+    "name": "Veer Singh Bhuriya",
+    "party": "Indian National Congress",
+    "map_shape_id": 65062,
+    "shape_name": "Thandla"
+  },
+  {
+    "district": "Jhabua",
+    "no": "195",
+    "constituency": "Petlawad (ST)",
+    "name": "Nirmala Dileep Singh Bhuria",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65063,
+    "shape_name": "Petlawad"
+  },
+  {
+    "district": "Dhar",
+    "no": "196",
+    "constituency": "Sardarpur (ST)",
+    "name": "Pratap Grewal",
+    "party": "Indian National Congress",
+    "map_shape_id": 65064,
+    "shape_name": "Sardarpur"
+  },
+  {
+    "district": "Dhar",
+    "no": "197",
+    "constituency": "Gandhwani (ST)",
+    "name": "Umang Singhar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65065,
+    "shape_name": "Gandhwani"
+  },
+  {
+    "district": "Dhar",
+    "no": "198",
+    "constituency": "Kukshi (ST)",
+    "name": "Surendra Singh Baghel",
+    "party": "Indian National Congress",
+    "map_shape_id": 65066,
+    "shape_name": "Kukshi"
+  },
+  {
+    "district": "Dhar",
+    "no": "199",
+    "constituency": "Manawar (ST)",
+    "name": "Hiralal Alawa",
+    "party": "Indian National Congress",
+    "map_shape_id": 65067,
+    "shape_name": "Manawar"
+  },
+  {
+    "district": "Dhar",
+    "no": "200",
+    "constituency": "Dharampuri (ST)",
+    "name": "Kalu Singh Thakur",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65068,
+    "shape_name": "Dharampuri"
+  },
+  {
+    "district": "Dhar",
+    "no": "201",
+    "constituency": "Dhar",
+    "name": "Neena Verma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65069,
+    "shape_name": "Dhar"
+  },
+  {
+    "district": "Dhar",
+    "no": "202",
+    "constituency": "Badnawar",
+    "name": "Bhanwar Singh Shekhawat",
+    "party": "Indian National Congress",
+    "map_shape_id": 65070,
+    "shape_name": "Badnawar"
+  },
+  {
+    "district": "Indore",
+    "no": "203",
+    "constituency": "Depalpur",
+    "name": "Manoj Nirbhay Singh Patel",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65071,
+    "shape_name": "Depalpur"
+  },
+  {
+    "district": "Indore",
+    "no": "204",
+    "constituency": "Indore-1",
+    "name": "Kailash Vijayvargiya",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65072,
+    "shape_name": "Indore-1"
+  },
+  {
+    "district": "Indore",
+    "no": "205",
+    "constituency": "Indore-2",
+    "name": "Ramesh Mendola",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65073,
+    "shape_name": "Indore-2"
+  },
+  {
+    "district": "Indore",
+    "no": "206",
+    "constituency": "Indore-3",
+    "name": "Golu Shukla",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65074,
+    "shape_name": "Indore-3"
+  },
+  {
+    "district": "Indore",
+    "no": "207",
+    "constituency": "Indore-4",
+    "name": "Malini Gaur",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65075,
+    "shape_name": "Indore-4"
+  },
+  {
+    "district": "Indore",
+    "no": "208",
+    "constituency": "Indore-5",
+    "name": "Mahendra Hardia",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65076,
+    "shape_name": "Indore-5"
+  },
+  {
+    "district": "Indore",
+    "no": "209",
+    "constituency": "Dr. Ambedkar Nagar-Mhow",
+    "name": "Usha Thakur",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65077,
+    "shape_name": "Dr.Ambedkar Nagar -Mhow"
+  },
+  {
+    "district": "Indore",
+    "no": "210",
+    "constituency": "Rau",
+    "name": "Madhu Verma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65078,
+    "shape_name": "Rau"
+  },
+  {
+    "district": "Indore",
+    "no": "211",
+    "constituency": "Sanwer (SC)",
+    "name": "Tulsi Silawat",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65079,
+    "shape_name": "Sanwer"
+  },
+  {
+    "district": "Ujjain",
+    "no": "213",
+    "constituency": "Mahidpur",
+    "name": "Dinesh Jain",
+    "party": "Indian National Congress",
+    "map_shape_id": 65081,
+    "shape_name": "Mahidpur"
+  },
+  {
+    "district": "Ujjain",
+    "no": "214",
+    "constituency": "Tarana (SC)",
+    "name": "Mahesh Parmar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65082,
+    "shape_name": "Tarana"
+  },
+  {
+    "district": "Ujjain",
+    "no": "215",
+    "constituency": "Ghatiya (SC)",
+    "name": "Satish Malviya",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65083,
+    "shape_name": "Ghatiya"
+  },
+  {
+    "district": "Ujjain",
+    "no": "216",
+    "constituency": "Ujjain North",
+    "name": "Anil Jain Kaluheda",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65084,
+    "shape_name": "Ujjain North"
+  },
+  {
+    "district": "Ujjain",
+    "no": "217",
+    "constituency": "Ujjain South",
+    "name": "Mohan Yadav",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65085,
+    "shape_name": "Ujjain South"
+  },
+  {
+    "district": "Ujjain",
+    "no": "218",
+    "constituency": "Badnagar",
+    "name": "Jitendra Pandya",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65086,
+    "shape_name": "Badnagar"
+  },
+  {
+    "district": "Ratlam",
+    "no": "219",
+    "constituency": "Ratlam Rural (ST)",
+    "name": "Mathuralal Damar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65087,
+    "shape_name": "Ratlam Rural"
+  },
+  {
+    "district": "Ratlam",
+    "no": "220",
+    "constituency": "Ratlam City",
+    "name": "Chetanya Kashyap",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65088,
+    "shape_name": "Ratlam City"
+  },
+  {
+    "district": "Ratlam",
+    "no": "221",
+    "constituency": "Sailana",
+    "name": "Kamleshwar Dodiyar",
+    "party": "Bharat Adivasi Party",
+    "map_shape_id": 65089,
+    "shape_name": "Sailana"
+  },
+  {
+    "district": "Ratlam",
+    "no": "222",
+    "constituency": "Jaora",
+    "name": "Rajendra Pandey",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65090,
+    "shape_name": "Jaora"
+  },
+  {
+    "district": "Ratlam",
+    "no": "223",
+    "constituency": "Alot (SC)",
+    "name": "Chintamani Malviya",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65091,
+    "shape_name": "Alot"
+  },
+  {
+    "district": "Mandsaur",
+    "no": "225",
+    "constituency": "Malhargarh (SC)",
+    "name": "Jagdish Devda",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65093,
+    "shape_name": "Malhargarh"
+  },
+  {
+    "district": "Mandsaur",
+    "no": "226",
+    "constituency": "Suwasra",
+    "name": "Hardeep Singh Dang",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65094,
+    "shape_name": "Suwasra"
+  },
+  {
+    "district": "Mandsaur",
+    "no": "227",
+    "constituency": "Garoth",
+    "name": "Chandar Singh Sisodiya",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65095,
+    "shape_name": "Garoth"
+  },
+  {
+    "district": "Neemuch",
+    "no": "228",
+    "constituency": "Manasa",
+    "name": "Aniruddha Maroo",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65096,
+    "shape_name": "Manasa"
+  },
+  {
+    "district": "Neemuch",
+    "no": "229",
+    "constituency": "Neemuch",
+    "name": "Dilip Singh Parihar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65097,
+    "shape_name": "Neemuch"
+  },
+  {
+    "district": "Neemuch",
+    "no": "230",
+    "constituency": "Jawad",
+    "name": "Om Prakash Sakhlecha",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67466,
+    "shape_name": "Jawad"
+  },
+  {
+    "district": "Morena",
+    "no": "3",
+    "constituency": "Sabalgarh",
+    "name": "Sarla Vijendra Rawat",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64906,
+    "shape_name": "Sabalagadh"
+  },
+  {
+    "district": "Gwalior",
+    "no": "18",
+    "constituency": "Bhitarwar",
+    "name": "Mohan Singh Rathore",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64921,
+    "shape_name": "Bhitrwar"
+  },
+  {
+    "district": "Guna",
+    "no": "30",
+    "constituency": "Chachoura",
+    "name": "Priyanka Penchi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64931,
+    "shape_name": "Chachoda"
+  },
+  {
+    "district": "Guna",
+    "no": "31",
+    "constituency": "Raghogarh",
+    "name": "Jaivardhan Singh",
+    "party": "Indian National Congress",
+    "map_shape_id": 64932,
+    "shape_name": "Raghogadh"
+  },
+  {
+    "district": "Damoh",
+    "no": "57",
+    "constituency": "Hatta (SC)",
+    "name": "Uma Devi Khatik",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67554,
+    "shape_name": "Hata"
+  },
+  {
+    "district": "Singrauli",
+    "no": "79",
+    "constituency": "Chitrangi (ST)",
+    "name": "Radha Ravindra Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64967,
+    "shape_name": "Chitarangi"
+  },
+  {
+    "district": "Singrauli",
+    "no": "80",
+    "constituency": "Singrauli",
+    "name": "Ram Niwas Shah",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64968,
+    "shape_name": "Singarauli"
+  },
+  {
+    "district": "Singrauli",
+    "no": "81",
+    "constituency": "Devsar (SC)",
+    "name": "Rajendra Meshram",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64969,
+    "shape_name": "Deosar"
+  },
+  {
+    "district": "Sidhi",
+    "no": "82",
+    "constituency": "Dhauhani (ST)",
+    "name": "Kunwar Singh Tekam",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64970,
+    "shape_name": "Dhouhani"
+  },
+  {
+    "district": "Shahdol",
+    "no": "84",
+    "constituency": "Jaisingnagar (ST)",
+    "name": "Manisha Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64972,
+    "shape_name": "Jaisinghnagar"
+  },
+  {
+    "district": "Anuppur",
+    "no": "86",
+    "constituency": "Kotma",
+    "name": "Dilip Jaiswal",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64974,
+    "shape_name": "Kotama"
+  },
+  {
+    "district": "Anuppur",
+    "no": "88",
+    "constituency": "Pushprajgarh (ST)",
+    "name": "Phundelal Marko",
+    "party": "Indian National Congress",
+    "map_shape_id": 64976,
+    "shape_name": "Pusprajgarh"
+  },
+  {
+    "district": "Katni",
+    "no": "91",
+    "constituency": "Barwara (ST)",
+    "name": "Dhirendra Bahadur Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64979,
+    "shape_name": "Badwara"
+  },
+  {
+    "district": "Katni",
+    "no": "93",
+    "constituency": "Murwara",
+    "name": "Sandeep Shriprasad Jaiswal",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64981,
+    "shape_name": "Mudwara"
+  },
+  {
+    "district": "Jabalpur",
+    "no": "99",
+    "constituency": "Jabalpur Cantonment",
+    "name": "Ashok Rohani",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64986,
+    "shape_name": "Jabalpur Cantt"
+  },
+  {
+    "district": "Chhindwara",
+    "no": "124",
+    "constituency": "Chourai",
+    "name": "Choudhary Sujeet Mersingh",
+    "party": "Indian National Congress",
+    "map_shape_id": 65001,
+    "shape_name": "Churai"
+  },
+  {
+    "district": "Chhindwara",
+    "no": "125",
+    "constituency": "Saunsar",
+    "name": "Vijay Revnath Chore",
+    "party": "Indian National Congress",
+    "map_shape_id": 65002,
+    "shape_name": "Sausar"
+  },
+  {
+    "district": "Chhindwara",
+    "no": "127",
+    "constituency": "Parasia (SC)",
+    "name": "Sohanlal Balmik",
+    "party": "Indian National Congress",
+    "map_shape_id": 65004,
+    "shape_name": "Parasiya"
+  },
+  {
+    "district": "Betul",
+    "no": "132",
+    "constituency": "Ghoradongri (ST)",
+    "name": "Ganga Sajjan Singh Uikey",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67392,
+    "shape_name": "Ghodadongri"
+  },
+  {
+    "district": "Bhopal",
+    "no": "152",
+    "constituency": "Bhopal Dakshin-Paschim",
+    "name": "Bhagwandas Sabnani",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65023,
+    "shape_name": "Bhopal Dakshina-Pashchim"
+  },
+  {
+    "district": "Barwani",
+    "no": "187",
+    "constituency": "Sendhawa (ST)",
+    "name": "Montu Solanki",
+    "party": "Indian National Congress",
+    "map_shape_id": 65056,
+    "shape_name": "Sendhwa"
+  },
+  {
+    "district": "Ujjain",
+    "no": "212",
+    "constituency": "Nagda-Khachrod",
+    "name": "Tej Bahadur Singh Chauhan",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65080,
+    "shape_name": "Nagada - Khacharod"
+  },
+  {
+    "district": "Mandsaur",
+    "no": "224",
+    "constituency": "Mandsaur",
+    "name": "Vipin Jain",
+    "party": "Indian National Congress",
+    "map_shape_id": 65092,
+    "shape_name": "Mandsour"
+  }
+]

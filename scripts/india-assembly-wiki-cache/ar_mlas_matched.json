@@ -1,0 +1,542 @@
+[
+  {
+    "district": "Tawang",
+    "no": "1",
+    "constituency": "Lumla",
+    "name": "Tsering Lhamu",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63834,
+    "shape_name": "Lumla"
+  },
+  {
+    "district": "Tawang",
+    "no": "2",
+    "constituency": "Tawang",
+    "name": "Namgey Tsering",
+    "party": "People's Party of Arunachal",
+    "map_shape_id": 63835,
+    "shape_name": "Tawang"
+  },
+  {
+    "district": "Tawang",
+    "no": "3",
+    "constituency": "Mukto",
+    "name": "Pema Khandu",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63836,
+    "shape_name": "Mukto"
+  },
+  {
+    "district": "West Kameng",
+    "no": "4",
+    "constituency": "Dirang",
+    "name": "Phurpa Tsering",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63837,
+    "shape_name": "Dirang"
+  },
+  {
+    "district": "West Kameng",
+    "no": "5",
+    "constituency": "Kalaktang",
+    "name": "Tseten Chombay Kee",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63838,
+    "shape_name": "Kalaktang"
+  },
+  {
+    "district": "West Kameng",
+    "no": "6",
+    "constituency": "Thrizino-Buragaon",
+    "name": "Tenzin Nyima Glow",
+    "party": "Independent",
+    "map_shape_id": 63839,
+    "shape_name": "Thrizino-Buragaon"
+  },
+  {
+    "district": "West Kameng",
+    "no": "7",
+    "constituency": "Bomdila",
+    "name": "Dongru Siongju",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63840,
+    "shape_name": "Bomdila"
+  },
+  {
+    "district": "East Kameng",
+    "no": "8",
+    "constituency": "Bameng",
+    "name": "Kumar Waii",
+    "party": "Indian National Congress",
+    "map_shape_id": 63841,
+    "shape_name": "Bameng"
+  },
+  {
+    "district": "East Kameng",
+    "no": "9",
+    "constituency": "Chayangtajo",
+    "name": "Hayeng Mangfi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63842,
+    "shape_name": "Chayang Tajo"
+  },
+  {
+    "district": "East Kameng",
+    "no": "10",
+    "constituency": "Seppa East",
+    "name": "Ealing Tallang",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63843,
+    "shape_name": "Seppa East"
+  },
+  {
+    "district": "East Kameng",
+    "no": "11",
+    "constituency": "Seppa West",
+    "name": "Mama Natung",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63844,
+    "shape_name": "Seppa West"
+  },
+  {
+    "district": "Pakke-Kessang",
+    "no": "12",
+    "constituency": "Pakke-Kessang",
+    "name": "Biyuram Wahge",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63845,
+    "shape_name": "Pakke Kessang"
+  },
+  {
+    "district": "Papum Pare",
+    "no": "13",
+    "constituency": "Itanagar",
+    "name": "Techi Kaso",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63846,
+    "shape_name": "Itanagar"
+  },
+  {
+    "district": "Papum Pare",
+    "no": "14",
+    "constituency": "Doimukh",
+    "name": "Nabam Vivek",
+    "party": "People's Party of Arunachal",
+    "map_shape_id": 63847,
+    "shape_name": "Doimukh"
+  },
+  {
+    "district": "Papum Pare",
+    "no": "15",
+    "constituency": "Sagalee",
+    "name": "Ratu Techi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63848,
+    "shape_name": "Sagalee"
+  },
+  {
+    "district": "Lower Subansiri",
+    "no": "16",
+    "constituency": "Yachuli",
+    "name": "Toko Tatung",
+    "party": "Nationalist Congress Party",
+    "map_shape_id": 63849,
+    "shape_name": "Yachuli"
+  },
+  {
+    "district": "Lower Subansiri",
+    "no": "17",
+    "constituency": "Ziro\u2013Hapoli",
+    "name": "Hage Appa",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63850,
+    "shape_name": "Ziro Hapoli"
+  },
+  {
+    "district": "Kra-Daadi",
+    "no": "18",
+    "constituency": "Palin",
+    "name": "Balo Raja",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63851,
+    "shape_name": "Palin"
+  },
+  {
+    "district": "Kurung Kumey",
+    "no": "19",
+    "constituency": "Nyapin",
+    "name": "Tai Nikio",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63852,
+    "shape_name": "Nyapin"
+  },
+  {
+    "district": "Kra-Daadi",
+    "no": "20",
+    "constituency": "Tali",
+    "name": "Jikke Tako",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63853,
+    "shape_name": "Tali"
+  },
+  {
+    "district": "Kurung Kumey",
+    "no": "21",
+    "constituency": "Koloriang",
+    "name": "Pani Taram",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63854,
+    "shape_name": "Koloriang"
+  },
+  {
+    "district": "Upper Subansiri",
+    "no": "22",
+    "constituency": "Nacho",
+    "name": "Nakap Nalo",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63855,
+    "shape_name": "Nacho"
+  },
+  {
+    "district": "Upper Subansiri",
+    "no": "23",
+    "constituency": "Taliha",
+    "name": "Nyato Rigia",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63856,
+    "shape_name": "Taliha"
+  },
+  {
+    "district": "Upper Subansiri",
+    "no": "24",
+    "constituency": "Daporijo",
+    "name": "Taniya Soki",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63857,
+    "shape_name": "Daporijo"
+  },
+  {
+    "district": "Kamle",
+    "no": "25",
+    "constituency": "Raga",
+    "name": "Rotom Tebin",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63858,
+    "shape_name": "Raga"
+  },
+  {
+    "district": "Upper Subansiri",
+    "no": "26",
+    "constituency": "Dumporijo",
+    "name": "Rode Bui",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63859,
+    "shape_name": "Dumporijo"
+  },
+  {
+    "district": "West Siang",
+    "no": "27",
+    "constituency": "Liromoba",
+    "name": "Pesi Jilen",
+    "party": "People's Party of Arunachal",
+    "map_shape_id": 63860,
+    "shape_name": "Liromoba"
+  },
+  {
+    "district": "Lower Siang",
+    "no": "28",
+    "constituency": "Likabali",
+    "name": "Kardo Nyigyor",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63861,
+    "shape_name": "Likabali"
+  },
+  {
+    "district": "Lepa Rada",
+    "no": "29",
+    "constituency": "Basar",
+    "name": "Nyabi Jini Dirchi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63862,
+    "shape_name": "Basar"
+  },
+  {
+    "district": "West Siang",
+    "no": "30",
+    "constituency": "Along West",
+    "name": "Topin Ete",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63863,
+    "shape_name": "Along West"
+  },
+  {
+    "district": "West Siang",
+    "no": "31",
+    "constituency": "Along East",
+    "name": "Kento Jini",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63864,
+    "shape_name": "Along East"
+  },
+  {
+    "district": "Siang",
+    "no": "32",
+    "constituency": "Rumgong",
+    "name": "Talem Taboh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63865,
+    "shape_name": "Rumgong"
+  },
+  {
+    "district": "Upper Siang",
+    "no": "34",
+    "constituency": "Tuting\u2013Yingkiong",
+    "name": "Alo Libang",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63867,
+    "shape_name": "Tuting Yingkiong"
+  },
+  {
+    "district": "Siang",
+    "no": "35",
+    "constituency": "Pangin",
+    "name": "Ojing Tasing",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63868,
+    "shape_name": "Pangin"
+  },
+  {
+    "district": "Lower Siang",
+    "no": "36",
+    "constituency": "Nari-Koyu",
+    "name": "Tojir Kadu",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63869,
+    "shape_name": "Nari-Koyu"
+  },
+  {
+    "district": "East Siang",
+    "no": "37",
+    "constituency": "Pasighat West",
+    "name": "Ninong Ering",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63870,
+    "shape_name": "Pasighat West"
+  },
+  {
+    "district": "East Siang",
+    "no": "38",
+    "constituency": "Pasighat East",
+    "name": "Tapi Darang",
+    "party": "People's Party of Arunachal",
+    "map_shape_id": 63871,
+    "shape_name": "Pasighat East"
+  },
+  {
+    "district": "East Siang",
+    "no": "39",
+    "constituency": "Mebo",
+    "name": "Oken Tayeng",
+    "party": "People's Party of Arunachal",
+    "map_shape_id": 63872,
+    "shape_name": "Mebo"
+  },
+  {
+    "district": "Upper Siang",
+    "no": "40",
+    "constituency": "Mariyang-Geku",
+    "name": "Oni Panyang",
+    "party": "People's Party of Arunachal",
+    "map_shape_id": 63873,
+    "shape_name": "Mariyang-Geku"
+  },
+  {
+    "district": "Dibang Valley",
+    "no": "41",
+    "constituency": "Anini",
+    "name": "Mopi Mihu",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63874,
+    "shape_name": "Anini"
+  },
+  {
+    "district": "Lower Dibang Valley",
+    "no": "42",
+    "constituency": "Dambuk",
+    "name": "Puinnyo Apum",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63875,
+    "shape_name": "Dambuk"
+  },
+  {
+    "district": "Lower Dibang Valley",
+    "no": "43",
+    "constituency": "Roing",
+    "name": "Mutchu Mithi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63876,
+    "shape_name": "Roing"
+  },
+  {
+    "district": "Lohit",
+    "no": "44",
+    "constituency": "Tezu",
+    "name": "Mahesh Chai",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63877,
+    "shape_name": "Tezu"
+  },
+  {
+    "district": "Anjaw",
+    "no": "45",
+    "constituency": "Hayuliang",
+    "name": "Dasanglu Pul",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63878,
+    "shape_name": "Hayuliang"
+  },
+  {
+    "district": "Namsai",
+    "no": "46",
+    "constituency": "Chowkham",
+    "name": "Chowna Mein",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63879,
+    "shape_name": "Chowkham"
+  },
+  {
+    "district": "Namsai",
+    "no": "47",
+    "constituency": "Namsai",
+    "name": "Chau Zingnu Namchoom",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63880,
+    "shape_name": "Namsai"
+  },
+  {
+    "district": "Namsai",
+    "no": "48",
+    "constituency": "Lekang",
+    "name": "Lekhiya Soni",
+    "party": "Nationalist Congress Party",
+    "map_shape_id": 63881,
+    "shape_name": "Lekang"
+  },
+  {
+    "district": "Changlang",
+    "no": "50",
+    "constituency": "Miao",
+    "name": "Kamlung Mossang",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67593,
+    "shape_name": "Miao"
+  },
+  {
+    "district": "Changlang",
+    "no": "51",
+    "constituency": "Nampong",
+    "name": "Laisam Simai",
+    "party": "Independent",
+    "map_shape_id": 67461,
+    "shape_name": "Nampong"
+  },
+  {
+    "district": "Changlang",
+    "no": "52",
+    "constituency": "Changlang South",
+    "name": "Hamjong Tangha",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63882,
+    "shape_name": "Changlang South"
+  },
+  {
+    "district": "Changlang",
+    "no": "53",
+    "constituency": "Changlang North",
+    "name": "Tesam Pongte",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67362,
+    "shape_name": "Changlang North"
+  },
+  {
+    "district": "Tirap",
+    "no": "54",
+    "constituency": "Namsang",
+    "name": "Wangki Lowang",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63883,
+    "shape_name": "Namsang"
+  },
+  {
+    "district": "Tirap",
+    "no": "55",
+    "constituency": "Khonsa East",
+    "name": "Wanglam Sawin",
+    "party": "Independent",
+    "map_shape_id": 63884,
+    "shape_name": "Khonsa East"
+  },
+  {
+    "district": "Tirap",
+    "no": "56",
+    "constituency": "Khonsa West",
+    "name": "Chakat Aboh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63885,
+    "shape_name": "Khonsa West"
+  },
+  {
+    "district": "Longding",
+    "no": "58",
+    "constituency": "Kanubari",
+    "name": "Gabriel Denwang Wangsu",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63887,
+    "shape_name": "Kanubari"
+  },
+  {
+    "district": "Longding",
+    "no": "59",
+    "constituency": "Longding\u2013Pumao",
+    "name": "Thangwang Wangham",
+    "party": "National People's Party (India)",
+    "map_shape_id": 63888,
+    "shape_name": "Longding Pumao"
+  },
+  {
+    "district": "Shi Yomi",
+    "no": "33",
+    "constituency": "Mechuka",
+    "name": "Pasang Dorjee Sona",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63866,
+    "shape_name": "Mechukha"
+  },
+  {
+    "district": "Changlang",
+    "no": "49",
+    "constituency": "Bordumsa-Diyun",
+    "name": "Nikh Kamin",
+    "party": "Nationalist Congress Party",
+    "map_shape_id": 67532,
+    "shape_name": "Bordumsa - Diyum"
+  },
+  {
+    "district": "Tirap",
+    "no": "57",
+    "constituency": "Borduria\u2013Bagapani",
+    "name": "Wanglin Lowangdong",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63886,
+    "shape_name": "Borduria Bogapani"
+  },
+  {
+    "district": "Longding",
+    "no": "60",
+    "constituency": "Pongchau-Wakka",
+    "name": "Honchun Ngandam",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63889,
+    "shape_name": "Pongchao Wakka"
+  }
+]

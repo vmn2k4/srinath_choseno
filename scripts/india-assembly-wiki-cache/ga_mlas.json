@@ -1,0 +1,282 @@
+[
+  {
+    "district": "North Goa",
+    "no": "1",
+    "constituency": "Mandrem",
+    "name": "Jit Arolkar",
+    "party": "Maharashtrawadi Gomantak Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "2",
+    "constituency": "Pernem",
+    "name": "Pravin Arlekar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "3",
+    "constituency": "Bicholim",
+    "name": "Chandrakant Shetye",
+    "party": "Independent"
+  },
+  {
+    "district": "North Goa",
+    "no": "4",
+    "constituency": "Tivim",
+    "name": "Nilkanth Halarnkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "5",
+    "constituency": "Mapusa",
+    "name": "Joshua D'Souza",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "6",
+    "constituency": "Siolim",
+    "name": "Delilah Lobo",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "7",
+    "constituency": "Saligao",
+    "name": "Kedar Naik",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "8",
+    "constituency": "Calangute",
+    "name": "Michael Lobo",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "9",
+    "constituency": "Porvorim",
+    "name": "Rohan Khaunte",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "10",
+    "constituency": "Aldona",
+    "name": "Carlos Alvares Ferreira",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "North Goa",
+    "no": "11",
+    "constituency": "Panaji",
+    "name": "Atanasio Monserrate",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "12",
+    "constituency": "Taleigao",
+    "name": "Jennifer Monserrate",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "13",
+    "constituency": "Santa Cruz",
+    "name": "Rodolfo Louis Fernandes",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "14",
+    "constituency": "St. Andre",
+    "name": "Viresh Borkar",
+    "party": "Revolutionary Goans Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "15",
+    "constituency": "Cumbarjua",
+    "name": "Rajesh Faldessai",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "16",
+    "constituency": "Maem",
+    "name": "Premendra Shet",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "17",
+    "constituency": "Sanquelim",
+    "name": "Pramod Sawant",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "18",
+    "constituency": "Poriem",
+    "name": "Deviya Rane",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "19",
+    "constituency": "Valpoi",
+    "name": "Vishwajit Pratapsingh Rane",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "20",
+    "constituency": "Priol",
+    "name": "Govind Gaude",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "21",
+    "constituency": "Ponda",
+    "name": "Ravi Naik",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "22",
+    "constituency": "Siroda",
+    "name": "Subhash Shirodkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Goa",
+    "no": "23",
+    "constituency": "Marcaim",
+    "name": "Sudin Dhavalikar",
+    "party": "Maharashtrawadi Gomantak Party"
+  },
+  {
+    "district": "South Goa",
+    "no": "24",
+    "constituency": "Mormugao",
+    "name": "Sankalp Amonkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Goa",
+    "no": "25",
+    "constituency": "Vasco Da Gama",
+    "name": "Krishna Salkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Goa",
+    "no": "26",
+    "constituency": "Dabolim",
+    "name": "Mauvin Godinho",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Goa",
+    "no": "27",
+    "constituency": "Cortalim",
+    "name": "Antonio Vas",
+    "party": "Independent"
+  },
+  {
+    "district": "South Goa",
+    "no": "28",
+    "constituency": "Nuvem",
+    "name": "Aleixo Sequeira",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Goa",
+    "no": "29",
+    "constituency": "Curtorim",
+    "name": "Aleixo Lourenco",
+    "party": "Independent"
+  },
+  {
+    "district": "South Goa",
+    "no": "30",
+    "constituency": "Fatorda",
+    "name": "Vijai Sardesai",
+    "party": "Goa Forward Party"
+  },
+  {
+    "district": "South Goa",
+    "no": "31",
+    "constituency": "Margao",
+    "name": "Digambar Kamat",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Goa",
+    "no": "32",
+    "constituency": "Benaulim",
+    "name": "Venzy Viegas",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "South Goa",
+    "no": "33",
+    "constituency": "Navelim",
+    "name": "Ulhas Tuenkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Goa",
+    "no": "34",
+    "constituency": "Cuncolim",
+    "name": "Yuri Alemao",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "South Goa",
+    "no": "35",
+    "constituency": "Velim",
+    "name": "Cruz Silva",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Kushavati",
+    "no": "36",
+    "constituency": "Quepem",
+    "name": "Altone D'Costa",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kushavati",
+    "no": "37",
+    "constituency": "Curchorem",
+    "name": "Nilesh Cabral",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kushavati",
+    "no": "38",
+    "constituency": "Sanvordem",
+    "name": "Ganesh Gaonkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kushavati",
+    "no": "39",
+    "constituency": "Sanguem",
+    "name": "Subhash Phal Desai",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kushavati",
+    "no": "40",
+    "constituency": "Canacona",
+    "name": "Ramesh Tawadkar",
+    "party": "Bharatiya Janata Party"
+  }
+]

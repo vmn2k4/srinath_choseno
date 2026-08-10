@@ -1,0 +1,542 @@
+[
+  {
+    "district": "West Jaintia Hills",
+    "no": "1",
+    "constituency": "Nartiang",
+    "name": "Sniawbhalang Dhar",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64073,
+    "shape_name": "NARTIANG"
+  },
+  {
+    "district": "West Jaintia Hills",
+    "no": "2",
+    "constituency": "Jowai",
+    "name": "Wailadmiki Shylla",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64074,
+    "shape_name": "JOWAI"
+  },
+  {
+    "district": "West Jaintia Hills",
+    "no": "3",
+    "constituency": "Raliang",
+    "name": "Comingone Ymbon",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64075,
+    "shape_name": "RALIANG"
+  },
+  {
+    "district": "West Jaintia Hills",
+    "no": "4",
+    "constituency": "Mowkaiaw",
+    "name": "Nujorki Sungoh",
+    "party": "United Democratic Party (Meghalaya)",
+    "map_shape_id": 64076,
+    "shape_name": "MOWKAIAW"
+  },
+  {
+    "district": "East Jaintia Hills",
+    "no": "5",
+    "constituency": "Sutnga Saipung",
+    "name": "Santa Mary Shylla",
+    "party": "National People's Party (India)",
+    "map_shape_id": 67394,
+    "shape_name": "SUTNGA SAIPUNG"
+  },
+  {
+    "district": "East Jaintia Hills",
+    "no": "6",
+    "constituency": "Khliehriat",
+    "name": "Kyrmen Shylla",
+    "party": "United Democratic Party (Meghalaya)",
+    "map_shape_id": 64077,
+    "shape_name": "KHLIEHRIAT"
+  },
+  {
+    "district": "West Jaintia Hills",
+    "no": "7",
+    "constituency": "Amlarem",
+    "name": "Lahkmen Rymbui",
+    "party": "United Democratic Party (Meghalaya)",
+    "map_shape_id": 64078,
+    "shape_name": "AMLAREM"
+  },
+  {
+    "district": "Ri Bhoi",
+    "no": "8",
+    "constituency": "Mawhati",
+    "name": "Charles Marngar",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64079,
+    "shape_name": "MAWHATI"
+  },
+  {
+    "district": "Ri Bhoi",
+    "no": "9",
+    "constituency": "Nongpoh",
+    "name": "Mayralborn Syiem",
+    "party": "United Democratic Party (Meghalaya)",
+    "map_shape_id": 64080,
+    "shape_name": "NONGPOH"
+  },
+  {
+    "district": "Ri Bhoi",
+    "no": "10",
+    "constituency": "Jirang",
+    "name": "Sosthenes Sohyun",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64081,
+    "shape_name": "JIRANG"
+  },
+  {
+    "district": "Ri Bhoi",
+    "no": "11",
+    "constituency": "Umsning",
+    "name": "Celestine Lyngdoh",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64082,
+    "shape_name": "UMSNING"
+  },
+  {
+    "district": "Ri Bhoi",
+    "no": "12",
+    "constituency": "Umroi",
+    "name": "Damanbait Lamare",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64083,
+    "shape_name": "UMROI"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "14",
+    "constituency": "Pynthorumkhrah",
+    "name": "Alexander Laloo Hek",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64085,
+    "shape_name": "PYNTHORUMKHRAH"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "15",
+    "constituency": "Mawlai",
+    "name": "Brightstarwell Marbaniang",
+    "party": "Voice of the People Party (Meghalaya)",
+    "map_shape_id": 64086,
+    "shape_name": "MAWLAI"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "16",
+    "constituency": "East Shillong",
+    "name": "Ampareen Lyngdoh",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64087,
+    "shape_name": "EAST SHILLONG"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "17",
+    "constituency": "North Shillong",
+    "name": "Adelbert Nongrum",
+    "party": "Voice of the People Party (Meghalaya)",
+    "map_shape_id": 64088,
+    "shape_name": "NORTH SHILLONG"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "18",
+    "constituency": "West Shillong",
+    "name": "Paul Lyngdoh",
+    "party": "United Democratic Party (Meghalaya)",
+    "map_shape_id": 64089,
+    "shape_name": "WEST SHILLONG"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "19",
+    "constituency": "South Shillong",
+    "name": "Sanbor Shullai",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 64090,
+    "shape_name": "SOUTH SHILLONG"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "20",
+    "constituency": "Mylliem",
+    "name": "Ronnie V. Lyngdoh",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64091,
+    "shape_name": "MYLLIEM"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "21",
+    "constituency": "Nongthymmai",
+    "name": "Charles Pyngrope",
+    "party": "Trinamool Congress",
+    "map_shape_id": 64092,
+    "shape_name": "NONGTHYMMAI"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "22",
+    "constituency": "Nongkrem",
+    "name": "Ardent Miller Basaiawmoit",
+    "party": "Voice of the People Party (Meghalaya)",
+    "map_shape_id": 64093,
+    "shape_name": "NONGKREM"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "23",
+    "constituency": "Sohiong",
+    "name": "Synshar Lyngdoh Thabah",
+    "party": "United Democratic Party (Meghalaya)",
+    "map_shape_id": 64094,
+    "shape_name": "SOHIONG"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "24",
+    "constituency": "Mawphlang",
+    "name": "Matthew Beyondstar Kurbah",
+    "party": "United Democratic Party (Meghalaya)",
+    "map_shape_id": 64095,
+    "shape_name": "MAWPHLANG"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "25",
+    "constituency": "Mawsynram",
+    "name": "Ollan Singh Suin",
+    "party": "United Democratic Party (Meghalaya)",
+    "map_shape_id": 64096,
+    "shape_name": "MAWSYNRAM"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "26",
+    "constituency": "Shella",
+    "name": "Balajied Kupar Synrem",
+    "party": "United Democratic Party (Meghalaya)",
+    "map_shape_id": 64097,
+    "shape_name": "SHELLA"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "27",
+    "constituency": "Pynursla",
+    "name": "Prestone Tysong",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64098,
+    "shape_name": "PYNURSLA"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "28",
+    "constituency": "Sohra",
+    "name": "Gavin Miguel Mylleim",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64099,
+    "shape_name": "SOHRA"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "29",
+    "constituency": "Mawkynrew",
+    "name": "Banteidor Lyngdoh",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64100,
+    "shape_name": "MAWKYNREW"
+  },
+  {
+    "district": "Eastern West Khasi Hills",
+    "no": "30",
+    "constituency": "Mairang",
+    "name": "Metbah Lyngdoh",
+    "party": "United Democratic Party (Meghalaya)",
+    "map_shape_id": 64101,
+    "shape_name": "MAIRANG"
+  },
+  {
+    "district": "Eastern West Khasi Hills",
+    "no": "31",
+    "constituency": "Mawthadraishan",
+    "name": "Shakliar Warjri",
+    "party": "Hill State People's Democratic Party",
+    "map_shape_id": 64102,
+    "shape_name": "MAWTHADRAISHAN"
+  },
+  {
+    "district": "West Khasi Hills",
+    "no": "32",
+    "constituency": "Nongstoin",
+    "name": "Gabriel Wahlang",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64103,
+    "shape_name": "NONGSTOIN"
+  },
+  {
+    "district": "West Khasi Hills",
+    "no": "33",
+    "constituency": "Rambrai-Jyrngam",
+    "name": "Remington Gabil Momin",
+    "party": "Independent",
+    "map_shape_id": 64104,
+    "shape_name": "RAMBRAI JYRNGAM"
+  },
+  {
+    "district": "West Khasi Hills",
+    "no": "34",
+    "constituency": "Mawshynrut",
+    "name": "Methodius Dkhar",
+    "party": "Hill State People's Democratic Party",
+    "map_shape_id": 64105,
+    "shape_name": "MAWSHYNRUT"
+  },
+  {
+    "district": "South West Khasi Hills",
+    "no": "35",
+    "constituency": "Ranikor",
+    "name": "Pius Marwein",
+    "party": "United Democratic Party (Meghalaya)",
+    "map_shape_id": 64106,
+    "shape_name": "RANIKOR"
+  },
+  {
+    "district": "South West Khasi Hills",
+    "no": "36",
+    "constituency": "Mawkyrwat",
+    "name": "Renikton Lyngdoh Tongkhar",
+    "party": "United Democratic Party (Meghalaya)",
+    "map_shape_id": 64107,
+    "shape_name": "MAWKYRWAT"
+  },
+  {
+    "district": "North Garo Hills",
+    "no": "37",
+    "constituency": "Kharkutta",
+    "name": "Rupert Momin",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64108,
+    "shape_name": "KHARKUTTA"
+  },
+  {
+    "district": "North Garo Hills",
+    "no": "38",
+    "constituency": "Mendipathar",
+    "name": "Marthon J. Sangma",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64109,
+    "shape_name": "MENDIPATHAR"
+  },
+  {
+    "district": "North Garo Hills",
+    "no": "39",
+    "constituency": "Resubelpara",
+    "name": "Timothy J. Shira",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64110,
+    "shape_name": "RESUBELPARA"
+  },
+  {
+    "district": "North Garo Hills",
+    "no": "40",
+    "constituency": "Bajengdoba",
+    "name": "Pongseng Marak",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64111,
+    "shape_name": "BAJENGDOBA"
+  },
+  {
+    "district": "East Garo Hills",
+    "no": "41",
+    "constituency": "Songsak",
+    "name": "Mukul Sangma",
+    "party": "Trinamool Congress",
+    "map_shape_id": 64112,
+    "shape_name": "SONGSAK"
+  },
+  {
+    "district": "East Garo Hills",
+    "no": "42",
+    "constituency": "Rongjeng",
+    "name": "Jim M. Sangma",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64113,
+    "shape_name": "RONGJENG"
+  },
+  {
+    "district": "East Garo Hills",
+    "no": "43",
+    "constituency": "Williamnagar",
+    "name": "Marcuise N. Marak",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64114,
+    "shape_name": "WILLIAM NAGAR"
+  },
+  {
+    "district": "West Garo Hills",
+    "no": "44",
+    "constituency": "Raksamgre",
+    "name": "Limison D. Sangma",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64115,
+    "shape_name": "RAKSAMGRE"
+  },
+  {
+    "district": "West Garo Hills",
+    "no": "45",
+    "constituency": "Tikrikilla",
+    "name": "Jimmy D. Sangma",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64116,
+    "shape_name": "TIKRIKILLA"
+  },
+  {
+    "district": "West Garo Hills",
+    "no": "46",
+    "constituency": "Phulbari",
+    "name": "Abu Taher Mondal",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64117,
+    "shape_name": "PHULBARI"
+  },
+  {
+    "district": "West Garo Hills",
+    "no": "47",
+    "constituency": "Rajabala",
+    "name": "Mizanur Rahman Kazi",
+    "party": "Trinamool Congress",
+    "map_shape_id": 64118,
+    "shape_name": "RAJABALA"
+  },
+  {
+    "district": "West Garo Hills",
+    "no": "48",
+    "constituency": "Selsella",
+    "name": "Arbinstone B. Marak",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64119,
+    "shape_name": "SELSELLA"
+  },
+  {
+    "district": "West Garo Hills",
+    "no": "49",
+    "constituency": "Dadenggre",
+    "name": "Rupa M. Marak",
+    "party": "Trinamool Congress",
+    "map_shape_id": 64120,
+    "shape_name": "DADENGGRE"
+  },
+  {
+    "district": "West Garo Hills",
+    "no": "50",
+    "constituency": "North Tura",
+    "name": "Thomas A. Sangma",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64121,
+    "shape_name": "NORTH TURA"
+  },
+  {
+    "district": "West Garo Hills",
+    "no": "51",
+    "constituency": "South Tura",
+    "name": "Conrad Sangma",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64122,
+    "shape_name": "SOUTH TURA"
+  },
+  {
+    "district": "West Garo Hills",
+    "no": "52",
+    "constituency": "Rangsakona",
+    "name": "Subir Marak",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64123,
+    "shape_name": "RANGSAKONA"
+  },
+  {
+    "district": "South West Garo Hills",
+    "no": "53",
+    "constituency": "Ampati",
+    "name": "Miani D Shira",
+    "party": "Trinamool Congress",
+    "map_shape_id": 64124,
+    "shape_name": "AMPATI"
+  },
+  {
+    "district": "South West Garo Hills",
+    "no": "54",
+    "constituency": "Mahendraganj",
+    "name": "Sanjay A. Sangma",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64125,
+    "shape_name": "MAHENDRAGANJ"
+  },
+  {
+    "district": "South West Garo Hills",
+    "no": "55",
+    "constituency": "Salmanpara",
+    "name": "Ian Botham K. Sangma",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64126,
+    "shape_name": "SALMANPARA"
+  },
+  {
+    "district": "West Garo Hills",
+    "no": "56",
+    "constituency": "Gambegre",
+    "name": "Mehtab Chandee Agitok Sangma",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64127,
+    "shape_name": "GAMBEGRE"
+  },
+  {
+    "district": "West Garo Hills",
+    "no": "57",
+    "constituency": "Dalu",
+    "name": "Brening A. Sangma",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64128,
+    "shape_name": "DALU"
+  },
+  {
+    "district": "South Garo Hills",
+    "no": "58",
+    "constituency": "Rongara Siju",
+    "name": "Rakkam A Sangma",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64129,
+    "shape_name": "RONGARA SIJU"
+  },
+  {
+    "district": "South Garo Hills",
+    "no": "60",
+    "constituency": "Baghmara",
+    "name": "Kartush R. Marak",
+    "party": "Independent",
+    "map_shape_id": 64131,
+    "shape_name": "BAGHMARA"
+  },
+  {
+    "district": "East Khasi Hills",
+    "no": "13",
+    "constituency": "Mawrengkneng",
+    "name": "Heaving Stone Kharpran",
+    "party": "Voice of the People Party (Meghalaya)",
+    "map_shape_id": 64084,
+    "shape_name": "MAWRYNGKNENG"
+  },
+  {
+    "district": "South Garo Hills",
+    "no": "59",
+    "constituency": "Chokpot",
+    "name": "Sengchim N. Sangma",
+    "party": "National People's Party (India)",
+    "map_shape_id": 64130,
+    "shape_name": "CHOCKPOT"
+  }
+]

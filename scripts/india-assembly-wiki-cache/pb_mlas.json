@@ -1,0 +1,821 @@
+[
+  {
+    "district": "Pathankot",
+    "no": "1",
+    "constituency": "Sujanpur",
+    "name": "Naresh Puri",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Pathankot",
+    "no": "2",
+    "constituency": "Bhoa",
+    "name": "Lal Chand Kataruchakk",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Pathankot",
+    "no": "3",
+    "constituency": "Pathankot",
+    "name": "Ashwani Kumar Sharma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gurdaspur",
+    "no": "4",
+    "constituency": "Gurdaspur",
+    "name": "Barindermeet Singh Pahra",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Gurdaspur",
+    "no": "5",
+    "constituency": "Dina Nagar",
+    "name": "Aruna Chaudhary",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Gurdaspur",
+    "no": "6",
+    "constituency": "Qadian",
+    "name": "Partap Singh Bajwa",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Gurdaspur",
+    "no": "7",
+    "constituency": "Batala",
+    "name": "Amansher Singh (Shery Kalsi)",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Gurdaspur",
+    "no": "8",
+    "constituency": "Sri Hargobindpur",
+    "name": "Amarpal Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Gurdaspur",
+    "no": "9",
+    "constituency": "Fatehgarh Churian",
+    "name": "Tripat Rajinder Singh Bajwa",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Gurdaspur",
+    "no": "10",
+    "constituency": "Dera Baba Nanak",
+    "name": "Gurdeep Singh Randhawa",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Amritsar",
+    "no": "11",
+    "constituency": "Ajnala",
+    "name": "Kuldip Singh Dhaliwal",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Amritsar",
+    "no": "12",
+    "constituency": "Rajasansi",
+    "name": "Sukhbinder Singh Sarkaria",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Amritsar",
+    "no": "13",
+    "constituency": "Majitha",
+    "name": "Ganieve Kaur Majithia",
+    "party": "Shiromani Akali Dal"
+  },
+  {
+    "district": "Amritsar",
+    "no": "14",
+    "constituency": "Jandiala",
+    "name": "Harbhajan Singh E.T.O.",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Amritsar",
+    "no": "15",
+    "constituency": "Amritsar North",
+    "name": "Kunwar Vijay Pratap Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Amritsar",
+    "no": "16",
+    "constituency": "Amritsar West",
+    "name": "Jasbir Singh Sandhu",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Amritsar",
+    "no": "17",
+    "constituency": "Amritsar Central",
+    "name": "Ajay Gupta",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Amritsar",
+    "no": "18",
+    "constituency": "Amritsar East",
+    "name": "Jeevan Jyot Kaur",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Amritsar",
+    "no": "19",
+    "constituency": "Amritsar South",
+    "name": "Inderbir Singh Nijjar",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Amritsar",
+    "no": "20",
+    "constituency": "Attari",
+    "name": "Jaswinder Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Tarn Taran",
+    "no": "21",
+    "constituency": "Tarn Taran",
+    "name": "Harmeet Singh Sandhu",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Tarn Taran",
+    "no": "22",
+    "constituency": "Khemkaran",
+    "name": "Sarvan Singh Dhun",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Tarn Taran",
+    "no": "23",
+    "constituency": "Patti",
+    "name": "Laljit Singh Bhullar",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Tarn Taran",
+    "no": "24",
+    "constituency": "Khadoor Sahib",
+    "name": "Manjinder Singh Lalpura",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Amritsar",
+    "no": "25",
+    "constituency": "Baba Bakala",
+    "name": "Dalbir Singh Tong",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Kapurthala",
+    "no": "26",
+    "constituency": "Bholath",
+    "name": "Sukhpal Singh Khaira",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kapurthala",
+    "no": "27",
+    "constituency": "Kapurthala",
+    "name": "Rana Gurjeet Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kapurthala",
+    "no": "28",
+    "constituency": "Sultanpur Lodhi",
+    "name": "Rana Inder Pratap Singh",
+    "party": "Independent"
+  },
+  {
+    "district": "Kapurthala",
+    "no": "29",
+    "constituency": "Phagwara",
+    "name": "Balwinder Singh Dhaliwal",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Jalandhar",
+    "no": "30",
+    "constituency": "Phillaur",
+    "name": "Vikramjit Singh Chaudhary",
+    "party": "Independent"
+  },
+  {
+    "district": "Jalandhar",
+    "no": "31",
+    "constituency": "Nakodar",
+    "name": "Inderjit Kaur Mann",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Jalandhar",
+    "no": "32",
+    "constituency": "Shahkot",
+    "name": "Hardev Singh Laddi",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Jalandhar",
+    "no": "33",
+    "constituency": "Kartarpur",
+    "name": "Balkar Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Jalandhar",
+    "no": "34",
+    "constituency": "Jalandhar West (SC)",
+    "name": "Mohinder Pal Bhagat",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Jalandhar",
+    "no": "35",
+    "constituency": "Jalandhar Central",
+    "name": "Raman Arora",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Jalandhar",
+    "no": "36",
+    "constituency": "Jalandhar North",
+    "name": "Avtar Singh Junior",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Jalandhar",
+    "no": "37",
+    "constituency": "Jalandhar Cantonment",
+    "name": "Pargat Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Jalandhar",
+    "no": "38",
+    "constituency": "Adampur",
+    "name": "Sukhwinder Singh Kotli",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Hoshiarpur",
+    "no": "39",
+    "constituency": "Mukerian",
+    "name": "Jangi Lal Mahajan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Hoshiarpur",
+    "no": "40",
+    "constituency": "Dasuya",
+    "name": "Karambir Singh Ghuman",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Hoshiarpur",
+    "no": "41",
+    "constituency": "Urmar",
+    "name": "Jasvir Singh Raja Gill",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Hoshiarpur",
+    "no": "42",
+    "constituency": "Sham Chaurasi",
+    "name": "Ravjot Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Hoshiarpur",
+    "no": "43",
+    "constituency": "Hoshiarpur",
+    "name": "Bram Shanker",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Hoshiarpur",
+    "no": "44",
+    "constituency": "Chabbewal",
+    "name": "Ishank Kumar",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Hoshiarpur",
+    "no": "45",
+    "constituency": "Garhshankar",
+    "name": "Jai Krishan Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Shaheed Bhagat Singh Nagar",
+    "no": "46",
+    "constituency": "Banga",
+    "name": "Sukhwinder Kumar",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Shaheed Bhagat Singh Nagar",
+    "no": "47",
+    "constituency": "Nawan Shahr",
+    "name": "Nachhatar Pal",
+    "party": "Bahujan Samaj Party"
+  },
+  {
+    "district": "Shaheed Bhagat Singh Nagar",
+    "no": "48",
+    "constituency": "Balachaur",
+    "name": "Santosh Katariaa",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Rupnagar",
+    "no": "49",
+    "constituency": "Anandpur Sahib",
+    "name": "Harjot Singh Bains",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Rupnagar",
+    "no": "50",
+    "constituency": "Rupnagar",
+    "name": "Dinesh Chadha",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Rupnagar",
+    "no": "51",
+    "constituency": "Chamkaur Sahib",
+    "name": "Dr Charanjit Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sahibzada Ajit Singh Nagar",
+    "no": "52",
+    "constituency": "Kharar",
+    "name": "Anmol Gagan Maan",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sahibzada Ajit Singh Nagar",
+    "no": "53",
+    "constituency": "S.A.S. Nagar",
+    "name": "Kulwant Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Fatehgarh Sahib",
+    "no": "54",
+    "constituency": "Bassi Pathana",
+    "name": "Rupinder Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Fatehgarh Sahib",
+    "no": "55",
+    "constituency": "Fatehgarh Sahib",
+    "name": "Lakhbir Singh Rai",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Fatehgarh Sahib",
+    "no": "56",
+    "constituency": "Amloh",
+    "name": "Gurinder Singh Garry",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "57",
+    "constituency": "Khanna",
+    "name": "Tarunpreet Singh Sond",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "58",
+    "constituency": "Samrala",
+    "name": "Jagtar Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "59",
+    "constituency": "Sahnewal",
+    "name": "Hardeep Singh Mundian",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "60",
+    "constituency": "Ludhiana East",
+    "name": "Daljit Singh Grewal",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "61",
+    "constituency": "Ludhiana South",
+    "name": "Rajinder Pal Kaur Chhina",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "62",
+    "constituency": "Atam Nagar",
+    "name": "Kulwant Singh Sidhu",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "63",
+    "constituency": "Ludhiana Central",
+    "name": "Ashok Prashar Pappi",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "64",
+    "constituency": "Ludhiana West",
+    "name": "Sanjeev Arora",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "65",
+    "constituency": "Ludhiana North",
+    "name": "Madan Lal Bagga",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "66",
+    "constituency": "Gill",
+    "name": "Jiwan Singh Sangowal",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "67",
+    "constituency": "Payal",
+    "name": "Manwinder Singh Gyaspura",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "68",
+    "constituency": "Dakha",
+    "name": "Manpreet Singh Ayali",
+    "party": "Akali Dal (Waris Punjab De)"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "69",
+    "constituency": "Raikot",
+    "name": "Hakam Singh Thekedar",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ludhiana",
+    "no": "70",
+    "constituency": "Jagraon",
+    "name": "Saravjit Kaur Manuke",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Moga",
+    "no": "71",
+    "constituency": "Nihal Singh Wala",
+    "name": "Manjit Singh Bilaspur",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Moga",
+    "no": "72",
+    "constituency": "Bhagha Purana",
+    "name": "Amritpal Singh Sukhanand",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Moga",
+    "no": "73",
+    "constituency": "Moga",
+    "name": "Amandeep Kaur Arora",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Moga",
+    "no": "74",
+    "constituency": "Dharamkot",
+    "name": "Devinder Singh Laddi Dhos",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ferozpur",
+    "no": "75",
+    "constituency": "Zira",
+    "name": "Naresh Kataria",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ferozpur",
+    "no": "76",
+    "constituency": "Firozpur City",
+    "name": "Ranveer Singh Bhullar",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ferozpur",
+    "no": "77",
+    "constituency": "Firozpur Rural",
+    "name": "Rajnish Dahiya",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Ferozpur",
+    "no": "78",
+    "constituency": "Guru Har Sahai",
+    "name": "Fauja Singh Sarari",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Fazilka",
+    "no": "79",
+    "constituency": "Jalalabad",
+    "name": "Jagdeep Kamboj Goldy",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Fazilka",
+    "no": "80",
+    "constituency": "Fazilka",
+    "name": "Narinderpal Singh Sawna",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Fazilka",
+    "no": "81",
+    "constituency": "Abohar",
+    "name": "Sandeep Jakhar",
+    "party": "Independent"
+  },
+  {
+    "district": "Fazilka",
+    "no": "82",
+    "constituency": "Balluana",
+    "name": "Amandeep Singh \u2018Goldy\u2019 Musafir",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sri Muktsar Sahib",
+    "no": "83",
+    "constituency": "Lambi",
+    "name": "Gurmeet Singh Khudian",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sri Muktsar Sahib",
+    "no": "84",
+    "constituency": "Gidderbaha",
+    "name": "Hardeep Singh Dhillon",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sri Muktsar Sahib",
+    "no": "85",
+    "constituency": "Malout",
+    "name": "Baljit Kaur",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sri Muktsar Sahib",
+    "no": "86",
+    "constituency": "Muktsar",
+    "name": "Jagdeep Singh Brar",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Faridkot",
+    "no": "87",
+    "constituency": "Faridkot",
+    "name": "Gurdit Singh Sekhon",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Faridkot",
+    "no": "88",
+    "constituency": "Kotkapura",
+    "name": "Kultar Singh Sandhwan",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Faridkot",
+    "no": "89",
+    "constituency": "Jaitu",
+    "name": "Amolak Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Bathinda",
+    "no": "90",
+    "constituency": "Rampura Phul",
+    "name": "Balkar Singh Sidhu",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Bathinda",
+    "no": "91",
+    "constituency": "Bhucho Mandi",
+    "name": "Master Jagsir Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Bathinda",
+    "no": "92",
+    "constituency": "Bathinda Urban",
+    "name": "Jagroop Singh Gill",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Bathinda",
+    "no": "93",
+    "constituency": "Bathinda Rural",
+    "name": "Amit Rattan Kotfatta",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Bathinda",
+    "no": "94",
+    "constituency": "Talwandi Sabo",
+    "name": "Baljinder Kaur",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Bathinda",
+    "no": "95",
+    "constituency": "Maur",
+    "name": "Sukhvir Maiser Khana",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Mansa",
+    "no": "96",
+    "constituency": "Mansa",
+    "name": "Vijay Singla",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Mansa",
+    "no": "97",
+    "constituency": "Sardulgarh",
+    "name": "Gurpreet Singh Banawali",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Mansa",
+    "no": "98",
+    "constituency": "Budhlada",
+    "name": "Budhram Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sangrur",
+    "no": "99",
+    "constituency": "Lehragaga",
+    "name": "Barinder Kumar Goyal",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sangrur",
+    "no": "100",
+    "constituency": "Dirba",
+    "name": "Harpal Singh Cheema",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sangrur",
+    "no": "101",
+    "constituency": "Sunam",
+    "name": "Aman Arora",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sangrur",
+    "no": "102",
+    "constituency": "Malerkotla",
+    "name": "Mohammad Jamil Ur Rehman",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sangrur",
+    "no": "103",
+    "constituency": "Amargarh",
+    "name": "Jaswant Singh Gajjan Majra",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sangrur",
+    "no": "104",
+    "constituency": "Dhuri",
+    "name": "Bhagwant Mann",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sangrur",
+    "no": "105",
+    "constituency": "Sangrur",
+    "name": "Narinder Kaur Bharaj",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Barnala",
+    "no": "106",
+    "constituency": "Bhadaur",
+    "name": "Labh Singh Ugoke",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Barnala",
+    "no": "107",
+    "constituency": "Barnala",
+    "name": "Kuldeep Singh Dhillon",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Barnala",
+    "no": "108",
+    "constituency": "Mehal Kalan",
+    "name": "Kulwant Singh Pandori",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Patiala",
+    "no": "109",
+    "constituency": "Nabha",
+    "name": "Gurdev Singh Dev Maan",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Patiala",
+    "no": "110",
+    "constituency": "Patiala Rural",
+    "name": "Balbir Singh",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Patiala",
+    "no": "111",
+    "constituency": "Rajpura",
+    "name": "Neena Mittal",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Sahibzada Ajit Singh Nagar",
+    "no": "112",
+    "constituency": "Dera Bassi",
+    "name": "Kuljit Singh Randhawa",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Patiala",
+    "no": "113",
+    "constituency": "Ghanaur",
+    "name": "Gurlal Ghanaur",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Patiala",
+    "no": "114",
+    "constituency": "Sanour",
+    "name": "Harmit Singh Pathanmajra",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Patiala",
+    "no": "115",
+    "constituency": "Patiala",
+    "name": "Ajit Pal Singh Kohli",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Patiala",
+    "no": "116",
+    "constituency": "Samana",
+    "name": "Chetan Singh Jaura Majra",
+    "party": "Aam Aadmi Party"
+  },
+  {
+    "district": "Patiala",
+    "no": "117",
+    "constituency": "Shutrana",
+    "name": "Kulwant Singh Bazigar",
+    "party": "Aam Aadmi Party"
+  }
+]

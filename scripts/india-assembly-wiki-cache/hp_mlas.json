@@ -1,0 +1,478 @@
+[
+  {
+    "district": "Chamba",
+    "no": "1",
+    "constituency": "Churah",
+    "name": "Hans Raj",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chamba",
+    "no": "2",
+    "constituency": "Bharmour",
+    "name": "Janak Raj",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chamba",
+    "no": "3",
+    "constituency": "Chamba",
+    "name": "Neeraj Nayar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Chamba",
+    "no": "4",
+    "constituency": "Dalhousie",
+    "name": "D S Thakur",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chamba",
+    "no": "5",
+    "constituency": "Bhattiyat",
+    "name": "Kuldeep Singh Pathania",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kangra",
+    "no": "6",
+    "constituency": "Nurpur",
+    "name": "Ranveer Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kangra",
+    "no": "7",
+    "constituency": "Indora",
+    "name": "Malender Rajan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kangra",
+    "no": "8",
+    "constituency": "Fatehpur",
+    "name": "Bhawani Singh Pathania",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kangra",
+    "no": "9",
+    "constituency": "Jawali",
+    "name": "Chander Kumar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kangra",
+    "no": "10",
+    "constituency": "Dehra",
+    "name": "Kamlesh Thakur",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kangra",
+    "no": "11",
+    "constituency": "Jaswan-Pragpur",
+    "name": "Bikram Thakur",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kangra",
+    "no": "12",
+    "constituency": "Jawalamukhi",
+    "name": "Sanjay Rattan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kangra",
+    "no": "13",
+    "constituency": "Jaisinghpur",
+    "name": "Yadvinder Goma",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kangra",
+    "no": "14",
+    "constituency": "Sullah",
+    "name": "Vipin Singh Parmar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kangra",
+    "no": "15",
+    "constituency": "Nagrota",
+    "name": "Raghubir Singh Bali",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kangra",
+    "no": "16",
+    "constituency": "Kangra",
+    "name": "Pawan Kumar Kajal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kangra",
+    "no": "17",
+    "constituency": "Shahpur",
+    "name": "Kewal Singh Pathania",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kangra",
+    "no": "18",
+    "constituency": "Dharamshala",
+    "name": "Sudhir Sharma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kangra",
+    "no": "19",
+    "constituency": "Palampur",
+    "name": "Ashish Butail",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kangra",
+    "no": "20",
+    "constituency": "Baijnath",
+    "name": "Kishori Lal",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Lahaul and Spiti",
+    "no": "21",
+    "constituency": "Lahaul and Spiti",
+    "name": "Anuradha Rana",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kullu",
+    "no": "22",
+    "constituency": "Manali",
+    "name": "Bhuvneshwar Gaur",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kullu",
+    "no": "23",
+    "constituency": "Kullu",
+    "name": "Sunder Singh Thakur",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kullu",
+    "no": "24",
+    "constituency": "Banjar",
+    "name": "Surender Shourie",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kullu",
+    "no": "25",
+    "constituency": "Anni",
+    "name": "Lokendra Kumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mandi",
+    "no": "26",
+    "constituency": "Karsog",
+    "name": "Deepraj Kapoor",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mandi",
+    "no": "27",
+    "constituency": "Sundernagar",
+    "name": "Rakesh Jamwal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mandi",
+    "no": "28",
+    "constituency": "Nachan",
+    "name": "Vinod Kumar (politician)",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mandi",
+    "no": "29",
+    "constituency": "Seraj",
+    "name": "Jai Ram Thakur",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mandi",
+    "no": "30",
+    "constituency": "Darang",
+    "name": "Puranchand Thakur",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mandi",
+    "no": "31",
+    "constituency": "Jogindernagar",
+    "name": "Prakash Rana",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mandi",
+    "no": "32",
+    "constituency": "Dharampur",
+    "name": "Chandershekhar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Mandi",
+    "no": "33",
+    "constituency": "Mandi",
+    "name": "Anil Sharma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mandi",
+    "no": "34",
+    "constituency": "Balh",
+    "name": "Inder Singh Gandhi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mandi",
+    "no": "35",
+    "constituency": "Sarkaghat",
+    "name": "Dalip Thakur",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Hamirpur",
+    "no": "36",
+    "constituency": "Bhoranj",
+    "name": "Suresh Kumar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Hamirpur",
+    "no": "37",
+    "constituency": "Sujanpur",
+    "name": "Ranjit Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Hamirpur",
+    "no": "38",
+    "constituency": "Hamirpur",
+    "name": "Ashish Sharma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Hamirpur",
+    "no": "39",
+    "constituency": "Barsar",
+    "name": "Inder Dutt Lakhanpal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Hamirpur",
+    "no": "40",
+    "constituency": "Nadaun",
+    "name": "Sukhvinder Singh Sukhu",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Una",
+    "no": "41",
+    "constituency": "Chintpurni",
+    "name": "Sudarshan Singh Babloo",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Una",
+    "no": "42",
+    "constituency": "Gagret",
+    "name": "Rakesh Kalia",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Una",
+    "no": "43",
+    "constituency": "Haroli",
+    "name": "Mukesh Agnihotri",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Una",
+    "no": "44",
+    "constituency": "Una",
+    "name": "Satpal Singh Satti",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Una",
+    "no": "45",
+    "constituency": "Kutlehar",
+    "name": "Vivek Sharma",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Bilaspur",
+    "no": "46",
+    "constituency": "Jhanduta",
+    "name": "Jeet Ram Katwal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bilaspur",
+    "no": "47",
+    "constituency": "Ghumarwin",
+    "name": "Rajesh Dharmani",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Bilaspur",
+    "no": "48",
+    "constituency": "Bilaspur",
+    "name": "Trilok Jamwal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bilaspur",
+    "no": "49",
+    "constituency": "Sri Naina Deviji",
+    "name": "Randhir Sharma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Solan",
+    "no": "50",
+    "constituency": "Arki",
+    "name": "Sanjay Awasthy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Solan",
+    "no": "51",
+    "constituency": "Nalagarh",
+    "name": "Hardeep Singh Bawa",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Solan",
+    "no": "52",
+    "constituency": "Doon",
+    "name": "Ram Kumar Chaudhary",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Solan",
+    "no": "53",
+    "constituency": "Solan",
+    "name": "Dhani Ram Shandil",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Solan",
+    "no": "54",
+    "constituency": "Kasauli",
+    "name": "Vinod Sultanpuri",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Sirmaur",
+    "no": "55",
+    "constituency": "Pachhad",
+    "name": "Reena Kashyap",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sirmaur",
+    "no": "56",
+    "constituency": "Nahan",
+    "name": "Ajay Solanki",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Sirmaur",
+    "no": "57",
+    "constituency": "Sri Renukaji",
+    "name": "Vinay Kumar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Sirmaur",
+    "no": "58",
+    "constituency": "Paonta Sahib",
+    "name": "Sukh Ram Chaudhary",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sirmaur",
+    "no": "59",
+    "constituency": "Shillai",
+    "name": "Harshwardhan Chauhan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Shimla",
+    "no": "60",
+    "constituency": "Chopal",
+    "name": "Balbir Singh Verma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Shimla",
+    "no": "61",
+    "constituency": "Theog",
+    "name": "Kuldeep Singh Rathore",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Shimla",
+    "no": "62",
+    "constituency": "Kasumpti",
+    "name": "Anirudh Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Shimla",
+    "no": "63",
+    "constituency": "Shimla",
+    "name": "Harish Janartha",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Shimla",
+    "no": "64",
+    "constituency": "Shimla Rural",
+    "name": "Vikramaditya Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Shimla",
+    "no": "65",
+    "constituency": "Jubbal-Kotkhai",
+    "name": "Rohit Thakur",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Shimla",
+    "no": "66",
+    "constituency": "Rampur",
+    "name": "Nand Lal",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Shimla",
+    "no": "67",
+    "constituency": "Rohru",
+    "name": "Mohan Lal Brakta",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kinnaur",
+    "no": "68",
+    "constituency": "Kinnaur",
+    "name": "Jagat Singh Negi",
+    "party": "Indian National Congress"
+  }
+]

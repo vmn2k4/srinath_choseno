@@ -1,0 +1,1954 @@
+{{Short description|Karnataka state legislative session (2023-2028)}}
+{{Use dmy dates|date=May 2023}}{{Infobox legislative term   
+|name               = 16th Karnataka Assembly
+|image = Seal of Karnataka.svg
+|body        = [[Karnataka Legislative Assembly]]
+|before      = [[15th Karnataka Assembly|15th]]
+|state=[[Karnataka]]
+|country=[[India]]
+|election=[[2023 Karnataka Legislative Assembly election]]
+|term=5 years
+|government=[[D. K. Shivakumar ministry]]
+|opposition=[[Bharatiya Janata Party|BJP]]
+|website={{url|https://www.kla.kar.nic.in/assembly/assembly.htm|Karnataka Legislative Assembly}}
+|meeting_place      = {{blist|[[Vidhana Soudha|Vidhana Soudha, Bengaluru]]|[[Suvarna Vidhana Soudha|Suvarna Vidhana Soudha, Belagavi]] (Winter session)}}
+|term_start=2023
+|term_end=2028
+| chamber1_leader1_type = [[Chief Minister of Karnataka|Chief Minister]]
+| chamber1_leader1      = [[D. K. Shivakumar]]
+| chamber1_leader2_type = [[Deputy Chief Minister of Karnataka|Deputy Chief Minister]]
+| chamber1_leader2      = [[G. Parameshwara]]
+|chamber1_leader3_type=[[List of speakers of the Karnataka Legislative Assembly|Speaker]]
+|chamber1_leader3=Vacant (as of 3 June 2026)
+|chamber1_leader4_type=[[List of deputy speakers of the Karnataka Legislative Assembly|Deputy Speaker]]
+|chamber1_leader4=[[Rudrappa Lamani|R. M. Lamani]]
+| chamber1_leader5_type = [[List of leaders of the opposition in the Karnataka Legislative Assembly|Leader of the Opposition]]
+| chamber1_leader5      = [[R. Ashoka]]
+|chamber1_leader6_type  = Deputy Leader of the Opposition
+|chamber1_leader6       = [[Arvind Bellad]]
+|membership1=224}}
+
+The '''16th Legislative Assembly of Karnataka''' was formed following the [[2023 Karnataka Legislative Assembly election|2023 Assembly election]] for all 224 seats.<ref>{{Cite web |date=2023-05-13 |title=Karnataka election results 2023: Full list of winners |url=https://indianexpress.com/elections/karnataka-election-results-full-list-of-winners-8606612/ |access-date=2023-05-13 |website=The Indian Express |language=en}}</ref><ref>
+{{Cite web |title=Karnataka Election Result 2023 Live: Karnataka Assembly Election Results - Congress celebrates party's impending victory |url=https://timesofindia.indiatimes.com/india/karnataka-assembly-election-results-2023-live-news-karnataka-cm-siddaramaiah-dk-shivakumar/liveblog/100195381.cms |access-date=2023-05-13 |website=The Times of India |language=en}}</ref><ref>{{Cite web |title=Karnataka Election Results 2023 Live Updates: Congress wins 136 seats, BJP 65, JDS 19 |url=https://www.indiatoday.in/india/story/karnataka-election-result-2023-live-updates-vote-counting-bjp-congress-jds-2378541-2023-05-13 |access-date=2023-05-13 |website=India Today |language=en}}</ref> The election were held on 10 May 2023 and the results were declared on 13 May 2023.
+
+==Leadership==
+The assembly was initially governed by the [[Second Siddaramaiah ministry]], sworn in on 20 May 2023 with [[Siddaramaiah]] as Chief Minister and [[D. K. Shivakumar]] as Deputy Chief Minister. Following an internal Congress leadership transition, Siddaramaiah resigned on 29 May 2026. The [[D. K. Shivakumar ministry]] was sworn in on 3 June 2026, with D. K. Shivakumar as Chief Minister and [[G. Parameshwara]] as Deputy Chief Minister.
+
+==Composition==
+{|class="wikitable"
+!colspan=2|Alliance
+!colspan=2|Political party
+!No. of MLAs{{efn|Figures reflect party position as of June 2026, accounting for by-elections, expulsions, and deaths during the term.}}
+!Leader of the party
+|-
+|rowspan=3 {{party color cell|Indian National Congress}}
+|rowspan=3 style="text-align:center;"|'''Government<br/>[[Indian National Developmental Inclusive Alliance|INDIA]]'''<br/>Seats: '''140'''
+|{{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|style="text-align:center;"|136
+|[[D. K. Shivakumar]]<br/><small>''([[Chief Minister of Karnataka|Chief Minister]])''</small>
+|-
+|{{party color cell|Sarvodaya Karnataka Paksha}}
+|[[Sarvodaya Karnataka Paksha]]
+|style="text-align:center;"|1
+|[[Darshan Puttannaiah]]
+|-
+|{{party color cell|Independent politician}}
+|[[Independent politician|Independent]]
+|style="text-align:center;"|3
+|{{n/a}}
+|-
+|rowspan=2 {{party color cell|National Democratic Alliance}}
+|rowspan=2 style="text-align:center;"|'''Opposition<br/>[[National Democratic Alliance|NDA]]'''<br/>Seats: '''81'''
+|{{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|style="text-align:center;"|63
+|[[B. Y. Vijayendra]]
+|-
+|{{party color cell|Janata Dal (Secular)}}
+|[[Janata Dal (Secular)]]
+|style="text-align:center;"|18
+|[[H. D. Deve Gowda]]
+|-
+|{{party color cell|Others}}
+|style="text-align:center;"|'''Others'''<br/>Seats: '''1'''
+|{{party color cell|Independent politician}}
+|[[Independent politician|Independent]]
+|style="text-align:center;"|1
+|[[K. H. Puttaswamy Gowda|K. Puttaswamy Gowda]]
+|-
+|{{party color cell|Vacant}}
+|style="text-align:center;"|'''[[Casual vacancy#India|Vacant]]'''<br/>Seats: '''2'''
+|{{party color cell|Vacant}}
+|
+*[[Dharwad Assembly constituency|Dharwad]]
+*[[Hiriyur Assembly constituency|Hiriyur]]
+|style="text-align:center;"|2
+|{{n/a}}
+|-
+!colspan=4|Total
+!colspan=2|224
+|}
+{{notelist}}
+
+
+==Members of Legislative Assembly==
+<section begin="MLA Header"/>
+{|class="wikitable sortable"
+! District
+! No.
+! Constituency
+! Name
+
+! colspan="2" |Party
+
+! Remarks
+
+|-
+
+|rowspan="18" |[[Belagavi district|Belagavi]]
+|1
+|[[Nippani Assembly constituency|Nippani]]
+|[[Shashikala Annasaheb Jolle|Shashikala Jolle]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|2
+|[[Chikkodi-Sadalga (Vidhana Sabha constituency)|Chikkodi-Sadalga]]
+|[[Ganesh Hukkeri]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|3
+|[[Athani (Vidhana Sabha constituency)|Athani]]
+|[[Laxman Savadi]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|4
+|[[Kagwad (Vidhana Sabha constituency)|Kagwad]]
+|[[Raju Kage]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|5
+|[[Kudachi (Vidhana Sabha constituency)|Kudachi]] (SC)
+|[[Mahendra Kallappa Tammannavar]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|6
+|[[Raibag (Vidhana Sabha constituency)|Raibag]] (SC)
+|[[Duryodhan Aihole]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|7
+|[[Hukkeri (Vidhana Sabha constituency)|Hukkeri]]
+|[[Nikhil Umesh Katti|Nikhil Katti]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|8
+|[[Arabhavi (Vidhana Sabha constituency)|Arabhavi]]
+|[[Balachandra Jarkiholi]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|9
+|[[Gokak (Vidhana Sabha constituency)|Gokak]]
+|[[Ramesh Jarkiholi]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|10
+|[[Yemkanmardi (Vidhana Sabha constituency)|Yemkanmardi]] (ST)
+|[[Satish Jarkiholi]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Shivakumar ministry)
+
+|-
+|11
+|[[Belgaum Uttar (Vidhana Sabha constituency)|Belgaum Uttar]]
+|[[Asif Sait]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|12
+|[[Belagavi Dakshin (Vidhana Sabha constituency)|Belgaum Dakshin]]
+|[[Abhay Patil]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|13
+|[[Belgaum Rural (Vidhana Sabha constituency)|Belgaum Rural]]
+|[[Lakshmi Hebbalkar]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Second Siddaramaiah ministry)
+
+|-
+|14
+|[[Khanapur (Vidhana Sabha constituency)|Khanapur]]
+|[[Vithal Somanna Halagekar|Vithal Halagekar]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|15
+|[[Kittur (Vidhana Sabha constituency)|Kittur]]
+|[[Babasaheb Devanagouda Patil]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|16
+|[[Bailhongal (Vidhana Sabha constituency)|Bailhongal]]
+|[[Mahantesh Koujalagi]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|17
+|[[Saundatti Yellamma (Vidhana Sabha constituency)|Saundatti Yellamma]]
+|[[Vishwas Vasant Vaidya]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|18
+|[[Ramdurg (Vidhana Sabha constituency)|Ramdurg]]
+|[[Ashok Pattan]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="8" |[[Bagalkot district|Bagalkot]]
+|19
+|[[Mudhol (Vidhana Sabha constituency)|Mudhol]] (SC)
+|[[R. B. Timmapur]] 
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|20
+|[[Terdal (Vidhana Sabha constituency)|Terdal]]
+|[[Siddu Savadi]]  
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|21
+|[[Jamkhandi (Vidhana Sabha constituency)|Jamkhandi]]
+|[[Jagadish Gudagunti]]  
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|22
+|[[Bilgi (Vidhana Sabha constituency)|Bilgi]]
+|[[J. T. Patil]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|23
+|[[Badami (Vidhana Sabha constituency)|Badami]]
+|Bhimsen Chimmanakatti
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+| rowspan="2" |24
+| rowspan="2" |[[Bagalkot (Vidhana Sabha constituency)|Bagalkot]]
+|[[H. Y. Meti]]
+|{{Party name with color|Indian National Congress}}
+|Died on 4 November 2025<ref>{{Cite web |date=2025-11-04 |title=Karnataka Congress MLA HY Meti passes away at 79 in Bengaluru |url=https://www.hindustantimes.com/cities/bengaluru-news/karnataka-congress-mla-hy-meti-passes-away-at-79-in-bengaluru-101762250636192.html |access-date=2025-11-04 |website=Hindustan Times |language=en}}</ref>
+|-
+|U.H. Meti
+|{{Party name with color|Indian National Congress}}
+|Elected in bypoll
+|-
+|25
+|[[Hungund (Vidhana Sabha constituency)|Hungund]]
+|[[Vijayanand Kashappanavar]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="8" |[[Bijapur district, Karnataka|Vijayapura]]
+|26
+|[[Muddebihal (Vidhana Sabha constituency)|Muddebihal]]
+|[[C. S. Nadagouda]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|27
+|[[Devar Hippargi (Vidhana Sabha constituency)|Devar Hippargi]]
+|[[Bhimanagouda Patil|Rajugouda Patil]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|28
+|[[Basavana Bagevadi (Vidhana Sabha constituency)|Basavana Bagevadi]]
+|[[Shivanand Patil]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|29
+|[[Babaleshwar (Vidhana Sabha constituency)|Babaleshwar]]
+|[[M. B. Patil]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Shivakumar ministry)
+
+|-
+|30
+|[[Bijapur City (Vidhana Sabha constituency)|Bijapur City]]
+|[[Basangouda Patil Yatnal]]
+|{{Party name with color|Independent politician}}
+
+|Expelled from [[BJP]] on 26 March 2025<ref>{{Cite web |date=2025-03-26 |title=BJP expels Karnataka MLA for 6 years over remarks against party, BS Yediyurappa |url=https://www.indiatoday.in/india/karnataka/story/bjp-expels-mla-basangouda-patil-yatnal-anti-party-anti-yediyurappa-2699477-2025-03-26 |access-date=2025-12-09 |website=India Today |language=en}}</ref>
+
+|-
+|31
+|[[Nagthan (Vidhana Sabha constituency)|Nagathan]] (SC)
+|[[Katakadond Vittal Dondiba]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|32
+|[[Indi (Vidhana Sabha constituency)|Indi]]
+|[[Yashavant Rayagoud Patil]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|33
+|[[Sindagi (Vidhana Sabha constituency)|Sindagi]]
+|[[Ashok M. Managuli]] 
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="2" |[[Kalaburagi district|Kalaburagi]]
+|34
+|[[Afzalpur (Vidhana Sabha constituency)|Afzalpur]]
+|[[M. Y. Patil]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|35
+|[[Jevargi (Vidhana Sabha constituency)|Jevargi]]
+|[[Ajay Singh (Karnataka politician)|Ajay Singh]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="5" |[[Yadgir district|Yadgir]]
+|rowspan=2|36
+|rowspan=2|[[Shorapur (Vidhana Sabha constituency)|Shorapur]] (ST)
+|[[Raja Venkatappa Naik]]
+|{{Party name with color|Indian National Congress}}
+
+| Died on 25 February 2024<ref>{{Cite web |date=2024-02-25 |title=Karnataka Congress MLA Raja Venkatappa Naik dies at 66 |url=https://www.indiatoday.in/india/south/story/karnataka-congress-mla-raja-venkatappa-naik-dies-at-66-2506884-2024-02-25 |access-date=2024-10-17 |website=India Today |language=en}}</ref>
+
+|-
+|[[Raja Venugopal Naik]]
+|{{Party name with color|Indian National Congress}}
+
+|Elected on 4 June 2024
+
+|-
+|37
+|[[Shahapur, Karnataka Assembly constituency|Shahapur]]
+|[[Sharanabasappa Gouda Darshanapur|Sharanabasappa Darshanapur]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|38
+|[[Yadgir (Vidhana Sabha constituency)|Yadgir]]
+|[[Channareddy Patil Tunnur]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|39
+|[[Gurmitkal (Vidhana Sabha constituency)|Gurmitkal]]
+|[[Sharanagouda Kandakur]] 
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+
+| rowspan="7" |[[Kalaburagi district|Kalaburagi]]
+|40
+|[[Chittapur (Vidhana Sabha constituency)|Chittapur]] (SC)
+|[[Priyank Kharge]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Shivakumar ministry)
+
+|-
+|41
+|[[Sedam (Vidhana Sabha constituency)|Sedam]]
+|[[Sharan Prakash Patil]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Shivakumar ministry)
+
+|-
+|42
+|[[Chincholi (Vidhana Sabha constituency)|Chincholi]] (SC)
+|[[Avinash Jadhav]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|43
+|[[Gulbarga Rural (Vidhana Sabha constituency)|Gulbarga Rural]] (SC)
+|[[Basawaraj Mattimud]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|44
+|[[Gulbarga Dakshin (Vidhana Sabha constituency)|Gulbarga Dakshin]]
+|[[Allamprabhu Patil]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|45
+|[[Gulbarga Uttar (Vidhana Sabha constituency)|Gulbarga Uttar]]
+|[[Kaneez Fathima]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|46
+|[[Aland (Vidhana Sabha constituency)|Aland]]
+|[[B. R. Patil]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="6" |[[Bidar district|Bidar]]
+|47
+|[[Basavakalyan (Vidhana Sabha constituency)|Basavakalyan]]
+|[[Sharanu Salagar]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|48
+|[[Humnabad (Vidhana Sabha constituency)|Humnabad]]
+|[[Siddu Patil]] 
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|49
+|[[Bidar South (Vidhana Sabha constituency)|Bidar South]]
+|[[Shailendra Beldale|Shailendra Bedale]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|50
+|[[Bidar (Vidhana Sabha constituency)|Bidar]]
+|[[Rahim Khan (politician)|Rahim Khan]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|51
+|[[Bhalki (Vidhana Sabha constituency)|Bhalki]]
+|[[Eshwara Khandre]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Shivakumar ministry)
+
+|-
+|52
+|[[Aurad (Vidhana Sabha constituency)|Aurad]] (SC)
+|[[Prabhu Chauhan]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+
+| rowspan="7" |[[Raichur district|Raichur]]
+|53
+|[[Raichur Rural (Karnataka Assembly constituency)|Raichur Rural]] (ST)
+|[[Basanagouda Daddal]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|54
+|[[Raichur (Karnataka Assembly constituency)|Raichur]]
+|Dr [[S. Shivaraj Patil|Shivaraj Patil]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|55
+|[[Manvi (Karnataka Assembly constituency)|Manvi]] (ST)
+|[[G. Hampayya Nayak]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|56
+|[[Devadurga (Karnataka Assembly constituency)|Devadurga]] (ST)
+|Karemma
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|57
+|[[Lingsugur (Karnataka Assembly constituency)|Lingsugur]] (SC)
+|[[Manappa D. Vajjal]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|58
+|[[Sindhanur (Karnataka Assembly constituency)|Sindhanur]]
+|[[Hampanagouda Badarli]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|59
+|[[Maski (Karnataka Assembly constituency)|Maski]] (ST)
+|[[Basanagouda Turvihal]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="5" |[[Koppal district|Koppal]]
+|60
+|[[Kushtagi (Karnataka Assembly constituency)|Kushtagi]]
+|[[Doddanagouda Hanamagouda Patil]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|61
+|[[Kanakagiri (Karnataka Assembly constituency)|Kanakagiri]] (SC)
+|Tangadagi Shivaraj Sangappa
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|62
+|[[Gangawati (Karnataka Assembly constituency)|Gangawati]]
+| [[G. Janardhana Reddy]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|KRPP merges with BJP<ref>{{Cite news |date=2024-03-25 |title=Janardhana Reddy to merge his party with BJP today |url=https://timesofindia.indiatimes.com/city/bengaluru/janardhana-reddy-to-merge-his-party-with-bjp-today/articleshow/108759820.cms |access-date=2024-10-17 |work=The Times of India |issn=0971-8257}}</ref>
+
+|-
+|63
+|[[Yelburga (Karnataka Assembly constituency)|Yelburga]]
+|[[Basavaraj Rayareddy]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|64
+|[[Koppal (Karnataka Assembly constituency)|Koppal]]
+|[[K. Raghavendra Hitnal]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="4" |[[Gadag district|Gadag]]
+|65
+|[[Shirahatti (Karnataka Assembly constituency)|Shirahatti]] (SC)
+|[[Chandru Lamani]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|66
+|[[Gadag (Vidhana Sabha constituency)|Gadag]]
+|[[H. K. Patil]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|67
+|[[Ron (Karnataka Assembly constituency)|Ron]]
+|[[Gurupadagouda Patil|Gurupadagouda Sanganagouda Patil]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|68
+|[[Nargund (Vidhana Sabha constituency)|Nargund]]
+|[[C. C. Patil]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+
+| rowspan="7" |[[Dharwad district|Dharwad]]
+|69
+|[[Navalgund (Karnataka Assembly constituency)|Navalgund]]
+|Ningaraddi Hanamaraddi Konaraddi
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|70
+|[[Kundgol (Vidhana Sabha constituency)|Kundgol]]
+|[[M. R. Patil (politician)|M. R. Patil]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|71
+|[[Dharwad (Karnataka Assembly constituency)|Dharwad]]
+|[[Vinay Kulkarni]]<ref>{{Cite web|url=https://www.deccanherald.com/india/karnataka/congress-leader-vinay-kulkarni-reinstated-as-mla-4098092|title=Congress leader Vinay Kulkarni reinstated as MLA|publisher=Deccan Herald|access-date=4 August 2026}}</ref><ref>{{Cite web|url=https://x.com/ANI/status/2084282829077377217|title=ANI on X: Karnataka Legislative Assembly restores membership of Dharwad MLA Vinay Kulkarni|publisher=ANI on X (Twitter)|access-date=3 August 2026}}</ref>
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|72
+|[[Hubli-Dharwad East (Karnataka Assembly constituency)|Hubli-Dharwad East]] (SC)
+|[[Abbayya Prasad]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|73
+|[[Hubli-Dharwad Central (Karnataka Assembly constituency)|Hubli-Dharwad Central]]
+|[[Mahesh Tenginakai]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|74
+|[[Hubli-Dharwad West (Karnataka Assembly constituency)|Hubli-Dharwad West]]
+|[[Arvind Bellad]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|Deputy Leader of the Opposition
+
+|-
+|75
+|[[Kalghatgi (Karnataka Assembly constituency)|Kalghatgi]]
+|[[Santosh Lad]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="6" |[[Uttara Kannada]]
+|76
+|[[Haliyal (Karnataka Assembly constituency)|Haliyal]]
+|[[R. V. Deshpande]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|77
+|[[Karwar (Karnataka Assembly constituency)|Karwar]]
+|[[Satish Krishna Sail]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|78
+|[[Kumta (Karnataka Assembly constituency)|Kumta]]
+|[[Dinakar Keshav Shetty]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|79
+|[[Bhatkal (Karnataka Assembly constituency)|Bhatkal]]
+|[[Mankala Vaidya]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|80
+|[[Sirsi (Karnataka Assembly constituency)|Sirsi]]
+|[[Bhimanna T. Naik]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|81
+|[[Yellapur (Karnataka Assembly constituency)|Yellapur]]
+|[[Arbail Hebbar Shivaram]]
+|{{Party name with color|Independent politician}}
+
+| Expelled from [[Bharatiya Janata Party]]<ref>{{cite web|title=Karnataka BJP expels two MLAs for 6 years over 'repeated violations'|url=https://www.hindustantimes.com/india-news/karnataka-bjp-expels-two-mlas-for-6-years-over-repeated-violations-101748333850188-amp.html}}</ref>
+
+|-
+
+| rowspan="7" |[[Haveri district|Haveri]]
+|82
+|[[Hangal (Vidhana Sabha constituency)|Hangal]]
+|[[Srinivas Mane]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|rowspan=2|83
+|rowspan=2|[[Shiggaon (Karnataka Assembly constituency)|Shiggaon]]
+|[[Basavaraj Bommai]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|Elected to Lok Sabha on 4 June 2024
+
+|-
+|Pathan Yasir Ahmed Khan
+|{{Party name with color|Indian National Congress}}
+
+|Elected on 23 November 2024  
+
+|-
+|84
+|[[Haveri (Karnataka Assembly constituency)|Haveri]] (SC)
+|[[Rudrappa Lamani|Rudrappa Manappa Lamani]]
+|{{Party name with color|Indian National Congress}}
+
+|Deputy Speaker
+
+|-
+|85
+|[[Byadgi (Karnataka Assembly constituency)|Byadgi]]
+|Basavaraj Neelappa Shivannanavar
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|86
+|[[Hirekerur (Karnataka Assembly constituency)|Hirekerur]]
+|[[U. B. Banakar]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|87
+|[[Ranebennur (Karnataka Assembly constituency)|Ranebennur]]
+|[[Prakash Koliwad]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="3" |[[Vijayanagara district|Vijayanagara]]
+|88
+|[[Hoovina Hadagali Assembly constituency|Hoovina Hadagali]] (SC)
+|[[Krishna Nayaka]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|89
+|[[Hagaribommanahalli (Karnataka Assembly constituency)|Hagaribommanahalli]] (SC)
+|K. Nemaraja Naik
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|90
+|[[Vijayanagara (Karnataka Assembly constituency)|Vijayanagara]]
+|[[H. R. Gaviyappa]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="6" |[[Ballari district|Ballari]]
+|91
+|[[Kampli (Karnataka Assembly constituency)|Kampli]] (ST)
+|[[J. N. Ganesh]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|92
+|[[Siruguppa (Karnataka Assembly constituency)|Siruguppa]] (ST)
+|[[B. M. Nagaraja]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|93
+|[[Bellary (Vidhana Sabha constituency)|Bellary]] (ST)
+|[[B Nagendra]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Second Siddaramaiah ministry)
+
+|-
+|94
+|[[Bellary City (Vidhana Sabha constituency)|Bellary City]]
+|[[Nara Bharath Reddy]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|rowspan=2|95
+|rowspan=2|[[Sandur (Karnataka Assembly constituency)|Sandur]] (ST)
+|[[E. Tukaram]]
+|{{Party name with color|Indian National Congress}}
+
+|Elected to Lok Sabha on 4 June 2024
+
+|-  
+|E. Annapoorna
+|{{Party name with color|Indian National Congress}}
+
+|Elected on 23 November 2024  
+
+|-
+
+|[[Vijayanagara district|Vijayanagara]]
+|96
+|[[Kudligi (Karnataka Assembly constituency)|Kudligi]] (ST)
+|[[N. T. Srinivas]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="7" |[[Chitradurga district|Chitradurga]]
+|97
+|[[Molakalmuru (Karnataka Assembly constituency)|Molakalmuru]] (ST)
+|[[N. Y. Gopalakrishna]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|98
+|[[Challakere (Karnataka Assembly constituency)|Challakere]] (ST)
+|[[T. Raghumurthy]]
+|{{Party name with color|Indian National Congress}}
+
+|
+|-
+|99
+|[[Chitradurga (Vidhana Sabha constituency)|Chitradurga]]
+|[[K. C. Veerendra Puppy]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|rowspan=2|100
+|rowspan=2|[[Hiriyur (Karnataka Assembly constituency)|Hiriyur]]
+|[[D. Sudhakar]]
+|{{Party name with color|Indian National Congress}}
+|Died on 10 May 2026<ref>{{Cite web |date=2026-05-10 |title=Karnataka Minister D Sudhakar passes away after prolonged illness in Bengaluru |url=https://www.indiatvnews.com/karnataka/karnataka-minister-d-sudhakar-passes-away-after-prolonged-illness-in-bengaluru-latest-updates-2026-05-10-1040545 |access-date=2026-06-06 |website=India TV News |language=en}}</ref>
+|-
+|colspan=4|'''Vacant'''
+|-
+|101
+|[[Hosadurga (Karnataka Assembly constituency)|Hosadurga]]
+|[[B. G. Govindappa]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|102
+|[[Holalkere (Karnataka Assembly constituency)|Holalkere]] (SC)
+|[[M. Chandrappa]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|[[Davanagere district|Davanagere]]
+|103
+|[[Jagalur (Karnataka Assembly constituency)|Jagalur]] (ST)
+|[[B. Devendrappa]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+| rowspan="1" |[[Vijayanagara district|Vijayanagara]]
+| rowspan="1" |104
+| rowspan="1" |[[Harapanahalli (Karnataka Assembly constituency)|Harapanahalli]]
+| rowspan="1" |[[Latha Mallikarjun]]
+|{{Party name with color|Independent politician}}
+|Joined Congress<ref>{{Cite web |title=Lata Mallikarjun officially joins Congress party |url=https://www.daijiworld.com/news/newsDisplay?newsID=1082912 |access-date=2025-12-09 |website=www.daijiworld.com |language=en}}</ref>
+
+|-
+| rowspan="7" |[[Davanagere district|Davanagere]]
+|105
+|[[Harihar (Karnataka Assembly constituency)|Harihar]]
+|[[B. P. Harish]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|106
+|[[Davanagere North (Karnataka Assembly constituency)|Davanagere North]]
+|[[S. S. Mallikarjun]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+| rowspan="2"|107
+| rowspan="2"|[[Davanagere South (Karnataka Assembly constituency)|Davanagere South]]
+|[[Shamanur Shivashankarappa]]
+|{{Party name with color|Indian National Congress}}
+|Died on 14 December 2025<ref>{{cite news |title=Veteran Congress leader Shamanur Shivashankarappa passes away at 94 |url=https://www.thehindu.com/news/national/karnataka/veteran-congress-leader-shamanur-shivashankarappa-passes-away-at-94/article70396221.ece |access-date=14 December 2025 |publisher=The Hindu |date=14 December 2025}}</ref>
+|-
+|[[Samarth Shamanur Mallikarjun]]
+|{{Party name with color|Indian National Congress}}
+|Elected in bypoll
+|-
+|108
+|[[Mayakonda (Karnataka Assembly constituency)|Mayakonda]] (SC)
+|[[K. S. Basavanthappa]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|109
+|[[Channagiri (Karnataka Assembly constituency)|Channagiri]]
+|[[Basavaraju V. Shivaganga]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|110
+|[[Honnali (Karnataka Assembly constituency)|Honnali]]
+|A. D. G. Shanthana Gowda
+|{{Party name with color|Indian National Congress}}
+|
+|-
+| rowspan="7" |[[Shimoga district|Shimoga]]
+|111
+|[[Shimoga Rural (Karnataka Assembly constituency)|Shimoga Rural]] (SC)
+|[[Sharada Puryanaik]]
+|{{Party name with color|Janata Dal (Secular)}}
+|
+|-
+|112
+|[[Bhadravati (Karnataka Assembly constituency)|Bhadravati]]
+|[[B. K. Sangameshwara]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|113
+|[[Shimoga (Vidhana Sabha constituency)|Shimoga]]
+|Channabasappa
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|114
+|[[Tirthahalli (Karnataka Assembly constituency)|Tirthahalli]]
+|[[Araga Jnanendra]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|115
+|[[Shikaripura (Vidhana Sabha constituency)|Shikaripura]]
+|[[B. Y. Vijayendra]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|116
+|[[Sorab (Karnataka Assembly constituency)|Sorab]]
+|[[Madhu Bangarappa]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|117
+|[[Sagar (Vidhana Sabha constituency)|Sagar]]
+|Gopala Krishna Beluru
+|{{Party name with color|Indian National Congress}}
+|
+|-
+| rowspan="5" |[[Udupi district|Udupi]]
+|118
+|[[Byndoor (Karnataka Assembly constituency)|Byndoor]]
+|Gururaj Shetty Gantihole
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|119
+|[[Kundapura (Karnataka Assembly constituency)|Kundapura]]
+|A. Kiran Kumar Kodgi
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|120
+|[[Udupi (Vidhana Sabha constituency)|Udupi]]
+|Yashpal A. Suvarna
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|121
+|[[Kapu (Karnataka Assembly constituency)|Kapu]]
+|[[Gurme Suresh Shetty]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|122
+|[[Karkala (Karnataka Assembly constituency)|Karkala]]
+|[[V. Sunil Kumar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="5" |[[Chikmagalur district|Chikmagalur]]
+|123
+|[[Sringeri (Vidhana Sabha constituency)|Sringeri]]
+|[[T. D. Rajegowda]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|124
+|[[Mudigere (Karnataka Assembly constituency)|Mudigere]] (SC)
+|[[Nayana Motamma]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|125
+|[[Chikmagalur (Vidhana Sabha constituency)|Chikmagalur]]
+|[[H. D. Thammaiah]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|126
+|[[Tarikere (Karnataka Assembly constituency)|Tarikere]]
+|[[G. H. Srinivasa]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|127
+|[[Kadur (Karnataka Assembly constituency)|Kadur]]
+|[[K. S. Anand]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="11" |[[Tumakuru district|Tumakuru]]
+|128
+|[[Chikkanayakanahalli (Vidhana Sabha constituency)|Chiknayakanhalli]]
+|[[C. B. Suresh Babu]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|129
+|[[Tiptur (Vidhana Sabha constituency)|Tiptur]]
+|[[K. Shadakshari]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|130
+|[[Turuvekere (Vidhana Sabha constituency)|Turuvekere]]
+|[[M. T. Krishnappa]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|131
+|[[Kunigal (Karnataka Assembly constituency)|Kunigal]]
+|[[H. D. Ranganath]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|132
+|[[Tumkur City (Vidhana Sabha constituency)|Tumkur City]]
+|[[G. B. Jyothi Ganesh]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|133
+|[[Tumkur Rural (Vidhana Sabha constituency)|Tumkur Rural]]
+|[[B. Suresh Gowda]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|134
+|[[Koratagere (Vidhana Sabha constituency)|Koratagere]] (SC)
+|[[G. Parameshwara]]
+|{{Party name with color|Indian National Congress}}
+
+|Deputy Chief Minister
+
+|-
+|135
+|[[Gubbi (Vidhana Sabha constituency)|Gubbi]]
+|[[S. R. Srinivas]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|136
+|[[Sira (Vidhana Sabha constituency)|Sira]]
+|[[T. B. Jayachandra]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|137
+|[[Pavagada (Vidhana Sabha constituency)|Pavagada]] (SC)
+|[[H. V. Venkatesh]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|138
+|[[Madhugiri (Vidhana Sabha constituency)|Madhugiri]]
+|[[K. N. Rajanna]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="5" |[[Chikkaballapura district|Chikkaballapura]]
+|139
+|[[Gauribidanur (Vidhana Sabha constituency)|Gauribidanur]]
+|K. Puttaswamy Gowda
+|{{Party name with color|Independent politician}}
+
+|
+
+|-
+|140
+|[[Bagepalli (Vidhana Sabha constituency)|Bagepalli]]
+|[[S. N. Subbareddy]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|141
+|[[Chikballapur (Vidhana Sabha constituency)|Chikkaballapur]]
+|[[Pradeep Eshwar]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|142
+|[[Sidlaghatta (Vidhana Sabha constituency)|Sidlaghatta]]
+|[[B. N. Ravi Kumar]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|143
+|[[Chintamani (Vidhana Sabha constituency)|Chintamani]]
+|[[M. C. Sudhakar]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Second Siddaramaiah ministry)
+
+|-
+
+| rowspan="6" |[[Kolar district|Kolar]]
+|144
+|[[Srinivasapur (Vidhana Sabha constituency)|Srinivaspur]]
+|[[G. K. Venkatashiva Reddy]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|145
+|[[Mulbagal (Vidhana Sabha constituency)|Mulbagal]] (SC)
+|Samruddhi V. Manjunath
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|146
+|[[Kolar Gold Field (Vidhan Sabha constituency)|Kolar Gold Field]] (SC)
+|[[M. Roopakala]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|147
+|[[Bangarapet (Vidhana Sabha constituency)|Bangarapet]] (SC)
+|[[S. N. Narayanaswamy]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|148
+|[[Kolar (Vidhana Sabha constituency)|Kolar]]
+|[[Kothur G. Manjunath]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|149
+|[[Malur (Vidhana Sabha constituency)|Malur]]
+|[[K. Y. Nanjegowda]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="28" |[[Bangalore Urban district|Bangalore Urban]]
+|150
+|[[Yelahanka (Vidhana Sabha constituency)|Yelahanka]]
+|[[S. R. Vishwanath]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|151
+|[[Krishnarajapuram (Vidhana Sabha constituency)|Krishnarajapuram]]
+|[[Byrati Basavaraj|B.A. Basavaraja]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|152
+|[[Byatarayanapura (Vidhana Sabha constituency)|Byatarayanapura]]
+|[[Krishna Byre Gowda|Krishna Byregowda]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Shivakumar ministry)
+
+|-
+|153
+|[[Yeshvanthapura (Vidhana Sabha constituency)|Yeshwantpur]]
+|[[S. T. Somashekhar|S.T. Somashekar]]
+|{{Party name with color|Independent politician}}
+
+| Expelled from [[Bharatiya Janata Party]]
+
+|-
+|154
+|[[Rajarajeshwarinagar (Vidhana Sabha constituency)|Rajarajeshwarinagar]]
+|[[Munirathna]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|155
+|[[Dasarahalli (Vidhana Sabha constituency)|Dasarahalli]]
+|[[S. Muniraju]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|156
+|[[Mahalakshmi Layout (Vidhana Sabha constituency)|Mahalakshmi Layout]]
+|[[K. Gopalaiah]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|157
+|[[Malleshwaram (Vidhana Sabha constituency)|Malleshwaram]]
+|[[C. N. Ashwath Narayan|C.N. Ashwath Narayan]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|158
+|[[Hebbal (Vidhana Sabha constituency)|Hebbal]]
+|[[Byrathi Suresh|Suresha B.S.]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Shivakumar ministry)
+
+|-
+|159
+|[[Pulakeshinagar (Vidhana Sabha constituency)|Pulakeshinagar]] (SC)
+|[[A. C. Srinivasa|A.C. Srinivasa]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|160
+|[[Sarvagnanagar (Vidhana Sabha constituency)|Sarvagnanagar]]
+|[[K. J. George|K.J. George]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Shivakumar ministry)
+
+|-
+|161
+|[[C. V. Raman Nagar (Vidhana Sabha constituency)|C. V. Raman Nagar]] (SC)
+|[[S. Raghu]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|162
+|[[Shivajinagar, Karnataka Assembly constituency|Shivajinagar]]
+|[[Rizwan Arshad]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|163
+|[[Shanti Nagar (Vidhana Sabha constituency)|Shanti Nagar]]
+|[[N. A. Haris|N.A. Haris]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|164
+|[[Gandhi Nagar, Karnataka Assembly constituency|Gandhi Nagar]]
+|[[Dinesh Gundu Rao]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|165
+|[[Rajaji Nagar (Vidhan Sabha constituency)|Rajaji Nagar]]
+|[[S. Suresh Kumar]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|166
+|[[Govindraj Nagar (Vidhana Sabha constituency)|Govindraj Nagar]]
+|[[Priya Krishna (politician)|Priya Krishna]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|167
+|[[Vijay Nagar (Vidhana Sabha constituency)|Vijay Nagar]]
+|[[M. Krishnappa (politician, born 1953)|M. Krishnappa]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|168
+|[[Chamrajpet (Vidhana Sabha constituency)|Chamrajpet]]
+|[[B. Z. Zameer Ahmed Khan|B.Z. Zameer Ahmed Khan]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Second Siddaramaiah ministry)
+
+|-
+|169
+|[[Chickpet (Vidhana Sabha constituency)|Chickpet]]
+|[[Uday Garudachar|Uday B. Garudachar]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|170
+|[[Basavanagudi (Vidhana Sabha constituency)|Basavanagudi]] 
+|[[L. A. Ravi Subramanya|Ravi Subramanya L.A.]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|171
+|[[Padmanaba Nagar (Vidhan Sabha constituency)|Padmanabhanagar]]
+|[[R. Ashoka]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+| Leader of the Opposition
+
+|-
+|172
+|[[B.T.M Layout (Vidhana Sabha constituency)|B.T.M. Layout]]
+|[[Ramalinga Reddy]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Shivakumar ministry)
+
+|-
+|173
+|[[Jayanagar (Vidhana Sabha constituency)|Jayanagar]]
+|[[C. K. Ramamurthy]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|174
+|[[Mahadevapura (Vidhana Sabha constituency)|Mahadevapura]] (SC)
+|[[Manjula S|Manjula S.]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|175
+|[[Bommanahalli (Vidhana Sabha constituency)|Bommanahalli]]
+|[[M. Satish Reddy|Satish Reddy M.]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|176
+|[[Bangalore South (Vidhana Sabha constituency)|Bangalore South]]
+|[[M. Krishnappa (politician, born 1962)|M. Krishnappa]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|177
+|[[Anekal (Vidhana Sabha constituency)|Anekal]] (SC)
+|[[B. Shivanna]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="4" |[[Bangalore Rural district|Bangalore Rural]]
+|178
+|[[Hosakote (Vidhana Sabha constituency)|Hoskote]]
+|[[Sharath Kumar Bache Gowda]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|179
+|[[Devanahalli (Vidhana Sabha constituency)|Devanahalli]] (SC)
+|[[K. H. Muniyappa]]
+|{{Party name with color|Indian National Congress}}
+
+|Cabinet Minister (Shivakumar ministry)
+
+|-
+|180
+|[[Doddaballapur (Vidhana Sabha constituency)|Doddaballapur]]
+|[[Dheeraj Muniraj]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|181
+|[[Nelamangala (Vidhana Sabha constituency)|Nelamangala]] (SC)
+|[[N. Shreenivasaiah]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="5" |[[Ramanagara district|Ramanagara]]
+|182
+|[[Magadi (Vidhana Sabha constituency)|Magadi]]
+|[[H. C. Balakrishna]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|183
+|[[Ramanagara (Vidhana Sabha constituency)|Ramanagara]]
+|[[H. A. Iqbal Hussain]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|184
+|[[Kanakapura (Vidhana Sabha constituency)|Kanakapura]]
+|[[D. K. Shivakumar|D.K. Shivakumar]]
+|{{Party name with color|Indian National Congress}}
+
+| Chief Minister
+
+|-
+|rowspan=2|185
+|rowspan=2|[[Channapatna (Vidhana Sabha constituency)|Channapatna]]
+|[[H. D. Kumaraswamy]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|Elected to Lok Sabha on 4 June 2024
+
+|-
+|[[C. P. Yogeshwar]]
+|{{Party name with color|Indian National Congress}}
+
+|Elected on 23 November 2024
+
+|-
+
+| rowspan="7" |[[Mandya district|Mandya]]
+|186
+|[[Malavalli (Vidhana Sabha constituency)|Malavalli]] (SC)
+|[[P. M. Narendraswamy]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|187
+|[[Maddur (Vidhana Sabha constituency)|Maddur]]
+|[[K. M. Udaya]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|188
+|[[Melukote (Karnataka Assembly constituency)|Melukote]]
+|[[Darshan Puttannaiah]]
+|{{Party name with color|Sarvodaya Karnataka Paksha}}
+
+|
+
+|-
+|189
+|[[Mandya (Vidhan Sabha constituency)|Mandya]]
+|[[Ravikumar Gowda]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|190
+|[[Shrirangapattana (Karnataka Assembly constituency)|Shrirangapattana]]
+|A. B. Ramesha Bandisiddegowda
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|191
+|[[Nagamangala (Vidhana Sabha constituency)|Nagamangala]]
+|[[N. Chaluvaraya Swamy]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|192
+|[[Krishnarajpete (Vidhana Sabha constituency)|Krishnarajapet]]
+|[[H. T. Manju]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+
+| rowspan="7" |[[Hassan district|Hassan]]
+|193
+|[[Shravanabelagola (Karnataka Assembly constituency)|Shravanabelagola]]
+|[[C. N. Balakrishna]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|194
+|[[Arsikere (Karnataka Assembly constituency)|Arsikere]]
+|[[K. M. Shivalinge Gowda]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|195
+|[[Belur (Karnataka Assembly constituency)|Belur]]
+|[[H. K. Suresh]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|196
+|[[Hassan (Vidhana Sabha constituency)|Hassan]]
+|[[Swaroop Prakash]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|197
+|[[Holenarasipur (Vidhan Sabha constituency)|Holenarasipur]]
+|[[H. D. Revanna]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|198
+|[[Arkalgud (Vidhana Sabha constituency)|Arkalgud]]
+|[[A. Manju]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|199
+|[[Sakleshpur (Karnataka Assembly constituency)|Sakleshpur]] (SC)
+|[[Cement Manju]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+
+| rowspan="8" |[[Dakshina Kannada]]
+|200
+|[[Belthangady (Vidhana Sabha constituency)|Belthangady]]
+|[[Harish Poonja]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|201
+|[[Moodabidri (Karnataka Assembly constituency)|Moodabidri]]
+|[[Umanatha Kotian]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|202
+|[[Mangalore City North (Vidhana Sabha constituency)|Mangalore City North]]
+|[[Y. Bharath Shetty]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|203
+|[[Mangalore City South (Vidhana Sabha constituency)|Mangalore City South]]
+|[[D. Vedavyasa Kamath]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|204
+|[[Mangalore (Vidhana Sabha constituency)|Mangalore]]
+|[[U. T. Khader]]
+|{{Party name with color|Indian National Congress}}
+
+|Former Speaker; Cabinet Minister (Shivakumar ministry)
+
+|-
+|205
+|[[Bantval (Karnataka Assembly constituency)|Bantval]]
+|[[U. Rajesh Naik]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|206
+|[[Puttur (Vidhana Sabha constituency)|Puttur]]
+|[[Ashok Kumar Rai (Indian politician)|Ashok Kumar Rai]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|207
+|[[Sullia (Karnataka Assembly constituency)|Sullia]] (SC)
+|Bhagirathi Murulya
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+
+| rowspan="2" |[[Kodagu district|Kodagu]]
+|208
+|[[Madikeri (Karnataka Assembly constituency)|Madikeri]]
+|[[Mantar Gowda]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|209
+|[[Virajpet (Vidhana Sabha constituency)|Virajpet]]
+|[[A. S. Ponnanna]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="11" |[[Mysore district|Mysore]]
+|210
+|[[Periyapatna (Karnataka Assembly constituency)|Periyapatna]]
+|[[K. Venkatesh]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|211
+|[[Krishnarajanagara (Karnataka Assembly constituency)|Krishnarajanagara]]
+|[[D. Ravishankar]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|212
+|[[Hunasuru (Vidhana Sabha constituency)|Hunsur]]
+|[[G. D. Harish Gowda]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|213
+|[[Heggadadevankote (Karnataka Assembly constituency)|Heggadadevankote]] (ST)
+|[[Anil Chikkamadhu]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|214
+|[[Nanjangud (Karnataka Assembly constituency)|Nanjangud]] (SC)
+|[[Darshan Dhruvanarayana]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|215
+|[[Chamundeshwari (Vidhana Sabha constituency)|Chamundeshwari]]
+|[[G. T. Devegowda]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|216
+|[[Krishnaraja (Vidhana Sabha constituency)|Krishnaraja]]
+|[[T. S. Srivatsa]]
+|{{Party name with color|Bharatiya Janata Party}}
+
+|
+
+|-
+|217
+|[[Chamaraja (Vidhana Sabha constituency)|Chamaraja]]
+|[[K. Harish Gowda]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|218
+|[[Narasimharaja (Vidhana Sabha constituency)|Narasimharaja]]
+|[[Tanveer Sait]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|219
+|[[Varuna (Vidhana Sabha constituency)|Varuna]]
+|[[Siddaramaiah]]
+|{{Party name with color|Indian National Congress}}
+
+| Former Chief Minister (2023–2026)
+
+|-
+|220
+|[[T. Narasipur (Karnataka Assembly constituency)|T. Narasipur]] (SC)
+|[[H. C. Mahadevappa]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+
+| rowspan="4" |[[Chamarajanagar district|Chamarajanagar]]
+|221
+|[[Hanur (Karnataka Assembly constituency)|Hanur]]
+|[[M. R. Manjunath]]
+|{{Party name with color|Janata Dal (Secular)}}
+
+|
+
+|-
+|222
+|[[Kollegal (Karnataka Assembly constituency)|Kollegal]] (SC)
+|[[A. R. Krishnamurthy]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|223
+|[[Chamarajanagar (Vidhana Sabha constituency)|Chamarajanagar]]
+|[[C. Puttarangashetty]]
+|{{Party name with color|Indian National Congress}}
+
+|
+
+|-
+|224
+|[[Gundlupet (Vidhana Sabha constituency)|Gundlupet]]
+|[[H M Ganesh Prasad]]
+|{{Party name with color|Indian National Congress}}
+
+|}
+
+== References ==
+{{reflist}}
+
+{{Karnataka Legislative Assembly}} 
+{{Current Indian assemblies}}
+
+[[Category:Terms of the Karnataka Legislative Assembly]]
+[[Category:Karnataka MLAs 2023–2028| ]]
+[[Category:2023 establishments in Karnataka]]
+[[Category:Lists of current Indian state and territorial assemblies|Karnataka]]

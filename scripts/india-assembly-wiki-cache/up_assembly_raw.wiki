@@ -1,0 +1,3613 @@
+{{Short description|Assembly term of a Uttar Pradesh Legislative Assembly, India constituted in 2022}}
+{{Use dmy dates|date=March 2022}}{{Use Indian English|date=March 2022}}
+
+{{Infobox legislative term
+| name = 18th Uttar Pradesh Assembly
+| before = [[17th Uttar Pradesh Assembly]]
+| after = [[Next Uttar Pradesh Legislative Assembly election|19th Uttar Pradesh Assembly]]
+| image = Seal of Uttar Pradesh.svg
+| body = [[Uttar Pradesh Legislative Assembly]]
+| meeting_place = [[Vidhan Bhawan, Lucknow|Vidhan Bhawan]]
+| term = 5 Years
+| term_start = 29 March 2022
+| term_end = 2027
+| election = [[2022 Uttar Pradesh Legislative Assembly election]]
+| government = [[National Democratic Alliance|NDA]]
+| opposition = [[Samajwadi Alliance|SP+]]
+| website = [https://uplegisassembly.gov.in/index_en.html Official website]
+| membership1 = 403
+| chamber1_leader1_type = [[Chief Minister of Uttar Pradesh|Chief Minister]]
+| chamber1_leader1 = [[Yogi Adityanath]]
+| chamber1_leader2_type = Deputy Chief Ministers
+| chamber1_leader2 = [[Brajesh Pathak]]<br/>[[Keshav Prasad Maurya]]
+| chamber1_leader3_type = [[List of speakers of the Uttar Pradesh Legislative Assembly|Speaker of the Assembly]]
+| chamber1_leader3 = [[Satish Mahana]]
+| chamber1_leader4_type = [[List of leaders of the opposition in the Uttar Pradesh Legislative Assembly|Leader of the Opposition]]
+| chamber1_leader4 = [[Mata Prasad Pandey]]
+| control1 = [[Bharatiya Janata Party]]
+}}
+
+The '''Eighteenth Uttar Pradesh Assembly''' (Eighteenth Vidhan Sabha of Uttar Pradesh) is formed by the members elected in the [[2022 Uttar Pradesh Legislative Assembly election]]. Elections for 403 seats of the [[Uttar Pradesh|state]], were conducted in seven phases from 10 February 2022 to 7 March 2022 by the [[Election Commission of India]]. The votes were counted and results were declared on 10 March 2022.
+
+[[Satish Mahana]] was elected as the speaker of the assembly.
+
+== Notable positions ==
+{| class="wikitable sortable"
+!S.No
+!Position
+!Portrait
+!Name
+! colspan="2" |Party
+!Constituency
+!Office Taken
+|-
+!1
+| [[List of speakers of the Uttar Pradesh Legislative Assembly|Speaker]] 
+| 
+|'''[[Satish Mahana]]'''
+| style="background:{{party color|Bharatiya Janata Party}}" |
+|[[Bharatiya Janata Party]]
+|[[Maharajpur (Uttar Pradesh Assembly constituency)|Maharajpur]]
+|29 March 2022
+|-
+!2
+| [[Uttar Pradesh Legislative Assembly|Deputy Speaker]] 
+| colspan="6" |''Vacant''
+|-
+!3
+|Leader of the House
+|[[File:The Uttar Pradesh Chief Minister, Shri Yogi Adityanath in New Delhi on February 10, 2018 (cropped).jpg|150px]]
+|'''[[Yogi Adityanath]]'''<br/>{{small|(''[[List of Chief Ministers of Uttar Pradesh|Chief Minister]]'')}}
+| rowspan="2" style="background:{{party color|Bharatiya Janata Party}}" |
+| rowspan="2" |[[Bharatiya Janata Party]]
+|[[Gorakhpur Urban (Assembly constituency)|Gorakhpur Urban]]
+| rowspan="2" |25 March 2022
+|-
+!4
+|Deputy Leader of the House
+| 
+|'''[[Suresh Kumar Khanna]]'''<br/>{{small|(''[[Department of Parliamentary Affairs (Uttar Pradesh)|Legislative Affairs]] and Finance Minister'')}}
+|[[Shahjahanpur Assembly constituency|Shahjahanpur]]
+|-
+!5
+|[[List of leaders of the opposition in the Uttar Pradesh Legislative Assembly|Leader of Opposition]]
+| 
+|[[Mata Prasad Pandey]]
+| style="background:{{party color|Samajwadi Party}}" |
+|[[Samajwadi Party]]
+|[[Itwa Assembly constituency|Itwa]]
+|28 July 2024
+|}
+
+==Composition==
+<!--this section is transcluded on Electoral history of-->
+<section begin="Composition"/>
+[[File:India Uttar Pradesh Legislative Assembly August 2026.svg|frameless|565x565px]]
+{|class="wikitable"
+!colspan=2|Alliance
+!colspan=2|Political party
+!No. of MLAs
+!Leader of the party
+|-
+|rowspan=6 {{party color cell|National Democratic Alliance}}
+|rowspan=6 style="text-align:center;"|'''Government<br/>[[National Democratic Alliance|NDA]]'''<br/>Seats: '''294'''
+|{{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|style="text-align:center;"|257
+|[[Yogi Adityanath]]<br/><small>''([[Chief Minister of Uttar Pradesh|Chief Minister]])''</small>
+|-
+|{{party color cell|Apna Dal (Soneylal)}}
+|[[Apna Dal (Soneylal)]]
+|style="text-align:center;"|13
+|[[Ram Niwas Verma]]
+|-
+|{{party color cell|Rashtriya Lok Dal}}
+|[[Rashtriya Lok Dal]]
+|style="text-align:center;"|9
+|[[Rajpal Singh Baliyan]]
+|-
+|{{party color cell|Suheldev Bharatiya Samaj Party}}
+|[[Suheldev Bharatiya Samaj Party]]
+|style="text-align:center;"|6
+|[[Om Prakash Rajbhar]]
+|-
+|{{party color cell|NISHAD Party}}
+|[[NISHAD Party]]
+|style="text-align:center;"|5
+|[[Anil Kumar Tripathi]]
+|-
+|{{party color cell|Independent politician}}
+|[[Independent politician|Independents – SP Rebels]]<ref>https://www.news18.com/india/samajwadi-party-expelled-mlas-declared-independents-may-join-bjp-9432023.html</ref>
+|style="text-align:center;"|4
+|{{n/a}}
+|-
+|rowspan=2 {{party color cell|Samajwadi Party}}
+|rowspan=2 style="text-align:center;"|'''Opposition<br/>[[Samajwadi Alliance|SP+]]'''<br/>Seats: '''102'''
+|{{party color cell|Samajwadi Party}}
+|[[Samajwadi Party]]
+|style="text-align:center;"|100
+|[[Mata Prasad Pandey]]<br/>{{small|''([[List of leaders of the opposition in the Uttar Pradesh Legislative Assembly|Leader of Opposition]])''}}
+|-
+|{{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|style="text-align:center;"|2
+|[[Aradhana Misra|Aradhana Mishra]]
+|-
+| {{party color cell|Others}}
+| style="text-align:center;"|'''Others'''<br/>Seats: '''2'''
+|{{party color cell|Jansatta Dal (Loktantrik)}}
+|[[Jansatta Dal (Loktantrik)]]
+|style="text-align:center;"|2
+|[[Raghuraj Pratap Singh]]
+|-
+|{{party color cell|Vacant}}
+|style="text-align:center;"|'''[[Casual vacancy#India|Vacant]]'''<br/>Seats: '''5'''
+|{{party color cell|Vacant}}
+|
+*[[Faridpur Assembly constituency| Faridpur]]
+*[[Ghosi, Uttar Pradesh Assembly constituency|Ghosi]]
+*[[Duddhi Assembly constituency|Duddhi]]
+*[[Nizamabad Assembly constituency|Nizamabad]]
+*[[Rasara Assembly constituency|Rasara]]
+|style="text-align:center;"|5
+|{{n/a}}
+|-
+!colspan=4|Total
+!colspan=2|403
+|}
+<section end="Composition"/>
+
+== Members of Legislative Assembly ==
+<!-- this section is transcluded on Electoral history of Uttar Pradesh Assembly --><section begin="MLA"/>
+{| class="wikitable sortable"
+|- 
+!District
+!No.
+!Constituency
+!Name
+! colspan="2" |Party
+! colspan=2 |Alliance
+! Remarks           
+|-
+| rowspan="7" | [[Saharanpur district|Saharanpur]]
+| 1
+| [[Behat (Assembly constituency)|Behat]]
+|[[Umar Ali Khan]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 2
+|[[Nakur (Assembly constituency)|Nakur]]
+|[[Mukesh Choudhary (politician)|Mukesh Choudhary]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 3
+| [[Saharanpur Nagar (Assembly constituency)|Saharanpur Nagar]]
+|[[Rajiv Gumber]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 4
+| [[Saharanpur (Assembly constituency)|Saharanpur]]
+|[[Ashu Malik]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 5
+| [[Deoband (Assembly constituency)|Deoband]]
+|[[Brijesh Singh|Brijesh Singh Rawat]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| 6
+| [[Rampur Maniharan (Assembly constituency)|Rampur Maniharan]] (SC)
+|[[Devendra Kumar Nim]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 7
+| [[Gangoh (Assembly constituency)|Gangoh]]
+|[[Kirat Singh Gurjar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="3" | [[Shamli district|Shamli]]
+| 8
+| [[Kairana (Assembly constituency)|Kairana]]
+|[[Nahid Hasan]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 9
+| [[Thana Bhawan (Assembly constituency)|Thana Bhawan]]
+|[[Ashraf Ali Khan (politician, born 1972)|Ashraf Ali Khan]]
+|bgcolor=#257605|
+|[[Rashtriya Lok Dal]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 10
+| [[Shamli (Assembly constituency)|Shamli]]
+|[[Persann Kumar Chaudhary]]
+|bgcolor=#257605|
+|[[Rashtriya Lok Dal]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="8" | [[Muzaffarnagar district|Muzaffarnagar]]
+| 11
+|[[Budhana (Assembly constituency)|Budhana]]
+|[[Rajpal Singh Baliyan]]
+|bgcolor=#257605|
+|[[Rashtriya Lok Dal]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 12
+| [[Charthawal (Assembly constituency)|Charthawal]]
+|[[Pankaj Kumar Malik]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 13
+| [[Purqazi (Assembly constituency)|Purqazi]] (SC)
+|[[Anil Kumar (Uttar Pradesh politician)|Anil Kumar]]
+|bgcolor=#257605|
+|[[Rashtriya Lok Dal]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 14
+| [[Muzaffarnagar (Assembly constituency)|Muzaffarnagar]]
+|[[Kapil Dev Aggarwal]] 
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS (I/C)
+|-
+| rowspan="2" |15
+| rowspan="2" |[[Khatauli (Assembly constituency)|Khatauli]]
+|[[Vikram Singh Saini]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Disqualified on 7 November 2022<ref>{{Cite web |date=7 November 2022 |title=UP BJP MLA's Seat Declared Vacant Following Conviction In Muzaffarnagar Riots Case |url=https://www.ndtv.com/india-news/up-bjp-mlas-seat-declared-vacant-following-conviction-in-muzaffarnagar-riots-case-3499394 |access-date=2022-11-10 |website=NDTV.com}}</ref>
+|-
+| [[Madan Bhaiya]]
+|bgcolor=#257605|
+|[[Rashtriya Lok Dal]]
+| {{Party name with colour|National Democratic Alliance}}
+|Elected on 8 December 2022
+|-
+|Rowspan=2|16
+|Rowspan=2|[[Meerapur (Assembly constituency)|Meerapur]]
+|[[Chandan Chauhan]]
+|bgcolor=#257605|
+|[[Rashtriya Lok Dal]]
+| {{Party name with colour|National Democratic Alliance}}
+|Elected to 18th Lok Sabha from Bijnor Lok Sabha constituency 
+|-
+|[[Mithlesh Pal]]
+|bgcolor=#257605|
+|[[Rashtriya Lok Dal]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="8" | [[Bijnor district|Bijnor]]
+| 17
+|[[Najibabad (Assembly constituency)|Najibabad]]
+|[[Tasleem Ahmad]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 18
+| [[Nagina (Assembly constituency)|Nagina]] (SC)
+|[[Manoj Kumar Paras]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 19
+| [[Barhapur (Assembly constituency)|Barhapur]]
+|[[Kunwar Sushant Singh|Sushant Kumar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 20
+| [[Dhampur (Assembly constituency)|Dhampur]]
+|[[Ashok Kumar Rana]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 21
+| [[Nehtaur (Assembly constituency)|Nehtaur]] (SC)
+|[[Om Kumar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 22
+| [[Bijnor (Assembly constituency)|Bijnor]]
+|[[Suchi (politician)|Suchi Chaudhary]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 23
+| [[Chandpur (Assembly constituency)|Chandpur]]
+|[[Swami Omvesh]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+|24
+|[[Noorpur (Assembly constituency)|Noorpur]]
+|[[Ram Avtar Singh]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="7" | [[Moradabad district|Moradabad]]
+| 25
+|[[Kanth (Assembly constituency)|Kanth]]
+|[[Kamal Akhtar]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 26
+| [[Thakurdwara (Assembly constituency)|Thakurdwara]]
+|[[Nawab Jan]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 27
+| [[Moradabad Rural (Assembly constituency)|Moradabad Rural]]
+|[[Mohd Nasir Qureshi]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 28
+| [[Moradabad Nagar (Assembly constituency)|Moradabad Nagar]]
+|[[Ritesh Kumar Gupta]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+|{{Party name with colour|National Democratic Alliance}}
+|
+|-
+|Rowspan=2| 29
+|Rowspan=2| [[Kundarki (Assembly constituency)|Kundarki]]
+|[[Ziaur Rahman Barq|Zia Ur Rehman]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}}
+|Elected as MP to Lok Sabha in 2024
+|-
+|[[Thakur Ramveer Singh|Ramveer Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+|{{Party name with color|National Democratic Alliance}}
+|Won in 2024 by-election
+|-
+| 30
+| [[Bilari (Assembly constituency)|Bilari]]
+|[[Mohammed Faeem]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="3" | [[Sambhal district|Sambhal]]
+| 31
+|[[Chandausi (Assembly constituency)|Chandausi]] (SC)
+|[[Gulab Devi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS (I/C)
+|-
+| 32
+| [[Asmoli (Assembly constituency)|Asmoli]]
+|[[Pinki Singh Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 33
+| [[Sambhal (Assembly constituency)|Sambhal]]
+|[[Iqbal Mehmood]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="7" | [[Rampur district|Rampur]]
+| rowspan="2" |34
+| rowspan="2" |[[Suar (Assembly constituency)|Suar]]
+|[[Abdullah Azam Khan]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|Disqualified on 15 February 2023<ref>{{Cite news |date=2023-02-15 |title=SP MLA Abdullah Azam Khan disqualified from UP Assembly after conviction in 15-year-old case |work=The Economic Times |url=https://economictimes.indiatimes.com/news/politics-and-nation/sp-mla-abdullah-azam-khan-disqualified-from-up-assembly-after-conviction-in-15-year-old-case/articleshow/97949511.cms |access-date=2023-05-13 |issn=0013-0389}}</ref>
+|-
+|[[Shafeek Ahmed Ansari]]
+| bgcolor="#330066" |
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|Won in 2023 by-election
+|-
+| 35
+| [[Chamraua (Assembly constituency)|Chamraua]]
+|[[Naseer Ahmad Khan]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+|{{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 36
+| [[Bilaspur, Uttar Pradesh Assembly constituency|Bilaspur]]
+|[[Baldev Singh Aulakh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| rowspan="2" |37
+| rowspan="2" |[[Rampur (Assembly constituency)|Rampur]]
+|[[Azam Khan (politician)|Azam Khan]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|Disqualified on 28 October 2022<ref>{{Cite news |date=2022-10-28 |title=SP leader Azam Khan disqualified from U.P. Assembly after conviction in hate speech case |language=en-IN |work=The Hindu |url=https://www.thehindu.com/news/national/other-states/sp-leader-azam-khan-disqualified-from-up-assembly-after-conviction-in-hate-speech-case/article66066804.ece |access-date=2023-12-19 |issn=0971-751X}}</ref>
+|-
+| [[Akash Saxena]]
+|Bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Elected on 8 December 2022
+|-
+| 38
+| [[Milak (Assembly constituency)|Milak]] (SC)
+|[[Rajbala]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="4" | [[Amroha district|Amroha]]
+| 39
+|[[Dhanaura (Assembly constituency)|Dhanaura]] (SC)
+|[[Rajeev Tarara]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 40
+| [[Naugawan Sadat (Assembly constituency)|Naugawan Sadat]]
+|[[Samarpal Singh]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 41
+| [[Amroha (Assembly constituency)|Amroha]]
+|[[Mehboob Ali (Uttar Pradesh politician)|Mehboob Ali]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 42
+| [[Hasanpur, Uttar Pradesh Assembly constituency|Hasanpur]]
+|[[Mahender Singh Khadakvanshi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="7" | [[Meerut district|Meerut]]
+| 43
+|[[Siwalkhas (Assembly constituency)|Siwalkhas]]
+|[[Ghulam Mohammed (politician)|Ghulam Mohammed]]
+|bgcolor=#257605|
+|[[Rashtriya Lok Dal]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 44
+| [[Sardhana (Assembly constituency)|Sardhana]]
+|[[Atul Pradhan]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 45
+| [[Hastinapur (Assembly constituency)|Hastinapur]]
+|[[Dinesh Khatik]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| 46
+| [[Kithore (Assembly constituency)|Kithore]]
+|[[Shahid Manzoor]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 47
+| [[Meerut Cantt. (Assembly constituency)|Meerut Cantt.]]
+|[[Amit Agarwal (politician)|Amit Agarwal]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 48
+| [[Meerut (Assembly constituency)|Meerut City]]
+|[[Rafiq Ansari]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 49
+| [[Meerut South (Assembly constituency)|Meerut South]]
+|[[Somendra Tomar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| rowspan="3" | [[Bagpat district|Bagpat]]
+| 50
+|[[Chhaprauli (Assembly constituency)|Chhaprauli]]
+|[[Ajay Kumar (Uttar Pradesh politician)|Ajay Kumar]]
+|bgcolor=#257605|
+|[[Rashtriya Lok Dal]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 51
+| [[Baraut (Assembly constituency)|Baraut]]
+|[[Krishnapal Malik|Krishan Pal Malik]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| 52
+| [[Bagpat (Assembly constituency)|Baghpat]]
+|[[Yogesh Dhama]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="6" | [[Ghaziabad district, Uttar Pradesh|Ghaziabad]]
+| 53
+| [[Loni (Assembly constituency)|Loni]]
+|[[Nand Kishor Gurjar|Nandkishor Gurjar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 54
+| [[Muradnagar (Assembly constituency)|Muradnagar]]
+|[[Ajit Pal Tyagi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 55
+| [[Sahibabad (Assembly constituency)|Sahibabad]]
+|[[Sunil Kumar Sharma (Uttar Pradesh)|Sunil Kumar Sharma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|Rowspan=2| 56
+|Rowspan=2| [[Ghaziabad (Assembly constituency)|Ghaziabad]]
+|[[Atul Garg]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+| Elected as MP from Ghaziabad Lok Sabha constituency in 18th Lok Sabha in 2024
+|-
+|[[Sanjeev Sharma (politician)|Sanjeev Sharma]] 
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+|{{Party name with color|National Democratic Alliance}}
+|Won in 2024 by-election
+|-
+| 57
+| [[Modinagar (Assembly constituency)|Modi Nagar]]
+|[[Manju Shivach]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="3" | [[Hapur district|Hapur]]
+| 58
+|[[Dholana (Assembly constituency)|Dholana]]
+|[[Dharmesh Singh Tomar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 59
+| [[Hapur (Assembly constituency)|Hapur]]
+| [[Vijay Pal]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 60
+| [[Garhmukteshwar (Assembly constituency)|Garhmukteshwar]]
+|[[Harendra Singh Tewatia]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="3" | [[Gautam Buddh Nagar district|Gautam Buddh Nagar]]
+| 61
+|[[Noida (Assembly constituency)|Noida]]
+|[[Pankaj Singh (politician)|Pankaj Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 62
+| [[Dadri (Uttar Pradesh Assembly constituency)|Dadri]]
+|[[Tejpal Singh Nagar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 63
+|[[Jewar (Assembly constituency)|Jewar]]
+|[[Dhirendra Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="7" | [[Bulandshahr district|Bulandshahr]]
+| 64
+|[[Sikandrabad (Assembly constituency)|Sikandrabad]]
+|[[Lakshmi Raj Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|65
+|[[Bulandshahr (Assembly constituency)|Bulandshahr]]
+|[[Pradeep Kumar Chaudhary]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 66
+|[[Syana (Assembly constituency)|Syana]]
+|[[Devendra Singh Lodhi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 67
+|[[Anupshahr (Assembly constituency)|Anupshahr]]
+|[[Sanjay Kumar Sharma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 68
+|[[Debai (Assembly constituency)|Debai]]
+|[[Chandrapal Singh (politician)|Chandrapal Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 69
+|[[Shikarpur (Assembly constituency)|Shikarpur]]
+|[[Anil Sharma (Uttar Pradesh politician)|Anil Sharma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 70
+|[[Khurja (Assembly constituency)|Khurja]] (SC)
+|[[Meenakshi Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="8" | [[Aligarh district|Aligarh]]
+|Rowspan=2| 71
+|Rowspan=2|[[Khair (Assembly constituency)|Khair]] (SC)
+|[[Anoop Pradhan]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|[[Surender Diler]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 72
+|[[Barauli (Assembly constituency)|Barauli]]
+|[[Thakur Jaivir Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 73
+|[[Atrauli (Assembly constituency)|Atrauli]]
+|[[Sandeep Singh (politician)|Sandeep Kumar Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS (I/C)
+|-
+| 74
+|[[Chharra (Assembly constituency)|Chharra]]
+|[[Ravendra Pal Singh (politician)|Ravendra Pal Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 75
+|[[Koil (Assembly constituency)|Koil]]
+|[[Anil Parashar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 76
+|[[Aligarh (Assembly constituency)|Aligarh]]
+|[[Mukta Raja]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|77
+|[[Iglas (Assembly constituency)|Iglas]] (SC)
+|[[Rajkumar Sahyogi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="3" | [[Hathras district|Hathras]]
+| 78
+|[[Hathras (Assembly constituency)|Hathras]] (SC)
+|[[Anjula Singh Mahaur]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 79
+|[[Sadabad (Assembly constituency)|Sadabad]]
+|[[Pradeep Kumar Singh (Uttar Pradesh politician)|Pradeep Kumar Singh]]
+|bgcolor=#257605|
+|[[Rashtriya Lok Dal]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 80
+|[[Sikandra Rao (Assembly constituency)|Sikandra Rao]]
+|[[Birendra Singh Rana]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="5" | [[Mathura district|Mathura]]
+| 81
+|[[Chhata (Assembly constituency)|Chhata]]
+|[[Chaudhary Laxmi Narayan Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+| 82
+|[[Mant (Assembly constituency)|Mant]]
+|[[Rajesh Chaudhary]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 83
+|[[Goverdhan (Assembly constituency)|Goverdhan]]
+|[[Meghshyam Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 84
+|[[Mathura (Assembly constituency)|Mathura]]
+|[[Shrikant Sharma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 85
+|[[Baldev (Assembly constituency)|Baldev]] (SC)
+|[[Pooran Prakash]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="9" | [[Agra district|Agra]]
+| 86
+|[[Etmadpur (Assembly constituency)|Etmadpur]]
+|[[Dharampal Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 87
+|[[Agra Cantonment (Assembly constituency)|Agra Cantt.]] (SC)
+|[[Girraj Singh Dharmesh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 88
+|[[Agra South (Assembly constituency)|Agra South]]
+|[[Yogendra Upadhyaya]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+| 89
+|[[Agra North (Assembly constituency)|Agra North]]
+|[[Purshottam Khandelwal]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 90
+|[[Agra Rural (Assembly constituency)|Agra Rural]] (SC)
+|[[Baby Rani Maurya]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+| 91
+|[[Fatehpur Sikri (Assembly constituency)|Fatehpur Sikri]]
+|[[Babulal Chaudhary|Chaudhary Babulal]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 92
+|[[Kheragarh (Assembly constituency)|Kheragarh]]
+|[[Bhagvan Singh Kushwaha]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 93
+|[[Fatehabad, Uttar Pradesh Assembly constituency|Fatehabad]]
+|[[Chotelal Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|94
+|[[Bah (Assembly constituency)|Bah]]
+|[[Rani Pakshalika Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="5" | [[Firozabad district|Firozabad]]
+| 95
+|[[Tundla (Assembly constituency)|Tundla]] (SC)
+|[[Prempal Singh Dhangar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 96
+|[[Jasrana (Assembly constituency)|Jasrana]]
+|[[Sachin Yadav (Jasrana politician)|Sachin Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 97
+|[[Firozabad (Assembly constituency)|Firozabad]]
+|[[Manish Asija]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 98
+|[[Shikohabad (Assembly constituency)|Shikohabad]]
+|[[Mukesh Verma]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 99
+|[[Sirsaganj (Assembly constituency)|Sirsaganj]]
+|[[Sarvesh Singh Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="3" | [[Kasganj district|Kasganj]]
+| 100
+|[[Kasganj (Assembly constituency)|Kasganj]]
+|[[Devendra Singh Rajput]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 101
+|[[Amanpur (Assembly constituency)|Amanpur]]
+|[[Hariom Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 102
+|[[Patiyali (Assembly constituency)|Patiyali]]
+|[[Nadira Sultan]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="4" | [[Etah district|Etah]]
+| 103
+|[[Aliganj (Assembly constituency)|Aliganj]]
+|[[Satyapal Singh Rathore]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 104
+|[[Etah (Assembly constituency)|Etah]]
+|[[Vipin Kumar David]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 105
+|[[Marhara (Assembly constituency)|Marhara]]
+|[[Virendra Singh Lodhi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 106
+|[[Jalesar (Assembly constituency)|Jalesar]] (SC)
+|[[Sanjeev Kumar Diwakar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="5" | [[Mainpuri district|Mainpuri]]
+| 107
+|[[Mainpuri (Assembly constituency)|Mainpuri]]
+|[[Jaiveer Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+| 108
+|[[Bhongaon (Assembly constituency)|Bhongaon]]
+|[[Ram Naresh Agnihotri]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 109
+|[[Kishni (Assembly constituency)|Kishni]] (SC)
+|[[Brajesh Katheriya]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+|Rowspan=2|110
+|Rowspan=2|[[Karhal (Assembly constituency)|Karhal]]
+|[[Akhilesh Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+| Resigned from Karhal seat on 11 June 2024.<ref>{{cite news |title=अखिलेश यादव ने करहल से दिया इस्तीफा, अब ये नेता लड़ सकता है सपा से चुनाव |url=https://www.abplive.com/states/up-uk/akhilesh-yadav-resigned-from-the-mla-post-in-up-tej-pratap-yadav-may-fight-by-election-from-karhal-2713146 |work=ABP News |language=hi |date=12 June 2024 |access-date=12 June 2024}}</ref>  
+|-
+|[[Tej Pratap Singh Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|  
+|-
+| [[Sambhal district|Sambhal]]
+| 111
+|[[Gunnaur (Assembly constituency)|Gunnaur]]
+|[[Ramkhiladi Singh Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="6" | [[Budaun district|Budaun]]
+| 112
+|[[Bisauli (Assembly constituency)|Bisauli]] (SC)
+|[[Ashutosh Maurya]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+| 
+|-
+| 113
+|[[Sahaswan (Assembly constituency)|Sahaswan]]
+|[[Brajesh Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 114
+|[[Bilsi (Assembly constituency)|Bilsi]]
+|[[Harish Shakya|Harish Chandra Shakya]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 115
+|[[Badaun (Assembly constituency)|Badaun]]
+|[[Mahesh Chandra Gupta]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 116
+|[[Shekhupur (Assembly constituency)|Shekhupur]]
+|[[Himanshu Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 117
+|[[Dataganj (Assembly constituency)|Dataganj]]
+|[[Rajeev Kumar Singh (Dataganj politician)|Rajeev Kumar Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="10" | [[Bareilly district|Bareilly]]
+| 118
+|[[Baheri (Assembly constituency)|Baheri]]
+|[[Ataurrehman]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 119
+|[[Meerganj (Assembly constituency)|Meerganj]]
+|[[D. C. Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 120
+|[[Bhojipura (Assembly constituency)|Bhojipura]]
+|[[Shazil Islam Ansari]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 121
+|[[Nawabganj (Assembly constituency)|Nawabganj]]
+|[[M. P. Arya]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="2" | 122
+| rowspan="2" |[[Faridpur (Assembly constituency)|Faridpur]] (SC)
+|[[Shyam Bihari Lal]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Died on 2 January 2026<ref>[https://www.indiatvnews.com/uttar-pradesh/bjp-mla-shyam-bihari-lal-passes-away-after-heart-attack-in-bareilly-cm-yogi-expresses-grief-reactions-latest-updates-2026-01-02-1024230 Shyam Bihari Lal, BJP MLA, dies in Bareilly a day after celebrating his 60th birthday, CM Yogi expresses grief]</ref>
+|-
+|Colspan="6"|Vacant
+|-
+| 123
+|[[Bithari Chainpur (Assembly constituency)|Bithari Chainpur]]
+|[[Raghavendra Sharma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 124
+|[[Bareilly (Assembly constituency)|Bareilly]]
+|[[Arun Kumar Saxena]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS (I/C)
+|-
+| 125
+|[[Bareilly Cantonment (Assembly constituency)|Bareilly Cantt]]
+|[[Sanjeev Agarwal]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 126
+|[[Aonla (Assembly constituency)|Aonla]]
+|[[Dharmpal Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+| rowspan="4" | [[Pilibhit district|Pilibhit]]
+| 127
+|[[Pilibhit (Assembly constituency)|Pilibhit]]
+|[[Sanjay Singh Gangwar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| 128
+|[[Barkhera (Assembly constituency)|Barkhera]]
+|[[Swami Pravaktanand]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 129
+|[[Puranpur (Assembly constituency)|Puranpur]] (SC)
+|[[Babu Ram Paswan]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 130
+|[[Bisalpur (Assembly constituency)|Bisalpur]]
+| [[Vivek Kumar Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="7" | [[Shahjahanpur district|Shahjahanpur]]
+| 131
+|[[Katra (Assembly constituency)|Katra]]
+|[[Veer Vikram Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 132
+|[[Jalalabad (UP Assembly constituency)|Jalalabad]]
+|[[Hari Prakash Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 133
+|[[Tilhar (Assembly constituency)|Tilhar]]
+|[[Salona Kushwaha]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 134
+|[[Powayan (Assembly constituency)|Powayan]] (SC)
+|[[Chetram|Chetram Pasi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 135
+|[[Shahjahanpur (Assembly constituency)|Shahjahanpur]]
+|[[Suresh Kumar Khanna]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+|Rowspan=2|136
+|Rowspan=2|[[Dadraul (Assembly constituency)|Dadraul]]
+|[[Manvendra Singh (Dadraul politician)|Manvendra Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Has died
+|-
+|[[Arvind Kumar Singh (Dadraul politician)|Arvind Kumar Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Elected on 4 June 2024
+|-
+| rowspan="9" | [[Lakhimpur Kheri district|Lakhimpur Kheri]]
+| 137
+|[[Palia (Assembly constituency)|Palia]]
+|[[Harvindar Kumar Sahani|Harvinder Kumar Sahani]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|138
+|[[Nighasan (Assembly constituency)|Nighasan]]
+|[[Shashank Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan=2| 139
+|rowspan=2| [[Gola Gokrannath (Assembly constituency)|Gola Gokarnnath]]
+|[[Arvind Giri]]
+| rowspan="2" bgcolor="#FF9933" |
+| rowspan="2" |[[Bharatiya Janata Party]]
+|{{Party name with colour|National Democratic Alliance}}
+| Died on 6 September 2022<ref>{{Cite web |date=2022-09-06 |title=UP: BJP MLA Arvind Giri dies of heart attack |url=https://www.hindustantimes.com/cities/lucknow-news/up-bjp-mla-arvind-giri-dies-of-heart-attack-101662438032862.html |access-date=2022-09-06 |website=Hindustan Times |language=en}}</ref>
+|-
+|[[Aman Giri]]
+|{{Party name with colour|National Democratic Alliance}}
+|Elected in Bypoll
+|-
+| 140
+|[[Sri Nagar (Assembly constituency)|Sri Nagar]] (SC)
+|[[Manju Tyagi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 141
+|[[Dhaurahra (Assembly constituency)|Dhaurahra]]
+|[[Vinod Shankar Avasthi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 142
+|[[Lakhimpur, Uttar Pradesh Assembly constituency|Lakhimpur]]
+|[[Yogesh Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 143
+|[[Kasta (Assembly constituency)|Kasta]] (SC)
+|[[Saurabh Singh (Uttar Pradesh politician)|Saurabh Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|144
+|[[Mohammdi (Assembly constituency)|Mohammadi]]
+|[[Lokendra Pratap Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="9"| [[Sitapur district|Sitapur]]
+| 145
+|[[Maholi (Assembly constituency)|Maholi]]
+|[[Shashank Trivedi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 146
+|[[Sitapur, Uttar Pradesh Assembly constituency|Sitapur]]
+|[[Rakesh Rathour|Rakesh Rathour Guru]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| 147
+|[[Hargaon (Assembly constituency)|Hargaon]] (SC)
+|[[Suresh Rahi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| 148
+|[[Laharpur (Assembly constituency)|Laharpur]]
+|[[Anil Kumar Verma]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 149
+|[[Biswan (Assembly constituency)|Biswan]]
+|[[Nirmal Verma (politician)|Nirmal Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 150
+|[[Sevata (Assembly constituency)|Sevata]]
+|[[Gyan Tiwari]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|151
+|[[Mahmoodabad (Assembly constituency)|Mahmoodabad]]
+|[[Asha Maurya]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 152
+|[[Sidhauli (Assembly constituency)|Sidhauli]] (SC)
+|[[Manish Rawat]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 153
+|[[Misrikh (Assembly constituency)|Misrikh]] (SC)
+|[[Ram Krishna Bhargava]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="8" | [[Hardoi district|Hardoi]]
+| 154
+|[[Sawayazpur (Assembly constituency)|Sawayazpur]]
+|[[Madhvendra Pratap Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|155
+|[[Shahabad (Assembly constituency)|Shahabad]]
+|[[Rajani Tiwari]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| 156
+|[[Hardoi (Assembly constituency)|Hardoi]]
+|[[Nitin Agarwal]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS (I/C)
+|-
+| 157
+|[[Gopamau (Assembly constituency)|Gopamau]] (SC)
+|[[Shyam Prakash]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 158
+|[[Sandi (Assembly constituency)|Sandi]] (SC)
+|[[Prabhash Kumar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 159
+|[[Bilgram-Mallanwan (Assembly constituency)|Bilgram-Mallanwan]]
+|[[Ashish Kumar Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 160
+|[[Balamau (Assembly constituency)|Balamau]] (SC)
+|[[Ram Pal Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 161
+|[[Sandila (Assembly constituency)|Sandila]]
+|[[Alka Singh Arkvanshi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="6" | [[Unnao district|Unnao]]
+|162
+|[[Bangarmau (Assembly constituency)|Bangarmau]]
+|[[Shrikant Katiyar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 163
+|[[Safipur (Assembly constituency)|Safipur]] (SC)
+|[[Bamba Lal Diwakar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 164
+|[[Mohan (Vidhan Sabha constituency)|Mohan]] (SC)
+|[[Brijesh Kumar Rawat]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 165
+|[[Unnao (Assembly constituency)|Unnao]]
+|[[Pankaj Gupta (BJP Politician)|Pankaj Gupta]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 166
+|[[Bhagwantnagar (Assembly constituency)|Bhagwantnagar]]
+|[[Ashutosh Shukla]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 167
+|[[Purwa (Assembly constituency)|Purwa]]
+|[[Anil Kumar Singh (politician)|Anil Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="10" | [[Lucknow district|Lucknow]]
+| 168
+|[[Malihabad (Assembly constituency)|Malihabad]] (SC)
+|[[Jai Devi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 169
+|[[Bakshi Kaa Talab (Assembly constituency)|Bakshi Kaa Talab]]
+|[[Yogesh Shukla]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 170
+|[[Sarojini Nagar (Assembly constituency)|Sarojini Nagar]]
+|[[Rajeshwar Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 171
+|[[Lucknow West (Assembly constituency)|Lucknow West]]
+|[[Armaan Khan (Politician)|Armaan Khan]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 172
+|[[Lucknow North (Assembly constituency)|Lucknow North]]
+|[[Neeraj Bora]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan=2|173
+|rowspan=2|[[Lucknow East (Assembly constituency)|Lucknow East]]
+|[[Ashutosh Tandon]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Died on 9 November 2023<ref>{{Cite web |date=2023-11-10 |title=3-term BJP MLA from Lucknow East Ashutosh Tandon passes away at 63 |url=https://indianexpress.com/article/cities/lucknow/3-term-bjp-mla-from-lucknow-east-ashutosh-tandon-passes-away-at-63-9020973/ |access-date=2023-12-16 |website=The Indian Express |language=en}}</ref>
+|-
+|[[O. P. Srivastava]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Elected on 4 June 2024
+|-
+| 174
+|[[Lucknow Central (Assembly constituency)|Lucknow Central]]
+|[[Ravidas Mehrotra]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 175
+|[[Lucknow Cantonment (Assembly constituency)|Lucknow Cantt]]
+|[[Brajesh Pathak]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|[[List of deputy chief ministers of Uttar Pradesh|Deputy Chief Minister]]
+|-
+| 176
+|[[Mohanlalganj (Assembly constituency)|Mohanlalganj]] (SC)
+|[[Amresh Kumar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| [[Raebareli district|Raebareli]]
+| 177
+|[[Bachhrawan (Assembly constituency)|Bachhrawan]] (SC)
+|[[Shyam Sunder Bharti]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| [[Amethi district|Amethi]]
+| 178
+|[[Tiloi (Assembly constituency)|Tiloi]]
+|[[Mayankeshwar Sharan Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| rowspan="5" | [[Raebareli district|Raebareli]]
+| 179
+|[[Harchandpur (Assembly constituency)|Harchandpur]]
+|Rahul Lodhi
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 180
+|[[Rae Bareli (Assembly constituency)|Rae Bareli]]
+|[[Aditi Singh (politician)|Aditi Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 181
+|[[Salon (Assembly constituency)|Salon]] (SC)
+|[[Ashok Kori]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 182
+|[[Sareni (Assembly constituency)|Sareni]]
+|[[Devendra Pratap Singh (UP politician, born 1958)|Devendra Pratap Singh]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 183
+|[[Unchahar (Assembly constituency)|Unchahar]]
+|[[Manoj Kumar Pandey (politician)|Manoj Kumar Pandey]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+| Switched from SP to BJP in 2024<ref>https://timesofindia.indiatimes.com/city/lucknow/manoj-pandey-rebel-sp-mla-from-rae-bareli-joins-bjp-fold/articleshow/110219939.cms</ref>
+|-
+| rowspan="3" | [[Amethi district|Amethi]]
+| 184
+|[[Jagdishpur (Assembly constituency)|Jagdishpur]] (SC)
+|[[Suresh Pasi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 185
+| [[Gauriganj (Assembly constituency)|Gauriganj]]
+|[[Rakesh Pratap Singh (politician)|Rakesh Pratap Singh]]
+| {{Party name with colour|Independent politician}}
+| {{Party name with colour|National Democratic Alliance}}
+| Expelled from [[Samajwadi Party]] in 2025.
+|-
+| 186
+| [[Amethi (Assembly constituency)|Amethi]]
+|[[Maharaji Prajapati]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="5" | [[Sultanpur district|Sultanpur]]
+| 187
+|[[Isauli (Assembly constituency)|Isauli]]
+|[[Mohammad Tahir Khan]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 188
+|[[Sultanpur (Assembly constituency)|Sultanpur]]
+|[[Vinod Singh (Sultanpur politician)|Vinod Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 189
+|[[Sadar Assembly constituency|Sadar]]
+|[[Raj Prasad Upadhyay]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 190
+|[[Lambhua (Assembly constituency)|Lambhua]]
+|[[Sitaram Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 191
+| [[Kadipur (Assembly constituency)|Kadipur]] (SC)
+|[[Rajesh Gautam]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="4" | [[Farrukhabad district|Farrukhabad]]
+| 192
+| [[Kaimganj (Assembly constituency)|Kaimganj]] (SC)
+|Dr. [[Surabhi Singh]]
+|bgcolor=#330066|
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 193
+|[[Amritpur (Assembly constituency)|Amritpur]]
+|[[Suhil Kumar Shakya|Sushil Kumar Shakya]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 194
+|[[Farrukhabad (Assembly constituency)|Farrukhabad]]
+|[[Sunil Dutt Dwivedi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 195
+|[[Bhojpur, Uttar Pradesh Assembly constituency|Bhojpur]]
+|[[Nagendra Singh Rathore]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="3" | [[Kannauj district|Kannauj]]
+| 196
+| [[Chhibramau (Assembly constituency)|Chhibramau]]
+|[[Archana Pandey]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 197
+| [[Tirwa (Assembly constituency)|Tirwa]]
+|[[Kailash Singh Rajput]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 198
+| [[Kannauj (Assembly constituency)|Kannauj]] (SC)
+|[[Asim Arun]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS (I/C)
+|-
+| rowspan="3" | [[Etawah district|Etawah]]
+| 199
+| [[Jaswantnagar (Assembly constituency)|Jaswantnagar]]
+|[[Shivpal Singh Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 200
+| [[Etawah (Assembly constituency)|Etawah]]
+|[[Sarita Bhadauria]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 201
+|[[Bharthana (Assembly constituency)|Bharthana]] (SC)
+|[[Raghvendra Kumar Singh]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="3" | [[Auraiya district|Auraiya]]
+| 202
+| [[Bidhuna (Assembly constituency)|Bidhuna]]
+|[[Rekha Verma (born 1961)|Rekha Verma]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 203
+|[[Dibiyapur (Assembly constituency)|Dibiyapur]]
+|[[Pradeep Kumar Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 204
+|[[Auraiya (Assembly constituency)|Auraiya]] (SC)
+|[[Gudiya Katheriya]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="4" | [[Kanpur Dehat district|Kanpur Dehat]]
+| 205
+|[[Rasulabad (Assembly constituency)|Rasulabad]] (SC)
+|[[Poonam Sankhwar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 206
+|[[Akbarpur-Raniya (Assembly constituency)|Akbarpur-Raniya]]
+|[[Pratibha Shukla]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| 207
+|[[Sikandra (Assembly constituency)|Sikandra]]
+|[[Ajit Singh Pal]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS (I/C)
+|-
+| 208
+| [[Bhognipur (Assembly constituency)|Bhognipur]]
+|[[Rakesh Sachan]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+| rowspan="11" | [[Kanpur Nagar district|Kanpur Nagar]]
+| 209
+| [[Bilhaur (Assembly constituency)|Bilhaur]] (SC)
+|[[Rahul Bachha Sonkar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 210
+| [[Bithoor (Assembly constituency)|Bithoor]]
+|[[Abhijeet Singh Sanga]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 211
+|[[Kalyanpur, Kanpur (Assembly constituency)|Kalyanpur]]
+|[[Neelima Katiyar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 212
+|[[Govind Nagar (Assembly constituency)|Govindnagar]]
+|[[Surendra Maithani]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|Rowspan=2| 213
+|Rowspan=2|[[Sishamau (Assembly constituency)|Sishamau]]
+|[[Haji Irfan Solanki]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+|[[Naseem Solanki]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 214
+|[[Arya Nagar (Assembly constituency)|Arya Nagar]]
+|[[Amitabh Bajpai]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 215
+|[[Kidwai Nagar (Assembly constituency)|Kidwai Nagar]]
+|[[Mahesh Trivedi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 216
+|[[Kanpur Cantonment (Assembly constituency)|Kanpur Cantt]]
+|[[Mohammad Hassan Roomi]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 217
+| [[Maharajpur (Uttar Pradesh Assembly constituency)|Maharajpur]]
+|[[Satish Mahana]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|[[Speaker (politics)|Speaker]]
+|-
+| 218
+| [[Ghatampur (Assembly constituency)|Ghatampur]] (SC)
+|[[Saroj Kureel]]
+|bgcolor=#330066|
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="3" | [[Jalaun district|Jalaun]]
+| 219
+|[[Madhogarh (Assembly constituency)|Madhaugarh]]
+|[[Moolchandra Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 220
+|[[Kalpi (Assembly constituency)|Kalpi]]
+|[[Vinod Chaturvedi]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+| '''Rebel'''
+|-
+| 221
+|[[Orai (Assembly constituency)|Orai]] (SC)
+|[[Gauri Shankar Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="4" | [[Jhansi district|Jhansi]]
+| 222
+|[[Babina (Assembly constituency)|Babina]]
+|[[Rajeev Singh Parichha]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 223
+|[[Jhansi Nagar (Assembly constituency)|Jhansi Nagar]]
+|[[Ravi Sharma (Uttar Pradesh politician)|Ravi Sharma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 224
+|[[Mauranipur (Assembly constituency)|Mauranipur]] (SC)
+|[[Rashmi Arya]]
+|bgcolor=#330066|
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 225
+|[[Garautha (Assembly constituency)|Garautha]]
+|[[Jawahar Lal Rajput]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="2" | [[Lalitpur district, India|Lalitpur]]
+| 226
+|[[Lalitpur (Assembly constituency)|Lalitpur]]
+|[[Ramratan Kushwaha]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 227
+|[[Mehroni (Assembly constituency)|Mehroni]] (SC)
+|[[Manohar Lal Panth]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| rowspan="2" | [[Hamirpur district, Uttar Pradesh|Hamirpur]]
+| 228
+|[[Hamirpur (Assembly constituency)|Hamirpur]]
+|[[Manoj Kumar Prajapati]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 229
+|[[Rath (Assembly constituency)|Rath]] (SC)
+|[[Manisha Anuragi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="2" | [[Mahoba district|Mahoba]]
+| 230
+|[[Mahoba (Assembly constituency)|Mahoba]]
+|[[Rakesh Kumar Goswami]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 231
+|[[Charkhari (Assembly constituency)|Charkhari]]
+|[[Brijbhushan Rajpoot]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="4" | [[Banda district, India|Banda]]
+| 232
+|[[Tindwari (Assembly constituency)|Tindwari]]
+|[[Ramakesh Nishad|Ramkesh Nishad]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| 233
+|[[Baberu (Assembly constituency)|Baberu]]
+|[[Vishambhar Singh Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 234
+|[[Naraini (Assembly constituency)|Naraini]] (SC)
+|[[Ommani Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 235
+| [[Banda (Assembly constituency)|Banda]]
+|[[Prakash Dwivedi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="2" | [[Chitrakoot district|Chitrakoot]]
+| 236
+|[[Chitrakoot, Uttar Pradesh Assembly constituency|Chitrakoot]]
+|[[Anil Pradhan]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 237
+| [[Manikpur (Assembly constituency)|Manikpur]]
+|[[Avinash Chandra Dwivedi]]
+|bgcolor=#330066|
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="6" | [[Fatehpur district|Fatehpur]]
+| 238
+| [[Jahanabad (Vidhan Sabha constituency)|Jahanabad]]
+|[[Rajendra Singh Patel]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 239
+|[[Bindki (Assembly constituency)|Bindki]]
+|[[Jai Kumar Singh Jaiki]]
+|bgcolor=#330066|
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 240
+| [[Fatehpur, Uttar Pradesh (Assembly constituency)|Fatehpur]]
+|[[Chandra Prakash Lodhi]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 241
+|[[Ayah Shah (Assembly constituency)|Ayah Shah]]
+|[[Vikas Gupta (politician)|Vikas Gupta]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 242
+|[[Husainganj (Assembly constituency)|Husainganj]]
+|[[Usha Maurya]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 243
+|[[Khaga (Assembly constituency)|Khaga]] (SC)
+|[[Krishna Paswan]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="7" | [[Pratapgarh district, Uttar Pradesh|Pratapgarh]]
+| 244
+|[[Rampur Khas (Assembly constituency)|Rampur Khas]]
+|[[Aradhana Mishra]]
+|bgcolor=#00BBFF|
+|[[Indian National Congress]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|Leader (Congress)
+|-
+| 245
+|[[Babaganj (Assembly constituency)|Babaganj]] (SC)
+|[[Vinod Saroj]]
+|bgcolor=#FFFF00|
+|[[Jansatta Dal (Loktantrik)]]
+| {{Party name with colour|Independent politician}}
+|
+|-
+| 246
+| [[Kunda (Assembly constituency)|Kunda]]
+|[[Raghuraj Pratap Singh]]
+|bgcolor=#FFFF00|
+|[[Jansatta Dal (Loktantrik)]]
+| {{Party name with colour|Independent politician}}
+|Leader (JD(L))
+|-
+| 247
+|[[Vishwanathganj (Assembly constituency)|Bishwavnathganj]]
+|[[Jeet Lal|Jeet Lal Patel]]
+|bgcolor=#330066|
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 248
+|[[Pratapgarh (Assembly constituency)|Pratapgarh]]
+|[[Rajendra Kumar Maurya]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 249
+|[[Patti (Assembly constituency)|Patti]]
+|[[Ram Singh (Uttar Pradesh politician)|Ram Singh Patel]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 250
+|[[Raniganj (Uttar Pradesh Assembly constituency)|Raniganj]]
+|[[Rakesh Kumar Verma]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="4" | [[Kaushambi district|Kaushambi]]
+| rowspan="2"|251
+|rowspan="2"|[[Sirathu (Assembly constituency)|Sirathu]]
+|rowspan="2"|[[Pallavi Patel]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|-
+|bgcolor=#27176D|
+|[[Apna Dal (Kamerawadi)]]
+| {{Party name with colour|Pichhra Dalit Muslim|shortname=PDM|color=#030303}} 
+|-
+| 252
+| [[Manjhanpur (Assembly constituency)|Manjhanpur]] (SC)
+|[[Indrajit Saroj]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 253
+|[[Chail (Assembly constituency)|Chail]]
+|[[Pooja Pal]]
+| {{Party name with colour|Independent politician}}
+| {{Party name with colour|National Democratic Alliance}}
+| Expelled from Samajwadi Party in 2025.
+|-
+| rowspan="13" | [[Prayagraj district|Prayagraj]]
+| 254
+| [[Phaphamau (Assembly constituency)|Phaphamau]]
+|[[Guru Prasad Maurya]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 255
+|[[Soraon (Assembly constituency)|Soraon]] (SC)
+|[[Geeta Shastri]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+|Rowspan=2| 256
+|Rowspan=2|[[Phulpur (Assembly constituency)|Phulpur]]
+|[[Praveen Patel]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|[[Deepak Patel]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 257
+|[[Pratappur, Uttar Pradesh Assembly constituency|Pratappur]]
+|[[Vijama Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 258
+|[[Handia (Assembly constituency)|Handia]]
+|[[Hakim Lal Bind]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+| 
+|-
+| 259
+| [[Meja (Assembly constituency)|Meja]]
+|[[Sandeep Singh Patel]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 260
+|[[Karachhana (Assembly constituency)|Karachhana]]
+|[[Piyush Ranjan Nishad]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 261
+|[[Prayagraj West Assembly constituency|Prayagraj West]]
+|[[Sidharth Nath Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 262
+|[[Prayagraj North Assembly constituency|Prayagraj North]]
+|[[Harshvardhan Bajpai]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 263
+|[[Prayagraj South Assembly constituency|Prayagraj South]]
+|[[Nand Gopal Gupta Nandi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+| 264
+|[[Bara (Assembly constituency)|Bara]] (SC)
+|[[Vachaspati (politician)|Vachaspati]]
+|bgcolor=#330066|
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 265
+|[[Koraon (Assembly constituency)|Koraon]]
+|[[Rajmani Kol]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="5" | [[Barabanki district|Barabanki]]
+| 266
+|[[Kursi (Assembly constituency)|Kursi]]
+|[[Sakendra Pratap Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 267
+|[[Ram Nagar, Uttar Pradesh Assembly constituency|Ram Nagar]]
+|[[Fareed Mahfooz Kidwai]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 268
+|[[Barabanki (Assembly constituency)|Barabanki]]
+|[[Dharmraj Singh Yadav|Dharamraj Singh Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 269
+|[[Zaidpur (Assembly constituency)|Zaidpur]] (SC)
+|[[Gaurav Kumar (politician)|Gaurav Kumar Rawat]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 270
+|[[Dariyabad (Assembly constituency)|Dariyabad]]
+|[[Satish Chandra Sharma (politician)|Satish Chandra Sharma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| [[Ayodhya district|Ayodhya]]
+| 271
+|[[Rudauli (Assembly constituency)|Rudauli]]
+|[[Ram Chandra Yadav (Uttar Pradesh politician)|Ram Chandra Yadav]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| [[Barabanki district|Barabanki]]
+| 272
+| [[Haidergarh (Assembly constituency)|Haidergarh]] (SC)
+|[[Dinesh Rawat]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="5" | [[Ayodhya district|Ayodhya]]
+|Rowspan=2| 273
+|Rowspan=2|[[Milkipur (Assembly constituency)|Milkipur]] (SC)
+|[[Awadhesh Prasad]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|Resigned from Milkipur seat on 11 June 2024.<ref>{{cite web|url=https://www.abplive.com/states/up-uk/awadhesh-prasad-resigns-from-mla-post-after-wining-faizabad-lok-sabha-seat-2713347|title=अवधेश प्रसाद ने दिया इस्तीफा, BJP से अयोध्या सीट छीनकर बने हैं सांसद|language=Hindi|publisher=[[ABP News]]}}</ref>
+|-
+|[[Chandrabhanu Paswan]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Won By-Election on 8 February 2025.<ref>{{cite web|url=https://results.eci.gov.in/AcResultByeFeb2025/candidateswise-S24273.htm|title= Bye Election to Assembly Constituencies: Results February-2025 Assembly Constituency 273 - MILKIPUR (Uttar Pradesh)|language=English |publisher=[[Election Commission of India]]}}</ref>
+|-
+| 274
+|[[Bikapur (Assembly constituency)|Bikapur]]
+|[[Amit Singh Chauhan]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 275
+| [[Ayodhya (Assembly constituency)|Ayodhya]]
+|[[Ved Prakash Gupta]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 276
+|[[Goshainganj (Assembly constituency)|Goshainganj]]
+|[[Abhay Singh (politician)|Abhay Singh]]
+| {{Party name with colour|Independent politician}}
+| {{Party name with colour|National Democratic Alliance}}
+| Expelled from [[Samajwadi Party]] in 2025.
+|-
+| rowspan="5" |[[Ambedkar Nagar district|Ambedkar Nagar]]
+|277
+|[[Katehari (Assembly constituency)|Katehari]]
+|[[Dharmraj Nishad]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+|{{Party name with colour|National Democratic Alliance}}
+|Elected on 23 November 2024
+|-
+| 278
+|[[Tanda (Assembly constituency)|Tanda]]
+|[[Ram Murti Verma]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 279
+|[[Alapur (Assembly constituency)|Alapur]] (SC)
+|[[Tribhuvan Dutt]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 280
+| [[Jalalpur (Assembly constituency)|Jalalpur]]
+|[[Rakesh Pandey (politician, born 1952)|Rakesh Pandey]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+| '''Rebel'''
+|-
+| 281
+|[[Akbarpur (Assembly constituency)|Akbarpur]]
+|[[Ram Achal Rajbhar]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="7" | [[Bahraich district|Bahraich]]
+| 282
+|[[Balha (Assembly constituency)|Balha]] (SC)
+|[[Saroj Sonkar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 283
+| [[Nanpara (Assembly constituency)|Nanpara]]
+|[[Ram Niwas Verma]]
+|bgcolor=#330066|
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 284
+| [[Matera (Assembly constituency)|Matera]]
+|[[Mariya Shah]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 285
+|[[Mahasi (Assembly constituency)|Mahasi]]
+|[[Sureshwar Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 286
+|[[Bahraich (Assembly constituency)|Bahraich]]
+|[[Anupama Jaiswal]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 287
+|[[Payagpur (Assembly constituency)|Payagpur]]
+|[[Subhash Tripathi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 288
+|[[Kaiserganj (Assembly constituency)|Kaiserganj]]
+|[[Anand Kumar (Kaiserganj politician)|Anand Kumar]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="2" | [[Shravasti district|Shravasti]]
+| 289
+|[[Bhinga (Assembly constituency)|Bhinga]]
+|[[Indrani Devi]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 290
+|[[Shravasti (Assembly constituency)|Shrawasti]]
+|[[Ram Feran Pandey]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="5" | [[Balrampur district, Uttar Pradesh|Balrampur]]
+| 291
+|[[Tulsipur (Assembly constituency)|Tulsipur]]
+|[[Kailash Nath Shukla]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan=2 |292
+| rowspan=2| [[Gainsari (Assembly constituency)|Gainsari]]
+|[[Shiv Pratap Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+| Died On 26 Jan 2024
+|-
+|[[Rakesh Kumar Yadav (politician)|Rakesh Kumar Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|Elected on 4 June 2024
+|-
+| 293
+|[[Utraula (Assembly constituency)|Utraula]]
+|[[Ram Pratap Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 294
+|[[Balrampur (Assembly constituency)|Balrampur]] (SC)
+|[[Paltu Ram]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="7" | [[Gonda district|Gonda]]
+| 295
+|[[Mehnaun (Assembly constituency)|Mehnaun]]
+|[[Vinay Kumar Dwivedi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 296
+|[[Gonda (Assembly constituency)|Gonda]]
+|[[Prateek Bhushan Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 297
+|[[Katra Bazar (Assembly constituency)|Katra Bazar]]
+|[[Bawan Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 298
+|[[Colonelganj (Assembly constituency)|Colonelganj]]
+|[[Ajay (Uttar Pradesh politician)|Ajay Pratap Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 299
+|[[Tarabganj (Assembly constituency)|Tarabganj]]
+|[[Prem Narayan Pandey]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 300
+|[[Mankapur (Assembly constituency)|Mankapur]] (SC)
+|[[Ramapati Shastri]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Pro tem Speaker
+|-
+| 301
+|[[Gaura (Assembly constituency)|Gaura]]
+|[[Prabhat Kumar Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="5" | [[Siddharthnagar district|Siddharthnagar]]
+| 302
+|[[Shohratgarh (Assembly constituency)|Shohratgarh]]
+|[[Vinay Verma]]
+|bgcolor=#330066|
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 303
+|[[Kapilvastu (Assembly constituency)|Kapilvastu]] (SC)
+|[[Shyam Dhani|Shyam Dhani Rahi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 304
+|[[Bansi (Assembly constituency)|Bansi]]
+|[[Jai Pratap Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 305
+|[[Itwa (Assembly constituency)|Itwa]]
+|[[Mata Prasad Pandey]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Samajwadi Party}}+
+|
+|-
+| 306
+|[[Domariyaganj (Assembly constituency)|Domariyaganj]]
+|[[Saiyada Khatoon]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="5" | [[Basti district|Basti]]
+| 307
+|[[Harraiya (Assembly constituency)|Harraiya]]
+|[[Ajay Kumar Singh (Uttar Pradesh politician)|Ajay Kumar Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 308
+|[[Kaptanganj (Assembly constituency)|Kaptanganj]]
+|[[Kavindra Chaudhary]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 309
+|[[Rudhauli (Assembly constituency)|Rudhauli]]
+|[[Rajendra Prasad Chaudhary]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 310
+|[[Basti Sadar (Assembly constituency)|Basti Sadar]]
+|[[Mahendra Nath Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 311
+|[[Mahadewa (Assembly constituency)|Mahadewa]] (SC)
+|[[Dudhram]]
+|bgcolor=#F5D50A|
+|[[Suheldev Bharatiya Samaj Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="3" | [[Sant Kabir Nagar district|Sant Kabir Nagar]]
+| 312
+|[[Menhdawal (Assembly constituency)|Menhdawal]]
+|[[Anil Kumar Tripathi]]
+|bgcolor=#B80000|
+|[[NISHAD Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 313
+|[[Khalilabad (Assembly constituency)|Khalilabad]]
+|[[Ankur Raj Tiwari]]  
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 314
+|[[Dhanghata (Assembly constituency)|Dhanghata]] (SC)
+|[[Ganesh Chandra Chauhan]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="5" | [[Maharajganj district|Maharajganj]]
+| 315
+|[[Pharenda (Assembly constituency)|Pharenda]]
+|[[Virendra Chaudhary]]
+|bgcolor=#00BBFF|
+|[[Indian National Congress]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 316
+|[[Nautanwa (Assembly constituency)|Nautanwa]]
+|[[Rishi Tripathi]]
+|bgcolor=#B80000|
+|[[NISHAD Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 317
+|[[Siswa (Assembly constituency)|Siswa]]
+|[[Prem Sagar Patel]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 318
+|[[Maharajganj (Assembly constituency)|Maharajganj]] (SC)
+|[[Jai Mangal Kanojiya]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 319
+|[[Paniyara (Assembly constituency)|Paniyara]]
+|[[Gyanendra Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="9" | [[Gorakhpur district|Gorakhpur]]
+| 320
+|[[Caimpiyarganj (Assembly constituency)|Caimpiyarganj]]
+|[[Fateh Bahadur Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 321
+|[[Pipraich (Assembly constituency)|Pipraich]]
+|[[Mahendra Pal Singh (politician)|Mahendra Pal Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 322
+|[[Gorakhpur Urban (Assembly constituency)|Gorakhpur Urban]]
+|[[Yogi Adityanath]]<br>{{small|([[List of chief ministers of Uttar Pradesh|Chief Minister]])}}
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Leader of the House
+|-
+| 323
+|[[Gorakhpur Rural (Assembly constituency)|Gorakhpur Rural]]
+|[[Bipin Singh (politician)|Bipin Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 324
+|[[Sahajanwa (Assembly constituency)|Sahajanwa]]
+|[[Pradeep Shukla]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 325
+|[[Khajani (Assembly constituency)|Khajani]] (SC)
+|[[Sriram Chauhan]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 326
+|[[Chauri-Chaura (Assembly constituency)|Chauri-Chaura]]
+|[[Sarvan Kumar Nishad]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 327
+|[[Bansgaon (Assembly constituency)|Bansgaon]] (SC)
+|[[Vimlesh Paswan]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 328
+|[[Chillupar (Assembly constituency)|Chillupar]]
+|[[Rajesh Tripathi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="7" | [[Kushinagar district|Kushinagar]]
+| 329
+|[[Khadda (Assembly constituency)|Khadda]]
+|[[Viveka Nand Pandey]]
+|bgcolor=#B80000|
+|[[NISHAD Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 330
+|[[Padrauna (Assembly constituency)|Padrauna]]
+|[[Manish Kumar Jaiswal|Manish Jaiswal]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 331
+|[[Tamkuhi Raj (Assembly constituency)|Tamkuhi Raj]]
+|[[Ashim Kumar Sarkar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 332
+|[[Fazilnagar (Assembly constituency)|Fazilnagar]]
+|[[Surendra Kumar Kushwaha]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 333
+|[[Kushinagar (Assembly constituency)|Kushinagar]]
+|[[Panchanand Pathak]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 334
+| [[Hata (Assembly constituency)|Hata]]
+|[[Mohan Verma]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 335
+|[[Ramkola (Assembly constituency)|Ramkola]] (SC)
+|[[Vinay Prakash Gond]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="7" | [[Deoria district|Deoria]]
+| 336
+|[[Rudrapur (Assembly constituency)|Rudrapur]]
+|[[Jai Prakash Nishad (Rudrapur)|Jai Prakash Nishad]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 337
+| [[Deoria (Assembly constituency)|Deoria]]
+|[[Shalabh Mani Tripathi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 338
+|[[Pathardeva (Assembly constituency)|Pathardeva]]
+|[[Surya Pratap Shahi]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+| 339
+|[[Rampur Karkhana (Assembly constituency)|Rampur Karkhana]]
+|[[Surendra Chaurasia]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 340
+|[[Bhatpar Rani (Assembly constituency)|Bhatpar Rani]]
+|[[Sabhakunwar Kushawaha]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 341
+|[[Salempur (Assembly constituency)|Salempur]] (SC)
+|[[Vijay Laxmi Gautam]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| 342
+|[[Barhaj (Assembly constituency)|Barhaj]]
+|[[Deepak Kumar Mishra]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="11" | [[Azamgarh district|Azamgarh]]
+| 343
+|[[Atrauliya (Assembly constituency)|Atrauliya]]
+|[[Sangram Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 344
+|[[Gopalpur, Uttar Pradesh Assembly constituency|Gopalpur]]
+|[[Nafees Ahmad]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 345
+|[[Sagri (Assembly constituency)|Sagri]]
+|[[Hriday Narayan Singh Patel]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 346
+|[[Mubarakpur (Assembly constituency)|Mubarakpur]]
+|[[Akhilesh Yadav (born 1964)|Akhilesh Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 347
+|[[Azamgarh (Assembly constituency)|Azamgarh]]
+|[[Durga Prasad Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="2" | 348
+| rowspan="2" | [[Nizamabad (Assembly constituency)|Nizamabad]]
+|[[Alambadi (politician)|Alambadi]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|Died on 22 July 2026<ref name=death>{{cite news |last=Roushan |first=Anurag |date=23 July 2026 |title=Alam Badi Azmi, five-time SP MLA, dies at 95; Akhilesh Yadav pays tribute |url=https://www.indiatvnews.com/amp/uttar-pradesh/alam-badi-azmi-five-time-sp-mla-dies-at-95-in-hospital-akhilesh-yadav-pays-tribute-latest-updates-2026-07-23-1049108 |work=India TV |access-date=23 July 2026}}</ref>
+|-
+| colspan="6" | Vacant
+|-
+| 349
+|[[Phoolpur Pawai (Assembly constituency)|Phoolpur Pawai]]
+|[[Ramakant Yadav (politician)|Ramakant Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 350
+|[[Didarganj (Assembly constituency)|Didarganj]]
+|[[Kamlakant Rajbhar]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 351
+|[[Lalganj, Uttar Pradesh Assembly constituency|Lalganj]] (SC)
+|[[Bechai Saroj]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 352
+|[[Mehnagar (Assembly constituency)|Mehnagar]] (SC)
+|[[Puja Saroj]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="6" |  [[Mau district|Mau]]
+| 353
+|[[Madhuban (Assembly constituency)|Madhuban]]
+|[[Ram Bilash Chauhan]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="3" | 354
+| rowspan="3" |[[Ghosi (Assembly constituency)|Ghosi]]
+|[[Dara Singh Chauhan]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|Resigned on 15 July 2023.<ref>{{Cite news |date=2023-07-15 |title=SP MLA Dara Singh Chauhan resigns from U.P. Assembly |language=en-IN |work=The Hindu |url=https://www.thehindu.com/news/national/other-states/sp-mla-dara-singh-chauhan-resigns-from-up-assembly/article67084507.ece |access-date=2023-11-29 |issn=0971-751X}}</ref>
+|-
+|[[Sudhakar Singh (Uttar Pradesh politician)|Sudhakar Singh]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|Elected in 2023 bypoll <br> Died on 20 November 2025
+|-
+|Colspan="6"|Vacant
+|-
+| 355
+|[[Muhammadabad-Gohna (Assembly constituency)|Muhammadabad-Gohna]] (SC)
+|[[Rajendra Kumar (politician)|Rajendra Kumar]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 356
+|[[Mau (Assembly constituency)|Mau]]
+|[[Abbas Ansari]]
+|bgcolor=#F5D50A|
+|[[Suheldev Bharatiya Samaj Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="8" | [[Ballia district|Ballia]]
+| 357
+|[[Belthara Road (Assembly constituency)|Belthara Road]] (SC)
+|[[Hansu Ram]]
+|bgcolor=#F5D50A|
+|[[Suheldev Bharatiya Samaj Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="2" | 358
+| rowspan="2" |[[Rasara (Assembly constituency)|Rasara]]
+|[[Uma Shankar Singh (Uttar Pradesh politician)|Umashankar Singh]]
+|bgcolor=#22409A|
+|[[Bahujan Samaj Party]]
+| {{Party name with colour|Bahujan Samaj Party}}
+|Died on 5 August 2026<ref>[https://www.thedailyjagran.com/india/bsps-only-mla-in-up-umashankar-singh-dies-of-cancer-mayawati-recalls-his-dedication-for-party-10323821 BSP's Only MLA In UP Umashankar Singh Dies Of Cancer; Mayawati Recalls His Dedication To The Party]</ref>
+|-
+|Colspan="6"|Vacant
+|-
+| 359
+|[[Sikanderpur (Assembly constituency)|Sikanderpur]]
+|[[Mohammed Ziauddin Rizvi]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 360
+|[[Phephana (Assembly constituency)|Phephana]]
+|[[Sangram Singh (politician)|Sangram Singh]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 361
+|[[Ballia Nagar (Assembly constituency)|Ballia Nagar]]
+|[[Daya Shankar Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS (I/C)
+|-
+| 362
+|[[Bansdih (Assembly constituency)|Bansdih]]
+|[[Ketakee Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 363
+|[[Bairia (Assembly constituency)|Bairia]]
+|[[Jai Prakash Anchal]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="9" | [[Jaunpur district|Jaunpur]]
+| 364
+|[[Badlapur (Assembly constituency)|Badlapur]]
+|[[Ramesh Chandra Mishra]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 365
+|[[Shahganj (Assembly constituency)|Shahganj]]
+|[[Ramesh Singh]]
+|bgcolor=#B80000|
+|[[NISHAD Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 366
+|[[Jaunpur (Assembly constituency)|Jaunpur]]
+|[[Girish Chandra Yadav]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS (I/C)
+|-
+| 367
+| [[Malhani (Assembly constituency)|Malhani]]
+|[[Lucky Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 368
+|[[Mungra Badshahpur (Assembly constituency)|Mungra Badshahpur]]
+|[[Pankaj Patel (politician)|Pankaj Patel]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 369
+|[[Machhlishahr (Assembly constituency)|Machhlishahr]] (SC)
+|[[Ragini Sonkar]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 370
+|[[Mariyahu (Assembly constituency)|Mariyahu]]
+|[[R.K. Patel]]
+|bgcolor=#330066|
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 371
+|[[Zafrabad (Assembly constituency)|Zafrabad]]
+|[[Jagdish Narayan (politician)|Jagdish Narayan]]
+|bgcolor=#F5D50A|
+|[[Suheldev Bharatiya Samaj Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 372
+| [[Kerakat (Vidhan Sabha constituency)|Kerakat (SC)]]
+|[[Tufani Saroj]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="7" | [[Ghazipur district|Ghazipur]]
+| 373
+|[[Jakhanian (Assembly constituency)|Jakhanian]] (SC)
+|[[Triveni Ram]]
+|bgcolor=#F5D50A|
+|[[Suheldev Bharatiya Samaj Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 374
+|[[Saidpur (Assembly constituency)|Saidpur]] (SC)
+|[[Ankit Bharti]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 375
+|[[Ghazipur Sadar (Assembly constituency)|Ghazipur Sadar]]
+|[[Jai Kishan Sahu]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 376
+|[[Jangipur, Uttar Pradesh Assembly constituency|Jangipur]]
+|[[Virendra Kumar Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 377
+|[[Zahoorabad (Assembly constituency)|Zahoorabad]]
+|[[Om Prakash Rajbhar]]
+|bgcolor=#F5D50A|
+|[[Suheldev Bharatiya Samaj Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Leader (SBSP)
+|-
+| 378
+|[[Mohammadabad (Assembly constituency)|Mohammadabad]]
+|[[Suhaib Ansari]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 379
+|[[Zamania (Assembly constituency)|Zamania]]
+|[[Omprakash Singh]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| rowspan="4" | [[Chandauli district|Chandauli]]
+| 380
+|[[Mughalsarai (Assembly constituency)|Mughalsarai]]
+|[[Ramesh Jaiswal]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 381
+|[[Sakaldiha (Assembly constituency)|Sakaldiha]]
+|[[Prabhunarayan Yadav]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 382
+|[[Saiyadraja (Assembly constituency)|Saiyadraja]]
+|[[Sushil Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 383
+|[[Chakia (Assembly constituency)|Chakia]] (SC)
+|[[Kailash Kharwar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="8" | [[Varanasi district|Varanasi]]
+| 384
+|[[Pindra (Assembly constituency)|Pindra]]
+|[[Avadhesh Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 385
+|[[Ajagara (Assembly constituency)|Ajagara]] (SC)
+|[[Tribhuvan Ram]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 386
+|[[Shivpur (Assembly constituency)|Shivpur]]
+|[[Anil Rajbhar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+| 387
+|[[Rohaniya (Assembly constituency)|Rohaniya]]
+|[[Sunil Patel (politician)|Sunil Patel]]
+|bgcolor=#330066|
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 388
+|[[Varanasi North (Assembly constituency)|Varanasi North]]
+|[[Ravindra Jaiswal]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS (I/C)
+|-
+| 389
+|[[Varanasi South (Assembly constituency)|Varanasi South]]
+|[[Neelkanth Tiwari]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 390
+|[[Varanasi Cantonment (Assembly constituency)|Varanasi Cantonment]]
+|[[Saurabh Srivastava (politician)|Saurabh Srivastava]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 391
+|[[Sevapuri (Assembly constituency)|Sevapuri]]
+|[[Neel Ratan|Neel Ratan Singh Patel Neelu]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="3" | [[Bhadohi district|Bhadohi]]
+| 392
+|[[Bhadohi (Assembly constituency)|Bhadohi]]
+|[[Zahid Beg]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Indian National Developmental Inclusive Alliance}} ([[Samajwadi Alliance|SP+]])
+|
+|-
+| 393
+|[[Gyanpur (Assembly constituency)|Gyanpur]]
+|[[Vipul Dubey]]
+|bgcolor=#B80000|
+|[[NISHAD Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 394
+|[[Aurai, Uttar Pradesh Assembly constituency|Aurai]] (SC)
+|[[Dinanath Bhaskar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="7" | [[Mirzapur district|Mirzapur]]
+| rowspan="2" |395
+| rowspan="2" |[[Chhanbey (Assembly constituency)|Chhanbey]] (SC)
+|[[Rahul Prakash|Rahul Prakash Kol]]
+| bgcolor="#330066" |
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|Died on 2 February 2023<ref>{{Cite web |date=2023-02-03 |title=Apna Dal (S) MLA Rahul Kol dies at 39 |url=https://indianexpress.com/article/cities/lucknow/apna-dal-s-mla-rahul-kol-dies-at-39-8421037/ |access-date=2023-05-13 |website=The Indian Express |language=en}}</ref>
+|-
+|[[Rinki Kol]]
+| bgcolor="#330066" |
+|[[Apna Dal (Sonelal)]]
+| {{Party name with colour|National Democratic Alliance}}
+|Won in 2023 by-election 
+|-
+| 396
+|[[Mirzapur (Assembly constituency)|Mirzapur]]
+|[[Ratnakar Mishra]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|Rowspan=2| 397
+|Rowspan=2|[[Majhawan (Assembly constituency)|Majhawan]]
+|[[Vinod Kumar Bind]]
+|bgcolor=#B80000|
+|[[NISHAD Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|[[Suchismita Maurya]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 398
+|[[Chunar (Assembly constituency)|Chunar]]
+|[[Anurag Singh (politician)|Anurag Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 399
+|[[Marihan (Assembly constituency)|Marihan]]
+|[[Rama Shankar Singh]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="6" | [[Sonbhadra district|Sonbhadra]]
+| 400
+|[[Ghorawal (Assembly constituency)|Ghorawal]]
+|[[Anil Kumar Maurya]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 401
+|[[Robertsganj (Assembly constituency)|Robertsganj]]
+|[[Bhupesh Chaubey]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| 402
+|[[Obra, Uttar Pradesh Assembly constituency|Obra]] (ST)
+|[[Sanjiv Kumar (Uttar Pradesh politician)|Sanjiv Kumar]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|MOS
+|-
+| rowspan="3" |403
+| rowspan="3" |[[Duddhi (Assembly constituency)|Duddhi]] (ST)
+|[[Ramdular Gaur]]
+|bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Disqualified on 15 December 2023<ref>{{Cite web |date=2023-12-15 |title=BJP MLA found guilty of raping minor girl, gets 25 years imprisonment |url=https://www.livemint.com/news/india/uttar-pradesh-bjp-mla-ramdular-gaur-found-guilty-of-raping-minor-girl-gets-25-years-imprisonment-11702642425905.html |access-date=2023-12-16 |website=mint |language=en}}</ref>
+|-
+|[[Vijay Singh Gond|Vijay Singh]]
+|bgcolor=#FF0000|
+|[[Samajwadi Party]]
+| {{Party name with colour|Samajwadi Party}}+
+|Elected on 4 June 2024, Died on 8 January 2026
+|-
+|Colspan="6"|Vacant
+|}<section end="MLA" />
+
+== See also ==
+* [[Uttar Pradesh Legislative Assembly]]
+* [[2022 Uttar Pradesh Legislative Assembly election]]
+* [[17th Uttar Pradesh Assembly]]
+
+==References==
+{{reflist}}
+
+{{Uttar Pradesh Legislative Assembly}}
+{{Current Indian assemblies}}
+{{Portal bar|India|Politics}}
+
+[[Category:Terms of the Uttar Pradesh Legislative Assembly]]
+[[Category:Lists of current Indian state and territorial assemblies|Uttar Pradesh]]
+[[Category:Uttar Pradesh MLAs 2022–2027| ]]

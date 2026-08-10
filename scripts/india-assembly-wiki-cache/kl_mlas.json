@@ -1,0 +1,982 @@
+[
+  {
+    "district": "Kasaragod",
+    "no": "1",
+    "constituency": "Manjeshwaram",
+    "name": "A. K. M. Ashraf",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Kasaragod",
+    "no": "2",
+    "constituency": "Kasaragod",
+    "name": "Kallatra Mahin",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Kasaragod",
+    "no": "3",
+    "constituency": "Udma",
+    "name": "K. Neelakandan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kasaragod",
+    "no": "4",
+    "constituency": "Kanhangad",
+    "name": "Govindan Pallikappil",
+    "party": "Communist Party of India"
+  },
+  {
+    "district": "Kasaragod",
+    "no": "5",
+    "constituency": "Thrikaripur",
+    "name": "Sandeep Varier",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kannur",
+    "no": "6",
+    "constituency": "Payyanur",
+    "name": "V. Kunhikrishnan",
+    "party": "Independent"
+  },
+  {
+    "district": "Kannur",
+    "no": "7",
+    "constituency": "Kalliasseri",
+    "name": "M. Vijin",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Kannur",
+    "no": "8",
+    "constituency": "Taliparamba",
+    "name": "T K Govindan Master",
+    "party": "Independent"
+  },
+  {
+    "district": "Kannur",
+    "no": "9",
+    "constituency": "Irikkur",
+    "name": "Sajeev Joseph",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kannur",
+    "no": "10",
+    "constituency": "Azhikode",
+    "name": "K. V. Sumesh",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Kannur",
+    "no": "11",
+    "constituency": "Kannur",
+    "name": "T.O Mohanan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kannur",
+    "no": "12",
+    "constituency": "Dharmadom",
+    "name": "Pinarayi Vijayan",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Kannur",
+    "no": "13",
+    "constituency": "Thalassery",
+    "name": "Karayi Rajan",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Kannur",
+    "no": "14",
+    "constituency": "Kuthuparamba",
+    "name": "P. K. Praveen",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Kannur",
+    "no": "15",
+    "constituency": "Mattanur",
+    "name": "V. K. Sanoj",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Kannur",
+    "no": "16",
+    "constituency": "Peravoor",
+    "name": "Adv Sunny Joseph",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Wayanad",
+    "no": "17",
+    "constituency": "Mananthavady",
+    "name": "Usha Vijayan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Wayanad",
+    "no": "18",
+    "constituency": "Sulthan Bathery",
+    "name": "I. C. Balakrishnan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Wayanad",
+    "no": "19",
+    "constituency": "Kalpetta",
+    "name": "T. Siddique",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "20",
+    "constituency": "Vatakara",
+    "name": "K. K. Rema",
+    "party": "Revolutionary Marxist Party of India"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "21",
+    "constituency": "Kuttiady",
+    "name": "Parakkal Abdulla",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "22",
+    "constituency": "Nadapuram",
+    "name": "K. M. Abhijith",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "23",
+    "constituency": "Koyilandy",
+    "name": "K. Praveen Kumar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "24",
+    "constituency": "Perambra",
+    "name": "Fathima Thahiliya",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "25",
+    "constituency": "Balussery",
+    "name": "V. T. Sooraj",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "26",
+    "constituency": "Elathur",
+    "name": "Vidya Balakrishnan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "27",
+    "constituency": "Kozhikode North",
+    "name": "K.Jayanth",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "28",
+    "constituency": "Kozhikode South",
+    "name": "Fyzal Babu",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "29",
+    "constituency": "Beypore",
+    "name": "P. A. Mohammed Riyas",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "30",
+    "constituency": "Kunnamangalam",
+    "name": "M. A. Razak Master",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "31",
+    "constituency": "Koduvally",
+    "name": "P. K. Firos",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "32",
+    "constituency": "Thiruvambady",
+    "name": "C. K. Kasim",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "33",
+    "constituency": "Kondotty",
+    "name": "T. P Ashrafali",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "34",
+    "constituency": "Eranad",
+    "name": "P. K. Basheer",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "35",
+    "constituency": "Nilambur",
+    "name": "Aryadan Shoukath",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Malappuram",
+    "no": "36",
+    "constituency": "Wandoor",
+    "name": "A. P. Anil Kumar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Malappuram",
+    "no": "37",
+    "constituency": "Manjeri",
+    "name": "M. Rahmathulla",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "38",
+    "constituency": "Perinthalmanna",
+    "name": "Najeeb Kanthapuram",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "39",
+    "constituency": "Mankada",
+    "name": "Manjalamkuzhi Ali",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "40",
+    "constituency": "Malappuram",
+    "name": "P. K. Kunhalikutty",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "41",
+    "constituency": "Vengara",
+    "name": "K. M. Shaji",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "42",
+    "constituency": "Vallikkunnu",
+    "name": "T. V. Ibrahim",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "43",
+    "constituency": "Tirurangadi",
+    "name": "P. M. A. Sameer",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "44",
+    "constituency": "Tanur",
+    "name": "P. K. Navas",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "45",
+    "constituency": "Tirur",
+    "name": "Kurukkoli Moideen",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "46",
+    "constituency": "Kottakkal",
+    "name": "K. K. Abid Hussain Thangal",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Malappuram",
+    "no": "47",
+    "constituency": "Thavanur",
+    "name": "V. S Joy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Malappuram",
+    "no": "48",
+    "constituency": "Ponnani",
+    "name": "K. P Noushad Ali",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Palakkad",
+    "no": "49",
+    "constituency": "Thrithala",
+    "name": "V. T. Balram",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Palakkad",
+    "no": "50",
+    "constituency": "Pattambi",
+    "name": "Muhammed Muhsin",
+    "party": "Communist Party of India"
+  },
+  {
+    "district": "Palakkad",
+    "no": "51",
+    "constituency": "Shornur",
+    "name": "P. Mammikutty",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Palakkad",
+    "no": "52",
+    "constituency": "Ottapalam",
+    "name": "K. Premkumar",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Palakkad",
+    "no": "53",
+    "constituency": "Kongad",
+    "name": "K. A. Thulasi",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Palakkad",
+    "no": "54",
+    "constituency": "Mannarkkad",
+    "name": "N. Samsudheen",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Palakkad",
+    "no": "55",
+    "constituency": "Malampuzha",
+    "name": "A. Prabhakaran",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Palakkad",
+    "no": "56",
+    "constituency": "Palakkad",
+    "name": "Ramesh Pisharody",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Palakkad",
+    "no": "57",
+    "constituency": "Tarur",
+    "name": "Sumod",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Palakkad",
+    "no": "58",
+    "constituency": "Chittur",
+    "name": "Sumesh Achuthan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Palakkad",
+    "no": "59",
+    "constituency": "Nenmara",
+    "name": "K. Preman",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Palakkad",
+    "no": "60",
+    "constituency": "Alathur",
+    "name": "T. M. Sasi",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Thrissur",
+    "no": "61",
+    "constituency": "Chelakkara",
+    "name": "U. R. Pradeep",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Thrissur",
+    "no": "62",
+    "constituency": "Kunnamkulam",
+    "name": "A. C. Moideen",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Thrissur",
+    "no": "63",
+    "constituency": "Guruvayur",
+    "name": "N. K. Akbar",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Thrissur",
+    "no": "64",
+    "constituency": "Manalur",
+    "name": "C. Raveendranath",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Thrissur",
+    "no": "65",
+    "constituency": "Wadakkanchery",
+    "name": "Xavier Chittilappilly",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Thrissur",
+    "no": "66",
+    "constituency": "Ollur",
+    "name": "K. Rajan",
+    "party": "Communist Party of India"
+  },
+  {
+    "district": "Thrissur",
+    "no": "67",
+    "constituency": "Thrissur",
+    "name": "Rajan Pallan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Thrissur",
+    "no": "68",
+    "constituency": "Nattika",
+    "name": "Geetha Gopi",
+    "party": "Communist Party of India"
+  },
+  {
+    "district": "Thrissur",
+    "no": "69",
+    "constituency": "Kaipamangalam",
+    "name": "K. K. Valsaraj",
+    "party": "Communist Party of India"
+  },
+  {
+    "district": "Thrissur",
+    "no": "70",
+    "constituency": "Irinjalakuda",
+    "name": "Thomas Unniyadan",
+    "party": "Kerala Congress"
+  },
+  {
+    "district": "Thrissur",
+    "no": "71",
+    "constituency": "Puthukkad",
+    "name": "K. K. Ramachandran",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Thrissur",
+    "no": "72",
+    "constituency": "Chalakudy",
+    "name": "T. J. Saneesh Kumar Joseph",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Thrissur",
+    "no": "73",
+    "constituency": "Kodungallur",
+    "name": "O. J. Janeesh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "74",
+    "constituency": "Perumbavoor",
+    "name": "Manoj Moothedan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "75",
+    "constituency": "Angamaly",
+    "name": "Roji M. John",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "76",
+    "constituency": "Aluva",
+    "name": "Anwar Sadath",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "77",
+    "constituency": "Kalamassery",
+    "name": "V. E. Abdul Gafoor",
+    "party": "Indian Union Muslim League"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "78",
+    "constituency": "Paravur",
+    "name": "V. D. Satheesan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "79",
+    "constituency": "Vypin",
+    "name": "Tony Chammany",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "80",
+    "constituency": "Kochi",
+    "name": "Mohammad Shiyas",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "81",
+    "constituency": "Thrippunithura",
+    "name": "Deepak Joy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "82",
+    "constituency": "Ernakulam",
+    "name": "T. J. Vinod",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "83",
+    "constituency": "Thrikkakara",
+    "name": "Uma Thomas",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "84",
+    "constituency": "Kunnathunad",
+    "name": "V. P. Sajeendran",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "85",
+    "constituency": "Piravom",
+    "name": "Anoop Jacob",
+    "party": "Kerala Congress (Jacob)"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "86",
+    "constituency": "Muvattupuzha",
+    "name": "Mathew Kuzhalnadan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "87",
+    "constituency": "Kothamangalam",
+    "name": "Shibu Thekkumpuram",
+    "party": "Kerala Congress"
+  },
+  {
+    "district": "Idukki",
+    "no": "88",
+    "constituency": "Devikulam",
+    "name": "F Raja",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Idukki",
+    "no": "89",
+    "constituency": "Udumbanchola",
+    "name": "Senapathy Venu",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Idukki",
+    "no": "90",
+    "constituency": "Thodupuzha",
+    "name": "Apu John Joseph",
+    "party": "Kerala Congress"
+  },
+  {
+    "district": "Idukki",
+    "no": "91",
+    "constituency": "Idukki",
+    "name": "Roy K Paulose",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Idukki",
+    "no": "92",
+    "constituency": "Peerumade",
+    "name": "Cyriac Thomas",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kottayam",
+    "no": "93",
+    "constituency": "Pala",
+    "name": "Mani C. Kappan",
+    "party": "Kerala Democratic Party"
+  },
+  {
+    "district": "Kottayam",
+    "no": "94",
+    "constituency": "Kaduthuruthy",
+    "name": "Mons Joseph",
+    "party": "Kerala Congress"
+  },
+  {
+    "district": "Kottayam",
+    "no": "95",
+    "constituency": "Vaikom",
+    "name": "K. Binimon",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kottayam",
+    "no": "96",
+    "constituency": "Ettumanoor",
+    "name": "Nattakom Suresh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kottayam",
+    "no": "97",
+    "constituency": "Kottayam",
+    "name": "Thiruvanchoor Radhakrishnan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kottayam",
+    "no": "98",
+    "constituency": "Puthuppally",
+    "name": "Chandy Oommen",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kottayam",
+    "no": "99",
+    "constituency": "Changanassery",
+    "name": "Vinu Job Kuzhimannil",
+    "party": "Kerala Congress"
+  },
+  {
+    "district": "Kottayam",
+    "no": "100",
+    "constituency": "Kanjirappally",
+    "name": "Rony K Baby",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kottayam",
+    "no": "101",
+    "constituency": "Poonjar",
+    "name": "Sebastian M. J.",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "102",
+    "constituency": "Aroor",
+    "name": "Shanimol Osman",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "103",
+    "constituency": "Cherthala",
+    "name": "P. Prasad",
+    "party": "Communist Party of India"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "104",
+    "constituency": "Alappuzha",
+    "name": "A.D.Thomas",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "105",
+    "constituency": "Ambalappuzha",
+    "name": "G. Sudhakaran",
+    "party": "Independent"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "106",
+    "constituency": "Kuttanad",
+    "name": "Reji Cheriyan",
+    "party": "Kerala Congress"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "107",
+    "constituency": "Haripad",
+    "name": "Ramesh Chennithala",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "108",
+    "constituency": "Kayamkulam",
+    "name": "M. Liju",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "109",
+    "constituency": "Mavelikara",
+    "name": "M. S. Arun Kumar",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "110",
+    "constituency": "Chengannur",
+    "name": "Saji Cherian",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Pathanamthitta",
+    "no": "111",
+    "constituency": "Thiruvalla",
+    "name": "Varghese Mammen",
+    "party": "Kerala Congress"
+  },
+  {
+    "district": "Pathanamthitta",
+    "no": "112",
+    "constituency": "Ranni",
+    "name": "Pazhakulam Madhu",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Pathanamthitta",
+    "no": "113",
+    "constituency": "Aranmula",
+    "name": "Abin Varkey",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Pathanamthitta",
+    "no": "114",
+    "constituency": "Konni",
+    "name": "K. U. Jenish Kumar",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Pathanamthitta",
+    "no": "115",
+    "constituency": "Adoor",
+    "name": "Adv. C. V. Santhakumar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kollam",
+    "no": "116",
+    "constituency": "Karunagapally",
+    "name": "C. R. Mahesh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kollam",
+    "no": "117",
+    "constituency": "Chavara",
+    "name": "Shibu Baby John",
+    "party": "Revolutionary Socialist Party (India)"
+  },
+  {
+    "district": "Kollam",
+    "no": "118",
+    "constituency": "Kunnathur",
+    "name": "Ullas Kovoor",
+    "party": "Revolutionary Socialist Party (India)"
+  },
+  {
+    "district": "Kollam",
+    "no": "119",
+    "constituency": "Kottarakkara",
+    "name": "K. N. Balagopal",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Kollam",
+    "no": "120",
+    "constituency": "Pathanapuram",
+    "name": "Jyothi Kumar Chamakkala",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kollam",
+    "no": "121",
+    "constituency": "Punalur",
+    "name": "C. Ajayaprasad",
+    "party": "Communist Party of India"
+  },
+  {
+    "district": "Kollam",
+    "no": "122",
+    "constituency": "Chadayamangalam",
+    "name": "M. M. Naseer",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kollam",
+    "no": "123",
+    "constituency": "Kundara",
+    "name": "P. C. Vishnunadh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kollam",
+    "no": "124",
+    "constituency": "Kollam",
+    "name": "Bindu Krishna",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kollam",
+    "no": "125",
+    "constituency": "Eravipuram",
+    "name": "Vishnu Mohan",
+    "party": "Revolutionary Socialist Party (India)"
+  },
+  {
+    "district": "Kollam",
+    "no": "126",
+    "constituency": "Chathannoor",
+    "name": "B. B. Gopakumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "127",
+    "constituency": "Varkala",
+    "name": "V. Joy",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "128",
+    "constituency": "Attingal",
+    "name": "O. S. Ambika",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "129",
+    "constituency": "Chirayinkeezhu",
+    "name": "Ramya Haridas",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "130",
+    "constituency": "Nedumangad",
+    "name": "G. R. Anil",
+    "party": "Communist Party of India"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "131",
+    "constituency": "Vamanapuram",
+    "name": "Sudheersha Palode",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "132",
+    "constituency": "Kazhakkoottam",
+    "name": "V. Muraleedharan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "133",
+    "constituency": "Vattiyoorkavu",
+    "name": "K. Muraleedharan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "134",
+    "constituency": "Thiruvananthapuram",
+    "name": "C. P. John",
+    "party": "Communist Marxist Party"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "135",
+    "constituency": "Nemom",
+    "name": "Rajeev Chandrasekhar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "136",
+    "constituency": "Aruvikkara",
+    "name": "G. Steephen",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "137",
+    "constituency": "Parassala",
+    "name": "C. K. Hareendran",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "138",
+    "constituency": "Kattakkada",
+    "name": "M. R. Baiju",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "139",
+    "constituency": "Kovalam",
+    "name": "M. Vincent",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "140",
+    "constituency": "Neyyattinkara",
+    "name": "N. Sakthan",
+    "party": "Indian National Congress"
+  }
+]

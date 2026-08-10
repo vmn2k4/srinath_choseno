@@ -1,0 +1,520 @@
+{{Short description|Unicameral legislature of the Indian state of Nagaland}}
+{{Use dmy dates|date=March 2023}}
+{{Infobox legislative term
+|name=14th Nagaland Assembly
+|before=[[13th Nagaland Assembly]]
+|state=[[Nagaland]]
+|country=[[India]]
+|meeting_place=Nagaland Legislative Assembly Secretariat, Thizama, Kohima, Nagaland 797003
+|election=[[2023 Nagaland Legislative Assembly election]]
+|government=[[North-East Democratic Alliance]]
+|opposition='''''None'''''
+|website=https://webtest.nagaland.gov.in
+|body=[[Nagaland Legislative Assembly]]
+|image=
+|membership1=60
+|chamber1_leader1=[[Sharingain Longkümer]], [[Naga People's Front|NPF]]
+|chamber1_leader1_type= [[List of speakers of the Nagaland Legislative Assembly|Speaker]]
+|chamber1_leader2=[[S. Toiho Yeptho]], [[Naga People's Front|NPF]]
+|chamber1_leader2_type= Deputy speaker
+|chamber1_leader3=[[Neiphiu Rio]], [[Naga People's Front|NPF]]
+|chamber1_leader3_type=[[List of chief ministers of Nagaland|Chief Minister]]
+|chamber1_leader4=[[T. R. Zeliang]], [[Naga People's Front|NPF]]<br>[[Yanthungo Patton]], [[Bharatiya Janata Party|BJP]]
+|chamber1_leader4_type=[[List of deputy chief ministers of Nagaland|Deputy Chief Minister]]
+}}
+
+The '''Fourteenth Nagaland Assembly''' was formed by the members elected in the [[2023 Nagaland Legislative Assembly election]]. Elections were held in [[List of constituencies of the Nagaland Legislative Assembly|59]] constituencies on 27th February 2023 while the representative for [[Akuluto Assembly constituency|Akuluto]] was elected unopposed.<ref>{{Cite news |date=2023-02-10 |title=Nagaland assembly elections 2023: BJP's Kazheto Kinimi wins uncontested from Akuluto |url=http://nenow.in/north-east-news/nagaland/nagaland-assembly-elections-2023-bjp-kazheto-kinimi-wins-uncontested-akuluto.html |access-date=2023-03-02 |work=Northeast Now |language=en-US}}</ref> Votes were counted on 2nd March 2023.<ref>{{Cite web |last=Gupta |first=Shobhit |date=2023-01-18 |title=Nagaland Assembly election 2023 to be held on February 27: Here is complete schedule |url=https://www.hindustantimes.com/india-news/nagaland-assembly-election-2023-to-be-held-on-27-february-here-is-complete-schedule-101674035457397.html |access-date=2023-03-02 |website=[[Hindustan Times]] |language=en}}</ref><ref>{{Cite news |date=2023-03-02 |title=Tripura, Meghalaya, Nagaland assembly election results: Key takeaways |work=The Times of India |url=https://timesofindia.indiatimes.com/india/tripura-meghalaya-nagaland-assembly-election-results-key-takeaways/articleshow/98363582.cms |access-date=2023-03-02 |issn=0971-8257}}</ref>
+
+== Results ==
+The incumbent [[North-East Democratic Alliance]] consisting [[Bharatiya Janata Party]] (BJP) and [[Nationalist Democratic Progressive Party]] (NDPP) gained majority in the house after winning 37 seats (25 NDPP + 12 BJP).<ref>{{Cite web |title=Election Commission of India |url=https://results.eci.gov.in/ResultAcGenMar2023/partywiseresult-S17.htm?st=S17 |access-date=2023-03-02 |website=results.eci.gov.in}}</ref><ref>{{Cite web |date=2023-03-02 |title=Nagaland Election Results 2023 Live Updates: NDPP-BJP alliance wins with 37 seats; PM Modi says 'double engine will keep working for state's progress ' |url=https://indianexpress.com/elections/nagaland-assembly-election-results-2023-live-updates-bjp-ndpp-npp-npf-latest-news-8473707/ |access-date=2023-03-02 |website=The Indian Express |language=en}}</ref>
+
+[[Hekani Jakhalu Kense]] from [[Dimapur III Assembly constituency|Dimapur III]] and [[Salhoutuonuo Kruse]] from [[Western Angami Assembly constituency|Western Angami]] constituencies became the first women [[Member of the Legislative Assembly (India)|MLAs]] in the history of Nagaland. Both got elected as NDPP candidates.<ref>{{Cite web |last=Baruah |first=Sukrita |date=2023-03-02 |title=Nagaland gets its first woman MLA: 'Only first battle won…will focus on youth and minorities' |url=https://indianexpress.com/article/political-pulse/hekani-jakhalu-nagaland-first-woman-mla-ndpp-8475448/ |access-date=2023-03-05 |website=[[The Indian Express]] |language=en}}</ref><ref>{{Cite news |last=Shekhar |first=Kumar Shakti |date=2023-03-03 |title=Meet first 2 women MLAs of Nagaland - Hekani Jakhalu, Salhoutuonuo Kruse |url=https://timesofindia.indiatimes.com/elections/assembly-elections/nagaland/news/meet-hekani-jakhalu-and-salhoutuonuo-kruse-who-created-history-by-becoming-first-2-women-mlas-in-nagaland/articleshow/98363688.cms?from=mdr |access-date=2023-03-05 |work=[[The Times of India]] |issn=0971-8257}}</ref>
+
+==Party wise distribution==
+{| class="wikitable"
+! colspan="2" |Alliance
+! colspan="2" |Party
+! colspan="2" |No. of MLA's
+!Leader of the Party
+in Assembly
+!Leader's Constituency
+|-
+| rowspan="6" style="background:{{party color|National Democratic Alliance}}" |
+| rowspan="6" | '''[[North-East Democratic Alliance]]'''<ref>{{Cite web |title=Nagaland Set For Oppositionless Government, All Parties Back BJP Alliance |url=https://www.ndtv.com/india-news/nagaland-set-for-oppositionless-government-all-parties-back-bjp-alliance-3837525 |access-date=2023-03-06 |website=NDTV.com}}</ref><ref>{{Cite news |date=2023-03-06 |title=Nagaland heading for oppositionless govt as parties support NDPP-BJP |url=https://www.business-standard.com/article/politics/nagaland-heading-for-oppositionless-govt-as-parties-support-ndpp-bjp-123030600120_1.html |access-date=2023-03-06 |newspaper=Business Standard |language=en}}</ref>
+| style="background:{{party color|Naga People's Front}}"|
+|[[Naga People's Front]]
+|34
+| rowspan="6" |'''60'''
+|[[Neiphiu Rio]]
+|[[Northern Angami II Assembly constituency|Northern Angami II]]
+|-
+|style="background:{{party color|Bharatiya Janata Party}}"|
+|[[Bharatiya Janata Party]]
+|12
+|[[Yanthungo Patton]] 
+|[[Tyüi Assembly constituency|Tyüi]]
+
+|-
+|style="background:{{party color|National People's Party (India)}}"|
+|[[National People's Party (India)|National People's Party]]
+|5
+|
+|
+|-
+|style="background:{{party color|Republican Party of India (Athawale)}}"|
+|[[Republican Party of India (Athawale)]]
+|2
+|
+|
+|-
+|style="background:{{party color|Lok Janshakti Party (Ram Vilas)}}"|
+|[[Lok Janshakti Party (Ram Vilas)]]
+| 2
+|
+|
+|-
+|style="background:{{party color|Independent}}" |
+|[[Independent politician|Independent]]
+|5
+|
+* [[Jwenga Seb]]
+* [[C. Manpon Konyak]]
+* [[Neisatuo Mero|Dr. Neisatuo Mero]]
+* [[Kevipodi Sophie]]
+* [[B. Bangtick Phom]]
+|
+* [[Tseminyü Assembly constituency|Tseminyü]]
+* [[Aboi Assembly constituency|Aboi]]
+* [[Pfütsero Assembly constituency|Pfütsero]]
+* [[Southern Angami I Assembly constituency|Southern Angami I]]
+* [[Tamlu Assembly constituency|Tamlu]]
+|-
+! colspan="4" |Total
+! 60
+! colspan="3"|
+|}
+
+== Members of Legislative Assembly ==
+
+{| class="wikitable sortable"
+|-
+!District
+! No.
+! Constituency
+! Name
+! colspan="2" | Party
+!Remarks
+|-
+| rowspan="2" | [[Dimapur district|Dimapur]]
+| 1
+| [[Dimapur I Assembly constituency|Dimapur I]]
+|  [[Tovihoto Ayemi|H. Tovihoto Ayemi]]
+| {{party name with color|Bharatiya Janata Party}} 
+|
+|-
+| 2
+| [[Dimapur II Assembly constituency|Dimapur II]] (ST)
+|  [[Moatoshi Longkumer|Moatoshi Longkümer]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| rowspan="1" | [[Chümoukedima district|Chümoukedima]]
+|3
+| [[Dimapur III Assembly constituency|Dimapur III]] (ST)
+| [[Hekani Jakhalu Kense]]	
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| rowspan="1" | [[Chümoukedima district|Chümoukedima]] and [[Niuland district|Niuland]]
+| 4
+| [[Ghaspani I Assembly constituency|Ghaspani I]] (ST)
+|  [[Jacob Zhimomi]]
+| {{party name with color|Bharatiya Janata Party}}
+|[[Fifth Rio ministry|Cabinet Minister]]
+|-
+| rowspan="1" | [[Chümoukedima district|Chümoukedima]]
+| 5
+| [[Ghaspani I Assembly constituency|Ghaspani II]] (ST)
+|  [[Zhaleo Rio]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| rowspan="3" | [[Peren district|Peren]]
+| rowspan="2" | 6
+| rowspan="2" | [[Tening Assembly constituency|Tening]] (ST)
+| rowspan="2" |  [[Namri Nchang]]
+| {{party name with color|Nationalist Congress Party}}
+| Switched from [[Nationalist Congress Party|NCP]] to [[Nationalist Democratic Progressive Party|NDPP]]<ref name=":0">{{Cite web |date=2025-05-31 |title=All 7 NCP MLAs in Nagaland join NDPP, give CM Rio absolute majority in assembly |url=https://www.deccanherald.com/india/nagaland/all-7-ncp-mlas-in-nagaland-join-ndpp-give-cm-rio-absolute-majority-in-assembly-3566003 |access-date=2025-10-15 |work=[[Deccan Herald]] }}</ref>
+|-
+| {{party name with color|Naga People's Front}}
+| Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 7
+| [[Peren Assembly constituency|Peren]] (ST)
+|  [[T. R. Zeliang]]
+|  {{party name with color|Naga People's Front}}
+| [[List of deputy chief ministers of Nagaland|Deputy Chief Minister]]; Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| rowspan="4" | [[Kohima district|Kohima]]
+| 8
+| [[Western Angami Assembly constituency|Western Angami]] (ST)
+| [[Salhoutuonuo Kruse]]
+| {{party name with color|Naga People's Front}}
+| [[Fifth Rio ministry|Cabinet Minister]]; Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 9
+| [[Kohima Town Assembly constituency|Kohima Town]] (ST)
+| [[Tseilhoutuo Rhütso]]
+| {{party name with color|National People's Party (India)}}
+|
+|-
+| 10
+| [[Northern Angami I Assembly constituency|Northern Angami I]] (ST)
+| [[Kekhrielhoulie Yhome]]
+| {{party name with color|Naga People's Front}}
+ |Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 11
+| [[Northern Angami II Assembly constituency|Northern Angami II]] (ST)
+|  [[Neiphiu Rio]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025 [[List of chief ministers of Nagaland|Chief Minister]]
+|-
+| rowspan="2" | [[Tseminyü district|Tseminyü]]
+| rowspan="2" | 12
+| rowspan="2" | [[Tseminyü Assembly constituency|Tseminyü]] (ST)
+| rowspan="2" | [[Jwenga Seb]]
+| {{party name with color|Janata Dal (United)|shortname=JD(U)}}
+|rowspan=2|[[Janata Dal (United)|JD(U)]] Nagaland unit disbanded<ref>{{Cite web |date=2023-03-08 |title=Tale of two Opposition parties in Nagaland {{!}} Pawar okays NCP support to NDPP-BJP govt, JD(U) disbands state unit |url=https://www.deccanherald.com/national/east-and-northeast/tale-of-two-opposition-parties-in-nagaland-pawar-okays-ncp-support-to-ndpp-bjp-govt-jdu-disbands-state-unit-1198316.html |access-date=2023-05-14 |website=Deccan Herald |language=en}}</ref>
+|-
+| {{party name with color|Independent politician|shortname=IND}}
+|-
+| [[Zünheboto district|Zünheboto]]
+| 13
+| [[Pughoboto Assembly constituency|Pughoboto]] (ST)
+| [[Sukhato A. Sema]]
+| {{party name with color|Lok Janshakti Party (Ram Vilas)}}
+|
+|-
+| rowspan="2" | [[Kohima district|Kohima]]
+| 14
+| [[Southern Angami I Assembly constituency|Southern Angami I]] (ST)
+| [[Kevipodi Sophie]]
+| {{party name with color|Independent politician|shortname=IND}}
+|
+|-
+| 15
+| [[Southern Angami II Assembly constituency|Southern Angami II]] (ST)
+| [[Kropol Vitsü]]
+| {{party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="5" | [[Phek district|Phek]]
+| 16
+| [[Pfütsero Assembly constituency|Pfütsero]] (ST)
+| [[Neisatuo Mero]]
+| {{party name with color|Independent politician|shortname=IND}}
+|
+|-
+| 17
+| [[Chizami Assembly constituency|Chizami]] (ST)
+| [[K. G. Kenye]]
+| {{party name with color|Naga People's Front}}
+| [[Fifth Rio ministry|Cabinet Minister]]; Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 18
+| [[Chozuba Assembly constituency|Chozuba]] (ST)
+| [[Küdecho Khamo]]
+| {{party name with color|Naga People's Front}}
+| Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 19
+| [[Phek Assembly constituency|Phek]] (ST)
+|  [[Kuzholuzo Nienu]]
+| {{party name with color|Naga People's Front}}
+|
+|-
+| 20
+| [[Meluri Assembly constituency|Meluri]] (ST)
+| [[Z. Nyusietho Nyuthe]]
+| {{party name with color|Naga People's Front}}
+| Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| rowspan="11" | [[Mokokchung district|Mokokchung]]
+| 21
+| [[Tuli Assembly constituency|Tuli]] (ST)
+| [[A. Pangjung Jamir]]
+| {{party name with color|Bharatiya Janata Party}}
+|
+|-
+| 22
+| [[Arkakong Assembly constituency|Arkakong]] (ST)
+| [[Nuklutoshi]]
+| {{party name with color|National People's Party (India)}}
+|
+|-
+| 23
+| [[Impur Assembly constituency|Impur]] (ST)
+| [[T. M. Mannen]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 24
+| [[Angetyongpang Assembly constituency|Angetyongpang]] (ST)
+|  [[Tongpang Ozüküm]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 25
+| [[Mongoya Assembly constituency|Mongoya]] (ST)
+| [[Imkongmar]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 26
+| [[Aonglenden Assembly constituency|Aonglenden]] (ST)
+| [[Sharingain Longkümer]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 27
+| [[Mokokchung Town Assembly constituency|Mokokchung Town]] (ST)
+|  [[Metsübo Jamir]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025[[Fifth Rio ministry|Cabinet Minister]]
+|-
+| rowspan="2" | 28
+| rowspan="2" | [[Koridang Assembly constituency|Koridang]] (ST)
+|  [[Imkong L. Imchen]]
+| {{party name with color|Bharatiya Janata Party}}
+| Died on 11 November 2025<ref>{{cite news |title=Nagaland BJP MLA Imkong L Imchen passes away at 75 |url=https://northeastlivetv.com/around-ne/nagaland/nagaland-bjp-mla-imkong-l-imchen-passes-away-at-75/ |access-date=11 November 2025 |publisher=Northeast Live |date=11 November 2025}}</ref>
+|-
+| [[Daochier L. Imchen|Daochier I. Imchen]]
+| {{party name with color|Bharatiya Janata Party}}
+|Elected in 2026 by-election. 
+|-
+| 29
+| [[Jangpetkong Assembly constituency|Jangpetkong]] (ST)
+| [[Temjenmemba]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 30
+| [[Alongtaki Assembly constituency|Alongtaki]] (ST)
+|  [[Temjen Imna Along]]
+| {{party name with color|Bharatiya Janata Party}} 
+|[[Fifth Rio ministry|Cabinet Minister]]
+|-
+| rowspan="8" | [[Zunheboto district|Zünheboto]]
+| 31
+| [[Akuluto Assembly constituency|Akuluto]] (ST)
+|  [[Kazheto Kinimi]]
+| {{party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="2" | 32
+| rowspan="2" | [[Atoizü Assembly constituency|Atoizü]] (ST)
+| rowspan="2" |  [[Picto Shohe]]
+| {{party name with color|Nationalist Congress Party}}
+| Switched from [[Nationalist Congress Party|NCP]] to [[Nationalist Democratic Progressive Party|NDPP]]<ref name=":0" />
+|-
+| {{party name with color|Naga People's Front}}
+| Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| rowspan="2" | 33
+| rowspan="2" | [[Suruhoto Assembly constituency|Suruhoto]] (ST)
+| rowspan="2" | [[S. Toiho Yeptho]]
+| {{party name with color|Nationalist Congress Party}}
+| rowspan="2" | Deputy Speaker; Switched from [[Nationalist Congress Party|NCP]] to [[Naga People's Front|NPF]]<ref name=":0" />
+|-
+|  {{party name with color|Naga People's Front}}
+|-
+| 34
+| [[Aghunato Assembly constituency|Aghunato]] (ST)
+| [[G. Ikuto Zhimomi]]
+| {{party name with color|Naga People's Front}}
+| Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 35
+| [[Zünheboto Assembly constituency|Zünheboto]] (ST)
+|  [[K. Tokugha Sukhalu]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 36
+| [[Satakha Assembly constituency|Satakha]] (ST)
+|  [[G. Kaito Aye]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025 [[Fifth Rio ministry|Cabinet Minister]]
+|-
+| rowspan="5" | [[Wokha district|Wokha]]
+| 37
+| [[Tyüi Assembly constituency|Tyüi]] (ST)
+|  [[Yanthungo Patton]]
+| {{party name with color|Bharatiya Janata Party}}
+|[[List of deputy chief ministers of Nagaland|Deputy Chief Minister]]
+|-
+| rowspan="2" | 38
+| rowspan="2" | [[Wokha Assembly constituency|Wokha]] (ST)
+| rowspan="2" | [[Y. Mhonbemo Hümtsoe]]
+| {{party name with color|Nationalist Congress Party}}
+| rowspan="2" | Switched from [[Nationalist Congress Party|NCP]] to [[Nationalist Democratic Progressive Party|NDPP]]<ref name=":0" /> Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+|  {{party name with color|Naga People's Front}}
+|-
+| 39
+| [[Sanis Assembly constituency|Sanis]] (ST)
+|  [[Mhathung Yanthan]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 40
+| [[Bhandari Assembly constituency|Bhandari]] (ST)
+| [[Achumbemo Kikon]]
+| {{party name with color|Naga People's Front}}
+|
+|-
+| rowspan="10" | [[Mon district|Mon]]
+|41
+| [[Tizit Assembly constituency|Tizit]] (ST)
+|  [[P. Paiwang Konyak]]
+| {{party name with color|Bharatiya Janata Party}}
+|[[Fifth Rio ministry|Cabinet Minister]]
+|-
+| 42
+| [[Wakching Assembly constituency|Wakching]] (ST)
+| [[W. Chingang Konyak]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| rowspan="2" |43
+| rowspan="2" | [[Tapi Assembly constituency|Tapi]] (ST)
+| [[Noke Wangnao]]
+| {{party name with color|Nationalist Democratic Progressive Party}}
+| Died on 28 August 2023<ref>{{Cite web|url=https://indianexpress.com/article/india/noke-wangnao-ten-time-nagaland-mla-dies-at-87-8913500/|title=Ten-time Nagaland MLA Noke Wangnao dies at 87|work=The Times of India|accessdate=29 August 2023}}</ref>
+|-
+| [[Wangpang Konyak]]
+| {{party name with color|Nagaland People's Front}} 
+| Elected in December 2023 by-election. Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| 44
+| [[Phomching Assembly constituency|Phomching]] (ST)
+| [[K. Konngam Konyak]]
+| {{party name with color|Bharatiya Janata Party}}
+|
+|-
+| 45
+| [[Tehok Assembly constituency|Tehok]] (ST)
+|  [[C. L. John]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025. [[Fifth Rio ministry|Cabinet Minister]]
+|-
+| rowspan="2" | 46
+| rowspan="2" | [[Mon Town Assembly constituency|Mon Town]] (ST)
+| rowspan="2" | [[Y. Mankhao Konyak]]
+| {{party name with color|Nationalist Congress Party}}
+| rowspan="2" | Switched from [[Nationalist Congress Party|NCP]] to [[Nationalist Democratic Progressive Party|NDPP]].<ref name=":0" /> Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+|  {{party name with color|Naga People's Front}}
+|-
+| 47
+| [[Aboi Assembly constituency|Aboi]] (ST)
+| [[C. Manpon Konyak]]
+| {{party name with color|Independent politician|shortname=IND}}
+|
+|-
+| 48
+| [[Moka Assembly constituency|Moka]] (ST)
+| [[A. Nyamnyei Konyak]]
+| {{party name with color|National People's Party (India)}}
+|
+|-
+| rowspan="3" | [[Longleng district|Longleng]]
+| 49
+| [[Tamlu Assembly constituency|Tamlu]] (ST)
+| [[B. Bangtick Phom]]
+| {{party name with color|Independent politician|shortname=IND}}
+|
+|-
+| rowspan="2" | 50
+| rowspan="2" | [[Longleng Assembly constituency|Longleng]] (ST)
+| rowspan="2" | [[A. Pongshi Phom]]
+| {{party name with color|Nationalist Congress Party}}
+| rowspan="2" | Switched from [[Nationalist Congress Party|NCP]] to [[Nationalist Democratic Progressive Party|NDPP]].<ref name=":0" /> Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+|  {{party name with color|Naga People's Front}}
+|-
+| rowspan="4" | [[Tuensang district|Tuensang]]
+| 51
+| [[Noksen Assembly constituency|Noksen]] (ST)
+| [[Y. Lima Onen Chang]]
+| {{party name with color|Republican Party of India (Athawale)}}
+|
+|-
+| 52
+| [[Longkhim–Chare Assembly constituency|Longkhim–Chare]] (ST)
+| [[Sethrongkyu Sangtam]]
+| {{party name with color|Bharatiya Janata Party}}
+|
+|-
+|53
+| [[Tuensang Sadar I Assembly constituency|Tuensang Sadar I]] (ST)
+| [[P. Bashangmongba Chang]]
+| {{party name with color|Bharatiya Janata Party}}
+|[[Fifth Rio ministry|Cabinet Minister]]
+|-
+|54
+| [[Tuensang Sadar II Assembly constituency|Tuensang Sadar II]] (ST)
+| [[Imtichoba]]
+| {{party name with color|Republican Party of India (Athawale)}}
+|
+|-
+| [[Mon district|Mon]]
+|55
+| [[Tobu Assembly constituency|Tobu]] (ST)
+| [[Naiba Konyak]]
+| {{party name with color|Lok Janshakti Party (Ram Vilas)}}
+|
+|-
+| rowspan="3" | [[Noklak district|Noklak]]
+| rowspan="2" |56
+| rowspan="2" | [[Noklak Assembly constituency|Noklak]] (ST)
+| rowspan="2" | [[Puthai Longon]]
+| {{party name with color|Nationalist Congress Party}}
+| rowspan="2" | Switched from [[Nationalist Congress Party|NCP]] to [[Nationalist Democratic Progressive Party|NDPP]]<ref name=":0" />
+Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+|  {{party name with color|Naga People's Front}}
+|-
+|57
+| [[Thonoknyu Assembly constituency|Thonoknyu]] (ST)
+| [[Benei M. Lamthiu]]
+| {{party name with color|National People's Party (India)}}
+|
+|-
+| rowspan="1" | [[Shamator district|Shamator]]
+|58
+| [[Shamator–Chessore Assembly constituency|Shamator–Chessore]] (ST)
+| [[Keoshu Yimchunger|S. Keoshu Yimchunger]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|-
+| rowspan="2" | [[Kiphire district|Kiphire]]
+|59
+| [[Seyochung–Sitimi Assembly constituency|Seyochung–Sitimi]] (ST)
+| [[C. Kipili Sangtam]]
+| {{party name with color|National People's Party (India)}}
+|
+|-
+|60
+| [[Pungro–Kiphire Assembly constituency|Pungro–Kiphire]] (ST)
+| [[S. Kiusumew Yimchunger]]
+| {{party name with color|Naga People's Front}}
+|Nationalist Democratic Progressive Party merged with NPF in Oct 2025
+|}
+
+== References ==
+{{Reflist}}
+[[Category:Lists of current Indian state and territorial assemblies|N]]
+[[Category:Nagaland MLAs 2023–2028| ]]
+[[Category:Terms of the Nagaland Legislative Assembly]]

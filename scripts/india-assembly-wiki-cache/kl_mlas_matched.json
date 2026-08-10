@@ -1,0 +1,1262 @@
+[
+  {
+    "district": "Kasaragod",
+    "no": "2",
+    "constituency": "Kasaragod",
+    "name": "Kallatra Mahin",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66014,
+    "shape_name": "KASARAGOD"
+  },
+  {
+    "district": "Kasaragod",
+    "no": "3",
+    "constituency": "Udma",
+    "name": "K. Neelakandan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66015,
+    "shape_name": "UDMA"
+  },
+  {
+    "district": "Kasaragod",
+    "no": "4",
+    "constituency": "Kanhangad",
+    "name": "Govindan Pallikappil",
+    "party": "Communist Party of India",
+    "map_shape_id": 66016,
+    "shape_name": "KANHANGAD"
+  },
+  {
+    "district": "Kannur",
+    "no": "7",
+    "constituency": "Kalliasseri",
+    "name": "M. Vijin",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66019,
+    "shape_name": "KALLIASSERI"
+  },
+  {
+    "district": "Kannur",
+    "no": "8",
+    "constituency": "Taliparamba",
+    "name": "T K Govindan Master",
+    "party": "Independent",
+    "map_shape_id": 66020,
+    "shape_name": "TALIPARAMBA"
+  },
+  {
+    "district": "Kannur",
+    "no": "9",
+    "constituency": "Irikkur",
+    "name": "Sajeev Joseph",
+    "party": "Indian National Congress",
+    "map_shape_id": 66021,
+    "shape_name": "IRIKKUR"
+  },
+  {
+    "district": "Kannur",
+    "no": "10",
+    "constituency": "Azhikode",
+    "name": "K. V. Sumesh",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66022,
+    "shape_name": "AZHIKODE"
+  },
+  {
+    "district": "Kannur",
+    "no": "11",
+    "constituency": "Kannur",
+    "name": "T.O Mohanan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66023,
+    "shape_name": "KANNUR"
+  },
+  {
+    "district": "Kannur",
+    "no": "13",
+    "constituency": "Thalassery",
+    "name": "Karayi Rajan",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66025,
+    "shape_name": "THALASSERY"
+  },
+  {
+    "district": "Kannur",
+    "no": "14",
+    "constituency": "Kuthuparamba",
+    "name": "P. K. Praveen",
+    "party": "Rashtriya Janata Dal",
+    "map_shape_id": 66026,
+    "shape_name": "KUTHUPARAMBA"
+  },
+  {
+    "district": "Kannur",
+    "no": "16",
+    "constituency": "Peravoor",
+    "name": "Adv Sunny Joseph",
+    "party": "Indian National Congress",
+    "map_shape_id": 66028,
+    "shape_name": "PERAVOOR"
+  },
+  {
+    "district": "Wayanad",
+    "no": "17",
+    "constituency": "Mananthavady",
+    "name": "Usha Vijayan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66029,
+    "shape_name": "MANANTHAVADY"
+  },
+  {
+    "district": "Wayanad",
+    "no": "18",
+    "constituency": "Sulthan Bathery",
+    "name": "I. C. Balakrishnan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66030,
+    "shape_name": "SULTHANBATHERY"
+  },
+  {
+    "district": "Wayanad",
+    "no": "19",
+    "constituency": "Kalpetta",
+    "name": "T. Siddique",
+    "party": "Indian National Congress",
+    "map_shape_id": 66031,
+    "shape_name": "KALPETTA"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "22",
+    "constituency": "Nadapuram",
+    "name": "K. M. Abhijith",
+    "party": "Indian National Congress",
+    "map_shape_id": 66034,
+    "shape_name": "NADAPURAM"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "23",
+    "constituency": "Koyilandy",
+    "name": "K. Praveen Kumar",
+    "party": "Indian National Congress",
+    "map_shape_id": 66035,
+    "shape_name": "QUILANDY"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "24",
+    "constituency": "Perambra",
+    "name": "Fathima Thahiliya",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66036,
+    "shape_name": "PERAMBRA"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "26",
+    "constituency": "Elathur",
+    "name": "Vidya Balakrishnan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66038,
+    "shape_name": "ELATHUR"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "27",
+    "constituency": "Kozhikode North",
+    "name": "K.Jayanth",
+    "party": "Indian National Congress",
+    "map_shape_id": 66039,
+    "shape_name": "KOZHIKODE NORTH"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "28",
+    "constituency": "Kozhikode South",
+    "name": "Fyzal Babu",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66040,
+    "shape_name": "KOZHIKODE SOUTH"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "29",
+    "constituency": "Beypore",
+    "name": "P. A. Mohammed Riyas",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66041,
+    "shape_name": "BEYPORE"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "30",
+    "constituency": "Kunnamangalam",
+    "name": "M. A. Razak Master",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66042,
+    "shape_name": "KUNNAMANGALAM"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "31",
+    "constituency": "Koduvally",
+    "name": "P. K. Firos",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66043,
+    "shape_name": "KODUVALLY"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "32",
+    "constituency": "Thiruvambady",
+    "name": "C. K. Kasim",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66044,
+    "shape_name": "THIRUVAMBADY"
+  },
+  {
+    "district": "Malappuram",
+    "no": "33",
+    "constituency": "Kondotty",
+    "name": "T. P Ashrafali",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66045,
+    "shape_name": "KONDOTTY"
+  },
+  {
+    "district": "Malappuram",
+    "no": "34",
+    "constituency": "Eranad",
+    "name": "P. K. Basheer",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66046,
+    "shape_name": "ERANAD"
+  },
+  {
+    "district": "Malappuram",
+    "no": "35",
+    "constituency": "Nilambur",
+    "name": "Aryadan Shoukath",
+    "party": "Indian National Congress",
+    "map_shape_id": 66047,
+    "shape_name": "NILAMBUR"
+  },
+  {
+    "district": "Malappuram",
+    "no": "36",
+    "constituency": "Wandoor",
+    "name": "A. P. Anil Kumar",
+    "party": "Indian National Congress",
+    "map_shape_id": 66048,
+    "shape_name": "WANDOOR"
+  },
+  {
+    "district": "Malappuram",
+    "no": "37",
+    "constituency": "Manjeri",
+    "name": "M. Rahmathulla",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66049,
+    "shape_name": "MANJERI"
+  },
+  {
+    "district": "Malappuram",
+    "no": "38",
+    "constituency": "Perinthalmanna",
+    "name": "Najeeb Kanthapuram",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66050,
+    "shape_name": "PERINTHALMANNA"
+  },
+  {
+    "district": "Malappuram",
+    "no": "39",
+    "constituency": "Mankada",
+    "name": "Manjalamkuzhi Ali",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66051,
+    "shape_name": "MANKADA"
+  },
+  {
+    "district": "Malappuram",
+    "no": "40",
+    "constituency": "Malappuram",
+    "name": "P. K. Kunhalikutty",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66052,
+    "shape_name": "MALAPPURAM"
+  },
+  {
+    "district": "Malappuram",
+    "no": "41",
+    "constituency": "Vengara",
+    "name": "K. M. Shaji",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66053,
+    "shape_name": "VENGARA"
+  },
+  {
+    "district": "Malappuram",
+    "no": "42",
+    "constituency": "Vallikkunnu",
+    "name": "T. V. Ibrahim",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66054,
+    "shape_name": "VALLIKKUNNU"
+  },
+  {
+    "district": "Malappuram",
+    "no": "43",
+    "constituency": "Tirurangadi",
+    "name": "P. M. A. Sameer",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66055,
+    "shape_name": "TIRURANGADI"
+  },
+  {
+    "district": "Malappuram",
+    "no": "44",
+    "constituency": "Tanur",
+    "name": "P. K. Navas",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66056,
+    "shape_name": "TANUR"
+  },
+  {
+    "district": "Malappuram",
+    "no": "45",
+    "constituency": "Tirur",
+    "name": "Kurukkoli Moideen",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66057,
+    "shape_name": "TIRUR"
+  },
+  {
+    "district": "Malappuram",
+    "no": "46",
+    "constituency": "Kottakkal",
+    "name": "K. K. Abid Hussain Thangal",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66058,
+    "shape_name": "KOTTAKKAL"
+  },
+  {
+    "district": "Malappuram",
+    "no": "47",
+    "constituency": "Thavanur",
+    "name": "V. S Joy",
+    "party": "Indian National Congress",
+    "map_shape_id": 66059,
+    "shape_name": "THAVANUR"
+  },
+  {
+    "district": "Malappuram",
+    "no": "48",
+    "constituency": "Ponnani",
+    "name": "K. P Noushad Ali",
+    "party": "Indian National Congress",
+    "map_shape_id": 66060,
+    "shape_name": "PONNANI"
+  },
+  {
+    "district": "Palakkad",
+    "no": "49",
+    "constituency": "Thrithala",
+    "name": "V. T. Balram",
+    "party": "Indian National Congress",
+    "map_shape_id": 66061,
+    "shape_name": "THRITHALA"
+  },
+  {
+    "district": "Palakkad",
+    "no": "50",
+    "constituency": "Pattambi",
+    "name": "Muhammed Muhsin",
+    "party": "Communist Party of India",
+    "map_shape_id": 66062,
+    "shape_name": "PATTAMBI"
+  },
+  {
+    "district": "Palakkad",
+    "no": "51",
+    "constituency": "Shornur",
+    "name": "P. Mammikutty",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66063,
+    "shape_name": "SHORNUR"
+  },
+  {
+    "district": "Palakkad",
+    "no": "52",
+    "constituency": "Ottapalam",
+    "name": "K. Premkumar",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66064,
+    "shape_name": "OTTAPALAM"
+  },
+  {
+    "district": "Palakkad",
+    "no": "53",
+    "constituency": "Kongad",
+    "name": "K. A. Thulasi",
+    "party": "Indian National Congress",
+    "map_shape_id": 66065,
+    "shape_name": "KONGAD"
+  },
+  {
+    "district": "Palakkad",
+    "no": "55",
+    "constituency": "Malampuzha",
+    "name": "A. Prabhakaran",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66067,
+    "shape_name": "MALAMPUZHA"
+  },
+  {
+    "district": "Palakkad",
+    "no": "56",
+    "constituency": "Palakkad",
+    "name": "Ramesh Pisharody",
+    "party": "Indian National Congress",
+    "map_shape_id": 66068,
+    "shape_name": "PALAKKAD"
+  },
+  {
+    "district": "Palakkad",
+    "no": "57",
+    "constituency": "Tarur",
+    "name": "Sumod",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66069,
+    "shape_name": "TARUR"
+  },
+  {
+    "district": "Palakkad",
+    "no": "58",
+    "constituency": "Chittur",
+    "name": "Sumesh Achuthan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66070,
+    "shape_name": "CHITTUR"
+  },
+  {
+    "district": "Palakkad",
+    "no": "59",
+    "constituency": "Nenmara",
+    "name": "K. Preman",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66071,
+    "shape_name": "NENMARA"
+  },
+  {
+    "district": "Palakkad",
+    "no": "60",
+    "constituency": "Alathur",
+    "name": "T. M. Sasi",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66072,
+    "shape_name": "ALATHUR"
+  },
+  {
+    "district": "Thrissur",
+    "no": "61",
+    "constituency": "Chelakkara",
+    "name": "U. R. Pradeep",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66073,
+    "shape_name": "CHELAKKARA"
+  },
+  {
+    "district": "Thrissur",
+    "no": "62",
+    "constituency": "Kunnamkulam",
+    "name": "A. C. Moideen",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66074,
+    "shape_name": "KUNNAMKULAM"
+  },
+  {
+    "district": "Thrissur",
+    "no": "64",
+    "constituency": "Manalur",
+    "name": "C. Raveendranath",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66076,
+    "shape_name": "MANALUR"
+  },
+  {
+    "district": "Thrissur",
+    "no": "65",
+    "constituency": "Wadakkanchery",
+    "name": "Xavier Chittilappilly",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66077,
+    "shape_name": "WADAKKANCHERY"
+  },
+  {
+    "district": "Thrissur",
+    "no": "66",
+    "constituency": "Ollur",
+    "name": "K. Rajan",
+    "party": "Communist Party of India",
+    "map_shape_id": 66078,
+    "shape_name": "OLLUR"
+  },
+  {
+    "district": "Thrissur",
+    "no": "67",
+    "constituency": "Thrissur",
+    "name": "Rajan Pallan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66079,
+    "shape_name": "THRISSUR"
+  },
+  {
+    "district": "Thrissur",
+    "no": "68",
+    "constituency": "Nattika",
+    "name": "Geetha Gopi",
+    "party": "Communist Party of India",
+    "map_shape_id": 66080,
+    "shape_name": "NATTIKA"
+  },
+  {
+    "district": "Thrissur",
+    "no": "69",
+    "constituency": "Kaipamangalam",
+    "name": "K. K. Valsaraj",
+    "party": "Communist Party of India",
+    "map_shape_id": 66081,
+    "shape_name": "KAIPAMANGALAM"
+  },
+  {
+    "district": "Thrissur",
+    "no": "71",
+    "constituency": "Puthukkad",
+    "name": "K. K. Ramachandran",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66083,
+    "shape_name": "PUTHUKKAD"
+  },
+  {
+    "district": "Thrissur",
+    "no": "73",
+    "constituency": "Kodungallur",
+    "name": "O. J. Janeesh",
+    "party": "Indian National Congress",
+    "map_shape_id": 66085,
+    "shape_name": "KODUNGALLUR"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "74",
+    "constituency": "Perumbavoor",
+    "name": "Manoj Moothedan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66086,
+    "shape_name": "PERUMBAVOOR"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "75",
+    "constituency": "Angamaly",
+    "name": "Roji M. John",
+    "party": "Indian National Congress",
+    "map_shape_id": 66087,
+    "shape_name": "ANGAMALY"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "76",
+    "constituency": "Aluva",
+    "name": "Anwar Sadath",
+    "party": "Indian National Congress",
+    "map_shape_id": 66088,
+    "shape_name": "ALUVA"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "77",
+    "constituency": "Kalamassery",
+    "name": "V. E. Abdul Gafoor",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66089,
+    "shape_name": "KALAMASSERY"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "78",
+    "constituency": "Paravur",
+    "name": "V. D. Satheesan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66090,
+    "shape_name": "PARAVUR"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "79",
+    "constituency": "Vypin",
+    "name": "Tony Chammany",
+    "party": "Indian National Congress",
+    "map_shape_id": 66091,
+    "shape_name": "VYPEN"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "80",
+    "constituency": "Kochi",
+    "name": "Mohammad Shiyas",
+    "party": "Indian National Congress",
+    "map_shape_id": 66092,
+    "shape_name": "KOCHI"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "83",
+    "constituency": "Thrikkakara",
+    "name": "Uma Thomas",
+    "party": "Indian National Congress",
+    "map_shape_id": 66095,
+    "shape_name": "THRIKKAKARA"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "84",
+    "constituency": "Kunnathunad",
+    "name": "V. P. Sajeendran",
+    "party": "Indian National Congress",
+    "map_shape_id": 66096,
+    "shape_name": "KUNNATHUNAD"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "85",
+    "constituency": "Piravom",
+    "name": "Anoop Jacob",
+    "party": "Kerala Congress (Jacob)",
+    "map_shape_id": 66097,
+    "shape_name": "PIRAVOM"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "86",
+    "constituency": "Muvattupuzha",
+    "name": "Mathew Kuzhalnadan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66098,
+    "shape_name": "MUVATTUPUZHA"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "87",
+    "constituency": "Kothamangalam",
+    "name": "Shibu Thekkumpuram",
+    "party": "Kerala Congress",
+    "map_shape_id": 66099,
+    "shape_name": "KOTHAMANGALAM"
+  },
+  {
+    "district": "Idukki",
+    "no": "88",
+    "constituency": "Devikulam",
+    "name": "F Raja",
+    "party": "Indian National Congress",
+    "map_shape_id": 67458,
+    "shape_name": "DEVIKULAM"
+  },
+  {
+    "district": "Idukki",
+    "no": "89",
+    "constituency": "Udumbanchola",
+    "name": "Senapathy Venu",
+    "party": "Indian National Congress",
+    "map_shape_id": 66100,
+    "shape_name": "UDUMBANCHOLA"
+  },
+  {
+    "district": "Idukki",
+    "no": "90",
+    "constituency": "Thodupuzha",
+    "name": "Apu John Joseph",
+    "party": "Kerala Congress",
+    "map_shape_id": 66101,
+    "shape_name": "THODUPUZHA"
+  },
+  {
+    "district": "Idukki",
+    "no": "91",
+    "constituency": "Idukki",
+    "name": "Roy K Paulose",
+    "party": "Indian National Congress",
+    "map_shape_id": 66102,
+    "shape_name": "IDUKKI"
+  },
+  {
+    "district": "Idukki",
+    "no": "92",
+    "constituency": "Peerumade",
+    "name": "Cyriac Thomas",
+    "party": "Indian National Congress",
+    "map_shape_id": 66103,
+    "shape_name": "PEERUMADE"
+  },
+  {
+    "district": "Kottayam",
+    "no": "93",
+    "constituency": "Pala",
+    "name": "Mani C. Kappan",
+    "party": "Kerala Democratic Party",
+    "map_shape_id": 66104,
+    "shape_name": "PALA"
+  },
+  {
+    "district": "Kottayam",
+    "no": "94",
+    "constituency": "Kaduthuruthy",
+    "name": "Mons Joseph",
+    "party": "Kerala Congress",
+    "map_shape_id": 66105,
+    "shape_name": "KADUTHURUTHY"
+  },
+  {
+    "district": "Kottayam",
+    "no": "95",
+    "constituency": "Vaikom",
+    "name": "K. Binimon",
+    "party": "Indian National Congress",
+    "map_shape_id": 66106,
+    "shape_name": "VAIKOM"
+  },
+  {
+    "district": "Kottayam",
+    "no": "96",
+    "constituency": "Ettumanoor",
+    "name": "Nattakom Suresh",
+    "party": "Indian National Congress",
+    "map_shape_id": 66107,
+    "shape_name": "ETTUMANOOR"
+  },
+  {
+    "district": "Kottayam",
+    "no": "97",
+    "constituency": "Kottayam",
+    "name": "Thiruvanchoor Radhakrishnan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66108,
+    "shape_name": "KOTTAYAM"
+  },
+  {
+    "district": "Kottayam",
+    "no": "98",
+    "constituency": "Puthuppally",
+    "name": "Chandy Oommen",
+    "party": "Indian National Congress",
+    "map_shape_id": 66109,
+    "shape_name": "PUTHUPPALLY"
+  },
+  {
+    "district": "Kottayam",
+    "no": "99",
+    "constituency": "Changanassery",
+    "name": "Vinu Job Kuzhimannil",
+    "party": "Kerala Congress",
+    "map_shape_id": 66110,
+    "shape_name": "CHANGANASSERY"
+  },
+  {
+    "district": "Kottayam",
+    "no": "100",
+    "constituency": "Kanjirappally",
+    "name": "Rony K Baby",
+    "party": "Indian National Congress",
+    "map_shape_id": 66111,
+    "shape_name": "KANJIRAPPALLY"
+  },
+  {
+    "district": "Kottayam",
+    "no": "101",
+    "constituency": "Poonjar",
+    "name": "Sebastian M. J.",
+    "party": "Indian National Congress",
+    "map_shape_id": 66112,
+    "shape_name": "POONJAR"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "102",
+    "constituency": "Aroor",
+    "name": "Shanimol Osman",
+    "party": "Indian National Congress",
+    "map_shape_id": 66113,
+    "shape_name": "AROOR"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "103",
+    "constituency": "Cherthala",
+    "name": "P. Prasad",
+    "party": "Communist Party of India",
+    "map_shape_id": 66114,
+    "shape_name": "CHERTHALA"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "104",
+    "constituency": "Alappuzha",
+    "name": "A.D.Thomas",
+    "party": "Indian National Congress",
+    "map_shape_id": 66115,
+    "shape_name": "ALAPPUZHA"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "106",
+    "constituency": "Kuttanad",
+    "name": "Reji Cheriyan",
+    "party": "Kerala Congress",
+    "map_shape_id": 66117,
+    "shape_name": "KUTTANAD"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "107",
+    "constituency": "Haripad",
+    "name": "Ramesh Chennithala",
+    "party": "Indian National Congress",
+    "map_shape_id": 66118,
+    "shape_name": "HARIPAD"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "108",
+    "constituency": "Kayamkulam",
+    "name": "M. Liju",
+    "party": "Indian National Congress",
+    "map_shape_id": 66119,
+    "shape_name": "KAYAMKULAM"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "109",
+    "constituency": "Mavelikara",
+    "name": "M. S. Arun Kumar",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66120,
+    "shape_name": "MAVELIKARA"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "110",
+    "constituency": "Chengannur",
+    "name": "Saji Cherian",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66121,
+    "shape_name": "CHENGANNUR"
+  },
+  {
+    "district": "Pathanamthitta",
+    "no": "111",
+    "constituency": "Thiruvalla",
+    "name": "Varghese Mammen",
+    "party": "Kerala Congress",
+    "map_shape_id": 66122,
+    "shape_name": "THIRUVALLA"
+  },
+  {
+    "district": "Pathanamthitta",
+    "no": "112",
+    "constituency": "Ranni",
+    "name": "Pazhakulam Madhu",
+    "party": "Indian National Congress",
+    "map_shape_id": 66123,
+    "shape_name": "RANNI"
+  },
+  {
+    "district": "Pathanamthitta",
+    "no": "113",
+    "constituency": "Aranmula",
+    "name": "Abin Varkey",
+    "party": "Indian National Congress",
+    "map_shape_id": 66124,
+    "shape_name": "ARANMULA"
+  },
+  {
+    "district": "Pathanamthitta",
+    "no": "114",
+    "constituency": "Konni",
+    "name": "K. U. Jenish Kumar",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66125,
+    "shape_name": "KONNI"
+  },
+  {
+    "district": "Pathanamthitta",
+    "no": "115",
+    "constituency": "Adoor",
+    "name": "Adv. C. V. Santhakumar",
+    "party": "Indian National Congress",
+    "map_shape_id": 66126,
+    "shape_name": "ADOOR"
+  },
+  {
+    "district": "Kollam",
+    "no": "117",
+    "constituency": "Chavara",
+    "name": "Shibu Baby John",
+    "party": "Revolutionary Socialist Party (India)",
+    "map_shape_id": 66128,
+    "shape_name": "CHAVARA"
+  },
+  {
+    "district": "Kollam",
+    "no": "118",
+    "constituency": "Kunnathur",
+    "name": "Ullas Kovoor",
+    "party": "Revolutionary Socialist Party (India)",
+    "map_shape_id": 66129,
+    "shape_name": "KUNNATHUR"
+  },
+  {
+    "district": "Kollam",
+    "no": "119",
+    "constituency": "Kottarakkara",
+    "name": "K. N. Balagopal",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66130,
+    "shape_name": "KOTTARAKKARA"
+  },
+  {
+    "district": "Kollam",
+    "no": "120",
+    "constituency": "Pathanapuram",
+    "name": "Jyothi Kumar Chamakkala",
+    "party": "Indian National Congress",
+    "map_shape_id": 66131,
+    "shape_name": "PATHANAPURAM"
+  },
+  {
+    "district": "Kollam",
+    "no": "121",
+    "constituency": "Punalur",
+    "name": "C. Ajayaprasad",
+    "party": "Communist Party of India",
+    "map_shape_id": 66132,
+    "shape_name": "PUNALUR"
+  },
+  {
+    "district": "Kollam",
+    "no": "122",
+    "constituency": "Chadayamangalam",
+    "name": "M. M. Naseer",
+    "party": "Indian National Congress",
+    "map_shape_id": 66133,
+    "shape_name": "CHADAYAMANGALAM"
+  },
+  {
+    "district": "Kollam",
+    "no": "123",
+    "constituency": "Kundara",
+    "name": "P. C. Vishnunadh",
+    "party": "Indian National Congress",
+    "map_shape_id": 66134,
+    "shape_name": "KUNDARA"
+  },
+  {
+    "district": "Kollam",
+    "no": "124",
+    "constituency": "Kollam",
+    "name": "Bindu Krishna",
+    "party": "Indian National Congress",
+    "map_shape_id": 66135,
+    "shape_name": "KOLLAM"
+  },
+  {
+    "district": "Kollam",
+    "no": "125",
+    "constituency": "Eravipuram",
+    "name": "Vishnu Mohan",
+    "party": "Revolutionary Socialist Party (India)",
+    "map_shape_id": 66136,
+    "shape_name": "ERAVIPURAM"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "127",
+    "constituency": "Varkala",
+    "name": "V. Joy",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66138,
+    "shape_name": "VARKALA"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "128",
+    "constituency": "Attingal",
+    "name": "O. S. Ambika",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66139,
+    "shape_name": "ATTINGAL"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "129",
+    "constituency": "Chirayinkeezhu",
+    "name": "Ramya Haridas",
+    "party": "Indian National Congress",
+    "map_shape_id": 66140,
+    "shape_name": "CHIRAYINKEEZHU"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "130",
+    "constituency": "Nedumangad",
+    "name": "G. R. Anil",
+    "party": "Communist Party of India",
+    "map_shape_id": 66141,
+    "shape_name": "NEDUMANGAD"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "131",
+    "constituency": "Vamanapuram",
+    "name": "Sudheersha Palode",
+    "party": "Indian National Congress",
+    "map_shape_id": 66142,
+    "shape_name": "VAMANAPURAM"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "132",
+    "constituency": "Kazhakkoottam",
+    "name": "V. Muraleedharan",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 66143,
+    "shape_name": "KAZHAKKOOTTAM"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "133",
+    "constituency": "Vattiyoorkavu",
+    "name": "K. Muraleedharan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66144,
+    "shape_name": "VATTIYOORKAVU"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "134",
+    "constituency": "Thiruvananthapuram",
+    "name": "C. P. John",
+    "party": "Communist Marxist Party",
+    "map_shape_id": 66145,
+    "shape_name": "THIRUVANANTHAPURAM"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "135",
+    "constituency": "Nemom",
+    "name": "Rajeev Chandrasekhar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 66146,
+    "shape_name": "NEMOM"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "136",
+    "constituency": "Aruvikkara",
+    "name": "G. Steephen",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66147,
+    "shape_name": "ARUVIKKARA"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "137",
+    "constituency": "Parassala",
+    "name": "C. K. Hareendran",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66148,
+    "shape_name": "PARASSALA"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "138",
+    "constituency": "Kattakkada",
+    "name": "M. R. Baiju",
+    "party": "Indian National Congress",
+    "map_shape_id": 66149,
+    "shape_name": "KATTAKKADA"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "139",
+    "constituency": "Kovalam",
+    "name": "M. Vincent",
+    "party": "Indian National Congress",
+    "map_shape_id": 66150,
+    "shape_name": "KOVALAM"
+  },
+  {
+    "district": "Thiruvananthapuram",
+    "no": "140",
+    "constituency": "Neyyattinkara",
+    "name": "N. Sakthan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66151,
+    "shape_name": "NEYYATTINKARA"
+  },
+  {
+    "district": "Kasaragod",
+    "no": "1",
+    "constituency": "Manjeshwaram",
+    "name": "A. K. M. Ashraf",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66013,
+    "shape_name": "MANJESHWAR"
+  },
+  {
+    "district": "Kasaragod",
+    "no": "5",
+    "constituency": "Thrikaripur",
+    "name": "Sandeep Varier",
+    "party": "Indian National Congress",
+    "map_shape_id": 66017,
+    "shape_name": "TRIKARIPUR"
+  },
+  {
+    "district": "Kannur",
+    "no": "6",
+    "constituency": "Payyanur",
+    "name": "V. Kunhikrishnan",
+    "party": "Independent",
+    "map_shape_id": 66018,
+    "shape_name": "PAYYANNUR"
+  },
+  {
+    "district": "Kannur",
+    "no": "12",
+    "constituency": "Dharmadom",
+    "name": "Pinarayi Vijayan",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66024,
+    "shape_name": "DHARMADAM"
+  },
+  {
+    "district": "Kannur",
+    "no": "15",
+    "constituency": "Mattanur",
+    "name": "V. K. Sanoj",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66027,
+    "shape_name": "MATTANNUR"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "20",
+    "constituency": "Vatakara",
+    "name": "K. K. Rema",
+    "party": "Revolutionary Marxist Party of India",
+    "map_shape_id": 66032,
+    "shape_name": "VADAKARA"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "21",
+    "constituency": "Kuttiady",
+    "name": "Parakkal Abdulla",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66033,
+    "shape_name": "KUTTIADI"
+  },
+  {
+    "district": "Kozhikode",
+    "no": "25",
+    "constituency": "Balussery",
+    "name": "V. T. Sooraj",
+    "party": "Indian National Congress",
+    "map_shape_id": 66037,
+    "shape_name": "BALUSSERI"
+  },
+  {
+    "district": "Palakkad",
+    "no": "54",
+    "constituency": "Mannarkkad",
+    "name": "N. Samsudheen",
+    "party": "Indian Union Muslim League",
+    "map_shape_id": 66066,
+    "shape_name": "MANNARKAD"
+  },
+  {
+    "district": "Thrissur",
+    "no": "63",
+    "constituency": "Guruvayur",
+    "name": "N. K. Akbar",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 66075,
+    "shape_name": "GURUVAYOOR"
+  },
+  {
+    "district": "Thrissur",
+    "no": "70",
+    "constituency": "Irinjalakuda",
+    "name": "Thomas Unniyadan",
+    "party": "Kerala Congress",
+    "map_shape_id": 66082,
+    "shape_name": "IRINJALAKKUDA"
+  },
+  {
+    "district": "Thrissur",
+    "no": "72",
+    "constituency": "Chalakudy",
+    "name": "T. J. Saneesh Kumar Joseph",
+    "party": "Indian National Congress",
+    "map_shape_id": 66084,
+    "shape_name": "CHALAKKUDY"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "81",
+    "constituency": "Thrippunithura",
+    "name": "Deepak Joy",
+    "party": "Indian National Congress",
+    "map_shape_id": 66093,
+    "shape_name": "THRIPUNITHURA"
+  },
+  {
+    "district": "Ernakulam",
+    "no": "82",
+    "constituency": "Ernakulam",
+    "name": "T. J. Vinod",
+    "party": "Indian National Congress",
+    "map_shape_id": 66094,
+    "shape_name": "ERANAKULAM"
+  },
+  {
+    "district": "Alappuzha",
+    "no": "105",
+    "constituency": "Ambalappuzha",
+    "name": "G. Sudhakaran",
+    "party": "Independent",
+    "map_shape_id": 66116,
+    "shape_name": "AMBALAPUZHA"
+  },
+  {
+    "district": "Kollam",
+    "no": "116",
+    "constituency": "Karunagapally",
+    "name": "C. R. Mahesh",
+    "party": "Indian National Congress",
+    "map_shape_id": 66127,
+    "shape_name": "KARUNAGAPPALLY"
+  },
+  {
+    "district": "Kollam",
+    "no": "126",
+    "constituency": "Chathannoor",
+    "name": "B. B. Gopakumar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 66137,
+    "shape_name": "CHATHANNUR"
+  }
+]

@@ -1,0 +1,422 @@
+[
+  {
+    "district": "West Tripura",
+    "no": "1",
+    "constituency": "Simna",
+    "name": "Brishaketu Debbarma",
+    "party": "Tipra Motha Party"
+  },
+  {
+    "district": "West Tripura",
+    "no": "2",
+    "constituency": "Mohanpur",
+    "name": "Ratan Lal Nath",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Tripura",
+    "no": "3",
+    "constituency": "Bamutia",
+    "name": "Nayan Sarkar",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "West Tripura",
+    "no": "4",
+    "constituency": "Barjala",
+    "name": "Sudip Sarkar",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "West Tripura",
+    "no": "5",
+    "constituency": "Khayerpur",
+    "name": "Ratan Chakraborty",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Tripura",
+    "no": "6",
+    "constituency": "Agartala",
+    "name": "Sudip Roy Barman",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "West Tripura",
+    "no": "7",
+    "constituency": "Ramnagar",
+    "name": "Dipak Majumder",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Tripura",
+    "no": "8",
+    "constituency": "Town Bordowali",
+    "name": "Manik Saha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Tripura",
+    "no": "9",
+    "constituency": "Banamalipur",
+    "name": "Gopal Chandra Roy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "West Tripura",
+    "no": "10",
+    "constituency": "Majlishpur",
+    "name": "Sushanta Chowdhury",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Tripura",
+    "no": "11",
+    "constituency": "Mandaibazar",
+    "name": "Swapna Debbarma",
+    "party": "Tipra Motha Party"
+  },
+  {
+    "district": "Sipahijala",
+    "no": "12",
+    "constituency": "Takarjala",
+    "name": "Biswajit Kalai",
+    "party": "Tipra Motha Party"
+  },
+  {
+    "district": "West Tripura",
+    "no": "13",
+    "constituency": "Pratapgarh",
+    "name": "Ramu Das",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "West Tripura",
+    "no": "14",
+    "constituency": "Badharghat",
+    "name": "Mina Rani Sarkar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sipahijala",
+    "no": "15",
+    "constituency": "Kamalasagar",
+    "name": "Antara Sarkar Deb",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sipahijala",
+    "no": "16",
+    "constituency": "Bishalgarh",
+    "name": "Sushanta Deb",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sipahijala",
+    "no": "17",
+    "constituency": "Golaghati",
+    "name": "Manab Debbarma",
+    "party": "Tipra Motha Party"
+  },
+  {
+    "district": "West Tripura",
+    "no": "18",
+    "constituency": "Suryamaninagar",
+    "name": "Ram Prasad Paul",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sipahijala",
+    "no": "19",
+    "constituency": "Charilam",
+    "name": "Subodh Deb Barma",
+    "party": "Tipra Motha Party"
+  },
+  {
+    "district": "Sipahijala",
+    "no": "20",
+    "constituency": "Boxanagar",
+    "name": "Tafajjal Hossain",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sipahijala",
+    "no": "21",
+    "constituency": "Nalchar",
+    "name": "Kishor Barman",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sipahijala",
+    "no": "22",
+    "constituency": "Sonamura",
+    "name": "Shyamal Chakraborty",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Sipahijala",
+    "no": "23",
+    "constituency": "Dhanpur",
+    "name": "Bindu Debnath",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Khowai",
+    "no": "24",
+    "constituency": "Ramchandraghat",
+    "name": "Ranjit Debbarma",
+    "party": "Tipra Motha Party"
+  },
+  {
+    "district": "Khowai",
+    "no": "25",
+    "constituency": "Khowai",
+    "name": "Nirmal Biswas",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Khowai",
+    "no": "26",
+    "constituency": "Asharambari",
+    "name": "Animesh Debbarma",
+    "party": "Tipra Motha Party"
+  },
+  {
+    "district": "Khowai",
+    "no": "27",
+    "constituency": "Kalyanpur-Pramodenagar",
+    "name": "Pinaki Das Chowdhury",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Khowai",
+    "no": "28",
+    "constituency": "Teliamura",
+    "name": "Kalyani Saha Roy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Khowai",
+    "no": "29",
+    "constituency": "Krishnapur",
+    "name": "Bikash Debbarma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gomati",
+    "no": "30",
+    "constituency": "Bagma",
+    "name": "Ram Pada Jamatia",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gomati",
+    "no": "31",
+    "constituency": "Radhakishorpur",
+    "name": "Pranjit Singha Roy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gomati",
+    "no": "32",
+    "constituency": "Matarbari",
+    "name": "Abhishek Debroy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gomati",
+    "no": "33",
+    "constituency": "Kakraban-Salgarh",
+    "name": "Jitendra Majumder",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Tripura",
+    "no": "34",
+    "constituency": "Rajnagar",
+    "name": "Swapna Majumder",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Tripura",
+    "no": "35",
+    "constituency": "Belonia",
+    "name": "Dipankar Sen",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "South Tripura",
+    "no": "36",
+    "constituency": "Santirbazar",
+    "name": "Pramod Reang",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Tripura",
+    "no": "37",
+    "constituency": "Hrishyamukh",
+    "name": "Asoke Chandra Mitra",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "South Tripura",
+    "no": "38",
+    "constituency": "Jolaibari",
+    "name": "Sukla Charan Noatia",
+    "party": "Indigenous People's Front of Tripura"
+  },
+  {
+    "district": "South Tripura",
+    "no": "39",
+    "constituency": "Manu",
+    "name": "Mailafru Mog",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "South Tripura",
+    "no": "40",
+    "constituency": "Sabroom",
+    "name": "Jitendra Chaudhury",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Gomati",
+    "no": "41",
+    "constituency": "Ampinagar",
+    "name": "Pathan Lal Jamatia",
+    "party": "Tipra Motha Party"
+  },
+  {
+    "district": "Gomati",
+    "no": "42",
+    "constituency": "Amarpur",
+    "name": "Ranjit Das",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gomati",
+    "no": "43",
+    "constituency": "Karbook",
+    "name": "Sanjoy Manik Tripura",
+    "party": "Tipra Motha Party"
+  },
+  {
+    "district": "Dhalai",
+    "no": "44",
+    "constituency": "Raima Valley",
+    "name": "Nandita Debbarma (Reang)",
+    "party": "Tipra Motha Party"
+  },
+  {
+    "district": "Dhalai",
+    "no": "45",
+    "constituency": "Kamalpur",
+    "name": "Manoj Kanti Deb",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Dhalai",
+    "no": "46",
+    "constituency": "Surma",
+    "name": "Swapna Das Paul",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Dhalai",
+    "no": "47",
+    "constituency": "Ambassa",
+    "name": "Chitta Ranjan Debbarma",
+    "party": "Tipra Motha Party"
+  },
+  {
+    "district": "Dhalai",
+    "no": "48",
+    "constituency": "Karamcherra",
+    "name": "Paul Dangshu",
+    "party": "Tipra Motha Party"
+  },
+  {
+    "district": "Dhalai",
+    "no": "49",
+    "constituency": "Chawamanu",
+    "name": "Sambhu Lal Chakma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Unakoti",
+    "no": "50",
+    "constituency": "Pabiachhara",
+    "name": "Bhagaban Das",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Unakoti",
+    "no": "51",
+    "constituency": "Fatikroy",
+    "name": "Sudhangshu Das",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Unakoti",
+    "no": "52",
+    "constituency": "Chandipur",
+    "name": "Tinku Roy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Unakoti",
+    "no": "53",
+    "constituency": "Kailashahar",
+    "name": "Birajit Sinha",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "North Tripura",
+    "no": "54",
+    "constituency": "Kadamtala-Kurti",
+    "name": "Islam Uddin",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "North Tripura",
+    "no": "55",
+    "constituency": "Bagbassa",
+    "name": "Jadab Lal Debnath",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Tripura",
+    "no": "56",
+    "constituency": "Dharmanagar",
+    "name": "Jahar Chakraborti",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Tripura",
+    "no": "57",
+    "constituency": "Jubarajnagar",
+    "name": "Sailendra Chandra Nath",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "North Tripura",
+    "no": "58",
+    "constituency": "Panisagar",
+    "name": "Binay Bhushan Das",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Tripura",
+    "no": "59",
+    "constituency": "Pencharthal",
+    "name": "Santana Chakma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "North Tripura",
+    "no": "60",
+    "constituency": "Kanchanpur",
+    "name": "Philip Kumar Reang",
+    "party": "Tipra Motha Party"
+  }
+]

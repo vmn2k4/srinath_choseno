@@ -1,0 +1,655 @@
+{{Short description|Indian state legislature since 2024}}
+{{Infobox legislature
+|name        = 6th Jharkhand Legislative Assembly
+|legislature = 
+|coa_pic     = 
+|coa_res     = 
+|house_type  = Unicameral
+|body              = 
+|houses            = [[Jharkhand Legislative Assembly]]
+|foundation        = 2024
+|disbanded         = 
+|preceded_by       = [[5th Jharkhand Assembly]]
+|term_limits       = 5 years
+|leader1_type      = [[List of speakers of the Jharkhand Legislative Assembly|Speaker]]
+|leader1           = [[Rabindra Nath Mahato]]
+|party1            = [[Jharkhand Mukti Morcha|JMM]]
+|election1         = [[2024 Jharkhand Legislative Assembly election|28 November 2024]]
+|leader2_type      = [[List of deputy speakers of the Jharkhand Legislative Assembly|Deputy Speaker]]
+|leader2           = vacant
+|leader3_type      = Leader of the House<br />([[List of chief ministers of Jharkhand|Chief Minister]])
+|leader3           = [[Hemant Soren]]
+|party3            = [[Jharkhand Mukti Morcha|JMM]]
+|election3         = [[2024 Jharkhand Legislative Assembly election|28 November 2024]]
+|leader5_type      = [[List of leaders of the opposition in the Jharkhand Legislative Assembly|Leader of the Opposition]]
+|leader5           = [[Babulal Marandi]]
+|election5         = 5 March 2025
+|party5            = [[Bharatiya Janata Party|BJP]]
+|members           = 81
+|structure1        = {{switcher|[[File:India Jharkhand Legislative Assembly Election 2024.svg|300px]]|Result by Party
+|[[File:Jharkhand Vidhan Sabha (Alliance wise).svg|300px]]|Result by Alliance}}
+|structure1_res    = 
+|political_groups1 = <!-- Do not make changes to Party totals without making corresponding changes under section 'Members of Legislative Assembly' -->
+'''[[Government of Jharkhand|Government]] (56)'''
+:{{Color box|{{Party color|Mahagathbandhan (Jharkhand)}}}} [[Mahagathbandhan (Jharkhand)|MGB]] (56)
+:*{{Color box|#215B30}} [[Jharkhand Mukti Morcha|JMM]] (34)
+:*{{Color box|#00BFFF}} [[Indian National Congress|INC]] (16)
+:*{{Color box|{{Party color|Rashtriya Janata Dal}}}} [[Rashtriya Janata Dal|RJD]] (4)
+:*{{Color box|{{Party color|Communist Party of India (Marxist–Leninist) Liberation}}}} [[Communist Party of India (Marxist–Leninist) Liberation|CPI(ML)L]] (2)
+
+'''Official Opposition (24)'''
+:{{Color box|{{Party color|National Democratic Alliance}}}} [[National Democratic Alliance|NDA]] (24)
+:*{{Color box|#FF9933}} [[Bharatiya Janata Party|BJP]] (21)
+:*{{Color box|{{Party color|All Jharkhand Students Union}}}} [[All Jharkhand Students Union|AJSU]] (1)
+:*{{colour box|#4E1B5D}} [[Lok Janshakti Party (Ram Vilas) |LJP(RV)]] (1)
+:*{{Color box|#0A1951}} [[Janata Dal (United)|JD(U)]] (1)
+
+'''Other Opposition''' (1)
+:*{{Color box|#75ED00}} [[Jharkhand Loktantrik Krantikari Morcha|JLKM]] (1)
+
+<!-- Do not make changes to Party totals without making corresponding changes under section 'Members of Legislative Assembly' -->
+|voting_system1    = [[First-past-the-post voting|First past the post]]
+|last_election1    = [[2024 Jharkhand Legislative Assembly election|13 November - 20 November 2024]]
+|next_election1    = [[Next Jharkhand Legislative Assembly election|November - December 2029]]
+|session_room      = 
+|session_res       = 300px
+|meeting_place     = Jharkhand Vidhansabha, Kute village, Ranchi
+|session_room2     = 
+|session_res2      = 300px
+|meeting_place2    = 
+|website           = {{URL|jharkhandvidhansabha.nic.in}}
+|footnotes         = 
+}}
+
+The '''Members of 6th [[Legislative Assembly of Jharkhand]]''' were elected in the [[2024 Jharkhand Legislative Assembly election]], with results announced on 23 November 2024.<ref>{{Cite web |title=General Election to Assembly Constituencies: Trends & Results November 2024 - Jharkhand |url=https://results.eci.gov.in/ResultAcGenNov2024/partywiseresult-S27.htm |website=results.eci.gov.in}}</ref><ref name=":0">{{Cite web|url=https://www.prabhatkhabar.com/topic/jharkhand-assembly-election|title=झारखंड विधानसभा चुनाव परिणाम 2024, Jharkhand Vidhan Sabha Result, झारखंड विधानसभा चुनाव के नतीजे}}</ref>
+
+== Members of Legislative Assembly ==
+<!-- this section is transcluded on the District article--><section begin="MLA Header"/>
+{| class="wikitable sortable" style="text-align:center;"
+!District
+!No.
+!Constituency
+!Name
+! colspan="2" |Party
+! colspan=2|Alliance
+! Remarks<section end="MLA Header"/>
+|-<section begin="Sahebganj district"/>
+|rowspan="3"|[[Sahebganj district|Sahebganj]]
+| 1
+| [[Rajmahal Assembly constituency|Rajmahal]]
+| [[Md. Tajuddin|Mohammad Tajuddin]]
+| {{Party name with color|Jharkhand Mukti Morcha|rowspan=4}}
+| {{party name with color|Mahagathbandhan (Jharkhand)|rowspan=11}}
+|
+|-
+| 2
+| [[Borio Assembly constituency|Borio]]
+| [[Dhananjay Soren]]
+|
+|-
+| 3
+|[[Barhait Assembly constituency|Barhait]]
+| [[Hemant Soren]]
+|[[List of chief ministers of Jharkhand|Chief Minister]]
+|-<section end="Sahebganj district"/><section begin="Pakur district"/>
+| rowspan="3"|[[Pakur district|Pakur]]
+| 4
+| [[Litipara Assembly constituency|Litipara]]
+| [[Hemlal Murmu]]
+|
+|-
+| 5
+| [[Pakur Assembly constituency|Pakur]]
+| [[Nisat Alam]]
+| {{Party name with color|Indian National Congress}}
+|
+|-
+| 6
+| [[Maheshpur Assembly constituency|Maheshpur]]
+| [[Stephen Marandi]]
+| {{Party name with color|Jharkhand Mukti Morcha|rowspan=3}}
+|
+|-<section end="Pakur district"/><section begin="Dumka district"/>
+|[[Dumka district|Dumka]]
+| 7
+| [[Sikaripara Assembly constituency|Sikaripara]]
+| [[Alok Kumar Soren]]
+|
+|-<section end="Dumka district"/><section begin="Jamtara district"/>
+|rowspan="2"|[[Jamtara district|Jamtara]]
+| 8
+| [[Nala Assembly constituency|Nala]]
+| [[Rabindra Nath Mahato]]
+|[[List of speakers of the Jharkhand Legislative Assembly|Speaker]]
+|-
+| 9
+| [[Jamtara Assembly constituency|Jamtara]]
+| [[Irfan Ansari]]
+| {{Party name with color|Indian National Congress}}
+|Cabinet minister
+|-<section end="Jamtara district"/><section begin="Dumka district 2"/>
+| rowspan="3"|[[Dumka district|Dumka]]
+| 10
+| [[Dumka Assembly constituency|Dumka]]
+| [[Basant Soren]]
+| {{Party name with color|Jharkhand Mukti Morcha|rowspan=2}}
+|
+|-
+| 11
+| [[Jama Assembly constituency|Jama]]
+| [[Louis Marandi]]
+|
+|-
+| 12
+| [[Jarmundi Assembly constituency|Jarmundi]]
+| [[Devendra Kunwar (Jharkhand politician)|Devendra Kunwar]] 
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|
+|-<section end="Dumka district 2"/><section begin="Deoghar district"/>
+| rowspan="3"|[[Deoghar district|Deoghar]]
+| 13
+| [[Madhupur Assembly constituency|Madhupur]]
+| [[Hafizul Hasan]]
+| {{Party name with color|Jharkhand Mukti Morcha|rowspan=2}}
+| {{party name with color|Mahagathbandhan (Jharkhand)|rowspan=6}}
+|Cabinet minister
+|-
+| 14
+| [[Sarath Assembly constituency|Sarath]]
+| [[Uday Shankar Singh]]
+|
+|-
+| 15
+| [[Deoghar Assembly constituency|Deoghar]]
+| [[Suresh Paswan]]
+| {{Party name with color|Rashtriya Janata Dal}}
+|
+|-<section end="Deoghar district"/><section begin="Godda district"/>
+| rowspan="3" | [[Godda district|Godda]]
+| 16
+| [[Poreyahat Assembly constituency|Poreyahat]]
+| [[Pradeep Yadav (Indian politician)|Pradeep Yadav]]
+| {{Party name with color|Indian National Congress}}
+|
+|-
+| 17
+| [[Godda Assembly constituency|Godda]]
+| [[Sanjay Prasad Yadav]]
+| {{Party name with color|Rashtriya Janata Dal}}
+|Cabinet minister
+|-
+| 18
+| [[Mahagama Assembly constituency|Mahagama]]
+| [[Dipika Pandey Singh]]
+| {{Party name with color|Indian National Congress}}
+|Cabinet minister
+|-<section end="Godda district"/><section begin="Koderma district"/>
+|[[Koderma district|Koderma]]
+| 19
+| [[Kodarma Assembly constituency|Kodarma]]
+|[[Neera Yadav (politician)|Neera Yadav]]
+| {{Party name with color|Bharatiya Janata Party|rowspan=4}}
+| {{Party name with color|National Democratic Alliance|rowspan=4}}
+|
+|-<section end="Koderma district"/><section begin="Hazaribagh district"/>
+| rowspan="2"|[[Hazaribagh district|Hazaribagh]]
+| 20
+| [[Barkatha Assembly constituency|Barkatha]]
+| [[Amit Kumar Yadav]]
+|
+|-
+| 21
+| [[Barhi Assembly constituency|Barhi]]
+| [[Manoj Kumar Yadav (Jharkhand politician)|Manoj Kumar Yadav]]
+|
+|-<section end="Hazaribagh district"/><section begin="Ramgarh district"/>
+|rowspan="2"|[[Ramgarh district|Ramgarh]]
+|22
+|[[Barkagaon Assembly constituency|Barkagaon]]
+|[[Roshan Lal Choudhary]]
+|
+|-
+|23
+| [[Ramgarh, Jharkhand Assembly constituency|Ramgarh]]
+| [[Mamta Devi]]
+| {{Party name with color|Indian National Congress}}
+| {{Party name with color|Mahagathbandhan (Jharkhand)}}
+|
+|-<section end="Ramgarh district"/><section begin="Hazaribagh district 2" />
+| rowspan="2" |[[Hazaribagh district|Hazaribagh]]
+| 24
+| [[Mandu Assembly constituency|Mandu]]
+| [[Nirmal Mahto (Jharkhand politician)|Nirmal Mahto]]
+| {{Party name with color|All Jharkhand Students Union}}
+| {{Party name with color|National Democratic Alliance|rowspan=7}}
+|
+|-
+| 25
+|  [[Hazaribagh Assembly constituency|Hazaribagh]]
+| [[Pradip Prasad]]
+| {{Party name with color|Bharatiya Janata Party}}
+|
+|-<section end="Hazaribagh district 2" /><section begin="Chatra district" />
+|rowspan="2"|[[Chatra district|Chatra]]
+| 26
+| [[Simaria Assembly constituency|Simaria]]
+| [[Kumar Ujjwal]]
+| {{Party name with color|Bharatiya Janata Party}}
+|
+|-
+| 27
+| [[Chatra Assembly constituency|Chatra]]
+| [[Janardan Paswan]]
+| {{Party name with color|Lok Janshakti Party (Ram Vilas)}}
+|
+|-<section end="Chatra district" /><section begin="Giridih district" />
+| rowspan="6"|[[Giridih district|Giridih]]
+| 28
+| [[Dhanwar Assembly constituency|Dhanwar]]
+| [[Babulal Marandi]]
+| {{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|Leader of Opposition 
+|-
+| 29
+| [[Bagodar Assembly constituency|Bagodar]]
+| [[Nagendra Mahto]]
+|
+|-
+| 30
+| [[Jamua Assembly constituency|Jamua]]
+| [[Manju Kumari]]
+|
+|-
+| 31
+| [[Gandey Assembly constituency|Gandey]]
+| [[Kalpana Soren]]
+| {{Party name with color|Jharkhand Mukti Morcha|rowspan=2}}
+| {{Party name with color|Mahagathbandhan (Jharkhand)|rowspan=2}}
+|
+|-
+| 32
+| [[Giridih Assembly constituency|Giridih]]
+| [[Sudivya Kumar]]
+|Cabinet minister
+|-
+| 33
+| [[Dumri Assembly constituency|Dumri]]
+| [[Jairam Kumar Mahato]]
+| {{Party name with color|Jharkhand Loktantrik Krantikari Morcha}}
+| {{party color cell|Others}}
+| align=left|None
+|
+|-<section end="Giridih district" /><section begin="Bokaro district" />
+| rowspan="4" | [[Bokaro district|Bokaro]]
+| 34
+| [[Gomia Assembly constituency|Gomia]]
+| [[Yogendra Prasad]]
+| {{Party name with color|Jharkhand Mukti Morcha}}
+| {{Party name with color|Mahagathbandhan (Jharkhand)|rowspan=6}}
+|Cabinet minister
+|-
+| 35
+| [[Bermo Assembly constituency|Bermo]]
+| [[Kumar Jaimangal|Kumar Jaimangal Singh]]
+| {{Party name with color|Indian National Congress|rowspan=2}}
+|
+|-
+| 36
+| [[Bokaro Assembly constituency|Bokaro]]
+| [[Shwettaa Singh]]
+|
+|-
+| 37
+| [[Chandankiyari Assembly constituency|Chandankiyari]]
+| [[Umakant Rajak]]
+| {{Party name with color|Jharkhand Mukti Morcha}}
+|
+|-<section end="Bokaro district" /><section begin="Dhanbad district" />
+| rowspan="6"|[[Dhanbad district|Dhanbad]]
+| 38
+| [[Sindri Assembly constituency|Sindri]]
+|[[Bablu Mahato]]
+|{{Party name with color|Communist Party of India (Marxist–Leninist) Liberation|rowspan=2}}
+|
+|-
+| 39
+| [[Nirsa Assembly constituency|Nirsa]]
+| [[Arup Chatterjee]]
+|
+|-
+| 40
+| [[Dhanbad Assembly constituency|Dhanbad]]
+| [[Raj Sinha]]
+| {{Party name with color|Bharatiya Janata Party|rowspan=2}}
+| {{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+| 41
+| [[Jharia Assembly constituency|Jharia]]
+| [[Ragini Singh]]
+| 
+|-
+| 42
+| [[Tundi Assembly constituency|Tundi]]
+| [[Mathura Prasad Mahato]]
+| {{Party name with color|Jharkhand Mukti Morcha}}
+| {{Party name with color|Mahagathbandhan (Jharkhand)}}
+|
+|-
+|  43
+| [[Baghmara, Jharkhand Assembly constituency|Baghmara]]
+| [[Shatrughan Mahto]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|
+|-<section end="Dhanbad district" /><section begin="East Singhbhum district" />
+| rowspan="7"|[[East Singhbhum district|East Singhbhum]]
+| 44
+|[[Baharagora Assembly constituency|Baharagora]]
+| [[Samir Mohanty]]
+| {{Party name with color|Jharkhand Mukti Morcha|rowspan=5}}
+| {{Party name with color|Mahagathbandhan (Jharkhand)|rowspan=5}}
+|
+|-
+| rowspan=2|45
+| rowspan=2|[[Ghatsila Assembly constituency|Ghatsila]]
+| [[Ramdas Soren]]
+| Died on 15 August 2025
+|-
+| [[Somesh Chandra Soren|Somesh Soren]]
+| Elected in [[2025 elections in India#Jharkhand|2025 by-election]] 
+|-
+| 46
+| [[Potka Assembly constituency|Potka]]
+| [[Sanjib Sardar]]
+|
+|-
+| 47
+| [[Jugsalai Assembly constituency|Jugsalai]]
+| [[Mangal Kalindi]]
+|
+|-
+| 48
+|[[Jamshedpur East Assembly constituency|Jamshedpur East]]
+| [[Purnima Sahu]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+| 49
+|[[Jamshedpur West Assembly constituency|Jamshedpur West]]
+| [[Saryu Roy (Politician)|Saryu Roy]]
+| {{Party name with color|Janata Dal (United)}}
+|
+|-<section end="East Singhbhum district" /><section begin="Seraikela Kharsawan district" />
+| rowspan="2" | [[Seraikela Kharsawan district|Seraikela Kharsawan]]
+| 50
+|[[Ichagarh Assembly constituency|Ichagarh]]
+| [[Sabita Mahato]]
+| {{Party name with color|Jharkhand Mukti Morcha}}
+| {{Party name with color|Mahagathbandhan (Jharkhand)}}
+|
+|-
+| 51
+|[[Seraikella Assembly constituency|Seraikella]]
+| [[Champai Soren]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|
+|-<section end="Seraikela Kharsawan district" /><section begin="West Singhbhum district" />
+| rowspan="5" | [[West Singhbhum district|West Singhbhum]]
+| 52
+|[[Chaibasa Assembly constituency|Chaibasa]]
+| [[Deepak Birua]]
+| {{Party name with color|Jharkhand Mukti Morcha|rowspan=2}}
+| {{Party name with color|Mahagathbandhan (Jharkhand)|rowspan=11}}
+|Cabinet minister
+|-
+| 53
+|[[Majhgaon Assembly constituency|Majhgaon]]
+| [[Niral Purty]]
+|
+|-
+| 54
+|[[Jaganathpur Assembly constituency|Jaganathpur]]
+|[[Sona Ram Sinku]]
+| {{Party name with color|Indian National Congress}}
+|
+|-
+|  55
+| [[Manoharpur Assembly constituency|Manoharpur]]
+| [[Jagat Majhi]]
+| {{Party name with color|Jharkhand Mukti Morcha|rowspan=7}}
+|
+|-
+| 56
+|[[Chakradharpur Assembly constituency|Chakradharpur]]
+| [[Sukhram Oraon]]
+|
+|-<section end="West Singhbhum district" /><section begin="Seraikela Kharsawan district 2" />
+|[[Seraikela Kharsawan district|Seraikela Kharsawan]]
+| 57
+|[[Kharsawan Assembly constituency|Kharsawan]]
+| [[Dashrath Gagrai]]
+|
+|-<section end="Seraikela Kharsawan district 2" /><section begin="Ranchi district" />
+|[[Ranchi district|Ranchi]]
+| 58
+|[[Tamar Assembly constituency|Tamar]]
+| [[Vikash Kumar Munda]]
+|
+|-<section end="Ranchi district" /><section begin="Khunti district" />
+|rowspan="2"|[[Khunti district|Khunti]]
+| 59
+|[[Torpa Assembly constituency|Torpa]]
+| [[Sudeep Gudhiya]]
+|
+|-
+| 60
+|[[Khunti Assembly constituency|Khunti]]
+| [[Ram Surya Munda]]
+|
+|-<section end="Khunti district" /><section begin="Ranchi district 2" />
+| rowspan="6" |[[Ranchi district|Ranchi]]
+| 61
+|[[Silli Assembly constituency|Silli]]
+| [[Amit Mahto]]
+|
+|-
+| 62
+|[[Khijri Assembly constituency|Khijri]]
+| [[Rajesh Kachhap]]
+| {{Party name with color|Indian National Congress}}
+|
+|-
+| 63
+|[[Ranchi Assembly constituency|Ranchi]]
+| [[C. P. Singh (Indian politician)|C. P. Singh]]
+| {{Party name with color|Bharatiya Janata Party|rowspan=2}}
+| {{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+| 64
+|[[Hatia Assembly constituency|Hatia]]
+| [[Navin Jaiswal]]
+|
+|-
+| 65
+|[[Kanke Assembly constituency|Kanke]]
+| [[Suresh Kumar Baitha]]
+| {{Party name with color|Indian National Congress|rowspan=2}}
+| {{Party name with color|Mahagathbandhan (Jharkhand)|rowspan=9}}
+|
+|-
+| 66
+| [[Mandar Assembly constituency|Mandar]]
+| [[Shilpi Neha Tirkey]]
+|Cabinet minister
+|-<section end="Ranchi district 2" /><section begin="Gumla district" />
+| rowspan="3" | [[Gumla district|Gumla]]
+| 67
+|[[Sisai Assembly constituency|Sisai]]
+| [[Jiga Susaran Horo]]
+| {{Party name with color|Jharkhand Mukti Morcha|rowspan=3}}
+| 
+|-
+| 68
+|[[Gumla Assembly constituency|Gumla]]
+| [[Bhushan Tirkey]]
+| 
+|-
+| 69
+|[[Bishunpur Assembly constituency|Bishunpur]]
+| [[Chamra Linda]]
+|Cabinet minister
+|-<section end="Gumla district" /><section begin="Simdega district" />
+| rowspan="2" | [[Simdega district|Simdega]]
+| 70
+|[[Simdega Assembly constituency|Simdega]]
+| [[Bhushan Bara]]
+| {{Party name with color|Indian National Congress|rowspan=4}}
+| 
+|-
+| 71
+|[[Kolebira Assembly constituency|Kolebira]]
+| [[Naman Bixal Kongari]]
+|
+|-<section end="Simdega district" /><section begin="Lohardaga district" />
+| [[Lohardaga district|Lohardaga]]
+| 72
+|[[Lohardaga Assembly constituency|Lohardaga]]
+| [[Rameshwar Oraon]]
+|
+|-<section end="Lohardaga district" /><section begin="Latehar district" />
+| rowspan="2" | [[Latehar district|Latehar]]
+| 73
+|[[Manika Assembly constituency|Manika]]
+| [[Ramchandra Singh|Ramachandra Singh]]
+|
+|-
+| 74
+|[[Latehar Assembly constituency|Latehar]]
+| [[Prakash Ram]]
+| {{Party name with color|Bharatiya Janata Party|rowspan=3}}
+| {{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-<section end="Latehar district" /><section begin="Palamu district" />
+| rowspan="5" | [[Palamu district|Palamu]]
+| 75
+|[[Panki Assembly constituency|Panki]]
+| [[Kushwaha Shashi Bhushan Mehta|Shashi Bhushan Mehta]]
+|
+|-
+| 76
+|[[Daltonganj Assembly constituency|Daltonganj]]
+| [[Alok Kumar Chaurasiya|Alok Chaurasiya]]
+|
+|-
+| 77
+|[[Bishrampur Assembly constituency|Bishrampur]]
+| [[Naresh Prasad Singh]]
+| {{Party name with color|Rashtriya Janata Dal}}
+| {{Party name with color|Mahagathbandhan (Jharkhand)|rowspan=3}}
+|
+|-
+| 78
+|[[Chhatarpur, Jharkhand Assembly constituency|Chhatarpur]]
+| [[Radha Krishna Kishore]]
+| {{Party name with color|Indian National Congress}}
+|Cabinet minister
+|-
+| 79
+|[[Hussainabad Assembly constituency|Hussainabad]]
+| [[Sanjay Kumar Singh Yadav|Sanjay Kumar Yadav]]
+| {{Party name with color|Rashtriya Janata Dal}}
+|
+|-<section end="Palamu district" /><section begin="Garhwa district" />
+| rowspan="2" | [[Garhwa district|Garhwa]]
+| 80
+|[[Garhwa Assembly constituency|Garhwa]]
+| [[Satyendra Nath Tiwari]]
+| {{Party name with color|Bharatiya Janata Party}}
+| {{Party name with color|National Democratic Alliance}}
+|
+|-
+| 81
+|[[Bhawanathpur Assembly constituency|Bhawanathpur]]
+| [[Anant Pratap Deo]]
+| {{Party name with color|Jharkhand Mukti Morcha}}
+| {{Party name with color|Mahagathbandhan (Jharkhand)}}
+|
+|-<section end="Garhwa district" />
+|}
+
+==Composition==
+<!--this section is transcluded on Electoral history of-->
+<section begin="Composition"/>
+{|class="wikitable"
+!colspan=2|Alliance
+!colspan=2|Political party
+!No. of MLAs
+!Leader of the party
+|-
+|rowspan=4 {{party color cell|Mahagathbandhan (Jharkhand)}}
+|rowspan=4 style="text-align:center;"|'''Government<br/>[[Mahagathbandhan (Jharkhand)|MGB]]'''<br/>Seats: '''56'''
+|{{party color cell|Jharkhand Mukti Morcha}}
+|[[Jharkhand Mukti Morcha]]
+|style="text-align:center;"|34
+|[[Hemant Soren]]<br/><small>''([[Chief Minister of Jharkhand|Chief Minister]])''</small>
+|-
+|{{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|style="text-align:center;"|16
+|[[Keshav Mahto Kamlesh]]
+|-
+|{{party color cell|Rashtriya Janata Dal}}
+|[[Rashtriya Janata Dal]]
+|style="text-align:center;"|4
+|[[Sanjay Prasad Yadav]]
+|-
+|{{party color cell|Communist Party of India (Marxist–Leninist) Liberation}}
+|[[Communist Party of India (Marxist–Leninist) Liberation]]
+|style="text-align:center;"|2
+|[[Arup Chatterjee]]
+|-
+|rowspan=4 {{party color cell|National Democratic Alliance}}
+|rowspan=4 style="text-align:center;"|'''Opposition<br/>[[National Democratic Alliance|NDA]]'''<br/>Seats: '''24'''
+|{{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|style="text-align:center;"|21
+|[[Babulal Marandi]]<br/><small>''([[List of leaders of the opposition in the Jharkhand Legislative Assembly|Leader of the Opposition]])''</small>
+|-
+|{{party color cell|All Jharkhand Students Union}}
+|[[All Jharkhand Students Union]]
+|style="text-align:center;"|1
+|[[Sudesh Mahto|Sudesh Mahato]]
+|-
+|{{party color cell|Janata Dal (United)}}
+|[[Janata Dal (United)]]
+|style="text-align:center;"|1
+|[[Saryu Roy]]
+|-
+|{{party color cell|Lok Janshakti Party (Ram Vilas)}}
+|[[Lok Janshakti Party (Ram Vilas)]]
+|style="text-align:center;"|1
+|[[Janardan Paswan]]
+|-
+|rowspan=1 {{party color cell|Others}}
+|rowspan=1 style="text-align:center;"|'''Others'''<br/>Seats: '''1'''
+|{{party color cell|Jharkhand Loktantrik Krantikari Morcha}}
+|[[Jharkhand Loktantrik Krantikari Morcha]]
+|style="text-align:center;"|1
+|[[Jairam Kumar Mahato]]
+|-
+!colspan=4|Total
+!colspan=2|81
+|}
+<section end="Composition"/>
+
+== References ==
+{{Reflist}}
+
+[[Category:Jharkhand MLAs 2024–2029| ]]
+[[Category:Terms of the Jharkhand Legislative Assembly]]
+[[Category:Lists of current Indian state and territorial assemblies|Jharkhand ]]

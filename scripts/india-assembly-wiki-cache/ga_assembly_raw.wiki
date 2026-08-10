@@ -1,0 +1,634 @@
+{{Short description|Unicameral legislature of the state of Goa in India}}
+{{Use dmy dates|date=March 2022}}
+{{Use Indian English|date=January 2018}}<!-- this section is transcluded on Goa Legislative Assembly --><section begin="Infobox"/>
+{{Infobox legislature
+| name               = Eighth Goa Assembly
+| native_name        = 
+| native_name_lang   = 
+| legislature        = [[Goa Legislative Assembly]]
+| foundation         = 2022<!-- {{Start date|YYYY|MM|DD}} -->
+| disbanded          = <!-- {{End date|YYYY|MM|DD}} -->
+| preceded_by        = [[7th Goa Assembly]]
+| succeeded_by       = 
+| new_session        =  
+| coa_pic            = Goa Legislative Assembly Symbol.jpg
+| coa_res            = 200px
+| house_type         = Unicameral
+| term_limits        = 5 years
+| leader1_type       = [[List of speakers of the Goa Legislative Assembly|Speaker]]
+| leader1            = '''[[Ganesh Gaonkar]]'''
+| party1             = [[Bharatiya Janata Party|BJP]]
+| election1          = 25 September 2025
+| leader3_type       = Leader of the House <br /> ([[List of Chief Ministers of Goa|Chief Minister]])
+| leader3            = '''[[Pramod Sawant]]'''
+| party3             = [[Bharatiya Janata Party|BJP]]
+| election3          = 19 March 2019
+| leader2_type       = Deputy Speaker
+| leader2            = '''[[Joshua D'Souza]]'''
+| party2             = [[Bharatiya Janata Party|BJP]]
+| election2          = 22 July 2022
+| leader4_type       = [[List of leaders of the opposition in the Goa Legislative Assembly|Leader of the Opposition]]
+| leader4            = '''[[Yuri Alemao]]'''
+| party4             = [[Indian National Congress|INC]]
+| election4          = 30 September 2022
+| members            = '''40'''
+| structure1         = [[File:India Goa Legislative Assembly 2024.svg|Goa Legislative Assembly Parties 2023]]
+| structure1_res     = 300px
+| political_groups1  = <!-- Do not make changes to Party totals without making corresponding changes under section 'Members of Legislative Assembly' -->
+'''[[Government of Goa|Government]] (33)'''
+:{{Color box|{{Party color|National Democratic Alliance}}}} [[National Democratic Alliance|NDA]] (33)<ref>{{Cite web|date=2022-03-10|title=BJP wins Goa, gets support of MGP and 3 Independents|url=https://www.hindustantimes.com/elections/goa-assembly-election/bjp-wins-goa-gets-support-of-mgp-and-3-independents-101646921867070.html|access-date=2022-06-09|website=Hindustan Times|language=en}}</ref>
+:*{{Color box|{{Party color|Bharatiya Janata Party}}}} [[Bharatiya Janata Party|BJP]] (28)
+:*{{Color box|{{Party color|Maharashtrawadi Gomantak Party}}}} [[Maharashtrawadi Gomantak Party|MGP]] (2)
+:*{{Color box|{{Party color|Independent politician}}}} [[Independent politician|IND]] (3)
+'''[[Parliamentary opposition|Opposition]] (7)'''
+:{{colorbox|{{party color|Indian National Developmental Inclusive Alliance}}}} [[Indian National Developmental Inclusive Alliance|INDIA]] (4) 
+:*{{Color box|{{Party color|Indian National Congress}}}} [[Indian National Congress|INC]] (3)
+:*{{Color box|{{Party color|Goa Forward Party}}}} [[Goa Forward Party|GFP]] (1)
+:{{Color box|{{Party color|Aam Aadmi Party}}}} [[Aam Aadmi Party|AAP]] (2)
+:{{Color box|{{Party color|Revolutionary Goans Party}}}} [[Revolutionary Goans Party|RGP]] (1)
+<!-- Do not make changes to Party totals without making corresponding changes under section 'Members of Legislative Assembly' -->
+| voting_system1     = [[First-past-the-post voting|First past the post]]
+| last_election1     = [[2022 Goa Legislative Assembly election|14 February 2022]]
+| next_election1     = [[Next Goa Legislative Assembly election|2027]]
+| session_room       = File:India Goa Assembly.jpg
+| session_res        = 
+| session_alt        = 
+| meeting_place      = Goa State Legislative Assembly Complex, [[Porvorim]], [[Bardez]], [[Goa]], [[India]]
+| website            = [http://www.goavidhansabha.gov.in Goa Legislative Assembly]
+}}<section end="Infobox"/>
+The '''Eighth Goa Assembly''' (term : 2022-present) is the [[unicameral]] legislature of the state of [[Goa]] in western [[India]]. It consists of 40 members. It is in-charge of the budget, the Assembly appropriates money for social programs, agricultural development, infrastructure development, etc. It is also responsible for proposing and levying taxes.
+
+The Assembly meets in the Goa State Legislative Assembly Complex in [[Porvorim]], [[Bardez]].
+
+==History==
+===Elections ===
+{{transcluded section|source=2022 Goa Legislative Assembly election}} 
+{{#section:2022 Goa Legislative Assembly election|Lead}}
+
+In July 2022, the ruling BJP's MLA [[Joshua D'Souza]] was elected for the post of the Deputy Speaker of the Goa Legislative Assembly, with 25 votes.<ref>{{cite news |title=Wary of Goa Congress 'defection', Opposition gives BJP walkover in deputy Speaker poll |url=https://indianexpress.com/article/political-pulse/wary-of-goa-congress-defection-opposition-gives-bjp-walkover-in-deputy-speaker-poll-8046660/ |access-date=26 July 2022 |work=The Indian Express |date=24 July 2022 |language=en}}</ref><ref>{{cite news |title=Goa Elections: Congress Moves Candidates To Resort, Starts Talks With AAP |url=https://www.outlookindia.com/national/goa-elections-congress-moves-candidates-to-resort-starts-talks-with-aap-news-186077 |access-date=26 July 2022 |work=outlookindia.com/ |date=9 March 2022 |language=en}}</ref>
+===Defections===
+On 14 September 2022, 8 Congress MLAs switched party and joined BJP after a successful [[Operation Kamala]].<ref>{{cite news |title=BJP ministers react to 'operation kamal' |url=https://www.thegoan.net/goa-news/bjp-ministers-react-to-%E2%80%98operation-kamal%E2%80%99/88952.html |access-date=24 September 2022 |work=The Goan EveryDay |date=16 September 2022 |language=en}}</ref><ref name="Goa 2022">{{Cite web |date=14 September 2022 |title=8 Goa Congress MLAs defect to BJP |url=https://indianexpress.com/article/cities/goa/goa-congress-mlas-join-bjp-8149937/ |access-date=14 September 2022 |website=The Indian Express |language=en}}</ref> Former [[Minister (government)|Minister]] [[Michael Lobo (politician)|Michael Lobo]], along with 7 other Congress MLAs joined [[Bharatiya Janata Party]], after meeting [[Pramod Sawant|Dr. Pramod Sawant]], Chief Minister of Goa from BJP.<ref>{{Cite web|title=Another Setback to Congress in Goa, 8 Party MLAs join BJP including Digambar Kamat and Michael Lobo|url=https://www.news18.com/news/politics/joined-to-strengthen-modi-ji-in-another-setback-to-congress-in-goa-8-party-mlas-join-bjp-5954275.html|work=[[Network18 Group|News18]]|date=14 September 2022|access-date=14 September 2022}}</ref><ref>{{Cite web|title=Another Setback to Congress in Goa, 8 Party MLAs join BJP including Digambar Kamat and Michael Lobo|url=https://timesofindia.indiatimes.com/india/blow-for-congress-in-goa-ex-cm-kamat-7-others-likely-to-join-bjp/articleshow/94191835.cms|work=[[Times of India]]|date=14 September 2022|access-date=15 September 2022}}</ref>
+<!-- this section is transclude on Operation Kamala--> <section begin="Defectors 2022"/>
+{| class="wikitable sortable"
+!No.
+!Constituency  
+!Name
+!Remarks
+|-
+|6
+|[[Siolim (Goa Assembly constituency)|Siolim]]
+|[[Delilah Lobo]]
+|Defected from Congress to BJP on 14 September 2022<ref name="Goa 2022" />
+|-
+|7
+|[[Saligao (Goa Assembly constituency)|Saligao]]
+|[[Kedar Naik]]
+|Defected from Congress to BJP on 14 September 2022<ref name="Goa 2022" />
+|-
+|8
+|[[Calangute (Goa Assembly constituency)|Calangute]]
+|[[Michael Lobo (politician)|Michael Lobo]]
+|Defected from Congress to BJP on 14 September 2022<ref name="Goa 2022" />
+|-
+|13
+|[[St. Cruz (Goa Assembly constituency)|St. Cruz]]
+|[[Rodolfo Fernandes (politician)|Rodolfo Louis Fernandes]]
+|Defected from Congress to BJP on 14 September 2022<ref name="Goa 2022" />
+|-
+|15
+|[[Cumbarjua (Goa Assembly constituency)|Cumbarjua]]
+|[[Rajesh Faldessai]]
+|Defected from Congress to BJP on 14 September 2022<ref name="Goa 2022" />
+|-
+|24
+|[[Mormugao (Goa Assembly constituency)|Mormugao]]
+|[[Sankalp Amonkar]] 
+|Defected from Congress to BJP on 14 September 2022<ref name="Goa 2022" />
+|-
+|28
+|[[Nuvem (Goa Assembly constituency)|Nuvem]]
+|[[Aleixo Sequeira]] 
+|Defected from Congress to BJP on 14 September 2022<ref name="Goa 2022" />
+|-
+|31
+|[[Margao (Goa Assembly constituency)|Margao]]
+|[[Digambar Kamat]] 
+|Defected from Congress to BJP on 14 September 2022<ref name="Goa 2022" />
+|} <section end="Defectors 2022"/>
+
+==Composition==
+===March 2022 - September 2022===
+{| 
+|-
+| [[File:Bharat Goa Vidhan Sabha 2022.svg|thumb|300px|left|Goa Legislative Assembly March-September 2022]]
+|-
+|
+Composition of the Eighth Goa Legislative Assembly by alliance and party, after the election results in 2022
+
+{| class="wikitable"
+|-
+! colspan="2" rowspan="2" |Alliance
+! colspan="2" rowspan="2" |Party 
+! colspan="3" |Seats
+! colspan="2" rowspan="2" |Bench
+|-
+!Party
+!Alliance
+!Bench
+|-
+|rowspan="3" bgcolor="{{Party color|National Democratic Alliance}}"|
+!rowspan="3" |[[National Democratic Alliance|NDA]]
+|bgcolor="{{Party color|Bharatiya Janata Party}}|
+|[[Bharatiya Janata Party]]
+|20
+|   colspan="2"  rowspan="3" |25
+|  rowspan="3" bgcolor="{{Party color|Bharatiya Janata Party}}|
+| rowspan="3" |Government
+|-
+| bgcolor="{{Party color|Maharashtrawadi Gomantak Party}}" |
+|[[Maharashtrawadi Gomantak Party]]
+| colspan="1" |2
+|-
+| bgcolor="{{Party color|Independent politician}}" |
+|[[Independent (politician)|Independents]]
+| colspan="1" |3
+|-
+| rowspan="2" bgcolor="{{Party color|United Progressive Alliance}}" |
+! rowspan="2" |[[United Progressive Alliance (India)|UPA]]
+| bgcolor="{{Party color|Indian National Congress}}" |
+|[[Indian National Congress]]
+|11
+| rowspan="2" |12
+| rowspan="4" |15
+| rowspan="4" bgcolor="{{Party color|Others}}" |
+| rowspan="4" |Others
+|-
+| bgcolor="{{Party color|Goa Forward Party}}" |
+|[[Goa Forward Party]]
+|1
+|-
+| bgcolor="{{Party color|Aam Aadmi Party}}" |
+![[Aam Aadmi Party|AAP]]
+| bgcolor="{{Party color|Aam Aadmi Party}}" |
+|[[Aam Aadmi Party]]
+| colspan="2" |2
+|-
+|style="background:{{Party color|Revolutionary Goans Party}}"|
+! [[Revolutionary Goans Party|RGP]]
+| style="background:{{Party color|Revolutionary Goans Party}}"|
+|  [[Revolutionary Goans Party]]
+| colspan="2" |1
+|-
+! colspan="4" |Total
+! colspan="3" |40
+! colspan="2" |
+|}
+|}
+
+===September 2022 - to present===
+{| 
+|-
+|
+[[File:India Goa Legislative Assembly 2024.svg|thumb|300px|left|Goa Legislative Assembly Sept 2022 onwards]]
+|-
+|
+<!-- this section is transcluded on Goa Legislative Assembly --><section begin="Composition of Eighth Goa Legislative Assembly"/>
+Composition after 14 September 2022 when 8 Congress MLA switched party and joined BJP.<ref name="Goa 2022"/>
+{| class="wikitable"
+|-
+! colspan="2" rowspan="2" |Alliance
+! colspan="2" rowspan="2" |Party
+! colspan="3" |Seats
+! colspan="2" rowspan="2" |Bench
+|-
+!Party
+!Alliance 
+!Bench
+|-
+|rowspan="3" bgcolor="{{Party color|National Democratic Alliance}}"|
+!rowspan="3" |[[National Democratic Alliance|NDA]]
+|bgcolor="{{Party color|Bharatiya Janata Party}}|
+|[[Bharatiya Janata Party]]
+|28
+|  colspan="2" rowspan="3" |33
+|  rowspan="3" bgcolor="{{Party color|Bharatiya Janata Party}}|
+| rowspan="3" |Government
+|-
+| bgcolor="{{Party color|Maharashtrawadi Gomantak Party}}" |
+|[[Maharashtrawadi Gomantak Party]]
+| colspan="1" |2
+|-
+| bgcolor="{{Party color|Independent politician}}" |
+|[[Independent (politician)|Independents]]
+| colspan="1" |3
+|-
+| rowspan="2" bgcolor="{{Party color|Indian National Developmental Inclusive Alliance}}" |
+! rowspan="2" |[[Indian National Developmental Inclusive Alliance|I.N.D.I.A]]
+| bgcolor="{{Party color|Indian National Congress}}" |
+|[[Indian National Congress]]
+|3
+| rowspan="2" |4
+| rowspan="4" |7
+| rowspan="4" bgcolor="{{Party color|Others}}" |
+| rowspan="4" |Others
+|-
+| bgcolor="{{Party color|Goa Forward Party}}" |
+|[[Goa Forward Party]]
+|1
+|-
+|-
+|style="background:{{Party color|Aam Aadmi Party}}"|
+! [[Aam Aadmi Party|AAP]]
+| style="background:{{Party color|Aam Aadmi Party}}"|
+|  [[Aam Aadmi Party]]
+| colspan="2" |2
+|-
+|-
+|style="background:{{Party color|Revolutionary Goans Party}}"|
+! [[Revolutionary Goans Party|RGP]]
+| style="background:{{Party color|Revolutionary Goans Party}}"|
+|  [[Revolutionary Goans Party]]
+| colspan="2" |1
+|-
+! colspan="4" |Total
+! colspan="3" |40
+! colspan="2" |
+|}<section end="Composition of Eighth Goa Legislative Assembly"/>
+|}
+
+== Members of Legislative Assembly ==
+[[File:Current Numbers of the 8th Goa Legislative Assembly.svg|thumb|Current Numbers Wise Map of 8th Goa Legislative Assembly]]
+<!-- this section is transcluded on Goa Legislative Assembly -->: <section begin="Members of Legislative Assembly"/><section begin="Table Caption"/>
+{| class="wikitable sortable"
+!District
+!No.
+!Constituency
+!Name
+! colspan="2" |Party
+! colspan=2 |Alliance
+!Remarks 
+|-<section end="Table Caption"/><section begin="North Goa district" />
+|rowspan="28"|[[North Goa district|North Goa]]
+|1
+| [[Mandrem Assembly constituency|Mandrem]]
+| [[Jit Arolkar]]
+|bgcolor=#D38540|
+|[[Maharashtrawadi Gomantak Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|2
+| [[Pernem Assembly constituency|Pernem]] (SC)
+|[[Pravin Arlekar]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|3
+| [[Bicholim Assembly constituency|Bicholim]]
+| [[Chandrakant Shetye]]
+| bgcolor=#CDCDCD|
+| [[Independent politician|Independent]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|4
+| [[Tivim Assembly constituency|Tivim]]
+| [[Nilkanth Halarnkar]]
+| {{Full party name with color|Bharatiya Janata Party}}
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+|5
+| [[Mapusa Assembly constituency|Mapusa]]
+|[[Joshua D'Souza]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="2" |6
+| rowspan="2" |[[Siolim Assembly constituency|Siolim]]
+| rowspan="2" | [[Delilah Lobo]]
+| bgcolor=#00BFFF|
+|[[Indian National Congress]]
+| {{Party name with colour|United Progressive Alliance}}
+| rowspan="2" | Switched from INC to BJP on 14 September 2022<ref name="Goa 2022"/>
+|-
+| {{Full party name with color|Bharatiya Janata Party}}
+| {{Party name with colour|National Democratic Alliance}}
+|-
+| rowspan="2" |7
+| rowspan="2" | [[Saligao Assembly constituency|Saligao]]
+| rowspan="2" | [[Kedar Naik]]
+| bgcolor="#00BFFF" |
+|[[Indian National Congress]]
+| {{Party name with colour|United Progressive Alliance}}
+| rowspan="2" | Switched from INC to BJP on 14 September 2022<ref name="Goa 2022"/>
+|-
+| {{Full party name with color|Bharatiya Janata Party}}
+| {{Party name with colour|National Democratic Alliance}}
+|-
+| rowspan="2" |8
+| rowspan="2" | [[Calangute Assembly constituency|Calangute]]
+| rowspan="2" |[[Michael Lobo (politician)|Michael Lobo]]
+| bgcolor="#00BFFF" |
+|[[Indian National Congress]]
+| {{Party name with colour|United Progressive Alliance}}
+| rowspan="2" | Switched from INC to BJP on 14 September 2022<ref name="Goa 2022"/>
+|-
+| {{Full party name with color|Bharatiya Janata Party}}
+| {{Party name with colour|National Democratic Alliance}}
+|-
+|9
+| [[Porvorim Assembly constituency|Porvorim]]
+| [[Rohan Khaunte]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+|10
+| [[Aldona Assembly constituency|Aldona]]
+| [[Carlos Alvares Ferreira]]
+| bgcolor=#00BFFF|
+|[[Indian National Congress]]
+| {{Party name with colour|United Progressive Alliance}}
+|
+|-
+|11
+| [[Panaji Assembly constituency|Panaji]]
+|[[Atanasio Monserrate]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+|12
+| [[Taleigao Assembly constituency|Taleigao]]
+| [[Jennifer Monserrate]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="2" |13
+| rowspan="2" | [[St. Cruz Assembly constituency|Santa Cruz]]
+| rowspan="2" | [[Rodolfo Fernandes (politician)|Rodolfo Louis Fernandes]]
+| bgcolor=#00BFFF|
+|[[Indian National Congress]]
+| {{Party name with colour|United Progressive Alliance}}
+| rowspan="2" | Switched from INC to BJP on 14 September 2022<ref name="Goa 2022"/>
+|-
+| {{Full party name with color|Bharatiya Janata Party}}
+| {{Party name with colour|National Democratic Alliance}}
+|-
+|14
+| [[St. Andre Assembly constituency|St. Andre]]
+| [[Viresh Borkar]]
+| {{Party color cell|Revolutionary Goans Party}}
+|[[Revolutionary Goans Party]]
+|colspan=2|
+|
+|-
+| rowspan="2" |15
+| rowspan="2" | [[Cumbarjua Assembly constituency|Cumbarjua]]
+| rowspan="2" | [[Rajesh Faldessai]]
+| bgcolor=#00BFFF|
+|[[Indian National Congress]]
+| {{Party name with colour|United Progressive Alliance}}
+| rowspan="2" | Switched from INC to BJP on 14 September 2022<ref name="Goa 2022"/>
+|-
+| {{Full party name with color|Bharatiya Janata Party}}
+| {{Party name with colour|National Democratic Alliance}}
+|-
+|16
+| [[Maem Assembly constituency|Maem]]
+|[[Premendra Shet]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|17
+| [[Sanquelim Assembly constituency|Sanquelim]]
+| [[Pramod Sawant]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Chief Minister
+|-
+|18
+| [[Poriem Assembly constituency|Poriem]]
+| [[Deviya Vishwajit Rane|Deviya Rane]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|19
+| [[Valpoi Assembly constituency|Valpoi]]
+| [[Vishwajit Pratapsingh Rane]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+|20
+| [[Priol Assembly constituency|Priol]]
+| [[Govind Gaude]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|21
+| [[Ponda Assembly constituency|Ponda]]
+| [[Ravi Naik]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+|22
+| [[Siroda Assembly constituency|Siroda]]
+| [[Subhash Shirodkar]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+|23
+| [[Marcaim Assembly constituency|Marcaim]]
+| [[Sudin Dhavalikar]]
+|bgcolor=#D38540|
+|[[Maharashtrawadi Gomantak Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-<section end="North Goa district"/><section begin="South Goa district" />
+| rowspan="15" | [[South Goa district|South Goa]]
+| rowspan="2" |24
+| rowspan="2" | [[Mormugao Assembly constituency|Mormugao]]
+| rowspan="2" | [[Sankalp Amonkar]]
+| bgcolor=#00BFFF|
+|[[Indian National Congress]]
+| {{Party name with colour|United Progressive Alliance}}
+| rowspan="2" | Switched from INC to BJP on 14 September 2022<ref name="Goa 2022"/>
+|-
+| {{Full party name with color|Bharatiya Janata Party}}
+| {{Party name with colour|National Democratic Alliance}}
+|-
+|25
+| [[Vasco Da Gama Assembly constituency|Vasco Da Gama]]
+|[[Krishna Salkar]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|26
+| [[Dabolim Assembly constituency|Dabolim]]
+| [[Mauvin Godinho]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+|27
+| [[Cortalim Assembly constituency|Cortalim]]
+| [[Antonio Vas]]
+| bgcolor=#CDCDCD|
+| [[Independent politician|Independent]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+| rowspan="2" |28
+| rowspan="2" | [[Nuvem Assembly constituency|Nuvem]]
+| rowspan="2" | [[Aleixo Sequeira]]
+| bgcolor=#00BFFF|
+|[[Indian National Congress]]
+| {{Party name with colour|United Progressive Alliance}}
+| rowspan="2" | Switched from INC to BJP on 14 September 2022<ref name="Goa 2022"/>
+|-
+| {{Full party name with color|Bharatiya Janata Party}}
+| {{Party name with colour|National Democratic Alliance}}
+|-
+|29
+| [[Curtorim Assembly constituency|Curtorim]]
+|[[Aleixo Lourenco]]
+| bgcolor=#CDCDCD|
+| [[Independent politician|Independent]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|30
+| [[Fatorda Assembly constituency|Fatorda]]
+| [[Vijai Sardesai]]
+| bgcolor=#353982|
+|[[Goa Forward Party]]
+| {{Party name with colour|United Progressive Alliance}}
+|
+|-
+| rowspan="2" |31
+| rowspan="2" | [[Margao Assembly constituency|Margao]]
+| rowspan="2" | [[Digambar Kamat]]
+| bgcolor=#00BFFF|
+|[[Indian National Congress]]
+| {{Party name with colour|United Progressive Alliance}}
+| rowspan="2" | Switched from INC to BJP on 14 September 2022<ref name="Goa 2022"/>Cabinet Minister
+|-
+| {{Full party name with color|Bharatiya Janata Party}}
+| {{Party name with colour|National Democratic Alliance}}
+|-
+|32
+| [[Benaulim Assembly constituency|Benaulim]]
+| [[Venzy Viegas]]
+| bgcolor=#0066A4|
+|[[Aam Aadmi Party]]
+|colspan=2|
+|
+|-
+|33
+| [[Navelim Assembly constituency|Navelim]]
+| [[Ulhas Tuenkar]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|34
+| [[Cuncolim Assembly constituency|Cuncolim]]
+| [[Yuri Alemao]]
+| bgcolor=#00BFFF|
+|[[Indian National Congress]]
+| {{Party name with colour|United Progressive Alliance}}
+|
+|-
+|35
+| [[Velim Assembly constituency|Velim]]
+| [[Cruz Silva]]
+| bgcolor=#0066A4|
+|[[Aam Aadmi Party]]
+|colspan=2|
+|
+|-<section end="South Goa district"/><section begin="Kushavati district" />
+| rowspan="5" | [[Kushavati district|Kushavati]]
+|36
+| [[Quepem Assembly constituency|Quepem]]
+| [[Altone D'Costa]]
+| bgcolor=#00BFFF|
+|[[Indian National Congress]]
+| {{Party name with colour|United Progressive Alliance}}
+|
+|-
+|37
+| [[Curchorem Assembly constituency|Curchorem]]
+| [[Nilesh Cabral]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|38
+| [[Sanvordem Assembly constituency|Sanvordem]]
+| [[Ganesh Gaonkar]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|
+|-
+|39
+| [[Sanguem Assembly constituency|Sanguem]]
+| [[Subhash Phal Desai]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-
+|40
+| [[Canacona Assembly constituency|Canacona]]
+| [[Ramesh Tawadkar]]
+| bgcolor=#FF9933|
+|[[Bharatiya Janata Party]]
+| {{Party name with colour|National Democratic Alliance}}
+|Cabinet Minister
+|-<section end="Kushavati District"/>
+|}<section end="Members of Legislative Assembly"/>
+
+==References==
+{{Reflist}}
+
+==External links== 
+*[http://www.goavidhansabha.gov.in/ Goa Legislature official site]
+
+{{Goan elections}} 
+{{Goa topics}}
+{{Current Indian assemblies}}
+
+
+{{Authority control}}
+
+[[Category:Terms of the Goa Legislative Assembly|8]]
+[[Category:Lists of current Indian state and territorial assemblies|Goa]]
+[[Category:Goa MLAs 2022–2027| ]]

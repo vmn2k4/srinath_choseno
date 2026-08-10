@@ -1,0 +1,812 @@
+[
+  {
+    "district": "Kupwara",
+    "no": "1",
+    "constituency": "Karnah",
+    "name": "Javaid Ahmad Mirchal",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63484,
+    "shape_name": "Karnah"
+  },
+  {
+    "district": "Kupwara",
+    "no": "2",
+    "constituency": "Trehgam",
+    "name": "Saifullah Mir",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63495,
+    "shape_name": "Trehgam"
+  },
+  {
+    "district": "Kupwara",
+    "no": "3",
+    "constituency": "Kupwara",
+    "name": "Mir Mohammad Fayaz",
+    "party": "Jammu & Kashmir Peoples Democratic Party",
+    "map_shape_id": 63506,
+    "shape_name": "Kupwara"
+  },
+  {
+    "district": "Kupwara",
+    "no": "4",
+    "constituency": "Lolab",
+    "name": "Qaysar Jamshaid Lone",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63517,
+    "shape_name": "Lolab"
+  },
+  {
+    "district": "Kupwara",
+    "no": "5",
+    "constituency": "Handwara",
+    "name": "Sajad Gani Lone",
+    "party": "Jammu and Kashmir People's Conference",
+    "map_shape_id": 63528,
+    "shape_name": "Handwara"
+  },
+  {
+    "district": "Kupwara",
+    "no": "6",
+    "constituency": "Langate",
+    "name": "Khursheed Ahmed Sheikh",
+    "party": "Jammu and Kashmir Awami Ittehad Party",
+    "map_shape_id": 63539,
+    "shape_name": "Langate"
+  },
+  {
+    "district": "Baramulla",
+    "no": "7",
+    "constituency": "Sopore",
+    "name": "Irshad Rasool Kar",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63550,
+    "shape_name": "Sopore"
+  },
+  {
+    "district": "Baramulla",
+    "no": "8",
+    "constituency": "Rafiabad",
+    "name": "Javid Ahmad Dar",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63561,
+    "shape_name": "Rafiabad"
+  },
+  {
+    "district": "Baramulla",
+    "no": "9",
+    "constituency": "Uri",
+    "name": "Sajjad Safi",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63572,
+    "shape_name": "Uri"
+  },
+  {
+    "district": "Baramulla",
+    "no": "10",
+    "constituency": "Baramulla",
+    "name": "Javid Hassan Baig",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63583,
+    "shape_name": "Baramulla"
+  },
+  {
+    "district": "Baramulla",
+    "no": "11",
+    "constituency": "Gulmarg",
+    "name": "Pirzada Farooq Ahmed Shah",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63594,
+    "shape_name": "Gulmarg"
+  },
+  {
+    "district": "Baramulla",
+    "no": "12",
+    "constituency": "Wagoora\u2013Kreeri",
+    "name": "Irfan Hafiz Lone",
+    "party": "Indian National Congress",
+    "map_shape_id": 63605,
+    "shape_name": "Wagoora - Kreeri"
+  },
+  {
+    "district": "Baramulla",
+    "no": "13",
+    "constituency": "Pattan",
+    "name": "Javaid Riyaz",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63616,
+    "shape_name": "Pattan"
+  },
+  {
+    "district": "Bandipora",
+    "no": "14",
+    "constituency": "Sonawari",
+    "name": "Hilal Akbar Lone",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63627,
+    "shape_name": "Sonawari"
+  },
+  {
+    "district": "Bandipora",
+    "no": "15",
+    "constituency": "Bandipora",
+    "name": "Nizam Uddin Bhat",
+    "party": "Indian National Congress",
+    "map_shape_id": 63638,
+    "shape_name": "Bandipora"
+  },
+  {
+    "district": "Bandipora",
+    "no": "16",
+    "constituency": "Gurez",
+    "name": "Nazir Ahmed Khan",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63649,
+    "shape_name": "Gurez (ST)"
+  },
+  {
+    "district": "Ganderbal",
+    "no": "17",
+    "constituency": "Kangan",
+    "name": "Mian Mehar Ali",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63660,
+    "shape_name": "Kangan (ST)"
+  },
+  {
+    "district": "Ganderbal",
+    "no": "18",
+    "constituency": "Ganderbal",
+    "name": "Omar Abdullah",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63671,
+    "shape_name": "Ganderbal"
+  },
+  {
+    "district": "Srinagar",
+    "no": "19",
+    "constituency": "Hazratbal",
+    "name": "Salman Sagar",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63682,
+    "shape_name": "Hazratbal"
+  },
+  {
+    "district": "Srinagar",
+    "no": "20",
+    "constituency": "Khanyar",
+    "name": "Ali Mohammad Sagar",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63693,
+    "shape_name": "Khanyar"
+  },
+  {
+    "district": "Srinagar",
+    "no": "21",
+    "constituency": "Habba Kadal",
+    "name": "Shamim Firdous",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63704,
+    "shape_name": "Habbakadal"
+  },
+  {
+    "district": "Srinagar",
+    "no": "22",
+    "constituency": "Lal Chowk",
+    "name": "Sheikh Ahsan Ahmed",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63715,
+    "shape_name": "Lal Chowk"
+  },
+  {
+    "district": "Srinagar",
+    "no": "23",
+    "constituency": "Chanapora",
+    "name": "Mushtaq Guroo",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63726,
+    "shape_name": "Chanapora"
+  },
+  {
+    "district": "Srinagar",
+    "no": "24",
+    "constituency": "Zadibal",
+    "name": "Tanvir Sadiq",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63737,
+    "shape_name": "Zadibal"
+  },
+  {
+    "district": "Srinagar",
+    "no": "25",
+    "constituency": "Eidgah",
+    "name": "Mubarik Gul",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63742,
+    "shape_name": "Eidgah"
+  },
+  {
+    "district": "Srinagar",
+    "no": "26",
+    "constituency": "Central Shalteng",
+    "name": "Tariq Hameed Karra",
+    "party": "Indian National Congress",
+    "map_shape_id": 63743,
+    "shape_name": "Central Shalteng"
+  },
+  {
+    "district": "Budgam",
+    "no": "27",
+    "constituency": "Budgam",
+    "name": "Aga Syed Muntazir Mehdi",
+    "party": "Jammu & Kashmir Peoples Democratic Party",
+    "map_shape_id": 63744,
+    "shape_name": "Budgam"
+  },
+  {
+    "district": "Budgam",
+    "no": "28",
+    "constituency": "Beerwah",
+    "name": "Shafi Ahmad Wani",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63745,
+    "shape_name": "Beerwah"
+  },
+  {
+    "district": "Budgam",
+    "no": "29",
+    "constituency": "Khan Sahib",
+    "name": "Saif Ud Din Bhat",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63746,
+    "shape_name": "Khansahib"
+  },
+  {
+    "district": "Budgam",
+    "no": "31",
+    "constituency": "Chadoora",
+    "name": "Ali Mohammad Dar",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63748,
+    "shape_name": "Chadoora"
+  },
+  {
+    "district": "Pulwama",
+    "no": "32",
+    "constituency": "Pampore",
+    "name": "Hasnain Masoodi",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63749,
+    "shape_name": "Pampore"
+  },
+  {
+    "district": "Pulwama",
+    "no": "33",
+    "constituency": "Tral",
+    "name": "Rafiq Ahmad Naik",
+    "party": "Jammu & Kashmir Peoples Democratic Party",
+    "map_shape_id": 63750,
+    "shape_name": "Tral"
+  },
+  {
+    "district": "Pulwama",
+    "no": "34",
+    "constituency": "Pulwama",
+    "name": "Waheed Ur Rehman Para",
+    "party": "Jammu & Kashmir Peoples Democratic Party",
+    "map_shape_id": 63751,
+    "shape_name": "Pulwama"
+  },
+  {
+    "district": "Pulwama",
+    "no": "35",
+    "constituency": "Rajpora",
+    "name": "Ghulam Mohit Uddin Mir",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63752,
+    "shape_name": "Rajpora"
+  },
+  {
+    "district": "Shopian",
+    "no": "36",
+    "constituency": "Zainapora",
+    "name": "Showkat Hussain",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63753,
+    "shape_name": "Zainapora"
+  },
+  {
+    "district": "Shopian",
+    "no": "37",
+    "constituency": "Shopian",
+    "name": "Shabir Ahmad Kullay",
+    "party": "Independent",
+    "map_shape_id": 63754,
+    "shape_name": "Shopian"
+  },
+  {
+    "district": "Kulgam",
+    "no": "38",
+    "constituency": "DH Pora",
+    "name": "Sakina Itoo",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63755,
+    "shape_name": "D.H. Pora"
+  },
+  {
+    "district": "Kulgam",
+    "no": "39",
+    "constituency": "Kulgam",
+    "name": "Mohammad Yusuf Tarigami",
+    "party": "Communist Party of India (Marxist)",
+    "map_shape_id": 63756,
+    "shape_name": "Kulgam"
+  },
+  {
+    "district": "Kulgam",
+    "no": "40",
+    "constituency": "Devsar",
+    "name": "Peerzada Feroze Ahamad",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63757,
+    "shape_name": "Devsar"
+  },
+  {
+    "district": "Anantnag",
+    "no": "41",
+    "constituency": "Dooru",
+    "name": "Gulam Ahmad Mir",
+    "party": "Indian National Congress",
+    "map_shape_id": 63758,
+    "shape_name": "Dooru"
+  },
+  {
+    "district": "Anantnag",
+    "no": "42",
+    "constituency": "Kokernag",
+    "name": "Zafar Ali Khatana",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63759,
+    "shape_name": "Kokernag (ST)"
+  },
+  {
+    "district": "Anantnag",
+    "no": "43",
+    "constituency": "Anantnag West",
+    "name": "Abdul Majeed Bhat",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63760,
+    "shape_name": "Anantnag West"
+  },
+  {
+    "district": "Anantnag",
+    "no": "44",
+    "constituency": "Anantnag",
+    "name": "Peerzada Mohammad Syed",
+    "party": "Indian National Congress",
+    "map_shape_id": 67383,
+    "shape_name": "Anantnag"
+  },
+  {
+    "district": "Anantnag",
+    "no": "45",
+    "constituency": "Srigufwara\u2013Bijbehara",
+    "name": "Bashir Ahmed Shah Veeri",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 67477,
+    "shape_name": "Srigufwara - Bijbehara"
+  },
+  {
+    "district": "Anantnag",
+    "no": "46",
+    "constituency": "Shangus\u2013Anantnag East",
+    "name": "Reyaz Ahmad Khan",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63761,
+    "shape_name": "Shangus - Anantnag East"
+  },
+  {
+    "district": "Anantnag",
+    "no": "47",
+    "constituency": "Pahalgam",
+    "name": "Altaf Ahmad Wani",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63762,
+    "shape_name": "Pahalgam"
+  },
+  {
+    "district": "Kishtawar",
+    "no": "48",
+    "constituency": "Inderwal",
+    "name": "Payare Lal Sharma",
+    "party": "Independent",
+    "map_shape_id": 63763,
+    "shape_name": "Inderwal"
+  },
+  {
+    "district": "Kishtawar",
+    "no": "49",
+    "constituency": "Kishtwar",
+    "name": "Shagun Parihar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63764,
+    "shape_name": "Kishtwar"
+  },
+  {
+    "district": "Kishtawar",
+    "no": "50",
+    "constituency": "Padder\u2013Nagseni",
+    "name": "Sunil Kumar Sharma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63765,
+    "shape_name": "Padder-Nagseni"
+  },
+  {
+    "district": "Doda",
+    "no": "51",
+    "constituency": "Bhadarwah",
+    "name": "Daleep Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63766,
+    "shape_name": "Bhadarwah"
+  },
+  {
+    "district": "Doda",
+    "no": "52",
+    "constituency": "Doda",
+    "name": "Mehraj Malik",
+    "party": "Aam Aadmi Party",
+    "map_shape_id": 63767,
+    "shape_name": "Doda"
+  },
+  {
+    "district": "Doda",
+    "no": "53",
+    "constituency": "Doda West",
+    "name": "Shakti Raj Parihar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63768,
+    "shape_name": "Doda West"
+  },
+  {
+    "district": "Ramban",
+    "no": "54",
+    "constituency": "Ramban",
+    "name": "Arjun Singh Raju",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63769,
+    "shape_name": "Ramban"
+  },
+  {
+    "district": "Ramban",
+    "no": "55",
+    "constituency": "Banihal",
+    "name": "Sajad Shaheen",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63770,
+    "shape_name": "Banihal"
+  },
+  {
+    "district": "Reasi",
+    "no": "56",
+    "constituency": "Gulabgarh",
+    "name": "Khurshied Ahmed",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63771,
+    "shape_name": "Gulabgarh (ST)"
+  },
+  {
+    "district": "Reasi",
+    "no": "57",
+    "constituency": "Reasi",
+    "name": "Kuldeep Raj Dubey",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63772,
+    "shape_name": "Reasi"
+  },
+  {
+    "district": "Reasi",
+    "no": "58",
+    "constituency": "Shri Mata Vaishno Devi",
+    "name": "Baldev Raj Sharma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63773,
+    "shape_name": "Shri Mata Vaishno Devi"
+  },
+  {
+    "district": "Udhampur",
+    "no": "59",
+    "constituency": "Udhampur West",
+    "name": "Pawan Kumar Gupta",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63774,
+    "shape_name": "Udhampur West"
+  },
+  {
+    "district": "Udhampur",
+    "no": "60",
+    "constituency": "Udhampur East",
+    "name": "Ranbir Singh Pathania",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63775,
+    "shape_name": "Udhampur East"
+  },
+  {
+    "district": "Udhampur",
+    "no": "61",
+    "constituency": "Chenani",
+    "name": "Balwant Singh Mankotia",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63776,
+    "shape_name": "Chenani"
+  },
+  {
+    "district": "Udhampur",
+    "no": "62",
+    "constituency": "Ramnagar",
+    "name": "Sunil Bhardwaj",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63777,
+    "shape_name": "Ramnagar (SC)"
+  },
+  {
+    "district": "Kathua",
+    "no": "63",
+    "constituency": "Bani",
+    "name": "Rameshwar Singh Thakur",
+    "party": "Independent",
+    "map_shape_id": 63778,
+    "shape_name": "Bani"
+  },
+  {
+    "district": "Kathua",
+    "no": "64",
+    "constituency": "Billawar",
+    "name": "Satish Kumar Sharma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63779,
+    "shape_name": "Billawar"
+  },
+  {
+    "district": "Kathua",
+    "no": "65",
+    "constituency": "Basohli",
+    "name": "Thakur Darshan Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63780,
+    "shape_name": "Basohli"
+  },
+  {
+    "district": "Kathua",
+    "no": "66",
+    "constituency": "Jasrota",
+    "name": "Rajiv Jasrotia",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63781,
+    "shape_name": "Jasrota"
+  },
+  {
+    "district": "Kathua",
+    "no": "67",
+    "constituency": "Kathua",
+    "name": "Bharat Bhushan",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63782,
+    "shape_name": "Kathua (SC)"
+  },
+  {
+    "district": "Kathua",
+    "no": "68",
+    "constituency": "Hiranagar",
+    "name": "Vijay Kumar Sharma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63783,
+    "shape_name": "Hiranagar"
+  },
+  {
+    "district": "Samba",
+    "no": "69",
+    "constituency": "Ramgarh",
+    "name": "Devinder Kumar Manyal",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63784,
+    "shape_name": "Ramgarh (SC)"
+  },
+  {
+    "district": "Samba",
+    "no": "70",
+    "constituency": "Samba",
+    "name": "Surjeet Singh Slathia",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63785,
+    "shape_name": "Samba"
+  },
+  {
+    "district": "Samba",
+    "no": "71",
+    "constituency": "Vijaypur",
+    "name": "Chander Prakash Ganga",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63786,
+    "shape_name": "Vijaypur"
+  },
+  {
+    "district": "Jammu",
+    "no": "72",
+    "constituency": "Bishnah",
+    "name": "Rajeev Kumar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63787,
+    "shape_name": "Bishnah (SC)"
+  },
+  {
+    "district": "Jammu",
+    "no": "73",
+    "constituency": "Suchetgarh",
+    "name": "Gharu Ram Bhagat",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63788,
+    "shape_name": "Suchetgarh (SC)"
+  },
+  {
+    "district": "Jammu",
+    "no": "75",
+    "constituency": "Bahu",
+    "name": "Vikram Randhawa",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67431,
+    "shape_name": "Bahu"
+  },
+  {
+    "district": "Jammu",
+    "no": "76",
+    "constituency": "Jammu East",
+    "name": "Yudhvir Sethi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63790,
+    "shape_name": "Jammu East"
+  },
+  {
+    "district": "Jammu",
+    "no": "77",
+    "constituency": "Nagrota",
+    "name": "Devyani Singh Rana",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63791,
+    "shape_name": "Nagrota"
+  },
+  {
+    "district": "Jammu",
+    "no": "78",
+    "constituency": "Jammu West",
+    "name": "Arvind Gupta",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63792,
+    "shape_name": "Jammu West"
+  },
+  {
+    "district": "Jammu",
+    "no": "79",
+    "constituency": "Jammu North",
+    "name": "Sham Lal Sharma",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63793,
+    "shape_name": "Jammu North"
+  },
+  {
+    "district": "Jammu",
+    "no": "80",
+    "constituency": "Marh",
+    "name": "Surinder Kumar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67484,
+    "shape_name": "Marh (SC)"
+  },
+  {
+    "district": "Jammu",
+    "no": "81",
+    "constituency": "Akhnoor",
+    "name": "Mohan Lal",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63794,
+    "shape_name": "Akhnoor (SC)"
+  },
+  {
+    "district": "Jammu",
+    "no": "82",
+    "constituency": "Chhamb",
+    "name": "Satish Sharma",
+    "party": "Independent",
+    "map_shape_id": 63795,
+    "shape_name": "Chhamb"
+  },
+  {
+    "district": "Rajouri",
+    "no": "83",
+    "constituency": "Kalakote\u2013Sunderbani",
+    "name": "Randhir Singh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67454,
+    "shape_name": "Kalakote - Sunderbani"
+  },
+  {
+    "district": "Rajouri",
+    "no": "84",
+    "constituency": "Nowshera",
+    "name": "Surinder Choudhary",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63796,
+    "shape_name": "Nowshera"
+  },
+  {
+    "district": "Rajouri",
+    "no": "85",
+    "constituency": "Rajouri",
+    "name": "Iftkar Ahmed",
+    "party": "Indian National Congress",
+    "map_shape_id": 63797,
+    "shape_name": "Rajouri (ST)"
+  },
+  {
+    "district": "Rajouri",
+    "no": "86",
+    "constituency": "Budhal",
+    "name": "Javaid Iqbal",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63798,
+    "shape_name": "Budhal (ST)"
+  },
+  {
+    "district": "Poonch",
+    "no": "88",
+    "constituency": "Surankote",
+    "name": "Choudhary Mohammed Akram",
+    "party": "Independent",
+    "map_shape_id": 63800,
+    "shape_name": "Surankote (ST)"
+  },
+  {
+    "district": "Poonch",
+    "no": "89",
+    "constituency": "Poonch Haveli",
+    "name": "Ajaz Ahmed Jan",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63801,
+    "shape_name": "Poonch Haveli"
+  },
+  {
+    "district": "Poonch",
+    "no": "90",
+    "constituency": "Mendhar",
+    "name": "Javed Ahmed Rana",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63802,
+    "shape_name": "Mendhar (ST)"
+  },
+  {
+    "district": "Budgam",
+    "no": "30",
+    "constituency": "Charari Sharief",
+    "name": "Abdul Rahim Rather",
+    "party": "Jammu & Kashmir National Conference",
+    "map_shape_id": 63747,
+    "shape_name": "Chrar-i-Sharief"
+  },
+  {
+    "district": "Jammu",
+    "no": "74",
+    "constituency": "RS Pora\u2013Jammu South",
+    "name": "Narinder Singh Raina",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63789,
+    "shape_name": "R.S. Pura - Jammu South"
+  },
+  {
+    "district": "Rajouri",
+    "no": "87",
+    "constituency": "Thanamandi",
+    "name": "Muzaffar Iqbal Khan",
+    "party": "Independent",
+    "map_shape_id": 63799,
+    "shape_name": "Thannamandi (ST)"
+  }
+]

@@ -1,0 +1,542 @@
+[
+  {
+    "district": "Dimapur",
+    "no": "1",
+    "constituency": "Dimapur I",
+    "name": "H. Tovihoto Ayemi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63890,
+    "shape_name": "Dimapur-I"
+  },
+  {
+    "district": "Dimapur",
+    "no": "2",
+    "constituency": "Dimapur II",
+    "name": "Moatoshi Longk\u00fcmer",
+    "party": "Naga People's Front",
+    "map_shape_id": 63891,
+    "shape_name": "Dimapur-II"
+  },
+  {
+    "district": "Ch\u00fcmoukedima",
+    "no": "3",
+    "constituency": "Dimapur III",
+    "name": "Hekani Jakhalu Kense",
+    "party": "Naga People's Front",
+    "map_shape_id": 63892,
+    "shape_name": "Dimapur-III"
+  },
+  {
+    "district": "Ch\u00fcmoukedima",
+    "no": "4",
+    "constituency": "Ghaspani I",
+    "name": "Jacob Zhimomi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63893,
+    "shape_name": "Ghaspani-I"
+  },
+  {
+    "district": "Ch\u00fcmoukedima",
+    "no": "5",
+    "constituency": "Ghaspani II",
+    "name": "Zhaleo Rio",
+    "party": "Naga People's Front",
+    "map_shape_id": 63894,
+    "shape_name": "Ghaspani-Ii"
+  },
+  {
+    "district": "Peren",
+    "no": "7",
+    "constituency": "Peren",
+    "name": "T. R. Zeliang",
+    "party": "Naga People's Front",
+    "map_shape_id": 63896,
+    "shape_name": "Peren"
+  },
+  {
+    "district": "Kohima",
+    "no": "8",
+    "constituency": "Western Angami",
+    "name": "Salhoutuonuo Kruse",
+    "party": "Naga People's Front",
+    "map_shape_id": 63897,
+    "shape_name": "Western Angami"
+  },
+  {
+    "district": "Kohima",
+    "no": "9",
+    "constituency": "Kohima Town",
+    "name": "Tseilhoutuo Rh\u00fctso",
+    "party": "National People's Party (India)",
+    "map_shape_id": 63898,
+    "shape_name": "Kohima Town"
+  },
+  {
+    "district": "Kohima",
+    "no": "10",
+    "constituency": "Northern Angami I",
+    "name": "Kekhrielhoulie Yhome",
+    "party": "Naga People's Front",
+    "map_shape_id": 63899,
+    "shape_name": "Northern Angami-I"
+  },
+  {
+    "district": "Kohima",
+    "no": "11",
+    "constituency": "Northern Angami II",
+    "name": "Neiphiu Rio",
+    "party": "Naga People's Front",
+    "map_shape_id": 67574,
+    "shape_name": "Northern Angami-II"
+  },
+  {
+    "district": "Tseminy\u00fc",
+    "no": "12",
+    "constituency": "Tseminy\u00fc",
+    "name": "Jwenga Seb",
+    "party": "Independent",
+    "map_shape_id": 67475,
+    "shape_name": "Tseminyu"
+  },
+  {
+    "district": "Z\u00fcnheboto",
+    "no": "13",
+    "constituency": "Pughoboto",
+    "name": "Sukhato A. Sema",
+    "party": "Lok Janshakti Party (Ram Vilas)",
+    "map_shape_id": 63900,
+    "shape_name": "Pughoboto"
+  },
+  {
+    "district": "Kohima",
+    "no": "14",
+    "constituency": "Southern Angami I",
+    "name": "Kevipodi Sophie",
+    "party": "Independent",
+    "map_shape_id": 63901,
+    "shape_name": "Southern Angami-I"
+  },
+  {
+    "district": "Kohima",
+    "no": "15",
+    "constituency": "Southern Angami II",
+    "name": "Kropol Vits\u00fc",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63902,
+    "shape_name": "Southern Angami-II"
+  },
+  {
+    "district": "Phek",
+    "no": "16",
+    "constituency": "Pf\u00fctsero",
+    "name": "Neisatuo Mero",
+    "party": "Independent",
+    "map_shape_id": 63903,
+    "shape_name": "Pfutsero"
+  },
+  {
+    "district": "Phek",
+    "no": "17",
+    "constituency": "Chizami",
+    "name": "K. G. Kenye",
+    "party": "Naga People's Front",
+    "map_shape_id": 63904,
+    "shape_name": "Chizami"
+  },
+  {
+    "district": "Phek",
+    "no": "18",
+    "constituency": "Chozuba",
+    "name": "K\u00fcdecho Khamo",
+    "party": "Naga People's Front",
+    "map_shape_id": 63905,
+    "shape_name": "Chazouba"
+  },
+  {
+    "district": "Phek",
+    "no": "19",
+    "constituency": "Phek",
+    "name": "Kuzholuzo Nienu",
+    "party": "Naga People's Front",
+    "map_shape_id": 63906,
+    "shape_name": "Phek"
+  },
+  {
+    "district": "Phek",
+    "no": "20",
+    "constituency": "Meluri",
+    "name": "Z. Nyusietho Nyuthe",
+    "party": "Naga People's Front",
+    "map_shape_id": 63907,
+    "shape_name": "Meluri"
+  },
+  {
+    "district": "Mokokchung",
+    "no": "21",
+    "constituency": "Tuli",
+    "name": "A. Pangjung Jamir",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67520,
+    "shape_name": "Tuli"
+  },
+  {
+    "district": "Mokokchung",
+    "no": "22",
+    "constituency": "Arkakong",
+    "name": "Nuklutoshi",
+    "party": "National People's Party (India)",
+    "map_shape_id": 67490,
+    "shape_name": "Arkakong"
+  },
+  {
+    "district": "Mokokchung",
+    "no": "23",
+    "constituency": "Impur",
+    "name": "T. M. Mannen",
+    "party": "Naga People's Front",
+    "map_shape_id": 63908,
+    "shape_name": "Impur"
+  },
+  {
+    "district": "Mokokchung",
+    "no": "24",
+    "constituency": "Angetyongpang",
+    "name": "Tongpang Oz\u00fck\u00fcm",
+    "party": "Naga People's Front",
+    "map_shape_id": 63909,
+    "shape_name": "Angetyongpang"
+  },
+  {
+    "district": "Mokokchung",
+    "no": "25",
+    "constituency": "Mongoya",
+    "name": "Imkongmar",
+    "party": "Naga People's Front",
+    "map_shape_id": 63910,
+    "shape_name": "Mongoya"
+  },
+  {
+    "district": "Mokokchung",
+    "no": "26",
+    "constituency": "Aonglenden",
+    "name": "Sharingain Longk\u00fcmer",
+    "party": "Naga People's Front",
+    "map_shape_id": 63911,
+    "shape_name": "Aonglenden"
+  },
+  {
+    "district": "Mokokchung",
+    "no": "27",
+    "constituency": "Mokokchung Town",
+    "name": "Mets\u00fcbo Jamir",
+    "party": "Naga People's Front",
+    "map_shape_id": 63912,
+    "shape_name": "Mokokchung Town"
+  },
+  {
+    "district": "Mokokchung",
+    "no": "28",
+    "constituency": "Koridang",
+    "name": "Daochier I. Imchen",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67541,
+    "shape_name": "Koridang"
+  },
+  {
+    "district": "Mokokchung",
+    "no": "29",
+    "constituency": "Jangpetkong",
+    "name": "Temjenmemba",
+    "party": "Naga People's Front",
+    "map_shape_id": 67575,
+    "shape_name": "Jangpetkong"
+  },
+  {
+    "district": "Mokokchung",
+    "no": "30",
+    "constituency": "Alongtaki",
+    "name": "Temjen Imna Along",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 67401,
+    "shape_name": "Alongtaki"
+  },
+  {
+    "district": "Z\u00fcnheboto",
+    "no": "31",
+    "constituency": "Akuluto",
+    "name": "Kazheto Kinimi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63913,
+    "shape_name": "Akuluto"
+  },
+  {
+    "district": "Z\u00fcnheboto",
+    "no": "32",
+    "constituency": "Atoiz\u00fc",
+    "name": "Picto Shohe",
+    "party": "Naga People's Front",
+    "map_shape_id": 63914,
+    "shape_name": "Atoizu"
+  },
+  {
+    "district": "Z\u00fcnheboto",
+    "no": "34",
+    "constituency": "Aghunato",
+    "name": "G. Ikuto Zhimomi",
+    "party": "Naga People's Front",
+    "map_shape_id": 63916,
+    "shape_name": "Aghunato"
+  },
+  {
+    "district": "Z\u00fcnheboto",
+    "no": "35",
+    "constituency": "Z\u00fcnheboto",
+    "name": "K. Tokugha Sukhalu",
+    "party": "Naga People's Front",
+    "map_shape_id": 63917,
+    "shape_name": "Zunheboto"
+  },
+  {
+    "district": "Z\u00fcnheboto",
+    "no": "36",
+    "constituency": "Satakha",
+    "name": "G. Kaito Aye",
+    "party": "Naga People's Front",
+    "map_shape_id": 63918,
+    "shape_name": "Satakha"
+  },
+  {
+    "district": "Wokha",
+    "no": "37",
+    "constituency": "Ty\u00fci",
+    "name": "Yanthungo Patton",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63919,
+    "shape_name": "Tyui"
+  },
+  {
+    "district": "Wokha",
+    "no": "38",
+    "constituency": "Wokha",
+    "name": "Y. Mhonbemo H\u00fcmtsoe",
+    "party": "Naga People's Front",
+    "map_shape_id": 63920,
+    "shape_name": "Wokha"
+  },
+  {
+    "district": "Wokha",
+    "no": "39",
+    "constituency": "Sanis",
+    "name": "Mhathung Yanthan",
+    "party": "Naga People's Front",
+    "map_shape_id": 67578,
+    "shape_name": "Sanis"
+  },
+  {
+    "district": "Wokha",
+    "no": "40",
+    "constituency": "Bhandari",
+    "name": "Achumbemo Kikon",
+    "party": "Naga People's Front",
+    "map_shape_id": 67572,
+    "shape_name": "Bhandari"
+  },
+  {
+    "district": "Mon",
+    "no": "41",
+    "constituency": "Tizit",
+    "name": "P. Paiwang Konyak",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63921,
+    "shape_name": "Tizit"
+  },
+  {
+    "district": "Mon",
+    "no": "42",
+    "constituency": "Wakching",
+    "name": "W. Chingang Konyak",
+    "party": "Naga People's Front",
+    "map_shape_id": 63922,
+    "shape_name": "Wakching"
+  },
+  {
+    "district": "Mon",
+    "no": "43",
+    "constituency": "Tapi",
+    "name": "Wangpang Konyak",
+    "party": "Nagaland People's Front",
+    "map_shape_id": 63923,
+    "shape_name": "Tapi"
+  },
+  {
+    "district": "Mon",
+    "no": "44",
+    "constituency": "Phomching",
+    "name": "K. Konngam Konyak",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63924,
+    "shape_name": "Phomching"
+  },
+  {
+    "district": "Mon",
+    "no": "45",
+    "constituency": "Tehok",
+    "name": "C. L. John",
+    "party": "Naga People's Front",
+    "map_shape_id": 63925,
+    "shape_name": "Tehok"
+  },
+  {
+    "district": "Mon",
+    "no": "46",
+    "constituency": "Mon Town",
+    "name": "Y. Mankhao Konyak",
+    "party": "Naga People's Front",
+    "map_shape_id": 63926,
+    "shape_name": "Mon Town"
+  },
+  {
+    "district": "Mon",
+    "no": "47",
+    "constituency": "Aboi",
+    "name": "C. Manpon Konyak",
+    "party": "Independent",
+    "map_shape_id": 63927,
+    "shape_name": "Aboi"
+  },
+  {
+    "district": "Mon",
+    "no": "48",
+    "constituency": "Moka",
+    "name": "A. Nyamnyei Konyak",
+    "party": "National People's Party (India)",
+    "map_shape_id": 63928,
+    "shape_name": "Moka"
+  },
+  {
+    "district": "Longleng",
+    "no": "49",
+    "constituency": "Tamlu",
+    "name": "B. Bangtick Phom",
+    "party": "Independent",
+    "map_shape_id": 63929,
+    "shape_name": "Tamlu"
+  },
+  {
+    "district": "Longleng",
+    "no": "50",
+    "constituency": "Longleng",
+    "name": "A. Pongshi Phom",
+    "party": "Naga People's Front",
+    "map_shape_id": 63930,
+    "shape_name": "Longleng"
+  },
+  {
+    "district": "Tuensang",
+    "no": "51",
+    "constituency": "Noksen",
+    "name": "Y. Lima Onen Chang",
+    "party": "Republican Party of India (Athawale)",
+    "map_shape_id": 63931,
+    "shape_name": "Noksen"
+  },
+  {
+    "district": "Tuensang",
+    "no": "52",
+    "constituency": "Longkhim\u2013Chare",
+    "name": "Sethrongkyu Sangtam",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63932,
+    "shape_name": "Longkhim Chare"
+  },
+  {
+    "district": "Tuensang",
+    "no": "53",
+    "constituency": "Tuensang Sadar I",
+    "name": "P. Bashangmongba Chang",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 63933,
+    "shape_name": "Tuensang Sadar-I"
+  },
+  {
+    "district": "Tuensang",
+    "no": "54",
+    "constituency": "Tuensang Sadar II",
+    "name": "Imtichoba",
+    "party": "Republican Party of India (Athawale)",
+    "map_shape_id": 63934,
+    "shape_name": "Tuensang Sadar-II"
+  },
+  {
+    "district": "Mon",
+    "no": "55",
+    "constituency": "Tobu",
+    "name": "Naiba Konyak",
+    "party": "Lok Janshakti Party (Ram Vilas)",
+    "map_shape_id": 63935,
+    "shape_name": "Tobu"
+  },
+  {
+    "district": "Noklak",
+    "no": "56",
+    "constituency": "Noklak",
+    "name": "Puthai Longon",
+    "party": "Naga People's Front",
+    "map_shape_id": 63936,
+    "shape_name": "Noklak"
+  },
+  {
+    "district": "Noklak",
+    "no": "57",
+    "constituency": "Thonoknyu",
+    "name": "Benei M. Lamthiu",
+    "party": "National People's Party (India)",
+    "map_shape_id": 63937,
+    "shape_name": "Thonoknyu"
+  },
+  {
+    "district": "Shamator",
+    "no": "58",
+    "constituency": "Shamator\u2013Chessore",
+    "name": "S. Keoshu Yimchunger",
+    "party": "Naga People's Front",
+    "map_shape_id": 63938,
+    "shape_name": "Shamator Chessore"
+  },
+  {
+    "district": "Kiphire",
+    "no": "59",
+    "constituency": "Seyochung\u2013Sitimi",
+    "name": "C. Kipili Sangtam",
+    "party": "National People's Party (India)",
+    "map_shape_id": 63939,
+    "shape_name": "Seyochung Sitimi"
+  },
+  {
+    "district": "Kiphire",
+    "no": "60",
+    "constituency": "Pungro\u2013Kiphire",
+    "name": "S. Kiusumew Yimchunger",
+    "party": "Naga People's Front",
+    "map_shape_id": 63940,
+    "shape_name": "Pungro Kiphire"
+  },
+  {
+    "district": "Peren",
+    "no": "6",
+    "constituency": "Tening",
+    "name": "Namri Nchang",
+    "party": "Naga People's Front",
+    "map_shape_id": 63895,
+    "shape_name": "Tenning"
+  },
+  {
+    "district": "Z\u00fcnheboto",
+    "no": "33",
+    "constituency": "Suruhoto",
+    "name": "S. Toiho Yeptho",
+    "party": "Naga People's Front",
+    "map_shape_id": 63915,
+    "shape_name": "Suruhuto"
+  }
+]

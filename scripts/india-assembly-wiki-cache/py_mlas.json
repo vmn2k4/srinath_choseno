@@ -1,0 +1,205 @@
+[
+  {
+    "district": "Puducherry",
+    "no": "1",
+    "constituency": "Mannadipet",
+    "name": "A. Namassivayam",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Puducherry",
+    "no": "2",
+    "constituency": "Thirubuvanai (SC)",
+    "name": "A. K. Sai J. Saravanan Kumar",
+    "party": "Tamilaga Vettri Kazhagam"
+  },
+  {
+    "district": "Puducherry",
+    "no": "3",
+    "constituency": "Ossudu (SC)",
+    "name": "P. Karthikeyan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Puducherry",
+    "no": "4",
+    "constituency": "Mangalam",
+    "name": "N. Rangaswamy",
+    "party": "All India N.R. Congress"
+  },
+  {
+    "district": "Puducherry",
+    "no": "5",
+    "constituency": "Villianur",
+    "name": "B. Ravicoumar",
+    "party": "All India N.R. Congress"
+  },
+  {
+    "district": "Puducherry",
+    "no": "6",
+    "constituency": "Ozhukarai",
+    "name": "K. Narayanasamy",
+    "party": "All India N.R. Congress"
+  },
+  {
+    "district": "Puducherry",
+    "no": "7",
+    "constituency": "Kadirkamam",
+    "name": "Azhaganantham",
+    "party": "Independent"
+  },
+  {
+    "district": "Puducherry",
+    "no": "8",
+    "constituency": "Indira Nagar",
+    "name": "A. K. D. Arumugam",
+    "party": "All India N.R. Congress"
+  },
+  {
+    "district": "Puducherry",
+    "no": "10",
+    "constituency": "Kamaraj Nagar",
+    "name": "Jose Charles Martin",
+    "party": "Latchiya Jananayaka Katchi"
+  },
+  {
+    "district": "Puducherry",
+    "no": "11",
+    "constituency": "Lawspet",
+    "name": "V. P. Sivakolundhu",
+    "party": "All India N.R. Congress"
+  },
+  {
+    "district": "Puducherry",
+    "no": "12",
+    "constituency": "Kalapet",
+    "name": "Ramesh",
+    "party": "Dravida Munnetra Kazhagam"
+  },
+  {
+    "district": "Puducherry",
+    "no": "13",
+    "constituency": "Muthialpet",
+    "name": "Vaiyapuri Manikandan",
+    "party": "All India N.R. Congress"
+  },
+  {
+    "district": "Puducherry",
+    "no": "14",
+    "constituency": "Raj Bhavan",
+    "name": "Vignesh Kannan",
+    "party": "Dravida Munnetra Kazhagam"
+  },
+  {
+    "district": "Puducherry",
+    "no": "15",
+    "constituency": "Oupalam",
+    "name": "A. Anbalagan",
+    "party": "All India Anna Dravida Munnetra Kazhagam"
+  },
+  {
+    "district": "Puducherry",
+    "no": "16",
+    "constituency": "Orleampeth",
+    "name": "G. Nehru Kuppusamy",
+    "party": "Neyam Makkal Kazhagam"
+  },
+  {
+    "district": "Puducherry",
+    "no": "17",
+    "constituency": "Nellithope",
+    "name": "V. Karthikeyan",
+    "party": "Dravida Munnetra Kazhagam"
+  },
+  {
+    "district": "Puducherry",
+    "no": "18",
+    "constituency": "Mudaliarpet",
+    "name": "A. Johnkumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Puducherry",
+    "no": "19",
+    "constituency": "Ariankuppam",
+    "name": "Aiyappan",
+    "party": "All India N.R. Congress"
+  },
+  {
+    "district": "Puducherry",
+    "no": "20",
+    "constituency": "Manavely",
+    "name": "B. Ramu",
+    "party": "Tamilaga Vettri Kazhagam"
+  },
+  {
+    "district": "Puducherry",
+    "no": "21",
+    "constituency": "Embalam (SC)",
+    "name": "E. Mohandaoss",
+    "party": "All India N.R. Congress"
+  },
+  {
+    "district": "Puducherry",
+    "no": "22",
+    "constituency": "Nettapakkam (SC)",
+    "name": "Rajavelu",
+    "party": "All India N.R. Congress"
+  },
+  {
+    "district": "Puducherry",
+    "no": "23",
+    "constituency": "Bahour",
+    "name": "R. Senthilkumar",
+    "party": "Dravida Munnetra Kazhagam"
+  },
+  {
+    "district": "Karaikal",
+    "no": "24",
+    "constituency": "Nedungadu (SC)",
+    "name": "V. Vigneswaran",
+    "party": "Independent"
+  },
+  {
+    "district": "Karaikal",
+    "no": "25",
+    "constituency": "Thirunallar",
+    "name": "G. N. S. Rajasekaran",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Karaikal",
+    "no": "26",
+    "constituency": "Karaikal North",
+    "name": "P. R. N. Thirumurugan",
+    "party": "All India N.R. Congress"
+  },
+  {
+    "district": "Karaikal",
+    "no": "27",
+    "constituency": "Karaikal South",
+    "name": "A. M. H. Nazeem",
+    "party": "Dravida Munnetra Kazhagam"
+  },
+  {
+    "district": "Karaikal",
+    "no": "28",
+    "constituency": "Neravy T. R. Pattinam",
+    "name": "T. K. S. M. Meenatchisundaram",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mahe",
+    "no": "29",
+    "constituency": "Mahe",
+    "name": "T. Ashok Kumar",
+    "party": "Independent"
+  },
+  {
+    "district": "Yanam",
+    "no": "30",
+    "constituency": "Yanam",
+    "name": "Malladi Krishna Rao",
+    "party": "All India N.R. Congress"
+  }
+]

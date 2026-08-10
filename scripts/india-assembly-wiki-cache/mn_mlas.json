@@ -1,0 +1,422 @@
+[
+  {
+    "district": "Imphal East",
+    "no": "1",
+    "constituency": "Khundrakpam",
+    "name": "T. Lokeshwar Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Imphal East",
+    "no": "2",
+    "constituency": "Heingang",
+    "name": "N. Biren Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal East",
+    "no": "3",
+    "constituency": "Khurai",
+    "name": "L. Susindro Meitei",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal East",
+    "no": "4",
+    "constituency": "Kshetrigao",
+    "name": "Sheikh Noorul Hassan",
+    "party": "National People's Party (India)"
+  },
+  {
+    "district": "Imphal East",
+    "no": "5",
+    "constituency": "Thongju",
+    "name": "T. Biswajit Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal East",
+    "no": "6",
+    "constituency": "Keirao",
+    "name": "L. Rameshwor Meitei",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal East",
+    "no": "7",
+    "constituency": "Andro",
+    "name": "T. Shyamkumar Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal East",
+    "no": "8",
+    "constituency": "Lamlai",
+    "name": "K. Ibomcha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal West",
+    "no": "9",
+    "constituency": "Thangmeiband",
+    "name": "K. Joykisan Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal West",
+    "no": "10",
+    "constituency": "Uripok",
+    "name": "K. Raghumani Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal West",
+    "no": "11",
+    "constituency": "Sagolband",
+    "name": "Rajkumar Imo Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal West",
+    "no": "12",
+    "constituency": "Keishamthong",
+    "name": "Sapam Nishikant Singh",
+    "party": "Independent"
+  },
+  {
+    "district": "Imphal West",
+    "no": "13",
+    "constituency": "Singjamei",
+    "name": "Yumnam Khemchand Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal East",
+    "no": "14",
+    "constituency": "Yaiskul",
+    "name": "T. Satyabrata Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal East",
+    "no": "15",
+    "constituency": "Wangkhei",
+    "name": "Thangjam Arunkumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal West",
+    "no": "16",
+    "constituency": "Sekmai",
+    "name": "Heikham Dingo Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal West",
+    "no": "17",
+    "constituency": "Lamsang",
+    "name": "Sorokhaibam Rajen",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal West",
+    "no": "18",
+    "constituency": "Konthoujam",
+    "name": "Sapam Ranjan Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal West",
+    "no": "19",
+    "constituency": "Patsoi",
+    "name": "Sapam Kunjakeswor Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal West",
+    "no": "20",
+    "constituency": "Langthabal",
+    "name": "Karam Shyam",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal West",
+    "no": "21",
+    "constituency": "Naoriya Pakhanglakpa",
+    "name": "Soraisam Kebi Devi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Imphal West",
+    "no": "22",
+    "constituency": "Wangoi",
+    "name": "Khuraijam Loken Singh",
+    "party": "National People's Party (India)"
+  },
+  {
+    "district": "Imphal West",
+    "no": "23",
+    "constituency": "Mayang Imphal",
+    "name": "Kongkham Robindro Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bishnupur",
+    "no": "24",
+    "constituency": "Nambol",
+    "name": "T. Basanta Kumar Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bishnupur",
+    "no": "25",
+    "constituency": "Oinam",
+    "name": "Irengbam Nalini Devi",
+    "party": "National People's Party (India)"
+  },
+  {
+    "district": "Bishnupur",
+    "no": "26",
+    "constituency": "Bishnupur",
+    "name": "Govindas Konthoujam",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bishnupur",
+    "no": "27",
+    "constituency": "Moirang",
+    "name": "Thongam Shanti Singh",
+    "party": "National People's Party (India)"
+  },
+  {
+    "district": "Bishnupur",
+    "no": "28",
+    "constituency": "Thanga",
+    "name": "Tongbram Robindro Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bishnupur",
+    "no": "29",
+    "constituency": "Kumbi",
+    "name": "S. Premachandra Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thoubal",
+    "no": "30",
+    "constituency": "Lilong",
+    "name": "Muhammad Abdul Nasir",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Thoubal",
+    "no": "31",
+    "constituency": "Thoubal",
+    "name": "Okram Ibobi Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Thoubal",
+    "no": "32",
+    "constituency": "Wangkhem",
+    "name": "K. Meghachandra Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Thoubal",
+    "no": "33",
+    "constituency": "Heirok",
+    "name": "T. Radheshyam Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thoubal",
+    "no": "34",
+    "constituency": "Wangjing Tentha",
+    "name": "Paonam Brojen",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thoubal",
+    "no": "35",
+    "constituency": "Khangabok",
+    "name": "Surjakumar Okram",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Thoubal",
+    "no": "36",
+    "constituency": "Wabgai",
+    "name": "Usham Deben Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thoubal",
+    "no": "37",
+    "constituency": "Kakching",
+    "name": "M. Rameshwar Singh",
+    "party": "National People's Party (India)"
+  },
+  {
+    "district": "Thoubal",
+    "no": "38",
+    "constituency": "Hiyanglam",
+    "name": "Yumnam Radheshyam",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Thoubal",
+    "no": "39",
+    "constituency": "Sugnu",
+    "name": "Kangujam Ranjit Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Imphal East",
+    "no": "40",
+    "constituency": "Jiribam",
+    "name": "Ashab Uddin",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chandel",
+    "no": "41",
+    "constituency": "Chandel",
+    "name": "Olish Shilshi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chandel",
+    "no": "42",
+    "constituency": "Tengnoupal",
+    "name": "Letpao Haokip",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Ukhrul",
+    "no": "43",
+    "constituency": "Phungyar",
+    "name": "Leishiyo Keishing",
+    "party": "Naga People's Front"
+  },
+  {
+    "district": "Ukhrul",
+    "no": "44",
+    "constituency": "Ukhrul",
+    "name": "Ram Muivah",
+    "party": "Naga People's Front"
+  },
+  {
+    "district": "Ukhrul",
+    "no": "45",
+    "constituency": "Chingai",
+    "name": "Khashim Vashum",
+    "party": "Naga People's Front"
+  },
+  {
+    "district": "Senapati",
+    "no": "46",
+    "constituency": "Saikul",
+    "name": "K. Haokip Hangshing",
+    "party": "Kuki People's Alliance"
+  },
+  {
+    "district": "Senapati",
+    "no": "47",
+    "constituency": "Karong",
+    "name": "J. Kumo Sha",
+    "party": "Independent"
+  },
+  {
+    "district": "Senapati",
+    "no": "48",
+    "constituency": "Mao",
+    "name": "Losii Dikho",
+    "party": "Naga People's Front"
+  },
+  {
+    "district": "Senapati",
+    "no": "49",
+    "constituency": "Tadubi",
+    "name": "N. Kayisii",
+    "party": "National People's Party (India)"
+  },
+  {
+    "district": "Senapati",
+    "no": "50",
+    "constituency": "Kangpokpi",
+    "name": "Nemcha Kipgen",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Senapati",
+    "no": "51",
+    "constituency": "Saitu",
+    "name": "Haokholet Kipgen",
+    "party": "Independent"
+  },
+  {
+    "district": "Tamenglong",
+    "no": "52",
+    "constituency": "Tamei",
+    "name": "Awangbow Newmai",
+    "party": "Naga People's Front"
+  },
+  {
+    "district": "Tamenglong",
+    "no": "53",
+    "constituency": "Tamenglong",
+    "name": "Janghemlung Panmei",
+    "party": "National People's Party (India)"
+  },
+  {
+    "district": "Tamenglong",
+    "no": "54",
+    "constituency": "Nungba",
+    "name": "Dinganglung Gangmei",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Churachandpur",
+    "no": "55",
+    "constituency": "Tipaimukh",
+    "name": "Ngursanglur Sanate",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Churachandpur",
+    "no": "56",
+    "constituency": "Thanlon",
+    "name": "Vungzagin Valte",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Churachandpur",
+    "no": "57",
+    "constituency": "Henglep",
+    "name": "Letzamang Haokip",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Churachandpur",
+    "no": "58",
+    "constituency": "Churachandpur",
+    "name": "L. M. Khaute",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Churachandpur",
+    "no": "59",
+    "constituency": "Saikot",
+    "name": "Paolienlal Haokip",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Churachandpur",
+    "no": "60",
+    "constituency": "Singhat",
+    "name": "Chinlunthang Manlun",
+    "party": "Kuki People's Alliance"
+  }
+]

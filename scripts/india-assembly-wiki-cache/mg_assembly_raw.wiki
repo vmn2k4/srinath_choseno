@@ -1,0 +1,619 @@
+{{Short description|Unicameral legislature of the Indian state of Meghalaya}}
+{{Use dmy dates|date=March 2023}}
+{{Infobox legislative term
+|name=11th Meghalaya Assembly
+|before=[[10th Meghalaya Assembly]]
+|state=[[Meghalaya]]
+|body=[[Meghalaya Legislative Assembly]]
+|country=[[India]]
+|government=[[Meghalaya Democratic Alliance (2018)|Meghalaya Democratic Alliance]]
+|website=https://megassembly.gov.in/
+|meeting_place=Vidhana Bhavan, Shillong, Meghalaya, India
+|image=
+}}
+
+'''Eleventh Meghalaya Assembly''' constituted after the [[2023 Meghalaya Legislative Assembly election]]. Elections were held in [[List of constituencies of the Meghalaya Legislative Assembly|59]] constituencies.<ref>{{Cite web |last=Singharia |first=Kanishka |date=2023-01-18 |title=Meghalaya polls to be held on Feb 27, results on March 2 |url=https://www.hindustantimes.com/india-news/meghalaya-polls-to-be-held-on-feb-27-results-on-march-2-101674034750467.html |access-date=2023-03-02 |website=Hindustan Times |language=en}}</ref> Voting on [[Sohiong Assembly constituency|Sohiong]] was postponed after the death of UDP's candidate H. D. R. Lyngdoh.<ref>{{Cite web |last=ANI |date=2023-02-21 |title=Polling postponed in Sohiong, Meghalaya after UDP candidate's death |url=https://www.business-standard.com/article/elections/polling-postponed-in-sohiong-meghalaya-after-udp-candidate-s-death-123022100374_1.html |access-date=2023-03-02 |website=www.business-standard.com |language=en}}</ref>
+
+== History ==
+After results were declared on 2 March 2023, it resulted into a hung assembly. Ruling NPP got 26 seats however BJP supported [[Meghalaya Democratic Alliance (2018)|MDA]].<ref>{{Cite web |date=2023-03-02 |title=Meghalaya Election Results 2023 highlights: BJP submits letter of support to NPP |url=https://www.hindustantimes.com/india-news/meghalaya-election-result-2023-live-60-assembly-constituencies-election-news-101677714304477.html |access-date=2023-03-02 |website=Hindustan Times |language=en}}</ref><ref>{{Cite web |last=Gupta |first=Anamni |last2=Suresh |first2=Anandu |date=2023-03-02 |title=Meghalaya Election Results 2023 Live Updates: Conrad Sangma falls short of majority, dials Amit Shah for BJP support to form govt |url=https://indianexpress.com/elections/meghalaya-election-result-2023-live-updates-assembly-election-vote-counting-today-bjp-congress-cpi-latest-news-8473285/ |access-date=2023-03-02 |website=[[The Indian Express]] |language=en}}</ref>
+
+== Notable positions ==
+{| class="wikitable sortable"
+!S.No
+!Position
+!Portrait
+!Name
+! colspan="2" |Party
+!Constituency
+!Office Taken
+|-
+!1
+| Speaker
+|
+|[[Thomas A. Sangma]]
+|{{Party name with color|National People's Party (India)}}
+|[[North Tura Assembly constituency|North Tura]]
+|9 March 2023<ref>{{Cite news |last=PTI |date=2023-03-09 |title=NPP's Thomas A. Sangma elected unopposed as speaker of the assembly |url=http://www.ndtv.com/india-news/conrad-sangmas-party-mla-thomas-sangma-elected-unopposed-as-meghalaya-speaker-3845750/amp/1 |access-date=2023-03-09 |work=[[NDTV]] |issn=}}</ref>
+|-
+!2
+|Deputy Speaker 
+|
+| [[Limison D. Sangma]]                 
+|{{Party name with color|National People's Party (India)}}
+|[[Raksamgre (Vidhan Sabha constituency)|Raksamgre]] (ST)
+|15 September 2025
+|-
+!3
+|Leader of the House ([[List of chief ministers of Meghalaya|Chief Minister]])
+|
+|[[Conrad Sangma]]
+|{{Party name with color|National People's Party (India)}}
+|[[South Tura Assembly constituency|South Tura]]
+|7 March 2023<ref name=":1">{{Cite news |last=Dhar |first=Aniruddha |date=2023-03-07 |title=Conrad Sangma takes oath as Meghalaya CM; Prestone Tynsong, Sniawbhalang Dhar his deputy |url=https://www.hindustantimes.com/india-news/conrad-sangma-takes-oath-as-meghalaya-cm-in-presence-of-pm-modi-101678167714518.html |access-date=2024-08-29 |work=[[The Hindustan Times]] |issn=}}</ref>
+|-
+!rowspan="2" |4
+|rowspan="2" |[[List of deputy chief ministers of Meghalaya|Deputy Chief Minister]]
+|rowspan="2" |
+|[[Prestone Tynsong]]
+|{{Party name with color|National People's Party (India)}}
+|[[Pynursla Assembly constituency|Pynursla]]
+|7 March 2023<ref name=":1" />
+|-
+|[[Sniawbhalang Dhar]]
+|{{Party name with color|National People's Party (India)}}
+|[[Nartiang Assembly constituency|Nartiang]]
+|7 March 2023<ref name=":1" />
+|-
+!5
+|Leader of the Opposition 
+| 
+|[[Mukul Sangma]] 
+|{{Party name with color|Trinamool Congress}}
+|[[Mylliem Assembly constituency|Mylliem]]
+|9 June 2023                      
+|}
+
+== Party wise distribution ==
+{| class="wikitable"
+! colspan="2" |Alliance
+! colspan="2" |Party
+! colspan="2" |No. of MLA's
+!Leader of the Party
+in Assembly
+!Leader's Constituency
+|-
+| rowspan="5" style="background:{{party color|National Democratic Alliance}}"|
+| rowspan="5" |[[Meghalaya Democratic Alliance (2018)|Meghalaya Democratic Alliance]]
+|style="background:{{party color|National People's Party (India)}}"|
+|[[National People's Party (India)|National People's Party]]
+|33
+| rowspan="5" |'''51'''
+|[[Conrad Sangma]]
+|[[South Tura Assembly constituency|South Tura]]
+|-
+|style="background:{{party color|United Democratic Party (Meghalaya)}}"|
+|[[United Democratic Party (Meghalaya)|United Democratic Party]]
+|12
+|[[Metbah Lyngdoh]]
+|[[Mairang (Vidhan Sabha constituency)|Mairang]]
+|-
+|style="background:{{party color|Bharatiya Janata Party}}"|
+|[[Bharatiya Janata Party]]
+|2
+|[[Sanbor Shullai]]
+|[[South Shillong (Vidhan Sabha constituency)|South Shillong]]
+|-
+|bgcolor="{{Party color|Hill State People's Democratic Party}}" |
+|[[Hill State People's Democratic Party]]
+| colspan="2" |'''2'''
+|[[Methodius Dkhar]]
+|[[Mawshynrut (Vidhan Sabha constituency)|Mawshynrut]] (ST)
+|-
+|style="background:{{party color|Independent}}"|
+|[[Independent politician|Independent]]
+|2
+|•[[Remington Gabil Momin]]<br />     •[[Kartush Marak|Kartush R. Marak]]
+|•[[Rambrai-Jyrngam (Vidhan Sabha constituency)|Rambrai-Jyrngam]] (ST)<br />•[[Baghmara (Meghalaya Vidhan Sabha constituency)|Baghmara]] (ST)
+|-
+| rowspan="4" bgcolor="{{party color|Others}}"|
+| rowspan="4" |'''''None'''''
+|bgcolor="{{Party color|Trinamool Congress}}" |
+|[[Trinamool Congress|All India Trinamool Congress]]
+| colspan="2" |'''5'''
+|
+|
+|-
+|bgcolor="{{Party color|Voice of the People Party (Meghalaya)}}" |
+|[[Voice of the People Party (Meghalaya)|Voice of the People Party]]
+| colspan="2" |'''4'''
+|
+|
+|-
+! colspan="4" |Total no. of MLAs 
+! colspan=2|60
+! colspan=2|
+|}
+
+== Members of Legislative Assembly ==
+{| class="wikitable sortable"
+|-
+!District
+! No.
+! Constituency
+! Name
+! colspan="2" | Party
+! colspan="2" |
+!Remarks
+|-
+| rowspan="4" |[[West Jaintia Hills district|West Jaintia Hills]]
+|1
+|[[Nartiang Assembly constituency|Nartiang]] (ST)
+| [[Sniawbhalang Dhar]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[List of deputy chief ministers of Meghalaya|Deputy Chief Minister]] 
+|-
+|2
+|[[Jowai (Vidhan Sabha constituency)|Jowai]] (ST)
+| [[Wailadmiki Shylla]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|3
+|[[Raliang (Vidhan Sabha constituency)|Raliang]] (ST)
+| [[Comingone Ymbon]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[Second Conrad Sangma ministry|Cabinet Minister]]
+|-
+|4
+|[[Mowkaiaw (Vidhan Sabha constituency)|Mowkaiaw]] (ST)
+| [[Nujorki Sungoh]]
+|{{Full party name with color|United Democratic Party (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+| rowspan="2" |[[East Jaintia Hills district|East Jaintia Hills]]
+|5
+|[[Sutnga Saipung (Vidhan Sabha constituency)|Sutnga Saipung]] (ST)
+| [[Santa Mary Shylla]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|6
+|[[Khliehriat (Vidhan Sabha constituency)|Khliehriat]] (ST)
+| [[Kyrmen Shylla]]
+|{{Full party name with color|United Democratic Party (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[Second Conrad Sangma ministry|Cabinet Minister]]
+|-
+|[[West Jaintia Hills district|West Jaintia Hills]]
+|7
+|[[Amlarem (Vidhan Sabha constituency)|Amlarem]] (ST)
+| [[Lahkmen Rymbui]]
+|{{Full party name with color|United Democratic Party (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+| rowspan="7" |[[Ri-Bhoi district|Ri Bhoi]]
+|rowspan="2"|8
+|rowspan="2"|[[Mawhati (Vidhan Sabha constituency)|Mawhati]] (ST)
+| rowspan="2"|[[Charles Marngar]]
+|{{Full party name with color|Indian National Congress}}
+|{{Party name with color|United Progressive Alliance}}
+|rowspan="2"|Switched from INC to NPP
+|-
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|-
+|9
+|[[Nongpoh (Vidhan Sabha constituency)|Nongpoh]] (ST)
+| [[Mayralborn Syiem]]
+|{{Full party name with color|United Democratic Party (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|10
+|[[Jirang (Vidhan Sabha constituency)|Jirang]] (ST)
+| [[Sosthenes Sohtun|Sosthenes Sohyun]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+| rowspan="2"|11
+| rowspan="2"|[[Umsning (Vidhan Sabha constituency)|Umsning]] (ST) 
+| rowspan="2"| [[Celestine Lyngdoh]]
+|{{Full party name with color|Indian National Congress}}
+|{{Party name with color|United Progressive Alliance}}
+|rowspan="2"| Switched from INC to NPP 
+|-
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|-
+|12
+|[[Umroi (Vidhan Sabha constituency)|Umroi]] (ST) 
+| [[Damanbait Lamare]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+| rowspan="20" |[[East Khasi Hills district|East Khasi Hills]]
+|13
+|[[Mawryngkneng (Vidhan Sabha constituency)|Mawrengkneng]] (ST) 
+| [[Heaving Stone Kharpran]]
+|{{Full party name with color|Voice of the People Party (Meghalaya)}}
+|bgcolor={{Party color|Other}}|
+|Others
+|
+|-
+|14
+|[[Pynthorumkhrah (Vidhan Sabha constituency)|Pynthorumkhrah]]
+| [[Alexander Laloo Hek]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[Second Conrad Sangma ministry|Cabinet Minister]]
+|-
+|15
+|[[Mawlai (Vidhan Sabha constituency)|Mawlai]] (ST)
+| [[Brightstarwell Marbaniang]]
+|{{Full party name with color|Voice of the People Party (Meghalaya)}}
+|bgcolor={{Party color|Other}}|
+|Others
+|
+|-
+|16
+|[[East Shillong (Vidhan Sabha constituency)|East Shillong]] (ST)
+| [[Ampareen Lyngdoh]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[Second Conrad Sangma ministry|Cabinet Minister]]
+|-
+|17
+|[[North Shillong (Vidhan Sabha constituency)|North Shillong]] (ST)
+| [[Adelbert Nongrum]]
+|{{Full party name with color|Voice of the People Party (Meghalaya)}}
+|bgcolor={{Party color|Other}}|
+|Others
+|
+|-
+|18
+|[[West Shillong (Vidhan Sabha constituency)|West Shillong]]
+| [[Paul Lyngdoh]]
+|{{Full party name with color|United Democratic Party (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[Second Conrad Sangma ministry|Cabinet Minister]]
+|-
+|19
+|[[South Shillong (Vidhan Sabha constituency)|South Shillong]]
+| [[Sanbor Shullai]]
+|{{Full party name with color|Bharatiya Janata Party}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[Second Conrad Sangma ministry|Cabinet Minister]]
+|-
+|rowspan=2|20
+|rowspan=2|[[Mylliem (Vidhan Sabha constituency)|Mylliem]] (ST)
+| rowspan=2|[[Ronnie V. Lyngdoh]]
+|{{Full party name with color|Indian National Congress}}
+|{{Party name with color|United Progressive Alliance}}
+| rowspan=2|Switched from UPA to MDA
+|-
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|-
+|21
+|[[Nongthymmai (Vidhan Sabha constituency)|Nongthymmai]] (ST)
+| [[Charles Pyngrope]]
+|{{Full party name with color|Trinamool Congress}}
+|bgcolor={{Party color|Other}}|
+|Others
+|
+|-
+|22
+|[[Nongkrem (Vidhan Sabha constituency)|Nongkrem]] (ST)
+| [[Ardent Miller Basaiawmoit]]
+|{{Full party name with color|Voice of the People Party (Meghalaya)}}
+|bgcolor={{Party color|Other}}|
+|Others
+|
+|-
+|23
+|[[Sohiong (Vidhan Sabha constituency)|Sohiong]] (ST)
+| [[Synshar Lyngdoh Thabah]]
+|{{Full party name with color|United Democratic Party (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|24
+|[[Mawphlang (Vidhan Sabha constituency)|Mawphlang]] (ST)
+| [[Matthew Beyondstar Kurbah]]
+|{{Full party name with color|United Democratic Party (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|25
+|[[Mawsynram (Vidhan Sabha constituency)|Mawsynram]] (ST) 
+| [[Ollan Singh Suin]]
+|{{Full party name with color|United Democratic Party (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|26
+|[[Shella (Vidhan Sabha constituency)|Shella]] (ST)
+| [[Balajied Kupar Synrem]]
+|{{Full party name with color|United Democratic Party (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|27
+|[[Pynursla (Vidhan Sabha constituency)|Pynursla]] (ST) 
+| [[Prestone Tynsong|Prestone Tysong]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[List of deputy chief ministers of Meghalaya|Deputy Chief Minister]] 
+|-
+| rowspan="2" |28
+| rowspan="2" |[[Sohra (Vidhan Sabha constituency)|Sohra]] (ST)
+| rowspan="2" | [[Gavin Miguel Mylleim]]
+|{{Full party name with color|People's Democratic Front (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+| rowspan="2" |PDF merged with NPP<ref name=":0">{{Cite web |date=2023-05-06 |title=PDF merges with NPP |url=https://theshillongtimes.com/2023/05/06/pdf-merges-with-npp/ |access-date=2023-05-14 |website=The Shillong Times |language=en-US}}</ref>
+|-
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|-
+| rowspan="2" |29
+| rowspan="2" |[[Mawkynrew (Vidhan Sabha constituency)|Mawkynrew]] (ST) 
+| rowspan="2" | [[Banteidor Lyngdoh]]
+|{{Full party name with color|People's Democratic Front (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+| rowspan="2" |PDF merged with NPP<ref name=":0" />
+|-
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|-
+| rowspan="2" |[[Eastern West Khasi Hills district|Eastern West Khasi Hills]]
+|30
+|[[Mairang (Vidhan Sabha constituency)|Mairang]] (ST)
+| [[Metbah Lyngdoh]]
+|{{Full party name with color|United Democratic Party (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|31
+|[[Mawthadraishan (Vidhan Sabha constituency)|Mawthadraishan]] (ST)
+| [[Shakliar Warjri]]
+|{{Full party name with color|Hill State People's Democratic Party}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[Second Conrad Sangma ministry|Cabinet Minister]]
+|-
+| rowspan="4" |[[West Khasi Hills district|West Khasi Hills]]
+| rowspan="2" |32
+| rowspan="2" |[[Nongstoin (Vidhan Sabha constituency)|Nongstoin]] (ST)
+| rowspan="2" |[[Gabriel Wahlang]]
+|{{Full party name with color|Indian National Congress}}
+|{{Party name with color|United Progressive Alliance}}
+| rowspan="2"|Switched from INC to NPP 
+|-
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|-
+|33
+|[[Rambrai-Jyrngam (Vidhan Sabha constituency)|Rambrai-Jyrngam]] (ST)
+| [[Remington Gabil Momin]]
+|{{Full party name with color|Independent politician}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|34
+|[[Mawshynrut (Vidhan Sabha constituency)|Mawshynrut]] (ST)
+| [[Methodius Dkhar]]
+|{{Full party name with color|Hill State People's Democratic Party}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+| rowspan="2" |[[South West Khasi Hills district|South West Khasi Hills]]
+|35
+|[[Ranikor (Vidhan Sabha constituency)|Ranikor]] (ST)
+| [[Pius Marwein]]
+|{{Full party name with color|United Democratic Party (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|36
+|[[Mawkyrwat (Vidhan Sabha constituency)|Mawkyrwat]] (ST)
+| [[Renikton Lyngdoh|Renikton Lyngdoh Tongkhar]]
+|{{Full party name with color|United Democratic Party (Meghalaya)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+| rowspan="4" |[[North Garo Hills district|North Garo Hills]]
+|37
+|[[Kharkutta (Vidhan Sabha constituency)|Kharkutta]] (ST)
+| [[Rupert Momin]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|38
+|[[Mendipathar (Vidhan Sabha constituency)|Mendipathar]] (ST)
+| [[Marthon Sangma|Marthon J. Sangma]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|39
+|[[Resubelpara (Vidhan Sabha constituency)|Resubelpara]] (ST)
+| [[Timothy Shira|Timothy J. Shira]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|40
+|[[Bajengdoba (Vidhan Sabha constituency)|Bajengdoba]] (ST)
+| [[Pongseng Marak]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+| rowspan="3" |[[East Garo Hills district|East Garo Hills]]
+|41
+|[[Songsak (Vidhan Sabha constituency)|Songsak]] (ST)
+| [[Mukul Sangma]]
+|{{Full party name with color|Trinamool Congress}}
+|bgcolor={{Party color|Other}}|
+|Others
+|Leader of Opposition [[Trinamool Congress|TMC]]
+|-
+|42
+|[[Rongjeng (Vidhan Sabha constituency)|Rongjeng]] (ST)
+| [[Jim Sangma|Jim M. Sangma]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|43
+|[[Williamnagar (Vidhan Sabha constituency)|Williamnagar]] (ST)
+| [[Marcuise Marak|Marcuise N. Marak]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[Second Conrad Sangma ministry|Cabinet Minister]]
+|-
+| rowspan="9" |[[West Garo Hills district|West Garo Hills]]
+|44
+|[[Raksamgre (Vidhan Sabha constituency)|Raksamgre]] (ST)
+| [[Limison D. Sangma]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|45
+|[[Tikrikilla (Vidhan Sabha constituency)|Tikrikilla]] (ST)
+| [[Jimmy Sangma|Jimmy D. Sangma]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|46
+|[[Phulbari (Vidhan Sabha constituency)|Phulbari]]
+| [[Abu Taher Mondal]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[Second Conrad Sangma ministry|Cabinet Minister]]
+|-
+|47
+|[[Rajabala (Vidhan Sabha constituency)|Rajabala]]
+|[[Mizanur Rahman Kazi]]
+|{{Full party name with color|Trinamool Congress}}
+|bgcolor={{Party color|Other}}|
+|Others
+|
+|-
+|48
+|[[Selsella (Vidhan Sabha constituency)|Selsella]] (ST)
+| [[Arbinstone Marak|Arbinstone B. Marak]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|49
+|[[Dadenggre (Vidhan Sabha constituency)|Dadenggre]] (ST)
+| [[Rupa M. Marak]]
+|{{Full party name with color|Trinamool Congress}}
+|bgcolor={{Party color|Other}}|
+|Others
+|
+|-
+|50
+|[[North Tura (Vidhan Sabha constituency)|North Tura]] (ST)
+| [[Thomas A. Sangma]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|Speaker
+|-
+|51
+|[[South Tura (Vidhan Sabha constituency)|South Tura]] (ST)
+| [[Conrad Sangma]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[List of chief ministers of Meghalaya|Chief Minister]]
+|-
+|52
+|[[Rangsakona (Vidhan Sabha constituency)|Rangsakona]] (ST)
+| [[Subir Marak]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+| rowspan="3" |[[South West Garo Hills district|South West Garo Hills]]
+|53
+|[[Ampati (Vidhan Sabha constituency)|Ampati]] (ST)
+| [[Miani D Shira]]
+|{{Full party name with color|Trinamool Congress}}
+|bgcolor={{Party color|Other}}|
+|Others
+|
+|-
+|54
+|[[Mahendraganj (Vidhan Sabha constituency)|Mahendraganj]] (ST)
+| [[Sanjay Sangma|Sanjay A. Sangma]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|55
+|[[Salmanpara (Vidhan Sabha constituency)|Salmanpara]] (ST)
+| [[Ian Botham Sangma|Ian Botham K. Sangma]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+| rowspan="3" |[[West Garo Hills district|West Garo Hills]]
+| rowspan="2" |56
+| rowspan="2" |[[Gambegre (Vidhan Sabha constituency)|Gambegre]] (ST)
+| [[Saleng A. Sangma]]
+|{{Full party name with color|Indian National Congress}}
+|{{Party name with color|United Progressive Alliance}}
+|Elected to 18th Loksabha<ref>{{Cite news |last=Laitphlang |first=David |date=4 June 2024 |title=Meghalaya: Sitting MPs ousted; ruling NPP loses from its bastion in Tura |url=https://www.hindustantimes.com/india-news/meghalaya-sitting-mps-ousted-ruling-npp-loses-from-its-bastion-in-tura-101717505954902.html |access-date=29 August 2024 |work=[[The Hindustan Times]]}}</ref>
+|-
+|[[Mehtab Sangma|Mehtab Chandee Agitok Sangma]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|Elected in bypoll
+|-
+|57
+|[[Dalu (Vidhan Sabha constituency)|Dalu]] (ST)
+| [[Brening Sangma|Brening A. Sangma]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+| rowspan="3" |[[South Garo Hills district|South Garo Hills]]
+|58
+|[[Rongara Siju (Vidhan Sabha constituency)|Rongara Siju]] (ST)
+| [[Rakkam A Sangma]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|[[Second Conrad Sangma ministry|Cabinet Minister]]
+|-
+|59
+|[[Chokpot (Vidhan Sabha constituency)|Chokpot]] (ST)
+| [[Sengchim Sangma|Sengchim N. Sangma]]
+|{{Full party name with color|National People's Party (India)}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|-
+|60
+|[[Baghmara (Meghalaya Vidhan Sabha constituency)|Baghmara]] (ST)
+| [[Kartush Marak|Kartush R. Marak]]
+|{{Full party name with color|Independent politician}}
+|{{Party name with color|Meghalaya Democratic Alliance (2018)}}
+|
+|}
+
+== References ==
+{{reflist}}
+[[Category:Lists of current Indian state and territorial assemblies|Meghalaya]]
+[[Category:Meghalaya MLAs 2023–2028| ]]
+[[Category:Terms of the Meghalaya Legislative Assembly]]

@@ -1,0 +1,2018 @@
+[
+  {
+    "district": "Belagavi",
+    "no": "1",
+    "constituency": "Nippani",
+    "name": "Shashikala Jolle",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65639,
+    "shape_name": "Nippani"
+  },
+  {
+    "district": "Belagavi",
+    "no": "2",
+    "constituency": "Chikkodi-Sadalga",
+    "name": "Ganesh Hukkeri",
+    "party": "Indian National Congress",
+    "map_shape_id": 65640,
+    "shape_name": "Chikkodi-Sadalga"
+  },
+  {
+    "district": "Belagavi",
+    "no": "3",
+    "constituency": "Athani",
+    "name": "Laxman Savadi",
+    "party": "Indian National Congress",
+    "map_shape_id": 65641,
+    "shape_name": "Athani"
+  },
+  {
+    "district": "Belagavi",
+    "no": "4",
+    "constituency": "Kagwad",
+    "name": "Raju Kage",
+    "party": "Indian National Congress",
+    "map_shape_id": 65642,
+    "shape_name": "Kagwad"
+  },
+  {
+    "district": "Belagavi",
+    "no": "5",
+    "constituency": "Kudachi",
+    "name": "Mahendra Kallappa Tammannavar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65643,
+    "shape_name": "Kudachi"
+  },
+  {
+    "district": "Belagavi",
+    "no": "7",
+    "constituency": "Hukkeri",
+    "name": "Nikhil Katti",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65645,
+    "shape_name": "Hukkeri"
+  },
+  {
+    "district": "Belagavi",
+    "no": "8",
+    "constituency": "Arabhavi",
+    "name": "Balachandra Jarkiholi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65646,
+    "shape_name": "Arabhavi"
+  },
+  {
+    "district": "Belagavi",
+    "no": "9",
+    "constituency": "Gokak",
+    "name": "Ramesh Jarkiholi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65647,
+    "shape_name": "Gokak"
+  },
+  {
+    "district": "Belagavi",
+    "no": "11",
+    "constituency": "Belgaum Uttar",
+    "name": "Asif Sait",
+    "party": "Indian National Congress",
+    "map_shape_id": 65649,
+    "shape_name": "Belgaum Uttar"
+  },
+  {
+    "district": "Belagavi",
+    "no": "12",
+    "constituency": "Belgaum Dakshin",
+    "name": "Abhay Patil",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65650,
+    "shape_name": "Belgaum Dakshin"
+  },
+  {
+    "district": "Belagavi",
+    "no": "13",
+    "constituency": "Belgaum Rural",
+    "name": "Lakshmi Hebbalkar",
+    "party": "Indian National Congress",
+    "map_shape_id": 67406,
+    "shape_name": "Belgaum Rural"
+  },
+  {
+    "district": "Belagavi",
+    "no": "14",
+    "constituency": "Khanapur",
+    "name": "Vithal Halagekar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65651,
+    "shape_name": "Khanapur"
+  },
+  {
+    "district": "Belagavi",
+    "no": "15",
+    "constituency": "Kittur",
+    "name": "Babasaheb Devanagouda Patil",
+    "party": "Indian National Congress",
+    "map_shape_id": 65652,
+    "shape_name": "Kittur"
+  },
+  {
+    "district": "Belagavi",
+    "no": "17",
+    "constituency": "Saundatti Yellamma",
+    "name": "Vishwas Vasant Vaidya",
+    "party": "Indian National Congress",
+    "map_shape_id": 65654,
+    "shape_name": "Saundatti Yellamma"
+  },
+  {
+    "district": "Belagavi",
+    "no": "18",
+    "constituency": "Ramdurg",
+    "name": "Ashok Pattan",
+    "party": "Indian National Congress",
+    "map_shape_id": 65655,
+    "shape_name": "Ramdurg"
+  },
+  {
+    "district": "Bagalkot",
+    "no": "19",
+    "constituency": "Mudhol",
+    "name": "R. B. Timmapur",
+    "party": "Indian National Congress",
+    "map_shape_id": 65656,
+    "shape_name": "Mudhol"
+  },
+  {
+    "district": "Bagalkot",
+    "no": "20",
+    "constituency": "Terdal",
+    "name": "Siddu Savadi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65657,
+    "shape_name": "Terdal"
+  },
+  {
+    "district": "Bagalkot",
+    "no": "21",
+    "constituency": "Jamkhandi",
+    "name": "Jagadish Gudagunti",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65658,
+    "shape_name": "Jamkhandi"
+  },
+  {
+    "district": "Bagalkot",
+    "no": "22",
+    "constituency": "Bilgi",
+    "name": "J. T. Patil",
+    "party": "Indian National Congress",
+    "map_shape_id": 65659,
+    "shape_name": "Bilgi"
+  },
+  {
+    "district": "Bagalkot",
+    "no": "23",
+    "constituency": "Badami",
+    "name": "Bhimsen Chimmanakatti",
+    "party": "Indian National Congress",
+    "map_shape_id": 65660,
+    "shape_name": "Badami"
+  },
+  {
+    "district": "Bagalkot",
+    "no": "24",
+    "constituency": "Bagalkot",
+    "name": "U.H. Meti",
+    "party": "Indian National Congress",
+    "map_shape_id": 65661,
+    "shape_name": "Bagalkot"
+  },
+  {
+    "district": "Bagalkot",
+    "no": "25",
+    "constituency": "Hungund",
+    "name": "Vijayanand Kashappanavar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65662,
+    "shape_name": "Hungund"
+  },
+  {
+    "district": "Vijayapura",
+    "no": "26",
+    "constituency": "Muddebihal",
+    "name": "C. S. Nadagouda",
+    "party": "Indian National Congress",
+    "map_shape_id": 65663,
+    "shape_name": "Muddebihal"
+  },
+  {
+    "district": "Vijayapura",
+    "no": "28",
+    "constituency": "Basavana Bagevadi",
+    "name": "Shivanand Patil",
+    "party": "Indian National Congress",
+    "map_shape_id": 65665,
+    "shape_name": "Basavana  Bagevadi"
+  },
+  {
+    "district": "Vijayapura",
+    "no": "29",
+    "constituency": "Babaleshwar",
+    "name": "M. B. Patil",
+    "party": "Indian National Congress",
+    "map_shape_id": 65666,
+    "shape_name": "Babaleshwar"
+  },
+  {
+    "district": "Vijayapura",
+    "no": "30",
+    "constituency": "Bijapur City",
+    "name": "Basangouda Patil Yatnal",
+    "party": "Independent",
+    "map_shape_id": 65667,
+    "shape_name": "Bijapur City"
+  },
+  {
+    "district": "Vijayapura",
+    "no": "32",
+    "constituency": "Indi",
+    "name": "Yashavant Rayagoud Patil",
+    "party": "Indian National Congress",
+    "map_shape_id": 65669,
+    "shape_name": "Indi"
+  },
+  {
+    "district": "Kalaburagi",
+    "no": "34",
+    "constituency": "Afzalpur",
+    "name": "M. Y. Patil",
+    "party": "Indian National Congress",
+    "map_shape_id": 65671,
+    "shape_name": "Afzalpur"
+  },
+  {
+    "district": "Kalaburagi",
+    "no": "35",
+    "constituency": "Jevargi",
+    "name": "Ajay Singh",
+    "party": "Indian National Congress",
+    "map_shape_id": 65672,
+    "shape_name": "Jevargi"
+  },
+  {
+    "district": "Yadgir",
+    "no": "36",
+    "constituency": "Shorapur",
+    "name": "Raja Venugopal Naik",
+    "party": "Indian National Congress",
+    "map_shape_id": 65673,
+    "shape_name": "Shorapur"
+  },
+  {
+    "district": "Yadgir",
+    "no": "37",
+    "constituency": "Shahapur",
+    "name": "Sharanabasappa Darshanapur",
+    "party": "Indian National Congress",
+    "map_shape_id": 65674,
+    "shape_name": "Shahapur"
+  },
+  {
+    "district": "Yadgir",
+    "no": "38",
+    "constituency": "Yadgir",
+    "name": "Channareddy Patil Tunnur",
+    "party": "Indian National Congress",
+    "map_shape_id": 65675,
+    "shape_name": "Yadgir"
+  },
+  {
+    "district": "Yadgir",
+    "no": "39",
+    "constituency": "Gurmitkal",
+    "name": "Sharanagouda Kandakur",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65676,
+    "shape_name": "Gurmitkal"
+  },
+  {
+    "district": "Kalaburagi",
+    "no": "40",
+    "constituency": "Chittapur",
+    "name": "Priyank Kharge",
+    "party": "Indian National Congress",
+    "map_shape_id": 65677,
+    "shape_name": "Chittapur"
+  },
+  {
+    "district": "Kalaburagi",
+    "no": "41",
+    "constituency": "Sedam",
+    "name": "Sharan Prakash Patil",
+    "party": "Indian National Congress",
+    "map_shape_id": 65678,
+    "shape_name": "Sedam"
+  },
+  {
+    "district": "Kalaburagi",
+    "no": "42",
+    "constituency": "Chincholi",
+    "name": "Avinash Jadhav",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65679,
+    "shape_name": "Chincholi"
+  },
+  {
+    "district": "Kalaburagi",
+    "no": "43",
+    "constituency": "Gulbarga Rural",
+    "name": "Basawaraj Mattimud",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65680,
+    "shape_name": "Gulbarga Rural"
+  },
+  {
+    "district": "Kalaburagi",
+    "no": "44",
+    "constituency": "Gulbarga Dakshin",
+    "name": "Allamprabhu Patil",
+    "party": "Indian National Congress",
+    "map_shape_id": 65681,
+    "shape_name": "Gulbarga Dakshin"
+  },
+  {
+    "district": "Kalaburagi",
+    "no": "45",
+    "constituency": "Gulbarga Uttar",
+    "name": "Kaneez Fathima",
+    "party": "Indian National Congress",
+    "map_shape_id": 65682,
+    "shape_name": "Gulbarga Uttar"
+  },
+  {
+    "district": "Kalaburagi",
+    "no": "46",
+    "constituency": "Aland",
+    "name": "B. R. Patil",
+    "party": "Indian National Congress",
+    "map_shape_id": 65683,
+    "shape_name": "Aland"
+  },
+  {
+    "district": "Bidar",
+    "no": "47",
+    "constituency": "Basavakalyan",
+    "name": "Sharanu Salagar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65684,
+    "shape_name": "Basavakalyan"
+  },
+  {
+    "district": "Bidar",
+    "no": "48",
+    "constituency": "Humnabad",
+    "name": "Siddu Patil",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65685,
+    "shape_name": "Humnabad"
+  },
+  {
+    "district": "Bidar",
+    "no": "49",
+    "constituency": "Bidar South",
+    "name": "Shailendra Bedale",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65686,
+    "shape_name": "Bidar South"
+  },
+  {
+    "district": "Bidar",
+    "no": "50",
+    "constituency": "Bidar",
+    "name": "Rahim Khan",
+    "party": "Indian National Congress",
+    "map_shape_id": 65687,
+    "shape_name": "Bidar"
+  },
+  {
+    "district": "Bidar",
+    "no": "51",
+    "constituency": "Bhalki",
+    "name": "Eshwara Khandre",
+    "party": "Indian National Congress",
+    "map_shape_id": 65688,
+    "shape_name": "Bhalki"
+  },
+  {
+    "district": "Bidar",
+    "no": "52",
+    "constituency": "Aurad",
+    "name": "Prabhu Chauhan",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65689,
+    "shape_name": "Aurad"
+  },
+  {
+    "district": "Raichur",
+    "no": "53",
+    "constituency": "Raichur Rural",
+    "name": "Basanagouda Daddal",
+    "party": "Indian National Congress",
+    "map_shape_id": 65690,
+    "shape_name": "Raichur Rural"
+  },
+  {
+    "district": "Raichur",
+    "no": "54",
+    "constituency": "Raichur",
+    "name": "Shivaraj Patil",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65691,
+    "shape_name": "Raichur"
+  },
+  {
+    "district": "Raichur",
+    "no": "55",
+    "constituency": "Manvi",
+    "name": "G. Hampayya Nayak",
+    "party": "Indian National Congress",
+    "map_shape_id": 65692,
+    "shape_name": "Manvi"
+  },
+  {
+    "district": "Raichur",
+    "no": "56",
+    "constituency": "Devadurga",
+    "name": "Karemma",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65693,
+    "shape_name": "Devadurga"
+  },
+  {
+    "district": "Raichur",
+    "no": "57",
+    "constituency": "Lingsugur",
+    "name": "Manappa D. Vajjal",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65694,
+    "shape_name": "Lingsugur"
+  },
+  {
+    "district": "Raichur",
+    "no": "58",
+    "constituency": "Sindhanur",
+    "name": "Hampanagouda Badarli",
+    "party": "Indian National Congress",
+    "map_shape_id": 65695,
+    "shape_name": "Sindhanur"
+  },
+  {
+    "district": "Raichur",
+    "no": "59",
+    "constituency": "Maski",
+    "name": "Basanagouda Turvihal",
+    "party": "Indian National Congress",
+    "map_shape_id": 65696,
+    "shape_name": "Maski"
+  },
+  {
+    "district": "Koppal",
+    "no": "60",
+    "constituency": "Kushtagi",
+    "name": "Doddanagouda Hanamagouda Patil",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65697,
+    "shape_name": "Kushtagi"
+  },
+  {
+    "district": "Koppal",
+    "no": "61",
+    "constituency": "Kanakagiri",
+    "name": "Tangadagi Shivaraj Sangappa",
+    "party": "Indian National Congress",
+    "map_shape_id": 65698,
+    "shape_name": "Kanakagiri"
+  },
+  {
+    "district": "Koppal",
+    "no": "63",
+    "constituency": "Yelburga",
+    "name": "Basavaraj Rayareddy",
+    "party": "Indian National Congress",
+    "map_shape_id": 65700,
+    "shape_name": "Yelburga"
+  },
+  {
+    "district": "Koppal",
+    "no": "64",
+    "constituency": "Koppal",
+    "name": "K. Raghavendra Hitnal",
+    "party": "Indian National Congress",
+    "map_shape_id": 65701,
+    "shape_name": "Koppal"
+  },
+  {
+    "district": "Gadag",
+    "no": "65",
+    "constituency": "Shirahatti",
+    "name": "Chandru Lamani",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65702,
+    "shape_name": "Shirahatti"
+  },
+  {
+    "district": "Gadag",
+    "no": "66",
+    "constituency": "Gadag",
+    "name": "H. K. Patil",
+    "party": "Indian National Congress",
+    "map_shape_id": 65703,
+    "shape_name": "Gadag"
+  },
+  {
+    "district": "Gadag",
+    "no": "67",
+    "constituency": "Ron",
+    "name": "Gurupadagouda Sanganagouda Patil",
+    "party": "Indian National Congress",
+    "map_shape_id": 65704,
+    "shape_name": "Ron"
+  },
+  {
+    "district": "Gadag",
+    "no": "68",
+    "constituency": "Nargund",
+    "name": "C. C. Patil",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65705,
+    "shape_name": "Nargund"
+  },
+  {
+    "district": "Dharwad",
+    "no": "69",
+    "constituency": "Navalgund",
+    "name": "Ningaraddi Hanamaraddi Konaraddi",
+    "party": "Indian National Congress",
+    "map_shape_id": 65706,
+    "shape_name": "Navalgund"
+  },
+  {
+    "district": "Dharwad",
+    "no": "70",
+    "constituency": "Kundgol",
+    "name": "M. R. Patil",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65707,
+    "shape_name": "Kundgol"
+  },
+  {
+    "district": "Dharwad",
+    "no": "71",
+    "constituency": "Dharwad",
+    "name": "Vinay Kulkarni",
+    "party": "Indian National Congress",
+    "map_shape_id": 65708,
+    "shape_name": "Dharwad"
+  },
+  {
+    "district": "Dharwad",
+    "no": "72",
+    "constituency": "Hubli-Dharwad East",
+    "name": "Abbayya Prasad",
+    "party": "Indian National Congress",
+    "map_shape_id": 65709,
+    "shape_name": "Hubli-Dharwad-East"
+  },
+  {
+    "district": "Dharwad",
+    "no": "73",
+    "constituency": "Hubli-Dharwad Central",
+    "name": "Mahesh Tenginakai",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65710,
+    "shape_name": "Hubli-Dharwad-Central"
+  },
+  {
+    "district": "Dharwad",
+    "no": "74",
+    "constituency": "Hubli-Dharwad West",
+    "name": "Arvind Bellad",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65711,
+    "shape_name": "Hubli-Dharwad-West"
+  },
+  {
+    "district": "Uttara Kannada",
+    "no": "76",
+    "constituency": "Haliyal",
+    "name": "R. V. Deshpande",
+    "party": "Indian National Congress",
+    "map_shape_id": 65713,
+    "shape_name": "Haliyal"
+  },
+  {
+    "district": "Uttara Kannada",
+    "no": "77",
+    "constituency": "Karwar",
+    "name": "Satish Krishna Sail",
+    "party": "Indian National Congress",
+    "map_shape_id": 65714,
+    "shape_name": "Karwar"
+  },
+  {
+    "district": "Uttara Kannada",
+    "no": "78",
+    "constituency": "Kumta",
+    "name": "Dinakar Keshav Shetty",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65715,
+    "shape_name": "Kumta"
+  },
+  {
+    "district": "Uttara Kannada",
+    "no": "79",
+    "constituency": "Bhatkal",
+    "name": "Mankala Vaidya",
+    "party": "Indian National Congress",
+    "map_shape_id": 65716,
+    "shape_name": "Bhatkal"
+  },
+  {
+    "district": "Uttara Kannada",
+    "no": "80",
+    "constituency": "Sirsi",
+    "name": "Bhimanna T. Naik",
+    "party": "Indian National Congress",
+    "map_shape_id": 65717,
+    "shape_name": "Sirsi"
+  },
+  {
+    "district": "Uttara Kannada",
+    "no": "81",
+    "constituency": "Yellapur",
+    "name": "Arbail Hebbar Shivaram",
+    "party": "Independent",
+    "map_shape_id": 67416,
+    "shape_name": "Yellapur"
+  },
+  {
+    "district": "Haveri",
+    "no": "82",
+    "constituency": "Hangal",
+    "name": "Srinivas Mane",
+    "party": "Indian National Congress",
+    "map_shape_id": 65718,
+    "shape_name": "Hangal"
+  },
+  {
+    "district": "Haveri",
+    "no": "83",
+    "constituency": "Shiggaon",
+    "name": "Pathan Yasir Ahmed Khan",
+    "party": "Indian National Congress",
+    "map_shape_id": 65719,
+    "shape_name": "Shiggaon"
+  },
+  {
+    "district": "Haveri",
+    "no": "84",
+    "constituency": "Haveri",
+    "name": "Rudrappa Manappa Lamani",
+    "party": "Indian National Congress",
+    "map_shape_id": 65720,
+    "shape_name": "Haveri"
+  },
+  {
+    "district": "Haveri",
+    "no": "85",
+    "constituency": "Byadgi",
+    "name": "Basavaraj Neelappa Shivannanavar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65721,
+    "shape_name": "Byadgi"
+  },
+  {
+    "district": "Haveri",
+    "no": "86",
+    "constituency": "Hirekerur",
+    "name": "U. B. Banakar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65722,
+    "shape_name": "Hirekerur"
+  },
+  {
+    "district": "Haveri",
+    "no": "87",
+    "constituency": "Ranebennur",
+    "name": "Prakash Koliwad",
+    "party": "Indian National Congress",
+    "map_shape_id": 65723,
+    "shape_name": "Ranebennur"
+  },
+  {
+    "district": "Vijayanagara",
+    "no": "88",
+    "constituency": "Hoovina Hadagali",
+    "name": "Krishna Nayaka",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65724,
+    "shape_name": "Hadagali"
+  },
+  {
+    "district": "Vijayanagara",
+    "no": "89",
+    "constituency": "Hagaribommanahalli",
+    "name": "K. Nemaraja Naik",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65725,
+    "shape_name": "Hagaribommanahalli"
+  },
+  {
+    "district": "Vijayanagara",
+    "no": "90",
+    "constituency": "Vijayanagara",
+    "name": "H. R. Gaviyappa",
+    "party": "Indian National Congress",
+    "map_shape_id": 65726,
+    "shape_name": "Vijayanagara"
+  },
+  {
+    "district": "Ballari",
+    "no": "91",
+    "constituency": "Kampli",
+    "name": "J. N. Ganesh",
+    "party": "Indian National Congress",
+    "map_shape_id": 65727,
+    "shape_name": "Kampli"
+  },
+  {
+    "district": "Ballari",
+    "no": "93",
+    "constituency": "Bellary",
+    "name": "B Nagendra",
+    "party": "Indian National Congress",
+    "map_shape_id": 65729,
+    "shape_name": "Bellary"
+  },
+  {
+    "district": "Ballari",
+    "no": "94",
+    "constituency": "Bellary City",
+    "name": "Nara Bharath Reddy",
+    "party": "Indian National Congress",
+    "map_shape_id": 65730,
+    "shape_name": "Bellary City"
+  },
+  {
+    "district": "Ballari",
+    "no": "95",
+    "constituency": "Sandur",
+    "name": "E. Annapoorna",
+    "party": "Indian National Congress",
+    "map_shape_id": 65731,
+    "shape_name": "Sandur"
+  },
+  {
+    "district": "Vijayanagara",
+    "no": "96",
+    "constituency": "Kudligi",
+    "name": "N. T. Srinivas",
+    "party": "Indian National Congress",
+    "map_shape_id": 65732,
+    "shape_name": "Kudligi"
+  },
+  {
+    "district": "Chitradurga",
+    "no": "97",
+    "constituency": "Molakalmuru",
+    "name": "N. Y. Gopalakrishna",
+    "party": "Indian National Congress",
+    "map_shape_id": 65733,
+    "shape_name": "Molakalmuru"
+  },
+  {
+    "district": "Chitradurga",
+    "no": "98",
+    "constituency": "Challakere",
+    "name": "T. Raghumurthy",
+    "party": "Indian National Congress",
+    "map_shape_id": 65734,
+    "shape_name": "Challakere"
+  },
+  {
+    "district": "Chitradurga",
+    "no": "99",
+    "constituency": "Chitradurga",
+    "name": "K. C. Veerendra Puppy",
+    "party": "Indian National Congress",
+    "map_shape_id": 65735,
+    "shape_name": "Chitradurga"
+  },
+  {
+    "district": "Chitradurga",
+    "no": "100",
+    "constituency": "Hiriyur",
+    "name": "D. Sudhakar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65736,
+    "shape_name": "Hiriyur"
+  },
+  {
+    "district": "Chitradurga",
+    "no": "101",
+    "constituency": "Hosadurga",
+    "name": "B. G. Govindappa",
+    "party": "Indian National Congress",
+    "map_shape_id": 65737,
+    "shape_name": "Hosadurga"
+  },
+  {
+    "district": "Chitradurga",
+    "no": "102",
+    "constituency": "Holalkere",
+    "name": "M. Chandrappa",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65738,
+    "shape_name": "Holalkere"
+  },
+  {
+    "district": "Davanagere",
+    "no": "103",
+    "constituency": "Jagalur",
+    "name": "B. Devendrappa",
+    "party": "Indian National Congress",
+    "map_shape_id": 65739,
+    "shape_name": "Jagalur"
+  },
+  {
+    "district": "Vijayanagara",
+    "no": "104",
+    "constituency": "Harapanahalli",
+    "name": "Latha Mallikarjun",
+    "party": "Independent",
+    "map_shape_id": 65740,
+    "shape_name": "Harapanahalli"
+  },
+  {
+    "district": "Davanagere",
+    "no": "105",
+    "constituency": "Harihar",
+    "name": "B. P. Harish",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65741,
+    "shape_name": "Harihar"
+  },
+  {
+    "district": "Davanagere",
+    "no": "106",
+    "constituency": "Davanagere North",
+    "name": "S. S. Mallikarjun",
+    "party": "Indian National Congress",
+    "map_shape_id": 65742,
+    "shape_name": "Davanagere North"
+  },
+  {
+    "district": "Davanagere",
+    "no": "107",
+    "constituency": "Davanagere South",
+    "name": "Samarth Shamanur Mallikarjun",
+    "party": "Indian National Congress",
+    "map_shape_id": 65743,
+    "shape_name": "Davanagere South"
+  },
+  {
+    "district": "Davanagere",
+    "no": "108",
+    "constituency": "Mayakonda",
+    "name": "K. S. Basavanthappa",
+    "party": "Indian National Congress",
+    "map_shape_id": 65744,
+    "shape_name": "Mayakonda"
+  },
+  {
+    "district": "Davanagere",
+    "no": "109",
+    "constituency": "Channagiri",
+    "name": "Basavaraju V. Shivaganga",
+    "party": "Indian National Congress",
+    "map_shape_id": 65745,
+    "shape_name": "Channagiri"
+  },
+  {
+    "district": "Davanagere",
+    "no": "110",
+    "constituency": "Honnali",
+    "name": "A. D. G. Shanthana Gowda",
+    "party": "Indian National Congress",
+    "map_shape_id": 65746,
+    "shape_name": "Honnali"
+  },
+  {
+    "district": "Shimoga",
+    "no": "111",
+    "constituency": "Shimoga Rural",
+    "name": "Sharada Puryanaik",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65747,
+    "shape_name": "Shimoga Rural"
+  },
+  {
+    "district": "Shimoga",
+    "no": "113",
+    "constituency": "Shimoga",
+    "name": "Channabasappa",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65749,
+    "shape_name": "Shimoga"
+  },
+  {
+    "district": "Shimoga",
+    "no": "114",
+    "constituency": "Tirthahalli",
+    "name": "Araga Jnanendra",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65750,
+    "shape_name": "Tirthahalli"
+  },
+  {
+    "district": "Shimoga",
+    "no": "115",
+    "constituency": "Shikaripura",
+    "name": "B. Y. Vijayendra",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65751,
+    "shape_name": "Shikaripura"
+  },
+  {
+    "district": "Shimoga",
+    "no": "116",
+    "constituency": "Sorab",
+    "name": "Madhu Bangarappa",
+    "party": "Indian National Congress",
+    "map_shape_id": 67436,
+    "shape_name": "Sorab"
+  },
+  {
+    "district": "Shimoga",
+    "no": "117",
+    "constituency": "Sagar",
+    "name": "Gopala Krishna Beluru",
+    "party": "Indian National Congress",
+    "map_shape_id": 65752,
+    "shape_name": "Sagar"
+  },
+  {
+    "district": "Udupi",
+    "no": "118",
+    "constituency": "Byndoor",
+    "name": "Gururaj Shetty Gantihole",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65753,
+    "shape_name": "Baindur"
+  },
+  {
+    "district": "Udupi",
+    "no": "120",
+    "constituency": "Udupi",
+    "name": "Yashpal A. Suvarna",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65755,
+    "shape_name": "Udupi"
+  },
+  {
+    "district": "Udupi",
+    "no": "121",
+    "constituency": "Kapu",
+    "name": "Gurme Suresh Shetty",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65756,
+    "shape_name": "Kaup"
+  },
+  {
+    "district": "Udupi",
+    "no": "122",
+    "constituency": "Karkala",
+    "name": "V. Sunil Kumar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65757,
+    "shape_name": "Karkala"
+  },
+  {
+    "district": "Chikmagalur",
+    "no": "123",
+    "constituency": "Sringeri",
+    "name": "T. D. Rajegowda",
+    "party": "Indian National Congress",
+    "map_shape_id": 65758,
+    "shape_name": "Sringeri"
+  },
+  {
+    "district": "Chikmagalur",
+    "no": "124",
+    "constituency": "Mudigere",
+    "name": "Nayana Motamma",
+    "party": "Indian National Congress",
+    "map_shape_id": 65759,
+    "shape_name": "Mudigere"
+  },
+  {
+    "district": "Chikmagalur",
+    "no": "126",
+    "constituency": "Tarikere",
+    "name": "G. H. Srinivasa",
+    "party": "Indian National Congress",
+    "map_shape_id": 65761,
+    "shape_name": "Tarikere"
+  },
+  {
+    "district": "Chikmagalur",
+    "no": "127",
+    "constituency": "Kadur",
+    "name": "K. S. Anand",
+    "party": "Indian National Congress",
+    "map_shape_id": 65762,
+    "shape_name": "Kadur"
+  },
+  {
+    "district": "Tumakuru",
+    "no": "129",
+    "constituency": "Tiptur",
+    "name": "K. Shadakshari",
+    "party": "Indian National Congress",
+    "map_shape_id": 65764,
+    "shape_name": "Tiptur"
+  },
+  {
+    "district": "Tumakuru",
+    "no": "130",
+    "constituency": "Turuvekere",
+    "name": "M. T. Krishnappa",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65765,
+    "shape_name": "Turuvekere"
+  },
+  {
+    "district": "Tumakuru",
+    "no": "131",
+    "constituency": "Kunigal",
+    "name": "H. D. Ranganath",
+    "party": "Indian National Congress",
+    "map_shape_id": 65766,
+    "shape_name": "Kunigal"
+  },
+  {
+    "district": "Tumakuru",
+    "no": "132",
+    "constituency": "Tumkur City",
+    "name": "G. B. Jyothi Ganesh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65767,
+    "shape_name": "Tumkur City"
+  },
+  {
+    "district": "Tumakuru",
+    "no": "133",
+    "constituency": "Tumkur Rural",
+    "name": "B. Suresh Gowda",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65768,
+    "shape_name": "Tumkur Rural"
+  },
+  {
+    "district": "Tumakuru",
+    "no": "134",
+    "constituency": "Koratagere",
+    "name": "G. Parameshwara",
+    "party": "Indian National Congress",
+    "map_shape_id": 65769,
+    "shape_name": "Koratagere"
+  },
+  {
+    "district": "Tumakuru",
+    "no": "135",
+    "constituency": "Gubbi",
+    "name": "S. R. Srinivas",
+    "party": "Indian National Congress",
+    "map_shape_id": 65770,
+    "shape_name": "Gubbi"
+  },
+  {
+    "district": "Tumakuru",
+    "no": "136",
+    "constituency": "Sira",
+    "name": "T. B. Jayachandra",
+    "party": "Indian National Congress",
+    "map_shape_id": 65771,
+    "shape_name": "Sira"
+  },
+  {
+    "district": "Tumakuru",
+    "no": "137",
+    "constituency": "Pavagada",
+    "name": "H. V. Venkatesh",
+    "party": "Indian National Congress",
+    "map_shape_id": 65772,
+    "shape_name": "Pavagada"
+  },
+  {
+    "district": "Tumakuru",
+    "no": "138",
+    "constituency": "Madhugiri",
+    "name": "K. N. Rajanna",
+    "party": "Indian National Congress",
+    "map_shape_id": 65773,
+    "shape_name": "Madhugiri"
+  },
+  {
+    "district": "Chikkaballapura",
+    "no": "139",
+    "constituency": "Gauribidanur",
+    "name": "K. Puttaswamy Gowda",
+    "party": "Independent",
+    "map_shape_id": 65774,
+    "shape_name": "Gauribidanur"
+  },
+  {
+    "district": "Chikkaballapura",
+    "no": "140",
+    "constituency": "Bagepalli",
+    "name": "S. N. Subbareddy",
+    "party": "Indian National Congress",
+    "map_shape_id": 65775,
+    "shape_name": "Bagepalli"
+  },
+  {
+    "district": "Chikkaballapura",
+    "no": "141",
+    "constituency": "Chikkaballapur",
+    "name": "Pradeep Eshwar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65776,
+    "shape_name": "Chikkaballapur"
+  },
+  {
+    "district": "Chikkaballapura",
+    "no": "142",
+    "constituency": "Sidlaghatta",
+    "name": "B. N. Ravi Kumar",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65777,
+    "shape_name": "Sidlaghatta"
+  },
+  {
+    "district": "Chikkaballapura",
+    "no": "143",
+    "constituency": "Chintamani",
+    "name": "M. C. Sudhakar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65778,
+    "shape_name": "Chintamani"
+  },
+  {
+    "district": "Kolar",
+    "no": "145",
+    "constituency": "Mulbagal",
+    "name": "Samruddhi V. Manjunath",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65780,
+    "shape_name": "Mulbagal"
+  },
+  {
+    "district": "Kolar",
+    "no": "146",
+    "constituency": "Kolar Gold Field",
+    "name": "M. Roopakala",
+    "party": "Indian National Congress",
+    "map_shape_id": 65781,
+    "shape_name": "Kolar Gold Field"
+  },
+  {
+    "district": "Kolar",
+    "no": "147",
+    "constituency": "Bangarapet",
+    "name": "S. N. Narayanaswamy",
+    "party": "Indian National Congress",
+    "map_shape_id": 65782,
+    "shape_name": "Bangarapet"
+  },
+  {
+    "district": "Kolar",
+    "no": "148",
+    "constituency": "Kolar",
+    "name": "Kothur G. Manjunath",
+    "party": "Indian National Congress",
+    "map_shape_id": 65783,
+    "shape_name": "Kolar"
+  },
+  {
+    "district": "Kolar",
+    "no": "149",
+    "constituency": "Malur",
+    "name": "K. Y. Nanjegowda",
+    "party": "Indian National Congress",
+    "map_shape_id": 65784,
+    "shape_name": "Malur"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "150",
+    "constituency": "Yelahanka",
+    "name": "S. R. Vishwanath",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65785,
+    "shape_name": "Yelahanka"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "151",
+    "constituency": "Krishnarajapuram",
+    "name": "B.A. Basavaraja",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65786,
+    "shape_name": "K.R. Pura"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "152",
+    "constituency": "Byatarayanapura",
+    "name": "Krishna Byregowda",
+    "party": "Indian National Congress",
+    "map_shape_id": 65787,
+    "shape_name": "Byatarayanapura"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "154",
+    "constituency": "Rajarajeshwarinagar",
+    "name": "Munirathna",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65789,
+    "shape_name": "Rajarajeshwarinagar"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "155",
+    "constituency": "Dasarahalli",
+    "name": "S. Muniraju",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65790,
+    "shape_name": "Dasarahalli"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "156",
+    "constituency": "Mahalakshmi Layout",
+    "name": "K. Gopalaiah",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65791,
+    "shape_name": "Mahalakshmi Layout"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "157",
+    "constituency": "Malleshwaram",
+    "name": "C.N. Ashwath Narayan",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65792,
+    "shape_name": "Malleshwaram"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "158",
+    "constituency": "Hebbal",
+    "name": "Suresha B.S.",
+    "party": "Indian National Congress",
+    "map_shape_id": 65793,
+    "shape_name": "Hebbal"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "159",
+    "constituency": "Pulakeshinagar",
+    "name": "A.C. Srinivasa",
+    "party": "Indian National Congress",
+    "map_shape_id": 65794,
+    "shape_name": "Pulakeshinagar"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "160",
+    "constituency": "Sarvagnanagar",
+    "name": "K.J. George",
+    "party": "Indian National Congress",
+    "map_shape_id": 65795,
+    "shape_name": "Sarvagnanagar"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "162",
+    "constituency": "Shivajinagar",
+    "name": "Rizwan Arshad",
+    "party": "Indian National Congress",
+    "map_shape_id": 65797,
+    "shape_name": "Shivajinagar"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "163",
+    "constituency": "Shanti Nagar",
+    "name": "N.A. Haris",
+    "party": "Indian National Congress",
+    "map_shape_id": 65798,
+    "shape_name": "Shantinagar"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "164",
+    "constituency": "Gandhi Nagar",
+    "name": "Dinesh Gundu Rao",
+    "party": "Indian National Congress",
+    "map_shape_id": 65799,
+    "shape_name": "Gandhinagar"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "165",
+    "constituency": "Rajaji Nagar",
+    "name": "S. Suresh Kumar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65800,
+    "shape_name": "Rajajinagar"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "169",
+    "constituency": "Chickpet",
+    "name": "Uday B. Garudachar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65804,
+    "shape_name": "Chickpet"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "170",
+    "constituency": "Basavanagudi",
+    "name": "Ravi Subramanya L.A.",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65805,
+    "shape_name": "Basavanagudi"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "172",
+    "constituency": "B.T.M. Layout",
+    "name": "Ramalinga Reddy",
+    "party": "Indian National Congress",
+    "map_shape_id": 65807,
+    "shape_name": "B.T.M Layout"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "173",
+    "constituency": "Jayanagar",
+    "name": "C. K. Ramamurthy",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65808,
+    "shape_name": "Jayanagar"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "174",
+    "constituency": "Mahadevapura",
+    "name": "Manjula S.",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65809,
+    "shape_name": "Mahadevapura"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "175",
+    "constituency": "Bommanahalli",
+    "name": "Satish Reddy M.",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65810,
+    "shape_name": "Bommanahalli"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "176",
+    "constituency": "Bangalore South",
+    "name": "M. Krishnappa",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65811,
+    "shape_name": "Bangalore South"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "177",
+    "constituency": "Anekal",
+    "name": "B. Shivanna",
+    "party": "Indian National Congress",
+    "map_shape_id": 65812,
+    "shape_name": "Anekal"
+  },
+  {
+    "district": "Bangalore Rural",
+    "no": "179",
+    "constituency": "Devanahalli",
+    "name": "K. H. Muniyappa",
+    "party": "Indian National Congress",
+    "map_shape_id": 65814,
+    "shape_name": "Devanahalli"
+  },
+  {
+    "district": "Bangalore Rural",
+    "no": "180",
+    "constituency": "Doddaballapur",
+    "name": "Dheeraj Muniraj",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65815,
+    "shape_name": "Doddaballapur"
+  },
+  {
+    "district": "Bangalore Rural",
+    "no": "181",
+    "constituency": "Nelamangala",
+    "name": "N. Shreenivasaiah",
+    "party": "Indian National Congress",
+    "map_shape_id": 65816,
+    "shape_name": "Nelamangala"
+  },
+  {
+    "district": "Ramanagara",
+    "no": "182",
+    "constituency": "Magadi",
+    "name": "H. C. Balakrishna",
+    "party": "Indian National Congress",
+    "map_shape_id": 65817,
+    "shape_name": "Magadi"
+  },
+  {
+    "district": "Ramanagara",
+    "no": "184",
+    "constituency": "Kanakapura",
+    "name": "D.K. Shivakumar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65819,
+    "shape_name": "Kanakapura"
+  },
+  {
+    "district": "Ramanagara",
+    "no": "185",
+    "constituency": "Channapatna",
+    "name": "C. P. Yogeshwar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65820,
+    "shape_name": "Channapatna"
+  },
+  {
+    "district": "Mandya",
+    "no": "186",
+    "constituency": "Malavalli",
+    "name": "P. M. Narendraswamy",
+    "party": "Indian National Congress",
+    "map_shape_id": 65821,
+    "shape_name": "Malavalli"
+  },
+  {
+    "district": "Mandya",
+    "no": "187",
+    "constituency": "Maddur",
+    "name": "K. M. Udaya",
+    "party": "Indian National Congress",
+    "map_shape_id": 65822,
+    "shape_name": "Maddur"
+  },
+  {
+    "district": "Mandya",
+    "no": "188",
+    "constituency": "Melukote",
+    "name": "Darshan Puttannaiah",
+    "party": "Sarvodaya Karnataka Paksha",
+    "map_shape_id": 65823,
+    "shape_name": "Melukote"
+  },
+  {
+    "district": "Mandya",
+    "no": "189",
+    "constituency": "Mandya",
+    "name": "Ravikumar Gowda",
+    "party": "Indian National Congress",
+    "map_shape_id": 65824,
+    "shape_name": "Mandya"
+  },
+  {
+    "district": "Mandya",
+    "no": "190",
+    "constituency": "Shrirangapattana",
+    "name": "A. B. Ramesha Bandisiddegowda",
+    "party": "Indian National Congress",
+    "map_shape_id": 65825,
+    "shape_name": "Shrirangapattana"
+  },
+  {
+    "district": "Mandya",
+    "no": "191",
+    "constituency": "Nagamangala",
+    "name": "N. Chaluvaraya Swamy",
+    "party": "Indian National Congress",
+    "map_shape_id": 65826,
+    "shape_name": "Nagamangala"
+  },
+  {
+    "district": "Hassan",
+    "no": "193",
+    "constituency": "Shravanabelagola",
+    "name": "C. N. Balakrishna",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65828,
+    "shape_name": "Shravanabelagola"
+  },
+  {
+    "district": "Hassan",
+    "no": "194",
+    "constituency": "Arsikere",
+    "name": "K. M. Shivalinge Gowda",
+    "party": "Indian National Congress",
+    "map_shape_id": 65829,
+    "shape_name": "Arsikere"
+  },
+  {
+    "district": "Hassan",
+    "no": "195",
+    "constituency": "Belur",
+    "name": "H. K. Suresh",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65830,
+    "shape_name": "Belur"
+  },
+  {
+    "district": "Hassan",
+    "no": "196",
+    "constituency": "Hassan",
+    "name": "Swaroop Prakash",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65831,
+    "shape_name": "Hassan"
+  },
+  {
+    "district": "Hassan",
+    "no": "197",
+    "constituency": "Holenarasipur",
+    "name": "H. D. Revanna",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65832,
+    "shape_name": "Holenarasipur"
+  },
+  {
+    "district": "Dakshina Kannada",
+    "no": "200",
+    "constituency": "Belthangady",
+    "name": "Harish Poonja",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65835,
+    "shape_name": "Belthangady"
+  },
+  {
+    "district": "Dakshina Kannada",
+    "no": "201",
+    "constituency": "Moodabidri",
+    "name": "Umanatha Kotian",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65836,
+    "shape_name": "Moodabidri"
+  },
+  {
+    "district": "Dakshina Kannada",
+    "no": "202",
+    "constituency": "Mangalore City North",
+    "name": "Y. Bharath Shetty",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65837,
+    "shape_name": "Mangalore City North"
+  },
+  {
+    "district": "Dakshina Kannada",
+    "no": "203",
+    "constituency": "Mangalore City South",
+    "name": "D. Vedavyasa Kamath",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65838,
+    "shape_name": "Mangalore City South"
+  },
+  {
+    "district": "Dakshina Kannada",
+    "no": "204",
+    "constituency": "Mangalore",
+    "name": "U. T. Khader",
+    "party": "Indian National Congress",
+    "map_shape_id": 65839,
+    "shape_name": "Mangalore"
+  },
+  {
+    "district": "Dakshina Kannada",
+    "no": "206",
+    "constituency": "Puttur",
+    "name": "Ashok Kumar Rai",
+    "party": "Indian National Congress",
+    "map_shape_id": 65841,
+    "shape_name": "Puttur"
+  },
+  {
+    "district": "Dakshina Kannada",
+    "no": "207",
+    "constituency": "Sullia",
+    "name": "Bhagirathi Murulya",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65842,
+    "shape_name": "Sullia"
+  },
+  {
+    "district": "Kodagu",
+    "no": "208",
+    "constituency": "Madikeri",
+    "name": "Mantar Gowda",
+    "party": "Indian National Congress",
+    "map_shape_id": 65843,
+    "shape_name": "Madikeri"
+  },
+  {
+    "district": "Kodagu",
+    "no": "209",
+    "constituency": "Virajpet",
+    "name": "A. S. Ponnanna",
+    "party": "Indian National Congress",
+    "map_shape_id": 65844,
+    "shape_name": "Virajpet"
+  },
+  {
+    "district": "Mysore",
+    "no": "211",
+    "constituency": "Krishnarajanagara",
+    "name": "D. Ravishankar",
+    "party": "Indian National Congress",
+    "map_shape_id": 65846,
+    "shape_name": "Krishnarajanagara"
+  },
+  {
+    "district": "Mysore",
+    "no": "212",
+    "constituency": "Hunsur",
+    "name": "G. D. Harish Gowda",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65847,
+    "shape_name": "Hunsur"
+  },
+  {
+    "district": "Mysore",
+    "no": "213",
+    "constituency": "Heggadadevankote",
+    "name": "Anil Chikkamadhu",
+    "party": "Indian National Congress",
+    "map_shape_id": 65848,
+    "shape_name": "Heggadadevankote"
+  },
+  {
+    "district": "Mysore",
+    "no": "214",
+    "constituency": "Nanjangud",
+    "name": "Darshan Dhruvanarayana",
+    "party": "Indian National Congress",
+    "map_shape_id": 65849,
+    "shape_name": "Nanjangud"
+  },
+  {
+    "district": "Mysore",
+    "no": "215",
+    "constituency": "Chamundeshwari",
+    "name": "G. T. Devegowda",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65850,
+    "shape_name": "Chamundeshwari"
+  },
+  {
+    "district": "Mysore",
+    "no": "216",
+    "constituency": "Krishnaraja",
+    "name": "T. S. Srivatsa",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65851,
+    "shape_name": "Krishnaraja"
+  },
+  {
+    "district": "Mysore",
+    "no": "217",
+    "constituency": "Chamaraja",
+    "name": "K. Harish Gowda",
+    "party": "Indian National Congress",
+    "map_shape_id": 65852,
+    "shape_name": "Chamaraja"
+  },
+  {
+    "district": "Mysore",
+    "no": "218",
+    "constituency": "Narasimharaja",
+    "name": "Tanveer Sait",
+    "party": "Indian National Congress",
+    "map_shape_id": 65853,
+    "shape_name": "Narasimharaja"
+  },
+  {
+    "district": "Mysore",
+    "no": "219",
+    "constituency": "Varuna",
+    "name": "Siddaramaiah",
+    "party": "Indian National Congress",
+    "map_shape_id": 65854,
+    "shape_name": "Varuna"
+  },
+  {
+    "district": "Mysore",
+    "no": "220",
+    "constituency": "T. Narasipur",
+    "name": "H. C. Mahadevappa",
+    "party": "Indian National Congress",
+    "map_shape_id": 65855,
+    "shape_name": "T. Narasipur"
+  },
+  {
+    "district": "Chamarajanagar",
+    "no": "221",
+    "constituency": "Hanur",
+    "name": "M. R. Manjunath",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65856,
+    "shape_name": "Hanur"
+  },
+  {
+    "district": "Chamarajanagar",
+    "no": "222",
+    "constituency": "Kollegal",
+    "name": "A. R. Krishnamurthy",
+    "party": "Indian National Congress",
+    "map_shape_id": 65857,
+    "shape_name": "Kollegal"
+  },
+  {
+    "district": "Chamarajanagar",
+    "no": "223",
+    "constituency": "Chamarajanagar",
+    "name": "C. Puttarangashetty",
+    "party": "Indian National Congress",
+    "map_shape_id": 65858,
+    "shape_name": "Chamarajanagar"
+  },
+  {
+    "district": "Chamarajanagar",
+    "no": "224",
+    "constituency": "Gundlupet",
+    "name": "H M Ganesh Prasad",
+    "party": "Indian National Congress",
+    "map_shape_id": 65859,
+    "shape_name": "Gundlupet"
+  },
+  {
+    "district": "Belagavi",
+    "no": "6",
+    "constituency": "Raibag",
+    "name": "Duryodhan Aihole",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65644,
+    "shape_name": "Raybag"
+  },
+  {
+    "district": "Belagavi",
+    "no": "10",
+    "constituency": "Yemkanmardi",
+    "name": "Satish Jarkiholi",
+    "party": "Indian National Congress",
+    "map_shape_id": 65648,
+    "shape_name": "Yemkanamardi"
+  },
+  {
+    "district": "Belagavi",
+    "no": "16",
+    "constituency": "Bailhongal",
+    "name": "Mahantesh Koujalagi",
+    "party": "Indian National Congress",
+    "map_shape_id": 65653,
+    "shape_name": "Bailahongal"
+  },
+  {
+    "district": "Vijayapura",
+    "no": "27",
+    "constituency": "Devar Hippargi",
+    "name": "Rajugouda Patil",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65664,
+    "shape_name": "Devara Hippargi"
+  },
+  {
+    "district": "Vijayapura",
+    "no": "31",
+    "constituency": "Nagathan",
+    "name": "Katakadond Vittal Dondiba",
+    "party": "Indian National Congress",
+    "map_shape_id": 65668,
+    "shape_name": "Nagthan"
+  },
+  {
+    "district": "Vijayapura",
+    "no": "33",
+    "constituency": "Sindagi",
+    "name": "Ashok M. Managuli",
+    "party": "Indian National Congress",
+    "map_shape_id": 65670,
+    "shape_name": "Sindgi"
+  },
+  {
+    "district": "Koppal",
+    "no": "62",
+    "constituency": "Gangawati",
+    "name": "G. Janardhana Reddy",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65699,
+    "shape_name": "Gangavathi"
+  },
+  {
+    "district": "Dharwad",
+    "no": "75",
+    "constituency": "Kalghatgi",
+    "name": "Santosh Lad",
+    "party": "Indian National Congress",
+    "map_shape_id": 65712,
+    "shape_name": "Kalaghatgi"
+  },
+  {
+    "district": "Ballari",
+    "no": "92",
+    "constituency": "Siruguppa",
+    "name": "B. M. Nagaraja",
+    "party": "Indian National Congress",
+    "map_shape_id": 65728,
+    "shape_name": "Siraguppa"
+  },
+  {
+    "district": "Shimoga",
+    "no": "112",
+    "constituency": "Bhadravati",
+    "name": "B. K. Sangameshwara",
+    "party": "Indian National Congress",
+    "map_shape_id": 65748,
+    "shape_name": "Bhadravathi"
+  },
+  {
+    "district": "Udupi",
+    "no": "119",
+    "constituency": "Kundapura",
+    "name": "A. Kiran Kumar Kodgi",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65754,
+    "shape_name": "Kundapur"
+  },
+  {
+    "district": "Chikmagalur",
+    "no": "125",
+    "constituency": "Chikmagalur",
+    "name": "H. D. Thammaiah",
+    "party": "Indian National Congress",
+    "map_shape_id": 65760,
+    "shape_name": "Chickamagalur"
+  },
+  {
+    "district": "Tumakuru",
+    "no": "128",
+    "constituency": "Chiknayakanhalli",
+    "name": "C. B. Suresh Babu",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65763,
+    "shape_name": "Chikknayakanhalli"
+  },
+  {
+    "district": "Kolar",
+    "no": "144",
+    "constituency": "Srinivaspur",
+    "name": "G. K. Venkatashiva Reddy",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65779,
+    "shape_name": "Srinivasapur"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "153",
+    "constituency": "Yeshwantpur",
+    "name": "S.T. Somashekar",
+    "party": "Independent",
+    "map_shape_id": 65788,
+    "shape_name": "Yeshwanthapura"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "161",
+    "constituency": "C. V. Raman Nagar",
+    "name": "S. Raghu",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65796,
+    "shape_name": "C.V. RamannNagar"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "166",
+    "constituency": "Govindraj Nagar",
+    "name": "Priya Krishna",
+    "party": "Indian National Congress",
+    "map_shape_id": 65801,
+    "shape_name": "Govindarajanagar"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "167",
+    "constituency": "Vijay Nagar",
+    "name": "M. Krishnappa",
+    "party": "Indian National Congress",
+    "map_shape_id": 65802,
+    "shape_name": "Vijayanagar"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "168",
+    "constituency": "Chamrajpet",
+    "name": "B.Z. Zameer Ahmed Khan",
+    "party": "Indian National Congress",
+    "map_shape_id": 65803,
+    "shape_name": "Chamrajapet"
+  },
+  {
+    "district": "Bangalore Urban",
+    "no": "171",
+    "constituency": "Padmanabhanagar",
+    "name": "R. Ashoka",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65806,
+    "shape_name": "Padmanabanagar"
+  },
+  {
+    "district": "Bangalore Rural",
+    "no": "178",
+    "constituency": "Hoskote",
+    "name": "Sharath Kumar Bache Gowda",
+    "party": "Indian National Congress",
+    "map_shape_id": 65813,
+    "shape_name": "Hosakote"
+  },
+  {
+    "district": "Ramanagara",
+    "no": "183",
+    "constituency": "Ramanagara",
+    "name": "H. A. Iqbal Hussain",
+    "party": "Indian National Congress",
+    "map_shape_id": 65818,
+    "shape_name": "Ramanagaram"
+  },
+  {
+    "district": "Mandya",
+    "no": "192",
+    "constituency": "Krishnarajapet",
+    "name": "H. T. Manju",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65827,
+    "shape_name": "Krishnarajpet"
+  },
+  {
+    "district": "Hassan",
+    "no": "198",
+    "constituency": "Arkalgud",
+    "name": "A. Manju",
+    "party": "Janata Dal (Secular)",
+    "map_shape_id": 65833,
+    "shape_name": "Arakalgud"
+  },
+  {
+    "district": "Hassan",
+    "no": "199",
+    "constituency": "Sakleshpur",
+    "name": "Cement Manju",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65834,
+    "shape_name": "Sakaleshpur"
+  },
+  {
+    "district": "Dakshina Kannada",
+    "no": "205",
+    "constituency": "Bantval",
+    "name": "U. Rajesh Naik",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 65840,
+    "shape_name": "Bantwal"
+  },
+  {
+    "district": "Mysore",
+    "no": "210",
+    "constituency": "Periyapatna",
+    "name": "K. Venkatesh",
+    "party": "Indian National Congress",
+    "map_shape_id": 65845,
+    "shape_name": "Piriyapatna"
+  }
+]

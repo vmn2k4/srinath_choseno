@@ -1,0 +1,835 @@
+[
+  {
+    "district": "Kumuram Bheem Asifabad",
+    "no": "1",
+    "constituency": "Sirpur",
+    "name": "Palvai Harish Babu",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Mancherial",
+    "no": "2",
+    "constituency": "Chennur",
+    "name": "Gaddam Vivek Venkatswamy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Mancherial",
+    "no": "3",
+    "constituency": "Bellampalli",
+    "name": "Gaddam Vinod",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Mancherial",
+    "no": "4",
+    "constituency": "Mancherial",
+    "name": "Kokkirala Premsagar Rao",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kumuram Bheem Asifabad",
+    "no": "5",
+    "constituency": "Asifabad",
+    "name": "Kova Laxmi",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Nirmal",
+    "no": "6",
+    "constituency": "Khanapur",
+    "name": "Vedma Bhojju",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Adilabad",
+    "no": "7",
+    "constituency": "Adilabad",
+    "name": "Payal Shanker",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Adilabad",
+    "no": "8",
+    "constituency": "Boath (ST)",
+    "name": "Anil Jadhav",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Nirmal",
+    "no": "9",
+    "constituency": "Nirmal",
+    "name": "Alleti Maheshwar Reddy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nirmal",
+    "no": "10",
+    "constituency": "Mudhole",
+    "name": "Pawar Ramarao Patel",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nizambad",
+    "no": "11",
+    "constituency": "Armur",
+    "name": "Paidi Rakesh Reddy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nizambad",
+    "no": "12",
+    "constituency": "Bodhan",
+    "name": "Podduturi Sudarshan Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kamareddy",
+    "no": "13",
+    "constituency": "Jukkal",
+    "name": "Thota Laxmi Kantha Rao",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nizambad",
+    "no": "14",
+    "constituency": "Banswada",
+    "name": "Pocharam Srinivas Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kamareddy",
+    "no": "15",
+    "constituency": "Yellareddy",
+    "name": "K. Madan Mohan Rao",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kamareddy",
+    "no": "16",
+    "constituency": "Kamareddy",
+    "name": "K. V. Ramana Reddy",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nizambad",
+    "no": "17",
+    "constituency": "Nizamabad Urban)",
+    "name": "Dhanpal Suryanarayana Gupta",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nizambad",
+    "no": "18",
+    "constituency": "Nizamabad Rural",
+    "name": "Rekulapally Bhoopathi Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nizambad",
+    "no": "19",
+    "constituency": "Balkonda",
+    "name": "Vemula Prashanth Reddy",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Jagital",
+    "no": "20",
+    "constituency": "Koratla",
+    "name": "Kalvakuntla Sanjay",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Jagital",
+    "no": "21",
+    "constituency": "Jagtial",
+    "name": "M. Sanjay Kumar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Jagital",
+    "no": "22",
+    "constituency": "Dharmapuri",
+    "name": "Adluri Laxman Kumar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Peddapalli",
+    "no": "23",
+    "constituency": "Ramagundam",
+    "name": "Makkan Singh Raj Thakur",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Peddapalli",
+    "no": "24",
+    "constituency": "Manthani",
+    "name": "Duddilla Sridhar Babu",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Peddapalli",
+    "no": "25",
+    "constituency": "Peddapalle",
+    "name": "Chinthakunta Vijaya Ramana Rao",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Karimnagar",
+    "no": "26",
+    "constituency": "Karimnagar",
+    "name": "Gangula Kamalakar",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Karimnagar",
+    "no": "27",
+    "constituency": "Choppadandi",
+    "name": "Medipally Sathyam",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Rajanna Sircilla",
+    "no": "28",
+    "constituency": "Vemulawada",
+    "name": "Aadi Srinivas",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Rajanna Sircilla",
+    "no": "29",
+    "constituency": "Sircilla",
+    "name": "K. T. Rama Rao",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Karimnagar",
+    "no": "30",
+    "constituency": "Manakondur",
+    "name": "Kavvampally Satyanarayana",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Karimnagar",
+    "no": "31",
+    "constituency": "Huzurabad",
+    "name": "Padi Kaushik Reddy",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Siddipet",
+    "no": "32",
+    "constituency": "Husnabad",
+    "name": "Ponnam Prabhakar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Siddipet",
+    "no": "33",
+    "constituency": "Siddipet",
+    "name": "T. Harish Rao",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Medak",
+    "no": "34",
+    "constituency": "Medak",
+    "name": "Mynampally Rohith",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Sangareddy",
+    "no": "35",
+    "constituency": "Narayankhed",
+    "name": "Patlolla Sanjeeva Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Sangareddy",
+    "no": "36",
+    "constituency": "Andole",
+    "name": "Damodar Raja Narasimha",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Medak",
+    "no": "37",
+    "constituency": "Narsapur",
+    "name": "Vakiti Sunitha Laxma Reddy",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Sangareddy",
+    "no": "38",
+    "constituency": "Zahirabad",
+    "name": "Koninty Manik Rao",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Sangareddy",
+    "no": "39",
+    "constituency": "Sangareddy",
+    "name": "Chintha Prabhakar",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Sangareddy",
+    "no": "40",
+    "constituency": "Patancheru",
+    "name": "Gudem Mahipal Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Siddipet",
+    "no": "41",
+    "constituency": "Dubbak",
+    "name": "Kotha Prabhakar Reddy",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Siddipet",
+    "no": "42",
+    "constituency": "Gajwel",
+    "name": "K. Chandrashekar Rao",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Medchal Malkajgiri",
+    "no": "43",
+    "constituency": "Medchal",
+    "name": "Malla Reddy",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Medchal Malkajgiri",
+    "no": "44",
+    "constituency": "Malkajgiri",
+    "name": "Marri Rajashekar Reddy",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Medchal Malkajgiri",
+    "no": "45",
+    "constituency": "Quthbullapur",
+    "name": "K. P. Vivekanand Goud",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Medchal Malkajgiri",
+    "no": "46",
+    "constituency": "Kukatpally",
+    "name": "Madhavaram Krishna Rao",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Medchal Malkajgiri",
+    "no": "47",
+    "constituency": "Uppal",
+    "name": "Bandari Lakshma Reddy",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Ranga Reddy",
+    "no": "48",
+    "constituency": "Ibrahimpatnam",
+    "name": "Malreddy Ranga Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ranga Reddy",
+    "no": "49",
+    "constituency": "L. B. Nagar",
+    "name": "Devireddy Sudheer Reddy",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Ranga Reddy",
+    "no": "50",
+    "constituency": "Maheshwaram",
+    "name": "Sabitha Indra Reddy",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Ranga Reddy",
+    "no": "51",
+    "constituency": "Rajendranagar",
+    "name": "T. Prakash Goud",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ranga Reddy",
+    "no": "52",
+    "constituency": "Serilingampally",
+    "name": "Arekapudi Gandhi",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ranga Reddy",
+    "no": "53",
+    "constituency": "Chevella",
+    "name": "Kale Yadaiah",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Vikarabad",
+    "no": "54",
+    "constituency": "Pargi",
+    "name": "T. Ram Mohan Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Vikarabad",
+    "no": "55",
+    "constituency": "Vikarabad",
+    "name": "Gaddam Prasad Kumar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Vikarabad",
+    "no": "56",
+    "constituency": "Tandur",
+    "name": "B. Manohar Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "57",
+    "constituency": "Musheerabad",
+    "name": "Muta Gopal",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "58",
+    "constituency": "Malakpet",
+    "name": "Ahmed Bin Abdullah Balala",
+    "party": "All India Majlis-e-Ittehadul Muslimeen"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "59",
+    "constituency": "Amberpet",
+    "name": "Kaleru Venkatesh",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "60",
+    "constituency": "Khairatabad",
+    "name": "Danam Nagender",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "61",
+    "constituency": "Jubilee Hills",
+    "name": "Vallala Naveen Yadav",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "62",
+    "constituency": "Sanathnagar",
+    "name": "Talasani Srinivas Yadav",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "63",
+    "constituency": "Nampally",
+    "name": "Mohammad Majid Hussain",
+    "party": "All India Majlis-e-Ittehadul Muslimeen"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "64",
+    "constituency": "Karwan",
+    "name": "Kausar Mohiuddin",
+    "party": "All India Majlis-e-Ittehadul Muslimeen"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "65",
+    "constituency": "Goshamahal",
+    "name": "T. Raja Singh",
+    "party": "Independent"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "66",
+    "constituency": "Charminar",
+    "name": "Mir Zulfeqar Ali",
+    "party": "All India Majlis-e-Ittehadul Muslimeen"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "67",
+    "constituency": "Chandrayangutta",
+    "name": "Akbaruddin Owaisi",
+    "party": "All India Majlis-e-Ittehadul Muslimeen"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "68",
+    "constituency": "Yakutpura",
+    "name": "Jaffer Hussain",
+    "party": "All India Majlis-e-Ittehadul Muslimeen"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "69",
+    "constituency": "Bahadurpura",
+    "name": "Mohammed Mubeen",
+    "party": "All India Majlis-e-Ittehadul Muslimeen"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "70",
+    "constituency": "Secunderabad",
+    "name": "T. Padma Rao Goud",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Hyderabad",
+    "no": "71",
+    "constituency": "Secunderabad Cantt.",
+    "name": "Narayanan Sri Ganesh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Vikarabad",
+    "no": "72",
+    "constituency": "Kodangal",
+    "name": "Anumula Revanth Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Narayanpet",
+    "no": "73",
+    "constituency": "Narayanpet",
+    "name": "Chittem Parinika Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Mahabubnagar",
+    "no": "74",
+    "constituency": "Mahbubnagar",
+    "name": "Yennam Srinivas Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Mahabubnagar",
+    "no": "75",
+    "constituency": "Jadcherla",
+    "name": "Janampalli Anirudh Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Mahabubnagar",
+    "no": "76",
+    "constituency": "Devarkadra",
+    "name": "Gavinolla Madhusudan Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Narayanpet",
+    "no": "77",
+    "constituency": "Makthal",
+    "name": "Vakiti Srihari",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Wanaparty",
+    "no": "78",
+    "constituency": "Wanaparthy",
+    "name": "Tudi Megha Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Jogulamba Gadwal",
+    "no": "79",
+    "constituency": "Gadwal",
+    "name": "Bandla Krishna Mohan Reddy",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Jogulamba Gadwal",
+    "no": "80",
+    "constituency": "Alampur",
+    "name": "Vijayudu",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Nagarkurnool",
+    "no": "81",
+    "constituency": "Nagarkurnool",
+    "name": "Kuchkulla Rajesh Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nagarkurnool",
+    "no": "82",
+    "constituency": "Achampet",
+    "name": "Chikkudu Vamshi Krishna",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ranga Reddy",
+    "no": "83",
+    "constituency": "Kalwakurthy",
+    "name": "Kasireddy Narayan Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ranga Reddy",
+    "no": "84",
+    "constituency": "Shadnagar",
+    "name": "K. Shankaraiah",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nagarkurnool",
+    "no": "85",
+    "constituency": "Kollapur",
+    "name": "Jupally Krishna Rao",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nalgonda",
+    "no": "86",
+    "constituency": "Devarakonda",
+    "name": "Nenavath Balu Naik",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nalgonda",
+    "no": "87",
+    "constituency": "Nagarjuna Sagar",
+    "name": "Kunduru Jayaveer Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nalgonda",
+    "no": "88",
+    "constituency": "Miryalaguda",
+    "name": "Bathula Laxma Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Suryapet",
+    "no": "89",
+    "constituency": "Huzurnagar",
+    "name": "Nalamada Uttam Kumar Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Suryapet",
+    "no": "90",
+    "constituency": "Kodad",
+    "name": "Nalamada Padmavathi Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Suryapet",
+    "no": "91",
+    "constituency": "Suryapet",
+    "name": "Guntakandla Jagadish Reddy",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Nalgonda",
+    "no": "92",
+    "constituency": "Nalgonda",
+    "name": "Komatireddy Venkat Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nalgonda",
+    "no": "93",
+    "constituency": "Munugode",
+    "name": "Komatireddy Raj Gopal Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Yadadri Bhuvanagari",
+    "no": "94",
+    "constituency": "Bhongir",
+    "name": "Kumbam Anil Kumar Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nalgonda",
+    "no": "95",
+    "constituency": "Nakrekal",
+    "name": "Vemula Veeresham",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Suryapet",
+    "no": "96",
+    "constituency": "Thungathurthi",
+    "name": "Mandula Samual",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Yadadri Bhuvanagari",
+    "no": "97",
+    "constituency": "Alair",
+    "name": "Beerla Ilaiah",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Jangoan",
+    "no": "98",
+    "constituency": "Jangaon",
+    "name": "Palla Rajeshwar Reddy",
+    "party": "Bharat Rashtra Samithi"
+  },
+  {
+    "district": "Jangoan",
+    "no": "99",
+    "constituency": "Ghanpur (Station)",
+    "name": "Kadiyam Srihari",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Jangoan",
+    "no": "100",
+    "constituency": "Palakurthi",
+    "name": "Mamidala Yashaswini Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Mahabubabad",
+    "no": "101",
+    "constituency": "Dornakal",
+    "name": "Jatoth Ram Chander Naik",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Mahabubabad",
+    "no": "102",
+    "constituency": "Mahabubabad",
+    "name": "Murali Naik Bhukya",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Warangal Rural",
+    "no": "103",
+    "constituency": "Narsampet",
+    "name": "Donthi Madhava Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Warangal Rural",
+    "no": "104",
+    "constituency": "Parkal",
+    "name": "Revuri Prakash Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Warangal Rural",
+    "no": "105",
+    "constituency": "Warangal West",
+    "name": "Naini Rajender Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Warangal Rural",
+    "no": "106",
+    "constituency": "Warangal East",
+    "name": "Konda Surekha",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Warangal Rural",
+    "no": "107",
+    "constituency": "Waradhanapet",
+    "name": "K. R. Nagaraj",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Jayashankar Bhupalpalle",
+    "no": "108",
+    "constituency": "Bhupalpalle",
+    "name": "Gandra Satyanarayana Rao",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Mulug",
+    "no": "109",
+    "constituency": "Mulug",
+    "name": "Dansari Anasuya (Seethakka)",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Bhadradri Kothagudem",
+    "no": "110",
+    "constituency": "Pinapaka",
+    "name": "Payam Venkateswarlu",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Bhadradri Kothagudem",
+    "no": "111",
+    "constituency": "Yellandu",
+    "name": "Koram Kanakaiah",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Khammam",
+    "no": "112",
+    "constituency": "Khammam",
+    "name": "Thummala Nageswara Rao",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Khammam",
+    "no": "113",
+    "constituency": "Palair",
+    "name": "Ponguleti Srinivasa Reddy",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Khammam",
+    "no": "114",
+    "constituency": "Madhira",
+    "name": "Mallu Bhatti Vikramarka",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Khammam",
+    "no": "115",
+    "constituency": "Wyra",
+    "name": "Maloth Ramdas",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Khammam",
+    "no": "116",
+    "constituency": "Sathupalli",
+    "name": "Matta Ragamayee",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Bhadradri Kothagudem",
+    "no": "117",
+    "constituency": "Kothagudem",
+    "name": "Kunamneni Sambasiva Rao",
+    "party": "Communist Party of India"
+  },
+  {
+    "district": "Bhadradri Kothagudem",
+    "no": "118",
+    "constituency": "Aswaraopeta",
+    "name": "Jare Adinarayana",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Bhadradri Kothagudem",
+    "no": "119",
+    "constituency": "Bhadrachalam",
+    "name": "Tellam Venkata Rao",
+    "party": "Indian National Congress"
+  }
+]

@@ -1,0 +1,556 @@
+{{Short description|Legislative Assembly of Tripura from 2023}}
+{{Use dmy dates|date=March 2023}}
+{{Infobox legislative term
+| name                  = 13th Tripura Assembly
+| before                = [[Twelfth Tripura Assembly]]
+| state                 = [[Tripura]]
+| country               = [[India]]
+| body                  = [[Tripura Legislative Assembly]]
+| meeting_place         = Tripura Vidhan Sabha, Agartala<br>[[File:1487239146-tripura-assembly-fb.jpg|thumbnail|150px]]
+| election              = [[2023 Tripura Legislative Assembly election]]
+| term                  = 5 years
+| government            = [[National Democratic Alliance]]
+| opposition            = [[Secular Democratic Forces]]
+| website               = https://www.tripuraassembly.nic.in/
+| image                 = 
+| term_start            = 2023
+| term_end              = 2028
+| membership1           = 60
+| control1              = [[Bharatiya Janata Party]]
+| chamber1_leader1_type = [[Chief Minister of Tripura|Chief Minister]]
+| chamber1_leader1      = [[Manik Saha]]
+| chamber1_leader2_type = [[Deputy Chief Minister of Tripura|Deputy Chief Minister]]
+| chamber1_leader2      = 
+| chamber1_leader5_type = [[List of leaders of the opposition in the Tripura Legislative Assembly|Leader of the Opposition]]
+| chamber1_leader5      = [[Jitendra Chaudhury]]
+| chamber1_leader3_type = [[Speaker of the Tripura Legislative Assembly|Speaker of the Assembly]]
+| chamber1_leader3      = [[Ram Pada Jamatia]]
+| chamber1_leader4_type = [[List of deputy speakers of the Tripura Legislative Assembly|Deputy Speaker of the Assembly]]
+| chamber1_leader4      = [[Ram Prasad Paul]]
+}}
+
+The '''Thirteenth Tripura Assembly''' was formed after [[2023 Tripura Legislative Assembly election]]. Elections were held in [[List of constituencies of the Tripura Legislative Assembly|60]] constituencies on 16 February 2023. Votes were counted on 2 March 2023.<ref>{{Cite web |date=2023-01-18 |title=Tripura to vote in single phase on Feb 16, results on March 2 {{!}} Full schedule |url=https://www.hindustantimes.com/elections/tripura-assembly-election-2023-full-schedule-election-date-tripura-to-vote-in-single-phase-on-feb-16-results-on-march-2-full-schedule-101674035328054.html |access-date=2023-03-03 |website=Hindustan Times |language=en}}</ref>
+
+== History ==
+[[Bharatiya Janata Party]] led alliance won election with 34(BJP 33 + [[Indigenous People's Front of Tripura|IPFT]] 1) seats while newcomer Tipra Motha Party become second largest party with 13 seats. [[Communist Party of India (Marxist)]] led Secular Democratic Forces won 14(11 CPIM + 3 [[Indian National Congress|INC]]).<ref>{{Cite web |date=2023-03-02 |title=Election Results 2023 Analysis: BJP and allies back in power in Northeastern states, focus shifts to govt formation |url=https://indianexpress.com/article/political-pulse/tripura-meghalaya-nagaland-election-results-today-analysis-live-updates-8474449/ |access-date=2023-03-03 |website=The Indian Express |language=en}}</ref>
+
+== Notable positions ==
+{|class="wikitable sortable"
+!S.No
+!Position
+!Portrait
+!Name
+! colspan="2" |Party
+!Constituency
+!Office Taken
+|-
+!1
+|[[Speaker of the Tripura Legislative Assembly|Speaker]]
+|[[File:Blank.svg|100px|center]]<!-- Do not use placeholder images per WP:IPH -->
+|[[Ram Pada Jamatia]]
+|{{Full party name with color|Bharatiya Janata Party|rowspan=3}}
+|[[Bagma Assembly constituency|Bagma]]
+|18 March 2026<ref>{{Cite web |title=Latest Business and Financial News : The Economic Times on mobile |url=https://m.economictimes.com/news/politics-and-nation/bjps-biswabandhu-sen-elected-tripura-speaker-tipra-motha-abstains-from-voting/amp_articleshow/98964334.cms%7Ctitle=BJP%27s |access-date=2023-03-24 |website=m.economictimes.com}}</ref>
+|-
+!2
+| [[List of deputy speakers of the Tripura Legislative Assembly|Deputy Speaker]] 
+| [[File:Blank.svg|100px|center]]<!-- Do not use placeholder images per WP:IPH -->
+|[[Ram Prasad Paul]]
+|[[Suryamaninagar Assembly constituency|Suyamaninagar]]
+| 28 March 2023<ref>{{cite news |last1=Deb |first1=Debraj |title=Tripura: Former BJP minister Ramprasad Paul elected Deputy Speaker of Assembly |url=https://indianexpress.com/article/north-east-india/tripura/tripura-former-bjp-minister-ramprasad-paul-elected-deputy-speaker-of-assembly-8524258/ |access-date=28 March 2023 |work=The Indian Express |date=28 March 2023 |language=en}}</ref>
+|-
+!3
+|Leader of the House <br/>{{small|(''[[List of Chief Ministers of Tripura|Chief Minister]]'')}}
+|[[File:Manik Saha Invitation for HWC 2023.jpg|frameless|154x154px]]
+|'''[[Manik Saha]]'''
+|[[Town Bordowali Assembly constituency|Town Bardowali]]
+| rowspan="1" |13 March 2023
+|-
+!4
+|[[List of leaders of the opposition in the Tripura Legislative Assembly|Leader of Opposition]]
+| 
+|'''[[Jitendra Chaudhury]]'''
+|style="background:{{party color|Communist Party of India (Marxist)}}" |
+||[[Communist Party of India (Marxist)]]
+|[[Sabroom Assembly constituency|Sabroom]]
+|6 March 2024
+|}
+
+==Party wise distribution==
+[[File:India Tripura Legislative Assembly June 2024.svg|right|thumb|295px|Current partywise distribution of the 13th Tripura Legislative Assembly]]
+{| class="wikitable"
+! colspan="2" |Alliance
+! colspan="2" |Party
+! colspan="2" |No. of MLA's
+!Leader of the Party
+in Assembly
+!Leader's Constituency
+|-
+| rowspan="3" style="background:{{party color|National Democratic Alliance}}"|
+| rowspan="3" |'''[[National Democratic Alliance]]'''
+|style="background:{{party color|Bharatiya Janata Party}}"|
+|[[Bharatiya Janata Party]]
+|33
+| rowspan="3" |'''47'''
+|[[Manik Saha]]
+|[[Town Bordowali Assembly constituency|Town Bordowali]]
+|-
+|style="background:{{Party color|Tipra Motha Party}}"|
+|[[Tipra Motha Party]]
+|13
+|[[Animesh Debbarma]]
+|[[Asharambari Assembly constituency|Asharambari]] 
+|-
+|style="background:{{party color|Indigenous People's Front of Tripura}}"|
+|[[Indigenous People's Front of Tripura]]
+|1
+|[[Sukla Charan Noatia]]
+|[[Jolaibari Assembly constituency|Jolaibari]]
+|-
+| rowspan="2" style="background:{{party color|Communist Party of India (Marxist)}}"|
+| rowspan="2" |'''[[Secular Democratic Forces]]'''
+|style="background:{{party color|Communist Party of India (Marxist)}}"|
+|[[Communist Party of India (Marxist)]]
+|10
+| rowspan="2" |'''13'''
+|[[Jitendra Chaudhury]]
+|[[Sabroom Assembly constituency|Sabroom]]
+|-
+|style="background:{{party color|Indian National Congress}}"|
+|[[Indian National Congress]]
+|3
+|[[Birajit Sinha]]
+|[[Kailashahar Assembly constituency|Kailashahar]]
+|-
+! colspan="4" |Total no. of MLAs
+! colspan="4" |60
+|}
+
+== Members of Legislative Assembly ==
+{| class="wikitable"
+|+
+!District
+! No.
+! Constituency
+! Name
+! colspan="3" |Party
+! Alliance
+!Remarks
+|-
+| rowspan="12" |[[West Tripura district|West Tripura]]
+|1
+|[[Simna Assembly constituency|Simna]] (ST)
+|[[Brishaketu Debbarma]]
+|{{party name with color|Tipra Motha Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+||[[Second Saha ministry|Minister of State]]
+|-
+|2
+|[[Mohanpur Assembly constituency|Mohanpur]]
+|[[Ratan Lal Nath]]
+|{{party name with color|Bharatiya Janata Party}}
+|[[Second Saha ministry|Cabinet Minister]]
+|- 
+|3
+|[[Bamutia Assembly constituency|Bamutia]] (SC)
+| [[Nayan Sarkar]]
+| {{party name with color|Communist Party of India (Marxist)|rowspan=2}}
+| rowspan=2 bgcolor="#CC0D0D"|
+| rowspan=2|[[Secular Democratic Forces|SDF]]
+|
+|-
+|4
+|[[Barjala Assembly constituency|Barjala]] (SC)
+| [[Sudip Sarkar]]
+|
+|- 
+|5
+|[[Khayerpur Assembly constituency|Khayerpur]]
+| [[Ratan Chakraborty]]
+| {{party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|- 
+|6
+|[[Agartala Assembly constituency|Agartala]]
+|[[Sudip Roy Barman]]
+|{{party name with color|Indian National Congress}}
+|bgcolor="#CC0D0D"|
+|[[Secular Democratic Forces|SDF]]
+|
+|- 
+| rowspan="2" |7
+| rowspan="2" |[[Ramnagar, Tripura Assembly constituency|Ramnagar]]
+| [[Surajit Datta]]
+| {{party name with color|Bharatiya Janata Party|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|Died on 27 December 2023<ref>{{Cite news |date=2023-12-28 |title=Seven-term Tripura MLA and BJP leader Surajit Datta passes away at 70 |work=The Times of India |url=https://timesofindia.indiatimes.com/city/agartala/seven-term-tripura-mla-and-bjp-leader-surajit-datta-passes-away-at-70/articleshow/106347214.cms |access-date=2023-12-31 |issn=0971-8257}}</ref>
+|-
+| [[Dipak Majumder]]
+| 
+|- 
+|8
+|[[Town Bordowali Assembly constituency|Town Bordowali]]
+| [[Manik Saha]]
+|[[List of chief ministers of Tripura|Chief Minister]]
+|- 
+|9
+|[[Banamalipur Assembly constituency|Banamalipur]]
+| [[Gopal Chandra Roy]]
+|{{party name with color|Indian National Congress}}
+|bgcolor="#CC0D0D"|
+| [[Secular Democratic Forces|SDF]]
+|
+|- 
+|10
+|[[Majlishpur Assembly constituency|Majlishpur]]
+|[[Sushanta Chowdhury]]
+|{{party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|[[Second Saha ministry|Cabinet Minister]]
+|- 
+|11
+|[[Mandaibazar Assembly constituency|Mandaibazar]] (ST)
+| [[Swapna Debbarma]]
+|{{party name with color|Tipra Motha Party|rowspan=2}}
+|
+|-
+|[[Sipahijala district|Sipahijala]]
+|12
+|[[Takarjala Assembly constituency|Takarjala]] (ST)
+|[[Biswajit Kalai]]
+|
+|-
+| rowspan="2" |[[West Tripura district|West Tripura]]
+|13
+|[[Pratapgarh, Tripura Assembly constituency|Pratapgarh]] (SC)
+| [[Ramu Das]]
+| {{party name with color|Communist Party of India (Marxist)}}
+|bgcolor="#CC0D0D"|
+| [[Secular Democratic Forces|SDF]]
+|
+|- 
+|14
+|[[Badharghat Assembly constituency|Badharghat]] (SC)
+|[[Mina Rani Sarkar]]
+|{{party name with color|Bharatiya Janata Party|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=6}}
+|
+|-
+| rowspan="3" |[[Sipahijala district|Sipahijala]]
+|15
+|[[Kamalasagar Assembly constituency|Kamalasagar]]
+| [[Antara Sarkar Deb]]
+|
+|- 
+|16
+|[[Bishalgarh Assembly constituency|Bishalgarh]]
+|[[Sushanta Deb]]
+|
+|- 
+|17
+|[[Golaghati Assembly constituency|Golaghati]] (ST)
+| [[Manav Debbarma|Manab Debbarma]]	
+| {{party name with color|Tipra Motha Party}}
+|
+|-
+| rowspan="1" |[[West Tripura district|West Tripura]]
+|18
+|[[Suryamaninagar Assembly constituency|Suryamaninagar]]
+| [[Ram Prasad Paul]]	
+| {{party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="7" |[[Sipahijala district|Sipahijala]]
+|19
+|[[Charilam Assembly constituency|Charilam]] (ST)
+| [[Subodh Deb Barma]]
+| {{party name with color|Tipra Motha Party}}
+|
+|- 
+| rowspan="2" |20
+| rowspan="2" |[[Boxanagar Assembly constituency|Boxanagar]]
+|[[Samsul Haque]]
+|{{party name with color|Communist Party of India (Marxist)}}
+|bgcolor="#CC0D0D"|
+| [[Secular Democratic Forces|SDF]]
+|Died on 19 July 2023<ref>{{cite web|url=https://timesofindia.indiatimes.com/city/agartala/tripura-cpm-mla-samsul-haque-dies-of-heart-attack/articleshow/101921670.cms|title=Tripura CPM MLA Samsul Haque dies of heart attack|work=The Times of India|accessdate=19 July 2023}}</ref>
+|-
+|Tafajjal Hossain
+|{{party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|Elected in September 2023 by-election<ref name=:0>{{cite web|url=https://www.deccanherald.com/india/tripura/bjp-wins-bypolls-in-dhanpur-boxanagar-assembly-seats-in-tripura-2677948|title=BJP wins bypolls in Dhanpur, Boxanagar Assembly seats in Tripura|work=Deccan Herald|accessdate=8 September 2023}}</ref>
+|-  
+|21
+|[[Nalchar Assembly constituency|Nalchar]] (SC)
+| [[Kishor Barman]]
+|{{party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|[[Second Saha ministry|Cabinet Minister]]
+|- 
+|22
+|[[Sonamura Assembly constituency|Sonamura]]
+|[[Shyamal Chakraborty]]
+| {{party name with color|Communist Party of India (Marxist)}}
+|bgcolor="#CC0D0D"|
+| [[Secular Democratic Forces|SDF]]
+|
+|- 
+| rowspan="2" |23
+| rowspan="2" |[[Dhanpur Assembly constituency|Dhanpur]]
+|[[Pratima Bhoumik]]
+|{{party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|Resigned on 15 March 2023<ref>{{Cite news |date=2023-03-16 |title=Union minister Pratima Bhoumik resigns from Tripura assembly |work=The Times of India |url=https://timesofindia.indiatimes.com/city/agartala/union-min-pratima-bhoumik-resigns-from-tripura-assembly/articleshow/98681627.cms |access-date=2023-05-14 |issn=0971-8257}}</ref>
+|-
+|[[Bindu Debnath]]
+|Elected in September 2023 by-election<ref name=":0" />
+|- 
+| rowspan="6" |[[Khowai district|Khowai]]
+|24
+|[[Ramchandraghat Assembly constituency|Ramchandraghat]] (ST)
+| [[Ranjit Debbarma]]
+| {{party name with color|Tipra Motha Party}}
+|
+|- 
+|25
+|[[Khowai Assembly constituency|Khowai]]
+|[[Nirmal Biswas]]
+| {{party name with color|Communist Party of India (Marxist)}}
+| bgcolor="#CC0D0D"|
+| [[Secular Democratic Forces|SDF]]
+|
+|- 
+|26
+|[[Asharambari Assembly constituency|Asharambari]] (ST)
+|[[Animesh Debbarma]]
+| {{party name with color|Tipra Motha Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=9}}
+| [[Second Saha ministry|Cabinet Minister]]
+|-
+|27
+|[[Kalyanpur-Pramodenagar Assembly constituency|Kalyanpur-Pramodenagar]]
+| [[Pinaki Das Chowdhury]]
+| {{party name with color|Bharatiya Janata Party|rowspan=8}}
+|
+|- 
+|28
+|[[Teliamura Assembly constituency|Teliamura]]
+| [[Kalyani Saha Roy]]	
+|
+|- 
+|29
+|[[Krishnapur Assembly constituency|Krishnapur]] (ST)
+|[[Bikash Debbarma]]
+|[[Second Saha ministry|Cabinet Minister]]
+|- 
+| rowspan="4" |[[Gomati district|Gomati]]
+|30
+|[[Bagma Assembly constituency|Bagma]] (ST)
+| [[Ram Pada Jamatia]]
+|[[List of speakers of the Tripura Legislative Assembly|Speaker]]
+|- 
+|31
+|[[Radhakishorpur Assembly constituency|Radhakishorpur]]
+| [[Pranjit Singha Roy]]
+|[[Second Saha ministry|Cabinet Minister]]
+|- 
+|32
+|[[Matarbari Assembly constituency|Matarbari]]
+| [[Abhishek Debroy]]
+|
+|- 
+|33
+|[[Kakraban-Salgarh Assembly constituency|Kakraban-Salgarh]] (SC)
+| [[Jitendra Majumder]]
+|
+|- 
+| rowspan="7" |[[South Tripura district|South Tripura]]
+|34
+|[[Rajnagar, Tripura Assembly constituency|Rajnagar]] (SC)
+| [[Swapna Majumder]]
+|
+|- 
+|35
+|[[Belonia Assembly constituency|Belonia]]
+| [[Dipankar Sen]]
+| {{party name with color|Communist Party of India (Marxist)}}
+| bgcolor="#CC0D0D"|
+| [[Secular Democratic Forces|SDF]]
+|
+|- 
+|36
+|[[Santirbazar Assembly constituency|Santirbazar]] (ST)
+| [[Pramod Reang]]
+| {{party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|- 
+|37
+|[[Hrishyamukh Assembly constituency|Hrishyamukh]]
+| [[Asoke Chandra Mitra]]
+| {{party name with color|Communist Party of India (Marxist)}}
+|bgcolor="#CC0D0D"|
+| [[Secular Democratic Forces|SDF]]
+|
+|- 
+|38
+|[[Jolaibari Assembly constituency|Jolaibari]] (ST)
+|[[Sukla Charan Noatia]]
+| {{party name with color|Indigenous People's Front of Tripura}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|[[Second Saha ministry|Cabinet Minister]]
+|- 
+|39
+|[[Manu Assembly constituency|Manu]] (ST)
+| [[Mailafru Mog]]
+| {{party name with color|Bharatiya Janata Party}}
+|
+|- 
+|40
+|[[Sabroom Assembly constituency|Sabroom]]
+| [[Jitendra Chaudhury]]
+| {{party name with color|Communist Party of India (Marxist)}}
+|bgcolor="#CC0D0D"|
+| [[Secular Democratic Forces|SDF]]
+|[[List of leaders of the opposition in the Tripura Legislative Assembly|Leader of Opposition]]
+|-
+| rowspan="3" |[[Gomati district|Gomati]]
+|41
+|[[Ampinagar Assembly constituency|Ampinagar]] (ST)
+| [[Pathan Lal Jamatia]]
+| {{party name with color|Tipra Motha Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=12}}
+|
+|- 
+|42
+|[[Amarpur, Tripura Assembly constituency|Amarpur]]
+|[[Ranjit Das (politician)|Ranjit Das]]
+| {{party name with color|Bharatiya Janata Party}}
+|
+|- 
+|43
+|[[Karbook Assembly constituency|Karbook]] (ST)
+| [[Sanjoy Manik Tripura]]
+| {{party name with color|Tipra Motha Party|rowspan=2}}
+|
+|- 
+| rowspan="6" |[[Dhalai district|Dhalai]]
+|44
+|[[Raima Valley Assembly constituency|Raima Valley]] (ST)
+| [[Nandita Debbarma|Nandita Debbarma (Reang)]]
+|
+|- 
+|45
+|[[Kamalpur, Tripura Assembly constituency|Kamalpur]]
+| [[Manoj Kanti Deb]]		
+| {{party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|- 
+|46
+|[[Surma Assembly constituency|Surma]] (SC)
+| [[Swapna Das Paul]]
+|
+|- 
+|47
+|[[Ambassa Assembly constituency|Ambassa]] (ST)
+| [[Chitta Ranjan Debbarma]]
+| {{party name with color|Tipra Motha Party|rowspan=2}}
+|
+|- 
+|48
+|[[Karamcherra Assembly constituency|Karamcherra]] (ST)
+| [[Paul Dangshu]]
+|
+|- 
+|49
+|[[Chawamanu Assembly constituency|Chawamanu]] (ST)
+| [[Sambhu Lal Chakma]]
+| {{party name with color|Bharatiya Janata Party|rowspan=4}}
+|
+|-
+| rowspan="4" |[[Unakoti district|Unakoti]]
+|50
+|[[Pabiachhara Assembly constituency|Pabiachhara]] (SC)
+| [[Bhagaban Das]]
+|
+|- 
+|51
+|[[Fatikroy Assembly constituency|Fatikroy]] (SC)
+|  [[Sudhangshu Das]]
+|[[Second Saha ministry|Cabinet Minister]]
+|- 
+|52
+|[[Chandipur, Tripura Assembly constituency|Chandipur]]
+| [[Tinku Roy]]
+|[[Second Saha ministry|Cabinet Minister]]
+|- 
+|53
+|[[Kailashahar Assembly constituency|Kailashahar]]
+| [[Birajit Sinha]]
+| {{party name with color|Indian National Congress}}
+|rowspan=2 bgcolor="#CC0D0D"|
+|rowspan=2|[[Secular Democratic Forces|SDF]]
+|Congress Legislative Party Leader
+|-
+| rowspan="8" |[[North Tripura district|North Tripura]]
+|54
+|[[Kadamtala-Kurti Assembly constituency|Kadamtala-Kurti]]
+| [[Islam Uddin]]
+| {{party name with color|Communist Party of India (Marxist)}}
+|
+|- 
+|55
+|[[Bagbassa Assembly constituency|Bagbassa]]
+| [[Jadab Lal Debnath]]
+|{{party name with color|Bharatiya Janata Party|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|- 
+| rowspan="2" |56
+| rowspan="2" |[[Dharmanagar Assembly constituency|Dharmanagar]]
+|[[Biswa Bandhu Sen]]
+|[[List of speakers of the Tripura Legislative Assembly|Speaker]], died on 26 December 2025.<ref>{{Cite web|url=https://www.tripurainfo.com/EnglishNews.aspx?intnid=4477|title=Tripura Assembly Speaker Biswabandhu Sen Passes Away After Prolonged Illness|website=tripurainfo DOT com}}</ref>
+|-
+|[[Jahar Chakraborti]]
+| colspan="4" |
+|-
+|57
+|[[Jubarajnagar Assembly constituency|Jubarajnagar]]
+| [[Sailendra Chandra Nath]]	
+| {{party name with color|Communist Party of India (Marxist)}}
+|bgcolor="#CC0D0D"|
+| [[Secular Democratic Forces|SDF]]
+|
+|- 
+|58
+|[[Panisagar Assembly constituency|Panisagar]]
+| [[Binay Bhushan Das]]
+|{{party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|- 
+|59
+|[[Pencharthal Assembly constituency|Pencharthal]] (ST)
+|[[Santana Chakma]]
+|[[Second Saha ministry|Cabinet Minister]]
+|- 
+|60
+|[[Kanchanpur Assembly constituency|Kanchanpur]] (ST)
+|[[Philip Kumar Reang]]
+|{{party name with color|Tipra Motha Party}}
+|
+|}
+
+== References ==
+{{Reflist}}
+
+==External links==
+*[https://www.loksabhaelections.in/tripura Tripura Lok Sabha Election Result Website] {{Webarchive|url=https://web.archive.org/web/20230304105102/https://www.loksabhaelections.in/tripura |date=4 March 2023 }}
+*[http://tripura.gov.in/ Official government website of Tripura]
+
+{{Current Indian assemblies}}
+{{Authority control}}
+[[Category:Lists of current Indian state and territorial assemblies|T]]
+[[Category:Terms of the Tripura Legislative Assembly]]
+[[Category:Tripura MLAs 2023–2028| ]]

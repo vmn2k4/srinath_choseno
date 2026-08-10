@@ -1,0 +1,1078 @@
+{{Short description|17th state legislature of the Indian state of Odisha}}
+{{Use Indian English|date=July 2024}}
+{{Use dmy dates|date=July 2024}}
+{{Infobox legislative term
+| background_color = #FF9933
+| name = 17th Odisha Legislative Assembly
+| before = [[Sixteenth Odisha Vidhan Sabha|16th Assembly]]
+| after = 
+| image = Odisha Vidhan Soudha.jpg
+| image_size = 300px
+| caption = Front view of Odisha Bidhana Soudha, [[Bhubaneshwar]]
+| meeting_place = Odisha Vidhan Saudha, [[Bhubaneshwar]], [[Odisha]], [[India]]
+| election = [[2024 Odisha Legislative Assembly election]]
+| website = {{URL|https://assembly.odisha.gov.in/}}
+| chamber1 = '''[[Odisha Legislative Assembly]]'''
+| government = [[Bharatiya Janata Party]]
+| opposition = [[Biju Janata Dal]]
+| term_start = 4 June 2024
+| term_end = Incumbent
+| membership1 = 147
+| chamber1_leader1_type = [[List of governors of Odisha|Governor]]
+| chamber1_leader1 = [[Raghubar Das]]<br/>[[Kambhampati Hari Babu]]
+| chamber1_leader2_type = [[List of speakers of the Odisha Legislative Assembly|Speaker]]
+| chamber1_leader2 = [[Surama Padhy]], [[Bharatiya Janata Party|BJP]]
+| chamber1_leader3_type = [[List of speakers of the Odisha Legislative Assembly#Deputy Speakers|Deputy Speaker]]
+| chamber1_leader3 = [[Bhabani Shankar Bhoi]], [[Bharatiya Janata Party|BJP]]
+| chamber1_leader4_type = [[List of Chief Ministers of Odisha|Leader of the House]]<br/>(Chief Minister)
+| chamber1_leader4 = [[Mohan Charan Majhi]], [[Bharatiya Janata Party|BJP]]
+| chamber1_leader5_type = [[List of deputy chief ministers of Odisha|Deputy Leader of the House]]<br/>(Deputy Chief Minister)
+| chamber1_leader5 = [[Kanak Vardhan Singh Deo]], [[Bharatiya Janata Party|BJP]]<br>[[Pravati Parida]], [[Bharatiya Janata Party|BJP]]
+| chamber1_leader6_type = [[List of leaders of the opposition in the Odisha Legislative Assembly|Leader of Opposition]]
+| chamber1_leader6 = [[Naveen Patnaik]], [[Biju Janata Dal|BJD]]
+| control1 = [[Bharatiya Janata Party|BJP]] (81/147)
+| module = 3 Sessions with 62 Sittings
+| chamber1_image = File:India Odisha Legislative Assembly 2025.svg
+| chamber1_image_size = 300px
+| chamber1_image_caption = House Composition as of today
+}}
+
+The '''Seventeenth [[Odisha Legislative Assembly]]''' was constituted after the [[2024 Odisha Legislative Assembly election]]s, which were concluded on 1 June 2024, and the previous assembly term ending on 24 June 2024.<ref>{{Cite web |date=2024-03-16 |title=Odisha Assembly elections 2024: Polls to be held in 4 phases; 3.32 crore voters will exercise franchise |url=https://indianexpress.com/elections/odisha-assembly-elections-2024-dates-results-9215672/ |access-date=2024-04-16 |website=The Indian Express |language=en}}</ref><ref>{{Cite web |title=Terms of the Houses |url=https://eci.gov.in/elections/term-of-houses/ |archive-url=https://web.archive.org/web/20220328103956/https://eci.gov.in/elections/term-of-houses/ |archive-date=28 March 2022 |access-date=2022-02-13 |website=Election Commission of India |language=en-IN}}</ref>
+
+== Brief history ==
+Following the BJP's victory in the [[2024 Odisha Legislative Assembly election|2024 election]], Chief Minister [[Mohan Charan Majhi]], along with his two deputy Chief Ministers, eight Cabinet Ministers, and five Ministers of State with Independent Charge, were administered their oaths of office and secrecy by Governor [[Raghubar Das]] at Janata Maidan, Bhubaneswar on 12 June 2024. Prime Minister [[Narendra Modi]], Home Minister [[Amit Shah]], Defense Minister [[Rajnath Singh]], and Chief Ministers from 10 BJP-ruled states attended the ceremony.<ref>{{Cite web |title=Highlights: BJP Tribal Leader, 4-Time MLA Mohan Majhi Sworn In As Odisha Chief Minister|url=https://ndtv.com|access-date=2024-06-13|website=NDTV.com}}</ref><ref>{{Cite news |last=Barik|first=Satyasundar|date=2024-06-12|title=Mohan Charan Majhi sworn in as Odisha’s first BJP Chief Minister|url=https://thehindu.com|access-date=2024-06-13|work=The Hindu|language=en-IN|issn=0971-751X}}</ref><ref>{{Cite news |date=2024-06-13|title=Odisha Cabinet portfolios: CM Mohan Charan Majhi keeps Home|url=https://indiatvnews.com|access-date=2024-06-15|work=India News|language=en-IN|issn=0971-751X}}</ref> 
+
+In 2025, the BJP won the [[Nuapada Assembly constituency#2025 by-election|Nuapada by-election]], increasing its assembly strength to 79 seats.<ref>{{Cite news |last=PTI |date=2025-11-14 |title=BJP clinches landslide victory in Nuapada; BJD finishes third |url=https://thehindu.com |access-date=2026-04-05 |work=The Hindu |language=en-IN |issn=0971-751X}}</ref>
+
+Following allegations of cross-voting during the March 2026 Rajya Sabha elections, the [[Biju Janata Dal|BJD]] suspended eight of its MLAs and the [[Indian National Congress|INC]] suspended three of its MLAs from internal party activities, subsequently filing disqualification petitions with the Speaker under the Tenth Schedule. On 22 June 2026, Assembly Speaker Surama Padhy dismissed all 11 petitions due to procedural defects and lack of authenticated evidence, allowing the legislators to retain their full legislative membership under their original party banners.<ref name=":speaker_dismissal">{{Cite web |title=Odisha Assembly Speaker Surama Padhy dismisses BJD and Congress disqualification petitions |url=https://newsonair.gov.in |website=News On AIR |date=2026-06-22 |access-date=2026-06-22}}</ref><ref name=":ht_dismissal">{{Cite news |last=Mohanty |first=Debabrata |date=2026-06-22 |title=Odisha Speaker rejects BJD plea to disqualify 8 MLAs over Rajya Sabha vote |url=https://hindustantimes.com |work=Hindustan Times |access-date=2026-06-22}}</ref>
+
+== House Composition ==
+{| class="wikitable sortable" style="text-align:center"
+! rowspan="2" |Party
+! colspan="2" |Strength
+|-
+!'''Assembly Begins'''
+!'''As of today'''
+|-
+
+| style="text-align:left" |[[Bharatiya Janata Party]]
+|78
+|79
+|-
+
+| style="text-align:left" |[[Biju Janata Dal]]
+|51
+
+|50
+|-
+
+| style="text-align:left" |[[Indian National Congress]]
+|14
+
+|14
+|-
+
+| style="text-align:left" |[[Communist Party of India (Marxist)]]
+|1
+|1
+|-
+
+| style="text-align:left" |[[Independent politician|Independent]]
+|3
+|3
+|-
+!Total
+|147
+|147
+|}
+
+== Office bearers ==
+{| class="wikitable sortable" style="text-align:center"
+!Position
+!Portrait
+!Name
+! colspan="2" |Tenure
+! colspan="2" |Party
+|-
+| rowspan="2" |[[List of governors of Odisha|Governor]]
+|[[File:Raghubar_Das_with_Jual_Oram_(cropped).jpg|100x100px]]
+|[[Raghubar Das]]
+|Assembly Begins
+|2 January 2025
+| colspan="2" rowspan="2" |N/A
+|-
+| [[File:GTaYHuVaAAAc5dU.jpg|100x100px]]
+|[[Kambhampati Hari Babu]]
+|3 January 2025
+|''Incumbent''
+|-
+|[[List of speakers of the Odisha Legislative Assembly|Speaker]]
+|[[File:Surama Padhy, Speaker of Odisha Legislative Assembly.jpg|100x100px]]
+|[[Surama Padhy]]<br />{{Small|MLA from [[Ranpur Assembly constituency|Ranapur]]}}
+|20 June 2024
+|''Incumbent''
+|{{Full party name with color|Bharatiya Janata Party}}
+|-
+|[[List of speakers of the Odisha Legislative Assembly#Deputy Speakers|Deputy Speaker]]
+|[[File:Bhabani Shankar Bhoi.jpg|100x100px]]
+|[[Bhabani Shankar Bhoi]]<br />{{Small|MLA from [[Talsara Assembly constituency|Talasara]]}}
+|25 July 2024
+|''Incumbent''
+|{{Full party name with color|Bharatiya Janata Party}}
+|-
+|[[Chief Minister of Odisha|Leader of the House]]<br />{{Small|(Chief Minister)<br/> Leader of BJP Legislature Party}}
+|[[File:Shri Mohan Charan Majhi.jpg|100x100px]]
+|[[Mohan Charan Majhi]]<br />{{Small|MLA from [[Keonjhar Assembly constituency|Kendujhar]]}}
+|12 June 2024
+|''Incumbent''
+|{{Full party name with color|Bharatiya Janata Party}}
+|-
+| rowspan="2" |[[List of deputy chief ministers of Odisha|Deputy Leader of the House]]<br />{{Small|(Deputy Chief Minister)<br/> Deputy Leader of BJP Legislature Party}}
+|[[File:Dy CM KV Singh Deo.jpg|100x100px]]
+|[[Kanak Vardhan Singh Deo]]<br />{{Small|MLA from [[Patnagarh Assembly constituency|Patanagad]]}}
+|12 June 2024
+|''Incumbent''
+|{{Full party name with color|Bharatiya Janata Party}}
+|-
+|[[File:Dy CM Pravati Parida.jpg|100x100px]]
+|[[Pravati Parida]]<br />{{Small|MLA from [[Nimapara Assembly constituency|Nimapada]]}}
+|12 June 2024
+|''Incumbent''
+|{{Full party name with color|Bharatiya Janata Party}}
+|-
+|Minister for [https://pa.odisha.gov.in/ Parliamentary Affairs]
+|[[File:Mukesh_Mahaling_2024.jpg|100x100px]]
+|[[Mukesh Mahaling]]<br />{{small|MLA from [[Loisingha Assembly constituency|Loisingha]]}}
+|12 June 2024
+|''Incumbent''
+|{{Full party name with color|Bharatiya Janata Party}}
+|-
+|[[List of leaders of the opposition in the Odisha Legislative Assembly|Leader of Opposition]]<br />{{Small|Leader of BJD Legislature Party}}
+|[[File:NaveenPatnaik.jpg|100x100px]]
+|[[Naveen Patnaik]]<br />{{Small|MLA from [[Hinjili Assembly constituency|Hinjili]]}}
+|19 June 2024
+|''Incumbent''
+|{{Full party name with color|Biju Janata Dal}}
+|-
+|Deputy Leader of Opposition<br />{{Small|Deputy Leader of BJD Legislature Party}}
+|[[File:Prasanna Acharya MLA.jpg|100x100px]]
+|[[Prasanna Acharya]]<br />{{Small|MLA from [[Rairakhol Assembly constituency|Redhakhol]]}}
+|19 June 2024
+|''Incumbent''
+|{{Full party name with color|Biju Janata Dal}}
+|-
+|Leader of Congress Legislature Party
+| [[File:Rama Chandra Kadam.jpg|100x100px]]
+|[[Rama Chandra Kadam]]<br />{{Small|MLA from [[Pottangi Assembly constituency|Pattangi]]}}
+|21 June 2024
+|''Incumbent''
+|{{Full party name with color|Indian National Congress}}
+|-
+|[[Speaker of the Lok Sabha#Pro tem speaker|Pro tem Speaker]]
+| [[File:Ranendra Pratap Swain.jpg|100x100px]]
+|[[Ranendra Pratap Swain]]<br />{{small|MLA from [[Athagarh Assembly constituency|Athagada]]}}
+|17 June 2025
+|19 June 2025
+|{{Full party name with color|Biju Janata Dal}}
+|}
+
+== Council of Minister ==
+{{Transcluded section|source=Majhi ministry}}
+{{trim|{{#Section-h:Majhi ministry|Council of Ministers}}}}
+
+== Members of Legislative Assembly ==
+{| class="wikitable sortable" style="text-align:center"
+|+[https://results.eci.gov.in/AcResultGenJune2024/partywiseresult-S18.htm Source]
+!District
+!Ac.<br/>No.
+!Constituency 
+!Name
+! colspan="2" |Party 
+!Remarks
+|-
+| rowspan="5" |[[Bargarh district|Bargarh]]
+| 1
+| [[Padampur Assembly constituency|Padampur]]
+| [[Barsha Singh Bariha]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| 2
+| [[Bijepur Assembly constituency|Bijepur]]
+| [[Sanat Kumar Gartia]]
+| {{Full party name with color|rowspan=7|Bharatiya Janata Party}}
+|
+|-
+| 3
+| [[Bargarh Assembly constituency|Bargarh]]
+| [[Ashwini Kumar Sarangi]]
+|
+|-
+| 4
+| [[Attabira Assembly constituency|Attabira (SC)]]
+| [[Nihar Ranjan Mahanand]]
+|
+|-
+| 5
+| [[Bhatli Assembly constituency|Bhatli]]
+| [[Irasis Acharya]]
+|
+|-
+| rowspan="2" |[[Jharsuguda district|Jharsuguda]]
+| 6
+| [[Brajarajnagar Assembly constituency|Brajarajnagar]]
+| [[Suresh Pujari]]
+| Cabinet Minister
+|-
+| 7
+| [[Jharsuguda Assembly constituency|Jharsuguda]]
+| [[Tankadhar Tripathy]]
+|
+|-
+| rowspan="7" | [[Sundergarh district|Sundargarh]]
+| 8
+| [[Talsara Assembly constituency|Talsara]] (ST)
+| [[Bhabani Shankar Bhoi]] 
+| Deputy Speaker
+|-
+| 9
+| [[Sundargarh Assembly constituency|Sundargarh]] (ST)
+| [[Jogesh Kumar Singh]]
+| {{Full party name with color|rowspan=2|Biju Janata Dal}}
+|
+|-
+| 10
+| [[Biramitrapur Assembly constituency|Biramitrapur]] (ST)
+| [[Rohit Joseph Tirkey]]
+| 
+|-
+| 11
+| [[Raghunathpali Assembly constituency|Raghunathpali]] (SC)
+| [[Durga Charan Tanti]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| 12
+| [[Rourkela Assembly constituency|Rourkela]]
+| [[Sarada Prashad Nayak]]
+| {{Full party name with color|Biju Janata Dal}}
+| 
+|-
+| 13
+| [[Rajgangpur Assembly constituency|Rajgangpur]] (ST)
+| [[C. S. Raazen Ekka]]
+| {{Full party name with color|Indian National Congress}}
+|Chief Whip, Congress
+|-
+| 14
+| [[Bonai Assembly constituency|Bonai]] (ST)
+| [[Laxman Munda]] 
+| {{Full party name with color|Communist Party of India (Marxist)|dab=yes}}
+|
+|-
+| rowspan= "4" | [[Sambalpur district|Sambalpur]]
+| 15
+| [[Kuchinda Assembly constituency|Kuchinda]] (ST)
+| [[Rabi Narayan Naik]]
+| {{Full party name with color|Bharatiya Janata Party}}
+| Cabinet Minister 
+|-
+| 16
+| [[Rengali Assembly constituency|Rengali]] (SC)
+| [[Sudarshan Haripal]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| 17
+| [[Sambalpur Assembly constituency|Sambalpur]]
+| [[Jayanarayan Mishra]] 
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| 18
+| [[Rairakhol Assembly constituency|Rairakhol]]
+| [[Prasanna Acharya]]
+| {{Full party name with color|rowspan=2|Biju Janata Dal}}
+|Deputy Leader of Opposition
+|-
+| [[Debagarh district|Deogarh]]
+| 19
+| [[Deogarh Assembly constituency|Deogarh]]
+| [[Romanch Ranjan Biswal]]
+|
+|-
+| rowspan="6" |  [[Kendujhar district|Keonjhar]]
+| 20
+| [[Telkoi Assembly constituency|Telkoi]] (ST)
+| [[Fakir Mohan Naik]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| 21
+| [[Ghasipura Assembly constituency|Ghasipura]]
+| [[Badri Narayan Patra]] 
+| {{Full party name with color|rowspan=2|Biju Janata Dal}}
+|
+|-
+| 22
+| [[Anandapur Assembly constituency|Anandpur]] (SC)
+| [[Abhimanyu Sethi]]
+|
+|-
+| 23
+| [[Patna Assembly constituency|Patna]] (ST)
+| [[Akhila Chandra Naik]]
+| {{Full party name with color|rowspan=2|Bharatiya Janata Party}}
+|
+|-
+| 24
+| [[Keonjhar Assembly constituency|Keonjhar]] (ST)
+| [[Mohan Charan Majhi]] 
+| Chief Minister
+|-
+| 25
+| [[Champua Assembly constituency|Champua]]
+| [[Sanatan Mahakud]]
+| {{Full party name with color|Biju Janata Dal}}
+|Suspended from Party for Anti Party Activities<ref name=":0">{{Cite news |date=2026-01-16 |title=BJD suspends 2 MLAs, cites anti-party activities |url=https://timesofindia.indiatimes.com/city/bhubaneswar/bjd-suspends-2-mlas-cites-anti-party-activities/articleshow/126551776.cms |access-date=2026-03-23 |work=The Times of India |issn=0971-8257}}</ref>
+|-
+| rowspan="9" | [[Mayurbhanj district|Mayurbhanj]]
+| 26
+| [[Jashipur Assembly constituency|Jashipur]] (ST)
+| [[Ganesh Ram Singh Khuntia]]
+| {{Full party name with color|rowspan=9|Bharatiya Janata Party}}
+| Minister of State (I/C) 
+|-
+| 27
+| [[Saraskana Assembly constituency|Saraskana]] (ST)
+| [[Bhadav Hansdah]]
+|
+|-
+| 28
+| [[Rairangpur Assembly constituency|Rairangpur]] (ST)
+| [[Jalen Naik]]
+|
+|-
+| 29
+| [[Bangriposi Assembly constituency|Bangriposi]] (ST)
+| [[Sanjali Murmu]]
+|
+|-
+| 30
+| [[Karanjia Assembly constituency|Karanjia]] (ST)
+| [[Padma Charan Haiburu]]
+|
+|-
+| 31
+| [[Udala Assembly constituency|Udala]] (ST)
+| [[Bhaskar Madhei]]
+|
+|-
+| 32
+| [[Badasahi Assembly constituency|Badasahi]] (SC)
+| [[Sanatan Bijuli]]
+|
+|-
+| 33
+| [[Baripada Assembly constituency|Baripada]] (ST)
+| [[Prakash Soren]]
+|
+|-
+| 34
+| [[Morada Assembly constituency|Morada]]
+| [[Krushna Chandra Mohapatra]]
+| Cabinet Minister
+|-
+| rowspan="8" |  [[Balasore district|Balasore]]
+| 35
+| [[Jaleswar, Odisha Assembly constituency|Jaleswar]]
+| [[Aswini Kumar Patra]]
+| {{Full party name with color|rowspan=3|Biju Janata Dal}}
+|
+|-
+| 36
+| [[Bhograi Assembly constituency|Bhograi]]
+| [[Goutam Buddha Das (politician)|Goutam Buddha Das]]
+|
+|-
+| 37
+| [[Basta Assembly constituency|Basta]]
+| [[Subasini Jena]]
+|Suspended from Party for cross voting in [[2026 Rajya Sabha elections#Odisha|2026 RS election]]<ref name=":1">{{Cite news |date=2026-03-22 |title=BJD suspends 6 MLAs for RS cross-voting |url=https://timesofindia.indiatimes.com/city/bhubaneswar/bjd-suspends-6-mlas-for-rs-cross-voting/articleshow/129727175.cms |access-date=2026-03-23 |work=The Times of India |issn=0971-8257}}</ref>
+|-
+| 38
+| [[Balasore Assembly constituency|Balasore]]
+| [[Manas Kumar Dutta]]
+| {{Full party name with color|rowspan=3|Bharatiya Janata Party}}
+|
+|-
+| 39
+| [[Remuna Assembly constituency|Remuna]] (SC)
+| [[Gobinda Chandra Das]]
+| Deputy Govt. Chief Whip
+|-
+| 40
+| [[Nilgiri Assembly constituency|Nilagiri]]
+| [[Santosh Khatua]]
+|
+|-
+| 41
+| [[Soro Assembly constituency|Soro]] (SC)
+| [[Madhab Dhada]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| 42
+| [[Simulia Assembly constituency|Simulia]]
+| [[Padma Lochan Panda]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="5" | [[Bhadrak district|Bhadrak]]
+| 43
+| [[Bhandaripokhari Assembly constituency|Bhandaripokhari]]
+| [[Sanjib Kumar Mallick]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| 44
+| [[Bhadrak Assembly constituency|Bhadrak]]
+| [[Sitansu Sekhar Mohapatra]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| 45
+| [[Basudevpur Assembly constituency|Basudevpur]]
+| Ashok Kumar Das
+| {{Full party name with color|Indian National Congress}}
+|Deputy Leader of Congress Legislature Party
+|-
+| 46
+| [[Dhamnagar Assembly constituency|Dhamnagar]] (SC)
+| [[Suryabanshi Suraj]]
+| {{Full party name with color|Bharatiya Janata Party}}
+| Minister of State (I/C) 
+|-
+| 47
+| [[Chandabali Assembly constituency|Chandabali]]
+| [[Byomakesh Ray]]
+| {{Full party name with color|rowspan=3|Biju Janata Dal}}
+|
+|-
+| rowspan="7" | [[Jajpur district|Jajpur]]
+| 48
+| [[Binjharpur Assembly constituency|Binjharpur]] (SC)
+| [[Pramila Mallik]] 
+| Chief Whip, BJD
+|-
+| 49
+| [[Bari, Odisha Assembly constituency|Bari]]
+| [[Biswa Ranjan Mallick]]
+|
+|-
+| 50
+| [[Barchana Assembly constituency|Barchana]]
+| [[Amar Kumar Nayak]]
+| {{Full party name with color|Bharatiya Janata Party}}
+| 
+|-
+| 51
+| [[Dharmasala Assembly constituency|Dharmasala]]
+| [[Himanshu Sekhar Sahoo]]
+| {{party name with color|Independent}}
+| Supports [[Bharatiya Janata Party]]
+|-
+| 52
+| [[Jajpur Assembly constituency|Jajpur]]
+| [[Sujata Sahu (politician)|Sujata Sahu]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| 53
+| [[Korei Assembly constituency|Korei]]
+| [[Akash Dasnayak]]
+| {{Full party name with color|rowspan=7|Bharatiya Janata Party}}
+|
+|-
+| 54
+| [[Sukinda Assembly constituency|Sukinda]]
+| [[Pradeep Bal Samanta]]
+| Minister of State (I/C)
+|-
+| rowspan="4" | [[Dhenkanal district|Dhenkanal]]
+| 55
+| [[Dhenkanal Assembly constituency|Dhenkanal]]
+| [[Krushna Chandra Patra]]
+| Cabinet Minister 
+|-
+| 56
+| [[Hindol Assembly constituency|Hindol]] (SC)
+| [[Simarani Nayak]]
+|
+|-
+| 57
+| [[Kamakhyanagar Assembly constituency|Kamakhyanagar]]
+| [[Satrughan Jena]]
+|
+|-
+| 58
+| [[Parjanga Assembly constituency|Parjanga]]
+| [[Bibhuti Bhusan Pradhan]]
+|
+|-
+| rowspan= "5" | [[Angul district|Angul]]
+| 59
+| [[Pallahara Assembly constituency|Pallahara]]
+| [[Ashok Mohanty]]
+|
+|-
+| 60
+| [[Talcher Assembly constituency|Talcher]]
+| [[Braja Kishore Pradhan]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| 61
+| [[Angul Assembly constituency|Angul]]
+| [[Pratap Chandra Pradhan]]
+| {{Full party name with color|rowspan=2|Bharatiya Janata Party}}
+|
+|-
+| 62
+| [[Chhendipada Assembly constituency|Chhendipada]] (SC)
+| [[Agasti Behera]]
+|
+|-
+| 63
+| [[Athmallik Assembly constituency|Athmallik]]
+| [[Nalini Kanta Pradhan]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| rowspan="2" |  [[Subarnapur district|Subarnapur]]
+| 64
+| [[Birmaharajpur Assembly constituency|Birmaharajpur]] (SC)
+| [[Raghunath Jagadala]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| 65
+| [[Sonepur Assembly constituency|Sonepur]]
+| [[Niranjan Pujari]] 
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| rowspan="5" | [[Balangir district|Bolangir]]
+| 66
+| [[Loisingha Assembly constituency|Loisingha]] (SC)
+| [[Mukesh Mahaling]]
+| {{Full party name with color|rowspan=2|Bharatiya Janata Party}}
+| Cabinet Minister 
+|-
+| 67
+| [[Patnagarh Assembly constituency|Patnagarh]]
+| [[Kanak Vardhan Singh Deo]]
+| Deputy Chief Minister 
+|-
+| 68
+| [[Bolangir Assembly constituency|Bolangir]]
+| [[Kalikesh Narayan Singh Deo]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| 69
+| [[Titlagarh Assembly constituency|Titlagarh]]
+| [[Nabin Kumar Jain]]
+| {{Full party name with color|rowspan=2|Bharatiya Janata Party}}
+|
+|-
+| 70
+| [[Kantabanji Assembly constituency|Kantabanji]]
+| [[Laxman Bag]]
+|
+|-
+| rowspan="3" |  [[Nuapada district|Nuapada]]
+| rowspan="2" | 71
+| rowspan="2" | [[Nuapada Assembly constituency|Nuapada]]
+| [[Rajendra Dholakia]]
+| {{Full party name with color|Biju Janata Dal}}
+| Died on 8 September 2025<ref>{{Cite news |date=2025-09-08 |title=Odisha BJD MLA Rajendra Dholakia passes away at 68; was suffering from kidney-related ailments |url=https://timesofindia.indiatimes.com/city/bhubaneswar/odisha-bjd-mla-rajendra-dholakia-passes-away-at-68-was-suffering-from-kidney-related-ailments/articleshow/123761594.cms |access-date=2025-09-08 |work=The Times of India |issn=0971-8257}}</ref>
+|-
+| [[Jay Dholakia]]
+|{{Full party name with color|Bharatiya Janata Party}}
+| Won in November 2025 Bypoll<ref name=":2">{{Cite news |date=2025-11-14 |title=Jay Dholakia wins Nuapada bypoll as BJP surges; BJD secures third spot |url=https://timesofindia.indiatimes.com/city/bhubaneswar/jay-dholakia-wins-nuapada-bypoll-as-bjp-surges-bjd-secures-third-spot/articleshow/125331217.cms |access-date=2026-03-23 |work=The Times of India |issn=0971-8257}}</ref>
+|-
+| 72
+| [[Khariar Assembly constituency|Khariar]]
+| [[Adhiraj Mohan Panigrahi]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| rowspan="4" | [[Nabarangpur district|Nabarangpur]]
+| 73
+| [[Umerkote Assembly constituency|Umarkote]] (ST)
+| [[Nityananda Gond]]
+| {{Full party name with color|rowspan=3|Bharatiya Janata Party}}
+| Cabinet Minister
+|-
+| 74
+| [[Jharigam Assembly constituency|Jharigam]] (ST)
+| [[Narsing Bhatra]]
+|
+|-
+| 75
+| [[Nabarangpur Assembly constituency|Nabarangpur]] (ST)
+| [[Gouri Shankar Majhi]]
+|
+|-
+| 76
+| [[Dabugam Assembly constituency|Dabugam]] (ST)
+| [[Manohar Randhari]]
+| {{Full party name with color|rowspan=3|Biju Janata Dal}}
+|
+|-
+| rowspan="5" | [[Kalahandi district|Kalahandi]]
+| 77
+| [[Lanjigarh Assembly constituency|Lanjigarh]] (ST)
+| [[Pradip Kumar Dishari]]
+|
+|-
+| 78
+| [[Junagarh Assembly constituency|Junagarh]]
+| [[Dibya Shankar Mishra]]
+|
+|-
+| 79
+| [[Dharmagarh Assembly constituency|Dharmagarh]]
+| [[Sudhir Ranjan Pattjoshi]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| 80
+| [[Bhawanipatna Assembly constituency|Bhawanipatna]] (SC)
+| [[Sagar Charan Das]]
+| {{Full party name with color|Indian National Congress}}
+|
+|-
+| 81
+| [[Narla Assembly constituency|Narla]]
+| [[Manorama Mohanty]]
+| {{Full party name with color|rowspan=2|Biju Janata Dal}}
+|
+|-
+| rowspan="3" | [[Kandhamal district|Kandhamal]]
+| 82
+| [[Baliguda Assembly constituency|Baliguda]] (ST)
+| [[Chakramani Kanhar]]
+|Suspended from Party for cross voting in [[2026 Rajya Sabha elections#Odisha|2026 RS election]]<ref name=":1" />
+|-
+| 83
+| [[G. Udayagiri Assembly constituency|G. Udayagiri]] (ST)
+| [[Prafulla Chandra Pradhan]]
+| {{Full party name with color|Indian National Congress}}
+|
+|-
+| 84
+| [[Phulbani Assembly constituency|Phulbani]] (ST)
+| [[Uma Charan Mallick]]
+| {{Full party name with color|rowspan=3|Bharatiya Janata Party}}
+|
+|-
+| rowspan="2" | [[Boudh district|Boudh]]
+| 85
+| [[Kantamal Assembly constituency|Kantamal]]
+| [[Kanhai Charan Danga]]
+|
+|-
+| 86
+| [[Boudh Assembly constituency|Boudh]]
+| [[Saroj Kumar Pradhan]]
+|Govt. Chief Whip
+|-
+| rowspan="9" | [[Cuttack district|Cuttack]]
+| 87
+| [[Baramba Assembly constituency|Baramba]]
+| [[Bijaya Kumar Dalabehera]]
+| {{party name with color|Independent}}
+| Supports [[Bharatiya Janata Party]]
+|-
+| 88
+| [[Banki Assembly constituency|Banki]]
+| [[Devi Ranjan Tripathy]] 
+| {{Full party name with color|rowspan=2|Biju Janata Dal}}
+|Suspended from Party for cross voting in [[2026 Rajya Sabha elections#Odisha|2026 RS election]]<ref name=":1" />
+|-
+| 89
+| [[Athagarh Assembly constituency|Athgarh]]
+| [[Ranendra Pratap Swain]]
+|
+|-
+| 90
+| [[Barabati-Cuttack Assembly constituency|Barabati-Cuttack]]
+| [[Sofia Firdous]]
+| {{Full party name with color|Independent}}
+| Suspended from Party for cross voting in [[2026 Rajya Sabha elections#Odisha|2026 RS election]]<ref name=":3">{{Cite web |last=Service |first=Express News |date=2026-03-18 |title=Odisha Congress suspends three MLAs, seeks disqualification for cross-voting in Rajya Sabha election |url=https://www.newindianexpress.com/states/odisha/2026/Mar/18/odisha-congress-suspends-three-mlas-seeks-disqualification-for-cross-voting-in-rajya-sabha-election |access-date=2026-03-23 |website=The New Indian Express |language=en}}</ref>
+|-
+| 91
+| [[Choudwar-Cuttack Assembly constituency|Choudwar-Cuttack]]
+| [[Souvic Biswal]]
+| {{Full party name with color|Biju Janata Dal}}
+|Suspended from Party for cross voting in [[2026 Rajya Sabha elections#Odisha|2026 RS election]]<ref name=":1" />
+|-
+| 92
+| [[Niali Assembly constituency|Niali]] (SC)
+| [[Chhabi Malik]]
+| {{Full party name with color|rowspan=2|Bharatiya Janata Party}}
+|
+|-
+| 93
+| [[Cuttack Sadar Assembly constituency|Cuttack Sadar]] (SC)
+| [[Prakash Chandra Sethi (politician)|Prakash Chandra Sethi]]
+|
+|-
+| 94
+| [[Salipur Assembly constituency|Salipur]]
+| [[Prasanta Behera]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| 95
+| [[Mahanga Assembly constituency|Mahanga]]
+| [[Sarada Prasad Padhan]]
+| {{party name with color|Independent}}
+| Supports [[Bharatiya Janata Party]]
+|-
+| rowspan="5" | [[Kendrapara district|Kendrapara]]
+| 96
+| [[Patkura Assembly constituency|Patkura]]
+| [[Arvind Mohapatra]]
+| {{Full party name with color|rowspan=4|Biju Janata Dal}}
+| Suspended from Party for Anti Party Activities<ref name=":0" />
+|-
+| 97
+| [[Kendrapara Assembly constituency|Kendrapara]] (SC)
+| [[Ganeswar Behera]]
+|
+|-
+| 98
+| [[Aul Assembly constituency|Aul]]
+| [[Pratap Keshari Deb]] 
+|Deputy Chief Whip, BJD
+|-
+| 99
+| [[Rajanagar Assembly constituency|Rajanagar]]
+| [[Dhruba Charan Sahoo]]
+|
+|-
+| 100
+| [[Mahakalapada Assembly constituency|Mahakalapada]]
+| [[Durga Prasan Nayak]]
+| {{Full party name with color|rowspan=2|Bharatiya Janata Party}}
+|
+|-
+| rowspan="4" | [[Jagatsinghpur district|Jagatsinghpur]]
+| 101
+| [[Paradeep Assembly constituency|Paradeep]]
+| [[Sampad Chandra Swain]]
+| Minister of State (I/C)
+|-
+| 102
+| [[Tirtol Assembly constituency|Tirtol]] (SC)
+| [[Ramakanta Bhoi]]
+| {{Full party name with color|rowspan=2|Biju Janata Dal}}
+|Suspended from Party for cross voting in [[2026 Rajya Sabha elections#Odisha|2026 RS election]]<ref name=":1" />
+|-
+| 103
+| [[Balikuda-Erasama Assembly constituency|Balikuda-Erasama]]
+| [[Sarada Prasanna Jena]]
+|
+|-
+| 104
+| [[Jagatsinghpur Assembly constituency|Jagatsinghpur]]
+| [[Amarendra Das]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| rowspan="6" | [[Puri district|Puri]]
+| 105
+| [[Kakatpur Assembly constituency|Kakatpur]] (SC)
+| [[Tusharkanti Behera]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| 106
+| [[Nimapara Assembly constituency|Nimapara]]
+| [[Pravati Parida]]
+| {{Full party name with color|Bharatiya Janata Party}}
+| Deputy Chief Minister
+|-
+| 107
+| [[Puri Assembly constituency|Puri]]
+| [[Sunil Kumar Mohanty]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| 108
+| [[Brahmagiri Assembly constituency|Brahmagiri]]
+| [[Upasna Mohapatra]]
+| {{Full party name with color|rowspan=3|Bharatiya Janata Party}}
+|
+|-
+| 109
+| [[Satyabadi Assembly constituency|Satyabadi]]
+| [[Om Prakash Mishra (politician)|Om Prakash Mishra]]
+|
+|-
+| 110
+| [[Pipili Assembly constituency|Pipili]]
+| [[Ashrit Pattanayak]]
+|
+|-
+| rowspan="8" | [[Khordha district|Khordha]]
+| 111
+| [[Jayadev Assembly constituency|Jayadev]] (SC)
+| [[Naba Kishor Mallick]]
+| {{Full party name with color|rowspan=3|Biju Janata Dal}}
+|Suspended from Party for cross voting in [[2026 Rajya Sabha elections|2026 RS election]]<ref name=":1" />
+|-
+| 112
+| [[Bhubaneswar Central (Vidhan Sabha Constituency)|Bhubaneswar Central]]
+| [[Ananta Narayan Jena]]
+|
+|-
+| 113
+| [[Bhubaneswar North (Vidhan Sabha Constituency)|Bhubaneswar North]]
+| [[Susant Kumar Rout]]
+|
+|-
+| 114
+| [[Ekamra-Bhubaneswar Assembly constituency|Ekamra Bhubaneswar]]
+| [[Babu Singh (Odisha politician)|Babu Singh]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| 115
+| [[Jatani Assembly constituency|Jatani]]
+| [[Bibhuti Bhusan Balabantaray]]
+| {{Full party name with color|rowspan=2|Biju Janata Dal}}
+|
+|-
+| 116
+| [[Begunia Assembly constituency|Begunia]]
+| [[Pradip Kumar Sahu]]
+| 
+|-
+| 117
+| [[Khurda Assembly constituency|Khurda]]
+| [[Prasanta Kumar Jagadev]]
+| {{Full party name with color|rowspan=4|Bharatiya Janata Party}}
+|
+|-
+| 118
+| [[Chilika Assembly constituency|Chilika]]
+| [[Prithviraj Harichandan]]
+| Cabinet Minister 
+|-
+| rowspan="4" | [[Nayagarh district|Nayagarh]]
+| 119
+| [[Ranpur Assembly constituency|Ranpur]]
+| [[Surama Padhy]]
+|Speaker
+|-
+| 120
+| [[Khandapada Assembly constituency|Khandapada]]
+| [[Dusmanta Kumar Swain]]
+|
+|-
+| 121
+| [[Daspalla Assembly constituency|Daspalla]] (SC)
+| [[Ramesh Chandra Behera]]
+| {{Full party name with color|rowspan=2|Biju Janata Dal}}
+|
+|-
+| 122
+| [[Nayagarh Assembly constituency|Nayagarh]]
+| [[Arun Kumar Sahoo]]
+|
+|-
+| rowspan="13" |  [[Ganjam district|Ganjam]]
+| 123
+| [[Bhanjanagar Assembly constituency|Bhanjanagar]]
+| [[Pradyumna Kumar Nayak]]
+| {{Full party name with color|rowspan=7|Bharatiya Janata Party}}
+|
+|-
+| 124
+| [[Polasara Assembly constituency|Polasara]]
+| [[Gokula Nanda Mallik]]
+| Minister of State (I/C)
+|-
+| 125
+| [[Kabisuryanagar Assembly constituency|Kabisuryanagar]]
+| [[Pratap Chandra Nayak]]
+|
+|-
+| 126
+| [[Khalikote Assembly constituency|Khalikote]] (SC)
+| [[Purna Chandra Sethy]]
+|
+|-
+| 127
+| [[Chhatrapur Assembly constituency|Chhatrapur]] (SC)
+| [[Krushna Chandra Nayak]]
+|
+|-
+| 128
+| [[Aska Assembly constituency|Aska]]
+| [[Saroj Kumar Padhi]]
+|
+|-
+| 129
+| [[Surada Assembly constituency|Surada]]
+| [[Nilamani Bisoyi]]
+|
+|-
+| 130
+| [[Sanakhemundi Assembly constituency|Sanakhemundi]]
+| [[Ramesh Chandra Jena (politician)|Ramesh Chandra Jena]] 
+| {{Full party name with color|Indian National Congress}}
+|Suspended from Party for cross voting in [[2026 Rajya Sabha elections#Odisha|2026 RS election]]<ref name=":3" />
+|-
+| 131
+| [[Hinjili Assembly constituency|Hinjili]]
+| [[Naveen Patnaik]] 
+| {{Full party name with color|Biju Janata Dal}}
+| Leader of Opposition 
+|-
+| 132
+| [[Gopalpur, Odisha Assembly constituency|Gopalpur]]
+| [[Bibhuti Bhushan Jena]]
+| {{Full party name with color|rowspan=4|Bharatiya Janata Party}}
+| Cabinet Minister
+|-
+| 133
+| [[Berhampur Assembly constituency|Berhampur]]
+| [[K Anil Kumar|K. Anil Kumar]]
+|
+|-
+| 134
+| [[Digapahandi Assembly constituency|Digapahandi]]
+| [[Sidhant Mohapatra]]
+|
+|-
+| 135
+| [[Chikiti Assembly constituency|Chikiti]]
+| [[Manoranjan Dyan Samantara]]
+|
+|-
+| rowspan="2" | [[Gajapati district|Gajapati]]
+| 136
+| [[Mohana Assembly constituency|Mohana]] (ST)
+| [[Dasarathi Gomango]]
+| {{Full party name with color|Indian National Congress}}
+|Suspended from Party for cross voting in [[2026 Rajya Sabha elections#Odisha|2026 RS election]]<ref name=":3" />
+|-
+| 137
+| [[Paralakhemundi Assembly constituency|Paralakhemundi]]
+| [[Rupesh Kumar Panigrahi]]
+| {{Full party name with color|Biju Janata Dal}}
+|
+|-
+| rowspan="3" | [[Rayagada district|Rayagada]]
+| 138
+| [[Gunupur Assembly constituency|Gunupur]] (ST)
+| [[Satyajeet Gomango]]
+| {{Full party name with color|rowspan=4|Indian National Congress}}
+|
+|-
+| 139
+| [[Bissam Cuttack Assembly constituency|Bissam Cuttack]] (ST)
+| [[Nilamadhab Hikaka]]
+|
+|-
+| 140
+| [[Rayagada Assembly constituency|Rayagada]] (ST)
+| [[Kadraka Appala Swamy]]
+|
+|-
+| rowspan="5" | [[Koraput district|Koraput]]
+| 141
+| [[Laxmipur Assembly constituency|Lakshmipur]] (ST)
+| [[Pabitra Saunta]]
+|
+|-
+| 142
+| [[Kotpad Assembly constituency|Kotpad]] (ST)
+| [[Rupu Bhatra]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| 143
+| [[Jeypore Assembly constituency|Jeypore]]
+| [[Tara Prasad Bahinipati]]
+| {{Full party name with color|Indian National Congress}}
+|
+|-
+| 144
+| [[Koraput Assembly constituency|Koraput]] (SC)
+| [[Raghuram Machha]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| 145
+| [[Pottangi Assembly constituency|Pottangi]] (ST)
+| [[Rama Chandra Kadam]]
+| {{Full party name with color|Indian National Congress}}
+|Leader of Congress Legislature Party
+|-
+| rowspan="2" | [[Malkangiri district|Malkangiri]]
+| 146
+| [[Malkangiri Assembly constituency|Malkangiri]] (ST)
+| [[Narasinga Madkami]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|
+|-
+| 147
+| [[Chitrakonda Assembly constituency|Chitrakonda]] (ST)
+| [[Mangu Khilla]]
+| {{Full party name with color|Indian National Congress}}
+|
+|}
+
+== Bypolls ==
+{|class="wikitable sortable" style="text-align:center;"
+!Date
+!colspan="2"|Constituency
+!colspan="3"|Previous MLA 
+!Reason
+!colspan="3"|Elected MLA
+|-
+|11 November 2025<ref name=":2" />
+!71
+|[[Nuapada Assembly constituency|Nuapada]]
+|[[Rajendra Dholakia]]
+|{{Full party name with color|Biju Janata Dal}}
+|Died on 8 September 2025<ref>{{Cite web |date=2025-09-09 |title=BJD leader and Nuapada MLA Dholakia dies at 69 |url=https://www.newindianexpress.com/states/odisha/2025/Sep/09/bjd-leader-and-nuapada-mla-dholakia-dies-at-69 |access-date=2025-10-17 |website=The New Indian Express |language=en}}</ref>
+|[[Jay Dholakia]]<ref name=":2" />
+|{{Full party name with color|Bharatiya Janata Party}}
+|}
+
+== See also ==
+* [[2024 Odisha Legislative Assembly election]]
+* [[Odisha Legislative Assembly]]
+* [[List of constituencies of the Odisha Legislative Assembly]]
+* [[Government of Odisha]]
+* [[List of governors of Odisha]]
+* [[List of chief ministers of Odisha]]
+
+== References ==
+{{Reflist}}
+
+{{Odisha Legislative Assembly}}
+{{Legislatures of India}}
+{{Current Indian assemblies}}
+
+[[Category:Odisha Legislative Assembly]]
+[[Category:Odisha MLAs 2024–2029| ]]
+[[Category:Lists of current Indian state and territorial assemblies|Odisha]]
+[[Category:Terms of the Odisha Legislative Assembly|17th]]

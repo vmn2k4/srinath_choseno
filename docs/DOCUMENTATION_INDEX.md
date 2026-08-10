@@ -31,6 +31,7 @@ Complete guide to all Choseno documentation — architecture, features, data pip
 ### Elections & Candidacies
 
 - **[ELECTION_DATA_SOURCES.md](ELECTION_DATA_SOURCES.md)** — Where candidate data comes from, how verified candidates are listed
+- **[adding-us-2026-midterm-candidates.md](adding-us-2026-midterm-candidates.md)** — How the 2026 US Midterms election + its House/Senate races + confirmed candidates were bulk-loaded from the FEC; repeatable recipe for future cycles
 - **Flow**: User registers as politician → applies for election seat → creates campaign wall → voters ask questions/show support
 
 ### Politician & Office Holders

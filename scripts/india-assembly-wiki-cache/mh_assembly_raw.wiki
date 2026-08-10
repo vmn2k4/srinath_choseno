@@ -1,0 +1,1997 @@
+{{Short description|Maharashtra Assembly session since 2024}}
+{{Use dmy dates|date=May 2025}}{{Use Indian English|date=May 2025}}
+{{Infobox legislative term
+| name = 15th Maharashtra Assembly
+| before = [[14th Maharashtra Assembly|14th Assembly]]
+| after = 16th Assembly
+| image = Vidhan Bhavan aerial view.jpg
+| image_size = 250px
+| caption = '''[[Maharashtra Vidhan Sabha]] [[Mumbai]]'''
+| body = '''[[Maharashtra Legislative Assembly]]'''
+| chamber1 = Sovereign
+| chamber1_image = File:India Maharashtra Legislative Assembly Election 2024.svg
+| chamber1_image_size = 350 px
+| chamber1_alt = 
+| membership1 = 
+| control1 = [[Maha Yuti]]
+| chamber1_leader1_type = [[Governor of Maharashtra|Governor]]
+| chamber1_leader1 = *'''[[C.P. Radhakrishnan]]''' (2024-2025)
+*'''[[Acharya Devvrat]]''' (since 2025)
+| government = *[[Third Fadnavis ministry]] (Since 2024)
+| chamber2_leader1_type = [[List of speakers of the Maharashtra Legislative Assembly|Speaker of the House]]
+| chamber2_leader1 = * [[Rahul Narwekar]]
+| chamber2_leader2_type = [[List of deputy speakers of the Maharashtra Legislative Assembly|Deputy Speaker of the House]]
+| chamber2_leader2 = * [[Anna Bansode]]
+| chamber2_leader3_type = [[List of chief ministers of Maharashtra|Chief Minister]]
+| chamber2_leader3 = * [[Devendra Fadnavis]]
+| chamber2_leader4_type = [[List of deputy chief ministers of Maharashtra|Deputy Chief Minister]]
+| chamber2_leader4 = *[[Eknath Shinde]] 
+*[[Ajit Pawar]] (2024-2026) 
+*[[Sunetra Pawar]] (From 2026)
+| chamber2_leader5_type = [[List of Leaders of the House of the Maharashtra Legislative Assembly|Leader of the House]]
+| chamber2_leader5 = * [[Devendra Fadnavis]]
+| election = '''[[2024 Maharashtra Legislative Assembly election]]'''
+| opposition = Vacant<ref>{{cite web|title=In a first in six decades, no Leader of Opposition in Maharashtra Assembly|url=https://www.thehindu.com/elections/maharashtra-assembly/in-a-first-in-six-decades-no-leader-of-opposition-in-maharashtra-assembly/article68904861.ece|publisher = The Hindu|date=24 November 2024}}</ref>{{efn|No leader of opposition because no political party obtained at least 10% of the seats in the assembly.}}
+| term_start = 7 December 2024
+| term_end = 
+}}
+The '''Members of 15th [[Maharashtra Legislative Assembly]]''' were elected in the [[2024 Maharashtra Legislative Assembly election]], with results announced on 23 November 2024.<ref>{{Cite web |title=General Election to Assembly Constituencies: Trends & Results November 2024 - Maharashtra |url=https://results.eci.gov.in/ResultAcGenNov2024/partywiseresult-S13.htm |website=results.eci.gov.in}}</ref><ref name=":0">{{Cite news |date=15 October 2024 |title=Maharashtra election dates announced: Voting in single phase on November 20, result on Nov 23 |url=https://economictimes.indiatimes.com/news/elections/assembly-elections/maharashtra/maharashtra-election-dates-announced-check-election-schedule-for-maharashtra-voting-result-date-bjp-congress-ncp-shiv-sena/articleshow/114243422.cms?from=mdr |access-date=16 October 2024 |work=The Economic Times |issn=0013-0389}}</ref>
+
+The [[Bharatiya Janata Party]] emerged as the single largest party winning 132 seats alone, and its alliance [[Maha Yuti]] secured a record 237 seats. [[Devendra Fadnavis]] of [[Bharatiya Janata Party]] was sworn in as the new CM. None of the opposition parties could win 10% of the seats, hence there is no official opposition.
+
+== Office bearers ==
+{| class="wikitable sortable"
+|-
+! Post !! Name  !! colspan="2"| Party 
+|-
+| '''[[List of governors of Maharashtra|Governor]]'''
+| [[Jishnu Dev Varma]] 
+| {{Full party name with color|Independent|shortname=Independent}}
+|-
+| '''[[Speaker of Maharashtra Assembly|Speaker]]'''
+| [[Rahul Narwekar]]<ref>{{cite web | url=https://www.indiatoday.in/india/story/bjps-rahul-narvekar-colaba-mla-re-elected-unopposed-maharashtra-assembly-speaker-2646978-2024-12-09 | title=BJP's Rahul Narvekar re-elected unopposed as Maharashtra Assembly Speaker | publisher=India Today | date=9 December 2024 | accessdate=16 December 2024 | author=Bhalekar, Ritvick Arun}}</ref>
+| {{Full party name with color|Bharatiya Janata Party}}
+|-
+| '''[[List of Deputy Speakers of the Maharashtra Legislative Assembly|Deputy Speaker]]'''
+| [[Anna Bansode]]
+| {{Full party name with color|Nationalist Congress Party}}
+|-
+| '''[[List of chief ministers of Maharashtra|Chief Minister]]'''
+| [[Devendra Fadnavis]]
+| {{Full party name with color|Bharatiya Janata Party}}
+|-
+|'''[[List of deputy chief ministers of Maharashtra|First Deputy Chief Minister]]'''
+| [[Eknath Shinde]]
+| {{Full party name with color|Shiv Sena (2022–present)}}
+|-
+|'''[[List of deputy chief ministers of Maharashtra|Second Deputy Chief Minister]]'''
+| [[Sunetra Pawar]] 
+| {{Full party name with color|Nationalist Congress Party}}
+|-
+|'''[[List of Leader of the Opposition of the Maharashtra Legislative Assembly|Leader of Opposition]]'''
+| Vacant<ref>{{cite web | url=https://timesofindia.indiatimes.com/india/maharashtra-election-results-a-first-in-6-decades-no-leader-of-opposition-as-main-opposition-party-wins-under-10-of-seats/articleshow/115614620.cms | title=Maharashtra election results: A first in 6 decades, no leader of opposition, as main opposition party wins under 10% of seats | publisher=Times of India | date=24 November 2024 | accessdate=16 December 2024}}</ref>
+| colspan="2"| N/A
+|}
+
+== Members of Legislative Assembly ==
+{| class="wikitable sortable"
+!District
+!#
+!Constituency
+!Member
+! colspan="2" |Party
+! colspan="2" |Alliance
+!Remarks
+|-
+|rowspan="4" | [[Nandurbar district|Nandurbar]]
+|1
+|[[Akkalkuwa Assembly constituency|Akkalkuwa]] (ST)
+|[[Aamshya Padavi]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+|2
+|[[Shahada Assembly constituency|Shahada]] (ST)
+|[[Rajesh Padvi]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|3
+|[[Nandurbar Assembly constituency|Nandurbar]] (ST)
+|[[Vijaykumar Gavit]]
+|
+|-
+|4
+|[[Navapur Assembly constituency|Navapur]] (ST)
+|[[Shirishkumar Surupsing Naik|Shirishkumar Naik]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|rowspan="5" | [[Dhule district|Dhule]]
+|5
+|[[Sakri Assembly constituency|Sakri]] (ST)
+|[[Manjula Gavit]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance|rowspan=5}}
+|
+|-
+|6
+|[[Dhule Rural Assembly constituency|Dhule Rural]]
+|[[Raghavendra Patil]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=4}}
+|
+|-
+|7
+|[[Dhule City Assembly constituency|Dhule City]]
+|[[Anup Agrawal (politician)|Anup Agrawal]]
+|
+|-
+|8
+|[[Sindkheda Assembly constituency|Sindkheda]]
+|[[Jayakumar Jitendrasinh Rawal|Jayakumar Rawal]]
+|
+|-
+|9
+|[[Shirpur Assembly constituency|Shirpur]] (ST)
+|[[Kashiram Vechan Pawara|Kashiram Pawara]]
+|
+|-
+|rowspan="11" | [[Jalgaon district|Jalgaon]]
+|10
+|[[Chopda Assembly constituency|Chopda]] (ST)
+|[[Chandrakant Sonawane]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance|rowspan=11}}
+|
+|-
+|11
+|[[Raver Assembly constituency|Raver]]
+|[[Amol Haribhau Jawale|Amol Jawale]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|12
+|[[Bhusawal Assembly constituency|Bhusawal]] (SC)
+|[[Sanjay Savkare]]
+|
+|-
+|13
+|[[Jalgaon City Assembly constituency|Jalgaon City]]
+|[[Suresh Damu Bhole|Suresh Bhole]]
+|
+|-
+|14
+|[[Jalgaon Rural Assembly constituency|Jalgaon Rural]]
+|[[Gulab Raghunath Patil|Gulabrao Patil]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|15
+|[[Amalner Assembly constituency|Amalner]]
+|[[Anil Bhaidas Patil]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|16
+|[[Erandol Assembly constituency|Erandol]]
+|[[Amol Patil]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|17
+|[[Chalisgaon Assembly constituency|Chalisgaon]]
+|[[Mangesh Chavan]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|18
+|[[Pachora Assembly constituency|Pachora]]
+|[[Kishor Appa Patil]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|19
+|[[Jamner Assembly constituency|Jamner]]
+|[[Girish Mahajan]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|20
+|[[Muktainagar Assembly constituency|Muktainagar]]
+|[[Chandrakant Nimba Patil]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|rowspan="7" | [[Buldhana district|Buldana]]
+|21
+|[[Malkapur Assembly constituency|Malkapur]]
+|[[Chainsukh Madanlal Sancheti|Chainsukh Sancheti]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=4}}
+|
+|-
+|22
+|[[Buldhana Assembly constituency|Buldhana]]
+|[[Sanjay Gaikwad]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|23
+|[[Chikhali Assembly constituency|Chikhali]]
+|[[Shweta Mahale]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|24
+|[[Sindkhed Raja Assembly constituency|Sindkhed Raja]]
+|[[Manoj Kayande]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|25
+|[[Mehkar Assembly constituency|Mehkar]] (SC)
+|[[Siddharth Kharat]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|26
+|[[Khamgaon Assembly constituency|Khamgaon]]
+|[[Akash Pandurang Fundkar|Akash Fundkar]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|27
+|[[Jalgaon (Jamod) Assembly constituency|Jalgaon (Jamod)]]
+|[[Sanjay Kute]]
+|
+|-
+|rowspan="5" | [[Akola district|Akola]]
+|28
+|[[Akot Assembly constituency|Akot]]
+|[[Prakash Gunvantrao Bharsakale|Prakash Bharsakale]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|29
+|[[Balapur Assembly constituency|Balapur]]
+|[[Nitin Tale]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|{{Party name with color|Maha Vikas Aghadi|rowspan=2}}
+|
+|-
+|30
+|[[Akola West Assembly constituency|Akola West]]
+|[[Sajid Khan Pathan]]
+|{{Party name with color|Indian National Congress}}
+|
+|-
+|31
+|[[Akola East Assembly constituency|Akola East]]
+|[[Randhir Pralhadrao Savarkar|Randhir Savarkar]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|32
+|[[Murtizapur Assembly constituency|Murtizapur]] (SC)
+|[[Harish Marotiappa Pimple|Harish Pimple]]
+|
+|-
+|rowspan="3" | [[Washim district|Washim]]
+|33
+|[[Risod Assembly constituency|Risod]]
+|[[Amit Subhashrao Zanak|Amit Zanak]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|34
+|[[Washim Assembly constituency|Washim]] (SC)
+|[[Shyam Ramcharan Khode|Shyam Khode]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|35
+|[[Karanja Assembly constituency|Karanja]]
+|[[Sai Prakash Dahake]]
+|
+|-
+|rowspan="8" | [[Amravati district|Amravati]]
+|36
+|[[Dhamangaon Railway Assembly constituency|Dhamangaon Railway]]
+|[[Pratap Adsad]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=4}}
+|
+|-
+|37
+|[[Badnera Assembly constituency|Badnera]]
+|[[Ravi Rana]]
+|{{party name with color|Ravi Rana|shortname=RYSP|color=#1A34BB}}
+|
+|-
+|38
+|[[Amravati Assembly constituency|Amravati]]
+|[[Sulbha Khodke]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|39
+|[[Teosa Assembly constituency|Teosa]]
+|[[Rajesh Shriramji Wankhade|Rajesh Wankhade]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|40
+|[[Daryapur Assembly constituency|Daryapur]] (SC)
+|[[Gajanan Lawate]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|41
+|[[Melghat Assembly constituency|Melghat]] (ST)
+|[[Kewalram Tulsiram Kale|Kewalram Kale]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+|42
+|[[Achalpur Assembly constituency|Achalpur]]
+|[[Pravin Vasantrao Tayade|Pravin Tayade]]
+|
+|-
+|43
+|[[Morshi Assembly constituency|Morshi]]
+|[[Chandu Atmaramji Yawalkar|Chandu Yawalkar]]
+|
+|-
+|rowspan="4" | [[Wardha district|Wardha]]
+|44
+|[[Arvi Assembly constituency|Arvi]]
+|[[Sumit Wankhede]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=4}}
+|{{Party name with color|National Democratic Alliance|rowspan=4}}
+|
+|-
+|45
+|[[Deoli, Maharashtra Assembly constituency|Deoli]]
+|[[Rajesh Bhaurao Bakane|Rajesh Bakane]]
+|
+|-
+|46
+|[[Hinganghat Assembly constituency|Hinganghat]]
+|[[Samir Trimbakrao Kunawar|Samir Kunawar]]
+|
+|-
+|47
+|[[Wardha Assembly constituency|Wardha]]
+|[[Pankaj Rajesh Bhoyar|Pankaj Bhoyar]]
+|
+|-
+|rowspan="12" | [[Nagpur district|Nagpur]]
+|48
+|[[Katol Assembly constituency|Katol]]
+|[[Charansing Thakur]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+|49
+|[[Savner Assembly constituency|Savner]]
+|[[Ashish Deshmukh]]
+|
+|-
+|50
+|[[Hingna Assembly constituency|Hingna]]
+|[[Sameer Meghe]]
+|
+|-
+|51
+|[[Umred Assembly constituency|Umred]] (SC)
+|[[Sanjay Meshram]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|52
+|[[Nagpur South West Assembly constituency|Nagpur South West]]
+|[[Devendra Fadnavis]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=4}}
+|{{Party name with color|National Democratic Alliance|rowspan=4}}
+| [[Chief Minister of Maharashtra|Chief Minister]]
+|-
+|53
+|[[Nagpur South Assembly constituency|Nagpur South]]
+|[[Mohan Mate]]
+|
+|-
+|54
+|[[Nagpur East Assembly constituency|Nagpur East]]
+|[[Krishna Khopde]]
+|
+|-
+|55
+|[[Nagpur Central Assembly constituency|Nagpur Central]]
+|[[Pravin Datke]]
+|
+|-
+|56
+|[[Nagpur West Assembly constituency|Nagpur West]]
+|[[Vikas Thakre]]
+|{{Party name with color|Indian National Congress|rowspan=2}}
+|{{Party name with color|Maha Vikas Aghadi|rowspan=2}}
+|
+|-
+|57
+|[[Nagpur North Assembly constituency|Nagpur North]] (SC)
+|[[Nitin Raut]]
+|
+|-
+|58
+|[[Kamthi Assembly constituency|Kamthi]]
+|[[Chandrashekhar Bawankule]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|59
+|[[Ramtek Assembly constituency|Ramtek]]
+|[[Ashish Jaiswal]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|rowspan="3" | [[Bhandara district|Bhandara]]
+|60
+|[[Tumsar Assembly constituency|Tumsar]]
+|[[Raju Manikrao Karemore|Raju Karemore]]
+|{{Party name with color|Nationalist Congress Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|61
+|[[Bhandara Assembly constituency|Bhandara]] (SC)
+|[[Narendra Bhondekar]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|62
+|[[Sakoli Assembly constituency|Sakoli]]
+|[[Nana Patole]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|rowspan="4" | [[Gondia district|Gondia]]
+|63
+|[[Arjuni-Morgaon Assembly constituency|Arjuni Morgaon]] (SC)
+|[[Rajkumar Badole]]
+|{{Party name with color|Nationalist Congress Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=4}}
+|
+|-
+|64
+|[[Tirora Assembly constituency|Tirora]]
+|[[Vijay Bharatlal Rahangdale|Vijay Rahangdale]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|65
+|[[Gondiya Assembly constituency|Gondiya]]
+|[[Vinod Agrawal]]
+|
+|-
+|66
+|[[Amgaon Assembly constituency|Amgaon]] (ST)
+|[[Sanjay Hanmantrao Puram|Sanjay Puram]]
+|
+|-
+|rowspan="3" | [[Gadchiroli district|Gadchiroli]]
+|67
+|[[Armori Assembly constituency|Armori]] (ST)
+|[[Ramdas Maluji Masram|Ramdas Masram]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|68
+|[[Gadchiroli Assembly constituency|Gadchiroli]] (ST)
+|[[Milind Ramji Narote|Milind Narote]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|69
+|[[Aheri Assembly constituency|Aheri]] (ST)
+|[[Dharamrao Baba Atram]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|rowspan="6" | [[Chandrapur district|Chandrapur]]
+|70
+|[[Rajura Assembly constituency|Rajura]]
+|[[Deorao Vithoba Bhongle|Deorao Bhongle]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+|71
+|[[Chandrapur, Maharashtra Assembly constituency|Chandrapur]] (SC)
+|[[Kishor Jorgewar]]
+|
+|-
+|72
+|[[Ballarpur Assembly constituency|Ballarpur]]
+|[[Sudhir Mungantiwar]]
+|
+|-
+|73
+|[[Bramhapuri Assembly constituency|Bramhapuri]]
+|[[Vijay Wadettiwar]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|74
+|[[Chimur Assembly constituency|Chimur]]
+|[[Bunty Bhangdiya]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|75
+|[[Warora Assembly constituency|Warora]]
+|[[Karan Sanjay Deotale|Karan Deotale]]
+|
+|-
+|rowspan="7" | [[Yavatmal district|Yavatmal]]
+|76
+|[[Wani Assembly constituency|Wani]]
+|[[Sanjay Derkar]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|77
+|[[Ralegaon Assembly constituency|Ralegaon]] (ST)
+|[[Ashok Uike]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|78
+|[[Yavatmal Assembly constituency|Yavatmal]]
+|[[Balasaheb Mangulkar]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|79
+|[[Digras Assembly constituency|Digras]]
+|[[Sanjay Rathod]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance|rowspan=4}}
+|
+|-
+|80
+|[[Arni Assembly constituency|Arni]] (ST)
+|[[Raju Narayan Todsam|Raju Todsam]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|81
+|[[Pusad Assembly constituency|Pusad]]
+|[[Indranil Naik]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|82
+|[[Umarkhed Assembly constituency|Umarkhed]] (SC)
+|[[Kisan Wankhede]] 
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="9" | [[Nanded district|Nanded]]
+|83
+|[[Kinwat Assembly constituency|Kinwat]]
+|[[Bhimrao Keram]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=9}}
+|
+|-
+|84
+|[[Hadgaon Assembly constituency|Hadgaon]]
+|[[Baburao Kadam]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|85
+|[[Bhokar Assembly constituency|Bhokar]]
+|[[Sreejaya Chavan]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|86
+|[[Nanded North Assembly constituency|Nanded North]]
+|[[Balaji Kalyankar]]
+|{{Party name with color|Shiv Sena (2022–present)|rowspan=2}}
+|
+|-
+|87
+|[[Nanded South Assembly constituency|Nanded South]]
+|[[Anand Tidke]]
+|
+|-
+|88
+|[[Loha Assembly constituency|Loha]]
+|[[Prataprao Govindrao Chikhalikar|Prataprao Chikhalikar]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|89
+|[[Naigaon Assembly constituency|Naigaon]]
+|[[Rajesh Sambhaji Pawar|Rajesh Pawar]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|90
+|[[Deglur Assembly constituency|Deglur]] (SC)
+|[[Jitesh Antapurkar]]
+|
+|-
+|91
+|[[Mukhed Assembly constituency|Mukhed]] 
+|[[Tushar Rathod]]
+|
+|-
+|rowspan="3" | [[Hingoli district|Hingoli]]
+|92
+|[[Basmath Assembly constituency|Basmath]]
+|[[Chandrakant Nawghare]]
+|{{Party name with color|Nationalist Congress Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+|93
+|[[Kalamnuri Assembly constituency|Kalamnuri]]
+|[[Santosh Bangar]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|94
+|[[Hingoli Assembly constituency|Hingoli]]
+|[[Tanaji Sakharamji Mutkule|Tanaji Mutkule]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="4" | [[Parbhani district|Parbhani]]
+|95
+|[[Jintur Assembly constituency|Jintur]]
+|[[Meghana Bordikar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|96
+|[[Parbhani Assembly constituency|Parbhani]]
+|[[Rahul Vedprakash Patil]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|97
+|[[Gangakhed Assembly constituency|Gangakhed]]
+|[[Ratnakar Gutte]]
+| style="background-color: {{party color|Rashtriya Samaj Paksha}}" |
+|[[Rashtriya Samaj Paksha|RSPS]]
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|98
+|[[Pathri Assembly constituency|Pathri]]
+|[[Rajesh Vitekar]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|rowspan="5" | [[Jalna district|Jalna]]
+|99
+|[[Partur Assembly constituency|Partur]]
+|[[Babanrao Lonikar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=5}}
+|
+|-
+|100
+|[[Ghansawangi Assembly constituency|Ghansawangi]]
+|[[Hikmat Udhan]]
+|{{Party name with color|Shiv Sena (2022–present)|rowspan=2}}
+|
+|-
+|101
+|[[Jalna Assembly constituency|Jalna]]
+|[[Arjun Khotkar]]
+|
+|-
+|102
+|[[Badnapur Assembly constituency|Badnapur]] (SC)
+|[[Narayan Tilakchand Kuche|Narayan Kuche]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|103
+|[[Bhokardan Assembly constituency|Bhokardan]]
+|[[Santosh Danve]]
+|
+|-
+|rowspan="9" | [[Aurangabad district, Maharashtra|Chhatrapati Sambhaji Nagar]]
+|104
+|[[Sillod Assembly constituency|Sillod]]
+|[[Abdul Sattar (Maharashtra politician)|Abdul Sattar]]
+|{{Party name with color|Shiv Sena (2022–present)|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=9}}
+|
+|-
+|105
+|[[Kannad Assembly constituency|Kannad]]
+|[[Sanjana Jadhav]]
+|
+|-
+|106
+|[[Phulambri Assembly constituency|Phulambri]]
+|[[Anuradha Chavan]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|107
+|[[Aurangabad Central Assembly constituency|Aurangabad Central]]
+|[[Pradeep Jaiswal]]
+|{{Party name with color|Shiv Sena (2022–present)|rowspan=2}}
+|
+|-
+|108
+|[[Aurangabad West Assembly constituency|Aurangabad West]] (SC)
+|[[Sanjay Shirsat]]
+|
+|-
+|109
+|[[Aurangabad East Assembly constituency|Aurangabad East]]
+|[[Atul Save]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|110
+|[[Paithan Assembly constituency|Paithan]]
+|[[Vilas Sandipan Bhumre|Vilas Bhumre]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|111
+|[[Gangapur, Maharashtra Assembly constituency|Gangapur]]
+|[[Prashant Bamb]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|112
+|[[Vaijapur Assembly constituency|Vaijapur]]
+|[[Ramesh Bornare]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|rowspan="15" | [[Nashik district|Nashik]]
+|113
+|[[Nandgaon Assembly constituency|Nandgaon]]
+|[[Suhas Kande]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|114
+|[[Malegaon Central Assembly constituency|Malegaon Central]]
+|[[Mohammed Ismail Abdul Khalique|Ismail Abdul Khalique]]
+| style="background-color: {{party color|All India Majlis-e-Ittehadul Muslimeen}}" |
+|[[AIMIM]]
+| style="background-color: {{party color|Independent}}" |
+|None
+|
+|-
+|115
+|[[Malegaon Outer Assembly constituency|Malegaon Outer]]
+|[[Dadaji Bhuse]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance|rowspan=13}}
+|
+|-
+|116
+|[[Baglan Assembly constituency|Baglan]] (ST)
+|[[Dilip Manglu Borse|Dilip Borse]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|117
+|[[Kalwan Assembly constituency|Kalwan]] (ST)
+|[[Nitin Arjun Pawar|Nitin Pawar]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|118
+|[[Chandwad Assembly constituency|Chandwad]]
+|[[Rahul Daulatrao Aher|Rahul Aher]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|119
+|[[Yevla Assembly constituency|Yevla]]
+|[[Chhagan Bhujbal]]
+|{{Party name with color|Nationalist Congress Party|rowspan=4}}
+|
+|-
+|120
+|[[Sinnar Assembly constituency|Sinnar]]
+|[[Manikrao Kokate]]
+|
+|-
+|121
+|[[Niphad Assembly constituency|Niphad]]
+|[[Diliprao Shankarrao Bankar|Diliprao Bankar]]
+|
+|-
+|122
+|[[Dindori, Maharashtra Assembly constituency|Dindori]] (ST)
+|[[Narhari Zirwal]]
+|
+|-
+|123
+|[[Nashik East Assembly constituency|Nashik East]]
+|[[Rahul Uttamrao Dhikale|Rahul Dhikale]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|124
+|[[Nashik Central Assembly constituency|Nashik Central]]
+|[[Devayani Farande]]
+|
+|-
+|125
+|[[Nashik West Assembly constituency|Nashik West]]
+|[[Seema Mahesh Hiray|Seema Hiray]]
+|
+|-
+|126
+|[[Deolali Assembly constituency|Deolali]] (SC)
+|[[Saroj Ahire]]
+|{{Party name with color|Nationalist Congress Party|rowspan=2}}
+|
+|-
+|127
+|[[Igatpuri Assembly constituency|Igatpuri]] (ST)
+|[[Hiraman Khoskar]]
+|
+|-
+|rowspan="6" | [[Palghar district|Palghar]]
+|128
+|[[Dahanu Assembly constituency|Dahanu]] (ST)
+|[[Vinod Bhiva Nikole]]
+| style="background-color: {{party color|Communist Party of India (Marxist)}}" |
+|[[Communist Party of India (Marxist)|CPI(M)]]
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|129
+|[[Vikramgad Assembly constituency|Vikramgad]] (ST)
+|[[Bhoye Harishchandra Sakharam|Harishchandra Bhoye]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=5}}
+|
+|-
+|130
+|[[Palghar Assembly constituency|Palghar]] (ST)
+|[[Rajendra Gavit]]
+|{{Party name with color|Shiv Sena (2022–present)|rowspan=2}}
+|
+|-
+|131
+|[[Boisar Assembly constituency|Boisar]] (ST)
+|[[Vilas Tare]]
+|
+|-
+|132
+|[[Nalasopara Assembly constituency|Nalasopara]]
+|[[Rajan Naik]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|133
+|[[Vasai (Vidhan Sabha) Constituency|Vasai]]
+|[[Sneha Pandit]]
+|
+|-
+|rowspan="18" | [[Thane district|Thane]]
+|134
+|[[Bhiwandi Rural Assembly constituency|Bhiwandi Rural]] (ST)
+|[[Shantaram More]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+|135
+|[[Shahapur, Maharashtra Assembly constituency|Shahapur]] (ST)
+|[[Daulat Daroda]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|136
+|[[Bhiwandi West Assembly constituency|Bhiwandi West]]
+|[[Mahesh Prabhakar Choughule|Mahesh Choughule]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|137
+|[[Bhiwandi East Assembly constituency|Bhiwandi East]]
+|[[Rais Shaikh]]
+| style="background-color: {{party color|Samajwadi Party}}" |
+|[[Samajwadi Party|SP]]
+|style="background-color: {{party color|Independent}}" |
+|None
+|
+|-
+|138
+|[[Kalyan West Assembly constituency|Kalyan West]]
+|[[Vishwanath Bhoir]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance|rowspan=11}}
+|
+|-
+|139
+|[[Murbad Assembly constituency|Murbad]]
+|[[Kisan Kathore]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|140
+|[[Ambernath Assembly constituency|Ambernath]] (SC)
+|[[Balaji Kinikar]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|141
+|[[Ulhasnagar Assembly constituency|Ulhasnagar]]
+|[[Kumar Ailani]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|142
+|[[Kalyan East Assembly constituency|Kalyan East]]
+|[[Sulbha Gaikwad]]
+|
+|-
+|143
+|[[Dombivali Assembly constituency|Dombivli]]
+|[[Ravindra Chavan]]
+|
+|-
+|144
+|[[Kalyan Rural Assembly constituency|Kalyan Rural]]
+|[[Rajesh More]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|145
+|[[Mira Bhayandar Assembly constituency|Mira Bhayandar]]
+|[[Narendra Mehta]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|146
+|[[Ovala-Majiwada Assembly constituency|Ovala-Majiwada]]
+|[[Pratap Sarnaik]]
+|{{Party name with color|Shiv Sena (2022–present)|rowspan=2}}
+|
+|-
+|147
+|[[Kopri-Pachpakhadi Assembly constituency|Kopri-Pachpakhadi]]
+|[[Eknath Shinde]]
+| [[List of deputy chief ministers of Maharashtra|Dy Chief Minister]]
+|-
+|148
+|[[Thane Assembly constituency|Thane]]
+|[[Sanjay Mukund Kelkar|Sanjay Kelkar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|149
+|[[Mumbra-Kalwa Assembly constituency|Mumbra-Kalwa]]
+|[[Jitendra Awhad]]
+| {{party name with color|Nationalist Congress Party (Sharadchandra Pawar)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|150
+|[[Airoli Assembly constituency|Airoli]]
+|[[Ganesh Naik]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|151
+|[[Belapur Assembly constituency|Belapur]]
+|[[Manda Vijay Mhatre|Manda Mhatre]]
+|
+|-
+|rowspan="26" | [[Mumbai Suburban district|Mumbai Suburban]]
+|152
+|[[Borivali Assembly constituency|Borivali]]
+|[[Sanjay Upadhyay]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=4}}
+|
+|-
+|153
+|[[Dahisar Assembly constituency|Dahisar]]
+|[[Manisha Ashok Chaudhary|Manisha Chaudhary]]
+|
+|-
+|154
+|[[Magathane Assembly constituency|Magathane]]
+|[[Prakash Surve]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|155
+|[[Mulund Assembly constituency|Mulund]]
+|[[Mihir Kotecha]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|156
+|[[Vikhroli Assembly constituency|Vikhroli]]
+|[[Sunil Raut]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|157
+|[[Bhandup West Assembly constituency|Bhandup West]]
+|[[Ashok Patil]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|158
+|[[Jogeshwari East Assembly constituency|Jogeshwari East]]
+|[[Anant Nar]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)|rowspan=2}}
+|{{Party name with color|Maha Vikas Aghadi|rowspan=2}}
+|
+|-
+|159
+|[[Dindoshi Assembly constituency|Dindoshi]]
+|[[Sunil Prabhu]]
+|
+|-
+|160
+|[[Kandivali East Assembly constituency|Kandivali East]]
+|[[Atul Bhatkhalkar]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|161
+|[[Charkop Assembly constituency|Charkop]]
+|[[Yogesh Sagar]]
+|
+|-
+|162
+|[[Malad West Assembly constituency|Malad West]]
+|[[Aslam Shaikh]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|163
+|[[Goregaon Assembly constituency|Goregaon]]
+|[[Vidya Thakur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|164
+|[[Versova Assembly constituency|Versova]]
+|[[Haroon Khan (Maharashtra politician)|Haroon Rashid Khan]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|165
+|[[Andheri West Assembly constituency|Andheri West]]
+|[[Ameet Bhaskar Satam|Ameet Satam]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=6}}
+|
+|-
+|166 
+|[[Andheri East Assembly constituency|Andheri East]]
+|[[Murji Patel]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|167
+|[[Vile Parle Assembly constituency|Vile Parle]]
+|[[Parag Alavani]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|168
+|[[Chandivali Assembly constituency|Chandivali]]
+|[[Dilip Lande]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|169
+|[[Ghatkopar West Assembly constituency|Ghatkopar West]]
+|[[Ram Kadam]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|170
+|[[Ghatkopar East Assembly constituency|Ghatkopar East]]
+|[[Parag Shah]]
+|
+|-
+|171
+|[[Mankhurd Shivaji Nagar Assembly constituency|Mankhurd Shivaji Nagar]]
+|[[Abu Asim Azmi]]
+| style="background-color: {{party color|Samajwadi Party}}" |
+|[[Samajwadi Party|SP]]
+|style="background-color: {{party color|Independent}}" |
+|None
+|
+|-
+|172
+|[[Anushakti Nagar Assembly constituency|Anushakti Nagar]]
+|[[Sana Malik]]
+|{{Party name with color|Nationalist Congress Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+|173
+|[[Chembur Assembly constituency|Chembur]]
+|[[Tukaram Ramkrishna Kate|Tukaram Kate]]
+|{{Party name with color|Shiv Sena (2022–present)|rowspan=2}}
+|
+|-
+|174
+|[[Kurla Assembly constituency|Kurla]](SC)
+|[[Mangesh Kudalkar]]
+|
+|-
+|175
+|[[Kalina Assembly constituency|Kalina]]
+|[[Sanjay Potnis]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)|rowspan=2}}
+|{{Party name with color|Maha Vikas Aghadi|rowspan=2}}
+|
+|-
+|176
+|[[Vandre East Assembly constituency|Vandre East]]
+|[[Varun Sardesai]]
+|
+|-
+|177
+|[[Vandre West Assembly constituency|Vandre West]]
+|[[Ashish Shelar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|rowspan="10" | [[Mumbai City district|Mumbai City]]
+|178
+|[[Dharavi Assembly constituency|Dharavi]] (SC)
+|[[Jyoti Gaikwad]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|179
+|[[Sion Koliwada Assembly constituency|Sion Koliwada]]
+|[[R. Tamil Selvan]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|180
+|[[Wadala Assembly constituency|Wadala]]
+|[[Kalidas Kolambkar]]
+|
+|-
+|181
+|[[Mahim Assembly constituency|Mahim]]
+|[[Mahesh Sawant]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)|rowspan=4}}
+|{{Party name with color|Maha Vikas Aghadi|rowspan=4}}
+|
+|-
+|182
+|[[Worli Assembly constituency|Worli]]
+|[[Aaditya Thackeray]]
+|
+|-
+|183
+|[[Shivadi Assembly constituency|Shivadi]]
+|[[Ajay Choudhari]]
+|
+|-
+|184
+|[[Byculla Assembly constituency|Byculla]]
+|[[Manoj Jamsutkar]]
+|
+|-
+|185
+|[[Malabar Hill Assembly constituency|Malabar Hill]]
+|[[Mangal Lodha]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|186
+|[[Mumbadevi Assembly constituency|Mumbadevi]]
+|[[Amin Patel]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|187
+|[[Colaba Assembly constituency|Colaba]]
+|[[Rahul Narwekar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|rowspan="7" | [[Raigad district|Raigad]]
+|188
+|[[Panvel Assembly constituency|Panvel]]
+|[[Prashant Thakur]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=7}}
+|
+|-
+|189
+|[[Karjat Assembly constituency|Karjat]]
+|[[Mahendra Thorve]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|190
+|[[Uran Assembly constituency|Uran]]
+|[[Mahesh Baldi]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|191
+|[[Pen Assembly constituency|Pen]]
+|[[Ravisheth Patil]]
+|
+|-
+|192
+|[[Alibag Assembly constituency|Alibag]]
+|[[Mahendra Dalvi]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|193
+|[[Shrivardhan Assembly constituency|Shrivardhan]]
+|[[Aditi Tatkare]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|194
+|[[Mahad Assembly constituency|Mahad]]
+|[[Bharatshet Gogawale]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+| rowspan="22" |  [[Pune district|Pune]]
+|195
+|[[Junnar Assembly constituency|Junnar]]
+|[[Sharaddada Bhimaji Sonavane|Sharaddada Sonavane]]
+| style="background-color: {{party color|Independent politician}}" |
+|[[Independent politician|IND]]
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|196
+|[[Ambegaon Assembly constituency|Ambegaon]]
+|[[Dilip Walse Patil]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|197
+|[[Khed Alandi Assembly constituency|Khed Alandi]]
+|[[Babaji Kale]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|198
+|[[Shirur Assembly constituency|Shirur]]
+|[[Dnyaneshwar Katke]]
+|{{Party name with color|Nationalist Congress Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=5}}
+|
+|-
+|199
+|[[Daund Assembly constituency|Daund]]
+|[[Rahul Kul]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|200
+|[[Indapur Assembly constituency|Indapur]]
+|[[Dattatray Vithoba Bharne|Dattatray Bharne]]
+|{{Party name with color|Nationalist Congress Party|rowspan=3}}
+|
+|-
+| rowspan="2" |201
+| rowspan="2" |[[Baramati Assembly constituency|Baramati]]
+| [[Ajit Pawar]]
+|Died on 28 January 2026
+|-
+| [[Sunetra Pawar]]
+|[[List of deputy chief ministers of Maharashtra|Dy Chief Minister]]
+|-
+|202
+|[[Purandar Assembly constituency|Purandar]]
+|[[Vijay Shivtare]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance|rowspan=6}}
+|
+|-
+|203
+|[[Bhor Assembly constituency|Bhor]]
+|[[Shankar Mandekar]]
+|{{Party name with color|Nationalist Congress Party|rowspan=2}}
+|
+|-
+|204
+|[[Maval Assembly constituency|Maval]]
+|[[Sunil Shelke]]
+|
+|-
+|205
+|[[Chinchwad Assembly constituency|Chinchwad]]
+|[[Shankar Jagtap]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|206
+|[[Pimpri Assembly constituency|Pimpri]] (SC)
+|[[Anna Bansode]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|207
+|[[Bhosari Assembly constituency|Bhosari]]
+|[[Mahesh Landge]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|208
+|[[Vadgaon Sheri Assembly constituency|Vadgaon Sheri]]
+|[[Bapusaheb Tukaram Pathare|Bapusaheb Pathare]]
+| {{party name with color|Nationalist Congress Party (Sharadchandra Pawar)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|209
+|[[Shivajinagar, Maharashtra Assembly constituency|Shivajinagar]]
+|[[Siddharth Shirole]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=4}}
+|{{Party name with color|National Democratic Alliance|rowspan=7}}
+|
+|-
+|210
+|[[Kothrud Assembly constituency|Kothrud]]
+|[[Chandrakant Patil]]
+|
+|-
+|211
+|[[Khadakwasala Assembly constituency|Khadakwasala]]
+|[[Bhimrao Tapkir]]
+|
+|-
+|212
+|[[Parvati Assembly constituency|Parvati]]
+|[[Madhuri Misal]]
+|
+|-
+|213
+|[[Hadapsar Assembly constituency|Hadapsar]]
+|[[Chetan Tupe]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|214
+|[[Pune Cantonment Assembly constituency|Pune Cantonment]]
+|[[Sunil Kamble]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|215
+|[[Kasba Peth Assembly constituency|Kasba Peth]]
+|[[Hemant Rasane]]
+|
+|-
+|rowspan="13" | [[Ahmednagar district|Ahmednagar]]
+|216
+|[[Akole Assembly constituency|Akole]] (ST)
+|[[Kiran Lahamate]]
+|{{Party name with color|Nationalist Congress Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=4}}
+|
+|-
+|217
+|[[Sangamner Assembly constituency|Sangamner]]
+|[[Amol Khatal]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|218
+|[[Shirdi Assembly constituency|Shirdi]]
+|[[Radhakrishna Vikhe Patil]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|219
+|[[Kopargaon Assembly constituency|Kopargaon]]
+|[[Ashutosh Ashokrao Kale|Ashutosh Kale]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|220
+|[[Shrirampur Assembly constituency|Shrirampur]] (SC)
+|[[Hemant Ogale]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|221
+|[[Nevasa Assembly constituency|Nevasa]]
+|[[Vitthal Langhe|Vitthalrao Langhe]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance|rowspan=4}}
+|
+|-
+|222
+|[[Shevgaon Assembly constituency|Shevgaon]]
+|[[Monika Rajiv Rajale|Monika Rajale]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|Rowspan=2|223
+|Rowspan=2|[[Rahuri Assembly constituency|Rahuri]]
+|[[Shivaji Bhanudas Kardile|Shivaji Kardile]]
+|Died on 17 October 2025
+|-
+|Akshay Shivajirao Kardile
+|
+|-
+|224
+|[[Parner Assembly constituency|Parner]]
+|[[Kashinath Mahadu Date|Kashinath Date]]
+|{{Party name with color|Nationalist Congress Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+|225
+|[[Ahmednagar City Assembly constituency|Ahmednagar City]]
+|[[Sangram Arun Jagtap|Sangram Jagtap]]
+|
+|-
+|226
+|[[Shrigonda Assembly constituency|Shrigonda]]
+|[[Vikram Babanrao Pachpute|Vikram Pachpute]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|227
+|[[Karjat Jamkhed Assembly constituency|Karjat Jamkhed]]
+|[[Rohit Rajendra Pawar|Rohit Pawar]]
+|{{party name with color|Nationalist Congress Party (Sharadchandra Pawar)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|rowspan="6" | [[Beed district|Beed]]
+|228
+|[[Georai Assembly constituency|Georai]] (SC)
+|[[Vijaysinh Pandit]]
+|{{Party name with color|Nationalist Congress Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|229
+|[[Majalgaon Assembly constituency|Majalgaon]]
+|[[Prakashdada Solanke]]
+|
+|-
+|230
+|[[Beed Assembly constituency|Beed]]
+|[[Sandeep Kshirsagar]]
+| {{party name with color|Nationalist Congress Party (Sharadchandra Pawar)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|231
+|[[Ashti Assembly constituency|Ashti]]
+|[[Suresh Dhas]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+|232
+|[[Kaij Assembly constituency|Kaij]] (SC)
+|[[Namita Mundada]]
+|
+|-
+|233
+|[[Parli Assembly constituency|Parli]]
+|[[Dhananjay Munde]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|rowspan="6" | [[Latur district|Latur]]
+|234
+|[[Latur Rural Assembly constituency|Latur Rural]]
+|[[Ramesh Karad]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|235
+|[[Latur City Assembly constituency|Latur City]]
+|[[Amit Deshmukh]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|236
+|[[Ahmedpur Assembly constituency|Ahmadpur]]
+|[[Babasaheb Mohanrao Patil|Babasaheb Patil]]
+|{{Party name with color|Nationalist Congress Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=4}}
+|
+|-
+|237
+|[[Udgir Assembly constituency|Udgir]] (SC)
+|[[Sanjay Bansode]]
+|
+|-
+|238
+|[[Nilanga Assembly constituency|Nilanga]]
+|[[Sambhaji Patil Nilangekar]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|
+|-
+|239
+|[[Ausa Assembly constituency|Ausa]]
+|[[Abhimanyu Dattatray Pawar|Abhimanyu Pawar]]
+|
+|-
+|rowspan="4" | [[Dharashiv district|Dharashiv]]
+|240
+|[[Umarga Assembly constituency|Umarga]] (SC)
+|[[Pravin Virbhadrayya Swami]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|241
+|[[Tuljapur Assembly constituency|Tuljapur]]
+|[[Ranajagjitsinha Patil]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|242
+|[[Osmanabad Assembly constituency|Dharashiv]]
+|[[Kailas Patil]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|243
+|[[Paranda Assembly constituency|Paranda]]
+|[[Tanaji Sawant]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|rowspan="11" | [[Solapur district|Solapur]]
+|244
+|[[Karmala Assembly constituency|Karmala]]
+|[[Narayan Patil]]
+| {{party name with color|Nationalist Congress Party (Sharadchandra Pawar)|rowspan=2}}
+|{{Party name with color|Maha Vikas Aghadi|rowspan=4}}
+|
+|-
+|245
+|[[Madha Assembly constituency|Madha]]
+|[[Abhijeet Dhananjay Patil|Abhijeet Patil]]
+|
+|-
+|246
+|[[Barshi Assembly constituency|Barshi]]
+|[[Dilip Gangadhar Sopal|Dilip Sopal]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|
+|-
+|247
+|[[Mohol Assembly constituency|Mohol]] (SC)
+|[[Raju Khare]]
+| {{party name with color|Nationalist Congress Party (Sharadchandra Pawar)}}
+|
+|-
+|248
+|[[Solapur City North Assembly constituency|Solapur City North]]
+|[[Vijay Deshmukh]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=5}}
+|{{Party name with color|National Democratic Alliance|rowspan=5}}
+|
+|-
+|249
+|[[Solapur City Central Assembly constituency|Solapur City Central]]
+|[[Devendra Rajesh Kothe|Devendra Kothe]]
+|
+|-
+|250
+|[[Akkalkot Assembly constituency|Akkalkot]]
+|[[Sachin Kalyanshetti]]
+|
+|-
+|251
+|[[Solapur South Assembly constituency|Solapur South]]
+|[[Subhash Deshmukh]]
+|
+|-
+|252
+|[[Pandharpur Assembly constituency|Pandharpur]]
+|[[Samadhan Autade]]
+|
+|-
+|253
+|[[Sangola (Vidhan Sabha constituency)|Sangola]]
+|[[Babasaheb Deshmukh]]
+| style="background-color: {{party color|Peasants and Workers Party of India}}" |
+|[[Peasants and Workers Party of India|PWPI]]
+|{{Party name with color|Maha Vikas Aghadi|rowspan=2}}
+|
+|-
+|254
+|[[Malshiras Assembly constituency|Malshiras]] (SC)
+|[[Uttamrao Jankar]]
+| {{party name with color|Nationalist Congress Party (Sharadchandra Pawar)}}
+|
+|-
+|rowspan="8" | [[Satara district|Satara]]
+|255
+|[[Phaltan (Vidhan Sabha Constituency)|Phaltan]] (SC)
+|[[Sachin Patil (politician)|Sachin Patil]]
+|{{Party name with color|Nationalist Congress Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=8}}
+|
+|-
+|256
+|[[Wai Assembly constituency|Wai]]
+|[[Makrand Jadhav - Patil]]
+|
+|-
+|257
+|[[Koregaon Assembly constituency|Koregaon]]
+|[[Mahesh Shinde]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|258
+|[[Man Assembly constituency|Man]]
+|[[Jaykumar Gore]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=3}}
+|
+|-
+|259
+|[[Karad North Assembly constituency|Karad North]]
+|[[Manoj Ghorpade]]
+|
+|-
+|260
+|[[Karad South Assembly constituency|Karad South]]
+|[[Atulbaba Suresh Bhosale|Atulbaba Bhosale]]
+|
+|-
+|261
+|[[Patan, Maharashtra Assembly constituency|Patan]]
+|[[Shambhuraj Desai]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|262
+|[[Satara Assembly constituency|Satara]]
+|[[Shivendra Raje Bhosale]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|rowspan="5" | [[Ratnagiri district|Ratnagiri]]
+|263
+|[[Dapoli Assembly constituency|Dapoli]]
+|[[Yogesh Kadam]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|264
+|[[Guhagar Assembly constituency|Guhagar]]
+|[[Bhaskar Jadhav]]
+|{{Party name with color|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|265
+|[[Chiplun Assembly constituency|Chiplun]]
+|[[Shekhar Govindrao Nikam|Shekhar Nikam]]
+|{{Party name with color|Nationalist Congress Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+|266
+|[[Ratnagiri Assembly constituency|Ratnagiri]]
+|[[Uday Samant]]
+|{{Party name with color|Shiv Sena (2022–present)|rowspan=2}}
+|
+|-
+|267
+|[[Rajapur Assembly constituency|Rajapur]]
+|[[Kiran Samant]]
+|
+|-
+|rowspan="3" | [[Sindhudurg district|Sindhudurg]]
+|268
+|[[Kankavli Assembly constituency|Kankavli]]
+|[[Nitesh Narayan Rane|Nitesh Rane]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance|rowspan=3}}
+|
+|-
+|269
+|[[Kudal Assembly constituency|Kudal]]
+|[[Nilesh Narayan Rane|Nilesh Rane]]
+|{{Party name with color|Shiv Sena (2022–present)|rowspan=2}}
+|
+|-
+|270
+|[[Sawantwadi Assembly constituency|Sawantwadi]]
+|[[Deepak Vasant Kesarkar|Deepak Kesarkar]]
+|
+|-
+|rowspan="10" | [[Kolhapur district|Kolhapur]]
+|271
+|[[Chandgad Assembly constituency|Chandgad]]
+|[[Shivaji Patil]]
+| style="background-color: {{party color|Independent politician}}" |
+|[[Independent politician|IND]]
+|{{Party name with color|National Democratic Alliance|rowspan=10}}
+|
+|-
+|272
+|[[Radhanagari Assembly constituency|Radhanagari]]
+|[[Prakashrao Abitkar]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|
+|-
+|273
+|[[Kagal Assembly constituency|Kagal]]
+|[[Hasan Mushrif]]
+|{{Party name with color|Nationalist Congress Party}}
+|
+|-
+|274
+|[[Kolhapur South Assembly constituency|Kolhapur South]]
+|[[Amal Mahadik]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|275
+|[[Karvir (Vidhan Sabha constituency)|Karvir]]
+|[[Chandradip Narke]]
+|{{Party name with color|Shiv Sena (2022–present)|rowspan=2}}
+|
+|-
+|276
+|[[Kolhapur North Assembly constituency|Kolhapur North]]
+|[[Rajesh Vinayakrao Kshirsagar|Rajesh Kshirsagar]]
+|
+|-
+|277
+|[[Shahuwadi (Vidhan Sabha constituency)|Shahuwadi]]
+|[[Vinay Kore]]
+|{{Party name with color|Jan Surajya Shakti|rowspan=2}}
+|
+|-
+|278
+|[[Hatkanangale (Vidhan Sabha constituency)|Hatkanangle]] (SC)
+|[[Ashokrao Mane]]
+|
+|-
+|279
+|[[Ichalkaranji (Vidhan Sabha constituency)|Ichalkaranji]]
+|[[Rahul Awade]]
+|{{Party name with color|Bharatiya Janata Party}}
+|
+|-
+|280
+|[[Shirol Assembly constituency|Shirol]]
+|[[Rajendra Patil Yadravkar]]
+|{{party name with color|Rajendra Patil|shortname=RSVA|color=#F58E7D}}
+|
+|-
+|rowspan="8" | [[Sangli district|Sangli]]
+|281
+|[[Miraj Assembly constituency|Miraj]] (SC)
+|[[Suresh Khade]]
+|{{Party name with color|Bharatiya Janata Party|rowspan=2}}
+|{{Party name with color|National Democratic Alliance|rowspan=2}}
+|
+|-
+|282
+|[[Sangli Assembly constituency|Sangli]]
+|[[Sudhir Gadgil]]
+|
+|-
+|283
+|[[Islampur, Maharashtra Assembly constituency|Islampur]]
+|[[Jayant Patil]]
+| {{party name with color|Nationalist Congress Party (Sharadchandra Pawar)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|284
+|[[Shirala Assembly constituency|Shirala]]
+|[[Satyajit Deshmukh]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|285
+|[[Palus-Kadegaon Assembly constituency|Palus-Kadegaon]]
+|[[Vishwajeet Kadam]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|286
+|[[Khanapur, Maharashtra Assembly constituency|Khanapur]]
+|[[Suhas Babar]]
+|{{Party name with color|Shiv Sena (2022–present)}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|-
+|287
+|[[Tasgaon-Kavathe Mahankal Assembly constituency|Tasgaon-Kavathe Mahankal]]
+|[[Rohit Patil]]
+| {{party name with color|Nationalist Congress Party (Sharadchandra Pawar)}}
+|{{Party name with color|Maha Vikas Aghadi}}
+|
+|-
+|288
+|[[Jat Assembly constituency|Jat]]
+|[[Gopichand Padalkar]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|National Democratic Alliance}}
+|
+|}
+
+==Composition==
+
+{|class="wikitable"
+!colspan=2|Alliance
+!colspan=2|Political party
+!No. of MLAs
+!Leader of the party
+|-
+|rowspan=8 {{party color cell|National Democratic Alliance}}
+|rowspan=8 style="text-align:center;"|'''Government<br/>[[Maha Yuti|MY]]'''<br/>Seats: '''235'''
+|{{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|style="text-align:center;"|132
+|[[Devendra Fadnavis]]<br/><small>''([[Chief Minister of Maharashtra|Chief Minister]])''</small>
+|-
+|{{party color cell|Shiv Sena (2022–present)}}
+|[[Shiv Sena]]
+|style="text-align:center;"|57
+|[[Eknath Shinde]]<br/><small>''([[Deputy Chief Minister of Maharashtra|Deputy Chief Minister]])''</small>
+|-
+|{{party color cell|Nationalist Congress Party}}
+|[[Nationalist Congress Party]]
+|style="text-align:center;"|41
+|[[Sunetra Pawar]]<br/><small>''([[Deputy Chief Minister of Maharashtra|Deputy Chief Minister]])''</small>
+|-
+|{{party color cell|Jan Surajya Shakti}}
+|[[Jan Surajya Shakti]]
+|style="text-align:center;"|2
+|[[Vinay Kore]]
+|-
+|{{party color cell|Rashtriya Samaj Paksha}}
+|[[Rashtriya Samaj Paksha]]
+|style="text-align:center;"|1
+|[[Mahadev Jankar]]
+|-
+|{{party name with color|Rajendra Patil|shortname=Rajarshi Shahu Vikas Aghadi|color=#F58E7D}}
+|style="text-align:center;"|1
+|[[Rajendra Patil]]
+|-
+|{{party color cell|Rashtriya Yuva Swabhiman Party}}
+|[[Ravi Rana|Rashtriya Yuva Swabhiman Party]]
+|style="text-align:center;"|1
+|[[Ravi Rana]]
+|-
+|{{Party color cell|Independent (politician)}}
+|[[Independent (politician)|IND]]
+|style="text-align:center;"|1
+|[[Shivaji Patil]]
+|-
+|rowspan=5 {{party color cell|Maha Vikas Aghadi}}
+|rowspan=5 style="text-align:center;"|'''Opposition<br/>[[Maha Vikas Aghadi|MVA]]'''<br/>Seats: '''50'''
+|{{party color cell|Shiv Sena (Uddhav Balasaheb Thackeray)}}
+|[[Shiv Sena (Uddhav Balasaheb Thackeray)]]
+|style="text-align:center;"|20
+|[[Uddhav Thackeray]]
+|-
+|{{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|style="text-align:center;"|16
+|[[Prithviraj Chavan]]
+|-
+|{{party color cell|Nationalist Congress Party – Sharadchandra Pawar}}
+|[[Nationalist Congress Party (Sharadchandra Pawar)]]
+|style="text-align:center;"|10
+|[[Sharad Pawar]]
+|-
+|{{party color cell|Communist Party of India (Marxist)}}
+|[[Communist Party of India (Marxist)]]
+|style="text-align:center;"|1
+|[[Vinod Bhiva Nikole|Vinod Nikole]]
+|-
+|{{party color cell|Peasants and Workers Party of India}}
+|[[Peasants and Workers Party of India]]
+|style="text-align:center;"|1
+|[[Jayant Prabhakar Patil|Jayant Patil]]
+|-
+|rowspan=2 {{party color cell|Others}}
+|rowspan=2 style="text-align:center;"|'''Others'''<br/>Seats: '''3'''
+|{{party color cell|Samajwadi Party}}
+|[[Samajwadi Party]]
+|style="text-align:center;"|2
+|[[Abu Azmi]]
+|-
+|{{party color cell|All India Majlis-e-Ittehadul Muslimeen}}
+|[[All India Majlis-e-Ittehadul Muslimeen]]
+|style="text-align:center;"|1
+|[[Mohammed Ismail Abdul Khalique|Ismail Abdul Khalique]]
+|-
+!colspan=4|Total
+!colspan=2|288
+|}
+<section end="Composition"/>
+
+== References ==
+{{Reflist}}{{Current Indian assemblies}}
+===Notes===
+{{notelist}}
+
+
+[[Category:Maharashtra MLAs 2024–2029| ]]
+[[Category:Maharashtra Legislature]]
+[[Category:Lists of current Indian state and territorial assemblies|Maharashtra ]]
+[[Category:Terms of the Maharashtra Legislative Assembly]]

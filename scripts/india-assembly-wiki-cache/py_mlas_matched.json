@@ -1,0 +1,263 @@
+[
+  {
+    "district": "Puducherry",
+    "no": "1",
+    "constituency": "Mannadipet",
+    "name": "A. Namassivayam",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 66384,
+    "shape_name": "Mannadipet"
+  },
+  {
+    "district": "Puducherry",
+    "no": "4",
+    "constituency": "Mangalam",
+    "name": "N. Rangaswamy",
+    "party": "All India N.R. Congress",
+    "map_shape_id": 66387,
+    "shape_name": "Mangalam"
+  },
+  {
+    "district": "Puducherry",
+    "no": "5",
+    "constituency": "Villianur",
+    "name": "B. Ravicoumar",
+    "party": "All India N.R. Congress",
+    "map_shape_id": 66388,
+    "shape_name": "Villianur"
+  },
+  {
+    "district": "Puducherry",
+    "no": "6",
+    "constituency": "Ozhukarai",
+    "name": "K. Narayanasamy",
+    "party": "All India N.R. Congress",
+    "map_shape_id": 66389,
+    "shape_name": "Ozhukarai"
+  },
+  {
+    "district": "Puducherry",
+    "no": "8",
+    "constituency": "Indira Nagar",
+    "name": "A. K. D. Arumugam",
+    "party": "All India N.R. Congress",
+    "map_shape_id": 66391,
+    "shape_name": "Indira Nagar"
+  },
+  {
+    "district": "Puducherry",
+    "no": "10",
+    "constituency": "Kamaraj Nagar",
+    "name": "Jose Charles Martin",
+    "party": "Latchiya Jananayaka Katchi",
+    "map_shape_id": 66393,
+    "shape_name": "Kamaraj Nagar"
+  },
+  {
+    "district": "Puducherry",
+    "no": "11",
+    "constituency": "Lawspet",
+    "name": "V. P. Sivakolundhu",
+    "party": "All India N.R. Congress",
+    "map_shape_id": 66394,
+    "shape_name": "Lawspet"
+  },
+  {
+    "district": "Puducherry",
+    "no": "12",
+    "constituency": "Kalapet",
+    "name": "Ramesh",
+    "party": "Dravida Munnetra Kazhagam",
+    "map_shape_id": 66395,
+    "shape_name": "Kalapet"
+  },
+  {
+    "district": "Puducherry",
+    "no": "13",
+    "constituency": "Muthialpet",
+    "name": "Vaiyapuri Manikandan",
+    "party": "All India N.R. Congress",
+    "map_shape_id": 66396,
+    "shape_name": "Muthialpet"
+  },
+  {
+    "district": "Puducherry",
+    "no": "14",
+    "constituency": "Raj Bhavan",
+    "name": "Vignesh Kannan",
+    "party": "Dravida Munnetra Kazhagam",
+    "map_shape_id": 66397,
+    "shape_name": "Raj Bhavan"
+  },
+  {
+    "district": "Puducherry",
+    "no": "15",
+    "constituency": "Oupalam",
+    "name": "A. Anbalagan",
+    "party": "All India Anna Dravida Munnetra Kazhagam",
+    "map_shape_id": 66398,
+    "shape_name": "Oupalam"
+  },
+  {
+    "district": "Puducherry",
+    "no": "16",
+    "constituency": "Orleampeth",
+    "name": "G. Nehru Kuppusamy",
+    "party": "Neyam Makkal Kazhagam",
+    "map_shape_id": 66399,
+    "shape_name": "Orleampeth"
+  },
+  {
+    "district": "Puducherry",
+    "no": "17",
+    "constituency": "Nellithope",
+    "name": "V. Karthikeyan",
+    "party": "Dravida Munnetra Kazhagam",
+    "map_shape_id": 66400,
+    "shape_name": "Nellithope"
+  },
+  {
+    "district": "Puducherry",
+    "no": "18",
+    "constituency": "Mudaliarpet",
+    "name": "A. Johnkumar",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 66401,
+    "shape_name": "Mudaliarpet"
+  },
+  {
+    "district": "Puducherry",
+    "no": "19",
+    "constituency": "Ariankuppam",
+    "name": "Aiyappan",
+    "party": "All India N.R. Congress",
+    "map_shape_id": 66402,
+    "shape_name": "Ariankuppam"
+  },
+  {
+    "district": "Puducherry",
+    "no": "20",
+    "constituency": "Manavely",
+    "name": "B. Ramu",
+    "party": "Tamilaga Vettri Kazhagam",
+    "map_shape_id": 66403,
+    "shape_name": "Manavely"
+  },
+  {
+    "district": "Puducherry",
+    "no": "21",
+    "constituency": "Embalam (SC)",
+    "name": "E. Mohandaoss",
+    "party": "All India N.R. Congress",
+    "map_shape_id": 66404,
+    "shape_name": "Embalam (SC)"
+  },
+  {
+    "district": "Puducherry",
+    "no": "22",
+    "constituency": "Nettapakkam (SC)",
+    "name": "Rajavelu",
+    "party": "All India N.R. Congress",
+    "map_shape_id": 66405,
+    "shape_name": "Nettapakkam (SC)"
+  },
+  {
+    "district": "Puducherry",
+    "no": "23",
+    "constituency": "Bahour",
+    "name": "R. Senthilkumar",
+    "party": "Dravida Munnetra Kazhagam",
+    "map_shape_id": 66406,
+    "shape_name": "Bahour"
+  },
+  {
+    "district": "Karaikal",
+    "no": "24",
+    "constituency": "Nedungadu (SC)",
+    "name": "V. Vigneswaran",
+    "party": "Independent",
+    "map_shape_id": 66407,
+    "shape_name": "Nedungadu (SC)"
+  },
+  {
+    "district": "Karaikal",
+    "no": "25",
+    "constituency": "Thirunallar",
+    "name": "G. N. S. Rajasekaran",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 66408,
+    "shape_name": "Thirunallar"
+  },
+  {
+    "district": "Karaikal",
+    "no": "26",
+    "constituency": "Karaikal North",
+    "name": "P. R. N. Thirumurugan",
+    "party": "All India N.R. Congress",
+    "map_shape_id": 66409,
+    "shape_name": "Karaikal North"
+  },
+  {
+    "district": "Karaikal",
+    "no": "27",
+    "constituency": "Karaikal South",
+    "name": "A. M. H. Nazeem",
+    "party": "Dravida Munnetra Kazhagam",
+    "map_shape_id": 66410,
+    "shape_name": "Karaikal South"
+  },
+  {
+    "district": "Karaikal",
+    "no": "28",
+    "constituency": "Neravy T. R. Pattinam",
+    "name": "T. K. S. M. Meenatchisundaram",
+    "party": "Bharatiya Janata Party",
+    "map_shape_id": 66411,
+    "shape_name": "Neravy T.R. Pattinam"
+  },
+  {
+    "district": "Mahe",
+    "no": "29",
+    "constituency": "Mahe",
+    "name": "T. Ashok Kumar",
+    "party": "Independent",
+    "map_shape_id": 66412,
+    "shape_name": "Mahe"
+  },
+  {
+    "district": "Yanam",
+    "no": "30",
+    "constituency": "Yanam",
+    "name": "Malladi Krishna Rao",
+    "party": "All India N.R. Congress",
+    "map_shape_id": 66413,
+    "shape_name": "Yanam"
+  },
+  {
+    "district": "Puducherry",
+    "no": "2",
+    "constituency": "Thirubuvanai (SC)",
+    "name": "A. K. Sai J. Saravanan Kumar",
+    "party": "Tamilaga Vettri Kazhagam",
+    "map_shape_id": 66385,
+    "shape_name": "Thirubhuvanai (SC)"
+  },
+  {
+    "district": "Puducherry",
+    "no": "3",
+    "constituency": "Ossudu (SC)",
+    "name": "P. Karthikeyan",
+    "party": "Indian National Congress",
+    "map_shape_id": 66386,
+    "shape_name": "Oussudu (SC)"
+  },
+  {
+    "district": "Puducherry",
+    "no": "7",
+    "constituency": "Kadirkamam",
+    "name": "Azhaganantham",
+    "party": "Independent",
+    "map_shape_id": 66390,
+    "shape_name": "Kadirgamam"
+  }
+]

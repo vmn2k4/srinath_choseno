@@ -1,0 +1,1703 @@
+[
+  {
+    "district": "West Champaran",
+    "no": "1",
+    "constituency": "Valmiki Nagar",
+    "name": "Dhirendra Pratap Singh",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "West Champaran",
+    "no": "2",
+    "constituency": "Ramnagar",
+    "name": "Bhagirathi Devi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Champaran",
+    "no": "3",
+    "constituency": "Narkatiaganj",
+    "name": "Rashmi Varma",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Champaran",
+    "no": "4",
+    "constituency": "Bagaha",
+    "name": "Ram Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Champaran",
+    "no": "5",
+    "constituency": "Lauriya",
+    "name": "Vinay Bihari",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Champaran",
+    "no": "6",
+    "constituency": "Nautan",
+    "name": "Narayan Prasad",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Champaran",
+    "no": "7",
+    "constituency": "Chanpatia",
+    "name": "Umakant Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Champaran",
+    "no": "8",
+    "constituency": "Bettiah",
+    "name": "Renu Devi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Champaran",
+    "no": "9",
+    "constituency": "Sikta",
+    "name": "Birendra Prasad Gupta",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "East Champaran",
+    "no": "10",
+    "constituency": "Raxaul",
+    "name": "Pramod Kumar Sinha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Champaran",
+    "no": "11",
+    "constituency": "Sugauli",
+    "name": "Shashi Bhushan Singh",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "East Champaran",
+    "no": "12",
+    "constituency": "Narkatiya",
+    "name": "Shamim Ahmad",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "East Champaran",
+    "no": "13",
+    "constituency": "Harsidhi",
+    "name": "Krishnanandan Paswan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Champaran",
+    "no": "14",
+    "constituency": "Govindganj",
+    "name": "Sunil Mani Tiwari",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Champaran",
+    "no": "15",
+    "constituency": "Kesaria",
+    "name": "Shalini Mishra",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "East Champaran",
+    "no": "16",
+    "constituency": "Kalyanpur",
+    "name": "Manoj Kumar Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "East Champaran",
+    "no": "17",
+    "constituency": "Pipra",
+    "name": "Shyambabu Prasad Yadav",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Champaran",
+    "no": "18",
+    "constituency": "Madhuban",
+    "name": "Rana Randhir Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Champaran",
+    "no": "19",
+    "constituency": "Motihari",
+    "name": "Pramod Kumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Champaran",
+    "no": "20",
+    "constituency": "Chiraia",
+    "name": "Lal Babu Prasad Gupta",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Champaran",
+    "no": "21",
+    "constituency": "Dhaka",
+    "name": "Pawan Jaiswal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sheohar",
+    "no": "22",
+    "constituency": "Sheohar",
+    "name": "Chetan Anand",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Sitamarhi",
+    "no": "23",
+    "constituency": "Riga",
+    "name": "Moti Lal Prasad",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sitamarhi",
+    "no": "24",
+    "constituency": "Bathnaha",
+    "name": "Anil Kumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sitamarhi",
+    "no": "25",
+    "constituency": "Parihar",
+    "name": "Gayatri Devi Yadav",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sitamarhi",
+    "no": "26",
+    "constituency": "Sursand",
+    "name": "Dilip Kumar Ray",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Sitamarhi",
+    "no": "27",
+    "constituency": "Bajpatti",
+    "name": "Mukesh Kumar Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Sitamarhi",
+    "no": "28",
+    "constituency": "Sitamarhi",
+    "name": "Mithilesh Kumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sitamarhi",
+    "no": "29",
+    "constituency": "Runnisaidpur",
+    "name": "Pankaj Kumar Mishra",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Sitamarhi",
+    "no": "30",
+    "constituency": "Belsand",
+    "name": "Sanjay Kumar Gupta",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Madhubani",
+    "no": "31",
+    "constituency": "Harlakhi",
+    "name": "Sudhanshu Shekhar",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Madhubani",
+    "no": "32",
+    "constituency": "Benipatti",
+    "name": "Vinod Narayan Jha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Madhubani",
+    "no": "33",
+    "constituency": "Khajauli",
+    "name": "Arun Shankar Prasad",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Madhubani",
+    "no": "34",
+    "constituency": "Babubarhi",
+    "name": "Mina Kumari",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Madhubani",
+    "no": "35",
+    "constituency": "Bisfi",
+    "name": "Haribhushan Thakur",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Madhubani",
+    "no": "36",
+    "constituency": "Madhubani",
+    "name": "Samir Kumar Mahaseth",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Madhubani",
+    "no": "37",
+    "constituency": "Rajnagar",
+    "name": "Ram Prit Paswan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Madhubani",
+    "no": "38",
+    "constituency": "Jhanjharpur",
+    "name": "Nitish Mishra",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Madhubani",
+    "no": "39",
+    "constituency": "Phulparas",
+    "name": "Sheela Kumari Mandal",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Madhubani",
+    "no": "40",
+    "constituency": "Laukaha",
+    "name": "Bharat Bhushan Mandal",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Supaul",
+    "no": "41",
+    "constituency": "Nirmali",
+    "name": "Aniruddha Prasad Yadav",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Supaul",
+    "no": "42",
+    "constituency": "Pipra",
+    "name": "Rambilash Kamat",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Supaul",
+    "no": "43",
+    "constituency": "Supaul",
+    "name": "Bijendra Prasad Yadav",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Supaul",
+    "no": "44",
+    "constituency": "Triveniganj",
+    "name": "Veena Bharti",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Supaul",
+    "no": "45",
+    "constituency": "Chhatapur",
+    "name": "Neeraj Kumar Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Araria",
+    "no": "46",
+    "constituency": "Narpatganj",
+    "name": "Jai Prakash Yadav",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Araria",
+    "no": "47",
+    "constituency": "Raniganj",
+    "name": "Achmit Rishidev",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Araria",
+    "no": "48",
+    "constituency": "Forbesganj",
+    "name": "Vidya Sagar Keshri",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Araria",
+    "no": "49",
+    "constituency": "Araria",
+    "name": "Avidur Rahman",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Araria",
+    "no": "50",
+    "constituency": "Jokihat",
+    "name": "Mohammed Shahnawaz Alam",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Araria",
+    "no": "51",
+    "constituency": "Sikti",
+    "name": "Vijay Kumar Mandal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kishanganj",
+    "no": "52",
+    "constituency": "Bahadurganj",
+    "name": "Mohammad Anzar Nayeemi",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Kishanganj",
+    "no": "53",
+    "constituency": "Thakurganj",
+    "name": "Saud Alam",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Kishanganj",
+    "no": "54",
+    "constituency": "Kishanganj",
+    "name": "Ijaharul Hussain",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kishanganj",
+    "no": "55",
+    "constituency": "Kochadhaman",
+    "name": "Muhammad Izhar Asfi",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Purnia",
+    "no": "56",
+    "constituency": "Amour",
+    "name": "Akhtarul Iman",
+    "party": "All India Majlis-e-Ittehadul Muslimeen"
+  },
+  {
+    "district": "Purnia",
+    "no": "57",
+    "constituency": "Baisi",
+    "name": "Syed Ruknuddin Ahmad",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Purnia",
+    "no": "58",
+    "constituency": "Kasba",
+    "name": "Md Afaque Alam",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Purnia",
+    "no": "59",
+    "constituency": "Banmankhi",
+    "name": "Krishna Kumar Rishi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Purnia",
+    "no": "60",
+    "constituency": "Rupauli",
+    "name": "Shankar Singh",
+    "party": "Independent"
+  },
+  {
+    "district": "Purnia",
+    "no": "61",
+    "constituency": "Dhamdaha",
+    "name": "Leshi Singh",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Purnia",
+    "no": "62",
+    "constituency": "Purnia",
+    "name": "Vijay Kumar Khemka",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Katihar",
+    "no": "63",
+    "constituency": "Katihar",
+    "name": "Tarkishore Prasad",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Katihar",
+    "no": "64",
+    "constituency": "Kadwa",
+    "name": "Shakeel Ahmad Khan",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Katihar",
+    "no": "65",
+    "constituency": "Balrampur",
+    "name": "Mahbub Alam",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "Katihar",
+    "no": "66",
+    "constituency": "Pranpur",
+    "name": "Nisha Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Katihar",
+    "no": "67",
+    "constituency": "Manihari",
+    "name": "Manohar Prasad Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Katihar",
+    "no": "68",
+    "constituency": "Barari",
+    "name": "Bijay Singh",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Katihar",
+    "no": "69",
+    "constituency": "Korha",
+    "name": "Kavita Devi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Madhepura",
+    "no": "70",
+    "constituency": "Alamnagar",
+    "name": "Narendra Narayan Yadav",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Madhepura",
+    "no": "71",
+    "constituency": "Bihariganj",
+    "name": "Niranjan Kumar Mehta",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Madhepura",
+    "no": "72",
+    "constituency": "Singheshwar",
+    "name": "Chandrahas Chaupal",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Madhepura",
+    "no": "73",
+    "constituency": "Madhepura",
+    "name": "Chandra Shekhar Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Saharsa",
+    "no": "74",
+    "constituency": "Sonbarsha",
+    "name": "Ratnesh Sada",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Saharsa",
+    "no": "75",
+    "constituency": "Saharsa",
+    "name": "Alok Ranjan Jha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Saharsa",
+    "no": "76",
+    "constituency": "Simri Bakhtiarpur",
+    "name": "Yusuf Salahuddin",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Saharsa",
+    "no": "77",
+    "constituency": "Mahishi",
+    "name": "Gunjeshwar Sah",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Darbhanga",
+    "no": "78",
+    "constituency": "Kusheshwar Asthan",
+    "name": "Aman Bhushan Hajari",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Darbhanga",
+    "no": "79",
+    "constituency": "Gaura Bauram",
+    "name": "Swarna Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Darbhanga",
+    "no": "80",
+    "constituency": "Benipur",
+    "name": "Binay Kumar Choudhary",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Darbhanga",
+    "no": "81",
+    "constituency": "Alinagar",
+    "name": "Mishrilal Yadav",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Darbhanga",
+    "no": "82",
+    "constituency": "Darbhanga Rural",
+    "name": "Lalit Kumar Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Darbhanga",
+    "no": "83",
+    "constituency": "Darbhanga",
+    "name": "Sanjay Saraogi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Darbhanga",
+    "no": "84",
+    "constituency": "Hayaghat",
+    "name": "Ram Chandra Prasad",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Darbhanga",
+    "no": "85",
+    "constituency": "Bahadurpur",
+    "name": "Madan Sahni",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Darbhanga",
+    "no": "86",
+    "constituency": "Keoti",
+    "name": "Murari Mohan Jha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Darbhanga",
+    "no": "87",
+    "constituency": "Jale",
+    "name": "Jibesh Kumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Muzaffarpur",
+    "no": "88",
+    "constituency": "Gaighat",
+    "name": "Niranjan Roy",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Muzaffarpur",
+    "no": "89",
+    "constituency": "Aurai",
+    "name": "Ram Surat Rai",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Muzaffarpur",
+    "no": "90",
+    "constituency": "Minapur",
+    "name": "Munna Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Muzaffarpur",
+    "no": "91",
+    "constituency": "Bochahan",
+    "name": "Amar Kumar Paswan",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Muzaffarpur",
+    "no": "92",
+    "constituency": "Sakra",
+    "name": "Ashok Kumar Choudhary",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Muzaffarpur",
+    "no": "93",
+    "constituency": "Kurhani",
+    "name": "Kedar Prasad Gupta",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Muzaffarpur",
+    "no": "94",
+    "constituency": "Muzaffarpur",
+    "name": "Bijendra Chaudhary",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Muzaffarpur",
+    "no": "95",
+    "constituency": "Kanti",
+    "name": "Mohammad Israil Mansuri",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Muzaffarpur",
+    "no": "96",
+    "constituency": "Baruraj",
+    "name": "Arun Kumar Singh (politician)",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Muzaffarpur",
+    "no": "97",
+    "constituency": "Paroo",
+    "name": "Ashok Kumar Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Muzaffarpur",
+    "no": "98",
+    "constituency": "Sahebganj",
+    "name": "Raju Kumar Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gopalganj",
+    "no": "99",
+    "constituency": "Baikunthpur",
+    "name": "Prem Shankar Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Gopalganj",
+    "no": "100",
+    "constituency": "Barauli",
+    "name": "Rampravesh Rai",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gopalganj",
+    "no": "101",
+    "constituency": "Gopalganj",
+    "name": "Kusum Devi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gopalganj",
+    "no": "102",
+    "constituency": "Kuchaikote",
+    "name": "Amrendra Kumar Pandey",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Gopalganj",
+    "no": "103",
+    "constituency": "Bhore",
+    "name": "Sunil Kumar",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Gopalganj",
+    "no": "104",
+    "constituency": "Hathua",
+    "name": "Rajesh Kumar Singh",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Siwan",
+    "no": "105",
+    "constituency": "Siwan",
+    "name": "Awadh Bihari Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Siwan",
+    "no": "106",
+    "constituency": "Ziradei",
+    "name": "Amarjeet Kushwaha",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "Siwan",
+    "no": "107",
+    "constituency": "Darauli",
+    "name": "Satyadeo Ram",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "Siwan",
+    "no": "108",
+    "constituency": "Raghunathpur",
+    "name": "Hari Shankar Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Siwan",
+    "no": "109",
+    "constituency": "Daraunda",
+    "name": "Karanjeet Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Siwan",
+    "no": "110",
+    "constituency": "Barharia",
+    "name": "Bachcha Pandey",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Siwan",
+    "no": "111",
+    "constituency": "Goriakothi",
+    "name": "Devesh Kant Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Siwan",
+    "no": "112",
+    "constituency": "Maharajganj",
+    "name": "Vijay Shanker Dubey",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Saran",
+    "no": "113",
+    "constituency": "Ekma",
+    "name": "Srikant Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Saran",
+    "no": "114",
+    "constituency": "Manjhi",
+    "name": "Satyendra Yadav",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Saran",
+    "no": "115",
+    "constituency": "Baniapur",
+    "name": "Kedar Nath Singh",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Saran",
+    "no": "116",
+    "constituency": "Taraiya",
+    "name": "Janak Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Saran",
+    "no": "117",
+    "constituency": "Marhaura",
+    "name": "Jitendra Kumar Ray",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Saran",
+    "no": "118",
+    "constituency": "Chapra",
+    "name": "C. N. Gupta",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Saran",
+    "no": "119",
+    "constituency": "Garkha",
+    "name": "Surendra Ram",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Saran",
+    "no": "120",
+    "constituency": "Amnour",
+    "name": "Krishan Kumar Mantoo",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Saran",
+    "no": "121",
+    "constituency": "Parsa",
+    "name": "Chhote Lal Ray",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Saran",
+    "no": "122",
+    "constituency": "Sonpur",
+    "name": "Ramanuj Prasad Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Vaishali",
+    "no": "123",
+    "constituency": "Hajipur",
+    "name": "Awadhesh Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Vaishali",
+    "no": "124",
+    "constituency": "Lalganj",
+    "name": "Sanjay Kumar Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Vaishali",
+    "no": "125",
+    "constituency": "Vaishali",
+    "name": "Siddharth Patel",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Vaishali",
+    "no": "126",
+    "constituency": "Mahua",
+    "name": "Mukesh Raushan Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Vaishali",
+    "no": "127",
+    "constituency": "Raja Pakar",
+    "name": "Pratima Kumari",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Vaishali",
+    "no": "128",
+    "constituency": "Raghopur",
+    "name": "Tejashwi Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Vaishali",
+    "no": "129",
+    "constituency": "Mahnar",
+    "name": "Bina Singh",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Vaishali",
+    "no": "130",
+    "constituency": "Patepur",
+    "name": "Lakhendra Kumar Raushan",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Samastipur",
+    "no": "131",
+    "constituency": "Kalyanpur",
+    "name": "Maheshwar Hazari",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Samastipur",
+    "no": "132",
+    "constituency": "Warisnagar",
+    "name": "Ashok Kumar",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Samastipur",
+    "no": "133",
+    "constituency": "Samastipur",
+    "name": "Akhtarul Islam Sahin",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Samastipur",
+    "no": "134",
+    "constituency": "Ujiarpur",
+    "name": "Alok Kumar Mehta",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Samastipur",
+    "no": "135",
+    "constituency": "Morwa",
+    "name": "Ranvijay Sahu",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Samastipur",
+    "no": "136",
+    "constituency": "Sarairanjan",
+    "name": "Vijay Kumar Chaudhary",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Samastipur",
+    "no": "137",
+    "constituency": "Mohiuddinnagar",
+    "name": "Rajesh Kumar Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Samastipur",
+    "no": "138",
+    "constituency": "Bibhutipur",
+    "name": "Ajay Kumar",
+    "party": "Communist Party of India (Marxist)"
+  },
+  {
+    "district": "Samastipur",
+    "no": "139",
+    "constituency": "Rosera",
+    "name": "Birendra Kumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Samastipur",
+    "no": "140",
+    "constituency": "Hasanpur",
+    "name": "Tej Pratap Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Begusarai",
+    "no": "141",
+    "constituency": "Cheria-Bariarpur",
+    "name": "Raj Banshi Mahto",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Begusarai",
+    "no": "142",
+    "constituency": "Bachhwara",
+    "name": "Surendra Mehata",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Begusarai",
+    "no": "143",
+    "constituency": "Teghra",
+    "name": "Ram Ratan Singh",
+    "party": "Communist Party of India"
+  },
+  {
+    "district": "Begusarai",
+    "no": "144",
+    "constituency": "Matihani",
+    "name": "Raj Kumar Singh",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Begusarai",
+    "no": "145",
+    "constituency": "Sahebpur Kamal",
+    "name": "Sadanand Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Begusarai",
+    "no": "146",
+    "constituency": "Begusarai",
+    "name": "Kundan Kumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Begusarai",
+    "no": "147",
+    "constituency": "Bakhri",
+    "name": "Suryakant Paswan",
+    "party": "Communist Party of India"
+  },
+  {
+    "district": "Khagaria",
+    "no": "148",
+    "constituency": "Alauli",
+    "name": "Ramvrikish Sada",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Khagaria",
+    "no": "149",
+    "constituency": "Khagaria",
+    "name": "Chhatrapati Yadav",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Khagaria",
+    "no": "150",
+    "constituency": "Beldaur",
+    "name": "Panna Lal Singh Patel",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Khagaria",
+    "no": "151",
+    "constituency": "Parbatta",
+    "name": "Sanjeev Kumar",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Bhagalpur",
+    "no": "152",
+    "constituency": "Bihpur",
+    "name": "Kumar Shailendra",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bhagalpur",
+    "no": "153",
+    "constituency": "Gopalpur",
+    "name": "Narendra Kumar Niraj",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Bhagalpur",
+    "no": "154",
+    "constituency": "Pirpainti",
+    "name": "Lalan Kumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bhagalpur",
+    "no": "155",
+    "constituency": "Kahalgaon",
+    "name": "Pawan Kumar Yadav",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bhagalpur",
+    "no": "156",
+    "constituency": "Bhagalpur",
+    "name": "Ajeet Sharma",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Bhagalpur",
+    "no": "157",
+    "constituency": "Sultanganj",
+    "name": "Lalit Narayan Mandal",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Bhagalpur",
+    "no": "158",
+    "constituency": "Nathnagar",
+    "name": "Ali Ashraf Siddiqui",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Banka",
+    "no": "159",
+    "constituency": "Amarpur",
+    "name": "Jayant Raj Kushwaha",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Banka",
+    "no": "160",
+    "constituency": "Dhoraiya",
+    "name": "Bhudeo Choudhary",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Banka",
+    "no": "161",
+    "constituency": "Banka",
+    "name": "Ramnarayan Mandal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Banka",
+    "no": "162",
+    "constituency": "Katoria",
+    "name": "Nikki Hembrom",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Banka",
+    "no": "163",
+    "constituency": "Belhar",
+    "name": "Manoj Yadav",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Munger",
+    "no": "164",
+    "constituency": "Tarapur",
+    "name": "Rajeev Kumar Singh",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Munger",
+    "no": "165",
+    "constituency": "Munger",
+    "name": "Pranav Kumar Yadav",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Munger",
+    "no": "166",
+    "constituency": "Jamalpur",
+    "name": "Ajay Kumar Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Lakhisarai",
+    "no": "167",
+    "constituency": "Suryagarha",
+    "name": "Prahlad Yadav",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Lakhisarai",
+    "no": "168",
+    "constituency": "Lakhisarai",
+    "name": "Vijay Kumar Sinha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Sheikhpura",
+    "no": "169",
+    "constituency": "Sheikhpura",
+    "name": "Vijay Kumar Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Sheikhpura",
+    "no": "170",
+    "constituency": "Barbigha",
+    "name": "Sudarshan Kumar",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Nalanda",
+    "no": "171",
+    "constituency": "Asthawan",
+    "name": "Jitendra Kumar",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Nalanda",
+    "no": "172",
+    "constituency": "Biharsharif",
+    "name": "Sunil Kumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nalanda",
+    "no": "173",
+    "constituency": "Rajgir",
+    "name": "Kaushal Kishore",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Nalanda",
+    "no": "174",
+    "constituency": "Islampur",
+    "name": "Rakesh Raushan Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Nalanda",
+    "no": "175",
+    "constituency": "Hilsa",
+    "name": "Krishna Murari Sharan",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Nalanda",
+    "no": "176",
+    "constituency": "Nalanda",
+    "name": "Shrawan Kumar",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Nalanda",
+    "no": "177",
+    "constituency": "Harnaut",
+    "name": "Hari Narayan Singh",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Patna",
+    "no": "178",
+    "constituency": "Mokama",
+    "name": "Nilam Devi",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Patna",
+    "no": "179",
+    "constituency": "Barh",
+    "name": "Gyanendra Kumar Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Patna",
+    "no": "180",
+    "constituency": "Bakhtiarpur",
+    "name": "Aniruddh Kumar Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Patna",
+    "no": "181",
+    "constituency": "Digha",
+    "name": "Sanjeev Chaurasiya",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Patna",
+    "no": "182",
+    "constituency": "Bankipur",
+    "name": "Nitin Nabin",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Patna",
+    "no": "183",
+    "constituency": "Kumhrar",
+    "name": "Arun Kumar Sinha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Patna",
+    "no": "184",
+    "constituency": "Patna Sahib",
+    "name": "Nand Kishore Yadav",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Patna",
+    "no": "185",
+    "constituency": "Fatuha",
+    "name": "Rama Nand Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Patna",
+    "no": "186",
+    "constituency": "Danapur",
+    "name": "Ritlal Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Patna",
+    "no": "187",
+    "constituency": "Maner",
+    "name": "Bhai Virendra Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Patna",
+    "no": "188",
+    "constituency": "Phulwari",
+    "name": "Gopal Ravidas",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "Patna",
+    "no": "189",
+    "constituency": "Masaurhi",
+    "name": "Rekha Devi",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Patna",
+    "no": "190",
+    "constituency": "Paliganj",
+    "name": "Sandeep Yadav",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "Patna",
+    "no": "191",
+    "constituency": "Bikram",
+    "name": "Siddharth Saurav",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bhojpur",
+    "no": "192",
+    "constituency": "Sandesh",
+    "name": "Kiran Devi Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Bhojpur",
+    "no": "193",
+    "constituency": "Barhara",
+    "name": "Raghvendra Pratap Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bhojpur",
+    "no": "194",
+    "constituency": "Arrah",
+    "name": "Amrendra Pratap Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bhojpur",
+    "no": "195",
+    "constituency": "Agiaon",
+    "name": "Shiv Prakash Ranjan",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "Bhojpur",
+    "no": "196",
+    "constituency": "Tarari",
+    "name": "Vishal Prashant",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Bhojpur",
+    "no": "197",
+    "constituency": "Jagdishpur",
+    "name": "Ram Vishnun Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Bhojpur",
+    "no": "198",
+    "constituency": "Shahpur",
+    "name": "Rahul Tiwari",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Buxar",
+    "no": "199",
+    "constituency": "Brahampur",
+    "name": "Shambhu Nath Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Buxar",
+    "no": "200",
+    "constituency": "Buxar",
+    "name": "Sanjay Kumar Tiwari",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Buxar",
+    "no": "201",
+    "constituency": "Dumraon",
+    "name": "Ajit Kumar Singh",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "Buxar",
+    "no": "202",
+    "constituency": "Rajpur",
+    "name": "Vishwanath Ram",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Kaimur",
+    "no": "203",
+    "constituency": "Ramgarh",
+    "name": "Ashok Kumar Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kaimur",
+    "no": "204",
+    "constituency": "Mohania",
+    "name": "Sangita Kumari",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kaimur",
+    "no": "205",
+    "constituency": "Bhabua",
+    "name": "Bharat Bind",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Kaimur",
+    "no": "206",
+    "constituency": "Chainpur",
+    "name": "Mohd Zama Khan",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Rohtas",
+    "no": "207",
+    "constituency": "Chenari",
+    "name": "Murari Prasad Gautam",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Rohtas",
+    "no": "208",
+    "constituency": "Sasaram",
+    "name": "Rajesh Kumar Gupta",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Rohtas",
+    "no": "209",
+    "constituency": "Kargahar",
+    "name": "Santhosh Kumar Mishra",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Rohtas",
+    "no": "210",
+    "constituency": "Dinara",
+    "name": "Vijay Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Rohtas",
+    "no": "211",
+    "constituency": "Nokha",
+    "name": "Anita Devi",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Rohtas",
+    "no": "212",
+    "constituency": "Dehri",
+    "name": "Fateh Bahadur Singh",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Rohtas",
+    "no": "213",
+    "constituency": "Karakat",
+    "name": "Arun Singh",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "Arwal",
+    "no": "214",
+    "constituency": "Arwal",
+    "name": "Maha Nand Singh",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "Arwal",
+    "no": "215",
+    "constituency": "Kurtha",
+    "name": "Bagi Kumar Verma",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Jehanabad",
+    "no": "216",
+    "constituency": "Jehanabad",
+    "name": "Suday Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Jehanabad",
+    "no": "217",
+    "constituency": "Ghosi",
+    "name": "Ram Bali Singh Yadav",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "Jehanabad",
+    "no": "218",
+    "constituency": "Makhdumpur",
+    "name": "Satish Kumar",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Aurangabad",
+    "no": "219",
+    "constituency": "Goh",
+    "name": "Bhim Kumar Singh",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Aurangabad",
+    "no": "220",
+    "constituency": "Obra",
+    "name": "Rishi Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Aurangabad",
+    "no": "221",
+    "constituency": "Nabinagar",
+    "name": "Vijay Kumar Singh",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Aurangabad",
+    "no": "222",
+    "constituency": "Kutumba",
+    "name": "Rajesh Kumar",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Aurangabad",
+    "no": "223",
+    "constituency": "Aurangabad",
+    "name": "Anand Shankar Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Aurangabad",
+    "no": "224",
+    "constituency": "Rafiganj",
+    "name": "MD Nehaluddin",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Gaya",
+    "no": "225",
+    "constituency": "Gurua",
+    "name": "Vinay Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Gaya",
+    "no": "226",
+    "constituency": "Sherghati",
+    "name": "Manju Agrawal",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Gaya",
+    "no": "227",
+    "constituency": "Imamganj",
+    "name": "Deepa Manjhi",
+    "party": "Hindustani Awam Morcha"
+  },
+  {
+    "district": "Gaya",
+    "no": "228",
+    "constituency": "Barachatti",
+    "name": "Jyoti Devi",
+    "party": "Hindustani Awam Morcha"
+  },
+  {
+    "district": "Gaya",
+    "no": "229",
+    "constituency": "Bodh Gaya",
+    "name": "Kumar Sarvjeet",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Gaya",
+    "no": "230",
+    "constituency": "Gaya Town",
+    "name": "Prem Kumar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Gaya",
+    "no": "231",
+    "constituency": "Tikari",
+    "name": "Anil Kumar",
+    "party": "Hindustani Awam Morcha"
+  },
+  {
+    "district": "Gaya",
+    "no": "232",
+    "constituency": "Belaganj",
+    "name": "Manorama Devi",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Gaya",
+    "no": "233",
+    "constituency": "Atri",
+    "name": "Ajay Kumar Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Gaya",
+    "no": "234",
+    "constituency": "Wazirganj",
+    "name": "Birendra Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Nawada",
+    "no": "235",
+    "constituency": "Rajauli",
+    "name": "Prakash Veer",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Nawada",
+    "no": "236",
+    "constituency": "Hisua",
+    "name": "Nitu Kumari",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Nawada",
+    "no": "237",
+    "constituency": "Nawada",
+    "name": "Vibha Devi Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Nawada",
+    "no": "238",
+    "constituency": "Gobindpur",
+    "name": "Md Kamran",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Nawada",
+    "no": "239",
+    "constituency": "Warsaliganj",
+    "name": "Aruna Devi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Jamui",
+    "no": "240",
+    "constituency": "Sikandra",
+    "name": "Prafull Kumar Manjhi",
+    "party": "Hindustani Awam Morcha"
+  },
+  {
+    "district": "Jamui",
+    "no": "241",
+    "constituency": "Jamui",
+    "name": "Shreyasi Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Jamui",
+    "no": "242",
+    "constituency": "Jhajha",
+    "name": "Damodar Rawat",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Jamui",
+    "no": "243",
+    "constituency": "Chakai",
+    "name": "Sumit Kumar Singh",
+    "party": "Independent"
+  }
+]

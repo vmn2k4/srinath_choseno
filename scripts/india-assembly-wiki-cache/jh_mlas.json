@@ -1,0 +1,569 @@
+[
+  {
+    "district": "Sahebganj",
+    "no": "1",
+    "constituency": "Rajmahal",
+    "name": "Mohammad Tajuddin",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Sahebganj",
+    "no": "2",
+    "constituency": "Borio",
+    "name": "Dhananjay Soren",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Sahebganj",
+    "no": "3",
+    "constituency": "Barhait",
+    "name": "Hemant Soren",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Pakur",
+    "no": "4",
+    "constituency": "Litipara",
+    "name": "Hemlal Murmu",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Pakur",
+    "no": "5",
+    "constituency": "Pakur",
+    "name": "Nisat Alam",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Pakur",
+    "no": "6",
+    "constituency": "Maheshpur",
+    "name": "Stephen Marandi",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Dumka",
+    "no": "7",
+    "constituency": "Sikaripara",
+    "name": "Alok Kumar Soren",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Jamtara",
+    "no": "8",
+    "constituency": "Nala",
+    "name": "Rabindra Nath Mahato",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Jamtara",
+    "no": "9",
+    "constituency": "Jamtara",
+    "name": "Irfan Ansari",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Dumka",
+    "no": "10",
+    "constituency": "Dumka",
+    "name": "Basant Soren",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Dumka",
+    "no": "11",
+    "constituency": "Jama",
+    "name": "Louis Marandi",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Dumka",
+    "no": "12",
+    "constituency": "Jarmundi",
+    "name": "Devendra Kunwar",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Deoghar",
+    "no": "13",
+    "constituency": "Madhupur",
+    "name": "Hafizul Hasan",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Deoghar",
+    "no": "14",
+    "constituency": "Sarath",
+    "name": "Uday Shankar Singh",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Deoghar",
+    "no": "15",
+    "constituency": "Deoghar",
+    "name": "Suresh Paswan",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Godda",
+    "no": "16",
+    "constituency": "Poreyahat",
+    "name": "Pradeep Yadav",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Godda",
+    "no": "17",
+    "constituency": "Godda",
+    "name": "Sanjay Prasad Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Godda",
+    "no": "18",
+    "constituency": "Mahagama",
+    "name": "Dipika Pandey Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Koderma",
+    "no": "19",
+    "constituency": "Kodarma",
+    "name": "Neera Yadav",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Hazaribagh",
+    "no": "20",
+    "constituency": "Barkatha",
+    "name": "Amit Kumar Yadav",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Hazaribagh",
+    "no": "21",
+    "constituency": "Barhi",
+    "name": "Manoj Kumar Yadav",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Ramgarh",
+    "no": "22",
+    "constituency": "Barkagaon",
+    "name": "Roshan Lal Choudhary",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Ramgarh",
+    "no": "23",
+    "constituency": "Ramgarh",
+    "name": "Mamta Devi",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Hazaribagh",
+    "no": "24",
+    "constituency": "Mandu",
+    "name": "Nirmal Mahto",
+    "party": "All Jharkhand Students Union"
+  },
+  {
+    "district": "Hazaribagh",
+    "no": "25",
+    "constituency": "Hazaribagh",
+    "name": "Pradip Prasad",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chatra",
+    "no": "26",
+    "constituency": "Simaria",
+    "name": "Kumar Ujjwal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Chatra",
+    "no": "27",
+    "constituency": "Chatra",
+    "name": "Janardan Paswan",
+    "party": "Lok Janshakti Party (Ram Vilas)"
+  },
+  {
+    "district": "Giridih",
+    "no": "28",
+    "constituency": "Dhanwar",
+    "name": "Babulal Marandi",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Giridih",
+    "no": "29",
+    "constituency": "Bagodar",
+    "name": "Nagendra Mahto",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Giridih",
+    "no": "30",
+    "constituency": "Jamua",
+    "name": "Manju Kumari",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Giridih",
+    "no": "31",
+    "constituency": "Gandey",
+    "name": "Kalpana Soren",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Giridih",
+    "no": "32",
+    "constituency": "Giridih",
+    "name": "Sudivya Kumar",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Giridih",
+    "no": "33",
+    "constituency": "Dumri",
+    "name": "Jairam Kumar Mahato",
+    "party": "Jharkhand Loktantrik Krantikari Morcha"
+  },
+  {
+    "district": "Bokaro",
+    "no": "34",
+    "constituency": "Gomia",
+    "name": "Yogendra Prasad",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Bokaro",
+    "no": "35",
+    "constituency": "Bermo",
+    "name": "Kumar Jaimangal Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Bokaro",
+    "no": "36",
+    "constituency": "Bokaro",
+    "name": "Shwettaa Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Bokaro",
+    "no": "37",
+    "constituency": "Chandankiyari",
+    "name": "Umakant Rajak",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Dhanbad",
+    "no": "38",
+    "constituency": "Sindri",
+    "name": "Bablu Mahato",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "Dhanbad",
+    "no": "39",
+    "constituency": "Nirsa",
+    "name": "Arup Chatterjee",
+    "party": "Communist Party of India (Marxist\u2013Leninist) Liberation"
+  },
+  {
+    "district": "Dhanbad",
+    "no": "40",
+    "constituency": "Dhanbad",
+    "name": "Raj Sinha",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Dhanbad",
+    "no": "41",
+    "constituency": "Jharia",
+    "name": "Ragini Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Dhanbad",
+    "no": "42",
+    "constituency": "Tundi",
+    "name": "Mathura Prasad Mahato",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Dhanbad",
+    "no": "43",
+    "constituency": "Baghmara",
+    "name": "Shatrughan Mahto",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Singhbhum",
+    "no": "44",
+    "constituency": "Baharagora",
+    "name": "Samir Mohanty",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "East Singhbhum",
+    "no": "45",
+    "constituency": "Ghatsila",
+    "name": "Somesh Soren",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "East Singhbhum",
+    "no": "46",
+    "constituency": "Potka",
+    "name": "Sanjib Sardar",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "East Singhbhum",
+    "no": "47",
+    "constituency": "Jugsalai",
+    "name": "Mangal Kalindi",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "East Singhbhum",
+    "no": "48",
+    "constituency": "Jamshedpur East",
+    "name": "Purnima Sahu",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "East Singhbhum",
+    "no": "49",
+    "constituency": "Jamshedpur West",
+    "name": "Saryu Roy",
+    "party": "Janata Dal (United)"
+  },
+  {
+    "district": "Seraikela Kharsawan",
+    "no": "50",
+    "constituency": "Ichagarh",
+    "name": "Sabita Mahato",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Seraikela Kharsawan",
+    "no": "51",
+    "constituency": "Seraikella",
+    "name": "Champai Soren",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "West Singhbhum",
+    "no": "52",
+    "constituency": "Chaibasa",
+    "name": "Deepak Birua",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "West Singhbhum",
+    "no": "53",
+    "constituency": "Majhgaon",
+    "name": "Niral Purty",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "West Singhbhum",
+    "no": "54",
+    "constituency": "Jaganathpur",
+    "name": "Sona Ram Sinku",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "West Singhbhum",
+    "no": "55",
+    "constituency": "Manoharpur",
+    "name": "Jagat Majhi",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "West Singhbhum",
+    "no": "56",
+    "constituency": "Chakradharpur",
+    "name": "Sukhram Oraon",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Seraikela Kharsawan",
+    "no": "57",
+    "constituency": "Kharsawan",
+    "name": "Dashrath Gagrai",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Ranchi",
+    "no": "58",
+    "constituency": "Tamar",
+    "name": "Vikash Kumar Munda",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Khunti",
+    "no": "59",
+    "constituency": "Torpa",
+    "name": "Sudeep Gudhiya",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Khunti",
+    "no": "60",
+    "constituency": "Khunti",
+    "name": "Ram Surya Munda",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Ranchi",
+    "no": "61",
+    "constituency": "Silli",
+    "name": "Amit Mahto",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Ranchi",
+    "no": "62",
+    "constituency": "Khijri",
+    "name": "Rajesh Kachhap",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ranchi",
+    "no": "63",
+    "constituency": "Ranchi",
+    "name": "C. P. Singh",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Ranchi",
+    "no": "64",
+    "constituency": "Hatia",
+    "name": "Navin Jaiswal",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Ranchi",
+    "no": "65",
+    "constituency": "Kanke",
+    "name": "Suresh Kumar Baitha",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Ranchi",
+    "no": "66",
+    "constituency": "Mandar",
+    "name": "Shilpi Neha Tirkey",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Gumla",
+    "no": "67",
+    "constituency": "Sisai",
+    "name": "Jiga Susaran Horo",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Gumla",
+    "no": "68",
+    "constituency": "Gumla",
+    "name": "Bhushan Tirkey",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Gumla",
+    "no": "69",
+    "constituency": "Bishunpur",
+    "name": "Chamra Linda",
+    "party": "Jharkhand Mukti Morcha"
+  },
+  {
+    "district": "Simdega",
+    "no": "70",
+    "constituency": "Simdega",
+    "name": "Bhushan Bara",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Simdega",
+    "no": "71",
+    "constituency": "Kolebira",
+    "name": "Naman Bixal Kongari",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Lohardaga",
+    "no": "72",
+    "constituency": "Lohardaga",
+    "name": "Rameshwar Oraon",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Latehar",
+    "no": "73",
+    "constituency": "Manika",
+    "name": "Ramachandra Singh",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Latehar",
+    "no": "74",
+    "constituency": "Latehar",
+    "name": "Prakash Ram",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Palamu",
+    "no": "75",
+    "constituency": "Panki",
+    "name": "Shashi Bhushan Mehta",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Palamu",
+    "no": "76",
+    "constituency": "Daltonganj",
+    "name": "Alok Chaurasiya",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Palamu",
+    "no": "77",
+    "constituency": "Bishrampur",
+    "name": "Naresh Prasad Singh",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Palamu",
+    "no": "78",
+    "constituency": "Chhatarpur",
+    "name": "Radha Krishna Kishore",
+    "party": "Indian National Congress"
+  },
+  {
+    "district": "Palamu",
+    "no": "79",
+    "constituency": "Hussainabad",
+    "name": "Sanjay Kumar Yadav",
+    "party": "Rashtriya Janata Dal"
+  },
+  {
+    "district": "Garhwa",
+    "no": "80",
+    "constituency": "Garhwa",
+    "name": "Satyendra Nath Tiwari",
+    "party": "Bharatiya Janata Party"
+  },
+  {
+    "district": "Garhwa",
+    "no": "81",
+    "constituency": "Bhawanathpur",
+    "name": "Anant Pratap Deo",
+    "party": "Jharkhand Mukti Morcha"
+  }
+]

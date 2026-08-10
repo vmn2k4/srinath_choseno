@@ -1,0 +1,1745 @@
+{{Short description|Indian state legislature, 2026–}}
+{{Use dmy dates|date=May 2026}}
+{{Use Indian English|date=May 2026}}
+{{Infobox legislative term
+| name = Seventeenth Legislative Assembly of Tamil Nadu
+| image = Seal of Tamil Nadu.svg
+| body = [[Tamil Nadu Legislative Assembly]]
+| meeting_place = [[Fort St. George, India|Fort St. George]], [[Chennai]], [[India]]
+| election = [[2026 Tamil Nadu Legislative Assembly election]]
+| government = [[C. Joseph Vijay ministry]]
+| opposition = [[Dravida Munnetra Kazhagam|DMK]]
+| term_start = {{Start date|2026|05|11|df=y}}<ref>{{Cite news |date=10 May 2026 |title=17th Tamil Nadu Assembly to meet for its first session on May 11; election of Speaker and Dy Speaker scheduled next day |url=https://economictimes.indiatimes.com/news/elections/assembly-elections/tamil-nadu/17th-tamil-nadu-assembly-to-meet-for-its-first-session-on-may-11-election-of-speaker-and-dy-speaker-scheduled-next-day/articleshow/130992026.cms |access-date=3 June 2026 |work=The Economic Times |issn=0013-0389}}</ref>
+| term_end = 
+| before = [[16th Tamil Nadu Assembly|16th]]
+| after = [[Tamil Nadu Legislative Assembly| 18th]]
+| website = [http://www.assembly.tn.gov.in/ Official website]
+| chamber1 = 
+| chamber1_image = 
+| chamber1_image_size = 
+| chamber1_alt = 
+| membership1 = 234
+| control1 = {{Color box|{{Party color|Tamilaga Vettri Kazhagam}}}} [[Tamilaga Vettri Kazhagam|TVK]]
+| chamber1_leader1_type = [[List of speakers of the Tamil Nadu Legislative Assembly|Speaker]]
+| chamber1_leader1 = [[Prabhakar]]
+| chamber1_leader2_type = Deputy Speaker
+| chamber1_leader2 = [[M. Ravisankar]]
+| chamber1_leader3_type = [[List of chief ministers of Tamil Nadu|Chief Minister]]
+| chamber1_leader3 = [[C. Joseph Vijay]]
+| chamber1_leader4_type = [[List of deputy chief ministers of Tamil Nadu|Deputy Chief Minister]]
+| chamber1_leader4 = 
+| chamber1_leader5_type = [[List of leaders of the opposition in the Tamil Nadu Legislative Assembly|Leader of the Opposition]]
+| chamber1_leader5 = [[Udhayanidhi Stalin]]
+| session1_start = 
+| session1_end = 
+}}
+
+The '''Seventeenth Assembly of Tamil Nadu''' succeeded the [[16th Tamil Nadu Assembly|Sixteenth Assembly of Tamil Nadu]] and was constituted after the [[2026 Tamil Nadu Legislative Assembly election|April 2026 State Assembly elections]], which resulted in a [[Hung Parliament|Hung Assembly]] for the second time in the state's history, with no party or alliance reaching the majority mark, since [[1952 Madras State Legislative Assembly election|1952 election]] when [[Indian National Congress|INC]] was the largest party with no majority in the [[1st Madras Assembly]].
+
+== Office bearers ==
+
+The main officials of the Tamil Nadu Legislative Assembly are:
+
+{| class="wikitable sortable"
+!Position
+!Name
+!Office Taken
+|-
+| [[List of speakers of the Tamil Nadu Legislative Assembly|Speaker]] 
+|[[J. C. D. Prabhakar]]
+| rowspan="2" |12 May 2026
+|-
+| [[List of speakers of the Tamil Nadu Legislative Assembly|Deputy Speaker]] 
+|[[M. Ravisankar]]
+|-
+|[[Chief Minister of Tamil Nadu|Chief Minister]]
+|[[C. Joseph Vijay]]
+|10 May 2026
+|-
+|[[List of leaders of the house in the Tamil Nadu Legislative Assembly|Leader of the House]]
+|[[K. A. Sengottaiyan]]
+| rowspan="2" | 12 May 2026
+|-
+|[[Government Whip]]
+|[[R. Sabarinathan]]
+|-
+|[[List of leaders of the opposition in the Tamil Nadu Legislative Assembly|Leader of Opposition]]
+|[[Udhayanidhi Stalin]]
+| rowspan="2"|10 May 2026
+|-
+|[[List of leaders of the opposition in the Tamil Nadu Legislative Assembly|Deputy Leader of Opposition]]
+|[[K. N. Nehru]]
+|}
+== Chief Minister ==
+{| class="wikitable"
+!Chief Minister
+!Took office
+!Left office
+!Term
+|-
+|C. Joseph Vijay
+|10 May 2026
+| ''Incumbent''
+| {{Age in days|10 May 2026}} days
+|}
+
+==Council of Ministers==
+{{transcluded section|Joseph Vijay ministry}}
+{{#section-h:Joseph Vijay ministry|Council of Ministers}}
+
+==Party position==
+Number of members of legislative assembly by party-wise and their floor leaders ''(As on {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}})'':
+{|class="wikitable sortable" style="text-align:center;"
+!colspan=2|Alliance
+!colspan=2|Political party
+!No. of MLAs
+!Floor leader of the party
+|-
+|rowspan=4 {{party color cell|TVK-led Alliance}}
+|rowspan=4 style="text-align:center;"|'''Government<br/>[[TVK-led Alliance|TVK+]]'''<br/>Seats: '''116'''
+|{{party color cell|Tamilaga Vettri Kazhagam}}
+|[[Tamilaga Vettri Kazhagam]]
+|style="text-align:center;"|107
+|[[C. Joseph Vijay]]<br/><small>''([[Chief Minister of Tamil Nadu|Chief Minister]])''</small>
+|-
+|{{party color cell|Indian National Congress}}
+|[[Indian National Congress]]
+|style="text-align:center;"|5
+|[[S. Rajesh Kumar]]
+|-
+|{{party color cell|Indian Union Muslim League}}
+|[[Indian Union Muslim League]]
+|style="text-align:center;"|2
+|[[A. M. Shahjahan]]
+|-
+|{{party color cell|Viduthalai Chiruthaigal Katchi}}
+|[[Viduthalai Chiruthaigal Katchi]]
+|style="text-align:center;"|2
+|[[Vanni Arasu]]
+|-
+|rowspan=3 {{party color cell|Others}}
+|rowspan=3 style="text-align:center;"|'''Outside Support/ Confidence and Supply<br/>[[Left Coordination Committee|LCC]] and one other'''<br/>Seats: '''5'''
+|{{party color cell|Communist Party of India}}
+|[[Communist Party of India]]
+|style="text-align:center;"|2
+|[[T. Ramachandran (CPI politician)|T. Ramachandran]]
+|-
+|{{party color cell|Communist Party of India (Marxist)}}
+|[[Communist Party of India (Marxist)]]
+|style="text-align:center;"|2
+|[[R. Chellaswamy]]
+|-
+|{{party color cell|Independent politician}}
+|[[Independent politician|Independent]]
+|style="text-align:center;"|1
+|[[S. Kamaraj]]
+|-
+|rowspan=2 {{party color cell|Secular Progressive Alliance}}
+|rowspan=2 style="text-align:center;"|'''Opposition<br/>[[Secular Progressive Alliance|SPA]]'''<br/>Seats: '''60'''
+|{{party color cell|Dravida Munnetra Kazhagam}}
+|[[Dravida Munnetra Kazhagam]]
+|style="text-align:center;"|59
+|[[Udhayanidhi Stalin]]<br/><small>''([[Leader of the Opposition in the Tamil Nadu Legislative Assembly|Leader of the Opposition]])''</small>
+|-
+|{{party color cell|Desiya Murpokku Dravida Kazhagam}}
+|[[Desiya Murpokku Dravida Kazhagam]]
+|style="text-align:center;"|1
+|[[Premallatha Vijayakant]]
+|-
+|rowspan=3 {{party color cell|Others}}
+|rowspan=3 style="text-align:center;"|'''Others'''
+[[AIADMK-led Alliance|'''AIADMK+''']]<br />Seats: '''46'''
+|{{party color cell|All India Anna Dravida Munnetra Kazhagam}}
+|[[All India Anna Dravida Munnetra Kazhagam]]
+|style="text-align:center;"|41
+|[[Edappadi K. Palaniswami]]
+|-
+|{{party color cell|Pattali Makkal Katchi}}
+|[[Pattali Makkal Katchi]]
+|style="text-align:center;"|4
+|[[Sowmiya Anbumani]]
+|-
+|{{party color cell|Bharatiya Janata Party}}
+|[[Bharatiya Janata Party]]
+|style="text-align:center;"|1
+|[[M. Bhojarajan]]
+|-
+|style="background:white;|
+|style="text-align:center;"|'''[[Casual vacancy#India|Vacant]]'''<br/>Seats: '''7'''
+|style="background:white;|
+|
+*[[Madurantakam Assembly constituency|Madurantakam]]
+*[[Dharapuram Assembly constituency|Dharapuram]]
+*[[Perundurai Assembly constituency|Perundurai]]
+*[[Karur Assembly constituency|Karur]]
+*[[Tiruchirappalli East Assembly constituency|Tiruchirappalli (East)]]
+*[[Viralimalai Assembly constituency|Viralimalai]]
+*[[Ambasamudram Assembly constituency|Ambasamudram]]
+|style="text-align:center;"|7
+|N/A
+|-
+!colspan=4|Total
+!234
+!
+|}
+
+== Members ==
+
+<!-- this section is transcluded on Tamil Nadu Legislative Assembly -->
+<!-- this section is transcluded on the district article--><section begin="MLA Header"/>
+
+{|class="wikitable sortable"
+|+Source:<ref>{{cite web |date=4 May 2026 |title=Tamil Nadu election results 2026: Full list of winners |url=https://www.thehindu.com/elections/tamil-nadu-assembly/tamil-nadu-assembly-election-2026-results-full-list-of-winners/article70908112.ece |access-date=4 May 2026 |work=[[The Hindu]]}}</ref>
+!District
+!No.
+!Constituency
+!Name
+!colspan=2|Party
+!colspan=2|Alliance
+! class="remarks-col" | Remarks <section end="MLA Header"/><!-- this section is transcluded on the district article--> <section begin="Tiruvallur district"/>
+
+|-
+| rowspan="6" |[[Tiruvallur district|Tiruvallur]]
+|1
+|[[Gummidipoondi Assembly constituency|Gummidipoondi]]
+|[[S. Vijayakumar]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|
+|-
+|2
+|[[Ponneri Assembly constituency|Ponneri]]
+|[[M. S. Ravi]]
+|
+|-
+|3
+|[[Tiruttani Assembly constituency|Tiruttani]]
+|[[G. Hari]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+| Supported TVK; Later declared support for EPS
+|-
+|4
+|[[Thiruvallur Assembly constituency|Thiruvallur]]
+|[[T. Arunkumar]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=3}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=3}}
+|
+|-
+|5
+|[[Poonamallee Assembly constituency|Poonamallee (SC)]]
+|[[R. Prakasam]]
+|
+|-
+|6
+|[[Avadi Assembly constituency|Avadi]]
+|[[R. Ramesh Kumar]]
+|<section end="Tiruvallur district"/><section begin="Chennai district"/>
+|-
+|rowspan="22" |[[Chennai district|Chennai]]
+|7
+|[[Maduravoyal Assembly constituency|Maduravoyal]]
+|[[P. Rhevanth Charan]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=11}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=11}}
+|
+|-
+|8
+|[[Ambattur Assembly constituency|Ambattur]]
+|[[G. Balamurugan]]
+|
+|-
+|9
+|[[Madavaram Assembly constituency|Madavaram]]
+|[[M. L. Vijay Prabhu|M. L. Vijayprabhu]]
+|
+|-
+|10
+|[[Thiruvottiyur Assembly constituency|Thiruvottiyur]]
+|[[N. Senthil Kumar]]
+|
+|-
+|11
+|[[Dr. Radhakrishnan Nagar Assembly constituency|Dr. Radhakrishnan Nagar]]
+|[[N. Marie Wilson]]
+|Cabinet Minister
+|-
+|12
+|[[Perambur Assembly constituency|Perambur]]
+|[[C. Joseph Vijay]]
+|[[Chief Minister of Tamil Nadu|Chief Minister]]
+|-
+|13
+|[[Kolathur Assembly constituency|Kolathur]]
+|[[V. S. Babu]]
+|
+|-
+|14
+|[[Villivakkam Assembly constituency|Villivakkam]]
+|[[Aadhav Arjuna]]
+|Cabinet Minister
+|-
+|15
+|[[Thiru. Vi. Ka. Nagar Assembly constituency|Thiru-Vi-Ka-Nagar (SC)]]
+|[[M. R. Pallavi]]
+|
+|-
+|16
+|[[Egmore Assembly constituency|Egmore (SC)]]
+|[[Rajmohan Arumugam|A. Rajmohan]]
+|Cabinet Minister
+|-
+|17
+|[[Royapuram Assembly constituency|Royapuram]]
+|[[K. V. Vijay Damu]]
+|
+|-
+|18
+|[[Harbour Assembly constituency|Harbour]]
+|[[P. K. Sekar Babu]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=2}}
+|
+|-
+|19
+|[[Chepauk-Thiruvallikeni Assembly constituency|Chepauk-Thiruvallikeni]]
+|[[Udhayanidhi Stalin]]
+|[[List of leaders of the opposition in the Tamil Nadu Legislative Assembly|Leader of the Opposition]]
+|-
+|20
+|[[Thousand Lights Assembly constituency|Thousand Lights]]
+|[[J. C. D. Prabhakar]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=9}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=9}}
+|[[List of speakers of the Tamil Nadu Legislative Assembly|Speaker]]
+|-
+|21
+|[[Anna Nagar Assembly constituency|Anna Nagar]]
+|[[V. K. Ramkumar]]
+|
+|-
+|22
+|[[Virugampakkam Assembly constituency|Virugampakkam]]
+|[[R. Sabarinathan]]
+|Government Whip
+|-
+|23
+|[[Saidapet Assembly constituency|Saidapet]]
+|[[Arul Prakasam. M|M. Arul Prakasam]]
+|
+|-
+|24
+|[[Thiyagarayanagar Assembly constituency|Thiyagarayanagar]]
+|[[Bussy N. Anand]]
+|Cabinet Minister
+|-
+|25
+|[[Mylapore (constituency)|Mylapore]]
+|[[P. Venkataramanan]]
+|Cabinet Minister
+|-
+|26
+|[[Velachery Assembly constituency|Velachery]]
+|[[R. Kumar]] 
+|Cabinet Minister
+|-
+|27
+|[[Sholinganallur Assembly constituency|Sholinganallur]]
+|[[ECR P Saravanan|P. Saravanan]]
+|
+|-
+|28
+|[[Alandur Assembly constituency|Alandur]]
+|[[M. Harish]]
+|<section end="Chennai district"/> <!-- this section is transcluded on the district article--> <section begin="Kanchipuram district"/>
+|-
+|[[Kanchipuram district|Kanchipuram]]
+|29
+|[[Sriperumbudur Assembly constituency|Sriperumbudur (SC)]]
+|[[Thennarasu. K.]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|Cabinet Minister<section end="Kanchipuram district"/> <!-- this section is transcluded on the district article--> <section begin="Chengalpattu district"/>
+|-
+|rowspan=7|[[Chengalpattu district|Chengalpattu]]
+|30
+|[[Pallavaram Assembly constituency|Pallavaram]]
+|[[J. Kamatchi]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=4}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=4}}
+|
+|-
+|31
+|[[Tambaram Assembly constituency|Tambaram]]
+|[[D. Sarathkumar]]
+|Cabinet Minister
+|-
+|32
+|[[Chengalpattu Assembly constituency|Chengalpattu]]
+|[[S. Thiyagarajan]]
+|
+|-
+|33
+|[[Thiruporur Assembly constituency|Thiruporur]]
+|[[B. Vijayaraj]]
+|
+|-
+|34
+|[[Cheyyur Assembly constituency|Cheyyur (SC)]]
+|[[E. Rajasekar]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|AIADMK-led Alliance|rowspan=2}}
+|Opposed TVK
+|-
+|rowspan=2|35
+|rowspan=2|[[Maduranthakam Assembly constituency|Madurantakam (SC)]]
+|[[Maragatham Kumaravel]]
+|Supported TVK<section end="Chengalpattu district"/> <!-- this section is transcluded on the district article--> <section begin="Kanchipuram district"/>
+|-
+|colspan="5" style="text-align:center;"|''[[Casual vacancy#India|Vacant]]''
+|On 25 May 2026, resigned from office and officially joined [[Tamilaga Vettri Kazhagam|TVK]]<ref name=Res/>
+|-
+|rowspan=2|[[Kanchipuram district|Kanchipuram]]
+|36
+|[[Uthiramerur Assembly constituency|Uthiramerur]]
+|[[J. Munirathinam]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|
+|-
+|37
+|[[Kancheepuram Assembly constituency|Kancheepuram]]
+|[[R. V. Ranjithkumar]]
+|Cabinet Minister<section end="Kanchipuram district"/> <!-- this section is transcluded on the district article--> <section begin="Ranipet district"/>
+|-
+|rowspan=2|[[Ranipet district|Ranipet]]
+|38
+|[[Arakkonam Assembly constituency|Arakkonam (SC)]]
+|[[V. Gandhiraj]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|Cabinet Minister
+|-
+|39
+|[[Sholinghur Assembly constituency|Sholinghur]]
+|[[G. Kapil]]
+|<section end="Ranipet district"/> <!-- this section is transcluded on the district article--> <section begin="Vellore district"/>
+|-
+|[[Vellore district|Vellore]]
+|40
+|[[Katpadi Assembly constituency|Katpadi]]
+|[[M. Sudhakar (politician)|M. Sudhakar]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|<section end="Vellore district"/> <!-- this section is transcluded on the district article--> <section begin="Ranipet district"/>
+|-
+|rowspan=2|[[Ranipet district|Ranipet]]
+|41
+|[[Ranipet Assembly constituency|Ranipet]]
+|[[I. Thahira]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|42
+|[[Arcot Assembly constituency|Arcot]]
+|[[S. M. Sukumar]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+||Supported TVK; Later declared support for EPS<ref>https://www.pgurus.com/three-aiadmk-rebel-mlas-resign-set-to-join-tvk/</ref><section end="Ranipet district"/> <!-- this section is transcluded on the district article--> <section begin="Vellore district"/>
+|-
+|rowspan=4|[[Vellore district|Vellore]]
+|43
+|[[Vellore Assembly constituency|Vellore]]
+|[[M. M. Vinoth Kannan]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|44
+|[[Anaicut Assembly constituency|Anaicut]]
+|[[D. Velazhagan]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Opposed TVK
+|-
+|45
+|[[Kilvaithinankuppam Assembly constituency|Kilvaithinankuppam (SC)]]
+|[[E. Thenral Kumar]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|
+|-
+|46
+|[[Gudiyatham Assembly constituency|Gudiyatham (SC)]]
+|[[K. Sindhu]]
+|<section end="Vellore district"/> <!-- this section is transcluded on the district article--> <section begin="Tirupathur district"/>
+|-
+|rowspan=4|[[Tirupathur district|Tirupathur]]
+|47
+|[[Vaniyambadi Assembly constituency|Vaniyambadi]]
+|[[Syed Farooq Basha]]
+|{{Party name with color|Indian Union Muslim League}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|Won as SPA candidate, switched to TVK+ post-election<ref>https://www.thehindu.com/news/national/tamil-nadu/iuml-to-join-tn-cm-vijays-cabinet-am-shahjahan-to-represent-party/article71006250.ece</ref>
+|-
+|48
+|[[Ambur Assembly constituency|Ambur]]
+|[[A. C. Vilwanathan]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|49
+|[[Jolarpet Assembly constituency|Jolarpet]]
+|[[K. C. Veeramani]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK; Later declared support for EPS<ref>https://www.thehindu.com/news/national/tamil-nadu/aiadmk-velumani-faction-willing-to-hold-talks-with-palaniswami-on-intra-party-issues/article70981726.ece</ref>
+|-
+|50
+|[[Tiruppattur, Vellore Assembly constituency|Tirupattur]]
+|[[N. Thirupathi]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|<section end="Tirupathur district"/><!-- this section is transcluded on the district article--> <section begin="Krishnagiri district"/>
+|-
+|rowspan=6|[[Krishnagiri district|Krishnagiri]]
+|51
+|[[Uthangarai Assembly constituency|Uthangarai (SC)]]
+|[[N. Elaiyaraja]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|52
+|[[Bargur Assembly constituency|Bargur]]
+|[[E. C. Govindarasan]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Opposed TVK
+|-
+|53
+|[[Krishnagiri Assembly constituency|Krishnagiri]]
+|[[P. Mukundhan]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|54
+|[[Veppanahalli Assembly constituency|Veppanahalli]]
+|[[P. S. Srinivasan]] 
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|55
+|[[Hosur Assembly constituency|Hosur]]
+|[[P. Balakrishna Reddy]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK; Later declared support for EPS
+|-
+|56
+|[[Thalli Assembly constituency|Thalli]]
+|[[T. Ramachandran (CPI politician)|T. Ramachandran]]
+|{{Party name with color|Communist Party of India}}
+|{{party name with color|Left Democratic Front (Tamil Nadu)|shortname=LDF|color=Red}}
+|Won as SPA candidate; party switched to TVK+ post-election; Outside support to TVK government<section end="Krishnagiri district" /><section begin="Dharmapuri district" />
+|-
+|rowspan=5|[[Dharmapuri district|Dharmapuri]]
+|57
+|[[Palacode Assembly constituency|Palacode]]
+|[[K. P. Anbalagan]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK; Later declared support for EPS
+|-
+|58
+|[[Pennagaram Assembly constituency|Pennagaram]]
+|[[S. Gajendran]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|59
+|[[Dharmapuri, Tamil Nadu Assembly constituency|Dharmapuri]]
+|[[Sowmiya Anbumani]]
+|{{Party name with color|Pattali Makkal Katchi}}
+|{{Party name with color|AIADMK-led Alliance|rowspan=3}}
+|
+|-
+|60
+|[[Pappireddipatti Assembly constituency|Pappireddipatti]]
+|[[Maragatham Vetrivel]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam|rowspan=2}}
+|Supported TVK; Later declared support for EPS
+|-
+|61
+|[[Harur Assembly constituency|Harur (SC)]]
+|[[V. Sampathkumar]]
+||Opposed TVK<section end="Dharmapuri district"/><!-- this section is transcluded on the district article--> <section begin="Tiruvannamalai district"/>
+|-
+| rowspan="8" |[[Tiruvannamalai district|Tiruvannamalai]]
+|62
+|[[Chengam Assembly constituency|Chengam (SC)]]
+|[[S. Velu|T. S. Velu]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Opposed TVK
+|-
+|63
+|[[Tiruvannamalai Assembly constituency|Tiruvannamalai]]
+|[[E. V. Velu]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|64
+|[[Kilpennathur Assembly constituency|Kilpennathur]]
+|[[S. Ramachandran (Kalasapakkam)|S. Ramachandran]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|AIADMK-led Alliance|rowspan=2}}
+|Opposed TVK
+|-
+|65
+|[[Kalasapakkam Assembly constituency|Kalasapakkam]]
+|[[Agri S. S. Krishnamurthy]]
+|Opposed TVK
+|-
+|66
+|[[Polur Assembly constituency|Polur]]
+| [[R. Abishek]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|67
+|[[Arani Assembly constituency|Arani]]
+|[[L. Jaya Sudha]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|AIADMK-led Alliance|rowspan=2}}
+|Opposed TVK
+|-
+|68
+|[[Cheyyar Assembly constituency|Cheyyar]]
+|[[Mukkur N. Subramanian]]
+|Opposed TVK
+|-
+|69
+|[[Vandavasi Assembly constituency|Vandavasi (SC)]]
+|[[S. Ambethkumar]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|<section end="Tiruvannamalai district"/><!-- this section is transcluded on the district article--> <section begin="Viluppuram district"/>
+|-
+|rowspan=7|[[Viluppuram district|Viluppuram]]
+|70
+|[[Gingee Assembly constituency|Gingee]]
+|[[A. Ganeshkumar]]
+|{{Party name with color|Pattali Makkal Katchi}}
+|{{Party name with color|AIADMK-led Alliance|rowspan=2}}
+|
+|-
+|71
+|[[Mailam Assembly constituency|Mailam]]
+|[[C. Ve. Shanmugam]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|Supported TVK; Later declared support for EPS
+|-
+|72
+|[[Tindivanam Assembly constituency|Tindivanam (SC)]]
+|[[Vanni Arasu]]
+|{{Party name with color|Viduthalai Chiruthaigal Katchi}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|Won as SPA candidate; party switched to TVK+ post-election; Cabinet Minister<ref>https://www.ndtv.com/india-news/iuml-and-vck-to-also-join-vijay-cabinet-expansion-likely-tomorrow-sources-11527767</ref>
+|-
+|73
+|[[Vanur Assembly constituency|Vanur (SC)]]
+|[[D. Gowtham]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=2}}
+|
+|-
+|74
+|[[Villupuram Assembly constituency|Villupuram]]
+|[[R. Lakshmanan]]
+|
+|-
+|75
+|[[Vikravandi Assembly constituency|Vikravandi]]
+|[[C. Sivakumar]]
+|{{Party name with color|Pattali Makkal Katchi}}
+|{{Party name with color|AIADMK-led Alliance|rowspan=2}}
+|
+|-
+|76
+|[[Tirukkoyilur Assembly constituency|Tirukkoyilur]]
+|[[S. Palaniswamy]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|Opposed TVK<section end="Viluppuram district"/><!-- this section is transcluded on the district article--><section begin="Kallakurichi district"/>
+|-
+| rowspan="4" |[[Kallakurichi district|Kallakurichi]]
+|77
+|[[Ulundurpet Assembly constituency|Ulundurpet]]
+|[[G. R. Vasanthavel]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=2}}
+|
+|-
+|78
+|[[Rishivandiyam Assembly constituency|Rishivandiyam]]
+|[[K. Karthikeyan]]
+|
+|-
+|79
+|[[Sankarapuram Assembly constituency|Sankarapuram]]
+| [[R. Rakesh (Politician)|R. Rakesh]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK; Later declared support for EPS
+|-
+|80
+|[[Kallakurichi Assembly constituency|Kallakurichi (SC)]]
+|[[Arul Vignesh]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|<section end="Kallakurichi district"/><!-- this section is transcluded on the district article--> <section begin="Salem district"/>
+|-
+|rowspan=11|[[Salem district|Salem]]
+|81
+|[[Gangavalli Assembly constituency|Gangavalli (SC)]]
+|[[A. Nallathambi (AIADMK politician)|A. Nallathambi]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam|rowspan=7}}
+|{{Party name with color|AIADMK-led Alliance|rowspan=7}}
+|Opposed TVK
+|-
+|82
+|[[Attur Assembly constituency|Attur (SC)]]
+|[[A. P. Jayasankaran]]
+|Opposed TVK
+|-
+|83
+|[[Yercaud Assembly constituency|Yercaud (ST)]]
+|[[P. Usharani]]
+|Opposed TVK
+|-
+|84
+|[[Omalur Assembly constituency|Omalur]]
+|[[R. Mani]]
+|Opposed TVK
+|-
+|85
+|[[Mettur Assembly constituency|Mettur]]
+|[[G. Venkatachalam]]
+|Opposed TVK
+|-
+|86
+|[[Edappadi Assembly constituency|Edappadi]]
+|[[Edappadi K. Palaniswami]]
+|Opposed TVK
+|-
+|87
+|[[Sankari Assembly constituency|Sankari]]
+|[[S. Vetrivel]]
+|Opposed TVK
+|-
+|88
+|[[Salem West Assembly constituency|Salem West]]
+|[[S. Lakshmanan (politician, born 1968)|S. Lakshmanan]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=4}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=4}}
+|
+|-
+|89
+|[[Salem North Assembly constituency|Salem North]]
+|[[K. Sivakumar]]
+|
+|-
+|90
+|[[Salem South Assembly constituency|Salem South]]
+|[[Vijay Tamilan Parthiban]]
+|Cabinet Minister
+|-
+|91
+|[[Veerapandi Assembly constituency|Veerapandi]]
+|[[M. S. Palanivel]]
+|<section end="Salem district"/><!-- this section is transcluded on the district article--> <section begin="Namakkal district"/>
+|-
+|rowspan=6|[[Namakkal district|Namakkal]]
+|92
+|[[Rasipuram Assembly constituency|Rasipuram (SC)]]
+|[[Logesh Tamilselvan]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=3}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=3}}
+|Cabinet Minister
+|-
+|93
+|[[Senthamangalam Assembly constituency|Senthamangalam (ST)]]
+|[[P. Chandrasekar]]
+|
+|-
+|94
+|[[Namakkal Assembly constituency|Namakkal]]
+|[[C. S. Dileep]]
+|
+|-
+|95
+|[[Paramathi-Velur Assembly constituency|Paramathi-Velur]]
+|[[S. Sekar]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK; Later declared support for EPS
+|-
+|96
+|[[Tiruchengode Assembly constituency|Tiruchengode]]
+|[[K. G. Arunraj]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|Cabinet Minister
+|-
+|97
+|[[Kumarapalayam Assembly constituency|Kumarapalayam]]
+|[[C. Vijayalakshmi]]
+|Cabinet Minister<section end="Namakkal district"/> <!-- this section is transcluded on the district article--> <section begin="Erode district"/>
+|-
+|rowspan=3|[[Erode district|Erode]]
+|98
+|[[Erode East Assembly constituency|Erode East]]
+|[[M. Vijay Balaji]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=3}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=3}}
+|Cabinet Minister
+|-
+|99
+|[[Erode West Assembly constituency|Erode West]]
+|[[K. K. Ananth Moghan]]
+|
+|-
+|100
+|[[Modakkurichi Assembly constituency|Modakkurichi]]
+|[[D. Shanmugan]]
+|<section end="Erode district"/> <!-- this section is transcluded on the district article--> <section begin="Tiruppur district"/>
+|-
+|rowspan=3|[[Tiruppur district|Tiruppur]]
+|rowspan=2|101
+|rowspan=2|[[Dharapuram Assembly constituency|Dharapuram (SC)]]
+|[[P. Sathyabama]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK
+|-
+|colspan="5" style="text-align:center;"|''[[Casual vacancy#India|Vacant]]''
+|On 25 May 2026, resigned from office and officially joined [[Tamilaga Vettri Kazhagam|TVK]]<ref name=Res/>
+|-
+|102
+|[[Kangayam Assembly constituency|Kangayam]]
+|[[N. S. N. Nataraj]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|AIADMK-led Alliance|rowspan=2}}
+|Supported TVK; Later declared support for EPS<ref>https://www.pgurus.com/three-aiadmk-rebel-mlas-resign-set-to-join-tvk/</ref><section end="Tiruppur district"/> <!-- this section is transcluded on the district article--> <section begin="Erode district"/>
+|-
+|rowspan=6|[[Erode district|Erode]]
+|rowspan=2|103
+|rowspan=2|[[Perundurai Assembly constituency|Perundurai]]
+|[[S. Jayakumar (Indian politician)|S. Jayakumar]]
+|Supported TVK
+|-
+|colspan="5" style="text-align:center;"|''[[Casual vacancy#India|Vacant]]''
+|On 25 May 2026, resigned from office and officially joined [[Tamilaga Vettri Kazhagam|TVK]]<ref name=Res>{{cite web|url=https://www.dtnext.in/amp/story/news/tamilnadu/major-setback-for-aiadmk-as-three-mlas-resign-from-assembly|title=3 AIADMK MLAs resigned and joined TVK|access-date=25 May 2026|date=25 May 2026|work=DT Next}}</ref>
+|-
+|104
+|[[Bhavani Assembly constituency|Bhavani]]
+|[[K. C. Karuppannan]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|AIADMK-led Alliance|rowspan=2}}
+|Opposed TVK
+|-
+|105
+|[[Anthiyur Assembly constituency|Anthiyur]]
+|[[P. Haribaskar]]
+|Supported TVK; Later declared support for EPS<ref>https://www.pgurus.com/three-aiadmk-rebel-mlas-resign-set-to-join-tvk/</ref>
+|-
+|106
+|[[Gobichettipalayam Assembly constituency|Gobichettipalayam]]
+|[[K. A. Sengottaiyan]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|Cabinet Minister
+|-
+|107
+|[[Bhavanisagar Assembly constituency|Bhavanisagar (SC)]]
+|[[V. P. Tamilselvi]]
+|<section end="Erode district"/> <!-- this section is transcluded on the district article--> <section begin="Nilgiris district"/>
+|-
+|rowspan=3|[[Nilgiris district|Nilgiris]]
+|108
+|[[Udagamandalam Assembly constituency|Udhagamandalam]]
+|[[M. Bhojarajan]]
+|{{Party name with color|Bharatiya Janata Party}}
+|{{Party name with color|AIADMK-led Alliance}}
+|
+|-
+|109
+|[[Gudalur Assembly constituency|Gudalur (SC)]]
+|[[M. Thiravidamani|M. Dravidamani]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=2}}
+|
+|-
+|110
+|[[Coonoor Assembly constituency|Coonoor]]
+|[[M. Raju]]
+|<section end="Nilgiris district"/> <!-- this section is transcluded on the district article--> <section begin="Coimbatore district"/>
+|-
+|[[Coimbatore district|Coimbatore]]
+|111
+|[[Mettupalayam Assembly constituency|Mettuppalayam]]
+|[[N. Sunil Anand]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|<section end="Coimbatore district"/> <!-- this section is transcluded on the district article--> <section begin="Tiruppur district"/>
+|-
+|rowspan=4|[[Tiruppur district|Tiruppur]]
+|112
+|[[Avanashi Assembly constituency|Avanashi (SC)]]
+|[[S. Kamali]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=4}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=4}}
+|Cabinet Minister
+|-
+|113
+|[[Tiruppur North Assembly constituency|Tiruppur North]]
+|[[V. Sathyabama]]
+|
+|-
+|114
+|[[Tiruppur South Assembly constituency|Tiruppur South]]
+|[[S. Balamurugan]]
+|
+|-
+|115
+|[[Palladam Assembly constituency|Palladam]]
+|[[K. Ramkumar]]
+|<section end="Tiruppur district"/> <!-- this section is transcluded on the district article--> <section begin="Coimbatore district"/>
+|-
+|rowspan=9|[[Coimbatore district|Coimbatore]]
+|116
+|[[Sulur Assembly constituency|Sulur]]
+|[[N. M. Sukumar]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=3}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=3}}
+|
+|-
+|117
+|[[Kavundampalayam Assembly constituency|Kavundampalayam]]
+|[[Kanimozhi Santhosh]]
+|
+|-
+|118
+|[[Coimbatore North Assembly constituency|Coimbatore North]]
+|[[V. Sampathkumar]]
+|Cabinet Minister
+|-
+|119
+|[[Thondamuthur Assembly constituency|Thondamuthur]]
+|[[S. P. Velumani]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK; Later declared support for EPS
+|-
+|120
+|[[Coimbatore South Assembly constituency|Coimbatore South]]
+|[[V. Senthilbalaji]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|121
+|[[Singanallur Assembly constituency|Singanallur]]
+|[[K. S. Sri Giri Prasath]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|
+|-
+|122
+|[[Kinathukadavu Assembly constituency|Kinathukadavu]]
+|[[K. Vignesh]]
+|Cabinet Minister
+|-
+|123
+|[[Pollachi Assembly constituency|Pollachi]]
+|[[K. Nithyanandhan]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=2}}
+|
+|-
+|124
+|[[Valparai Assembly constituency|Valparai (SC)]]
+|[[A. Sudhakar]]
+|<section end="Coimbatore district"/> <!-- this section is transcluded on the district article--> <section begin="Tiruppur district"/>
+|-
+|rowspan=2|[[Tiruppur district|Tiruppur]]
+|125
+|[[Udumalaipettai Assembly constituency|Udumalaipettai]]
+|[[M. Jayakumar]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=2}}
+|
+|-
+|126
+|[[Madathukulam Assembly constituency|Madathukulam]]
+|[[R. Jayaramakrishnan]]
+|<section end="Tiruppur district"/> <!-- this section is transcluded on the district article--> <section begin="Dindigul district"/>
+|-
+|rowspan=7|[[Dindigul district|Dindigul]]
+|127
+|[[Palani Assembly constituency|Palani]]
+|[[K. Ravimanoharan]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK; Later declared support for EPS
+|-
+|128
+|[[Oddanchatram Assembly constituency|Oddanchatram]]
+|[[R. Sakkarapani]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=2}}
+|
+|-
+|129
+|[[Athoor Assembly constituency|Athoor]]
+|[[I. Periyasamy]]
+|
+|-
+|130
+|[[Nilakottai Assembly constituency|Nilakkottai (SC)]]
+|[[R. Ayyanar]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|131
+|[[Natham Assembly constituency|Natham]]
+|[[Natham R. Viswanathan]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK; Later declared support for EPS
+|-
+|132
+|[[Dindigul Assembly constituency|Dindigul]]
+|[[I. P. Senthilkumar]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=2}}
+|
+|-
+|133
+|[[Vedasandur Assembly constituency|Vedasandur]]
+|[[T. Saminathan]]
+|<section end="Dindigul district"/> <!-- this section is transcluded on the district article--> <section begin="Karur district"/>
+|-
+|rowspan=5|[[Karur district|Karur]]
+|134
+|[[Aravakurichi Assembly constituency|Aravakurichi]]
+|[[R. Elango]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|rowspan=2|135
+|rowspan=2|[[Karur Assembly constituency|Karur]]
+|[[M. R. Vijayabhaskar]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK
+|-
+|colspan="5" style="text-align:center;"|''[[Casual vacancy#India|Vacant]]''
+|On 29 June 2026, resigned from office 
+|-
+|136
+|[[Krishnarayapuram Assembly constituency|Krishnarayapuram (SC)]]
+|[[Sathya M.]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|137
+|[[Kulithalai Assembly constituency|Kulithalai]]
+|[[Suriyanur A. Chandran]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|<section end="Karur district"/> <!-- this section is transcluded on the district article--> <section begin="Tiruchirappalli district"/>
+|-
+| rowspan="10" |[[Tiruchirappalli district|Tiruchirappalli]]
+|138
+|[[Manapparai Assembly constituency|Manapparai]]
+|[[R. Kathiravan]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|
+|-
+|139
+|[[Srirangam Assembly constituency|Srirangam]]
+|[[S. Ramesh]]
+|Cabinet Minister
+|-
+|140
+|[[Tiruchirappalli West Assembly constituency|Tiruchirappalli West]]
+|[[K. N. Nehru]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|[[List_of_leaders_of_the_opposition_in_the_Tamil_Nadu_Legislative_Assembly#List_of_deputy_leaders_of_the_opposition|Deputy Leader of the Opposition]]
+|-
+| rowspan="2" |141
+| rowspan="2" |[[Tiruchirappalli East Assembly constituency|Tiruchirappalli East]]
+|[[C. Joseph Vijay]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+}}
+|
+|-
+|colspan="5" style="text-align:center;"|''[[Casual vacancy#India|Vacant]]''
+|On 10 May 2026, resigned from office and retained the Perambur Assembly constituency
+|-
+|142
+|[[Thiruverumbur Assembly constituency|Thiruverumbur]]
+|[[Navalpattu S. Viji]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+}}
+|
+|-
+|143
+|[[Lalgudi Assembly constituency|Lalgudi]]
+|[[Leema Rose Martin]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK; Later declared support for EPS
+|-
+|144
+|[[Manachanallur Assembly constituency|Manachanallur]]
+|[[S. Kathiravan]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|145
+|[[Musiri Assembly constituency|Musiri]]
+|[[M. Vignesh]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|
+|-
+|146
+|[[Thuraiyur Assembly constituency|Thuraiyur (SC)]]
+|[[M. Ravisankar]]
+|[[List of speakers of the Tamil Nadu Legislative Assembly|Deputy Speaker]]<section end="Tiruchirappalli district"/><!-- this section is transcluded on the district article--> <section begin="Perambalur district"/>
+|-
+|rowspan=2|[[Perambalur district|Perambalur]]
+|147
+|[[Perambalur Assembly constituency|Perambalur (SC)]]
+|[[K. Sivakumar]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|148
+|[[Kunnam Assembly constituency|Kunnam]]
+|[[S. S. Sivasankar]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|<section end="Perambalur district"/> <!-- this section is transcluded on the district article--> <section begin="Ariyalur district"/>
+|-
+|rowspan=2|[[Ariyalur district|Ariyalur]]
+|149
+|[[Ariyalur Assembly constituency|Ariyalur]]
+|[[S. Rajendran (AIADMK politician, Ariyalur)|S. Rajendran]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance|rowspan=2}}
+|Opposed TVK
+|-
+|150
+|[[Jayankondam Assembly constituency|Jayankondam]]
+|[[G. Vaithilingam]]
+|{{Party name with color|Pattali Makkal Katchi}}
+|<section end="Ariyalur district"/><!-- this section is transcluded on the district article--><section begin="Cuddalore district" />
+|-
+|rowspan=9|[[Cuddalore district|Cuddalore]]
+|151
+|[[Tittakudi Assembly constituency|Tittakudi (SC)]]
+|[[C. V. Ganesan]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=2}}
+|
+|-
+|152
+|[[Virudhachalam Assembly constituency|Vriddhachalam]]
+|[[Premallatha Vijayakant]]
+|{{Party name with color|Desiya Murpokku Dravida Kazhagam}}
+|
+|-
+|153
+|[[Neyveli Assembly constituency|Neyveli]]
+|[[R. Rajendran (AIADMK politician)|R. Rajendran]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|AIADMK-led Alliance|rowspan=2}}
+|Opposed TVK
+|-
+|154
+|[[Panruti Assembly constituency|Panruti]]
+|[[K. Mohan (politician)|K. Mohan]]
+|Supported TVK; Later declared support for EPS<ref>https://www.pgurus.com/three-aiadmk-rebel-mlas-resign-set-to-join-tvk/</ref>
+|-
+|155
+|[[Cuddalore Assembly constituency|Cuddalore]]
+|[[B. Rajkumar]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|Cabinet Minister
+|-
+|156
+|[[Kurinjipadi Assembly constituency|Kurinjipadi]]
+|[[M. R. K. Panneerselvam]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|157
+|[[Bhuvanagiri Assembly constituency|Bhuvanagiri]]
+|[[A. Arunmozhithevan]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK; Later declared support for EPS
+|-
+|158
+|[[Chidambaram Assembly constituency|Chidambaram]]
+|[[Thamimum Ansari|M. Thamimum Ansari]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|-
+|159
+|[[Kattumannarkoil Assembly constituency|Kattumannarkoil (SC)]]
+|[[L. E. Jothimani]]
+|{{Party name with color|Viduthalai Chiruthaigal Katchi}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|Won as SPA candidate; party switched to TVK+ post-election<ref>https://www.ndtv.com/india-news/iuml-and-vck-to-also-join-vijay-cabinet-expansion-likely-tomorrow-sources-11527767</ref><section end="Cuddalore district" /><!-- this section is transcluded on the district article--><section begin="Mayiladuthurai district" />
+|-
+|rowspan=3|[[Mayiladuthurai district|Mayiladuthurai]]
+|160
+|[[Sirkazhi Assembly constituency|Sirkazhi (SC)]]
+|[[R. Senthilselvan]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|161
+|[[Mayiladuthurai Assembly constituency|Mayiladuthurai]]
+|[[Jamal Mohamed Younoos]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+}}
+|Won as SPA candidate; party switched to TVK+ post-election
+|-
+|162
+|[[Poompuhar Assembly constituency|Poompuhar]]
+|[[Nivedha M. Murugan]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|<section end="Mayiladuthurai district"/><!-- this section is transcluded on the district article--> <section begin="Nagapattinam district"/>
+|-
+|rowspan=3|[[Nagapattinam district|Nagapattinam]]
+|163
+|[[Nagapattinam Assembly constituency|Nagapattinam]]
+|[[M. H. Jawahirullah]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|164
+|[[Kilvelur Assembly constituency|Kilvelur (SC)]]
+|[[T. Latha]]
+|{{Party name with color|Communist Party of India (Marxist)}}
+|{{party name with color|Left Democratic Front (Tamil Nadu)|shortname=LDF|color=Red}}
+|Won as SPA candidate; party switched to TVK+ post-election; outside support to TVK government 
+|-
+|165
+|[[Vedaranyam Assembly constituency|Vedaranyam]]
+|[[O. S. Manian]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Opposed TVK<section end="Nagapattinam district"/><!-- this section is transcluded on the district article--> <section begin="Tiruvarur district"/>
+|-
+|rowspan=5|[[Tiruvarur district|Tiruvarur]]
+|166
+|[[Thiruthuraipoondi Assembly constituency|Thiruthuraipoondi (SC)]]
+|[[K. Marimuthu]]
+|{{Party name with color|Communist Party of India}}
+|{{party name with color|Left Democratic Front (Tamil Nadu)|shortname=LDF|color=Red}}
+|Won as SPA candidate; party switched to TVK+ post-election; outside support to TVK government 
+|-
+|rowspan="2"|167
+|rowspan="2"|[[Mannargudi Assembly constituency|Mannargudi]]
+|rowspan="2"|[[S. Kamaraj]]
+|{{Party name with color|Amma Makkal Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|
+|-
+|{{Party name with color|Independent politician|shortname=IND}}
+|{{Party name with color|TVK-led Alliance}}
+|Outside support to TVK government; Expelled from [[Amma Makkal Munnetra Kazhagam|AMMK]]
+|-
+|168
+|[[Thiruvarur Assembly constituency|Thiruvarur]]
+|[[K. Poondi Kalaivanan]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|169
+|[[Nannilam Assembly constituency|Nannilam]]
+|[[R. Kamaraj]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK; Later declared support for EPS<section end="Tiruvarur district"/><!-- this section is transcluded on the district article--><section begin="Thanjavur district" />
+|-
+|rowspan=8|[[Thanjavur district|Thanjavur]]
+|170
+|[[Thiruvidamarudur Assembly constituency|Thiruvidaimarudur]]
+|[[Govi. Chezhian]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|171
+|[[Kumbakonam Assembly constituency|Kumbakonam]]
+|[[R. Vinoth]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|Cabinet Minister
+|-
+|172
+|[[Papanasam Assembly constituency|Papanasam]]
+|[[A. M. Shahjahan]]
+|{{Party name with color|Indian Union Muslim League}}
+|Won as SPA candidate; party switched to TVK+ post-election; Cabinet Minister<ref>https://www.thehindu.com/news/national/tamil-nadu/iuml-to-join-tn-cm-vijays-cabinet-am-shahjahan-to-represent-party/article71006250.ece</ref>
+|-
+|173
+|[[Thiruvaiyaru Assembly constituency|Thiruvaiyaru]]
+|[[Durai Chandrasekaran]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|174
+|[[Thanjavur Assembly constituency|Thanjavur]]
+|[[R. Vijaysaravanan]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|175
+|[[Orathanadu Assembly constituency|Orathanadu]]
+|[[R. Vaithilingam]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=3}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=3}}
+|
+|-
+|176
+|[[Pattukkottai Assembly constituency|Pattukkottai]]
+|[[K. Annadurai]]
+|
+|-
+|177
+|[[Peravurani Assembly constituency|Peravurani]]
+|[[Peravurani N. Ashokkumar|N. Ashokkumar]]
+|<section end="Thanjavur district"/><!-- this section is transcluded on the district article--> <section begin="Pudukkottai district"/>
+|-
+|rowspan=7|[[Pudukkottai district|Pudukkottai]]
+|178
+|[[Gandarvakottai Assembly constituency|Gandarvakkottai (SC)]]
+|[[N. Subramanian]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|rowspan=2|179
+|rowspan=2|[[Viralimalai Assembly constituency|Viralimalai]]
+|[[C. Vijayabaskar]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK
+|-
+|colspan="5" style="text-align:center;"|''[[Casual vacancy#India|Vacant]]''
+|On 16 June 2026, resigned from office 
+|-
+|180
+|[[Pudukkottai Assembly constituency|Pudukkottai]]
+|[[V. Muthuraja]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=3}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=3}}
+|
+|-
+|181
+|[[Thirumayam Assembly constituency|Thirumayam]]
+|[[S. Regupathy]]
+|
+|-
+|182
+|[[Alangudi Assembly constituency|Alangudi]]
+|[[Siva V. Meyyanathan]]
+|
+|-
+|183
+|[[Aranthangi Assembly constituency|Aranthangi]]
+|[[J. Mohamed Farvas]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+||Cabinet Minister<section end="Pudukkottai district"/><!-- this section is transcluded on the district article--> <section begin="Sivaganga district"/>
+|-
+|rowspan=4|[[Sivaganga district|Sivaganga]]
+|184
+|[[Karaikudi Assembly constituency|Karaikudi]]
+|[[T. K. Prabhu]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=4}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=4}}
+|Cabinet Minister
+|-
+|185
+|[[Tiruppattur, Sivaganga Assembly constituency|Tirupattur]]
+|[[Srinivasa Sethupathi]] 
+|
+|-
+|186
+|[[Sivaganga Assembly constituency|Sivaganga]]
+|[[Kulanthai Rani]] 
+|
+|-
+|187
+|[[Manamadurai Assembly constituency|Manamadurai (SC)]]
+|[[D. Elangovan]]
+|<section end="Sivaganga district"/> <!-- this section is transcluded on the district article--> <section begin="Madurai district"/>
+|-
+|rowspan=10|[[Madurai district|Madurai]]
+|188
+|[[Melur Assembly constituency|Melur]]
+|[[P. Viswanathan]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=8}}
+|Won as SPA candidate; party switched to TVK+ post-election; Cabinet Minister
+|-
+|189
+|[[Madurai East Assembly constituency|Madurai East]]
+|[[S. Karthikeyan]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=7}}
+|
+|-
+|190
+|[[Sholavandan Assembly constituency|Sholavandan (SC)]]
+|[[M. V. Karuppiah]]
+|
+|-
+|191
+|[[Madurai North Assembly constituency|Madurai North]]
+|[[A. Kallanai]]
+|
+|-
+|192
+|[[Madurai South Assembly constituency|Madurai South]]
+|[[M. M. Gopison]]
+|
+|-
+|193
+|[[Madurai Central Assembly constituency|Madurai Central]]
+|[[Madhar Badhurudeen]]
+|
+|-
+|194
+|[[Madurai West Assembly constituency|Madurai West]]
+|[[S. R. Thangapandi]]
+|
+|-
+|195
+|[[Thiruparankundram Assembly constituency|Thiruparankundram]]
+|[[C. T. R. Nirmal Kumar]]
+|Cabinet Minister
+|-
+|196
+|[[Thirumangalam Assembly constituency|Thirumangalam]]
+|[[Sedapatti M. Manimaran]] 
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|197
+|[[Usilampatti Assembly constituency|Usilampatti]]
+|[[M. Vijay]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|<section end="Madurai district"/><!-- this section is transcluded on the district article--> <section begin="Theni district"/>
+|-
+|rowspan=4|[[Theni district|Theni]]
+|198
+|[[Andipatti Assembly constituency|Andipatti]]
+|[[A. Maharajan]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|199
+|[[Periyakulam Assembly constituency|Periyakulam (SC)]]
+|[[G. Sabari Iyngaran]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|200
+|[[Bodinayakanur Assembly constituency|Bodinayakanur]]
+|[[O. Panneerselvam]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|201
+|[[Cumbum Assembly constituency|Cumbum]]
+|[[P. L. A. Jeganathmishra]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|<section end="Theni district"/> <!-- this section is transcluded on the district article--> <section begin="Virudhunagar district"/>
+|-
+|rowspan=7|[[Virudhunagar district|Virudhunagar]]
+|202
+|[[Rajapalayam Assembly constituency|Rajapalayam]]
+|[[K. Jegadeshwari]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|Cabinet Minister
+|-
+|203
+|[[Srivilliputhur Assembly constituency|Srivilliputhur (SC)]]
+|[[A. Karthik]]
+|
+|-
+|204
+|[[Sattur Assembly constituency|Sattur]]
+|[[A. Kadarkarairaj]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|205
+|[[Sivakasi Assembly constituency|Sivakasi]]
+|[[S. Keerthana]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|Cabinet Minister
+|-
+|206
+|[[Virudhunagar Assembly constituency|Virudhunagar]]
+|[[P. Selvam]]
+|
+|-
+|207
+|[[Aruppukkottai Assembly constituency|Aruppukkottai]]
+|[[K. K. S. S. R. Ramachandran]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=2}}
+|
+|-
+|208
+|[[Tiruchuli Assembly constituency|Tiruchuli]]
+|[[Thangam Thenarasu]]
+|<section end="Virudhunagar district"/><!-- this section is transcluded on the district article--><section begin="Ramanathapuram district" />
+|-
+|rowspan=4|[[Ramanathapuram district|Ramanathapuram]]
+|209
+|[[Paramakudi Assembly constituency|Paramakudi (SC)]]
+|[[K. K. Kathiravan]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|210
+|[[Tiruvadanai Assembly constituency|Tiruvadanai]]
+|[[Rajeev (politician)|Rajeev]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|Cabinet Minister
+|-
+|211
+|[[Ramanathapuram Assembly constituency|Ramanathapuram]]
+|[[Katharbatcha Muthuramalingam]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=2}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=2}}
+|
+|-
+|212
+|[[Mudhukulathur Assembly constituency|Mudhukulathur]]
+|[[Raja Kannappan|R. S. Rajakannappan]]
+|<section end="Ramanathapuram district"/> <!-- this section is transcluded on the district article--> <section begin="Thoothukudi district"/>
+|-
+|rowspan=6|[[Thoothukudi district|Thoothukudi]]
+|213
+|[[Vilathikulam Assembly constituency|Vilathikulam]]
+|[[G. V. Markandayan]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|214
+|[[Thoothukkudi Assembly constituency|Thoothukkudi]]
+|[[A. Srinath|Srinath]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|Cabinet Minister
+|-
+|215
+|[[Tiruchendur Assembly constituency|Tiruchendur]]
+|[[Anitha R. Radhakrishnan]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|216
+|[[Srivaikuntam Assembly constituency|Srivaikuntam]]
+|[[G. Saravanan]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|
+|-
+|217
+|[[Ottapidaram Assembly constituency|Ottapidaram (SC)]]
+|[[P. Mathanraja]]
+|Cabinet Minister
+|-
+|218
+|[[Kovilpatti Assembly constituency|Kovilpatti]]
+|[[K. Karunanithi]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|<section end="Thoothukudi district"/><!-- this section is transcluded on the district article--><section begin="Tenkasi district" />
+|-
+|rowspan=5|[[Tenkasi district|Tenkasi]]
+|219
+|[[Sankarankovil Assembly constituency|Sankarankovil (SC)]]
+|[[Dhilipan Jaishankar|Dr. Dhilipan Jaishankar]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK; Later declared support for EPS<ref>https://www.pgurus.com/three-aiadmk-rebel-mlas-resign-set-to-join-tvk/</ref>
+|-
+|220
+|[[Vasudevanallur Assembly constituency|Vasudevanallur (SC)]]
+|[[E. Raja]]
+|{{Party name with color|Dravida Munnetra Kazhagam|rowspan=4}}
+|{{Party name with color|Secular Progressive Alliance|rowspan=4}}
+|
+|-
+|221
+|[[Kadayanallur Assembly constituency|Kadayanallur]]
+|[[T. M. Rajendran]]
+|
+|-
+|222
+|[[Tenkasi Assembly constituency|Tenkasi]]
+|[[Kalai Kathiravan]]
+|
+|-
+|223
+|[[Alangulam Assembly constituency|Alangulam]]
+|[[P. H. Manoj Pandian]]
+|<section end="Tenkasi district"/><!-- this section is transcluded on the district article--> <section begin="Tirunelveli district"/>
+|-
+|rowspan=6|[[Tirunelveli district|Tirunelveli]]
+|224
+|[[Tirunelveli Assembly constituency|Tirunelveli]]
+|[[R. S. Murughan]]
+|{{Party name with color|Tamilaga Vettri Kazhagam}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=1}}
+|
+|-
+|rowspan=2|225
+|rowspan=2|[[Ambasamudram Assembly constituency|Ambasamudram]]
+|[[E. Subaya|Esakki Subaya]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Supported TVK
+|-
+|colspan="5" style="text-align:center;"|''[[Casual vacancy#India|Vacant]]''
+|On 26 May 2026, resigned from office and officially joined [[Tamilaga Vettri Kazhagam|TVK]]
+|-
+|226
+|[[Palayamkottai Assembly constituency|Palayamkottai]]
+|[[M. Abdul Wahab]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|227
+|[[Nanguneri Assembly constituency|Nanguneri]]
+|[[V. Narayanan (politician)|Reddiarpatti V. Narayanan]]
+|{{Party name with color|Tamilaga Vettri Kazhagam|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|
+|-
+|228
+|[[Radhapuram Assembly constituency|Radhapuram]]
+|[[Sathish Christopher]]
+|<section end="Tirunelveli district"/><!-- this section is transcluded on the district article--> <section begin="Kanyakumari district"/>
+|-
+|rowspan=6|[[Kanyakumari district|Kanyakumari]]
+|229
+|[[Kanniyakumari Assembly constituency|Kanniyakumari]]
+|[[N. Thalavai Sundaram]]
+|{{Party name with color|All India Anna Dravida Munnetra Kazhagam}}
+|{{Party name with color|AIADMK-led Alliance}}
+|Opposed TVK
+|-
+|230
+|[[Nagercoil Assembly constituency|Nagercoil]]
+|[[S. Austin]]
+|{{Party name with color|Dravida Munnetra Kazhagam}}
+|{{Party name with color|Secular Progressive Alliance}}
+|
+|-
+|231
+|[[Colachal Assembly constituency|Colachal]]
+|[[Tharahai Cuthbert]]
+|{{Party name with color|Indian National Congress}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+}}
+|Won as SPA candidate; party switched to TVK+ post-election
+|-
+|232
+|[[Padmanabhapuram Assembly constituency|Padmanabhapuram]]
+|[[R. Chellaswamy]]
+|{{Party name with color|Communist Party of India (Marxist)}}
+|{{party name with color|Left Democratic Front (Tamil Nadu)|shortname=LDF|color=Red}}
+|Won as SPA candidate; party switched to TVK+ post-election; outside support to TVK government 
+|-
+|233
+|[[Vilavancode Assembly constituency|Vilavancode]]
+|[[T. T. Praveen]]
+|{{Party name with color|Indian National Congress|rowspan=2}}
+|{{Party name with color|TVK-led Alliance|color=#800200|shortname=TVK+|rowspan=2}}
+|Won as SPA candidate; party switched to TVK+ post-election
+|-
+|234
+|[[Killiyoor Assembly constituency|Killiyoor]]
+|[[S. Rajeshkumar]]
+|Won as SPA candidate; party switched to TVK+ post-election; Cabinet Minister<section end="Kanyakumari district"/>
+|-
+|}
+
+== See also ==
+
+* [[Government of Tamil Nadu]]
+* [[List of chief ministers of Tamil Nadu]]
+* [[Assembly of Tamil Nadu|Legislative assembly of Tamil Nadu]]
+
+== Notes ==
+{{notelist}}
+
+== References ==
+
+{{Reflist}}
+
+{{Current Indian assemblies}}
+
+[[Category:Tamil Nadu MLAs 2026–2031| ]]
+[[Category:Lists of current Indian state and territorial assemblies|Tamil Nadu]]
+[[Category:Terms of the Tamil Nadu Legislative Assembly]]
