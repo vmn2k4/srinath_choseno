@@ -20,11 +20,7 @@ export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
          target_boundary_name,
          bio,
          avatar_url,
-         contact_email,
-         contact_phone,
-         photo_url,
-         source_url,
-         holding_since
+         political_parties ( name, abbreviation )
        )
     `
     )
@@ -199,5 +195,41 @@ export async function getActiveCandidacies(supabase: Client, profileId: string) 
     )
     .eq("politician_id", profileId)
     .order("created_at", { ascending: false });
+}
+
+export async function getSEOProfileSummary(supabase: Client, ghostId: string) {
+  const { data: owner } = await getWallOwnerProfile(supabase, ghostId);
+  if (!owner) return { owner: null, activeCandidacy: null, partyName: null, rating: null };
+
+  const partyName =
+    (owner.politician_profiles as any)?.political_parties?.name ||
+    (owner.politician_profiles as any)?.political_party_id ||
+    null;
+
+  let activeCandidacy: any = null;
+  if (owner.id) {
+    const { data: candidacies } = await getActiveCandidacies(supabase, owner.id);
+    if (candidacies && candidacies.length > 0) {
+      activeCandidacy = candidacies[0];
+    }
+  }
+
+  // Get ratings summary if available
+  let rating: { avg: number; count: number } | null = null;
+  if (owner.id) {
+    const { data: ratingsData } = await supabase
+      .from("politician_ratings")
+      .select("rating")
+      .eq("politician_id", owner.id);
+    if (ratingsData && ratingsData.length > 0) {
+      const sum = ratingsData.reduce((acc: number, r: { rating: number }) => acc + r.rating, 0);
+      rating = {
+        avg: Math.round((sum / ratingsData.length) * 10) / 10,
+        count: ratingsData.length,
+      };
+    }
+  }
+
+  return { owner, activeCandidacy, partyName, rating };
 }
 

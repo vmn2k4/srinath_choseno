@@ -216,7 +216,7 @@ export default function HomePage() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
           </span>
-          The real voice of voters
+          Voice of the Silent Majority
         </span>
 
         <h1 className="font-display text-6xl sm:text-7xl md:text-8xl font-extrabold leading-[1.02] mt-8 tracking-tight drop-shadow-2xl">

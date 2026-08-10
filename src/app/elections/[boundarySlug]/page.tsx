@@ -145,8 +145,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Boundary Not Found | Choseno" };
   }
 
-  const title = `Office Holders & Elections in ${shape.name} | Choseno`;
-  const description = `Current elected officeholders, representatives, and upcoming election candidates for ${shape.name} (${shape.boundary_type}, ${shape.country}) on Choseno.`;
+  const title = `${shape.name} 2026 Elections — Candidates, Reps & Voter Ratings | Choseno`;
+  const description = `Who represents you in ${shape.name}? View all 2026 ${shape.boundary_type} candidates, your current elected officials, constituent ratings and real voter feedback on Choseno.`;
   const canonicalUrl = `${BASE_URL}/elections/${buildBoundarySlug(shape)}`;
 
   return {
@@ -154,7 +154,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description,
     alternates: { canonical: canonicalUrl },
     openGraph: { title, description, url: canonicalUrl, siteName: "Choseno", type: "website" },
-    twitter: { card: "summary", title, description },
+    twitter: { card: "summary_large_image", title, description },
   };
 }
 

@@ -355,6 +355,19 @@ export default function PoliticianWallClient({
 
   return (
     <div className="w-full max-w-none pb-20 px-4 lg:px-8 space-y-6">
+      {/* Accessible SEO & AI Search Entity Lead Block */}
+      {wallOwner && (
+        <section aria-label="Politician Profile Overview" className="sr-only">
+          <p>
+            {wallOwner.full_name || "Politician"} is a public leader and candidate profile on Choseno.
+            {wallOwner.politician_profiles?.political_target_role && ` Serving as or running for ${wallOwner.politician_profiles.political_target_role}.`}
+            {wallOwner.politician_profiles?.target_boundary_name && ` Located in ${wallOwner.politician_profiles.target_boundary_name}.`}
+            {wallOwner.politician_profiles?.bio && ` Profile overview: ${wallOwner.politician_profiles.bio}`}
+            {" "}Voters and constituents can review policy stances, submit public ratings, track campaign updates, and leave feedback on Choseno.
+          </p>
+        </section>
+      )}
+
       {/* Wall Header Card */}
       <Card padding="md" className="space-y-4">
         <div className="flex items-start justify-between gap-4 flex-wrap">

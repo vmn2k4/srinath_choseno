@@ -1,7 +1,12 @@
 import { Metadata } from "next";
 import PoliticianWallClient from "@/components/features/PoliticianWallClient";
 import { createClient as createServerClient } from "@/lib/supabase/server";
-import { getWallOwnerProfile, getWallPosts, getSupporterCount } from "@/lib/services/politicianWall";
+import {
+  getWallOwnerProfile,
+  getWallPosts,
+  getSupporterCount,
+  getSEOProfileSummary,
+} from "@/lib/services/politicianWall";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -10,29 +15,38 @@ interface WallPageProps {
   params: Promise<{ ghostId: string }>;
 }
 
-type WallOwner = {
-  id: string;
-  full_name?: string;
-  politician_profiles?: { bio?: string; avatar_url?: string } | null;
-};
-
 export async function generateMetadata({
   params,
 }: WallPageProps): Promise<Metadata> {
   const { ghostId } = await params;
   const supabase = await createServerClient();
-  const { data } = await getWallOwnerProfile(supabase, ghostId);
-  const owner = data as unknown as WallOwner | null;
+  const { owner, activeCandidacy, partyName } = await getSEOProfileSummary(supabase, ghostId);
 
   const name = owner?.full_name || "Politician";
   const bio = owner?.politician_profiles?.bio || "";
+  const roleTitle =
+    activeCandidacy?.election_seats?.role_title ||
+    (owner?.politician_profiles as any)?.political_target_role ||
+    "Representative";
+  const boundaryName =
+    activeCandidacy?.election_seats?.map_shapes?.name ||
+    (owner?.politician_profiles as any)?.target_boundary_name ||
+    "";
+  const electionYear = activeCandidacy?.election_seats?.elections?.election_date?.slice(0, 4) || "2026";
+
+  const partyLabel = partyName ? ` (${partyName})` : "";
+  const locationLabel = boundaryName ? ` in ${boundaryName}` : "";
+
   const canonicalUrl = `${BASE_URL}/wall/${ghostId}`;
   const ogImageUrl = `${BASE_URL}/wall/${ghostId}/opengraph-image`;
 
-  const title = `${name}'s Public Wall | Choseno`;
-  const description = bio
-    ? bio.slice(0, 160)
-    : `Official public wall, policy positions, and constituent updates for ${name} on Choseno.`;
+  const title = activeCandidacy
+    ? `${name}${partyLabel} — ${electionYear} ${roleTitle} Candidate${locationLabel} & Voter Ratings | Choseno`
+    : `${name}${partyLabel} — ${roleTitle}${locationLabel} | Voter Ratings & Feedback | Choseno`;
+
+  const description = activeCandidacy
+    ? `What do ${boundaryName || "local"} voters really think of ${name}? Read anonymous constituent reviews, ${electionYear} ${roleTitle} stances${partyLabel ? ` (${partyName})` : ""}, ratings & submit your feedback on Choseno.`
+    : `What do constituents really think of ${name}? See approval ratings, constituent feedback, policy stances and join the discussion — anonymous and free on Choseno.`;
 
   return {
     title,
@@ -66,23 +80,72 @@ export default async function WallPage({ params }: WallPageProps) {
   const { ghostId } = await params;
   const supabase = await createServerClient();
 
-  const { data: ownerData } = await getWallOwnerProfile(supabase, ghostId);
-  const owner = ownerData as unknown as WallOwner | null;
-
-  const [{ data: posts }, supportCountRes] = await Promise.all([
+  const [{ owner, activeCandidacy, partyName, rating }, { data: posts }] = await Promise.all([
+    getSEOProfileSummary(supabase, ghostId),
     getWallPosts(supabase, ghostId),
-    owner?.id ? getSupporterCount(supabase, owner.id) : Promise.resolve({ count: 0 }),
   ]);
 
+  const supportCountRes = owner?.id ? await getSupporterCount(supabase, owner.id) : { count: 0 };
+
+  const name = owner?.full_name || "Politician";
+  const bio = owner?.politician_profiles?.bio || "";
+  const roleTitle =
+    activeCandidacy?.election_seats?.role_title ||
+    (owner?.politician_profiles as any)?.political_target_role ||
+    "Representative";
+  const canonicalUrl = `${BASE_URL}/wall/${ghostId}`;
+
   const jsonLd = owner
-    ? {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        name: owner.full_name || "Politician",
-        description: owner.politician_profiles?.bio || undefined,
-        image: owner.politician_profiles?.avatar_url || undefined,
-        url: `${BASE_URL}/wall/${ghostId}`,
-      }
+    ? [
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: name,
+          jobTitle: roleTitle,
+          description: bio || undefined,
+          image: owner.politician_profiles?.avatar_url || undefined,
+          url: canonicalUrl,
+          ...(partyName && {
+            memberOf: {
+              "@type": "PoliticalParty",
+              name: partyName,
+            },
+          }),
+          ...(rating && rating.count > 0 && {
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: rating.avg.toString(),
+              reviewCount: rating.count.toString(),
+              bestRating: "5",
+              worstRating: "1",
+            },
+          }),
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: BASE_URL,
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Elections & Races",
+              item: `${BASE_URL}/elections`,
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: `${name} Wall`,
+              item: canonicalUrl,
+            },
+          ],
+        },
+      ]
     : null;
 
   return (

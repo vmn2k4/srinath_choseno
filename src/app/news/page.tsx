@@ -9,14 +9,14 @@ import { SITE_URL } from "@/lib/constants/site";
 const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
-  title: "Civic News & Updates | Choseno",
+  title: "Election News & 2026 Candidate Updates | Choseno",
   description:
-    "Stay informed with the latest civic news, electoral boundary updates, and democratic technology from Choseno.",
+    "Latest news on 2026 midterm elections, candidate announcements, local races & democratic accountability. Community-curated civic journalism, free to read.",
   alternates: { canonical: `${BASE_URL}/news` },
   openGraph: {
-    title: "Civic News & Updates | Choseno",
+    title: "Election News & 2026 Candidate Updates | Choseno",
     description:
-      "Stay informed with the latest civic news, electoral boundary updates, and democratic technology from Choseno.",
+      "Latest news on 2026 midterm elections, candidate announcements, local races & democratic accountability. Community-curated civic journalism, free to read.",
     url: `${BASE_URL}/news`,
     siteName: "Choseno",
     type: "website",
@@ -25,15 +25,15 @@ export const metadata: Metadata = {
         url: `${BASE_URL}/news/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "Civic News & Updates | Choseno",
+        alt: "Election News & 2026 Candidate Updates | Choseno",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Civic News & Updates | Choseno",
+    title: "Election News & 2026 Candidate Updates | Choseno",
     description:
-      "Stay informed with the latest civic news, electoral boundary updates, and democratic technology from Choseno.",
+      "Latest news on 2026 midterm elections, candidate announcements, local races & democratic accountability.",
     images: [`${BASE_URL}/news/opengraph-image`],
   },
 };

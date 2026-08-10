@@ -36,19 +36,22 @@ export async function generateMetadata({
     : null;
 
   const candidateName = selectedCandidate?.display_name || selectedCandidate?.profiles?.full_name;
-
-  const title = candidateName
-    ? `${candidateName} (${seat.role_title}) — ${seat.map_shapes?.name || "Electoral Seat"} | Choseno`
-    : `${seat.role_title} — ${seat.map_shapes?.name || "Electoral Seat"} | Choseno`;
-
-  const description = selectedCandidate?.statement
-    ? selectedCandidate.statement.slice(0, 160)
-    : `View candidates, campaign statements, and discussion for ${seat.role_title} in ${seat.map_shapes?.name || "your district"} on Choseno.`;
+  const ghostId = selectedCandidate?.profiles?.current_ghost_id;
 
   const seatSlug = buildSeatSlug(seat);
   const candSlug = selectedCandidate ? buildCandidateSlug(selectedCandidate) : candidateId;
 
-  const canonicalUrl = `${BASE_URL}/elections/seat/${seatSlug}/candidate/${candSlug}`;
+  const title = candidateName
+    ? `${candidateName} (${seat.role_title}, ${seat.map_shapes?.name || "District"}) — Voter Ratings & Stances`
+    : `${seat.role_title} Candidates — ${seat.map_shapes?.name || "Electoral Seat"} | Choseno`;
+
+  const description = selectedCandidate?.statement
+    ? `${selectedCandidate.statement.slice(0, 140)} — See voter ratings & constituent discussion on Choseno.`
+    : `What do voters think of ${candidateName || "this candidate"}? Read constituent feedback, policy stances, and ratings for ${seat.role_title} on Choseno.`;
+
+  const canonicalUrl = ghostId
+    ? `${BASE_URL}/wall/${ghostId}/${candSlug}`
+    : `${BASE_URL}/elections/seat/${seatSlug}/candidate/${candSlug}`;
 
   const ogImageUrl = selectedCandidate
     ? `${BASE_URL}/candidacy/${selectedCandidate.id}/opengraph-image`

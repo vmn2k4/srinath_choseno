@@ -18,9 +18,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const supabase = await createClient();
 
-  const [{ data: articles }, { data: seats }] = await Promise.all([
+  const [{ data: articles }, { data: seats }, { data: wallProfiles }] = await Promise.all([
     getPublishedNewsArticles(supabase, { limit: 500 }),
     getActiveSeats(supabase),
+    supabase
+      .from("profiles")
+      .select("current_ghost_id, updated_at")
+      .not("current_ghost_id", "is", null),
   ]);
 
   const articleRoutes: MetadataRoute.Sitemap = (articles || []).map((a) => ({
@@ -30,6 +34,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const wallRoutes: MetadataRoute.Sitemap = (wallProfiles || [])
+    .filter((p) => p.current_ghost_id)
+    .map((p) => ({
+      url: `${baseUrl}/wall/${p.current_ghost_id}`,
+      lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
+      changeFrequency: "daily",
+      priority: 0.85,
+    }));
+
   const allSeatRows = (seats || []) as Array<{
     id: string;
     role_title?: string;
@@ -37,10 +50,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     map_shapes?: { id?: number; name?: string; boundary_type?: string } | null;
   }>;
 
-  // Boundary directory pages: every distinct boundary with at least one
-  // active seat is worth a page even with zero candidates yet (role
-  // descriptions + "no active election" is real content, not thin). Seat
-  // pages themselves are the ones gated on having a candidate below.
   const shapesById = new Map<number, { id: number; name: string }>();
   allSeatRows.forEach((s) => {
     const shape = s.map_shapes;
@@ -76,15 +85,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       candidateCountBySeat.set(c.seat_id, (candidateCountBySeat.get(c.seat_id) || 0) + 1);
     });
 
-    // A seat with zero candidates is empty by definition — sitemapping it
-    // risks Google treating it as thin/soft-404 content. Only seats with a
-    // registered candidate get their own sitemap entry.
     const seatsWithCandidates = allSeatRows.filter((s) => (candidateCountBySeat.get(s.id) || 0) > 0);
     seatRoutes = seatsWithCandidates.map((s) => ({
       url: `${baseUrl}/elections/seat/${buildSeatSlug(s)}`,
       lastModified: new Date(),
       changeFrequency: "daily",
-      priority: 0.6,
+      priority: 0.8,
     }));
 
     const seatMap = new Map(allSeatRows.map((s) => [s.id, s]));
@@ -116,5 +122,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  return [...staticRoutes, ...articleRoutes, ...boundaryRoutes, ...seatRoutes, ...candidateRoutes];
+  return [
+    ...staticRoutes,
+    ...wallRoutes,
+    ...articleRoutes,
+    ...boundaryRoutes,
+    ...seatRoutes,
+    ...candidateRoutes,
+  ];
 }

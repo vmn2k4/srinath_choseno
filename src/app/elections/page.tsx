@@ -19,14 +19,14 @@ import { SITE_URL } from "@/lib/constants/site";
 const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
-  title: "Active Elections & Races | Choseno",
+  title: "2026 Midterm Election Candidates by District | Choseno",
   description:
-    "Discover active elections, open seats, and candidates in your electoral boundaries on Choseno.",
+    "Browse all 2026 U.S. House & Senate candidates by state and district. Read voter ratings, policy stances & constituent reviews. Find who's on your ballot today.",
   alternates: { canonical: `${BASE_URL}/elections` },
   openGraph: {
-    title: "Active Elections & Races | Choseno",
+    title: "2026 Midterm Election Candidates by District | Choseno",
     description:
-      "Discover active elections, open seats, and candidates in your electoral boundaries on Choseno.",
+      "Browse all 2026 U.S. House & Senate candidates by state and district. Read voter ratings, policy stances & constituent reviews. Find who's on your ballot today.",
     url: `${BASE_URL}/elections`,
     siteName: "Choseno",
     type: "website",
@@ -35,15 +35,15 @@ export const metadata: Metadata = {
         url: `${BASE_URL}/elections/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "Active Elections & Races | Choseno",
+        alt: "2026 Midterm Election Candidates by District | Choseno",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Active Elections & Races | Choseno",
+    title: "2026 Midterm Election Candidates by District | Choseno",
     description:
-      "Discover active elections, open seats, and candidates in your electoral boundaries on Choseno.",
+      "Browse all 2026 U.S. House & Senate candidates by state and district. Read voter ratings, policy stances & constituent reviews.",
     images: [`${BASE_URL}/elections/opengraph-image`],
   },
 };

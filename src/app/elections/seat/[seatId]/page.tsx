@@ -41,13 +41,38 @@ export async function generateMetadata({
 
   const candidateName = selectedCandidate?.display_name || selectedCandidate?.profiles?.full_name;
 
+  const roleTitle = seat.role_title || "Electoral Seat";
+  const boundaryName = seat.map_shapes?.name || "District";
+  const electionName = seat.elections?.name || "2026 US Midterm Elections";
+  const electionYear = seat.elections?.election_date?.slice(0, 4) || "2026";
+  const candCount = (candidates as any[])?.length || 0;
+
+  const candidateListNames = (candidates as any[])
+    ?.slice(0, 3)
+    .map((c) => c.display_name || c.profiles?.full_name)
+    .filter(Boolean);
+
+  const topMatchup =
+    candidateListNames && candidateListNames.length >= 2
+      ? `${candidateListNames[0]} vs. ${candidateListNames[1]}`
+      : candidateListNames && candidateListNames.length === 1
+      ? candidateListNames[0]
+      : "";
+
   const title = candidateName
-    ? `${candidateName} (${seat.role_title}) — ${seat.map_shapes?.name || "Electoral Seat"} | Choseno`
-    : `${seat.role_title} — ${seat.map_shapes?.name || "Electoral Seat"} | Choseno`;
+    ? `${candidateName} (${roleTitle}, ${boundaryName}) — 2026 Candidate & Voter Ratings | Choseno`
+    : topMatchup
+    ? `${electionYear} ${roleTitle} (${boundaryName}): ${topMatchup} — Voter Ratings | Choseno`
+    : `2026 ${roleTitle} Race (${boundaryName}) — Candidate Roster & Voter Reviews | Choseno`;
+
+  const candidateNamesFormatted =
+    candidateListNames && candidateListNames.length > 0
+      ? ` Candidates include ${candidateListNames.join(", ")}${candCount > 3 ? ` & ${candCount - 3} others` : ""}.`
+      : "";
 
   const description = selectedCandidate?.statement
     ? selectedCandidate.statement.slice(0, 160)
-    : `View candidates, campaign statements, and discussion for ${seat.role_title} in ${seat.map_shapes?.name || "your district"} on Choseno.`;
+    : `Who is running for ${roleTitle} in ${boundaryName}?${candidateNamesFormatted} Compare all ${candCount > 0 ? `${candCount} ` : ""}candidates, read policy stances, constituent reviews & ratings on Choseno.`;
 
   const seatSlug = buildSeatSlug(seat);
   const candSlug = selectedCandidate ? buildCandidateSlug(selectedCandidate) : candidateId;
@@ -98,20 +123,35 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
     seat?.id ? [seat.id] : []
   );
 
+  const roleTitle = seat?.role_title || "Electoral Seat";
+  const boundaryName = seat?.map_shapes?.name || "District";
+  const seatSlug = seat ? buildSeatSlug(seat) : seatId;
+  const canonicalUrl = `${BASE_URL}/elections/seat/${seatSlug}`;
+
   const jsonLd = seat
-    ? {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Elections", item: `${BASE_URL}/elections` },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: `${seat.role_title} — ${seat.map_shapes?.name || ""}`,
-            item: `${BASE_URL}/elections/seat/${seatId}`,
-          },
-        ],
-      }
+    ? [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemPage",
+          name: `${roleTitle} Candidates — ${boundaryName}`,
+          description: `View candidates, policy positions, and constituent discussion for ${roleTitle} in ${boundaryName}.`,
+          url: canonicalUrl,
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: BASE_URL },
+            { "@type": "ListItem", position: 2, name: "Elections & Races", item: `${BASE_URL}/elections` },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: `${roleTitle} (${boundaryName})`,
+              item: canonicalUrl,
+            },
+          ],
+        },
+      ]
     : null;
 
   return (
@@ -123,9 +163,9 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
         />
       )}
       <ElectionSeatPageClient
-        seatId={seat?.id || seatId}
+        seatId={seatId}
         initialSeat={seat}
-        initialCandidates={candidates || []}
+        initialCandidates={(candidates as any[]) || []}
       />
     </>
   );

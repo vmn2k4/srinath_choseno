@@ -45,13 +45,16 @@ export async function generateMetadata({
   const name = candidate.profiles?.full_name || "Candidate";
   const roleTitle = candidate.election_seats?.role_title || "Office";
   const slug = buildCandidateSlug(candidate);
-  const canonicalUrl = `${BASE_URL}/candidacy/${slug}`;
+  const ghostId = candidate.profiles?.current_ghost_id;
+  const canonicalUrl = ghostId
+    ? `${BASE_URL}/wall/${ghostId}/${slug}`
+    : `${BASE_URL}/candidacy/${slug}`;
   const ogImageUrl = `${BASE_URL}/candidacy/${realCandidateId}/opengraph-image`;
 
-  const title = `${name} — Candidate for ${roleTitle} | Choseno`;
+  const title = `${name} — 2026 ${roleTitle} Candidate | Voter Reviews`;
   const description = candidate.statement
-    ? candidate.statement.slice(0, 160)
-    : `View official campaign statements, positions, and updates from ${name} on Choseno.`;
+    ? `${candidate.statement.slice(0, 140)} — Read constituent ratings & voter feedback on Choseno.`
+    : `What do voters think of ${name}? Read anonymous constituent reviews, policy stances & ratings for ${roleTitle} on Choseno.`;
 
   return {
     title,

@@ -6,6 +6,7 @@ import {
   getWallPosts,
   getWallPostBySlugOrId,
   getSupporterCount,
+  getSEOProfileSummary,
 } from "@/lib/services/politicianWall";
 import { SITE_URL } from "@/lib/constants/site";
 
@@ -14,20 +15,6 @@ const BASE_URL = SITE_URL;
 interface WallSlugPageProps {
   params: Promise<{ ghostId: string; slug: string }>;
 }
-
-type WallOwner = {
-  id: string;
-  full_name?: string;
-  politician_profiles?: {
-    bio?: string;
-    avatar_url?: string;
-    contact_email?: string | null;
-    contact_phone?: string | null;
-    photo_url?: string | null;
-    source_url?: string | null;
-    holding_since?: string | null;
-  } | null;
-};
 
 type WallPost = {
   id: string;
@@ -42,15 +29,26 @@ export async function generateMetadata({
   const { ghostId, slug } = await params;
   const supabase = await createServerClient();
 
-  const [{ data: ownerData }, { data: postData }] = await Promise.all([
-    getWallOwnerProfile(supabase, ghostId),
+  const [{ owner, activeCandidacy, partyName }, { data: postData }] = await Promise.all([
+    getSEOProfileSummary(supabase, ghostId),
     getWallPostBySlugOrId(supabase, ghostId, slug),
   ]);
 
-  const owner = ownerData as unknown as WallOwner | null;
   const post = postData as WallPost | null;
-
   const name = owner?.full_name || "Politician";
+  const roleTitle =
+    activeCandidacy?.election_seats?.role_title ||
+    (owner?.politician_profiles as any)?.political_target_role ||
+    "Representative";
+  const boundaryName =
+    activeCandidacy?.election_seats?.map_shapes?.name ||
+    (owner?.politician_profiles as any)?.target_boundary_name ||
+    "";
+  const electionYear = activeCandidacy?.election_seats?.elections?.election_date?.slice(0, 4) || "2026";
+
+  const partyLabel = partyName ? ` (${partyName})` : "";
+  const locationLabel = boundaryName ? ` in ${boundaryName}` : "";
+
   const canonicalUrl = `${BASE_URL}/wall/${ghostId}/${slug}`;
 
   const postExcerpt = post?.content
@@ -58,14 +56,16 @@ export async function generateMetadata({
     : null;
 
   const title = postExcerpt
-    ? `"${postExcerpt.slice(0, 60)}${postExcerpt.length > 60 ? "…" : ""}" — ${name}'s Wall | Choseno`
-    : `${name}'s Public Wall Thread | Choseno`;
+    ? `"${postExcerpt.slice(0, 55)}${postExcerpt.length > 55 ? "…" : ""}" — ${name}${partyLabel} | Choseno`
+    : activeCandidacy
+    ? `${name}${partyLabel} — ${electionYear} ${roleTitle} Candidate${locationLabel} | Choseno`
+    : `${name}${partyLabel} — ${roleTitle}${locationLabel} | Public Wall | Choseno`;
 
   const description = postExcerpt
-    ? postExcerpt.slice(0, 160)
-    : owner?.politician_profiles?.bio
-    ? owner.politician_profiles.bio.slice(0, 160)
-    : `Read official updates, policy statements, and constituent discussion for ${name} on Choseno.`;
+    ? `${postExcerpt.slice(0, 140)} — Read official updates, voter ratings, and constituent discussion for ${name} (${roleTitle}) on Choseno.`
+    : activeCandidacy
+    ? `Read updates, constituent feedback, and campaign positions for ${name}, candidate for ${roleTitle}${locationLabel}${partyLabel} on Choseno.`
+    : `Read official updates, policy statements, and constituent discussion for ${name} (${roleTitle}${locationLabel}) on Choseno.`;
 
   const ogImageUrl = post?.image_url || `${BASE_URL}/wall/${ghostId}/${slug}/opengraph-image`;
 
@@ -101,11 +101,11 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
   const { ghostId, slug } = await params;
   const supabase = await createServerClient();
 
-  const [{ data: ownerData }, { data: postData }] = await Promise.all([
-    getWallOwnerProfile(supabase, ghostId),
+  const [{ owner, activeCandidacy, partyName, rating }, { data: postData }] = await Promise.all([
+    getSEOProfileSummary(supabase, ghostId),
     getWallPostBySlugOrId(supabase, ghostId, slug),
   ]);
-  const owner = ownerData as unknown as WallOwner | null;
+
   const post = postData as WallPost | null;
 
   const [{ data: posts }, supportCountRes] = await Promise.all([
@@ -113,30 +113,85 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
     owner?.id ? getSupporterCount(supabase, owner.id) : Promise.resolve({ count: 0 }),
   ]);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SocialMediaPosting",
-    headline: post?.content ? post.content.slice(0, 110) : `${owner?.full_name || "Politician"}'s Public Thread`,
-    articleBody: post?.content || undefined,
-    datePublished: post?.created_at || undefined,
-    url: `${BASE_URL}/wall/${ghostId}/${slug}`,
-    author: owner
-      ? {
-          "@type": "Person",
-          name: owner.full_name || "Politician",
-          url: `${BASE_URL}/wall/${ghostId}`,
-          image: owner.politician_profiles?.avatar_url || undefined,
-        }
-      : undefined,
-    publisher: {
-      "@type": "Organization",
-      name: "Choseno",
-      url: BASE_URL,
+  const name = owner?.full_name || "Politician";
+  const roleTitle =
+    activeCandidacy?.election_seats?.role_title ||
+    (owner?.politician_profiles as any)?.political_target_role ||
+    "Representative";
+  const canonicalUrl = `${BASE_URL}/wall/${ghostId}/${slug}`;
+
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "SocialMediaPosting",
+      headline: post?.content ? post.content.slice(0, 110) : `${name}'s Public Thread`,
+      articleBody: post?.content || undefined,
+      datePublished: post?.created_at || undefined,
+      url: canonicalUrl,
+      author: owner
+        ? {
+            "@type": "Person",
+            name: name,
+            jobTitle: roleTitle,
+            url: `${BASE_URL}/wall/${ghostId}`,
+            image: owner.politician_profiles?.avatar_url || undefined,
+            ...(partyName && {
+              memberOf: {
+                "@type": "PoliticalParty",
+                name: partyName,
+              },
+            }),
+          }
+        : undefined,
+      publisher: {
+        "@type": "Organization",
+        name: "Choseno",
+        url: BASE_URL,
+      },
+      ...(post?.image_url && {
+        image: post.image_url,
+      }),
+      ...(rating && rating.count > 0 && {
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: rating.avg.toString(),
+          reviewCount: rating.count.toString(),
+          bestRating: "5",
+          worstRating: "1",
+        },
+      }),
     },
-    ...(post?.image_url && {
-      image: post.image_url,
-    }),
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: BASE_URL,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Elections & Races",
+          item: `${BASE_URL}/elections`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: `${name} Wall`,
+          item: `${BASE_URL}/wall/${ghostId}`,
+        },
+        {
+          "@type": "ListItem",
+          position: 4,
+          name: post?.content ? post.content.slice(0, 30) : slug,
+          item: canonicalUrl,
+        },
+      ],
+    },
+  ];
 
   return (
     <>
@@ -148,7 +203,7 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
         ghostId={ghostId}
         initialWallOwner={owner as any}
         initialPosts={(posts as any) || []}
-        initialSupportCount={"count" in supportCountRes ? supportCountRes.count || 0 : 0}
+        initialSupportCount={"count" in supportCountRes ? (supportCountRes as any).count || 0 : 0}
       />
     </>
   );

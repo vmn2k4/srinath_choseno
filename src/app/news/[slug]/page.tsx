@@ -99,38 +99,49 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
       })
     : null;
 
-  // ── JSON-LD NewsArticle structured data ──────────────────────────────────
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    headline: article.headline,
-    description:
-      content?.metaDescription || article.summary || undefined,
-    datePublished: article.published_at ?? article.created_at,
-    dateModified: article.updated_at,
-    url: `${SITE_URL}/news/${slug}`,
-    publisher: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_URL,
+  // ── JSON-LD NewsArticle + Breadcrumb structured data ──────────────────────
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      headline: article.headline,
+      description:
+        content?.metaDescription || article.summary || undefined,
+      datePublished: article.published_at ?? article.created_at,
+      dateModified: article.updated_at,
+      url: `${SITE_URL}/news/${slug}`,
+      publisher: {
+        "@type": "Organization",
+        name: SITE_NAME,
+        url: SITE_URL,
+      },
+      ...(article.hero_image_url && {
+        image: {
+          "@type": "ImageObject",
+          url: article.hero_image_url,
+          description: content?.heroImageAlt ?? article.headline,
+        },
+      }),
+      ...(content?.author?.name && {
+        author: {
+          "@type": "Person",
+          name: content.author.name,
+        },
+      }),
+      ...(content?.tags?.length && {
+        keywords: content.tags.join(", "),
+      }),
     },
-    ...(article.hero_image_url && {
-      image: {
-        "@type": "ImageObject",
-        url: article.hero_image_url,
-        description: content?.heroImageAlt ?? article.headline,
-      },
-    }),
-    ...(content?.author?.name && {
-      author: {
-        "@type": "Person",
-        name: content.author.name,
-      },
-    }),
-    ...(content?.tags?.length && {
-      keywords: content.tags.join(", "),
-    }),
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "News", item: `${SITE_URL}/news` },
+        { "@type": "ListItem", position: 3, name: article.headline, item: `${SITE_URL}/news/${slug}` },
+      ],
+    },
+  ];
 
   return (
     <>
