@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import LinkPreview from "./LinkPreview";
 import AnswerValue from "./AnswerValue";
@@ -43,6 +44,7 @@ import {
   MessageSquare,
   Send,
   UserCheck,
+  ExternalLink,
 } from "lucide-react";
 import {
   Card,
@@ -714,19 +716,45 @@ export default function CandidacyWall({
                 </div>
               </div>
 
-              {/* Support Button */}
-              <Button
-                variant={isSupporting ? "primary" : "outline"}
-                size="sm"
-                onClick={toggleSupport}
-                className="gap-1.5 shrink-0"
-              >
-                <Heart
-                  size={14}
-                  className={isSupporting ? "fill-current" : ""}
-                />
-                {supportCount > 0 ? supportCount : "Support"}
-              </Button>
+              <div className="flex items-center gap-2 flex-wrap shrink-0">
+                {candidate.profiles?.current_ghost_id && (
+                  <Link
+                    href={(() => {
+                      const ghostId = candidate.profiles.current_ghost_id;
+                      const roleTitle = candidate.election_seats?.role_title || "";
+                      const slug = `${displayName}${roleTitle ? `-${roleTitle}` : ""}`
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, "-")
+                        .replace(/(^-|-$)+/g, "");
+                      return `/wall/${ghostId}${slug ? `/${slug}` : ""}`;
+                    })()}
+                  >
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-1.5 text-xs border-primary/30 text-primary-light hover:bg-primary/10 shrink-0"
+                      title={`View ${displayName}'s full Politician Wall`}
+                    >
+                      <ExternalLink size={13} />
+                      View Politician Wall
+                    </Button>
+                  </Link>
+                )}
+
+                {/* Support Button */}
+                <Button
+                  variant={isSupporting ? "primary" : "outline"}
+                  size="sm"
+                  onClick={toggleSupport}
+                  className="gap-1.5 shrink-0"
+                >
+                  <Heart
+                    size={14}
+                    className={isSupporting ? "fill-current" : ""}
+                  />
+                  {supportCount > 0 ? supportCount : "Support"}
+                </Button>
+              </div>
             </div>
 
             {/* Nomination Status */}
