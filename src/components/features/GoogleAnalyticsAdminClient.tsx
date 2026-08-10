@@ -14,11 +14,16 @@ import {
   AlertCircle,
   Globe2,
   MapPin,
+  TrendingUp,
+  Link2,
+  Zap,
 } from "lucide-react";
 import { GA4_DATE_RANGES, DEFAULT_GA4_DATE_RANGE_DAYS, type Ga4DateRangeDays } from "@/lib/constants/ga4";
 import type { Ga4Overview } from "@/lib/analytics/ga4Reporting";
 
 const RANGE_LABELS: Record<Ga4DateRangeDays, string> = {
+  1: "Last 24 hours",
+  3: "Last 3 days",
   7: "Last 7 days",
   14: "Last 14 days",
   28: "Last 28 days",
@@ -120,7 +125,7 @@ export default function GoogleAnalyticsAdminClient() {
           </div>
         ) : data ? (
           <div className="space-y-8">
-            {/* KPI Grid */}
+            {/* Primary KPI Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <Card padding="md" className="border-l-4 border-l-primary space-y-2">
                 <div className="flex items-center justify-between">
@@ -128,6 +133,7 @@ export default function GoogleAnalyticsAdminClient() {
                   <Activity size={18} className="text-primary" />
                 </div>
                 <p className="text-2xl font-bold text-text-main">{data.totals.sessions.toLocaleString()}</p>
+                <p className="text-xs text-text-muted">Total user sessions</p>
               </Card>
               <Card padding="md" className="border-l-4 border-l-success space-y-2">
                 <div className="flex items-center justify-between">
@@ -135,6 +141,7 @@ export default function GoogleAnalyticsAdminClient() {
                   <Users size={18} className="text-success" />
                 </div>
                 <p className="text-2xl font-bold text-text-main">{data.totals.activeUsers.toLocaleString()}</p>
+                <p className="text-xs text-text-muted">Unique visitors</p>
               </Card>
               <Card padding="md" className="border-l-4 border-l-accent space-y-2">
                 <div className="flex items-center justify-between">
@@ -142,6 +149,7 @@ export default function GoogleAnalyticsAdminClient() {
                   <Eye size={18} className="text-accent" />
                 </div>
                 <p className="text-2xl font-bold text-text-main">{data.totals.pageViews.toLocaleString()}</p>
+                <p className="text-xs text-text-muted">Total page views</p>
               </Card>
               <Card padding="md" className="border-l-4 border-l-warning space-y-2">
                 <div className="flex items-center justify-between">
@@ -151,34 +159,80 @@ export default function GoogleAnalyticsAdminClient() {
                 <p className="text-2xl font-bold text-text-main">
                   {Math.floor(data.totals.avgEngagementSec / 60)}m {data.totals.avgEngagementSec % 60}s
                 </p>
+                <p className="text-xs text-text-muted">Per session</p>
               </Card>
             </div>
 
-            {/* Daily sessions trend — plain CSS bars, no charting lib in this project */}
+            {/* Secondary KPI Grid — Bounce Rate & Conversions */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+              <Card padding="md" className="border-l-4 border-l-danger space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-text-muted uppercase tracking-wider">Bounce Rate</span>
+                  <TrendingUp size={18} className="text-danger" />
+                </div>
+                <p className="text-2xl font-bold text-text-main">{data.totals.bounceRate.toFixed(2)}%</p>
+                <p className="text-xs text-text-muted">Sessions with single interaction</p>
+              </Card>
+              <Card padding="md" className="border-l-4 border-l-success space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-text-muted uppercase tracking-wider">Conversions</span>
+                  <Zap size={18} className="text-success" />
+                </div>
+                <p className="text-2xl font-bold text-text-main">{data.totals.conversions.toLocaleString()}</p>
+                <p className="text-xs text-text-muted">Total goal completions</p>
+              </Card>
+            </div>
+
+            {/* Daily sessions trend with y-axis labels */}
             {data.dailyTrend.length > 0 && (
               <div>
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">
-                    Sessions, {RANGE_LABELS[days].toLowerCase()}
+                    Daily Sessions Trend
                   </h3>
+                  <span className="text-[11px] text-text-muted">{RANGE_LABELS[days].toLowerCase()}</span>
                 </div>
-                <div className="flex items-end gap-0.5 h-24 bg-surface/30 rounded-lg p-2">
-                  {data.dailyTrend.map((day) => {
-                    const max = Math.max(...data.dailyTrend.map((d) => d.sessions), 1);
-                    const heightPct = Math.max((day.sessions / max) * 100, 2);
-                    return (
-                      <div
-                        key={day.date}
-                        title={`${day.date}: ${day.sessions} sessions`}
-                        className="flex-1 bg-primary/60 hover:bg-primary rounded-sm transition-colors"
-                        style={{ height: `${heightPct}%` }}
-                      />
-                    );
-                  })}
-                </div>
-                <div className="flex justify-between mt-1.5 text-[10px] text-text-muted font-mono">
-                  <span>{data.dailyTrend[0]?.date}</span>
-                  <span>{data.dailyTrend[data.dailyTrend.length - 1]?.date}</span>
+                <div className="flex gap-3">
+                  {/* Y-axis labels */}
+                  <div className="flex flex-col justify-between h-40 text-right pr-2 py-2">
+                    {(() => {
+                      const max = Math.max(...data.dailyTrend.map((d) => d.sessions), 1);
+                      const labels = [];
+                      for (let i = 0; i <= 4; i++) {
+                        labels.push(Math.round((max / 4) * (4 - i)));
+                      }
+                      return labels.map((label, idx) => (
+                        <div key={idx} className="text-[10px] text-text-muted font-mono leading-none">
+                          {label.toLocaleString()}
+                        </div>
+                      ));
+                    })()}
+                  </div>
+                  {/* Chart */}
+                  <div className="flex-1">
+                    <div className="flex items-end gap-0.5 h-40 bg-surface/30 rounded-lg p-3 border border-border-light/20">
+                      {data.dailyTrend.map((day) => {
+                        const max = Math.max(...data.dailyTrend.map((d) => d.sessions), 1);
+                        const heightPct = Math.max((day.sessions / max) * 100, 2);
+                        return (
+                          <div key={day.date} className="flex-1 group relative">
+                            <div
+                              title={`${day.date}: ${day.sessions} sessions, ${day.activeUsers} users, ${day.bounceRate.toFixed(1)}% bounce`}
+                              className="w-full bg-gradient-to-t from-primary to-primary/60 hover:from-primary hover:to-primary rounded-sm transition-all cursor-pointer relative group"
+                              style={{ height: `${heightPct}%` }}
+                            />
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-6 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                              <div className="text-[10px] text-text-muted font-mono">{day.date}</div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="flex justify-between mt-6 text-[10px] text-text-muted font-mono">
+                      <span>{data.dailyTrend[0]?.date}</span>
+                      <span>{data.dailyTrend[data.dailyTrend.length - 1]?.date}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
@@ -186,7 +240,7 @@ export default function GoogleAnalyticsAdminClient() {
             {/* Geography — where visitors are from */}
             <div>
               <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                <Globe2 size={13} /> Where visitors are from
+                <Globe2 size={13} /> Geographic Performance
               </h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Top Countries */}
@@ -195,23 +249,30 @@ export default function GoogleAnalyticsAdminClient() {
                   {data.topCountries.length === 0 ? (
                     <p className="text-xs text-text-muted">No geography data yet.</p>
                   ) : (
-                    <div className="space-y-2">
-                      {data.topCountries.map((c) => {
+                    <div className="space-y-2.5">
+                      {data.topCountries.map((c, idx) => {
                         const max = Math.max(...data.topCountries.map((x) => x.sessions), 1);
                         const pct = Math.max((c.sessions / max) * 100, 3);
                         return (
-                          <div key={c.country} className="space-y-0.5">
-                            <div className="flex items-center justify-between text-xs gap-3">
-                              <span className="text-text-main font-medium truncate">{c.country}</span>
-                              <span className="text-text-muted font-semibold shrink-0 font-mono">
-                                {c.sessions.toLocaleString()}
-                              </span>
+                          <div key={c.country} className="border border-border-light/30 rounded-lg p-2.5 space-y-1.5">
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="text-xs font-semibold text-text-main">{c.country}</span>
+                              <div className="flex items-center gap-1 text-[10px]">
+                                <span className="text-text-muted font-mono">{c.sessions.toLocaleString()}</span>
+                                <span className="text-text-muted/60">•</span>
+                                <span className="text-text-muted font-mono">{c.activeUsers.toLocaleString()} users</span>
+                              </div>
                             </div>
-                            <div className="h-1.5 rounded-full bg-surface/60 overflow-hidden">
-                              <div
-                                className="h-full bg-primary/70 rounded-full"
-                                style={{ width: `${pct}%` }}
-                              />
+                            <div className="flex items-center justify-between gap-2">
+                              <div className="flex-1 h-1.5 rounded-full bg-surface/60 overflow-hidden">
+                                <div
+                                  className="h-full bg-primary/70 rounded-full"
+                                  style={{ width: `${pct}%` }}
+                                />
+                              </div>
+                              <span className="text-[10px] text-danger font-mono shrink-0">
+                                {c.bounceRate.toFixed(1)}%
+                              </span>
                             </div>
                           </div>
                         );
@@ -228,79 +289,215 @@ export default function GoogleAnalyticsAdminClient() {
                   {data.topCities.length === 0 ? (
                     <p className="text-xs text-text-muted">No city-level data yet.</p>
                   ) : (
-                    <div className="space-y-1.5">
-                      {data.topCities.map((c, i) => (
-                        <div key={`${c.city}-${c.country}-${i}`} className="flex items-center justify-between text-xs gap-3">
-                          <span className="text-text-main truncate">
-                            {c.city}
-                            {c.country && <span className="text-text-muted"> · {c.country}</span>}
-                          </span>
-                          <span className="text-text-muted font-semibold shrink-0 font-mono">
-                            {c.sessions.toLocaleString()}
-                          </span>
-                        </div>
-                      ))}
+                    <div className="space-y-2">
+                      {data.topCities.map((c, i) => {
+                        const max = Math.max(...data.topCities.map((x) => x.sessions), 1);
+                        const pct = Math.max((c.sessions / max) * 100, 3);
+                        return (
+                          <div key={`${c.city}-${c.country}-${i}`} className="space-y-1">
+                            <div className="flex items-center justify-between text-xs gap-3">
+                              <span className="text-text-main font-medium truncate">
+                                {c.city}
+                                {c.country && <span className="text-text-muted text-[10px]"> · {c.country}</span>}
+                              </span>
+                              <span className="text-text-muted font-semibold shrink-0 font-mono">
+                                {c.sessions.toLocaleString()}
+                              </span>
+                            </div>
+                            <div className="h-1.5 rounded-full bg-surface/60 overflow-hidden">
+                              <div
+                                className="h-full bg-accent/70 rounded-full"
+                                style={{ width: `${pct}%` }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
               </div>
             </div>
 
+            {/* Traffic Sources Overview */}
+            <div>
+              <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                <Link2 size={13} /> Traffic Sources
+              </h3>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                {data.trafficSources.length === 0 ? (
+                  <p className="text-xs text-text-muted col-span-3">No traffic source data yet.</p>
+                ) : (
+                  data.trafficSources.map((source) => {
+                    const total = data.trafficSources.reduce((acc, s) => acc + s.sessions, 0) || 1;
+                    const pct = Math.round((source.sessions / total) * 100);
+                    return (
+                      <div key={source.source} className="border border-border-light/30 rounded-lg p-3 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-semibold text-text-main truncate">{source.source}</span>
+                          <Badge tone="neutral" size="sm">
+                            {pct}%
+                          </Badge>
+                        </div>
+                        <div className="space-y-1">
+                          <div className="h-1.5 rounded-full bg-surface/60 overflow-hidden">
+                            <div
+                              className="h-full bg-primary/70 rounded-full"
+                              style={{ width: `${pct}%` }}
+                            />
+                          </div>
+                          <div className="flex items-center justify-between text-[10px] text-text-muted">
+                            <span>{source.sessions.toLocaleString()} sessions</span>
+                            <span>{source.activeUsers.toLocaleString()} users</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+
+            {/* Top Pages & Top Events Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Top Pages */}
+              {/* Top Pages with Engagement */}
               <div>
                 <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3">Top Pages</h3>
-                <div className="space-y-1.5">
+                <div className="space-y-2.5">
                   {data.topPages.length === 0 ? (
                     <p className="text-xs text-text-muted">No page view data yet.</p>
                   ) : (
-                    data.topPages.map((p) => (
-                      <div key={p.path} className="flex items-center justify-between text-xs gap-3">
-                        <span className="font-mono text-text-main truncate">{p.path}</span>
-                        <span className="text-text-muted font-semibold shrink-0">{p.views.toLocaleString()}</span>
+                    data.topPages.map((p, idx) => (
+                      <div key={p.path} className="border border-border-light/30 rounded-lg p-2.5 space-y-1.5">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-bold text-text-muted bg-surface/80 px-1.5 py-0.5 rounded">
+                                #{idx + 1}
+                              </span>
+                              <span className="font-mono text-xs text-text-main truncate">{p.path}</span>
+                            </div>
+                          </div>
+                          <span className="text-xs font-semibold text-primary shrink-0">{p.views.toLocaleString()}</span>
+                        </div>
+                        <div className="text-[10px] text-text-muted">
+                          Avg engagement: {Math.floor(p.avgEngagementSec / 60)}m {p.avgEngagementSec % 60}s
+                        </div>
                       </div>
                     ))
                   )}
                 </div>
               </div>
 
-              {/* Top Events — this is where our custom gtag events show up */}
+              {/* Top Events */}
               <div>
                 <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3">Top Events</h3>
-                <div className="space-y-1.5">
+                <div className="space-y-2.5">
                   {data.topEvents.length === 0 ? (
                     <p className="text-xs text-text-muted">No event data yet.</p>
                   ) : (
-                    data.topEvents.map((e) => (
-                      <div key={e.name} className="flex items-center justify-between text-xs gap-3">
-                        <span className="font-mono text-text-main truncate">{e.name}</span>
-                        <span className="text-text-muted font-semibold shrink-0">{e.count.toLocaleString()}</span>
-                      </div>
-                    ))
+                    data.topEvents.map((e, idx) => {
+                      const max = Math.max(...data.topEvents.map((x) => x.count), 1);
+                      const pct = Math.max((e.count / max) * 100, 5);
+                      return (
+                        <div key={e.name} className="space-y-1.5">
+                          <div className="flex items-center justify-between text-xs gap-3">
+                            <span className="text-text-main font-medium truncate">
+                              <span className="text-[10px] font-bold text-text-muted bg-surface/80 px-1.5 py-0.5 rounded mr-2">
+                                #{idx + 1}
+                              </span>
+                              {e.name}
+                            </span>
+                            <span className="text-text-muted font-semibold shrink-0 font-mono">
+                              {e.count.toLocaleString()}
+                            </span>
+                          </div>
+                          <div className="h-1.5 rounded-full bg-surface/60 overflow-hidden">
+                            <div
+                              className="h-full bg-accent/70 rounded-full"
+                              style={{ width: `${pct}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })
                   )}
                 </div>
               </div>
             </div>
 
-            {/* Device breakdown */}
-            {data.devices.length > 0 && (
-              <div>
-                <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                  <Smartphone size={13} /> Device Breakdown
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {data.devices.map((d) => {
-                    const total = data.devices.reduce((acc, x) => acc + x.sessions, 0) || 1;
-                    const pct = Math.round((d.sessions / total) * 100);
-                    return (
-                      <Badge key={d.category} tone="neutral" size="sm">
-                        {d.category}: {pct}%
-                      </Badge>
-                    );
-                  })}
+            {/* Bounce Rate by Device & Top Referrers */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Device Breakdown with Bounce Rate */}
+              {data.devices.length > 0 && (
+                <div>
+                  <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                    <Smartphone size={13} /> Device Performance
+                  </h3>
+                  <div className="space-y-2.5">
+                    {data.devices.map((d) => {
+                      const total = data.devices.reduce((acc, x) => acc + x.sessions, 0) || 1;
+                      const pct = Math.round((d.sessions / total) * 100);
+                      return (
+                        <div key={d.category} className="border border-border-light/30 rounded-lg p-3 space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-semibold text-text-main capitalize">{d.category}</span>
+                            <div className="flex items-center gap-2">
+                              <Badge tone="neutral" size="sm">
+                                {pct}%
+                              </Badge>
+                              <span className="text-[10px] font-mono text-danger">
+                                {d.bounceRate.toFixed(1)}% bounce
+                              </span>
+                            </div>
+                          </div>
+                          <div className="h-1.5 rounded-full bg-surface/60 overflow-hidden">
+                            <div
+                              className="h-full bg-primary/70 rounded-full"
+                              style={{ width: `${pct}%` }}
+                            />
+                          </div>
+                          <div className="text-[10px] text-text-muted">
+                            {d.sessions.toLocaleString()} sessions
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+
+              {/* Top Referrers */}
+              {data.topReferrers && data.topReferrers.length > 0 && (
+                <div>
+                  <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                    <Link2 size={13} /> Top Referrers
+                  </h3>
+                  <div className="space-y-2">
+                    {data.topReferrers.map((r, idx) => {
+                      const max = Math.max(...data.topReferrers.map((x) => x.sessions), 1);
+                      const pct = Math.max((r.sessions / max) * 100, 5);
+                      return (
+                        <div key={`${r.referrer}-${idx}`} className="space-y-1">
+                          <div className="flex items-center justify-between text-xs gap-3">
+                            <span className="text-text-main truncate font-mono text-[11px]">{r.referrer || "(direct)"}</span>
+                            <span className="text-text-muted font-semibold shrink-0">
+                              {r.sessions.toLocaleString()}
+                            </span>
+                          </div>
+                          <div className="h-1.5 rounded-full bg-surface/60 overflow-hidden">
+                            <div
+                              className="h-full bg-success/70 rounded-full"
+                              style={{ width: `${pct}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         ) : null}
       </Card>

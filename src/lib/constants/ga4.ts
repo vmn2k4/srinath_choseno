@@ -7,6 +7,6 @@
 // Ranges the admin UI's dropdown can request. GA4's relative-date syntax
 // ("NdaysAgo") only accepts these specific strings, so this also doubles
 // as the allowlist the API route validates query params against.
-export const GA4_DATE_RANGES = [7, 14, 28, 30, 90] as const;
+export const GA4_DATE_RANGES = [1, 3, 7, 14, 28, 30, 90] as const;
 export type Ga4DateRangeDays = (typeof GA4_DATE_RANGES)[number];
 export const DEFAULT_GA4_DATE_RANGE_DAYS: Ga4DateRangeDays = 30;

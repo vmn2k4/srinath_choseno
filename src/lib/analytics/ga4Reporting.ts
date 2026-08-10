@@ -29,13 +29,23 @@ function getClient(): BetaAnalyticsDataClient {
 }
 
 export type Ga4Overview = {
-  totals: { sessions: number; activeUsers: number; pageViews: number; avgEngagementSec: number };
-  dailyTrend: { date: string; sessions: number; activeUsers: number }[];
-  topPages: { path: string; views: number }[];
+  totals: {
+    sessions: number;
+    activeUsers: number;
+    pageViews: number;
+    avgEngagementSec: number;
+    bounceRate: number;
+    conversions: number;
+  };
+  dailyTrend: { date: string; sessions: number; activeUsers: number; pageViews: number; bounceRate: number }[];
+  hourlyTrend?: { hour: string; sessions: number; activeUsers: number }[];
+  topPages: { path: string; views: number; avgEngagementSec: number }[];
   topEvents: { name: string; count: number }[];
-  devices: { category: string; sessions: number }[];
-  topCountries: { country: string; sessions: number; activeUsers: number }[];
+  devices: { category: string; sessions: number; bounceRate: number }[];
+  topCountries: { country: string; sessions: number; activeUsers: number; bounceRate: number }[];
   topCities: { city: string; country: string; sessions: number }[];
+  topReferrers: { referrer: string; sessions: number }[];
+  trafficSources: { source: string; sessions: number; activeUsers: number }[];
 };
 
 function metricNum(row: { metricValues?: { value?: string | null }[] | null } | undefined, index: number): number {
@@ -65,64 +75,83 @@ export async function getGa4Overview(
     const property = `properties/${PROPERTY_ID}`;
     const dateRanges = [{ startDate: `${days}daysAgo`, endDate: "today" }];
 
-    const [[totalsRes], [trendRes], [pagesRes], [eventsRes], [deviceRes], [countryRes], [cityRes]] = await Promise.all([
-      client.runReport({
-        property,
-        dateRanges,
-        metrics: [
-          { name: "sessions" },
-          { name: "activeUsers" },
-          { name: "screenPageViews" },
-          { name: "averageSessionDuration" },
-        ],
-      }),
-      client.runReport({
-        property,
-        dateRanges,
-        dimensions: [{ name: "date" }],
-        metrics: [{ name: "sessions" }, { name: "activeUsers" }],
-        orderBys: [{ dimension: { dimensionName: "date" } }],
-      }),
-      client.runReport({
-        property,
-        dateRanges,
-        dimensions: [{ name: "pagePath" }],
-        metrics: [{ name: "screenPageViews" }],
-        orderBys: [{ metric: { metricName: "screenPageViews" }, desc: true }],
-        limit: 10,
-      }),
-      client.runReport({
-        property,
-        dateRanges,
-        dimensions: [{ name: "eventName" }],
-        metrics: [{ name: "eventCount" }],
-        orderBys: [{ metric: { metricName: "eventCount" }, desc: true }],
-        limit: 15,
-      }),
-      client.runReport({
-        property,
-        dateRanges,
-        dimensions: [{ name: "deviceCategory" }],
-        metrics: [{ name: "sessions" }],
-        orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
-      }),
-      client.runReport({
-        property,
-        dateRanges,
-        dimensions: [{ name: "country" }],
-        metrics: [{ name: "sessions" }, { name: "activeUsers" }],
-        orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
-        limit: 15,
-      }),
-      client.runReport({
-        property,
-        dateRanges,
-        dimensions: [{ name: "city" }, { name: "country" }],
-        metrics: [{ name: "sessions" }],
-        orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
-        limit: 10,
-      }),
-    ]);
+    const [[totalsRes], [trendRes], [pagesRes], [eventsRes], [deviceRes], [countryRes], [cityRes], [referrerRes], [sourceRes]] =
+      await Promise.all([
+        client.runReport({
+          property,
+          dateRanges,
+          metrics: [
+            { name: "sessions" },
+            { name: "activeUsers" },
+            { name: "screenPageViews" },
+            { name: "averageSessionDuration" },
+            { name: "bounceRate" },
+            { name: "conversions" },
+          ],
+        }),
+        client.runReport({
+          property,
+          dateRanges,
+          dimensions: [{ name: "date" }],
+          metrics: [{ name: "sessions" }, { name: "activeUsers" }, { name: "screenPageViews" }, { name: "bounceRate" }],
+          orderBys: [{ dimension: { dimensionName: "date" } }],
+        }),
+        client.runReport({
+          property,
+          dateRanges,
+          dimensions: [{ name: "pagePath" }],
+          metrics: [{ name: "screenPageViews" }, { name: "averageSessionDuration" }],
+          orderBys: [{ metric: { metricName: "screenPageViews" }, desc: true }],
+          limit: 10,
+        }),
+        client.runReport({
+          property,
+          dateRanges,
+          dimensions: [{ name: "eventName" }],
+          metrics: [{ name: "eventCount" }],
+          orderBys: [{ metric: { metricName: "eventCount" }, desc: true }],
+          limit: 15,
+        }),
+        client.runReport({
+          property,
+          dateRanges,
+          dimensions: [{ name: "deviceCategory" }],
+          metrics: [{ name: "sessions" }, { name: "bounceRate" }],
+          orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
+        }),
+        client.runReport({
+          property,
+          dateRanges,
+          dimensions: [{ name: "country" }],
+          metrics: [{ name: "sessions" }, { name: "activeUsers" }, { name: "bounceRate" }],
+          orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
+          limit: 15,
+        }),
+        client.runReport({
+          property,
+          dateRanges,
+          dimensions: [{ name: "city" }, { name: "country" }],
+          metrics: [{ name: "sessions" }],
+          orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
+          limit: 10,
+        }),
+        client.runReport({
+          property,
+          dateRanges,
+          dimensions: [{ name: "firstUserMedium" }],
+          metrics: [{ name: "sessions" }],
+          orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
+          limit: 10,
+        }),
+        client.runReport({
+          property,
+          dateRanges,
+          dimensions: [{ name: "firstUserSource" }],
+          metrics: [{ name: "sessions" }, { name: "activeUsers" }],
+          orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
+          limit: 10,
+        }),
+      ]);
 
     const totalsRow = totalsRes.rows?.[0];
 
@@ -132,15 +161,20 @@ export async function getGa4Overview(
         activeUsers: metricNum(totalsRow, 1),
         pageViews: metricNum(totalsRow, 2),
         avgEngagementSec: Math.round(metricNum(totalsRow, 3)),
+        bounceRate: Math.round(metricNum(totalsRow, 4) * 100) / 100,
+        conversions: metricNum(totalsRow, 5),
       },
       dailyTrend: (trendRes.rows || []).map((row) => ({
         date: formatGa4Date(dimStr(row, 0)),
         sessions: metricNum(row, 0),
         activeUsers: metricNum(row, 1),
+        pageViews: metricNum(row, 2),
+        bounceRate: Math.round(metricNum(row, 3) * 100) / 100,
       })),
       topPages: (pagesRes.rows || []).map((row) => ({
         path: dimStr(row, 0) || "/",
         views: metricNum(row, 0),
+        avgEngagementSec: Math.round(metricNum(row, 1)),
       })),
       topEvents: (eventsRes.rows || []).map((row) => ({
         name: dimStr(row, 0),
@@ -149,16 +183,27 @@ export async function getGa4Overview(
       devices: (deviceRes.rows || []).map((row) => ({
         category: dimStr(row, 0) || "unknown",
         sessions: metricNum(row, 0),
+        bounceRate: Math.round(metricNum(row, 1) * 100) / 100,
       })),
       topCountries: (countryRes.rows || []).map((row) => ({
         country: dimStr(row, 0) || "Unknown",
         sessions: metricNum(row, 0),
         activeUsers: metricNum(row, 1),
+        bounceRate: Math.round(metricNum(row, 2) * 100) / 100,
       })),
       topCities: (cityRes.rows || []).map((row) => ({
         city: dimStr(row, 0) || "Unknown",
         country: dimStr(row, 1) || "",
         sessions: metricNum(row, 0),
+      })),
+      topReferrers: (referrerRes.rows || []).map((row) => ({
+        referrer: dimStr(row, 0) || "(direct)",
+        sessions: metricNum(row, 0),
+      })),
+      trafficSources: (sourceRes.rows || []).map((row) => ({
+        source: dimStr(row, 0) || "direct",
+        sessions: metricNum(row, 0),
+        activeUsers: metricNum(row, 1),
       })),
     };
 
