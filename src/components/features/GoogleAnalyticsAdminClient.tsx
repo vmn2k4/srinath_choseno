@@ -215,11 +215,14 @@ export default function GoogleAnalyticsAdminClient() {
                         const max = Math.max(...data.dailyTrend.map((d) => d.sessions), 1);
                         const heightPct = Math.max((day.sessions / max) * 100, 2);
                         return (
-                          <div key={day.date} className="flex-1 group relative h-full">
+                          <div
+                            key={day.date}
+                            className="flex-1 group relative"
+                            style={{ height: `${heightPct}%` }}
+                          >
                             <div
                               title={`${day.date}: ${day.sessions} sessions, ${day.activeUsers} users, ${day.bounceRate.toFixed(1)}% bounce`}
-                              className="w-full h-full bg-gradient-to-t from-primary to-primary/60 hover:from-primary hover:to-primary rounded-sm transition-all cursor-pointer relative flex items-end justify-center"
-                              style={{ height: `${heightPct}%` }}
+                              className="w-full h-full bg-gradient-to-t from-primary to-primary/60 hover:from-primary hover:to-primary rounded-sm transition-all cursor-pointer"
                             />
                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-6 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                               <div className="text-[10px] text-text-muted font-mono">{day.date}</div>
