@@ -19,7 +19,12 @@ export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
          political_target_role,
          target_boundary_name,
          bio,
-         avatar_url
+         avatar_url,
+         contact_email,
+         contact_phone,
+         photo_url,
+         source_url,
+         holding_since
        )
     `
     )

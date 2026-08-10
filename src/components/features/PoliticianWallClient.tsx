@@ -14,6 +14,9 @@ import {
   Video,
   Flag,
   Star,
+  Mail,
+  Phone,
+  Globe,
 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import VideoRecorder from "./VideoRecorder";
@@ -60,6 +63,11 @@ interface WallOwnerRecord {
     target_boundary_name?: string;
     bio?: string;
     avatar_url?: string;
+    contact_email?: string | null;
+    contact_phone?: string | null;
+    photo_url?: string | null;
+    source_url?: string | null;
+    holding_since?: string | null;
   } | null;
 }
 
@@ -351,7 +359,7 @@ export default function PoliticianWallClient({
       <Card padding="md" className="space-y-4">
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-4">
-            <Avatar src={wallOwner?.politician_profiles?.avatar_url} name={wallOwner?.full_name || "P"} size="xl" />
+            <Avatar src={wallOwner?.politician_profiles?.photo_url || wallOwner?.politician_profiles?.avatar_url} name={wallOwner?.full_name || "P"} size="xl" />
             <div>
               <h1 className="text-2xl font-bold text-text-main flex items-center gap-2">
                 {wallOwner?.full_name || "Politician Wall"}
@@ -374,6 +382,39 @@ export default function PoliticianWallClient({
               >
                 <StarRating value={ratingSummary.avg} count={ratingSummary.count} size="sm" />
               </button>
+
+              {/* Contact Info Links */}
+              <div className="flex flex-wrap gap-2 mt-3">
+                {wallOwner?.politician_profiles?.contact_email && (
+                  <a
+                    href={`mailto:${wallOwner.politician_profiles.contact_email}`}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-primary hover:text-primary-light bg-primary/10 hover:bg-primary/15 rounded-lg transition-colors"
+                  >
+                    <Mail size={13} />
+                    {wallOwner.politician_profiles.contact_email}
+                  </a>
+                )}
+                {wallOwner?.politician_profiles?.contact_phone && (
+                  <a
+                    href={`tel:${wallOwner.politician_profiles.contact_phone}`}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-primary hover:text-primary-light bg-primary/10 hover:bg-primary/15 rounded-lg transition-colors"
+                  >
+                    <Phone size={13} />
+                    {wallOwner.politician_profiles.contact_phone}
+                  </a>
+                )}
+                {wallOwner?.politician_profiles?.source_url && (
+                  <a
+                    href={wallOwner.politician_profiles.source_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-primary hover:text-primary-light bg-primary/10 hover:bg-primary/15 rounded-lg transition-colors"
+                  >
+                    <Globe size={13} />
+                    Official Website
+                  </a>
+                )}
+              </div>
             </div>
           </div>
 

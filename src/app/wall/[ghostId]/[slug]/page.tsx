@@ -18,7 +18,15 @@ interface WallSlugPageProps {
 type WallOwner = {
   id: string;
   full_name?: string;
-  politician_profiles?: { bio?: string; avatar_url?: string } | null;
+  politician_profiles?: {
+    bio?: string;
+    avatar_url?: string;
+    contact_email?: string | null;
+    contact_phone?: string | null;
+    photo_url?: string | null;
+    source_url?: string | null;
+    holding_since?: string | null;
+  } | null;
 };
 
 type WallPost = {
