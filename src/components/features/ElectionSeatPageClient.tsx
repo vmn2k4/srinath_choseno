@@ -172,7 +172,8 @@ export default function ElectionSeatPageClient({
       setLoadingHolders(false);
     }
 
-    const { data: candidateRows } = await getCandidatesBySeatIds(supabase, [seatId]);
+    const targetSeatId = seatRow?.id || seatId;
+    const { data: candidateRows } = await getCandidatesBySeatIds(supabase, [targetSeatId]);
     const candItems = (candidateRows as any[]) || [];
     setCandidates(candItems);
 

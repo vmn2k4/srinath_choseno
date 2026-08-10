@@ -345,7 +345,29 @@ export async function getMyCandidacies(supabase: Client, profileId: string) {
 }
 
 export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]) {
-  const realSeatIds = seatIds.map(extractIdFromSlug).filter((id) => id && id.length === 36);
+  if (!seatIds || seatIds.length === 0) {
+    return { data: [], error: null };
+  }
+
+  const resolvedIds: string[] = [];
+
+  for (const sId of seatIds) {
+    if (!sId) continue;
+    const extracted = extractIdFromSlug(sId);
+    if (extracted && extracted.length === 36) {
+      resolvedIds.push(extracted);
+    } else {
+      const { data: seatMatch } = await getSeatById(supabase, sId);
+      if (seatMatch?.id && !resolvedIds.includes(seatMatch.id)) {
+        resolvedIds.push(seatMatch.id);
+      }
+    }
+  }
+
+  if (resolvedIds.length === 0) {
+    return { data: [], error: null };
+  }
+
   // profiles joined via !inner so a test-flagged candidate's row drops out
   // entirely in production, instead of surviving with a null-embedded
   // profile (the default to-one embed behavior when an .eq() filter on the
@@ -353,10 +375,7 @@ export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]
   const columns =
     "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url))";
 
-  let query =
-    realSeatIds.length > 0
-      ? supabase.from("election_candidates").select(columns).in("seat_id", realSeatIds)
-      : supabase.from("election_candidates").select(columns);
+  let query = supabase.from("election_candidates").select(columns).in("seat_id", resolvedIds);
   if (!isDevEnvironment()) query = query.eq("profiles.is_test", false);
   return query;
 }
