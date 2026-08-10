@@ -307,6 +307,33 @@ export async function getShapeContainers(supabase: Client, shapeId: number | str
     .eq("map_shape_id", Number(shapeId));
 }
 
+// shape_containers — batched variant of getShapeContainers, for resolving
+// every container (e.g. a user's Province) that ANY of their boundary
+// memberships sits inside in one round trip. Used by PoliticianSidebar to
+// find the Premier's Province shape for a user whose only memberships are
+// riding-level (Province is an admin_only container, never a membership
+// itself — see 20260727000001_admin_only_boundary_types.sql).
+export async function getContainersForShapeIds(supabase: Client, shapeIds: (number | string)[]) {
+  if (!shapeIds.length) return { data: [], error: null };
+  return supabase
+    .from("shape_containers")
+    .select("container_shape_id, map_shapes:container_shape_id(id, name, boundary_type)")
+    .in("map_shape_id", shapeIds.map(Number));
+}
+
+// map_shapes — the single National-level shape (id anchor for the Prime
+// Minister / President office_holders row) for a country, if one exists. See
+// 20260809000000_national_and_province_head_roles.sql.
+export async function getNationalShapeForCountry(supabase: Client, country: string) {
+  return supabase
+    .from("map_shapes")
+    .select("id, name")
+    .eq("country", country)
+    .eq("boundary_type", "National")
+    .is("retired_at", null)
+    .maybeSingle();
+}
+
 // map_shapes — canonical candidate-list query for BoundaryPicker: broad
 // columns, optional multi-type + country filters, excludes retired, paginated.
 export async function getBoundaryCandidates(

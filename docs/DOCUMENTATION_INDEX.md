@@ -1,0 +1,275 @@
+# Documentation Index
+
+Complete guide to all Choseno documentation — architecture, features, data pipelines, and developer guides.
+
+---
+
+## Getting Started
+
+**New to the project?** Start here:
+
+1. **[PLATFORM_SPEC.md](PLATFORM_SPEC.md)** — Project overview, vision, feature summary
+2. **[CODE_LAYERS.md](CODE_LAYERS.md)** — How the codebase is organized (routing → pages → components → services → utils)
+3. **[SCREENS_AND_FEATURES.md](SCREENS_AND_FEATURES.md)** — Walkthrough of every screen in the app
+4. **[SUPABASE_SCHEMA.md](SUPABASE_SCHEMA.md)** — Database schema (tables, relationships, constraints)
+
+---
+
+## Core Concepts
+
+### Authentication & Users
+
+- **[AUTHENTICATION_FLOWS.md](AUTHENTICATION_FLOWS.md)** — Sign up, login, role switching, session management
+- **Three roles**: Citizen (`normal`), Politician (`politician`), Admin (`admin`)
+
+### Boundaries & Geography
+
+- **[SCHEMA_QUICK_START.md](SCHEMA_QUICK_START.md)** — Quick reference for boundary types, map shapes, jurisdictions
+- **[adding-boundary-data.md](adding-boundary-data.md)** — How to find, download, upload GIS boundary data (shapefiles → PostGIS)
+- **Key concept**: Every user belongs to multiple boundaries (federal, provincial, municipal); elections are per-boundary
+
+### Elections & Candidacies
+
+- **[ELECTION_DATA_SOURCES.md](ELECTION_DATA_SOURCES.md)** — Where candidate data comes from, how verified candidates are listed
+- **Flow**: User registers as politician → applies for election seat → creates campaign wall → voters ask questions/show support
+
+### Politician & Office Holders
+
+- **[OFFICE_HOLDERS_FEATURE.md](OFFICE_HOLDERS_FEATURE.md)** — Auto-populated elected officials (MPs, Senators, Mayors, etc.)
+- **[OFFICE_HOLDERS_IMPLEMENTATION.md](OFFICE_HOLDERS_IMPLEMENTATION.md)** — Technical details of office holder syncing
+- **[POLITICIAN_WALL_FEATURE.md](POLITICIAN_WALL_FEATURE.md)** — Politician's public profile, engagement, support tracking
+- **[RATINGS_SYSTEM.md](RATINGS_SYSTEM.md)** — 1-5 star ratings with 6-month cooldown, engagement summaries
+
+---
+
+## Features & Systems
+
+### Content & Moderation
+
+- **[COMMENTS_AND_MODERATION.md](COMMENTS_AND_MODERATION.md)** — Threaded posts/comments, user flags, admin content review, hidden content log
+- **[NEWS_TAGGING.md](NEWS_TAGGING.md)** — Editorial news articles, tagging to politicians/parties, scheduling
+
+### Engagement & Analytics
+
+- **[API_CACHING_STRATEGY.md](API_CACHING_STRATEGY.md)** — Client-side + database caching, TTL strategies, invalidation patterns
+- **[GA4_DASHBOARD_SETUP.md](GA4_DASHBOARD_SETUP.md)** — Google Analytics 4 integration, traffic metrics, user signup tracking
+
+### Media
+
+- **[VIDEO_SUPPORT.md](VIDEO_SUPPORT.md)** — In-browser video recording, upload to Supabase storage, playback on walls/campaigns/feed
+
+### Administration
+
+- **[ADMIN_FEATURES.md](ADMIN_FEATURES.md)** — Seven admin panels: Boundaries, Analytics, Elections, Election Admins, Visualizer, Theme, News, Moderation, Office Holders
+
+---
+
+## Technical Guides
+
+### Backend & Data
+
+- **[SERVICES.md](SERVICES.md)** — Service layer architecture (every Supabase call lives in `src/lib/services/`)
+- **[SCHEMA_RELATIONSHIPS.md](SCHEMA_RELATIONSHIPS.md)** — Foreign key diagrams, cardinality, join patterns
+- **[SCHEMA_TABLE_INDEX.md](SCHEMA_TABLE_INDEX.md)** — Alphabetical table listing with column counts, row counts
+- **[SUPABASE_CONFIGURATION.md](SUPABASE_CONFIGURATION.md)** — Local dev setup (CLI, Docker), migrations, production deployment, RLS, storage
+
+### Frontend
+
+- **[CODE_LAYERS.md](CODE_LAYERS.md)** — Component organization, context, utilities, naming conventions
+
+---
+
+## Data Pipelines & Ingestion
+
+### Boundaries
+
+```
+Electoral boundary shapefiles (government sources)
+  ↓ (download + validate)
+  ↓ ogr2ogr (convert to GeoJSON)
+  ↓ scripts/upload_boundary.py (analyze, upload)
+  ↓ Supabase PostGIS table (map_shapes)
+  ↓ Live map display, user location resolution
+```
+
+**Reference**: [adding-boundary-data.md](adding-boundary-data.md)
+
+### Office Holders
+
+```
+Government websites + OpenNorth/OpenStates APIs
+  ↓ (scripts: populate-*.py)
+  ↓ Fetch + parse current MPs/MLAs/Mayors/Governors/Senators
+  ↓ Fuzzy match to boundaries
+  ↓ Supabase office_holders table + auto-create politician walls
+  ↓ Politician profiles appear on election pages + politician directory
+```
+
+**References**:
+- [OFFICE_HOLDERS_DATA_GUIDE.md](../OFFICE_HOLDERS_DATA_GUIDE.md)
+- [OFFICE_HOLDERS_FEATURE.md](OFFICE_HOLDERS_FEATURE.md)
+
+### Elections & Candidates
+
+```
+Admin creates election (boundary + role + dates) → candidates register
+  ↓ Onboarding: users become politicians, join boundaries
+  ↓ Politicians apply for open seats (video intro + questionnaire)
+  ↓ Election admin approves/rejects nominations
+  ↓ Live campaign pages, voter questions, support tracking
+```
+
+**Reference**: [ELECTION_DATA_SOURCES.md](ELECTION_DATA_SOURCES.md)
+
+---
+
+## Glossary
+
+| Term | Definition |
+|---|---|
+| **Boundary** | Electoral or administrative region (federal riding, province, municipality, etc.). Users belong to multiple boundaries. |
+| **Ghost ID** | Anonymous, rotating identity for posts/comments. One per user, changes on "burn identity." Politicians have one static Ghost ID. |
+| **Map Shape** | PostGIS geometry record in `map_shapes` table. One per boundary. Powers location resolution ("what boundaries am I in?"). |
+| **Constituency** / **Boundary Membership** | The set of boundaries a user belongs to. Set at onboarding, updated when location changes. |
+| **Seat** (election) | A specific electoral position (e.g., "House Rep for CA-13"). One seat per role per boundary per election. |
+| **Candidacy** | A politician's application to run for a specific seat. One per politician per seat. Includes campaign wall, video intro, questionnaire answers. |
+| **Profile** | User account record. Extended by `politician_profiles` (politicians only), `email_subscriptions`, etc. |
+| **Wall** | Politician's public profile page. Distinct from campaign pages. Shows engagement (ratings, support), posts, news articles. |
+| **Engagement Score** | Civic Impact Score. Points for posting, commenting, upvotes. Used to rank politicians/citizens by activity. |
+| **RLS** | Row-Level Security. PostgreSQL policies that filter data per user. Enforces privacy without app logic. |
+
+---
+
+## Key Files by Role
+
+### Product Manager / Designer
+- [SCREENS_AND_FEATURES.md](SCREENS_AND_FEATURES.md)
+- [PLATFORM_SPEC.md](PLATFORM_SPEC.md)
+- [ADMIN_FEATURES.md](ADMIN_FEATURES.md)
+
+### Backend / Database Engineer
+- [SUPABASE_SCHEMA.md](SUPABASE_SCHEMA.md)
+- [SCHEMA_RELATIONSHIPS.md](SCHEMA_RELATIONSHIPS.md)
+- [SUPABASE_CONFIGURATION.md](SUPABASE_CONFIGURATION.md)
+- [SERVICES.md](SERVICES.md)
+
+### Frontend / Full-Stack Engineer
+- [CODE_LAYERS.md](CODE_LAYERS.md)
+- [AUTHENTICATION_FLOWS.md](AUTHENTICATION_FLOWS.md)
+- [API_CACHING_STRATEGY.md](API_CACHING_STRATEGY.md)
+- [COMMENTS_AND_MODERATION.md](COMMENTS_AND_MODERATION.md)
+
+### Data / Integration Engineer
+- [adding-boundary-data.md](adding-boundary-data.md)
+- [OFFICE_HOLDERS_DATA_GUIDE.md](../OFFICE_HOLDERS_DATA_GUIDE.md)
+- [ELECTION_DATA_SOURCES.md](ELECTION_DATA_SOURCES.md)
+
+### Admin / Support
+- [ADMIN_FEATURES.md](ADMIN_FEATURES.md)
+- [SUPABASE_CONFIGURATION.md](SUPABASE_CONFIGURATION.md) (troubleshooting section)
+
+---
+
+## Recent Features (Added Aug 2026)
+
+| Feature | Doc | Status |
+|---|---|---|
+| **Politician Ratings** | [RATINGS_SYSTEM.md](RATINGS_SYSTEM.md) | Live |
+| **News Tagging** | [NEWS_TAGGING.md](NEWS_TAGGING.md) | Live |
+| **National/Provincial Heads** | [OFFICE_HOLDERS_FEATURE.md](OFFICE_HOLDERS_FEATURE.md) | Live (PM, Premiers, President auto-populated) |
+| **Politician Walls** | [POLITICIAN_WALL_FEATURE.md](POLITICIAN_WALL_FEATURE.md) | Live (separate from campaign pages) |
+| **Engagement Summaries** | [RATINGS_SYSTEM.md](RATINGS_SYSTEM.md) | Live (materialized view on ratings) |
+
+---
+
+## Running & Deployment
+
+### Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start local Supabase (see SUPABASE_CONFIGURATION.md)
+supabase start
+
+# Set up .env.local with local keys
+# (See SUPABASE_CONFIGURATION.md)
+
+# Start dev server
+npm run dev
+# → http://localhost:3000
+```
+
+### Production Deployment
+
+**Prerequisites**:
+- Supabase project created (https://supabase.com)
+- Migrations applied to prod database
+- `.env.production.local` configured with prod keys
+
+**Deploy**:
+```bash
+# Push migrations to production
+supabase db push --project-id {project-id}
+
+# Deploy app to hosting (Vercel, etc.)
+git push  # Auto-deploy on push, or manual deploy via hosting dashboard
+```
+
+**Reference**: [SUPABASE_CONFIGURATION.md](SUPABASE_CONFIGURATION.md) → Production Setup
+
+---
+
+## Troubleshooting Quick Links
+
+| Issue | Doc |
+|---|---|
+| "How do I add a new boundary type?" | [SCHEMA_QUICK_START.md](SCHEMA_QUICK_START.md), [ADMIN_FEATURES.md](ADMIN_FEATURES.md) |
+| "How do I update politician data?" | [OFFICE_HOLDERS_DATA_GUIDE.md](../OFFICE_HOLDERS_DATA_GUIDE.md) |
+| "User can't log in" | [AUTHENTICATION_FLOWS.md](AUTHENTICATION_FLOWS.md) |
+| "Election seats not showing" | [SUPABASE_SCHEMA.md](SUPABASE_SCHEMA.md) (elections table), [ADMIN_FEATURES.md](ADMIN_FEATURES.md) |
+| "Database locked / migrations won't apply" | [SUPABASE_CONFIGURATION.md](SUPABASE_CONFIGURATION.md) → Troubleshooting |
+| "Video upload failing" | [VIDEO_SUPPORT.md](VIDEO_SUPPORT.md) → Performance |
+| "Content moderation questions" | [COMMENTS_AND_MODERATION.md](COMMENTS_AND_MODERATION.md) |
+
+---
+
+## Contributing
+
+When adding a new feature:
+1. Update relevant schema docs (SUPABASE_SCHEMA.md, SCHEMA_RELATIONSHIPS.md)
+2. If a new service, add to SERVICES.md
+3. Add a new doc file for the feature (follow naming: FEATURE_NAME.md)
+4. Link it here in DOCUMENTATION_INDEX.md
+5. Update README or PLATFORM_SPEC.md if user-facing
+
+**Documentation checklist**:
+- [ ] Schema changes documented
+- [ ] RLS policies explained
+- [ ] Service functions listed
+- [ ] Components/UI behavior described
+- [ ] Example usage shown
+- [ ] Related files/links added
+- [ ] Future enhancements noted
+
+---
+
+## Document History
+
+| Date | Added | Author |
+|---|---|---|
+| 2026-08-09 | RATINGS_SYSTEM.md, NEWS_TAGGING.md, POLITICIAN_WALL_FEATURE.md | Claude |
+| 2026-08-09 | AUTHENTICATION_FLOWS.md, COMMENTS_AND_MODERATION.md | Claude |
+| 2026-08-09 | API_CACHING_STRATEGY.md, ADMIN_FEATURES.md | Claude |
+| 2026-08-09 | VIDEO_SUPPORT.md, SUPABASE_CONFIGURATION.md | Claude |
+| Earlier | SUPABASE_SCHEMA.md, CODE_LAYERS.md, SERVICES.md, etc. | (prior work) |
+
+---
+
+## Questions?
+
+- **Codebase questions**: Check CODE_LAYERS.md (architecture) and SERVICES.md (data flow)
+- **Feature questions**: Search this index for the feature name
+- **Data/schema questions**: Start with SUPABASE_SCHEMA.md, then SCHEMA_RELATIONSHIPS.md
+- **Deployment questions**: See SUPABASE_CONFIGURATION.md

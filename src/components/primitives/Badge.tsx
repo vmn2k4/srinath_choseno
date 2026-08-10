@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 // Centralized badge/status-pill recipe — covers every status/role/type label
 // in the app (election status, candidate status, "you"/"owner" markers,
@@ -29,6 +29,7 @@ export default function Badge({
   uppercase = true,
   icon,
   className = "",
+  style,
   children,
 }: {
   tone?: BadgeTone;
@@ -37,6 +38,7 @@ export default function Badge({
   uppercase?: boolean;
   icon?: ReactNode;
   className?: string;
+  style?: CSSProperties;
   children?: ReactNode;
 }) {
   const shapeClass = shape === "pill" ? "rounded-full" : "rounded";
@@ -44,6 +46,7 @@ export default function Badge({
 
   return (
     <span
+      style={style}
       className={`inline-flex items-center gap-1 font-bold whitespace-nowrap ${caseClass} ${TONES[tone] || TONES.neutral} ${SIZES[size] || SIZES.xs} ${shapeClass} ${className}`.trim()}
     >
       {icon}

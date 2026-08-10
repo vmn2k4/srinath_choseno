@@ -1,0 +1,168 @@
+import Link from "next/link";
+import { Mail, Phone, ExternalLink, UserCheck, ArrowRight } from "lucide-react";
+import { Avatar, Badge, Card } from "@/components/primitives";
+
+export interface BranchHolderNode {
+  id: string;
+  full_name: string;
+  role_title: string;
+  role_description: string | null;
+  party_name: string | null;
+  photo_url: string | null;
+  ghost_id: string | null;
+  boundary_name: string | null;
+  contact_email?: string | null;
+  contact_phone?: string | null;
+  source_url?: string | null;
+}
+
+export interface RepresentationBranch {
+  key: string;
+  label: string;
+  top: BranchHolderNode | null;
+  bottom: BranchHolderNode[];
+}
+
+function slugFor(node: BranchHolderNode) {
+  return `${node.full_name}-${node.role_title}`
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+}
+
+// Note: the "View Wall" footer is the only <a> in this card (not the whole
+// card wrapped in a Link) -- the card also renders mailto:/tel:/external <a>
+// tags for contact info, and nested <a> elements are invalid HTML that
+// triggers a hydration mismatch (the browser silently un-nests them
+// client-side, producing a different DOM than what the server rendered).
+function NodeCard({ node, emphasized }: { node: BranchHolderNode; emphasized?: boolean }) {
+  return (
+    <Card
+      padding="sm"
+      className={`w-full sm:w-56 space-y-1.5 transition-all hover:shadow-md ${
+        emphasized ? "border-2 border-primary/40 bg-primary/5" : "border border-border-light/50"
+      }`}
+    >
+      <div className="flex items-center gap-2.5">
+        <Avatar src={node.photo_url} name={node.full_name} size={emphasized ? "md" : "sm"} />
+        <div className="min-w-0 flex-1">
+          <h4 className="font-bold text-text-main text-sm truncate" title={node.full_name}>
+            {node.full_name}
+          </h4>
+          <div className="flex items-center gap-1 flex-wrap mt-0.5 max-w-full">
+            {/* Role badge carries the "why this role matters" copy as a hover
+                tooltip instead of a permanent paragraph -- keeps the card
+                short while the info stays one hover away. whitespace-normal
+                overrides Badge's default nowrap so long party names (e.g.
+                "New Democratic Party (NDP)") wrap inside the card instead of
+                pushing it wider than its column. */}
+            <span
+              className="relative group/role"
+              title={node.role_description || undefined}
+            >
+              <Badge tone="primary" size="xs" className="cursor-default">
+                {node.role_title}
+              </Badge>
+              {node.role_description && (
+                <span className="pointer-events-none absolute left-0 top-full z-20 mt-1 hidden w-48 rounded-lg border border-border-light/60 bg-surface p-2 text-[11px] font-normal normal-case leading-snug text-text-muted shadow-lg group-hover/role:block">
+                  {node.role_description}
+                </span>
+              )}
+            </span>
+            {node.party_name && (
+              // Badge's base recipe hard-codes whitespace-nowrap; a plain
+              // className override loses that specificity fight (both are
+              // single utility classes, so Tailwind's stylesheet order picks
+              // the winner, not attribute order), so force it inline instead
+              // -- long party names ("New Democratic Party (NDP)") need to
+              // wrap across 2 lines rather than push the card wider.
+              <Badge
+                tone="neutral"
+                size="xs"
+                uppercase={false}
+                className="break-words text-left max-w-full"
+                style={{ whiteSpace: "normal" }}
+              >
+                {node.party_name}
+              </Badge>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {node.boundary_name && <p className="text-[11px] text-text-darker truncate">{node.boundary_name}</p>}
+
+      <div className="flex items-center gap-3 pt-1 text-[11px] text-text-muted flex-wrap">
+        {node.contact_email && (
+          <a href={`mailto:${node.contact_email}`} className="flex items-center gap-1 hover:text-primary transition-colors">
+            <Mail size={11} /> Email
+          </a>
+        )}
+        {node.contact_phone && (
+          <a href={`tel:${node.contact_phone}`} className="flex items-center gap-1 hover:text-primary transition-colors">
+            <Phone size={11} /> Call
+          </a>
+        )}
+        {node.source_url && (
+          <a
+            href={node.source_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 hover:text-primary transition-colors"
+          >
+            <ExternalLink size={11} /> Official
+          </a>
+        )}
+      </div>
+
+      {node.ghost_id && (
+        <Link
+          href={`/wall/${node.ghost_id}/${slugFor(node)}`}
+          className="pt-1.5 border-t border-border-light/30 flex items-center gap-1 text-[11px] font-semibold text-primary hover:underline"
+        >
+          <UserCheck size={12} />
+          View Wall
+          <ArrowRight size={11} />
+        </Link>
+      )}
+    </Card>
+  );
+}
+
+// Renders one branch (Federal, Provincial, Municipal, ...) as a two-tier
+// vertical org chart: a single "top" office (Prime Minister/Premier/Governor/
+// Mayor -- either fetched from the superior boundary, or the head role found
+// on this shape itself) connected down to one or more "bottom" holders tied
+// directly to the viewed boundary (MP/MLA, or Councillors alongside a Mayor
+// top node). A vertical stub connects top to bottom; multiple bottom nodes
+// share a horizontal trunk line (border-top) so they read as siblings.
+export default function RepresentationBranchTree({ branch }: { branch: RepresentationBranch }) {
+  if (!branch.top && branch.bottom.length === 0) {
+    return (
+      <p className="text-sm text-text-muted text-center py-6">
+        No {branch.label.toLowerCase()} office holders recorded yet.
+      </p>
+    );
+  }
+
+  return (
+    <div className="flex flex-col items-center py-1">
+      {branch.top && <NodeCard node={branch.top} emphasized />}
+
+      {branch.top && branch.bottom.length > 0 && <div className="w-px h-5 bg-border-light" />}
+
+      {branch.bottom.length === 1 ? (
+        <NodeCard node={branch.bottom[0]} />
+      ) : branch.bottom.length > 1 ? (
+        <div className="w-full flex flex-wrap justify-center gap-x-4 gap-y-3 pt-3 border-t-2 border-primary/25">
+          {branch.bottom.map((node) => (
+            <div key={node.id} className="relative flex flex-col items-center">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-border-light" />
+              <NodeCard node={node} />
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}

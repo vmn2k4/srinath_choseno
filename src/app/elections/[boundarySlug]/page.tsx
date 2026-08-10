@@ -1,25 +1,131 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { MapPin, Landmark, UserCheck, ArrowRight, ExternalLink, Mail, Phone, Building, Sparkles } from "lucide-react";
+import { MapPin, Landmark, ArrowRight, Building, Sparkles, Network } from "lucide-react";
 import { createClient as createServerClient } from "@/lib/supabase/server";
-import { getMapShapeById, getShapeContainers } from "@/lib/services/boundaries";
+import { getMapShapeById, getShapeContainers, getNationalShapeForCountry } from "@/lib/services/boundaries";
 import {
   getElectionRoleTypes,
   getOfficeHoldersForShape,
   getActiveSeatsByShapeIds,
   getCandidatesBySeatIds,
 } from "@/lib/services/elections";
-import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
-import PoliticianEngagementStats from "@/components/features/PoliticianEngagementStats";
-import { buildBoundarySlug, buildSeatSlug, extractShapeIdFromSlug, slugifyText } from "@/lib/utils/slugs";
-import { Card, EmptyState, Avatar, Badge } from "@/components/primitives";
+import { getUserBoundaryMemberships } from "@/lib/services/profile";
+import BoundaryDirectoryClient from "@/components/features/BoundaryDirectoryClient";
+import type { BranchHolderNode, RepresentationBranch } from "@/components/features/RepresentationBranchTree";
+import { buildBoundarySlug, buildSeatSlug, extractShapeIdFromSlug } from "@/lib/utils/slugs";
+import { Card, Badge } from "@/components/primitives";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
 
 interface PageProps {
   params: Promise<{ boundarySlug: string }>;
+  searchParams: Promise<{ view?: string }>;
+}
+
+type ShapeRow = { id: number; name: string; country: string; boundary_type: string };
+
+type OfficeHolderRow = {
+  id: string;
+  full_name: string;
+  bio?: string | null;
+  source_url?: string | null;
+  photo_url?: string | null;
+  contact_email?: string | null;
+  contact_phone?: string | null;
+  map_shapes?: { id?: number; name?: string; boundary_type?: string } | null;
+  election_role_types?: { role_title?: string; role_key?: string; description?: string | null } | null;
+  political_parties?: { name?: string } | null;
+  profiles?: { current_ghost_id?: string | null } | null;
+};
+
+// The role a person holds when they ARE the head of their branch, rather than
+// a local representative reporting up to one -- used to split a shape's own
+// office holders into a "top" node (Mayor, or a fetched Premier/Governor/
+// Prime Minister/President) vs. "bottom" nodes (Councillors, or the shape's
+// own MP/MLA/etc.).
+const HEAD_ROLE_TITLES = new Set(["Mayor", "Governor", "Premier", "Prime Minister", "President"]);
+
+// Where to find the "top" office for a boundary_type that ISN'T itself a
+// head-of-branch shape (a riding/district has no head role of its own, so its
+// superior comes from the National shape directly, or from the container
+// (Province/State) it geometrically sits inside). Boundary types not listed
+// here (Municipal, Province, State, National) resolve their top node from
+// their OWN office holders instead (see resolveBranch).
+const SUPERIOR_SOURCE: Record<string, { source: "national" } | { source: "container"; containerType: string }> = {
+  "Canada:Federal": { source: "national" },
+  "USA:Federal": { source: "national" },
+  "Canada:Provincial": { source: "container", containerType: "Province" },
+  "USA:State Senate": { source: "container", containerType: "State" },
+  "USA:State House": { source: "container", containerType: "State" },
+};
+
+function toNode(row: OfficeHolderRow): BranchHolderNode {
+  return {
+    id: row.id,
+    full_name: row.full_name,
+    role_title: row.election_role_types?.role_title || "Elected Official",
+    role_description: row.election_role_types?.description || null,
+    party_name: row.political_parties?.name || null,
+    photo_url: row.photo_url || null,
+    ghost_id: row.profiles?.current_ghost_id || null,
+    boundary_name: row.map_shapes?.name || null,
+    contact_email: row.contact_email,
+    contact_phone: row.contact_phone,
+    source_url: row.source_url,
+  };
+}
+
+function branchKeyFor(shape: ShapeRow): string {
+  return shape.boundary_type.toLowerCase().replace(/\s+/g, "-");
+}
+
+async function resolveBranch(
+  supabase: Awaited<ReturnType<typeof createServerClient>>,
+  shape: ShapeRow
+): Promise<RepresentationBranch> {
+  const { data } = await getOfficeHoldersForShape(supabase, shape.id);
+  const rows = (data || []) as unknown as OfficeHolderRow[];
+
+  const headHere = rows.filter((r) => HEAD_ROLE_TITLES.has(r.election_role_types?.role_title || ""));
+  const restHere = rows.filter((r) => !HEAD_ROLE_TITLES.has(r.election_role_types?.role_title || ""));
+
+  let top: BranchHolderNode | null = null;
+  let bottom: BranchHolderNode[] = [];
+
+  if (headHere.length > 0) {
+    top = toNode(headHere[0]);
+    bottom = restHere.map(toNode);
+  } else {
+    bottom = rows.map(toNode);
+    const config = SUPERIOR_SOURCE[`${shape.country}:${shape.boundary_type}`];
+
+    if (config?.source === "national") {
+      const { data: national } = await getNationalShapeForCountry(supabase, shape.country);
+      if (national?.id) {
+        const { data: nHolders } = await getOfficeHoldersForShape(supabase, national.id);
+        const head = ((nHolders || []) as unknown as OfficeHolderRow[]).find((h) =>
+          HEAD_ROLE_TITLES.has(h.election_role_types?.role_title || "")
+        );
+        if (head) top = toNode(head);
+      }
+    } else if (config?.source === "container") {
+      const { data: containers } = await getShapeContainers(supabase, shape.id);
+      const match = (containers || []).find(
+        (c: any) => c.map_shapes?.boundary_type === config.containerType
+      );
+      if (match?.container_shape_id) {
+        const { data: cHolders } = await getOfficeHoldersForShape(supabase, match.container_shape_id);
+        const head = ((cHolders || []) as unknown as OfficeHolderRow[]).find((h) =>
+          HEAD_ROLE_TITLES.has(h.election_role_types?.role_title || "")
+        );
+        if (head) top = toNode(head);
+      }
+    }
+  }
+
+  return { key: branchKeyFor(shape), label: shape.boundary_type, top, bottom };
 }
 
 async function loadShape(boundarySlug: string) {
@@ -50,75 +156,78 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function BoundaryDirectoryPage({ params }: PageProps) {
+export default async function BoundaryDirectoryPage({ params, searchParams }: PageProps) {
   const { boundarySlug } = await params;
+  const { view } = await searchParams;
   const { supabase, shape } = await loadShape(boundarySlug);
 
   if (!shape) notFound();
 
-  const [{ data: roleTypes }, { data: holders }, { data: containers }, { data: seats }] = await Promise.all([
-    getElectionRoleTypes(supabase, shape.country, shape.boundary_type),
-    getOfficeHoldersForShape(supabase, shape.id),
+  const [{ data: containers }, { data: seats }] = await Promise.all([
     getShapeContainers(supabase, shape.id),
     getActiveSeatsByShapeIds(supabase, [shape.id]),
   ]);
 
-  const seatRows = (seats || []) as Array<{
-    id: string;
-    role_title: string;
-    map_shapes?: { name?: string; boundary_type?: string } | null;
-  }>;
+  const seatRows = (seats || []) as Array<{ id: string; role_title: string }>;
   const seatIds = seatRows.map((s) => s.id);
   const { data: candidateRows } = seatIds.length
     ? await getCandidatesBySeatIds(supabase, seatIds)
     : { data: [] as { seat_id: string }[] };
-
   const candidateCountBySeat = new Map<string, number>();
   (candidateRows || []).forEach((c) => {
     candidateCountBySeat.set(c.seat_id, (candidateCountBySeat.get(c.seat_id) || 0) + 1);
   });
 
-  const seatByRoleTitle = new Map(seatRows.map((s) => [s.role_title, s]));
-  const officeHolderList = (holders as unknown) as Array<{
-    id: string;
-    election_role_type_id: string;
-    full_name: string;
-    bio?: string | null;
-    photo_url?: string | null;
-    source_url?: string | null;
-    contact_email?: string | null;
-    contact_phone?: string | null;
-    election_role_types?: { role_title?: string; role_key?: string } | null;
-    political_parties?: { name?: string } | null;
-    profiles?: { id?: string; full_name?: string; current_ghost_id?: string | null } | null;
-  }>;
+  // Primary branch: whichever hierarchy the boundary being viewed itself
+  // belongs to (a Federal riding page always shows Prime Minister → MP, a
+  // Municipal page always shows Mayor → Councillors, etc).
+  const primaryBranch = await resolveBranch(supabase, shape as ShapeRow);
+  const branches: RepresentationBranch[] = [primaryBranch];
 
-  const holderByRoleTypeId = new Map(officeHolderList.map((h) => [h.election_role_type_id, h]));
-  const holderProfileIds = officeHolderList.map((h) => h.profiles?.id).filter((id): id is string => Boolean(id));
-  const { data: engagementRows } = await getPoliticianEngagementSummaries(supabase, holderProfileIds);
-  const engagementByPoliticianId = new Map(
-    (
-      (engagementRows || []) as {
-        politician_id: string;
-        supporter_count: number;
-        avg_rating: number;
-        rating_count: number;
-        comment_count: number;
-      }[]
-    ).map((r) => [
-      r.politician_id,
-      {
-        supporterCount: r.supporter_count,
-        avgRating: r.avg_rating,
-        ratingCount: r.rating_count,
-        commentCount: r.comment_count,
-      },
-    ])
+  // Plus, for a signed-in citizen, their OTHER branches too (their own
+  // Provincial riding, Municipal ward, etc.) -- so "All" genuinely shows
+  // their whole civic picture: PM→MP, Premier→MLA, and Mayor→Councillors
+  // together, not just whichever single boundary the URL happens to name.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    const { data: memberships } = await getUserBoundaryMemberships(supabase, user.id);
+    const memberShapes = (memberships || [])
+      .map((m: any) => m.map_shapes as ShapeRow | null)
+      .filter((s): s is ShapeRow => s != null && !s.boundary_type.toLowerCase().includes("polling"));
+
+    const seenKeys = new Set(branches.map((b) => b.key));
+    for (const memberShape of memberShapes) {
+      const key = branchKeyFor(memberShape);
+      if (seenKeys.has(key)) continue;
+      seenKeys.add(key);
+      branches.push(await resolveBranch(supabase, memberShape));
+    }
+  }
+
+  // Roles & Responsibilities reference -- union of role types across every
+  // (country, boundary_type) actually represented in the rendered branches,
+  // including the boundary_type of each branch's fetched superior, so a role
+  // is documented even when nobody currently holds it.
+  const roleTypeKeys = new Set<string>();
+  branches.forEach((b) => roleTypeKeys.add(`${shape.country}:${b.label}`));
+  if (shape.country === "Canada") roleTypeKeys.add("Canada:National").add("Canada:Province");
+  if (shape.country === "USA") roleTypeKeys.add("USA:National").add("USA:State");
+
+  const roleTypesRaw = await Promise.all(
+    Array.from(roleTypeKeys).map((key) => {
+      const [country, boundaryType] = key.split(":");
+      return getElectionRoleTypes(supabase, country, boundaryType);
+    })
   );
+  const roleTypes = roleTypesRaw
+    .flatMap((r) => r.data || [])
+    .filter((r, i, arr) => arr.findIndex((x) => x.role_title === r.role_title) === i);
+
   const containerList = (containers || []) as Array<{ map_shapes?: { id?: number; name?: string; boundary_type?: string } | null }>;
-  const containerNames = containerList
-    .map((c) => c.map_shapes?.name)
-    .filter((n): n is string => Boolean(n));
+  const containerNames = containerList.map((c) => c.map_shapes?.name).filter((n): n is string => Boolean(n));
 
   const canonicalUrl = `${BASE_URL}/elections/${buildBoundarySlug(shape)}`;
   const breadcrumbItems = [
@@ -132,16 +241,13 @@ export default async function BoundaryDirectoryPage({ params }: PageProps) {
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: breadcrumbItems.map((b, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: b.name,
-      item: b.url,
-    })),
+    itemListElement: breadcrumbItems.map((b, i) => ({ "@type": "ListItem", position: i + 1, name: b.name, item: b.url })),
   };
 
+  const totalRepresentatives = branches.reduce((sum, b) => sum + (b.top ? 1 : 0) + b.bottom.length, 0);
+
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 py-10 space-y-8">
+    <div className="w-full max-w-5xl mx-auto px-4 py-10 space-y-8">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c") }}
@@ -184,15 +290,14 @@ export default async function BoundaryDirectoryPage({ params }: PageProps) {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="text-right sm:block">
-              <div className="text-2xl font-black text-primary">{officeHolderList.length}</div>
-              <div className="text-xs text-text-muted font-medium">Active Representative{officeHolderList.length === 1 ? "" : "s"}</div>
+          <div className="text-right">
+            <div className="text-2xl font-black text-primary">{totalRepresentatives}</div>
+            <div className="text-xs text-text-muted font-medium">
+              Active Representative{totalRepresentatives === 1 ? "" : "s"}
             </div>
           </div>
         </div>
 
-        {/* Parent Boundaries */}
         {containerList.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-border-light/30">
             <span className="text-xs text-text-muted font-medium flex items-center gap-1">
@@ -215,148 +320,59 @@ export default async function BoundaryDirectoryPage({ params }: PageProps) {
         )}
       </div>
 
-      {/* Main Representatives Directory List */}
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-text-main flex items-center gap-2">
-            <Landmark size={22} className="text-primary" />
-            Elected Representatives &amp; Incumbents
-          </h2>
-        </div>
-
-        {officeHolderList.length === 0 ? (
-          <Card padding="lg" className="text-center py-10">
-            <EmptyState
-              icon={Landmark}
-              title="No office holders recorded yet"
-              description={`Active representative records for ${shape.name} will appear here as district profiles are populated.`}
-            />
-          </Card>
-        ) : (
-          <div className="grid grid-cols-1 gap-5">
-            {officeHolderList.map((holder) => {
-              const roleTitle = holder.election_role_types?.role_title || "Elected Official";
-              const partyName = holder.political_parties?.name;
-              const ghostId = holder.profiles?.current_ghost_id;
-              const seat = seatByRoleTitle.get(roleTitle);
-              const candidateCount = seat ? candidateCountBySeat.get(seat.id) || 0 : 0;
-              const engagement = holder.profiles?.id ? engagementByPoliticianId.get(holder.profiles.id) : undefined;
-
-              return (
-                <Card key={holder.id} padding="lg" className="space-y-4 border-l-4 border-l-primary hover:shadow-md transition-shadow">
-                  <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
-                    <div className="flex items-start gap-4">
-                      <Avatar src={holder.photo_url} name={holder.full_name} size="lg" className="ring-2 ring-primary/20" />
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="text-xl font-extrabold text-text-main">{holder.full_name}</h3>
-                          <Badge tone="primary" size="sm" className="font-bold">
-                            {roleTitle}
-                          </Badge>
-                          {partyName && (
-                            <Badge tone="neutral" size="sm">
-                              {partyName}
-                            </Badge>
-                          )}
-                        </div>
-
-                        {holder.profiles?.id && (
-                          <PoliticianEngagementStats
-                            politicianId={holder.profiles.id}
-                            politicianName={holder.full_name}
-                            supporterCount={engagement?.supporterCount ?? 0}
-                            avgRating={engagement?.avgRating ?? 0}
-                            ratingCount={engagement?.ratingCount ?? 0}
-                            commentCount={engagement?.commentCount ?? 0}
-                            size="sm"
-                          />
-                        )}
-
-                        {holder.bio && (
-                          <p className="text-sm text-text-muted leading-relaxed pt-0.5">{holder.bio}</p>
-                        )}
-
-                        {/* Contact Info Pills */}
-                        <div className="flex items-center gap-4 pt-2 text-xs text-text-muted flex-wrap">
-                          {holder.contact_email && (
-                            <a
-                              href={`mailto:${holder.contact_email}`}
-                              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-hover/60 hover:bg-primary/10 hover:text-primary transition-colors"
-                            >
-                              <Mail size={13} />
-                              {holder.contact_email}
-                            </a>
-                          )}
-                          {holder.contact_phone && (
-                            <a
-                              href={`tel:${holder.contact_phone}`}
-                              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-hover/60 hover:bg-primary/10 hover:text-primary transition-colors"
-                            >
-                              <Phone size={13} />
-                              {holder.contact_phone}
-                            </a>
-                          )}
-                          {holder.source_url && (
-                            <a
-                              href={holder.source_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-hover/60 hover:bg-primary/10 hover:text-primary transition-colors"
-                            >
-                              <ExternalLink size={13} />
-                              Official Website
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Action Button to Politician Wall */}
-                    {ghostId && (
-                      <Link
-                        href={`/wall/${ghostId}/${slugifyText(holder.full_name)}-${slugifyText(roleTitle)}`}
-                        className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-sm shrink-0"
-                      >
-                        <UserCheck size={16} />
-                        Politician Wall
-                        <ArrowRight size={14} />
-                      </Link>
-                    )}
-                  </div>
-
-                  {/* Active Election Seat Status */}
-                  {seat && (
-                    <div className="pt-3 border-t border-border-light/30 flex items-center justify-between text-xs sm:text-sm">
-                      <span className="text-text-muted flex items-center gap-1.5 font-medium">
-                        <Sparkles size={14} className="text-primary" />
-                        Next Election Nominations Open
-                      </span>
-                      <Link
-                        href={`/elections/seat/${buildSeatSlug({ id: seat.id, role_title: seat.role_title, map_shapes: { name: shape.name } })}`}
-                        className="font-bold text-primary hover:underline flex items-center gap-1"
-                      >
-                        View {candidateCount} Candidate{candidateCount === 1 ? "" : "s"}
-                        <ArrowRight size={13} />
-                      </Link>
-                    </div>
-                  )}
-                </Card>
-              );
-            })}
-          </div>
-        )}
+      {/* Org Chart */}
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-text-main flex items-center gap-2">
+          <Network size={22} className="text-primary" />
+          Chain of Representation
+        </h2>
+        <BoundaryDirectoryClient
+          branches={branches}
+          // ?view=all lands on the combined view (linked from the feed
+          // sidebar's "All Districts" Directory shortcut) instead of
+          // whichever single branch the URL's own boundary belongs to.
+          defaultBranchKey={view === "all" && branches.length > 1 ? "all" : primaryBranch.key}
+        />
       </div>
 
-      {/* Tracked Offices Summary */}
-      {roleTypes && roleTypes.length > 0 && (
+      {/* Active Election Nominations */}
+      {seatRows.length > 0 && (
+        <div className="space-y-3">
+          <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+            <Sparkles size={18} className="text-primary" />
+            Active Election Nominations
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {seatRows.map((seat) => (
+              <Link
+                key={seat.id}
+                href={`/elections/seat/${buildSeatSlug({ id: seat.id, role_title: seat.role_title, map_shapes: { name: shape.name } })}`}
+                className="flex items-center justify-between gap-2 p-3 rounded-xl bg-surface-hover/40 hover:bg-primary/10 border border-border-light/40 hover:border-primary/30 transition-all text-sm"
+              >
+                <span className="font-semibold text-text-main">{seat.role_title}</span>
+                <span className="text-primary font-bold flex items-center gap-1 text-xs">
+                  {candidateCountBySeat.get(seat.id) || 0} Candidate{(candidateCountBySeat.get(seat.id) || 0) === 1 ? "" : "s"}
+                  <ArrowRight size={13} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Roles & Responsibilities Reference */}
+      {roleTypes.length > 0 && (
         <div className="pt-6 space-y-3">
-          <h3 className="text-base font-bold text-text-main">Tracked Roles &amp; Responsibilities</h3>
+          <h3 className="text-base font-bold text-text-main flex items-center gap-2">
+            <Landmark size={18} className="text-primary" />
+            Roles &amp; Responsibilities
+          </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {roleTypes.map((role) => (
               <Card key={role.id} padding="sm" className="space-y-1">
                 <div className="font-bold text-sm text-text-main">{role.role_title}</div>
                 {role.description && (
-                  <p className="text-xs text-text-muted leading-relaxed line-clamp-2">{role.description}</p>
+                  <p className="text-xs text-text-muted leading-relaxed">{role.description}</p>
                 )}
               </Card>
             ))}

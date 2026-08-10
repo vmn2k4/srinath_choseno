@@ -57,7 +57,8 @@ export async function getOfficeHoldersForShape(supabase: Client, mapShapeId: num
     .select(
       `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
        contact_email, contact_phone, linked_profile_id,
-       election_role_types(role_title, role_key),
+       map_shapes(id, name, boundary_type, country),
+       election_role_types(role_title, role_key, description),
        political_parties(name),
        profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id)`
     )

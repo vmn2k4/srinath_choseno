@@ -7,6 +7,7 @@ import { Card, Spinner, EmptyState, Avatar, Badge } from "@/components/primitive
 import PoliticianEngagementStats from "./PoliticianEngagementStats";
 import { getInterestedPoliticians } from "@/lib/services/profile";
 import { getOfficeHoldersForShapes, getFeaturedOfficeHolders } from "@/lib/services/elections";
+import { getContainersForShapeIds, getNationalShapeForCountry } from "@/lib/services/boundaries";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { buildBoundarySlug } from "@/lib/utils/slugs";
@@ -32,6 +33,8 @@ interface InterestedPolitician {
     country: string | null;
   } | null;
 }
+
+const TOP_TIER_ROLES = new Set(["Prime Minister", "President", "Premier", "Governor"]);
 
 interface OfficeHolderItem {
   id: string;
@@ -103,14 +106,47 @@ export default function PoliticianSidebar({
 
     async function fetchHolders() {
       setLoadingHolders(true);
-      const targetShapeIds = selectedPill?.shapeId
+      const isAllDistricts = !selectedPill?.shapeId && (selectedPill?.filterType || activeTab) === "all";
+      let targetShapeIds = selectedPill?.shapeId
         ? [selectedPill.shapeId]
         : memberships.map((m) => m.id);
+
+      // "All Districts" implies the user's country and (for Canada) their
+      // Province — pull in the head of state/government for both, even
+      // though neither is a real membership: National is always admin_only
+      // (resolved by profile.country, not geo), and Province is an
+      // admin_only container a riding-level membership sits inside (USA's
+      // State is already a normal membership, so its Governor is already
+      // covered by the base membership fetch above with no extra work).
+      if (isAllDistricts && profile?.country) {
+        const idsSet = new Set(targetShapeIds);
+        const { data: nationalShape } = await getNationalShapeForCountry(supabase, profile.country);
+        if (nationalShape?.id) idsSet.add(nationalShape.id);
+
+        if (memberships.length > 0) {
+          const { data: containers } = await getContainersForShapeIds(supabase, memberships.map((m) => m.id));
+          (containers || []).forEach((c: any) => {
+            if (c.container_shape_id) idsSet.add(c.container_shape_id);
+          });
+        }
+
+        targetShapeIds = Array.from(idsSet);
+      }
 
       if (targetShapeIds.length > 0) {
         const { data, error } = await getOfficeHoldersForShapes(supabase, targetShapeIds);
         if (!error && data && data.length > 0 && isMounted) {
-          setOfficeHolders(data as unknown as OfficeHolderItem[]);
+          // "All Districts" can pull in more office holders than the list's
+          // display cap (a dense municipality's councillors alone can exceed
+          // it) — float the Prime Minister/President/Premier/Governor to the
+          // top so they're never the ones truncated out.
+          const ranked = isAllDistricts
+            ? [...data].sort((a: any, b: any) => {
+                const rank = (role?: string) => (TOP_TIER_ROLES.has(role || "") ? 0 : 1);
+                return rank(a.election_role_types?.role_title) - rank(b.election_role_types?.role_title);
+              })
+            : data;
+          setOfficeHolders(ranked as unknown as OfficeHolderItem[]);
         } else if (isMounted) {
           const { data: featuredData } = await getFeaturedOfficeHolders(supabase, profile?.country);
           if (featuredData && isMounted) {
@@ -176,11 +212,23 @@ export default function PoliticianSidebar({
 
   if (activeTab?.toLowerCase() === "international" || selectedPill?.filterType === "international") return null;
 
-  // Active shape for direct boundary office holder page link
+  // Active shape for direct boundary office holder page link -- a specific
+  // pill (Federal/Provincial/Municipal) links straight to that boundary's
+  // own directory, but "All Districts" has no single boundary to name, so it
+  // falls back to any one membership just to have a valid URL to land on.
+  const isAllDistricts = !selectedPill?.shapeId && (selectedPill?.filterType || activeTab) === "all";
   const activeShape = selectedPill?.shapeId
     ? { id: selectedPill.shapeId, name: selectedPill.districtName }
     : memberships.length > 0
     ? { id: memberships[0].id, name: memberships[0].name }
+    : null;
+  // ?view=all tells that landing page to default to its own "All" tab
+  // (every branch stacked together) instead of whichever single branch the
+  // fallback boundary happens to belong to -- otherwise "All Districts" here
+  // always bounced to a single branch's directory (e.g. always Federal, if
+  // that happened to be memberships[0]) instead of showing everything.
+  const directoryHref = activeShape
+    ? `/elections/${buildBoundarySlug(activeShape)}${isAllDistricts ? "?view=all" : ""}`
     : null;
 
   return (
@@ -192,9 +240,9 @@ export default function PoliticianSidebar({
             <Landmark size={18} className="text-primary" />
             Current Office Holders
           </h3>
-          {activeShape && (
+          {directoryHref && (
             <Link
-              href={`/elections/${buildBoundarySlug(activeShape)}`}
+              href={directoryHref}
               className="text-xs font-semibold text-primary hover:underline flex items-center gap-1 shrink-0"
               title="View full office holder page"
             >
@@ -210,9 +258,9 @@ export default function PoliticianSidebar({
         ) : officeHolders.length === 0 ? (
           <div className="space-y-2">
             <p className="text-text-muted text-xs">No active office holders loaded for this boundary yet.</p>
-            {activeShape && (
+            {directoryHref && (
               <Link
-                href={`/elections/${buildBoundarySlug(activeShape)}`}
+                href={directoryHref}
                 className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
               >
                 View boundary page <ChevronRight size={12} />
@@ -286,9 +334,9 @@ export default function PoliticianSidebar({
               return <div key={holder.id}>{content}</div>;
             })}
 
-            {activeShape && (
+            {directoryHref && (
               <Link
-                href={`/elections/${buildBoundarySlug(activeShape)}`}
+                href={directoryHref}
                 className="w-full mt-2 py-2 px-3 rounded-lg bg-primary/5 hover:bg-primary/10 border border-primary/20 text-xs font-semibold text-primary flex items-center justify-center gap-1.5 transition-colors text-center"
               >
                 <UserCheck size={14} />

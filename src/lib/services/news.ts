@@ -37,6 +37,7 @@ export interface NewsArticle {
   published_at: string | null;
   hero_image_url: string | null;
   content: NewsArticleContent;
+  political_party_id: number | null;
   created_by: string | null;
   created_at: string;
   updated_at: string;
@@ -53,6 +54,7 @@ export interface NewsArticleInsert {
   published_at?: string | null;
   hero_image_url?: string | null;
   content?: NewsArticleContent;
+  political_party_id?: number | null;
 }
 
 // ── Breaking news ────────────────────────────────────────────────────────
@@ -245,6 +247,49 @@ export async function createNewsArticleComment(
     p_video_url: videoUrl ?? undefined,
     p_news_article_id: articleId,
     p_is_test: isDevEnvironment(),
+  });
+}
+
+// ── Politician tagging (article → wall posts) ──────────────────────────────
+//
+// Tagging an article to a politician surfaces it on that politician's wall
+// as a normal PostCard (see admin_sync_news_article_tags() in
+// 20260809000002_news_politician_party_tagging.sql for how the mirrored
+// posts row gets created/removed). This service only reads/writes the tag
+// list and triggers a resync — the RPC owns all the posts-table logic.
+
+export interface TaggedPolitician {
+  politician_id: string;
+  full_name: string | null;
+}
+
+export async function getNewsArticlePoliticianTags(
+  supabase: Client,
+  articleId: string
+): Promise<{ data: TaggedPolitician[] | null; error: PostgrestError | null }> {
+  const { data, error } = await supabase
+    .from("news_article_politicians")
+    .select("politician_id, profiles(full_name)")
+    .eq("news_article_id", articleId);
+  if (error) return { data: null, error };
+  const rows = (data as unknown as Array<{ politician_id: string; profiles: { full_name: string | null } | null }>) || [];
+  return { data: rows.map((r) => ({ politician_id: r.politician_id, full_name: r.profiles?.full_name ?? null })), error: null };
+}
+
+/**
+ * Replaces the article's tagged-politician set and resyncs the mirrored
+ * wall posts to match (create/remove per the article's current status).
+ * Pass `politicianIds` omitted/undefined to leave the tag set untouched
+ * and just resync against a status change (e.g. after publish/unpublish).
+ */
+export async function syncNewsArticlePoliticianTags(
+  supabase: Client,
+  articleId: string,
+  politicianIds?: string[]
+) {
+  return (supabase.rpc as any)("admin_sync_news_article_tags", {
+    p_article_id: articleId,
+    p_politician_ids: politicianIds,
   });
 }
 

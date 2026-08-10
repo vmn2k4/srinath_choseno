@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
-import { Users, ShieldCheck, CornerDownRight, Award, Flag } from "lucide-react";
+import { Users, ShieldCheck, CornerDownRight, Award, Flag, ArrowRight } from "lucide-react";
 import Card from "@/components/primitives/Card";
 import Badge from "@/components/primitives/Badge";
 import Button from "@/components/primitives/Button";
@@ -9,7 +9,7 @@ import VoteBar from "./VoteBar";
 import CommentComposer from "./CommentComposer";
 import MediaThumbnail from "./MediaThumbnail";
 import ReportDialog from "./ReportDialog";
-import PostHeader, { type PoliticianAuthorInfo } from "./PostHeader";
+import PostHeader, { type PoliticianAuthorInfo, type NewsAuthorInfo } from "./PostHeader";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { normalizeMediaUrl } from "@/lib/services/video";
 import type { ReportTargetType } from "@/lib/services/moderation";
@@ -17,7 +17,10 @@ import type { Database } from "@/lib/supabase/types";
 
 type PostRow = Database["public"]["Tables"]["posts"]["Row"];
 type CommentRow = Database["public"]["Tables"]["comments"]["Row"];
-export type PostWithComments = PostRow & { comments?: CommentRow[] | null };
+export type PostWithComments = PostRow & {
+  comments?: CommentRow[] | null;
+  news_articles?: { slug: string } | null;
+};
 
 // Unifies what were two independently-implemented ~80%-identical post cards:
 // FeedPage.jsx's inline post markup (vote bar, civic-score badge) and
@@ -61,6 +64,18 @@ export default function PostCard({
 }) {
   const [reportTarget, setReportTarget] = useState<{ targetType: ReportTargetType; targetId: string } | null>(null);
 
+  // A news article tagged to this wall is mirrored into a posts row by
+  // admin_sync_news_article_tags() (see the news_politician_party_tagging
+  // migration) -- news_article_id is the only signal needed to show "News"
+  // instead of the ghost name; the row's own ghost_id is a fixed sentinel
+  // that never matches a real politician, so isOwnerPost/spotlight below
+  // stay false for it as intended. news_articles(slug) is embedded by
+  // getWallPosts()/getWallPostBySlugOrId() so the header can link back to
+  // the full article.
+  const newsAuthor: NewsAuthorInfo | null = post.news_article_id
+    ? { articleHref: post.news_articles?.slug ? `/news/${post.news_articles.slug}` : undefined }
+    : null;
+
   const isOwnerPost = ownerGhostId != null && post.ghost_id === ownerGhostId;
   const comments = post.comments || [];
   const byDate = (a: CommentRow, b: CommentRow) =>
@@ -89,6 +104,7 @@ export default function PostCard({
           ghostId={post.ghost_id}
           createdAt={post.created_at}
           politicianAuthor={politicianAuthor}
+          newsAuthor={newsAuthor}
           isOwnerPost={isOwnerPost}
           ownerBadgeLabel={ownerBadgeLabel}
           boundaryName={boundaryName}
@@ -119,6 +135,15 @@ export default function PostCard({
               />
             )}
           </div>
+        )}
+
+        {newsAuthor?.articleHref && (
+          <Link
+            href={newsAuthor.articleHref}
+            className="inline-flex items-center gap-1.5 mb-4 text-xs font-bold text-accent hover:text-accent-hover"
+          >
+            Read Full Article <ArrowRight size={12} />
+          </Link>
         )}
 
         {linkMetadata ? (

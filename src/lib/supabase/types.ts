@@ -1066,6 +1066,7 @@ export type Database = {
           headline: string
           hero_image_url: string | null
           id: string
+          political_party_id: number | null
           province: string | null
           published_at: string | null
           slug: string
@@ -1082,6 +1083,7 @@ export type Database = {
           headline: string
           hero_image_url?: string | null
           id?: string
+          political_party_id?: number | null
           province?: string | null
           published_at?: string | null
           slug: string
@@ -1098,6 +1100,7 @@ export type Database = {
           headline?: string
           hero_image_url?: string | null
           id?: string
+          political_party_id?: number | null
           province?: string | null
           published_at?: string | null
           slug?: string
@@ -1105,7 +1108,48 @@ export type Database = {
           summary?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "news_articles_political_party_id_fkey"
+            columns: ["political_party_id"]
+            isOneToOne: false
+            referencedRelation: "political_parties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      news_article_politicians: {
+        Row: {
+          created_at: string
+          news_article_id: string
+          politician_id: string
+        }
+        Insert: {
+          created_at?: string
+          news_article_id: string
+          politician_id: string
+        }
+        Update: {
+          created_at?: string
+          news_article_id?: string
+          politician_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "news_article_politicians_news_article_id_fkey"
+            columns: ["news_article_id"]
+            isOneToOne: false
+            referencedRelation: "news_articles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "news_article_politicians_politician_id_fkey"
+            columns: ["politician_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       office_holders: {
         Row: {
@@ -2149,6 +2193,10 @@ export type Database = {
           id: string
           role: string
         }[]
+      }
+      admin_sync_news_article_tags: {
+        Args: { p_article_id: string; p_politician_ids?: string[] }
+        Returns: undefined
       }
       admin_update_moderation_rule: {
         Args: {

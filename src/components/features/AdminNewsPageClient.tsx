@@ -17,6 +17,7 @@ import {
   Newspaper, Plus, Trash2, Edit3, Eye, Save,
   X, ImagePlus, FileJson, ChevronDown, ChevronUp, Calendar,
   Globe, AlignLeft, User, RefreshCw, Upload, ClipboardPaste, Zap, Copy, List,
+  Users, Flag,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import {
@@ -29,10 +30,15 @@ import {
   uploadNewsHeroImage,
   isBreakingNewsActive,
   BREAKING_NEWS_ACTIVE_HOURS,
+  getNewsArticlePoliticianTags,
+  syncNewsArticlePoliticianTags,
   type NewsArticle,
   type NewsArticleContent,
   type NewsArticleInsert,
+  type TaggedPolitician,
 } from "@/lib/services/news";
+import { adminSearchProfiles } from "@/lib/services/profile";
+import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { normalizeCountryCode, normalizeProvinceCode } from "@/lib/utils/newsGeography";
 
 // ── Types ─────────────────────────────────────────────────────────────────
@@ -58,6 +64,7 @@ interface ArticleFormData {
   authorBio: string;
   authorPhotoUrl: string;
   sources: string; // one per line: "Label | https://url"
+  politicalPartyId: string;
 }
 
 const EMPTY_FORM: ArticleFormData = {
@@ -81,6 +88,7 @@ const EMPTY_FORM: ArticleFormData = {
   authorBio: "",
   authorPhotoUrl: "",
   sources: "",
+  politicalPartyId: "",
 };
 
 const STATUS_CONFIG: Record<string, { label: string; tone: "primary" | "accent" | "amber" | "emerald" | "rose" | "neutral" }> = {
@@ -147,6 +155,7 @@ function formToInsert(f: ArticleFormData): NewsArticleInsert {
     status:        f.status,
     published_at:  f.published_at  ? new Date(f.published_at).toISOString() : null,
     hero_image_url:f.hero_image_url|| null,
+    political_party_id: f.politicalPartyId ? Number(f.politicalPartyId) : null,
     content,
   };
 }
@@ -165,6 +174,7 @@ function articleToForm(a: NewsArticle): ArticleFormData {
       ? new Date(a.published_at).toISOString().slice(0, 16)
       : "",
     hero_image_url:a.hero_image_url  ?? "",
+    politicalPartyId: a.political_party_id != null ? String(a.political_party_id) : "",
     seoTitle:      c?.seoTitle       ?? "",
     metaDescription:c?.metaDescription?? "",
     body:          c?.body           ?? "",
@@ -239,7 +249,9 @@ The output must strictly be a valid JSON object matching the schema below, with 
   ],
   "hero_image_url": "https://example.com/photo.jpg — OPTIONAL. Only include if the source material explicitly provides an image URL. Never invent, guess, or reuse a stock URL — omit this field entirely if no image was given.",
   "heroImageAlt": "Accessible description of what's in the image — REQUIRED whenever hero_image_url is set, omit otherwise",
-  "heroImageCaption": "Photo credit / caption shown under the image — OPTIONAL, only if provided in source material"
+  "heroImageCaption": "Photo credit / caption shown under the image — OPTIONAL, only if provided in source material",
+  "taggedPoliticians": ["Full Name As Registered On Choseno"],
+  "taggedParty": "Party Name — OPTIONAL"
 }
 
 ### Key Points:
@@ -256,6 +268,8 @@ The output must strictly be a valid JSON object matching the schema below, with 
 - Sources: cite every source the input material actually came from — this renders as a "Sources" section on the published article. Omit the array entirely if no sources were given, never invent one.
 - Images: Never fabricate a hero_image_url — only set it if the source material gives you a real image URL and its photo credit. No image? Omit all three image fields; it can be uploaded manually afterward in the admin panel.
 - All timestamps in ISO 8601 format with timezone
+- taggedPoliticians: full name(s) of any politician who is a direct subject of the story (e.g. the story is about them, quotes them, or is their announcement). Use their full name exactly as it would appear on a public profile. Omit the field (or leave it an empty array) if no specific politician is the subject — never guess a name just to fill the field. Names that don't match a registered profile will simply be skipped and can be added manually afterward in the admin panel.
+- taggedParty: the political party the story is about, if any. Omit if the story isn't about a specific party.
 
 ### Common Mistakes to Avoid:
 ❌ DON'T invent quotes, statistics, or details not in source material
@@ -263,6 +277,7 @@ The output must strictly be a valid JSON object matching the schema below, with 
 ❌ DON'T bury the lede - start with the news, not background
 ❌ DON'T assume or fill gaps with reasonable inferences
 ❌ DON'T include editorializing or opinion
+❌ DON'T invent or guess at a taggedPoliticians/taggedParty name — only include one explicitly named as a subject in the source material
 
 ✅ DO start with verified facts and datelines
 ✅ DO quote only when explicitly provided in source
@@ -302,7 +317,9 @@ The output MUST be a valid JSON object with a batch array:
       "sources": [{ "label": "Source", "url": "https://..." }],
       "hero_image_url": "https://... — OPTIONAL, only if source material gives a real image URL. Omit otherwise, never invent one.",
       "heroImageAlt": "Accessible description — REQUIRED if hero_image_url is set",
-      "heroImageCaption": "Photo credit / caption — OPTIONAL"
+      "heroImageCaption": "Photo credit / caption — OPTIONAL",
+      "taggedPoliticians": ["Full Name — OPTIONAL, only if a politician is a direct subject of this article"],
+      "taggedParty": "Party Name — OPTIONAL"
     },
     { /* article 2 */ },
     { /* article 3 */ }
@@ -328,6 +345,8 @@ The output MUST be a valid JSON object with a batch array:
 8. **Breaking News:** Only set \`breakingNews: true\` on articles that are genuinely <6 hours old and represent a sudden, unexpected development. The badge auto-clears itself ${BREAKING_NEWS_ACTIVE_HOURS} hours after \`published_at\` — never set it on older or evergreen stories in the batch.
 
 9. **Images:** Never fabricate a hero_image_url for any article in the batch. Only set it (with heroImageAlt) when the source material actually supplies an image URL — otherwise omit all three image fields for that article; images can be added manually afterward in the admin panel.
+
+10. **Politician/Party tagging:** Only set taggedPoliticians/taggedParty when a specific politician or party is a direct subject of that article. Use the politician's full name exactly as it would appear on a public profile. Never invent a name to fill the field — omit it for stories not centered on a specific politician or party. Names that don't match a registered profile are skipped automatically and can be tagged manually afterward by editing that article.
 
 Here are today's news stories and topics:`;
 }
@@ -366,6 +385,49 @@ function applyJsonToForm(parsed: any, prev: ArticleFormData): ArticleFormData {
   };
 }
 
+// ── Politician/party name resolution (AI JSON import) ──────────────────────
+// The AI prompt asks for politician/party names as plain strings (it has no
+// visibility into profile ids). These best-effort match those names against
+// registered profiles/parties so import can auto-tag when a name is
+// unambiguous, and report back what it couldn't match so the admin can add
+// it manually via the picker already in the Politician & Party Tagging
+// section (or, for a batch import, by editing that article afterward).
+
+async function resolvePoliticianNamesToTags(
+  supabase: ReturnType<typeof createClient>,
+  names: string[]
+): Promise<{ matched: TaggedPolitician[]; unmatched: string[] }> {
+  const matched: TaggedPolitician[] = [];
+  const unmatched: string[] = [];
+  for (const raw of names) {
+    const name = raw.trim();
+    if (!name) continue;
+    const { data } = await adminSearchProfiles(supabase, name);
+    const politicians = ((data as { id: string; full_name: string | null; role: string | null }[] | null) || [])
+      .filter((p) => p.role === "politician");
+    const exact = politicians.filter((p) => (p.full_name || "").trim().toLowerCase() === name.toLowerCase());
+    if (exact.length === 1) {
+      matched.push({ politician_id: exact[0].id, full_name: exact[0].full_name });
+    } else {
+      unmatched.push(name);
+    }
+  }
+  return { matched, unmatched };
+}
+
+async function resolvePartyNameToId(
+  supabase: ReturnType<typeof createClient>,
+  name: string,
+  country: string
+): Promise<number | null> {
+  const trimmed = name.trim();
+  if (!trimmed) return null;
+  const { data } = await getPoliticalParties(supabase, { country: country || undefined });
+  const parties = (data as { id: number; name: string }[] | null) || [];
+  const match = parties.find((p) => p.name.trim().toLowerCase() === trimmed.toLowerCase());
+  return match ? match.id : null;
+}
+
 // ── Component ─────────────────────────────────────────────────────────────
 
 export default function AdminNewsPageClient() {
@@ -384,6 +446,17 @@ export default function AdminNewsPageClient() {
   const [uploadingHero, setUploadingHero] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; headline: string } | null>(null);
 
+  // Politician tagging — chips of {id, full_name} plus the search-as-you-type
+  // picker that adds to them (mirrors OfficeHoldersAdminClient's linked-
+  // profile picker, extended to multi-select).
+  const [taggedPoliticians, setTaggedPoliticians] = useState<TaggedPolitician[]>([]);
+  const [politicianQuery, setPoliticianQuery] = useState("");
+  const [politicianResults, setPoliticianResults] = useState<{ id: string; full_name: string | null; role: string | null }[]>([]);
+  const [searchingPolitician, setSearchingPolitician] = useState(false);
+
+  // Political parties available for the article's current country.
+  const [partyOptions, setPartyOptions] = useState<{ id: number; name: string }[]>([]);
+
   // JSON import state
   const [jsonPasteMode, setJsonPasteMode] = useState(false);
   const [jsonPasteText, setJsonPasteText] = useState("");
@@ -393,6 +466,11 @@ export default function AdminNewsPageClient() {
   // `batch` array instead of a single article.
   const [batchPreview, setBatchPreview] = useState<NewsArticleInsert[] | null>(null);
   const [batchImporting, setBatchImporting] = useState(false);
+  // Politician/party name hints pulled from the pasted batch JSON, keyed by
+  // slug -- applied to each article's tags after creation (see
+  // handleBatchImport), since news_article_politicians rows need a real
+  // article id that doesn't exist until after the insert.
+  const [batchTagHints, setBatchTagHints] = useState<Record<string, { politicianNames: string[]; partyName?: string }>>({});
 
   // AI Prompt state
   const [showAiPrompt, setShowAiPrompt] = useState(false);
@@ -401,6 +479,7 @@ export default function AdminNewsPageClient() {
 
   const [sectionsOpen, setSectionsOpen] = useState({
     core: true,
+    tagging: true,
     seo: false,
     content: true,
     author: false,
@@ -423,6 +502,41 @@ export default function AdminNewsPageClient() {
     Promise.resolve().then(() => loadArticles());
   }, [loadArticles]);
 
+  const runPoliticianSearch = useCallback(async () => {
+    if (politicianQuery.trim().length < 2) {
+      setPoliticianResults([]);
+      return;
+    }
+    setSearchingPolitician(true);
+    const { data } = await adminSearchProfiles(supabase, politicianQuery.trim());
+    const rows = (data as { id: string; full_name: string | null; role: string | null }[] | null) || [];
+    setPoliticianResults(rows.filter((p) => p.role === "politician"));
+    setSearchingPolitician(false);
+  }, [supabase, politicianQuery]);
+
+  useEffect(() => {
+    const id = setTimeout(runPoliticianSearch, 300);
+    return () => clearTimeout(id);
+  }, [runPoliticianSearch]);
+
+  useEffect(() => {
+    getPoliticalParties(supabase, { country: form.country || undefined }).then(({ data }) => {
+      setPartyOptions((data as { id: number; name: string }[] | null) || []);
+    });
+  }, [supabase, form.country]);
+
+  function addTaggedPolitician(p: { id: string; full_name: string | null }) {
+    setTaggedPoliticians((prev) =>
+      prev.some((tp) => tp.politician_id === p.id) ? prev : [...prev, { politician_id: p.id, full_name: p.full_name }]
+    );
+    setPoliticianQuery("");
+    setPoliticianResults([]);
+  }
+
+  function removeTaggedPolitician(politicianId: string) {
+    setTaggedPoliticians((prev) => prev.filter((tp) => tp.politician_id !== politicianId));
+  }
+
   // ── Form helpers ──────────────────────────────────────────────────────────
 
   function setField<K extends keyof ArticleFormData>(key: K, value: ArticleFormData[K]) {
@@ -440,6 +554,10 @@ export default function AdminNewsPageClient() {
     setJsonPasteText("");
     setJsonPasteError("");
     setBatchPreview(null);
+    setBatchTagHints({});
+    setTaggedPoliticians([]);
+    setPoliticianQuery("");
+    setPoliticianResults([]);
   }
 
   async function openEditForm(id: string) {
@@ -455,6 +573,11 @@ export default function AdminNewsPageClient() {
     setJsonPasteText("");
     setJsonPasteError("");
     setBatchPreview(null);
+    setBatchTagHints({});
+    setPoliticianQuery("");
+    setPoliticianResults([]);
+    const { data: tags } = await getNewsArticlePoliticianTags(supabase, id);
+    setTaggedPoliticians(tags || []);
   }
 
   function closeForm() {
@@ -468,37 +591,77 @@ export default function AdminNewsPageClient() {
   // form — each item goes through the same applyJsonToForm/formToInsert
   // mapping as a single paste, just run once per array entry.
 
-  function parseAndApplyJson(jsonString: string): { ok: boolean; batchCount?: number } {
+  async function parseAndApplyJson(
+    jsonString: string
+  ): Promise<{ ok: boolean; batchCount?: number; unmatchedPoliticians?: string[] }> {
     try {
       const parsed = JSON.parse(jsonString);
       if (parsed && Array.isArray(parsed.batch)) {
-        const drafts = parsed.batch.map((item: any) => formToInsert(applyJsonToForm(item, EMPTY_FORM)));
+        const hints: Record<string, { politicianNames: string[]; partyName?: string }> = {};
+        const drafts = parsed.batch.map((item: any) => {
+          const draft = formToInsert(applyJsonToForm(item, EMPTY_FORM));
+          const politicianNames = Array.isArray(item?.taggedPoliticians) ? item.taggedPoliticians : [];
+          const partyName = typeof item?.taggedParty === "string" ? item.taggedParty : undefined;
+          if (draft.slug && (politicianNames.length > 0 || partyName)) {
+            hints[draft.slug] = { politicianNames, partyName };
+          }
+          return draft;
+        });
         setBatchPreview(drafts);
+        setBatchTagHints(hints);
         setJsonPasteError("");
         return { ok: true, batchCount: drafts.length };
       }
+
       setBatchPreview(null);
-      setForm((prev) => applyJsonToForm(parsed, prev));
+      setBatchTagHints({});
+      const nextForm = applyJsonToForm(parsed, form);
+      setForm(nextForm);
+
+      let unmatchedPoliticians: string[] = [];
+      const politicianNames: string[] = Array.isArray(parsed.taggedPoliticians) ? parsed.taggedPoliticians : [];
+      if (politicianNames.length > 0) {
+        const { matched, unmatched } = await resolvePoliticianNamesToTags(supabase, politicianNames);
+        unmatchedPoliticians = unmatched;
+        if (matched.length > 0) {
+          setTaggedPoliticians((prev) => {
+            const byId = new Map(prev.map((tp) => [tp.politician_id, tp]));
+            matched.forEach((m) => byId.set(m.politician_id, m));
+            return Array.from(byId.values());
+          });
+        }
+      }
+      if (typeof parsed.taggedParty === "string" && parsed.taggedParty.trim()) {
+        const partyId = await resolvePartyNameToId(supabase, parsed.taggedParty, nextForm.country);
+        if (partyId != null) setField("politicalPartyId", String(partyId));
+      }
+
       setJsonPasteError("");
-      return { ok: true };
+      return { ok: true, unmatchedPoliticians };
     } catch {
       setJsonPasteError("Invalid JSON — check your syntax and try again.");
       return { ok: false };
     }
   }
 
+  function unmatchedNote(names?: string[]): string {
+    return names && names.length > 0
+      ? ` Couldn't auto-match politician(s): ${names.join(", ")} — add them manually below.`
+      : "";
+  }
+
   function handleJsonFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (ev) => {
-      const result = parseAndApplyJson(ev.target?.result as string);
+    reader.onload = async (ev) => {
+      const result = await parseAndApplyJson(ev.target?.result as string);
       if (result.ok) {
         setStatusMsg({
           type: "success",
           msg: result.batchCount
             ? `Loaded ${result.batchCount} articles — review below and click "Import All".`
-            : "JSON imported — review fields and save.",
+            : `JSON imported — review fields and save.${unmatchedNote(result.unmatchedPoliticians)}`,
         });
       }
     };
@@ -506,15 +669,15 @@ export default function AdminNewsPageClient() {
     e.target.value = "";
   }
 
-  function handleJsonPasteApply() {
+  async function handleJsonPasteApply() {
     if (!jsonPasteText.trim()) { setJsonPasteError("Paste some JSON first."); return; }
-    const result = parseAndApplyJson(jsonPasteText);
+    const result = await parseAndApplyJson(jsonPasteText);
     if (result.ok) {
       setStatusMsg({
         type: "success",
         msg: result.batchCount
           ? `Loaded ${result.batchCount} articles — review below and click "Import All".`
-          : "JSON applied — review fields and save.",
+          : `JSON applied — review fields and save.${unmatchedNote(result.unmatchedPoliticians)}`,
       });
       setJsonPasteMode(false);
       setJsonPasteText("");
@@ -526,19 +689,46 @@ export default function AdminNewsPageClient() {
     setBatchImporting(true);
     setStatusMsg(null);
     const { created, failed } = await createNewsArticlesBatch(supabase, batchPreview);
+
+    // Best-effort auto-tag each created article from its JSON hints -- needs
+    // a real article id, so this can only run after the insert above.
+    const unmatchedByArticle: string[] = [];
+    for (const article of created) {
+      const hint = batchTagHints[article.slug];
+      if (!hint) continue;
+
+      let politicianIds: string[] = [];
+      if (hint.politicianNames.length > 0) {
+        const { matched, unmatched } = await resolvePoliticianNamesToTags(supabase, hint.politicianNames);
+        politicianIds = matched.map((m) => m.politician_id);
+        if (unmatched.length > 0) unmatchedByArticle.push(`"${article.headline}": ${unmatched.join(", ")}`);
+      }
+      if (politicianIds.length > 0) await syncNewsArticlePoliticianTags(supabase, article.id, politicianIds);
+
+      if (hint.partyName) {
+        const partyId = await resolvePartyNameToId(supabase, hint.partyName, article.country || "");
+        if (partyId != null) await updateNewsArticle(supabase, article.id, { political_party_id: partyId });
+      }
+    }
+
     setBatchImporting(false);
+    const tagNote = unmatchedByArticle.length
+      ? ` Couldn't auto-match politician(s) on: ${unmatchedByArticle.join("; ")} — edit those articles to tag manually.`
+      : "";
 
     if (failed.length === 0) {
-      setStatusMsg({ type: "success", msg: `Imported ${created.length} article${created.length === 1 ? "" : "s"}.` });
+      setStatusMsg({ type: "success", msg: `Imported ${created.length} article${created.length === 1 ? "" : "s"}.${tagNote}` });
       setBatchPreview(null);
+      setBatchTagHints({});
       await loadArticles();
       closeForm();
     } else {
       setStatusMsg({
         type: created.length > 0 ? "success" : "error",
-        msg: `Imported ${created.length}, ${failed.length} failed — ${failed.map((f) => `"${f.headline}": ${f.error}`).join("; ")}`,
+        msg: `Imported ${created.length}, ${failed.length} failed — ${failed.map((f) => `"${f.headline}": ${f.error}`).join("; ")}${tagNote}`,
       });
       setBatchPreview(null);
+      setBatchTagHints({});
       if (created.length > 0) await loadArticles();
     }
   }
@@ -579,12 +769,23 @@ export default function AdminNewsPageClient() {
 
     const payload = formToInsert(form);
     let err;
+    let savedId = editingId;
     if (editingId) {
       const res = await updateNewsArticle(supabase, editingId, payload);
       err = res.error;
     } else {
       const res = await createNewsArticle(supabase, payload);
       err = res.error;
+      savedId = res.data?.id ?? null;
+    }
+
+    if (!err && savedId) {
+      const tagRes = await syncNewsArticlePoliticianTags(
+        supabase,
+        savedId,
+        taggedPoliticians.map((tp) => tp.politician_id)
+      );
+      err = tagRes.error ?? undefined;
     }
 
     setSaving(false);
@@ -610,6 +811,7 @@ export default function AdminNewsPageClient() {
     if (error) {
       setStatusMsg({ type: "error", msg: error.message });
     } else {
+      await syncNewsArticlePoliticianTags(supabase, id);
       setStatusMsg({ type: "success", msg: `"${article.headline}" published!` });
       await loadArticles();
     }
@@ -624,6 +826,7 @@ export default function AdminNewsPageClient() {
     if (error) {
       setStatusMsg({ type: "error", msg: error.message });
     } else {
+      await syncNewsArticlePoliticianTags(supabase, id);
       setStatusMsg({ type: "success", msg: `"${article.headline}" unpublished.` });
       await loadArticles();
     }
@@ -950,6 +1153,78 @@ export default function AdminNewsPageClient() {
                     🔴 Breaking News <span className="text-text-muted font-normal">(auto-clears {BREAKING_NEWS_ACTIVE_HOURS}h after publish)</span>
                   </label>
                 </div>
+              </div>
+            </CollapsibleFormSection>
+
+            {/* ── Politician & Party Tagging ── */}
+            <CollapsibleFormSection
+              title="Politician & Party Tagging"
+              icon={<Users size={13} />}
+              open={sectionsOpen.tagging}
+              onToggle={() => toggleSection("tagging")}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <FieldGroup label="Linked Political Party (optional)">
+                  <Select
+                    value={form.politicalPartyId}
+                    onChange={(e) => setField("politicalPartyId", e.target.value)}
+                  >
+                    <option value="">None</option>
+                    {partyOptions.map((p) => (
+                      <option key={p.id} value={p.id}>{p.name}</option>
+                    ))}
+                  </Select>
+                </FieldGroup>
+
+                <FieldGroup label="Tagged Politicians (optional)">
+                  <p className="text-[11px] text-text-muted -mt-1 mb-1">
+                    Tagging a politician posts this article to their wall as a normal post.
+                  </p>
+                  {taggedPoliticians.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-2">
+                      {taggedPoliticians.map((tp) => (
+                        <div
+                          key={tp.politician_id}
+                          className="flex items-center gap-1.5 text-xs bg-accent/10 text-accent font-semibold px-2.5 py-1 rounded-xl"
+                        >
+                          <Flag size={12} />
+                          {tp.full_name || "Unnamed politician"}
+                          <button
+                            type="button"
+                            onClick={() => removeTaggedPolitician(tp.politician_id)}
+                            className="hover:text-danger cursor-pointer"
+                          >
+                            <X size={12} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div className="relative">
+                    <Input
+                      placeholder="Search politicians by name..."
+                      value={politicianQuery}
+                      onChange={(e) => setPoliticianQuery(e.target.value)}
+                    />
+                    {searchingPolitician && (
+                      <Spinner size="sm" className="absolute right-3 top-1/2 -translate-y-1/2" />
+                    )}
+                    {politicianResults.length > 0 && (
+                      <div className="mt-1.5 border border-border-light/40 rounded-xl divide-y divide-border-light/30 overflow-hidden">
+                        {politicianResults.map((p) => (
+                          <button
+                            key={p.id}
+                            type="button"
+                            onClick={() => addTaggedPolitician(p)}
+                            className="w-full text-left px-3 py-2 text-xs hover:bg-surface-hover transition-colors cursor-pointer"
+                          >
+                            {p.full_name || "Unnamed politician"}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </FieldGroup>
               </div>
             </CollapsibleFormSection>
 
