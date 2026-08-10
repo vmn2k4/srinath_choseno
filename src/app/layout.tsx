@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import NavBar from "@/components/NavBar";
+import SiteFooter from "@/components/SiteFooter";
 import DebugUserSwitcher from "@/components/dev/DebugUserSwitcher";
 import FakeProductionToggle from "@/components/dev/FakeProductionToggle";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
@@ -27,9 +28,12 @@ const bigShouldersDisplay = Big_Shoulders({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Choseno — A Framework for Future Democracy",
+  title: "Choseno — Rate Your Politician & See 2026 Candidate Reviews",
   description:
-    "An anonymous civic social platform. Post under a rotating Ghost ID, scoped automatically to your real electoral and administrative boundaries.",
+    "Like Yelp, but for democracy. Rate your senators, representatives & local politicians. Read what voters in your district are saying — anonymously, free.",
+  authors: [{ name: "Murugappan Valliyappan", url: "https://www.linkedin.com/in/muruvalliyappan/" }],
+  creator: "Murugappan Valliyappan",
+  publisher: "Choseno",
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
@@ -46,6 +50,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <div className="flex flex-col min-h-screen">
               <NavBar />
               <main className="flex-1 w-full pt-6 lg:pt-8">{children}</main>
+              <SiteFooter />
             </div>
             {process.env.NODE_ENV !== "production" && (
               <>

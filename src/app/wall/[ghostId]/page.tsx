@@ -20,7 +20,7 @@ export async function generateMetadata({
 }: WallPageProps): Promise<Metadata> {
   const { ghostId } = await params;
   const supabase = await createServerClient();
-  const { owner, activeCandidacy, partyName } = await getSEOProfileSummary(supabase, ghostId);
+  const { owner, activeCandidacy, partyName, rating } = await getSEOProfileSummary(supabase, ghostId);
 
   const name = owner?.full_name || "Politician";
   const bio = owner?.politician_profiles?.bio || "";
@@ -44,9 +44,14 @@ export async function generateMetadata({
     ? `${name}${partyLabel} — ${electionYear} ${roleTitle} Candidate${locationLabel} & Voter Ratings | Choseno`
     : `${name}${partyLabel} — ${roleTitle}${locationLabel} | Voter Ratings & Feedback | Choseno`;
 
+  const ratingPrefix =
+    rating && rating.count > 0
+      ? `${rating.count} voter${rating.count === 1 ? "" : "s"} rated ${name} ${rating.avg}★. `
+      : "";
+
   const description = activeCandidacy
-    ? `What do ${boundaryName || "local"} voters really think of ${name}? Read anonymous constituent reviews, ${electionYear} ${roleTitle} stances${partyLabel ? ` (${partyName})` : ""}, ratings & submit your feedback on Choseno.`
-    : `What do constituents really think of ${name}? See approval ratings, constituent feedback, policy stances and join the discussion — anonymous and free on Choseno.`;
+    ? `${ratingPrefix}What do ${boundaryName || "local"} voters really think of ${name}? Read anonymous constituent reviews, ${electionYear} ${roleTitle} stances${partyLabel ? ` (${partyName})` : ""}, ratings & submit your feedback on Choseno.`
+    : `${ratingPrefix}What do constituents really think of ${name}? See approval ratings, constituent feedback, policy stances and join the discussion — anonymous and free on Choseno.`;
 
   return {
     title,
