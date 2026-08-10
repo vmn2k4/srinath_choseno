@@ -51,14 +51,52 @@ export function extractIdFromSlug(slugOrId: string | null | undefined): string {
 export function buildSeatSlug(seat: {
   id?: string;
   role_title?: string;
+  map_shapes?: { name?: string; properties?: unknown } | null;
+}): string {
+  if (!seat?.id) return "";
+  const role = seat.role_title ? slugifyText(seat.role_title) : "seat";
+  const area = seat.map_shapes?.name ? slugifyText(seat.map_shapes.name) : "";
+  const properties = seat.map_shapes?.properties;
+  const rawState = properties && typeof properties === "object" && !Array.isArray(properties)
+    ? (properties as Record<string, unknown>).state_name ||
+      (properties as Record<string, unknown>).stateName ||
+      (properties as Record<string, unknown>).STATE_NAME ||
+      (properties as Record<string, unknown>).state ||
+      (properties as Record<string, unknown>).stusps ||
+      (properties as Record<string, unknown>).STUSPS
+    : null;
+  const state = rawState ? slugifyStateName(String(rawState)) : "";
+  const textPart = state && area ? `${state}-${area}` : area ? `${role}-${area}` : state || role;
+  const shortHash = seat.id.replace(/-/g, "").slice(0, 6);
+  return `${textPart}-${shortHash}`;
+}
+
+export function buildLegacySeatSlug(seat: {
+  id?: string;
+  role_title?: string;
   map_shapes?: { name?: string } | null;
 }): string {
   if (!seat?.id) return "";
   const role = seat.role_title ? slugifyText(seat.role_title) : "seat";
   const area = seat.map_shapes?.name ? slugifyText(seat.map_shapes.name) : "";
-  const textPart = area ? `${role}-${area}` : role;
-  const shortHash = seat.id.replace(/-/g, "").slice(0, 6);
-  return `${textPart}-${shortHash}`;
+  return `${area ? `${role}-${area}` : role}-${seat.id.replace(/-/g, "").slice(0, 6)}`;
+}
+
+function slugifyStateName(value: string): string {
+  const stateNames: Record<string, string> = {
+    al: "alabama", ak: "alaska", az: "arizona", ar: "arkansas", ca: "california",
+    co: "colorado", ct: "connecticut", de: "delaware", fl: "florida", ga: "georgia",
+    hi: "hawaii", id: "idaho", il: "illinois", in: "indiana", ia: "iowa", ks: "kansas",
+    ky: "kentucky", la: "louisiana", me: "maine", md: "maryland", ma: "massachusetts",
+    mi: "michigan", mn: "minnesota", ms: "mississippi", mo: "missouri", mt: "montana",
+    ne: "nebraska", nv: "nevada", nh: "new-hampshire", nj: "new-jersey", nm: "new-mexico",
+    ny: "new-york", nc: "north-carolina", nd: "north-dakota", oh: "ohio", ok: "oklahoma",
+    or: "oregon", pa: "pennsylvania", ri: "rhode-island", sc: "south-carolina",
+    sd: "south-dakota", tn: "tennessee", tx: "texas", ut: "utah", vt: "vermont",
+    va: "virginia", wa: "washington", wv: "west-virginia", wi: "wisconsin", wy: "wyoming",
+  };
+  const slug = slugifyText(value);
+  return stateNames[slug] || slug;
 }
 
 /**

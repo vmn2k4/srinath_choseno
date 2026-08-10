@@ -1,7 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { fetchAllPages } from "@/lib/utils/fetchAllPages";
-import { extractIdFromSlug, buildSeatSlug, buildCandidateSlug, slugifyText } from "@/lib/utils/slugs";
+import { extractIdFromSlug, buildSeatSlug, buildLegacySeatSlug, buildCandidateSlug, slugifyText } from "@/lib/utils/slugs";
 import { isDevEnvironment } from "@/lib/utils/environment";
 
 type Client = SupabaseClient<Database>;
@@ -270,7 +270,7 @@ export async function getOpenSeatsNearShapeIds(supabase: Client, shapeIds: numbe
   return supabase
     .from("election_seats")
     .select(
-      "id, role_title, map_shape_id, map_shapes(name, boundary_type, country), elections!inner(id, name, election_date, status)"
+      "id, role_title, map_shape_id, map_shapes(name, boundary_type, country, properties), elections!inner(id, name, election_date, status)"
     )
     .in("map_shape_id", shapeIds)
     .in("elections.status", ["nominations_open", "active"])
@@ -281,7 +281,7 @@ export async function getOpenSeatsNearShapeIds(supabase: Client, shapeIds: numbe
 export async function getActiveSeatsByShapeIds(supabase: Client, shapeIds: number[]) {
   return supabase
     .from("election_seats")
-    .select("id, role_title, map_shapes(name, boundary_type), elections!inner(id, name, election_date, status)")
+    .select("id, role_title, map_shapes(name, boundary_type, properties), elections!inner(id, name, election_date, status)")
     .in("map_shape_id", shapeIds)
     .in("elections.status", ["nominations_open", "active"]);
 }
@@ -292,7 +292,7 @@ export async function getActiveSeats(supabase: Client) {
   return supabase
     .from("election_seats")
     .select(
-      "id, role_title, map_shape_id, map_shapes(id, name, boundary_type), elections!inner(id, name, election_date, status)"
+      "id, role_title, map_shape_id, map_shapes(id, name, boundary_type, properties), elections!inner(id, name, election_date, status)"
     )
     .in("elections.status", ["nominations_open", "active"])
     .order("role_title");
@@ -307,7 +307,7 @@ export async function getSeatById(supabase: Client, seatId: string) {
   if (realSeatId && realSeatId.length === 36) {
     const res = await supabase
       .from("election_seats")
-      .select("id, map_shape_id, role_title, map_shapes(name, boundary_type, country), elections(id, name, election_date, status)")
+      .select("id, map_shape_id, role_title, map_shapes(name, boundary_type, country, properties), elections(id, name, election_date, status)")
       .eq("id", realSeatId)
       .maybeSingle();
 
@@ -316,7 +316,7 @@ export async function getSeatById(supabase: Client, seatId: string) {
 
   const { data: seats } = await supabase
     .from("election_seats")
-    .select("id, map_shape_id, role_title, map_shapes(name, boundary_type, country), elections(id, name, election_date, status)");
+      .select("id, map_shape_id, role_title, map_shapes(name, boundary_type, country, properties), elections(id, name, election_date, status)");
 
   if (!seats || seats.length === 0) {
     return { data: null };
@@ -324,10 +324,12 @@ export async function getSeatById(supabase: Client, seatId: string) {
 
   const match = seats.find((s) => {
     const seatSlug = buildSeatSlug(s as any);
+    const legacySeatSlug = buildLegacySeatSlug(s as any);
     return (
       s.id === seatId ||
       s.id === realSeatId ||
       seatSlug === seatId ||
+      legacySeatSlug === seatId ||
       slugifyText(s.role_title) === seatId ||
       (s.map_shapes && typeof s.map_shapes !== 'string' && 'name' in s.map_shapes && s.map_shapes.name && slugifyText(`${s.role_title}-${s.map_shapes.name}`) === seatId)
     );

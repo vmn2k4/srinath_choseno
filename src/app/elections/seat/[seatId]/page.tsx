@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
@@ -126,6 +127,10 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
   const roleTitle = seat?.role_title || "Electoral Seat";
   const boundaryName = seat?.map_shapes?.name || "District";
   const seatSlug = seat ? buildSeatSlug(seat) : seatId;
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(seatId);
+  if (seat && isUuid && seatSlug !== seatId) {
+    redirect(`/elections/seat/${seatSlug}`);
+  }
   const canonicalUrl = `${BASE_URL}/elections/seat/${seatSlug}`;
 
   const jsonLd = seat
