@@ -80,7 +80,7 @@ export async function hydratePoliticianAuthors(
 
   let query = supabase
     .from("profiles")
-    .select("current_ghost_id, full_name")
+    .select("current_ghost_id, full_name, politician_profiles(wall_slug)")
     .eq("role", "politician")
     .in("current_ghost_id", ghostIds);
   if (!isDevEnvironment()) query = query.eq("is_test", false);
@@ -91,7 +91,9 @@ export async function hydratePoliticianAuthors(
     if (row.current_ghost_id) {
       map.set(row.current_ghost_id, {
         fullName: row.full_name || "Politician",
-        wallHref: `/wall/${row.current_ghost_id}`,
+        wallHref: row.politician_profiles?.wall_slug
+          ? `/wall/${row.politician_profiles.wall_slug}`
+          : `/wall/${row.current_ghost_id}`,
       });
     }
   }

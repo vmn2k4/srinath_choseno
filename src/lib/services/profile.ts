@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { isDevEnvironment } from "@/lib/utils/environment";
+import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 
 type Client = SupabaseClient<Database>;
 
@@ -276,8 +277,11 @@ export async function upsertPoliticianProfile(
   },
   fallbackBoundaryId?: string | null
 ) {
+  const { data: profile } = await getOwnProfile(supabase, userId, { columns: "full_name" });
+  const profileName = (profile as { full_name?: string | null } | null)?.full_name;
   return supabase.from("politician_profiles").upsert({
     id: userId,
+    wall_slug: buildPoliticianWallSlug(profileName, politicalTargetRole),
     target_boundary_id: targetBoundaryId ?? fallbackBoundaryId,
     target_boundary_name: targetBoundaryName,
     political_target_role: politicalTargetRole || null,

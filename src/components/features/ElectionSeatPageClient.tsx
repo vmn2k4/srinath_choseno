@@ -51,7 +51,7 @@ import {
 } from "@/components/primitives";
 import PoliticianEngagementStats from "./PoliticianEngagementStats";
 import { createClient } from "@/lib/supabase/client";
-import { buildSeatSlug, buildCandidateSlug, extractIdFromSlug } from "@/lib/utils/slugs";
+import { buildSeatSlug, buildCandidateSlug, buildPoliticianWallSlug, extractIdFromSlug } from "@/lib/utils/slugs";
 import { trackElectionViewed } from "@/lib/analytics/events";
 
 interface ElectionSeatPageClientProps {
@@ -535,11 +535,8 @@ export default function ElectionSeatPageClient({
                         if (!ghostId) return null;
                         const candName = activeCand.display_name || activeCand.profiles?.full_name || "candidate";
                         const roleTitle = seat?.role_title || "";
-                        const slug = `${candName}${roleTitle ? `-${roleTitle}` : ""}`
-                          .toLowerCase()
-                          .replace(/[^a-z0-9]+/g, "-")
-                          .replace(/(^-|-$)+/g, "");
-                        const wallHref = `/wall/${ghostId}${slug ? `/${slug}` : ""}`;
+                        const slug = buildPoliticianWallSlug(candName, roleTitle);
+                        const wallHref = `/wall/${slug}`;
                         return (
                           <Link href={wallHref}>
                             <Button
@@ -635,7 +632,7 @@ export default function ElectionSeatPageClient({
                         .replace(/[^a-z0-9]+/g, "-")
                         .replace(/(^-|-$)+/g, "");
                       return (
-                        <Link key={holder.id} href={`/wall/${holder.profiles.current_ghost_id}/${slug}`} className="block">
+                        <Link key={holder.id} href={`/wall/${slug}`} className="block">
                           {content}
                         </Link>
                       );

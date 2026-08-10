@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Mail, Phone, ExternalLink, UserCheck, ArrowRight } from "lucide-react";
 import { Avatar, Badge, Card } from "@/components/primitives";
+import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 
 export interface BranchHolderNode {
   id: string;
@@ -24,10 +25,7 @@ export interface RepresentationBranch {
 }
 
 function slugFor(node: BranchHolderNode) {
-  return `${node.full_name}-${node.role_title}`
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)+/g, "");
+  return buildPoliticianWallSlug(node.full_name, node.role_title);
 }
 
 // Note: the "View Wall" footer is the only <a> in this card (not the whole
@@ -117,7 +115,7 @@ function NodeCard({ node, emphasized }: { node: BranchHolderNode; emphasized?: b
 
       {node.ghost_id && (
         <Link
-          href={`/wall/${node.ghost_id}/${slugFor(node)}`}
+          href={`/wall/${slugFor(node)}`}
           className="pt-1.5 border-t border-border-light/30 flex items-center gap-1 text-[11px] font-semibold text-primary hover:underline"
         >
           <UserCheck size={12} />

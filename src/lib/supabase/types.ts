@@ -1283,6 +1283,7 @@ export type Database = {
           target_boundary_id: string | null
           target_boundary_name: string | null
           target_boundary_type: string | null
+          wall_slug: string | null
           updated_at: string | null
         }
         Insert: {
@@ -1297,6 +1298,7 @@ export type Database = {
           target_boundary_id?: string | null
           target_boundary_name?: string | null
           target_boundary_type?: string | null
+          wall_slug?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -1311,6 +1313,7 @@ export type Database = {
           target_boundary_id?: string | null
           target_boundary_name?: string | null
           target_boundary_type?: string | null
+          wall_slug?: string | null
           updated_at?: string | null
         }
         Relationships: [

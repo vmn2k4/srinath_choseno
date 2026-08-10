@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
-import { buildSeatSlug, buildCandidateSlug, extractIdFromSlug } from "@/lib/utils/slugs";
+import { buildSeatSlug, buildCandidateSlug, buildPoliticianWallSlug, extractIdFromSlug } from "@/lib/utils/slugs";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -36,6 +36,7 @@ export async function generateMetadata({
     : null;
 
   const candidateName = selectedCandidate?.display_name || selectedCandidate?.profiles?.full_name;
+  const roleTitle = seat.role_title || "Office";
   const ghostId = selectedCandidate?.profiles?.current_ghost_id;
 
   const seatSlug = buildSeatSlug(seat);
@@ -50,7 +51,7 @@ export async function generateMetadata({
     : `What do voters think of ${candidateName || "this candidate"}? Read constituent feedback, policy stances, and ratings for ${seat.role_title} on Choseno.`;
 
   const canonicalUrl = ghostId
-    ? `${BASE_URL}/wall/${ghostId}/${candSlug}`
+    ? `${BASE_URL}/wall/${buildPoliticianWallSlug(candidateName, roleTitle)}`
     : `${BASE_URL}/elections/seat/${seatSlug}/candidate/${candSlug}`;
 
   const ogImageUrl = selectedCandidate

@@ -16,6 +16,7 @@ export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
        role,
        constituency,
        politician_profiles (
+         wall_slug,
          political_target_role,
          target_boundary_name,
          bio,
@@ -27,6 +28,31 @@ export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
     .eq("current_ghost_id", ghostId);
   if (!isDevEnvironment()) query = query.eq("is_test", false);
   return query.single();
+}
+
+export async function getWallOwnerProfileBySlug(supabase: Client, wallSlug: string) {
+  let query = supabase
+    .from("profiles")
+    .select(
+      `
+       id,
+       current_ghost_id,
+       full_name,
+       role,
+       constituency,
+       politician_profiles!inner (
+         wall_slug,
+         political_target_role,
+         target_boundary_name,
+         bio,
+         avatar_url,
+         political_parties ( name )
+       )
+    `
+    )
+    .eq("politician_profiles.wall_slug", wallSlug);
+  if (!isDevEnvironment()) query = query.eq("is_test", false);
+  return query.maybeSingle();
 }
 
 // ── politician_supporters ────────────────────────────────────────────────
@@ -233,3 +259,8 @@ export async function getSEOProfileSummary(supabase: Client, ghostId: string) {
   return { owner, activeCandidacy, partyName, rating };
 }
 
+export async function getSEOProfileSummaryBySlug(supabase: Client, wallSlug: string) {
+  const { data: owner } = await getWallOwnerProfileBySlug(supabase, wallSlug);
+  if (!owner?.current_ghost_id) return { owner: null, activeCandidacy: null, partyName: null, rating: null };
+  return getSEOProfileSummary(supabase, owner.current_ghost_id);
+}

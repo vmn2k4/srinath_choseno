@@ -9,6 +9,7 @@ import {
   getSEOProfileSummary,
 } from "@/lib/services/politicianWall";
 import { SITE_URL } from "@/lib/constants/site";
+import { redirect } from "next/navigation";
 
 const BASE_URL = SITE_URL;
 
@@ -33,6 +34,9 @@ export async function generateMetadata({
     getSEOProfileSummary(supabase, ghostId),
     getWallPostBySlugOrId(supabase, ghostId, slug),
   ]);
+
+  const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
+  if (wallSlug && slug === wallSlug) redirect(`/wall/${wallSlug}`);
 
   const post = postData as WallPost | null;
   const name = owner?.full_name || "Politician";
@@ -105,6 +109,9 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
     getSEOProfileSummary(supabase, ghostId),
     getWallPostBySlugOrId(supabase, ghostId, slug),
   ]);
+
+  const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
+  if (wallSlug && slug === wallSlug) redirect(`/wall/${wallSlug}`);
 
   const post = postData as WallPost | null;
 

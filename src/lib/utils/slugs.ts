@@ -13,6 +13,15 @@ export function slugifyText(text: string): string {
 }
 
 /**
+ * Public URL slug for a politician wall. The database stores this value so
+ * links remain stable if a politician's display name or role changes later.
+ */
+export function buildPoliticianWallSlug(name?: string | null, role?: string | null): string {
+  const base = [name, role].filter(Boolean).join("-");
+  return slugifyText(base || "politician");
+}
+
+/**
  * Extracts a UUID or short hex hash from a raw UUID or a slugified URL string.
  * Examples:
  * - "councillor-vancouver-94349f" -> "94349f"

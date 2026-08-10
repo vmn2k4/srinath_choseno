@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useTheme, THEMES, ThemeKey } from "@/contexts/ThemeContext";
 import ChosenoLogo from "@/components/primitives/ChosenoLogo";
 import { trackLogout } from "@/lib/analytics/events";
+import { slugifyText } from "@/lib/utils/slugs";
 
 export default function NavBar() {
   const { session, profile, signOut } = useAuth();
@@ -69,7 +70,7 @@ export default function NavBar() {
             <>
               {profile?.role === "politician" && profile?.current_ghost_id && (
                 <Link
-                  href={`/wall/${profile.current_ghost_id}`}
+                  href={`/wall/${slugifyText(profile.full_name || "politician")}`}
                   className={`flex items-center gap-1.5 ${navLinkClass(
                     pathname?.startsWith("/wall") ?? false
                   )}`}
@@ -304,7 +305,7 @@ export default function NavBar() {
             <>
               {profile?.role === "politician" && profile?.current_ghost_id && (
                 <Link
-                  href={`/wall/${profile.current_ghost_id}`}
+                  href={`/wall/${slugifyText(profile.full_name || "politician")}`}
                   className={mobileNavLinkClass(pathname?.startsWith("/wall") ?? false)}
                 >
                   <Sparkles size={18} />

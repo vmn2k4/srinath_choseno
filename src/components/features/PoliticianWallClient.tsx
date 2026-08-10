@@ -54,11 +54,14 @@ import {
 import ReportDialog from "./ReportDialog";
 import { createClient } from "@/lib/supabase/client";
 import { trackPostCreated, trackPostEngagement, trackCommentAdded, trackPoliticianViewed } from "@/lib/analytics/events";
+import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 
 interface WallOwnerRecord {
   id: string;
   full_name: string;
+  current_ghost_id?: string | null;
   politician_profiles?: {
+    wall_slug?: string | null;
     political_target_role?: string;
     target_boundary_name?: string;
     bio?: string;
@@ -138,7 +141,7 @@ export default function PoliticianWallClient({
       setPosts(postRows);
       const map = await hydratePoliticianAuthors(supabase, postRows);
       if (ghostId && wallOwner?.full_name) {
-        map.set(ghostId, { fullName: wallOwner.full_name, wallHref: `/wall/${ghostId}` });
+        map.set(ghostId, { fullName: wallOwner.full_name, wallHref: `/wall/${wallOwner.politician_profiles?.wall_slug || buildPoliticianWallSlug(wallOwner.full_name, wallOwner.politician_profiles?.political_target_role)}` });
       }
       setPoliticianAuthors(map);
     } catch (err) {
@@ -208,7 +211,7 @@ export default function PoliticianWallClient({
         setPosts(rows);
         const map = await hydratePoliticianAuthors(supabase, rows);
         if (ghostId && ownerRecord?.full_name) {
-          map.set(ghostId, { fullName: ownerRecord.full_name, wallHref: `/wall/${ghostId}` });
+          map.set(ghostId, { fullName: ownerRecord.full_name, wallHref: `/wall/${ownerRecord.politician_profiles?.wall_slug || buildPoliticianWallSlug(ownerRecord.full_name, ownerRecord.politician_profiles?.political_target_role)}` });
         }
         if (isMounted) setPoliticianAuthors(map);
       }
@@ -667,7 +670,7 @@ export default function PoliticianWallClient({
               politicianAuthor={
                 politicianAuthors.get(post.ghost_id) ??
                 (post.ghost_id === ghostId && wallOwner?.full_name
-                  ? { fullName: wallOwner.full_name, wallHref: `/wall/${ghostId}` }
+                  ? { fullName: wallOwner.full_name, wallHref: `/wall/${wallOwner.politician_profiles?.wall_slug || buildPoliticianWallSlug(wallOwner.full_name, wallOwner.politician_profiles?.political_target_role)}` }
                   : null)
               }
               onReport={handleReport}

@@ -10,7 +10,7 @@ import { getOfficeHoldersForShapes, getFeaturedOfficeHolders } from "@/lib/servi
 import { getContainersForShapeIds, getNationalShapeForCountry } from "@/lib/services/boundaries";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
-import { buildBoundarySlug } from "@/lib/utils/slugs";
+import { buildBoundarySlug, buildPoliticianWallSlug } from "@/lib/utils/slugs";
 import { createClient } from "@/lib/supabase/client";
 
 interface MembershipShape {
@@ -312,12 +312,9 @@ export default function PoliticianSidebar({
               );
 
               if (profileGhostId) {
-                const slug = `${holder.full_name}-${roleTitle}`
-                  .toLowerCase()
-                  .replace(/[^a-z0-9]+/g, "-")
-                  .replace(/(^-|-$)+/g, "");
+                const slug = buildPoliticianWallSlug(holder.full_name, roleTitle);
                 return (
-                  <Link key={holder.id} href={`/wall/${profileGhostId}/${slug}`} className="block">
+                  <Link key={holder.id} href={`/wall/${slug}`} className="block">
                     {content}
                   </Link>
                 );
@@ -367,16 +364,13 @@ export default function PoliticianSidebar({
               const name = pol.profiles?.full_name || getGhostDisplayName(pol.profiles?.current_ghost_id);
               const role = pol.political_target_role || "politician";
               const boundary = pol.target_boundary_name || pol.profiles?.country || "";
-              const slug = `${name}-${role}-${boundary}`
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, "-")
-                .replace(/(^-|-$)+/g, "");
+              const slug = buildPoliticianWallSlug(name, role);
               const engagement = pol.profiles?.id ? engagementSummaries.get(pol.profiles.id) : undefined;
 
               return (
                 <Link
                   key={pol.id}
-                  href={`/wall/${pol.profiles?.current_ghost_id}/${slug}`}
+                  href={`/wall/${slug}`}
                   className="group cursor-pointer bg-surface-hover/50 hover:bg-surface-hover rounded-lg p-2.5 border border-border-light/50 hover:border-primary/30 transition-all flex items-center gap-2.5"
                 >
                   <Avatar src={pol.avatar_url} name={name} size="sm" />

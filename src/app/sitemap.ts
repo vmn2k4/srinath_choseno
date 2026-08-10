@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { getPublishedNewsArticles } from "@/lib/services/news";
 import { getActiveSeats, getCandidatesBySeatIds } from "@/lib/services/elections";
-import { buildSeatSlug, buildCandidateSlug, buildBoundarySlug } from "@/lib/utils/slugs";
+import { buildSeatSlug, buildCandidateSlug, buildBoundarySlug, buildPoliticianWallSlug } from "@/lib/utils/slugs";
 import { SITE_URL } from "@/lib/constants/site";
 
 const baseUrl = SITE_URL;
@@ -26,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getActiveSeats(supabase),
     supabase
       .from("profiles")
-      .select("current_ghost_id, updated_at")
+      .select("current_ghost_id, full_name, updated_at, politician_profiles(wall_slug)")
       .not("current_ghost_id", "is", null),
   ]);
 
@@ -40,7 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const wallRoutes: MetadataRoute.Sitemap = (wallProfiles || [])
     .filter((p) => p.current_ghost_id)
     .map((p) => ({
-      url: `${baseUrl}/wall/${p.current_ghost_id}`,
+      url: `${baseUrl}/wall/${p.politician_profiles?.wall_slug || buildPoliticianWallSlug(p.full_name)}`,
       lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
       changeFrequency: "daily",
       priority: 0.85,

@@ -8,7 +8,7 @@ import {
 } from "@/lib/services/elections";
 import { getPoliticianProfile } from "@/lib/services/profile";
 import { getSupporterCount } from "@/lib/services/politicianWall";
-import { buildCandidateSlug, buildSeatSlug, extractIdFromSlug } from "@/lib/utils/slugs";
+import { buildCandidateSlug, buildPoliticianWallSlug, buildSeatSlug, extractIdFromSlug } from "@/lib/utils/slugs";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -47,7 +47,7 @@ export async function generateMetadata({
   const slug = buildCandidateSlug(candidate);
   const ghostId = candidate.profiles?.current_ghost_id;
   const canonicalUrl = ghostId
-    ? `${BASE_URL}/wall/${ghostId}/${slug}`
+    ? `${BASE_URL}/wall/${buildPoliticianWallSlug(name, roleTitle)}`
     : `${BASE_URL}/candidacy/${slug}`;
   const ogImageUrl = `${BASE_URL}/candidacy/${realCandidateId}/opengraph-image`;
 

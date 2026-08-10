@@ -61,6 +61,7 @@ import {
   StarRating,
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
+import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 import { trackPostCreated, trackPostEngagement, trackCommentAdded } from "@/lib/analytics/events";
 
 interface CandidateRecord {
@@ -211,7 +212,10 @@ export default function CandidacyWall({
     setPosts(rows);
     const map = await hydratePoliticianAuthors(supabase, rows);
     if (targetGhostId && candidate?.display_name) {
-      map.set(targetGhostId, { fullName: candidate.display_name, wallHref: `/wall/${targetGhostId}` });
+      map.set(targetGhostId, {
+        fullName: candidate.display_name,
+        wallHref: `/wall/${buildPoliticianWallSlug(candidate.display_name, candidate.election_seats?.role_title)}`,
+      });
     }
     setPoliticianAuthors(map);
   };
@@ -720,13 +724,8 @@ export default function CandidacyWall({
                 {candidate.profiles?.current_ghost_id && (
                   <Link
                     href={(() => {
-                      const ghostId = candidate.profiles.current_ghost_id;
                       const roleTitle = candidate.election_seats?.role_title || "";
-                      const slug = `${displayName}${roleTitle ? `-${roleTitle}` : ""}`
-                        .toLowerCase()
-                        .replace(/[^a-z0-9]+/g, "-")
-                        .replace(/(^-|-$)+/g, "");
-                      return `/wall/${ghostId}${slug ? `/${slug}` : ""}`;
+                      return `/wall/${buildPoliticianWallSlug(displayName, roleTitle)}`;
                     })()}
                   >
                     <Button
@@ -991,7 +990,10 @@ export default function CandidacyWall({
                   politicianAuthor={
                     politicianAuthors.get(post.ghost_id) ??
                     (post.ghost_id === candidate?.profiles?.current_ghost_id && candidate?.display_name
-                      ? { fullName: candidate.display_name, wallHref: `/wall/${candidate.profiles.current_ghost_id}` }
+                      ? {
+                          fullName: candidate.display_name,
+                          wallHref: `/wall/${buildPoliticianWallSlug(candidate.display_name, candidate.election_seats?.role_title)}`,
+                        }
                       : null)
                   }
                   onReport={handleReport}
