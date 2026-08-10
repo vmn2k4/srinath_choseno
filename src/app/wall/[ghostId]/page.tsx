@@ -153,10 +153,8 @@ export default async function WallPage({ params }: WallPageProps) {
       ]
     : null;
 
-  // First 5 posts for SSR snapshot — gives crawlers real textual content
   type PostRecord = { id: string; content?: string | null; created_at?: string | null };
   const seoPostsSnapshot = ((posts as PostRecord[]) || []).slice(0, 5);
-  const sourceUrl = (owner?.politician_profiles as any)?.source_url || null;
 
   return (
     <>
@@ -166,18 +164,9 @@ export default async function WallPage({ params }: WallPageProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
       )}
-
-      {/*
-        SSR CONTENT SNAPSHOT — visually hidden, fully readable by Googlebot,
-        ChatGPT, Perplexity, and Gemini crawlers. Solves the thin-content
-        problem caused by client-side rendering of posts and ratings.
-      */}
       <div aria-hidden="true" style={{ position: "absolute", width: "1px", height: "1px", padding: 0, margin: "-1px", overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap", border: 0 }}>
         <h1>{name} — {roleTitle}</h1>
         {bio && <p>{bio}</p>}
-        {sourceUrl && (
-          <p>Official profile: <a href={sourceUrl} rel="noopener noreferrer">{sourceUrl}</a></p>
-        )}
         {rating && rating.count > 0 && (
           <p>{rating.count} voter{rating.count === 1 ? "" : "s"} have rated {name} an average of {rating.avg} out of 5 stars on Choseno.</p>
         )}
