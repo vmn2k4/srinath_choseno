@@ -45,7 +45,7 @@ type OfficeHolderRow = {
 // office holders into a "top" node (Mayor, or a fetched Premier/Governor/
 // Prime Minister/President) vs. "bottom" nodes (Councillors, or the shape's
 // own MP/MLA/etc.).
-const HEAD_ROLE_TITLES = new Set(["Mayor", "Governor", "Premier", "Prime Minister", "President"]);
+const HEAD_ROLE_TITLES = new Set(["Mayor", "Governor", "Premier", "Prime Minister", "President", "Chief Minister"]);
 
 // Where to find the "top" office for a boundary_type that ISN'T itself a
 // head-of-branch shape (a riding/district has no head role of its own, so its
@@ -56,9 +56,11 @@ const HEAD_ROLE_TITLES = new Set(["Mayor", "Governor", "Premier", "Prime Ministe
 const SUPERIOR_SOURCE: Record<string, { source: "national" } | { source: "container"; containerType: string }> = {
   "Canada:Federal": { source: "national" },
   "USA:Federal": { source: "national" },
+  "India:Lok Sabha": { source: "national" },
   "Canada:Provincial": { source: "container", containerType: "Province" },
   "USA:State Senate": { source: "container", containerType: "State" },
   "USA:State House": { source: "container", containerType: "State" },
+  "India:Vidhan Sabha": { source: "container", containerType: "State" },
 };
 
 function toNode(row: OfficeHolderRow): BranchHolderNode {
@@ -196,7 +198,10 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
     const { data: memberships } = await getUserBoundaryMemberships(supabase, user.id);
     const memberShapes = (memberships || [])
       .map((m: any) => m.map_shapes as ShapeRow | null)
-      .filter((s): s is ShapeRow => s != null && !s.boundary_type.toLowerCase().includes("polling"));
+      .filter(
+        (s): s is ShapeRow =>
+          s != null && s.country === shape.country && !s.boundary_type.toLowerCase().includes("polling")
+      );
 
     const seenKeys = new Set(branches.map((b) => b.key));
     for (const memberShape of memberShapes) {
@@ -215,6 +220,7 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
   branches.forEach((b) => roleTypeKeys.add(`${shape.country}:${b.label}`));
   if (shape.country === "Canada") roleTypeKeys.add("Canada:National").add("Canada:Province");
   if (shape.country === "USA") roleTypeKeys.add("USA:National").add("USA:State");
+  if (shape.country === "India") roleTypeKeys.add("India:National").add("India:State");
 
   const roleTypesRaw = await Promise.all(
     Array.from(roleTypeKeys).map((key) => {

@@ -138,13 +138,17 @@ export default function InteractiveLocationPicker({
         }).addTo(map);
 
         marker.on("dragend", () => {
-          const pos = marker.getLatLng();
+          // .wrap() normalizes lng back into -180..180 -- after panning across the
+          // antimeridian, Leaflet's raw LatLng can otherwise report e.g. -282 instead
+          // of the equivalent 77, which find_boundaries_by_point can't match.
+          const pos = marker.getLatLng().wrap();
           onLocationSelect(pos.lat, pos.lng);
         });
 
         map.on("click", (e: any) => {
-          marker.setLatLng(e.latlng);
-          onLocationSelect(e.latlng.lat, e.latlng.lng);
+          const wrapped = e.latlng.wrap();
+          marker.setLatLng(wrapped);
+          onLocationSelect(wrapped.lat, wrapped.lng);
         });
 
         mapInstanceRef.current = map;

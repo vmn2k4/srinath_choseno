@@ -22,8 +22,12 @@ export default function FindMyDistrictClient() {
   const [boundaries, setBoundaries] = useState<MatchedBoundary[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedLat, setSelectedLat] = useState<number | undefined>(undefined);
+  const [selectedLng, setSelectedLng] = useState<number | undefined>(undefined);
 
   const handleLocationSelect = async (lat: number, lng: number) => {
+    setSelectedLat(lat);
+    setSelectedLng(lng);
     setLoading(true);
     setError("");
     const { data, error: rpcError } = await findBoundariesByPoint(supabase, lat, lng);
@@ -50,7 +54,13 @@ export default function FindMyDistrictClient() {
         </p>
       </div>
 
-      <InteractiveLocationPicker onLocationSelect={handleLocationSelect} loading={loading} error={error} />
+      <InteractiveLocationPicker
+        currentLat={selectedLat}
+        currentLng={selectedLng}
+        onLocationSelect={handleLocationSelect}
+        loading={loading}
+        error={error}
+      />
 
       {loading && (
         <div className="flex justify-center">

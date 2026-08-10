@@ -1,10 +1,21 @@
-# Adding India boundary data (Lok Sabha / Vidhan Sabha / State) — progress log
+> **⚠️ BLOCKED as of this update: the Supabase database is in read-only mode.**
+> `SHOW transaction_read_only` returns `on` at the database level (not a replica —
+> `pg_is_in_recovery()` is `false`), meaning **no writes can succeed right now**, from this
+> script or from the live app. This almost certainly means the Supabase project has hit a
+> plan/storage/compute quota and needs the user to check the Supabase dashboard directly
+> (billing/usage page) — not something fixable via `psql` as the app's `postgres` role
+> (confirmed `is_superuser = off`, no role- or database-level config override found).
+> **Hit mid-way through the Ward upload** (~35,000/63,676 rows in before the first write
+> failed) — safe to `--resume 4b4fe530-38f1-4179-ac19-4c83c234a2c3` once writes work again.
 
-**Status: Lok Sabha (543/543) + State (36/36) done, uploaded, and verified live — 0
-invalid geometries, spot-checked against `find_boundaries_by_point`. Vidhan Sabha: found a
-real fix — a live NIC/Government of India ArcGIS service with correct, separate
-Andhra Pradesh (175) and Telangana (119) counts — currently downloading/not yet uploaded.
-See §"BREAKTHROUGH" under Vidhan Sabha below for the exact access method if resuming.**
+# Adding India boundary data (Lok Sabha / Vidhan Sabha / State / Ward) — progress log
+
+**Status: Lok Sabha (543/543), State (36/36), and Vidhan Sabha (4,122/4,122) all done,
+uploaded, and verified live — 0 invalid geometries across all three. Vidhan Sabha
+per-state counts match the real official seat count exactly for 30 of 31 states/UTs with
+an assembly (only Sikkim is off by one: 31 loaded vs. 32 real — minor, not yet
+root-caused). Ward boundaries (municipal-level): research done, build in progress — see
+the dedicated section near the end of this doc.**
 
 This is a live progress log for loading India's electoral boundaries, following the
 general method in [adding-boundary-data.md](adding-boundary-data.md). Kept up to date as
@@ -20,9 +31,12 @@ Three boundary types, mirroring the Canada/USA pattern:
 | `Vidhan Sabha` | State Legislative Assembly (MLA) constituencies — ~4,123 seats across 28 states + UTs | `false` | `false` | Canada `Provincial` / USA `State House` |
 | `State` | State/UT outlines (28 states + 8 UTs) | `true` (proposed) | `true` | Canada `Province` — pure container, no directly-elected statewide office in India (Governor is appointed, CM is chosen by the assembly, not directly elected) |
 
-Not in scope yet: Rajya Sabha (indirectly elected, no geographic constituency to map),
-Panchayat/municipal wards (thousands of independent local bodies, same "not centrally
-solvable" call as Canada/US municipal in the parent doc).
+Not in scope yet: Rajya Sabha (indirectly elected, no geographic constituency to map).
+**Municipal wards: research done, not yet decided/built — see dedicated section at the end
+of this doc.** Unlike Canada/US municipal (genuinely "thousands of independent systems,
+research one at a time"), India turns out to have a real candidate for *centralized* ward
+data via a national government program (Swachh Bharat Mission) — see below before assuming
+this has to be per-city research.
 
 ## Prerequisites (same as parent doc)
 
@@ -358,11 +372,35 @@ observed), and always background/poll rather than running all 5 sequentially in 
 foreground shell call (hit the harness's 2-minute default command timeout doing this the
 naive way).
 
-**Status as of this doc update: pages fetching, not yet merged/analyzed/uploaded.** If
-picking this up cold, check `<scratch>/india/page_*.geojson` for what's already downloaded
-and `fetch_log.txt` for progress before re-fetching from scratch (tokens may have expired
-by the time this is read — get a fresh one per the steps above if any `page_*.geojson`
-file contains an `{"error":...}` body instead of a FeatureCollection).
+**Update: done.** All 17 pages (250 records each, reduced from an initial 1000-per-page
+attempt that hit transient server errors on the largest batches) fetched cleanly on retry.
+Merging + cleanup found:
+- **301 blank-`AC_NAME` rows** — 294 of them were West Bengal's *real* constituencies
+  (correct, unique `AC_ID`s, just missing this one field in this service) — backfilled by
+  name-lookup against the earlier static LGD file, which shares the same `AC_ID` scheme.
+  The remaining 7 were genuinely non-constituency remainder areas (Gujarat's Rann of Kutch,
+  a J&K border strip, 2 small Goa slivers, a tiny Mumbai-suburban area, and both Ladakh rows
+  — Ladakh is a UT with no legislative assembly at all) — dropped.
+- **4 duplicate `AC_ID`s** after the above: 2 were the same junk-remainder pattern (Goa,
+  Ladakh — already dropped), 2 were real multi-part geometries (Himachal Pradesh's
+  Bharmour ×3, Punjab's Amargarh ×2) — dissolved via `ogr2ogr -dialect sqlite -sql
+  "SELECT ... ST_Union(geometry) ... GROUP BY AC_ID"` (same technique as the parent doc's
+  Manitoba voting-area dissolve).
+- **Final: 4,122 unique features**, uploaded via
+  `supabase/migrations/20260810000000_india_vidhan_sabha_boundary_type.sql` (registers
+  `Vidhan Sabha`, rank 2, bumping `State` to rank 3) +
+  `upload_boundary.py --country India --type "Vidhan Sabha" --name-field AC_NAME
+  --code-field AC_ID`. Result: **4122/4122 loaded, 0 invalid.**
+- **Verified per-state**: queried `properties->>'st_name'` grouped counts against real
+  official seat counts — **30 of 31 states/UTs with an assembly match exactly** (Andhra
+  Pradesh 175, Telangana 119, Gujarat 182, Maharashtra 288, Uttar Pradesh 403, West Bengal
+  294, all others also exact). **Sikkim is the one exception: 31 loaded vs. 32 real** — not
+  yet root-caused, small enough state that a single missed/merged seat is plausible; check
+  before treating this doc as "fully closed."
+- **Live spot-check**: Hyderabad (17.3850°N, 78.4867°E) correctly resolves to Vidhan Sabha
+  seat "Khairatabad" under Telangana's own code (`36060`, state_LGD 36) via
+  `find_boundaries_by_point` — confirms the AP/Telangana fix works end-to-end, not just in
+  the raw counts.
 
 ### Recommended next step (superseded by the breakthrough above, kept for history)
 
@@ -409,3 +447,145 @@ Pradesh's real current 175 seats**, not "the whole AP/Telangana mess." Three opt
   came from the *same* release/pipeline, and one was clean while the other had a serious,
   specific, confirmable data-integrity bug. A vintage/source label on a release page is not
   a substitute for checking the actual feature-level content.
+- **A blank attribute value is not automatically junk — check whether it's "no real entity
+  here" or "the entity is real, this one field just wasn't populated" before dropping
+  rows.** The BharatMapService Assembly layer had 301 blank-`AC_NAME` rows; a naive filter
+  would have silently deleted **all 294 of West Bengal's real constituencies** along with 7
+  genuinely-non-constituency remainder areas (Rann of Kutch, a J&K border strip, etc.).
+  Checking *why* each blank existed (all 294 WB rows had real, unique, correctly-numbered
+  `AC_ID`s; the 7 real junk rows didn't correspond to any seat number at all) caught this
+  before it shipped. Fixed by backfilling names from the AC_ID-keyed lookup already built
+  from the earlier (static) LGD file, since both datasets share the same ID scheme.
+- **A live ArcGIS token embedded in a public page's rendered JS is short-lived — don't treat
+  a value captured once as reusable across a multi-minute paginated download.** The first
+  attempt died partway through (page 2 of 5 came back as an HTML "invalid token" error page,
+  not JSON) purely from token expiry between requests; the fix was smaller
+  page sizes (fewer/shorter requests, less total elapsed time) plus per-page validation
+  (check `type == "FeatureCollection"` before accepting a page) with automatic retry,
+  not a fundamentally different access method.
+- **Multi-part-geometry duplicates need `GROUP BY <id> + ST_Union` dissolving, not
+  deduplication by dropping extra rows** — `upload_boundary.py`'s own resumability logic
+  (skip a row if its code already exists in `map_shapes` for this upload) would have
+  silently dropped the *second and third polygon parts* of Himachal Pradesh's Bharmour and
+  Punjab's Amargarh constituencies if left as separate same-`AC_ID` rows, quietly shrinking
+  those two seats' real shapes. Caught by checking for duplicate codes *before* uploading,
+  not after.
+
+---
+
+## Municipal wards — research done (prompted by "where else do we have ward-wise data,
+## besides Esri"), nothing downloaded/uploaded yet, needs a scope decision
+
+### What Esri has (confirming what was already noticed)
+
+`arcgis.com/sharing/rest/search?q=india%20ward%20boundaries` turns up **Esri India's
+"India Ward Boundaries"** Living Atlas layer
+(`livingatlas.esri.in/server1/rest/services/Wards/India_Ward_Boundaries/MapServer/0`) — a
+genuine national-scale ward layer, plus several individual-city ones (Nagpur, Ahmedabad,
+Pune) from the same Esri India account. Same licensing pattern as the Legislative Assembly
+layer found earlier in this doc: Esri India Living Atlas content, almost certainly requires
+an ArcGIS Online org/developer login and (going by the Assembly layer's terms) likely
+disallows offline export — **not independently re-verified for this specific layer's
+license page**, but no reason to expect it differs from the sibling layer already checked.
+
+### Two other candidates found — one looks like the real answer
+
+Both come from the same `yashveeeeeeer/india-geodata` release already used above
+(`urban/boundaries`), which per the repo's own README draws from a real list of government
+sources including **Swachh Bharat Mission** — not just DataMeet/community scrapes:
+
+1. **`SBM_Wards`** (Swachh Bharat Mission — Urban, a Ministry of Housing and Urban Affairs
+   flagship sanitation program that requires every enrolled Urban Local Body to map its own
+   wards). **This is the real find**: 70,419 ward features across **3,712 distinct ULBs** —
+   two orders of magnitude more coverage than any single-city dataset, and explicitly a
+   named government program in the aggregator's own sources list (same trust tier as LGD,
+   which already checked out clean for Lok Sabha/State). Fields: `statename`, `districtname`,
+   `ulbname`, `ulbcode`, `wardname`, `wardcode`, `status` (`APPROVED`/`OPEN`/`REJECTED`/null).
+   A sibling file, **`SBM_ULBs`** (3,373 features), has the whole-municipality outline for
+   each ULB — would work as a `Municipal`-equivalent container the way `State` containers
+   Lok Sabha/Vidhan Sabha seats.
+2. **`LivingAtlas_Wards`** (9,100 features) — smaller coverage, and given the name is
+   almost certainly a re-export of the same Esri Living Atlas data flagged above (license
+   status unclear, not the government-sourced pick). **Deprioritized in favor of SBM.**
+
+### Real data-quality problem found in SBM_Wards: unnormalized, self-reported state names
+
+Each of the 3,712 ULBs entered its own metadata independently into the SBM portal, with
+**zero centralized normalization of the `statename` field** — confirmed by direct
+inspection: 69 distinct string values for what should be ~36 real states/UTs, including
+`"Uttar Pradesh"` / `"UTTAR PRADESH"` / `"Uttar Pradeshh"` / `"Uttar Pardesh"` / `" Uttar
+Pradesh"` (leading space) / `"Uttarpradesh"` all referring to the same state, similarly
+`"Andhra Pradesh"` / `"Andhra Pradhesh"` and `"Telangana"` / `"Telanagana"`, plus ~40 rows
+with a blank state name and 58 with `null`. **This is real, substantial cleanup work**
+(a fuzzy/manual state-name normalization map across ~69 variants, plus deciding what to do
+with the `OPEN`/`REJECTED`/null-status and blank-state rows) before this could be uploaded
+as clean per-state boundary batches the way Lok Sabha/Vidhan Sabha/State were.
+
+### Decided and built (confirmed with the user to proceed)
+
+Registered `Ward` (rank 4, `admin_only=false`, `is_container=false` — citizen-facing,
+since a ward elects a real corporator/councillor) via
+`supabase/migrations/20260810000001_india_ward_boundary_type.sql`.
+
+**Cleaning pipeline** (`SBM_Wards.geojsonl`, 70,419 raw rows):
+1. **Status filter**: kept only `status == 'APPROVED'` (6,477 dropped: `OPEN` presumably
+   means not-yet-finalized by the ULB, `REJECTED` is self-explanatory — this is a judgment
+   call, not verified against SBM's own documentation of what these statuses mean formally;
+   revisit if `OPEN` turns out to mean something more benign).
+2. **State-name normalization**: raw data had **69 distinct spellings** for what should be
+   ~36 real states/UTs (self-reported per-ULB, zero central QA). Fixed with a small
+   typo-correction map (`ANDHRA PRADHESH`→`ANDHRA PRADESH`, `TELANAGANA`→`TELANGANA`,
+   `MAHARASTRA`/`MAHRASHTRA`/`MAHARSHTRA`→`MAHARASHTRA`, `JAMMU AND KASHMIR`/`JAMMU
+   &AMP; KASHMIR`→`JAMMU & KASHMIR`, etc. — see
+   `scripts`-equivalent in the scratch dir, `clean_sbm_wards.py`, `TYPO_FIXES` dict) plus
+   whitespace/case normalization, matched against the canonical 36-name list already
+   established from `LGD_States`. **Worked cleanly**: only 52 rows (all blank/whitespace
+   state names, no lingering typos) couldn't be resolved and were dropped.
+3. **Unique code construction**: `wardcode` alone repeats across every ULB (every city has
+   a "Ward 1"), and **36 ULBs had `wardcode` entirely null** (236 rows, distinguished only
+   by `wardname`). Built a synthetic `ward_full_code = f"{ulbcode}_{wardcode or
+   slugified(wardname)}"` for use as `--code-field`, since leaving `code` null across many
+   rows in one upload risks the resumability check's `IS NOT DISTINCT FROM NULL` matching
+   unrelated rows against each other if a resume is ever needed.
+4. **Dissolve real duplicates**: 156 duplicate `ward_full_code`s (370 rows) after the above
+   — same multi-part-geometry pattern as Vidhan Sabha's Bharmour/Amargarh, confirmed by
+   inspection (identical `ulbname`/`wardname`/`status` per duplicate group, e.g. Junagadh's
+   "Sukhnath Chowk" ward appearing as 2 rows). Dissolved via the same
+   `ogr2ogr -dialect sqlite -sql "... ST_Union(geometry) ... GROUP BY ward_full_code"`
+   technique. (One dissolve group hit a GEOS `TopologyException: side location conflict` —
+   ogr2ogr still produced the full expected feature count, so this was a non-fatal
+   warning for that one group, not investigated further since the final count matched
+   exactly.)
+5. **Result: 63,676 unique wards**, vertex profile confirmed via `--analyze-only`:
+   overwhelmingly simple polygons (median 53 vertices, mean 113 — municipal wards are much
+   smaller/simpler than state or even assembly-constituency polygons). Only 1 shape exceeds
+   the 100k-vertex cutoff (a ward named "30" somewhere, 127,982 vertices — skipped,
+   negligible loss of 1/63,676).
+6. Uploaded via `upload_boundary.py --country India --type "Ward" --name-field wardname
+   --code-field ward_full_code --name "India Municipal Wards (Swachh Bharat Mission,
+   APPROVED status only)"`. **Given the size (63,676 shapes — ~15x Vidhan Sabha's
+   already-largest 4,122), this ran as a long background job; check
+   `boundary_uploads`/`map_shapes` directly for final status if picking this up mid-run.**
+
+### Coverage gap, confirmed real (not a cleaning miss)
+
+**Only 28 of 36 states/UTs are present at all** in the raw `SBM_Wards` source — missing
+entirely (zero rows, checked in the *raw* pre-cleaning data, so this isn't something the
+typo-fix pass could have caused): Arunachal Pradesh, Manipur, Meghalaya, Mizoram, Tripura,
+Lakshadweep, Dadra & Nagar Haveli/Daman & Diu, and Andaman & Nicobar. Likely explanation:
+these states/UTs' ULBs simply haven't been onboarded to this specific SBM data-collection
+initiative (or have but with zero `APPROVED` wards yet) — not investigated further this
+session. **If ward coverage for any of these is needed later, this specific source won't
+provide it — would need separate per-state research**, same as the parent doc's
+Canada/US "research one municipality at a time" fallback, just scoped to 8 states/UTs
+instead of an entire country.
+
+### Deferred, not built this session
+
+- **`Municipal` container type backed by `SBM_ULBs`** (3,373 whole-ULB outline features,
+  3,349 unique `ulbcode` after the same kind of near-duplicate check — 17 dup codes, not
+  yet dissolved/cleaned) — would mirror `State`→Lok Sabha/Vidhan Sabha, letting an admin
+  pick "every ward in Mumbai" as a container the way `ElectionsAdmin.jsx` already does for
+  states. Same `stnm`/`ulbnm`/`ulbcode` field shape as `SBM_Wards`, so the same
+  state-name-normalization map would apply directly. Not done — flagged as the natural
+  next step if ward-scoped seat creation is needed.
