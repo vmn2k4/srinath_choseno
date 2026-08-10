@@ -17,6 +17,7 @@ import {
   TrendingUp,
   Link2,
   Zap,
+  UserPlus,
 } from "lucide-react";
 import { GA4_DATE_RANGES, DEFAULT_GA4_DATE_RANGE_DAYS, type Ga4DateRangeDays } from "@/lib/constants/ga4";
 import type { Ga4Overview } from "@/lib/analytics/ga4Reporting";
@@ -163,8 +164,20 @@ export default function GoogleAnalyticsAdminClient() {
               </Card>
             </div>
 
-            {/* Secondary KPI Grid — Bounce Rate & Conversions */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+            {/* Secondary KPI Grid — New Users, Bounce Rate & Conversions */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <Card padding="md" className="border-l-4 border-l-accent space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-text-muted uppercase tracking-wider">New Users</span>
+                  <UserPlus size={18} className="text-accent" />
+                </div>
+                <p className="text-2xl font-bold text-text-main">{data.totals.newUsers.toLocaleString()}</p>
+                <p className="text-xs text-text-muted">
+                  {data.totals.activeUsers > 0
+                    ? `${Math.round((data.totals.newUsers / data.totals.activeUsers) * 100)}% of active users`
+                    : "First-time visitors"}
+                </p>
+              </Card>
               <Card padding="md" className="border-l-4 border-l-danger space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-text-muted uppercase tracking-wider">Bounce Rate</span>
@@ -182,6 +195,63 @@ export default function GoogleAnalyticsAdminClient() {
                 <p className="text-xs text-text-muted">Total goal completions</p>
               </Card>
             </div>
+
+            {/* Hourly traffic — always last 24 hours, independent of the date range selector */}
+            {data.hourlyTrend.length > 0 && (
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">
+                    Hourly Traffic
+                  </h3>
+                  <span className="text-[11px] text-text-muted">last 24 hours</span>
+                </div>
+                <div className="flex gap-3">
+                  {/* Y-axis labels */}
+                  <div className="flex flex-col justify-between h-40 text-right pr-2 py-2">
+                    {(() => {
+                      const max = Math.max(...data.hourlyTrend.map((h) => h.sessions), 1);
+                      const labels = [];
+                      for (let i = 0; i <= 4; i++) {
+                        labels.push(Math.round((max / 4) * (4 - i)));
+                      }
+                      return labels.map((label, idx) => (
+                        <div key={idx} className="text-[10px] text-text-muted font-mono leading-none">
+                          {label.toLocaleString()}
+                        </div>
+                      ));
+                    })()}
+                  </div>
+                  {/* Chart */}
+                  <div className="flex-1">
+                    <div className="flex items-end gap-0.5 h-40 bg-surface/30 rounded-lg p-3 border border-border-light/20">
+                      {data.hourlyTrend.map((hour) => {
+                        const max = Math.max(...data.hourlyTrend.map((h) => h.sessions), 1);
+                        const heightPct = Math.max((hour.sessions / max) * 100, 2);
+                        return (
+                          <div
+                            key={hour.dateHour}
+                            className="flex-1 group relative"
+                            style={{ height: `${heightPct}%` }}
+                          >
+                            <div
+                              title={`${hour.hourLabel}: ${hour.sessions} sessions, ${hour.activeUsers} users, ${hour.newUsers} new`}
+                              className="w-full h-full bg-gradient-to-t from-accent to-accent/60 hover:from-accent hover:to-accent rounded-sm transition-all cursor-pointer"
+                            />
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-6 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                              <div className="text-[10px] text-text-muted font-mono">{hour.hourLabel}</div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="flex justify-between mt-6 text-[10px] text-text-muted font-mono">
+                      <span>{data.hourlyTrend[0]?.hourLabel}</span>
+                      <span>{data.hourlyTrend[data.hourlyTrend.length - 1]?.hourLabel}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Daily sessions trend with y-axis labels */}
             {data.dailyTrend.length > 0 && (
@@ -221,7 +291,7 @@ export default function GoogleAnalyticsAdminClient() {
                             style={{ height: `${heightPct}%` }}
                           >
                             <div
-                              title={`${day.date}: ${day.sessions} sessions, ${day.activeUsers} users, ${day.bounceRate.toFixed(1)}% bounce`}
+                              title={`${day.date}: ${day.sessions} sessions, ${day.activeUsers} users (${day.newUsers} new), ${day.bounceRate.toFixed(1)}% bounce`}
                               className="w-full h-full bg-gradient-to-t from-primary to-primary/60 hover:from-primary hover:to-primary rounded-sm transition-all cursor-pointer"
                             />
                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-6 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
