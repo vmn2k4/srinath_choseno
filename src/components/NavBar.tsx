@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LogOut, User as UserIcon, Palette, Check, Menu, X, Newspaper, Rss, Vote, Shield, Sparkles, MapPin, Home } from "lucide-react";
+import { LogOut, User as UserIcon, Palette, Check, Menu, X, Newspaper, Rss, Vote, Shield, Sparkles, MapPin, Home, Heart } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme, THEMES, ThemeKey } from "@/contexts/ThemeContext";
 import ChosenoLogo from "@/components/primitives/ChosenoLogo";
@@ -121,6 +121,13 @@ export default function NavBar() {
           >
             <Newspaper size={15} />
             News
+          </Link>
+
+          <Link
+            href="/about"
+            className={`flex items-center gap-1.5 ${navLinkClass(isActive("/about"))}`}
+          >
+            About
           </Link>
 
           {session ? (
@@ -347,6 +354,14 @@ export default function NavBar() {
           >
             <Newspaper size={18} />
             News
+          </Link>
+
+          <Link
+            href="/about"
+            className={mobileNavLinkClass(isActive("/about"))}
+          >
+            <Heart size={18} />
+            About Us
           </Link>
 
           {session ? (
