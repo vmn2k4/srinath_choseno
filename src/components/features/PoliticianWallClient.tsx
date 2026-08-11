@@ -17,6 +17,8 @@ import {
   Mail,
   Phone,
   Globe,
+  ShieldCheck,
+  CheckCircle2,
 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import VideoRecorder from "./VideoRecorder";
@@ -42,7 +44,9 @@ import {
   Card,
   Button,
   Badge,
+  Input,
   Textarea,
+  Alert,
   Spinner,
   Modal,
   StoryViewerModal,
@@ -132,6 +136,68 @@ export default function PoliticianWallClient({
 
   const [politicianAuthors, setPoliticianAuthors] = useState<Map<string, { fullName: string; wallHref: string }>>(new Map());
   const [candidacies, setCandidacies] = useState<any[]>([]);
+
+  const [showClaimModal, setShowClaimModal] = useState(false);
+  const [claimName, setClaimName] = useState("");
+  const [claimEmail, setClaimEmail] = useState("");
+  const [claimPhone, setClaimPhone] = useState("");
+  const [claimMotivation, setClaimMotivation] = useState("");
+  const [submittingClaim, setSubmittingClaim] = useState(false);
+  const [claimSuccess, setClaimSuccess] = useState(false);
+  const [claimError, setClaimError] = useState("");
+
+  const handleClaimSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!claimEmail.trim() || !claimName.trim()) return;
+    setSubmittingClaim(true);
+    setClaimError("");
+
+    try {
+      // 1. Record claim in database
+      if (wallOwner?.id && user?.id) {
+        try {
+          await supabase.from("candidacy_claim_requests").insert({
+            candidate_id: wallOwner.id,
+            requester_profile_id: user.id,
+            contact_email: claimEmail.trim(),
+            social_media_info: claimPhone.trim() || null,
+            motivation: claimMotivation.trim() || `Claim request for ${wallOwner.full_name}`,
+            status: "pending",
+          });
+        } catch {
+          // ignore DB error if unauthenticated or RLS blocks
+        }
+      }
+
+      // 2. Invoke send-email edge function to notify admins
+      const emailBody = `
+        <h2>Official Wall Profile Claim Request</h2>
+        <p><strong>Politician / Representative:</strong> ${wallOwner?.full_name || "Representative"}</p>
+        <p><strong>Wall URL:</strong> ${typeof window !== "undefined" ? window.location.href : ""}</p>
+        <hr />
+        <p><strong>Requester Name:</strong> ${claimName.trim()}</p>
+        <p><strong>Official Contact Email:</strong> ${claimEmail.trim()}</p>
+        <p><strong>Phone / Social Link:</strong> ${claimPhone.trim() || "N/A"}</p>
+        <p><strong>Verification Details:</strong> ${claimMotivation.trim() || "N/A"}</p>
+      `;
+
+      await supabase.functions.invoke("send-email", {
+        body: {
+          to: "info@choseno.com",
+          subject: `Profile Claim Request: ${wallOwner?.full_name || "Politician"}`,
+          html: emailBody,
+          replyTo: claimEmail.trim(),
+        },
+      }).catch(() => null);
+
+      setClaimSuccess(true);
+    } catch (err) {
+      console.error("Error submitting claim request:", err);
+      setClaimError("Failed to submit request. Please try again or email info@choseno.com.");
+    } finally {
+      setSubmittingClaim(false);
+    }
+  };
 
   const fetchPosts = async () => {
     try {
@@ -477,6 +543,22 @@ export default function PoliticianWallClient({
               Ratings
             </Button>
 
+            {!isOwner && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setClaimName((user?.user_metadata?.full_name as string) || "");
+                  setClaimEmail(user?.email || "");
+                  setShowClaimModal(true);
+                }}
+                className="gap-1.5 border-primary/40 text-primary hover:bg-primary/10"
+              >
+                <ShieldCheck size={14} className="text-primary" />
+                Claim Profile
+              </Button>
+            )}
+
             {isOwner && (
               <>
                 <Button
@@ -778,6 +860,118 @@ export default function PoliticianWallClient({
           type={mediaPreview.type}
           onClose={() => setMediaPreview(null)}
         />
+      )}
+
+      {/* Claim Profile Modal */}
+      {showClaimModal && (
+        <Modal onOverlayClick={() => setShowClaimModal(false)}>
+          <Card padding="md" className="space-y-4 w-full max-w-md">
+            <div className="flex justify-between items-center border-b border-border-light/30 pb-3">
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={20} className="text-primary" />
+                <h3 className="font-bold text-base text-text-main">Claim Official Wall Profile</h3>
+              </div>
+              <Button size="sm" variant="ghost" onClick={() => setShowClaimModal(false)}>
+                <X size={16} />
+              </Button>
+            </div>
+
+            {claimSuccess ? (
+              <div className="space-y-4 text-center py-4">
+                <CheckCircle2 size={44} className="text-success mx-auto" />
+                <h4 className="font-bold text-lg text-text-main">Claim Request Submitted!</h4>
+                <p className="text-xs text-text-muted leading-relaxed">
+                  Thank you! Your claim request for <strong>{wallOwner?.full_name || "this representative"}</strong> has been received. Our team will review your verification details and contact you at <strong>{claimEmail}</strong> shortly.
+                </p>
+                <Button
+                  className="w-full mt-2"
+                  onClick={() => {
+                    setShowClaimModal(false);
+                    setClaimSuccess(false);
+                  }}
+                >
+                  Done
+                </Button>
+              </div>
+            ) : (
+              <form onSubmit={handleClaimSubmit} className="space-y-4">
+                <p className="text-xs text-text-muted leading-relaxed">
+                  Are you <strong>{wallOwner?.full_name || "this representative"}</strong> or an authorized campaign staff member? Submit your contact details to request official verification and wall access.
+                </p>
+
+                {claimError && (
+                  <Alert tone="danger">{claimError}</Alert>
+                )}
+
+                <div>
+                  <label className="block text-xs font-semibold text-text-main mb-1">
+                    Your Full Name *
+                  </label>
+                  <Input
+                    required
+                    placeholder="e.g. Bob Ferguson"
+                    value={claimName}
+                    onChange={(e) => setClaimName(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-text-main mb-1">
+                    Official Contact Email *
+                  </label>
+                  <Input
+                    type="email"
+                    required
+                    placeholder="e.g. campaign@bobferguson.org"
+                    value={claimEmail}
+                    onChange={(e) => setClaimEmail(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-text-main mb-1">
+                    Phone Number or Official Website/Social Link
+                  </label>
+                  <Input
+                    placeholder="e.g. (555) 123-4567 or twitter.com/bobferguson"
+                    value={claimPhone}
+                    onChange={(e) => setClaimPhone(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-text-main mb-1">
+                    Verification Notes / Message
+                  </label>
+                  <Textarea
+                    rows={3}
+                    placeholder="Briefly state your role or official position..."
+                    value={claimMotivation}
+                    onChange={(e) => setClaimMotivation(e.target.value)}
+                  />
+                </div>
+
+                <div className="flex gap-2 pt-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setShowClaimModal(false)}
+                    className="flex-1"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={submittingClaim}
+                    className="flex-1"
+                  >
+                    {submittingClaim ? <Spinner size="sm" /> : "Submit Claim Request"}
+                  </Button>
+                </div>
+              </form>
+            )}
+          </Card>
+        </Modal>
       )}
     </div>
   );
