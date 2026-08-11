@@ -91,6 +91,11 @@ export default function InteractiveLocationPicker({
     return () => clearTimeout(timer);
   }, [addressQuery]);
 
+  const onLocationSelectRef = useRef(onLocationSelect);
+  useEffect(() => {
+    onLocationSelectRef.current = onLocationSelect;
+  }, [onLocationSelect]);
+
   useEffect(() => {
     if (typeof window === "undefined" || !mapContainerRef.current) return;
 
@@ -100,7 +105,11 @@ export default function InteractiveLocationPicker({
       const L = (await import("leaflet")).default;
       await import("leaflet/dist/leaflet.css");
 
-      if (!isSubscribed || !mapContainerRef.current) return;
+      if (!isSubscribed || !mapContainerRef.current || mapInstanceRef.current) return;
+
+      if ((mapContainerRef.current as any)._leaflet_id) {
+        delete (mapContainerRef.current as any)._leaflet_id;
+      }
 
       const defaultIcon = L.icon({
         iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -117,50 +126,38 @@ export default function InteractiveLocationPicker({
       const initialLat = currentLat ? parseFloat(currentLat.toString()) : 49.2827;
       const initialLng = currentLng ? parseFloat(currentLng.toString()) : -123.1207;
 
-      if (!mapInstanceRef.current) {
-        const map = L.map(mapContainerRef.current).setView(
-          [initialLat, initialLng],
-          currentLat && currentLng ? 13 : 10
-        );
+      const map = L.map(mapContainerRef.current).setView(
+        [initialLat, initialLng],
+        currentLat && currentLng ? 13 : 10
+      );
 
-        L.tileLayer(
-          "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-          {
-            attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
-            subdomains: "abcd",
-            maxZoom: 19,
-          }
-        ).addTo(map);
-
-        const marker = L.marker([initialLat, initialLng], {
-          draggable: true,
-          icon: defaultIcon,
-        }).addTo(map);
-
-        marker.on("dragend", () => {
-          // .wrap() normalizes lng back into -180..180 -- after panning across the
-          // antimeridian, Leaflet's raw LatLng can otherwise report e.g. -282 instead
-          // of the equivalent 77, which find_boundaries_by_point can't match.
-          const pos = marker.getLatLng().wrap();
-          onLocationSelect(pos.lat, pos.lng);
-        });
-
-        map.on("click", (e: any) => {
-          const wrapped = e.latlng.wrap();
-          marker.setLatLng(wrapped);
-          onLocationSelect(wrapped.lat, wrapped.lng);
-        });
-
-        mapInstanceRef.current = map;
-        markerRef.current = marker;
-      } else {
-        if (currentLat && currentLng) {
-          const latNum = parseFloat(currentLat.toString());
-          const lngNum = parseFloat(currentLng.toString());
-          mapInstanceRef.current.setView([latNum, lngNum], 13);
-          markerRef.current.setLatLng([latNum, lngNum]);
+      L.tileLayer(
+        "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+        {
+          attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
+          subdomains: "abcd",
+          maxZoom: 19,
         }
-      }
+      ).addTo(map);
+
+      const marker = L.marker([initialLat, initialLng], {
+        draggable: true,
+        icon: defaultIcon,
+      }).addTo(map);
+
+      marker.on("dragend", () => {
+        const pos = marker.getLatLng().wrap();
+        onLocationSelectRef.current(pos.lat, pos.lng);
+      });
+
+      map.on("click", (e: any) => {
+        const wrapped = e.latlng.wrap();
+        marker.setLatLng(wrapped);
+        onLocationSelectRef.current(wrapped.lat, wrapped.lng);
+      });
+
+      mapInstanceRef.current = map;
+      markerRef.current = marker;
     }
 
     initMap();
@@ -168,12 +165,26 @@ export default function InteractiveLocationPicker({
     return () => {
       isSubscribed = false;
       if (mapInstanceRef.current) {
+        mapInstanceRef.current.off();
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
         markerRef.current = null;
       }
+      if (mapContainerRef.current) {
+        delete (mapContainerRef.current as any)._leaflet_id;
+      }
     };
-  }, [currentLat, currentLng]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!mapInstanceRef.current || !markerRef.current || !currentLat || !currentLng) return;
+    const latNum = parseFloat(currentLat.toString());
+    const lngNum = parseFloat(currentLng.toString());
+    if (isNaN(latNum) || isNaN(lngNum)) return;
+
+    mapInstanceRef.current.setView([latNum, lngNum], 13);
+    markerRef.current.setLatLng([latNum, lngNum]);
+  }, [currentLat, currentLng]);
 
   const autoDetectGPS = () => {
     setGeoError("");
