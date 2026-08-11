@@ -43,7 +43,7 @@ export default function Page() {
       url: BASE_URL,
       logo: `${BASE_URL}/icon.svg`,
       description:
-        "Choseno connects citizens and independent candidates inside real, verified electoral boundaries — an anonymous, hyperlocal civic network free of party influence.",
+        "Choseno connects citizens and candidates inside real electoral boundaries — an anonymous, hyperlocal civic network free of party influence.",
     },
     {
       "@context": "https://schema.org",

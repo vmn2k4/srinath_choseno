@@ -8,7 +8,7 @@ const LAST_UPDATED = "August 10, 2026";
 export const metadata: Metadata = {
   title: "Terms of Service | Choseno",
   description:
-    "Read Choseno's Terms of Service. Choseno is a user-generated civic social platform. Users are responsible for content they post. Choseno does not endorse or verify user-submitted content.",
+    "Read Choseno's Terms of Service. Learn user content rules, Section 230 platform liability protections, and platform guidelines for civic discussion.",
   alternates: { canonical: `${BASE_URL}/terms` },
   robots: { index: true, follow: true },
 };

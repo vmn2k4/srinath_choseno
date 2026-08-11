@@ -8,7 +8,7 @@ const BASE_URL = SITE_URL;
 export const metadata: Metadata = {
   title: "About Choseno — Built by a Citizen, for Citizens | Murugappan Valliyappan",
   description:
-    "Choseno was created by Murugappan Valliyappan, an independent software developer and everyday citizen frustrated by one-way politics. Learn who built this platform, why, and how it works.",
+    "Choseno was created by Murugappan Valliyappan, an independent developer and citizen frustrated by one-way politics. Learn who built Choseno & our mission.",
   alternates: { canonical: `${BASE_URL}/about` },
   openGraph: {
     title: "About Choseno — Built by a Citizen, for Citizens",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About Choseno — Built by a Citizen, for Citizens",
     description:
-      "An independent civic initiative by Murugappan Valliyappan — a common man who believes you should be part of the political conversation every day, not just on election day.",
+      "An independent civic initiative by Murugappan Valliyappan. A platform for citizens to discuss politics every day, not just on election day.",
   },
 };
 
