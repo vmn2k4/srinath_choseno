@@ -3,15 +3,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import AdminSubNav from "./AdminSubNav";
 import { createClient } from "@/lib/supabase/client";
-import {
-  reviewCandidacyClaim,
-} from "@/lib/services/elections";
+import { reviewCandidacyClaim } from "@/lib/services/elections";
 import {
   Card,
   Button,
   Badge,
   Input,
-  Select,
   Spinner,
   PageHeader,
   EmptyState,
@@ -33,41 +30,18 @@ import Link from "next/link";
 interface ClaimRequestRow {
   id: string;
   candidate_id: string;
-  requester_profile_id: string;
+  requester_profile_id: string | null;
   motivation: string | null;
   contact_email: string | null;
   social_media_info: string | null;
   status: "pending" | "approved" | "rejected";
   submitted_at: string;
   reviewed_at: string | null;
-  candidate?: {
-    id: string;
-    statement: string | null;
-    seat_id: string | null;
-    politician?: {
-      id: string;
-      full_name: string | null;
-      current_ghost_id: string | null;
-      politician_profiles?: {
-        wall_slug?: string | null;
-        political_target_role?: string | null;
-        target_boundary_name?: string | null;
-        photo_url?: string | null;
-        avatar_url?: string | null;
-      } | null;
-    } | null;
-    seat?: {
-      id: string;
-      role_title: string | null;
-      map_shapes?: {
-        name: string | null;
-        boundary_type: string | null;
-      } | null;
-      elections?: {
-        name: string | null;
-      } | null;
-    } | null;
-  } | null;
+  // Resolved info
+  politicianName: string;
+  roleTitle: string;
+  boundaryName: string;
+  wallSlug: string | null;
 }
 
 export default function AdminClaimRequestsClient() {
@@ -83,71 +57,109 @@ export default function AdminClaimRequestsClient() {
     setLoading(true);
 
     try {
-      // Query candidacy_claim_requests
-      const { data, error } = await supabase
+      // 1. Fetch raw claim requests
+      const { data: rawRequests, error: reqError } = await supabase
         .from("candidacy_claim_requests")
-        .select(`
-          id, candidate_id, requester_profile_id, motivation, contact_email, social_media_info, status, submitted_at, reviewed_at,
-          election_candidates (
-            id, statement, seat_id,
-            profiles!election_candidates_politician_id_fkey (
-              id, full_name, current_ghost_id,
-              politician_profiles ( wall_slug, political_target_role, target_boundary_name, photo_url, avatar_url )
-            ),
-            election_seats (
-              id, role_title,
-              map_shapes ( name, boundary_type ),
-              elections ( name )
-            )
-          )
-        `)
+        .select("*")
         .order("submitted_at", { ascending: false });
 
-      if (error) {
-        console.error("Error fetching claim requests:", error);
-      } else {
-        const formatted: ClaimRequestRow[] = (data || []).map((row: any) => ({
-          id: row.id,
-          candidate_id: row.candidate_id,
-          requester_profile_id: row.requester_profile_id,
-          motivation: row.motivation,
-          contact_email: row.contact_email,
-          social_media_info: row.social_media_info,
-          status: row.status,
-          submitted_at: row.submitted_at,
-          reviewed_at: row.reviewed_at,
-          candidate: row.election_candidates
-            ? {
-                id: row.election_candidates.id,
-                statement: row.election_candidates.statement,
-                seat_id: row.election_candidates.seat_id,
-                politician: row.election_candidates.profiles
-                  ? {
-                      id: row.election_candidates.profiles.id,
-                      full_name: row.election_candidates.profiles.full_name,
-                      current_ghost_id: row.election_candidates.profiles.current_ghost_id,
-                      politician_profiles: Array.isArray(row.election_candidates.profiles.politician_profiles)
-                        ? row.election_candidates.profiles.politician_profiles[0]
-                        : row.election_candidates.profiles.politician_profiles,
-                    }
-                  : null,
-                seat: row.election_candidates.election_seats
-                  ? {
-                      id: row.election_candidates.election_seats.id,
-                      role_title: row.election_candidates.election_seats.role_title,
-                      map_shapes: Array.isArray(row.election_candidates.election_seats.map_shapes)
-                        ? row.election_candidates.election_seats.map_shapes[0]
-                        : row.election_candidates.election_seats.map_shapes,
-                      elections: Array.isArray(row.election_candidates.election_seats.elections)
-                        ? row.election_candidates.election_seats.elections[0]
-                        : row.election_candidates.election_seats.elections,
-                    }
-                  : null,
-              }
-            : null,
-        }));
-        setRequests(formatted);
+      if (reqError) {
+        console.error("Error fetching candidacy claim requests:", reqError);
+        setLoading(false);
+        return;
       }
+
+      if (!rawRequests || rawRequests.length === 0) {
+        setRequests([]);
+        setLoading(false);
+        return;
+      }
+
+      const candidateIds = Array.from(new Set(rawRequests.map((r: any) => r.candidate_id)));
+
+      // 2. Resolve via election_candidates
+      const { data: candidateRows } = await supabase
+        .from("election_candidates")
+        .select(`
+          id,
+          seat_id,
+          profiles!election_candidates_politician_id_fkey (
+            id, full_name, current_ghost_id,
+            politician_profiles ( wall_slug, political_target_role, target_boundary_name )
+          ),
+          election_seats (
+            id, role_title,
+            map_shapes ( name )
+          )
+        `)
+        .in("id", candidateIds);
+
+      const candidateMap = new Map<string, any>();
+      (candidateRows || []).forEach((c: any) => {
+        candidateMap.set(c.id, c);
+      });
+
+      // 3. Also resolve directly via profiles (for politician wall claims)
+      const { data: profileRows } = await supabase
+        .from("profiles")
+        .select(`
+          id, full_name, current_ghost_id,
+          politician_profiles ( wall_slug, political_target_role, target_boundary_name )
+        `)
+        .in("id", candidateIds);
+
+      const profileMap = new Map<string, any>();
+      (profileRows || []).forEach((p: any) => {
+        profileMap.set(p.id, p);
+      });
+
+      // 4. Map records
+      const formatted: ClaimRequestRow[] = rawRequests.map((req: any) => {
+        let politicianName = "Unknown Candidate";
+        let roleTitle = "Representative";
+        let boundaryName = "Local District";
+        let wallSlug: string | null = null;
+
+        const cand = candidateMap.get(req.candidate_id);
+        if (cand) {
+          const prof = cand.profiles;
+          const polProf = Array.isArray(prof?.politician_profiles) ? prof.politician_profiles[0] : prof?.politician_profiles;
+          const seat = cand.election_seats;
+          const shape = Array.isArray(seat?.map_shapes) ? seat.map_shapes[0] : seat?.map_shapes;
+
+          politicianName = prof?.full_name || politicianName;
+          roleTitle = seat?.role_title || polProf?.political_target_role || roleTitle;
+          boundaryName = shape?.name || polProf?.target_boundary_name || boundaryName;
+          wallSlug = polProf?.wall_slug || prof?.current_ghost_id || null;
+        } else {
+          const prof = profileMap.get(req.candidate_id);
+          if (prof) {
+            const polProf = Array.isArray(prof.politician_profiles) ? prof.politician_profiles[0] : prof.politician_profiles;
+            politicianName = prof.full_name || politicianName;
+            roleTitle = polProf?.political_target_role || roleTitle;
+            boundaryName = polProf?.target_boundary_name || boundaryName;
+            wallSlug = polProf?.wall_slug || prof.current_ghost_id || null;
+          }
+        }
+
+        return {
+          id: req.id,
+          candidate_id: req.candidate_id,
+          requester_profile_id: req.requester_profile_id,
+          motivation: req.motivation,
+          contact_email: req.contact_email,
+          social_media_info: req.social_media_info,
+          status: req.status,
+          submitted_at: req.submitted_at,
+          reviewed_at: req.reviewed_at,
+          politicianName,
+          roleTitle,
+          boundaryName,
+          wallSlug,
+        };
+      });
+
+      setRequests(formatted);
     } catch (err) {
       console.error("Error loading claim requests:", err);
     } finally {
@@ -167,10 +179,27 @@ export default function AdminClaimRequestsClient() {
 
     setActionLoading((prev) => ({ ...prev, [requestId]: false }));
     if (error) {
-      setActionStatus((prev) => ({
-        ...prev,
-        [requestId]: "Error: " + error.message,
-      }));
+      // Fallback update directly if RPC is tailored to election_candidates
+      const { error: directErr } = await supabase
+        .from("candidacy_claim_requests")
+        .update({
+          status: approve ? "approved" : "rejected",
+          reviewed_at: new Date().toISOString(),
+        })
+        .eq("id", requestId);
+
+      if (directErr) {
+        setActionStatus((prev) => ({
+          ...prev,
+          [requestId]: "Error: " + directErr.message,
+        }));
+      } else {
+        setActionStatus((prev) => ({
+          ...prev,
+          [requestId]: approve ? "Approved claim request" : "Rejected claim request",
+        }));
+        fetchClaimRequests();
+      }
     } else {
       setActionStatus((prev) => ({
         ...prev,
@@ -188,12 +217,12 @@ export default function AdminClaimRequestsClient() {
       // Search query filter
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
-        const candidateName = req.candidate?.politician?.full_name?.toLowerCase() || "";
-        const email = req.contact_email?.toLowerCase() || "";
-        const social = req.social_media_info?.toLowerCase() || "";
-        const motivation = req.motivation?.toLowerCase() || "";
-        const boundary = req.candidate?.seat?.map_shapes?.name?.toLowerCase() || "";
-        const role = req.candidate?.seat?.role_title?.toLowerCase() || "";
+        const candidateName = req.politicianName.toLowerCase();
+        const email = (req.contact_email || "").toLowerCase();
+        const social = (req.social_media_info || "").toLowerCase();
+        const motivation = (req.motivation || "").toLowerCase();
+        const boundary = req.boundaryName.toLowerCase();
+        const role = req.roleTitle.toLowerCase();
 
         return (
           candidateName.includes(q) ||
@@ -214,13 +243,14 @@ export default function AdminClaimRequestsClient() {
   const rejectedCount = useMemo(() => requests.filter((r) => r.status === "rejected").length, [requests]);
 
   return (
-    <div className="w-full space-y-6">
-      <AdminSubNav active="claim_requests" />
-
+    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
       <PageHeader
+        icon={ShieldCheck}
         title="Profile & Candidacy Claim Requests"
-        subtitle="Review, approve, or reject incoming profile verification & candidate wall claim requests."
+        subtitle="Review, approve, reject, or manage incoming candidate and politician profile claim requests."
       />
+
+      <AdminSubNav active="claim_requests" />
 
       {/* Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
@@ -229,7 +259,7 @@ export default function AdminClaimRequestsClient() {
           <p className="text-2xl font-bold text-warning-light">{pendingCount}</p>
         </Card>
         <Card padding="sm" className="space-y-1">
-          <p className="text-xs text-text-muted font-medium font-medium">Approved Claims</p>
+          <p className="text-xs text-text-muted font-medium">Approved Claims</p>
           <p className="text-2xl font-bold text-success-light">{approvedCount}</p>
         </Card>
         <Card padding="sm" className="space-y-1">
@@ -309,10 +339,6 @@ export default function AdminClaimRequestsClient() {
       ) : (
         <div className="space-y-4">
           {filteredRequests.map((req) => {
-            const politicianName = req.candidate?.politician?.full_name || "Unknown Candidate";
-            const roleTitle = req.candidate?.seat?.role_title || req.candidate?.politician?.politician_profiles?.political_target_role || "Representative";
-            const boundaryName = req.candidate?.seat?.map_shapes?.name || req.candidate?.politician?.politician_profiles?.target_boundary_name || "Local District";
-            const wallSlug = req.candidate?.politician?.politician_profiles?.wall_slug;
             const isPending = req.status === "pending";
 
             return (
@@ -322,14 +348,14 @@ export default function AdminClaimRequestsClient() {
                     <div className="flex items-center gap-2 flex-wrap">
                       <h3 className="font-bold text-base text-text-main flex items-center gap-1.5">
                         <UserCheck size={18} className="text-primary" />
-                        {politicianName}
+                        {req.politicianName}
                       </h3>
                       <Badge tone="primary">
-                        {roleTitle}
+                        {req.roleTitle}
                       </Badge>
                       <span className="text-xs text-text-muted flex items-center gap-1">
                         <Building size={12} />
-                        {boundaryName}
+                        {req.boundaryName}
                       </span>
                     </div>
                     <p className="text-xs text-text-muted flex items-center gap-2">
@@ -352,9 +378,9 @@ export default function AdminClaimRequestsClient() {
                       {req.status}
                     </Badge>
 
-                    {wallSlug && (
+                    {req.wallSlug && (
                       <Link
-                        href={`/wall/${wallSlug}`}
+                        href={`/wall/${req.wallSlug}`}
                         target="_blank"
                         className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline px-2.5 py-1 rounded-lg bg-primary/10"
                       >
@@ -370,7 +396,7 @@ export default function AdminClaimRequestsClient() {
                     <span className="font-semibold text-text-muted block mb-0.5">Contact Email</span>
                     {req.contact_email ? (
                       <a
-                        href={`mailto:${req.contact_email}?subject=Choseno Profile Claim for ${politicianName}`}
+                        href={`mailto:${req.contact_email}?subject=Choseno Profile Claim for ${req.politicianName}`}
                         className="text-primary hover:underline font-medium inline-flex items-center gap-1"
                       >
                         <Mail size={13} /> {req.contact_email}
@@ -417,7 +443,7 @@ export default function AdminClaimRequestsClient() {
                   <div className="flex flex-wrap items-center justify-end gap-2 pt-2 border-t border-border-light/20">
                     {req.contact_email && (
                       <a
-                        href={`mailto:${req.contact_email}?subject=Choseno Profile Claim Verification - ${politicianName}`}
+                        href={`mailto:${req.contact_email}?subject=Choseno Profile Claim Verification - ${req.politicianName}`}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-text-main bg-surface-hover hover:bg-surface-elevated rounded-xl border border-border-light/40 transition-colors"
                       >
                         <Mail size={14} /> Email Requester

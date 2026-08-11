@@ -154,18 +154,27 @@ export default function PoliticianWallClient({
 
     try {
       // 1. Record claim in database
-      if (wallOwner?.id && user?.id) {
-        try {
-          await supabase.from("candidacy_claim_requests").insert({
-            candidate_id: wallOwner.id,
-            requester_profile_id: user.id,
-            contact_email: claimEmail.trim(),
-            social_media_info: claimPhone.trim() || null,
-            motivation: claimMotivation.trim() || `Claim request for ${wallOwner.full_name}`,
-            status: "pending",
-          });
-        } catch {
-          // ignore DB error if unauthenticated or RLS blocks
+      if (wallOwner?.id) {
+        // Check if candidate entry exists in election_candidates
+        const { data: candRow } = await supabase
+          .from("election_candidates")
+          .select("id")
+          .eq("politician_id", wallOwner.id)
+          .maybeSingle();
+
+        const candidateIdToUse = candRow?.id || wallOwner.id;
+
+        const { error: dbErr } = await supabase.from("candidacy_claim_requests").insert({
+          candidate_id: candidateIdToUse,
+          requester_profile_id: (user?.id || undefined) as any,
+          contact_email: claimEmail.trim(),
+          social_media_info: claimPhone.trim() || null,
+          motivation: claimMotivation.trim() || `Claim request for ${wallOwner.full_name}`,
+          status: "pending",
+        });
+
+        if (dbErr) {
+          console.error("Error inserting claim request:", dbErr);
         }
       }
 
