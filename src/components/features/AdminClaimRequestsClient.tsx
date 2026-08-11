@@ -27,6 +27,7 @@ import {
   User,
   Phone,
   MessageSquare,
+  Globe,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -46,6 +47,9 @@ interface ClaimRequestRow {
   roleTitle: string;
   boundaryName: string;
   wallSlug: string | null;
+  officialContactEmail?: string | null;
+  officialContactPhone?: string | null;
+  officialSourceUrl?: string | null;
   // Resolved requester profile info
   requesterAccountName?: string | null;
   requesterAccountEmail?: string | null;
@@ -75,7 +79,6 @@ export default function AdminClaimRequestsClient() {
 
       if (reqError) {
         console.error("Error fetching candidacy claim requests:", reqError);
-        // Fallback simple query
         const { data: simpleReqs } = await supabase
           .from("candidacy_claim_requests")
           .select("*")
@@ -113,7 +116,7 @@ export default function AdminClaimRequestsClient() {
         seat_id,
         profiles!election_candidates_politician_id_fkey (
           id, full_name, current_ghost_id,
-          politician_profiles ( wall_slug, political_target_role, target_boundary_name )
+          politician_profiles ( wall_slug, political_target_role, target_boundary_name, contact_email, contact_phone, source_url )
         ),
         election_seats (
           id, role_title,
@@ -132,7 +135,7 @@ export default function AdminClaimRequestsClient() {
       .from("profiles")
       .select(`
         id, full_name, current_ghost_id,
-        politician_profiles ( wall_slug, political_target_role, target_boundary_name )
+        politician_profiles ( wall_slug, political_target_role, target_boundary_name, contact_email, contact_phone, source_url )
       `)
       .in("id", candidateIds);
 
@@ -147,6 +150,9 @@ export default function AdminClaimRequestsClient() {
       let roleTitle = "Representative";
       let boundaryName = "Local District";
       let wallSlug: string | null = null;
+      let officialContactEmail: string | null = null;
+      let officialContactPhone: string | null = null;
+      let officialSourceUrl: string | null = null;
 
       const cand = candidateMap.get(req.candidate_id);
       if (cand) {
@@ -159,6 +165,9 @@ export default function AdminClaimRequestsClient() {
         roleTitle = seat?.role_title || polProf?.political_target_role || roleTitle;
         boundaryName = shape?.name || polProf?.target_boundary_name || boundaryName;
         wallSlug = polProf?.wall_slug || prof?.current_ghost_id || null;
+        officialContactEmail = polProf?.contact_email || null;
+        officialContactPhone = polProf?.contact_phone || null;
+        officialSourceUrl = polProf?.source_url || null;
       } else {
         const prof = profileMap.get(req.candidate_id);
         if (prof) {
@@ -167,6 +176,9 @@ export default function AdminClaimRequestsClient() {
           roleTitle = polProf?.political_target_role || roleTitle;
           boundaryName = polProf?.target_boundary_name || boundaryName;
           wallSlug = polProf?.wall_slug || prof.current_ghost_id || null;
+          officialContactEmail = polProf?.contact_email || null;
+          officialContactPhone = polProf?.contact_phone || null;
+          officialSourceUrl = polProf?.source_url || null;
         }
       }
 
@@ -185,6 +197,9 @@ export default function AdminClaimRequestsClient() {
         roleTitle,
         boundaryName,
         wallSlug,
+        officialContactEmail,
+        officialContactPhone,
+        officialSourceUrl,
         requesterAccountName: req.requester_profile?.full_name || null,
         requesterAccountEmail: req.requester_profile?.email || null,
       };
@@ -419,53 +434,107 @@ export default function AdminClaimRequestsClient() {
                   </div>
                 </div>
 
-                {/* Submitter Info Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 bg-surface/30 p-3.5 rounded-xl border border-border-light/20 text-xs">
-                  <div>
-                    <span className="font-semibold text-text-muted flex items-center gap-1 mb-1">
-                      <User size={13} /> Submitter Name
-                    </span>
-                    <span className="text-text-main font-bold">
-                      {req.requester_name || req.requesterAccountName || "Not provided"}
-                    </span>
-                  </div>
+                {/* Side-by-Side Comparison Panel */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Column 1: Requester Submitted Info */}
+                  <div className="bg-primary/5 p-3.5 rounded-xl border border-primary/20 space-y-2.5 text-xs">
+                    <div className="flex items-center gap-1.5 font-bold text-primary border-b border-primary/20 pb-2">
+                      <User size={15} />
+                      <span>SUBMITTER REQUESTED DETAILS</span>
+                    </div>
 
-                  <div>
-                    <span className="font-semibold text-text-muted flex items-center gap-1 mb-1">
-                      <Mail size={13} /> Contact Email
-                    </span>
-                    {req.contact_email ? (
-                      <a
-                        href={`mailto:${req.contact_email}?subject=Choseno Profile Claim for ${req.politicianName}`}
-                        className="text-primary hover:underline font-medium inline-flex items-center gap-1"
-                      >
-                        {req.contact_email}
-                      </a>
-                    ) : (
-                      <span className="text-text-muted italic">Not provided</span>
-                    )}
-                  </div>
-
-                  <div>
-                    <span className="font-semibold text-text-muted flex items-center gap-1 mb-1">
-                      <Phone size={13} /> Phone / Social Link
-                    </span>
-                    <span className="text-text-main font-medium">
-                      {req.social_media_info || "Not provided"}
-                    </span>
-                  </div>
-
-                  <div>
-                    <span className="font-semibold text-text-muted flex items-center gap-1 mb-1">
-                      <ShieldCheck size={13} /> User Account ID
-                    </span>
-                    {req.requester_profile_id ? (
-                      <span className="text-text-muted font-mono text-[11px] truncate block" title={req.requester_profile_id}>
-                        {req.requester_profile_id.slice(0, 16)}...
+                    <div>
+                      <span className="text-text-muted block font-semibold mb-0.5">Submitter Name:</span>
+                      <span className="text-text-main font-bold text-sm">
+                        {req.requester_name || req.requesterAccountName || "Not provided"}
                       </span>
-                    ) : (
-                      <span className="text-text-muted italic font-sans text-[11px]">Guest Submitter</span>
-                    )}
+                    </div>
+
+                    <div>
+                      <span className="text-text-muted block font-semibold mb-0.5">Claim Contact Email:</span>
+                      {req.contact_email ? (
+                        <a
+                          href={`mailto:${req.contact_email}?subject=Choseno Profile Claim for ${req.politicianName}`}
+                          className="text-primary hover:underline font-bold inline-flex items-center gap-1"
+                        >
+                          <Mail size={13} /> {req.contact_email}
+                        </a>
+                      ) : (
+                        <span className="text-text-muted italic">Not provided</span>
+                      )}
+                    </div>
+
+                    <div>
+                      <span className="text-text-muted block font-semibold mb-0.5">Phone / Social Link:</span>
+                      <span className="text-text-main font-medium">
+                        {req.social_media_info || "Not provided"}
+                      </span>
+                    </div>
+
+                    <div>
+                      <span className="text-text-muted block font-semibold mb-0.5">User Account ID:</span>
+                      {req.requester_profile_id ? (
+                        <span className="text-text-muted font-mono text-[11px] truncate block" title={req.requester_profile_id}>
+                          {req.requester_profile_id}
+                        </span>
+                      ) : (
+                        <span className="text-text-muted italic text-[11px]">Guest Submitter (Unauthenticated)</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Column 2: Official Candidate Record */}
+                  <div className="bg-surface/50 p-3.5 rounded-xl border border-border-light/40 space-y-2.5 text-xs">
+                    <div className="flex items-center justify-between border-b border-border-light/30 pb-2">
+                      <div className="flex items-center gap-1.5 font-bold text-text-main">
+                        <Building size={15} className="text-primary" />
+                        <span>OFFICIAL CANDIDATE / WALL RECORD</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <span className="text-text-muted block font-semibold mb-0.5">Official Name &amp; Role:</span>
+                      <span className="text-text-main font-bold text-sm">
+                        {req.politicianName} ({req.roleTitle})
+                      </span>
+                    </div>
+
+                    <div>
+                      <span className="text-text-muted block font-semibold mb-0.5">Official Contact Email:</span>
+                      {req.officialContactEmail ? (
+                        <a
+                          href={`mailto:${req.officialContactEmail}`}
+                          className="text-primary hover:underline font-medium inline-flex items-center gap-1"
+                        >
+                          <Mail size={13} /> {req.officialContactEmail}
+                        </a>
+                      ) : (
+                        <span className="text-text-muted italic">No official email on record</span>
+                      )}
+                    </div>
+
+                    <div>
+                      <span className="text-text-muted block font-semibold mb-0.5">Official Phone:</span>
+                      <span className="text-text-main font-medium">
+                        {req.officialContactPhone || "No official phone on record"}
+                      </span>
+                    </div>
+
+                    <div>
+                      <span className="text-text-muted block font-semibold mb-0.5">Official Website / Source:</span>
+                      {req.officialSourceUrl ? (
+                        <a
+                          href={req.officialSourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary hover:underline font-medium inline-flex items-center gap-1 truncate block max-w-full"
+                        >
+                          <Globe size={13} /> {req.officialSourceUrl}
+                        </a>
+                      ) : (
+                        <span className="text-text-muted italic">No official website link on record</span>
+                      )}
+                    </div>
                   </div>
                 </div>
 
