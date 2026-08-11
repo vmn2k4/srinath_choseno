@@ -78,6 +78,9 @@ export default function OfficeHoldersAdminClient() {
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState("");
   const [inviting, setInviting] = useState(false);
+  const [wallInviteUrl, setWallInviteUrl] = useState("");
+  const [wallInviteEmail, setWallInviteEmail] = useState("");
+  const [wallInviting, setWallInviting] = useState(false);
 
 
   useEffect(() => {
@@ -217,6 +220,58 @@ export default function OfficeHoldersAdminClient() {
     setStatus(error ? `Invitation error: ${error.message}` : `Claim invitation sent to ${email}.`);
   };
 
+  const inviteExistingWall = async () => {
+    const email = wallInviteEmail.trim().toLowerCase();
+    let wallSlug = "";
+    try {
+      const parsed = new URL(wallInviteUrl.trim(), window.location.origin);
+      const match = parsed.pathname.match(/^\/wall\/([^/]+)\/?$/);
+      if (!match) throw new Error("Use a wall URL such as https://www.choseno.com/wall/donald-j-trump-president");
+      wallSlug = decodeURIComponent(match[1]);
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Enter a valid Choseno wall URL.");
+      return;
+    }
+    if (!email || !email.includes("@")) {
+      setStatus("Enter the politician's email address.");
+      return;
+    }
+
+    setWallInviting(true);
+    setStatus("");
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("id, full_name, current_ghost_id, politician_profiles!inner(wall_slug)")
+      .eq("politician_profiles.wall_slug", wallSlug)
+      .maybeSingle();
+
+    if (profileError || !profile) {
+      setWallInviting(false);
+      setStatus(profileError?.message || "No wall was found for that URL.");
+      return;
+    }
+
+    const { data: officeHolder, error: holderError } = await supabase
+      .from("office_holders")
+      .select("id, full_name")
+      .eq("linked_profile_id", profile.id)
+      .maybeSingle();
+
+    if (holderError || !officeHolder) {
+      setWallInviting(false);
+      setStatus(holderError?.message || `No officeholder record is linked to ${profile.full_name || "that wall"}.`);
+      return;
+    }
+
+    const { error: inviteError } = await inviteOfficeholderToClaim(supabase, officeHolder.id, email);
+    setWallInviting(false);
+    setStatus(
+      inviteError
+        ? `Invitation error: ${inviteError.message}`
+        : `Claim invitation sent to ${email} for ${profile.full_name || "the wall"}.`,
+    );
+  };
+
   const mergeClaim = async (holder: Holder, claim: OfficeholderClaim) => {
     setSaving(true);
     const { error } = await mergeOfficeholderWallClaim(supabase, claim.id);
@@ -270,6 +325,46 @@ export default function OfficeHoldersAdminClient() {
       />
 
       <AdminSubNav active="office-holders" />
+
+      <Card padding="md" className="space-y-4 border-primary/20 bg-primary/5">
+        <div>
+          <h2 className="font-bold text-text-main flex items-center gap-2">
+            <Mail size={17} className="text-primary" />
+            Invite a politician to claim an existing wall
+          </h2>
+          <p className="text-xs text-text-muted mt-1 max-w-2xl">
+            Paste the public wall URL and the politician&apos;s email. We&apos;ll send a one-time claim link; ownership changes only after the recipient registers and confirms it.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr_auto] gap-2.5 items-end">
+          <label className="text-xs font-semibold text-text-muted">
+            Wall URL
+            <Input
+              className="mt-1"
+              placeholder="https://www.choseno.com/wall/donald-j-trump-president"
+              value={wallInviteUrl}
+              onChange={(e) => setWallInviteUrl(e.target.value)}
+            />
+          </label>
+          <label className="text-xs font-semibold text-text-muted">
+            Politician email
+            <Input
+              className="mt-1"
+              type="email"
+              placeholder="politician@example.com"
+              value={wallInviteEmail}
+              onChange={(e) => setWallInviteEmail(e.target.value)}
+            />
+          </label>
+          <Button
+            onClick={inviteExistingWall}
+            disabled={wallInviting || !wallInviteUrl.trim() || !wallInviteEmail.trim()}
+            className="gap-1"
+          >
+            <Mail size={14} /> {wallInviting ? "Sending…" : "Send claim invite"}
+          </Button>
+        </div>
+      </Card>
 
       <Card padding="md" className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
