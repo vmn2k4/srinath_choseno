@@ -268,6 +268,30 @@ export async function getSEOProfileSummary(supabase: Client, ghostId: string) {
     }
   }
 
+  // Fallback: If contact details or photo are missing on this specific profile,
+  // attempt resolution from matching office_holders for the same politician name
+  if (owner && owner.full_name) {
+    const pp = owner.politician_profiles as any;
+    if (pp && (!pp.contact_email || !pp.contact_phone || !pp.source_url || !pp.photo_url)) {
+      const { data: ohMatches } = await supabase
+        .from("office_holders")
+        .select("contact_email, contact_phone, source_url, photo_url")
+        .ilike("full_name", owner.full_name);
+
+      if (ohMatches && ohMatches.length > 0) {
+        const emailMatch = ohMatches.find((m) => m.contact_email)?.contact_email;
+        const phoneMatch = ohMatches.find((m) => m.contact_phone)?.contact_phone;
+        const sourceMatch = ohMatches.find((m) => m.source_url)?.source_url;
+        const photoMatch = ohMatches.find((m) => m.photo_url)?.photo_url;
+
+        if (!pp.contact_email && emailMatch) pp.contact_email = emailMatch;
+        if (!pp.contact_phone && phoneMatch) pp.contact_phone = phoneMatch;
+        if (!pp.source_url && sourceMatch) pp.source_url = sourceMatch;
+        if (!pp.photo_url && photoMatch) pp.photo_url = photoMatch;
+      }
+    }
+  }
+
   return { owner, activeCandidacy, partyName, rating };
 }
 
