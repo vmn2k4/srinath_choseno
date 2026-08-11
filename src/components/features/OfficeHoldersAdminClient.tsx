@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import AdminSubNav from "./AdminSubNav";
 import { getCountries, listBoundaryTypes, searchMapShapesByName } from "@/lib/services/boundaries";
-import { getElectionRoleTypes, getOfficeHoldersForShape, upsertOfficeHolder, removeOfficeHolder, inviteOfficeholderToClaim, getOfficeholderWallClaims, mergeOfficeholderWallClaim, reverseOfficeholderWallClaim } from "@/lib/services/elections";
+import { getElectionRoleTypes, getOfficeHoldersForShape, upsertOfficeHolder, removeOfficeHolder, inviteOfficeholderToClaim, resendOfficeholderClaim, getOfficeholderWallClaims, mergeOfficeholderWallClaim, reverseOfficeholderWallClaim } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { adminGetProfileById } from "@/lib/services/profile";
 import { UserCheck, Search, Save, Trash2, X, Link2, Mail } from "lucide-react";
@@ -215,9 +215,22 @@ export default function OfficeHoldersAdminClient() {
     }
     setInviting(true);
     setStatus("");
-    const { error } = await inviteOfficeholderToClaim(supabase, holder.id, email);
+    const { error } = await sendClaimInvitation(holder.id, email);
     setInviting(false);
     setStatus(error ? `Invitation error: ${error.message}` : `Claim invitation sent to ${email}.`);
+  };
+
+  const sendClaimInvitation = async (officeHolderId: string, email: string) => {
+    const { data: existingClaims, error: claimsError } = await getOfficeholderWallClaims(supabase, officeHolderId);
+    if (claimsError) return { error: claimsError };
+    const latest = (existingClaims || [])[0] as OfficeholderClaim | undefined;
+    if (latest?.status === "invited" || latest?.status === "expired") {
+      return resendOfficeholderClaim(supabase, latest.id, email);
+    }
+    if (latest?.status === "pending_review" || latest?.status === "approved") {
+      return { error: new Error(`This wall already has a ${latest.status.replace("_", " ")} claim.`) };
+    }
+    return inviteOfficeholderToClaim(supabase, officeHolderId, email);
   };
 
   const inviteExistingWall = async () => {
@@ -263,7 +276,7 @@ export default function OfficeHoldersAdminClient() {
       return;
     }
 
-    const { error: inviteError } = await inviteOfficeholderToClaim(supabase, officeHolder.id, email);
+    const { error: inviteError } = await sendClaimInvitation(officeHolder.id, email);
     setWallInviting(false);
     setStatus(
       inviteError
