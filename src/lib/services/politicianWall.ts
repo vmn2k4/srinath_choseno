@@ -112,6 +112,28 @@ export async function getWallOwnerProfileBySlug(supabase: Client, wallSlug: stri
        )
     `;
 
+  // A merged imported wall keeps its old slug as a public redirect. Resolve
+  // this before the normal slug/name fallbacks so an old link cannot land on
+  // an archived synthetic profile or an ambiguous name match.
+  const { data: redirect } = await supabase
+    .from("office_holder_wall_redirects")
+    .select("target_profile_id")
+    .eq("old_wall_slug", wallSlug)
+    .eq("active", true)
+    .maybeSingle();
+  if (redirect?.target_profile_id) {
+    let redirectedQuery = supabase
+      .from("profiles")
+      .select(selectFields)
+      .eq("id", redirect.target_profile_id);
+    if (!isDevEnvironment()) redirectedQuery = redirectedQuery.eq("is_test", false);
+    const redirected = await redirectedQuery.maybeSingle();
+    if (redirected.data) {
+      redirected.data = await enrichProfileWithContactFallback(supabase, redirected.data);
+      return redirected;
+    }
+  }
+
   // 1. Try matching exact wall_slug
   let query = supabase.from("profiles").select(selectFields).eq("politician_profiles.wall_slug", wallSlug);
   if (!isDevEnvironment()) query = query.eq("is_test", false);

@@ -3,13 +3,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import AdminSubNav from "./AdminSubNav";
 import { getCountries, listBoundaryTypes, searchMapShapesByName } from "@/lib/services/boundaries";
-import { getElectionRoleTypes, getOfficeHoldersForShape, upsertOfficeHolder, removeOfficeHolder } from "@/lib/services/elections";
+import { getElectionRoleTypes, getOfficeHoldersForShape, upsertOfficeHolder, removeOfficeHolder, inviteOfficeholderToClaim, getOfficeholderWallClaims, mergeOfficeholderWallClaim, reverseOfficeholderWallClaim } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
-import { adminSearchProfiles, adminGetProfileById } from "@/lib/services/profile";
-import { UserCheck, Search, Save, Trash2, X, Link2 } from "lucide-react";
+import { adminGetProfileById } from "@/lib/services/profile";
+import { UserCheck, Search, Save, Trash2, X, Link2, Mail } from "lucide-react";
 import { Card, Button, Input, Textarea, Select, Spinner, PageHeader } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
 import { createClient } from "@/lib/supabase/client";
+import type { Database } from "@/lib/supabase/types";
 
 interface RoleType {
   id: string;
@@ -39,12 +40,7 @@ interface ShapeOption {
   boundary_type: string;
 }
 
-interface ProfileMatch {
-  id: string;
-  full_name: string | null;
-  avatar_url: string | null;
-  role: string | null;
-}
+type OfficeholderClaim = Database["public"]["Tables"]["office_holder_wall_claims"]["Row"];
 
 const emptyForm = {
   fullName: "",
@@ -73,6 +69,7 @@ export default function OfficeHoldersAdminClient() {
 
   const [roleTypes, setRoleTypes] = useState<RoleType[]>([]);
   const [holders, setHolders] = useState<Record<string, Holder>>({});
+  const [claims, setClaims] = useState<Record<string, OfficeholderClaim[]>>({});
   const [loadingRoles, setLoadingRoles] = useState(false);
 
   const [parties, setParties] = useState<{ id: number; name: string }[]>([]);
@@ -80,10 +77,8 @@ export default function OfficeHoldersAdminClient() {
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState("");
+  const [inviting, setInviting] = useState(false);
 
-  const [profileQuery, setProfileQuery] = useState("");
-  const [profileResults, setProfileResults] = useState<ProfileMatch[]>([]);
-  const [searchingProfile, setSearchingProfile] = useState(false);
 
   useEffect(() => {
     getCountries(supabase).then(({ data }) => setCountries(data || []));
@@ -123,22 +118,6 @@ export default function OfficeHoldersAdminClient() {
     return () => clearTimeout(id);
   }, [runSearch]);
 
-  const runProfileSearch = useCallback(async () => {
-    if (profileQuery.trim().length < 2) {
-      setProfileResults([]);
-      return;
-    }
-    setSearchingProfile(true);
-    const { data } = await adminSearchProfiles(supabase, profileQuery.trim());
-    setProfileResults((data as ProfileMatch[] | null) || []);
-    setSearchingProfile(false);
-  }, [supabase, profileQuery]);
-
-  useEffect(() => {
-    const id = setTimeout(runProfileSearch, 300);
-    return () => clearTimeout(id);
-  }, [runProfileSearch]);
-
   const selectShape = async (shape: ShapeOption) => {
     setSelectedShape(shape);
     setShapeOptions([]);
@@ -154,6 +133,13 @@ export default function OfficeHoldersAdminClient() {
       byRole[h.election_role_type_id] = h;
     });
     setHolders(byRole);
+    const claimEntries = await Promise.all(
+      Object.values(byRole).map(async (holder) => {
+        const { data } = await getOfficeholderWallClaims(supabase, holder.id);
+        return [holder.id, (data as OfficeholderClaim[] | null) || []] as const;
+      })
+    );
+    setClaims(Object.fromEntries(claimEntries));
     setLoadingRoles(false);
   };
 
@@ -174,8 +160,6 @@ export default function OfficeHoldersAdminClient() {
           }
         : emptyForm
     );
-    setProfileQuery("");
-    setProfileResults([]);
     setEditingRoleId(role.id);
     setStatus("");
 
@@ -188,6 +172,11 @@ export default function OfficeHoldersAdminClient() {
 
   const saveHolder = async (role: RoleType) => {
     if (!selectedShape || !user || !form.fullName.trim()) return;
+    const existing = holders[role.id];
+    if (form.linkedProfileId && form.linkedProfileId !== existing?.linked_profile_id) {
+      setStatus("Direct profile linking is disabled. Use the claim invitation so the merge is verified and reversible.");
+      return;
+    }
     setSaving(true);
     setStatus("");
     const { data, error } = await upsertOfficeHolder(
@@ -213,6 +202,45 @@ export default function OfficeHoldersAdminClient() {
     }
     setHolders((prev) => ({ ...prev, [role.id]: (data as unknown) as Holder }));
     setEditingRoleId(null);
+  };
+
+  const inviteHolder = async (holder: Holder) => {
+    const email = holder.contact_email?.trim();
+    if (!email) {
+      setStatus("Add an official email before sending a claim invitation.");
+      return;
+    }
+    setInviting(true);
+    setStatus("");
+    const { error } = await inviteOfficeholderToClaim(supabase, holder.id, email);
+    setInviting(false);
+    setStatus(error ? `Invitation error: ${error.message}` : `Claim invitation sent to ${email}.`);
+  };
+
+  const mergeClaim = async (holder: Holder, claim: OfficeholderClaim) => {
+    setSaving(true);
+    const { error } = await mergeOfficeholderWallClaim(supabase, claim.id);
+    setSaving(false);
+    setStatus(error ? `Merge error: ${error.message}` : "Claim merged successfully. The old wall URL now redirects.");
+    if (!error) {
+      const { data } = await getOfficeholderWallClaims(supabase, holder.id);
+      setClaims((prev) => ({ ...prev, [holder.id]: (data as OfficeholderClaim[] | null) || [] }));
+      if (selectedShape) await selectShape(selectedShape);
+    }
+  };
+
+  const reverseClaim = async (holder: Holder, claim: OfficeholderClaim) => {
+    const reason = window.prompt("Reason for reversing this claim:");
+    if (!reason?.trim()) return;
+    setSaving(true);
+    const { error } = await reverseOfficeholderWallClaim(supabase, claim.id, reason.trim());
+    setSaving(false);
+    setStatus(error ? `Reversal error: ${error.message}` : "Claim reversed and original wall ownership restored.");
+    if (!error) {
+      const { data } = await getOfficeholderWallClaims(supabase, holder.id);
+      setClaims((prev) => ({ ...prev, [holder.id]: (data as OfficeholderClaim[] | null) || [] }));
+      if (selectedShape) await selectShape(selectedShape);
+    }
   };
 
   const deleteHolder = async (role: RoleType) => {
@@ -316,6 +344,7 @@ export default function OfficeHoldersAdminClient() {
             <div className="space-y-3">
               {roleTypes.map((role) => {
                 const existing = holders[role.id];
+                const latestClaim = existing ? claims[existing.id]?.[0] : undefined;
                 const isEditing = editingRoleId === role.id;
                 return (
                   <div key={role.id} className="p-4 bg-surface/30 border border-border-light/30 rounded-2xl space-y-3">
@@ -338,6 +367,7 @@ export default function OfficeHoldersAdminClient() {
                               <Button size="sm" variant="outline" onClick={() => startEdit(role)}>
                                 Edit
                               </Button>
+                              {latestClaim && <span className="text-[11px] text-text-muted">Claim: {latestClaim.status}</span>}
                             </>
                           ) : (
                             <Button size="sm" onClick={() => startEdit(role)}>
@@ -400,7 +430,7 @@ export default function OfficeHoldersAdminClient() {
 
                         <div className="pt-1">
                           <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-1.5">
-                            Link registered profile (optional)
+                            Profile ownership
                           </p>
                           {form.linkedProfileId ? (
                             <div className="flex items-center gap-2 text-xs bg-accent/10 text-accent font-semibold px-3 py-1.5 rounded-xl w-fit">
@@ -415,42 +445,7 @@ export default function OfficeHoldersAdminClient() {
                                 <X size={13} />
                               </button>
                             </div>
-                          ) : (
-                            <div className="relative">
-                              <Input
-                                placeholder="Search registered users by name..."
-                                value={profileQuery}
-                                onChange={(e) => setProfileQuery(e.target.value)}
-                              />
-                              {searchingProfile && (
-                                <Spinner size="sm" className="absolute right-3 top-1/2 -translate-y-1/2" />
-                              )}
-                              {profileResults.length > 0 && (
-                                <div className="mt-1.5 border border-border-light/40 rounded-xl divide-y divide-border-light/30 overflow-hidden">
-                                  {profileResults.map((p) => (
-                                    <button
-                                      key={p.id}
-                                      onClick={() => {
-                                        setForm((f) => ({
-                                          ...f,
-                                          linkedProfileId: p.id,
-                                          linkedProfileName: p.full_name || "Unnamed profile",
-                                        }));
-                                        setProfileQuery("");
-                                        setProfileResults([]);
-                                      }}
-                                      className="w-full text-left px-3 py-2 text-xs hover:bg-surface-hover transition-colors cursor-pointer"
-                                    >
-                                      {p.full_name || "Unnamed profile"}{" "}
-                                      {p.role === "politician" && (
-                                        <span className="text-text-muted">(politician)</span>
-                                      )}
-                                    </button>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          )}
+                          ) : <p className="text-xs text-text-muted">No linked account. Use the official email above to send a verified claim invitation.</p>}
                         </div>
 
                         <div className="flex items-center gap-2 pt-1">
@@ -462,10 +457,27 @@ export default function OfficeHoldersAdminClient() {
                               <Trash2 size={14} /> Remove
                             </Button>
                           )}
+                          {existing && (
+                            <Button size="sm" variant="outline" onClick={() => inviteHolder(existing)} disabled={saving || inviting || !form.contactEmail.trim()} className="gap-1">
+                              <Mail size={14} /> {inviting ? "Sending…" : "Send claim invite"}
+                            </Button>
+                          )}
                           <Button size="sm" variant="ghost" onClick={() => setEditingRoleId(null)} className="gap-1">
                             <X size={14} /> Cancel
                           </Button>
                         </div>
+                      </div>
+                    )}
+                    {!isEditing && existing && latestClaim?.status === "pending_review" && (
+                      <div className="flex items-center gap-2 pt-2 border-t border-border-light/20">
+                        <span className="text-xs text-text-secondary">Verified claim is awaiting admin merge.</span>
+                        <Button size="sm" onClick={() => mergeClaim(existing, latestClaim)} disabled={saving}>Merge wall</Button>
+                      </div>
+                    )}
+                    {!isEditing && existing && latestClaim?.status === "approved" && (
+                      <div className="flex items-center gap-2 pt-2 border-t border-border-light/20">
+                        <span className="text-xs text-text-secondary">Wall merged; reverse if the claim was fraudulent.</span>
+                        <Button size="sm" variant="outline" onClick={() => reverseClaim(existing, latestClaim)} disabled={saving}>Reverse claim</Button>
                       </div>
                     )}
                   </div>

@@ -16,11 +16,12 @@ import { fetchOrHealProfile, getOwnProfile } from "@/lib/services/profile";
 import type { Database } from "@/lib/supabase/types";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+type AuthProfile = Profile & { politician_wall_slug?: string | null };
 
 type AuthContextValue = {
   session: Session | null;
   user: Session["user"] | undefined;
-  profile: Profile | null;
+  profile: AuthProfile | null;
   loading: boolean;
   signOut: () => Promise<{ error: unknown }>;
   refreshProfile: () => Promise<void>;
@@ -31,7 +32,7 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [supabase] = useState(() => createClient());
   const [session, setSession] = useState<Session | null>(null);
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<AuthProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Tracks whichever user id is currently applied, so the onAuthStateChange
@@ -66,7 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(true);
       const data = await fetchOrHealProfile(supabase, userId, newSession.user.email);
       if (active) {
-        setProfile(data);
+        setProfile(data as AuthProfile | null);
         setLoading(false);
       }
     };
@@ -110,7 +111,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const refreshProfile = async () => {
     if (session?.user?.id) {
       const { data } = await getOwnProfile(supabase, session.user.id);
-      setProfile(data as unknown as Profile);
+      setProfile(data as unknown as AuthProfile);
     }
   };
 

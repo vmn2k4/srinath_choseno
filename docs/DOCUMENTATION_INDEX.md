@@ -34,6 +34,10 @@ Complete guide to all Choseno documentation — architecture, features, data pip
 - **[adding-us-2026-midterm-candidates.md](adding-us-2026-midterm-candidates.md)** — How the 2026 US Midterms election + its House/Senate races + confirmed candidates were bulk-loaded from the FEC; repeatable recipe for future cycles
 - **Flow**: User registers as politician → applies for election seat → creates campaign wall → voters ask questions/show support
 
+### Officeholder Wall Claims
+
+- **[OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md](OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md)** — Current behavior and planned reversible flow for claiming scraped officeholder walls, merging them with existing or new profiles, sending invitations, reversing fraudulent claims, and tracing failures.
+
 ### Politician & Office Holders
 
 - **[OFFICE_HOLDERS_FEATURE.md](OFFICE_HOLDERS_FEATURE.md)** — Auto-populated elected officials (MPs, Senators, Mayors, etc.)

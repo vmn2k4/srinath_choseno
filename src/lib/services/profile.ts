@@ -44,6 +44,22 @@ export async function fetchOrHealProfile(
     data.role = "admin";
   }
 
+  // `wall_slug` belongs to politician_profiles in the live schema, not to
+  // profiles. Keep the auth profile convenient for navigation without
+  // duplicating that column or teaching callers to read a stale field.
+  if (data?.role === "politician") {
+    const { data: politicianProfile } = await supabase
+      .from("politician_profiles")
+      .select("wall_slug")
+      .eq("id", userId)
+      .maybeSingle();
+
+    return {
+      ...data,
+      politician_wall_slug: politicianProfile?.wall_slug ?? null,
+    };
+  }
+
   return data;
 }
 

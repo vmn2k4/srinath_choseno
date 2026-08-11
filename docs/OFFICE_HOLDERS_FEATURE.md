@@ -1,5 +1,7 @@
 # Office Holders Feature — Implementation Guide
 
+> **Claiming status (2026-08-11):** Auto-populated officeholder walls can be publicly displayed and an admin can manually link an `office_holders` row to a profile, but a safe officeholder claim/invite/merge/reversal flow is not implemented yet. Do not use the manual link as a substitute for a merge: it changes the reference only and does not move wall content or create recovery history. See [OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md](OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md) for the current flow, schema map, task list, and verification log.
+
 ## Overview
 
 The Office Holders feature displays the current incumbent (MLA, MP, Mayor, etc.) for each electoral boundary on the seat detail page. This allows users to see who currently represents them before viewing candidates running for that seat.
@@ -332,4 +334,3 @@ LEFT JOIN profiles ...
 - [SUPABASE_SCHEMA.md](SUPABASE_SCHEMA.md) — office_holders table schema
 - [SCHEMA_RELATIONSHIPS.md](SCHEMA_RELATIONSHIPS.md) — Entity relationships
 - [CODE_LAYERS.md](../docs/CODE_LAYERS.md) — Architecture overview
-

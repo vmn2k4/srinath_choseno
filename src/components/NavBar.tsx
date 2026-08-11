@@ -70,7 +70,7 @@ export default function NavBar() {
             <>
               {profile?.role === "politician" && profile?.current_ghost_id && (
                 <Link
-                  href={`/wall/${profile.wall_slug || buildPoliticianWallSlug(profile.full_name, profile.designation)}`}
+                  href={`/wall/${profile.politician_wall_slug || buildPoliticianWallSlug(profile.full_name, profile.designation)}`}
                   className={`flex items-center gap-1.5 ${navLinkClass(
                     pathname?.startsWith("/wall") ?? false
                   )}`}
@@ -305,7 +305,7 @@ export default function NavBar() {
             <>
               {profile?.role === "politician" && profile?.current_ghost_id && (
                 <Link
-                  href={`/wall/${profile.wall_slug || buildPoliticianWallSlug(profile.full_name, profile.designation)}`}
+                  href={`/wall/${profile.politician_wall_slug || buildPoliticianWallSlug(profile.full_name, profile.designation)}`}
                   className={mobileNavLinkClass(pathname?.startsWith("/wall") ?? false)}
                 >
                   <Sparkles size={18} />

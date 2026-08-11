@@ -12,31 +12,6 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.5"
   }
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
   public: {
     Tables: {
       boundary_uploads: {
@@ -86,7 +61,8 @@ export type Database = {
           contact_email: string | null
           id: string
           motivation: string | null
-          requester_profile_id: string
+          requester_name: string | null
+          requester_profile_id: string | null
           reviewed_at: string | null
           reviewed_by: string | null
           social_media_info: string | null
@@ -98,7 +74,8 @@ export type Database = {
           contact_email?: string | null
           id?: string
           motivation?: string | null
-          requester_profile_id: string
+          requester_name?: string | null
+          requester_profile_id?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
           social_media_info?: string | null
@@ -110,7 +87,8 @@ export type Database = {
           contact_email?: string | null
           id?: string
           motivation?: string | null
-          requester_profile_id?: string
+          requester_name?: string | null
+          requester_profile_id?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
           social_media_info?: string | null
@@ -118,13 +96,6 @@ export type Database = {
           submitted_at?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "candidacy_claim_requests_candidate_id_fkey"
-            columns: ["candidate_id"]
-            isOneToOne: false
-            referencedRelation: "election_candidates"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "candidacy_claim_requests_requester_profile_id_fkey"
             columns: ["requester_profile_id"]
@@ -1037,7 +1008,6 @@ export type Database = {
           label: string
           score_penalty: number
           updated_at: string | null
-          wall_slug: string | null
         }
         Insert: {
           abuse_type: string
@@ -1046,7 +1016,6 @@ export type Database = {
           label: string
           score_penalty?: number
           updated_at?: string | null
-          wall_slug?: string | null
         }
         Update: {
           abuse_type?: string
@@ -1055,9 +1024,41 @@ export type Database = {
           label?: string
           score_penalty?: number
           updated_at?: string | null
-          wall_slug?: string | null
         }
         Relationships: []
+      }
+      news_article_politicians: {
+        Row: {
+          created_at: string
+          news_article_id: string
+          politician_id: string
+        }
+        Insert: {
+          created_at?: string
+          news_article_id: string
+          politician_id: string
+        }
+        Update: {
+          created_at?: string
+          news_article_id?: string
+          politician_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "news_article_politicians_news_article_id_fkey"
+            columns: ["news_article_id"]
+            isOneToOne: false
+            referencedRelation: "news_articles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "news_article_politicians_politician_id_fkey"
+            columns: ["politician_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       news_articles: {
         Row: {
@@ -1121,33 +1122,255 @@ export type Database = {
           },
         ]
       }
-      news_article_politicians: {
+      office_holder_wall_claim_invites: {
         Row: {
+          cancelled_at: string | null
+          claim_id: string
           created_at: string
-          news_article_id: string
-          politician_id: string
+          created_by: string
+          email: string
+          expires_at: string
+          id: string
+          token_hash: string
+          used_at: string | null
         }
         Insert: {
+          cancelled_at?: string | null
+          claim_id: string
           created_at?: string
-          news_article_id: string
-          politician_id: string
+          created_by: string
+          email: string
+          expires_at: string
+          id?: string
+          token_hash: string
+          used_at?: string | null
         }
         Update: {
+          cancelled_at?: string | null
+          claim_id?: string
           created_at?: string
-          news_article_id?: string
-          politician_id?: string
+          created_by?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          token_hash?: string
+          used_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "news_article_politicians_news_article_id_fkey"
-            columns: ["news_article_id"]
+            foreignKeyName: "office_holder_wall_claim_invites_claim_id_fkey"
+            columns: ["claim_id"]
             isOneToOne: false
-            referencedRelation: "news_articles"
+            referencedRelation: "office_holder_wall_claims"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "news_article_politicians_politician_id_fkey"
-            columns: ["politician_id"]
+            foreignKeyName: "office_holder_wall_claim_invites_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      office_holder_wall_claim_items: {
+        Row: {
+          claim_id: string
+          entity_id: string
+          entity_type: string
+          id: string
+          metadata: Json
+          moved_at: string
+          reversed_at: string | null
+          source_value: Json
+          target_value: Json
+        }
+        Insert: {
+          claim_id: string
+          entity_id: string
+          entity_type: string
+          id?: string
+          metadata?: Json
+          moved_at?: string
+          reversed_at?: string | null
+          source_value?: Json
+          target_value?: Json
+        }
+        Update: {
+          claim_id?: string
+          entity_id?: string
+          entity_type?: string
+          id?: string
+          metadata?: Json
+          moved_at?: string
+          reversed_at?: string | null
+          source_value?: Json
+          target_value?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "office_holder_wall_claim_items_claim_id_fkey"
+            columns: ["claim_id"]
+            isOneToOne: false
+            referencedRelation: "office_holder_wall_claims"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      office_holder_wall_claims: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          claimed_at: string | null
+          contact_email: string | null
+          created_at: string
+          created_by: string
+          id: string
+          invited_at: string | null
+          metadata: Json
+          office_holder_id: string
+          reversal_reason: string | null
+          reversed_at: string | null
+          reversed_by: string | null
+          source_ghost_id: string
+          source_profile_id: string
+          status: string
+          target_ghost_id: string | null
+          target_profile_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          claimed_at?: string | null
+          contact_email?: string | null
+          created_at?: string
+          created_by: string
+          id?: string
+          invited_at?: string | null
+          metadata?: Json
+          office_holder_id: string
+          reversal_reason?: string | null
+          reversed_at?: string | null
+          reversed_by?: string | null
+          source_ghost_id: string
+          source_profile_id: string
+          status?: string
+          target_ghost_id?: string | null
+          target_profile_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          claimed_at?: string | null
+          contact_email?: string | null
+          created_at?: string
+          created_by?: string
+          id?: string
+          invited_at?: string | null
+          metadata?: Json
+          office_holder_id?: string
+          reversal_reason?: string | null
+          reversed_at?: string | null
+          reversed_by?: string | null
+          source_ghost_id?: string
+          source_profile_id?: string
+          status?: string
+          target_ghost_id?: string | null
+          target_profile_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "office_holder_wall_claims_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "office_holder_wall_claims_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "office_holder_wall_claims_office_holder_id_fkey"
+            columns: ["office_holder_id"]
+            isOneToOne: false
+            referencedRelation: "office_holders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "office_holder_wall_claims_reversed_by_fkey"
+            columns: ["reversed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "office_holder_wall_claims_source_profile_id_fkey"
+            columns: ["source_profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "office_holder_wall_claims_target_profile_id_fkey"
+            columns: ["target_profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      office_holder_wall_redirects: {
+        Row: {
+          active: boolean
+          claim_id: string
+          created_at: string
+          id: string
+          old_ghost_id: string
+          old_wall_slug: string | null
+          reversed_at: string | null
+          target_ghost_id: string
+          target_profile_id: string
+        }
+        Insert: {
+          active?: boolean
+          claim_id: string
+          created_at?: string
+          id?: string
+          old_ghost_id: string
+          old_wall_slug?: string | null
+          reversed_at?: string | null
+          target_ghost_id: string
+          target_profile_id: string
+        }
+        Update: {
+          active?: boolean
+          claim_id?: string
+          created_at?: string
+          id?: string
+          old_ghost_id?: string
+          old_wall_slug?: string | null
+          reversed_at?: string | null
+          target_ghost_id?: string
+          target_profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "office_holder_wall_redirects_claim_id_fkey"
+            columns: ["claim_id"]
+            isOneToOne: false
+            referencedRelation: "office_holder_wall_claims"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "office_holder_wall_redirects_target_profile_id_fkey"
+            columns: ["target_profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -1291,8 +1514,8 @@ export type Database = {
           target_boundary_id: string | null
           target_boundary_name: string | null
           target_boundary_type: string | null
-          wall_slug: string | null
           updated_at: string | null
+          wall_slug: string | null
         }
         Insert: {
           avatar_url?: string | null
@@ -1311,8 +1534,8 @@ export type Database = {
           target_boundary_id?: string | null
           target_boundary_name?: string | null
           target_boundary_type?: string | null
-          wall_slug?: string | null
           updated_at?: string | null
+          wall_slug?: string | null
         }
         Update: {
           avatar_url?: string | null
@@ -1331,8 +1554,8 @@ export type Database = {
           target_boundary_id?: string | null
           target_boundary_name?: string | null
           target_boundary_type?: string | null
-          wall_slug?: string | null
           updated_at?: string | null
+          wall_slug?: string | null
         }
         Relationships: [
           {
@@ -1604,7 +1827,6 @@ export type Database = {
           onboarding_completed: boolean | null
           role: string | null
           updated_at: string | null
-          wall_slug: string | null
         }
         Insert: {
           burn_count?: number
@@ -1621,7 +1843,6 @@ export type Database = {
           onboarding_completed?: boolean | null
           role?: string | null
           updated_at?: string | null
-          wall_slug?: string | null
         }
         Update: {
           burn_count?: number
@@ -1638,7 +1859,6 @@ export type Database = {
           onboarding_completed?: boolean | null
           role?: string | null
           updated_at?: string | null
-          wall_slug?: string | null
         }
         Relationships: []
       }
@@ -1792,6 +2012,192 @@ export type Database = {
           proj4text?: string | null
           srid?: number
           srtext?: string | null
+        }
+        Relationships: []
+      }
+      staging_3ca4898a_241b_4fa2_9fc8_e7f6b481ce90: {
+        Row: {
+          districtname: string | null
+          geom: unknown
+          ogc_fid: number
+          state_norm: string | null
+          statename: string | null
+          status: string | null
+          ulbcode: string | null
+          ulbname: string | null
+          ward_full_code: string | null
+          wardcode: string | null
+          wardname: string | null
+        }
+        Insert: {
+          districtname?: string | null
+          geom?: unknown
+          ogc_fid?: number
+          state_norm?: string | null
+          statename?: string | null
+          status?: string | null
+          ulbcode?: string | null
+          ulbname?: string | null
+          ward_full_code?: string | null
+          wardcode?: string | null
+          wardname?: string | null
+        }
+        Update: {
+          districtname?: string | null
+          geom?: unknown
+          ogc_fid?: number
+          state_norm?: string | null
+          statename?: string | null
+          status?: string | null
+          ulbcode?: string | null
+          ulbname?: string | null
+          ward_full_code?: string | null
+          wardcode?: string | null
+          wardname?: string | null
+        }
+        Relationships: []
+      }
+      staging_7360e4a2_e1ae_4f1f_87f1_a1cf0ecf0959: {
+        Row: {
+          geom: unknown
+          inpoly_fid: number | null
+          maxsimptol: number | null
+          minsimptol: number | null
+          objectid: number | null
+          ogc_fid: number
+          remarks: string | null
+          shape_area: number | null
+          shape_length: number | null
+          simpgnflag: number | null
+          state_lgd: number | null
+          stcode11: string | null
+          stname: string | null
+          stname_sh: string | null
+        }
+        Insert: {
+          geom?: unknown
+          inpoly_fid?: number | null
+          maxsimptol?: number | null
+          minsimptol?: number | null
+          objectid?: number | null
+          ogc_fid?: number
+          remarks?: string | null
+          shape_area?: number | null
+          shape_length?: number | null
+          simpgnflag?: number | null
+          state_lgd?: number | null
+          stcode11?: string | null
+          stname?: string | null
+          stname_sh?: string | null
+        }
+        Update: {
+          geom?: unknown
+          inpoly_fid?: number | null
+          maxsimptol?: number | null
+          minsimptol?: number | null
+          objectid?: number | null
+          ogc_fid?: number
+          remarks?: string | null
+          shape_area?: number | null
+          shape_length?: number | null
+          simpgnflag?: number | null
+          state_lgd?: number | null
+          stcode11?: string | null
+          stname?: string | null
+          stname_sh?: string | null
+        }
+        Relationships: []
+      }
+      staging_89a7cd27_3e2b_4b47_8ba8_0ba37fc0318b: {
+        Row: {
+          ac_id: string | null
+          ac_name: string | null
+          ac_no: number | null
+          dist_lgd: number | null
+          dist_name: string | null
+          geom: unknown
+          ogc_fid: number
+          pc_name: string | null
+          pc_no: number | null
+          st_name: string | null
+          state_lgd: number | null
+        }
+        Insert: {
+          ac_id?: string | null
+          ac_name?: string | null
+          ac_no?: number | null
+          dist_lgd?: number | null
+          dist_name?: string | null
+          geom?: unknown
+          ogc_fid?: number
+          pc_name?: string | null
+          pc_no?: number | null
+          st_name?: string | null
+          state_lgd?: number | null
+        }
+        Update: {
+          ac_id?: string | null
+          ac_name?: string | null
+          ac_no?: number | null
+          dist_lgd?: number | null
+          dist_name?: string | null
+          geom?: unknown
+          ogc_fid?: number
+          pc_name?: string | null
+          pc_no?: number | null
+          st_name?: string | null
+          state_lgd?: number | null
+        }
+        Relationships: []
+      }
+      staging_db3c53db_8b13_4868_b1a2_11b07da77963: {
+        Row: {
+          geom: unknown
+          objectid: number | null
+          ogc_fid: number
+          pc_id: number | null
+          pc_name: string | null
+          pc_no: number | null
+          shape_area: number | null
+          shape_length: number | null
+          st_area_sh: number | null
+          st_code: string | null
+          st_length_: number | null
+          st_name: string | null
+          state_lgd: number | null
+          status: string | null
+        }
+        Insert: {
+          geom?: unknown
+          objectid?: number | null
+          ogc_fid?: number
+          pc_id?: number | null
+          pc_name?: string | null
+          pc_no?: number | null
+          shape_area?: number | null
+          shape_length?: number | null
+          st_area_sh?: number | null
+          st_code?: string | null
+          st_length_?: number | null
+          st_name?: string | null
+          state_lgd?: number | null
+          status?: string | null
+        }
+        Update: {
+          geom?: unknown
+          objectid?: number | null
+          ogc_fid?: number
+          pc_id?: number | null
+          pc_name?: string | null
+          pc_no?: number | null
+          shape_area?: number | null
+          shape_length?: number | null
+          st_area_sh?: number | null
+          st_code?: string | null
+          st_length_?: number | null
+          st_name?: string | null
+          state_lgd?: number | null
+          status?: string | null
         }
         Relationships: []
       }
@@ -2283,6 +2689,10 @@ export type Database = {
       }
       burn_ghost_identity: { Args: never; Returns: undefined }
       calculate_my_score: { Args: never; Returns: number }
+      cancel_officeholder_wall_claim: {
+        Args: { p_claim_id: string }
+        Returns: undefined
+      }
       claim_candidacy_via_token: {
         Args: { p_token: string }
         Returns: {
@@ -2339,6 +2749,22 @@ export type Database = {
           isOneToOne: true
           isSetofReturn: false
         }
+      }
+      create_officeholder_wall_claim: {
+        Args: {
+          p_email: string
+          p_expires_at?: string
+          p_office_holder_id: string
+          p_token_hash: string
+        }
+        Returns: {
+          claim_id: string
+          expires_at: string
+          invite_id: string
+          office_holder_id: string
+          source_ghost_id: string
+          source_profile_id: string
+        }[]
       }
       create_post: {
         Args: {
@@ -2630,10 +3056,6 @@ export type Database = {
           users: Json
         }[]
       }
-      get_or_create_political_party: {
-        Args: { p_country: string; p_name: string }
-        Returns: number
-      }
       get_geojson_shapes:
         | {
             Args: never
@@ -2661,6 +3083,10 @@ export type Database = {
           target_id: string
           target_type: string
         }[]
+      }
+      get_or_create_political_party: {
+        Args: { p_country: string; p_name: string }
+        Returns: number
       }
       get_politician_engagement_summaries: {
         Args: { p_include_test?: boolean; p_politician_ids: string[] }
@@ -2718,6 +3144,10 @@ export type Database = {
         Returns: boolean
       }
       longtransactionsenabled: { Args: never; Returns: boolean }
+      merge_officeholder_wall_claim: {
+        Args: { p_claim_id: string }
+        Returns: Json
+      }
       populate_geometry_columns:
         | { Args: { tbl_oid: unknown; use_typmod?: boolean }; Returns: number }
         | { Args: { use_typmod?: boolean }; Returns: string }
@@ -2758,6 +3188,10 @@ export type Database = {
       }
       postgis_version: { Args: never; Returns: string }
       postgis_wagyu_version: { Args: never; Returns: string }
+      preview_officeholder_wall_claim: {
+        Args: { p_claim_id: string }
+        Returns: Json
+      }
       preview_retirement_coverage_gap: {
         Args: { p_shape_ids: number[] }
         Returns: {
@@ -2784,6 +3218,15 @@ export type Database = {
         }
         Returns: undefined
       }
+      redeem_officeholder_wall_claim: {
+        Args: { p_token_hash: string }
+        Returns: {
+          claim_id: string
+          office_holder_id: string
+          status: string
+          target_profile_id: string
+        }[]
+      }
       remove_unregistered_candidate: {
         Args: { p_candidate_id: string }
         Returns: undefined
@@ -2808,7 +3251,8 @@ export type Database = {
           contact_email: string | null
           id: string
           motivation: string | null
-          requester_profile_id: string
+          requester_name: string | null
+          requester_profile_id: string | null
           reviewed_at: string | null
           reviewed_by: string | null
           social_media_info: string | null
@@ -2822,6 +3266,19 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      resend_officeholder_wall_claim: {
+        Args: {
+          p_claim_id: string
+          p_email: string
+          p_expires_at?: string
+          p_token_hash: string
+        }
+        Returns: {
+          claim_id: string
+          expires_at: string
+          invite_id: string
+        }[]
+      }
       resolve_region_names: {
         Args: { p_country: string; p_shape_ids: number[] }
         Returns: {
@@ -2830,6 +3287,10 @@ export type Database = {
         }[]
       }
       retire_shapes: { Args: { p_shape_ids: number[] }; Returns: undefined }
+      reverse_officeholder_wall_claim: {
+        Args: { p_claim_id: string; p_reason: string }
+        Returns: Json
+      }
       review_candidacy_claim: {
         Args: { p_approve: boolean; p_request_id: string }
         Returns: {
@@ -2837,7 +3298,8 @@ export type Database = {
           contact_email: string | null
           id: string
           motivation: string | null
-          requester_profile_id: string
+          requester_name: string | null
+          requester_profile_id: string | null
           reviewed_at: string | null
           reviewed_by: string | null
           social_media_info: string | null
@@ -3719,9 +4181,6 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {},
   },

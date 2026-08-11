@@ -920,3 +920,62 @@ export async function getClaimRequestsForSeat(supabase: Client, seatId: string) 
 export async function reviewCandidacyClaim(supabase: Client, requestId: string, approve: boolean) {
   return supabase.rpc("review_candidacy_claim", { p_request_id: requestId, p_approve: approve });
 }
+
+// Officeholder claims must be created by the server-side invitation flow so
+// raw tokens never reach the database. This low-level wrapper is kept here for
+// the edge function/service boundary; the browser should invoke that flow,
+// not manufacture token hashes or call this RPC directly.
+export async function createOfficeholderWallClaimRecord(
+  supabase: Client,
+  officeHolderId: string,
+  email: string,
+  tokenHash: string,
+  expiresAt?: string,
+) {
+  return supabase.rpc("create_officeholder_wall_claim", {
+    p_office_holder_id: officeHolderId,
+    p_email: email,
+    p_token_hash: tokenHash,
+    ...(expiresAt ? { p_expires_at: expiresAt } : {}),
+  });
+}
+
+export async function inviteOfficeholderToClaim(supabase: Client, officeHolderId: string, email: string) {
+  return supabase.functions.invoke("send-officeholder-claim", {
+    body: { officeHolderId, email, redirectOrigin: window.location.origin },
+  });
+}
+
+export async function resendOfficeholderClaim(supabase: Client, claimId: string, email: string) {
+  return supabase.functions.invoke("send-officeholder-claim", {
+    body: { claimId, email, redirectOrigin: window.location.origin },
+  });
+}
+
+export async function cancelOfficeholderClaim(supabase: Client, claimId: string) {
+  return supabase.rpc("cancel_officeholder_wall_claim", { p_claim_id: claimId });
+}
+
+export async function redeemOfficeholderWallClaim(supabase: Client, tokenHash: string) {
+  return supabase.rpc("redeem_officeholder_wall_claim", { p_token_hash: tokenHash });
+}
+
+export async function previewOfficeholderWallClaim(supabase: Client, claimId: string) {
+  return supabase.rpc("preview_officeholder_wall_claim", { p_claim_id: claimId });
+}
+
+export async function mergeOfficeholderWallClaim(supabase: Client, claimId: string) {
+  return supabase.rpc("merge_officeholder_wall_claim", { p_claim_id: claimId });
+}
+
+export async function reverseOfficeholderWallClaim(supabase: Client, claimId: string, reason: string) {
+  return supabase.rpc("reverse_officeholder_wall_claim", { p_claim_id: claimId, p_reason: reason });
+}
+
+export async function getOfficeholderWallClaims(supabase: Client, officeHolderId: string) {
+  return supabase
+    .from("office_holder_wall_claims")
+    .select("*")
+    .eq("office_holder_id", officeHolderId)
+    .order("created_at", { ascending: false });
+}
