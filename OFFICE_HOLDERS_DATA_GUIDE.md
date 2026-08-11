@@ -29,10 +29,11 @@ Choseno maintains **10,661 active elected officials** across Canada and the Unit
 
 ## 2. Data Sources & Repositories
 
-### Canadian Federal, Provincial & Municipal Office Holders
-- **Data Provider**: [OpenNorth Represent API](https://represent.opennorth.ca/) (`https://represent.opennorth.ca/representatives/`)
+### Canadian Federal, Provincial & Municipal Office Holders & Civic Parties
+- **Primary Data Provider**: [OpenNorth Represent API](https://represent.opennorth.ca/) (`https://represent.opennorth.ca/representatives/`)
+- **Municipal Party Sources**: [CivicInfo BC](https://www.civicinfo.bc.ca/elections) (for all British Columbia municipalities) and Élections Québec / Wikipedia MediaWiki API (for Quebec municipalities like Montreal, Quebec City, Laval, Gatineau, Longueuil).
 - **Coverage**: Canadian Members of Parliament (MPs), Provincial Legislators (MLAs, MPPs, MHAs), and Canadian Municipal Officials (Mayors, City Councillors, Regional Councillors, Reeves).
-- **Extracted Fields**: Full Name, Municipality / District Name, Role Title (Mayor vs Councillor), Party Affiliation, Official Email, Phone, Government Source URL, Official Headshot Photo URL.
+- **Extracted Fields**: Full Name, Municipality / District Name, Role Title (Mayor vs Councillor), Civic Party Affiliation (*Surrey Connect*, *Surrey First*, *Safe Surrey Coalition*, *ABC Vancouver*, *Projet Montréal*, etc.), Official Email, Phone, Government Source URL, Official Headshot Photo URL.
 
 ### US Federal Congress, State Governors & US Municipal Officials
 - **Data Provider**: [unitedstates / congress-legislators](https://github.com/unitedstates/congress-legislators), [OpenStates Open-Data Repository](https://github.com/openstates/people) & Civil Services Executive Governors Dataset.
@@ -46,12 +47,19 @@ Choseno maintains **10,661 active elected officials** across Canada and the Unit
 
 ---
 
-## 3. How the Pipeline Works
+## 3. How the Pipeline & Current Office Holder Detection Work
 
 The end-to-end data pipelines are located at:
 - National / State / Federal Pipeline: [`scripts/populate-all-office-holders.py`](file:///Users/vmn2k4/Coding/Choseno/scripts/populate-all-office-holders.py)
+- BC & Quebec Municipal Civic Party Pipeline: [`scripts/fast-populate-bc-qc.py`](file:///Users/vmn2k4/Coding/Choseno/scripts/fast-populate-bc-qc.py)
 - Canadian Municipal Pipeline: [`scripts/populate-canadian-municipal.py`](file:///Users/vmn2k4/Coding/Choseno/scripts/populate-canadian-municipal.py)
 - US Municipal Pipeline: [`scripts/populate-us-municipal.py`](file:///Users/vmn2k4/Coding/Choseno/scripts/populate-us-municipal.py)
+
+### Current Office Holder Detection (Politician Wall & UI)
+Current office holders are detected dynamically via `enrichProfileWithContactFallback()` in [`src/lib/services/politicianWall.ts`](file:///Users/vmn2k4/Coding/Choseno/src/lib/services/politicianWall.ts):
+- Checks for corresponding entries in `public.office_holders` (via `linked_profile_id` or matching full name) and `holding_since`.
+- Active office holders display their official role badge directly (e.g. **`[MAYOR]`**, **`[COUNCILLOR]`**, **`[GOVERNOR]`**, **`[MP]`**).
+- Non-office holder candidates aspiring for office display **`[ASPIRING MAYOR]`**, **`[ASPIRING COUNCILLOR]`**, etc.
 
 ### Pipeline Execution Flow
 

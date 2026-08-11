@@ -2032,3 +2032,26 @@ Now every surface that uses `<Avatar>` (walls, sidebars, candidate cards, office
 - **Data Quality**: Some office_holders rows have garbage avatar_url values (e.g. tracking pixels) — not a rendering bug (the fix above handles it), but worth auditing the data source pipeline to prevent future loads. Current workaround: stale URLs will show as initial-letter circles until the office_holders record is updated.
 - **Opengraph Cards**: `/wall/[ghostId]/opengraph-image.tsx` files still pull `avatar_url` directly for social-share previews. A broken URL there produces a broken share-card image (can't use React Avatar component server-side). Lower visibility, not touched this session.
 - **Facebook Tracking Pixel**: Daniel Fontaine's `avatar_url` pointing to `https://www.facebook.com/tr?...` is a data issue, not a code issue. To fix: audit office_holders.populate scripts and update the erroneous row via SQL.
+
+---
+
+## 2026-08-11: Municipal Civic Party Ingestion & Active Office Holder Detection
+
+### Problem & Context
+1. **Municipal Party Data**: OpenNorth API returns empty party strings for municipal representatives across Canada because official city websites present mayors and councillors non-partisans. Consequently, Canadian municipal office holders defaulted to `'Independent'`.
+2. **Aspiring Badge Rendering**: The Politician Wall (`/wall/[ghostId]/[slug]`) previously prepended `"Aspiring "` unconditionally to `political_target_role` (e.g. `[ASPIRING MAYOR]`), causing current sitting office holders (like Brenda Locke, Mayor of Surrey) to be incorrectly displayed as "Aspiring Mayor".
+
+### Changes & Solution
+1. **Civic Party Ingestion (BC & QC)**:
+   - Sourced live municipal party data from **CivicInfo BC** (`civicinfo.bc.ca`) for British Columbia municipalities and **Élections Québec / Wikipedia MediaWiki API** for Quebec municipalities (Montreal, Quebec City, Laval, Gatineau, Longueuil).
+   - Created [`scripts/fast-populate-bc-qc.py`](file:///Users/vmn2k4/Coding/Choseno/scripts/fast-populate-bc-qc.py) to seed missing civic parties into `public.political_parties` and update `office_holders.political_party_id` for matched office holders.
+   - Re-exported updated records to [`scripts/office-holders-data.csv`](file:///Users/vmn2k4/Coding/Choseno/scripts/office-holders-data.csv).
+
+2. **Active Office Holder Detection**:
+   - Updated `enrichProfileWithContactFallback()` in [`src/lib/services/politicianWall.ts`](file:///Users/vmn2k4/Coding/Choseno/src/lib/services/politicianWall.ts) to query `office_holders` (by `linked_profile_id` or matching full name) and set `is_office_holder = true` on the profile.
+   - Updated [`src/components/features/PoliticianWallClient.tsx`](file:///Users/vmn2k4/Coding/Choseno/src/components/features/PoliticianWallClient.tsx) badge rendering:
+     - **Active Office Holders**: Render official role badge directly (e.g. **`[MAYOR]`**, **`[COUNCILLOR]`**, **`[GOVERNOR]`**, **`[MP]`**).
+     - **Candidates / Non-Office Holders**: Render **`[ASPIRING MAYOR]`**, **`[ASPIRING COUNCILLOR]`**, etc.
+
+3. **Documentation**:
+   - Updated [`OFFICE_HOLDERS_DATA_GUIDE.md`](file:///Users/vmn2k4/Coding/Choseno/OFFICE_HOLDERS_DATA_GUIDE.md) to document the updated multi-source municipal party pipeline and office holder detection method.
