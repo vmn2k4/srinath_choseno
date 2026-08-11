@@ -63,19 +63,20 @@ const SUPERIOR_SOURCE: Record<string, { source: "national" } | { source: "contai
   "India:Vidhan Sabha": { source: "container", containerType: "State" },
 };
 
-function toNode(row: OfficeHolderRow): BranchHolderNode {
+function toNode(row: OfficeHolderRow & { profiles?: { politician_profiles?: { photo_url?: string | null; avatar_url?: string | null; contact_email?: string | null; contact_phone?: string | null; source_url?: string | null } | null } | null }): BranchHolderNode {
+  const pp = row.profiles?.politician_profiles;
   return {
     id: row.id,
     full_name: row.full_name,
     role_title: row.election_role_types?.role_title || "Elected Official",
     role_description: row.election_role_types?.description || null,
     party_name: row.political_parties?.name || null,
-    photo_url: row.photo_url || null,
+    photo_url: row.photo_url || pp?.photo_url || pp?.avatar_url || null,
     ghost_id: row.profiles?.current_ghost_id || null,
     boundary_name: row.map_shapes?.name || null,
-    contact_email: row.contact_email,
-    contact_phone: row.contact_phone,
-    source_url: row.source_url,
+    contact_email: row.contact_email || pp?.contact_email || null,
+    contact_phone: row.contact_phone || pp?.contact_phone || null,
+    source_url: row.source_url || pp?.source_url || null,
   };
 }
 

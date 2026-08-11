@@ -50,9 +50,76 @@ export async function getElectionRoleTypes(supabase: Client, country: string, bo
     .eq("boundary_type", boundaryType);
 }
 
+async function enrichOfficeHolders(supabase: Client, holders: any[]) {
+  if (!holders || !holders.length) return holders;
+
+  const missingNames = holders
+    .filter((h) => !h.photo_url || !h.contact_email || !h.contact_phone || !h.source_url)
+    .map((h) => h.full_name?.trim())
+    .filter(Boolean);
+
+  const nameToContact = new Map<
+    string,
+    { photo_url?: string; email?: string; phone?: string; source?: string }
+  >();
+
+  if (missingNames.length > 0) {
+    const { data: profMatches } = await supabase
+      .from("profiles")
+      .select("full_name, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url)")
+      .in("full_name", missingNames);
+
+    (profMatches || []).forEach((p: any) => {
+      const norm = p.full_name?.trim().toLowerCase();
+      if (!norm || !p.politician_profiles) return;
+      const pp = p.politician_profiles;
+      const photo = pp.photo_url || pp.avatar_url;
+      if (!nameToContact.has(norm)) {
+        nameToContact.set(norm, {
+          photo_url: photo || undefined,
+          email: pp.contact_email || undefined,
+          phone: pp.contact_phone || undefined,
+          source: pp.source_url || undefined,
+        });
+      }
+    });
+  }
+
+  return holders.map((h) => {
+    const linkedPP = h.profiles?.politician_profiles;
+    const norm = h.full_name?.trim().toLowerCase();
+    const fallback = norm ? nameToContact.get(norm) : null;
+
+    return {
+      ...h,
+      photo_url:
+        h.photo_url ||
+        linkedPP?.photo_url ||
+        linkedPP?.avatar_url ||
+        fallback?.photo_url ||
+        null,
+      contact_email:
+        h.contact_email ||
+        linkedPP?.contact_email ||
+        fallback?.email ||
+        null,
+      contact_phone:
+        h.contact_phone ||
+        linkedPP?.contact_phone ||
+        fallback?.phone ||
+        null,
+      source_url:
+        h.source_url ||
+        linkedPP?.source_url ||
+        fallback?.source ||
+        null,
+    };
+  });
+}
+
 // ── office_holders (current officeholder shown on boundary directory pages) ──
 export async function getOfficeHoldersForShape(supabase: Client, mapShapeId: number | string) {
-  return supabase
+  const res = await supabase
     .from("office_holders")
     .select(
       `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
@@ -60,9 +127,14 @@ export async function getOfficeHoldersForShape(supabase: Client, mapShapeId: num
        map_shapes(id, name, boundary_type, country),
        election_role_types(role_title, role_key, description),
        political_parties(name),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id)`
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url))`
     )
     .eq("map_shape_id", Number(mapShapeId));
+
+  if (res.data) {
+    res.data = await enrichOfficeHolders(supabase, res.data);
+  }
+  return res;
 }
 
 export async function getOfficeHoldersForShapes(
@@ -71,7 +143,7 @@ export async function getOfficeHoldersForShapes(
 ) {
   if (!mapShapeIds.length) return { data: [], error: null };
   const ids = mapShapeIds.map(Number);
-  return supabase
+  const res = await supabase
     .from("office_holders")
     .select(
       `id, map_shape_id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
@@ -79,9 +151,14 @@ export async function getOfficeHoldersForShapes(
        map_shapes(id, name, boundary_type, country),
        election_role_types(role_title, role_key),
        political_parties(name),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id)`
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url))`
     )
     .in("map_shape_id", ids);
+
+  if (res.data) {
+    res.data = await enrichOfficeHolders(supabase, res.data);
+  }
+  return res;
 }
 
 export async function getFeaturedOfficeHolders(
@@ -96,9 +173,8 @@ export async function getFeaturedOfficeHolders(
        map_shapes!inner(id, name, boundary_type, country),
        election_role_types(role_title, role_key),
        political_parties(name),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id)`
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url))`
     )
-    .not("photo_url", "is", null)
     .order("updated_at", { ascending: false })
     .limit(10);
 
@@ -106,7 +182,11 @@ export async function getFeaturedOfficeHolders(
     query = query.eq("map_shapes.country", country);
   }
 
-  return query;
+  const res = await query;
+  if (res.data) {
+    res.data = await enrichOfficeHolders(supabase, res.data);
+  }
+  return res;
 }
 
 export async function getOfficeHolderByRole(
@@ -114,18 +194,24 @@ export async function getOfficeHolderByRole(
   mapShapeId: number | string,
   electionRoleTypeId: string
 ) {
-  return supabase
+  const res = await supabase
     .from("office_holders")
     .select(
       `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
        contact_email, contact_phone, linked_profile_id,
        election_role_types(role_title, role_key),
        political_parties(name),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id)`
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url))`
     )
     .eq("map_shape_id", Number(mapShapeId))
     .eq("election_role_type_id", electionRoleTypeId)
     .maybeSingle();
+
+  if (res.data) {
+    const enriched = await enrichOfficeHolders(supabase, [res.data]);
+    res.data = enriched[0];
+  }
+  return res;
 }
 
 export async function getOfficeHolder(
