@@ -10,23 +10,23 @@ async function enrichProfileWithContactFallback(supabase: Client, profileData: a
   const pp = profileData.politician_profiles as any;
   if (!pp) return profileData;
 
-  if (!pp.contact_email || !pp.contact_phone || !pp.source_url || !pp.photo_url) {
-    const { data: ohMatches } = await supabase
-      .from("office_holders")
-      .select("contact_email, contact_phone, source_url, photo_url")
-      .ilike("full_name", profileData.full_name);
+  const { data: ohMatches } = await supabase
+    .from("office_holders")
+    .select("contact_email, contact_phone, source_url, photo_url, holding_since")
+    .or(`linked_profile_id.eq.${profileData.id},full_name.ilike.${profileData.full_name}`);
 
-    if (ohMatches && ohMatches.length > 0) {
-      const emailMatch = ohMatches.find((m) => m.contact_email)?.contact_email;
-      const phoneMatch = ohMatches.find((m) => m.contact_phone)?.contact_phone;
-      const sourceMatch = ohMatches.find((m) => m.source_url)?.source_url;
-      const photoMatch = ohMatches.find((m) => m.photo_url)?.photo_url;
+  if (ohMatches && ohMatches.length > 0) {
+    pp.is_office_holder = true;
+    const emailMatch = ohMatches.find((m) => m.contact_email)?.contact_email;
+    const phoneMatch = ohMatches.find((m) => m.contact_phone)?.contact_phone;
+    const sourceMatch = ohMatches.find((m) => m.source_url)?.source_url;
+    const photoMatch = ohMatches.find((m) => m.photo_url)?.photo_url;
 
-      if (!pp.contact_email && emailMatch) pp.contact_email = emailMatch;
-      if (!pp.contact_phone && phoneMatch) pp.contact_phone = phoneMatch;
-      if (!pp.source_url && sourceMatch) pp.source_url = sourceMatch;
-      if (!pp.photo_url && photoMatch) pp.photo_url = photoMatch;
-    }
+    if (!pp.contact_email && emailMatch) pp.contact_email = emailMatch;
+    if (!pp.contact_phone && phoneMatch) pp.contact_phone = phoneMatch;
+    if (!pp.source_url && sourceMatch) pp.source_url = sourceMatch;
+    if (!pp.photo_url && photoMatch) pp.photo_url = photoMatch;
+  }
 
     if (!pp.contact_email || !pp.contact_phone || !pp.source_url || !pp.photo_url) {
       const { data: siblingProfiles } = await supabase
@@ -47,7 +47,6 @@ async function enrichProfileWithContactFallback(supabase: Client, profileData: a
         if (!pp.photo_url && photoMatch) pp.photo_url = photoMatch;
       }
     }
-  }
 
   return profileData;
 }

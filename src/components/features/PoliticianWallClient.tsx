@@ -398,7 +398,9 @@ export default function PoliticianWallClient({
                 {wallOwner?.full_name || "Politician Wall"}
                 {wallOwner?.politician_profiles?.political_target_role && (
                   <Badge tone="primary">
-                    Aspiring {wallOwner.politician_profiles.political_target_role}
+                    {(wallOwner.politician_profiles as any).is_office_holder || (wallOwner.politician_profiles as any).holding_since
+                      ? wallOwner.politician_profiles.political_target_role
+                      : `Aspiring ${wallOwner.politician_profiles.political_target_role}`}
                   </Badge>
                 )}
               </h1>
