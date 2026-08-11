@@ -10,6 +10,7 @@ const TABS = [
   { key: "elections", label: "Elections & Seats", href: "/admin/elections" },
   { key: "election-admins", label: "Seat Administrators", href: "/admin/election-admins" },
   { key: "office-holders", label: "Office Holders", href: "/admin/office-holders" },
+  { key: "claim_requests", label: "Claim Requests", href: "/admin/claim_requests" },
   { key: "visualizer", label: "Boundary Inspector", href: "/admin/visualize" },
   { key: "theme", label: "Site Theme", href: "/admin/theme" },
   { key: "news", label: "News", href: "/admin/news" },
