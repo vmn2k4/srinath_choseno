@@ -86,11 +86,12 @@ export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
   return res;
 }
 
+function isUuidString(val: string) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(val);
+}
+
 export async function getWallOwnerProfileBySlug(supabase: Client, wallSlug: string) {
-  let query = supabase
-    .from("profiles")
-    .select(
-      `
+  const selectFields = `
        id,
        current_ghost_id,
        full_name,
@@ -109,11 +110,28 @@ export async function getWallOwnerProfileBySlug(supabase: Client, wallSlug: stri
          holding_since,
          political_parties ( name )
        )
-    `
-    )
-    .eq("politician_profiles.wall_slug", wallSlug);
+    `;
+
+  // 1. Try matching exact wall_slug
+  let query = supabase.from("profiles").select(selectFields).eq("politician_profiles.wall_slug", wallSlug);
   if (!isDevEnvironment()) query = query.eq("is_test", false);
-  const res = await query.maybeSingle();
+  let res = await query.maybeSingle();
+
+  // 2. Fallback: Try matching full_name by converting slug hyphens to spaces (e.g. "john-doe" -> "John Doe")
+  if (!res.data && wallSlug) {
+    const nameFromSlug = wallSlug.replace(/-/g, " ");
+    let nameQuery = supabase.from("profiles").select(selectFields).ilike("full_name", nameFromSlug);
+    if (!isDevEnvironment()) nameQuery = nameQuery.eq("is_test", false);
+    res = await nameQuery.maybeSingle();
+  }
+
+  // 3. Fallback: Try matching by profile id or current_ghost_id if wallSlug is a UUID
+  if (!res.data && isUuidString(wallSlug)) {
+    let uuidQuery = supabase.from("profiles").select(selectFields).or(`id.eq.${wallSlug},current_ghost_id.eq.${wallSlug}`);
+    if (!isDevEnvironment()) uuidQuery = uuidQuery.eq("is_test", false);
+    res = await uuidQuery.maybeSingle();
+  }
+
   if (res.data) {
     res.data = await enrichProfileWithContactFallback(supabase, res.data);
   }

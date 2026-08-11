@@ -302,9 +302,6 @@ export async function upsertPoliticianProfile(
     source_url: sourceUrl || null,
     updated_at: new Date().toISOString(),
   });
-  if (!result.error) {
-    await supabase.from("profiles").update({ wall_slug: wallSlug }).eq("id", userId);
-  }
   return result;
 }
 
