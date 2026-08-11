@@ -15,6 +15,8 @@ export default async function AuthPage({
   const params = await searchParams;
   const roleParam = typeof params.role === "string" ? params.role : undefined;
   const initialRole = roleParam === "citizen" || roleParam === "politician" ? roleParam : undefined;
+  const nextParam = typeof params.next === "string" ? params.next : undefined;
+  const nextPath = nextParam?.startsWith("/") && !nextParam.startsWith("//") ? nextParam : undefined;
 
-  return <AuthPageClient initialRole={initialRole} />;
+  return <AuthPageClient initialRole={initialRole} nextPath={nextPath} />;
 }

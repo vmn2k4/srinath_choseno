@@ -9,10 +9,16 @@ import { createClient } from "@/lib/supabase/client";
 import { trackSignUp, trackLogin } from "@/lib/analytics/events";
 import { Mail } from "lucide-react";
 
-export default function AuthPageClient({ initialRole }: { initialRole?: "citizen" | "politician" }) {
+export default function AuthPageClient({
+  initialRole,
+  nextPath,
+}: {
+  initialRole?: "citizen" | "politician";
+  nextPath?: string;
+}) {
   const supabase = createClient();
   const router = useRouter();
-  const { session } = useAuth();
+  const { session, profile, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,10 +29,10 @@ export default function AuthPageClient({ initialRole }: { initialRole?: "citizen
   });
 
   useEffect(() => {
-    if (session) {
-      router.replace("/feed");
+    if (session && !authLoading && profile) {
+      router.replace(nextPath || (profile.role === "admin" ? "/admin" : "/feed"));
     }
-  }, [session, router]);
+  }, [session, profile, authLoading, nextPath, router]);
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +58,6 @@ export default function AuthPageClient({ initialRole }: { initialRole?: "citizen
         if (error) throw error;
         if (data?.session) {
           trackLogin("email");
-          router.push("/feed");
           router.refresh();
         }
       }
