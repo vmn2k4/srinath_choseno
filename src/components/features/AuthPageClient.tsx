@@ -139,6 +139,7 @@ export default function AuthPageClient({
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
               required
             />
           </div>
@@ -152,6 +153,7 @@ export default function AuthPageClient({
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete={isSignUp ? "new-password" : "current-password"}
               required
             />
           </div>
