@@ -144,6 +144,40 @@ export default function AdminClaimRequestsClient() {
       profileMap.set(p.id, p);
     });
 
+    // The directory treats office_holders as the authoritative source for
+    // current public contact details. Keep the claim-review record consistent
+    // with it when a politician_profiles row is older or incomplete.
+    const profileNames = (profileRows || [])
+      .map((p: any) => p.full_name)
+      .filter(Boolean);
+    const officeHolderQueries = [];
+    if (candidateIds.length > 0) {
+      officeHolderQueries.push(
+        supabase
+          .from("office_holders")
+          .select("linked_profile_id, full_name, contact_email, contact_phone, source_url")
+          .in("linked_profile_id", candidateIds),
+      );
+    }
+    if (profileNames.length > 0) {
+      officeHolderQueries.push(
+        supabase
+          .from("office_holders")
+          .select("linked_profile_id, full_name, contact_email, contact_phone, source_url")
+          .in("full_name", profileNames),
+      );
+    }
+    const officeHolderResults = await Promise.all(officeHolderQueries);
+    const officeHolderMap = new Map<string, any>();
+    officeHolderResults.forEach(({ data }) => {
+      (data || []).forEach((holder: any) => {
+        const profileKey = holder.linked_profile_id;
+        const nameKey = holder.full_name?.trim().toLowerCase();
+        if (profileKey) officeHolderMap.set(profileKey, holder);
+        if (nameKey && !officeHolderMap.has(nameKey)) officeHolderMap.set(nameKey, holder);
+      });
+    });
+
     // 4. Map records
     const formatted: ClaimRequestRow[] = rawRequests.map((req: any) => {
       let politicianName = "Unknown Candidate";
@@ -158,6 +192,8 @@ export default function AdminClaimRequestsClient() {
       if (cand) {
         const prof = cand.profiles;
         const polProf = Array.isArray(prof?.politician_profiles) ? prof.politician_profiles[0] : prof?.politician_profiles;
+        const officeHolder =
+          officeHolderMap.get(prof?.id) || officeHolderMap.get(prof?.full_name?.trim().toLowerCase());
         const seat = cand.election_seats;
         const shape = Array.isArray(seat?.map_shapes) ? seat.map_shapes[0] : seat?.map_shapes;
 
@@ -165,20 +201,22 @@ export default function AdminClaimRequestsClient() {
         roleTitle = seat?.role_title || polProf?.political_target_role || roleTitle;
         boundaryName = shape?.name || polProf?.target_boundary_name || boundaryName;
         wallSlug = polProf?.wall_slug || prof?.current_ghost_id || null;
-        officialContactEmail = polProf?.contact_email || null;
-        officialContactPhone = polProf?.contact_phone || null;
-        officialSourceUrl = polProf?.source_url || null;
+        officialContactEmail = polProf?.contact_email || officeHolder?.contact_email || null;
+        officialContactPhone = polProf?.contact_phone || officeHolder?.contact_phone || null;
+        officialSourceUrl = polProf?.source_url || officeHolder?.source_url || null;
       } else {
         const prof = profileMap.get(req.candidate_id);
         if (prof) {
           const polProf = Array.isArray(prof.politician_profiles) ? prof.politician_profiles[0] : prof.politician_profiles;
+          const officeHolder =
+            officeHolderMap.get(prof.id) || officeHolderMap.get(prof.full_name?.trim().toLowerCase());
           politicianName = prof.full_name || politicianName;
           roleTitle = polProf?.political_target_role || roleTitle;
           boundaryName = polProf?.target_boundary_name || boundaryName;
           wallSlug = polProf?.wall_slug || prof.current_ghost_id || null;
-          officialContactEmail = polProf?.contact_email || null;
-          officialContactPhone = polProf?.contact_phone || null;
-          officialSourceUrl = polProf?.source_url || null;
+          officialContactEmail = polProf?.contact_email || officeHolder?.contact_email || null;
+          officialContactPhone = polProf?.contact_phone || officeHolder?.contact_phone || null;
+          officialSourceUrl = polProf?.source_url || officeHolder?.source_url || null;
         }
       }
 
