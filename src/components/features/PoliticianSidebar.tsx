@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Users, ChevronRight, Landmark, ArrowRight, UserCheck } from "lucide-react";
 import { Card, Spinner, EmptyState, Avatar, Badge } from "@/components/primitives";
@@ -77,6 +77,21 @@ export default function PoliticianSidebar({
     Map<string, { supporterCount: number; avgRating: number; ratingCount: number; commentCount: number }>
   >(new Map());
 
+  const membershipCountries = useMemo(
+    () => Array.from(new Set(memberships.map((m) => m.country).filter(Boolean))),
+    [memberships]
+  );
+
+  const selectedShapeCountry = selectedPill?.shapeId
+    ? memberships.find((m) => m.id === selectedPill.shapeId)?.country || null
+    : null;
+
+  // Use the live boundary memberships as the source of truth. `profiles.country`
+  // can lag behind after a user moves countries, but memberships are what the
+  // feed/sidebar is actually rendering against.
+  const effectiveCountry =
+    selectedShapeCountry || (membershipCountries.length === 1 ? membershipCountries[0] : profile?.country || null);
+
   useEffect(() => {
     let isMounted = true;
 
@@ -95,7 +110,7 @@ export default function PoliticianSidebar({
         filterType,
         shapeId,
         shapeIds: userShapeIds,
-        country: profile?.country,
+        country: effectiveCountry,
       });
 
       if (!error && data && isMounted) {
@@ -118,9 +133,9 @@ export default function PoliticianSidebar({
       // admin_only container a riding-level membership sits inside (USA's
       // State is already a normal membership, so its Governor is already
       // covered by the base membership fetch above with no extra work).
-      if (isAllDistricts && profile?.country) {
+      if (isAllDistricts && effectiveCountry) {
         const idsSet = new Set(targetShapeIds);
-        const { data: nationalShape } = await getNationalShapeForCountry(supabase, profile.country);
+        const { data: nationalShape } = await getNationalShapeForCountry(supabase, effectiveCountry);
         if (nationalShape?.id) idsSet.add(nationalShape.id);
 
         if (memberships.length > 0) {
@@ -136,27 +151,34 @@ export default function PoliticianSidebar({
       if (targetShapeIds.length > 0) {
         const { data, error } = await getOfficeHoldersForShapes(supabase, targetShapeIds);
         if (!error && data && data.length > 0 && isMounted) {
+          const countryScopedData = effectiveCountry
+            ? data.filter((holder: any) => holder.map_shapes?.country === effectiveCountry)
+            : data;
           // "All Districts" can pull in more office holders than the list's
           // display cap (a dense municipality's councillors alone can exceed
           // it) — float the Prime Minister/President/Premier/Governor to the
           // top so they're never the ones truncated out.
           const ranked = isAllDistricts
-            ? [...data].sort((a: any, b: any) => {
+            ? [...countryScopedData].sort((a: any, b: any) => {
                 const rank = (role?: string) => (TOP_TIER_ROLES.has(role || "") ? 0 : 1);
                 return rank(a.election_role_types?.role_title) - rank(b.election_role_types?.role_title);
               })
-            : data;
+            : countryScopedData;
           setOfficeHolders(ranked as unknown as OfficeHolderItem[]);
         } else if (isMounted) {
-          const { data: featuredData } = await getFeaturedOfficeHolders(supabase, profile?.country);
+          const { data: featuredData } = await getFeaturedOfficeHolders(supabase, effectiveCountry);
           if (featuredData && isMounted) {
             setOfficeHolders(featuredData as unknown as OfficeHolderItem[]);
+          } else if (isMounted) {
+            setOfficeHolders([]);
           }
         }
       } else if (isMounted) {
-        const { data: featuredData } = await getFeaturedOfficeHolders(supabase, profile?.country);
+        const { data: featuredData } = await getFeaturedOfficeHolders(supabase, effectiveCountry);
         if (featuredData && isMounted) {
           setOfficeHolders(featuredData as unknown as OfficeHolderItem[]);
+        } else {
+          setOfficeHolders([]);
         }
       }
       if (isMounted) setLoadingHolders(false);
@@ -168,7 +190,7 @@ export default function PoliticianSidebar({
     return () => {
       isMounted = false;
     };
-  }, [profile, activeTab, selectedPill, memberships, supabase]);
+  }, [profile, activeTab, selectedPill, memberships, effectiveCountry, supabase]);
 
   // Batch-fetch supporter/rating/comment summaries for every politician
   // shown across both sections, once per render of the underlying lists —

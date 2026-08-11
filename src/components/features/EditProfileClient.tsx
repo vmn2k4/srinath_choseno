@@ -148,6 +148,10 @@ export default function EditProfileClient() {
 
   const handleSave = async () => {
     if (!user) return;
+    if (locLoading) {
+      setError("Please wait for location verification to finish before saving.");
+      return;
+    }
     setSaving(true);
     setError(null);
     setSaved(false);
@@ -401,8 +405,8 @@ export default function EditProfileClient() {
         <Button variant="ghost" onClick={() => router.push("/profile")}>
           Cancel
         </Button>
-        <Button onClick={handleSave} disabled={saving}>
-          {saving ? "Saving..." : "Save Changes"}
+        <Button onClick={handleSave} disabled={saving || locLoading}>
+          {saving ? "Saving..." : locLoading ? "Verifying Location..." : "Save Changes"}
           {!saving && <Check size={16} className="ml-1" />}
         </Button>
       </div>
