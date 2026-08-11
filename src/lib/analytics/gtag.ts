@@ -12,5 +12,9 @@ export type GtagEventParams = Record<string, string | number | boolean | null | 
 
 export function sendEvent(eventName: string, params?: GtagEventParams) {
   if (typeof window === "undefined" || !GA_MEASUREMENT_ID) return;
+  // The analytics component loads gtag asynchronously. Avoid calling the
+  // package helper before its dataLayer has been created; it logs a warning
+  // in that window and drops the event anyway.
+  if (!Array.isArray((window as Window & { dataLayer?: unknown }).dataLayer)) return;
   sendGAEvent("event", eventName, params ?? {});
 }

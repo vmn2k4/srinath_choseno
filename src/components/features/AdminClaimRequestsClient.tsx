@@ -73,7 +73,7 @@ export default function AdminClaimRequestsClient() {
         .from("candidacy_claim_requests")
         .select(`
           *,
-          requester_profile:profiles!candidacy_claim_requests_requester_profile_id_fkey ( id, full_name, email )
+          requester_profile:profiles!candidacy_claim_requests_requester_profile_id_fkey ( id, full_name )
         `)
         .order("submitted_at", { ascending: false });
 
@@ -201,7 +201,9 @@ export default function AdminClaimRequestsClient() {
         officialContactPhone,
         officialSourceUrl,
         requesterAccountName: req.requester_profile?.full_name || null,
-        requesterAccountEmail: req.requester_profile?.email || null,
+        // Profiles intentionally do not store email; use the contact email
+        // submitted with the claim request in the UI instead.
+        requesterAccountEmail: null,
       };
     });
 
