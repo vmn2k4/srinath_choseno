@@ -335,6 +335,21 @@ export default function AdminClaimRequestsClient() {
 
       <AdminSubNav active="claim_requests" />
 
+      <Card padding="md" className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-primary/20 bg-primary/5">
+        <div>
+          <p className="font-bold text-text-main">Invite a politician to claim an existing wall</p>
+          <p className="text-xs text-text-muted mt-1">
+            Have a wall URL and politician email? Open the invitation form to send a secure claim link.
+          </p>
+        </div>
+        <Link
+          href="/admin/office-holders"
+          className="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary/90 transition-colors whitespace-nowrap"
+        >
+          Open wall invite form
+        </Link>
+      </Card>
+
       {/* Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <Card padding="sm" className="space-y-1">
