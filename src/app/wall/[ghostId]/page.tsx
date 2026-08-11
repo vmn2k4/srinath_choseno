@@ -33,7 +33,7 @@ export async function generateMetadata({
     : await getSEOProfileSummaryBySlug(supabase, ghostId);
   const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
   if (!owner) return { title: "Politician Wall | Choseno" };
-  if (isUuid(ghostId) && wallSlug) redirect(`/wall/${wallSlug}`);
+  if (wallSlug && ghostId !== wallSlug) redirect(`/wall/${wallSlug}`);
 
   const name = owner?.full_name || "Politician";
   const bio = owner?.politician_profiles?.bio || "";
@@ -105,7 +105,7 @@ export default async function WallPage({ params }: WallPageProps) {
   if (!owner?.current_ghost_id) notFound();
 
   const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
-  if (isUuid(ghostId) && wallSlug) redirect(`/wall/${wallSlug}`);
+  if (wallSlug && ghostId !== wallSlug) redirect(`/wall/${wallSlug}`);
 
   const { data: posts } = await getWallPosts(supabase, owner.current_ghost_id);
 
