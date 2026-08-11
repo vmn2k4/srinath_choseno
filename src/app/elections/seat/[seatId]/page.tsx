@@ -76,9 +76,13 @@ export async function generateMetadata({
       ? ` Candidates include ${candidateListNames.join(", ")}${candCount > 3 ? ` & ${candCount - 3} others` : ""}.`
       : "";
 
-  const description = selectedCandidate?.statement
-    ? selectedCandidate.statement.slice(0, 160)
-    : `Who is running for ${roleTitle} in ${boundaryName}?${candidateNamesFormatted} Compare all ${candCount > 0 ? `${candCount} ` : ""}candidates, read policy stances, constituent reviews & ratings on Choseno.`;
+  const rawDesc = selectedCandidate?.statement
+    ? selectedCandidate.statement
+    : candidateListNames && candidateListNames.length > 0
+    ? `${roleTitle} candidates in ${boundaryName}: ${candidateListNames.join(", ")}. Read policy stances & voter ratings on Choseno.`
+    : `Who is running for ${roleTitle} in ${boundaryName}? Compare candidates, policy stances & voter ratings on Choseno.`;
+
+  const description = rawDesc.length > 155 ? `${rawDesc.slice(0, 152)}...` : rawDesc;
 
   const seatSlug = buildSeatSlug(seat);
   const candSlug = selectedCandidate ? buildCandidateSlug(selectedCandidate) : candidateId;

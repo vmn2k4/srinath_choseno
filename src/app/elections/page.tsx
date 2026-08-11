@@ -21,12 +21,12 @@ const BASE_URL = SITE_URL;
 export const metadata: Metadata = {
   title: "2026 Midterm Election Candidates by District | Choseno",
   description:
-    "Browse all 2026 U.S. House & Senate candidates by state and district. Read voter ratings, policy stances & constituent reviews. Find who's on your ballot today.",
+    "Browse all 2026 U.S. House & Senate candidates by state and district. Read voter ratings, policy stances & constituent reviews on Choseno.",
   alternates: { canonical: `${BASE_URL}/elections` },
   openGraph: {
     title: "2026 Midterm Election Candidates by District | Choseno",
     description:
-      "Browse all 2026 U.S. House & Senate candidates by state and district. Read voter ratings, policy stances & constituent reviews. Find who's on your ballot today.",
+      "Browse all 2026 U.S. House & Senate candidates by state and district. Read voter ratings, policy stances & constituent reviews on Choseno.",
     url: `${BASE_URL}/elections`,
     siteName: "Choseno",
     type: "website",
