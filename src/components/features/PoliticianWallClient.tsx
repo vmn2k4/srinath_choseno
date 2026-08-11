@@ -176,6 +176,9 @@ export default function PoliticianWallClient({
 
         if (dbErr) {
           console.error("Error inserting claim request:", dbErr);
+          setClaimError("Failed to submit request: " + dbErr.message);
+          setSubmittingClaim(false);
+          return;
         }
       }
 
