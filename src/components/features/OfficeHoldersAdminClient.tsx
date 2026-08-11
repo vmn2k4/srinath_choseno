@@ -11,6 +11,8 @@ import { Card, Button, Input, Textarea, Select, Spinner, PageHeader } from "@/co
 import { useAuth } from "@/contexts/AuthContext";
 import { createClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/types";
+import Link from "next/link";
+import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 
 interface RoleType {
   id: string;
@@ -208,7 +210,8 @@ export default function OfficeHoldersAdminClient() {
   };
 
   const inviteHolder = async (holder: Holder) => {
-    const email = holder.contact_email?.trim();
+    const latestClaim = claims[holder.id]?.[0];
+    const email = (holder.contact_email || latestClaim?.contact_email || "").trim();
     if (!email) {
       setStatus("Add an official email before sending a claim invitation.");
       return;
@@ -566,7 +569,13 @@ export default function OfficeHoldersAdminClient() {
                             </Button>
                           )}
                           {existing && (
-                            <Button size="sm" variant="outline" onClick={() => inviteHolder(existing)} disabled={saving || inviting || !form.contactEmail.trim()} className="gap-1">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => inviteHolder(existing)}
+                                disabled={saving || inviting || (!form.contactEmail.trim() && !claims[existing.id]?.[0]?.contact_email)}
+                                className="gap-1"
+                              >
                               <Mail size={14} /> {inviting ? "Sending…" : "Send claim invite"}
                             </Button>
                           )}
@@ -580,6 +589,26 @@ export default function OfficeHoldersAdminClient() {
                       <div className="flex items-center gap-2 pt-2 border-t border-border-light/20">
                         <span className="text-xs text-text-secondary">Verified claim is awaiting admin merge.</span>
                         <Button size="sm" onClick={() => mergeClaim(existing, latestClaim)} disabled={saving}>Merge wall</Button>
+                      </div>
+                    )}
+                    {!isEditing && existing && latestClaim && (
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 pt-2 border-t border-border-light/20 text-xs text-text-muted">
+                        <span className="font-semibold text-text-secondary">
+                          Invite: {latestClaim.contact_email || "email unavailable"}
+                        </span>
+                        <span>({latestClaim.status.replace("_", " ")})</span>
+                        <Link
+                          href={`/wall/${buildPoliticianWallSlug(existing.full_name, role.role_title)}`}
+                          target="_blank"
+                          className="text-primary hover:underline"
+                        >
+                          View wall
+                        </Link>
+                        {(latestClaim.status === "invited" || latestClaim.status === "expired") && (
+                          <Button size="sm" variant="outline" onClick={() => inviteHolder(existing)} disabled={inviting} className="gap-1">
+                            <Mail size={13} /> {inviting ? "Resending…" : "Resend invite"}
+                          </Button>
+                        )}
                       </div>
                     )}
                     {!isEditing && existing && latestClaim?.status === "approved" && (
