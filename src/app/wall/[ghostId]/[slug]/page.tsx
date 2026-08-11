@@ -11,7 +11,7 @@ import {
 } from "@/lib/services/politicianWall";
 import { SITE_URL } from "@/lib/constants/site";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 const BASE_URL = SITE_URL;
 
@@ -44,9 +44,8 @@ export async function generateMetadata({
   if (wallSlug && slug === wallSlug) redirect(`/wall/${wallSlug}`);
 
   const { data: postData } = await getWallPostBySlugOrId(supabase, owner?.current_ghost_id || ghostId, slug);
-
-
   const post = postData as WallPost | null;
+  if (!owner || !post) return { title: "Page Not Found | Choseno" };
   const name = owner?.full_name || "Politician";
   const roleTitle =
     activeCandidacy?.election_seats?.role_title ||
@@ -123,9 +122,8 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
   if (wallSlug && slug === wallSlug) redirect(`/wall/${wallSlug}`);
 
   const { data: postData } = await getWallPostBySlugOrId(supabase, owner?.current_ghost_id || ghostId, slug);
-
-
   const post = postData as WallPost | null;
+  if (!owner || !post) notFound();
 
   const [{ data: posts }, supportCountRes] = await Promise.all([
     getWallPosts(supabase, owner?.current_ghost_id || ghostId),

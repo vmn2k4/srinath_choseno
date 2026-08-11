@@ -205,7 +205,9 @@ export async function getWallPostBySlugOrId(supabase: Client, ghostId: string, s
     return postSlug === slug || p.id === slug;
   });
 
-  return { data: slugifiedMatch || posts[0] };
+  // Never serve another post for an unknown URL. That creates duplicate pages
+  // and can make search engines index misleading content under many slugs.
+  return { data: slugifiedMatch || null };
 }
 
 export async function getActiveCandidacies(supabase: Client, profileId: string) {

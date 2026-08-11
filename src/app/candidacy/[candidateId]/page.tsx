@@ -8,7 +8,7 @@ import {
 } from "@/lib/services/elections";
 import { getPoliticianProfile } from "@/lib/services/profile";
 import { getSupporterCount } from "@/lib/services/politicianWall";
-import { buildCandidateSlug, buildPoliticianWallSlug, buildSeatSlug, extractIdFromSlug } from "@/lib/utils/slugs";
+import { buildCandidateSlug, buildSeatSlug, extractIdFromSlug } from "@/lib/utils/slugs";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -45,10 +45,9 @@ export async function generateMetadata({
   const name = candidate.profiles?.full_name || "Candidate";
   const roleTitle = candidate.election_seats?.role_title || "Office";
   const slug = buildCandidateSlug(candidate);
-  const ghostId = candidate.profiles?.current_ghost_id;
-  const canonicalUrl = ghostId
-    ? `${BASE_URL}/wall/${buildPoliticianWallSlug(name, roleTitle)}`
-    : `${BASE_URL}/candidacy/${slug}`;
+  // The candidacy page contains campaign-specific answers and posts, so it is
+  // a distinct public resource from the politician's permanent wall.
+  const canonicalUrl = `${BASE_URL}/candidacy/${slug}`;
   const ogImageUrl = `${BASE_URL}/candidacy/${realCandidateId}/opengraph-image`;
 
   const title = `${name} — 2026 ${roleTitle} Candidate | Voter Reviews`;

@@ -3,7 +3,12 @@ import { redirect } from "next/navigation";
 import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
-import { buildSeatSlug, buildCandidateSlug, extractIdFromSlug } from "@/lib/utils/slugs";
+import {
+  buildSeatSlug,
+  buildCandidateSlug,
+  buildPoliticianWallSlug,
+  extractIdFromSlug,
+} from "@/lib/utils/slugs";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -156,10 +161,10 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
           numberOfItems: candList.length,
           itemListElement: candList.map((c, idx) => {
             const candName = c.display_name || c.profiles?.full_name || "Candidate";
-            const candGhostId = c.profiles?.current_ghost_id;
             const candSlug = buildCandidateSlug(c);
-            const candUrl = candGhostId
-              ? `${BASE_URL}/wall/${candGhostId}/${candSlug}`
+            const candWallSlug = c.profiles?.politician_profiles?.wall_slug;
+            const candUrl = c.profiles?.current_ghost_id
+              ? `${BASE_URL}/wall/${candWallSlug || buildPoliticianWallSlug(candName, roleTitle)}`
               : `${canonicalUrl}/candidate/${candSlug}`;
 
             return {

@@ -14,9 +14,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/find-my-district`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${baseUrl}/news`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
     { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
-    { url: `${baseUrl}/privacy`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
-    { url: `${baseUrl}/terms`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
-    { url: `${baseUrl}/auth`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
   ];
 
   const supabase = await createClient();
@@ -50,7 +47,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     id: string;
     role_title?: string;
     map_shape_id?: number;
-    map_shapes?: { id?: number; name?: string; boundary_type?: string } | null;
+    map_shapes?: {
+      id?: number;
+      name?: string;
+      boundary_type?: string;
+      properties?: unknown;
+    } | null;
   }>;
 
   const shapesById = new Map<number, { id: number; name: string }>();
