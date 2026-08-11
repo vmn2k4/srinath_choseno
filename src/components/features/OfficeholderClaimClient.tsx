@@ -43,7 +43,12 @@ export default function OfficeholderClaimClient({ token }: { token: string }) {
           <>
             <h1 className="text-lg font-bold text-text-main mb-2">Sign in to claim this wall</h1>
             <p className="text-sm text-text-secondary mb-5">Use the Choseno account that should own this officeholder wall, then return to this link.</p>
-            <Button onClick={() => router.push("/auth?role=politician")} className="w-full">Sign in or sign up</Button>
+            <Button
+              onClick={() => router.push(`/auth?role=politician&next=${encodeURIComponent(window.location.pathname)}`)}
+              className="w-full"
+            >
+              Sign in or sign up
+            </Button>
           </>
         )}
         {(loading || state === "claiming") && <><Spinner /><p className="text-sm text-text-secondary mt-4">Verifying your claim...</p></>}

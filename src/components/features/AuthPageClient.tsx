@@ -41,11 +41,11 @@ export default function AuthPageClient({
 
     try {
       if (isSignUp) {
-        const { data, error } = await signUp(supabase, email, password);
+        const { data, error } = await signUp(supabase, email, password, nextPath);
         if (error) throw error;
         trackSignUp("email");
         if (data?.session) {
-          router.push(initialRole ? `/onboarding?role=${initialRole}` : "/onboarding");
+          router.push(nextPath || (initialRole ? `/onboarding?role=${initialRole}` : "/onboarding"));
           router.refresh();
         } else {
           setMessage({
@@ -80,7 +80,7 @@ export default function AuthPageClient({
       // so this is the last point client-side JS runs in the flow.
       if (isSignUp) trackSignUp("google");
       else trackLogin("google");
-      await signInWithGoogle(supabase);
+      await signInWithGoogle(supabase, nextPath);
     } catch (err: unknown) {
       const errorObj = err as { error_description?: string; message?: string };
       setMessage({
