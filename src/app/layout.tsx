@@ -34,6 +34,11 @@ export const metadata: Metadata = {
   authors: [{ name: "Murugappan Valliyappan", url: "https://www.linkedin.com/in/muruvalliyappan/" }],
   creator: "Murugappan Valliyappan",
   publisher: "Choseno",
+  verification: {
+    other: {
+      "msvalidate.01": "AECC25E231AF85530C43CA52A2B4E345",
+    },
+  },
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
