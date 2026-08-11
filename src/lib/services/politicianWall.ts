@@ -10,10 +10,11 @@ async function enrichProfileWithContactFallback(supabase: Client, profileData: a
   const pp = profileData.politician_profiles as any;
   if (!pp) return profileData;
 
+  const escapedName = profileData.full_name.replace(/"/g, '""');
   const { data: ohMatches } = await supabase
     .from("office_holders")
     .select("contact_email, contact_phone, source_url, photo_url, holding_since")
-    .or(`linked_profile_id.eq.${profileData.id},full_name.ilike.${profileData.full_name}`);
+    .or(`linked_profile_id.eq.${profileData.id},full_name.ilike."${escapedName}"`);
 
   if (ohMatches && ohMatches.length > 0) {
     pp.is_office_holder = true;
