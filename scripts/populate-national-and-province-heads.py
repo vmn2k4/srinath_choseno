@@ -46,6 +46,12 @@ RECORDS = [
      "President of the United States", "https://www.whitehouse.gov"),
 ]
 
+# Keep verified public contact data separate from the seed tuples so a rerun
+# cannot overwrite it with NULL values.
+OFFICIAL_CONTACT_PHONES = {
+    "Bob Ferguson": "360-902-4111",
+}
+
 
 def sql_val(v):
     if v is None or not str(v).strip():
@@ -106,6 +112,15 @@ ON CONFLICT (map_shape_id, election_role_type_id, full_name) DO UPDATE SET
   bio = EXCLUDED.bio,
   source_url = EXCLUDED.source_url,
   updated_at = NOW();
+
+UPDATE office_holders oh
+SET contact_phone = c.contact_phone,
+    updated_at = NOW()
+FROM (VALUES
+  {", ".join(f"({sql_val(name)}, {sql_val(phone)})" for name, phone in OFFICIAL_CONTACT_PHONES.items())}
+) AS c(full_name, contact_phone)
+WHERE oh.full_name = c.full_name
+  AND NULLIF(BTRIM(oh.contact_phone), '') IS NULL;
 
 COMMIT;
 """
