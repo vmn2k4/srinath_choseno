@@ -166,12 +166,13 @@ export default function PoliticianWallClient({
 
         const { error: dbErr } = await supabase.from("candidacy_claim_requests").insert({
           candidate_id: candidateIdToUse,
-          requester_profile_id: (user?.id || undefined) as any,
+          requester_profile_id: user?.id || null,
+          requester_name: claimName.trim(),
           contact_email: claimEmail.trim(),
           social_media_info: claimPhone.trim() || null,
-          motivation: claimMotivation.trim() || `Claim request for ${wallOwner.full_name}`,
+          motivation: claimMotivation.trim() || null,
           status: "pending",
-        });
+        } as any);
 
         if (dbErr) {
           console.error("Error inserting claim request:", dbErr);

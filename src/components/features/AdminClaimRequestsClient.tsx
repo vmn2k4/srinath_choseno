@@ -24,6 +24,9 @@ import {
   Calendar,
   UserCheck,
   Building,
+  User,
+  Phone,
+  MessageSquare,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -31,17 +34,21 @@ interface ClaimRequestRow {
   id: string;
   candidate_id: string;
   requester_profile_id: string | null;
+  requester_name: string | null;
   motivation: string | null;
   contact_email: string | null;
   social_media_info: string | null;
   status: "pending" | "approved" | "rejected";
   submitted_at: string;
   reviewed_at: string | null;
-  // Resolved info
+  // Resolved candidate info
   politicianName: string;
   roleTitle: string;
   boundaryName: string;
   wallSlug: string | null;
+  // Resolved requester profile info
+  requesterAccountName?: string | null;
+  requesterAccountEmail?: string | null;
 }
 
 export default function AdminClaimRequestsClient() {
@@ -57,114 +64,133 @@ export default function AdminClaimRequestsClient() {
     setLoading(true);
 
     try {
-      // 1. Fetch raw claim requests
+      // 1. Fetch raw claim requests with joined requester profiles
       const { data: rawRequests, error: reqError } = await supabase
         .from("candidacy_claim_requests")
-        .select("*")
+        .select(`
+          *,
+          requester_profile:profiles!candidacy_claim_requests_requester_profile_id_fkey ( id, full_name, email )
+        `)
         .order("submitted_at", { ascending: false });
 
       if (reqError) {
         console.error("Error fetching candidacy claim requests:", reqError);
-        setLoading(false);
-        return;
-      }
-
-      if (!rawRequests || rawRequests.length === 0) {
-        setRequests([]);
-        setLoading(false);
-        return;
-      }
-
-      const candidateIds = Array.from(new Set(rawRequests.map((r: any) => r.candidate_id)));
-
-      // 2. Resolve via election_candidates
-      const { data: candidateRows } = await supabase
-        .from("election_candidates")
-        .select(`
-          id,
-          seat_id,
-          profiles!election_candidates_politician_id_fkey (
-            id, full_name, current_ghost_id,
-            politician_profiles ( wall_slug, political_target_role, target_boundary_name )
-          ),
-          election_seats (
-            id, role_title,
-            map_shapes ( name )
-          )
-        `)
-        .in("id", candidateIds);
-
-      const candidateMap = new Map<string, any>();
-      (candidateRows || []).forEach((c: any) => {
-        candidateMap.set(c.id, c);
-      });
-
-      // 3. Also resolve directly via profiles (for politician wall claims)
-      const { data: profileRows } = await supabase
-        .from("profiles")
-        .select(`
-          id, full_name, current_ghost_id,
-          politician_profiles ( wall_slug, political_target_role, target_boundary_name )
-        `)
-        .in("id", candidateIds);
-
-      const profileMap = new Map<string, any>();
-      (profileRows || []).forEach((p: any) => {
-        profileMap.set(p.id, p);
-      });
-
-      // 4. Map records
-      const formatted: ClaimRequestRow[] = rawRequests.map((req: any) => {
-        let politicianName = "Unknown Candidate";
-        let roleTitle = "Representative";
-        let boundaryName = "Local District";
-        let wallSlug: string | null = null;
-
-        const cand = candidateMap.get(req.candidate_id);
-        if (cand) {
-          const prof = cand.profiles;
-          const polProf = Array.isArray(prof?.politician_profiles) ? prof.politician_profiles[0] : prof?.politician_profiles;
-          const seat = cand.election_seats;
-          const shape = Array.isArray(seat?.map_shapes) ? seat.map_shapes[0] : seat?.map_shapes;
-
-          politicianName = prof?.full_name || politicianName;
-          roleTitle = seat?.role_title || polProf?.political_target_role || roleTitle;
-          boundaryName = shape?.name || polProf?.target_boundary_name || boundaryName;
-          wallSlug = polProf?.wall_slug || prof?.current_ghost_id || null;
-        } else {
-          const prof = profileMap.get(req.candidate_id);
-          if (prof) {
-            const polProf = Array.isArray(prof.politician_profiles) ? prof.politician_profiles[0] : prof.politician_profiles;
-            politicianName = prof.full_name || politicianName;
-            roleTitle = polProf?.political_target_role || roleTitle;
-            boundaryName = polProf?.target_boundary_name || boundaryName;
-            wallSlug = polProf?.wall_slug || prof.current_ghost_id || null;
-          }
+        // Fallback simple query
+        const { data: simpleReqs } = await supabase
+          .from("candidacy_claim_requests")
+          .select("*")
+          .order("submitted_at", { ascending: false });
+        if (!simpleReqs || simpleReqs.length === 0) {
+          setRequests([]);
+          setLoading(false);
+          return;
         }
+        await processAndSetRequests(simpleReqs);
+        return;
+      }
 
-        return {
-          id: req.id,
-          candidate_id: req.candidate_id,
-          requester_profile_id: req.requester_profile_id,
-          motivation: req.motivation,
-          contact_email: req.contact_email,
-          social_media_info: req.social_media_info,
-          status: req.status,
-          submitted_at: req.submitted_at,
-          reviewed_at: req.reviewed_at,
-          politicianName,
-          roleTitle,
-          boundaryName,
-          wallSlug,
-        };
-      });
-
-      setRequests(formatted);
+      await processAndSetRequests(rawRequests || []);
     } catch (err) {
       console.error("Error loading claim requests:", err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const processAndSetRequests = async (rawRequests: any[]) => {
+    if (!rawRequests || rawRequests.length === 0) {
+      setRequests([]);
+      return;
+    }
+
+    const candidateIds = Array.from(new Set(rawRequests.map((r: any) => r.candidate_id)));
+
+    // 2. Resolve via election_candidates
+    const { data: candidateRows } = await supabase
+      .from("election_candidates")
+      .select(`
+        id,
+        seat_id,
+        profiles!election_candidates_politician_id_fkey (
+          id, full_name, current_ghost_id,
+          politician_profiles ( wall_slug, political_target_role, target_boundary_name )
+        ),
+        election_seats (
+          id, role_title,
+          map_shapes ( name )
+        )
+      `)
+      .in("id", candidateIds);
+
+    const candidateMap = new Map<string, any>();
+    (candidateRows || []).forEach((c: any) => {
+      candidateMap.set(c.id, c);
+    });
+
+    // 3. Also resolve directly via profiles (for politician wall claims)
+    const { data: profileRows } = await supabase
+      .from("profiles")
+      .select(`
+        id, full_name, current_ghost_id,
+        politician_profiles ( wall_slug, political_target_role, target_boundary_name )
+      `)
+      .in("id", candidateIds);
+
+    const profileMap = new Map<string, any>();
+    (profileRows || []).forEach((p: any) => {
+      profileMap.set(p.id, p);
+    });
+
+    // 4. Map records
+    const formatted: ClaimRequestRow[] = rawRequests.map((req: any) => {
+      let politicianName = "Unknown Candidate";
+      let roleTitle = "Representative";
+      let boundaryName = "Local District";
+      let wallSlug: string | null = null;
+
+      const cand = candidateMap.get(req.candidate_id);
+      if (cand) {
+        const prof = cand.profiles;
+        const polProf = Array.isArray(prof?.politician_profiles) ? prof.politician_profiles[0] : prof?.politician_profiles;
+        const seat = cand.election_seats;
+        const shape = Array.isArray(seat?.map_shapes) ? seat.map_shapes[0] : seat?.map_shapes;
+
+        politicianName = prof?.full_name || politicianName;
+        roleTitle = seat?.role_title || polProf?.political_target_role || roleTitle;
+        boundaryName = shape?.name || polProf?.target_boundary_name || boundaryName;
+        wallSlug = polProf?.wall_slug || prof?.current_ghost_id || null;
+      } else {
+        const prof = profileMap.get(req.candidate_id);
+        if (prof) {
+          const polProf = Array.isArray(prof.politician_profiles) ? prof.politician_profiles[0] : prof.politician_profiles;
+          politicianName = prof.full_name || politicianName;
+          roleTitle = polProf?.political_target_role || roleTitle;
+          boundaryName = polProf?.target_boundary_name || boundaryName;
+          wallSlug = polProf?.wall_slug || prof.current_ghost_id || null;
+        }
+      }
+
+      return {
+        id: req.id,
+        candidate_id: req.candidate_id,
+        requester_profile_id: req.requester_profile_id || null,
+        requester_name: req.requester_name || req.requester_profile?.full_name || null,
+        motivation: req.motivation || null,
+        contact_email: req.contact_email || null,
+        social_media_info: req.social_media_info || null,
+        status: req.status,
+        submitted_at: req.submitted_at,
+        reviewed_at: req.reviewed_at,
+        politicianName,
+        roleTitle,
+        boundaryName,
+        wallSlug,
+        requesterAccountName: req.requester_profile?.full_name || null,
+        requesterAccountEmail: req.requester_profile?.email || null,
+      };
+    });
+
+    setRequests(formatted);
   };
 
   useEffect(() => {
@@ -179,7 +205,7 @@ export default function AdminClaimRequestsClient() {
 
     setActionLoading((prev) => ({ ...prev, [requestId]: false }));
     if (error) {
-      // Fallback update directly if RPC is tailored to election_candidates
+      // Fallback update directly
       const { error: directErr } = await supabase
         .from("candidacy_claim_requests")
         .update({
@@ -218,6 +244,7 @@ export default function AdminClaimRequestsClient() {
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         const candidateName = req.politicianName.toLowerCase();
+        const reqName = (req.requester_name || "").toLowerCase();
         const email = (req.contact_email || "").toLowerCase();
         const social = (req.social_media_info || "").toLowerCase();
         const motivation = (req.motivation || "").toLowerCase();
@@ -226,6 +253,7 @@ export default function AdminClaimRequestsClient() {
 
         return (
           candidateName.includes(q) ||
+          reqName.includes(q) ||
           email.includes(q) ||
           social.includes(q) ||
           motivation.includes(q) ||
@@ -343,6 +371,7 @@ export default function AdminClaimRequestsClient() {
 
             return (
               <Card key={req.id} padding="md" className="space-y-4 border border-border/60 hover:border-primary/30 transition-colors">
+                {/* Header Row */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-border-light/20 pb-3">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -390,16 +419,27 @@ export default function AdminClaimRequestsClient() {
                   </div>
                 </div>
 
-                {/* Requester Details */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-surface/30 p-3 rounded-xl border border-border-light/20 text-xs">
+                {/* Submitter Info Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 bg-surface/30 p-3.5 rounded-xl border border-border-light/20 text-xs">
                   <div>
-                    <span className="font-semibold text-text-muted block mb-0.5">Contact Email</span>
+                    <span className="font-semibold text-text-muted flex items-center gap-1 mb-1">
+                      <User size={13} /> Submitter Name
+                    </span>
+                    <span className="text-text-main font-bold">
+                      {req.requester_name || req.requesterAccountName || "Not provided"}
+                    </span>
+                  </div>
+
+                  <div>
+                    <span className="font-semibold text-text-muted flex items-center gap-1 mb-1">
+                      <Mail size={13} /> Contact Email
+                    </span>
                     {req.contact_email ? (
                       <a
                         href={`mailto:${req.contact_email}?subject=Choseno Profile Claim for ${req.politicianName}`}
                         className="text-primary hover:underline font-medium inline-flex items-center gap-1"
                       >
-                        <Mail size={13} /> {req.contact_email}
+                        {req.contact_email}
                       </a>
                     ) : (
                       <span className="text-text-muted italic">Not provided</span>
@@ -407,24 +447,34 @@ export default function AdminClaimRequestsClient() {
                   </div>
 
                   <div>
-                    <span className="font-semibold text-text-muted block mb-0.5">Phone / Social Link</span>
+                    <span className="font-semibold text-text-muted flex items-center gap-1 mb-1">
+                      <Phone size={13} /> Phone / Social Link
+                    </span>
                     <span className="text-text-main font-medium">
                       {req.social_media_info || "Not provided"}
                     </span>
                   </div>
 
                   <div>
-                    <span className="font-semibold text-text-muted block mb-0.5">Requester Profile ID</span>
-                    <span className="text-text-muted font-mono text-[11px] truncate block">
-                      {req.requester_profile_id || "Guest / Unauthenticated"}
+                    <span className="font-semibold text-text-muted flex items-center gap-1 mb-1">
+                      <ShieldCheck size={13} /> User Account ID
                     </span>
+                    {req.requester_profile_id ? (
+                      <span className="text-text-muted font-mono text-[11px] truncate block" title={req.requester_profile_id}>
+                        {req.requester_profile_id.slice(0, 16)}...
+                      </span>
+                    ) : (
+                      <span className="text-text-muted italic font-sans text-[11px]">Guest Submitter</span>
+                    )}
                   </div>
                 </div>
 
                 {/* Verification Motivation / Note */}
                 {req.motivation && (
                   <div className="space-y-1">
-                    <span className="text-xs font-semibold text-text-muted block">Verification Note / Message:</span>
+                    <span className="text-xs font-semibold text-text-muted flex items-center gap-1">
+                      <MessageSquare size={13} /> Verification Note / Message:
+                    </span>
                     <p className="text-xs text-text-main bg-background p-3 rounded-xl border border-border-light/30 italic">
                       &quot;{req.motivation}&quot;
                     </p>
