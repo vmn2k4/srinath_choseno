@@ -55,6 +55,9 @@ export default function EditProfileClient() {
   const [parties, setParties] = useState<any[]>([]);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [avatarError, setAvatarError] = useState<string | null>(null);
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [sourceUrl, setSourceUrl] = useState("");
 
   const isPolitician = role === "politician";
 
@@ -79,6 +82,9 @@ export default function EditProfileClient() {
         setAvatarUrl(pd?.avatar_url || "");
         setPoliticalTargetRole(pd?.political_target_role || "");
         setTargetBoundaryId(pd?.target_boundary_id ?? null);
+        setContactEmail(pd?.contact_email || "");
+        setContactPhone(pd?.contact_phone || "");
+        setSourceUrl(pd?.source_url || "");
       }
 
       const { data: locRows } = await getLatestUserLocation(supabase, user.id);
@@ -169,6 +175,9 @@ export default function EditProfileClient() {
             bio,
             avatarUrl,
             politicalTargetRole: politicalTargetRole || null,
+            contactEmail: contactEmail || null,
+            contactPhone: contactPhone || null,
+            sourceUrl: sourceUrl || null,
           },
           targetBoundaryId
         );
@@ -327,6 +336,36 @@ export default function EditProfileClient() {
                 </option>
               ))}
             </Select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-text-tertiary mb-2">Official Website / Campaign Page</label>
+            <Input
+              placeholder="e.g. https://mycampaign.com"
+              type="url"
+              value={sourceUrl}
+              onChange={(e) => setSourceUrl(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-text-tertiary mb-2">Contact Phone</label>
+            <Input
+              placeholder="e.g. (555) 123-4567"
+              type="tel"
+              value={contactPhone}
+              onChange={(e) => setContactPhone(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-text-tertiary mb-2">Contact Email</label>
+            <Input
+              placeholder="e.g. contact@mycampaign.com"
+              type="email"
+              value={contactEmail}
+              onChange={(e) => setContactEmail(e.target.value)}
+            />
           </div>
 
           <div>

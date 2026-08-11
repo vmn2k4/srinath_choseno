@@ -1277,12 +1277,17 @@ export type Database = {
         Row: {
           avatar_url: string | null
           bio: string | null
+          contact_email: string | null
+          contact_phone: string | null
           created_at: string | null
           education: string | null
+          holding_since: string | null
           hometown: string | null
           id: string
+          photo_url: string | null
           political_party_id: number | null
           political_target_role: string | null
+          source_url: string | null
           target_boundary_id: string | null
           target_boundary_name: string | null
           target_boundary_type: string | null
@@ -1292,12 +1297,17 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           bio?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
           created_at?: string | null
           education?: string | null
+          holding_since?: string | null
           hometown?: string | null
           id: string
+          photo_url?: string | null
           political_party_id?: number | null
           political_target_role?: string | null
+          source_url?: string | null
           target_boundary_id?: string | null
           target_boundary_name?: string | null
           target_boundary_type?: string | null
@@ -1307,12 +1317,17 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           bio?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
           created_at?: string | null
           education?: string | null
+          holding_since?: string | null
           hometown?: string | null
           id?: string
+          photo_url?: string | null
           political_party_id?: number | null
           political_target_role?: string | null
+          source_url?: string | null
           target_boundary_id?: string | null
           target_boundary_name?: string | null
           target_boundary_type?: string | null

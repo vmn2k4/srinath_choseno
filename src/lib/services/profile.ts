@@ -265,6 +265,9 @@ export async function upsertPoliticianProfile(
     bio,
     avatarUrl,
     politicalTargetRole,
+    contactEmail,
+    contactPhone,
+    sourceUrl,
   }: {
     targetBoundaryId?: string | null;
     targetBoundaryName?: string | null;
@@ -274,6 +277,9 @@ export async function upsertPoliticianProfile(
     bio?: string | null;
     avatarUrl?: string | null;
     politicalTargetRole?: string | null;
+    contactEmail?: string | null;
+    contactPhone?: string | null;
+    sourceUrl?: string | null;
   },
   fallbackBoundaryId?: string | null
 ) {
@@ -291,6 +297,9 @@ export async function upsertPoliticianProfile(
     hometown: hometown || null,
     bio,
     avatar_url: avatarUrl || null,
+    contact_email: contactEmail || null,
+    contact_phone: contactPhone || null,
+    source_url: sourceUrl || null,
     updated_at: new Date().toISOString(),
   });
   if (!result.error) {
@@ -340,7 +349,7 @@ export async function getProfileRole(supabase: Client, userId: string) {
 export async function getPoliticianProfile(supabase: Client, politicianId: string) {
   return supabase
     .from("politician_profiles")
-    .select("education, hometown, bio, avatar_url, political_parties(name)")
+    .select("education, hometown, bio, avatar_url, contact_email, contact_phone, source_url, political_parties(name)")
     .eq("id", politicianId)
     .maybeSingle();
 }
@@ -349,7 +358,7 @@ export async function getPoliticianProfile(supabase: Client, politicianId: strin
 export async function getPoliticianProfileFull(supabase: Client, userId: string) {
   return supabase
     .from("politician_profiles")
-    .select("target_boundary_id, target_boundary_name, political_target_role, political_party_id, political_parties(name), education, hometown, bio, avatar_url")
+    .select("target_boundary_id, target_boundary_name, political_target_role, political_party_id, political_parties(name), education, hometown, bio, avatar_url, contact_email, contact_phone, source_url")
     .eq("id", userId)
     .maybeSingle();
 }

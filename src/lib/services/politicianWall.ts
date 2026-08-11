@@ -21,6 +21,11 @@ export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
          target_boundary_name,
          bio,
          avatar_url,
+         contact_email,
+         contact_phone,
+         photo_url,
+         source_url,
+         holding_since,
          political_parties ( name )
        )
     `
@@ -46,6 +51,11 @@ export async function getWallOwnerProfileBySlug(supabase: Client, wallSlug: stri
          target_boundary_name,
          bio,
          avatar_url,
+         contact_email,
+         contact_phone,
+         photo_url,
+         source_url,
+         holding_since,
          political_parties ( name )
        )
     `

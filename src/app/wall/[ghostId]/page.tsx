@@ -128,8 +128,17 @@ export default async function WallPage({ params }: WallPageProps) {
           name: name,
           jobTitle: roleTitle,
           description: bio || undefined,
-          image: owner.politician_profiles?.avatar_url || undefined,
+          image: owner.politician_profiles?.photo_url || owner.politician_profiles?.avatar_url || undefined,
           url: canonicalUrl,
+          ...(owner.politician_profiles?.contact_phone && {
+            telephone: owner.politician_profiles.contact_phone,
+          }),
+          ...(owner.politician_profiles?.contact_email && {
+            email: owner.politician_profiles.contact_email,
+          }),
+          ...(owner.politician_profiles?.source_url && {
+            sameAs: [owner.politician_profiles.source_url],
+          }),
           ...(partyName && {
             memberOf: {
               "@type": "PoliticalParty",
