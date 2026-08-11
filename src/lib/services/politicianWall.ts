@@ -5,6 +5,53 @@ import { isDevEnvironment } from "@/lib/utils/environment";
 type Client = SupabaseClient<Database>;
 
 // profiles — wall owner lookup by ghost_id, with nested politician_profiles.
+async function enrichProfileWithContactFallback(supabase: Client, profileData: any) {
+  if (!profileData || !profileData.full_name) return profileData;
+  const pp = profileData.politician_profiles as any;
+  if (!pp) return profileData;
+
+  if (!pp.contact_email || !pp.contact_phone || !pp.source_url || !pp.photo_url) {
+    const { data: ohMatches } = await supabase
+      .from("office_holders")
+      .select("contact_email, contact_phone, source_url, photo_url")
+      .ilike("full_name", profileData.full_name);
+
+    if (ohMatches && ohMatches.length > 0) {
+      const emailMatch = ohMatches.find((m) => m.contact_email)?.contact_email;
+      const phoneMatch = ohMatches.find((m) => m.contact_phone)?.contact_phone;
+      const sourceMatch = ohMatches.find((m) => m.source_url)?.source_url;
+      const photoMatch = ohMatches.find((m) => m.photo_url)?.photo_url;
+
+      if (!pp.contact_email && emailMatch) pp.contact_email = emailMatch;
+      if (!pp.contact_phone && phoneMatch) pp.contact_phone = phoneMatch;
+      if (!pp.source_url && sourceMatch) pp.source_url = sourceMatch;
+      if (!pp.photo_url && photoMatch) pp.photo_url = photoMatch;
+    }
+
+    if (!pp.contact_email || !pp.contact_phone || !pp.source_url || !pp.photo_url) {
+      const { data: siblingProfiles } = await supabase
+        .from("profiles")
+        .select("politician_profiles(contact_email, contact_phone, source_url, photo_url, avatar_url)")
+        .ilike("full_name", profileData.full_name);
+
+      if (siblingProfiles && siblingProfiles.length > 0) {
+        const sibs = siblingProfiles.map((s: any) => s.politician_profiles).filter(Boolean);
+        const emailMatch = sibs.find((s: any) => s.contact_email)?.contact_email;
+        const phoneMatch = sibs.find((s: any) => s.contact_phone)?.contact_phone;
+        const sourceMatch = sibs.find((s: any) => s.source_url)?.source_url;
+        const photoMatch = sibs.find((s: any) => s.photo_url || s.avatar_url)?.photo_url || sibs.find((s: any) => s.avatar_url)?.avatar_url;
+
+        if (!pp.contact_email && emailMatch) pp.contact_email = emailMatch;
+        if (!pp.contact_phone && phoneMatch) pp.contact_phone = phoneMatch;
+        if (!pp.source_url && sourceMatch) pp.source_url = sourceMatch;
+        if (!pp.photo_url && photoMatch) pp.photo_url = photoMatch;
+      }
+    }
+  }
+
+  return profileData;
+}
+
 export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
   let query = supabase
     .from("profiles")
@@ -32,7 +79,11 @@ export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
     )
     .eq("current_ghost_id", ghostId);
   if (!isDevEnvironment()) query = query.eq("is_test", false);
-  return query.single();
+  const res = await query.single();
+  if (res.data) {
+    res.data = await enrichProfileWithContactFallback(supabase, res.data);
+  }
+  return res;
 }
 
 export async function getWallOwnerProfileBySlug(supabase: Client, wallSlug: string) {
@@ -62,7 +113,11 @@ export async function getWallOwnerProfileBySlug(supabase: Client, wallSlug: stri
     )
     .eq("politician_profiles.wall_slug", wallSlug);
   if (!isDevEnvironment()) query = query.eq("is_test", false);
-  return query.maybeSingle();
+  const res = await query.maybeSingle();
+  if (res.data) {
+    res.data = await enrichProfileWithContactFallback(supabase, res.data);
+  }
+  return res;
 }
 
 // ── politician_supporters ────────────────────────────────────────────────

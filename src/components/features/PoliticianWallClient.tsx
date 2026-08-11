@@ -168,7 +168,24 @@ export default function PoliticianWallClient({
       const ownerRecord = owner as WallOwnerRecord | null;
 
       if (ownerRecord) {
-        if (isMounted) setWallOwner(ownerRecord);
+        if (isMounted) {
+          setWallOwner((prev) => {
+            if (!prev) return ownerRecord;
+            const prevPP = prev.politician_profiles;
+            const newPP = ownerRecord.politician_profiles;
+            return {
+              ...ownerRecord,
+              politician_profiles: {
+                ...newPP,
+                contact_email: newPP?.contact_email || prevPP?.contact_email || null,
+                contact_phone: newPP?.contact_phone || prevPP?.contact_phone || null,
+                source_url: newPP?.source_url || prevPP?.source_url || null,
+                photo_url: newPP?.photo_url || prevPP?.photo_url || null,
+                holding_since: newPP?.holding_since || prevPP?.holding_since || null,
+              },
+            };
+          });
+        }
         if (trackedGhostViewRef.current !== ghostId) {
           trackedGhostViewRef.current = ghostId;
           trackPoliticianViewed({ ghostId, source: "wall" });
