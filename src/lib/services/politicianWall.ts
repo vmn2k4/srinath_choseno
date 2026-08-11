@@ -29,25 +29,25 @@ async function enrichProfileWithContactFallback(supabase: Client, profileData: a
     if (!pp.photo_url && photoMatch) pp.photo_url = photoMatch;
   }
 
-    if (!pp.contact_email || !pp.contact_phone || !pp.source_url || !pp.photo_url) {
-      const { data: siblingProfiles } = await supabase
-        .from("profiles")
-        .select("politician_profiles(contact_email, contact_phone, source_url, photo_url, avatar_url)")
-        .ilike("full_name", profileData.full_name);
+  if (!pp.contact_email || !pp.contact_phone || !pp.source_url || !pp.photo_url) {
+    const { data: siblingProfiles } = await supabase
+      .from("profiles")
+      .select("politician_profiles(contact_email, contact_phone, source_url, photo_url, avatar_url)")
+      .ilike("full_name", profileData.full_name);
 
-      if (siblingProfiles && siblingProfiles.length > 0) {
-        const sibs = siblingProfiles.map((s: any) => s.politician_profiles).filter(Boolean);
-        const emailMatch = sibs.find((s: any) => s.contact_email)?.contact_email;
-        const phoneMatch = sibs.find((s: any) => s.contact_phone)?.contact_phone;
-        const sourceMatch = sibs.find((s: any) => s.source_url)?.source_url;
-        const photoMatch = sibs.find((s: any) => s.photo_url || s.avatar_url)?.photo_url || sibs.find((s: any) => s.avatar_url)?.avatar_url;
+    if (siblingProfiles && siblingProfiles.length > 0) {
+      const sibs = siblingProfiles.map((s: any) => s.politician_profiles).filter(Boolean);
+      const emailMatch = sibs.find((s: any) => s.contact_email)?.contact_email;
+      const phoneMatch = sibs.find((s: any) => s.contact_phone)?.contact_phone;
+      const sourceMatch = sibs.find((s: any) => s.source_url)?.source_url;
+      const photoMatch = sibs.find((s: any) => s.photo_url || s.avatar_url)?.photo_url || sibs.find((s: any) => s.avatar_url)?.avatar_url;
 
-        if (!pp.contact_email && emailMatch) pp.contact_email = emailMatch;
-        if (!pp.contact_phone && phoneMatch) pp.contact_phone = phoneMatch;
-        if (!pp.source_url && sourceMatch) pp.source_url = sourceMatch;
-        if (!pp.photo_url && photoMatch) pp.photo_url = photoMatch;
-      }
+      if (!pp.contact_email && emailMatch) pp.contact_email = emailMatch;
+      if (!pp.contact_phone && phoneMatch) pp.contact_phone = phoneMatch;
+      if (!pp.source_url && sourceMatch) pp.source_url = sourceMatch;
+      if (!pp.photo_url && photoMatch) pp.photo_url = photoMatch;
     }
+  }
 
   return profileData;
 }
