@@ -24,6 +24,7 @@ import {
   CyclingBoundaryPill,
   RoleSplitCta,
 } from "@/components/features/home/HomeMotion";
+import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -211,33 +212,43 @@ export default function HomePage() {
 
       {/* ============ HERO — real content, server-rendered; HeroSection only supplies the motion shell ============ */}
       <HeroSection>
-        <span className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-accent/40 bg-surface-elevated/90 elevation-3 text-xs font-bold tracking-wide text-accent">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
-          </span>
-          Voice of the Silent Majority
-        </span>
+        <div className="grid lg:grid-cols-[1.15fr_1fr] gap-14 lg:gap-10 items-center">
+          {/* Left — pitch + CTAs */}
+          <div className="text-center lg:text-left">
+            <span className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-accent/40 bg-surface-elevated/90 elevation-3 text-xs font-bold tracking-wide text-accent">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
+              </span>
+              Voice of the Silent Majority
+            </span>
 
-        <h1 className="font-display text-6xl sm:text-7xl md:text-8xl font-extrabold leading-[1.02] mt-8 tracking-tight drop-shadow-2xl">
-          Rate Your Politicians&apos; Performance.
-          <br />
-          <span className="text-primary">Like Yelp, but for Democracy.</span>
-        </h1>
+            <h1 className="font-display text-5xl sm:text-6xl md:text-7xl font-extrabold leading-[1.02] mt-8 tracking-tight drop-shadow-2xl">
+              Rate Your Politicians&apos; Performance.
+              <br />
+              <span className="text-primary">Like Yelp, but for Democracy.</span>
+            </h1>
 
-        <p className="text-xl md:text-2xl text-text-main/90 font-medium max-w-3xl mx-auto mt-7 leading-relaxed">
-          A secure, anonymous space to hold local leaders accountable. Share your
-          experience, read what your neighbors think, and walk into the booth
-          informed — no toxicity, just accountability.
-        </p>
+            <p className="text-lg md:text-xl text-text-main/90 font-medium max-w-2xl mx-auto lg:mx-0 mt-7 leading-relaxed">
+              A secure, anonymous space to hold local leaders accountable. Share your
+              experience, read what your neighbors think, and walk into the booth
+              informed — no toxicity, just accountability.
+            </p>
 
-        <div className="mt-9 flex items-center justify-center gap-3 text-base text-text-muted">
-          <span className="font-medium text-text-main/80">Conversations scoped to</span>
-          <CyclingBoundaryPill levels={BOUNDARY_LEVELS} />
-        </div>
+            <div className="mt-9 flex items-center justify-center lg:justify-start gap-3 text-base text-text-muted">
+              <span className="font-medium text-text-main/80">Conversations scoped to</span>
+              <CyclingBoundaryPill levels={BOUNDARY_LEVELS} />
+            </div>
 
-        <div className="mt-12">
-          <RoleSplitCta />
+            <div className="mt-12">
+              <RoleSplitCta align="start" />
+            </div>
+          </div>
+
+          {/* Right — compact "find your district" widget, visible the moment visitors land */}
+          <div className="flex justify-center lg:justify-end">
+            <HomeLocateWidget />
+          </div>
         </div>
       </HeroSection>
 

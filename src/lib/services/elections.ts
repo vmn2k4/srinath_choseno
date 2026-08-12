@@ -151,7 +151,7 @@ export async function getOfficeHoldersForShapes(
        map_shapes(id, name, boundary_type, country),
        election_role_types(role_title, role_key),
        political_parties(name),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url))`
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url, wall_slug))`
     )
     .in("map_shape_id", ids);
 

@@ -12,33 +12,7 @@ import {
 } from "lucide-react";
 import { Card, Button, Input } from "@/components/primitives";
 import { trackSearch } from "@/lib/analytics/events";
-
-async function geocodeAddressFree(query: string) {
-  if (!query || query.trim().length < 3) return [];
-  try {
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-        query.trim()
-      )}&limit=5`,
-      {
-        headers: {
-          "Accept-Language": "en",
-          "User-Agent": "Choseno-Civic-App/1.0",
-        },
-      }
-    );
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data.map((item: any) => ({
-      display_name: item.display_name,
-      lat: parseFloat(item.lat),
-      lng: parseFloat(item.lon),
-    }));
-  } catch (err) {
-    console.error("Free Geocoding error:", err);
-    return [];
-  }
-}
+import { geocodeAddressFree } from "@/lib/utils/geocode";
 
 interface InteractiveLocationPickerProps {
   currentLat?: string | number;

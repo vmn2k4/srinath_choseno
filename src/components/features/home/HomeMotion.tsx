@@ -123,7 +123,7 @@ export function HeroSection({ children }: { children: ReactNode }) {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-[92vh] flex items-center justify-center px-6 overflow-hidden"
+      className="relative min-h-[92vh] flex items-center justify-center px-6 py-16 lg:py-6 overflow-hidden"
     >
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
         <ParallaxOrb className="orb orb-a" sectionRef={heroRef} range={[0, -180]} driftX={[0, 40, -20, 0]} duration={18} />
@@ -133,7 +133,7 @@ export function HeroSection({ children }: { children: ReactNode }) {
 
       <motion.div
         style={reduceMotion ? undefined : { y, opacity, scale }}
-        className="relative z-10 max-w-5xl mx-auto text-center"
+        className="relative z-10 max-w-7xl mx-auto w-full"
       >
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 28 }}
@@ -187,11 +187,18 @@ export function CyclingBoundaryPill({ levels }: { levels: string[] }) {
 // `role` query param carries through /auth -> /onboarding so the role step
 // there is pre-selected instead of asked twice. Kept as a small island
 // rather than making the whole page client-side for it.
-export function RoleSplitCta({ size = "lg" }: { size?: "lg" | "md" }) {
+export function RoleSplitCta({
+  size = "lg",
+  align = "center",
+}: {
+  size?: "lg" | "md";
+  align?: "center" | "start";
+}) {
   const { session } = useAuth();
   const big = size === "lg";
   const pad = big ? "px-8 py-4.5 text-lg" : "px-6 py-3.5 text-sm";
   const iconSize = big ? 20 : 16;
+  const justify = align === "start" ? "justify-center lg:justify-start" : "justify-center";
 
   if (session) {
     return (
@@ -212,7 +219,7 @@ export function RoleSplitCta({ size = "lg" }: { size?: "lg" | "md" }) {
   }
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+    <div className={`flex flex-col sm:flex-row items-center ${justify} gap-4`}>
       <Link
         href="/auth?role=citizen"
         className={`group inline-flex items-center gap-3 ${pad} rounded-2xl bg-primary text-text-on-primary font-bold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md`}
