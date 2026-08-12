@@ -15,13 +15,7 @@ import { getOfficeHoldersForShapes } from "@/lib/services/elections";
 import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { geocodeAddressFree, type GeocodeSuggestion } from "@/lib/utils/geocode";
 import { trackSearch } from "@/lib/analytics/events";
-
-interface MatchedBoundary {
-  id: number;
-  name: string;
-  country: string;
-  boundary_type: string;
-}
+import { useGuestLocation, setGuestLocation, clearGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
 
 interface RepRow {
   id: string;
@@ -61,6 +55,7 @@ function wallHrefFor(rep: RepRow): string | null {
 
 export default function HomeLocateWidget() {
   const supabase = createClient();
+  const guestLocation = useGuestLocation();
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<GeocodeSuggestion[]>([]);
   const [searching, setSearching] = useState(false);
@@ -85,6 +80,33 @@ export default function HomeLocateWidget() {
     return () => clearTimeout(timer);
   }, [query]);
 
+  // Sync guest location from localStorage / cross-tab storage events
+  useEffect(() => {
+    if (guestLocation && guestLocation.boundaries.length > 0) {
+      const matched = guestLocation.boundaries.filter(
+        (b) => !b.boundary_type?.toLowerCase().includes("polling")
+      );
+      setBoundaries(matched);
+
+      if (matched.length > 0) {
+        setLoadingResults(true);
+        getOfficeHoldersForShapes(
+          supabase,
+          matched.map((b) => b.id)
+        ).then(({ data: holderRows }) => {
+          setReps((holderRows || []) as unknown as RepRow[]);
+          setLoadingResults(false);
+        }).catch((err) => {
+          console.error(err);
+          setLoadingResults(false);
+        });
+      }
+    } else if (boundaries !== null && (!guestLocation || guestLocation.boundaries.length === 0)) {
+      setBoundaries(null);
+      setReps([]);
+    }
+  }, [guestLocation, supabase]);
+
   const resolveLocation = async (lat: number, lng: number) => {
     setError("");
     setLoadingResults(true);
@@ -97,9 +119,10 @@ export default function HomeLocateWidget() {
       return;
     }
     const matched = ((data as MatchedBoundary[] | null) || []).filter(
-      (b) => !b.boundary_type.toLowerCase().includes("polling")
+      (b) => !(b.boundary_type || "").toLowerCase().includes("polling")
     );
     setBoundaries(matched);
+    setGuestLocation({ lat, lng, boundaries: matched });
 
     if (matched.length > 0) {
       const { data: holderRows } = await getOfficeHoldersForShapes(
@@ -142,6 +165,7 @@ export default function HomeLocateWidget() {
     setReps([]);
     setError("");
     setQuery("");
+    clearGuestLocation();
   };
 
   const repsFor = (boundaryId: number) => reps.filter((r) => r.map_shape_id === boundaryId);
@@ -240,7 +264,7 @@ export default function HomeLocateWidget() {
             <div className="space-y-3">
               {boundaries
                 .slice(0, 3)
-                .sort((a, b) => getBoundaryTypeOrder(a.boundary_type) - getBoundaryTypeOrder(b.boundary_type))
+                .sort((a, b) => getBoundaryTypeOrder(a.boundary_type || "") - getBoundaryTypeOrder(b.boundary_type || ""))
                 .map((b) => {
                   const boundaryReps = repsFor(b.id);
 

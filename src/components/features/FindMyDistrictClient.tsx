@@ -13,13 +13,7 @@ import { createClient } from "@/lib/supabase/client";
 import { trackFindDistrictCompleted } from "@/lib/analytics/events";
 import { useTranslation } from "@/contexts/LanguageContext";
 import type { BranchHolderNode, RepresentationBranch } from "./RepresentationBranchTree";
-
-interface MatchedBoundary {
-  id: number;
-  name: string;
-  country: string;
-  boundary_type: string;
-}
+import { useGuestLocation, setGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
 
 interface OfficeHolderRow {
   id: string;
@@ -131,6 +125,7 @@ interface FindMyDistrictClientProps {
 export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyDistrictClientProps) {
   const { t } = useTranslation();
   const supabase = createClient();
+  const guestLocation = useGuestLocation();
   const hasInitialBoundaries = initialBoundaries.length > 0;
   const [boundaries, setBoundaries] = useState<MatchedBoundary[] | null>(
     hasInitialBoundaries ? initialBoundaries : null
@@ -156,15 +151,15 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
       setBranchesLoading(true);
       // Filter out polling districts as they're not electoral boundaries
       const boundariesToResolve = matched.filter(
-        (b) => !b.boundary_type.toLowerCase().includes("polling")
+        (b) => !(b.boundary_type || "").toLowerCase().includes("polling")
       );
       const resolvedBranches = await Promise.all(
         boundariesToResolve.map((b) =>
           resolveBranch(supabase, {
             id: b.id,
             name: b.name,
-            country: b.country,
-            boundary_type: b.boundary_type,
+            country: b.country || "",
+            boundary_type: b.boundary_type || "",
           } as ShapeRow)
         )
       );
@@ -174,17 +169,22 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
     [supabase]
   );
 
-  // Resolve the already-known constituency's representatives on mount —
-  // same data an address search would produce, minus the address search.
-  // Deferred a tick (same pattern as InteractiveLocationPicker's own mount
-  // effect) so the setState calls inside resolveAllBranches don't run
-  // synchronously within the effect body.
+  // Sync initial profile boundaries or guest location from localStorage / cross-tab storage
   useEffect(() => {
     if (hasInitialBoundaries) {
       Promise.resolve().then(() => resolveAllBranches(initialBoundaries));
+    } else if (guestLocation && guestLocation.boundaries.length > 0) {
+      setBoundaries(guestLocation.boundaries);
+      setSelectedLat(guestLocation.lat);
+      setSelectedLng(guestLocation.lng);
+      setPickerOpen(false);
+      Promise.resolve().then(() => resolveAllBranches(guestLocation.boundaries));
+    } else if (!guestLocation || guestLocation.boundaries.length === 0) {
+      setBoundaries(null);
+      setBranches([]);
+      setPickerOpen(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [hasInitialBoundaries, guestLocation, initialBoundaries, resolveAllBranches]);
 
   const handleLocationSelect = async (lat: number, lng: number) => {
     setSelectedLat(lat);
@@ -201,6 +201,9 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
     const matched = (data as MatchedBoundary[] | null) || [];
     trackFindDistrictCompleted({ found: matched.length > 0, boundaryCount: matched.length });
     setBoundaries(matched);
+    if (!hasInitialBoundaries) {
+      setGuestLocation({ lat, lng, boundaries: matched });
+    }
     await resolveAllBranches(matched);
   };
 

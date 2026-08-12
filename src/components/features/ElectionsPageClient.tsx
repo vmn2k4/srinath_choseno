@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
   Vote,
@@ -32,6 +32,11 @@ import {
   getActiveSeats,
   getCandidatesBySeatIds,
 } from "@/lib/services/elections";
+import {
+  useGuestLocation,
+  setGuestLocation,
+  clearGuestLocation,
+} from "@/lib/utils/guestLocation";
 
 export interface SeatWithCandidates {
   id: string;
@@ -61,6 +66,9 @@ export default function ElectionsPageClient({
 }: ElectionsPageClientProps) {
   const { t } = useTranslation();
   const supabase = createClient();
+  const guestLocation = useGuestLocation();
+  const isGuest = initialBoundaries.length === 0;
+
   const [seats, setSeats] = useState<SeatWithCandidates[]>(initialSeats);
   const [loading, setLoading] = useState(false);
 
@@ -82,34 +90,25 @@ export default function ElectionsPageClient({
     !initialRole || initialBoundaries.length === 0
   );
 
-  const handleLocationSelect = async (lat: number, lng: number) => {
-    setCurrentLat(lat);
-    setCurrentLng(lng);
-    setLocLoading(true);
-    setLocError("");
-    setLoading(true);
+  const fetchSeatsForBoundaries = useCallback(
+    async (boundariesToFetch: MatchedBoundary[]) => {
+      setLoading(true);
+      try {
+        const shapeIds = boundariesToFetch.map((b) => b.id);
+        let resSeats: SeatWithCandidates[] = [];
 
-    try {
-      const { data: boundaries, error: rpcError } = await findBoundariesByPoint(
-        supabase,
-        lat,
-        lng
-      );
-      if (rpcError) throw rpcError;
+        if (shapeIds.length > 0) {
+          const { data: seatRows } = await getActiveSeatsByShapeIds(
+            supabase,
+            shapeIds
+          );
+          resSeats = (seatRows || []) as unknown as SeatWithCandidates[];
+        } else {
+          const { data: seatRows } = await getActiveSeats(supabase);
+          resSeats = (seatRows || []) as unknown as SeatWithCandidates[];
+        }
 
-      const matched = (boundaries as MatchedBoundary[]) || [];
-      setMatchedBoundaries(matched);
-      setHasCustomLocation(true);
-
-      const shapeIds = matched.map((b) => b.id);
-      if (shapeIds.length > 0) {
-        const { data: seatRows } = await getActiveSeatsByShapeIds(
-          supabase,
-          shapeIds
-        );
-        const rows = (seatRows || []) as unknown as SeatWithCandidates[];
-        const seatIds = rows.map((s) => s.id);
-
+        const seatIds = resSeats.map((s) => s.id);
         const candidatesBySeat: Record<string, unknown[]> = {};
         if (seatIds.length > 0) {
           const { data: candidateRows } = await getCandidatesBySeatIds(
@@ -123,69 +122,85 @@ export default function ElectionsPageClient({
         }
 
         setSeats(
-          rows.map((s) => ({
+          resSeats.map((s) => ({
             ...s,
             candidates: candidatesBySeat[s.id] || [],
           }))
         );
-      } else {
-        setSeats([]);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
+    },
+    [supabase]
+  );
+
+  // Sync with guest location from localStorage / cross-tab storage events
+  useEffect(() => {
+    if (!isGuest) return;
+
+    if (guestLocation && guestLocation.boundaries.length > 0) {
+      setMatchedBoundaries(guestLocation.boundaries);
+      setCurrentLat(guestLocation.lat);
+      setCurrentLng(guestLocation.lng);
+      setHasCustomLocation(true);
+      setShowPicker(false);
+      setMobileFinderOpen(false);
+      fetchSeatsForBoundaries(guestLocation.boundaries);
+    } else if (hasCustomLocation && (!guestLocation || guestLocation.boundaries.length === 0)) {
+      setMatchedBoundaries([]);
+      setCurrentLat(undefined);
+      setCurrentLng(undefined);
+      setHasCustomLocation(false);
+      setShowPicker(true);
+      setMobileFinderOpen(true);
+      fetchSeatsForBoundaries([]);
+    }
+  }, [guestLocation, isGuest, fetchSeatsForBoundaries]);
+
+  const handleLocationSelect = async (lat: number, lng: number) => {
+    setCurrentLat(lat);
+    setCurrentLng(lng);
+    setLocLoading(true);
+    setLocError("");
+
+    try {
+      const { data: boundaries, error: rpcError } = await findBoundariesByPoint(
+        supabase,
+        lat,
+        lng
+      );
+      if (rpcError) throw rpcError;
+
+      const matched = (boundaries as MatchedBoundary[]) || [];
+      setMatchedBoundaries(matched);
+      setHasCustomLocation(true);
+
+      if (isGuest) {
+        setGuestLocation({ lat, lng, boundaries: matched });
+      }
+
+      await fetchSeatsForBoundaries(matched);
     } catch (err: any) {
       console.error(err);
       setLocError("Could not resolve location boundaries.");
     } finally {
       setLocLoading(false);
-      setLoading(false);
     }
   };
 
   const handleResetLocation = async () => {
-    setLoading(true);
     setHasCustomLocation(false);
     setMatchedBoundaries(initialBoundaries);
     setCurrentLat(undefined);
     setCurrentLng(undefined);
 
-    try {
-      let resSeats: SeatWithCandidates[] = [];
-      const shapeIds = initialBoundaries.map((b) => b.id);
-
-      if (shapeIds.length > 0) {
-        const { data: seatRows } = await getActiveSeatsByShapeIds(
-          supabase,
-          shapeIds
-        );
-        resSeats = (seatRows || []) as unknown as SeatWithCandidates[];
-      } else {
-        const { data: seatRows } = await getActiveSeats(supabase);
-        resSeats = (seatRows || []) as unknown as SeatWithCandidates[];
-      }
-
-      const seatIds = resSeats.map((s) => s.id);
-      const candidatesBySeat: Record<string, unknown[]> = {};
-      if (seatIds.length > 0) {
-        const { data: candidateRows } = await getCandidatesBySeatIds(
-          supabase,
-          seatIds
-        );
-        (candidateRows || []).forEach((c: { seat_id: string }) => {
-          candidatesBySeat[c.seat_id] = candidatesBySeat[c.seat_id] || [];
-          candidatesBySeat[c.seat_id].push(c);
-        });
-      }
-
-      setSeats(
-        resSeats.map((s) => ({
-          ...s,
-          candidates: candidatesBySeat[s.id] || [],
-        }))
-      );
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
+    if (isGuest) {
+      clearGuestLocation();
     }
+
+    await fetchSeatsForBoundaries(initialBoundaries);
   };
 
   return (
