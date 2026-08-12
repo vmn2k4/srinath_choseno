@@ -21,8 +21,10 @@ import {
   ConfirmDialog,
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 export default function ProfilePageClient() {
+  const { t } = useTranslation();
   const supabase = createClient();
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
@@ -139,10 +141,10 @@ export default function ProfilePageClient() {
 
   const roleLabel =
     profile?.role === "normal"
-      ? "Citizen"
+      ? t("profile.citizen")
       : profile?.role === "politician"
-      ? "Politician"
-      : "Not set";
+      ? t("profile.politician")
+      : t("profile.notSet");
   const roleTone = profile?.role === "politician" ? "primary" : "accent";
 
   // Citizen -> politician only. The reverse is permanently blocked at the database
@@ -166,11 +168,11 @@ export default function ProfilePageClient() {
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
       <PageHeader
-        title="Your Profile"
-        subtitle="Manage your account details."
+        title={t("profile.title")}
+        subtitle={t("profile.subtitle")}
         action={
           <Button variant="outline" onClick={() => router.push("/profile/edit")}>
-            <Pencil size={15} /> Edit Profile
+            <Pencil size={15} /> {t("profile.editBtn")}
           </Button>
         }
       />
@@ -179,14 +181,14 @@ export default function ProfilePageClient() {
       <Card padding="md" className="space-y-4">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest">
-            General Info
+            {t("profile.generalInfo")}
           </h3>
           {profile?.role !== "politician" && (
             <button
               onClick={switchToPolitician}
               className="text-xs font-semibold text-text-muted hover:text-text-main hover:bg-surface-hover px-3 py-1.5 rounded-lg border border-border-light transition-colors cursor-pointer"
             >
-              Switch to Politician Account
+              {t("profile.switchToPolitician")}
             </button>
           )}
         </div>
@@ -196,22 +198,22 @@ export default function ProfilePageClient() {
             original stacked two-column layout. */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
           <div className="flex items-center justify-between gap-3 sm:block">
-            <p className="text-xs text-text-muted sm:mb-1">Full Name</p>
+            <p className="text-xs text-text-muted sm:mb-1">{t("profile.fullName")}</p>
             <p className="font-semibold text-text-main text-right sm:text-left">
               {profile?.fullName || (
-                <em className="text-text-muted not-italic font-normal">Not set</em>
+                <em className="text-text-muted not-italic font-normal">{t("profile.notSet")}</em>
               )}
             </p>
           </div>
           <div className="flex items-center justify-between gap-3 sm:block">
-            <p className="text-xs text-text-muted sm:mb-1">Account Type</p>
+            <p className="text-xs text-text-muted sm:mb-1">{t("profile.accountType")}</p>
             <Badge tone={roleTone} size="sm">
               {roleLabel}
             </Badge>
           </div>
           <div className="sm:col-span-2">
             <p className="text-xs text-text-muted mb-1">
-              Your Verified Constituencies
+              {t("profile.verifiedConstituencies")}
             </p>
             {profile?.matchedBoundaries?.length ? (
               <div className="flex flex-wrap gap-2 mt-1.5">

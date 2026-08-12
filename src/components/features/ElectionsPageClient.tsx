@@ -26,6 +26,7 @@ import InteractiveLocationPicker from "./InteractiveLocationPicker";
 import { createClient } from "@/lib/supabase/client";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 import { findBoundariesByPoint } from "@/lib/services/boundaries";
+import { useTranslation } from "@/contexts/LanguageContext";
 import {
   getActiveSeatsByShapeIds,
   getActiveSeats,
@@ -58,6 +59,7 @@ export default function ElectionsPageClient({
   initialRole = null,
   initialBoundaries = [],
 }: ElectionsPageClientProps) {
+  const { t } = useTranslation();
   const supabase = createClient();
   const [seats, setSeats] = useState<SeatWithCandidates[]>(initialSeats);
   const [loading, setLoading] = useState(false);
@@ -188,7 +190,7 @@ export default function ElectionsPageClient({
 
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 flex flex-col gap-6 lg:gap-8">
-      <PageHeader icon={Vote} title="Elections &amp; Races" />
+      <PageHeader icon={Vote} title={t("elections.title")} />
 
       {initialRole === "normal" && (
         <Card
@@ -196,11 +198,10 @@ export default function ElectionsPageClient({
           className="flex items-center justify-between gap-4 flex-wrap"
         >
           <p className="text-sm text-text-secondary">
-            Interested in serving your community? Switch to candidate mode to
-            file your candidacy.
+            {t("elections.runCta")}
           </p>
           <Button as={Link} href="/profile" className="shrink-0">
-            Run for Office
+            {t("elections.runBtn")}
           </Button>
         </Card>
       )}
@@ -218,8 +219,8 @@ export default function ElectionsPageClient({
           >
             <MapPin size={15} />
             {matchedBoundaries.length > 0
-              ? `${matchedBoundaries.length} district${matchedBoundaries.length !== 1 ? "s" : ""} verified`
-              : "Find Elections Near You"}
+              ? `${matchedBoundaries.length} ${t("elections.verifiedDistricts")}`
+              : t("elections.finderTitle")}
           </button>
         )}
 
@@ -235,11 +236,10 @@ export default function ElectionsPageClient({
               </div>
               <div className="min-w-0">
                 <h2 className="text-sm lg:text-base font-bold text-text-main truncate lg:whitespace-normal lg:flex lg:items-center lg:gap-2">
-                  Find Elections in Your Constituency
+                  {t("elections.finderTitle")}
                 </h2>
                 <p className="hidden lg:block text-xs text-text-muted">
-                  Search your address, click on the map, or use Auto-Detect GPS to
-                  discover elections in your local electoral boundaries.
+                  {t("elections.finderSubtitle")}
                 </p>
               </div>
             </div>
@@ -253,7 +253,7 @@ export default function ElectionsPageClient({
               >
                 <Search size={14} />
                 <span className="hidden lg:inline">
-                  {showPicker ? "Hide Map & Location Search" : "Search Address / Map"}
+                  {showPicker ? t("elections.hideSearch") : t("elections.showSearch")}
                 </span>
                 <span className="lg:hidden">{showPicker ? "Hide" : "Search"}</span>
               </Button>

@@ -11,6 +11,7 @@ import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { Card, Spinner } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { trackFindDistrictCompleted } from "@/lib/analytics/events";
+import { useTranslation } from "@/contexts/LanguageContext";
 import type { BranchHolderNode, RepresentationBranch } from "./RepresentationBranchTree";
 
 interface MatchedBoundary {
@@ -128,6 +129,7 @@ interface FindMyDistrictClientProps {
 }
 
 export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyDistrictClientProps) {
+  const { t } = useTranslation();
   const supabase = createClient();
   const hasInitialBoundaries = initialBoundaries.length > 0;
   const [boundaries, setBoundaries] = useState<MatchedBoundary[] | null>(
@@ -210,12 +212,10 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
       <header className="w-full max-w-7xl mx-auto px-4 pt-3 pb-1 sm:py-4">
         <div className="text-center space-y-1 sm:space-y-2 mb-3 sm:mb-6">
           <h1 className="font-display text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
-            Find your electoral district and representatives
+            {t("findDistrict.title")}
           </h1>
           <p className="hidden sm:block text-text-muted text-sm max-w-2xl mx-auto">
-            Search your address to discover your federal, provincial, and municipal electoral boundaries,
-            your elected representatives, and 2026 election candidates in your area. Free,
-            non-partisan, and no login required.
+            {t("findDistrict.subtitle")}
           </p>
         </div>
       </header>
@@ -239,7 +239,7 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
               >
                 <span className="flex items-center gap-2 min-w-0">
                   <MapPin size={15} className="text-primary shrink-0" />
-                  <span className="truncate">Change location</span>
+                  <span className="truncate">{t("findDistrict.changeLocation")}</span>
                 </span>
                 <ChevronDown size={15} className="text-text-muted shrink-0" />
               </button>
@@ -270,12 +270,11 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
               <section className="space-y-3" aria-label="Electoral boundaries at your location">
                 {boundaries.length === 0 ? (
                   <Card padding="md" className="text-center text-sm text-text-muted">
-                    No mapped boundaries found for that location yet. Coverage expands as new
-                    regions are added.
+                    {t("findDistrict.noBoundaries")}
                   </Card>
                 ) : (
                   <>
-                    <h2 className="text-base font-bold text-text-main">Your Electoral Boundaries</h2>
+                    <h2 className="text-base font-bold text-text-main">{t("findDistrict.yourBoundaries")}</h2>
                     <div className="space-y-3">
                       {boundaries.map((b) => (
                         <Link

@@ -20,6 +20,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { MapPin, ArrowRight } from "lucide-react";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -195,6 +196,7 @@ export function RoleSplitCta({
   align?: "center" | "start";
 }) {
   const { session } = useAuth();
+  const { t } = useTranslation();
   const big = size === "lg";
   const pad = big
     ? "py-3 px-6 text-base sm:px-8 sm:py-4.5 sm:text-lg"
@@ -210,7 +212,7 @@ export function RoleSplitCta({
           big ? "py-3 px-6 text-base sm:px-9 sm:py-4.5 sm:text-xl" : pad
         } rounded-2xl bg-primary text-text-on-primary font-bold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md`}
       >
-        Open your feed
+        {t("home.openFeed")}
         <ArrowRight
           size={big ? 22 : iconSize}
           className="transition-transform duration-300 group-hover:translate-x-1.5"
@@ -226,7 +228,7 @@ export function RoleSplitCta({
         href="/auth?role=citizen"
         className={`group inline-flex items-center gap-3 w-full sm:w-auto justify-center ${pad} rounded-2xl bg-primary text-text-on-primary font-bold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md`}
       >
-        I&apos;m a Citizen
+        {t("home.citizenCta")}
         <ArrowRight
           size={iconSize}
           className="transition-transform duration-300 group-hover:translate-x-1.5"
@@ -237,7 +239,7 @@ export function RoleSplitCta({
         href="/auth?role=politician"
         className={`group inline-flex items-center gap-3 w-full sm:w-auto justify-center ${pad} rounded-2xl border-2 border-primary/50 bg-surface-elevated/70 text-text-main font-bold hover:bg-primary/10 hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer`}
       >
-        I&apos;m Running for Office
+        {t("home.candidateCta")}
         <ArrowRight
           size={iconSize}
           className="transition-transform duration-300 group-hover:translate-x-1.5"

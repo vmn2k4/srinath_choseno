@@ -1,0 +1,266 @@
+{
+  "nav": {
+    "home": "Home",
+    "elections": "Elections",
+    "findDistrict": "Find District",
+    "news": "News",
+    "about": "About",
+    "logIn": "Log In",
+    "signUp": "Sign Up",
+    "logInSignUp": "Log In / Sign Up",
+    "myWall": "My Wall",
+    "admin": "Admin",
+    "profile": "Profile",
+    "signOut": "Log Out",
+    "theme": "Theme"
+  },
+  "footer": {
+    "tagline": "A secure, anonymous civic platform connecting citizens and independent candidates in real electoral boundaries.",
+    "quickLinks": "Quick Links",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact",
+    "editorial": "Editorial Standards",
+    "copyright": "Choseno. Independent & non-partisan.",
+    "builtWith": "Built with",
+    "byCitizen": "by an everyday citizen —"
+  },
+  "home": {
+    "badge": "Voice of the Silent Majority",
+    "titleMain": "Rate Your Politicians' Performance.",
+    "titleSub": "Like Yelp, but for Democracy.",
+    "subtitle": "A secure, anonymous space to hold local leaders accountable. Share your experience, read what your neighbors think, and walk into the booth informed — no toxicity, just accountability.",
+    "scopedTo": "Conversations scoped to",
+    "citizenCta": "I'm a Citizen",
+    "candidateCta": "I'm Running for Office",
+    "openFeed": "Open your feed",
+    "trustChips": {
+      "anonymous": "Speak freely, stay hidden",
+      "verified": "Real voting areas verified",
+      "nonpartisan": "No favorite parties",
+      "realPeople": "Real people, real votes"
+    },
+    "bridge": {
+      "title": "Democracy, simplified.",
+      "subtitle": "Same as picking a restaurant — except this time you're choosing who represents you.",
+      "step1Title": "Find",
+      "step1Text": "Search for who represents you — no lengthy forms.",
+      "step2Title": "Read",
+      "step2Text": "Listen to what people around you really think.",
+      "step3Title": "Vote",
+      "step3Text": "Make your choice with confidence, not guesses."
+    },
+    "howItWorks": {
+      "badge": "Simple & Safe",
+      "title": "How Choseno works for you",
+      "subtitle": "No complex setups. Three simple steps to join neighborhood discussions safely.",
+      "step1Title": "Find your voting area",
+      "step1Text": "Share your location once. We instantly match it to your real voting area — no forms to fill out, your privacy stays completely safe.",
+      "step2Title": "Join neighborhood conversations",
+      "step2Text": "Read real discussions from people in your voting area. Easily switch between your street, city, province, country, or global conversations.",
+      "step3Title": "Speak up on what matters",
+      "step3Text": "Share your opinion anonymously. Show your elected officials which local issues you care about most. They see real people speaking up, not bots or outsiders."
+    },
+    "audiences": {
+      "title": "Built for voters & future leaders",
+      "voterLabel": "For Voters",
+      "voterPitch": "Be heard on issues that affect your neighborhood — not just the big national news.",
+      "voterPoint1": "See all discussions from your area in one place",
+      "voterPoint2": "Post and comment with a private anonymous name",
+      "voterPoint3": "Change your anonymous name anytime for a fresh start",
+      "voterPoint4": "Real votes only — one person, one vote. No fake accounts allowed",
+      "voterCta": "Join your area",
+      "voterSecondary": "not sure your voting area? find it now",
+      "candidateLabel": "For People Who Want to Run",
+      "candidatePitch": "Run for office without needing a party. The voters decide who they like, not party bosses.",
+      "candidatePoint1": "Your own public page where voters can learn about you",
+      "candidatePoint2": "Answer voter questions directly — no avoiding tough questions",
+      "candidatePoint3": "Record short videos explaining your ideas, right on the site",
+      "candidatePoint4": "See exactly what voters are asking and decide how to answer",
+      "candidateCta": "Run for office",
+      "candidateSecondary": "or see open races near you"
+    },
+    "preview": {
+      "titleMain": "Every district,",
+      "titleSub": "one feed away."
+    },
+    "features": {
+      "title": "Designed for honest, local conversations",
+      "f1Title": "Anonymous names you can change",
+      "f1Text": "Use a private name when you post. Switch to a new anonymous name anytime you want a fresh start.",
+      "f2Title": "Real video answers",
+      "f2Text": "Politicians record video answers to voter questions. You get their real voice, not just written words.",
+      "f3Title": "Real votes only",
+      "f3Text": "One person gets one vote. No fake accounts, no outsiders. Just real people from your area.",
+      "f4Title": "Talk at every level",
+      "f4Text": "Discuss your street, your city, your province, your country — or think globally. Pick what matters to you.",
+      "f5Title": "Neighbors talking together",
+      "f5Text": "Conversations stay local. You're talking with real people from your area who care about the same issues.",
+      "f6Title": "Verified voting areas",
+      "f6Text": "We make sure you see discussions only from your actual voting area. No confusion about who represents you."
+    },
+    "faqsTitle": "Questions, answered",
+    "faqs": [
+      {
+        "q": "Is Choseno really anonymous?",
+        "a": "Yes. Your posts appear under a fake name, not your real one. You can get a new fake name anytime you want, and your old posts get disconnected from your profile."
+      },
+      {
+        "q": "Can politicians or staff see who I really am?",
+        "a": "No. Nobody sees your real name. Your posts and profile are completely separate — even staff can't connect them. That's by design."
+      },
+      {
+        "q": "What happens when I get a new anonymous name?",
+        "a": "Your old posts stay online but get a fresh start. When you switch to a new name, you're making a clean break from your past posts."
+      },
+      {
+        "q": "How do you know where I live without asking for my address?",
+        "a": "We just need your location once. We match it to your voting area automatically — no forms, no typing an address."
+      },
+      {
+        "q": "Is Choseno run by a political party?",
+        "a": "No. We show all candidates equally. A candidate's party doesn't matter to us — voters decide who they like."
+      },
+      {
+        "q": "Can I run for office without party support?",
+        "a": "Yes. Any local resident can run. You just share a little about yourself, voters ask you questions, and you get your own campaign page."
+      },
+      {
+        "q": "What if my area isn't on the map yet?",
+        "a": "You can search for your area by name or use your location. If it's not there yet, we're still adding new areas. Check back soon."
+      }
+    ],
+    "closing": {
+      "titleMain": "Join your district.",
+      "titleSub": "Vote informed.",
+      "subtitle": "See what your neighbors are already saying, then walk into the booth knowing exactly who you're choosing."
+    }
+  },
+  "elections": {
+    "title": "Elections & Races",
+    "finderTitle": "Find Elections in Your Constituency",
+    "finderSubtitle": "Search your address, click on the map, or use Auto-Detect GPS to discover elections in your local electoral boundaries.",
+    "hideSearch": "Hide Map & Location Search",
+    "showSearch": "Search Address / Map",
+    "noCandidates": "No candidates yet",
+    "candidateCount": "candidates",
+    "verifiedDistricts": "Verified in electoral district(s)",
+    "resetLoc": "Reset to your profile location",
+    "showingSeats": "Showing active seats",
+    "runCta": "Interested in serving your community? Switch to candidate mode to file your candidacy.",
+    "runBtn": "Run for Office"
+  },
+  "findDistrict": {
+    "title": "Find your electoral district and representatives",
+    "subtitle": "Search your address to discover your federal, provincial, and municipal electoral boundaries, your elected representatives, and 2026 election candidates in your area. Free, non-partisan, and no login required.",
+    "changeLocation": "Change location",
+    "yourBoundaries": "Your Electoral Boundaries",
+    "noBoundaries": "No mapped boundaries found for that location yet. Coverage expands as new regions are added."
+  },
+  "newsPage": {
+    "title": "Civic News & Updates",
+    "readFull": "Read full article",
+    "breaking": "BREAKING",
+    "noArticles": "No news articles published yet. Check back soon.",
+    "failedToLoad": "Failed to load news articles.",
+    "backToNews": "Back to News",
+    "minRead": "min read",
+    "topics": "Topics",
+    "sources": "Sources",
+    "translateArticle": "Translate Article",
+    "showingOriginal": "Show Original",
+    "translatingArticle": "Translating Article..."
+  },
+  "profile": {
+    "title": "Your Profile",
+    "subtitle": "Manage your account details.",
+    "editBtn": "Edit Profile",
+    "generalInfo": "General Info",
+    "switchToPolitician": "Switch to Candidate Mode",
+    "fullName": "Full Name",
+    "accountType": "Account Type",
+    "verifiedConstituencies": "Your Verified Constituencies",
+    "notSet": "Not set",
+    "citizen": "Citizen",
+    "politician": "Running for Office"
+  },
+  "location": {
+    "placeholder": "Search address or city...",
+    "findLocation": "Find your location",
+    "findLocationDesc": "Use your GPS, or close this and search/click the map instead.",
+    "locateMe": "Locate Me",
+    "autoDetect": "Auto-Detect GPS",
+    "manualCoords": "Manual Coordinates"
+  },
+  "sidebar": {
+    "currentOfficeHolders": "Current Office Holders",
+    "directory": "Directory",
+    "viewFullDirectory": "View Full Office Holder Directory",
+    "candidatesAndReps": "Candidates & Representatives",
+    "noOfficeHolders": "No active office holders loaded for this boundary yet.",
+    "noCandidates": "No candidates or representatives found for your area yet.",
+    "viewBoundaryPage": "View boundary page",
+    "onChoseno": "On Choseno"
+  },
+  "feed": {
+    "createPostPlaceholder": "What's happening in your constituency?",
+    "postBtn": "Post",
+    "posting": "Posting...",
+    "localFeed": "Local Feed",
+    "trending": "Trending",
+    "allDiscussions": "All Discussions",
+    "emptyTitle": "No posts in this boundary yet",
+    "emptyDesc": "Be the first neighbor to post a question or feedback for your local representatives!",
+    "switchIdentity": "New Anonymous Name",
+    "identityInfo": "Get a new anonymous name anytime for a fresh start"
+  },
+  "about": {
+    "badge": "An independent civic initiative",
+    "heroTitleMain": "Built by a citizen,",
+    "heroTitleSub": "for every citizen.",
+    "heroLead": "Choseno started as a personal dream — not a startup pitch. It was born out of a simple frustration that millions of people share: we vote once, and then politicians do whatever they want.",
+    "whoBuilt": "Who built this",
+    "role": "Independent Software Developer & Citizen",
+    "bio1": "I am a common person — not a politician, not a lobbyist, not a media company. I am someone who watches the news, votes in every election, and still feels like my voice disappears the moment I leave the polling booth.",
+    "bio2": "Choseno is my personal contribution to the world. I built it because I genuinely believe people deserve to be part of the political conversation every single day of a politician's term — not just every two or four years on election day.",
+    "bio3": "This platform is not funded by any political party, PAC, or corporate interest. It is an independent, self-started initiative. No agenda. No endorsements. Just a tool to help citizens find each other, share their real experiences with the people who represent them, and hold those representatives accountable through public opinion.",
+    "missionTitle": "Our mission",
+    "m1Title": "Continuous Conversation",
+    "m1Text": "Politics isn't a one-day event. Choseno gives citizens a permanent forum to ask questions, share feedback, and hold representatives accountable throughout their entire term.",
+    "m2Title": "Voice of the Silent Majority",
+    "m2Text": "Most people have opinions but nowhere to share them safely. Choseno's anonymous Ghost ID system lets people speak honestly without fear of retribution.",
+    "m3Title": "Zero Party Influence",
+    "m3Text": "Choseno has no political affiliation and accepts no political donations. Every candidate is represented equally. Voters decide who gets a good rating — not us.",
+    "editorialTitle": "How We Work — Editorial Standards",
+    "standard1Title": "Strict Non-Partisanship",
+    "standard1Text": "We do not rank candidates based on party affiliation or endorsement. Every verified candidate gets the exact same presentation.",
+    "standard2Title": "Verified Voters & One Person, One Vote",
+    "standard2Text": "To prevent bots, brigading, and foreign interference, all location-based votes are tied to real, verified electoral boundaries.",
+    "standard3Title": "Privacy First",
+    "standard3Text": "Your real identity is never exposed on posts or ratings. We protect citizen privacy while maintaining high-trust community signals.",
+    "contactQuestions": "Questions, concerns, or corrections?"
+  },
+  "auth": {
+    "title": "Welcome Back",
+    "signUpTitle": "Create an Account",
+    "subtitle": "Join your local civic network anonymously",
+    "tabCitizen": "Citizen",
+    "tabPolitician": "Running for Office",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "signInBtn": "Log In",
+    "signUpBtn": "Sign Up",
+    "orContinue": "or continue with",
+    "google": "Google",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?"
+  },
+  "post": {
+    "translate": "Translate",
+    "translating": "Translating...",
+    "original": "Show original",
+    "translatedBy": "Translated automatically"
+  }
+}

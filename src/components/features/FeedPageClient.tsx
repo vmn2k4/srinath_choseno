@@ -20,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 import LinkPreview from "./LinkPreview";
+import { useTranslation } from "@/contexts/LanguageContext";
 import PostCard, { PostWithComments } from "./PostCard";
 import StoryStrip, { StoryPost } from "./StoryStrip";
 import PitchViewerModal from "./PitchViewerModal";
@@ -100,6 +101,7 @@ function getBoundaryNameFromPost(post: any): string | null {
 }
 
 export default function FeedPageClient() {
+  const { t } = useTranslation();
   const supabase = createClient();
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
@@ -717,7 +719,7 @@ export default function FeedPageClient() {
                     >
                       <Avatar src={avatarUrl} name={profile?.full_name} size="sm" />
                       <span className="flex-1 min-w-0 text-sm text-text-muted bg-surface/50 border border-border-light/30 rounded-full px-4 py-2 truncate">
-                        What&apos;s happening in your constituency?
+                        {t("feed.createPostPlaceholder")}
                       </span>
                       <span className="shrink-0 flex items-center gap-1 text-text-muted">
                         <ImageIcon size={18} aria-hidden="true" />
@@ -829,7 +831,7 @@ export default function FeedPageClient() {
                           type="submit"
                           disabled={submitting || (!newPostContent.trim() && !imageFile && !uploadedVideoUrl)}
                         >
-                          {submitting ? "Posting..." : "Post to Feed"}
+                          {submitting ? t("feed.posting") : t("feed.postBtn")}
                         </Button>
                       </div>
                     </div>
@@ -856,15 +858,17 @@ export default function FeedPageClient() {
                   return (
                     <button
                       key={pill.key}
+                      type="button"
                       onClick={() => setMasterFilter(pill.key)}
-                      className={`px-3.5 py-1.5 rounded-xl text-left transition-all cursor-pointer whitespace-nowrap shrink-0 border ${
+                      className={`flex flex-col text-left px-3 py-2 rounded-xl transition-all border shrink-0 min-w-[130px] cursor-pointer ${
                         isActive
-                          ? "bg-primary/20 text-primary border-primary/40 shadow-sm"
-                          : "bg-surface/40 hover:bg-surface-hover text-text-muted hover:text-text-main border-border-light/30"
+                          ? "bg-primary/10 border-primary text-text-main font-bold shadow-sm"
+                          : "bg-surface/60 border-border-light/40 text-text-muted hover:bg-surface-hover hover:border-border-light hover:text-text-main"
                       }`}
                     >
-                      <div className="text-[12px] font-bold text-text-main truncate leading-tight">
-                        {pill.districtName}
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <MapPin size={12} className={isActive ? "text-primary shrink-0" : "text-text-muted shrink-0"} />
+                        <span className="truncate text-xs">{pill.districtName}</span>
                       </div>
                       <div className="text-[10px] font-semibold text-primary/80 uppercase tracking-wider leading-tight">
                         {pill.divisionType}
@@ -878,8 +882,8 @@ export default function FeedPageClient() {
               {posts.length === 0 ? (
                 <EmptyState
                   icon={Users}
-                  title="No Posts in This Feed"
-                  description="Be the first constituent to post a civic update or topic for this area!"
+                  title={t("feed.emptyTitle")}
+                  description={t("feed.emptyDesc")}
                 />
               ) : (
                 <div className="space-y-4">

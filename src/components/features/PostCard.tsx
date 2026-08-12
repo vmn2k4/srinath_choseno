@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
-import { Users, ShieldCheck, CornerDownRight, Award, Flag, ArrowRight } from "lucide-react";
+import { Users, ShieldCheck, CornerDownRight, Award, Flag, ArrowRight, Languages, Loader2 } from "lucide-react";
 import Card from "@/components/primitives/Card";
 import Badge from "@/components/primitives/Badge";
 import Button from "@/components/primitives/Button";
@@ -12,6 +12,7 @@ import ReportDialog from "./ReportDialog";
 import PostHeader, { type PoliticianAuthorInfo, type NewsAuthorInfo } from "./PostHeader";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { normalizeMediaUrl } from "@/lib/services/video";
+import { useTranslation } from "@/contexts/LanguageContext";
 import type { ReportTargetType } from "@/lib/services/moderation";
 import type { Database } from "@/lib/supabase/types";
 
@@ -62,7 +63,35 @@ export default function PostCard({
   commentError?: string;
   boundaryName?: string | null;
 }) {
+  const { t, locale } = useTranslation();
   const [reportTarget, setReportTarget] = useState<{ targetType: ReportTargetType; targetId: string } | null>(null);
+  const [translatedText, setTranslatedText] = useState<string | null>(null);
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [showTranslated, setShowTranslated] = useState(false);
+
+  const handleToggleTranslate = async () => {
+    if (translatedText) {
+      setShowTranslated((prev) => !prev);
+      return;
+    }
+    if (!post.content) return;
+
+    setIsTranslating(true);
+    try {
+      const res = await fetch(
+        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(post.content)}&langpair=autodetect|${locale}`
+      );
+      const data = await res.json();
+      if (data?.responseData?.translatedText) {
+        setTranslatedText(data.responseData.translatedText);
+        setShowTranslated(true);
+      }
+    } catch {
+      // Fallback silently if offline or translation API unavailable
+    } finally {
+      setIsTranslating(false);
+    }
+  };
 
   // A news article tagged to this wall is mirrored into a posts row by
   // admin_sync_news_article_tags() (see the news_politician_party_tagging
@@ -112,9 +141,36 @@ export default function PostCard({
           onReport={onReport ? () => setReportTarget({ targetType: "post", targetId: post.id }) : undefined}
         />
 
-        <p className="text-text-tertiary text-sm whitespace-pre-wrap leading-relaxed mb-3">
-          {post.content}
+        <p className="text-text-tertiary text-sm whitespace-pre-wrap leading-relaxed mb-2">
+          {showTranslated && translatedText ? translatedText : post.content}
         </p>
+
+        {locale !== "en" && post.content && post.content.length > 5 && (
+          <div className="mb-3 flex items-center gap-2">
+            <button
+              onClick={handleToggleTranslate}
+              disabled={isTranslating}
+              className="inline-flex items-center gap-1.5 text-xs text-primary/80 hover:text-primary transition-colors cursor-pointer font-medium"
+            >
+              {isTranslating ? (
+                <>
+                  <Loader2 size={12} className="animate-spin" />
+                  <span>{t("post.translating")}</span>
+                </>
+              ) : (
+                <>
+                  <Languages size={12} />
+                  <span>{showTranslated ? t("post.original") : t("post.translate")}</span>
+                </>
+              )}
+            </button>
+            {showTranslated && (
+              <span className="text-[10px] text-text-muted italic">
+                ({t("post.translatedBy")})
+              </span>
+            )}
+          </div>
+        )}
 
         {(post.image_url || post.video_url) && (
           <div className="mb-4 flex gap-3 items-start flex-wrap">

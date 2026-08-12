@@ -1,0 +1,266 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "elections": "Elecciones",
+    "findDistrict": "Buscar Distrito",
+    "news": "Noticias",
+    "about": "Acerca de",
+    "logIn": "Iniciar Sesión",
+    "signUp": "Registrarse",
+    "logInSignUp": "Iniciar Sesión / Registrarse",
+    "myWall": "Mi Muro",
+    "admin": "Admin",
+    "profile": "Perfil",
+    "signOut": "Cerrar Sesión",
+    "theme": "Tema"
+  },
+  "footer": {
+    "tagline": "Una plataforma cívica segura y anónima que conecta a ciudadanos y candidatos independientes en límites electorales reales.",
+    "quickLinks": "Enlaces Rápidos",
+    "legal": "Legal",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "contact": "Contacto",
+    "editorial": "Normas Editoriales",
+    "copyright": "Choseno. Independiente y neutral.",
+    "builtWith": "Hecho con",
+    "byCitizen": "por un ciudadano común —"
+  },
+  "home": {
+    "badge": "La Voz de la Mayoría Silenciosa",
+    "titleMain": "Evalúa a tus Políticos.",
+    "titleSub": "Como Yelp, pero para la Democracia.",
+    "subtitle": "Un espacio seguro y anónimo para opinar sobre tus líderes locales. Comparte tu experiencia, lee lo que piensan tus vecinos y vota informado — sin toxicidad, solo transparencia.",
+    "scopedTo": "Conversaciones de tu zona en",
+    "citizenCta": "Soy Votante",
+    "candidateCta": "Quiero Postularme",
+    "openFeed": "Abrir mi Feed",
+    "trustChips": {
+      "anonymous": "Habla libremente, 100% anónimo",
+      "verified": "Zonas de votación reales verificadas",
+      "nonpartisan": "Sin favoritismo de partidos",
+      "realPeople": "Gente real, votos reales"
+    },
+    "bridge": {
+      "title": "Democracia, sin vueltas.",
+      "subtitle": "Igual que elegir un restaurante — pero esta vez eliges a quien te representa.",
+      "step1Title": "Busca",
+      "step1Text": "Encuentra quién te representa — sin formularios largos.",
+      "step2Title": "Lee",
+      "step2Text": "Descubre lo que la gente de tu zona piensa de verdad.",
+      "step3Title": "Vota",
+      "step3Text": "Elige con confianza y argumentos."
+    },
+    "howItWorks": {
+      "badge": "Fácil y Seguro",
+      "title": "Cómo funciona Choseno",
+      "subtitle": "Sin complicaciones. Tres pasos simples para sumarte a la conversación de tu barrio.",
+      "step1Title": "Encuentra tu zona electoral",
+      "step1Text": "Comparte tu ubicación una vez. Te conectamos al instante con tu distrito real — tu privacidad está 100% protegida.",
+      "step2Title": "Súmate a la conversación",
+      "step2Text": "Lee opiniones reales de tus vecinos. Cambia fácilmente entre tu calle, ciudad, provincia o país.",
+      "step3Title": "Opina sobre lo que te importa",
+      "step3Text": "Publica de forma anónima. Muestra a tus representantes cuáles son los problemas reales de tu comunidad."
+    },
+    "audiences": {
+      "title": "Hecho para votantes y futuros candidatos",
+      "voterLabel": "Para Votantes",
+      "voterPitch": "Hazte escuchar en lo que afecta a tu barrio — no solo en las noticias de la tele.",
+      "voterPoint1": "Todas las conversaciones de tu zona en un solo lugar",
+      "voterPoint2": "Publica y comenta con un seudónimo anónimo",
+      "voterPoint3": "Cambia tu seudónimo cuando quieras para empezar de cero",
+      "voterPoint4": "Una persona, un voto. Cero cuentas falsas",
+      "voterCta": "Sumarme a mi zona",
+      "voterSecondary": "¿no sabes cuál es tu distrito? encuéntralo aquí",
+      "candidateLabel": "Para Quienes Quieren Postularse",
+      "candidatePitch": "Postúlate sin depender de un partido. Que los votantes decidan, no los jefes del partido.",
+      "candidatePoint1": "Tu perfil público donde la gente puede conocer tus ideas",
+      "candidatePoint2": "Responde directo a los vecinos — nada de esquivar preguntas",
+      "candidatePoint3": "Graba vídeos cortos contando tus propuestas",
+      "candidatePoint4": "Mira exactamente qué le preocupa a los votantes",
+      "candidateCta": "Postularme a un cargo",
+      "candidateSecondary": "o mira las elecciones abiertas en tu zona"
+    },
+    "preview": {
+      "titleMain": "Todos los distritos,",
+      "titleSub": "a un toque de distancia."
+    },
+    "features": {
+      "title": "Diseñado para conversaciones locales y sinceras",
+      "f1Title": "Nombres anónimos cambiables",
+      "f1Text": "Publica con total privacidad. Cambia a un nuevo seudónimo cuando quieras un borrón y cuenta nueva.",
+      "f2Title": "Respuestas reales en vídeo",
+      "f2Text": "Los candidatos responden en vídeo a las preguntas. Escuchas su propia voz, no un texto preparado.",
+      "f3Title": "Solo votos reales",
+      "f3Text": "Un ciudadano = un voto. Sin bots ni gente de afuera. Vecinos reales de tu zona.",
+      "f4Title": "Charla a cualquier nivel",
+      "f4Text": "Habla sobre tu calle, tu ciudad, tu país o el mundo. Elige lo que te interese hoy.",
+      "f5Title": "Vecinos charlando juntos",
+      "f5Text": "Conversaciones locales con gente de tu barrio que vive los mismos problemas cotidianos.",
+      "f6Title": "Zonas electorales verificadas",
+      "f6Text": "Garantizamos que solo veas debates correspondientes a tu zona electoral real."
+    },
+    "faqsTitle": "Preguntas frecuentes",
+    "faqs": [
+      {
+        "q": "¿Choseno es realmente anónimo?",
+        "a": "Sí, 100%. Tus publicaciones aparecen con un nombre anónimo, nunca con tu nombre real. Puedes cambiar de nombre anónimo cuando quieras."
+      },
+      {
+        "q": "¿Los políticos o el equipo pueden ver quién soy?",
+        "a": "No. Nadie puede ver tu nombre real. Tu perfil personal y tus publicaciones están completamente separados."
+      },
+      {
+        "q": "¿Qué pasa cuando cambio mi nombre anónimo?",
+        "a": "Tus publicaciones anteriores siguen online pero desconectadas. Haces un borrón y cuenta nueva para tus nuevos mensajes."
+      },
+      {
+        "q": "¿Cómo saben dónde vivo sin pedirme la dirección?",
+        "a": "Solo necesitamos tu ubicación una vez. Te conectamos automáticamente con tu zona electoral sin pedirte calle ni número."
+      },
+      {
+        "q": "¿Choseno pertenece a algún partido político?",
+        "a": "No, para nada. Somos 100% independientes y neutrales. Todos los candidatos tienen el mismo espacio."
+      },
+      {
+        "q": "¿Puedo postularme sin apoyo de un partido?",
+        "a": "¡Claro que sí! Cualquier vecino puede postularse. Creas tu perfil, la gente te hace preguntas y muestras tus propuestas."
+      },
+      {
+        "q": "¿Qué pasa si mi zona aún no aparece en el mapa?",
+        "a": "Puedes buscar tu zona por nombre. Estamos sumando nuevos distritos constantemente, vuelve a revisar pronto."
+      }
+    ],
+    "closing": {
+      "titleMain": "Súmate a tu distrito.",
+      "titleSub": "Vota informado.",
+      "subtitle": "Mira lo que tus vecinos ya están comentando y entra al cuarto oscuro sabiendo exactamente a quién eliges."
+    }
+  },
+  "elections": {
+    "title": "Elecciones y Candidaturas",
+    "finderTitle": "Encuentra Elecciones en tu Zona",
+    "finderSubtitle": "Busca tu dirección, haz clic en el mapa o usa la ubicación para descubrir las elecciones en tu zona electoral.",
+    "hideSearch": "Ocultar Mapa y Búsqueda",
+    "showSearch": "Buscar Dirección / Mapa",
+    "noCandidates": "Aún no hay candidatos postulados",
+    "candidateCount": "candidatos",
+    "verifiedDistricts": "Verificado en distrito(s) electoral(es)",
+    "resetLoc": "Restablecer a tu ubicación guardada",
+    "showingSeats": "Mostrando puestos activos",
+    "runCta": "¿Quieres representar a tu comunidad? Cambia a modo candidato y presenta tu candidatura.",
+    "runBtn": "Postularme a un cargo"
+  },
+  "findDistrict": {
+    "title": "Encuentra tu distrito electoral y representantes",
+    "subtitle": "Busca tu dirección para descubrir tus distritos electorales, representantes electos y candidatos a las elecciones 2026 en tu zona. Gratuito, independiente y sin registro obligatorio.",
+    "changeLocation": "Cambiar ubicación",
+    "yourBoundaries": "Tus Distritos Electorales",
+    "noBoundaries": "Aún no se encontraron distritos cartografiados para esta ubicación."
+  },
+  "newsPage": {
+    "title": "Noticias Cívicas y Novedades",
+    "readFull": "Leer artículo completo",
+    "breaking": "ÚLTIMA HORA",
+    "noArticles": "Aún no hay artículos de noticias publicados. Vuelve pronto.",
+    "failedToLoad": "Error al cargar los artículos de noticias.",
+    "backToNews": "Volver a Noticias",
+    "minRead": "min de lectura",
+    "topics": "Temas",
+    "sources": "Fuentes",
+    "translateArticle": "Traducir Artículo",
+    "showingOriginal": "Mostrar Original",
+    "translatingArticle": "Traduciendo Artículo..."
+  },
+  "profile": {
+    "title": "Tu Perfil",
+    "subtitle": "Gestiona los datos de tu cuenta.",
+    "editBtn": "Editar Perfil",
+    "generalInfo": "Información General",
+    "switchToPolitician": "Cambiar a Modo Candidato",
+    "fullName": "Nombre Completo",
+    "accountType": "Tipo de Cuenta",
+    "verifiedConstituencies": "Tus Distritos Verificados",
+    "notSet": "No especificado",
+    "citizen": "Votante",
+    "politician": "Candidato a Cargo"
+  },
+  "location": {
+    "placeholder": "Buscar dirección o ciudad...",
+    "findLocation": "Encuentra tu ubicación",
+    "findLocationDesc": "Usa tu GPS, o busca/haz clic en el mapa.",
+    "locateMe": "Ubicarme",
+    "autoDetect": "Detectar por GPS",
+    "manualCoords": "Coordenadas manuales"
+  },
+  "sidebar": {
+    "currentOfficeHolders": "Representantes Actuales",
+    "directory": "Directorio",
+    "viewFullDirectory": "Ver Directorio Completo de Representantes",
+    "candidatesAndReps": "Candidatos y Representantes",
+    "noOfficeHolders": "Aún no hay representantes cargados para esta zona.",
+    "noCandidates": "Aún no hay candidatos en esta zona.",
+    "viewBoundaryPage": "Ver página del distrito",
+    "onChoseno": "En Choseno"
+  },
+  "feed": {
+    "createPostPlaceholder": "¿Qué está pasando en tu distrito?",
+    "postBtn": "Publicar",
+    "posting": "Publicando...",
+    "localFeed": "Noticias Locales",
+    "trending": "Tendencias",
+    "allDiscussions": "Todas las Conversaciones",
+    "emptyTitle": "Aún no hay publicaciones en esta zona",
+    "emptyDesc": "¡Sé el primer vecino en enviar una pregunta u opinión a tus representantes locales!",
+    "switchIdentity": "Nuevo Seudónimo Anónimo",
+    "identityInfo": "Obtén un nuevo seudónimo anónimo cuando quieras para un borrón y cuenta nueva"
+  },
+  "about": {
+    "badge": "Una iniciativa ciudadana independiente",
+    "heroTitleMain": "Creado por un ciudadano,",
+    "heroTitleSub": "para todos los ciudadanos.",
+    "heroLead": "Choseno nació de un sueño personal y de una frustración compartida por millones de personas: votamos cada varios años y luego los políticos hacen lo que quieren.",
+    "whoBuilt": "Quién creó esto",
+    "role": "Desarrollador de Software Independiente y Ciudadano",
+    "bio1": "Soy una persona común y corriente — no soy político, ni lobista, ni un medio de comunicación. Soy alguien que mira las noticias, vota en cada elección y siente que su voz desaparece apenas sale del centro de votación.",
+    "bio2": "Choseno es mi aporte personal para cambiar esto. Lo creé porque creo firmemente que la gente merece ser parte de la conversación política todos los días del mandato de un político, no solo el día de la votación.",
+    "bio3": "Esta plataforma no recibe financiamiento de ningún partido ni corporación. Es una iniciativa 100% independiente. Sin agenda. Sin favoritismos. Es una herramienta para que los ciudadanos se encuentren, compartan sus experiencias reales y responsabilicen a sus representantes.",
+    "missionTitle": "Nuestra misión",
+    "m1Title": "Conversación Continua",
+    "m1Text": "La política no es un evento de un solo día. Choseno brinda un foro permanente para preguntar, opinar y evaluar a tus representantes.",
+    "m2Title": "La Voz de la Mayoría Silenciosa",
+    "m2Text": "La mayoría tiene opinión pero no un lugar seguro para compartirla. El sistema de nombres anónimos de Choseno permite hablar sin temor.",
+    "m3Title": "Cero Influencia de Partidos",
+    "m3Text": "Choseno no tiene filiación política ni acepta donaciones. Todos los candidatos son tratados por igual. Los votantes deciden quién destaca.",
+    "editorialTitle": "Cómo Trabamos — Normas Editoriales",
+    "standard1Title": "Estricta Neutralidad",
+    "standard1Text": "No destacamos a candidatos por partido ni alianzas. Todos los candidatos verificados tienen exactamente la misma visibilidad.",
+    "standard2Title": "Votantes Verificados (Un Ciudadano, Un Voto)",
+    "standard2Text": "Para evitar bots y manipulación extranjera, todos los votos y debates se vinculan a zonas electorales reales.",
+    "standard3Title": "Privacidad Ante Todo",
+    "standard3Text": "Tu identidad real nunca se muestra en publicaciones ni calificaciones. Protegemos tu privacidad.",
+    "contactQuestions": "¿Preguntas, dudas o correcciones?"
+  },
+  "auth": {
+    "title": "Bienvenido de nuevo",
+    "signUpTitle": "Crear una Cuenta",
+    "subtitle": "Únete a tu red cívica local de forma anónima",
+    "tabCitizen": "Ciudadano",
+    "tabPolitician": "Candidato a Cargo",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "passwordLabel": "Contraseña",
+    "signInBtn": "Iniciar Sesión",
+    "signUpBtn": "Registrarse",
+    "orContinue": "o continuar con",
+    "google": "Google",
+    "noAccount": "¿No tienes una cuenta?",
+    "haveAccount": "¿Ya tienes una cuenta?"
+  },
+  "post": {
+    "translate": "Traducir",
+    "translating": "Traduciendo...",
+    "original": "Ver original",
+    "translatedBy": "Traducido automáticamente"
+  }
+}

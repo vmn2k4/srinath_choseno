@@ -3,6 +3,7 @@ import { Public_Sans, Big_Shoulders } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
 import DebugUserSwitcher from "@/components/dev/DebugUserSwitcher";
@@ -50,24 +51,26 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${publicSans.variable} ${bigShouldersDisplay.variable}`}>
       <body>
-        <ThemeProvider>
-          <AuthProvider>
-            {/* pb-16 clears the fixed mobile bottom nav bar (NavBar renders
-                it lg:hidden) so page content and the footer never sit
-                underneath it; lg+ has no bottom bar so no padding needed. */}
-            <div className="flex flex-col min-h-screen pb-16 lg:pb-0">
-              <NavBar />
-              <main className="flex-1 w-full pt-6 lg:pt-8">{children}</main>
-              <SiteFooter />
-            </div>
-            {process.env.NODE_ENV !== "production" && (
-              <>
-                <DebugUserSwitcher />
-                <FakeProductionToggle />
-              </>
-            )}
-          </AuthProvider>
-        </ThemeProvider>
+        <LanguageProvider>
+          <ThemeProvider>
+            <AuthProvider>
+              {/* pb-16 clears the fixed mobile bottom nav bar (NavBar renders
+                  it lg:hidden) so page content and the footer never sit
+                  underneath it; lg+ has no bottom bar so no padding needed. */}
+              <div className="flex flex-col min-h-screen pb-16 lg:pb-0">
+                <NavBar />
+                <main className="flex-1 w-full pt-6 lg:pt-8">{children}</main>
+                <SiteFooter />
+              </div>
+              {process.env.NODE_ENV !== "production" && (
+                <>
+                  <DebugUserSwitcher />
+                  <FakeProductionToggle />
+                </>
+              )}
+            </AuthProvider>
+          </ThemeProvider>
+        </LanguageProvider>
         <GoogleAnalytics />
       </body>
     </html>

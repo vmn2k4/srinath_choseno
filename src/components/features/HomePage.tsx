@@ -1,3 +1,5 @@
+"use client";
+
 import {
   MapPin,
   Megaphone,
@@ -25,6 +27,7 @@ import {
   RoleSplitCta,
 } from "@/components/features/home/HomeMotion";
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -199,6 +202,74 @@ const faqJsonLd = {
 };
 
 export default function HomePage() {
+  const { t } = useTranslation();
+
+  const trustChips = [
+    { icon: Flame, label: t("home.trustChips.anonymous") },
+    { icon: MapPin, label: t("home.trustChips.verified") },
+    { icon: Scale, label: t("home.trustChips.nonpartisan") },
+    { icon: ThumbsUp, label: t("home.trustChips.realPeople") },
+  ];
+
+  const bridgeSteps = [
+    { icon: Search, title: t("home.bridge.step1Title"), text: t("home.bridge.step1Text") },
+    { icon: MessageSquare, title: t("home.bridge.step2Title"), text: t("home.bridge.step2Text") },
+    { icon: Vote, title: t("home.bridge.step3Title"), text: t("home.bridge.step3Text") },
+  ];
+
+  const steps = [
+    { icon: MapPin, title: t("home.howItWorks.step1Title"), text: t("home.howItWorks.step1Text") },
+    { icon: Layers, title: t("home.howItWorks.step2Title"), text: t("home.howItWorks.step2Text") },
+    { icon: Megaphone, title: t("home.howItWorks.step3Title"), text: t("home.howItWorks.step3Text") },
+  ];
+
+  const audiences = [
+    {
+      icon: Users,
+      label: t("home.audiences.voterLabel"),
+      accent: "text-accent",
+      pitch: t("home.audiences.voterPitch"),
+      points: [
+        t("home.audiences.voterPoint1"),
+        t("home.audiences.voterPoint2"),
+        t("home.audiences.voterPoint3"),
+        t("home.audiences.voterPoint4"),
+      ],
+      ctaHref: "/auth?role=citizen",
+      ctaLabel: t("home.audiences.voterCta"),
+      secondaryHref: "/find-my-district",
+      secondaryLabel: t("home.audiences.voterSecondary"),
+    },
+    {
+      icon: Landmark,
+      label: t("home.audiences.candidateLabel"),
+      accent: "text-primary",
+      pitch: t("home.audiences.candidatePitch"),
+      points: [
+        t("home.audiences.candidatePoint1"),
+        t("home.audiences.candidatePoint2"),
+        t("home.audiences.candidatePoint3"),
+        t("home.audiences.candidatePoint4"),
+      ],
+      ctaHref: "/auth?role=politician",
+      ctaLabel: t("home.audiences.candidateCta"),
+      secondaryHref: "/elections",
+      secondaryLabel: t("home.audiences.candidateSecondary"),
+    },
+  ];
+
+  const features = [
+    { icon: Flame, title: t("home.features.f1Title"), text: t("home.features.f1Text") },
+    { icon: Video, title: t("home.features.f2Title"), text: t("home.features.f2Text") },
+    { icon: ThumbsUp, title: t("home.features.f3Title"), text: t("home.features.f3Text") },
+    { icon: Globe2, title: t("home.features.f4Title"), text: t("home.features.f4Text") },
+    { icon: MessageSquare, title: t("home.features.f5Title"), text: t("home.features.f5Text") },
+    { icon: MapPin, title: t("home.features.f6Title"), text: t("home.features.f6Text") },
+  ];
+
+  const faqsData = t("home.faqs", "") as unknown;
+  const faqList: { q: string; a: string }[] = Array.isArray(faqsData) ? faqsData : [];
+
   return (
     <div className="w-full overflow-x-clip">
       <script
@@ -220,25 +291,23 @@ export default function HomePage() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
               </span>
-              Voice of the Silent Majority
+              {t("home.badge")}
             </span>
 
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.02] mt-6 sm:mt-8 tracking-tight drop-shadow-2xl">
-              Rate Your Politicians&apos; Performance.
+              {t("home.titleMain")}
               <br />
-              <span className="text-primary">Like Yelp, but for Democracy.</span>
+              <span className="text-primary">{t("home.titleSub")}</span>
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-text-main/90 font-medium max-w-2xl mx-auto lg:mx-0 mt-5 sm:mt-7 leading-relaxed">
-              A secure, anonymous space to hold local leaders accountable. Share your
-              experience, read what your neighbors think, and walk into the booth
-              informed — no toxicity, just accountability.
+              {t("home.subtitle")}
             </p>
 
             {/* On mobile, hide the label to save space; just show the boundary pill.
                 On sm+, show the full "Conversations scoped to [Boundary]" */}
             <div className="mt-8 sm:mt-9 hidden sm:flex items-center justify-center lg:justify-start gap-3 text-base text-text-muted">
-              <span className="font-medium text-text-main/80">Conversations scoped to</span>
+              <span className="font-medium text-text-main/80">{t("home.scopedTo")}</span>
               <CyclingBoundaryPill levels={BOUNDARY_LEVELS} />
             </div>
 
@@ -263,7 +332,7 @@ export default function HomePage() {
       {/* ============ TRUST BAR ============ */}
       <section className="relative px-4 sm:px-6 py-6" aria-label="Trust and privacy at a glance">
         <Reveal className="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-          {TRUST_CHIPS.map((chip) => (
+          {trustChips.map((chip) => (
             <span
               key={chip.label}
               className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-border-light/50 bg-surface-elevated/70 text-xs sm:text-sm font-semibold text-text-secondary"
@@ -280,11 +349,10 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto text-center">
           <Reveal>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
-              Democracy, simplified.
+              {t("home.bridge.title")}
             </h2>
             <p className="mt-3 sm:mt-4 text-base sm:text-lg text-text-muted max-w-xl mx-auto">
-              Same as picking a restaurant — except this time you&apos;re choosing who
-              represents you.
+              {t("home.bridge.subtitle")}
             </p>
           </Reveal>
 
@@ -292,7 +360,7 @@ export default function HomePage() {
             delay={120}
             className="mt-12 sm:mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-3"
           >
-            {BRIDGE_STEPS.map((step, i) => (
+            {bridgeSteps.map((step, i) => (
               <div key={step.title} className="contents">
                 <div className="flex flex-col items-center gap-2 sm:gap-3 w-full sm:w-44">
                   <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
@@ -301,7 +369,7 @@ export default function HomePage() {
                   <h3 className="text-base sm:text-lg font-bold text-text-main">{step.title}</h3>
                   <p className="text-xs sm:text-sm text-text-muted leading-relaxed">{step.text}</p>
                 </div>
-                {i < BRIDGE_STEPS.length - 1 && (
+                {i < bridgeSteps.length - 1 && (
                   <ArrowRight
                     size={20}
                     className="text-primary/40 rotate-90 sm:rotate-0 shrink-0"
@@ -319,12 +387,12 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-12 sm:mb-16">
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
-              Three simple steps to get started
+              {t("home.howItWorks.title")}
             </h2>
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-7">
-            {STEPS.map((step, i) => (
+            {steps.map((step, i) => (
               <Reveal key={step.title} delay={i * 120}>
                 <HoverLift className="glass-card elevation-2 p-5 sm:p-6 lg:p-8 h-full group hover:border-primary/40 transition-all duration-300 relative overflow-hidden">
                   <span className="font-display text-5xl sm:text-6xl lg:text-7xl font-black text-primary/20 group-hover:text-primary/35 transition-colors duration-500 select-none leading-none">
@@ -347,12 +415,12 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-12 sm:mb-16">
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
-              Whether you&apos;re voting or running
+              {t("home.audiences.title")}
             </h2>
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-7">
-            {AUDIENCES.map((audience, i) => (
+            {audiences.map((audience, i) => (
               <Reveal key={audience.label} delay={i * 120}>
                 <HoverLift lift={8} className="glass-card elevation-2 p-5 sm:p-6 lg:p-8 h-full flex flex-col justify-between">
                   <div>
@@ -403,9 +471,9 @@ export default function HomePage() {
         <ContainerScroll
           titleComponent={
             <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
-              Every district,
+              {t("home.preview.titleMain")}
               <br />
-              <span className="text-primary">one feed away.</span>
+              <span className="text-primary">{t("home.preview.titleSub")}</span>
             </h2>
           }
         >
@@ -450,12 +518,12 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-12 sm:mb-16">
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
-              Built for trust and privacy
+              {t("home.features.title")}
             </h2>
           </Reveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-            {FEATURES.map((feat, i) => (
+            {features.map((feat, i) => (
               <Reveal key={feat.title} delay={i * 80}>
                 <div className="glass-card p-4 sm:p-5 lg:p-6 h-full space-y-2 sm:space-y-3">
                   <feat.icon size={20} className="text-primary" aria-hidden="true" />
@@ -473,12 +541,12 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto">
           <Reveal className="text-center mb-10 sm:mb-14">
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
-              Questions, answered
+              {t("home.faqsTitle")}
             </h2>
           </Reveal>
 
           <div className="space-y-2 sm:space-y-3">
-            {FAQS.map((faq, i) => (
+            {faqList.map((faq, i) => (
               <Reveal key={faq.q} delay={i * 60}>
                 <details className="glass-card p-4 sm:p-6 group">
                   <summary className="flex items-center justify-between gap-3 sm:gap-4 cursor-pointer list-none font-bold text-text-main text-sm sm:text-base lg:text-lg">
@@ -502,11 +570,11 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto">
           <Reveal>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight">
-              Join your district. <span className="text-primary">Vote informed.</span>
+              {t("home.closing.titleMain")}{" "}
+              <span className="text-primary">{t("home.closing.titleSub")}</span>
             </h2>
             <p className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl text-text-muted max-w-2xl mx-auto">
-              See what your neighbors are already saying, then walk into the booth
-              knowing exactly who you&apos;re choosing.
+              {t("home.closing.subtitle")}
             </p>
 
             <div className="mt-8 sm:mt-10">

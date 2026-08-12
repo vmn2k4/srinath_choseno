@@ -11,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import { Card, Button, Input } from "@/components/primitives";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { trackSearch } from "@/lib/analytics/events";
 import { geocodeAddressFree } from "@/lib/utils/geocode";
 
@@ -31,6 +32,7 @@ export default function InteractiveLocationPicker({
   error = "",
   isVisible = true,
 }: InteractiveLocationPickerProps) {
+  const { t } = useTranslation();
   const [addressQuery, setAddressQuery] = useState("");
   const [addressSuggestions, setAddressSuggestions] = useState<any[]>([]);
   const [searchingAddress, setSearchingAddress] = useState(false);
@@ -235,7 +237,7 @@ export default function InteractiveLocationPicker({
           />
           <Input
             type="text"
-            placeholder="Search address or city (e.g. 1055 W Georgia St, Vancouver)..."
+            placeholder={t("location.placeholder")}
             value={addressQuery}
             onChange={(e) => {
               setAddressQuery(e.target.value);
@@ -293,9 +295,9 @@ export default function InteractiveLocationPicker({
               </button>
 
               <div className="space-y-1">
-                <h3 className="text-sm font-bold text-slate-900">Find your location</h3>
+                <h3 className="text-sm font-bold text-slate-900">{t("location.findLocation")}</h3>
                 <p className="text-xs text-slate-600">
-                  Use your GPS, or close this and search/click the map instead.
+                  {t("location.findLocationDesc")}
                 </p>
               </div>
 
@@ -314,31 +316,17 @@ export default function InteractiveLocationPicker({
                 ) : (
                   <Navigation size={14} className="!text-white" />
                 )}
-                Locate Me
+                {t("location.locateMe")}
               </Button>
             </div>
           </div>
         )}
 
         <div className="absolute bottom-3 right-3 z-20">
-          {/* Fixed (not theme-token) colors deliberately — this button floats on top of the
-              Leaflet/CARTO map tiles, which are always pale regardless of which of the site's
-              12 themes is active. A translucent theme-colored background (the previous
-              bg-surface-elevated/90) barely tints a light map, so light-on-dark themes ended
-              up with near-white text on an almost-white backdrop. A solid white pill with dark
-              text/icon is the standard on-map-control convention (Google/Apple Maps) for
-              exactly this reason — it stays legible over any map imagery, independent of
-              in-app theming. */}
           <Button
             size="sm"
             onClick={autoDetectGPS}
             disabled={loading}
-            // `!` (important) modifiers are required here: Button's default variant="primary"
-            // already sets a text/background color (text-text-on-primary, bg-primary), and
-            // those utility classes win the cascade over a plain same-specificity override
-            // regardless of className string order, since Tailwind's generated CSS order (not
-            // JSX prop order) decides ties. Confirmed live — without `!`, computed color was
-            // still primary's white despite this className listing slate-800.
             className="shadow-lg text-xs gap-1.5 !bg-white !border !border-black/10 !text-slate-800 hover:!bg-slate-50"
           >
             {loading ? (
@@ -346,7 +334,7 @@ export default function InteractiveLocationPicker({
             ) : (
               <Navigation size={14} className="!text-blue-600" />
             )}
-            Auto-Detect GPS
+            {t("location.autoDetect")}
           </Button>
         </div>
       </div>

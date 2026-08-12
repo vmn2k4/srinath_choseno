@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { signUp, signInWithPassword, signInWithGoogle } from "@/lib/services/auth";
 import { Card, Input, Button, Alert } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
@@ -18,6 +19,7 @@ export default function AuthPageClient({
   nextPath?: string;
   initialIntent?: "login";
 }) {
+  const { t } = useTranslation();
   const supabase = createClient();
   const router = useRouter();
   const { session, profile, loading: authLoading } = useAuth();
@@ -133,7 +135,7 @@ export default function AuthPageClient({
     <div className="w-full max-w-md mx-auto mt-10 sm:mt-14 px-4 pb-16">
       <Card padding="lg" className="shadow-2xl animate-fade-in border border-border-light/40">
         <h1 className="text-2xl font-extrabold text-text-main text-center">
-          {isSignUp ? "Create an Account" : "Welcome Back"}
+          {isSignUp ? t("auth.signUpBtn") : t("auth.title")}
         </h1>
         {isSignUp && initialRole && (
           <p className="text-center text-sm text-text-muted mt-1.5 mb-4">
@@ -147,11 +149,11 @@ export default function AuthPageClient({
         <form onSubmit={handleAuth} className="flex flex-col gap-4">
           <div>
             <label className="block mb-2 text-xs font-semibold text-text-muted uppercase tracking-wider">
-              Email Address
+              {t("auth.emailLabel")}
             </label>
             <Input
               type="email"
-              placeholder="you@example.com"
+              placeholder={t("auth.emailPlaceholder")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
@@ -161,7 +163,7 @@ export default function AuthPageClient({
 
           <div>
             <label className="block mb-2 text-xs font-semibold text-text-muted uppercase tracking-wider">
-              Password
+              {t("auth.passwordLabel")}
             </label>
             <Input
               type="password"
@@ -174,7 +176,7 @@ export default function AuthPageClient({
           </div>
 
           <Button type="submit" size="lg" disabled={loading} className="mt-2 w-full font-bold">
-            {loading ? "Processing..." : isSignUp ? "Sign Up" : "Log In"}
+            {loading ? "Processing..." : isSignUp ? t("auth.signUpBtn") : t("auth.signInBtn")}
           </Button>
         </form>
 

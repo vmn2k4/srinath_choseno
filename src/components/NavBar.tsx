@@ -6,6 +6,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { LogOut, LogIn, User as UserIcon, Palette, Check, Menu, X, Newspaper, Vote, Shield, Sparkles, MapPin, Home, Heart } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme, THEMES, ThemeKey } from "@/contexts/ThemeContext";
+import { useTranslation } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ChosenoLogo from "@/components/primitives/ChosenoLogo";
 import { trackLogout } from "@/lib/analytics/events";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
@@ -13,6 +15,7 @@ import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 export default function NavBar() {
   const { session, profile, signOut } = useAuth();
   const { theme, setTheme } = useTheme();
+  const { t } = useTranslation();
   const pathname = usePathname();
   const router = useRouter();
   const [themeOpen, setThemeOpen] = useState(false);
@@ -126,7 +129,7 @@ export default function NavBar() {
             )}`}
           >
             <Home size={15} />
-            Home
+            {t("nav.home")}
           </Link>
 
           {session ? (
@@ -139,7 +142,7 @@ export default function NavBar() {
                   )}`}
                 >
                   <Sparkles size={15} />
-                  My Wall
+                  {t("nav.myWall")}
                 </Link>
               )}
               {profile?.role !== "admin" && (
@@ -154,7 +157,7 @@ export default function NavBar() {
                   )}`}
                 >
                   <Vote size={15} />
-                  Elections &amp; Races
+                  {t("nav.elections")}
                 </Link>
               )}
               {profile?.role === "admin" && (
@@ -163,7 +166,7 @@ export default function NavBar() {
                   className={`flex items-center gap-1.5 ${navLinkClass(isActive("/admin"))}`}
                 >
                   <Shield size={15} />
-                  Admin
+                  {t("nav.admin")}
                 </Link>
               )}
             </>
@@ -176,7 +179,7 @@ export default function NavBar() {
             )}`}
           >
             <MapPin size={15} />
-            Find District
+            {t("nav.findDistrict")}
           </Link>
 
           <Link
@@ -184,14 +187,14 @@ export default function NavBar() {
             className={`flex items-center gap-1.5 ${navLinkClass(pathname?.startsWith("/news") ?? false)}`}
           >
             <Newspaper size={15} />
-            News
+            {t("nav.news")}
           </Link>
 
           <Link
             href="/about"
             className={`flex items-center gap-1.5 ${navLinkClass(isActive("/about"))}`}
           >
-            About
+            {t("nav.about")}
           </Link>
 
           {session ? (
@@ -203,7 +206,7 @@ export default function NavBar() {
                 )}`}
               >
                 <UserIcon size={15} />
-                Profile
+                {t("nav.profile")}
               </Link>
             </>
           ) : (
@@ -212,7 +215,7 @@ export default function NavBar() {
                 href="/elections"
                 className={navLinkClass(isActive("/elections"))}
               >
-                Elections
+                {t("nav.elections")}
               </Link>
               <Link
                 href="/auth"
@@ -222,10 +225,14 @@ export default function NavBar() {
                     : "text-text-on-primary bg-primary hover:bg-primary-hover shadow-sm"
                 }`}
               >
-                Log In / Sign Up
+                {t("nav.logIn")}
               </Link>
             </>
           )}
+
+          <div className="ml-1 flex items-center gap-2">
+            <LanguageSwitcher />
+          </div>
 
           {/* Theme Picker Dropdown - Admin Only */}
           {profile?.role === "admin" && (
@@ -285,7 +292,7 @@ export default function NavBar() {
                 onClick={handleSignOut}
               >
                 <LogOut size={15} />
-                <span>Sign Out</span>
+                <span>{t("nav.signOut")}</span>
               </button>
             </>
           )}
@@ -293,6 +300,8 @@ export default function NavBar() {
 
         {/* Mobile / Tablet Controls */}
         <div className="flex lg:hidden items-center gap-2">
+          <LanguageSwitcher compact />
+
           {/* Theme Button for Mobile - Admin Only */}
           {profile?.role === "admin" && (
           <div className="relative">
@@ -366,7 +375,7 @@ export default function NavBar() {
             className={mobileNavLinkClass(isActive("/") || isActive("/feed"))}
           >
             <Home size={18} />
-            Home
+            {t("nav.home")}
           </Link>
 
           {session ? (
@@ -377,7 +386,7 @@ export default function NavBar() {
                   className={mobileNavLinkClass(pathname?.startsWith("/wall") ?? false)}
                 >
                   <Sparkles size={18} />
-                  My Wall
+                  {t("nav.myWall")}
                 </Link>
               )}
 
@@ -393,7 +402,7 @@ export default function NavBar() {
                   )}
                 >
                   <Vote size={18} />
-                  Elections &amp; Races
+                  {t("nav.elections")}
                 </Link>
               )}
 
@@ -403,7 +412,7 @@ export default function NavBar() {
                   className={mobileNavLinkClass(isActive("/admin"))}
                 >
                   <Shield size={18} />
-                  Admin
+                  {t("nav.admin")}
                 </Link>
               )}
             </>
@@ -414,7 +423,7 @@ export default function NavBar() {
             className={mobileNavLinkClass(isActive("/find-my-district"))}
           >
             <MapPin size={18} />
-            Find District
+            {t("nav.findDistrict")}
           </Link>
 
           <Link
@@ -422,7 +431,7 @@ export default function NavBar() {
             className={mobileNavLinkClass(pathname?.startsWith("/news") ?? false)}
           >
             <Newspaper size={18} />
-            News
+            {t("nav.news")}
           </Link>
 
           <Link
@@ -430,7 +439,7 @@ export default function NavBar() {
             className={mobileNavLinkClass(isActive("/about"))}
           >
             <Heart size={18} />
-            About Us
+            {t("nav.about")}
           </Link>
 
           {session ? (
@@ -440,7 +449,7 @@ export default function NavBar() {
                 className={mobileNavLinkClass(isActive("/profile"))}
               >
                 <UserIcon size={18} />
-                Profile
+                {t("nav.profile")}
               </Link>
 
               <div className="pt-3 mt-1 border-t border-border-light/20">
@@ -449,7 +458,7 @@ export default function NavBar() {
                   onClick={handleSignOut}
                 >
                   <LogOut size={18} />
-                  Sign Out
+                  {t("nav.signOut")}
                 </button>
               </div>
             </>
@@ -460,7 +469,7 @@ export default function NavBar() {
                 className={mobileNavLinkClass(isActive("/elections"))}
               >
                 <Vote size={18} />
-                Elections
+                {t("nav.elections")}
               </Link>
 
               <div className="pt-3 mt-1 border-t border-border-light/20">
@@ -468,7 +477,7 @@ export default function NavBar() {
                   href="/auth"
                   className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-base font-bold text-text-on-primary bg-primary hover:bg-primary-hover shadow-md transition-colors"
                 >
-                  Log In / Sign Up
+                  {t("nav.logInSignUp")}
                 </Link>
               </div>
             </>

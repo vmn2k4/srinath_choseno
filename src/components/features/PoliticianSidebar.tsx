@@ -12,6 +12,7 @@ import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { buildBoundarySlug, buildPoliticianWallSlug } from "@/lib/utils/slugs";
 import { createClient } from "@/lib/supabase/client";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 interface MembershipShape {
   id: number;
@@ -68,6 +69,7 @@ export default function PoliticianSidebar({
   };
   memberships?: MembershipShape[];
 }) {
+  const { t } = useTranslation();
   const supabase = createClient();
   const [politicians, setPoliticians] = useState<InterestedPolitician[]>([]);
   const [officeHolders, setOfficeHolders] = useState<OfficeHolderItem[]>([]);
@@ -260,7 +262,7 @@ export default function PoliticianSidebar({
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-text-main font-bold flex items-center gap-2 text-sm sm:text-base">
             <Landmark size={18} className="text-primary" />
-            Current Office Holders
+            {t("sidebar.currentOfficeHolders")}
           </h3>
           {directoryHref && (
             <Link
@@ -268,7 +270,7 @@ export default function PoliticianSidebar({
               className="text-xs font-semibold text-primary hover:underline flex items-center gap-1 shrink-0"
               title="View full office holder page"
             >
-              Directory <ArrowRight size={12} />
+              {t("sidebar.directory")} <ArrowRight size={12} />
             </Link>
           )}
         </div>
@@ -279,13 +281,13 @@ export default function PoliticianSidebar({
           </div>
         ) : officeHolders.length === 0 ? (
           <div className="space-y-2">
-            <p className="text-text-muted text-xs">No active office holders loaded for this boundary yet.</p>
+            <p className="text-text-muted text-xs">{t("sidebar.noOfficeHolders")}</p>
             {directoryHref && (
               <Link
                 href={directoryHref}
                 className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
               >
-                View boundary page <ChevronRight size={12} />
+                {t("sidebar.viewBoundaryPage")} <ChevronRight size={12} />
               </Link>
             )}
           </div>
@@ -306,7 +308,7 @@ export default function PoliticianSidebar({
                       <h4 className="text-text-main text-xs font-semibold truncate">{holder.full_name}</h4>
                       {holder.linked_profile_id && (
                         <Badge tone="primary" size="sm" className="text-[10px] px-1 py-0 shrink-0">
-                          On Choseno
+                          {t("sidebar.onChoseno")}
                         </Badge>
                       )}
                     </div>
@@ -359,7 +361,7 @@ export default function PoliticianSidebar({
                 className="w-full mt-2 py-2 px-3 rounded-lg bg-primary/5 hover:bg-primary/10 border border-primary/20 text-xs font-semibold text-primary flex items-center justify-center gap-1.5 transition-colors text-center"
               >
                 <UserCheck size={14} />
-                View Full Office Holder Directory
+                {t("sidebar.viewFullDirectory")}
                 <ArrowRight size={14} />
               </Link>
             )}
@@ -371,7 +373,7 @@ export default function PoliticianSidebar({
       <Card variant="composer" padding="sm">
         <h3 className="text-text-main font-bold mb-3 flex items-center gap-2 text-sm sm:text-base">
           <Users size={18} className="text-primary" />
-          Candidates &amp; Representatives
+          {t("sidebar.candidatesAndReps")}
         </h3>
 
         {loading ? (
@@ -379,7 +381,7 @@ export default function PoliticianSidebar({
             <Spinner size="sm" />
           </div>
         ) : politicians.length === 0 ? (
-          <EmptyState description="No candidates or representatives found for your area yet." />
+          <EmptyState description={t("sidebar.noCandidates")} />
         ) : (
           <div className="space-y-2.5">
             {politicians.map((pol) => {
