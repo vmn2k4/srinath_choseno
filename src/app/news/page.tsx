@@ -142,17 +142,23 @@ export default async function NewsPage() {
                       </span>
                     )}
 
-                    <h2 className="text-base font-bold text-text-main leading-snug line-clamp-3 group-hover:text-primary transition-colors">
+                    {/* Below md (single-column mobile feed) this drops to a
+                        2-line headline with no excerpt and no separate CTA
+                        row — the whole card is already the tap target, so
+                        roughly twice as many articles fit per screen. md+
+                        (the 2/3-col grid, where cards are narrower and
+                        benefit from more text) keeps the original detail. */}
+                    <h2 className="text-base font-bold text-text-main leading-snug line-clamp-2 md:line-clamp-3 group-hover:text-primary transition-colors">
                       {article.headline}
                     </h2>
 
                     {article.summary && (
-                      <p className="text-xs text-text-muted leading-relaxed line-clamp-3">
+                      <p className="hidden md:block text-xs text-text-muted leading-relaxed line-clamp-3">
                         {article.summary}
                       </p>
                     )}
 
-                    <div className="inline-flex items-center gap-1.5 text-xs font-bold text-primary group-hover:text-primary-hover transition-colors pt-2 mt-auto border-t border-border-light/20">
+                    <div className="hidden md:inline-flex items-center gap-1.5 text-xs font-bold text-primary group-hover:text-primary-hover transition-colors pt-2 mt-auto border-t border-border-light/20">
                       Read full article <ArrowRight size={13} />
                     </div>
                   </div>

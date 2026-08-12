@@ -37,7 +37,14 @@ function NodeCard({ node, emphasized }: { node: BranchHolderNode; emphasized?: b
   return (
     <Card
       padding="sm"
-      className={`w-full sm:w-56 space-y-1.5 transition-all hover:shadow-md ${
+      // w-full + a fixed max-width + mx-auto (rather than the old w-full
+      // sm:w-56) is the single source of truth for card size everywhere
+      // NodeCard is used -- top node, lone bottom node, and each card in the
+      // multi-bottom-node grid below all resolve to the same 320px cap now,
+      // instead of each card sizing to its own content (a flex-wrap row
+      // with no explicit item basis lets w-full collapse to max-content,
+      // so a longer name/party badge silently made that one card wider).
+      className={`w-full max-w-xs mx-auto space-y-1.5 transition-all hover:shadow-md ${
         emphasized ? "border-2 border-primary/40 bg-primary/5" : "border border-border-light/50"
       }`}
     >
@@ -151,7 +158,12 @@ export default function RepresentationBranchTree({ branch }: { branch: Represent
       {branch.bottom.length === 1 ? (
         <NodeCard node={branch.bottom[0]} />
       ) : branch.bottom.length > 1 ? (
-        <div className="w-full flex flex-wrap justify-center gap-x-4 gap-y-3 pt-3 border-t-2 border-primary/25">
+        // Grid, not flex-wrap: grid columns are equal-width by definition,
+        // which is what actually guarantees every card in the row matches —
+        // flex-wrap items size to their own content unless given an
+        // explicit basis, which was the root cause of mismatched card
+        // widths here.
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-5 pt-3 border-t-2 border-primary/25">
           {branch.bottom.map((node) => (
             <div key={node.id} className="relative flex flex-col items-center">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-border-light" />

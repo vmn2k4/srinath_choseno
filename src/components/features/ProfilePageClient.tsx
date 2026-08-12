@@ -190,17 +190,21 @@ export default function ProfilePageClient() {
             </button>
           )}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <div>
-            <p className="text-xs text-text-muted mb-1">Full Name</p>
-            <p className="font-semibold text-text-main">
+        {/* Below sm: each field is one row (label left, value right) instead
+            of a stacked label-above-value block, so the card doesn't spend
+            a full row's height on a single short fact. sm+ reverts to the
+            original stacked two-column layout. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
+          <div className="flex items-center justify-between gap-3 sm:block">
+            <p className="text-xs text-text-muted sm:mb-1">Full Name</p>
+            <p className="font-semibold text-text-main text-right sm:text-left">
               {profile?.fullName || (
                 <em className="text-text-muted not-italic font-normal">Not set</em>
               )}
             </p>
           </div>
-          <div>
-            <p className="text-xs text-text-muted mb-1">Account Type</p>
+          <div className="flex items-center justify-between gap-3 sm:block">
+            <p className="text-xs text-text-muted sm:mb-1">Account Type</p>
             <Badge tone={roleTone} size="sm">
               {roleLabel}
             </Badge>

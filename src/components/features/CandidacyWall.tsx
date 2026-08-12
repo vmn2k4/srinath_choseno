@@ -166,6 +166,9 @@ export default function CandidacyWall({
   const [submitting, setSubmitting] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  // Same tap-to-expand pattern as the Feed/Wall composers -- starts
+  // collapsed to a single row instead of always showing the full textarea.
+  const [composerOpen, setComposerOpen] = useState(false);
 
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
   const [commentErrors, setCommentErrors] = useState<Record<string, string>>({});
@@ -388,11 +391,20 @@ export default function CandidacyWall({
       setLinkMetadata(null);
       setImageFile(null);
       setImagePreview(null);
+      setComposerOpen(false);
       await loadPosts();
     } catch (err) {
       console.error("Error creating post:", err);
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  // Only snap the composer back to its compact one-line trigger when
+  // there's nothing pending, mirroring the Feed/Wall composers.
+  const closeComposerIfEmpty = () => {
+    if (!newPostContent.trim() && !imageFile) {
+      setComposerOpen(false);
     }
   };
 
@@ -904,7 +916,22 @@ export default function CandidacyWall({
         {/* Right Column: Wall Feed & Composer */}
         <div className="lg:col-span-7 space-y-6">
           {user && profile?.current_ghost_id && (
-            <Card padding="md">
+            <Card padding={composerOpen ? "md" : "sm"}>
+              {!composerOpen ? (
+                <button
+                  type="button"
+                  onClick={() => setComposerOpen(true)}
+                  className="w-full flex items-center gap-2.5 text-left cursor-pointer"
+                >
+                  <Avatar name="You" size="sm" />
+                  <span className="flex-1 min-w-0 text-sm text-text-muted bg-surface/50 border border-border-light/30 rounded-full px-4 py-2 truncate">
+                    {isOwner
+                      ? "Post an update to your campaign wall..."
+                      : "Ask the candidate a question or leave a message..."}
+                  </span>
+                  <ImageIcon size={18} className="shrink-0 text-text-muted" aria-hidden="true" />
+                </button>
+              ) : (
               <form onSubmit={handleCreatePost} className="space-y-3">
                 <Textarea
                   placeholder={
@@ -915,6 +942,7 @@ export default function CandidacyWall({
                   value={newPostContent}
                   onChange={handlePostChange}
                   rows={3}
+                  autoFocus
                 />
 
                 {imagePreview && (
@@ -959,11 +987,21 @@ export default function CandidacyWall({
                     />
                   </label>
 
-                  <Button type="submit" disabled={submitting}>
-                    {submitting ? "Posting..." : "Post to Wall"}
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={closeComposerIfEmpty}
+                      className="text-xs font-semibold text-text-muted hover:text-text-main px-2 py-1.5 rounded-lg hover:bg-surface/50 transition-colors cursor-pointer"
+                    >
+                      Cancel
+                    </button>
+                    <Button type="submit" disabled={submitting}>
+                      {submitting ? "Posting..." : "Post to Wall"}
+                    </Button>
+                  </div>
                 </div>
               </form>
+              )}
             </Card>
           )}
 

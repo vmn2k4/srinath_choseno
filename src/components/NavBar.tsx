@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LogOut, User as UserIcon, Palette, Check, Menu, X, Newspaper, Rss, Vote, Shield, Sparkles, MapPin, Home, Heart } from "lucide-react";
+import { LogOut, LogIn, User as UserIcon, Palette, Check, Menu, X, Newspaper, Vote, Shield, Sparkles, MapPin, Home, Heart } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme, THEMES, ThemeKey } from "@/contexts/ThemeContext";
 import ChosenoLogo from "@/components/primitives/ChosenoLogo";
@@ -47,7 +47,70 @@ export default function NavBar() {
         : "text-text-main hover:bg-surface-hover hover:text-primary"
     }`;
 
+  // Same destinations as the hamburger drawer below, surfaced as an
+  // always-visible icon strip so the common ones don't require opening the
+  // drawer at all. Sign Out and the theme picker stay drawer/menu-only since
+  // they're settings, not places you navigate to.
+  const mobileIconNavItems: { href: string; label: string; icon: typeof Home; active: boolean }[] = [
+    {
+      href: session && profile?.role !== "admin" ? "/feed" : "/",
+      label: "Home",
+      icon: Home,
+      active: isActive("/") || isActive("/feed"),
+    },
+    ...(session && profile?.role === "politician" && profile?.current_ghost_id
+      ? [
+          {
+            href: `/wall/${profile.politician_wall_slug || buildPoliticianWallSlug(profile.full_name, profile.designation)}`,
+            label: "My Wall",
+            icon: Sparkles,
+            active: pathname?.startsWith("/wall") ?? false,
+          },
+        ]
+      : []),
+    ...(session && profile?.role !== "admin"
+      ? [
+          {
+            href: profile?.role === "politician" ? "/politician/elections" : "/elections",
+            label: "Elections",
+            icon: Vote,
+            active: isActive("/elections") || isActive("/politician/elections"),
+          },
+        ]
+      : []),
+    ...(!session
+      ? [
+          {
+            href: "/elections",
+            label: "Elections",
+            icon: Vote,
+            active: isActive("/elections"),
+          },
+        ]
+      : []),
+    ...(session && profile?.role === "admin"
+      ? [{ href: "/admin", label: "Admin", icon: Shield, active: isActive("/admin") }]
+      : []),
+    {
+      href: "/find-my-district",
+      label: "Find District",
+      icon: MapPin,
+      active: isActive("/find-my-district"),
+    },
+    {
+      href: "/news",
+      label: "News",
+      icon: Newspaper,
+      active: pathname?.startsWith("/news") ?? false,
+    },
+    { href: "/about", label: "About", icon: Heart, active: isActive("/about") },
+    session
+      ? { href: "/profile", label: "Profile", icon: UserIcon, active: isActive("/profile") }
+      : { href: "/auth", label: "Log In", icon: LogIn, active: isActive("/auth") },
+  ];
+
   return (
+    <>
     <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md elevation-2 border-b border-border w-full">
       <div className="w-full px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
         <Link href="/" className="hover:opacity-90 transition-opacity">
@@ -292,7 +355,12 @@ export default function NavBar() {
 
       {/* Mobile Drawer Panel */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed left-0 right-0 top-[57px] z-50 bg-surface/95 backdrop-blur-xl border-b border-border shadow-2xl animate-fade-in max-h-[calc(100vh-60px)] overflow-y-auto p-4 flex flex-col gap-2">
+        /* absolute + top-full (relative to the sticky <nav>, which
+           establishes a containing block for non-static descendants) so
+           this sits right below however tall the nav actually is —
+           including the icon strip above — instead of a fixed pixel
+           offset that assumed a single-row app bar. */
+        <div className="lg:hidden absolute left-0 right-0 top-full z-50 bg-surface/95 backdrop-blur-xl border-b border-border shadow-2xl animate-fade-in max-h-[calc(100vh-60px)] overflow-y-auto p-4 flex flex-col gap-2">
           <Link
             href={session && profile?.role !== "admin" ? "/feed" : "/"}
             className={mobileNavLinkClass(isActive("/") || isActive("/feed"))}
@@ -408,5 +476,41 @@ export default function NavBar() {
         </div>
       )}
     </nav>
+
+    {/* Mobile Bottom Nav Bar — same destinations as the hamburger drawer,
+        always visible as a fixed bottom tab bar so common navigation never
+        needs the drawer at all. Desktop/tablet (lg+) keep the normal top
+        tabs above and never render this. env(safe-area-inset-bottom)
+        padding clears the home-indicator area on notched iPhones. */}
+    <div
+      className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-t border-border elevation-2 overflow-x-auto no-scrollbar"
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+    >
+      {/* min-w-max + shrink-0 items instead of evenly-distributed flex-1 —
+          with up to 8 possible destinations (role-dependent), splitting the
+          width evenly would squeeze labels like "Find District" past
+          readability. Fixed-width items that scroll keep every label
+          legible; the row still fits 5-6 items on one screen unscrolled. */}
+      <div className="flex items-stretch justify-around min-w-max px-1 py-1">
+        {mobileIconNavItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.href + item.label}
+              href={item.href}
+              className={`shrink-0 flex flex-col items-center justify-center gap-0.5 min-w-[64px] px-2 py-1.5 rounded-lg text-[10px] font-medium transition-colors ${
+                item.active
+                  ? "text-primary bg-primary/10"
+                  : "text-text-muted hover:text-text-main hover:bg-surface-hover"
+              }`}
+            >
+              <Icon size={18} />
+              <span className="whitespace-nowrap">{item.label}</span>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+    </>
   );
 }

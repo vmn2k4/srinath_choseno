@@ -12,6 +12,7 @@ import {
   Sparkles,
   RotateCcw,
   Search,
+  X,
 } from "lucide-react";
 import {
   Card,
@@ -69,6 +70,13 @@ export default function ElectionsPageClient({
   const [locError, setLocError] = useState("");
   const [hasCustomLocation, setHasCustomLocation] = useState(false);
   const [showPicker, setShowPicker] = useState(
+    !initialRole || initialBoundaries.length === 0
+  );
+  // Below lg the finder widget starts collapsed to a small icon pill so the
+  // (more important) active-seats list is visible without scrolling — unless
+  // there's nothing verified yet, in which case a first-time visitor needs
+  // it open to search.
+  const [mobileFinderOpen, setMobileFinderOpen] = useState(
     !initialRole || initialBoundaries.length === 0
   );
 
@@ -179,7 +187,7 @@ export default function ElectionsPageClient({
   };
 
   return (
-    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-8">
+    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 flex flex-col gap-6 lg:gap-8">
       <PageHeader icon={Vote} title="Elections &amp; Races" />
 
       {initialRole === "normal" && (
@@ -197,36 +205,73 @@ export default function ElectionsPageClient({
         </Card>
       )}
 
-      {/* Location / Constituency Finder Widget */}
-      <Card padding="md" className="space-y-4">
-        <div className="flex items-center justify-between gap-4 flex-wrap border-b border-border-light/20 pb-4">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-accent/10 border border-accent/20 text-accent">
-              <MapPin size={20} />
+      {/* Location / Constituency Finder Widget. Below lg it moves after the
+          seats list (order-3, vs the seats list's order-2) and starts
+          collapsed to a small icon pill — tap to expand into the same full
+          widget lg+ always shows. */}
+      <div className="order-3 lg:order-2 flex flex-col gap-2">
+        {!mobileFinderOpen && (
+          <button
+            type="button"
+            onClick={() => setMobileFinderOpen(true)}
+            className="lg:hidden self-start flex items-center gap-1.5 px-3 py-2 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-semibold"
+          >
+            <MapPin size={15} />
+            {matchedBoundaries.length > 0
+              ? `${matchedBoundaries.length} district${matchedBoundaries.length !== 1 ? "s" : ""} verified`
+              : "Find Elections Near You"}
+          </button>
+        )}
+
+        <Card
+          padding="sm"
+          className={`space-y-3 lg:p-6 lg:space-y-4 lg:block ${mobileFinderOpen ? "" : "hidden"}`}
+        >
+          <div className="flex items-center justify-between gap-2 lg:gap-4 lg:flex-wrap border-b border-border-light/20 pb-2 lg:pb-4">
+            <div className="flex items-center gap-2 lg:gap-2.5 min-w-0">
+              <div className="p-1.5 lg:p-2 rounded-lg lg:rounded-xl bg-accent/10 border border-accent/20 text-accent shrink-0">
+                <MapPin size={16} className="lg:hidden" />
+                <MapPin size={20} className="hidden lg:block" />
+              </div>
+              <div className="min-w-0">
+                <h2 className="text-sm lg:text-base font-bold text-text-main truncate lg:whitespace-normal lg:flex lg:items-center lg:gap-2">
+                  Find Elections in Your Constituency
+                </h2>
+                <p className="hidden lg:block text-xs text-text-muted">
+                  Search your address, click on the map, or use Auto-Detect GPS to
+                  discover elections in your local electoral boundaries.
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-base font-bold text-text-main flex items-center gap-2">
-                Find Elections in Your Constituency
-              </h2>
-              <p className="text-xs text-text-muted">
-                Search your address, click on the map, or use Auto-Detect GPS to
-                discover elections in your local electoral boundaries.
-              </p>
+
+            <div className="flex items-center gap-1.5 shrink-0">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowPicker(!showPicker)}
+                className="gap-1.5 text-xs shrink-0 !px-2.5 !py-1.5 lg:!px-3"
+              >
+                <Search size={14} />
+                <span className="hidden lg:inline">
+                  {showPicker ? "Hide Map & Location Search" : "Search Address / Map"}
+                </span>
+                <span className="lg:hidden">{showPicker ? "Hide" : "Search"}</span>
+              </Button>
+
+              {matchedBoundaries.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setMobileFinderOpen(false)}
+                  className="lg:hidden text-text-muted hover:text-text-main p-1.5 cursor-pointer"
+                  title="Collapse"
+                >
+                  <X size={15} />
+                </button>
+              )}
             </div>
           </div>
 
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowPicker(!showPicker)}
-            className="gap-1.5 text-xs shrink-0"
-          >
-            <Search size={14} />
-            {showPicker ? "Hide Map & Location Search" : "Search Address / Map"}
-          </Button>
-        </div>
-
-        {showPicker && (
+          {showPicker && (
           <InteractiveLocationPicker
             currentLat={currentLat}
             currentLng={currentLng}
@@ -275,25 +320,30 @@ export default function ElectionsPageClient({
             </div>
           </div>
         )}
-      </Card>
+        </Card>
+      </div>
 
-      {/* Elections & Open Seats List */}
+      {/* Elections & Open Seats List — below lg this renders before the
+          finder widget (order-2 vs its order-3) since it's the content
+          people actually came for. */}
       {loading ? (
-        <div className="flex justify-center py-16">
+        <div className="order-2 lg:order-3 flex justify-center py-16">
           <Spinner size="md" />
         </div>
       ) : seats.length === 0 ? (
-        <EmptyState
-          icon={Vote}
-          title="No Active Elections Found"
-          description={
-            matchedBoundaries.length > 0
-              ? "There are no active elections or open seats currently running for your selected constituency boundaries."
-              : "There are no active elections running right now."
-          }
-        />
+        <div className="order-2 lg:order-3">
+          <EmptyState
+            icon={Vote}
+            title="No Active Elections Found"
+            description={
+              matchedBoundaries.length > 0
+                ? "There are no active elections or open seats currently running for your selected constituency boundaries."
+                : "There are no active elections running right now."
+            }
+          />
+        </div>
       ) : (
-        <div className="space-y-4">
+        <div className="order-2 lg:order-3 space-y-4">
           <div className="flex items-center justify-between text-xs text-text-muted px-1">
             <span>
               Showing {seats.length} active seat

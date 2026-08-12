@@ -23,8 +23,13 @@ export default function StoryStrip({
   onSelect: (postId: string) => void;
   label?: string;
 }) {
+  // Nothing to advertise -- an empty-state placeholder here just pushes the
+  // actual feed further down the screen for no benefit, so skip rendering
+  // the strip entirely rather than showing a "No pitches yet" box.
+  if (posts.length === 0) return null;
+
   return (
-    <div className="mb-8">
+    <div className="mb-5 sm:mb-8">
       <h3 className="text-text-muted text-sm font-medium mb-3 flex items-center gap-2">
         <Video size={16} className="text-primary-light" /> {label}
       </h3>
@@ -32,13 +37,7 @@ export default function StoryStrip({
         className="flex gap-4 overflow-x-auto pb-4"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        {posts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center min-w-[100px] w-[100px] h-[150px] rounded-xl border-2 border-dashed border-border-light/40 shrink-0 text-text-muted gap-1.5">
-            <Video size={20} className="opacity-40" />
-            <span className="text-[10px] font-medium text-center px-2">No pitches yet</span>
-          </div>
-        ) : (
-          posts.map((post) => (
+        {posts.map((post) => (
             <button
               key={`story-${post.id}`}
               onClick={() => post.video_url && onSelect(post.id)}
@@ -62,8 +61,7 @@ export default function StoryStrip({
                 </div>
               </div>
             </button>
-          ))
-        )}
+        ))}
       </div>
     </div>
   );

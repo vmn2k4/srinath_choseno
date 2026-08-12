@@ -14,7 +14,6 @@ import {
   X,
   Video,
   Flag,
-  Star,
   Mail,
   Phone,
   Globe,
@@ -144,6 +143,9 @@ export default function PoliticianWallClient({
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [showRecorder, setShowRecorder] = useState(false);
+  // Same tap-to-expand pattern as the main Feed composer -- starts collapsed
+  // to a single row instead of always showing the full textarea + toolbar.
+  const [composerOpen, setComposerOpen] = useState(false);
   const [showQr, setShowQr] = useState(false);
 
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
@@ -453,11 +455,22 @@ export default function PoliticianWallClient({
       setLinkMetadata(null);
       setImageFile(null);
       setImagePreview(null);
+      setVideoUrl(null);
+      setShowRecorder(false);
+      setComposerOpen(false);
       await fetchPosts();
     } catch (err) {
       console.error("Error creating post:", err);
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  // Only snap the composer back to its compact one-line trigger when
+  // there's nothing pending, mirroring the Feed composer's behavior.
+  const closeComposerIfEmpty = () => {
+    if (!newPostContent.trim() && !imageFile && !videoUrl && !showRecorder) {
+      setComposerOpen(false);
     }
   };
 
@@ -498,6 +511,102 @@ export default function PoliticianWallClient({
   const isOwner = user && wallOwner?.id === user.id;
   const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 
+  // Action icon row extracted to a variable so it can render inline with the
+  // contact icons on mobile (single combined row, saving a whole row of
+  // height) while staying in its own right-aligned column on desktop —
+  // avoids duplicating the button markup itself, just its placement.
+  const actionButtons = (
+    <>
+      <div className="relative shrink-0">
+        <Button
+          variant="icon"
+          size="sm"
+          tone="default"
+          onClick={toggleSupport}
+          title={isSupporting ? "Withdraw support" : "Support this politician"}
+          // Icon-variant tones are muted-until-hover by design, which
+          // hides a *persistent* toggled state — force it visible here
+          // since "supporting" needs to read as active at rest, not
+          // just on hover.
+          className={isSupporting ? "!text-primary bg-primary/10" : ""}
+        >
+          <Heart size={16} className={isSupporting ? "fill-current" : ""} />
+        </Button>
+        {supportCount > 0 && (
+          <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-primary text-text-on-primary text-[10px] font-bold flex items-center justify-center leading-none pointer-events-none">
+            {supportCount}
+          </span>
+        )}
+      </div>
+
+      {/* Unified claim gating — see get_wall_claim_eligibility() (migration
+          20260811170000). Shows nothing at all once the wall already has a
+          real owner or an open claim; otherwise routes to whichever claim
+          system actually backs this wall (election-candidacy stub vs.
+          officeholder import) instead of one generic form that only ever
+          worked for the candidate case. */}
+      {!isOwner && (claimEligibility?.kind === "unclaimed_candidate" || claimEligibility?.kind === "unclaimed_officeholder") && (
+        <Button
+          variant="icon"
+          size="sm"
+          tone="primary"
+          onClick={openClaimModal}
+          title="Claim This Wall"
+          // Same reasoning as the Support toggle above — this needs to
+          // read as a live call-to-action at rest (an unclaimed wall
+          // inviting the real politician to claim it), not blend into
+          // the muted-until-hover default icon look.
+          className="shrink-0 !text-primary bg-primary/10 hover:bg-primary/20"
+        >
+          <ShieldCheck size={16} />
+        </Button>
+      )}
+
+      {isOwner && (
+        <>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => router.push("/profile/edit")}
+            className="gap-1 text-xs shrink-0"
+          >
+            ✎ Edit Profile
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={loadSupportersDashboard}
+            className="gap-1 text-xs shrink-0"
+          >
+            <Users size={14} /> Supporters Dashboard
+          </Button>
+        </>
+      )}
+
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => setShowQr(true)}
+        className="p-2 shrink-0"
+      >
+        <QrCode size={16} />
+      </Button>
+
+      {!isOwner && wallOwner?.id && (
+        <Button
+          variant="icon"
+          size="sm"
+          tone="danger"
+          onClick={() => setShowReportProfile(true)}
+          title="Report this politician"
+          className="shrink-0"
+        >
+          <Flag size={14} />
+        </Button>
+      )}
+    </>
+  );
+
   return (
     <div className="w-full max-w-none pb-20 px-4 lg:px-8 space-y-6">
       {/* Accessible SEO & AI Search Entity Lead Block */}
@@ -513,54 +622,87 @@ export default function PoliticianWallClient({
         </section>
       )}
 
-      {/* Wall Header Card */}
-      <Card padding="md" className="space-y-4">
-        <div className="flex items-start justify-between gap-4 flex-wrap">
-          <div className="flex items-center gap-4">
-            <Avatar src={wallOwner?.politician_profiles?.photo_url || wallOwner?.politician_profiles?.avatar_url} name={wallOwner?.full_name || "P"} size="xl" />
-            <div>
-              <h1 className="text-2xl font-bold text-text-main flex items-center gap-2">
-                {wallOwner?.full_name || "Politician Wall"}
+      {/* Wall Header Card — ultra-compact on mobile (p-3, space-y-2) to save
+          vertical real estate; expands to breathable spacing on lg+ (p-6,
+          space-y-4). Two-row mobile layout: identity in left column,
+          actions icons in right. Same compact two-row pattern as the Feed
+          and Elections headers. */}
+      <Card padding="none" className="p-3 lg:p-6 space-y-2 lg:space-y-4">
+        <div className="flex flex-col gap-2 lg:gap-4 lg:flex-row lg:items-start lg:justify-between">
+          {/* items-start (not items-center) so the avatar pins to the top of
+              the text column instead of vertically centering against it —
+              with 2-3 contact pills stacked below the name, that column can
+              get much taller than the avatar, which used to drag the avatar
+              down into the middle of the card. */}
+          <div className="flex items-start gap-2 lg:gap-4 min-w-0">
+            <Avatar
+              src={wallOwner?.politician_profiles?.photo_url || wallOwner?.politician_profiles?.avatar_url}
+              name={wallOwner?.full_name || "P"}
+              size="xl"
+              className="!w-12 !h-12 !text-lg lg:!w-20 lg:!h-20 lg:!text-2xl"
+            />
+            <div className="min-w-0 flex-1">
+              <h1 className="text-lg lg:text-2xl font-bold text-text-main flex items-center gap-2 min-w-0">
+                <span className="truncate">{wallOwner?.full_name || "Politician Wall"}</span>
                 {wallOwner?.politician_profiles?.political_target_role && (
-                  <Badge tone="primary">
+                  <Badge tone="primary" className="shrink-0">
                     {wallOwner.politician_profiles.is_office_holder || wallOwner.politician_profiles.holding_since
                       ? wallOwner.politician_profiles.political_target_role
                       : `Aspiring ${wallOwner.politician_profiles.political_target_role}`}
                   </Badge>
                 )}
               </h1>
-              {wallOwner?.politician_profiles?.target_boundary_name && (
-                <p className="text-xs text-text-muted mt-0.5">
-                  {wallOwner.politician_profiles.target_boundary_name}
-                </p>
-              )}
-              <button
-                type="button"
-                onClick={() => setShowReviewsModal(true)}
-                className="mt-1.5 cursor-pointer hover:opacity-80 transition-opacity"
-                title="View ratings and reviews"
-              >
-                <StarRating value={ratingSummary.avg} count={ratingSummary.count} size="sm" />
-              </button>
+              {/* Location + rating collapsed onto one line on mobile instead
+                  of two — they're both short, low-priority metadata and
+                  don't need a row each. */}
+              <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                {wallOwner?.politician_profiles?.target_boundary_name && (
+                  <span className="text-xs text-text-muted truncate">
+                    {wallOwner.politician_profiles.target_boundary_name}
+                  </span>
+                )}
+                {wallOwner?.politician_profiles?.target_boundary_name && (
+                  <span className="text-text-muted/40 text-xs">·</span>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setShowReviewsModal(true)}
+                  className="cursor-pointer hover:opacity-80 transition-opacity"
+                  title="View ratings and reviews"
+                >
+                  <StarRating value={ratingSummary.avg} count={ratingSummary.count} size="sm" />
+                </button>
+              </div>
 
-              {/* Contact Info Links */}
-              <div className="flex flex-wrap gap-2 mt-3">
+              {/* Contact + action icons share one row on mobile — below lg,
+                  contact links are icon-only circular buttons (title attr
+                  carries the label for a11y/tooltip) and the action buttons
+                  (support/claim/qr/report) are appended right after them in
+                  the same wrapping row, so the whole card collapses from
+                  four stacked rows to one. At lg+ contact links regain their
+                  full labeled-pill form here, and the action buttons move
+                  back out to their own right-aligned column below. */}
+              <div className="flex flex-wrap items-center gap-1.5 lg:gap-2 mt-1.5 lg:mt-2">
                 {wallOwner?.politician_profiles?.contact_email && (
                   <a
                     href={`mailto:${wallOwner.politician_profiles.contact_email}`}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-primary hover:text-primary-light bg-primary/10 hover:bg-primary/15 rounded-lg transition-colors"
+                    title={wallOwner.politician_profiles.contact_email}
+                    className="inline-flex items-center justify-center gap-1.5 w-7 h-7 lg:w-auto lg:h-auto lg:px-2.5 lg:py-1.5 text-xs font-medium text-primary hover:text-primary-light bg-primary/10 hover:bg-primary/15 rounded-full lg:rounded-lg transition-colors shrink-0"
                   >
-                    <Mail size={13} />
-                    {wallOwner.politician_profiles.contact_email}
+                    <Mail size={13} className="shrink-0" />
+                    <span className="hidden lg:inline truncate max-w-[220px]">
+                      {wallOwner.politician_profiles.contact_email}
+                    </span>
                   </a>
                 )}
                 {wallOwner?.politician_profiles?.contact_phone && (
                   <a
                     href={`tel:${wallOwner.politician_profiles.contact_phone}`}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-primary hover:text-primary-light bg-primary/10 hover:bg-primary/15 rounded-lg transition-colors"
+                    title={wallOwner.politician_profiles.contact_phone}
+                    className="inline-flex items-center justify-center gap-1.5 w-7 h-7 lg:w-auto lg:h-auto lg:px-2.5 lg:py-1.5 text-xs font-medium text-primary hover:text-primary-light bg-primary/10 hover:bg-primary/15 rounded-full lg:rounded-lg transition-colors shrink-0"
                   >
-                    <Phone size={13} />
-                    {wallOwner.politician_profiles.contact_phone}
+                    <Phone size={13} className="shrink-0" />
+                    <span className="hidden lg:inline">{wallOwner.politician_profiles.contact_phone}</span>
                   </a>
                 )}
                 {wallOwner?.politician_profiles?.source_url && (
@@ -568,104 +710,42 @@ export default function PoliticianWallClient({
                     href={wallOwner.politician_profiles.source_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-primary hover:text-primary-light bg-primary/10 hover:bg-primary/15 rounded-lg transition-colors"
+                    title="Official Website"
+                    className="inline-flex items-center justify-center gap-1.5 w-7 h-7 lg:w-auto lg:h-auto lg:px-2.5 lg:py-1.5 text-xs font-medium text-primary hover:text-primary-light bg-primary/10 hover:bg-primary/15 rounded-full lg:rounded-lg transition-colors shrink-0"
                   >
-                    <Globe size={13} />
-                    Official Website
+                    <Globe size={13} className="shrink-0" />
+                    <span className="hidden lg:inline">Official Website</span>
                   </a>
                 )}
+
+                {/* Thin divider between contact links and action icons so
+                    the merged mobile row still reads as two groups. */}
+                {(wallOwner?.politician_profiles?.contact_email ||
+                  wallOwner?.politician_profiles?.contact_phone ||
+                  wallOwner?.politician_profiles?.source_url) && (
+                  <span className="w-px h-4 bg-border lg:hidden shrink-0" />
+                )}
+
+                {/* Mobile-only: action buttons folded into this same row.
+                    Hidden at lg where they reappear in their own column. */}
+                <div className="flex items-center gap-1.5 flex-wrap lg:hidden">
+                  {actionButtons}
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <Button
-              variant={isSupporting ? "primary" : "outline"}
-              size="sm"
-              onClick={toggleSupport}
-              className="gap-1.5"
-            >
-              <Heart
-                size={14}
-                className={isSupporting ? "fill-current" : ""}
-              />
-              {supportCount > 0 ? supportCount : "Support"}
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowReviewsModal(true)}
-              className="gap-1.5"
-            >
-              <Star size={14} />
-              Ratings
-            </Button>
-
-            {/* Unified claim gating — see get_wall_claim_eligibility() (migration
-                20260811170000). Shows nothing at all once the wall already has a
-                real owner or an open claim; otherwise routes to whichever claim
-                system actually backs this wall (election-candidacy stub vs.
-                officeholder import) instead of one generic form that only ever
-                worked for the candidate case. */}
-            {!isOwner && (claimEligibility?.kind === "unclaimed_candidate" || claimEligibility?.kind === "unclaimed_officeholder") && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={openClaimModal}
-                className="gap-1.5 border-primary/40 text-primary hover:bg-primary/10"
-              >
-                <ShieldCheck size={14} className="text-primary" />
-                Claim This Wall
-              </Button>
-            )}
-
-            {isOwner && (
-              <>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => router.push("/profile/edit")}
-                  className="gap-1 text-xs"
-                >
-                  ✎ Edit Profile
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={loadSupportersDashboard}
-                  className="gap-1 text-xs"
-                >
-                  <Users size={14} /> Supporters Dashboard
-                </Button>
-              </>
-            )}
-
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowQr(true)}
-              className="p-2"
-            >
-              <QrCode size={16} />
-            </Button>
-
-            {!isOwner && wallOwner?.id && (
-              <Button
-                variant="icon"
-                size="sm"
-                tone="danger"
-                onClick={() => setShowReportProfile(true)}
-                title="Report this politician"
-              >
-                <Flag size={14} />
-              </Button>
-            )}
+          {/* Desktop-only action column — icon-only row. Ratings is gone
+              entirely -- the star rating in the identity column already
+              opens this same modal, so a second "Ratings" button was a
+              duplicate control. */}
+          <div className="hidden lg:flex items-center gap-2 flex-wrap">
+            {actionButtons}
           </div>
         </div>
 
         {wallOwner?.politician_profiles?.bio && (
-          <p className="text-sm text-text-secondary pt-3 border-t border-border-light/20 leading-relaxed">
+          <p className="text-sm text-text-secondary pt-2 lg:pt-3 border-t border-border-light/20 leading-relaxed">
             {wallOwner.politician_profiles.bio}
           </p>
         )}
@@ -701,9 +781,29 @@ export default function PoliticianWallClient({
         )}
       </Card>
 
-      {/* Post Composer */}
+      {/* Post Composer — collapses to a single tap-to-expand row (same
+          pattern as the main Feed composer) instead of always showing the
+          full textarea + toolbar. */}
       {user && profile?.current_ghost_id && (
-        <Card padding="md">
+        <Card padding={composerOpen ? "md" : "sm"}>
+          {!composerOpen ? (
+            <button
+              type="button"
+              onClick={() => setComposerOpen(true)}
+              className="w-full flex items-center gap-2.5 text-left cursor-pointer"
+            >
+              <Avatar name="You" size="sm" />
+              <span className="flex-1 min-w-0 text-sm text-text-muted bg-surface/50 border border-border-light/30 rounded-full px-4 py-2 truncate">
+                {isOwner
+                  ? "Post an update to your public wall..."
+                  : "Leave a post or message for this representative..."}
+              </span>
+              <span className="shrink-0 flex items-center gap-1 text-text-muted">
+                <ImageIcon size={18} aria-hidden="true" />
+                {isOwner && <Video size={18} aria-hidden="true" />}
+              </span>
+            </button>
+          ) : (
           <form onSubmit={handleCreatePost} className="space-y-3">
             <Textarea
               placeholder={
@@ -714,6 +814,7 @@ export default function PoliticianWallClient({
               value={newPostContent}
               onChange={handlePostChange}
               rows={3}
+              autoFocus
             />
 
             {imagePreview && (
@@ -800,11 +901,21 @@ export default function PoliticianWallClient({
                 )}
               </div>
 
-              <Button type="submit" disabled={submitting}>
-                {submitting ? "Posting..." : "Post to Wall"}
-              </Button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={closeComposerIfEmpty}
+                  className="text-xs font-semibold text-text-muted hover:text-text-main px-2 py-1.5 rounded-lg hover:bg-surface/50 transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <Button type="submit" disabled={submitting}>
+                  {submitting ? "Posting..." : "Post to Wall"}
+                </Button>
+              </div>
             </div>
           </form>
+          )}
         </Card>
       )}
 

@@ -295,10 +295,14 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
         ))}
       </nav>
 
-      {/* Header Banner */}
-      <div className="bg-surface/50 border border-border-light/50 rounded-2xl p-6 sm:p-8 space-y-4 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
+      {/* Header Banner — below sm the representative count folds into the
+          subtitle line instead of its own standalone stat block, and the
+          boundary name shrinks a step, so the actual Chain of
+          Representation list starts higher on the mobile fold. sm+ is
+          unchanged. */}
+      <div className="bg-surface/50 border border-border-light/50 rounded-2xl p-4 sm:p-8 space-y-3 sm:space-y-4 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+          <div className="min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <Badge tone="primary" size="sm">
                 {shape.boundary_type}
@@ -307,16 +311,19 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
                 {shape.country}
               </Badge>
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-text-main">
+            <h1 className="font-display text-2xl sm:text-4xl font-extrabold tracking-tight text-text-main truncate">
               {shape.name}
             </h1>
-            <p className="mt-1 text-sm text-text-muted flex items-center gap-1.5">
+            <p className="mt-1 text-sm text-text-muted flex items-center gap-1.5 flex-wrap">
               <MapPin size={15} className="text-primary shrink-0" />
               Electoral Directory &amp; Office Holders
+              <span className="sm:hidden font-semibold text-text-main">
+                · {totalRepresentatives} active rep{totalRepresentatives === 1 ? "" : "s"}
+              </span>
             </p>
           </div>
 
-          <div className="text-right">
+          <div className="hidden sm:block text-right shrink-0">
             <div className="text-2xl font-black text-primary">{totalRepresentatives}</div>
             <div className="text-xs text-text-muted font-medium">
               Active Representative{totalRepresentatives === 1 ? "" : "s"}

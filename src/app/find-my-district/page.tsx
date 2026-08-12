@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import FindMyDistrictClient from "@/components/features/FindMyDistrictClient";
+import { createClient } from "@/lib/supabase/server";
+import { getUserBoundaryMemberships } from "@/lib/services/profile";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -72,7 +74,36 @@ const schemaData = {
   },
 };
 
-export default function FindMyDistrictPage() {
+export default async function FindMyDistrictPage() {
+  // Same "already know your constituency" state Elections & Races reads on
+  // the server (src/app/elections/page.tsx) — reused here so this screen
+  // doesn't re-ask a question the app already has the answer to. See the
+  // mobile audit's "location asked for twice" finding.
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // FindMyDistrictClient's MatchedBoundary (unlike ElectionsPageClient's)
+  // requires non-optional country/boundary_type — it does string ops
+  // (.toLowerCase()) on them — so rows missing either are dropped here
+  // rather than passed through with empty-string fallbacks.
+  let initialBoundaries: { id: number; name: string; country: string; boundary_type: string }[] = [];
+
+  if (user) {
+    const { data: memberships } = await getUserBoundaryMemberships(supabase, user.id);
+    const memRows = (memberships || []) as Array<{
+      map_shape_id: number;
+      map_shapes?: { id: number; name: string; country?: string; boundary_type?: string } | null;
+    }>;
+    initialBoundaries = memRows
+      .map((m) => m.map_shapes)
+      .filter((s): s is { id: number; name: string; country: string; boundary_type: string } =>
+        Boolean(s && s.country && s.boundary_type)
+      )
+      .map((s) => ({ id: s.id, name: s.name, country: s.country, boundary_type: s.boundary_type }));
+  }
+
   return (
     <>
       <script
@@ -81,7 +112,7 @@ export default function FindMyDistrictPage() {
           __html: JSON.stringify(schemaData),
         }}
       />
-      <FindMyDistrictClient />
+      <FindMyDistrictClient initialBoundaries={initialBoundaries} />
     </>
   );
 }

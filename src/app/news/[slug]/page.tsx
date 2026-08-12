@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { ArrowLeft, Calendar, Clock, Globe, User, ExternalLink, Zap } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Globe, User, ExternalLink, Zap, Tag } from "lucide-react";
 import { Card, Badge } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/server";
 import {
@@ -191,9 +191,16 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
           </div>
         )}
 
-        {/* Article header */}
+        {/* Article header — below sm this drops the repeated summary (the
+            reader already read it on the list card to get here), shrinks
+            the headline a step, and folds the byline into the meta row
+            instead of its own block, so body copy starts much closer to
+            the top of the fold. sm+ keeps the original, more spacious
+            layout. Topic tags (as opposed to the category kicker) live at
+            the bottom of the article, near Sources — nobody decides
+            whether to read a piece because of its tag list. */}
         <Card padding="md" className="space-y-5">
-          <div className="space-y-3 pb-5 border-b border-border-light/20">
+          <div className="space-y-2.5 sm:space-y-3 pb-4 sm:pb-5 border-b border-border-light/20">
             <div className="flex items-center flex-wrap gap-2">
               <Badge tone="primary">{article.category}</Badge>
               {isBreaking && !article.hero_image_url && (
@@ -201,20 +208,22 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
                   <Zap size={10} /> BREAKING
                 </span>
               )}
-              {content?.tags?.map((tag) => (
-                <Badge key={tag} tone="neutral">{tag}</Badge>
-              ))}
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-text-main leading-tight">
+            <h1 className="text-xl sm:text-3xl font-extrabold text-text-main leading-tight">
               {article.headline}
             </h1>
 
             {article.summary && (
-              <p className="text-sm text-text-muted leading-relaxed">{article.summary}</p>
+              <p className="hidden sm:block text-sm text-text-muted leading-relaxed">{article.summary}</p>
             )}
 
-            <div className="flex items-center flex-wrap gap-4 text-xs text-text-muted">
+            <div className="flex items-center flex-wrap gap-3 sm:gap-4 text-xs text-text-muted">
+              {content?.author?.name && (
+                <span className="sm:hidden flex items-center gap-1 font-semibold text-text-secondary">
+                  <User size={12} /> {content.author.name}
+                </span>
+              )}
               {displayDate && (
                 <span className="flex items-center gap-1">
                   <Calendar size={12} /> {displayDate}
@@ -231,9 +240,10 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
             </div>
           </div>
 
-          {/* Author byline */}
+          {/* Author byline — full block (photo + bio) only at sm+; mobile
+              already folded the name into the meta row above. */}
           {content?.author?.name && (
-            <div className="flex items-center gap-3 pb-5 border-b border-border-light/20">
+            <div className="hidden sm:flex items-center gap-3 pb-5 border-b border-border-light/20">
               {content.author.photoUrl && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -259,6 +269,23 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
             <NewsArticleBody body={content.body} />
           ) : (
             <p className="text-text-muted text-sm italic">No article content yet.</p>
+          )}
+
+          {/* Topics — moved down here from the header. These are discovery
+              tags, not a reason to click; a reader who just finished the
+              piece is a better audience for "explore more like this" than
+              one who hasn't started reading yet. */}
+          {content?.tags && content.tags.length > 0 && (
+            <div className="pt-5 border-t border-border-light/20 space-y-2">
+              <h3 className="text-xs font-semibold text-text-muted uppercase tracking-widest flex items-center gap-1.5">
+                <Tag size={12} /> Topics
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {content.tags.map((tag) => (
+                  <Badge key={tag} tone="neutral">{tag}</Badge>
+                ))}
+              </div>
+            </div>
           )}
 
           {/* Sources */}

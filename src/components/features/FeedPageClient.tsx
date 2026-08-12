@@ -134,6 +134,12 @@ export default function FeedPageClient() {
   const [uploadedVideoUrl, setUploadedVideoUrl] = useState<string | null>(null);
   const [mediaPreview, setMediaPreview] = useState<{ url: string; type: "image" | "video" } | null>(null);
 
+  // Composer starts collapsed to a single tap-to-expand row (app-style —
+  // Twitter/LinkedIn "start a post" pattern) instead of always showing the
+  // full textarea + toolbar, which used to dominate the first screenful on
+  // mobile before any actual feed content appeared.
+  const [composerOpen, setComposerOpen] = useState(false);
+
   // Ticking clock for the ephemeral story strip (rule 6) — kept in state
   // and updated on an interval rather than calling Date.now() during render,
   // which would make the component impure (React purity rule).
@@ -358,6 +364,16 @@ export default function FeedPageClient() {
     setImageError(null);
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
+    setComposerOpen(true);
+  };
+
+  // Only snap the composer back to its compact one-line trigger when there's
+  // nothing pending -- an in-progress draft, image, or video stays expanded
+  // so a stray tap outside doesn't silently discard it.
+  const closeComposerIfEmpty = () => {
+    if (!newPostContent.trim() && !imageFile && !uploadedVideoUrl && !showVideoRecorder) {
+      setComposerOpen(false);
+    }
   };
 
   const handleCreatePost = async (e: React.FormEvent) => {
@@ -406,6 +422,7 @@ export default function FeedPageClient() {
       setImageError(null);
       setUploadedVideoUrl(null);
       setShowVideoRecorder(false);
+      setComposerOpen(false);
       await loadFeedPosts();
     } catch (err: any) {
       const msg = err?.message || err?.details || err?.hint || (typeof err === "object" ? JSON.stringify(err) : String(err));
@@ -498,62 +515,92 @@ export default function FeedPageClient() {
     <>
       <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 flex flex-col lg:flex-row gap-6">
         <div className="flex-1 min-w-0 space-y-6">
-          {/* Profile Header & Summary */}
-          <Card padding="md" className="space-y-4">
-            <div className="flex items-center justify-between gap-4 flex-wrap">
-              <div className="flex items-center gap-3">
-                <Avatar src={avatarUrl} name={profile?.full_name} size="md" />
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h1 className="text-lg font-bold text-text-main">
+          {/* Profile Header & Summary — kept to one compact row through
+              tablet widths (Facebook-style mini header); only the true
+              desktop two-column layout (lg+) gets the roomier spelled-out
+              version. */}
+          <Card padding="sm" className="space-y-2 lg:p-6 lg:space-y-4">
+            {/* Below lg: identity (avatar/name/badge) and meta (location,
+                score, burn) are two stacked rows so the name always gets the
+                full row width instead of racing the score/burn chips for
+                space. lg:contents unwraps the meta row so, at desktop width,
+                its children rejoin the identity row as before (location back
+                under the name, actions pinned to the far right). */}
+            <div className="flex flex-col gap-1.5 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
+              <div className="flex items-center gap-2 lg:gap-3 min-w-0">
+                <Avatar
+                  src={avatarUrl}
+                  name={profile?.full_name}
+                  size="md"
+                  className="!w-8 !h-8 !text-xs lg:!w-10 lg:!h-10 lg:!text-sm"
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5 lg:gap-2 min-w-0">
+                    <h1 className="text-sm lg:text-lg font-bold text-text-main truncate">
                       {profile?.full_name || "Constituent"}
                     </h1>
-                    <Badge tone="primary" className="capitalize">
+                    <Badge tone="primary" className="capitalize shrink-0">
                       {profile?.role === "normal" ? "Citizen" : profile?.role}
                     </Badge>
                   </div>
-                  <p className="text-xs text-text-muted flex items-center gap-1 mt-0.5">
-                    <MapPin size={12} className="text-accent" />{" "}
-                    {profile?.constituency || profile?.country || "Platform Visitor"}
+                  <p className="hidden lg:flex text-xs text-text-muted items-center gap-1 mt-0.5 truncate">
+                    <MapPin size={12} className="text-accent shrink-0" />{" "}
+                    <span className="truncate">
+                      {profile?.constituency || profile?.country || "Platform Visitor"}
+                    </span>
                   </p>
                 </div>
               </div>
 
-              {!isAdmin && (
-                <div className="flex items-center gap-3 flex-wrap">
-                  <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/30 rounded-xl text-xs">
-                    <Award size={14} className="text-primary" />
-                    <span className="text-text-secondary font-medium">
-                      Impact Score: <strong className="text-primary">{score ?? 0}</strong>
-                    </span>
-                    <button
-                      onClick={handleRecalculateScore}
-                      disabled={scoring}
-                      className="text-text-muted hover:text-primary transition-colors p-0.5 ml-1 cursor-pointer"
-                      title="Recalculate score"
-                    >
-                      <RefreshCw size={12} className={scoring ? "animate-spin" : ""} />
-                    </button>
-                  </div>
+              <div className="flex items-center justify-between gap-2 lg:contents">
+                <p className="lg:hidden pl-10 min-w-0 text-[11px] text-text-muted flex items-center gap-1 truncate">
+                  <MapPin size={11} className="text-accent shrink-0" />{" "}
+                  <span className="truncate">
+                    {profile?.constituency || profile?.country || "Platform Visitor"}
+                  </span>
+                </p>
 
-                  {!isPolitician && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setShowBurnConfirm(true)}
-                      className="gap-1.5 text-xs text-danger hover:text-danger hover:border-danger/40"
-                    >
-                      <Flame size={14} /> Burn Identity
-                    </Button>
-                  )}
-                </div>
-              )}
+                {!isAdmin && (
+                  <div className="flex items-center gap-1.5 lg:gap-3 shrink-0">
+                    <div className="flex items-center gap-1 lg:gap-2 px-2 py-1 lg:px-3 lg:py-1.5 bg-primary/10 border border-primary/30 rounded-lg lg:rounded-xl text-[10px] lg:text-xs">
+                      <Award size={12} className="text-primary shrink-0" />
+                      <span className="text-text-secondary font-medium whitespace-nowrap">
+                        <span className="hidden lg:inline">Impact Score: </span>
+                        <strong className="text-primary">{score ?? 0}</strong>
+                      </span>
+                      <button
+                        onClick={handleRecalculateScore}
+                        disabled={scoring}
+                        className="text-text-muted hover:text-primary transition-colors p-0.5 lg:ml-1 cursor-pointer"
+                        title="Recalculate score"
+                      >
+                        <RefreshCw size={11} className={scoring ? "animate-spin" : ""} />
+                      </button>
+                    </div>
+
+                    {!isPolitician && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setShowBurnConfirm(true)}
+                        className="gap-1.5 text-xs text-danger hover:text-danger hover:border-danger/40 !px-2 !py-1 lg:!px-3 lg:!py-1.5"
+                        title="Burn Identity"
+                      >
+                        <Flame size={13} /> <span className="hidden lg:inline">Burn Identity</span>
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </Card>
 
-          {/* Active Elections Banner - Compact Multi-Pill Bar (up to 5 side-by-side) */}
+          {/* Active Elections Banner - below lg this is a single-line,
+              horizontally-scrolling pill strip (no wrap → no stacked full-
+              width rows eating the screen); lg+ reverts to the original
+              two-line, wrapping card grid. */}
           {activeElections.length > 0 && (
-            <div className="flex items-center gap-3 overflow-x-auto pb-1 flex-wrap">
+            <div className="flex items-center gap-2 lg:gap-3 overflow-x-auto pb-1 lg:flex-wrap">
               {activeElections.map((elec, idx) => {
                 const seatId = elec.seat_id || elec.election_seat_id;
                 const formattedDate = elec.election_date
@@ -572,13 +619,26 @@ export default function FeedPageClient() {
                       const { data: seat } = await getSeatById(supabase, seatId);
                       router.push(`/elections/seat/${buildSeatSlug(seat || { id: seatId })}`);
                     }}
-                    className="group relative flex-1 min-w-[210px] max-w-[270px] p-2.5 px-3 bg-primary/10 hover:bg-primary/20 border border-primary/30 hover:border-primary/50 rounded-2xl flex items-center gap-2.5 text-xs transition-all shadow-sm cursor-pointer hover:shadow-md animate-fade-in"
+                    className="group relative shrink-0 lg:flex-1 lg:min-w-[210px] lg:max-w-[270px] flex items-center gap-2 lg:gap-2.5 px-2.5 py-1.5 lg:p-2.5 lg:px-3 bg-primary/10 hover:bg-primary/20 border border-primary/30 hover:border-primary/50 rounded-full lg:rounded-2xl text-[11px] lg:text-xs transition-all shadow-sm cursor-pointer hover:shadow-md animate-fade-in"
                     title={`Click to view ${elec.role_title} seat page`}
                   >
-                    <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform">
-                      <Vote size={15} />
+                    <div className="w-5 h-5 lg:w-7 lg:h-7 rounded-full bg-primary/20 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform">
+                      <Vote size={11} className="lg:hidden" />
+                      <Vote size={15} className="hidden lg:block" />
                     </div>
-                    <div className="min-w-0 flex-1 space-y-0.5">
+
+                    {/* Mobile/tablet: one line, role + date only. */}
+                    <div className="flex lg:hidden items-center gap-1 min-w-0 whitespace-nowrap">
+                      <span className="font-bold text-text-main truncate max-w-[110px]">
+                        {elec.role_title}
+                      </span>
+                      {formattedDate && (
+                        <span className="text-primary font-semibold shrink-0">· {formattedDate}</span>
+                      )}
+                    </div>
+
+                    {/* Desktop: full two-line detail as before. */}
+                    <div className="hidden lg:block min-w-0 flex-1 space-y-0.5">
                       {/* Line 1: Election Name / Boundary */}
                       <div className="flex items-center gap-1.5 truncate">
                         <span className="font-bold text-text-main truncate text-xs">
@@ -642,16 +702,37 @@ export default function FeedPageClient() {
                 </Card>
               )}
 
-              {/* Main Composer */}
+              {/* Main Composer — collapses to a single tap-to-expand row
+                  (Twitter/LinkedIn "start a post" pattern) so it doesn't
+                  dominate the first screenful on mobile before any feed
+                  content is visible. Expands automatically once there's a
+                  draft, image, or video pending. */}
               {profile?.current_ghost_id && (
-                <Card padding="md">
-                  <form onSubmit={handleCreatePost} className="space-y-3">
-                    <Textarea
-                      placeholder="What's happening in your constituency?"
-                      value={newPostContent}
-                      onChange={handlePostTextChange}
-                      rows={3}
-                    />
+                <Card padding={composerOpen ? "md" : "sm"}>
+                  {!composerOpen ? (
+                    <button
+                      type="button"
+                      onClick={() => setComposerOpen(true)}
+                      className="w-full flex items-center gap-2.5 text-left cursor-pointer"
+                    >
+                      <Avatar src={avatarUrl} name={profile?.full_name} size="sm" />
+                      <span className="flex-1 min-w-0 text-sm text-text-muted bg-surface/50 border border-border-light/30 rounded-full px-4 py-2 truncate">
+                        What&apos;s happening in your constituency?
+                      </span>
+                      <span className="shrink-0 flex items-center gap-1 text-text-muted">
+                        <ImageIcon size={18} aria-hidden="true" />
+                        {isPolitician && <Video size={18} aria-hidden="true" />}
+                      </span>
+                    </button>
+                  ) : (
+                    <form onSubmit={handleCreatePost} className="space-y-3">
+                      <Textarea
+                        placeholder="What's happening in your constituency?"
+                        value={newPostContent}
+                        onChange={handlePostTextChange}
+                        rows={3}
+                        autoFocus
+                      />
 
                     {(imagePreview || uploadedVideoUrl) && (
                       <div className="flex gap-3 items-end flex-wrap">
@@ -736,18 +817,30 @@ export default function FeedPageClient() {
                         )}
                       </div>
 
-                      <Button
-                        type="submit"
-                        disabled={submitting || (!newPostContent.trim() && !imageFile && !uploadedVideoUrl)}
-                      >
-                        {submitting ? "Posting..." : "Post to Feed"}
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={closeComposerIfEmpty}
+                          className="text-xs font-semibold text-text-muted hover:text-text-main px-2 py-1.5 rounded-lg hover:bg-surface/50 transition-colors cursor-pointer"
+                        >
+                          Cancel
+                        </button>
+                        <Button
+                          type="submit"
+                          disabled={submitting || (!newPostContent.trim() && !imageFile && !uploadedVideoUrl)}
+                        >
+                          {submitting ? "Posting..." : "Post to Feed"}
+                        </Button>
+                      </div>
                     </div>
                   </form>
+                  )}
                 </Card>
               )}
 
-              {/* Video Stories Strip */}
+              {/* Video Stories Strip — renders nothing when empty (see
+                  StoryStrip), so it never occupies space just to announce
+                  its own emptiness. */}
               <StoryStrip
                 posts={storyPosts}
                 onSelect={(postId) => setActiveStoryId(postId)}

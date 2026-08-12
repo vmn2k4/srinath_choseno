@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { MapPin, ArrowRight, Layers, Network } from "lucide-react";
+import { MapPin, ArrowRight, Layers, Network, ChevronDown } from "lucide-react";
 import InteractiveLocationPicker from "./InteractiveLocationPicker";
 import BoundaryDirectoryClient from "./BoundaryDirectoryClient";
 import { findBoundariesByPoint, getShapeContainers, getNationalShapeForCountry } from "@/lib/services/boundaries";
@@ -120,34 +120,37 @@ async function resolveBranch(
   }
 }
 
-export default function FindMyDistrictClient() {
+interface FindMyDistrictClientProps {
+  // Constituency already on file for this account (same source as Elections
+  // & Races' initialBoundaries) — lets this screen skip straight to results
+  // instead of re-asking for a location every visit.
+  initialBoundaries?: MatchedBoundary[];
+}
+
+export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyDistrictClientProps) {
   const supabase = createClient();
-  const [boundaries, setBoundaries] = useState<MatchedBoundary[] | null>(null);
+  const hasInitialBoundaries = initialBoundaries.length > 0;
+  const [boundaries, setBoundaries] = useState<MatchedBoundary[] | null>(
+    hasInitialBoundaries ? initialBoundaries : null
+  );
   const [branches, setBranches] = useState<RepresentationBranch[]>([]);
   const [loading, setLoading] = useState(false);
-  const [branchesLoading, setBranchesLoading] = useState(false);
+  const [branchesLoading, setBranchesLoading] = useState(hasInitialBoundaries);
   const [error, setError] = useState("");
   const [selectedLat, setSelectedLat] = useState<number | undefined>(undefined);
   const [selectedLng, setSelectedLng] = useState<number | undefined>(undefined);
+  // Below md: if we already know the constituency, the map/search picker
+  // starts collapsed to a "Change location" pill instead of covering the
+  // screen with a GPS-permission overlay on every visit. md+ always shows
+  // the full two-column layout — there's room for both there.
+  const [pickerOpen, setPickerOpen] = useState(!hasInitialBoundaries);
 
-  const handleLocationSelect = async (lat: number, lng: number) => {
-    setSelectedLat(lat);
-    setSelectedLng(lng);
-    setLoading(true);
-    setError("");
-    setBranches([]);
-    const { data, error: rpcError } = await findBoundariesByPoint(supabase, lat, lng);
-    setLoading(false);
-    if (rpcError) {
-      setError("Couldn't look up boundaries for that location. Please try again.");
-      return;
-    }
-    const matched = (data as MatchedBoundary[] | null) || [];
-    trackFindDistrictCompleted({ found: matched.length > 0, boundaryCount: matched.length });
-    setBoundaries(matched);
-
-    // Fetch branches for all boundaries (excluding polling districts)
-    if (matched.length > 0) {
+  const resolveAllBranches = useCallback(
+    async (matched: MatchedBoundary[]) => {
+      if (matched.length === 0) {
+        setBranches([]);
+        return;
+      }
       setBranchesLoading(true);
       // Filter out polling districts as they're not electoral boundaries
       const boundariesToResolve = matched.filter(
@@ -165,18 +168,51 @@ export default function FindMyDistrictClient() {
       );
       setBranches(resolvedBranches.filter((b): b is RepresentationBranch => b !== null));
       setBranchesLoading(false);
+    },
+    [supabase]
+  );
+
+  // Resolve the already-known constituency's representatives on mount —
+  // same data an address search would produce, minus the address search.
+  // Deferred a tick (same pattern as InteractiveLocationPicker's own mount
+  // effect) so the setState calls inside resolveAllBranches don't run
+  // synchronously within the effect body.
+  useEffect(() => {
+    if (hasInitialBoundaries) {
+      Promise.resolve().then(() => resolveAllBranches(initialBoundaries));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleLocationSelect = async (lat: number, lng: number) => {
+    setSelectedLat(lat);
+    setSelectedLng(lng);
+    setLoading(true);
+    setError("");
+    setBranches([]);
+    const { data, error: rpcError } = await findBoundariesByPoint(supabase, lat, lng);
+    setLoading(false);
+    if (rpcError) {
+      setError("Couldn't look up boundaries for that location. Please try again.");
+      return;
+    }
+    const matched = (data as MatchedBoundary[] | null) || [];
+    trackFindDistrictCompleted({ found: matched.length > 0, boundaryCount: matched.length });
+    setBoundaries(matched);
+    await resolveAllBranches(matched);
   };
 
   return (
     <div className="w-full min-h-screen bg-page-bg">
-      {/* Header */}
-      <header className="w-full max-w-7xl mx-auto px-4 py-4">
-        <div className="text-center space-y-2 mb-6">
-          <h1 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight">
+      {/* Header — compact on mobile (title only, description hidden) so the
+          functional search widget is reachable without scrolling past a
+          marketing block; full hero treatment returns at sm: and up. */}
+      <header className="w-full max-w-7xl mx-auto px-4 pt-3 pb-1 sm:py-4">
+        <div className="text-center space-y-1 sm:space-y-2 mb-3 sm:mb-6">
+          <h1 className="font-display text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
             Find your electoral district and representatives
           </h1>
-          <p className="text-text-muted text-sm max-w-2xl mx-auto">
+          <p className="hidden sm:block text-text-muted text-sm max-w-2xl mx-auto">
             Search your address to discover your federal, provincial, and municipal electoral boundaries,
             your elected representatives, and 2026 election candidates in your area. Free,
             non-partisan, and no login required.
@@ -184,18 +220,39 @@ export default function FindMyDistrictClient() {
         </div>
       </header>
 
-      {/* Main Layout - Two Column (Map + Boundaries) */}
+      {/* Main Layout - Two Column (Map + Boundaries) — two-up from md: so
+          iPad portrait already gets both panels side by side instead of a
+          long single-column scroll. */}
       <section className="w-full max-w-7xl mx-auto px-4 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-8">
-          {/* Left Column - Map */}
-          <div className="space-y-4">
-            <InteractiveLocationPicker
-              currentLat={selectedLat}
-              currentLng={selectedLng}
-              onLocationSelect={handleLocationSelect}
-              loading={loading}
-              error={error}
-            />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-8">
+          {/* Left Column - Map. Below md, if we already resolved a
+              constituency on mount, this starts collapsed behind a
+              "Change location" pill instead of forcing the GPS-permission
+              overlay in front of results the user already has. md+ always
+              shows the map — there's room for it alongside the list. */}
+          <div className="space-y-3">
+            {!pickerOpen && (
+              <button
+                type="button"
+                onClick={() => setPickerOpen(true)}
+                className="md:hidden w-full flex items-center justify-between gap-2 px-4 py-3 rounded-xl border border-border-light/40 bg-surface-elevated/70 text-sm font-semibold text-text-main"
+              >
+                <span className="flex items-center gap-2 min-w-0">
+                  <MapPin size={15} className="text-primary shrink-0" />
+                  <span className="truncate">Change location</span>
+                </span>
+                <ChevronDown size={15} className="text-text-muted shrink-0" />
+              </button>
+            )}
+            <div className={pickerOpen ? "space-y-4" : "hidden md:block space-y-4"}>
+              <InteractiveLocationPicker
+                currentLat={selectedLat}
+                currentLng={selectedLng}
+                onLocationSelect={handleLocationSelect}
+                loading={loading}
+                error={error}
+              />
+            </div>
           </div>
 
           {/* Right Column - Electoral Boundaries */}
