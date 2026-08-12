@@ -15,7 +15,7 @@ import { getOfficeHoldersForShapes } from "@/lib/services/elections";
 import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { geocodeAddressFree, type GeocodeSuggestion } from "@/lib/utils/geocode";
 import { trackSearch } from "@/lib/analytics/events";
-import { useGuestLocation, setGuestLocation, clearGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
+import { useGuestLocation, getGuestLocation, setGuestLocation, clearGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
 
 interface RepRow {
   id: string;
@@ -82,9 +82,10 @@ export default function HomeLocateWidget() {
 
   // Sync guest location from localStorage / cross-tab storage events
   useEffect(() => {
-    if (guestLocation && guestLocation.boundaries.length > 0) {
-      const matched = guestLocation.boundaries.filter(
-        (b) => !b.boundary_type?.toLowerCase().includes("polling")
+    const loc = guestLocation || getGuestLocation();
+    if (loc && loc.boundaries && loc.boundaries.length > 0) {
+      const matched = loc.boundaries.filter(
+        (b) => !(b.boundary_type || "").toLowerCase().includes("polling")
       );
       setBoundaries(matched);
 
@@ -101,7 +102,7 @@ export default function HomeLocateWidget() {
           setLoadingResults(false);
         });
       }
-    } else if (boundaries !== null && (!guestLocation || guestLocation.boundaries.length === 0)) {
+    } else if (boundaries !== null && (!loc || loc.boundaries.length === 0)) {
       setBoundaries(null);
       setReps([]);
     }

@@ -71,6 +71,12 @@ export default function NavBar() {
           },
         ]
       : []),
+    {
+      href: "/find-my-district",
+      label: "Find District",
+      icon: MapPin,
+      active: isActive("/find-my-district"),
+    },
     ...(session && profile?.role !== "admin"
       ? [
           {
@@ -94,12 +100,6 @@ export default function NavBar() {
     ...(session && profile?.role === "admin"
       ? [{ href: "/admin", label: "Admin", icon: Shield, active: isActive("/admin") }]
       : []),
-    {
-      href: "/find-my-district",
-      label: "Find District",
-      icon: MapPin,
-      active: isActive("/find-my-district"),
-    },
     {
       href: "/news",
       label: "News",

@@ -321,9 +321,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right — compact "find your district" widget. Hidden on mobile to maximize
-              hero content real estate; visible on lg+ where there's room for both. */}
-          <div className="hidden lg:flex justify-center lg:justify-end">
+          {/* Right — compact "find your district" widget. */}
+          <div className="mt-8 lg:mt-0 flex justify-center lg:justify-end">
             <HomeLocateWidget />
           </div>
         </div>
