@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
@@ -12,16 +13,24 @@ interface CandidateSeatPageProps {
   params: Promise<{ seatId: string; candidateId: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: CandidateSeatPageProps): Promise<Metadata> {
-  const { seatId, candidateId } = await params;
+// generateMetadata and the page component below both need the seat +
+// candidates for the same seatId. Deduped via React cache() so it's one
+// pair of DB round trips per request instead of two.
+const getSeatWithCandidates = cache(async (seatId: string) => {
   const supabase = await createServerClient();
-
   const [{ data: seat }, { data: candidates }] = await Promise.all([
     getSeatById(supabase, seatId),
     getCandidatesBySeatIds(supabase, [seatId]),
   ]);
+  return { seat, candidates };
+});
+
+export async function generateMetadata({
+  params,
+}: CandidateSeatPageProps): Promise<Metadata> {
+  const { seatId, candidateId } = await params;
+
+  const { seat, candidates } = await getSeatWithCandidates(seatId);
 
   if (!seat) {
     return {
@@ -85,12 +94,8 @@ export async function generateMetadata({
 
 export default async function CandidateSeatPage({ params }: CandidateSeatPageProps) {
   const { seatId, candidateId } = await params;
-  const supabase = await createServerClient();
 
-  const [{ data: seat }, { data: candidates }] = await Promise.all([
-    getSeatById(supabase, seatId),
-    getCandidatesBySeatIds(supabase, [seatId]),
-  ]);
+  const { seat, candidates } = await getSeatWithCandidates(seatId);
 
   const selectedCandidate = candidateId
     ? (candidates as any[])?.find(

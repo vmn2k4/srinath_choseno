@@ -42,6 +42,19 @@ async function writeLine(conn: Deno.Conn, line: string): Promise<void> {
   await conn.write(new TextEncoder().encode(line + "\r\n"));
 }
 
+// RFC 2047 encoded-word, needed because raw non-ASCII bytes in a header
+// (e.g. an em dash in the subject) get reinterpreted as Latin-1 by mail
+// clients and render as mojibake ("â€"" instead of "—"). Headers are
+// otherwise sent as-is over SMTP with no charset declaration of their own —
+// unlike the body, which does declare charset=utf-8 and so isn't affected.
+function encodeHeaderValue(value: string): string {
+  if (/^[\x00-\x7F]*$/.test(value)) return value;
+  const bytes = new TextEncoder().encode(value);
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return `=?UTF-8?B?${btoa(binary)}?=`;
+}
+
 async function sendViaSMTP(
   host: string,
   port: number,
@@ -124,11 +137,12 @@ async function sendViaSMTP(
     response = await readLine(smtpConn);
     console.log("DATA response:", response);
 
-    // Compose and send email
+    // Compose and send email. The envelope MAIL FROM above stays a bare
+    // address (SMTP requires that); this header can carry a display name.
     const emailLines = [
-      `From: ${from}`,
+      `From: "Choseno" <${from}>`,
       `To: ${to.join(", ")}`,
-      `Subject: ${subject}`,
+      `Subject: ${encodeHeaderValue(subject)}`,
       `Content-Type: ${isHtml ? "text/html" : "text/plain"}; charset=utf-8`,
       "",
       body,

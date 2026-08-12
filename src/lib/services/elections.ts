@@ -388,21 +388,36 @@ export async function findOpenSeatsInContainer(supabase: Client, containerShapeI
   return supabase.rpc("find_open_seats_in_container", { p_container_shape_id: containerShapeId });
 }
 
+const SEAT_COLUMNS =
+  "id, map_shape_id, role_title, map_shapes(name, boundary_type, country, properties), elections(id, name, election_date, status)";
+
 export async function getSeatById(supabase: Client, seatId: string) {
   const realSeatId = extractIdFromSlug(seatId);
   if (realSeatId && realSeatId.length === 36) {
     const res = await supabase
       .from("election_seats")
-      .select("id, map_shape_id, role_title, map_shapes(name, boundary_type, country, properties), elections(id, name, election_date, status)")
+      .select(SEAT_COLUMNS)
       .eq("id", realSeatId)
       .maybeSingle();
 
     if (res.data) return res;
   }
 
-  const { data: seats } = await supabase
-    .from("election_seats")
-      .select("id, map_shape_id, role_title, map_shapes(name, boundary_type, country, properties), elections(id, name, election_date, status)");
+  // Seat slugs (buildSeatSlug) always carry a short 6-char hex hash, never a
+  // full UUID, so this is the common path. Resolve it to a real id through
+  // an indexed lookup instead of fetching every seat and scanning in JS.
+  if (realSeatId && /^[0-9a-f]{6,8}$/i.test(realSeatId)) {
+    const { data: resolvedId } = await supabase.rpc("find_seat_id_by_short_hash", {
+      short_hash: realSeatId,
+    });
+    if (resolvedId) {
+      const res = await supabase.from("election_seats").select(SEAT_COLUMNS).eq("id", resolvedId).maybeSingle();
+      if (res.data) return res;
+    }
+  }
+
+  // Last-resort fallback for any slug shape the fast paths above don't cover.
+  const { data: seats } = await supabase.from("election_seats").select(SEAT_COLUMNS);
 
   if (!seats || seats.length === 0) {
     return { data: null };
@@ -468,31 +483,43 @@ export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]
   return query;
 }
 
+const CANDIDATE_COLUMNS = `
+  id, seat_id, statement, status, submitted_at, intro_video_url, politician_id,
+  election_seats ( role_title, map_shapes ( name, properties ), elections ( id, name, election_date, status ) )
+`;
+
 export async function getCandidateById(supabase: Client, candidateId: string) {
   const realCandidateId = extractIdFromSlug(candidateId);
   if (realCandidateId && realCandidateId.length === 36) {
     const res = await supabase
       .from("election_candidates")
-      .select(
-        `
-        id, seat_id, statement, status, submitted_at, intro_video_url, politician_id,
-        election_seats ( role_title, map_shapes ( name, properties ), elections ( id, name, election_date, status ) )
-      `
-      )
+      .select(CANDIDATE_COLUMNS)
       .eq("id", realCandidateId)
       .maybeSingle();
 
     if (res.data) return res;
   }
 
-  const { data: cands } = await supabase
-    .from("election_candidates")
-    .select(
-      `
-      id, seat_id, statement, status, submitted_at, intro_video_url, politician_id,
-      election_seats ( role_title, map_shapes ( name, properties ), elections ( id, name, election_date, status ) )
-    `
-    );
+  // Candidate slugs (buildCandidateSlug) always carry a short 6-char hex
+  // hash, never a full UUID, so this is the common path. Resolve it to a
+  // real id through an indexed lookup instead of fetching every candidate
+  // and scanning in JS.
+  if (realCandidateId && /^[0-9a-f]{6,8}$/i.test(realCandidateId)) {
+    const { data: resolvedId } = await supabase.rpc("find_candidate_id_by_short_hash", {
+      short_hash: realCandidateId,
+    });
+    if (resolvedId) {
+      const res = await supabase
+        .from("election_candidates")
+        .select(CANDIDATE_COLUMNS)
+        .eq("id", resolvedId)
+        .maybeSingle();
+      if (res.data) return res;
+    }
+  }
+
+  // Last-resort fallback for any slug shape the fast paths above don't cover.
+  const { data: cands } = await supabase.from("election_candidates").select(CANDIDATE_COLUMNS);
 
   const match = (cands || []).find((c) => {
     const candSlug = buildCandidateSlug(c as any);
@@ -521,6 +548,23 @@ export async function getPublicCandidateById(supabase: Client, candidateId: stri
     if (res.data) return res;
   }
 
+  // Candidate slugs (buildCandidateSlug) always carry a short 6-char hex
+  // hash, never a full UUID, so this is the common path. Resolve it to a
+  // real id through an indexed lookup instead of fetching every candidate
+  // and scanning in JS.
+  if (realCandidateId && /^[0-9a-f]{6,8}$/i.test(realCandidateId)) {
+    const { data: resolvedId } = await supabase.rpc("find_candidate_id_by_short_hash", {
+      short_hash: realCandidateId,
+    });
+    if (resolvedId) {
+      let query = supabase.from("election_candidates").select(columns).eq("id", resolvedId);
+      if (!isDevEnvironment()) query = query.eq("profiles.is_test", false);
+      const res = await query.maybeSingle();
+      if (res.data) return res;
+    }
+  }
+
+  // Last-resort fallback for any slug shape the fast paths above don't cover.
   let listQuery = supabase.from("election_candidates").select(columns);
   if (!isDevEnvironment()) listQuery = listQuery.eq("profiles.is_test", false);
   const { data: cands } = await listQuery;
@@ -940,16 +984,39 @@ export async function createOfficeholderWallClaimRecord(
   });
 }
 
+// supabase-js's functions.invoke() only surfaces a generic "Edge Function
+// returned a non-2xx status code" on failure — the function's own {error}
+// JSON body (e.g. "SMTP not configured", "account already exists") is left
+// on error.context (the raw Response) and never read. Unwrap it here so
+// admins see the real reason an invite failed, not a blank status code.
+async function invokeOfficeholderClaimFn(
+  supabase: Client,
+  body: Record<string, unknown>
+) {
+  const result = await supabase.functions.invoke("send-officeholder-claim", { body });
+  if (result.error) {
+    const context = (result.error as { context?: Response }).context;
+    if (context && typeof context.clone === "function") {
+      try {
+        const parsed = await context.clone().json();
+        if (parsed?.error) {
+          return { ...result, error: new Error(parsed.error) };
+        }
+      } catch {
+        // Response body wasn't JSON (e.g. a network-level failure below the
+        // function) — fall through and surface the original generic error.
+      }
+    }
+  }
+  return result;
+}
+
 export async function inviteOfficeholderToClaim(supabase: Client, officeHolderId: string, email: string) {
-  return supabase.functions.invoke("send-officeholder-claim", {
-    body: { officeHolderId, email, redirectOrigin: window.location.origin },
-  });
+  return invokeOfficeholderClaimFn(supabase, { officeHolderId, email, redirectOrigin: window.location.origin });
 }
 
 export async function resendOfficeholderClaim(supabase: Client, claimId: string, email: string) {
-  return supabase.functions.invoke("send-officeholder-claim", {
-    body: { claimId, email, redirectOrigin: window.location.origin },
-  });
+  return invokeOfficeholderClaimFn(supabase, { claimId, email, redirectOrigin: window.location.origin });
 }
 
 export async function cancelOfficeholderClaim(supabase: Client, claimId: string) {
@@ -972,10 +1039,55 @@ export async function reverseOfficeholderWallClaim(supabase: Client, claimId: st
   return supabase.rpc("reverse_officeholder_wall_claim", { p_claim_id: claimId, p_reason: reason });
 }
 
+// Closes out a claim stuck at 'pending_review' (redeemed or self-requested,
+// but not approved) — the counterpart to reverse (which only handles already-
+// approved/merged claims). Also undoes the redemption-time profile backfill
+// (contact info, bio, party, etc.) so a rejected claimant's profile stops
+// showing the officeholder's details.
+export async function rejectOfficeholderWallClaim(supabase: Client, claimId: string, reason: string) {
+  return supabase.rpc("reject_officeholder_wall_claim", { p_claim_id: claimId, p_reason: reason });
+}
+
 export async function getOfficeholderWallClaims(supabase: Client, officeHolderId: string) {
   return supabase
     .from("office_holder_wall_claims")
     .select("*")
     .eq("office_holder_id", officeHolderId)
     .order("created_at", { ascending: false });
+}
+
+// Unified "can this wall be claimed, and by which system" check — read-only,
+// works for logged-out visitors too. Returns one of:
+//   { kind: 'unclaimed_candidate', candidate_id }   -> route to the existing
+//     election-candidacy claim form (requestCandidacyClaim), unchanged.
+//   { kind: 'unclaimed_officeholder', office_holder_id } -> route to
+//     requestOfficeholderWallClaim below.
+//   { kind: 'not_claimable' } -> hide all claim UI; the wall already has an
+//     owner (a real account) or an open/approved claim in flight.
+export async function getWallClaimEligibility(supabase: Client, profileId: string) {
+  return supabase.rpc("get_wall_claim_eligibility", { p_profile_id: profileId });
+}
+
+// Self-service counterpart to the admin-initiated officeholder invite: a
+// logged-in citizen asserts "this is me" directly, no token/email-invite
+// round trip needed. Lands in pending_review and is reviewed by an admin
+// exactly like an invited-and-redeemed claim (preview -> merge/reverse).
+export async function requestOfficeholderWallClaim(
+  supabase: Client,
+  officeHolderId: string,
+  contactEmail: string,
+  note?: string | null,
+) {
+  return supabase.rpc("request_officeholder_wall_claim", {
+    p_office_holder_id: officeHolderId,
+    p_contact_email: contactEmail,
+    p_note: note || undefined,
+  });
+}
+
+// Admin-only: self-requested claims are otherwise only visible by already
+// having navigated to that specific officeholder's admin panel. This lists
+// all of them globally so admins can discover and review them.
+export async function listPendingSelfRequestedOfficeholderClaims(supabase: Client) {
+  return supabase.rpc("list_pending_self_requested_officeholder_claims");
 }

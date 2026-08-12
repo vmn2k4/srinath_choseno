@@ -17,6 +17,10 @@ export default async function AuthPage({
   const initialRole = roleParam === "citizen" || roleParam === "politician" ? roleParam : undefined;
   const nextParam = typeof params.next === "string" ? params.next : undefined;
   const nextPath = nextParam?.startsWith("/") && !nextParam.startsWith("//") ? nextParam : undefined;
+  // Lets a link force the Log In tab even when role is set (e.g. the
+  // officeholder claim email's "merge with my existing account" link) —
+  // independent of initialRole, which otherwise always defaults to Sign Up.
+  const initialIntent = params.intent === "login" ? "login" : undefined;
 
-  return <AuthPageClient initialRole={initialRole} nextPath={nextPath} />;
+  return <AuthPageClient initialRole={initialRole} nextPath={nextPath} initialIntent={initialIntent} />;
 }

@@ -59,13 +59,11 @@ export default async function ElectionsPage() {
   let initialBoundaries: MatchedBoundary[] = [];
 
   if (user) {
-    const { data: myProfile } = await getProfileRole(supabase, user.id);
+    const [{ data: myProfile }, { data: memberships }] = await Promise.all([
+      getProfileRole(supabase, user.id),
+      getUserBoundaryMemberships(supabase, user.id),
+    ]);
     role = myProfile?.role || null;
-
-    const { data: memberships } = await getUserBoundaryMemberships(
-      supabase,
-      user.id
-    );
 
     const memRows = (memberships || []) as Array<{
       map_shape_id: number;

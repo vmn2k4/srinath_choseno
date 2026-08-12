@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
@@ -18,19 +19,27 @@ interface SeatPageProps {
   searchParams: Promise<{ candidate?: string }>;
 }
 
+// generateMetadata and the page component below both need the seat +
+// candidates for the same seatId. Deduped via React cache() so it's one
+// pair of DB round trips per request instead of two.
+const getSeatWithCandidates = cache(async (seatId: string) => {
+  const supabase = await createServerClient();
+  const { data: seat } = await getSeatById(supabase, seatId);
+  const { data: candidates } = await getCandidatesBySeatIds(
+    supabase,
+    seat?.id ? [seat.id] : []
+  );
+  return { seat, candidates };
+});
+
 export async function generateMetadata({
   params,
   searchParams,
 }: SeatPageProps): Promise<Metadata> {
   const { seatId } = await params;
   const { candidate: candidateId } = await searchParams;
-  const supabase = await createServerClient();
 
-  const { data: seat } = await getSeatById(supabase, seatId);
-  const { data: candidates } = await getCandidatesBySeatIds(
-    supabase,
-    seat?.id ? [seat.id] : []
-  );
+  const { seat, candidates } = await getSeatWithCandidates(seatId);
 
   if (!seat) {
     return {
@@ -125,13 +134,8 @@ export async function generateMetadata({
 
 export default async function ElectionSeatPage({ params }: SeatPageProps) {
   const { seatId } = await params;
-  const supabase = await createServerClient();
 
-  const { data: seat } = await getSeatById(supabase, seatId);
-  const { data: candidates } = await getCandidatesBySeatIds(
-    supabase,
-    seat?.id ? [seat.id] : []
-  );
+  const { seat, candidates } = await getSeatWithCandidates(seatId);
 
   const roleTitle = seat?.role_title || "Electoral Seat";
   const boundaryName = seat?.map_shapes?.name || "District";

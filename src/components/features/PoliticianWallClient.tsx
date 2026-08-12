@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import { useAuth } from "@/contexts/AuthContext";
 import LinkPreview from "./LinkPreview";
 import PostCard, { type PostWithComments } from "@/components/features/PostCard";
@@ -20,8 +21,6 @@ import {
   ShieldCheck,
   CheckCircle2,
 } from "lucide-react";
-import { QRCodeSVG } from "qrcode.react";
-import VideoRecorder from "./VideoRecorder";
 import { getOwnProfile } from "@/lib/services/profile";
 import {
   getWallOwnerProfile,
@@ -39,6 +38,7 @@ import {
 import { uploadPostImage, createComment, hydratePoliticianAuthors, voteOnPost } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
+import { getWallClaimEligibility, requestCandidacyClaim, requestOfficeholderWallClaim } from "@/lib/services/elections";
 import PoliticianRatingModal from "./PoliticianRatingModal";
 import {
   Card,
@@ -55,6 +55,18 @@ import {
   EmptyState,
   StarRating,
 } from "@/components/primitives";
+
+// Both only render behind a rare user action (opening the QR modal /
+// recording a video pitch), so they're pulled out of this page's initial
+// JS bundle and fetched on demand instead of loading for every wall visit.
+const QRCodeSVG = dynamic(() => import("qrcode.react").then((mod) => mod.QRCodeSVG), {
+  ssr: false,
+  loading: () => <Spinner />,
+});
+const VideoRecorder = dynamic(() => import("./VideoRecorder"), {
+  ssr: false,
+  loading: () => <Spinner />,
+});
 import ReportDialog from "./ReportDialog";
 import { createClient } from "@/lib/supabase/client";
 import { trackPostCreated, trackPostEngagement, trackCommentAdded, trackPoliticianViewed } from "@/lib/analytics/events";
@@ -75,6 +87,11 @@ interface WallOwnerRecord {
     photo_url?: string | null;
     source_url?: string | null;
     holding_since?: string | null;
+    // Set client-side in enrichProfileWithContactFallback (politicianWall.ts)
+    // when this wall matches an office_holders record. Purely a display flag
+    // (badge text/contact fallback) — claim eligibility is a separate check,
+    // see claimEligibility/get_wall_claim_eligibility() below.
+    is_office_holder?: boolean;
   } | null;
 }
 
@@ -137,8 +154,19 @@ export default function PoliticianWallClient({
   const [politicianAuthors, setPoliticianAuthors] = useState<Map<string, { fullName: string; wallHref: string }>>(new Map());
   const [candidacies, setCandidacies] = useState<any[]>([]);
 
+  // Unified claim eligibility — see get_wall_claim_eligibility() (migration
+  // 20260811170000). Derived from public data (no auth.users lookup needed):
+  // an unclaimed election_candidates stub, an unclaimed office_holders wall,
+  // or 'not_claimable' if the wall already has a real owner or an open
+  // claim. Replaces the old is_office_holder-only binary, which never
+  // accounted for a wall already belonging to a real, signed-up person.
+  type ClaimEligibility =
+    | { kind: "unclaimed_candidate"; candidate_id: string }
+    | { kind: "unclaimed_officeholder"; office_holder_id: string }
+    | { kind: "not_claimable" }
+    | null;
+  const [claimEligibility, setClaimEligibility] = useState<ClaimEligibility>(null);
   const [showClaimModal, setShowClaimModal] = useState(false);
-  const [claimName, setClaimName] = useState("");
   const [claimEmail, setClaimEmail] = useState("");
   const [claimPhone, setClaimPhone] = useState("");
   const [claimMotivation, setClaimMotivation] = useState("");
@@ -146,64 +174,82 @@ export default function PoliticianWallClient({
   const [claimSuccess, setClaimSuccess] = useState(false);
   const [claimError, setClaimError] = useState("");
 
+  useEffect(() => {
+    let cancelled = false;
+    async function loadEligibility() {
+      if (!wallOwner?.id) {
+        if (!cancelled) setClaimEligibility(null);
+        return;
+      }
+      const { data, error } = await getWallClaimEligibility(supabase, wallOwner.id);
+      if (cancelled) return;
+      setClaimEligibility(error || !data ? { kind: "not_claimable" } : (data as ClaimEligibility));
+    }
+    loadEligibility();
+    return () => {
+      cancelled = true;
+    };
+  }, [supabase, wallOwner?.id]);
+
+  const openClaimModal = () => {
+    if (!user) {
+      router.push(`/auth?role=politician&next=${encodeURIComponent(window.location.pathname)}`);
+      return;
+    }
+    setClaimEmail(user.email || "");
+    setShowClaimModal(true);
+  };
+
   const handleClaimSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!claimEmail.trim() || !claimName.trim()) return;
+    if (!claimEmail.trim() || !claimEligibility || claimEligibility.kind === "not_claimable") return;
     setSubmittingClaim(true);
     setClaimError("");
 
     try {
-      // 1. Record claim in database
-      if (wallOwner?.id) {
-        // Check if candidate entry exists in election_candidates
-        const { data: candRow } = await supabase
-          .from("election_candidates")
-          .select("id")
-          .eq("politician_id", wallOwner.id)
-          .maybeSingle();
-
-        const candidateIdToUse = candRow?.id || wallOwner.id;
-
-        const { error: dbErr } = await supabase.from("candidacy_claim_requests").insert({
-          candidate_id: candidateIdToUse,
-          requester_profile_id: user?.id || null,
-          requester_name: claimName.trim(),
-          contact_email: claimEmail.trim(),
-          social_media_info: claimPhone.trim() || null,
-          motivation: claimMotivation.trim() || null,
-          status: "pending",
-        } as any);
-
-        if (dbErr) {
-          console.error("Error inserting claim request:", dbErr);
-          setClaimError("Failed to submit request: " + dbErr.message);
+      if (claimEligibility.kind === "unclaimed_candidate") {
+        const { error } = await requestCandidacyClaim(supabase, claimEligibility.candidate_id, {
+          motivation: claimMotivation.trim(),
+          contactEmail: claimEmail.trim(),
+          socialMediaInfo: claimPhone.trim() || null,
+        });
+        if (error) {
+          setClaimError(error.message || "Failed to submit request.");
+          setSubmittingClaim(false);
+          return;
+        }
+      } else {
+        const { error } = await requestOfficeholderWallClaim(
+          supabase,
+          claimEligibility.office_holder_id,
+          claimEmail.trim(),
+          [claimPhone.trim() && `Phone/social: ${claimPhone.trim()}`, claimMotivation.trim()].filter(Boolean).join("\n") || null,
+        );
+        if (error) {
+          setClaimError(error.message || "Failed to submit request.");
           setSubmittingClaim(false);
           return;
         }
       }
 
-      // 2. Invoke send-email edge function to notify admins
-      const emailBody = `
-        <h2>Official Wall Profile Claim Request</h2>
-        <p><strong>Politician / Representative:</strong> ${wallOwner?.full_name || "Representative"}</p>
-        <p><strong>Wall URL:</strong> ${typeof window !== "undefined" ? window.location.href : ""}</p>
-        <hr />
-        <p><strong>Requester Name:</strong> ${claimName.trim()}</p>
-        <p><strong>Official Contact Email:</strong> ${claimEmail.trim()}</p>
-        <p><strong>Phone / Social Link:</strong> ${claimPhone.trim() || "N/A"}</p>
-        <p><strong>Verification Details:</strong> ${claimMotivation.trim() || "N/A"}</p>
-      `;
-
+      // Best-effort admin notification email — the claim request itself is
+      // already recorded and reviewable regardless of whether this succeeds.
       await supabase.functions.invoke("send-email", {
         body: {
           to: "info@choseno.com",
-          subject: `Profile Claim Request: ${wallOwner?.full_name || "Politician"}`,
-          html: emailBody,
+          subject: `Wall Claim Request: ${wallOwner?.full_name || "Politician"}`,
+          html: `<h2>Wall Claim Request</h2>
+            <p><strong>Wall:</strong> ${wallOwner?.full_name || "Representative"}</p>
+            <p><strong>Wall URL:</strong> ${typeof window !== "undefined" ? window.location.href : ""}</p>
+            <p><strong>Contact Email:</strong> ${claimEmail.trim()}</p>
+            <p><strong>Phone / Social Link:</strong> ${claimPhone.trim() || "N/A"}</p>
+            <p><strong>Notes:</strong> ${claimMotivation.trim() || "N/A"}</p>`,
           replyTo: claimEmail.trim(),
         },
       }).catch(() => null);
 
       setClaimSuccess(true);
+      setClaimEligibility({ kind: "not_claimable" });
     } catch (err) {
       console.error("Error submitting claim request:", err);
       setClaimError("Failed to submit request. Please try again or email info@choseno.com.");
@@ -477,7 +523,7 @@ export default function PoliticianWallClient({
                 {wallOwner?.full_name || "Politician Wall"}
                 {wallOwner?.politician_profiles?.political_target_role && (
                   <Badge tone="primary">
-                    {(wallOwner.politician_profiles as any).is_office_holder || (wallOwner.politician_profiles as any).holding_since
+                    {wallOwner.politician_profiles.is_office_holder || wallOwner.politician_profiles.holding_since
                       ? wallOwner.politician_profiles.political_target_role
                       : `Aspiring ${wallOwner.politician_profiles.political_target_role}`}
                   </Badge>
@@ -556,19 +602,21 @@ export default function PoliticianWallClient({
               Ratings
             </Button>
 
-            {!isOwner && (
+            {/* Unified claim gating — see get_wall_claim_eligibility() (migration
+                20260811170000). Shows nothing at all once the wall already has a
+                real owner or an open claim; otherwise routes to whichever claim
+                system actually backs this wall (election-candidacy stub vs.
+                officeholder import) instead of one generic form that only ever
+                worked for the candidate case. */}
+            {!isOwner && (claimEligibility?.kind === "unclaimed_candidate" || claimEligibility?.kind === "unclaimed_officeholder") && (
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => {
-                  setClaimName((user?.user_metadata?.full_name as string) || "");
-                  setClaimEmail(user?.email || "");
-                  setShowClaimModal(true);
-                }}
+                onClick={openClaimModal}
                 className="gap-1.5 border-primary/40 text-primary hover:bg-primary/10"
               >
                 <ShieldCheck size={14} className="text-primary" />
-                Claim Profile
+                Claim This Wall
               </Button>
             )}
 
@@ -875,14 +923,15 @@ export default function PoliticianWallClient({
         />
       )}
 
-      {/* Claim Profile Modal */}
+      {/* Claim Wall Modal — same form, routes to whichever backend claim
+          system actually matches this wall (see claimEligibility above). */}
       {showClaimModal && (
         <Modal onOverlayClick={() => setShowClaimModal(false)}>
           <Card padding="md" className="space-y-4 w-full max-w-md">
             <div className="flex justify-between items-center border-b border-border-light/30 pb-3">
               <div className="flex items-center gap-2">
                 <ShieldCheck size={20} className="text-primary" />
-                <h3 className="font-bold text-base text-text-main">Claim Official Wall Profile</h3>
+                <h3 className="font-bold text-base text-text-main">Claim This Wall</h3>
               </div>
               <Button size="sm" variant="ghost" onClick={() => setShowClaimModal(false)}>
                 <X size={16} />
@@ -909,24 +958,12 @@ export default function PoliticianWallClient({
             ) : (
               <form onSubmit={handleClaimSubmit} className="space-y-4">
                 <p className="text-xs text-text-muted leading-relaxed">
-                  Are you <strong>{wallOwner?.full_name || "this representative"}</strong> or an authorized campaign staff member? Submit your contact details to request official verification and wall access.
+                  Are you <strong>{wallOwner?.full_name || "this representative"}</strong> or an authorized campaign staff member? Submit your contact details to request official verification and wall access. Signed in as <strong>{user?.email}</strong> — an admin reviews every request before anything on this wall changes.
                 </p>
 
                 {claimError && (
                   <Alert tone="danger">{claimError}</Alert>
                 )}
-
-                <div>
-                  <label className="block text-xs font-semibold text-text-main mb-1">
-                    Your Full Name *
-                  </label>
-                  <Input
-                    required
-                    placeholder="e.g. Bob Ferguson"
-                    value={claimName}
-                    onChange={(e) => setClaimName(e.target.value)}
-                  />
-                </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-text-main mb-1">

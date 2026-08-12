@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import Link from "next/link";
 import { MapPin, Landmark, ArrowRight, Building, Sparkles, Network } from "lucide-react";
 import { createClient as createServerClient } from "@/lib/supabase/server";
@@ -131,12 +132,15 @@ async function resolveBranch(
   return { key: branchKeyFor(shape), label: shape.boundary_type, top, bottom };
 }
 
-async function loadShape(boundarySlug: string) {
+// generateMetadata and the page component below both resolve the same
+// shape from boundarySlug. Deduped via React cache() so it's one DB round
+// trip per request instead of two.
+const loadShape = cache(async (boundarySlug: string) => {
   const shapeId = extractShapeIdFromSlug(boundarySlug);
   const supabase = await createServerClient();
   const { data: shape } = await getMapShapeById(supabase, shapeId);
   return { supabase, shape };
-}
+});
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { boundarySlug } = await params;
@@ -166,35 +170,42 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
 
   if (!shape) notFound();
 
-  const [{ data: containers }, { data: seats }] = await Promise.all([
-    getShapeContainers(supabase, shape.id),
-    getActiveSeatsByShapeIds(supabase, [shape.id]),
+  // These three don't depend on each other -- the seats/candidates lookup,
+  // the primary branch's office holders, and the auth check (which itself
+  // is a network round trip to validate the session) -- so run them
+  // concurrently instead of one after another.
+  const [{ containers, seatRows, candidateCountBySeat }, primaryBranch, {
+    data: { user },
+  }] = await Promise.all([
+    (async () => {
+      const [{ data: containers }, { data: seats }] = await Promise.all([
+        getShapeContainers(supabase, shape.id),
+        getActiveSeatsByShapeIds(supabase, [shape.id]),
+      ]);
+      const seatRows = (seats || []) as Array<{ id: string; role_title: string }>;
+      const seatIds = seatRows.map((s) => s.id);
+      const { data: candidateRows } = seatIds.length
+        ? await getCandidatesBySeatIds(supabase, seatIds)
+        : { data: [] as { seat_id: string }[] };
+      const candidateCountBySeat = new Map<string, number>();
+      (candidateRows || []).forEach((c) => {
+        candidateCountBySeat.set(c.seat_id, (candidateCountBySeat.get(c.seat_id) || 0) + 1);
+      });
+      return { containers, seatRows, candidateCountBySeat };
+    })(),
+    // Primary branch: whichever hierarchy the boundary being viewed itself
+    // belongs to (a Federal riding page always shows Prime Minister → MP, a
+    // Municipal page always shows Mayor → Councillors, etc).
+    resolveBranch(supabase, shape as ShapeRow),
+    supabase.auth.getUser(),
   ]);
 
-  const seatRows = (seats || []) as Array<{ id: string; role_title: string }>;
-  const seatIds = seatRows.map((s) => s.id);
-  const { data: candidateRows } = seatIds.length
-    ? await getCandidatesBySeatIds(supabase, seatIds)
-    : { data: [] as { seat_id: string }[] };
-  const candidateCountBySeat = new Map<string, number>();
-  (candidateRows || []).forEach((c) => {
-    candidateCountBySeat.set(c.seat_id, (candidateCountBySeat.get(c.seat_id) || 0) + 1);
-  });
-
-  // Primary branch: whichever hierarchy the boundary being viewed itself
-  // belongs to (a Federal riding page always shows Prime Minister → MP, a
-  // Municipal page always shows Mayor → Councillors, etc).
-  const primaryBranch = await resolveBranch(supabase, shape as ShapeRow);
   const branches: RepresentationBranch[] = [primaryBranch];
 
   // Plus, for a signed-in citizen, their OTHER branches too (their own
   // Provincial riding, Municipal ward, etc.) -- so "All" genuinely shows
   // their whole civic picture: PM→MP, Premier→MLA, and Mayor→Councillors
   // together, not just whichever single boundary the URL happens to name.
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
   if (user) {
     const { data: memberships } = await getUserBoundaryMemberships(supabase, user.id);
     const memberShapes = (memberships || [])
@@ -204,13 +215,21 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
           s != null && s.country === shape.country && !s.boundary_type.toLowerCase().includes("polling")
       );
 
+    // Dedup synchronously first (two member shapes could share a branch
+    // key), then resolve every distinct branch concurrently instead of
+    // one seat/office-holder lookup at a time.
     const seenKeys = new Set(branches.map((b) => b.key));
+    const shapesToResolve: ShapeRow[] = [];
     for (const memberShape of memberShapes) {
       const key = branchKeyFor(memberShape);
       if (seenKeys.has(key)) continue;
       seenKeys.add(key);
-      branches.push(await resolveBranch(supabase, memberShape));
+      shapesToResolve.push(memberShape);
     }
+    const resolvedBranches = await Promise.all(
+      shapesToResolve.map((memberShape) => resolveBranch(supabase, memberShape))
+    );
+    branches.push(...resolvedBranches);
   }
 
   // Roles & Responsibilities reference -- union of role types across every

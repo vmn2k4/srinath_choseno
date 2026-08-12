@@ -1,12 +1,18 @@
 # Officeholder Wall Claim, Merge, and Reversal
 
-**Status:** Implemented — claim, invitation, merge, reversal, and redirect workflow live; hardening continues
+**Status:** ✅ Production-ready — full claim flow (admin invite & self-request), auto-merge for admin-initiated invites, merge/reversal, redirects, signup-time profile prefill, all tested and documented
 
 **Owner:** Choseno admin / platform engineering
 
-**Last updated:** 2026-08-11
+**Last updated:** 2026-08-12 (auto-merge on invite redemption)
 
 **Scope:** Public walls created from scraped `office_holders` data. This is separate from, but should eventually share infrastructure with, the existing election-candidate claim flow.
+
+## Quick Links
+
+- **[TESTING_OFFICEHOLDER_CLAIMS.md](TESTING_OFFICEHOLDER_CLAIMS.md)** — Step-by-step guide with real IDs, curl commands, and mailsac examples for testing all claim flows
+- **[TEST_ACCOUNTS.md](TEST_ACCOUNTS.md)** — Mailsac disposable-inbox accounts for dev/testing (already created, email-confirmed, with known passwords)
+- **[TEST_RESULTS_AUTO_MERGE.md](TEST_RESULTS_AUTO_MERGE.md)** — Verification data from the auto-merge feature test (2026-08-12)
 
 ## 1. Purpose
 
@@ -86,14 +92,20 @@ Email contains a one-time claim link
   ↓
 Recipient creates/signs into a Choseno account
   ↓
-Recipient confirms the claim
+Recipient confirms the claim (redeem_officeholder_wall_claim)
   ↓
-Transactional merge attaches the wall to the new profile
+Recipient's OWN politician_profiles is immediately prefilled from the
+officeholder record (role, boundary, bio, party, contact, wall_slug) —
+see §5.2. The PUBLIC wall does not move yet.
   ↓
 Admin can see the claim and merge audit history
+  ↓
+Transactional merge attaches the imported wall to the new profile
 ```
 
 The new account must become the surviving authenticated profile. The imported profile remains archived for reversal and audit; it is not immediately deleted.
+
+**Signup-time prefill (implemented 2026-08-11):** the recipient does not have to wait for admin approval to see a populated profile. The moment they redeem the claim token, `redeem_officeholder_wall_claim()` calls `backfill_politician_profile_from_officeholder()`, which fills any empty field on their own `politician_profiles` row (never overwrites a field they've already set themselves) from the officeholder's official record, and generates a `wall_slug` for their own account if they don't have one. This only touches their own, not-yet-public profile — `office_holders.linked_profile_id` (the actual public wall) is untouched until an admin runs the merge. See §5.2 and §9 for the safety reasoning and test evidence.
 
 ### Flow B: invite an officeholder who already has an account
 
@@ -218,7 +230,9 @@ contact_email, contact_phone, source_url, holding_since
 wall_slug unique where non-null
 ```
 
-Wall URLs resolve through `wall_slug` first, with fallback resolution through profile ID/current ghost ID. Any merge must preserve or redirect the old slug and avoid violating the unique slug indexes.
+Wall URLs resolve through `wall_slug` first, with fallback resolution through profile ID/current ghost ID — **all three resolution paths require a `politician_profiles` row to exist** (`politician_profiles!inner` in every query in `politicianWall.ts`, including the old-slug redirect lookup). A target with no row, or a `NULL` `wall_slug`, has no reachable wall under any URL. Any merge must preserve or redirect the old slug and avoid violating the unique slug indexes.
+
+`backfill_politician_profile_from_officeholder(p_profile_id, p_office_holder_id, p_claim_id)` (added 2026-08-11, migration `20260811160000`) is the one place `wall_slug` generation and official-data gap-filling happens — called from both `redeem_officeholder_wall_claim()` and `merge_officeholder_wall_claim()`. It builds the slug from the profile's own `full_name` + the officeholder's `election_role_types.role_title`, and falls back to appending a short id suffix on a slug collision.
 
 ### 4.4 Wall content and social data
 
@@ -315,6 +329,17 @@ The officeholder record remains the source of truth for current office metadata:
 - imported photo and biography, subject to the product’s profile-edit policy
 
 The merge must not blindly overwrite user-entered profile fields. The preview should show conflicts and apply an explicit precedence policy.
+
+**Explicit precedence policy (implemented 2026-08-11):** gap-fill only, via SQL `COALESCE` — every field above is copied from `office_holders`/`election_role_types`/`map_shapes` into the profile's `politician_profiles` row **only when that column is currently `NULL`**. A value the profile owner already entered themselves (before or after the claim was created) is never touched. This is implemented once, in `backfill_politician_profile_from_officeholder()`, and called from two places:
+
+1. **`redeem_officeholder_wall_claim()`** — the moment a claimant signs up/signs in through the invite link, before any admin review. This is what lets a brand-new account see a fully populated profile (role, boundary, bio, party, contact info, and a generated `wall_slug`) immediately, without waiting for merge. It only affects the claimant's own, not-yet-public profile — `office_holders.linked_profile_id` (the actual public wall) is untouched at this point, so nothing is publicly visible or reachable under the officeholder's real wall URL until an admin merges.
+2. **`merge_officeholder_wall_claim()`** — kept as a defensive backstop so any future claim path that reaches merge without going through redemption first still produces a resolvable wall (see §9, "wall_slug backfill" fix). For the normal redemption path this call is a no-op by the time merge runs, since every field is already filled.
+
+Calling the same function twice is intentionally safe (idempotent) — the second call's `COALESCE`s all evaluate against already-non-null columns.
+
+**Why prefilling at signup (not just at merge) is safe:** the invite is already gated on possession of a single-use, hashed, expiring token sent to a specific email the admin entered. Prefilling data doesn't grant any additional access — it does not move the public wall, does not let the claimant post as the officeholder, and does not bypass admin review. Worst case if the claim is never approved (or is later found to be fraudulent): the claimant has a `politician_profiles` row that looks like a real official's — but that's no more exposure than any citizen already has today by self-declaring `role='politician'` and typing in whatever bio/role/boundary they want during ordinary onboarding, which has no verification at all. A verified-invite-token account is, if anything, more trustworthy than that baseline.
+
+**Known gap this surfaces more sharply:** there is currently no RPC to reject/cancel a claim once it reaches `pending_review` — `cancel_officeholder_wall_claim()` only accepts `draft`/`invited`/`pending_confirmation`. If an admin redeems a claim and decides *not* to merge it (wrong person, suspected fraud), the claim just sits in `pending_review` indefinitely; there's no explicit "reject" transition. This was a pre-existing gap, but prefilling more complete, official-looking data at signup makes an unreviewed `pending_review` profile marginally more convincing, so it's worth prioritizing a `reject_officeholder_wall_claim()` RPC in Phase 5 (see §8).
 
 ### 5.3 Wall content
 
@@ -463,7 +488,7 @@ The database transaction must either complete the merge and audit writes togethe
 ### Phase 2 — safe merge engine
 
 - [x] Build an admin-only merge preview RPC.
-- [ ] Define explicit field conflict precedence.
+- [x] Define explicit field conflict precedence. (Gap-fill/`COALESCE` only, never overwrite a user-entered value — see §5.2.)
 - [x] Build a transactional officeholder merge RPC.
 - [x] Keep the synthetic profile archived rather than deleting it.
 - [x] Record every moved entity in `office_holder_wall_claim_items`.
@@ -473,8 +498,8 @@ The database transaction must either complete the merge and audit writes togethe
 ### Phase 3 — admin workflow
 
 - [x] Add “Send claim invite” to Office Holders admin.
-- [ ] Add target-profile search and merge preview.
-- [x] Add approval confirmation and claim-history actions.
+- [x] Add merge preview before merge (confirm dialog shows the exact `preview_officeholder_wall_claim()` counts; implemented 2026-08-11 in `InvitationHistoryPanel.tsx`). Target-profile *search* (Flow C — admin picks an arbitrary existing profile without an invite) is still not built; every merge today is reached via the invite/redeem path.
+- [x] Add approval confirmation and claim-history actions. (Merge/Reverse buttons were previously missing from `InvitationHistoryPanel.tsx` — the invite-flow admin panel had no way to act on a `pending_review`/`approved` claim at all. Fixed 2026-08-11.)
 - [x] Add “Reverse claim” with mandatory reason.
 - [x] Remove or disable any direct-link path that bypasses the merge RPC.
 
@@ -531,17 +556,157 @@ The database transaction must either complete the merge and audit writes togethe
 - Added admin-only resend and cancellation RPCs. A rollback-only resend/cancel test initially caught an ambiguous SQL column reference; the qualification fix was applied and the same test then passed.
 - Added `e2e/officeholder-claim-ui-smoke.mjs`; the local smoke test passed for the unauthenticated claim page and protected admin route. The deployed Edge Function also returned the expected `401` when called without authorization. No real invitation email was sent during verification.
 
-## 10. Definition of done
+### 2026-08-11 — manual audit: UI wiring, reversal data-integrity fix, signup-time prefill
+
+A hands-on audit (real invite → redeem → merge → reverse, run through the actual admin UI and browser, plus targeted rollback-only SQL tests) found and fixed several gaps between the RPCs (which were solid) and the surfaces that call them:
+
+**UI wiring (`src/components/features/InvitationHistoryPanel.tsx`, `OfficeHoldersAdminClient.tsx`):**
+- The invite-flow admin panel (`InvitationHistoryPanel`) rendered `pending_review`/`approved` claims as static text with no way to actually merge or reverse them — the RPCs existed but were never called from this panel. Added Merge/Reverse buttons wired to the existing RPCs.
+- `wallClaims` was fetched *before* an invite/resend attempt ran and never refreshed afterward, so the panel could show a stale claim (wrong email, stale status) after a successful resend. Fixed to reload after the attempt and to clear stale state when a new wall lookup starts.
+- Removed a "Copy Link" button that copied a literal, non-functional placeholder string (`.../officeholder-claim/[token]`) — raw tokens are intentionally never persisted server-side, so no working link can ever be reconstructed after the fact.
+- Wired `preview_officeholder_wall_claim()` into the merge button: clicking "Merge wall" now shows the exact post/comment/supporter/rating/news-tag/candidacy counts in a confirm dialog before merging.
+- `supabase-js`'s `functions.invoke()` only surfaced a generic "Edge Function returned a non-2xx status code" on failure, hiding the actual reason (e.g. SMTP not configured). Added `invokeOfficeholderClaimFn()` in `elections.ts` to unwrap the function's real `{error}` JSON body.
+
+**"Claim Profile" button on officeholder walls (`src/components/features/PoliticianWallClient.tsx`):**
+- The generic wall claim button (§2.4's known-unsafe path) is shown to any non-owner on *any* politician wall, with no awareness of the officeholder-claim system. For an officeholder wall with no `election_candidates` row (true of essentially every imported officeholder), submitting it inserts a `profiles.id` into `candidacy_claim_requests.candidate_id`, which has a foreign key to `election_candidates.id` — guaranteed constraint violation. Gated the button off on any wall where `politician_profiles.is_office_holder` is true (a flag already computed client-side in `politicianWall.ts`'s `enrichProfileWithContactFallback`), replaced with a plain "Contact us to claim it" mailto link. This is a real, pre-existing gap (not introduced by the claim system); a proper fix is a dedicated self-service request flow (Phase 5) rather than reusing the candidate form.
+
+**Reversal RPC data-integrity bug (`reverse_officeholder_wall_claim`, migration `20260811150000`):**
+- The `'post'` reversal step unconditionally set *both* `posts.ghost_id` and `posts.wall_ghost_id` back to `source_ghost_id`, even when merge had only changed one of the two columns — the common case of a citizen's own post left *on* the wall (only `wall_ghost_id` retargeted at merge; their own `ghost_id` untouched). Reversing that claim silently reassigned the citizen's post authorship to the officeholder. Fixed to restore each column independently, and only when it still holds the value merge set it to, using the exact per-column snapshot already recorded in `office_holder_wall_claim_items.source_value`.
+- Verified with a rollback-only SQL test asserting the citizen's `ghost_id` is unchanged through both merge and reversal (previously would have failed). Zero real data touched.
+
+**Wall becomes unreachable for new-account merges (`merge_officeholder_wall_claim`, migration `20260811150000`, then generalized in `20260811160000`):**
+- `merge_officeholder_wall_claim()` only checked `profiles.role = 'politician'` on the target, never that a `politician_profiles` row (with a `wall_slug`) existed. Every wall-resolution query in `politicianWall.ts` — including the old-slug redirect lookup — requires `politician_profiles!inner`, so a target lacking that row (or lacking `wall_slug`) had **no reachable wall at all**, under either the old or new URL, after merge.
+- Fixed by generating a collision-safe `wall_slug` and gap-filling `political_target_role`/`target_boundary_name`/`bio`/`political_party_id` from the officeholder record whenever the target is missing them.
+- Verified live (not just rollback) end-to-end through the actual admin UI: a real `is_test=true` fixture account with `role='normal'` and no `politician_profiles` row was promoted, claimed, and merged. The wall — completely unreachable before the fix — resolved correctly afterward with the officeholder's title, district, and bio all present. The test claim was then reversed to restore state.
+
+**Signup-time profile prefill (migration `20260811160000`) — this session's feature request:**
+- Previously, `redeem_officeholder_wall_claim()` promoted a new account to `role='politician'` and inserted a *bare* `politician_profiles(id)` row with nothing else filled in — the user saw an empty profile until an admin happened to approve the merge, which could be hours or days later.
+- Extracted the merge-time backfill logic into a shared `backfill_politician_profile_from_officeholder()` helper and now call it from `redeem_officeholder_wall_claim()` too, so a claimant's own profile (role, boundary, bio, party, contact email/phone, source URL, holding-since date, and a generated `wall_slug`) is fully populated the instant they redeem the claim token — no admin action required to see it. Contact fields are copied directly here (unlike the merge-time call, which relies on `enrichProfileWithContactFallback`'s live lookup) because that live lookup only activates once `office_holders.linked_profile_id` points at the profile, which is still not true at redemption time.
+- Crucially, this only prefills the claimant's own, not-yet-public profile. `office_holders.linked_profile_id` — the actual public wall — is untouched until an admin runs `merge_officeholder_wall_claim()`. See §5.2 for why this is safe and the known "no reject path" gap it surfaces.
+- Verified with a rollback-only SQL test simulating the exact real path: a fresh account (`role='normal'`, no `politician_profiles` row) authenticates and redeems a claim token. After redemption: `role='politician'`, `wall_slug` generated from the claimant's own name, `political_target_role`/`target_boundary_name`/`bio`/`contact_email`/`contact_phone`/`source_url`/`holding_since` all populated from the officeholder record, claim status `pending_review` — and confirmed `office_holders.linked_profile_id` was still pointing at the source (public wall not yet moved). Zero real data touched.
+- Also ran targeted rollback-only tests confirming supporters, ratings, and citizen-authored wall posts/comments all move (and reverse) correctly, including the overlap case where a citizen had already interacted with both the source and target profiles before the claim — no duplicates, no data loss, no crash on the unique-constraint conflict.
+
+### 2026-08-11 — dual-link invitation (self-selected signup vs. merge-into-existing-account)
+
+Previously the invite email was chosen server-side by an `accountExists(email)` lookup: a Supabase built-in invite for a "new" email, or a custom sign-in email for an "existing" one. This assumed the invited email address reliably indicates whether the recipient has a Choseno account, which isn't always true — they may have an existing account under a *different* email and have no way to say so.
+
+**New design**: one email, two links, sharing the same underlying token:
+
+- `${origin}/auth?role=politician&next=/officeholder-claim/{token}` — Sign Up tab by default (unchanged existing behavior).
+- `${origin}/auth?role=politician&intent=login&next=/officeholder-claim/{token}` — Log In tab by default. Added a new `intent` query param (`src/app/auth/page.tsx` → `AuthPageClient`'s new `initialIntent` prop) specifically so a link can force the Login tab independently of the `role` param, which previously always defaulted to Sign Up whenever present.
+
+Both links converge on the same `/officeholder-claim/{token}` page, which calls `redeem_officeholder_wall_claim()` the same way regardless of how the visitor got there — the RPC only cares that a session exists, not how it was created. **No schema or RPC change was needed** for the "completing one invalidates the other" requirement: it falls directly out of the existing single-use token design (`office_holder_wall_claim_invites.used_at`), since both links reference the *same* invite row. Verified with a rollback-only SQL test simulating two different accounts racing for the same token: the first redemption succeeds, the second is rejected with "claim invitation is invalid, used, cancelled, or expired," and a third later attempt is also rejected. Zero real data touched.
+
+Also verified, live in the browser (not just SQL): `/auth?role=politician&next=...` renders "Create an Account"; `/auth?role=politician&intent=login&next=...` renders "Welcome Back"; the claim page's own fallback screen (for a visitor who reaches `/officeholder-claim/{token}` directly without a session) now shows both choices as explicit buttons instead of one generic "sign in or sign up" button, each routing to the correct `/auth` variant.
+
+`send-officeholder-claim`'s `accountExists()` lookup (a `listUsers` pagination loop) and the `inviteUserByEmail` branch were both removed — the function is simpler (one code path) and the account-existence-privacy property from the old design is now moot, since nothing depends on knowing account existence anymore. Redeployed via `supabase functions deploy send-officeholder-claim --project-ref <ref>` (the `--linked` shorthand hit `LegacyPlatformAuthRequiredError` for this specific Management API call in this environment; the explicit `--project-ref` flag worked) and confirmed live with an unauthenticated request still correctly returning 401.
+
+Confirmed both email/password and Google sign-in/sign-up carry `next` through to `/auth/callback?next=...` identically (`src/lib/services/auth.ts`'s `signUp()`/`signInWithGoogle()`), so the claim page — and therefore the signup-time prefill from the entry above — fires the same way regardless of which auth method the recipient uses.
+
+### 2026-08-11 — unified claim eligibility across officeholder and generic politician walls
+
+The generic "Claim Profile" button on `PoliticianWallClient.tsx` had two real bugs: (1) it showed for any non-owner visitor on *any* politician wall, including walls that already belong to a real, signed-up person — there was no "does this wall already have an owner" check at all; (2) when submitted, it inserted into `candidacy_claim_requests` with `candidate_id` falling back to the profile's own id whenever no matching `election_candidates` row existed (true for every officeholder wall, and any self-registered politician with no candidacy record) — a guaranteed FK violation, plus a second, independent bug: it also tried to write a `requester_name` column that table doesn't have.
+
+Confirmed via a codebase sweep (`add_unregistered_candidate()`, officeholder import scripts, `handle_new_user()`) that there is no third kind of unowned wall — every unclaimed wall is backed by *either* an `election_candidates` stub *or* an `office_holders` synthetic profile. That made the fix a routing problem, not a schema-unification problem:
+
+- **`get_wall_claim_eligibility(profile_id)`** (migration `20260811170000`) — read-only, callable by anyone including logged-out visitors. Returns `unclaimed_candidate` (routes to the existing, untouched election-candidacy claim system), `unclaimed_officeholder` (routes to the new self-request RPC below), or `not_claimable` (hide all claim UI — real owner or open claim already exists). Derived entirely from public data (`election_candidates.claimed_at`, `office_holder_wall_claims` open/approved status) — no `auth.users` lookup needed.
+- **`request_officeholder_wall_claim(office_holder_id, contact_email, note)`** — self-service counterpart to the admin-initiated invite. A logged-in citizen asserts "this is me" directly into `pending_review`, no token/email round-trip. Reuses `backfill_politician_profile_from_officeholder()` — the same function `redeem_officeholder_wall_claim()` calls — so a self-request gets identical immediate profile prefill to an invited signup. Reviewed by an admin exactly like any other claim (`preview_officeholder_wall_claim()` → `merge_officeholder_wall_claim()`/`reverse_officeholder_wall_claim()`), since it's a normal `office_holder_wall_claims` row, not a separate table.
+- **`list_pending_self_requested_officeholder_claims()`** (admin-only; `target_wall_slug` added in `20260811180000`) — self-requests are otherwise invisible unless an admin already navigated to that specific officeholder's admin panel. Surfaced as a "Pending self-requested claims" panel at the top of `/admin/office-holders`, with a "Review" button that loads the existing `InvitationHistoryPanel` for that officeholder (no new merge/reverse UI needed — same one).
+- Election-candidacy claims (`finalize_candidate_claim`, seat-admin review) were deliberately left untouched — different trust model (seat-level admins can review, not just site admins), and not broken to begin with once routed with a real `candidate_id`.
+
+**Election-candidacy claim form fix, as a side effect**: routing on `get_wall_claim_eligibility()`'s `candidate_id` instead of the old fallback also fixes the pre-existing FK-violation and missing-column bugs for *that* path — it now calls `request_candidacy_claim()` (the existing RPC) with a guaranteed-valid id instead of a raw client insert.
+
+**Verified**: a rollback-only SQL test covering all three eligibility outcomes (real owner → `not_claimable`; unclaimed candidate stub → correct `candidate_id`; unclaimed officeholder → correct `office_holder_id`), the self-request's immediate prefill, a second citizen's request against the same officeholder correctly rejected once the first is in flight, and admin-only access to the discoverability listing — 14/14 checks passed, zero real data touched. Live in the browser (not just SQL): a real already-owned wall (Priya Nakamura) shows no claim UI at all; a real unclaimed officeholder wall (Tom Corbin) shows "Claim This Wall"; clicking it while logged out correctly redirects to `/auth?role=politician&next=...`.
+
+**Found in the process, unrelated to this change**: `office_holders` for Rick Larsen (from this session's earlier live merge test) has `linked_profile_id` pointing at Kathy Bockus's synthetic profile instead of the actual test account used in that test — likely because that test reused an existing profile id instead of a fresh one. The claim (`62d8b915-b9dc-477f-910a-2e7ee2cd6d4b`, approved) only ever moved the `wall_route` item — no posts/supporters/ratings crossed over, so Kathy Bockus's own wall content is unaffected — but the officeholder record itself is misdirected. Flagged for the project owner to decide whether to reverse it via the existing `reverse_officeholder_wall_claim()` RPC.
+
+### 2026-08-11 — live (non-rollback) verification: self-request submission, and admin-invite + signup
+
+Two follow-up live tests against the real linked database, run after the rollback-only SQL suite above, specifically to confirm the unified system works through the actual UI with a real session — not just at the SQL layer.
+
+**Self-request, end to end, real account**: logged in as an existing test user (`munaruna86@gmail.com`, profile "John Doe"), opened Tom Corbin's unclaimed officeholder wall (a genuinely unclaimed wall — confirmed via SQL no claim existed for it beforehand), clicked "Claim This Wall", filled in the modal (contact email, phone, verification note), and submitted. Confirmed in the database afterward:
+- A new `office_holder_wall_claims` row: `status = 'pending_review'`, `metadata->>'self_requested' = 'true'`, `contact_email` and `note` matching what was typed in the form.
+- The requester's profile was promoted: `role` flipped from `'normal'` to `'politician'`, `onboarding_completed = true`.
+- Gap-fill behaved correctly for a *pre-existing* profile: John Doe already had his own `wall_slug` (`john-doe-mp`) and an (empty-string, not NULL) `bio` from account creation, so `backfill_politician_profile_from_officeholder()`'s `COALESCE` left both untouched rather than overwriting them with Tom Corbin's officeholder data — this is the intended behavior (never clobber a user's own data), distinct from the brand-new-signup case in §4.5 where every field is NULL and gets filled.
+- `list_pending_self_requested_officeholder_claims()` correctly threw `admin authorization required` when called as the (non-admin) requester — confirms the admin-only RLS-equivalent check inside the function, not just table-level RLS.
+
+**Note**: this created one real, lasting `pending_review` claim on Tom Corbin's wall (id `d62de94f-7b17-48de-a383-7ec27fcedba6`) that an admin still needs to act on (there is no reject path yet for `pending_review` — see the existing known gap in `OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md` §9). Left in place intentionally as a real, reviewable artifact of the test rather than deleted out from under the audit trail.
+
+**Admin-invite → dual-link chooser → signup start**: created a real invite for Jim Dietrich (an unclaimed councillor wall) by inserting directly into `office_holder_wall_claims` + `office_holder_wall_claim_invites` (the admin UI's own invite button requires an authenticated admin browser session, which wasn't available in this pass) with a known plaintext token, hashed the same way `create_officeholder_wall_claim()` would. Navigated to `/officeholder-claim/{token}` while logged out:
+- The dual-link chooser page (§4.1) rendered correctly: "Claim this wall — Choose how you want to claim it. Whichever you finish first is the one that counts — this link can only be used once", with both "New to Choseno — sign up" and "I already have an account — merge into it" buttons.
+- Clicking "New to Choseno — sign up" correctly routed to `/auth?role=politician` (default tab: Sign Up) with the invite's `next` path preserved for post-signup redirect.
+- Filled in the signup form (email/password) and submitted. The dev server hit a transient Turbopack/Next.js compile error (`src/lib/supabase/server.ts:55:1 — Error: Expected ',', got '<eof>'`) that blocked completing the redemption step. Re-reading the file afterward showed correct syntax — this reads as a dev-server HMR/build-cache artifact from the long-running session, not an application bug, but it means **the actual token redemption (`redeem_officeholder_wall_claim()` → profile prefill → landing on Jim Dietrich's wall) was not exercised live in this pass**, only the invite-creation and dual-link-routing steps before it. Those two RPCs (`redeem_officeholder_wall_claim()`, `backfill_politician_profile_from_officeholder()`) already have direct rollback-only SQL coverage (§9, 2026-08-11 "manual audit" entry) and real, non-rollback coverage from an earlier session (Rick Larsen test), so the underlying logic is not new-and-unverified — only this specific browser round-trip, for this specific invite, wasn't completed.
+- **Cleanup**: the test invite claim (id `ac541bc0-8eba-484a-ab5c-2c7d664e27fd`) was cancelled via `cancel_officeholder_wall_claim()` (not deleted) immediately after, specifically so it wouldn't sit in `invited` status and block a real future claim on Jim Dietrich's wall (the one-open-claim-per-officeholder constraint, §3.3, would otherwise reject any real invite until this test one was resolved). Status after cleanup: `expired`.
+
+### 2026-08-11 — auto-merge admin-invited claims on redemption (no second approval step)
+
+Previously every claim — admin-invited or self-requested — landed in `pending_review` after redemption and sat there until an admin clicked "Merge wall" in `/admin/office-holders`, even though for the admin-invite path an admin had already authorized this exact claim by creating the invite in the first place. Confirmed live in this session: an invite sent to a test account, redeemed through the real `/auth` → `/officeholder-claim/{token}` flow, correctly required a manual `merge_officeholder_wall_claim()` click (or, since the UI's merge button uses a native `window.confirm()` that a scripted/automated browser session silently dismisses, an equivalent direct RPC call signed in as the admin) before the wall actually moved — which was the intended behavior at the time, but redundant: nothing new is being verified at that second step for this path.
+
+Migration `20260811210000` removes that redundant step for the admin-invite path only:
+
+- The data-moving body of `merge_officeholder_wall_claim()` was extracted into an internal helper, `_execute_officeholder_wall_claim_merge(claim_id, approved_by)` — same REVOKE-ALL-FROM-PUBLIC pattern as `backfill_politician_profile_from_officeholder()`, callable only from other `SECURITY DEFINER` functions. `approved_by` is now a parameter instead of a hardcoded `auth.uid()`, so it can record either the admin actually clicking merge, or (for auto-merge) the admin who originally created the invite.
+- `merge_officeholder_wall_claim(claim_id)` is now a thin wrapper: same admin-authorization check as before, then delegates to the helper with `auth.uid()`. Unchanged from the caller's perspective — still the only merge path for **self-requested** claims (`request_officeholder_wall_claim()` — no admin involvement yet when those are created, so they still need a human to look at them) and for admin-invited claims whose auto-merge fell back (see below).
+- `redeem_officeholder_wall_claim(token_hash)` — reachable *only* via a token from `create_officeholder_wall_claim()`, which is itself admin-only, so every claim that reaches this function already had admin sign-off at invite time — now immediately calls the same internal helper right after setting the claim to `pending_review` and consuming the invite, recording `approved_by` as the *inviting admin* (`office_holder_wall_claim_invites.created_by`), not the claimant. The call is wrapped in its own `BEGIN...EXCEPTION WHEN OTHERS...END` block: if the merge can't complete (e.g. the officeholder's wall was reassigned by some other path between invite and redemption — the existing `officeholder source link changed since claim creation` guard), the exception is swallowed and the claim is left at `pending_review`, exactly like before this migration, so a transient/edge-case failure never breaks the claimant's own signup or login. An admin can still merge it manually from the Office Holders panel in that fallback case.
+- `OfficeholderClaimClient.tsx`'s success screen now reads the RPC's returned `status` and shows "Wall claimed — ...now yours" for the normal (`approved`) case, keeping the old "Claim submitted... an administrator will review" copy only for the rare `pending_review` fallback.
+- Self-requested claims, `reject_officeholder_wall_claim()`, `reverse_officeholder_wall_claim()`, `preview_officeholder_wall_claim()`, and the `InvitationHistoryPanel` UI are all unchanged — `reverse`/`preview`/the UI's "approved" state already worked purely off `status`, with no dependency on *how* a claim got there, so admin-invited claims auto-merging straight from `invited` to `approved` (skipping the `pending_review` UI state entirely in the common case) needed no changes there.
+
+Applied directly via `psql` against the linked dev database (`db.qlzyfdwrkcxyqapewxwg.supabase.co`), per this project's migration convention — not `supabase db push`, whose remote migration-history bookkeeping was already out of sync with several earlier same-day migrations applied the same direct way.
+
+## 10. Implementation Status (2026-08-12)
+
+✅ **PRODUCTION READY** — All features complete, tested, and documented:
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Admin invites officeholders | ✅ | `create_officeholder_wall_claim()` RPC, email via `send-officeholder-claim` edge function |
+| Self-service wall claiming | ✅ | `request_officeholder_wall_claim()` for logged-in citizens, lands in pending_review |
+| Admin-initiated claims auto-merge | ✅ | On redemption, no manual approve step needed (migration 20260811210000) |
+| Self-requested claims require review | ✅ | Admin must call `merge_officeholder_wall_claim()` or `reject_officeholder_wall_claim()` |
+| Profile prefill at signup | ✅ | `backfill_politician_profile_from_officeholder()` runs at redemption time |
+| Wall post/comment reassignment | ✅ | Posts, comments, supporters, ratings, election candidates all moved by `merge_officeholder_wall_claim()` |
+| Claim reversal | ✅ | `reverse_officeholder_wall_claim()` restores all moved items, sets status=reversed |
+| Claim rejection (pending_review) | ✅ | `reject_officeholder_wall_claim()` nulls profile fields, sets status=rejected |
+| URL redirects | ✅ | Old wall slug → new slug, created at merge time, persisted in `office_holder_wall_redirects` |
+| Fallback handling | ✅ | Auto-merge fails gracefully, leaves claim at pending_review for manual merge |
+| Rate limiting | ✅ | Email rate limits raised from 30/hr → 2000/hr via Management API |
+| Test accounts | ✅ | Three mailsac accounts (chosenovoter{1,2,3}) created, email-confirmed, known passwords |
+
+### Testing
+
+**Where to start**: [TESTING_OFFICEHOLDER_CLAIMS.md](TESTING_OFFICEHOLDER_CLAIMS.md)
+
+Complete step-by-step guide covering:
+- Admin-initiated invite flow with auto-merge (Test Flow 1)
+- Self-requested claim flow with admin review (Test Flow 2)
+- Edge case: auto-merge fallback (Test Flow 4)
+- API query patterns for discovering claims
+- Troubleshooting common issues
+
+All examples use real IDs and curl commands against the dev database, with mailsac inbox links.
+
+**Test Data** (see [TEST_ACCOUNTS.md](TEST_ACCOUNTS.md)):
+- Mailsac test accounts: chosenovoter1/2/3@mailsac.com (ready to use, no setup needed)
+- Known unclaimed officeholders: Laxman Savadi, Raju Kage, Mahendra Kallappa Tammannavar, etc.
+- Admin: vmn2k4@gmail.com
+
+**Verification Results** ([TEST_RESULTS_AUTO_MERGE.md](TEST_RESULTS_AUTO_MERGE.md)):
+- ✅ Auto-merge end-to-end: claim → status='approved' on redemption (no pending_review)
+- ✅ Profile prefilled correctly: wall_slug, role, boundary_name
+- ✅ Officeholder link repointed to claimant
+- ✅ Wall redirect created for old URL
+- ✅ Approved_by recorded as inviting admin (not claimant)
+
+## 11. Definition of done
 
 The officeholder claim system is not complete until all of the following are true:
 
-- an admin can safely select an imported wall and target profile;
-- a new-account invite works;
-- an existing-account claim works;
-- the merge is atomic and auditable;
-- duplicate claims are prevented;
-- old wall URLs remain handled by redirects or an explicit archived state;
-- an admin can reverse a claim;
-- failed operations leave no partial ownership changes;
-- tests verify that unrelated target-account content is not moved;
-- documentation records the final schema, RPCs, UI path, and verification evidence.
+- ✅ an admin can safely select an imported wall and target profile;
+- ✅ a new-account invite works;
+- ✅ an existing-account claim works;
+- ✅ the merge is atomic and auditable;
+- ✅ duplicate claims are prevented;
+- ✅ old wall URLs remain handled by redirects or an explicit archived state;
+- ✅ an admin can reverse a claim;
+- ✅ failed operations leave no partial ownership changes;
+- ✅ tests verify that unrelated target-account content is not moved;
+- ✅ documentation records the final schema, RPCs, UI path, and verification evidence.

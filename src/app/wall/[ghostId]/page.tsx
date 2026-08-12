@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { cache } from "react";
 import PoliticianWallClient from "@/components/features/PoliticianWallClient";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import {
@@ -23,14 +24,21 @@ function isUuid(value: string) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
 
+// generateMetadata and the page component below both need the same profile
+// summary for ghostId. Deduped via React cache() so it's one DB round trip
+// per request instead of two.
+const getProfileSummary = cache(async (ghostId: string) => {
+  const supabase = await createServerClient();
+  return isUuid(ghostId)
+    ? getSEOProfileSummary(supabase, ghostId)
+    : getSEOProfileSummaryBySlug(supabase, ghostId);
+});
+
 export async function generateMetadata({
   params,
 }: WallPageProps): Promise<Metadata> {
   const { ghostId } = await params;
-  const supabase = await createServerClient();
-  const { owner, activeCandidacy, partyName, rating } = isUuid(ghostId)
-    ? await getSEOProfileSummary(supabase, ghostId)
-    : await getSEOProfileSummaryBySlug(supabase, ghostId);
+  const { owner, activeCandidacy, partyName, rating } = await getProfileSummary(ghostId);
   const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
   if (!owner) return { title: "Politician Wall | Choseno" };
   if (wallSlug && ghostId !== wallSlug) redirect(`/wall/${wallSlug}`);
@@ -98,18 +106,16 @@ export default async function WallPage({ params }: WallPageProps) {
   const { ghostId } = await params;
   const supabase = await createServerClient();
 
-  const summary = isUuid(ghostId)
-    ? await getSEOProfileSummary(supabase, ghostId)
-    : await getSEOProfileSummaryBySlug(supabase, ghostId);
-  const { owner, activeCandidacy, partyName, rating } = summary;
+  const { owner, activeCandidacy, partyName, rating } = await getProfileSummary(ghostId);
   if (!owner?.current_ghost_id) notFound();
 
   const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
   if (wallSlug && ghostId !== wallSlug) redirect(`/wall/${wallSlug}`);
 
-  const { data: posts } = await getWallPosts(supabase, owner.current_ghost_id);
-
-  const supportCountRes = owner?.id ? await getSupporterCount(supabase, owner.id) : { count: 0 };
+  const [{ data: posts }, supportCountRes] = await Promise.all([
+    getWallPosts(supabase, owner.current_ghost_id),
+    owner?.id ? getSupporterCount(supabase, owner.id) : Promise.resolve({ count: 0 }),
+  ]);
 
   const name = owner?.full_name || "Politician";
   const bio = owner?.politician_profiles?.bio || "";

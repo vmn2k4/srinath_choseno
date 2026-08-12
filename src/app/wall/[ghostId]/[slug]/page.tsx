@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { cache } from "react";
 import PoliticianWallClient from "@/components/features/PoliticianWallClient";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import {
@@ -30,21 +31,34 @@ type WallPost = {
   created_at?: string;
 };
 
+// generateMetadata and the page component below both need the same profile
+// summary and wall post. Deduped via React cache() so it's the same pair of
+// DB round trips instead of a duplicate per function.
+const getProfileSummary = cache(async (ghostId: string) => {
+  const supabase = await createServerClient();
+  return isUuid(ghostId)
+    ? getSEOProfileSummary(supabase, ghostId)
+    : getSEOProfileSummaryBySlug(supabase, ghostId);
+});
+
+const getWallPost = cache(async (ghostId: string, slug: string) => {
+  const supabase = await createServerClient();
+  const { owner } = await getProfileSummary(ghostId);
+  const { data } = await getWallPostBySlugOrId(supabase, owner?.current_ghost_id || ghostId, slug);
+  return data as WallPost | null;
+});
+
 export async function generateMetadata({
   params,
 }: WallSlugPageProps): Promise<Metadata> {
   const { ghostId, slug } = await params;
-  const supabase = await createServerClient();
 
-  const { owner, activeCandidacy, partyName } = isUuid(ghostId)
-    ? await getSEOProfileSummary(supabase, ghostId)
-    : await getSEOProfileSummaryBySlug(supabase, ghostId);
+  const { owner, activeCandidacy, partyName } = await getProfileSummary(ghostId);
   const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
   if (owner?.current_ghost_id && isUuid(ghostId) && wallSlug) redirect(`/wall/${wallSlug}/${slug}`);
   if (wallSlug && slug === wallSlug) redirect(`/wall/${wallSlug}`);
 
-  const { data: postData } = await getWallPostBySlugOrId(supabase, owner?.current_ghost_id || ghostId, slug);
-  const post = postData as WallPost | null;
+  const post = await getWallPost(ghostId, slug);
   if (!owner || !post) return { title: "Page Not Found | Choseno" };
   const name = owner?.full_name || "Politician";
   const roleTitle =
@@ -113,16 +127,12 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
   const { ghostId, slug } = await params;
   const supabase = await createServerClient();
 
-  const summary = isUuid(ghostId)
-    ? await getSEOProfileSummary(supabase, ghostId)
-    : await getSEOProfileSummaryBySlug(supabase, ghostId);
-  const { owner, activeCandidacy, partyName, rating } = summary;
+  const { owner, activeCandidacy, partyName, rating } = await getProfileSummary(ghostId);
   const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
   if (owner?.current_ghost_id && isUuid(ghostId) && wallSlug) redirect(`/wall/${wallSlug}/${slug}`);
   if (wallSlug && slug === wallSlug) redirect(`/wall/${wallSlug}`);
 
-  const { data: postData } = await getWallPostBySlugOrId(supabase, owner?.current_ghost_id || ghostId, slug);
-  const post = postData as WallPost | null;
+  const post = await getWallPost(ghostId, slug);
   if (!owner || !post) notFound();
 
   const [{ data: posts }, supportCountRes] = await Promise.all([

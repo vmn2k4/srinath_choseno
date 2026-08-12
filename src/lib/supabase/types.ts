@@ -12,6 +12,31 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.5"
   }
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       boundary_uploads: {
@@ -2687,6 +2712,14 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      backfill_politician_profile_from_officeholder: {
+        Args: {
+          p_claim_id?: string
+          p_office_holder_id: string
+          p_profile_id: string
+        }
+        Returns: undefined
+      }
       burn_ghost_identity: { Args: never; Returns: undefined }
       calculate_my_score: { Args: never; Returns: number }
       cancel_officeholder_wall_claim: {
@@ -2900,6 +2933,10 @@ export type Database = {
           rank: number
         }[]
       }
+      find_candidate_id_by_short_hash: {
+        Args: { short_hash: string }
+        Returns: string
+      }
       find_open_seats_in_container: {
         Args: { p_container_shape_id: number }
         Returns: {
@@ -2913,6 +2950,10 @@ export type Database = {
           seat_id: string
           shape_name: string
         }[]
+      }
+      find_seat_id_by_short_hash: {
+        Args: { short_hash: string }
+        Returns: string
       }
       find_shapes_in_containers: {
         Args: {
@@ -3113,6 +3154,10 @@ export type Database = {
           my_application_status: string
         }[]
       }
+      get_wall_claim_eligibility: {
+        Args: { p_profile_id: string }
+        Returns: Json
+      }
       gettransactionid: { Args: never; Returns: unknown }
       insert_map_shape:
         | {
@@ -3142,6 +3187,22 @@ export type Database = {
       is_claim_reviewer_for_candidate: {
         Args: { p_candidate_id: string }
         Returns: boolean
+      }
+      list_pending_self_requested_officeholder_claims: {
+        Args: never
+        Returns: {
+          boundary_name: string
+          claim_id: string
+          claimed_at: string
+          contact_email: string
+          note: string
+          office_holder_id: string
+          office_holder_name: string
+          requester_name: string
+          role_title: string
+          target_profile_id: string
+          target_wall_slug: string
+        }[]
       }
       longtransactionsenabled: { Args: never; Returns: boolean }
       merge_officeholder_wall_claim: {
@@ -3227,6 +3288,10 @@ export type Database = {
           target_profile_id: string
         }[]
       }
+      reject_officeholder_wall_claim: {
+        Args: { p_claim_id: string; p_reason: string }
+        Returns: Json
+      }
       remove_unregistered_candidate: {
         Args: { p_candidate_id: string }
         Returns: undefined
@@ -3265,6 +3330,17 @@ export type Database = {
           isOneToOne: true
           isSetofReturn: false
         }
+      }
+      request_officeholder_wall_claim: {
+        Args: {
+          p_contact_email: string
+          p_note?: string
+          p_office_holder_id: string
+        }
+        Returns: {
+          claim_id: string
+          status: string
+        }[]
       }
       resend_officeholder_wall_claim: {
         Args: {
@@ -4181,6 +4257,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },

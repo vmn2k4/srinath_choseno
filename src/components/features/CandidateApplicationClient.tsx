@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   getCandidateById,
@@ -23,8 +24,14 @@ import {
   Spinner,
 } from "@/components/primitives";
 import RatingScale from "@/components/features/RatingScale";
-import VideoRecorder from "@/components/features/VideoRecorder";
 import { createClient } from "@/lib/supabase/client";
+
+// Only rendered once a candidate opts into recording a video answer, so
+// it's pulled out of this page's initial JS bundle and fetched on demand.
+const VideoRecorder = dynamic(() => import("@/components/features/VideoRecorder"), {
+  ssr: false,
+  loading: () => <Spinner />,
+});
 
 const STATUS_COPY: Record<string, { label: string; tone: "amber" | "emerald" | "rose" }> = {
   pending: { label: "Pending Review", tone: "amber" },

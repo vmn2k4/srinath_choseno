@@ -3,16 +3,17 @@
 import React, { useState, useEffect, useCallback } from "react";
 import AdminSubNav from "./AdminSubNav";
 import { getCountries, listBoundaryTypes, searchMapShapesByName } from "@/lib/services/boundaries";
-import { getElectionRoleTypes, getOfficeHoldersForShape, upsertOfficeHolder, removeOfficeHolder, inviteOfficeholderToClaim, resendOfficeholderClaim, getOfficeholderWallClaims, mergeOfficeholderWallClaim, reverseOfficeholderWallClaim } from "@/lib/services/elections";
+import { getElectionRoleTypes, getOfficeHoldersForShape, upsertOfficeHolder, removeOfficeHolder, inviteOfficeholderToClaim, resendOfficeholderClaim, getOfficeholderWallClaims, mergeOfficeholderWallClaim, reverseOfficeholderWallClaim, rejectOfficeholderWallClaim, listPendingSelfRequestedOfficeholderClaims } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { adminGetProfileById } from "@/lib/services/profile";
-import { UserCheck, Search, Save, Trash2, X, Link2, Mail } from "lucide-react";
+import { UserCheck, Search, Save, Trash2, X, Link2, Mail, Inbox } from "lucide-react";
 import { Card, Button, Input, Textarea, Select, Spinner, PageHeader } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
 import { createClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/types";
 import Link from "next/link";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
+import { InvitationHistoryPanel } from "./InvitationHistoryPanel";
 
 interface RoleType {
   id: string;
@@ -83,7 +84,62 @@ export default function OfficeHoldersAdminClient() {
   const [wallInviteUrl, setWallInviteUrl] = useState("");
   const [wallInviteEmail, setWallInviteEmail] = useState("");
   const [wallInviting, setWallInviting] = useState(false);
+  const [selectedWall, setSelectedWall] = useState<{
+    slug: string;
+    name: string;
+    officeholderId: string;
+  } | null>(null);
+  const [wallClaims, setWallClaims] = useState<OfficeholderClaim[]>([]);
+  const [loadingWallClaims, setLoadingWallClaims] = useState(false);
 
+  // Self-requested claims (get_wall_claim_eligibility -> request_officeholder_wall_claim,
+  // migration 20260811170000) land in pending_review the same as an invited/
+  // redeemed claim, but nothing about them is visible unless an admin has
+  // already navigated to that specific officeholder's wall lookup above.
+  // This lists them globally so they're actually discoverable.
+  type SelfRequestedClaim = {
+    claim_id: string;
+    office_holder_id: string;
+    office_holder_name: string | null;
+    role_title: string | null;
+    boundary_name: string | null;
+    target_profile_id: string | null;
+    target_wall_slug: string | null;
+    requester_name: string | null;
+    contact_email: string | null;
+    note: string | null;
+    claimed_at: string | null;
+  };
+  const [selfRequests, setSelfRequests] = useState<SelfRequestedClaim[]>([]);
+  const [loadingSelfRequests, setLoadingSelfRequests] = useState(false);
+
+  const loadSelfRequests = useCallback(async () => {
+    setLoadingSelfRequests(true);
+    const { data } = await listPendingSelfRequestedOfficeholderClaims(supabase);
+    setSelfRequests((data as SelfRequestedClaim[] | null) || []);
+    setLoadingSelfRequests(false);
+  }, [supabase]);
+
+  useEffect(() => {
+    async function initialLoad() {
+      await loadSelfRequests();
+    }
+    initialLoad();
+  }, [loadSelfRequests]);
+
+  const reviewSelfRequest = (req: SelfRequestedClaim) => {
+    setSelectedWall({
+      slug: req.target_wall_slug || "",
+      name: req.office_holder_name || "Unnamed Officeholder",
+      officeholderId: req.office_holder_id,
+    });
+    setWallInviteEmail(req.contact_email || "");
+    setLoadingWallClaims(true);
+    getOfficeholderWallClaims(supabase, req.office_holder_id).then(({ data }) => {
+      setWallClaims((data as OfficeholderClaim[] | null) || []);
+      setLoadingWallClaims(false);
+    });
+  };
 
   useEffect(() => {
     getCountries(supabase).then(({ data }) => setCountries(data || []));
@@ -253,6 +309,10 @@ export default function OfficeHoldersAdminClient() {
       return;
     }
 
+    // Clear any previously-loaded wall so a failed/slow lookup can't leave the
+    // panel showing a different wall's invitation history while this one resolves.
+    setSelectedWall(null);
+    setWallClaims([]);
     setWallInviting(true);
     setStatus("");
     const { data: profile, error: profileError } = await supabase
@@ -279,7 +339,23 @@ export default function OfficeHoldersAdminClient() {
       return;
     }
 
+    // Set selected wall info so the panel renders while the invite is in flight.
+    setSelectedWall({
+      slug: wallSlug,
+      name: profile.full_name || "Unnamed Politician",
+      officeholderId: officeHolder.id,
+    });
+
     const { error: inviteError } = await sendClaimInvitation(officeHolder.id, email);
+
+    // Always reload claims after attempting the invite — a resend can succeed
+    // in the database even when the caller's UI has a stale claims list, and
+    // the panel must reflect the claim that was actually just touched.
+    setLoadingWallClaims(true);
+    const { data: claimsData } = await getOfficeholderWallClaims(supabase, officeHolder.id);
+    setWallClaims((claimsData as OfficeholderClaim[] | null) || []);
+    setLoadingWallClaims(false);
+
     setWallInviting(false);
     setStatus(
       inviteError
@@ -293,6 +369,20 @@ export default function OfficeHoldersAdminClient() {
     const { error } = await mergeOfficeholderWallClaim(supabase, claim.id);
     setSaving(false);
     setStatus(error ? `Merge error: ${error.message}` : "Claim merged successfully. The old wall URL now redirects.");
+    if (!error) {
+      const { data } = await getOfficeholderWallClaims(supabase, holder.id);
+      setClaims((prev) => ({ ...prev, [holder.id]: (data as OfficeholderClaim[] | null) || [] }));
+      if (selectedShape) await selectShape(selectedShape);
+    }
+  };
+
+  const rejectClaim = async (holder: Holder, claim: OfficeholderClaim) => {
+    const reason = window.prompt("Reason for rejecting this claim:");
+    if (!reason?.trim()) return;
+    setSaving(true);
+    const { error } = await rejectOfficeholderWallClaim(supabase, claim.id, reason.trim());
+    setSaving(false);
+    setStatus(error ? `Rejection error: ${error.message}` : "Claim rejected. The claimant's profile no longer shows this officeholder's details.");
     if (!error) {
       const { data } = await getOfficeholderWallClaims(supabase, holder.id);
       setClaims((prev) => ({ ...prev, [holder.id]: (data as OfficeholderClaim[] | null) || [] }));
@@ -342,6 +432,40 @@ export default function OfficeHoldersAdminClient() {
 
       <AdminSubNav active="office-holders" />
 
+      {selfRequests.length > 0 && (
+        <Card padding="md" className="space-y-3 border-warning/30 bg-warning/5">
+          <h2 className="font-bold text-text-main flex items-center gap-2">
+            <Inbox size={17} className="text-warning" />
+            Pending self-requested claims ({selfRequests.length})
+          </h2>
+          <p className="text-xs text-text-muted -mt-2">
+            Submitted directly by a logged-in citizen from the wall itself (no invite sent) — review the same way as any other claim.
+          </p>
+          <div className="space-y-2">
+            {selfRequests.map((req) => (
+              <div
+                key={req.claim_id}
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl border border-border-light/30 bg-surface/50 text-sm"
+              >
+                <div>
+                  <div className="font-semibold text-text-main">
+                    {req.office_holder_name} <span className="text-text-muted font-normal">— {req.role_title}{req.boundary_name ? `, ${req.boundary_name}` : ""}</span>
+                  </div>
+                  <div className="text-xs text-text-muted mt-0.5">
+                    Requested by <strong>{req.requester_name || "an unnamed profile"}</strong> · {req.contact_email}
+                    {req.note && <> · &ldquo;{req.note}&rdquo;</>}
+                  </div>
+                </div>
+                <Button size="sm" variant="outline" onClick={() => reviewSelfRequest(req)} className="shrink-0">
+                  Review
+                </Button>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+      {loadingSelfRequests && selfRequests.length === 0 && <p className="text-xs text-text-muted">Checking for pending claim requests…</p>}
+
       <Card padding="md" className="space-y-4 border-primary/20 bg-primary/5">
         <div>
           <h2 className="font-bold text-text-main flex items-center gap-2">
@@ -380,7 +504,24 @@ export default function OfficeHoldersAdminClient() {
             <Mail size={14} /> {wallInviting ? "Sending…" : "Send claim invite"}
           </Button>
         </div>
+        {status && <p className="text-sm text-text-muted">{status}</p>}
       </Card>
+
+      {selectedWall && (
+        <InvitationHistoryPanel
+          wallUrl={`${window.location.origin}/wall/${selectedWall.slug}`}
+          wallSlug={selectedWall.slug}
+          politicianName={selectedWall.name}
+          politicianEmail={wallInviteEmail}
+          officeholderId={selectedWall.officeholderId}
+          claims={wallClaims}
+          onStatusChange={async () => {
+            const { data: claimsData } = await getOfficeholderWallClaims(supabase, selectedWall.officeholderId);
+            setWallClaims((claimsData as OfficeholderClaim[] | null) || []);
+            loadSelfRequests();
+          }}
+        />
+      )}
 
       <Card padding="md" className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -589,6 +730,7 @@ export default function OfficeHoldersAdminClient() {
                       <div className="flex items-center gap-2 pt-2 border-t border-border-light/20">
                         <span className="text-xs text-text-secondary">Verified claim is awaiting admin merge.</span>
                         <Button size="sm" onClick={() => mergeClaim(existing, latestClaim)} disabled={saving}>Merge wall</Button>
+                        <Button size="sm" variant="outline" onClick={() => rejectClaim(existing, latestClaim)} disabled={saving}>Reject claim</Button>
                       </div>
                     )}
                     {!isEditing && existing && latestClaim && (

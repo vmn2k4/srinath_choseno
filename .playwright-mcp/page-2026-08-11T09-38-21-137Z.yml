@@ -1,0 +1,197 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e4]:
+        - link "Choseno Logo Icon Chosen o" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e6]:
+            - img "Choseno Logo Icon" [ref=e7]
+            - generic [ref=e12]:
+              - generic [ref=e13]: Chosen
+              - generic [ref=e14]: o
+        - generic [ref=e15]:
+          - link "Home" [ref=e16] [cursor=pointer]:
+            - /url: /
+          - link "Find District" [ref=e20] [cursor=pointer]:
+            - /url: /find-my-district
+          - link "News" [ref=e24] [cursor=pointer]:
+            - /url: /news
+          - link "About" [ref=e28] [cursor=pointer]:
+            - /url: /about
+          - link "Elections" [ref=e29] [cursor=pointer]:
+            - /url: /elections
+          - link "Log In / Sign Up" [ref=e30] [cursor=pointer]:
+            - /url: /auth
+    - main [ref=e31]:
+      - generic [ref=e32]:
+        - generic [ref=e35]:
+          - generic [ref=e36]: Voice of the Silent Majority
+          - heading "Rate Your Politicians' Performance. Like Yelp, but for Democracy." [level=1] [ref=e40]: Rate Your Politicians' Performance.Like Yelp, but for Democracy.
+          - paragraph [ref=e41]: A secure, anonymous space to hold local leaders accountable. Share your experience, read what your neighbors think, and walk into the booth informed — no toxicity, just accountability.
+          - generic [ref=e42]:
+            - generic [ref=e43]: Conversations scoped to
+            - generic [ref=e44]: Polling District
+          - generic [ref=e50]:
+            - link "I'm a Citizen" [ref=e51] [cursor=pointer]:
+              - /url: /auth?role=citizen
+            - link "I'm Running for Office" [ref=e54] [cursor=pointer]:
+              - /url: /auth?role=politician
+        - region "Trust and privacy at a glance" [ref=e57]:
+          - generic [ref=e58]:
+            - generic [ref=e59]: Speak freely, stay hidden
+            - generic [ref=e62]: Real voting areas verified
+            - generic [ref=e66]: No favorite parties
+            - generic [ref=e71]: Real people, real votes
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - heading "Democracy, simplified." [level=2] [ref=e77]
+            - paragraph [ref=e78]: Same as picking a restaurant — except this time you're choosing who represents you.
+          - generic [ref=e79]:
+            - generic [ref=e81]:
+              - heading "Find" [level=3] [ref=e86]
+              - paragraph [ref=e87]: Search for who represents you — no lengthy forms.
+            - generic [ref=e91]:
+              - heading "Read" [level=3] [ref=e95]
+              - paragraph [ref=e96]: Listen to what people around you really think.
+            - generic [ref=e100]:
+              - heading "Vote" [level=3] [ref=e105]
+              - paragraph [ref=e106]: Make your choice with confidence, not guesses.
+        - generic [ref=e108]:
+          - heading "Three simple steps to get started" [level=2] [ref=e110]
+          - generic [ref=e111]:
+            - generic [ref=e113]:
+              - generic [ref=e114]: "01"
+              - heading "Find your voting area" [level=3] [ref=e115]
+              - paragraph [ref=e119]: Share your location once. We instantly match it to your real voting area — no forms to fill out, your privacy stays completely safe.
+            - generic [ref=e121]:
+              - generic [ref=e122]: "02"
+              - heading "Join neighborhood conversations" [level=3] [ref=e123]
+              - paragraph [ref=e128]: Read real discussions from people in your voting area. Easily switch between your street, city, province, country, or global conversations.
+            - generic [ref=e130]:
+              - generic [ref=e131]: "03"
+              - heading "Speak up on what matters" [level=3] [ref=e132]
+              - paragraph [ref=e136]: Share your opinion anonymously. Show your elected officials which local issues you care about most. They see real people speaking up, not bots or outsiders.
+        - generic [ref=e138]:
+          - heading "Whether you're voting or running" [level=2] [ref=e140]
+          - generic [ref=e141]:
+            - generic [ref=e143]:
+              - generic [ref=e144]:
+                - heading "For Voters" [level=3] [ref=e152]
+                - paragraph [ref=e153]: Be heard on issues that affect your neighborhood — not just the big national news.
+                - list [ref=e154]:
+                  - listitem [ref=e155]: See all discussions from your area in one place
+                  - listitem [ref=e159]: Post and comment with a private anonymous name
+                  - listitem [ref=e163]: Change your anonymous name anytime for a fresh start
+                  - listitem [ref=e167]: Real votes only — one person, one vote. No fake accounts allowed
+              - generic [ref=e171]:
+                - link "Join your area" [ref=e172] [cursor=pointer]:
+                  - /url: /auth?role=citizen
+                - link "not sure your voting area? find it now" [ref=e173] [cursor=pointer]:
+                  - /url: /find-my-district
+            - generic [ref=e175]:
+              - generic [ref=e176]:
+                - heading "For People Who Want to Run" [level=3] [ref=e181]
+                - paragraph [ref=e182]: Run for office without needing a party. The voters decide who they like, not party bosses.
+                - list [ref=e183]:
+                  - listitem [ref=e184]: Your own public page where voters can learn about you
+                  - listitem [ref=e188]: Answer voter questions directly — no avoiding tough questions
+                  - listitem [ref=e192]: Record short videos explaining your ideas, right on the site
+                  - listitem [ref=e196]: See exactly what voters are asking and decide how to answer
+              - generic [ref=e200]:
+                - link "Run for office" [ref=e201] [cursor=pointer]:
+                  - /url: /auth?role=politician
+                - link "or see open races near you" [ref=e202] [cursor=pointer]:
+                  - /url: /elections
+        - generic [ref=e205]:
+          - heading "Every district, one feed away." [level=2] [ref=e207]: Every district,one feed away.
+          - generic [ref=e210]:
+            - generic [ref=e211]: choseno.com/elections
+            - generic [ref=e216]:
+              - generic [ref=e217]:
+                - generic [ref=e218]:
+                  - paragraph [ref=e219]: 2028 Provincial · Nominations open
+                  - paragraph [ref=e220]:
+                    - text: MLA
+                    - generic [ref=e221]: Surrey South
+                - generic [ref=e225]: 3 candidates
+              - generic [ref=e226]:
+                - generic [ref=e227]:
+                  - paragraph [ref=e228]: 2028 Federal · Nominations open
+                  - paragraph [ref=e229]:
+                    - text: MP
+                    - generic [ref=e230]: Vancouver-Fraserview
+                - generic [ref=e234]: 2 candidates
+              - generic [ref=e235]:
+                - generic [ref=e236]:
+                  - paragraph [ref=e237]: Municipal · Nominations open
+                  - paragraph [ref=e238]:
+                    - text: City Councillor
+                    - generic [ref=e239]: District 4
+                - generic [ref=e243]: 5 candidates
+        - generic [ref=e245]:
+          - heading "Built for trust and privacy" [level=2] [ref=e247]
+          - generic [ref=e248]:
+            - generic [ref=e250]:
+              - heading "Anonymous names you can change" [level=3] [ref=e253]
+              - paragraph [ref=e254]: Use a private name when you post. Switch to a new anonymous name anytime you want a fresh start.
+            - generic [ref=e256]:
+              - heading "Real video answers" [level=3] [ref=e260]
+              - paragraph [ref=e261]: Politicians record video answers to voter questions. You get their real voice, not just written words.
+            - generic [ref=e263]:
+              - heading "Real votes only" [level=3] [ref=e266]
+              - paragraph [ref=e267]: One person gets one vote. No fake accounts, no outsiders. Just real people from your area.
+            - generic [ref=e269]:
+              - heading "Talk at every level" [level=3] [ref=e275]
+              - paragraph [ref=e276]: Discuss your street, your city, your province, your country — or think globally. Pick what matters to you.
+            - generic [ref=e278]:
+              - heading "Neighbors talking together" [level=3] [ref=e281]
+              - paragraph [ref=e282]: Conversations stay local. You're talking with real people from your area who care about the same issues.
+            - generic [ref=e284]:
+              - heading "Verified voting areas" [level=3] [ref=e288]
+              - paragraph [ref=e289]: We make sure you see discussions only from your actual voting area. No confusion about who represents you.
+        - generic [ref=e291]:
+          - heading "Questions, answered" [level=2] [ref=e293]
+          - generic [ref=e294]:
+            - group [ref=e296]:
+              - generic "Is Choseno really anonymous?" [ref=e297] [cursor=pointer]
+            - group [ref=e302]:
+              - generic "Can politicians or staff see who I really am?" [ref=e303] [cursor=pointer]
+            - group [ref=e308]:
+              - generic "What happens when I get a new anonymous name?" [ref=e309] [cursor=pointer]
+            - group [ref=e314]:
+              - generic "How do you know where I live without asking for my address?" [ref=e315] [cursor=pointer]
+            - group [ref=e320]:
+              - generic "Is Choseno run by a political party?" [ref=e321] [cursor=pointer]
+            - group [ref=e326]:
+              - generic "Can I run for office without party support?" [ref=e327] [cursor=pointer]
+            - group [ref=e332]:
+              - generic "What if my area isn't on the map yet?" [ref=e333] [cursor=pointer]
+        - generic [ref=e339]:
+          - heading "Join your district. Vote informed." [level=2] [ref=e340]
+          - paragraph [ref=e341]: See what your neighbors are already saying, then walk into the booth knowing exactly who you're choosing.
+          - generic [ref=e343]:
+            - link "I'm a Citizen" [ref=e344] [cursor=pointer]:
+              - /url: /auth?role=citizen
+            - link "I'm Running for Office" [ref=e347] [cursor=pointer]:
+              - /url: /auth?role=politician
+    - contentinfo [ref=e350]:
+      - generic [ref=e351]:
+        - generic [ref=e352]:
+          - generic [ref=e353]: Built with
+          - generic [ref=e356]: by an everyday citizen —
+          - link "Murugappan Valliyappan" [ref=e357] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/muruvalliyappan/
+        - navigation "Footer navigation" [ref=e358]:
+          - link "About" [ref=e359] [cursor=pointer]:
+            - /url: /about
+          - link "Editorial Standards" [ref=e360] [cursor=pointer]:
+            - /url: /about#editorial-heading
+          - link "Privacy Policy" [ref=e361] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms of Service" [ref=e362] [cursor=pointer]:
+            - /url: /terms
+          - link "Contact" [ref=e363] [cursor=pointer]:
+            - /url: mailto:contact@choseno.com
+        - paragraph [ref=e364]: © 2026 Choseno. Independent & non-partisan.
+  - button "Debug user switcher" [ref=e366] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=e381] [cursor=pointer]

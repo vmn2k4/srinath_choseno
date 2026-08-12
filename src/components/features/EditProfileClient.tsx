@@ -13,7 +13,7 @@ import {
   upsertPoliticianProfile,
   uploadAvatarImage,
 } from "@/lib/services/profile";
-import { getPoliticalParties } from "@/lib/services/politicalParties";
+import { getPoliticalParties, getPoliticalPartyById } from "@/lib/services/politicalParties";
 import { findBoundariesByPoint, syncUserBoundaryMemberships } from "@/lib/services/boundaries";
 import { ArrowLeft, Camera, Check, Layers, MapPin, RefreshCw } from "lucide-react";
 import { Alert, Badge, Button, Card, Input, PageHeader, Select, Spinner, Textarea } from "@/components/primitives";
@@ -53,6 +53,14 @@ export default function EditProfileClient() {
   const [politicalTargetRole, setPoliticalTargetRole] = useState("");
   const [targetBoundaryId, setTargetBoundaryId] = useState<string | null>(null);
   const [parties, setParties] = useState<any[]>([]);
+  // The saved political_party_id can belong to a country outside the
+  // boundary-filtered `parties` list (mismatched officeholder data, a
+  // relocated profile, etc.) -- cached here so it's still shown/selectable
+  // instead of the <select> silently rendering as unselected. Only ever set
+  // from inside the effect's async fetch below, never synchronously, so it
+  // just holds "the last party we looked up" -- savedPartyOutOfList (derived
+  // below) decides whether that's still the one that should render.
+  const [fetchedFallbackParty, setFetchedFallbackParty] = useState<{ id: number; name: string; country: string } | null>(null);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [avatarError, setAvatarError] = useState<string | null>(null);
   const [contactEmail, setContactEmail] = useState("");
@@ -106,6 +114,27 @@ export default function EditProfileClient() {
     if (!isPolitician || !country) return;
     getPoliticalParties(supabase, { country }).then(({ data: rows }) => setParties(rows || []));
   }, [isPolitician, matchedBoundaries, supabase]);
+
+  // If the saved party isn't in the country-filtered list above, look it up
+  // directly so it can still be shown/selected (see savedPartyOutOfList
+  // below) instead of appearing as "no party chosen".
+  const partyInList = parties.some((p) => String(p.id) === politicalParty);
+  useEffect(() => {
+    if (!politicalParty || partyInList) return;
+    if (fetchedFallbackParty && String(fetchedFallbackParty.id) === politicalParty) return;
+    let cancelled = false;
+    getPoliticalPartyById(supabase, Number(politicalParty)).then(({ data }) => {
+      if (!cancelled && data) setFetchedFallbackParty(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [politicalParty, partyInList, fetchedFallbackParty, supabase]);
+
+  const savedPartyOutOfList =
+    politicalParty && !partyInList && fetchedFallbackParty && String(fetchedFallbackParty.id) === politicalParty
+      ? fetchedFallbackParty
+      : null;
 
   const reVerifyLocation = async (latitude: number, longitude: number) => {
     setLocLoading(true);
@@ -334,12 +363,23 @@ export default function EditProfileClient() {
             <label className="block text-sm font-medium text-text-tertiary mb-2">Political Party</label>
             <Select value={politicalParty} onChange={(e) => setPoliticalParty(e.target.value)}>
               <option value="">Select a party (optional)...</option>
+              {savedPartyOutOfList && (
+                <option value={savedPartyOutOfList.id}>
+                  {savedPartyOutOfList.name} ({savedPartyOutOfList.country})
+                </option>
+              )}
               {parties.map((p: any) => (
                 <option key={p.id} value={p.id}>
                   {p.name}
                 </option>
               ))}
             </Select>
+            {savedPartyOutOfList && (
+              <p className="text-xs text-text-muted mt-1">
+                This party is registered for {savedPartyOutOfList.country}, outside your detected boundaries.
+                Change it if that&apos;s not right.
+              </p>
+            )}
           </div>
 
           <div>

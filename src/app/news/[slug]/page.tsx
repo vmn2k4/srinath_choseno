@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import { ArrowLeft, Calendar, Clock, Globe, User, ExternalLink, Zap } from "lucide-react";
 import { Card, Badge } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/server";
@@ -20,12 +21,19 @@ interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
+// generateMetadata and the page component below both look up the same
+// article. Deduped via React cache() so it's one DB round trip per request
+// instead of two.
+const getArticle = cache(async (slug: string) => {
+  const supabase = await createClient();
+  return getNewsArticleBySlug(supabase, slug);
+});
+
 // ── generateMetadata (SSR SEO) ─────────────────────────────────────────────
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const supabase = await createClient();
-  const { data, error } = await getNewsArticleBySlug(supabase, slug);
+  const { data, error } = await getArticle(slug);
 
   if (error || !data) {
     return {
@@ -80,8 +88,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
 export default async function NewsArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
-  const supabase = await createClient();
-  const { data, error } = await getNewsArticleBySlug(supabase, slug);
+  const { data, error } = await getArticle(slug);
 
   if (error || !data) {
     notFound();

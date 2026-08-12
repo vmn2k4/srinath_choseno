@@ -8,10 +8,11 @@ Complete guide to all Choseno documentation — architecture, features, data pip
 
 **New to the project?** Start here:
 
-1. **[PLATFORM_SPEC.md](PLATFORM_SPEC.md)** — Project overview, vision, feature summary
-2. **[CODE_LAYERS.md](CODE_LAYERS.md)** — How the codebase is organized (routing → pages → components → services → utils)
-3. **[SCREENS_AND_FEATURES.md](SCREENS_AND_FEATURES.md)** — Walkthrough of every screen in the app
-4. **[SUPABASE_SCHEMA.md](SUPABASE_SCHEMA.md)** — Database schema (tables, relationships, constraints)
+1. **[CHOSENO_ARCHITECTURE_GUIDE.md](CHOSENO_ARCHITECTURE_GUIDE.md)** — Complete system overview (44 tables, 7 layers, data flows, service patterns)
+2. **[PLATFORM_SPEC.md](PLATFORM_SPEC.md)** — Project overview, vision, feature summary
+3. **[CODE_LAYERS.md](CODE_LAYERS.md)** — How the codebase is organized (routing → pages → components → services → utils)
+4. **[SCREENS_AND_FEATURES.md](SCREENS_AND_FEATURES.md)** — Walkthrough of every screen in the app
+5. **[SUPABASE_SCHEMA.md](SUPABASE_SCHEMA.md)** — Database schema (tables, relationships, constraints)
 
 ---
 
@@ -36,7 +37,8 @@ Complete guide to all Choseno documentation — architecture, features, data pip
 
 ### Officeholder Wall Claims
 
-- **[OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md](OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md)** — Current behavior and planned reversible flow for claiming scraped officeholder walls, merging them with existing or new profiles, sending invitations, reversing fraudulent claims, and tracing failures.
+- **[OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md](OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md)** — Complete implementation status, admin workflow, conditions & constraints, service layer API reference, maintenance tasks
+- **[OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md](OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md)** — Design rationale, schema decisions, merge rules, safety checklist, future enhancements
 
 ### Politician & Office Holders
 
@@ -66,6 +68,13 @@ Complete guide to all Choseno documentation — architecture, features, data pip
 ### Administration
 
 - **[ADMIN_FEATURES.md](ADMIN_FEATURES.md)** — Seven admin panels: Boundaries, Analytics, Elections, Election Admins, Visualizer, Theme, News, Moderation, Office Holders
+
+---
+
+## Testing & Verification
+
+- **[TEST_RESULTS_OFFICEHOLDER_CLAIM.md](TEST_RESULTS_OFFICEHOLDER_CLAIM.md)** — End-to-end test results, duplicate prevention verification, test environment details, next steps for QA
+- **[DEV_EMAIL_VERIFICATION_BYPASS.md](DEV_EMAIL_VERIFICATION_BYPASS.md)** — Auto-confirm emails in dev-only mode (for testing without email clicks), security guards, setup instructions
 
 ---
 
@@ -184,6 +193,10 @@ Admin creates election (boundary + role + dates) → candidates register
 | **National/Provincial Heads** | [OFFICE_HOLDERS_FEATURE.md](OFFICE_HOLDERS_FEATURE.md) | Live (PM, Premiers, President auto-populated) |
 | **Politician Walls** | [POLITICIAN_WALL_FEATURE.md](POLITICIAN_WALL_FEATURE.md) | Live (separate from campaign pages) |
 | **Engagement Summaries** | [RATINGS_SYSTEM.md](RATINGS_SYSTEM.md) | Live (materialized view on ratings) |
+| **Enhanced Admin UI** | Integrated InvitationHistoryPanel | Live (shows past invitations, wall link, resend/**merge/reverse with preview**) |
+| **Officeholder claim signup-time prefill** | [OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md](OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md) §4.5 | Live (profile prefilled from the officeholder record the moment a claim is redeemed, not just at merge) |
+| **Officeholder claim dual-link invite** | [OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md](OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md) §4.1 | Live (one email, two links — sign up fresh or merge into an existing account; completing either invalidates both) |
+| **Unified wall claim eligibility + self-service requests** | [OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md](OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md) §4.6 | Live (one eligibility check for both officeholder and generic politician walls; "Claim This Wall" now also works self-service on officeholder walls with no admin invite needed; fixed a bug where the claim button showed on walls that already had a real owner) |
 
 ---
 
@@ -264,6 +277,9 @@ When adding a new feature:
 
 | Date | Added | Author |
 |---|---|---|
+| 2026-08-11 | Updated CHOSENO_ARCHITECTURE_GUIDE.md, OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md, OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md — manual audit fixes (missing merge/reverse UI, reversal data-integrity bug, unreachable-wall-after-merge bug, unrelated Claim Profile FK bug) + signup-time profile prefill feature | Claude |
+| 2026-08-11 | CHOSENO_ARCHITECTURE_GUIDE.md, OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md, TEST_RESULTS_OFFICEHOLDER_CLAIM.md | Claude |
+| 2026-08-11 | Updated OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md, OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md — unified claim eligibility across officeholder and generic politician walls, self-service claim requests (no admin invite needed), admin discoverability panel; fixed "Claim Profile" button showing on already-owned walls and a related FK-violation bug | Claude |
 | 2026-08-09 | RATINGS_SYSTEM.md, NEWS_TAGGING.md, POLITICIAN_WALL_FEATURE.md | Claude |
 | 2026-08-09 | AUTHENTICATION_FLOWS.md, COMMENTS_AND_MODERATION.md | Claude |
 | 2026-08-09 | API_CACHING_STRATEGY.md, ADMIN_FEATURES.md | Claude |

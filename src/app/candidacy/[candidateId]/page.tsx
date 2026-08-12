@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { cache } from "react";
 import CandidacyWall from "@/components/features/CandidacyWall";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import {
@@ -26,14 +27,21 @@ type PublicCandidate = {
   profiles?: { full_name?: string; current_ghost_id?: string; politician_profiles?: { avatar_url?: string } } | null;
 };
 
+// generateMetadata and the page component below both look up the same
+// candidate. Deduped via React cache() so it's one DB round trip per
+// request instead of two.
+const getCandidate = cache(async (realCandidateId: string) => {
+  const supabase = await createServerClient();
+  const { data } = await getPublicCandidateById(supabase, realCandidateId);
+  return data as unknown as PublicCandidate | null;
+});
+
 export async function generateMetadata({
   params,
 }: CandidatePageProps): Promise<Metadata> {
   const { candidateId } = await params;
   const realCandidateId = extractIdFromSlug(candidateId);
-  const supabase = await createServerClient();
-  const { data } = await getPublicCandidateById(supabase, realCandidateId);
-  const candidate = data as unknown as PublicCandidate | null;
+  const candidate = await getCandidate(realCandidateId);
 
   if (!candidate) {
     return {
@@ -88,20 +96,20 @@ export default async function CandidacyPage({ params }: CandidatePageProps) {
   const realCandidateId = extractIdFromSlug(candidateId);
   const supabase = await createServerClient();
 
-  const { data: candidateData } = await getPublicCandidateById(supabase, realCandidateId);
-  const candidate = candidateData as unknown as PublicCandidate | null;
+  const candidate = await getCandidate(realCandidateId);
 
-  const [{ data: answers }, { data: posts }, supportCountRes] = await Promise.all([
+  const [{ data: answers }, { data: posts }, supportCountRes, candidateProfileRes] = await Promise.all([
     getPublicCandidateAnswers(supabase, realCandidateId),
     getCandidacyWallPosts(supabase, realCandidateId, candidate?.profiles?.current_ghost_id),
     candidate?.politician_id
       ? getSupporterCount(supabase, candidate.politician_id)
       : Promise.resolve({ count: 0 }),
+    candidate?.politician_id
+      ? getPoliticianProfile(supabase, candidate.politician_id)
+      : Promise.resolve({ data: null }),
   ]);
 
-  const candidateProfile = candidate?.politician_id
-    ? (await getPoliticianProfile(supabase, candidate.politician_id)).data
-    : null;
+  const candidateProfile = candidateProfileRes.data;
 
   const visibleAnswers = ((answers as any[]) || []).filter(
     (a) => a.election_questions?.visible_to_public

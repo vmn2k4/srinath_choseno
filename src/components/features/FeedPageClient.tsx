@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   MapPin,
@@ -23,7 +24,6 @@ import PostCard, { PostWithComments } from "./PostCard";
 import StoryStrip, { StoryPost } from "./StoryStrip";
 import PitchViewerModal from "./PitchViewerModal";
 import PoliticianSidebar from "./PoliticianSidebar";
-import VideoRecorder from "./VideoRecorder";
 import MediaThumbnail from "./MediaThumbnail";
 import {
   Card,
@@ -62,6 +62,14 @@ import { getSeatById } from "@/lib/services/elections";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 import { createClient } from "@/lib/supabase/client";
 import { trackPostCreated, trackPostEngagement, trackCommentAdded } from "@/lib/analytics/events";
+
+// Only rendered once a politician opts into recording a video pitch, so it's
+// pulled out of this page's initial JS bundle (the feed is the app's
+// highest-traffic page) and fetched on demand instead.
+const VideoRecorder = dynamic(() => import("./VideoRecorder"), {
+  ssr: false,
+  loading: () => <Spinner />,
+});
 
 interface MembershipShape {
   id: number;

@@ -14,52 +14,60 @@ This document contains the complete outreach strategy, pitch templates, social m
 
 ---
 
-## 2. Official Individual Candidate Outreach Email Template (Standard)
+## 2. Official Individual Candidate Outreach Email Template (Improved)
 
-> **Subject**: Candidate Page & Election Race Directory for [Candidate/Party Name]
+> **Subject**: Your [Role] Wall is Ready on Choseno — Get a Head Start Before Nominations Open
 >
 > Hi [Candidate/Party Name],
 >
-> We are reaching out to **all active candidates participating in upcoming elections in [City/District Name]** to feature your campaign on **Choseno** (choseno.com) — a new Canadian social media platform purpose-built for local politics.
->
-> As nominations for BC elections will open soon, we are giving candidates an **early head start** to set up your campaign platform, post about your vision, and let your supporters start posting testimonials about you.
->
-> **Live Race Example:**  
-> Since BC nominations have not yet officially opened, here is a live preview of how candidates and election races are presented side-by-side on Choseno using an active 2026 election race:  
-> 🔗 **https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-7ce0c3/candidate/tomas-roberto-scheel-53e11a**
->
-> Your official candidate wall is ready for you here:  
+> **Your official candidate wall is live and ready for you:**  
 > 🔗 **https://www.choseno.com/wall/[wall_slug]**
 >
-> ---
->
-> ### 🏛️ How Choseno Works for Your Campaign:
-> - **Side-by-Side Election Race Hub**: Local voters use Choseno to compare all candidates running in their area—their policy stances, platform, news, and posts—in one organized space.
-> - **Head Start & Supporter Endorsements**: Start posting updates early, and invite your supporters to join your community and post testimonials championing your candidacy.
-> - **1-Click Constituency Finder**: Voters enter their postal code (`choseno.com/find-my-district`) to instantly discover their riding and connect with candidate pages.
+> This is where local voters in [City/District] will compare your platform, posts, and positions against other candidates—all in one organized space. **Early candidates who claim and activate their wall get higher visibility** when voters search for races.
 >
 > ---
 >
-> ### 🇨🇦 Who Built Choseno?
-> After engineering core software in Silicon Valley for **Snapchat, Qualcomm, and AMD**, I moved to BC and recently became a proud **Canadian Citizen**. 
-> 
-> As a first-time voter, I built Choseno right here in **South Surrey** as a way to give back to our community — creating a 100% Canadian-owned civic platform rather than relying on foreign big-tech like X (Twitter) or Facebook.
+> ### 🚀 What’s This For?
+>
+> **Choseno** is a Canadian civic platform built for local politics. Voters use a 1-click postal code lookup to find their district, see all candidates in their race, and compare policies, testimonials, and news side-by-side.
+>
+> **Your wall lets you:**
+> - Post campaign updates, policy positions, and vision
+> - Let supporters post testimonials and engage
+> - Reach voters who are actively seeking candidate info
+>
+> **Live Example** (2026 U.S. race showing the format):  
+> 🔗 https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-7ce0c3/candidate/tomas-roberto-scheel-53e11a
 >
 > ---
 >
-> ### ☕ Let’s Connect (In-Person Coffee or 15-Min Online Call)
-> I’d love to buy you a coffee in South Surrey for a quick 15-minute demo, help verify your official wall, and share strategies to mobilize your supporters. 
-> 
-> **How to connect:**
-> 1. ☕ **In-Person Coffee (South Surrey)**: Available any day between 10:00 AM – 4:00 PM. Reply with your preferred date/time & contact number.
-> 2. 💻 **15-Min Online Call**: Pick a time directly on my Calendly: **https://calendly.com/vmn2k4/30min**
-> 3. 📩 **Instant Profile Claim**: Simply reply to this email with the email address you'd like linked to your profile, and we will verify your candidate wall for you!
+> ### ⚡ Three Ways to Get Started
+>
+> **Easiest (30 seconds):**  
+> Reply to this email with your email address. I’ll verify your wall within 24 hours and send you a quick setup guide.
+>
+> **Live Demo (15 minutes):**  
+> See the platform in action and discuss strategy. Pick a time on my Calendly:  
+> 🔗 **https://calendly.com/vmn2k4/30min**
+>
+> **Coffee in Lower Mainland (30 minutes):**  
+> I’m available any weekday 10 AM–4 PM across the Lower Mainland (Vancouver, Surrey, Burnaby, Coquitlam, etc.). Happy to meet near you, buy a coffee, show the platform live, and help you mobilize your supporters. Reply with your preferred city and a couple of times that work.
+>
+> ---
+>
+> ### 🇨🇦 Who’s Building This?
+>
+> After 10+ years engineering core software at **Snapchat, Qualcomm, and AMD** in Silicon Valley, I moved to BC and became a Canadian citizen. I built Choseno right here as a way to strengthen local democracy — **100% Canadian-owned civic tech**, not relying on foreign platforms like X or Facebook.
+>
+> ---
+>
+> **Next step:** Just reply to this email. Easiest to verify and activate your wall in 24 hours.
 >
 > Warm regards,
 >
 > **[Your Name]**  
 > Founder, Choseno  
-> 📍 *South Surrey, BC*  
+> 📍 *Lower Mainland, BC*  
 > 📞 [Your Phone Number] | ✉️ [Your Email Address]  
 > 🌐 [https://www.choseno.com](https://www.choseno.com)
 
@@ -80,16 +88,22 @@ Candidates and civic parties can post this draft on their official Facebook page
 
 ---
 
-## 4. In-Person Coffee Demo Playbook (South Surrey)
+## 4. In-Person Coffee Demo Playbook (Lower Mainland)
 
-- **Preferred Times**: Any day between **10:00 AM and 4:00 PM**.
+- **Preferred Times**: Any weekday between **10:00 AM and 4:00 PM**.
+- **Coverage Area**: Vancouver, Surrey, Burnaby, Coquitlam, Richmond, Langley, New Westminster, Port Coquitlam, and surrounding Lower Mainland cities.
 - **Location Options**:
-  - Morgan Crossing / Grandview Heights (Coffee Shops).
-  - South Surrey Civic Plaza / White Rock.
-  - Candidate's local campaign office / City Hall.
+  - Candidate's preferred coffee shop or café.
+  - Local campaign office or City Hall.
+  - Your office/home (if they prefer).
 - **Demo Agenda**:
-  1. Show official wall page (`/wall/[wall_slug]`).
-  2. Show 1-Click Constituency Finder (`/find-my-district`).
-  3. Show central Election Wall (`/elections`).
-  4. Verify their profile on the spot during coffee.
-  5. Ask for warm intros to other local candidates/colleagues.
+  1. Show official wall page (`/wall/[wall_slug]`) — their platform, posts, supporter endorsements.
+  2. Show 1-Click Constituency Finder (`/find-my-district`) — how voters discover them.
+  3. Show central Election Wall (`/elections`) — how their race is positioned vs. other candidates.
+  4. **Verify their profile on the spot** — confirm email, role title, district, and photo.
+  5. Walk through posting/engagement workflow — how to add campaign updates.
+  6. **Ask for warm intros** — other local candidates, party members, allied organizations they'd recommend connecting with.
+  7. **Leave them with:** 
+     - A printed QR code linking to their wall.
+     - Email with setup guide and next steps.
+     - Your contact info for follow-up questions.

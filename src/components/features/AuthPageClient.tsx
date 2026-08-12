@@ -12,9 +12,11 @@ import { Mail } from "lucide-react";
 export default function AuthPageClient({
   initialRole,
   nextPath,
+  initialIntent,
 }: {
   initialRole?: "citizen" | "politician";
   nextPath?: string;
+  initialIntent?: "login";
 }) {
   const supabase = createClient();
   const router = useRouter();
@@ -22,7 +24,7 @@ export default function AuthPageClient({
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSignUp, setIsSignUp] = useState(Boolean(initialRole));
+  const [isSignUp, setIsSignUp] = useState(initialIntent === "login" ? false : Boolean(initialRole));
   const [message, setMessage] = useState<{ type: "error" | "success" | ""; text: string }>({
     type: "",
     text: "",
@@ -43,6 +45,19 @@ export default function AuthPageClient({
       if (isSignUp) {
         const { data, error } = await signUp(supabase, email, password, nextPath);
         if (error) throw error;
+        // Supabase deliberately returns a fake "success" (not an error) when
+        // the email is already registered, to avoid leaking which emails
+        // have accounts. The tell is an empty identities array — a genuinely
+        // new signup always gets exactly one. Surface this explicitly instead
+        // of showing "check your email" for an email that will never get one.
+        if (data?.user && data.user.identities?.length === 0) {
+          setIsSignUp(false);
+          setMessage({
+            type: "error",
+            text: "An account with this email already exists. Log in instead, or use \"Forgot password\" if you don't remember it.",
+          });
+          return;
+        }
         trackSignUp("email");
         if (data?.session) {
           router.push(nextPath || (initialRole ? `/onboarding?role=${initialRole}` : "/onboarding"));

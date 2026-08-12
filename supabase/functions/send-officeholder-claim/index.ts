@@ -1,8 +1,15 @@
 // Sends an officeholder-scoped claim invitation.
 //
-// Existing accounts receive a normal Choseno email containing the claim link.
-// New accounts use Supabase Auth's invitation email and land on the same
-// claim route after accepting it. The raw claim token is never stored.
+// The recipient gets ONE email with TWO links — sign up fresh, or sign in
+// and merge into an existing account — sharing the same underlying token.
+// Letting the recipient self-select avoids guessing account ownership from
+// the invited email address alone (they may already have a Choseno account
+// under a different email) and avoids an account-existence lookup entirely.
+// Both links route through /auth?next=/officeholder-claim/{token}, and
+// redeem_officeholder_wall_claim() is single-use: whichever link is
+// completed first consumes the token, so the other one — and any future
+// reuse of either — stops working immediately. The raw token is never
+// stored, only its hash.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.4';
 
@@ -20,16 +27,6 @@ function makeToken(): string {
 async function sha256(value: string): Promise<string> {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
   return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, '0')).join('');
-}
-
-async function accountExists(admin: ReturnType<typeof createClient>, email: string): Promise<boolean> {
-  for (let page = 1; page <= 20; page += 1) {
-    const { data, error } = await admin.auth.admin.listUsers({ page, perPage: 1000 });
-    if (error) throw error;
-    if ((data.users || []).some((user) => user.email?.toLowerCase() === email)) return true;
-    if (!data.users || data.users.length < 1000) return false;
-  }
-  throw new Error('could not safely determine whether the account exists');
 }
 
 Deno.serve(async (req) => {
@@ -65,27 +62,34 @@ Deno.serve(async (req) => {
       });
     if (claimError) return new Response(JSON.stringify({ error: claimError.message }), { status: 400, headers: corsHeaders });
 
-    const admin = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
     const claimRow = Array.isArray(claim) ? claim[0] : claim;
-    const claimUrl = `${redirectOrigin}/officeholder-claim/${token}`;
-    const exists = await accountExists(admin, normalizedEmail);
+    const nextPath = `/officeholder-claim/${token}`;
+    const signupUrl = `${redirectOrigin}/auth?role=politician&next=${encodeURIComponent(nextPath)}`;
+    const mergeUrl = `${redirectOrigin}/auth?role=politician&intent=login&next=${encodeURIComponent(nextPath)}`;
 
-    if (!exists) {
-      const { error } = await admin.auth.admin.inviteUserByEmail(normalizedEmail, { redirectTo: claimUrl });
-      if (error) return new Response(JSON.stringify({ error: error.message, claimId: claimRow?.claim_id }), { status: 400, headers: corsHeaders });
-    } else {
-      const { error } = await admin.functions.invoke('send-email', {
-        body: {
-          to: normalizedEmail,
-          subject: 'You have been invited to claim your Choseno officeholder wall',
-          text: `Sign in to Choseno and claim your officeholder wall: ${claimUrl}`,
-          html: `<p>You have been invited to claim your Choseno officeholder wall.</p><p><a href="${claimUrl}">Sign in and claim your wall</a></p><p>This link expires in 7 days.</p>`,
-        },
-      });
-      if (error) return new Response(JSON.stringify({ error: error.message, claimId: claimRow?.claim_id }), { status: 502, headers: corsHeaders });
-    }
+    const admin = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
+    const { error } = await admin.functions.invoke('send-email', {
+      body: {
+        to: normalizedEmail,
+        subject: 'You have been invited to claim your Choseno officeholder wall',
+        text: [
+          "You've been invited to claim your official Choseno wall.",
+          '',
+          `New to Choseno? Sign up and claim your wall: ${signupUrl}`,
+          '',
+          `Already have a Choseno account? Sign in and merge this wall into your profile: ${mergeUrl}`,
+          '',
+          'Either link works once — completing one immediately invalidates the other, and this link expires in 7 days.',
+        ].join('\n'),
+        html: `<p>You've been invited to claim your official Choseno wall.</p>
+<p><a href="${signupUrl}">New to Choseno? Sign up and claim your wall</a></p>
+<p><a href="${mergeUrl}">Already have a Choseno account? Sign in and merge this wall into your profile</a></p>
+<p>Either link works once — completing one immediately invalidates the other, and this link expires in 7 days.</p>`,
+      },
+    });
+    if (error) return new Response(JSON.stringify({ error: error.message, claimId: claimRow?.claim_id }), { status: 502, headers: corsHeaders });
 
-    return new Response(JSON.stringify({ ok: true, claimId: claimRow?.claim_id, accountExists: exists }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ ok: true, claimId: claimRow?.claim_id }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   } catch (error) {
     return new Response(JSON.stringify({ error: error instanceof Error ? error.message : String(error) }), { status: 500, headers: corsHeaders });
   }
