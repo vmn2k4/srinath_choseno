@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Mail, Clock, CheckCircle2, AlertCircle, Copy, History, ExternalLink, GitMerge, Undo2, Trash2 } from "lucide-react";
-import { Card, Button, Badge, Spinner } from "@/components/primitives";
+import { Card, Button, Badge, Spinner, ConfirmDialog, PromptDialog } from "@/components/primitives";
 import { resendOfficeholderClaim, mergeOfficeholderWallClaim, reverseOfficeholderWallClaim, previewOfficeholderWallClaim, cancelOfficeholderClaim } from "@/lib/services/elections";
 import { createClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/types";
@@ -35,6 +35,14 @@ export function InvitationHistoryPanel({
   const [reversing, setReversing] = useState<string | null>(null);
   const [cancelling, setCancelling] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+
+  // window.confirm()/window.prompt() have no mobile-app equivalent, can't be
+  // themed, and in some embedded preview runtimes throw outright ("prompt()
+  // is not supported") instead of just looking out of place — resolved via
+  // the ConfirmDialog/PromptDialog instances rendered at the bottom instead.
+  const [pendingCancel, setPendingCancel] = useState<OfficeholderClaim | null>(null);
+  const [pendingMerge, setPendingMerge] = useState<{ claimId: string; summary: string } | null>(null);
+  const [pendingReverse, setPendingReverse] = useState<string | null>(null);
 
   const copyToClipboard = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
@@ -70,12 +78,16 @@ export function InvitationHistoryPanel({
     }
   };
 
-  const handleCancel = async (claim: OfficeholderClaim) => {
-    if (!window.confirm(`Cancel the invite to ${claim.contact_email || "this recipient"}? This can't be undone.`)) return;
+  const handleCancel = (claim: OfficeholderClaim) => setPendingCancel(claim);
+
+  const confirmCancel = async () => {
+    const claim = pendingCancel;
+    if (!claim) return;
     setActionError(null);
     setCancelling(claim.id);
     const { error } = await cancelOfficeholderClaim(supabase, claim.id);
     setCancelling(null);
+    setPendingCancel(null);
     if (error) {
       setActionError(`Cancel error: ${error.message}`);
     } else {
@@ -105,15 +117,19 @@ export function InvitationHistoryPanel({
         `• ${p.ratings ?? 0} rating(s)\n` +
         `• ${p.news_tags ?? 0} news tag(s)\n` +
         `• ${p.election_candidates ?? 0} election candidacy record(s)\n\n` +
-        `The old wall URL will keep working (it redirects here). An admin can reverse this later.\n\nProceed with merge?`
-      : "Proceed with merge? (No preview data was returned.)";
-    if (!window.confirm(summary)) {
-      setMerging(null);
-      return;
-    }
-
-    const { error } = await mergeOfficeholderWallClaim(supabase, claimId);
+        `The old wall URL will keep working (it redirects here). An admin can reverse this later.`
+      : "No preview data was returned.";
     setMerging(null);
+    setPendingMerge({ claimId, summary });
+  };
+
+  const confirmMerge = async () => {
+    const pending = pendingMerge;
+    if (!pending) return;
+    setMerging(pending.claimId);
+    const { error } = await mergeOfficeholderWallClaim(supabase, pending.claimId);
+    setMerging(null);
+    setPendingMerge(null);
     if (error) {
       setActionError(`Merge error: ${error.message}`);
     } else {
@@ -121,13 +137,16 @@ export function InvitationHistoryPanel({
     }
   };
 
-  const handleReverse = async (claimId: string) => {
-    const reason = window.prompt("Reason for reversing this claim:");
-    if (!reason?.trim()) return;
+  const handleReverse = (claimId: string) => setPendingReverse(claimId);
+
+  const confirmReverse = async (reason: string) => {
+    const claimId = pendingReverse;
+    if (!claimId) return;
     setActionError(null);
     setReversing(claimId);
-    const { error } = await reverseOfficeholderWallClaim(supabase, claimId, reason.trim());
+    const { error } = await reverseOfficeholderWallClaim(supabase, claimId, reason);
     setReversing(null);
+    setPendingReverse(null);
     if (error) {
       setActionError(`Reversal error: ${error.message}`);
     } else {
@@ -334,6 +353,36 @@ export function InvitationHistoryPanel({
           </li>
         </ul>
       </div>
+
+      <ConfirmDialog
+        open={!!pendingCancel}
+        title="Cancel this invitation?"
+        message={`Cancel the invite to ${pendingCancel?.contact_email || "this recipient"}? This can't be undone.`}
+        confirmLabel="Cancel invite"
+        cancelLabel="Keep invite"
+        loading={!!pendingCancel && cancelling === pendingCancel.id}
+        onConfirm={confirmCancel}
+        onCancel={() => setPendingCancel(null)}
+      />
+      <ConfirmDialog
+        open={!!pendingMerge}
+        title="Merge this wall?"
+        message={<span className="whitespace-pre-line">{pendingMerge?.summary}</span>}
+        confirmLabel="Merge wall"
+        loading={!!pendingMerge && merging === pendingMerge.claimId}
+        onConfirm={confirmMerge}
+        onCancel={() => setPendingMerge(null)}
+      />
+      <PromptDialog
+        open={!!pendingReverse}
+        title="Reverse this claim?"
+        message="This restores the original wall owner and moves all content back. Give a reason for the audit trail."
+        placeholder="Reason for reversing this claim…"
+        confirmLabel="Reverse claim"
+        loading={!!pendingReverse && reversing === pendingReverse}
+        onConfirm={confirmReverse}
+        onCancel={() => setPendingReverse(null)}
+      />
     </Card>
   );
 }

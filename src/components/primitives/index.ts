@@ -23,4 +23,5 @@ export type { TabItem } from "./Tabs";
 export { default as Avatar } from "./Avatar";
 export { default as Popover } from "./Popover";
 export { default as ConfirmDialog } from "./ConfirmDialog";
+export { default as PromptDialog } from "./PromptDialog";
 export { default as StarRating } from "./StarRating";

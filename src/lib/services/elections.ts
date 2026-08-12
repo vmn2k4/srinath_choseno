@@ -1056,6 +1056,15 @@ export async function getOfficeholderWallClaims(supabase: Client, officeHolderId
     .order("created_at", { ascending: false });
 }
 
+// Cross-wall admin feed (migration 20260811220000) — unlike
+// getOfficeholderWallClaims above, this isn't scoped to one officeholder the
+// admin already looked up, and it's meant to be loaded on every page mount
+// so "which wall did we invite, and what's its status" survives a refresh
+// instead of living only in the invite-form's transient client state.
+export async function listRecentOfficeholderWallClaims(supabase: Client, limit = 50) {
+  return supabase.rpc("list_recent_officeholder_wall_claims", { p_limit: limit });
+}
+
 // Unified "can this wall be claimed, and by which system" check — read-only,
 // works for logged-out visitors too. Returns one of:
 //   { kind: 'unclaimed_candidate', candidate_id }   -> route to the existing

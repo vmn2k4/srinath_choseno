@@ -3,17 +3,18 @@
 import React, { useState, useEffect, useCallback } from "react";
 import AdminSubNav from "./AdminSubNav";
 import { getCountries, listBoundaryTypes, searchMapShapesByName } from "@/lib/services/boundaries";
-import { getElectionRoleTypes, getOfficeHoldersForShape, upsertOfficeHolder, removeOfficeHolder, inviteOfficeholderToClaim, resendOfficeholderClaim, getOfficeholderWallClaims, mergeOfficeholderWallClaim, reverseOfficeholderWallClaim, rejectOfficeholderWallClaim, listPendingSelfRequestedOfficeholderClaims } from "@/lib/services/elections";
+import { getElectionRoleTypes, getOfficeHoldersForShape, upsertOfficeHolder, removeOfficeHolder, inviteOfficeholderToClaim, resendOfficeholderClaim, cancelOfficeholderClaim, getOfficeholderWallClaims, listRecentOfficeholderWallClaims, mergeOfficeholderWallClaim, reverseOfficeholderWallClaim, rejectOfficeholderWallClaim, previewOfficeholderWallClaim, listPendingSelfRequestedOfficeholderClaims } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { adminGetProfileById } from "@/lib/services/profile";
 import { UserCheck, Search, Save, Trash2, X, Link2, Mail, Inbox } from "lucide-react";
-import { Card, Button, Input, Textarea, Select, Spinner, PageHeader } from "@/components/primitives";
+import { Card, Button, Input, Textarea, Select, Spinner, PageHeader, ConfirmDialog, PromptDialog } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
 import { createClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/types";
 import Link from "next/link";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 import { InvitationHistoryPanel } from "./InvitationHistoryPanel";
+import { RecentOfficeholderInvitations, type RecentOfficeholderClaimRow } from "./RecentOfficeholderInvitations";
 
 interface RoleType {
   id: string;
@@ -120,12 +121,132 @@ export default function OfficeHoldersAdminClient() {
     setLoadingSelfRequests(false);
   }, [supabase]);
 
+  // Cross-wall invitation feed — loaded on every mount (not gated behind
+  // `selectedWall`) so "which wall did we invite, and what's its status"
+  // survives a page refresh. See RecentOfficeholderInvitations.
+  const [recentClaims, setRecentClaims] = useState<RecentOfficeholderClaimRow[]>([]);
+  const [loadingRecentClaims, setLoadingRecentClaims] = useState(false);
+  const [recentResendingId, setRecentResendingId] = useState<string | null>(null);
+  const [recentCancellingId, setRecentCancellingId] = useState<string | null>(null);
+  const [recentMergingId, setRecentMergingId] = useState<string | null>(null);
+  const [recentReversingId, setRecentReversingId] = useState<string | null>(null);
+  const [recentActionError, setRecentActionError] = useState<string | null>(null);
+
+  const loadRecentClaims = useCallback(async () => {
+    setLoadingRecentClaims(true);
+    const { data } = await listRecentOfficeholderWallClaims(supabase);
+    setRecentClaims((data as RecentOfficeholderClaimRow[] | null) || []);
+    setLoadingRecentClaims(false);
+  }, [supabase]);
+
   useEffect(() => {
     async function initialLoad() {
-      await loadSelfRequests();
+      await Promise.all([loadSelfRequests(), loadRecentClaims()]);
     }
     initialLoad();
-  }, [loadSelfRequests]);
+  }, [loadSelfRequests, loadRecentClaims]);
+
+  const handleRecentResend = async (claim: RecentOfficeholderClaimRow) => {
+    const email = (claim.contact_email || "").trim();
+    if (!email) {
+      setRecentActionError("This claim has no contact email on file.");
+      return;
+    }
+    setRecentActionError(null);
+    setRecentResendingId(claim.claim_id);
+    const { error } = await resendOfficeholderClaim(supabase, claim.claim_id, email);
+    setRecentResendingId(null);
+    if (error) {
+      setRecentActionError(`Resend error: ${error.message}`);
+    } else {
+      loadRecentClaims();
+    }
+  };
+
+  // window.confirm()/window.prompt() are unusable here — no mobile-app
+  // equivalent, can't be themed, and in some embedded preview runtimes they
+  // throw outright ("prompt() is not supported") instead of just looking
+  // out of place. Each of these "resolves" via one of the ConfirmDialog /
+  // PromptDialog instances rendered near the end of this component, rather
+  // than blocking synchronously.
+  const [pendingRecentCancel, setPendingRecentCancel] = useState<RecentOfficeholderClaimRow | null>(null);
+  const [pendingRecentMerge, setPendingRecentMerge] = useState<{ claim: RecentOfficeholderClaimRow; summary: string } | null>(null);
+  const [pendingRecentReverse, setPendingRecentReverse] = useState<RecentOfficeholderClaimRow | null>(null);
+
+  const handleRecentCancel = (claim: RecentOfficeholderClaimRow) => setPendingRecentCancel(claim);
+
+  const confirmRecentCancel = async () => {
+    const claim = pendingRecentCancel;
+    if (!claim) return;
+    setRecentActionError(null);
+    setRecentCancellingId(claim.claim_id);
+    const { error } = await cancelOfficeholderClaim(supabase, claim.claim_id);
+    setRecentCancellingId(null);
+    setPendingRecentCancel(null);
+    if (error) {
+      setRecentActionError(`Cancel error: ${error.message}`);
+    } else {
+      loadRecentClaims();
+    }
+  };
+
+  const handleRecentMerge = async (claim: RecentOfficeholderClaimRow) => {
+    setRecentActionError(null);
+    setRecentMergingId(claim.claim_id);
+    const { data: preview, error: previewError } = await previewOfficeholderWallClaim(supabase, claim.claim_id);
+    if (previewError) {
+      setRecentMergingId(null);
+      setRecentActionError(`Couldn't load merge preview: ${previewError.message}`);
+      return;
+    }
+    const p = preview as {
+      posts?: number; comments?: number; supporters?: number;
+      ratings?: number; news_tags?: number; election_candidates?: number;
+    } | null;
+    const summary = p
+      ? `This will merge the imported wall into the claiming profile:\n\n` +
+        `• ${p.posts ?? 0} post(s)\n` +
+        `• ${p.comments ?? 0} comment(s)\n` +
+        `• ${p.supporters ?? 0} supporter(s)\n` +
+        `• ${p.ratings ?? 0} rating(s)\n` +
+        `• ${p.news_tags ?? 0} news tag(s)\n` +
+        `• ${p.election_candidates ?? 0} election candidacy record(s)\n\n` +
+        `The old wall URL will keep working (it redirects here). An admin can reverse this later.`
+      : "No preview data was returned.";
+    setRecentMergingId(null);
+    setPendingRecentMerge({ claim, summary });
+  };
+
+  const confirmRecentMerge = async () => {
+    const pending = pendingRecentMerge;
+    if (!pending) return;
+    setRecentMergingId(pending.claim.claim_id);
+    const { error } = await mergeOfficeholderWallClaim(supabase, pending.claim.claim_id);
+    setRecentMergingId(null);
+    setPendingRecentMerge(null);
+    if (error) {
+      setRecentActionError(`Merge error: ${error.message}`);
+    } else {
+      loadRecentClaims();
+    }
+  };
+
+  const handleRecentReverse = (claim: RecentOfficeholderClaimRow) => setPendingRecentReverse(claim);
+
+  const confirmRecentReverse = async (reason: string) => {
+    const claim = pendingRecentReverse;
+    if (!claim) return;
+    setRecentActionError(null);
+    setRecentReversingId(claim.claim_id);
+    const { error } = await reverseOfficeholderWallClaim(supabase, claim.claim_id, reason);
+    setRecentReversingId(null);
+    setPendingRecentReverse(null);
+    if (error) {
+      setRecentActionError(`Reversal error: ${error.message}`);
+    } else {
+      loadRecentClaims();
+    }
+  };
 
   const reviewSelfRequest = (req: SelfRequestedClaim) => {
     setSelectedWall({
@@ -362,6 +483,10 @@ export default function OfficeHoldersAdminClient() {
         ? `Invitation error: ${inviteError.message}`
         : `Claim invitation sent to ${email} for ${profile.full_name || "the wall"}.`,
     );
+    // Refresh the persistent cross-wall feed too, so the invite just sent
+    // shows up there immediately (and stays visible after a page refresh,
+    // unlike the selectedWall panel above which is transient client state).
+    loadRecentClaims();
   };
 
   const mergeClaim = async (holder: Holder, claim: OfficeholderClaim) => {
@@ -376,12 +501,19 @@ export default function OfficeHoldersAdminClient() {
     }
   };
 
-  const rejectClaim = async (holder: Holder, claim: OfficeholderClaim) => {
-    const reason = window.prompt("Reason for rejecting this claim:");
-    if (!reason?.trim()) return;
+  const [pendingReject, setPendingReject] = useState<{ holder: Holder; claim: OfficeholderClaim } | null>(null);
+  const [pendingReverse, setPendingReverse] = useState<{ holder: Holder; claim: OfficeholderClaim } | null>(null);
+
+  const rejectClaim = (holder: Holder, claim: OfficeholderClaim) => setPendingReject({ holder, claim });
+
+  const confirmRejectClaim = async (reason: string) => {
+    const pending = pendingReject;
+    if (!pending) return;
+    const { holder, claim } = pending;
     setSaving(true);
-    const { error } = await rejectOfficeholderWallClaim(supabase, claim.id, reason.trim());
+    const { error } = await rejectOfficeholderWallClaim(supabase, claim.id, reason);
     setSaving(false);
+    setPendingReject(null);
     setStatus(error ? `Rejection error: ${error.message}` : "Claim rejected. The claimant's profile no longer shows this officeholder's details.");
     if (!error) {
       const { data } = await getOfficeholderWallClaims(supabase, holder.id);
@@ -390,12 +522,16 @@ export default function OfficeHoldersAdminClient() {
     }
   };
 
-  const reverseClaim = async (holder: Holder, claim: OfficeholderClaim) => {
-    const reason = window.prompt("Reason for reversing this claim:");
-    if (!reason?.trim()) return;
+  const reverseClaim = (holder: Holder, claim: OfficeholderClaim) => setPendingReverse({ holder, claim });
+
+  const confirmReverseClaim = async (reason: string) => {
+    const pending = pendingReverse;
+    if (!pending) return;
+    const { holder, claim } = pending;
     setSaving(true);
-    const { error } = await reverseOfficeholderWallClaim(supabase, claim.id, reason.trim());
+    const { error } = await reverseOfficeholderWallClaim(supabase, claim.id, reason);
     setSaving(false);
+    setPendingReverse(null);
     setStatus(error ? `Reversal error: ${error.message}` : "Claim reversed and original wall ownership restored.");
     if (!error) {
       const { data } = await getOfficeholderWallClaims(supabase, holder.id);
@@ -507,6 +643,24 @@ export default function OfficeHoldersAdminClient() {
         {status && <p className="text-sm text-text-muted">{status}</p>}
       </Card>
 
+      {recentActionError && (
+        <div className="p-2.5 bg-red-50 border border-red-200 rounded-lg text-xs text-red-800">
+          {recentActionError}
+        </div>
+      )}
+      <RecentOfficeholderInvitations
+        claims={recentClaims}
+        loading={loadingRecentClaims && recentClaims.length === 0}
+        resendingId={recentResendingId}
+        cancellingId={recentCancellingId}
+        mergingId={recentMergingId}
+        reversingId={recentReversingId}
+        onResend={handleRecentResend}
+        onCancel={handleRecentCancel}
+        onMerge={handleRecentMerge}
+        onReverse={handleRecentReverse}
+      />
+
       {selectedWall && (
         <InvitationHistoryPanel
           wallUrl={`${window.location.origin}/wall/${selectedWall.slug}`}
@@ -519,6 +673,7 @@ export default function OfficeHoldersAdminClient() {
             const { data: claimsData } = await getOfficeholderWallClaims(supabase, selectedWall.officeholderId);
             setWallClaims((claimsData as OfficeholderClaim[] | null) || []);
             loadSelfRequests();
+            loadRecentClaims();
           }}
         />
       )}
@@ -767,6 +922,56 @@ export default function OfficeHoldersAdminClient() {
           {status && <p className="text-danger text-xs">{status}</p>}
         </Card>
       )}
+
+      <ConfirmDialog
+        open={!!pendingRecentCancel}
+        title="Cancel this invitation?"
+        message={`Cancel the invite to ${pendingRecentCancel?.contact_email || "this recipient"}? This can't be undone.`}
+        confirmLabel="Cancel invite"
+        cancelLabel="Keep invite"
+        loading={!!pendingRecentCancel && recentCancellingId === pendingRecentCancel.claim_id}
+        onConfirm={confirmRecentCancel}
+        onCancel={() => setPendingRecentCancel(null)}
+      />
+      <ConfirmDialog
+        open={!!pendingRecentMerge}
+        title="Merge this wall?"
+        message={<span className="whitespace-pre-line">{pendingRecentMerge?.summary}</span>}
+        confirmLabel="Merge wall"
+        loading={!!pendingRecentMerge && recentMergingId === pendingRecentMerge.claim.claim_id}
+        onConfirm={confirmRecentMerge}
+        onCancel={() => setPendingRecentMerge(null)}
+      />
+      <PromptDialog
+        open={!!pendingRecentReverse}
+        title="Reverse this claim?"
+        message="This restores the original wall owner and moves all content back. Give a reason for the audit trail."
+        placeholder="Reason for reversing this claim…"
+        confirmLabel="Reverse claim"
+        loading={!!pendingRecentReverse && recentReversingId === pendingRecentReverse.claim_id}
+        onConfirm={confirmRecentReverse}
+        onCancel={() => setPendingRecentReverse(null)}
+      />
+      <PromptDialog
+        open={!!pendingReject}
+        title="Reject this claim?"
+        message="The claimant's profile will no longer show this officeholder's details. Give a reason for the audit trail."
+        placeholder="Reason for rejecting this claim…"
+        confirmLabel="Reject claim"
+        loading={saving && !!pendingReject}
+        onConfirm={confirmRejectClaim}
+        onCancel={() => setPendingReject(null)}
+      />
+      <PromptDialog
+        open={!!pendingReverse}
+        title="Reverse this claim?"
+        message="This restores the original wall owner and moves all content back. Give a reason for the audit trail."
+        placeholder="Reason for reversing this claim…"
+        confirmLabel="Reverse claim"
+        loading={saving && !!pendingReverse}
+        onConfirm={confirmReverseClaim}
+        onCancel={() => setPendingReverse(null)}
+      />
     </div>
   );
 }

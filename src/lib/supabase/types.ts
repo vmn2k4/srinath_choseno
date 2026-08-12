@@ -3204,6 +3204,25 @@ export type Database = {
           target_wall_slug: string
         }[]
       }
+      list_recent_officeholder_wall_claims: {
+        Args: { p_limit?: number }
+        Returns: {
+          approved_at: string | null
+          claim_id: string
+          claimed_at: string | null
+          contact_email: string | null
+          created_at: string
+          invite_expires_at: string | null
+          invited_at: string | null
+          is_self_requested: boolean
+          office_holder_id: string
+          office_holder_name: string
+          reversal_reason: string | null
+          reversed_at: string | null
+          status: string
+          wall_slug: string | null
+        }[]
+      }
       longtransactionsenabled: { Args: never; Returns: boolean }
       merge_officeholder_wall_claim: {
         Args: { p_claim_id: string }
