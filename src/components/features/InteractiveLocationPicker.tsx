@@ -8,6 +8,7 @@ import {
   Navigation,
   Check,
   SlidersHorizontal,
+  X,
 } from "lucide-react";
 import { Card, Button, Input } from "@/components/primitives";
 import { trackSearch } from "@/lib/analytics/events";
@@ -62,6 +63,11 @@ export default function InteractiveLocationPicker({
   const [manualLat, setManualLat] = useState(currentLat?.toString() || "");
   const [manualLng, setManualLng] = useState(currentLng?.toString() || "");
   const [showManualCoords, setShowManualCoords] = useState(false);
+
+  // Locate-me overlay: shown over the map until the user picks a location one
+  // way or another (GPS, address search, map click/drag, or manual coords),
+  // or dismisses it directly.
+  const [showLocateOverlay, setShowLocateOverlay] = useState(!currentLat || !currentLng);
 
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<any>(null);
@@ -147,12 +153,14 @@ export default function InteractiveLocationPicker({
 
       marker.on("dragend", () => {
         const pos = marker.getLatLng().wrap();
+        setShowLocateOverlay(false);
         onLocationSelectRef.current(pos.lat, pos.lng);
       });
 
       map.on("click", (e: any) => {
         const wrapped = e.latlng.wrap();
         marker.setLatLng(wrapped);
+        setShowLocateOverlay(false);
         onLocationSelectRef.current(wrapped.lat, wrapped.lng);
       });
 
@@ -188,6 +196,7 @@ export default function InteractiveLocationPicker({
 
   const autoDetectGPS = () => {
     setGeoError("");
+    setShowLocateOverlay(false);
     if (!navigator.geolocation) {
       setGeoError("Geolocation is not supported by your browser.");
       return;
@@ -207,6 +216,7 @@ export default function InteractiveLocationPicker({
   };
 
   const selectAddress = (suggestion: any) => {
+    setShowLocateOverlay(false);
     onLocationSelect(suggestion.lat, suggestion.lng);
     setAddressQuery("");
     setAddressSuggestions([]);
@@ -220,6 +230,7 @@ export default function InteractiveLocationPicker({
       setGeoError("Please enter valid decimal latitude and longitude numbers.");
       return;
     }
+    setShowLocateOverlay(false);
     onLocationSelect(parsedLat, parsedLng);
   };
 
@@ -235,7 +246,11 @@ export default function InteractiveLocationPicker({
             type="text"
             placeholder="Search address or city (e.g. 1055 W Georgia St, Vancouver)..."
             value={addressQuery}
-            onChange={(e) => setAddressQuery(e.target.value)}
+            onChange={(e) => {
+              setAddressQuery(e.target.value);
+              setShowLocateOverlay(false);
+            }}
+            onFocus={() => setShowLocateOverlay(false)}
             className="pl-9 text-xs"
           />
           {searchingAddress && (
@@ -247,14 +262,20 @@ export default function InteractiveLocationPicker({
         </div>
 
         {addressSuggestions.length > 0 && (
-          <div className="absolute top-full left-0 right-0 mt-1 bg-surface-elevated border border-border-light/40 rounded-xl shadow-xl z-30 overflow-hidden">
+          // Fixed (not theme-token) colors deliberately — this dropdown's `top-full`
+          // position overlaps the map immediately below it, so a translucent
+          // theme surface (the previous bg-surface-elevated) let the map tiles and
+          // zoom control bleed through and become illegible. A solid white
+          // background with dark text guarantees contrast over the map, same
+          // reasoning as the Auto-Detect GPS button and locate overlay below.
+          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-black/10 rounded-xl shadow-xl z-40 overflow-hidden">
             {addressSuggestions.map((item, idx) => (
               <button
                 key={idx}
                 onClick={() => selectAddress(item)}
-                className="w-full text-left px-4 py-2.5 text-xs text-text-secondary hover:bg-surface-hover hover:text-text-main flex items-center gap-2 border-b border-border-light/20 last:border-b-0 transition-colors"
+                className="w-full text-left px-4 py-2.5 text-xs text-slate-700 hover:bg-slate-50 hover:text-slate-900 flex items-center gap-2 border-b border-black/5 last:border-b-0 transition-colors"
               >
-                <MapPin size={14} className="text-accent shrink-0" />
+                <MapPin size={14} className="text-blue-600 shrink-0" />
                 <span className="truncate">{item.display_name}</span>
               </button>
             ))}
@@ -264,6 +285,49 @@ export default function InteractiveLocationPicker({
 
       <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden border border-border-light/30 bg-black/10">
         <div ref={mapContainerRef} className="w-full h-full z-10" />
+
+        {showLocateOverlay && (
+          // Fixed (not theme-token) colors here too, for the same reason as the
+          // Auto-Detect GPS button below: this card floats on top of the pale
+          // Leaflet/CARTO tiles regardless of the active theme, so it needs
+          // guaranteed contrast rather than a translucent theme-tinted background.
+          <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/45 p-4">
+            <div className="relative bg-white rounded-2xl shadow-2xl max-w-xs w-full p-5 space-y-4 text-center">
+              <button
+                onClick={() => setShowLocateOverlay(false)}
+                className="absolute top-2.5 right-2.5 p-1.5 rounded-full text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+                aria-label="Close"
+              >
+                <X size={16} />
+              </button>
+
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-slate-900">Find your location</h3>
+                <p className="text-xs text-slate-600">
+                  Use your GPS, or close this and search/click the map instead.
+                </p>
+              </div>
+
+              {geoError && (
+                <p className="text-xs text-red-600 font-medium">{geoError}</p>
+              )}
+
+              <Button
+                size="sm"
+                onClick={autoDetectGPS}
+                disabled={loading}
+                className="w-full shadow-md text-xs gap-1.5 !bg-blue-600 !text-white hover:!bg-blue-700"
+              >
+                {loading ? (
+                  <Loader2 size={14} className="animate-spin !text-white" />
+                ) : (
+                  <Navigation size={14} className="!text-white" />
+                )}
+                Locate Me
+              </Button>
+            </div>
+          </div>
+        )}
 
         <div className="absolute bottom-3 right-3 z-20">
           {/* Fixed (not theme-token) colors deliberately — this button floats on top of the
