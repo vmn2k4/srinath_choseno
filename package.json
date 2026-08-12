@@ -12,7 +12,11 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report",
     "import:office-holders": "ts-node scripts/import-office-holders.ts scripts/office-holders-data.csv",
-    "import:office-holders:custom": "ts-node scripts/import-office-holders.ts"
+    "import:office-holders:custom": "ts-node scripts/import-office-holders.ts",
+    "send-invites": "ts-node scripts/send-politician-invites.ts",
+    "send-invites:test": "head -6 scripts/bc-municipal-outreach.csv > scripts/test.csv && ts-node scripts/send-politician-invites.ts scripts/test.csv 'Test Campaign'",
+    "send-invites:mayors": "ts-node scripts/send-politician-invites.ts scripts/bc-municipal-outreach.csv 'BC Mayors & Councillors 2026'",
+    "send-invites:parties": "ts-node scripts/send-politician-invites.ts scripts/bc-civic-parties-contacts.csv 'BC Civic Parties 2026'"
   },
   "dependencies": {
     "@google-analytics/data": "^6.1.0",

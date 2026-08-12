@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Mail, Phone, ExternalLink, UserCheck, ArrowRight } from "lucide-react";
-import { Avatar, Badge, Card } from "@/components/primitives";
+import { Avatar, Badge, Button, Card } from "@/components/primitives";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 
 export interface BranchHolderNode {
@@ -114,14 +114,13 @@ function NodeCard({ node, emphasized }: { node: BranchHolderNode; emphasized?: b
       </div>
 
       {node.ghost_id && (
-        <Link
-          href={`/wall/${slugFor(node)}`}
-          className="pt-1.5 border-t border-border-light/30 flex items-center gap-1 text-[11px] font-semibold text-primary hover:underline"
-        >
-          <UserCheck size={12} />
-          View Wall
-          <ArrowRight size={11} />
-        </Link>
+        <div className="pt-1.5 mt-0.5 border-t border-border-light/30">
+          <Button as={Link} href={`/wall/${slugFor(node)}`} variant="primary" size="sm" className="w-full text-[11px] px-3 py-1.5">
+            <UserCheck size={12} />
+            View Wall
+            <ArrowRight size={11} />
+          </Button>
+        </div>
       )}
     </Card>
   );
