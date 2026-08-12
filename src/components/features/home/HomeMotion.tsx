@@ -196,7 +196,9 @@ export function RoleSplitCta({
 }) {
   const { session } = useAuth();
   const big = size === "lg";
-  const pad = big ? "px-8 py-4.5 text-lg" : "px-6 py-3.5 text-sm";
+  const pad = big
+    ? "py-3 px-6 text-base sm:px-8 sm:py-4.5 sm:text-lg"
+    : "py-2.5 px-5 text-sm sm:px-6 sm:py-3.5";
   const iconSize = big ? 20 : 16;
   const justify = align === "start" ? "justify-center lg:justify-start" : "justify-center";
 
@@ -204,8 +206,8 @@ export function RoleSplitCta({
     return (
       <Link
         href="/feed"
-        className={`group inline-flex items-center gap-3 ${
-          big ? "px-9 py-4.5 text-xl" : pad
+        className={`group inline-flex items-center gap-3 w-full sm:w-auto justify-center ${
+          big ? "py-3 px-6 text-base sm:px-9 sm:py-4.5 sm:text-xl" : pad
         } rounded-2xl bg-primary text-text-on-primary font-bold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md`}
       >
         Open your feed
@@ -219,10 +221,10 @@ export function RoleSplitCta({
   }
 
   return (
-    <div className={`flex flex-col sm:flex-row items-center ${justify} gap-4`}>
+    <div className={`w-full flex flex-col sm:flex-row items-center ${justify} gap-3 sm:gap-4`}>
       <Link
         href="/auth?role=citizen"
-        className={`group inline-flex items-center gap-3 ${pad} rounded-2xl bg-primary text-text-on-primary font-bold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md`}
+        className={`group inline-flex items-center gap-3 w-full sm:w-auto justify-center ${pad} rounded-2xl bg-primary text-text-on-primary font-bold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md`}
       >
         I&apos;m a Citizen
         <ArrowRight
@@ -233,7 +235,7 @@ export function RoleSplitCta({
       </Link>
       <Link
         href="/auth?role=politician"
-        className={`group inline-flex items-center gap-3 ${pad} rounded-2xl border-2 border-primary/50 bg-surface-elevated/70 text-text-main font-bold hover:bg-primary/10 hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer`}
+        className={`group inline-flex items-center gap-3 w-full sm:w-auto justify-center ${pad} rounded-2xl border-2 border-primary/50 bg-surface-elevated/70 text-text-main font-bold hover:bg-primary/10 hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer`}
       >
         I&apos;m Running for Office
         <ArrowRight

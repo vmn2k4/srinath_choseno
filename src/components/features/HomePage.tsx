@@ -247,7 +247,7 @@ export default function HomePage() {
               <CyclingBoundaryPill levels={BOUNDARY_LEVELS} />
             </div>
 
-            <div className="mt-8 sm:mt-12">
+            <div className="mt-6 sm:mt-12">
               <RoleSplitCta align="start" />
             </div>
           </div>
