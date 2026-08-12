@@ -251,6 +251,7 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
                 onLocationSelect={handleLocationSelect}
                 loading={loading}
                 error={error}
+                isVisible={pickerOpen}
               />
             </div>
           </div>

@@ -212,8 +212,8 @@ export default function HomePage() {
 
       {/* ============ HERO — real content, server-rendered; HeroSection only supplies the motion shell ============ */}
       <HeroSection>
-        <div className="grid lg:grid-cols-[1.15fr_1fr] gap-14 lg:gap-10 items-center">
-          {/* Left — pitch + CTAs */}
+        <div className="grid lg:grid-cols-[1.15fr_1fr] gap-8 sm:gap-10 lg:gap-10 items-center">
+          {/* Left — pitch + CTAs. On mobile, hide the right-side widget to make room for content. */}
           <div className="text-center lg:text-left">
             <span className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-accent/40 bg-surface-elevated/90 elevation-3 text-xs font-bold tracking-wide text-accent">
               <span className="relative flex h-2.5 w-2.5">
@@ -223,58 +223,66 @@ export default function HomePage() {
               Voice of the Silent Majority
             </span>
 
-            <h1 className="font-display text-5xl sm:text-6xl md:text-7xl font-extrabold leading-[1.02] mt-8 tracking-tight drop-shadow-2xl">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.02] mt-6 sm:mt-8 tracking-tight drop-shadow-2xl">
               Rate Your Politicians&apos; Performance.
               <br />
               <span className="text-primary">Like Yelp, but for Democracy.</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-text-main/90 font-medium max-w-2xl mx-auto lg:mx-0 mt-7 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-text-main/90 font-medium max-w-2xl mx-auto lg:mx-0 mt-5 sm:mt-7 leading-relaxed">
               A secure, anonymous space to hold local leaders accountable. Share your
               experience, read what your neighbors think, and walk into the booth
               informed — no toxicity, just accountability.
             </p>
 
-            <div className="mt-9 flex items-center justify-center lg:justify-start gap-3 text-base text-text-muted">
+            {/* On mobile, hide the label to save space; just show the boundary pill.
+                On sm+, show the full "Conversations scoped to [Boundary]" */}
+            <div className="mt-8 sm:mt-9 hidden sm:flex items-center justify-center lg:justify-start gap-3 text-base text-text-muted">
               <span className="font-medium text-text-main/80">Conversations scoped to</span>
               <CyclingBoundaryPill levels={BOUNDARY_LEVELS} />
             </div>
 
-            <div className="mt-12">
+            {/* Mobile: condensed version — just show the pill, no label */}
+            <div className="mt-6 sm:hidden flex justify-center">
+              <CyclingBoundaryPill levels={BOUNDARY_LEVELS} />
+            </div>
+
+            <div className="mt-8 sm:mt-12">
               <RoleSplitCta align="start" />
             </div>
           </div>
 
-          {/* Right — compact "find your district" widget, visible the moment visitors land */}
-          <div className="flex justify-center lg:justify-end">
+          {/* Right — compact "find your district" widget. Hidden on mobile to maximize
+              hero content real estate; visible on lg+ where there's room for both. */}
+          <div className="hidden lg:flex justify-center lg:justify-end">
             <HomeLocateWidget />
           </div>
         </div>
       </HeroSection>
 
       {/* ============ TRUST BAR ============ */}
-      <section className="relative px-6 py-6" aria-label="Trust and privacy at a glance">
-        <Reveal className="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-3">
+      <section className="relative px-4 sm:px-6 py-6" aria-label="Trust and privacy at a glance">
+        <Reveal className="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {TRUST_CHIPS.map((chip) => (
             <span
               key={chip.label}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border-light/50 bg-surface-elevated/70 text-sm font-semibold text-text-secondary"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-border-light/50 bg-surface-elevated/70 text-xs sm:text-sm font-semibold text-text-secondary"
             >
-              <chip.icon size={15} className="text-primary shrink-0" aria-hidden="true" />
-              {chip.label}
+              <chip.icon size={13} className="text-primary shrink-0" aria-hidden="true" />
+              <span className="truncate">{chip.label}</span>
             </span>
           ))}
         </Reveal>
       </section>
 
       {/* ============ CONCEPT BRIDGE — Yelp analogy ============ */}
-      <section className="relative py-24 px-6">
+      <section className="relative py-16 sm:py-24 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
           <Reveal>
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
               Democracy, simplified.
             </h2>
-            <p className="mt-4 text-lg text-text-muted max-w-xl mx-auto">
+            <p className="mt-3 sm:mt-4 text-base sm:text-lg text-text-muted max-w-xl mx-auto">
               Same as picking a restaurant — except this time you&apos;re choosing who
               represents you.
             </p>
@@ -282,20 +290,20 @@ export default function HomePage() {
 
           <Reveal
             delay={120}
-            className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-3"
+            className="mt-12 sm:mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-3"
           >
             {BRIDGE_STEPS.map((step, i) => (
               <div key={step.title} className="contents">
-                <div className="flex flex-col items-center gap-3 w-full sm:w-44">
-                  <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                    <step.icon size={22} className="text-primary" aria-hidden="true" />
+                <div className="flex flex-col items-center gap-2 sm:gap-3 w-full sm:w-44">
+                  <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                    <step.icon size={18} className="text-primary" aria-hidden="true" />
                   </div>
-                  <h3 className="text-lg font-bold text-text-main">{step.title}</h3>
-                  <p className="text-sm text-text-muted leading-relaxed">{step.text}</p>
+                  <h3 className="text-base sm:text-lg font-bold text-text-main">{step.title}</h3>
+                  <p className="text-xs sm:text-sm text-text-muted leading-relaxed">{step.text}</p>
                 </div>
                 {i < BRIDGE_STEPS.length - 1 && (
                   <ArrowRight
-                    size={22}
+                    size={20}
                     className="text-primary/40 rotate-90 sm:rotate-0 shrink-0"
                     aria-hidden="true"
                   />
@@ -307,26 +315,26 @@ export default function HomePage() {
       </section>
 
       {/* ============ HOW IT WORKS ============ */}
-      <section className="relative py-28 px-6">
+      <section className="relative py-16 sm:py-28 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          <Reveal className="text-center mb-16">
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
+          <Reveal className="text-center mb-12 sm:mb-16">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
               Three simple steps to get started
             </h2>
           </Reveal>
 
-          <div className="grid md:grid-cols-3 gap-7">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-7">
             {STEPS.map((step, i) => (
               <Reveal key={step.title} delay={i * 120}>
-                <HoverLift className="glass-card elevation-2 p-8 h-full group hover:border-primary/40 transition-all duration-300 relative overflow-hidden">
-                  <span className="font-display text-7xl font-black text-primary/20 group-hover:text-primary/35 transition-colors duration-500 select-none leading-none">
+                <HoverLift className="glass-card elevation-2 p-5 sm:p-6 lg:p-8 h-full group hover:border-primary/40 transition-all duration-300 relative overflow-hidden">
+                  <span className="font-display text-5xl sm:text-6xl lg:text-7xl font-black text-primary/20 group-hover:text-primary/35 transition-colors duration-500 select-none leading-none">
                     0{i + 1}
                   </span>
-                  <h3 className="mt-5 text-2xl font-bold tracking-tight flex items-center gap-2.5">
-                    <step.icon size={20} className="text-primary" aria-hidden="true" />
-                    {step.title}
+                  <h3 className="mt-4 sm:mt-5 text-lg sm:text-xl lg:text-2xl font-bold tracking-tight flex items-center gap-2">
+                    <step.icon size={18} className="text-primary shrink-0" aria-hidden="true" />
+                    <span>{step.title}</span>
                   </h3>
-                  <p className="mt-3 text-text-muted text-base leading-relaxed">{step.text}</p>
+                  <p className="mt-2 sm:mt-3 text-text-muted text-sm sm:text-base leading-relaxed">{step.text}</p>
                 </HoverLift>
               </Reveal>
             ))}
@@ -335,42 +343,42 @@ export default function HomePage() {
       </section>
 
       {/* ============ WHY JOIN — split by audience ============ */}
-      <section className="relative py-28 px-6">
+      <section className="relative py-16 sm:py-28 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          <Reveal className="text-center mb-16">
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
+          <Reveal className="text-center mb-12 sm:mb-16">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
               Whether you&apos;re voting or running
             </h2>
           </Reveal>
 
-          <div className="grid md:grid-cols-2 gap-7">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-7">
             {AUDIENCES.map((audience, i) => (
               <Reveal key={audience.label} delay={i * 120}>
-                <HoverLift lift={8} className="glass-card elevation-2 p-8 h-full flex flex-col justify-between">
+                <HoverLift lift={8} className="glass-card elevation-2 p-5 sm:p-6 lg:p-8 h-full flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl bg-surface/80 border border-border-light/40 flex items-center justify-center">
-                        <audience.icon size={24} className={audience.accent} aria-hidden="true" />
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-2xl bg-surface/80 border border-border-light/40 flex items-center justify-center shrink-0">
+                        <audience.icon size={20} className={audience.accent} aria-hidden="true" />
                       </div>
-                      <h3 className="text-2xl font-bold tracking-tight">{audience.label}</h3>
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-bold tracking-tight">{audience.label}</h3>
                     </div>
 
-                    <p className="mt-4 text-text-muted text-sm leading-relaxed">{audience.pitch}</p>
+                    <p className="mt-3 sm:mt-4 text-text-muted text-xs sm:text-sm leading-relaxed">{audience.pitch}</p>
 
-                    <ul className="mt-6 space-y-3">
+                    <ul className="mt-4 sm:mt-6 space-y-2 sm:space-y-3">
                       {audience.points.map((pt) => (
-                        <li key={pt} className="flex items-start gap-2.5 text-sm text-text-muted leading-relaxed">
-                          <CheckCircle2 size={16} className="text-primary mt-0.5 shrink-0" aria-hidden="true" />
+                        <li key={pt} className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-text-muted leading-relaxed">
+                          <CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" aria-hidden="true" />
                           {pt}
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="mt-8 flex flex-col gap-2">
+                  <div className="mt-6 sm:mt-8 flex flex-col gap-2">
                     <a
                       href={audience.ctaHref}
-                      className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-text-on-primary font-bold text-sm hover:bg-primary-hover transition-all duration-300"
+                      className="group w-full inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-primary text-text-on-primary font-bold text-sm sm:text-base hover:bg-primary-hover transition-all duration-300"
                     >
                       {audience.ctaLabel}
                     </a>
@@ -438,21 +446,21 @@ export default function HomePage() {
       </section>
 
       {/* ============ FEATURE GRID ============ */}
-      <section className="relative py-20 px-6">
+      <section className="relative py-16 sm:py-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          <Reveal className="text-center mb-16">
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
+          <Reveal className="text-center mb-12 sm:mb-16">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
               Built for trust and privacy
             </h2>
           </Reveal>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
             {FEATURES.map((feat, i) => (
               <Reveal key={feat.title} delay={i * 80}>
-                <div className="glass-card p-6 h-full space-y-3">
-                  <feat.icon size={22} className="text-primary" aria-hidden="true" />
-                  <h3 className="text-lg font-bold text-text-main">{feat.title}</h3>
-                  <p className="text-sm text-text-muted leading-relaxed">{feat.text}</p>
+                <div className="glass-card p-4 sm:p-5 lg:p-6 h-full space-y-2 sm:space-y-3">
+                  <feat.icon size={20} className="text-primary" aria-hidden="true" />
+                  <h3 className="text-base sm:text-lg font-bold text-text-main">{feat.title}</h3>
+                  <p className="text-xs sm:text-sm text-text-muted leading-relaxed">{feat.text}</p>
                 </div>
               </Reveal>
             ))}
@@ -461,27 +469,27 @@ export default function HomePage() {
       </section>
 
       {/* ============ FAQ ============ */}
-      <section className="relative py-20 px-6">
+      <section className="relative py-16 sm:py-20 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto">
-          <Reveal className="text-center mb-14">
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
+          <Reveal className="text-center mb-10 sm:mb-14">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
               Questions, answered
             </h2>
           </Reveal>
 
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {FAQS.map((faq, i) => (
               <Reveal key={faq.q} delay={i * 60}>
-                <details className="glass-card p-6 group">
-                  <summary className="flex items-center justify-between gap-4 cursor-pointer list-none font-bold text-text-main text-base sm:text-lg">
-                    {faq.q}
+                <details className="glass-card p-4 sm:p-6 group">
+                  <summary className="flex items-center justify-between gap-3 sm:gap-4 cursor-pointer list-none font-bold text-text-main text-sm sm:text-base lg:text-lg">
+                    <span>{faq.q}</span>
                     <ShieldCheck
-                      size={18}
+                      size={16}
                       className="text-primary shrink-0 transition-transform duration-300 group-open:rotate-180"
                       aria-hidden="true"
                     />
                   </summary>
-                  <p className="mt-3 text-sm sm:text-base text-text-muted leading-relaxed">{faq.a}</p>
+                  <p className="mt-3 text-xs sm:text-sm lg:text-base text-text-muted leading-relaxed">{faq.a}</p>
                 </details>
               </Reveal>
             ))}
@@ -490,18 +498,18 @@ export default function HomePage() {
       </section>
 
       {/* ============ CLOSING CTA ============ */}
-      <section className="relative py-28 px-6 text-center">
+      <section className="relative py-16 sm:py-28 px-4 sm:px-6 text-center">
         <div className="max-w-4xl mx-auto">
           <Reveal>
-            <h2 className="font-display text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight">
               Join your district. <span className="text-primary">Vote informed.</span>
             </h2>
-            <p className="mt-6 text-xl text-text-muted max-w-2xl mx-auto">
+            <p className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl text-text-muted max-w-2xl mx-auto">
               See what your neighbors are already saying, then walk into the booth
               knowing exactly who you&apos;re choosing.
             </p>
 
-            <div className="mt-10">
+            <div className="mt-8 sm:mt-10">
               <RoleSplitCta size="md" />
             </div>
           </Reveal>

@@ -20,6 +20,7 @@ interface InteractiveLocationPickerProps {
   onLocationSelect: (lat: number, lng: number) => void;
   loading?: boolean;
   error?: string;
+  isVisible?: boolean; // Signal that the container became visible (went from hidden to shown)
 }
 
 export default function InteractiveLocationPicker({
@@ -28,6 +29,7 @@ export default function InteractiveLocationPicker({
   onLocationSelect,
   loading = false,
   error = "",
+  isVisible = true,
 }: InteractiveLocationPickerProps) {
   const [addressQuery, setAddressQuery] = useState("");
   const [addressSuggestions, setAddressSuggestions] = useState<any[]>([]);
@@ -158,6 +160,20 @@ export default function InteractiveLocationPicker({
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // When the map container becomes visible (goes from hidden to shown), Leaflet
+  // can't calculate dimensions while it's display:none — call invalidateSize() to
+  // redraw the map tiles with the correct dimensions now that the container is
+  // visible. This is critical for mobile "Change location" button that starts
+  // hidden and toggles visible on click.
+  useEffect(() => {
+    if (!mapInstanceRef.current || !mapContainerRef.current) return;
+    // Use setTimeout so the layout reflow completes before invalidating
+    const timer = setTimeout(() => {
+      mapInstanceRef.current?.invalidateSize();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [isVisible]); // Re-run when visibility changes
+
   useEffect(() => {
     if (!mapInstanceRef.current || !markerRef.current || !currentLat || !currentLng) return;
     const latNum = parseFloat(currentLat.toString());
@@ -166,6 +182,7 @@ export default function InteractiveLocationPicker({
 
     mapInstanceRef.current.setView([latNum, lngNum], 13);
     markerRef.current.setLatLng([latNum, lngNum]);
+    mapInstanceRef.current.invalidateSize();
   }, [currentLat, currentLng]);
 
   const autoDetectGPS = () => {
