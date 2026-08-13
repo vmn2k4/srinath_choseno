@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { MapPin, ArrowRight, Layers, Network, ChevronDown } from "lucide-react";
+import { MapPin, ArrowRight, Layers, Network, ChevronDown, Sparkles } from "lucide-react";
 import InteractiveLocationPicker from "./InteractiveLocationPicker";
 import BoundaryDirectoryClient from "./BoundaryDirectoryClient";
 import { findBoundariesByPoint, getShapeContainers, getNationalShapeForCountry } from "@/lib/services/boundaries";
-import { getOfficeHoldersForShape } from "@/lib/services/elections";
-import { buildBoundarySlug } from "@/lib/utils/slugs";
+import { getOfficeHoldersForShape, getActiveSeatsByShapeIds, getCandidatesBySeatIds } from "@/lib/services/elections";
+import { buildBoundarySlug, buildSeatSlug } from "@/lib/utils/slugs";
 import { Card, Spinner } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { trackFindDistrictCompleted } from "@/lib/analytics/events";
@@ -31,7 +31,25 @@ interface OfficeHolderRow {
 
 type ShapeRow = { id: number; name: string; country: string; boundary_type: string; properties?: unknown };
 
+type SeatWithElections = {
+  id: string;
+  role_title: string;
+  candidateCount: number;
+  map_shapes?: { name?: string; properties?: unknown } | null;
+  elections?: { name?: string; election_date?: string } | null;
+};
+
 const HEAD_ROLE_TITLES = new Set(["Mayor", "Governor", "Premier", "Prime Minister", "President", "Chief Minister"]);
+
+function formatElectionDate(dateString?: string): string {
+  if (!dateString) return "";
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  } catch {
+    return "";
+  }
+}
 
 const SUPERIOR_SOURCE: Record<string, { source: "national" } | { source: "container"; containerType: string }> = {
   "Canada:Federal": { source: "national" },
@@ -133,9 +151,11 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
   const [branches, setBranches] = useState<RepresentationBranch[]>([]);
   const [loading, setLoading] = useState(false);
   const [branchesLoading, setBranchesLoading] = useState(hasInitialBoundaries);
+  const [seatsLoading, setSeatsLoading] = useState(hasInitialBoundaries);
   const [error, setError] = useState("");
   const [selectedLat, setSelectedLat] = useState<number | undefined>(undefined);
   const [selectedLng, setSelectedLng] = useState<number | undefined>(undefined);
+  const [seats, setSeats] = useState<SeatWithElections[]>([]);
   // Below md: if we already know the constituency, the map/search picker
   // starts collapsed to a "Change location" pill instead of covering the
   // screen with a GPS-permission overlay on every visit. md+ always shows
@@ -169,22 +189,91 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
     [supabase]
   );
 
+  const resolveAllSeats = useCallback(
+    async (matched: MatchedBoundary[]) => {
+      if (matched.length === 0) {
+        setSeats([]);
+        return;
+      }
+      setSeatsLoading(true);
+      try {
+        // Get shape IDs from matched boundaries, filtering out polling districts
+        const shapeIds = matched
+          .filter((b) => !(b.boundary_type || "").toLowerCase().includes("polling"))
+          .map((b) => b.id);
+
+        if (shapeIds.length === 0) {
+          setSeats([]);
+          setSeatsLoading(false);
+          return;
+        }
+
+        // Fetch seats for all boundaries
+        const { data: seatsData } = await getActiveSeatsByShapeIds(supabase, shapeIds);
+        const seatRows = (seatsData || []) as Array<{
+          id: string;
+          role_title: string;
+          map_shapes?: { name?: string; properties?: unknown } | null;
+          elections?: { id: string; name: string; election_date: string; status: string } | null;
+        }>;
+
+        if (seatRows.length === 0) {
+          setSeats([]);
+          setSeatsLoading(false);
+          return;
+        }
+
+        // Fetch candidate counts for each seat
+        const seatIds = seatRows.map((s) => s.id);
+        const { data: candidateRows } = await getCandidatesBySeatIds(supabase, seatIds);
+        const candidateCountBySeat = new Map<string, number>();
+        (candidateRows || []).forEach((c: any) => {
+          candidateCountBySeat.set(c.seat_id, (candidateCountBySeat.get(c.seat_id) || 0) + 1);
+        });
+
+        // Format seats with candidate counts and preserve elections data
+        const formattedSeats = seatRows.map((seat) => ({
+          id: seat.id,
+          role_title: seat.role_title,
+          candidateCount: candidateCountBySeat.get(seat.id) || 0,
+          map_shapes: seat.map_shapes || undefined,
+          elections: seat.elections || undefined,
+        }));
+
+        setSeats(formattedSeats);
+      } catch (err) {
+        console.error("Error resolving seats:", err);
+        setSeats([]);
+      } finally {
+        setSeatsLoading(false);
+      }
+    },
+    [supabase]
+  );
+
   // Sync initial profile boundaries or guest location from localStorage / cross-tab storage
   useEffect(() => {
     if (hasInitialBoundaries) {
-      Promise.resolve().then(() => resolveAllBranches(initialBoundaries));
+      Promise.resolve().then(() => {
+        resolveAllBranches(initialBoundaries);
+        resolveAllSeats(initialBoundaries);
+      });
     } else if (guestLocation && guestLocation.boundaries.length > 0) {
       setBoundaries(guestLocation.boundaries);
       setSelectedLat(guestLocation.lat);
       setSelectedLng(guestLocation.lng);
       setPickerOpen(false);
-      Promise.resolve().then(() => resolveAllBranches(guestLocation.boundaries));
+      Promise.resolve().then(() => {
+        resolveAllBranches(guestLocation.boundaries);
+        resolveAllSeats(guestLocation.boundaries);
+      });
     } else if (!guestLocation || guestLocation.boundaries.length === 0) {
       setBoundaries(null);
       setBranches([]);
+      setSeats([]);
       setPickerOpen(true);
     }
-  }, [hasInitialBoundaries, guestLocation, initialBoundaries, resolveAllBranches]);
+  }, [hasInitialBoundaries, guestLocation, initialBoundaries, resolveAllBranches, resolveAllSeats]);
 
   const handleLocationSelect = async (lat: number, lng: number) => {
     setSelectedLat(lat);
@@ -192,6 +281,7 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
     setLoading(true);
     setError("");
     setBranches([]);
+    setSeats([]);
     const { data, error: rpcError } = await findBoundariesByPoint(supabase, lat, lng);
     setLoading(false);
     if (rpcError) {
@@ -204,7 +294,7 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
     if (!hasInitialBoundaries) {
       setGuestLocation({ lat, lng, boundaries: matched });
     }
-    await resolveAllBranches(matched);
+    await Promise.all([resolveAllBranches(matched), resolveAllSeats(matched)]);
   };
 
   return (
@@ -311,7 +401,57 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
           </div>
         </div>
 
-        {/* Full Width - Chain of Representation (Below Map & Boundaries) */}
+        {/* Full Width - Active Election Nominations CTA (Below Map & Boundaries) */}
+        {!loading && boundaries && boundaries.length > 0 && (
+          <section className="my-8">
+            {seatsLoading ? (
+              <div className="flex justify-center py-12">
+                <Spinner />
+              </div>
+            ) : seats.length > 0 ? (
+              <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-2 border-primary/30 rounded-2xl p-6 sm:p-8 space-y-4">
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-black text-text-main flex items-center gap-2 mb-2">
+                    <Sparkles size={24} className="text-primary" aria-hidden="true" />
+                    2026 Candidates in Your Area
+                  </h2>
+                  <p className="text-sm text-text-muted">Explore the races happening in your electoral boundaries</p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {seats.map((seat) => (
+                    <Link
+                      key={seat.id}
+                      href={`/elections/seat/${buildSeatSlug({
+                        id: seat.id,
+                        role_title: seat.role_title,
+                        map_shapes: seat.map_shapes || { name: "", properties: {} },
+                      })}`}
+                      className="group flex items-start justify-between gap-3 p-4 rounded-lg bg-white/80 hover:bg-primary hover:text-white border border-primary/20 hover:border-primary transition-all shadow-sm hover:shadow-md"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <div className="font-bold text-text-main group-hover:text-white">{seat.role_title}</div>
+                        <div className="text-xs text-text-muted group-hover:text-white/70 mt-1 space-y-0.5">
+                          {seat.map_shapes?.name && (
+                            <div>{seat.map_shapes.name}</div>
+                          )}
+                          {seat.elections?.election_date && (
+                            <div>{formatElectionDate(seat.elections.election_date)}</div>
+                          )}
+                        </div>
+                      </div>
+                      <span className="font-bold text-primary group-hover:text-white flex items-center gap-2 text-sm whitespace-nowrap shrink-0">
+                        {seat.candidateCount}
+                        <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </section>
+        )}
+
+        {/* Full Width - Chain of Representation (Below CTA) */}
         {!loading && boundaries && boundaries.length > 0 && (
           <section className="space-y-4 border-t border-border-light/40 pt-8" aria-label="Representatives by government level">
             <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
