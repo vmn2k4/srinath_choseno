@@ -70,7 +70,7 @@ function NodeCard({ node, emphasized }: { node: BranchHolderNode; emphasized?: b
                 {node.role_title}
               </Badge>
               {node.role_description && (
-                <span className="pointer-events-none absolute left-0 top-full z-20 mt-1 hidden w-48 rounded-lg border border-border-light/60 bg-surface p-2 text-[11px] font-normal normal-case leading-snug text-text-muted shadow-lg group-hover/role:block">
+                <span className="pointer-events-none absolute left-0 top-full z-20 mt-1 hidden w-64 rounded-lg border border-border-light/60 bg-surface p-2.5 text-[11px] font-normal normal-case leading-snug text-text-muted shadow-lg group-hover/role:block">
                   {node.role_description}
                 </span>
               )}

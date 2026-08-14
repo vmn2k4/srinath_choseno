@@ -238,10 +238,15 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
     branches.push(...resolvedBranches);
   }
 
+  const containerList = (containers || []) as Array<{ map_shapes?: { id?: number; name?: string; boundary_type?: string } | null }>;
+  const containerNames = containerList.map((c) => c.map_shapes?.name).filter((n): n is string => Boolean(n));
+  const provinceContainer = containerList.find((c) => c.map_shapes?.boundary_type === "Province" || c.map_shapes?.boundary_type === "State");
+  const currentProvince = (shape.boundary_type === "Province" || shape.boundary_type === "State") ? shape.name : (provinceContainer?.map_shapes?.name || "");
+
   // Roles & Responsibilities reference -- only show roles that are actually
   // relevant to the current directory (branches) and active election seats.
-  // This avoids showing Quebec (MNA), Newfoundland (MHA), Ontario (MPP) etc.
-  // on a BC boundary page.
+  // Tailored specifically to the province (e.g. BC MLA / BC School Trustee
+  // vs Ontario MPP / Ontario School Trustee).
   const activeRoleTitles: string[] = [];
   const roleDescriptions = new Map<string, string | null>();
 
@@ -264,19 +269,39 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
     }
   }
 
-  // If any active roles need a description from election_role_types DB (e.g. seats without a holder)
-  if (activeRoleTitles.some((title) => !roleDescriptions.get(title))) {
+  // Query election_role_types for all active roles, prioritizing region_override matching currentProvince
+  if (activeRoleTitles.length > 0) {
     const { data: dbRoleTypes } = await supabase
       .from("election_role_types")
-      .select("id, role_title, description")
+      .select("id, boundary_type, role_key, region_override, role_title, description")
       .eq("country", shape.country)
       .in("role_title", activeRoleTitles);
 
-    (dbRoleTypes || []).forEach((r: any) => {
-      if (r.role_title && r.description && !roleDescriptions.get(r.role_title)) {
-        roleDescriptions.set(r.role_title, r.description);
+    const rolesList = (dbRoleTypes || []) as Array<{
+      id: string;
+      role_title: string;
+      region_override: string;
+      description: string | null;
+    }>;
+
+    for (const title of activeRoleTitles) {
+      // 1. Try to find region-specific match (e.g. region_override = 'British Columbia')
+      const regionMatch = rolesList.find(
+        (r) => r.role_title === title && r.region_override === currentProvince && r.description
+      );
+      if (regionMatch?.description) {
+        roleDescriptions.set(title, regionMatch.description);
+        continue;
       }
-    });
+
+      // 2. Fall back to default match (region_override = '')
+      const defaultMatch = rolesList.find(
+        (r) => r.role_title === title && (!r.region_override || r.region_override === "") && r.description
+      );
+      if (defaultMatch?.description) {
+        roleDescriptions.set(title, defaultMatch.description);
+      }
+    }
   }
 
   const roleTypes = activeRoleTitles
@@ -286,9 +311,6 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
       description: roleDescriptions.get(title) || null,
     }))
     .filter((r) => r.role_title && r.role_title !== "Elected Official");
-
-  const containerList = (containers || []) as Array<{ map_shapes?: { id?: number; name?: string; boundary_type?: string } | null }>;
-  const containerNames = containerList.map((c) => c.map_shapes?.name).filter((n): n is string => Boolean(n));
 
   const canonicalUrl = `${BASE_URL}/elections/${buildBoundarySlug(shape)}`;
   const breadcrumbItems = [
