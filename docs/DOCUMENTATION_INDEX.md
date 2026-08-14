@@ -42,6 +42,7 @@ Complete guide to all Choseno documentation — architecture, features, data pip
 
 ### Politician & Office Holders
 
+- **[ROLES_AND_RESPONSIBILITIES_GUIDE.md](ROLES_AND_RESPONSIBILITIES_GUIDE.md)** — Guide for `election_role_types`, province-specific localized roles, rich descriptions, and tree rendering
 - **[OFFICE_HOLDERS_FEATURE.md](OFFICE_HOLDERS_FEATURE.md)** — Auto-populated elected officials (MPs, Senators, Mayors, etc.)
 - **[OFFICE_HOLDERS_IMPLEMENTATION.md](OFFICE_HOLDERS_IMPLEMENTATION.md)** — Technical details of office holder syncing
 - **[POLITICIAN_WALL_FEATURE.md](POLITICIAN_WALL_FEATURE.md)** — Politician's public profile, engagement, support tracking

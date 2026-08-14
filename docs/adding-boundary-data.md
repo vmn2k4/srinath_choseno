@@ -307,5 +307,7 @@ Nunavut's missing riding data above).
 Whenever office holders are populated for a new boundary type (e.g. School Trustees, Mayors, Councillors):
 1. **Never insert raw `office_holders` without `linked_profile_id`**: Always create corresponding entries in `profiles` (`role='politician'`, `current_ghost_id=gen_random_uuid()`) and `politician_profiles` (`wall_slug=slugify(...)`) and link `office_holders.linked_profile_id = profile_id`.
 2. **Why**: The UI widgets (`RepresentationBranchTree.tsx` / `FindMyDistrictClient.tsx`) only render the `"View Wall ->"` button and route to `/wall/<slug>` when `node.ghost_id` is present.
-3. **Register Head of Branch**: If the newly added role is the executive head of the branch (e.g., `Board Chair`, `Mayor`, `Premier`), add it to `HEAD_ROLE_TITLES` in `FindMyDistrictClient.tsx` and `src/app/elections/[boundarySlug]/page.tsx` so it renders at the top of the tree hierarchy.
+3. **Register Head of Branch**: If the newly added role is the executive head of the branch (e.g., `Board Chair`, `Mayor`, `Premier`, `Governor`), add it to `HEAD_ROLE_TITLES` in `FindMyDistrictClient.tsx` and `src/app/elections/[boundarySlug]/page.tsx` so it renders at the top of the tree hierarchy.
+4. **Register Roles in `election_role_types` with Rich Descriptions**: Every new role must be registered in `election_role_types` with a comprehensive, plain-language description of its legislative powers, key ministries, and constituent services. For roles with province/state-specific powers or titles (e.g., MLA vs. MPP vs. MNA, BC School Act vs. Ontario Education Act), add localized entries using `region_override`. See [ROLES_AND_RESPONSIBILITIES_GUIDE.md](ROLES_AND_RESPONSIBILITIES_GUIDE.md) for full details.
+
 

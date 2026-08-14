@@ -29,36 +29,43 @@ Before importing, ensure all role types are registered in `election_role_types`:
 
 ```sql
 -- Check existing role types for Canada
-SELECT country, boundary_type, role_title 
+SELECT country, boundary_type, role_key, region_override, role_title, description 
 FROM election_role_types 
 WHERE country = 'Canada'
 ORDER BY boundary_type, role_title;
 
 -- Check existing role types for US
-SELECT country, boundary_type, role_title 
+SELECT country, boundary_type, role_key, region_override, role_title, description 
 FROM election_role_types 
-WHERE country = 'United States'
+WHERE country = 'USA'
 ORDER BY boundary_type, role_title;
 ```
 
 **Required role types:**
-- Canada Federal: "Member of Parliament" (or "MP")
-- Canada Provincial: "Member of Legislative Assembly" (or "MLA", "MPP", etc. per province)
-- US Senate: "Senator"
-- US House: "Representative" (or "US House Member")
-- US Governors: "Governor"
+- Canada Federal: `MP` (Federal), `Prime Minister` (National)
+- Canada Provincial: `MLA` (BC/AB/Default), `MPP` (Ontario), `MNA` (Quebec), `MHA` (Newfoundland and Labrador), `Premier` (Province)
+- Canada Municipal: `Mayor`, `Councillor` (with province-specific overrides where appropriate)
+- Canada School Districts: `School Trustee`, `Board Chair` (with province-specific overrides where appropriate)
+- US Federal: `U.S. Representative` (Federal), `President` (National)
+- US State: `U.S. Senator` (State), `Governor` (State), `State Senator` (State Senate), `State Representative` (State House)
+- US Municipal: `Mayor`, `Council Member`
+- India: `Prime Minister` (National), `Chief Minister` (State), `MP` (Lok Sabha), `MLA` (Vidhan Sabha), `Corporator / Councillor` (Ward)
 
-If missing, you must create them first:
+If missing or adding new roles/jurisdictions, you must create them with comprehensive descriptions and region overrides:
 
 ```sql
-INSERT INTO election_role_types (country, boundary_type, role_key, role_title, description)
+INSERT INTO public.election_role_types (country, boundary_type, role_key, region_override, role_title, description)
 VALUES 
-  ('Canada', 'Federal', 'mp', 'Member of Parliament', 'Federal representative for a riding'),
-  ('Canada', 'Provincial', 'mla', 'Member of Legislative Assembly', 'Provincial representative for a riding'),
-  ('United States', 'Federal', 'senator', 'Senator', 'US Senate member for a state'),
-  ('United States', 'Federal', 'representative', 'Representative', 'US House member for a district'),
-  ('United States', 'State', 'governor', 'Governor', 'State executive');
+  ('Canada', 'School District', 'trustee', 'British Columbia', 'School Trustee',
+   'Elected member of the local Board of Education governing a BC School District under the BC School Act. Sets the district''s multi-million dollar annual operating budget, establishes local educational and student-welfare policies, plans capital projects and school expansions/renovations, allocates funding across neighborhood schools, and hires and supervises the Superintendent of Schools.')
+ON CONFLICT (country, boundary_type, role_key, region_override)
+DO UPDATE SET
+  role_title = EXCLUDED.role_title,
+  description = EXCLUDED.description;
 ```
+
+> **Important**: See [ROLES_AND_RESPONSIBILITIES_GUIDE.md](../docs/ROLES_AND_RESPONSIBILITIES_GUIDE.md) for full details on registering roles, province/state overrides, and tree hierarchy placement (`HEAD_ROLE_TITLES`).
+
 
 ---
 
