@@ -126,7 +126,13 @@ async function resolveBranch(
       }
     }
 
-    return { key: branchKeyFor(shape), label: shape.boundary_type, top, bottom };
+    return {
+      key: branchKeyFor(shape),
+      label: shape.boundary_type,
+      districtName: shape.name || null,
+      top,
+      bottom,
+    };
   } catch (err) {
     console.error("Error resolving branch:", err);
     return null;

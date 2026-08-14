@@ -20,6 +20,7 @@ export interface BranchHolderNode {
 export interface RepresentationBranch {
   key: string;
   label: string;
+  districtName?: string | null;
   top: BranchHolderNode | null;
   bottom: BranchHolderNode[];
 }

@@ -129,7 +129,13 @@ async function resolveBranch(
     }
   }
 
-  return { key: branchKeyFor(shape), label: shape.boundary_type, top, bottom };
+  return {
+    key: branchKeyFor(shape),
+    label: shape.boundary_type,
+    districtName: shape.name || null,
+    top,
+    bottom,
+  };
 }
 
 // generateMetadata and the page component below both resolve the same
@@ -232,25 +238,54 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
     branches.push(...resolvedBranches);
   }
 
-  // Roles & Responsibilities reference -- union of role types across every
-  // (country, boundary_type) actually represented in the rendered branches,
-  // including the boundary_type of each branch's fetched superior, so a role
-  // is documented even when nobody currently holds it.
-  const roleTypeKeys = new Set<string>();
-  branches.forEach((b) => roleTypeKeys.add(`${shape.country}:${b.label}`));
-  if (shape.country === "Canada") roleTypeKeys.add("Canada:National").add("Canada:Province");
-  if (shape.country === "USA") roleTypeKeys.add("USA:National").add("USA:State");
-  if (shape.country === "India") roleTypeKeys.add("India:National").add("India:State");
+  // Roles & Responsibilities reference -- only show roles that are actually
+  // relevant to the current directory (branches) and active election seats.
+  // This avoids showing Quebec (MNA), Newfoundland (MHA), Ontario (MPP) etc.
+  // on a BC boundary page.
+  const activeRoleTitles: string[] = [];
+  const roleDescriptions = new Map<string, string | null>();
 
-  const roleTypesRaw = await Promise.all(
-    Array.from(roleTypeKeys).map((key) => {
-      const [country, boundaryType] = key.split(":");
-      return getElectionRoleTypes(supabase, country, boundaryType);
-    })
-  );
-  const roleTypes = roleTypesRaw
-    .flatMap((r) => r.data || [])
-    .filter((r, i, arr) => arr.findIndex((x) => x.role_title === r.role_title) === i);
+  // Collect roles in branch hierarchy order: top first, then bottom holders
+  for (const b of branches) {
+    if (b.top?.role_title && !activeRoleTitles.includes(b.top.role_title)) {
+      activeRoleTitles.push(b.top.role_title);
+      roleDescriptions.set(b.top.role_title, b.top.role_description || null);
+    }
+    for (const n of b.bottom) {
+      if (n.role_title && !activeRoleTitles.includes(n.role_title)) {
+        activeRoleTitles.push(n.role_title);
+        roleDescriptions.set(n.role_title, n.role_description || null);
+      }
+    }
+  }
+  for (const s of seatRows) {
+    if (s.role_title && !activeRoleTitles.includes(s.role_title)) {
+      activeRoleTitles.push(s.role_title);
+    }
+  }
+
+  // If any active roles need a description from election_role_types DB (e.g. seats without a holder)
+  if (activeRoleTitles.some((title) => !roleDescriptions.get(title))) {
+    const { data: dbRoleTypes } = await supabase
+      .from("election_role_types")
+      .select("id, role_title, description")
+      .eq("country", shape.country)
+      .in("role_title", activeRoleTitles);
+
+    (dbRoleTypes || []).forEach((r: any) => {
+      if (r.role_title && r.description && !roleDescriptions.get(r.role_title)) {
+        roleDescriptions.set(r.role_title, r.description);
+      }
+    });
+  }
+
+  const roleTypes = activeRoleTitles
+    .map((title, idx) => ({
+      id: `role-${idx}-${title}`,
+      role_title: title,
+      description: roleDescriptions.get(title) || null,
+    }))
+    .filter((r) => r.role_title && r.role_title !== "Elected Official");
 
   const containerList = (containers || []) as Array<{ map_shapes?: { id?: number; name?: string; boundary_type?: string } | null }>;
   const containerNames = containerList.map((c) => c.map_shapes?.name).filter((n): n is string => Boolean(n));

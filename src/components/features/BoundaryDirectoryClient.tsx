@@ -39,8 +39,16 @@ export default function BoundaryDirectoryClient({
 
   const renderBranch = (branch: RepresentationBranch) => (
     <div key={branch.key} className="bg-surface/40 border border-border-light/40 rounded-2xl p-3 sm:p-4">
-      <h3 className="text-sm font-bold text-text-muted uppercase tracking-wider text-center mb-2">
-        {branch.label}
+      <h3 className="text-sm font-bold text-text-muted uppercase tracking-wider text-center mb-2 flex items-center justify-center gap-1.5 flex-wrap">
+        <span>{branch.label}</span>
+        {branch.districtName && (
+          <>
+            <span className="text-text-muted/50 font-normal select-none">·</span>
+            <span className="text-text-main font-semibold normal-case tracking-normal">
+              {branch.districtName}
+            </span>
+          </>
+        )}
       </h3>
       <RepresentationBranchTree branch={branch} />
     </div>
