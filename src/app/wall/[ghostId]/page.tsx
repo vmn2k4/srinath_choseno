@@ -140,6 +140,31 @@ export default async function WallPage({ params }: WallPageProps) {
   const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
   const canonicalUrl = `${BASE_URL}/wall/${canonicalWallSlug}`;
 
+  type PostRecord = {
+    id: string;
+    content?: string | null;
+    created_at?: string | null;
+    news_articles?: { slug?: string | null; event_date?: string | null; published_at?: string | null } | Array<{ slug?: string | null; event_date?: string | null; published_at?: string | null }> | null;
+  };
+  const seoPostsSnapshot = ((posts as PostRecord[]) || []).slice(0, 10);
+
+  // Extract news articles linked to this politician for subjectOf structured data
+  const subjectOfArticles = seoPostsSnapshot
+    .filter((p) => p.news_articles)
+    .map((p) => {
+      const na = Array.isArray(p.news_articles) ? p.news_articles[0] : p.news_articles;
+      const articleSlug = na?.slug;
+      const articleUrl = articleSlug ? `${BASE_URL}/news/${articleSlug}` : undefined;
+      return {
+        "@type": "NewsArticle",
+        headline: p.content ? p.content.slice(0, 110) : undefined,
+        description: p.content || undefined,
+        datePublished: na?.published_at || na?.event_date || p.created_at || undefined,
+        url: articleUrl,
+      };
+    })
+    .filter((item) => item.headline);
+
   const jsonLd = owner
     ? [
         {
@@ -174,6 +199,9 @@ export default async function WallPage({ params }: WallPageProps) {
               worstRating: "1",
             },
           }),
+          ...(subjectOfArticles.length > 0 && {
+            subjectOf: subjectOfArticles,
+          }),
         },
         {
           "@context": "https://schema.org",
@@ -202,9 +230,6 @@ export default async function WallPage({ params }: WallPageProps) {
       ]
     : null;
 
-  type PostRecord = { id: string; content?: string | null; created_at?: string | null };
-  const seoPostsSnapshot = ((posts as PostRecord[]) || []).slice(0, 5);
-
   return (
     <>
       {jsonLd && (
@@ -221,19 +246,24 @@ export default async function WallPage({ params }: WallPageProps) {
         )}
         {seoPostsSnapshot.length > 0 && (
           <section>
-            <h2>Recent posts by {name} on Choseno</h2>
-            {seoPostsSnapshot.map((post) => (
-              post.content ? (
+            <h2>Recent civic updates and news coverage for {name} on Choseno</h2>
+            {seoPostsSnapshot.map((post) => {
+              const na = Array.isArray(post.news_articles) ? post.news_articles[0] : post.news_articles;
+              const newsSlug = na?.slug;
+              return post.content ? (
                 <article key={post.id}>
                   <p>{post.content}</p>
+                  {newsSlug && (
+                    <p><a href={`/news/${newsSlug}`}>Read full news coverage for {name}</a></p>
+                  )}
                   {post.created_at && (
                     <time dateTime={post.created_at}>
                       {new Date(post.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
                     </time>
                   )}
                 </article>
-              ) : null
-            ))}
+              ) : null;
+            })}
           </section>
         )}
       </div>
