@@ -252,7 +252,7 @@ export async function getSupportersList(supabase: Client, politicianId: string) 
 export async function getWallPosts(supabase: Client, ghostId: string) {
   let query = supabase
     .from("posts")
-    .select(`*, comments (*), news_articles (slug)`)
+    .select(`*, comments (*), news_articles (slug, event_date, published_at)`)
     .or(`ghost_id.eq.${ghostId},wall_ghost_id.eq.${ghostId}`)
     .order("created_at", { ascending: false });
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
@@ -287,7 +287,7 @@ export async function createWallPost(
 export async function getWallPostBySlugOrId(supabase: Client, ghostId: string, slug: string) {
   let exactQuery = supabase
     .from("posts")
-    .select(`*, comments (*), news_articles (slug)`)
+    .select(`*, comments (*), news_articles (slug, event_date, published_at)`)
     .eq("id", slug);
   if (!isDevEnvironment()) exactQuery = exactQuery.eq("is_test", false).eq("comments.is_test", false);
   const { data: exactPost } = await exactQuery.maybeSingle();

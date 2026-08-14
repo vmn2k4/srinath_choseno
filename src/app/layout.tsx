@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Public_Sans, Big_Shoulders } from "next/font/google";
+import { Public_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -18,13 +19,10 @@ const publicSans = Public_Sans({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-// Google Fonts merged the old separate "Big Shoulders Display" family into
-// the single variable "Big Shoulders" superfamily -- next/font/google's
-// font list (google-fonts-metadata.js) only recognizes the merged name.
-const bigShouldersDisplay = Big_Shoulders({
+const bigShouldersDisplay = localFont({
+  src: "../../public/fonts/BigShouldersDisplay-Variable.woff2",
   variable: "--font-big-shoulders-display",
-  subsets: ["latin"],
-  weight: ["700", "800", "900"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {

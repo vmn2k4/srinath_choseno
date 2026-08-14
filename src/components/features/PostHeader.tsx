@@ -45,12 +45,7 @@ export default function PostHeader({
       </div>
       <div className="flex-1 min-w-0">
         {newsAuthor ? (
-          <>
-            <span className="text-sm font-bold text-accent">News</span>
-            <Badge tone="accent" className="ml-2">
-              News
-            </Badge>
-          </>
+          <Badge tone="accent">News</Badge>
         ) : politicianAuthor ? (
           <>
             <Link

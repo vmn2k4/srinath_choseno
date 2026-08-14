@@ -20,7 +20,7 @@ type PostRow = Database["public"]["Tables"]["posts"]["Row"];
 type CommentRow = Database["public"]["Tables"]["comments"]["Row"];
 export type PostWithComments = PostRow & {
   comments?: CommentRow[] | null;
-  news_articles?: { slug: string } | null;
+  news_articles?: { slug: string; event_date?: string | null; published_at?: string | null } | null;
 };
 
 // Unifies what were two independently-implemented ~80%-identical post cards:
@@ -126,12 +126,14 @@ export default function PostCard({
   const linkMetadata = post.link_metadata as unknown as LinkMetadata | null;
   const inlineUrlMatch = !linkMetadata && post.content?.match(/(https?:\/\/[^\s]+)/);
 
+  const displayCreatedAt = post.news_articles?.event_date || post.news_articles?.published_at || post.created_at;
+
   return (
     <Card interactive padding="none" className="overflow-hidden">
       <div className="p-5">
         <PostHeader
           ghostId={post.ghost_id}
-          createdAt={post.created_at}
+          createdAt={displayCreatedAt}
           politicianAuthor={politicianAuthor}
           newsAuthor={newsAuthor}
           isOwnerPost={isOwnerPost}
@@ -141,9 +143,20 @@ export default function PostCard({
           onReport={onReport ? () => setReportTarget({ targetType: "post", targetId: post.id }) : undefined}
         />
 
-        <p className="text-text-main text-base font-medium whitespace-pre-wrap leading-loose mb-4">
-          {showTranslated && translatedText ? translatedText : post.content}
-        </p>
+        {newsAuthor && post.content?.includes("\n\n") ? (
+          <div className="mb-3 space-y-2">
+            <h3 className="text-base sm:text-lg font-semibold text-text-main leading-snug">
+              {showTranslated && translatedText ? translatedText.split("\n\n")[0] : post.content.split("\n\n")[0]}
+            </h3>
+            <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
+              {showTranslated && translatedText ? translatedText.split("\n\n").slice(1).join("\n\n") : post.content.split("\n\n").slice(1).join("\n\n")}
+            </p>
+          </div>
+        ) : (
+          <p className="text-text-main text-sm sm:text-base font-normal whitespace-pre-wrap leading-relaxed mb-3">
+            {showTranslated && translatedText ? translatedText : post.content}
+          </p>
+        )}
 
         {locale !== "en" && post.content && post.content.length > 5 && (
           <div className="mb-3 flex items-center gap-2">

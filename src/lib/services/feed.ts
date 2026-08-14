@@ -9,20 +9,27 @@ type Client = SupabaseClient<Database>;
 export async function getMembershipScopedPosts(supabase: Client, shapeIds: number[]) {
   let query = supabase
     .from("posts")
-    .select("*, comments(*), post_boundaries!inner(map_shape_id, map_shapes(id, name))")
+    .select("*, comments(*), post_boundaries!inner(map_shape_id, map_shapes(id, name)), news_articles(slug, event_date, published_at)")
     .in("post_boundaries.map_shape_id", shapeIds);
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }
 
 export async function getCountryScopedPosts(supabase: Client, country: string) {
-  let query = supabase.from("posts").select("*, comments(*)").eq("is_country", true).eq("country", country);
+  let query = supabase
+    .from("posts")
+    .select("*, comments(*), news_articles(slug, event_date, published_at)")
+    .eq("is_country", true)
+    .eq("country", country);
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }
 
 export async function getInternationalScopedPosts(supabase: Client) {
-  let query = supabase.from("posts").select("*, comments(*)").eq("is_international", true);
+  let query = supabase
+    .from("posts")
+    .select("*, comments(*), news_articles(slug, event_date, published_at)")
+    .eq("is_international", true);
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }
