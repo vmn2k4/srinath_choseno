@@ -58,9 +58,22 @@ export async function generateMetadata({
   const partyLabel = partyName ? ` (${partyName})` : "";
   const locationLabel = boundaryName ? ` in ${boundaryName}` : "";
 
+  const keywords = [
+    name,
+    roleTitle,
+    boundaryName,
+    partyName,
+    `${name} approval rating`,
+    `${name} news`,
+    `${name} policy stances`,
+    `${name} voter reviews`,
+    "civic accountability",
+    "2026 election candidate",
+  ].filter(Boolean) as string[];
+
   const title = activeCandidacy
-    ? `${name}${partyLabel} — ${electionYear} ${roleTitle} Candidate${locationLabel} & Voter Ratings | Choseno`
-    : `${name}${partyLabel} — ${roleTitle}${locationLabel} | Voter Ratings & Feedback | Choseno`;
+    ? `${name}${partyLabel} — ${electionYear} ${roleTitle} Candidate${locationLabel} | Ratings & Verified News`
+    : `${name}${partyLabel} — ${roleTitle}${locationLabel} | Approval Ratings & News Updates`;
 
   const ratingPrefix =
     rating && rating.count > 0
@@ -68,8 +81,8 @@ export async function generateMetadata({
       : "";
 
   const description = activeCandidacy
-    ? `${ratingPrefix}What do ${boundaryName || "local"} voters really think of ${name}? Read anonymous constituent reviews, ${electionYear} ${roleTitle} stances${partyLabel ? ` (${partyName})` : ""}, ratings & submit your feedback on Choseno.`
-    : `${ratingPrefix}What do constituents really think of ${name}? See approval ratings, constituent feedback, policy stances and join the discussion — anonymous and free on Choseno.`;
+    ? `${ratingPrefix}Track ${name}'s 2026 campaign stances, verified news updates, constituent approval ratings, and community reviews in ${boundaryName || "local district"}. Free on Choseno.`
+    : `${ratingPrefix}See ${name}'s verified civic news, constituent approval ratings, policy decisions, and constituent discussion — anonymous & independent on Choseno.`;
   const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
   const canonicalUrl = `${BASE_URL}/wall/${canonicalWallSlug}`;
   const ogImageUrl = `${BASE_URL}/wall/${canonicalWallSlug}/opengraph-image`;
@@ -77,9 +90,10 @@ export async function generateMetadata({
   return {
     title,
     description,
+    keywords,
     alternates: { canonical: canonicalUrl },
     openGraph: {
-      title,
+      title: `${title} | Choseno`,
       description,
       url: canonicalUrl,
       siteName: "Choseno",
@@ -95,7 +109,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: `${title} | Choseno`,
       description,
       images: [ogImageUrl],
     },
