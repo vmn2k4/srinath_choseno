@@ -1,6 +1,6 @@
 # Adding and Tagging News Articles Guide
 
-This document explains how to add new news articles to Choseno, format them properly, link them to office holders/politicians, and have them automatically mirror to their public walls and the main news feed with accurate historical dates.
+This document explains how to add new news articles to Choseno, format them properly, link them to office holders/politicians, deduplicate incoming content, and have articles automatically mirror to public walls and the main news feed with accurate historical dates.
 
 ---
 
@@ -13,6 +13,14 @@ This document explains how to add new news articles to Choseno, format them prop
 │ - Category, Impact Area, Coordinates                     │
 │ - Historical Event Date (event_date)                     │
 │ - Tagged Politician Profile UUIDs (taggedPoliticianIds)  │
+└────────────────────────────┬─────────────────────────────┘
+                             │
+                             ▼
+┌──────────────────────────────────────────────────────────┐
+│ Deduplication Engine (Slug, URL & Similarity Checks)     │
+│ - Verifies slug uniqueness & canonical source URLs       │
+│ - Detects duplicate stories within same event window     │
+│ - Merges sources & politician tags if story exists       │
 └────────────────────────────┬─────────────────────────────┘
                              │
                              ▼
@@ -35,12 +43,72 @@ This document explains how to add new news articles to Choseno, format them prop
 │ Live Display                                             │
 │ - Appears on Politician Wall (`/wall/[slug]`)            │
 │ - Appears in Main Feed (`/feed`) & News (`/news`)        │
+│ - Filterable by "My Representatives" for logged-in users │
 └──────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 2. Article JSON Schema Specification
+## 2. Deduplication Strategy & Rules (De-duping)
+
+As the platform scales to thousands of news articles, automated and editorial deduplication prevents feed clutter, split discussion threads, and redundant politician wall entries.
+
+### 2.1 The 3-Tier Deduplication Check
+
+1. **Source URL Deduplication (Exact Match)**
+   - Check if any source link in `sources[].url` already exists in `news_articles.content->'sources'`.
+   - If an article with the same source link exists, do **not** create a duplicate. Instead, update the existing record with any newly tagged politicians or quotes.
+
+2. **Slug & Canonical Key Deduplication**
+   - The `slug` field is indexed uniquely in the database.
+   - Format: `[politician-or-subject]-[key-topic]-[year-month-day]`.
+   - If an incoming article has a matching slug, the batch importer executes a `PATCH` update rather than creating a duplicate row.
+
+3. **Semantic & Headline Similarity Deduplication (Time-Window Match)**
+   - Articles mentioning the **same public official** on the **same policy/event** within a **±3 day window** must be merged into a single comprehensive article.
+   - **Similarity Rule**: If headline word overlap exceeds 75% for the same tagged politician within 72 hours, treat it as the same story.
+
+### 2.2 Deduplication Code Logic Example
+
+```javascript
+function isDuplicateStory(incoming, existingArticles) {
+  const normalize = (str) => (str || '').toLowerCase().replace(/[^a-z0-9]/g, ' ').trim();
+  const incomingTokens = new Set(normalize(incoming.headline).split(/\s+/).filter(w => w.length > 3));
+
+  for (const existing of existingArticles) {
+    // Check 1: Direct source URL match
+    const existingUrls = (existing.content?.sources || []).map(s => s.url);
+    const hasSharedSource = (incoming.sources || []).some(s => existingUrls.includes(s.url));
+    if (hasSharedSource) return { isDup: true, match: existing, reason: 'Source URL matched' };
+
+    // Check 2: Same politician + high headline overlap within 3 days
+    const incomingDate = new Date(incoming.eventDate || incoming.published_at).getTime();
+    const existingDate = new Date(existing.event_date || existing.published_at).getTime();
+    const diffDays = Math.abs(incomingDate - existingDate) / (1000 * 60 * 60 * 24);
+
+    if (diffDays <= 3) {
+      const existingTokens = new Set(normalize(existing.headline).split(/\s+/).filter(w => w.length > 3));
+      const intersection = [...incomingTokens].filter(t => existingTokens.has(t));
+      const similarity = intersection.length / Math.max(incomingTokens.size, 1);
+
+      if (similarity >= 0.7) {
+        return { isDup: true, match: existing, reason: `Headline similarity ${Math.round(similarity * 100)}%` };
+      }
+    }
+  }
+
+  return { isDup: false };
+}
+```
+
+### 2.3 What to Do When a Duplicate is Detected
+- **Merge Politician Tags**: Combine `taggedPoliticianIds` from both records so all involved leaders are tagged to the authoritative post.
+- **Append Citations**: Add the new outlet/URL to the existing `sources` array.
+- **Do Not Create New Feed Posts**: Prevent multiple mirror cards appearing on the same politician's wall for a single news event.
+
+---
+
+## 3. Article JSON Schema Specification
 
 Every article object must follow this structure:
 
@@ -53,8 +121,8 @@ Every article object must follow this structure:
   "country": "CA",
   "province": "BC",
   "status": "published",
-  "eventDate": "2024-02-15T15:00:00Z",
-  "published_at": "2024-02-15T15:00:00Z",
+  "eventDate": "2026-08-14T15:00:00Z",
+  "published_at": "2026-08-14T15:00:00Z",
   "impactArea": "state",
   "latitude": 49.1762,
   "longitude": -122.8436,
@@ -88,7 +156,7 @@ Every article object must follow this structure:
 
 ---
 
-## 3. How to Find Politician Profile UUIDs
+## 4. How to Find Politician Profile UUIDs
 
 To tag an office holder, you need their `profiles.id` UUID (the `linked_profile_id` on their `office_holders` record).
 
@@ -124,39 +192,32 @@ lookup("Eby"); // Replace with search name
 
 ---
 
-## 4. Method A: Adding Articles via Reusable Script (Fastest for Batches)
+## 5. Adding Articles via Reusable Script (With Built-in De-duping)
 
-A reusable script is provided at [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js).
+The batch script is located at [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js).
 
 ### Step 1: Open the script
-Edit [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js) and add your articles array into the `articles` list.
+Edit [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js) and paste your articles into the `articles` list.
 
 ### Step 2: Run the script
 ```bash
 node scripts/insert-news-batch.js
 ```
 
-### What the script automatically does:
-1. Authenticates using your admin credentials in `.env.local`.
-2. Checks for existing articles by slug (updates if already existing, inserts if new).
-3. Executes `admin_sync_news_article_tags(p_article_id, p_politician_ids)` to link tags and mirror the post to the politician's wall.
-4. Backdates the post's `created_at` in the feed to the historical `event_date`.
+### Automated Steps Performed:
+1. **Deduplication Check**: Queries existing articles to prevent duplicate stories by slug, URL, or headline similarity.
+2. **Schema Validation**: Ensures all required fields, valid category enums, and coordinates are correct.
+3. **Database Upsert**: Updates existing records or inserts new articles into `news_articles`.
+4. **Tag & Wall Synchronization**: Calls `admin_sync_news_article_tags(p_article_id, p_politician_ids)` to mirror posts to official profiles.
+5. **Backdates Post Timestamps**: Ensures `created_at` in the feed reflects when the real-world event occurred (`event_date`).
 
 ---
 
-## 5. Method B: Adding Articles via Admin Web UI
+## 6. Adding Articles via Admin Web UI
 
 1. Log into Choseno as an Admin and navigate to **Admin > News** (`/admin/news`).
 2. Click **New Article** or **Paste JSON**.
 3. Paste the single article or batch JSON array into the JSON importer.
-4. The system validates the schema and fields in real-time.
+4. The system validates the schema, checks for duplicate slugs/headlines, and previews the content.
 5. In the **Tagged Politicians** section, select the office holders you want to tag.
 6. Click **Save & Publish**. The article will go live immediately on `/news` and mirror to the selected politicians' walls.
-
----
-
-## 6. How Wall Mirroring and Feed Dates Work
-
-1. **Tag Syncing**: When an article is saved, the Postgres RPC `admin_sync_news_article_tags` creates a record in `posts` with `news_article_id = <article_id>` and `wall_ghost_id = <politician_ghost_id>`.
-2. **Historical Date Matching**: The mirrored post's `created_at` timestamp is set to `COALESCE(article.event_date, article.published_at, now())`.
-3. **Feed & PostCard Rendering**: The [`PostCard`](file:///Users/vmn2k4/Coding/Choseno/src/components/features/PostCard.tsx) component uses `post.news_articles.event_date` to ensure that when an article covers a past event, the date badge shows when it actually happened rather than when the article was entered into the database.

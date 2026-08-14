@@ -1,5 +1,5 @@
 /**
- * Reusable batch news importer and tagger for Choseno.
+ * Reusable batch news importer, tagger, and deduplicator for Choseno.
  * Usage:
  *   1. Add your article objects to the `articles` array below.
  *   2. Run: `node scripts/insert-news-batch.js`
@@ -33,8 +33,8 @@ const articles = [
     country: 'CA',
     province: 'BC',
     status: 'published', // 'published' | 'draft' | 'archived'
-    eventDate: '2024-02-15T15:00:00Z',
-    published_at: '2024-02-15T15:00:00Z',
+    eventDate: '2026-08-14T15:00:00Z',
+    published_at: '2026-08-14T15:00:00Z',
     impactArea: 'local', // 'local' | 'state' | 'country' | 'international'
     latitude: 49.1913,
     longitude: -122.8490,
@@ -51,12 +51,48 @@ const articles = [
       { label: 'Source Name', url: 'https://example.com/news-story' }
     ],
     taggedPoliticianIds: [
-      'uuid-of-politician-profile-1',
-      'uuid-of-politician-profile-2'
+      'uuid-of-politician-profile-1'
     ]
   }
   */
 ];
+
+// ── DEDUPLICATION HELPER ───────────────────────────────────────────────────
+function findDuplicate(incoming, existingList) {
+  const normalize = (str) => (str || '').toLowerCase().replace(/[^a-z0-9]/g, ' ').trim();
+  const incomingTokens = new Set(normalize(incoming.headline).split(/\s+/).filter(w => w.length > 3));
+
+  for (const existing of existingList) {
+    // 1. Slug match
+    if (existing.slug === incoming.slug) {
+      return { isDup: true, id: existing.id, match: existing, reason: 'Slug match' };
+    }
+
+    // 2. Source URL match
+    const existingUrls = (existing.content?.sources || []).map(s => s.url);
+    const hasSharedUrl = (incoming.sources || []).some(s => s.url && existingUrls.includes(s.url));
+    if (hasSharedUrl) {
+      return { isDup: true, id: existing.id, match: existing, reason: 'Source URL match' };
+    }
+
+    // 3. High headline token similarity within 3-day event window
+    const inDate = new Date(incoming.eventDate || incoming.published_at || Date.now()).getTime();
+    const exDate = new Date(existing.event_date || existing.published_at || Date.now()).getTime();
+    const daysDiff = Math.abs(inDate - exDate) / (1000 * 60 * 60 * 24);
+
+    if (daysDiff <= 3.5) {
+      const existingTokens = new Set(normalize(existing.headline).split(/\s+/).filter(w => w.length > 3));
+      const intersection = [...incomingTokens].filter(t => existingTokens.has(t));
+      const similarity = intersection.length / Math.max(incomingTokens.size, 1);
+
+      if (similarity >= 0.75) {
+        return { isDup: true, id: existing.id, match: existing, reason: `Headline similarity ${Math.round(similarity * 100)}%` };
+      }
+    }
+  }
+
+  return { isDup: false };
+}
 
 async function run() {
   if (articles.length === 0) {
@@ -88,11 +124,19 @@ async function run() {
     Prefer: 'return=representation'
   };
 
+  // 2. Fetch existing articles window for deduplication
+  const existRes = await fetch(env.NEXT_PUBLIC_SUPABASE_URL + '/rest/v1/news_articles?select=id,slug,headline,event_date,published_at,content&limit=1000', { headers });
+  const existingList = (await existRes.json()) || [];
+  console.log(`Loaded ${existingList.length} existing articles for deduplication screening.`);
+
   let successCount = 0;
+  let dupsCount = 0;
 
   for (let i = 0; i < articles.length; i++) {
     const art = articles[i];
     console.log(`\n[${i + 1}/${articles.length}] Processing "${art.headline}"...`);
+
+    const dupCheck = findDuplicate(art, existingList);
 
     const insertPayload = {
       slug: art.slug,
@@ -118,25 +162,17 @@ async function run() {
       }
     };
 
-    // Check existing
-    const checkUrl = env.NEXT_PUBLIC_SUPABASE_URL + '/rest/v1/news_articles?slug=eq.' + encodeURIComponent(art.slug) + '&select=id,slug';
-    const checkRes = await fetch(checkUrl, { headers });
-    const existing = await checkRes.json();
-
     let articleId;
-    if (existing && existing.length > 0) {
-      articleId = existing[0].id;
-      console.log(`  Article exists (id: ${articleId}), updating...`);
+    if (dupCheck.isDup) {
+      articleId = dupCheck.id;
+      dupsCount++;
+      console.log(`  [Deduplication Match: ${dupCheck.reason}] Updating existing article (id: ${articleId})...`);
       const updateUrl = env.NEXT_PUBLIC_SUPABASE_URL + '/rest/v1/news_articles?id=eq.' + articleId;
-      const updateRes = await fetch(updateUrl, {
+      await fetch(updateUrl, {
         method: 'PATCH',
         headers,
         body: JSON.stringify(insertPayload)
       });
-      if (!updateRes.ok) {
-        console.error('  Update error:', await updateRes.text());
-        continue;
-      }
     } else {
       const createUrl = env.NEXT_PUBLIC_SUPABASE_URL + '/rest/v1/news_articles';
       const createRes = await fetch(createUrl, {
@@ -150,7 +186,8 @@ async function run() {
       }
       const created = await createRes.json();
       articleId = created[0]?.id;
-      console.log(`  Created article with id: ${articleId}`);
+      if (created[0]) existingList.push(created[0]);
+      console.log(`  Created new article with id: ${articleId}`);
     }
 
     // Sync tags and create/update mirrored wall post
@@ -170,7 +207,6 @@ async function run() {
         console.log(`  Synced ${art.taggedPoliticianIds.length} politician tags to wall!`);
       }
 
-      // Also ensure post created_at in DB matches the article event_date
       const postDate = insertPayload.event_date || insertPayload.published_at;
       if (postDate) {
         await fetch(env.NEXT_PUBLIC_SUPABASE_URL + '/rest/v1/posts?news_article_id=eq.' + articleId, {
@@ -185,7 +221,7 @@ async function run() {
   }
 
   console.log('\n======================================================');
-  console.log(`Completed: ${successCount}/${articles.length} articles saved and synced.`);
+  console.log(`Completed: ${successCount} articles processed (${dupsCount} deduplicated/updated).`);
   console.log('======================================================');
 }
 
