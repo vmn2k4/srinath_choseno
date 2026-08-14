@@ -2,7 +2,18 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
-import { Newspaper, Calendar, ArrowRight, Globe, Zap, ChevronLeft, ChevronRight, Filter } from "lucide-react";
+import {
+  Newspaper,
+  Calendar,
+  ArrowRight,
+  Globe,
+  Zap,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+  UserCheck,
+  Users,
+} from "lucide-react";
 import { Card, PageHeader, Badge, Button } from "@/components/primitives";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { isBreakingNewsActive, type NewsArticleContent } from "@/lib/services/news";
@@ -22,6 +33,17 @@ interface NewsArticleRow {
   is_breaking?: boolean;
   breaking_until?: string | null;
   content: unknown;
+  news_article_politicians?: Array<{
+    politician_id: string;
+    profiles?: { id: string; full_name: string | null } | null;
+  }>;
+}
+
+export interface UserRepresentative {
+  id: string;
+  name: string;
+  role?: string | null;
+  district?: string | null;
 }
 
 const ITEMS_PER_PAGE = 12;
@@ -29,13 +51,23 @@ const ITEMS_PER_PAGE = 12;
 export default function NewsPageClient({
   items,
   error,
+  userRepresentatives = [],
+  isLoggedIn = false,
 }: {
   items: NewsArticleRow[];
   error: any;
+  userRepresentatives?: UserRepresentative[];
+  isLoggedIn?: boolean;
 }) {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [repFilter, setRepFilter] = useState<string | null>(null); // null = all news, "all_reps" = any rep, or specific politician_id
+
+  // Map of user representative IDs for fast lookup
+  const repIdsSet = useMemo(() => {
+    return new Set(userRepresentatives.map((r) => r.id));
+  }, [userRepresentatives]);
 
   // Sort strictly by the date the news happened (event_date falling back to published_at/created_at)
   const sortedItems = useMemo(() => {
@@ -55,13 +87,26 @@ export default function NewsPageClient({
     return ["All", ...Array.from(set).sort()];
   }, [items]);
 
-  // Filter by category if selected
+  // Filter items by category AND representative selection
   const filteredItems = useMemo(() => {
-    if (selectedCategory === "All") return sortedItems;
-    return sortedItems.filter(
-      (item) => item.category?.toLowerCase() === selectedCategory.toLowerCase()
-    );
-  }, [sortedItems, selectedCategory]);
+    return sortedItems.filter((item) => {
+      // 1. Category check
+      if (selectedCategory !== "All" && item.category?.toLowerCase() !== selectedCategory.toLowerCase()) {
+        return false;
+      }
+
+      // 2. Representative filter check
+      if (repFilter === "all_reps") {
+        const tagged = item.news_article_politicians ?? [];
+        return tagged.some((p) => repIdsSet.has(p.politician_id));
+      } else if (repFilter) {
+        const tagged = item.news_article_politicians ?? [];
+        return tagged.some((p) => p.politician_id === repFilter);
+      }
+
+      return true;
+    });
+  }, [sortedItems, selectedCategory, repFilter, repIdsSet]);
 
   // Pagination calculations
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / ITEMS_PER_PAGE));
@@ -78,6 +123,11 @@ export default function NewsPageClient({
 
   const handleCategorySelect = (cat: string) => {
     setSelectedCategory(cat);
+    setCurrentPage(1);
+  };
+
+  const handleRepFilterSelect = (val: string | null) => {
+    setRepFilter(val);
     setCurrentPage(1);
   };
 
@@ -102,7 +152,7 @@ export default function NewsPageClient({
     <div className="w-full max-w-none pb-20 px-4 lg:px-8 space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <PageHeader icon={Newspaper} title={t("newsPage.title")} />
-        
+
         {/* Results counter */}
         {filteredItems.length > 0 && (
           <div className="text-xs text-text-muted font-medium bg-surface/50 px-3 py-1.5 rounded-full border border-border-light/30 w-fit">
@@ -110,6 +160,58 @@ export default function NewsPageClient({
           </div>
         )}
       </div>
+
+      {/* Logged in Representatives Filter Bar */}
+      {isLoggedIn && userRepresentatives.length > 0 && (
+        <div className="p-3 bg-primary/5 rounded-2xl border border-primary/20 space-y-2.5">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
+              <UserCheck size={15} />
+              <span>Filter by My Representatives ({userRepresentatives.length})</span>
+            </div>
+            {repFilter && (
+              <button
+                onClick={() => handleRepFilterSelect(null)}
+                className="text-[11px] text-primary hover:underline font-semibold cursor-pointer"
+              >
+                Clear Representative Filter
+              </button>
+            )}
+          </div>
+
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+            <button
+              onClick={() => handleRepFilterSelect(repFilter === "all_reps" ? null : "all_reps")}
+              className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                repFilter === "all_reps"
+                  ? "bg-primary text-white shadow-sm"
+                  : "bg-surface/80 hover:bg-surface text-text-main border border-border-light/40"
+              }`}
+            >
+              <Users size={12} />
+              All My Representatives
+            </button>
+
+            {userRepresentatives.map((rep) => {
+              const isSelected = repFilter === rep.id;
+              return (
+                <button
+                  key={rep.id}
+                  onClick={() => handleRepFilterSelect(isSelected ? null : rep.id)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1 ${
+                    isSelected
+                      ? "bg-primary text-white shadow-sm"
+                      : "bg-surface/60 hover:bg-surface text-text-muted hover:text-text-main border border-border-light/30"
+                  }`}
+                >
+                  <span>{rep.name}</span>
+                  {rep.role && <span className="opacity-75 text-[10px]">({rep.role})</span>}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Category Filter Pills */}
       {categories.length > 2 && (
@@ -141,8 +243,21 @@ export default function NewsPageClient({
       )}
 
       {filteredItems.length === 0 && !error ? (
-        <Card padding="md" className="text-center py-16 text-text-muted text-sm">
-          {t("newsPage.noArticles")}
+        <Card padding="md" className="text-center py-16 text-text-muted text-sm space-y-3">
+          <p>{repFilter ? "No news articles found for the selected representative." : t("newsPage.noArticles")}</p>
+          {repFilter && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setRepFilter(null);
+                setSelectedCategory("All");
+              }}
+              className="text-xs"
+            >
+              Show All News Articles
+            </Button>
+          )}
         </Card>
       ) : (
         <>
@@ -151,7 +266,12 @@ export default function NewsPageClient({
             {paginatedItems.map((article) => {
               const content = article.content as NewsArticleContent;
               const isBreaking = isBreakingNewsActive(article as any);
-              
+
+              // Check if this article tags any of the user's representatives
+              const taggedUserReps = (article.news_article_politicians ?? []).filter((p) =>
+                repIdsSet.has(p.politician_id)
+              );
+
               // Prioritize event_date to reflect when the news happened
               const rawDate = article.event_date || article.published_at || article.created_at;
               const displayDate = rawDate
@@ -190,7 +310,14 @@ export default function NewsPageClient({
 
                   <div className="flex flex-col flex-1 p-4 space-y-3">
                     <div className="flex items-center justify-between gap-2 flex-wrap">
-                      <Badge tone="primary">{article.category || "News"}</Badge>
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <Badge tone="primary">{article.category || "News"}</Badge>
+                        {taggedUserReps.length > 0 && (
+                          <Badge tone="accent" className="flex items-center gap-1">
+                            <UserCheck size={10} /> My Rep
+                          </Badge>
+                        )}
+                      </div>
                       <div className="flex items-center gap-2 text-xs text-text-muted">
                         {article.country && (
                           <span className="flex items-center gap-1">

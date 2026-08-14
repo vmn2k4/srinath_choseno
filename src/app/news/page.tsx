@@ -38,7 +38,45 @@ export const metadata: Metadata = {
 
 export default async function NewsPage() {
   const supabase = await createClient();
-  const { data: articles, error } = await getPublishedNewsArticles(supabase, { limit: 150 });
+  const [{ data: articles, error }, { data: authData }] = await Promise.all([
+    getPublishedNewsArticles(supabase, { limit: 150 }),
+    supabase.auth.getUser(),
+  ]);
+
+  const user = authData?.user;
+  const userRepresentatives: Array<{ id: string; name: string; role?: string | null; district?: string | null }> = [];
+
+  if (user) {
+    const { data: memberships } = await supabase
+      .from("user_boundary_memberships")
+      .select("map_shape_id")
+      .eq("profile_id", user.id);
+
+    const shapeIds = (memberships ?? []).map((m) => m.map_shape_id);
+
+    if (shapeIds.length > 0) {
+      const { data: holders } = await supabase
+        .from("office_holders")
+        .select("id, full_name, linked_profile_id, election_role_types(role_title), map_shapes(name)")
+        .in("map_shape_id", shapeIds)
+        .not("linked_profile_id", "is", null);
+
+      if (holders) {
+        const seen = new Set<string>();
+        for (const h of holders) {
+          if (h.linked_profile_id && h.full_name && !seen.has(h.linked_profile_id)) {
+            seen.add(h.linked_profile_id);
+            userRepresentatives.push({
+              id: h.linked_profile_id,
+              name: h.full_name,
+              role: (h.election_role_types as any)?.role_title ?? null,
+              district: (h.map_shapes as any)?.name ?? null,
+            });
+          }
+        }
+      }
+    }
+  }
 
   const items = (articles ?? []) as any[];
 
@@ -65,7 +103,12 @@ export default async function NewsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
-      <NewsPageClient items={items} error={error} />
+      <NewsPageClient
+        items={items}
+        error={error}
+        userRepresentatives={userRepresentatives}
+        isLoggedIn={Boolean(user)}
+      />
     </>
   );
 }

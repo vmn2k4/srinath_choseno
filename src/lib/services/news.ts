@@ -146,7 +146,7 @@ export async function getPublishedNewsArticles(
   let q = supabase
     .from("news_articles")
     .select(
-      "id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, created_at"
+      "id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, created_at, news_article_politicians(politician_id, profiles(id, full_name))"
     )
     .eq("status", "published")
     .lte("published_at", new Date().toISOString())
