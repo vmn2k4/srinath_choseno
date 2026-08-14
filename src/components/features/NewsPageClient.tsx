@@ -61,8 +61,9 @@ export default function NewsPageClient({
 }) {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCountry, setSelectedCountry] = useState<string>("All");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [repFilter, setRepFilter] = useState<string | null>(null); // null = all news, "all_reps" = any rep, or specific politician_id
+  const [repFilter, setRepFilter] = useState<string | null>(null);
 
   // Map of user representative IDs for fast lookup
   const repIdsSet = useMemo(() => {
@@ -78,6 +79,15 @@ export default function NewsPageClient({
     return [...items].sort((a, b) => getTimestamp(b) - getTimestamp(a));
   }, [items]);
 
+  // Extract unique countries
+  const countries = useMemo(() => {
+    const set = new Set<string>();
+    items.forEach((item) => {
+      if (item.country) set.add(item.country.toUpperCase());
+    });
+    return ["All", ...Array.from(set).sort()];
+  }, [items]);
+
   // Extract unique categories for quick tabs
   const categories = useMemo(() => {
     const set = new Set<string>();
@@ -87,15 +97,20 @@ export default function NewsPageClient({
     return ["All", ...Array.from(set).sort()];
   }, [items]);
 
-  // Filter items by category AND representative selection
+  // Filter items by country, category AND representative selection
   const filteredItems = useMemo(() => {
     return sortedItems.filter((item) => {
-      // 1. Category check
+      // 1. Country filter
+      if (selectedCountry !== "All" && item.country?.toUpperCase() !== selectedCountry.toUpperCase()) {
+        return false;
+      }
+
+      // 2. Category filter
       if (selectedCategory !== "All" && item.category?.toLowerCase() !== selectedCategory.toLowerCase()) {
         return false;
       }
 
-      // 2. Representative filter check
+      // 3. Representative filter check
       if (repFilter === "all_reps") {
         const tagged = item.news_article_politicians ?? [];
         return tagged.some((p) => repIdsSet.has(p.politician_id));
@@ -106,7 +121,7 @@ export default function NewsPageClient({
 
       return true;
     });
-  }, [sortedItems, selectedCategory, repFilter, repIdsSet]);
+  }, [sortedItems, selectedCountry, selectedCategory, repFilter, repIdsSet]);
 
   // Pagination calculations
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / ITEMS_PER_PAGE));
@@ -119,6 +134,11 @@ export default function NewsPageClient({
       setCurrentPage(newPage);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+  };
+
+  const handleCountrySelect = (c: string) => {
+    setSelectedCountry(c);
+    setCurrentPage(1);
   };
 
   const handleCategorySelect = (cat: string) => {
@@ -213,28 +233,55 @@ export default function NewsPageClient({
         </div>
       )}
 
-      {/* Category Filter Pills */}
-      {categories.length > 2 && (
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
-          <Filter size={14} className="text-text-muted shrink-0 mr-1 hidden sm:inline-block" />
-          {categories.map((cat) => {
-            const isSelected = selectedCategory === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => handleCategorySelect(cat)}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
-                  isSelected
-                    ? "bg-primary text-white shadow-sm"
-                    : "bg-surface/60 hover:bg-surface text-text-muted hover:text-text-main border border-border-light/30"
-                }`}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
-      )}
+      {/* Country & Category Filter Bar */}
+      <div className="space-y-2">
+        {/* Country selector */}
+        {countries.length > 2 && (
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+            <Globe size={14} className="text-text-muted shrink-0 mr-1 hidden sm:inline-block" />
+            {countries.map((c) => {
+              const isSelected = selectedCountry === c;
+              const label = c === "All" ? "All Countries" : c === "CA" ? "Canada 🇨🇦" : c === "US" ? "United States 🇺🇸" : c;
+              return (
+                <button
+                  key={c}
+                  onClick={() => handleCountrySelect(c)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                    isSelected
+                      ? "bg-primary text-white shadow-sm"
+                      : "bg-surface/60 hover:bg-surface text-text-muted hover:text-text-main border border-border-light/30"
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Category selector */}
+        {categories.length > 2 && (
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
+            <Filter size={14} className="text-text-muted shrink-0 mr-1 hidden sm:inline-block" />
+            {categories.map((cat) => {
+              const isSelected = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => handleCategorySelect(cat)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                    isSelected
+                      ? "bg-primary text-white shadow-sm"
+                      : "bg-surface/60 hover:bg-surface text-text-muted hover:text-text-main border border-border-light/30"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
 
       {error && (
         <div className="px-4 py-3 rounded-xl bg-danger/10 border border-danger/20 text-danger text-sm">
@@ -245,13 +292,14 @@ export default function NewsPageClient({
       {filteredItems.length === 0 && !error ? (
         <Card padding="md" className="text-center py-16 text-text-muted text-sm space-y-3">
           <p>{repFilter ? "No news articles found for the selected representative." : t("newsPage.noArticles")}</p>
-          {repFilter && (
+          {(repFilter || selectedCategory !== "All" || selectedCountry !== "All") && (
             <Button
               variant="outline"
               size="sm"
               onClick={() => {
                 setRepFilter(null);
                 setSelectedCategory("All");
+                setSelectedCountry("All");
               }}
               className="text-xs"
             >
@@ -320,8 +368,8 @@ export default function NewsPageClient({
                       </div>
                       <div className="flex items-center gap-2 text-xs text-text-muted">
                         {article.country && (
-                          <span className="flex items-center gap-1">
-                            <Globe size={10} /> {article.country.toUpperCase()}
+                          <span className="flex items-center gap-1 font-semibold">
+                            <Globe size={10} /> {article.country.toUpperCase() === "US" ? "USA 🇺🇸" : article.country.toUpperCase() === "CA" ? "CAN 🇨🇦" : article.country.toUpperCase()}
                           </span>
                         )}
                         {displayDate && (

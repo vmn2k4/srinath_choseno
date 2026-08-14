@@ -27,12 +27,62 @@ const bigShouldersDisplay = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Choseno — Rate Your Politician & See 2026 Candidate Reviews",
+  title: {
+    default: "Choseno — Rate Politicians, Track Candidates & Live Civic News",
+    template: "%s | Choseno",
+  },
   description:
-    "Like Yelp, but for democracy. Rate your senators, representatives & local politicians. Read what voters in your district are saying — anonymously, free.",
-  authors: [{ name: "Murugappan Valliyappan", url: "https://www.linkedin.com/in/muruvalliyappan/" }],
-  creator: "Murugappan Valliyappan",
+    "Empowering voters with verified civic journalism, real-time election coverage, and district-level politician accountability. Track your representatives and read authentic community reviews.",
+  keywords: [
+    "rate politicians",
+    "elections 2026",
+    "civic news",
+    "local government updates",
+    "city council decisions",
+    "mayoral policy updates",
+    "candidate reviews",
+    "voter accountability",
+    "district boundaries",
+    "verified political news",
+  ],
+  authors: [{ name: "Choseno Civic News Desk", url: SITE_URL }],
+  creator: "Choseno",
   publisher: "Choseno",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: SITE_URL,
+    siteName: "Choseno",
+    title: "Choseno — Rate Politicians, Track Candidates & Live Civic News",
+    description:
+      "Empowering voters with verified civic journalism, real-time election coverage, and district-level politician accountability.",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Choseno — Civic Journalism and Democratic Accountability",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Choseno — Rate Politicians, Track Candidates & Live Civic News",
+    description:
+      "Empowering voters with verified civic journalism, real-time election coverage, and district-level politician accountability.",
+    images: [`${SITE_URL}/opengraph-image`],
+  },
   verification: {
     other: {
       "msvalidate.01": "AECC25E231AF85530C43CA52A2B4E345",

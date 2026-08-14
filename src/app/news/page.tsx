@@ -7,14 +7,26 @@ import NewsPageClient from "@/components/features/NewsPageClient";
 const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
-  title: "Election News & 2026 Candidate Updates | Choseno",
+  title: "Live Civic & Political News: Real-Time Updates on Mayors, Premiers & 2026 Elections",
   description:
-    "Latest news on 2026 midterm elections, candidate announcements, local races & democratic accountability. Community-curated civic journalism, free to read.",
+    "Breaking civic news, policy announcements, mayoral decisions & verified candidate updates across Canada & the United States. Track the actions of your elected officials in real time.",
+  keywords: [
+    "breaking civic news",
+    "political news today",
+    "mayor announcements",
+    "city council decisions",
+    "2026 election updates",
+    "provincial premier news",
+    "local government policy",
+    "politician accountability",
+    "US politics news",
+    "Canada politics news",
+  ],
   alternates: { canonical: `${BASE_URL}/news` },
   openGraph: {
-    title: "Election News & 2026 Candidate Updates | Choseno",
+    title: "Live Civic & Political News: Real-Time Updates on Mayors, Premiers & 2026 Elections",
     description:
-      "Latest news on 2026 midterm elections, candidate announcements, local races & democratic accountability. Community-curated civic journalism, free to read.",
+      "Breaking civic news, policy announcements, mayoral decisions & verified candidate updates across Canada & the United States.",
     url: `${BASE_URL}/news`,
     siteName: "Choseno",
     type: "website",
@@ -23,15 +35,15 @@ export const metadata: Metadata = {
         url: `${BASE_URL}/news/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "Election News & 2026 Candidate Updates | Choseno",
+        alt: "Live Civic & Political News | Choseno",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Election News & 2026 Candidate Updates | Choseno",
+    title: "Live Civic & Political News: Real-Time Updates on Mayors, Premiers & 2026 Elections",
     description:
-      "Latest news on 2026 midterm elections, candidate announcements, local races & democratic accountability.",
+      "Breaking civic news, policy announcements, mayoral decisions & verified candidate updates across Canada & the United States.",
     images: [`${BASE_URL}/news/opengraph-image`],
   },
 };
@@ -39,7 +51,7 @@ export const metadata: Metadata = {
 export default async function NewsPage() {
   const supabase = await createClient();
   const [{ data: articles, error }, { data: authData }] = await Promise.all([
-    getPublishedNewsArticles(supabase, { limit: 150 }),
+    getPublishedNewsArticles(supabase, { limit: 500 }),
     supabase.auth.getUser(),
   ]);
 

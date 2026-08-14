@@ -44,24 +44,32 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   const description =
     content?.metaDescription ||
     article.summary ||
-    (content?.body?.replace(/[#*`\[\]]/g, "").trim().slice(0, 160)) ||
+    content?.body?.replace(/[#*`\[\]]/g, "").trim().slice(0, 160) ||
     "";
   const canonicalUrl = `${SITE_URL}/news/${slug}`;
-  const publishedTime = article.published_at ?? undefined;
+  const publishedTime = (article.published_at || article.event_date || article.created_at) ?? undefined;
+  const modifiedTime = article.updated_at ?? publishedTime;
+  const tags = content?.tags || [article.category, article.country || "Civic News"];
 
   const ogImageUrl = article.hero_image_url || `${SITE_URL}/news/${slug}/opengraph-image`;
 
   return {
-    title: `${title} | Choseno News`,
+    title: `${title} | Choseno Civic News`,
     description,
+    keywords: tags,
+    category: article.category,
     alternates: { canonical: canonicalUrl },
     openGraph: {
-      title,
+      title: `${title} | Choseno`,
       description,
       url: canonicalUrl,
       siteName: "Choseno",
       type: "article",
       publishedTime,
+      modifiedTime,
+      section: article.category,
+      tags,
+      authors: [content?.author?.name || "Choseno Civic News Desk"],
       images: [
         {
           url: ogImageUrl,
@@ -73,7 +81,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: `${title} | Choseno`,
       description,
       images: [ogImageUrl],
     },
@@ -94,8 +102,8 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
   const content = article.content as NewsArticleContent;
   const isBreaking = isBreakingNewsActive(article);
   const readingTime = estimateReadingMinutes(content?.body);
-  const displayDate = article.published_at
-    ? new Date(article.published_at).toLocaleDateString("en-CA", {
+  const displayDate = (article.published_at || article.event_date || article.created_at)
+    ? new Date(article.published_at || article.event_date || article.created_at || "").toLocaleDateString("en-CA", {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -107,15 +115,29 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
     {
       "@context": "https://schema.org",
       "@type": "NewsArticle",
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": `${SITE_URL}/news/${slug}`,
+      },
       headline: article.headline,
-      description:
-        content?.metaDescription || article.summary || undefined,
-      datePublished: article.published_at ?? article.created_at,
-      dateModified: article.updated_at,
+      description: content?.metaDescription || article.summary || undefined,
+      articleSection: article.category,
+      inLanguage: "en",
+      datePublished: article.published_at ?? article.event_date ?? article.created_at,
+      dateModified: article.updated_at ?? article.published_at ?? article.event_date,
       url: `${SITE_URL}/news/${slug}`,
       publisher: {
-        "@type": "Organization",
+        "@type": "NewsMediaOrganization",
         name: SITE_NAME,
+        url: SITE_URL,
+        logo: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/icon.svg`,
+        },
+      },
+      author: {
+        "@type": "Organization",
+        name: content?.author?.name || "Choseno Civic News Desk",
         url: SITE_URL,
       },
       ...(article.hero_image_url && {
@@ -125,14 +147,14 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
           description: content?.heroImageAlt ?? article.headline,
         },
       }),
-      ...(content?.author?.name && {
-        author: {
-          "@type": "Person",
-          name: content.author.name,
-        },
-      }),
       ...(content?.tags?.length && {
         keywords: content.tags.join(", "),
+      }),
+      ...(article.country && {
+        spatialCoverage: {
+          "@type": "Place",
+          name: `${article.province ? article.province + ", " : ""}${article.country}`,
+        },
       }),
     },
     {
@@ -140,7 +162,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: "News", item: `${SITE_URL}/news` },
+        { "@type": "ListItem", position: 2, name: "Civic News", item: `${SITE_URL}/news` },
         { "@type": "ListItem", position: 3, name: article.headline, item: `${SITE_URL}/news/${slug}` },
       ],
     },
