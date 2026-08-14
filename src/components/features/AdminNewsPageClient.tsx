@@ -17,7 +17,7 @@ import {
   Newspaper, Plus, Trash2, Edit3, Eye, Save,
   X, ImagePlus, FileJson, ChevronDown, ChevronUp, Calendar,
   Globe, AlignLeft, User, RefreshCw, Upload, ClipboardPaste, Zap, Copy, List,
-  Users, Flag,
+  Users, Flag, MapPin, AlertTriangle,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import {
@@ -32,14 +32,23 @@ import {
   BREAKING_NEWS_ACTIVE_HOURS,
   getNewsArticlePoliticianTags,
   syncNewsArticlePoliticianTags,
+  syncNewsArticleBoundaries,
+  NEWS_CATEGORIES,
+  NEWS_STATUSES,
+  NEWS_IMPACT_AREAS,
+  NEWS_IMPACT_AREA_LABELS,
+  NEWS_IMPACT_AREA_DESCRIPTIONS,
   type NewsArticle,
   type NewsArticleContent,
   type NewsArticleInsert,
+  type NewsImpactArea,
   type TaggedPolitician,
 } from "@/lib/services/news";
-import { adminSearchProfiles } from "@/lib/services/profile";
+import { adminSearchProfiles, adminGetProfileById } from "@/lib/services/profile";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { normalizeCountryCode, normalizeProvinceCode } from "@/lib/utils/newsGeography";
+import { getNewsAiPrompt, type NewsPromptPersonContext } from "@/lib/utils/newsPrompts";
+import { validateNewsArticleJson, validateNewsArticleBatchJson } from "@/lib/utils/newsValidation";
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -51,7 +60,11 @@ interface ArticleFormData {
   country: string;
   province: string;
   status: "draft" | "scheduled" | "published" | "archived";
-  published_at: string;
+  published_at: string;  // "posted" date -- when this goes live on Choseno
+  eventDate: string;     // when the real-world news event happened
+  latitude: string;
+  longitude: string;
+  impactArea: NewsImpactArea | "";
   hero_image_url: string;
   seoTitle: string;
   metaDescription: string;
@@ -76,6 +89,10 @@ const EMPTY_FORM: ArticleFormData = {
   province: "",
   status: "published",
   published_at: new Date().toISOString().slice(0, 16),
+  eventDate: "",
+  latitude: "",
+  longitude: "",
+  impactArea: "",
   hero_image_url: "",
   seoTitle: "",
   metaDescription: "",
@@ -98,10 +115,10 @@ const STATUS_CONFIG: Record<string, { label: string; tone: "primary" | "accent" 
   archived:  { label: "Archived",  tone: "neutral"  },
 };
 
-const CATEGORY_OPTIONS = [
-  "General", "Engineering", "Privacy", "Product Update", "Policy",
-  "Elections", "Local", "National", "International", "Opinion",
-];
+// The JSON "enums" (category/status/impact area) are the single source of
+// truth in src/lib/services/news.ts -- this alias just keeps the rest of
+// this file's existing `CATEGORY_OPTIONS` references working unchanged.
+const CATEGORY_OPTIONS: readonly string[] = NEWS_CATEGORIES;
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
@@ -154,6 +171,10 @@ function formToInsert(f: ArticleFormData): NewsArticleInsert {
     province:      f.province      || null,
     status:        f.status,
     published_at:  f.published_at  ? new Date(f.published_at).toISOString() : null,
+    event_date:    f.eventDate     ? new Date(f.eventDate).toISOString()    : null,
+    latitude:      f.latitude      ? Number(f.latitude)  : null,
+    longitude:     f.longitude     ? Number(f.longitude) : null,
+    impact_area:   f.impactArea    || null,
     hero_image_url:f.hero_image_url|| null,
     political_party_id: f.politicalPartyId ? Number(f.politicalPartyId) : null,
     content,
@@ -173,6 +194,12 @@ function articleToForm(a: NewsArticle): ArticleFormData {
     published_at:  a.published_at
       ? new Date(a.published_at).toISOString().slice(0, 16)
       : "",
+    eventDate:     a.event_date
+      ? new Date(a.event_date).toISOString().slice(0, 16)
+      : "",
+    latitude:      a.latitude  != null ? String(a.latitude)  : "",
+    longitude:     a.longitude != null ? String(a.longitude) : "",
+    impactArea:    a.impact_area ?? "",
     hero_image_url:a.hero_image_url  ?? "",
     politicalPartyId: a.political_party_id != null ? String(a.political_party_id) : "",
     seoTitle:      c?.seoTitle       ?? "",
@@ -198,162 +225,17 @@ function generateSlug(headline: string): string {
     .slice(0, 80);
 }
 
-function getAiPrompt(mode: "single" | "batch" = "single"): string {
-  if (mode === "batch") {
-    return getBatchAiPrompt();
-  }
-  return `You are an expert, objective news writer and senior editor. When I provide a news article topic, source text, or headline, you will generate a complete, publication-ready news story based strictly on the provided input.
-
-The output must strictly be a valid JSON object matching the schema below, with no markdown code blocks outside of the JSON formatting (or pure JSON text).
-
-### Strict Guidelines:
-1. **Tone & Objectivity:** The content must be strictly neutral, fact-based, and objective. Avoid bias, loaded language, or sensationalism while maintaining plain, accessible language for a general audience.
-
-2. **Anti-Hallucination & Accuracy Rules:**
-   - Never invent names, quotes, statistics, dates, locations, sources, or details not present in the input.
-   - If information is unavailable, explicitly omit it or state uncertainty rather than filling gaps with plausible assumptions.
-
-3. **Factual Openings (No Sensationalism):** Open the body immediately with a standard journalistic dateline (e.g., \`CITY, Prov. — \`) followed by a concrete, factual scene or verified statistic from the source material. Avoid dramatic metaphors or clickbait.
-
-4. **Verified Quotes Only:** Integrate direct quotes or attributions *only* when explicitly provided in the source material. If no verified quotes are available, summarize perspectives using neutral paraphrasing without quotation marks.
-
-5. **Structure & Readability:** Break up sections into shorter, digestible subsections with punchy, action-oriented subheads tailored to the specific story topic.
-
-6. **Format & Schema:** Fill out every field in the JSON accurately. The \`body\` must use standard Markdown formatting.
-
-### Required JSON Structure:
-{
-  "slug": "url-friendly-hyphenated-slug",
-  "headline": "Compelling, accurate news headline",
-  "summary": "Short, punchy card excerpt summarizing the core development",
-  "category": "Choose one: ${CATEGORY_OPTIONS.join(", ")}",
-  "country": "CA — ISO-2 code (CA, US, GB…); full names like \\"Canada\\" also work and get normalized. Blank = global",
-  "province": "ON — province/state code (ON, BC, NY, CA…); full names like \\"Ontario\\" also work. Blank = country-wide",
-  "status": "Choose one: ${Object.keys(STATUS_CONFIG).join(", ")}",
-  "published_at": "2026-08-06T00:00:00Z",
-  "body": "CITY, Prov. — [Concrete, factual opening based strictly on source material...]\\n\\n## [Action-Oriented Subhead]\\n\\n[Core details, verified facts, and bullet points for metrics...]\\n\\n## Outlook\\n\\n[Forward-looking context grounded strictly in the source material...]",
-  "seoTitle": "Optimized SEO Title under 60 characters",
-  "metaDescription": "Concise meta description under 160 characters summarizing the article for search engines",
-  "tags": ["tag1", "tag2", "tag3"],
-  "breakingNews": false,
-  "author": {
-    "name": "Jane Doe",
-    "bio": "Civic and investigative reporter",
-    "photoUrl": "https://... — OPTIONAL, omit if not provided"
-  },
-  "sources": [
-    {
-      "label": "Source Name",
-      "url": "https://example.com/source"
-    }
-  ],
-  "hero_image_url": "https://example.com/photo.jpg — OPTIONAL. Only include if the source material explicitly provides an image URL. Never invent, guess, or reuse a stock URL — omit this field entirely if no image was given.",
-  "heroImageAlt": "Accessible description of what's in the image — REQUIRED whenever hero_image_url is set, omit otherwise",
-  "heroImageCaption": "Photo credit / caption shown under the image — OPTIONAL, only if provided in source material",
-  "taggedPoliticians": ["Full Name As Registered On Choseno"],
-  "taggedParty": "Party Name — OPTIONAL"
-}
-
-### Key Points:
-- Headline: 60-80 characters, compelling but factual
-- Summary: 100-150 characters, card-friendly excerpt
-- Body: Use Markdown formatting with ## for subheadings
-- Category: MUST be exactly one of: ${CATEGORY_OPTIONS.join(", ")} — any other value will be miscategorized on the site
-- Status: MUST be exactly one of: ${Object.keys(STATUS_CONFIG).join(", ")} — any other value will be rejected when saving
-- SEO Title: 50-60 characters, include primary keyword
-- Meta Description: 150-160 characters, write for CTR not gaming
-- Tags: 3-5 tags, relevant to the story
-- Breaking News: Only mark as true if article is <6 hours old and unexpected. The badge auto-clears itself ${BREAKING_NEWS_ACTIVE_HOURS} hours after publish, so never set it for older or evergreen stories.
-- Country/Province: prefer ISO-2 codes (CA, US, ON, BC…), but full names are accepted too
-- Sources: cite every source the input material actually came from — this renders as a "Sources" section on the published article. Omit the array entirely if no sources were given, never invent one.
-- Images: Never fabricate a hero_image_url — only set it if the source material gives you a real image URL and its photo credit. No image? Omit all three image fields; it can be uploaded manually afterward in the admin panel.
-- All timestamps in ISO 8601 format with timezone
-- taggedPoliticians: full name(s) of any politician who is a direct subject of the story (e.g. the story is about them, quotes them, or is their announcement). Use their full name exactly as it would appear on a public profile. Omit the field (or leave it an empty array) if no specific politician is the subject — never guess a name just to fill the field. Names that don't match a registered profile will simply be skipped and can be added manually afterward in the admin panel.
-- taggedParty: the political party the story is about, if any. Omit if the story isn't about a specific party.
-
-### Common Mistakes to Avoid:
-❌ DON'T invent quotes, statistics, or details not in source material
-❌ DON'T use sensational language ("Shocking", "Bombshell", "Massive")
-❌ DON'T bury the lede - start with the news, not background
-❌ DON'T assume or fill gaps with reasonable inferences
-❌ DON'T include editorializing or opinion
-❌ DON'T invent or guess at a taggedPoliticians/taggedParty name — only include one explicitly named as a subject in the source material
-
-✅ DO start with verified facts and datelines
-✅ DO quote only when explicitly provided in source
-✅ DO attribute opinion: "According to X, [opinion]"
-✅ DO explain complex topics in plain language
-✅ DO let the facts speak - no editorializing
-
-Here is my news topic/headline and source details:`;
-}
-
-function getBatchAiPrompt(): string {
-  return `You are an expert news curator and batch article generator. Your task is to generate multiple high-quality, publication-ready news articles in a single JSON batch format.
-
-When provided with today's top news stories, key events, or a list of topics, you will generate between 3-10 complete news articles covering different angles, regions, or story types.
-
-### Output Format - Batch Array:
-
-The output MUST be a valid JSON object with a batch array:
-
-{
-  "batch": [
-    {
-      "slug": "url-friendly-slug-1",
-      "headline": "Compelling headline",
-      "summary": "Short excerpt for card",
-      "category": "${CATEGORY_OPTIONS.join("|")}",
-      "country": "CA|US|GB",
-      "province": "ON|BC|NY|TX",
-      "status": "${Object.keys(STATUS_CONFIG).join("|")}",
-      "published_at": "2026-08-06T14:30:00Z",
-      "body": "CITY, Prov. — [Content in Markdown...]",
-      "seoTitle": "SEO title under 60 chars",
-      "metaDescription": "Meta description under 160 chars",
-      "tags": ["tag1", "tag2", "tag3"],
-      "breakingNews": false,
-      "author": { "name": "Author", "bio": "Role", "photoUrl": "https://... — OPTIONAL" },
-      "sources": [{ "label": "Source", "url": "https://..." }],
-      "hero_image_url": "https://... — OPTIONAL, only if source material gives a real image URL. Omit otherwise, never invent one.",
-      "heroImageAlt": "Accessible description — REQUIRED if hero_image_url is set",
-      "heroImageCaption": "Photo credit / caption — OPTIONAL",
-      "taggedPoliticians": ["Full Name — OPTIONAL, only if a politician is a direct subject of this article"],
-      "taggedParty": "Party Name — OPTIONAL"
-    },
-    { /* article 2 */ },
-    { /* article 3 */ }
-  ]
-}
-
-### Strict Guidelines:
-
-1. **Diversity:** Cover different topics, regions, categories, or angles. Avoid repetition.
-
-2. **Anti-Hallucination:** Never invent facts, quotes, or statistics not in source material.
-
-3. **Category:** MUST be exactly one of ${CATEGORY_OPTIONS.join(", ")} for every article — no other values, they won't display correctly on the site.
-
-4. **Status:** MUST be exactly one of ${Object.keys(STATUS_CONFIG).join(", ")} — any other value will be rejected when saving.
-
-5. **Country/Province:** Prefer ISO-2 codes — CA/US/GB for country, ON/BC/NY/CA for province or state. Full names ("Canada", "Ontario") are accepted too and get normalized automatically, but codes are more reliable. Leave "province" blank for country-wide stories, and "country" blank for global stories.
-
-6. **Factual & Neutral:** Start with dateline, no sensationalism, use Markdown formatting.
-
-7. **Sources:** Cite every source each article's input actually came from — renders as a "Sources" section on the published page. Omit the array for an article with no sources, never invent one.
-
-8. **Breaking News:** Only set \`breakingNews: true\` on articles that are genuinely <6 hours old and represent a sudden, unexpected development. The badge auto-clears itself ${BREAKING_NEWS_ACTIVE_HOURS} hours after \`published_at\` — never set it on older or evergreen stories in the batch.
-
-9. **Images:** Never fabricate a hero_image_url for any article in the batch. Only set it (with heroImageAlt) when the source material actually supplies an image URL — otherwise omit all three image fields for that article; images can be added manually afterward in the admin panel.
-
-10. **Politician/Party tagging:** Only set taggedPoliticians/taggedParty when a specific politician or party is a direct subject of that article. Use the politician's full name exactly as it would appear on a public profile. Never invent a name to fill the field — omit it for stories not centered on a specific politician or party. Names that don't match a registered profile are skipped automatically and can be tagged manually afterward by editing that article.
-
-Here are today's news stories and topics:`;
+/** Case/whitespace-tolerant match of a pasted impactArea string against the enum; null if it doesn't match anything. */
+function normalizeImpactArea(input: unknown): NewsImpactArea | null {
+  if (typeof input !== "string") return null;
+  const needle = input.trim().toLowerCase();
+  return NEWS_IMPACT_AREAS.find((v) => v === needle) ?? null;
 }
 
 function applyJsonToForm(parsed: any, prev: ArticleFormData): ArticleFormData {
   const flat = { ...parsed, ...(parsed.content ?? {}) };
   const country = flat.country ? normalizeCountryCode(flat.country) : prev.country;
+  const impactAreaRaw = flat.impactArea ?? flat.impact_area;
   return {
     ...prev,
     slug:           flat.slug           ?? prev.slug,
@@ -366,6 +248,12 @@ function applyJsonToForm(parsed: any, prev: ArticleFormData): ArticleFormData {
     published_at:   flat.published_at
       ? new Date(flat.published_at).toISOString().slice(0, 16)
       : prev.published_at,
+    eventDate: (flat.eventDate ?? flat.event_date)
+      ? new Date(flat.eventDate ?? flat.event_date).toISOString().slice(0, 16)
+      : prev.eventDate,
+    latitude:  flat.latitude  != null && flat.latitude  !== "" ? String(flat.latitude)  : prev.latitude,
+    longitude: flat.longitude != null && flat.longitude !== "" ? String(flat.longitude) : prev.longitude,
+    impactArea: impactAreaRaw != null ? (normalizeImpactArea(impactAreaRaw) ?? prev.impactArea) : prev.impactArea,
     hero_image_url: flat.hero_image_url ?? flat.heroImageUrl ?? prev.hero_image_url,
     seoTitle:       flat.seoTitle       ?? prev.seoTitle,
     metaDescription:flat.metaDescription?? prev.metaDescription,
@@ -410,6 +298,34 @@ async function resolvePoliticianNamesToTags(
       matched.push({ politician_id: exact[0].id, full_name: exact[0].full_name });
     } else {
       unmatched.push(name);
+    }
+  }
+  return { matched, unmatched };
+}
+
+/**
+ * Resolves the id-based `taggedPoliticianIds` (see newsPrompts.ts) --
+ * unambiguous, unlike name matching, since two different politicians can
+ * share a full name. Still validates each id actually belongs to a
+ * `role = 'politician'` profile before trusting it (an AI could echo back
+ * a malformed or unrelated id), and reports anything that doesn't resolve
+ * the same way resolvePoliticianNamesToTags does.
+ */
+async function resolvePoliticianIdsToTags(
+  supabase: ReturnType<typeof createClient>,
+  ids: string[]
+): Promise<{ matched: TaggedPolitician[]; unmatched: string[] }> {
+  const matched: TaggedPolitician[] = [];
+  const unmatched: string[] = [];
+  for (const raw of ids) {
+    const id = raw.trim();
+    if (!id) continue;
+    const { data } = await adminGetProfileById(supabase, id);
+    const row = data as { id: string; full_name: string | null; role: string | null } | null;
+    if (row && row.role === "politician") {
+      matched.push({ politician_id: row.id, full_name: row.full_name });
+    } else {
+      unmatched.push(id);
     }
   }
   return { matched, unmatched };
@@ -470,12 +386,17 @@ export default function AdminNewsPageClient() {
   // slug -- applied to each article's tags after creation (see
   // handleBatchImport), since news_article_politicians rows need a real
   // article id that doesn't exist until after the insert.
-  const [batchTagHints, setBatchTagHints] = useState<Record<string, { politicianNames: string[]; partyName?: string }>>({});
+  const [batchTagHints, setBatchTagHints] = useState<Record<string, { politicianNames: string[]; politicianIds: string[]; partyName?: string }>>({});
 
   // AI Prompt state
   const [showAiPrompt, setShowAiPrompt] = useState(false);
   const [promptCopied, setPromptCopied] = useState(false);
   const [promptTab, setPromptTab] = useState<"single" | "batch">("single");
+  // Pinned when arriving via a politician/office holder's "Generate News
+  // Article" button (?personId=&personName= on the URL) -- baked into the
+  // single-article prompt (newsPrompts.ts) so the AI tags this exact
+  // profile id instead of a name the fuzzy matcher has to guess at.
+  const [promptPerson, setPromptPerson] = useState<NewsPromptPersonContext | null>(null);
 
   const [sectionsOpen, setSectionsOpen] = useState({
     core: true,
@@ -501,6 +422,40 @@ export default function AdminNewsPageClient() {
   useEffect(() => {
     Promise.resolve().then(() => loadArticles());
   }, [loadArticles]);
+
+  // Arriving from a politician/office holder's "Generate News Article"
+  // button (OfficeHoldersAdminClient) lands here as
+  // /admin/news?personId=<uuid>&personName=<name> (personId omitted for an
+  // unclaimed officeholder with no linked profile yet). Read via
+  // window.location instead of next/navigation's useSearchParams so this
+  // client component doesn't need a <Suspense> boundary just for a one-time
+  // read on mount.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const personId = params.get("personId") || undefined;
+    const personName = params.get("personName");
+    if (!personName) return;
+
+    const person: NewsPromptPersonContext = { id: personId, name: personName };
+    // openNewForm() resets promptPerson/taggedPoliticians to null/[] as part
+    // of its normal "blank slate" behavior -- call it first so these two
+    // setters (same batch, later call wins) are what the form actually ends
+    // up with, not the reset.
+    openNewForm();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time sync from the URL (an external system) into React state on mount, not derivable during render
+    setPromptPerson(person);
+    if (personId) {
+      setTaggedPoliticians([{ politician_id: personId, full_name: personName }]);
+    }
+    setPromptTab("single");
+    setShowAiPrompt(true);
+    setStatusMsg({
+      type: "success",
+      msg: `Generating for ${personName}${personId ? "" : " (no linked profile yet — tag manually after saving)"}. Copy the prompt, paste your source material into your AI tool, then paste the JSON result back here.`,
+    });
+    window.history.replaceState(null, "", window.location.pathname);
+  }, []);
 
   const runPoliticianSearch = useCallback(async () => {
     if (politicianQuery.trim().length < 2) {
@@ -558,6 +513,7 @@ export default function AdminNewsPageClient() {
     setTaggedPoliticians([]);
     setPoliticianQuery("");
     setPoliticianResults([]);
+    setPromptPerson(null);
   }
 
   async function openEditForm(id: string) {
@@ -576,6 +532,7 @@ export default function AdminNewsPageClient() {
     setBatchTagHints({});
     setPoliticianQuery("");
     setPoliticianResults([]);
+    setPromptPerson(null);
     const { data: tags } = await getNewsArticlePoliticianTags(supabase, id);
     setTaggedPoliticians(tags || []);
   }
@@ -593,61 +550,89 @@ export default function AdminNewsPageClient() {
 
   async function parseAndApplyJson(
     jsonString: string
-  ): Promise<{ ok: boolean; batchCount?: number; unmatchedPoliticians?: string[] }> {
+  ): Promise<{ ok: boolean; batchCount?: number; unmatchedPoliticians?: string[]; warnings?: string[] }> {
+    let parsed: any;
     try {
-      const parsed = JSON.parse(jsonString);
-      if (parsed && Array.isArray(parsed.batch)) {
-        const hints: Record<string, { politicianNames: string[]; partyName?: string }> = {};
-        const drafts = parsed.batch.map((item: any) => {
-          const draft = formToInsert(applyJsonToForm(item, EMPTY_FORM));
-          const politicianNames = Array.isArray(item?.taggedPoliticians) ? item.taggedPoliticians : [];
-          const partyName = typeof item?.taggedParty === "string" ? item.taggedParty : undefined;
-          if (draft.slug && (politicianNames.length > 0 || partyName)) {
-            hints[draft.slug] = { politicianNames, partyName };
-          }
-          return draft;
-        });
-        setBatchPreview(drafts);
-        setBatchTagHints(hints);
-        setJsonPasteError("");
-        return { ok: true, batchCount: drafts.length };
-      }
-
-      setBatchPreview(null);
-      setBatchTagHints({});
-      const nextForm = applyJsonToForm(parsed, form);
-      setForm(nextForm);
-
-      let unmatchedPoliticians: string[] = [];
-      const politicianNames: string[] = Array.isArray(parsed.taggedPoliticians) ? parsed.taggedPoliticians : [];
-      if (politicianNames.length > 0) {
-        const { matched, unmatched } = await resolvePoliticianNamesToTags(supabase, politicianNames);
-        unmatchedPoliticians = unmatched;
-        if (matched.length > 0) {
-          setTaggedPoliticians((prev) => {
-            const byId = new Map(prev.map((tp) => [tp.politician_id, tp]));
-            matched.forEach((m) => byId.set(m.politician_id, m));
-            return Array.from(byId.values());
-          });
-        }
-      }
-      if (typeof parsed.taggedParty === "string" && parsed.taggedParty.trim()) {
-        const partyId = await resolvePartyNameToId(supabase, parsed.taggedParty, nextForm.country);
-        if (partyId != null) setField("politicalPartyId", String(partyId));
-      }
-
-      setJsonPasteError("");
-      return { ok: true, unmatchedPoliticians };
+      parsed = JSON.parse(jsonString);
     } catch {
       setJsonPasteError("Invalid JSON — check your syntax and try again.");
       return { ok: false };
     }
+
+    // Schema/enum debugging pass -- catches a syntactically-valid object
+    // with e.g. an out-of-enum category/impactArea or a lat without a lng
+    // before it ever reaches formToInsert, instead of silently saving
+    // wrong/null. See src/lib/utils/newsValidation.ts.
+    const isBatch = parsed && Array.isArray(parsed.batch);
+    const { errors, warnings } = isBatch
+      ? validateNewsArticleBatchJson(parsed.batch)
+      : validateNewsArticleJson(parsed);
+    if (errors.length > 0) {
+      setJsonPasteError(errors.join("\n"));
+      return { ok: false };
+    }
+
+    if (isBatch) {
+      const hints: Record<string, { politicianNames: string[]; politicianIds: string[]; partyName?: string }> = {};
+      const drafts = parsed.batch.map((item: any) => {
+        const draft = formToInsert(applyJsonToForm(item, EMPTY_FORM));
+        const politicianNames = Array.isArray(item?.taggedPoliticians) ? item.taggedPoliticians : [];
+        const politicianIds = Array.isArray(item?.taggedPoliticianIds) ? item.taggedPoliticianIds : [];
+        const partyName = typeof item?.taggedParty === "string" ? item.taggedParty : undefined;
+        if (draft.slug && (politicianNames.length > 0 || politicianIds.length > 0 || partyName)) {
+          hints[draft.slug] = { politicianNames, politicianIds, partyName };
+        }
+        return draft;
+      });
+      setBatchPreview(drafts);
+      setBatchTagHints(hints);
+      setJsonPasteError("");
+      return { ok: true, batchCount: drafts.length, warnings };
+    }
+
+    setBatchPreview(null);
+    setBatchTagHints({});
+    const nextForm = applyJsonToForm(parsed, form);
+    setForm(nextForm);
+
+    // taggedPoliticianIds (unambiguous) resolve first; taggedPoliticians
+    // (name, may be ambiguous) fills in anything the ids didn't cover.
+    // Both can be present -- results merge by politician_id.
+    let unmatchedPoliticians: string[] = [];
+    const politicianIds: string[] = Array.isArray(parsed.taggedPoliticianIds) ? parsed.taggedPoliticianIds : [];
+    const politicianNames: string[] = Array.isArray(parsed.taggedPoliticians) ? parsed.taggedPoliticians : [];
+    if (politicianIds.length > 0 || politicianNames.length > 0) {
+      const [byId, byName] = await Promise.all([
+        politicianIds.length > 0 ? resolvePoliticianIdsToTags(supabase, politicianIds) : Promise.resolve({ matched: [], unmatched: [] }),
+        politicianNames.length > 0 ? resolvePoliticianNamesToTags(supabase, politicianNames) : Promise.resolve({ matched: [], unmatched: [] }),
+      ]);
+      unmatchedPoliticians = [...byId.unmatched, ...byName.unmatched];
+      const matched = [...byId.matched, ...byName.matched];
+      if (matched.length > 0) {
+        setTaggedPoliticians((prev) => {
+          const byIdMap = new Map(prev.map((tp) => [tp.politician_id, tp]));
+          matched.forEach((m) => byIdMap.set(m.politician_id, m));
+          return Array.from(byIdMap.values());
+        });
+      }
+    }
+    if (typeof parsed.taggedParty === "string" && parsed.taggedParty.trim()) {
+      const partyId = await resolvePartyNameToId(supabase, parsed.taggedParty, nextForm.country);
+      if (partyId != null) setField("politicalPartyId", String(partyId));
+    }
+
+    setJsonPasteError("");
+    return { ok: true, unmatchedPoliticians, warnings };
   }
 
   function unmatchedNote(names?: string[]): string {
     return names && names.length > 0
       ? ` Couldn't auto-match politician(s): ${names.join(", ")} — add them manually below.`
       : "";
+  }
+
+  function warningsNote(warnings?: string[]): string {
+    return warnings && warnings.length > 0 ? ` ⚠ ${warnings.join(" ")}` : "";
   }
 
   function handleJsonFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -660,8 +645,8 @@ export default function AdminNewsPageClient() {
         setStatusMsg({
           type: "success",
           msg: result.batchCount
-            ? `Loaded ${result.batchCount} articles — review below and click "Import All".`
-            : `JSON imported — review fields and save.${unmatchedNote(result.unmatchedPoliticians)}`,
+            ? `Loaded ${result.batchCount} articles — review below and click "Import All".${warningsNote(result.warnings)}`
+            : `JSON imported — review fields and save.${unmatchedNote(result.unmatchedPoliticians)}${warningsNote(result.warnings)}`,
         });
       }
     };
@@ -676,8 +661,8 @@ export default function AdminNewsPageClient() {
       setStatusMsg({
         type: "success",
         msg: result.batchCount
-          ? `Loaded ${result.batchCount} articles — review below and click "Import All".`
-          : `JSON applied — review fields and save.${unmatchedNote(result.unmatchedPoliticians)}`,
+          ? `Loaded ${result.batchCount} articles — review below and click "Import All".${warningsNote(result.warnings)}`
+          : `JSON applied — review fields and save.${unmatchedNote(result.unmatchedPoliticians)}${warningsNote(result.warnings)}`,
       });
       setJsonPasteMode(false);
       setJsonPasteText("");
@@ -698,9 +683,15 @@ export default function AdminNewsPageClient() {
       if (!hint) continue;
 
       let politicianIds: string[] = [];
-      if (hint.politicianNames.length > 0) {
-        const { matched, unmatched } = await resolvePoliticianNamesToTags(supabase, hint.politicianNames);
-        politicianIds = matched.map((m) => m.politician_id);
+      if (hint.politicianIds.length > 0 || hint.politicianNames.length > 0) {
+        const [byId, byName] = await Promise.all([
+          hint.politicianIds.length > 0 ? resolvePoliticianIdsToTags(supabase, hint.politicianIds) : Promise.resolve({ matched: [], unmatched: [] }),
+          hint.politicianNames.length > 0 ? resolvePoliticianNamesToTags(supabase, hint.politicianNames) : Promise.resolve({ matched: [], unmatched: [] }),
+        ]);
+        const matchedIds = new Set<string>();
+        [...byId.matched, ...byName.matched].forEach((m) => matchedIds.add(m.politician_id));
+        politicianIds = Array.from(matchedIds);
+        const unmatched = [...byId.unmatched, ...byName.unmatched];
         if (unmatched.length > 0) unmatchedByArticle.push(`"${article.headline}": ${unmatched.join(", ")}`);
       }
       if (politicianIds.length > 0) await syncNewsArticlePoliticianTags(supabase, article.id, politicianIds);
@@ -708,6 +699,12 @@ export default function AdminNewsPageClient() {
       if (hint.partyName) {
         const partyId = await resolvePartyNameToId(supabase, hint.partyName, article.country || "");
         if (partyId != null) await updateNewsArticle(supabase, article.id, { political_party_id: partyId });
+      }
+
+      // Boundary auto-tagging from lat/lng -- see admin_sync_news_article_
+      // boundaries() in 20260813000000_news_event_geo_impact_area.sql.
+      if (article.latitude != null && article.longitude != null) {
+        await syncNewsArticleBoundaries(supabase, article.id);
       }
     }
 
@@ -788,6 +785,15 @@ export default function AdminNewsPageClient() {
       err = tagRes.error ?? undefined;
     }
 
+    if (!err && savedId) {
+      // Re-derives news_article_boundaries from the article's current
+      // latitude/longitude every save -- cheap, and correctly clears stale
+      // boundary tags if an admin removes the coordinates later, not just
+      // adds them the first time.
+      const boundaryRes = await syncNewsArticleBoundaries(supabase, savedId);
+      if (boundaryRes.error) err = boundaryRes.error;
+    }
+
     setSaving(false);
     if (err) {
       setStatusMsg({ type: "error", msg: err.message });
@@ -850,7 +856,7 @@ export default function AdminNewsPageClient() {
   }
 
   function handleCopyPrompt() {
-    navigator.clipboard.writeText(getAiPrompt(promptTab));
+    navigator.clipboard.writeText(getNewsAiPrompt(promptTab, promptPerson ?? undefined));
     setPromptCopied(true);
     setTimeout(() => setPromptCopied(false), 2000);
   }
@@ -905,17 +911,31 @@ export default function AdminNewsPageClient() {
                         <Globe size={11} /> {a.country}{a.province ? `-${a.province}` : ""}
                       </span>
                     )}
+                    {a.impact_area && (
+                      <Badge tone="accent">
+                        {a.impact_area === "local" && a.latitude != null ? <MapPin size={10} className="inline -mt-0.5 mr-0.5" /> : null}
+                        {NEWS_IMPACT_AREA_LABELS[a.impact_area as NewsImpactArea] ?? a.impact_area}
+                      </Badge>
+                    )}
                   </div>
                   <p className="text-sm font-semibold text-text-main truncate">{a.headline}</p>
                   <p className="text-xs text-text-muted font-mono">{a.slug}</p>
-                  {a.published_at && (
-                    <p className="text-xs text-text-muted flex items-center gap-1">
-                      <Calendar size={11} />
-                      {new Date(a.published_at).toLocaleDateString("en-CA", {
-                        year: "numeric", month: "short", day: "numeric",
-                      })}
-                    </p>
-                  )}
+                  <div className="flex items-center gap-3 flex-wrap">
+                    {a.published_at && (
+                      <p className="text-xs text-text-muted flex items-center gap-1">
+                        <Calendar size={11} /> Posted {new Date(a.published_at).toLocaleDateString("en-CA", {
+                          year: "numeric", month: "short", day: "numeric",
+                        })}
+                      </p>
+                    )}
+                    {a.event_date && (
+                      <p className="text-xs text-text-muted flex items-center gap-1">
+                        <Calendar size={11} /> Happened {new Date(a.event_date).toLocaleDateString("en-CA", {
+                          year: "numeric", month: "short", day: "numeric",
+                        })}
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   {a.status !== "published" && (
@@ -1014,7 +1034,14 @@ export default function AdminNewsPageClient() {
                   rows={10}
                   className="font-mono text-xs"
                 />
-                {jsonPasteError && <p className="text-xs text-danger mt-1">{jsonPasteError}</p>}
+                {jsonPasteError && (
+                  <div className="mt-1 flex items-start gap-1.5 text-xs text-danger">
+                    <AlertTriangle size={13} className="mt-0.5 shrink-0" />
+                    <div className="space-y-0.5">
+                      {jsonPasteError.split("\n").map((line, i) => <p key={i}>{line}</p>)}
+                    </div>
+                  </div>
+                )}
                 <div className="flex gap-2 mt-3">
                   <Button size="sm" onClick={handleJsonPasteApply}>Apply JSON</Button>
                   <Button size="sm" variant="ghost" onClick={() => { setJsonPasteMode(false); setJsonPasteText(""); setJsonPasteError(""); }}>
@@ -1040,6 +1067,7 @@ export default function AdminNewsPageClient() {
                       </div>
                       <div className="flex items-center gap-1.5 shrink-0">
                         {a.country && <Badge tone="neutral">{a.country}{a.province ? `-${a.province}` : ""}</Badge>}
+                        {a.impact_area && <Badge tone="accent">{NEWS_IMPACT_AREA_LABELS[a.impact_area]}</Badge>}
                         {a.content?.breakingNews && <Badge tone="rose">🔴 Breaking</Badge>}
                       </div>
                     </div>
@@ -1098,19 +1126,29 @@ export default function AdminNewsPageClient() {
 
                 <FieldGroup label="Status">
                   <Select value={form.status} onChange={(e) => setField("status", e.target.value as any)}>
-                    <option value="draft">Draft</option>
-                    <option value="scheduled">Scheduled</option>
-                    <option value="published">Published</option>
-                    <option value="archived">Archived</option>
+                    {NEWS_STATUSES.map((s) => (
+                      <option key={s} value={s}>{STATUS_CONFIG[s]?.label ?? s}</option>
+                    ))}
                   </Select>
                 </FieldGroup>
 
-                <FieldGroup label="Publish Date / Time">
+                <FieldGroup label="Posted Date / Time (when this goes live on Choseno)">
                   <Input
                     type="datetime-local"
                     value={form.published_at}
                     onChange={(e) => setField("published_at", e.target.value)}
                   />
+                </FieldGroup>
+
+                <FieldGroup label="Event Date (when the news itself happened, optional)">
+                  <Input
+                    type="datetime-local"
+                    value={form.eventDate}
+                    onChange={(e) => setField("eventDate", e.target.value)}
+                  />
+                  <p className="text-[11px] text-text-muted">
+                    Distinct from Posted Date — set this when backfilling an older story so it isn&apos;t dated as if it just happened.
+                  </p>
                 </FieldGroup>
 
                 <FieldGroup label="Country">
@@ -1129,6 +1167,37 @@ export default function AdminNewsPageClient() {
                     onBlur={(e) => setField("province", normalizeProvinceCode(e.target.value, form.country))}
                     placeholder="Ontario, ON, California… — blank = country-wide"
                   />
+                </FieldGroup>
+
+                <FieldGroup label="Impact Area">
+                  <Select value={form.impactArea} onChange={(e) => setField("impactArea", e.target.value as NewsImpactArea | "")}>
+                    <option value="">Not set</option>
+                    {NEWS_IMPACT_AREAS.map((v) => (
+                      <option key={v} value={v}>{NEWS_IMPACT_AREA_LABELS[v]}</option>
+                    ))}
+                  </Select>
+                  <p className="text-[11px] text-text-muted">
+                    {form.impactArea ? NEWS_IMPACT_AREA_DESCRIPTIONS[form.impactArea] : "How far this story's relevance reaches — controls who sees it as \"their\" news."}
+                  </p>
+                </FieldGroup>
+
+                <FieldGroup label="Event Latitude / Longitude" className="sm:col-span-2">
+                  <div className="grid grid-cols-2 gap-2">
+                    <Input
+                      type="number" step="any" placeholder="Latitude, e.g. 49.1913"
+                      value={form.latitude}
+                      onChange={(e) => setField("latitude", e.target.value)}
+                    />
+                    <Input
+                      type="number" step="any" placeholder="Longitude, e.g. -122.8490"
+                      value={form.longitude}
+                      onChange={(e) => setField("longitude", e.target.value)}
+                    />
+                  </div>
+                  <p className="text-[11px] text-text-muted flex items-start gap-1">
+                    <MapPin size={12} className="mt-0.5 shrink-0" />
+                    Where this news event happened. On save, the system automatically finds and tags the electoral boundaries containing this point (city, riding, etc.) — required for a &quot;Local&quot; impact area to actually surface as local news.
+                  </p>
                 </FieldGroup>
 
                 <FieldGroup label="Summary (card excerpt)" className="sm:col-span-2">
@@ -1421,6 +1490,19 @@ export default function AdminNewsPageClient() {
               </button>
             </div>
 
+            {promptTab === "single" && promptPerson && (
+              <div className="mx-2 flex items-center justify-between gap-3 text-xs bg-accent/10 text-accent font-semibold px-3 py-2 rounded-xl">
+                <span className="flex items-center gap-1.5">
+                  <Flag size={13} />
+                  Pinned to: {promptPerson.name}
+                  {!promptPerson.id && " (no linked profile — will tag by name only)"}
+                </span>
+                <button type="button" onClick={() => setPromptPerson(null)} className="hover:text-danger cursor-pointer shrink-0">
+                  <X size={13} />
+                </button>
+              </div>
+            )}
+
             <div
               className="p-5 rounded-2xl border border-border-light/30 space-y-3"
               style={{ backgroundColor: "var(--color-surface)" }}
@@ -1436,7 +1518,7 @@ export default function AdminNewsPageClient() {
               <div className="relative">
                 <textarea
                   readOnly
-                  value={getAiPrompt(promptTab)}
+                  value={getNewsAiPrompt(promptTab, promptPerson ?? undefined)}
                   className="w-full h-96 p-4 rounded-lg border border-border-light/30 bg-surface-hover font-mono text-xs resize-none"
                   style={{ color: "var(--color-text-main)" }}
                 />

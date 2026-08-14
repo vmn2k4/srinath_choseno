@@ -5,6 +5,50 @@ import { isDevEnvironment } from "@/lib/utils/environment";
 type Client = SupabaseClient<Database>;
 type NewsArticleRow = Database["public"]["Tables"]["news_articles"]["Insert"];
 
+// ── Domain constants (the JSON "enums") ─────────────────────────────────────
+//
+// JSON has no native enum type, so these are the single source of truth for
+// every place that needs to validate/render one -- the admin form's <select>
+// options, the AI prompt builders (src/lib/utils/newsPrompts.ts), and the
+// paste-JSON validator (src/lib/utils/newsValidation.ts). Each mirrors a DB
+// CHECK constraint (news_articles.category has no DB constraint today;
+// status and impact_area do -- see 20260804000001_news_platform.sql and
+// 20260813000000_news_event_geo_impact_area.sql) so a value accepted here
+// is guaranteed to be accepted there.
+
+export const NEWS_CATEGORIES = [
+  "General", "Engineering", "Privacy", "Product Update", "Policy",
+  "Elections", "Local", "National", "International", "Opinion",
+] as const;
+export type NewsCategory = (typeof NEWS_CATEGORIES)[number];
+
+export const NEWS_STATUSES = ["draft", "scheduled", "published", "archived"] as const;
+export type NewsStatus = (typeof NEWS_STATUSES)[number];
+
+/**
+ * How far a story's relevance reaches, for feed/notification targeting.
+ * "local" pairs with latitude/longitude (see admin_sync_news_article_
+ * boundaries()) to resolve which specific electoral boundaries the story
+ * belongs to; the other three are broad reach categories that don't need
+ * a point on the map.
+ */
+export const NEWS_IMPACT_AREAS = ["local", "state", "country", "international"] as const;
+export type NewsImpactArea = (typeof NEWS_IMPACT_AREAS)[number];
+
+export const NEWS_IMPACT_AREA_LABELS: Record<NewsImpactArea, string> = {
+  local: "Local",
+  state: "State / Province-wide",
+  country: "Country-wide",
+  international: "International",
+};
+
+export const NEWS_IMPACT_AREA_DESCRIPTIONS: Record<NewsImpactArea, string> = {
+  local: "Relevant to one city/riding/municipality — set latitude & longitude so it auto-tags the right electoral boundaries.",
+  state: "Relevant to a whole province or state.",
+  country: "Relevant nationwide.",
+  international: "Relevant across multiple countries.",
+};
+
 // ── Types ─────────────────────────────────────────────────────────────────
 
 export interface NewsArticleContent {
@@ -33,8 +77,12 @@ export interface NewsArticle {
   category: string;
   country: string | null;
   province: string | null;
-  status: "draft" | "scheduled" | "published" | "archived";
-  published_at: string | null;
+  status: NewsStatus;
+  published_at: string | null; // "posted" date -- when this went live on Choseno
+  event_date: string | null;   // when the real-world news event happened
+  latitude: number | null;
+  longitude: number | null;
+  impact_area: NewsImpactArea | null;
   hero_image_url: string | null;
   content: NewsArticleContent;
   political_party_id: number | null;
@@ -50,8 +98,12 @@ export interface NewsArticleInsert {
   category?: string;
   country?: string | null;
   province?: string | null;
-  status?: "draft" | "scheduled" | "published" | "archived";
+  status?: NewsStatus;
   published_at?: string | null;
+  event_date?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  impact_area?: NewsImpactArea | null;
   hero_image_url?: string | null;
   content?: NewsArticleContent;
   political_party_id?: number | null;
@@ -94,7 +146,7 @@ export async function getPublishedNewsArticles(
   let q = supabase
     .from("news_articles")
     .select(
-      "id, slug, headline, summary, category, country, province, status, published_at, hero_image_url, content, created_at"
+      "id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, created_at"
     )
     .eq("status", "published")
     .lte("published_at", new Date().toISOString())
@@ -129,7 +181,7 @@ export async function listAllNewsArticlesForAdmin(
 ): Promise<{ data: Partial<NewsArticle>[] | null; error: PostgrestError | null }> {
   return supabase
     .from("news_articles")
-    .select("id, slug, headline, category, country, province, status, published_at, content, created_at, updated_at")
+    .select("id, slug, headline, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, content, created_at, updated_at")
     .order("created_at", { ascending: false }) as unknown as Promise<{
     data: Partial<NewsArticle>[] | null;
     error: PostgrestError | null;
@@ -291,6 +343,68 @@ export async function syncNewsArticlePoliticianTags(
     p_article_id: articleId,
     p_politician_ids: politicianIds,
   });
+}
+
+/**
+ * All published articles tagged to a given politician (news_article_
+ * politicians), newest first -- powers a "News mentioning me" list on a
+ * politician's wall/profile, and lets the AI-generation flow pull a
+ * politician's prior coverage as context. Same shape/filters as
+ * getPublishedNewsArticles so callers can render both with one component.
+ */
+export async function getNewsArticlesByPolitician(
+  supabase: Client,
+  politicianId: string,
+  opts: { limit?: number; offset?: number } = {}
+): Promise<{ data: NewsArticle[] | null; error: PostgrestError | null }> {
+  let q = supabase
+    .from("news_articles")
+    .select(
+      "id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, created_at, news_article_politicians!inner(politician_id)"
+    )
+    .eq("news_article_politicians.politician_id", politicianId)
+    .eq("status", "published")
+    .lte("published_at", new Date().toISOString())
+    .order("published_at", { ascending: false });
+
+  if (opts.limit) q = q.limit(opts.limit);
+  if (opts.offset) q = q.range(opts.offset, opts.offset + (opts.limit ?? 10) - 1);
+
+  return q as unknown as Promise<{ data: NewsArticle[] | null; error: PostgrestError | null }>;
+}
+
+// ── Boundary tagging (article geolocation → electoral boundaries) ──────────
+//
+// A "local" article's latitude/longitude resolves to actual map_shapes rows
+// via admin_sync_news_article_boundaries() (ST_Contains, same pattern as
+// sync_user_boundary_memberships) -- spatial correctness belongs in
+// Postgres, not client JS. Call syncNewsArticleBoundaries after any save
+// that sets/changes/clears latitude+longitude.
+
+export interface TaggedBoundary {
+  map_shape_id: number;
+  name: string | null;
+  boundary_type: string | null;
+}
+
+export async function getNewsArticleBoundaries(
+  supabase: Client,
+  articleId: string
+): Promise<{ data: TaggedBoundary[] | null; error: PostgrestError | null }> {
+  const { data, error } = await supabase
+    .from("news_article_boundaries")
+    .select("map_shape_id, map_shapes(name, boundary_type)")
+    .eq("news_article_id", articleId);
+  if (error) return { data: null, error };
+  const rows = (data as unknown as Array<{ map_shape_id: number; map_shapes: { name: string | null; boundary_type: string | null } | null }>) || [];
+  return {
+    data: rows.map((r) => ({ map_shape_id: r.map_shape_id, name: r.map_shapes?.name ?? null, boundary_type: r.map_shapes?.boundary_type ?? null })),
+    error: null,
+  };
+}
+
+export async function syncNewsArticleBoundaries(supabase: Client, articleId: string) {
+  return (supabase.rpc as any)("admin_sync_news_article_boundaries", { p_article_id: articleId });
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────

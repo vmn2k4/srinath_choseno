@@ -1052,6 +1052,39 @@ export type Database = {
         }
         Relationships: []
       }
+      news_article_boundaries: {
+        Row: {
+          created_at: string
+          map_shape_id: number
+          news_article_id: string
+        }
+        Insert: {
+          created_at?: string
+          map_shape_id: number
+          news_article_id: string
+        }
+        Update: {
+          created_at?: string
+          map_shape_id?: number
+          news_article_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "news_article_boundaries_map_shape_id_fkey"
+            columns: ["map_shape_id"]
+            isOneToOne: false
+            referencedRelation: "map_shapes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "news_article_boundaries_news_article_id_fkey"
+            columns: ["news_article_id"]
+            isOneToOne: false
+            referencedRelation: "news_articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       news_article_politicians: {
         Row: {
           created_at: string
@@ -1092,9 +1125,13 @@ export type Database = {
           country: string | null
           created_at: string
           created_by: string | null
+          event_date: string | null
           headline: string
           hero_image_url: string | null
           id: string
+          impact_area: string | null
+          latitude: number | null
+          longitude: number | null
           political_party_id: number | null
           province: string | null
           published_at: string | null
@@ -1109,9 +1146,13 @@ export type Database = {
           country?: string | null
           created_at?: string
           created_by?: string | null
+          event_date?: string | null
           headline: string
           hero_image_url?: string | null
           id?: string
+          impact_area?: string | null
+          latitude?: number | null
+          longitude?: number | null
           political_party_id?: number | null
           province?: string | null
           published_at?: string | null
@@ -1126,9 +1167,13 @@ export type Database = {
           country?: string | null
           created_at?: string
           created_by?: string | null
+          event_date?: string | null
           headline?: string
           hero_image_url?: string | null
           id?: string
+          impact_area?: string | null
+          latitude?: number | null
+          longitude?: number | null
           political_party_id?: number | null
           province?: string | null
           published_at?: string | null
@@ -1518,6 +1563,71 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "countries"
             referencedColumns: ["name"]
+          },
+        ]
+      }
+      politician_claim_campaigns: {
+        Row: {
+          campaign_name: string
+          city: string | null
+          claim_link: string
+          claim_token: string
+          claimed_at: string | null
+          created_at: string
+          created_by: string | null
+          error_message: string | null
+          id: string
+          opened_at: string | null
+          politician_email: string
+          politician_name: string
+          role_title: string | null
+          sent_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          campaign_name: string
+          city?: string | null
+          claim_link: string
+          claim_token?: string
+          claimed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          error_message?: string | null
+          id?: string
+          opened_at?: string | null
+          politician_email: string
+          politician_name: string
+          role_title?: string | null
+          sent_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          campaign_name?: string
+          city?: string | null
+          claim_link?: string
+          claim_token?: string
+          claimed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          error_message?: string | null
+          id?: string
+          opened_at?: string | null
+          politician_email?: string
+          politician_name?: string
+          role_title?: string | null
+          sent_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "politician_claim_campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -2426,8 +2536,26 @@ export type Database = {
         }
         Relationships: []
       }
+      politician_campaign_stats: {
+        Row: {
+          campaign_name: string | null
+          campaign_start: string | null
+          claim_rate_percent: number | null
+          claimed_count: number | null
+          failed_count: number | null
+          last_sent_at: string | null
+          opened_count: number | null
+          sent_count: number | null
+          total: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      _execute_officeholder_wall_claim_merge: {
+        Args: { p_approved_by: string; p_claim_id: string }
+        Returns: Json
+      }
       _postgis_deprecate: {
         Args: { newname: string; oldname: string; version: string }
         Returns: undefined
@@ -2648,6 +2776,20 @@ export type Database = {
           id: string
           role: string
         }[]
+      }
+      admin_sync_news_article_boundaries: {
+        Args: { p_article_id: string }
+        Returns: {
+          created_at: string
+          map_shape_id: number
+          news_article_id: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "news_article_boundaries"
+          isOneToOne: false
+          isSetofReturn: true
+        }
       }
       admin_sync_news_article_tags: {
         Args: { p_article_id: string; p_politician_ids?: string[] }
@@ -3207,20 +3349,20 @@ export type Database = {
       list_recent_officeholder_wall_claims: {
         Args: { p_limit?: number }
         Returns: {
-          approved_at: string | null
+          approved_at: string
           claim_id: string
-          claimed_at: string | null
-          contact_email: string | null
+          claimed_at: string
+          contact_email: string
           created_at: string
-          invite_expires_at: string | null
-          invited_at: string | null
+          invite_expires_at: string
+          invited_at: string
           is_self_requested: boolean
           office_holder_id: string
           office_holder_name: string
-          reversal_reason: string | null
-          reversed_at: string | null
+          reversal_reason: string
+          reversed_at: string
           status: string
-          wall_slug: string | null
+          wall_slug: string
         }[]
       }
       longtransactionsenabled: { Args: never; Returns: boolean }

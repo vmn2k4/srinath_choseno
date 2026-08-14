@@ -141,7 +141,7 @@ export default function PostCard({
           onReport={onReport ? () => setReportTarget({ targetType: "post", targetId: post.id }) : undefined}
         />
 
-        <p className="text-text-tertiary text-sm whitespace-pre-wrap leading-relaxed mb-2">
+        <p className="text-text-main text-base font-medium whitespace-pre-wrap leading-loose mb-4">
           {showTranslated && translatedText ? translatedText : post.content}
         </p>
 
@@ -213,7 +213,7 @@ export default function PostCard({
         ) : null}
 
         {hasSpotlightResponse && (
-          <div className="mt-4 p-4 bg-primary/10 border border-primary/30 rounded-xl space-y-3 shadow-sm">
+          <div className="mt-3 p-3 bg-primary/10 border border-primary/30 rounded-xl space-y-2 shadow-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-primary-light">
                 <ShieldCheck size={16} />
@@ -254,9 +254,9 @@ export default function PostCard({
         />
       )}
 
-      <div className="bg-surface/10 p-4 border-t border-border-light/20">
+      <div className="bg-surface/10 p-3 border-t border-border-light/20">
         {commentsToDisplayInThread.length > 0 && (
-          <div className="space-y-3 mb-4 pl-2.5 border-l border-primary/20">
+          <div className="space-y-2 mb-3 pl-2.5 border-l border-primary/20">
             {hasSpotlightResponse && (
               <div className="text-[11px] font-semibold text-text-muted uppercase tracking-wider mb-2 flex items-center gap-1">
                 <CornerDownRight size={12} /> Community Comments ({commentsToDisplayInThread.length})
@@ -285,7 +285,7 @@ export default function PostCard({
                     </button>
                   )}
                 </div>
-                <p className="text-sm text-text-tertiary">{comment.content}</p>
+                <p className="text-sm text-text-main font-medium">{comment.content}</p>
               </div>
             ))}
           </div>

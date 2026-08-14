@@ -111,12 +111,60 @@ export default async function CandidateSeatPage({ params }: CandidateSeatPagePro
     redirect(`/elections/seat/${seatSlug}/candidate/${candidateSlug}`);
   }
 
+  const personSchema = buildPersonSchema(seat, selectedCandidate, seatSlug, candidateSlug);
+
   return (
-    <ElectionSeatPageClient
-      seatId={seatId}
-      initialSeat={seat}
-      initialCandidates={candidates || []}
-      initialCandidateId={realCandidateId}
-    />
+    <>
+      {personSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema).replace(/</g, "\\u003c") }}
+        />
+      )}
+      <ElectionSeatPageClient
+        seatId={seatId}
+        initialSeat={seat}
+        initialCandidates={candidates || []}
+        initialCandidateId={realCandidateId}
+      />
+    </>
   );
+}
+
+// Structured data so search engines can surface the candidate as a known
+// Person tied to the office/jurisdiction they're running in, rather than
+// just an untyped page. Only emitted once a specific candidate is selected
+// (the bare seat view has no single Person to describe).
+function buildPersonSchema(
+  seat: any,
+  candidate: any,
+  seatSlug: string,
+  candidateSlug: string
+) {
+  if (!seat || !candidate) return null;
+
+  const candidateName = candidate.display_name || candidate.profiles?.full_name;
+  if (!candidateName) return null;
+
+  const pol = candidate.profiles?.politician_profiles;
+  const avatarUrl = Array.isArray(pol) ? pol[0]?.avatar_url : pol?.avatar_url;
+  const districtName = seat.map_shapes?.name;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: candidateName,
+    url: `${BASE_URL}/elections/seat/${seatSlug}/candidate/${candidateSlug}`,
+    ...(avatarUrl ? { image: avatarUrl } : {}),
+    ...(candidate.statement ? { description: candidate.statement } : {}),
+    jobTitle: seat.role_title,
+    ...(districtName
+      ? {
+          affiliation: {
+            "@type": "GovernmentOrganization",
+            name: `${seat.role_title} — ${districtName}`,
+          },
+        }
+      : {}),
+  };
 }

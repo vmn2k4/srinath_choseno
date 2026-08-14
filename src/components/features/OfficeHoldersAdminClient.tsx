@@ -6,7 +6,7 @@ import { getCountries, listBoundaryTypes, searchMapShapesByName } from "@/lib/se
 import { getElectionRoleTypes, getOfficeHoldersForShape, upsertOfficeHolder, removeOfficeHolder, inviteOfficeholderToClaim, resendOfficeholderClaim, cancelOfficeholderClaim, getOfficeholderWallClaims, listRecentOfficeholderWallClaims, mergeOfficeholderWallClaim, reverseOfficeholderWallClaim, rejectOfficeholderWallClaim, previewOfficeholderWallClaim, listPendingSelfRequestedOfficeholderClaims } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { adminGetProfileById } from "@/lib/services/profile";
-import { UserCheck, Search, Save, Trash2, X, Link2, Mail, Inbox } from "lucide-react";
+import { UserCheck, Search, Save, Trash2, X, Link2, Mail, Inbox, Newspaper } from "lucide-react";
 import { Card, Button, Input, Textarea, Select, Spinner, PageHeader, ConfirmDialog, PromptDialog } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
 import { createClient } from "@/lib/supabase/client";
@@ -773,6 +773,20 @@ export default function OfficeHoldersAdminClient() {
                               </span>
                               <Button size="sm" variant="outline" onClick={() => startEdit(role)}>
                                 Edit
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                as="a"
+                                href={`/admin/news?personId=${encodeURIComponent(existing.linked_profile_id ?? "")}&personName=${encodeURIComponent(existing.full_name)}`}
+                                title={
+                                  existing.linked_profile_id
+                                    ? "Generate a news article about this officeholder, tagged unambiguously by their profile id"
+                                    : "Generate a news article about this officeholder (no linked profile yet — will tag by name only)"
+                                }
+                                className="gap-1"
+                              >
+                                <Newspaper size={13} /> Generate News Article
                               </Button>
                               {latestClaim && <span className="text-[11px] text-text-muted">Claim: {latestClaim.status}</span>}
                             </>
