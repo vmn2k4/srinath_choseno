@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 
 export default async function NewsPage() {
   const supabase = await createClient();
-  const { data: articles, error } = await getPublishedNewsArticles(supabase, { limit: 30 });
+  const { data: articles, error } = await getPublishedNewsArticles(supabase, { limit: 150 });
 
   const items = (articles ?? []) as any[];
 

@@ -150,6 +150,7 @@ export async function getPublishedNewsArticles(
     )
     .eq("status", "published")
     .lte("published_at", new Date().toISOString())
+    .order("event_date", { ascending: false, nullsFirst: false })
     .order("published_at", { ascending: false });
 
   if (opts.country) q = q.eq("country", opts.country);
