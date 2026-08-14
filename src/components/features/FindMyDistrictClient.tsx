@@ -39,7 +39,7 @@ type SeatWithElections = {
   elections?: { name?: string; election_date?: string } | null;
 };
 
-const HEAD_ROLE_TITLES = new Set(["Mayor", "Governor", "Premier", "Prime Minister", "President", "Chief Minister"]);
+const HEAD_ROLE_TITLES = new Set(["Mayor", "Governor", "Premier", "Prime Minister", "President", "Chief Minister", "Board Chair"]);
 
 function formatElectionDate(dateString?: string): string {
   if (!dateString) return "";

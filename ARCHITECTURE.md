@@ -9,7 +9,8 @@ sessions through 2026-07-29 (§§23–26), again 2026-07-30 (§27), twice more o
 2026-08-02 (§28, §29), 2026-08-03 (§30, a documentation-only backfill), and twice more on
 2026-08-04 (§31 — the Next.js migration cutover, a post-migration parity/SEO audit-and-fix
 pass, and debug-persona tooling; §32 — the onboarding/edit-profile flow, reported directly
-against the debug personas built in §31).
+against the debug personas built in §31), and again 2026-08-14 (Canada `School District`
+boundary type — see bottom of file).
 
 ---
 
@@ -2055,3 +2056,65 @@ Now every surface that uses `<Avatar>` (walls, sidebars, candidate cards, office
 
 3. **Documentation**:
    - Updated [`OFFICE_HOLDERS_DATA_GUIDE.md`](file:///Users/vmn2k4/Coding/Choseno/OFFICE_HOLDERS_DATA_GUIDE.md) to document the updated multi-source municipal party pipeline and office holder detection method.
+
+---
+
+## 2026-08-14: Canada `School District` boundary type (third layer type, no national source)
+
+New `country_boundary_types` row: `Canada` / `School District` (rank 8, `admin_only=false`,
+`is_container=false`, `election_eligible=true`). Loaded via `scripts/upload_boundary.py`
+following the [`docs/adding-boundary-data.md`](docs/adding-boundary-data.md) runbook.
+
+**Confirmed before sourcing anything**: unlike Municipal (StatsCan Census Subdivisions, one
+national file) and unlike USA's four Census Cartographic layers, school boards/divisions are
+**provincial jurisdiction** in Canada with no StatsCan national boundary file — same
+per-province-portal situation as §11's Provincial ridings load. Checked the standard StatsCan
+`*_000b21a_e.zip` naming pattern directly (404s) before committing to the per-province search.
+
+| Province | Source | Layer chosen | Loaded |
+|---|---|---|---|
+| BC | DataBC WFS, `WHSE_ADMIN_BOUNDARIES.ADM_EDUC_TRUSTEE_ELEC_AREAS_SP` (198 trustee electoral areas) | Dissolved by `SCHOOL_DISTRICT_NUMBER` → 59 districts; names joined from a hardcoded BC Ministry of Education SD-number→name table (no name field in the source) | 59/59 |
+| Alberta | Alberta govt ArcGIS Server, `geospatial.alberta.ca/titan/.../edu_school_and_school_authority_boundary/MapServer`, layer 3 "Public School Authority Boundaries" | Public only (layers 7/11 are Separate/Catholic and Francophone, overlapping the same geography — skipped for a clean partition, same call as Ontario below) | 42/42 |
+| Ontario | `services.arcgis.com/rGKxabTU9mcXMw7k/.../School_Board_Boundaries` (72 total: Public/Catholic × English/French, all overlapping) | Filtered to `TYPE=Public, LANGUAGE=English` for a clean province-wide partition | 31/31 |
+| Quebec | `donneesquebec.ca` dataset `territoires-des-commissions-scolaires-du-quebec`, `cs_fra.geojson` (francophone service centres, the general province-wide system; anglophone boards overlap on top of it for eligible students, same reasoning as ON/AB) | — | 60/60, needed `--vertex-cutoff 200000` (2 shapes over 100k, incl. Baie-James) |
+| Manitoba | `services.arcgis.com/mMUesHYPkXjaFGfS/.../Manitoba_School_Divisions` | — | 36/36 (see gotcha below) |
+| Saskatchewan | `gis.saskatchewan.ca/arcgis/rest/services/Education/SchoolsAndDivisions/MapServer`, layer 7 "SD_Public" | Public only, same reasoning as AB/ON | 18/18 |
+| New Brunswick | GNB Socrata, dataset `4ei4-9dzg` ("NB School Boundaries") — per-**school** catchment polygons (439 features), not per-district | Dissolved by `districtid` (`ASD-E/N/S/W`, `DSF-NE/NO/S`) → 7 districts. Needed `ST_MakeValid(geometry)` wrapped around the dissolve `ST_Union` — the raw per-school catchments had self-intersections that made a plain `ST_Union` throw `TopologyException: side location conflict` | 7/7, needed `--vertex-cutoff 200000` |
+| Nova Scotia | `data.novascotia.ca` Socrata, dataset `v69y-jn74` ("Nova Scotia School Board Zones - English") | English only — the French board (CSAP, dataset `76iu-75v2`) is a single province-wide zone that overlaps all 7 English boards, not a partition | 7/7 |
+| PEI, Newfoundland & Labrador, Yukon, NWT, Nunavut | — | **Not loaded** — each of these has only one province/territory-wide school authority (NL consolidated to one English district in 2013; PEI has one English + one French board, both island-wide; the three territories run community school councils under a single territorial department). A single boundary equal to the whole province/territory isn't a useful sub-division, and there's nothing to source — direct parallel to Nunavut's missing riding data in §11 | — |
+
+**Total: 260 shapes across 8 provinces, 0 invalid geometries** (verified via the same
+`boundary_uploads`/`map_shapes` join query as §11, plus a live `find_boundaries_by_point`
+spot-check against Toronto/Winnipeg/Vancouver/Halifax/Montreal — all five resolved to the
+correct district).
+
+**Decision made across every multi-board province (AB, ON, SK, QC, NS)**: where a province
+runs overlapping public/separate/Catholic/Francophone/Anglophone systems covering the *same*
+geography rather than partitioning it, load only the one system that partitions the whole
+province (the larger/general one — Public in AB/ON/SK, Francophone in QC, English in NS) so
+`map_shapes` stays a clean one-boundary-per-point lookup like every other type. The minority-
+language/system boards were deliberately not loaded — flagged here in case that's revisited.
+
+**A new class of "over-granular source" gotcha, beyond §1's Manitoba-voting-areas precedent**:
+BC and NB's sources weren't just finer-grained, they lacked a name field at the level needed
+(BC) or were per-*school* rather than per-*district* (NB), and NB's raw catchment polygons had
+real topology errors that only a dissolve `ST_Union` (not `--analyze-only`) surfaces. Wrap
+`ST_MakeValid(geometry)` around the geometry argument in the dissolve SQL by default for any
+future per-school/per-facility source, not just when a plain `ST_Union` first fails.
+
+**A real bug hit and fixed here**: Manitoba's source `Source` field (chosen as `--code-field`)
+is `NULL` on 9 of 36 features — the resumability dedup check treats those as colliding,
+so 2 of the null-code shapes silently failed to insert (34/36 loaded, not caught until the
+verification query). Fixed by deleting that batch and re-running with `OBJECTID` (guaranteed
+unique) as the code field instead, keeping `Source` as a plain property. **Always check a
+chosen `--code-field` for nulls/duplicates before uploading**, not just after a count mismatch.
+
+**Mandatory Rule for Office Holder Ingestion: Always Create & Link Ghost Profile Walls**:
+Never insert bare rows into `office_holders` without creating corresponding `profiles` and `politician_profiles` rows.
+Every elected official in Choseno requires:
+1. `profiles`: `role = 'politician'`, `full_name`, `country`, `constituency` (boundary name), `designation` (role title), and `current_ghost_id = gen_random_uuid()`.
+2. `politician_profiles`: `id = profile_id`, `political_target_role = role_title`, `target_boundary_type`, `target_boundary_name`, `wall_slug = slugify(full_name + '-' + role_title)`.
+3. `office_holders.linked_profile_id = profile_id`.
+
+**Why**: `RepresentationBranchTree.tsx` and boundary directory widgets only render the `"View Wall ->"` button if `node.ghost_id` exists (derived from `profiles.current_ghost_id`). Without this link, the official card renders in a truncated contact-only state without an interactive wall, breaking claiming and constituent engagement. Additionally, if the newly added role is the head of the branch (e.g. `Board Chair`, `Mayor`), it MUST be added to `HEAD_ROLE_TITLES` in `FindMyDistrictClient.tsx` and `src/app/elections/[boundarySlug]/page.tsx` so it renders at the top of the hierarchy tree.
+

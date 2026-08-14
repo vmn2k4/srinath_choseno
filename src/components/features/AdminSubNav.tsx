@@ -15,6 +15,7 @@ const TABS = [
   { key: "visualizer", label: "Boundary Inspector", href: "/admin/visualize" },
   { key: "theme", label: "Site Theme", href: "/admin/theme" },
   { key: "news", label: "News", href: "/admin/news" },
+  { key: "news-import", label: "Bulk News Import", href: "/admin/news-import" },
   { key: "moderation", label: "Moderation", href: "/admin/moderation" },
 ];
 

@@ -27,8 +27,13 @@ function isValidDate(value: unknown): boolean {
   return !Number.isNaN(new Date(value).getTime());
 }
 
-/** Case/whitespace-tolerant match against an enum array; returns the canonical value or null. */
-function matchEnum<T extends string>(value: unknown, allowed: readonly T[]): T | null {
+/**
+ * Case/whitespace-tolerant match against an enum array; returns the canonical
+ * value or null. Exported so grokNewsGeneration.ts's insert-mapper can reuse
+ * the exact same normalization this validator already applies, instead of
+ * re-implementing enum matching a second time.
+ */
+export function matchEnum<T extends string>(value: unknown, allowed: readonly T[]): T | null {
   if (typeof value !== "string") return null;
   const needle = value.trim().toLowerCase();
   return allowed.find((v) => v.toLowerCase() === needle) ?? null;

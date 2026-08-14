@@ -132,11 +132,40 @@ ${personInstructions(person)}
 Here is my news topic/headline and source details:`;
 }
 
-export function getBatchNewsAiPrompt(): string {
+/** Extra constraints for the automated bulk-import flow (NewsImportAdminClient) — unused by the manual copy/paste UI, which never passes these. */
+export interface BatchPromptOptions {
+  /** ISO date (yyyy-mm-dd or full timestamp) — every article's eventDate must fall on/after this. */
+  fromDate?: string;
+  /** ISO date — every article's eventDate must fall on/before this. */
+  toDate?: string;
+  /** Source URLs already covered by an existing article for this person (from a prior bulk-import run OR a manually created article) — instructs the model not to regenerate them. Re-checked in code regardless (see grokNewsGeneration.ts); this list only reduces wasted generations. */
+  excludeSourceUrls?: string[];
+  /** Headlines of this person's existing articles (any status, any source) — a secondary dedup signal for the same real-world story reported without an exact source-URL match. */
+  excludeHeadlines?: string[];
+}
+
+function dateRangeInstructions(opts?: BatchPromptOptions): string {
+  if (!opts?.fromDate && !opts?.toDate) return "";
+  const from = opts.fromDate ?? "any time in the past";
+  const to = opts.toDate ?? "now";
+  return `\n\n### Date Range (Backdated Import)\nOnly generate articles for real-world events that happened between ${from} and ${to}. Every "eventDate" MUST fall inside this range — omit any story you can't date within it rather than guessing.\nSet "published_at" to the SAME value as "eventDate" for every article (this is a historical backfill, not same-day news — the article should appear at its true historical position in the feed, not today's date).\n`;
+}
+
+function excludeSourcesInstructions(opts?: BatchPromptOptions): string {
+  const urls = opts?.excludeSourceUrls;
+  const headlines = opts?.excludeHeadlines;
+  if ((!urls || urls.length === 0) && (!headlines || headlines.length === 0)) return "";
+  let block = `\n\n### Already Covered — Do Not Regenerate\nThis person already has articles on Choseno covering the following. Do not generate another article about any of these stories, even from a different angle or a different source:\n`;
+  if (urls && urls.length > 0) block += `\nAlready-covered source URLs:\n${urls.map((u) => `- ${u}`).join("\n")}\n`;
+  if (headlines && headlines.length > 0) block += `\nAlready-covered story headlines (skip anything substantially the same story, even if you'd cite a different source for it):\n${headlines.map((h) => `- ${h}`).join("\n")}\n`;
+  return block;
+}
+
+export function getBatchNewsAiPrompt(person?: NewsPromptPersonContext, opts?: BatchPromptOptions): string {
   return `You are an expert news curator and batch article generator. Your task is to generate multiple high-quality, publication-ready news articles in a single JSON batch format.
 
 When provided with today's top news stories, key events, or a list of topics, you will generate between 3-10 complete news articles covering different angles, regions, or story types.
-
+${personInstructions(person)}${dateRangeInstructions(opts)}${excludeSourcesInstructions(opts)}
 ### Output Format - Batch Array:
 
 The output MUST be a valid JSON object with a batch array:
@@ -207,6 +236,10 @@ Here are today's news stories and topics:`;
 }
 
 /** Single entry point used by AdminNewsPageClient's prompt-mode toggle. */
-export function getNewsAiPrompt(mode: "single" | "batch", person?: NewsPromptPersonContext): string {
-  return mode === "batch" ? getBatchNewsAiPrompt() : getSingleNewsAiPrompt(person);
+export function getNewsAiPrompt(
+  mode: "single" | "batch",
+  person?: NewsPromptPersonContext,
+  batchOpts?: BatchPromptOptions
+): string {
+  return mode === "batch" ? getBatchNewsAiPrompt(person, batchOpts) : getSingleNewsAiPrompt(person);
 }

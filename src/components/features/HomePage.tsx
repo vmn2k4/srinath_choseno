@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   MapPin,
   Megaphone,
@@ -17,6 +18,7 @@ import {
   Search,
   Vote,
   ArrowRight,
+  Star,
 } from "lucide-react";
 import { ContainerScroll } from "@/components/primitives";
 import {
@@ -25,10 +27,18 @@ import {
   HeroSection,
   CyclingBoundaryPill,
   RoleSplitCta,
+  StaggerGroup,
+  StaggerItem,
+  TiltCard,
+  MagneticCta,
+  FloatingElement,
+  SectionOrbs,
+  ScrollRatingStars,
 } from "@/components/features/home/HomeMotion";
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { SITE_URL } from "@/lib/constants/site";
+import { useRef } from "react";
 
 const BASE_URL = SITE_URL;
 
@@ -203,6 +213,7 @@ const faqJsonLd = {
 
 export default function HomePage() {
   const { t } = useTranslation();
+  const ratingSectionRef = useRef<HTMLDivElement>(null);
 
   const trustChips = [
     { icon: Flame, label: t("home.trustChips.anonymous") },
@@ -284,68 +295,91 @@ export default function HomePage() {
       {/* ============ HERO — real content, server-rendered; HeroSection only supplies the motion shell ============ */}
       <HeroSection>
         <div className="grid lg:grid-cols-[1.15fr_1fr] gap-8 sm:gap-10 lg:gap-10 items-center">
-          {/* Left — pitch + CTAs. On mobile, hide the right-side widget to make room for content. */}
+          {/* Left — pitch + CTAs. On mobile, hide the right-side widget to make room for content.
+              Each piece cascades in on its own delay (mode="mount" -- plays immediately, not on
+              scroll-into-view) instead of the whole block fading in as one flat unit. */}
           <div className="text-center lg:text-left">
-            <span className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-accent/40 bg-surface-elevated/90 elevation-3 text-xs font-bold tracking-wide text-accent">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
+            <Reveal mode="mount">
+              <span className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-accent/40 bg-surface-elevated/90 elevation-3 text-xs font-bold tracking-wide text-accent">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
+                </span>
+                {t("home.badge")}
               </span>
-              {t("home.badge")}
-            </span>
+            </Reveal>
 
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.02] mt-6 sm:mt-8 tracking-tight drop-shadow-2xl">
-              {t("home.titleMain")}
-              <br />
-              <span className="text-primary">{t("home.titleSub")}</span>
-            </h1>
+            <Reveal mode="mount" delay={90}>
+              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.02] mt-6 sm:mt-8 tracking-tight drop-shadow-2xl">
+                {t("home.titleMain")}
+                <br />
+                <span className="text-primary">{t("home.titleSub")}</span>
+              </h1>
+            </Reveal>
 
-            <p className="text-base sm:text-lg md:text-xl text-text-main/90 font-medium max-w-2xl mx-auto lg:mx-0 mt-5 sm:mt-7 leading-relaxed">
-              {t("home.subtitle")}
-            </p>
+            <Reveal mode="mount" delay={200}>
+              <p className="text-base sm:text-lg md:text-xl text-text-main/90 font-medium max-w-2xl mx-auto lg:mx-0 mt-5 sm:mt-7 leading-relaxed">
+                {t("home.subtitle")}
+              </p>
+            </Reveal>
 
-            {/* On mobile, hide the label to save space; just show the boundary pill.
-                On sm+, show the full "Conversations scoped to [Boundary]" */}
-            <div className="mt-8 sm:mt-9 hidden sm:flex items-center justify-center lg:justify-start gap-3 text-base text-text-muted">
-              <span className="font-medium text-text-main/80">{t("home.scopedTo")}</span>
-              <CyclingBoundaryPill levels={BOUNDARY_LEVELS} />
-            </div>
+            <Reveal mode="mount" delay={300}>
+              {/* On mobile, hide the label to save space; just show the boundary pill.
+                  On sm+, show the full "Conversations scoped to [Boundary]" */}
+              <div className="mt-8 sm:mt-9 hidden sm:flex items-center justify-center lg:justify-start gap-3 text-base text-text-muted">
+                <span className="font-medium text-text-main/80">{t("home.scopedTo")}</span>
+                <CyclingBoundaryPill levels={BOUNDARY_LEVELS} />
+              </div>
 
-            {/* Mobile: condensed version — just show the pill, no label */}
-            <div className="mt-6 sm:hidden flex justify-center">
-              <CyclingBoundaryPill levels={BOUNDARY_LEVELS} />
-            </div>
+              {/* Mobile: condensed version — just show the pill, no label */}
+              <div className="mt-6 sm:hidden flex justify-center">
+                <CyclingBoundaryPill levels={BOUNDARY_LEVELS} />
+              </div>
+            </Reveal>
 
-            <div className="mt-6 sm:mt-12">
-              <RoleSplitCta align="start" />
-            </div>
+            <Reveal mode="mount" delay={400}>
+              <div className="mt-6 sm:mt-12">
+                <RoleSplitCta align="start" />
+              </div>
+            </Reveal>
           </div>
 
-          {/* Right — compact "find your district" widget. */}
-          <div className="mt-8 lg:mt-0 flex justify-center lg:justify-end">
-            <HomeLocateWidget />
-          </div>
+          {/* Right — compact "find your district" widget. Floats idly, tilts
+              toward the cursor on top of that, and cascades in last, once
+              the pitch has already landed. */}
+          <Reveal mode="mount" delay={250} className="mt-8 lg:mt-0 flex justify-center lg:justify-end">
+            <FloatingElement distance={9} duration={5}>
+              <TiltCard>
+                <HomeLocateWidget />
+              </TiltCard>
+            </FloatingElement>
+          </Reveal>
         </div>
       </HeroSection>
 
       {/* ============ TRUST BAR ============ */}
       <section className="relative px-4 sm:px-6 py-6" aria-label="Trust and privacy at a glance">
-        <Reveal className="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+        <StaggerGroup className="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {trustChips.map((chip) => (
-            <span
-              key={chip.label}
-              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-border-light/50 bg-surface-elevated/70 text-xs sm:text-sm font-semibold text-text-secondary"
-            >
-              <chip.icon size={13} className="text-primary shrink-0" aria-hidden="true" />
-              <span className="truncate">{chip.label}</span>
-            </span>
+            <StaggerItem key={chip.label}>
+              <span className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-border-light/50 bg-surface-elevated/70 text-xs sm:text-sm font-semibold text-text-secondary">
+                <chip.icon size={13} className="text-primary shrink-0" aria-hidden="true" />
+                <span className="truncate">{chip.label}</span>
+              </span>
+            </StaggerItem>
           ))}
-        </Reveal>
+        </StaggerGroup>
       </section>
 
       {/* ============ CONCEPT BRIDGE — Yelp analogy ============ */}
-      <section className="relative py-16 sm:py-24 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden">
+        <SectionOrbs
+          orbs={[
+            { variant: "orb-d", range: [80, -140], driftX: [0, -30, 20, 0], duration: 20 },
+            { variant: "orb-e", range: [-100, 120], driftX: [0, 25, -20, 0], duration: 24 },
+          ]}
+        />
+        <div className="relative max-w-4xl mx-auto text-center">
           <Reveal>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
               {t("home.bridge.title")}
@@ -362,9 +396,11 @@ export default function HomePage() {
             {bridgeSteps.map((step, i) => (
               <div key={step.title} className="contents">
                 <div className="flex flex-col items-center gap-2 sm:gap-3 w-full sm:w-44">
-                  <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                    <step.icon size={18} className="text-primary" aria-hidden="true" />
-                  </div>
+                  <FloatingElement distance={5} duration={3.4 + i * 0.4} delay={i * 0.25}>
+                    <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                      <step.icon size={18} className="text-primary" aria-hidden="true" />
+                    </div>
+                  </FloatingElement>
                   <h3 className="text-base sm:text-lg font-bold text-text-main">{step.title}</h3>
                   <p className="text-xs sm:text-sm text-text-muted leading-relaxed">{step.text}</p>
                 </div>
@@ -390,10 +426,10 @@ export default function HomePage() {
             </h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-7">
+          <StaggerGroup className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-7">
             {steps.map((step, i) => (
-              <Reveal key={step.title} delay={i * 120}>
-                <HoverLift className="glass-card elevation-2 p-5 sm:p-6 lg:p-8 h-full group hover:border-primary/40 transition-all duration-300 relative overflow-hidden">
+              <StaggerItem key={step.title}>
+                <HoverLift shine className="glass-card elevation-2 p-5 sm:p-6 lg:p-8 h-full group hover:border-primary/40 transition-all duration-300">
                   <span className="font-display text-5xl sm:text-6xl lg:text-7xl font-black text-primary/20 group-hover:text-primary/35 transition-colors duration-500 select-none leading-none">
                     0{i + 1}
                   </span>
@@ -403,30 +439,38 @@ export default function HomePage() {
                   </h3>
                   <p className="mt-2 sm:mt-3 text-text-muted text-sm sm:text-base leading-relaxed">{step.text}</p>
                 </HoverLift>
-              </Reveal>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
       {/* ============ WHY JOIN — split by audience ============ */}
-      <section className="relative py-16 sm:py-28 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
+      <section className="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden">
+        <SectionOrbs
+          orbs={[
+            { variant: "orb-a", range: [-120, 100], driftX: [0, 30, -25, 0], duration: 19 },
+            { variant: "orb-b", range: [140, -100], driftX: [0, -25, 30, 0], duration: 23 },
+          ]}
+        />
+        <div className="relative max-w-6xl mx-auto">
           <Reveal className="text-center mb-12 sm:mb-16">
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
               {t("home.audiences.title")}
             </h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-7">
+          <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-7">
             {audiences.map((audience, i) => (
-              <Reveal key={audience.label} delay={i * 120}>
-                <HoverLift lift={8} className="glass-card elevation-2 p-5 sm:p-6 lg:p-8 h-full flex flex-col justify-between">
+              <StaggerItem key={audience.label}>
+                <HoverLift lift={8} shine className="glass-card elevation-2 p-5 sm:p-6 lg:p-8 h-full flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-2 sm:gap-3">
-                      <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-2xl bg-surface/80 border border-border-light/40 flex items-center justify-center shrink-0">
-                        <audience.icon size={20} className={audience.accent} aria-hidden="true" />
-                      </div>
+                      <FloatingElement distance={4} duration={3.8 + i * 0.5} delay={i * 0.3}>
+                        <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-2xl bg-surface/80 border border-border-light/40 flex items-center justify-center shrink-0">
+                          <audience.icon size={20} className={audience.accent} aria-hidden="true" />
+                        </div>
+                      </FloatingElement>
                       <h3 className="text-lg sm:text-xl lg:text-2xl font-bold tracking-tight">{audience.label}</h3>
                     </div>
 
@@ -443,73 +487,79 @@ export default function HomePage() {
                   </div>
 
                   <div className="mt-6 sm:mt-8 flex flex-col gap-2">
-                    <a
+                    <MagneticCta
                       href={audience.ctaHref}
                       className="group w-full inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-primary text-text-on-primary font-bold text-sm sm:text-base hover:bg-primary-hover transition-all duration-300"
                     >
                       {audience.ctaLabel}
-                    </a>
+                    </MagneticCta>
                     {audience.secondaryHref && (
-                      <a
+                      <Link
                         href={audience.secondaryHref}
                         className="text-center text-xs text-text-muted hover:text-text-main underline decoration-primary/40 underline-offset-4 transition-colors"
                       >
                         {audience.secondaryLabel}
-                      </a>
+                      </Link>
                     )}
                   </div>
                 </HoverLift>
-              </Reveal>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
-      {/* ============ PRODUCT PREVIEW ============ */}
-      <section className="relative px-6">
-        <ContainerScroll
-          titleComponent={
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
-              {t("home.preview.titleMain")}
-              <br />
-              <span className="text-primary">{t("home.preview.titleSub")}</span>
+      {/* ============ RATE A POLITICIAN — scroll-driven star animation ============ */}
+      <section className="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden" ref={ratingSectionRef}>
+        <SectionOrbs
+          orbs={[
+            { variant: "orb-c", range: [-100, 140], driftX: [0, 30, -25, 0], duration: 20 },
+            { variant: "orb-a", range: [120, -80], driftX: [0, -25, 20, 0], duration: 22 },
+          ]}
+        />
+        <div className="relative max-w-4xl mx-auto">
+          <Reveal className="text-center mb-16 sm:mb-20">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
+              {t("home.rateTitle", "Rate politicians based on results, not rhetoric.")}
             </h2>
-          }
-        >
-          <div className="h-full w-full flex flex-col" aria-hidden="true">
-            <div className="flex items-center gap-2 px-4 md:px-6 py-3 border-b border-border-light/40 bg-surface-elevated/60 shrink-0">
-              <span className="w-2.5 h-2.5 rounded-full bg-danger/70" />
-              <span className="w-2.5 h-2.5 rounded-full bg-primary/70" />
-              <span className="w-2.5 h-2.5 rounded-full bg-accent/70" />
-              <span className="ml-3 text-[11px] text-text-muted font-mono truncate">
-                choseno.com/elections
-              </span>
-            </div>
-            <div className="flex-1 overflow-hidden p-4 md:p-8 space-y-3">
-              {MOCK_SEATS.map((seat) => (
-                <div
-                  key={seat.name}
-                  className="flex items-center justify-between gap-4 px-5 md:px-6 py-4.5 border-b border-border-light/50 last:border-b-0 hover:bg-surface-hover/40 transition-colors"
-                >
-                  <div className="min-w-0">
-                    <p className="text-[11px] font-semibold text-accent tracking-wide mb-1">
-                      {seat.election} · Nominations open
-                    </p>
-                    <p className="font-extrabold text-lg text-text-main flex items-center gap-2 flex-wrap">
-                      {seat.role}
-                      <span className="text-sm font-medium text-text-muted flex items-center gap-1.5 bg-surface/60 px-2.5 py-0.5 rounded-lg border border-border-light">
-                        <MapPin size={13} className="text-accent" /> {seat.name}
-                      </span>
-                    </p>
-                  </div>
-                  <span className="text-xs font-semibold text-primary bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-xl shrink-0">
-                    {seat.candidates}
-                  </span>
-                </div>
-              ))}
-            </div>
+            <p className="mt-3 sm:mt-4 text-base sm:text-lg text-text-muted max-w-2xl mx-auto">
+              {t("home.rateSubtitle", "See what your neighbors really think. Scroll down to see stars light up as you explore how it works.")}
+            </p>
+          </Reveal>
+
+          <div className="relative glass-card elevation-2 p-8 sm:p-12 lg:p-16 flex items-center justify-center min-h-[420px]">
+            <ScrollRatingStars
+              sectionRef={ratingSectionRef}
+              politicianName="Jenny Kwan"
+              title="Member of Parliament"
+              party="Vancouver East"
+              description="Focused on advocating for working families and strengthening community support programs in Vancouver East. Known for active engagement on housing affordability and economic justice."
+            />
           </div>
-        </ContainerScroll>
+
+          <div className="mt-12 sm:mt-16">
+            <Reveal className="text-center">
+              <p className="text-sm sm:text-base text-text-muted max-w-2xl mx-auto mb-6">
+                {t("home.rateFeature", "Real people from your area rate elected officials on performance. No anonymous trolls, no fake votes — just neighbors sharing their real experience.")}
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <Link
+                  href="/auth?role=citizen"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-text-on-primary font-bold text-sm sm:text-base hover:bg-primary-hover transition-all duration-300"
+                >
+                  {t("home.rateCtaPrimary", "Rate your representatives")}
+                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  href="/wall/jenny-kwan-mp"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-primary/50 bg-surface-elevated/70 text-text-main font-bold text-sm sm:text-base hover:bg-primary/10 hover:border-primary transition-all duration-300"
+                >
+                  {t("home.rateCtaSecondary", "See real ratings")}
+                </Link>
+              </div>
+            </Reveal>
+          </div>
+        </div>
       </section>
 
       {/* ============ FEATURE GRID ============ */}
@@ -521,17 +571,17 @@ export default function HomePage() {
             </h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-            {features.map((feat, i) => (
-              <Reveal key={feat.title} delay={i * 80}>
-                <div className="glass-card p-4 sm:p-5 lg:p-6 h-full space-y-2 sm:space-y-3">
+          <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+            {features.map((feat) => (
+              <StaggerItem key={feat.title}>
+                <HoverLift lift={5} shine className="glass-card p-4 sm:p-5 lg:p-6 h-full space-y-2 sm:space-y-3 hover:border-primary/40 transition-colors duration-300">
                   <feat.icon size={20} className="text-primary" aria-hidden="true" />
                   <h3 className="text-base sm:text-lg font-bold text-text-main">{feat.title}</h3>
                   <p className="text-xs sm:text-sm text-text-muted leading-relaxed">{feat.text}</p>
-                </div>
-              </Reveal>
+                </HoverLift>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
@@ -565,8 +615,14 @@ export default function HomePage() {
       </section>
 
       {/* ============ CLOSING CTA ============ */}
-      <section className="relative py-16 sm:py-28 px-4 sm:px-6 text-center">
-        <div className="max-w-4xl mx-auto">
+      <section className="relative py-16 sm:py-28 px-4 sm:px-6 text-center overflow-hidden">
+        <SectionOrbs
+          orbs={[
+            { variant: "orb-d", range: [100, -80], driftX: [0, -30, 25, 0], duration: 21 },
+            { variant: "orb-e", range: [-90, 110], driftX: [0, 25, -30, 0], duration: 25 },
+          ]}
+        />
+        <div className="relative max-w-4xl mx-auto">
           <Reveal>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight">
               {t("home.closing.titleMain")}{" "}

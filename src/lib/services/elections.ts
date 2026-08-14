@@ -50,6 +50,47 @@ export async function getElectionRoleTypes(supabase: Client, country: string, bo
     .eq("boundary_type", boundaryType);
 }
 
+/**
+ * Every role type for a country, unfiltered by boundary_type -- feeds the
+ * NewsImportAdminClient scope tree (country -> boundary_type -> role_key
+ * checkboxes, same pattern as BoundaryVisualizerClient's entityTypes tree).
+ * Grouped client-side by role_key so region-varying titles (MLA/MPP/MNA/MHA
+ * all share role_key='provincial_rep') collapse into one checkbox instead
+ * of four -- "select all provincial reps" should mean all of them
+ * regardless of what a given province calls the seat.
+ */
+export async function getAllElectionRoleTypesForCountry(supabase: Client, country: string) {
+  return supabase
+    .from("election_role_types")
+    .select("id, boundary_type, role_key, region_override, role_title")
+    .eq("country", country)
+    .order("boundary_type")
+    .order("role_key");
+}
+
+/**
+ * All current officeholders whose election_role_type_id is in the given
+ * set, across every map_shape -- the "select all MLAs" / "select all MPs"
+ * bulk query for NewsImportAdminClient. Distinct from
+ * getOfficeHoldersForShapes (which scopes by shape, not role) -- this is
+ * the shape-agnostic counterpart for "every seat of this role, anywhere".
+ * linked_profile_id is surfaced explicitly since the bulk news-import flow
+ * can only tag/generate for officeholders who have one (see
+ * NewsImportAdminClient's "no linked profile -- will be skipped" badge).
+ */
+export async function getOfficeHoldersByRoleTypeIds(supabase: Client, roleTypeIds: string[]) {
+  if (!roleTypeIds.length) return { data: [], error: null };
+  return supabase
+    .from("office_holders")
+    .select(
+      `id, map_shape_id, election_role_type_id, full_name, linked_profile_id,
+       map_shapes(id, name, boundary_type, country),
+       election_role_types(role_title, role_key)`
+    )
+    .in("election_role_type_id", roleTypeIds)
+    .order("full_name");
+}
+
 async function enrichOfficeHolders(supabase: Client, holders: any[]) {
   if (!holders || !holders.length) return holders;
 

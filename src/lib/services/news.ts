@@ -407,6 +407,131 @@ export async function syncNewsArticleBoundaries(supabase: Client, articleId: str
   return (supabase.rpc as any)("admin_sync_news_article_boundaries", { p_article_id: articleId });
 }
 
+// ── Bulk-import dedup registry (news_import_source_urls) ───────────────────
+//
+// See 20260814000000_news_import_source_dedup.sql for why this table
+// exists: re-running the automated Grok bulk-import for a politician must
+// not regenerate an article about a real-world story it already covered.
+// Two call sites use these: (1) before generating, to build the AI's
+// exclusion list; (2) after generating, to re-check + record what actually
+// got inserted. Never trust the prompt alone for (1) -- always re-verify
+// with (2)'s check before insert.
+
+export interface ImportedSourceUrls {
+  /** politician_id -> Set of source URLs already imported for them */
+  byPolitician: Map<string, Set<string>>;
+}
+
+/**
+ * Batch lookup across many politicians at once (one query, not N) --
+ * NewsImportAdminClient looks this up once for the whole selected scope
+ * before starting the sequential per-politician generation loop.
+ */
+export async function getImportedSourceUrlsForPoliticians(
+  supabase: Client,
+  politicianIds: string[]
+): Promise<{ data: ImportedSourceUrls | null; error: PostgrestError | null }> {
+  if (!politicianIds.length) return { data: { byPolitician: new Map() }, error: null };
+
+  // (supabase as any) -- news_import_source_urls is new (see
+  // 20260814000000_news_import_source_dedup.sql), not yet present in the
+  // generated Database types until `supabase gen types` runs post-deploy.
+  // Same cast pattern as boundaries.ts's country_boundary_types/entity_types.
+  const { data, error } = await (supabase as any)
+    .from("news_import_source_urls")
+    .select("politician_id, source_url")
+    .in("politician_id", politicianIds);
+
+  if (error) return { data: null, error };
+
+  const byPolitician = new Map<string, Set<string>>();
+  (data || []).forEach((row: { politician_id: string; source_url: string }) => {
+    if (!byPolitician.has(row.politician_id)) byPolitician.set(row.politician_id, new Set());
+    byPolitician.get(row.politician_id)!.add(row.source_url);
+  });
+
+  return { data: { byPolitician }, error: null };
+}
+
+export interface ExistingArticleTags {
+  /** politician_id -> source URLs already cited in ANY of their tagged articles, any status */
+  sourceUrlsByPolitician: Map<string, Set<string>>;
+  /** politician_id -> headlines of their tagged articles, any status -- extra dedup signal for stories with no exact URL match */
+  headlinesByPolitician: Map<string, string[]>;
+}
+
+/**
+ * Same idea as getImportedSourceUrlsForPoliticians, but reads real coverage
+ * already in news_articles instead of the bulk-import's own registry --
+ * catches the case that table can't: an article about this politician
+ * created through the ordinary manual /admin/news flow (paste-JSON or
+ * hand-typed), which never touches news_import_source_urls at all. Both
+ * lookups run before every bulk-generation request and their exclude sets
+ * are unioned (see api/admin/news-import/generate) so a re-run can't
+ * duplicate a story regardless of which flow originally created it.
+ *
+ * Deliberately unfiltered by status (unlike getNewsArticlesByPolitician,
+ * which is published-only for public display) -- a draft or scheduled
+ * article about a story is still a story already covered, not a gap to fill.
+ */
+export async function getExistingArticleTagsForPoliticians(
+  supabase: Client,
+  politicianIds: string[]
+): Promise<{ data: ExistingArticleTags | null; error: PostgrestError | null }> {
+  if (!politicianIds.length) {
+    return { data: { sourceUrlsByPolitician: new Map(), headlinesByPolitician: new Map() }, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from("news_article_politicians")
+    .select("politician_id, news_articles(headline, content)")
+    .in("politician_id", politicianIds);
+
+  if (error) return { data: null, error };
+
+  const sourceUrlsByPolitician = new Map<string, Set<string>>();
+  const headlinesByPolitician = new Map<string, string[]>();
+
+  (data as unknown as Array<{ politician_id: string; news_articles: { headline: string; content: NewsArticleContent } | null }>).forEach(
+    (row) => {
+      if (!row.news_articles) return;
+      if (!sourceUrlsByPolitician.has(row.politician_id)) sourceUrlsByPolitician.set(row.politician_id, new Set());
+      if (!headlinesByPolitician.has(row.politician_id)) headlinesByPolitician.set(row.politician_id, []);
+
+      const sources = row.news_articles.content?.sources ?? [];
+      sources.forEach((s) => {
+        if (s?.url) sourceUrlsByPolitician.get(row.politician_id)!.add(s.url.trim());
+      });
+      if (row.news_articles.headline) headlinesByPolitician.get(row.politician_id)!.push(row.news_articles.headline);
+    }
+  );
+
+  return { data: { sourceUrlsByPolitician, headlinesByPolitician }, error: null };
+}
+
+/**
+ * Records the source URLs an inserted article actually cited, so a future
+ * bulk-import run for this politician excludes them. `ON CONFLICT DO
+ * NOTHING` via upsert(ignoreDuplicates) -- PK is (politician_id,
+ * source_url), so re-recording the same story is a harmless no-op rather
+ * than an error.
+ */
+export async function recordImportedSourceUrls(
+  supabase: Client,
+  politicianId: string,
+  articleId: string,
+  sourceUrls: string[]
+) {
+  const rows = sourceUrls
+    .filter((url) => typeof url === "string" && url.trim())
+    .map((url) => ({ politician_id: politicianId, source_url: url.trim(), news_article_id: articleId }));
+  if (!rows.length) return { error: null };
+
+  return (supabase as any)
+    .from("news_import_source_urls")
+    .upsert(rows, { onConflict: "politician_id,source_url", ignoreDuplicates: true });
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────
 
 /** Estimate reading time from markdown body (200 wpm) */

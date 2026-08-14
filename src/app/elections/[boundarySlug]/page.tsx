@@ -46,7 +46,7 @@ type OfficeHolderRow = {
 // office holders into a "top" node (Mayor, or a fetched Premier/Governor/
 // Prime Minister/President) vs. "bottom" nodes (Councillors, or the shape's
 // own MP/MLA/etc.).
-const HEAD_ROLE_TITLES = new Set(["Mayor", "Governor", "Premier", "Prime Minister", "President", "Chief Minister"]);
+const HEAD_ROLE_TITLES = new Set(["Mayor", "Governor", "Premier", "Prime Minister", "President", "Chief Minister", "Board Chair"]);
 
 // Where to find the "top" office for a boundary_type that ISN'T itself a
 // head-of-branch shape (a riding/district has no head role of its own, so its

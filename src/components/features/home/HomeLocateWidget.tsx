@@ -268,6 +268,20 @@ export default function HomeLocateWidget() {
                 .sort((a, b) => getBoundaryTypeOrder(a.boundary_type || "") - getBoundaryTypeOrder(b.boundary_type || ""))
                 .map((b) => {
                   const boundaryReps = repsFor(b.id);
+                  const isMunicipal = (b.boundary_type || "").toLowerCase() === "municipal";
+
+                  // For municipal: separate mayor and councillors
+                  let displayReps = boundaryReps;
+                  let mayor: RepRow | undefined;
+                  let councillors: RepRow[] = [];
+
+                  if (isMunicipal) {
+                    mayor = boundaryReps.find((r) => (r.election_role_types?.role_title || "").toLowerCase() === "mayor");
+                    councillors = boundaryReps.filter((r) => (r.election_role_types?.role_title || "").toLowerCase() !== "mayor");
+                    displayReps = mayor ? [mayor, ...councillors.slice(0, 5)] : councillors.slice(0, 6);
+                  } else {
+                    displayReps = boundaryReps.slice(0, 6);
+                  }
 
                   return (
                     <div
@@ -282,34 +296,44 @@ export default function HomeLocateWidget() {
                       {boundaryReps.length === 0 ? (
                         <p className="text-xs text-text-muted">No office holder data yet.</p>
                       ) : (
-                        <div className="space-y-1.5">
-                          {boundaryReps.map((rep) => {
-                            const wallHref = wallHrefFor(rep);
-                            return (
-                              <div key={rep.id} className="flex items-center justify-between gap-2">
-                                <p className="min-w-0 text-xs text-text-muted flex items-center gap-1.5">
-                                  <Users size={11} className="shrink-0" aria-hidden="true" />
-                                  <span className="truncate">
-                                    {rep.full_name}
-                                    {rep.election_role_types?.role_title
-                                      ? ` · ${rep.election_role_types.role_title}`
-                                      : ""}
-                                  </span>
-                                </p>
-                                {wallHref && (
-                                  <Link
-                                    href={wallHref}
-                                    className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold text-primary bg-primary/10 hover:bg-primary/15 transition-colors whitespace-nowrap"
-                                    title="Rate this representative"
-                                  >
-                                    <Star size={12} className="fill-primary" aria-hidden="true" />
-                                    Rate
-                                  </Link>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
+                        <>
+                          <div className="space-y-1.5">
+                            {displayReps.map((rep) => {
+                              const wallHref = wallHrefFor(rep);
+                              return (
+                                <div key={rep.id} className="flex items-center justify-between gap-2">
+                                  <p className="min-w-0 text-xs text-text-muted flex items-center gap-1.5">
+                                    <Users size={11} className="shrink-0" aria-hidden="true" />
+                                    <span className="truncate">
+                                      {rep.full_name}
+                                      {rep.election_role_types?.role_title
+                                        ? ` · ${rep.election_role_types.role_title}`
+                                        : ""}
+                                    </span>
+                                  </p>
+                                  {wallHref && (
+                                    <Link
+                                      href={wallHref}
+                                      className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold text-primary bg-primary/10 hover:bg-primary/15 transition-colors whitespace-nowrap"
+                                      title="Rate this representative"
+                                    >
+                                      <Star size={12} className="fill-primary" aria-hidden="true" />
+                                      Rate
+                                    </Link>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                          {boundaryReps.length > displayReps.length && (
+                            <Link
+                              href="/find-my-district"
+                              className="inline-block mt-2 text-[11px] font-semibold text-primary hover:text-primary-hover transition-colors"
+                            >
+                              View more →
+                            </Link>
+                          )}
+                        </>
                       )}
                     </div>
                   );

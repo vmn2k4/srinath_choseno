@@ -245,3 +245,67 @@ happened to always coincide until USA's `State` needed to be both a real citizen
 
 Set `is_container` explicitly if a new boundary type needs to work as a container — it
 defaults to `false` and does **not** automatically follow `admin_only`.
+
+## Overlapping-system provinces (a boundary type isn't always a clean partition)
+
+Some provincial layers are actually several *overlapping* systems on the same geography, not
+one partition — Canada's school boards are the clearest case (Ontario/Alberta/Saskatchewan
+each run separate overlapping Public/Catholic/Francophone school-board layers covering the
+same area; a resident is inside all of them at once, by system, not by geography). Loading all
+of them as one boundary type would break the "one boundary per point per type" assumption the
+rest of the schema relies on (`find_boundaries_by_point`, feed tabs, etc. all assume a citizen
+has *one* answer per type). **Pick the one system that actually partitions the whole
+province/state** (usually the larger/general one — Public, or the historically-default
+language) and skip the rest, same as choosing US `Place` over `County Subdivision` for
+Municipal (§14 of ARCHITECTURE.md). Document which system you picked and why.
+
+## Per-facility sources need a dissolve *and* a validity fix
+
+A source can be finer-grained than "needs dissolving" (§2) in a worse way: New Brunswick's only
+public school-boundary data was per-*school* catchment polygons (439 of them), not per-*district*.
+Dissolving those with a plain `ST_Union(geometry)` GROUP BY district threw
+`TopologyException: side location conflict` — the individual catchment polygons had real
+self-intersections that only show up once you try to union them. Fix: wrap the geometry in
+`ST_MakeValid()` inside the dissolve SQL from the start whenever the source is per-facility
+rather than already-administrative-boundary-shaped:
+```bash
+ogr2ogr -f GeoJSON dissolved.geojson source.geojson \
+  -dialect sqlite -sql "SELECT <ID_FIELD>, ST_Union(ST_MakeValid(geometry)) AS geometry \
+                         FROM <layer_name> GROUP BY <ID_FIELD>" \
+  -t_srs EPSG:4326
+```
+Also watch for a **missing name field on the dissolved output** — BC's school-district source
+only had a numeric `SCHOOL_DISTRICT_NUMBER`, no name, at the granularity that needed dissolving
+to. There was no separate name lookup dataset; the fix was a small hardcoded number→name table
+(BC Ministry of Education's public school-district list) joined in before upload. Check for
+this before uploading, not after — an upload with numeric-only names for a citizen-facing type
+is a real product regression, not a cosmetic one.
+
+## Always sanity-check your `--code-field` for nulls/duplicates first
+
+The resumability check (§4) dedupes on `(name, code)` — if the chosen `--code-field` is `NULL`
+on some fraction of features (seen on a Manitoba source, 9 of 36 rows), those rows collide with
+each other and some silently fail to insert with no error, only a lower-than-expected final
+count. Caught by step 5's verification query (`loaded` < `expected_count`), not by the upload
+itself. `python3 -c "import json; ... Counter(f['properties'][field] for f in features)"` on
+the candidate code field before uploading is cheap insurance — prefer a field guaranteed
+unique per feature (an `OBJECTID`) over a "looks like an ID" field if there's any doubt.
+
+## Worked example: Canada school districts (2026-08-14 session)
+
+Full per-province source table and decisions are in
+[ARCHITECTURE.md](../ARCHITECTURE.md) (search "School District boundary type"). Short version:
+no StatsCan national file exists for this layer (confirmed by testing the standard
+`*_000b21a_e.zip` naming pattern directly, not by assuming) — treated as a per-province job
+like §11's Provincial ridings, sourced 8 of 13 provinces/territories (BC, AB, ON, QC, MB, SK,
+NB, NS — 260 shapes, 0 invalid), and skipped PEI/NL/YT/NT/NU because each has only one
+province/territory-wide school authority, not a real sub-division to load (parallel to
+Nunavut's missing riding data above).
+
+## Office Holder Ingestion Rule: Never insert without linking ghost profile walls
+
+Whenever office holders are populated for a new boundary type (e.g. School Trustees, Mayors, Councillors):
+1. **Never insert raw `office_holders` without `linked_profile_id`**: Always create corresponding entries in `profiles` (`role='politician'`, `current_ghost_id=gen_random_uuid()`) and `politician_profiles` (`wall_slug=slugify(...)`) and link `office_holders.linked_profile_id = profile_id`.
+2. **Why**: The UI widgets (`RepresentationBranchTree.tsx` / `FindMyDistrictClient.tsx`) only render the `"View Wall ->"` button and route to `/wall/<slug>` when `node.ghost_id` is present.
+3. **Register Head of Branch**: If the newly added role is the executive head of the branch (e.g., `Board Chair`, `Mayor`, `Premier`), add it to `HEAD_ROLE_TITLES` in `FindMyDistrictClient.tsx` and `src/app/elections/[boundarySlug]/page.tsx` so it renders at the top of the tree hierarchy.
+
