@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useAuth } from "@/contexts/AuthContext";
 import LinkPreview from "./LinkPreview";
 import PostCard, { type PostWithComments } from "@/components/features/PostCard";
 import MentionTextarea from "./MentionTextarea";
+import FeedSortControl from "./FeedSortControl";
+import { sortByEngagement, defaultSortMode } from "@/lib/utils/feedSort";
 import {
   Users,
   Heart,
@@ -130,6 +132,7 @@ export default function PoliticianWallClient({
   const [profile, setProfile] = useState<{ id: string; current_ghost_id: string; country?: string | null } | null>(null);
   const [viewerShapeIds, setViewerShapeIds] = useState<number[]>([]);
   const [posts, setPosts] = useState<PostWithComments[]>(initialPosts);
+  const [sortMode, setSortMode] = useState<"recency" | "engagement" | null>(null);
   const [loading, setLoading] = useState(!initialWallOwner);
   const [newPostContent, setNewPostContent] = useState("");
   const [mentionedPoliticianIds, setMentionedPoliticianIds] = useState<string[]>([]);
@@ -183,6 +186,11 @@ export default function PoliticianWallClient({
   const [submittingClaim, setSubmittingClaim] = useState(false);
   const [claimSuccess, setClaimSuccess] = useState(false);
   const [claimError, setClaimError] = useState("");
+
+  const displayedPosts = useMemo(() => {
+    const effectiveSortMode = sortMode ?? defaultSortMode(profile?.id ? "politician" : null);
+    return effectiveSortMode === "engagement" ? sortByEngagement(posts) : posts;
+  }, [posts, sortMode, profile?.id]);
 
   useEffect(() => {
     let cancelled = false;
@@ -965,11 +973,16 @@ export default function PoliticianWallClient({
       )}
 
       {/* Wall Post Feed */}
-      {posts.length === 0 ? (
+      {displayedPosts.length === 0 ? (
         <EmptyState description="No posts on this wall yet." />
       ) : (
-        <div className="space-y-6">
-          {posts.map((post) => (
+        <>
+          <FeedSortControl
+            sortMode={sortMode ?? defaultSortMode(profile?.id ? "politician" : null)}
+            onSortChange={setSortMode}
+          />
+          <div className="space-y-6">
+            {displayedPosts.map((post) => (
             <PostCard
               key={post.id}
               post={post}
@@ -997,7 +1010,8 @@ export default function PoliticianWallClient({
               mentionBadge={mentionOnlyPostIds.has(post.id)}
             />
           ))}
-        </div>
+          </div>
+        </>
       )}
 
       {showReportProfile && wallOwner?.id && (

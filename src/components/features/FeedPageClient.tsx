@@ -27,6 +27,8 @@ import PitchViewerModal from "./PitchViewerModal";
 import PoliticianSidebar from "./PoliticianSidebar";
 import MediaThumbnail from "./MediaThumbnail";
 import MentionTextarea from "./MentionTextarea";
+import FeedSortControl from "./FeedSortControl";
+import { sortByEngagement, defaultSortMode } from "@/lib/utils/feedSort";
 import {
   Card,
   Button,
@@ -84,15 +86,8 @@ interface MembershipShape {
 
 const MAX_IMAGE_SIZE_MB = 5;
 
-function sortByPoliticianEngagement<T extends { likes_count?: number | null; comments?: unknown[] | null }>(
-  list: T[]
-) {
-  return [...list].sort((a, b) => {
-    const scoreA = (a.likes_count ?? 0) + (a.comments?.length ?? 0);
-    const scoreB = (b.likes_count ?? 0) + (b.comments?.length ?? 0);
-    return scoreB - scoreA;
-  });
-}
+// sortByEngagement and defaultSortMode are now in @/lib/utils/feedSort
+// and shared across FeedPageClient, PoliticianWallClient, and CandidacyWall.
 
 function getBoundaryNameFromPost(post: any): string | null {
   const boundaries = post.post_boundaries as any[];
@@ -116,6 +111,11 @@ export default function FeedPageClient() {
   const [activeElections, setActiveElections] = useState<any[]>([]);
 
   const [posts, setPosts] = useState<PostWithComments[]>([]);
+  // null until a per-role default is applied once (politicians used to be
+  // hard-locked to engagement sort with no way to see recency instead, and
+  // vice versa for everyone else) -- after that, purely user-controlled via
+  // the dropdown, never auto-overridden again.
+  const [sortMode, setSortMode] = useState<"recency" | "engagement" | null>(null);
   const [politicianAuthors, setPoliticianAuthors] = useState<Map<string, { fullName: string; wallHref: string }>>(new Map());
   const [postMentions, setPostMentions] = useState<Map<string, { politicianId: string; fullName: string; wallHref: string }[]>>(new Map());
   const [newPostContent, setNewPostContent] = useState("");
@@ -347,11 +347,12 @@ export default function FeedPageClient() {
         new Date(a.created_at || 0).getTime()
     );
 
-    // Politicians want to see the most-engaged posts first.
-    const finalPosts = profile.role === "politician" ? sortByPoliticianEngagement(combined) : combined;
-    setPosts(finalPosts);
-    setPoliticianAuthors(await hydratePoliticianAuthors(supabase, finalPosts));
-    setPostMentions(await hydratePostMentions(supabase, finalPosts));
+    // Stored recency-sorted always -- engagement ordering is applied as a
+    // display-only derivation (see `displayedPosts` below) driven by the
+    // user's sortMode choice, not baked in here.
+    setPosts(combined);
+    setPoliticianAuthors(await hydratePoliticianAuthors(supabase, combined));
+    setPostMentions(await hydratePostMentions(supabase, combined));
   };
 
   useEffect(() => {
@@ -385,6 +386,11 @@ export default function FeedPageClient() {
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, [profile]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const displayedPosts = useMemo(() => {
+    const effectiveSortMode = sortMode ?? defaultSortMode(profile?.role);
+    return effectiveSortMode === "engagement" ? sortByEngagement(posts) : posts;
+  }, [posts, sortMode, profile?.role]);
 
   const handlePostTextChange = (text: string) => {
     setNewPostContent(text);
@@ -932,8 +938,21 @@ export default function FeedPageClient() {
                 })}
               </div>
 
+              {/* User-controlled sort (used to be hard-locked: politicians
+                  always got engagement order, everyone else always got
+                  recency, with no visual cue either way -- a genuinely new,
+                  unengaged post could silently rank below a week-old
+                  high-engagement one and read as a bug). Defaults to each
+                  role's old behavior, but is freely switchable now. */}
+              {displayedPosts.length > 0 && (
+                <FeedSortControl
+                  sortMode={sortMode ?? defaultSortMode(profile?.role)}
+                  onSortChange={setSortMode}
+                />
+              )}
+
               {/* Post List Feed */}
-              {posts.length === 0 ? (
+              {displayedPosts.length === 0 ? (
                 <EmptyState
                   icon={Users}
                   title={t("feed.emptyTitle")}
@@ -941,7 +960,7 @@ export default function FeedPageClient() {
                 />
               ) : (
                 <div className="space-y-4">
-                  {posts.map((post) => (
+                  {displayedPosts.map((post) => (
                     <PostCard
                       key={post.id}
                       post={post}
