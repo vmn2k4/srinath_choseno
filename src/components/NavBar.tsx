@@ -106,7 +106,7 @@ export default function NavBar() {
       icon: Newspaper,
       active: pathname?.startsWith("/news") ?? false,
     },
-    { href: "/about", label: "About", icon: Heart, active: isActive("/about") },
+    ...(!session ? [{ href: "/about", label: "About", icon: Heart, active: isActive("/about") }] : []),
     session
       ? { href: "/profile", label: "Profile", icon: UserIcon, active: isActive("/profile") }
       : { href: "/auth", label: "Log In", icon: LogIn, active: isActive("/auth") },
@@ -190,12 +190,14 @@ export default function NavBar() {
             {t("nav.news")}
           </Link>
 
-          <Link
-            href="/about"
-            className={`flex items-center gap-1.5 ${navLinkClass(isActive("/about"))}`}
-          >
-            {t("nav.about")}
-          </Link>
+          {!session && (
+            <Link
+              href="/about"
+              className={`flex items-center gap-1.5 ${navLinkClass(isActive("/about"))}`}
+            >
+              {t("nav.about")}
+            </Link>
+          )}
 
           {session ? (
             <>
@@ -434,13 +436,15 @@ export default function NavBar() {
             {t("nav.news")}
           </Link>
 
-          <Link
-            href="/about"
-            className={mobileNavLinkClass(isActive("/about"))}
-          >
-            <Heart size={18} />
-            {t("nav.about")}
-          </Link>
+          {!session && (
+            <Link
+              href="/about"
+              className={mobileNavLinkClass(isActive("/about"))}
+            >
+              <Heart size={18} />
+              {t("nav.about")}
+            </Link>
+          )}
 
           {session ? (
             <>
