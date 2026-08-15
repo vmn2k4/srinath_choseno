@@ -57,6 +57,7 @@ Complete guide to all Choseno documentation — architecture, features, data pip
 - **[COMMENTS_AND_MODERATION.md](COMMENTS_AND_MODERATION.md)** — Threaded posts/comments, user flags, admin content review, hidden content log
 - **[NEWS_TAGGING.md](NEWS_TAGGING.md)** — Editorial news articles, tagging to politicians/parties, scheduling
 - **[NEWS_GENERATION_GUIDE.md](NEWS_GENERATION_GUIDE.md)** — Automated news generation with Grok AI, schema validation, batch scripts
+- **[GEMINI_NEWS_SCRAPING_STANDARD.md](GEMINI_NEWS_SCRAPING_STANDARD.md)** — Definitive operational standard & SOP for scraping, research, 400-750 word depth, statutory/dollar numbers, exact canonical deep links, high-CTR `tweet` hooks, and direct Supabase insertion
 - **[SOCIAL_SHARING_AND_IMAGE_GENERATION.md](SOCIAL_SHARING_AND_IMAGE_GENERATION.md)** — Dynamic Edge OpenGraph card generation (`@vercel/og`), right-floated editorial text wrap, 1-click social sharing (X, WhatsApp, LinkedIn), and smart topic hashtag extraction
 
 ### Engagement & Analytics
