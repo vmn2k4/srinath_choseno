@@ -245,6 +245,70 @@ export async function getInterestedPoliticians(
   return { data: list, error: null };
 }
 
+// @mention autocomplete — every taggable person (politician or officeholder)
+// is a profiles row with role='politician' (office_holders is required to
+// have one linked, see ARCHITECTURE.md §34), and that role already has a
+// public SELECT policy (20260724000001_public_politician_profiles.sql), so
+// this is a plain client-side query, no RPC needed.
+//
+// Results are ranked by proximity to the searching user -- "brenda" should
+// surface their own constituency's Brenda before a same-named politician on
+// the other side of the country. Tier 0: office_holders.map_shape_id or
+// politician_profiles.target_boundary_id matches one of the viewer's
+// user_boundary_memberships (target_boundary_id covers self-registered
+// candidates; map_shape_id is the reliable one for scraped officeholders --
+// target_boundary_id is null for almost all of them, confirmed against live
+// data). Tier 1: same country. Tier 2: everyone else. office_holders is
+// disambiguated to the linked_profile_id FK since the table also has an
+// updated_by FK to profiles.
+//
+// Fetches a wider pool than `limit` so there's enough to actually reorder,
+// then sorts and truncates in memory -- still one query, runs on every
+// keystroke after "@" in the composer, so kept cheap.
+export async function searchTaggablePoliticians(
+  supabase: Client,
+  query: string,
+  options?: { viewerShapeIds?: number[]; viewerCountry?: string | null },
+  limit = 8
+) {
+  const trimmed = query.trim();
+  if (!trimmed) return { data: [], error: null };
+  const { viewerShapeIds = [], viewerCountry = null } = options || {};
+
+  let dbQuery = supabase
+    .from("profiles")
+    .select(
+      "id, full_name, country, current_ghost_id, politician_profiles(wall_slug, avatar_url, photo_url, target_boundary_id), office_holders!office_holders_linked_profile_id_fkey(map_shape_id)"
+    )
+    .eq("role", "politician")
+    .ilike("full_name", `%${trimmed}%`)
+    .order("full_name", { ascending: true })
+    .limit(Math.max(limit * 4, 24));
+  if (!isDevEnvironment()) dbQuery = dbQuery.eq("is_test", false);
+
+  const { data, error } = await dbQuery;
+  if (error || !data) return { data, error };
+
+  if (viewerShapeIds.length === 0 && !viewerCountry) {
+    return { data: data.slice(0, limit), error: null };
+  }
+
+  const shapeIdStrings = new Set(viewerShapeIds.map(String));
+  const tierOf = (row: (typeof data)[number]) => {
+    const targetBoundaryId = row.politician_profiles?.target_boundary_id;
+    const officeHolderShapeIds = (row.office_holders || []).map((oh) => oh.map_shape_id);
+    const isLocal =
+      (targetBoundaryId != null && shapeIdStrings.has(String(targetBoundaryId))) ||
+      officeHolderShapeIds.some((id) => viewerShapeIds.includes(id));
+    if (isLocal) return 0;
+    if (viewerCountry && row.country === viewerCountry) return 1;
+    return 2;
+  };
+
+  const sorted = [...data].sort((a, b) => tierOf(a) - tierOf(b));
+  return { data: sorted.slice(0, limit), error: null };
+}
+
 // profiles — role/full_name/country/constituency upsert, shared by
 // OnboardingFlow (passes onboardingCompleted:true) and EditProfileFlow (omits it).
 export async function upsertProfileCore(

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { Users, ShieldCheck, CornerDownRight, Award, Flag, ArrowRight, Languages, Loader2 } from "lucide-react";
 import Card from "@/components/primitives/Card";
@@ -23,6 +23,44 @@ export type PostWithComments = PostRow & {
   news_articles?: { slug: string; event_date?: string | null; published_at?: string | null } | null;
 };
 
+export type PostMention = { politicianId: string; fullName: string; wallHref: string };
+
+// Linkifies the first-typed "@Full Name" occurrence for each of this post's
+// resolved mentions (see hydratePostMentions in feed.ts) to that politician's
+// wall. Best-effort text match, not a stored offset -- fine for the common
+// case (mention inserted via the composer's autocomplete, never hand-edited
+// afterward); a name that no longer appears verbatim in the content (e.g.
+// the user rewrote around it) just doesn't get linked.
+function renderContentWithMentions(content: string, mentions?: PostMention[] | null): ReactNode {
+  if (!mentions || mentions.length === 0) return content;
+
+  const names = [...new Set(mentions.map((m) => m.fullName))].sort((a, b) => b.length - a.length);
+  const escaped = names.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const pattern = new RegExp(`@(${escaped.join("|")})\\b`, "g");
+
+  const nodes: ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+  while ((match = pattern.exec(content)) !== null) {
+    if (match.index > lastIndex) nodes.push(content.slice(lastIndex, match.index));
+    const name = match[1];
+    const mention = mentions.find((m) => m.fullName === name);
+    nodes.push(
+      mention ? (
+        <Link key={`mention-${key++}`} href={mention.wallHref} className="text-primary font-semibold hover:underline">
+          @{name}
+        </Link>
+      ) : (
+        match[0]
+      )
+    );
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < content.length) nodes.push(content.slice(lastIndex));
+  return nodes;
+}
+
 // Unifies what were two independently-implemented ~80%-identical post cards:
 // FeedPage.jsx's inline post markup (vote bar, civic-score badge) and
 // WallPostFeed.jsx's card (owner spotlight section, no voting). Parameterized
@@ -46,6 +84,8 @@ export default function PostCard({
   onReport,
   commentError,
   boundaryName,
+  mentions,
+  mentionBadge = false,
 }: {
   post: PostWithComments;
   ownerGhostId?: string | null;
@@ -62,6 +102,12 @@ export default function PostCard({
   onReport?: (targetType: ReportTargetType, targetId: string, abuseType: string) => Promise<{ error?: unknown }>;
   commentError?: string;
   boundaryName?: string | null;
+  mentions?: PostMention[];
+  // True on a politician wall when this post shows up only because someone
+  // else @mentioned the wall owner in it (see getMentionedWallPosts) -- not
+  // one they authored themselves. Distinguishes it from isOwnerPost's
+  // spotlight styling, which means the opposite (they wrote it).
+  mentionBadge?: boolean;
 }) {
   const { t, locale } = useTranslation();
   const [reportTarget, setReportTarget] = useState<{ targetType: ReportTargetType; targetId: string } | null>(null);
@@ -131,6 +177,11 @@ export default function PostCard({
   return (
     <Card interactive padding="none" className="overflow-hidden">
       <div className="p-5">
+        {mentionBadge && (
+          <Badge tone="accent" size="xs" className="mb-2">
+            Tagged in this post
+          </Badge>
+        )}
         <PostHeader
           ghostId={post.ghost_id}
           createdAt={displayCreatedAt}
@@ -149,12 +200,14 @@ export default function PostCard({
               {showTranslated && translatedText ? translatedText.split("\n\n")[0] : post.content.split("\n\n")[0]}
             </h3>
             <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
-              {showTranslated && translatedText ? translatedText.split("\n\n").slice(1).join("\n\n") : post.content.split("\n\n").slice(1).join("\n\n")}
+              {showTranslated && translatedText
+                ? translatedText.split("\n\n").slice(1).join("\n\n")
+                : renderContentWithMentions(post.content.split("\n\n").slice(1).join("\n\n"), mentions)}
             </p>
           </div>
         ) : (
           <p className="text-text-main text-sm sm:text-base font-normal whitespace-pre-wrap leading-relaxed mb-3">
-            {showTranslated && translatedText ? translatedText : post.content}
+            {showTranslated && translatedText ? translatedText : renderContentWithMentions(post.content, mentions)}
           </p>
         )}
 

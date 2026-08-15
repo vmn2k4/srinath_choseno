@@ -177,3 +177,37 @@ $$;
 
 DROP FUNCTION IF EXISTS public.create_wall_post(TEXT, TEXT, TEXT, JSONB, TEXT);
 GRANT EXECUTE ON FUNCTION public.create_wall_post(TEXT, TEXT, TEXT, JSONB, TEXT, UUID[]) TO authenticated;
+
+-- CandidacyWall's composer creates posts via a direct table insert
+-- (createCandidatePost in elections.ts -- a pre-existing, documented
+-- divergence from create_post/create_wall_post, see SERVICES.md's "Known
+-- intentional divergences"), so mentions there can't ride along inside one
+-- RPC call the way they do above. This lets the client attach mentions as a
+-- second step, but only onto a post it just created itself (the post's
+-- ghost_id must match the caller's current ghost) -- can't be used to tag
+-- mentions onto someone else's post.
+CREATE OR REPLACE FUNCTION public.attach_post_mentions(p_post_id UUID, p_mentioned_ids UUID[])
+RETURNS void
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  v_ghost_id UUID;
+  v_post_ghost_id UUID;
+BEGIN
+  SELECT current_ghost_id INTO v_ghost_id FROM public.profiles WHERE id = auth.uid();
+  IF v_ghost_id IS NULL THEN
+    RAISE EXCEPTION 'Ghost identity not found';
+  END IF;
+
+  SELECT ghost_id INTO v_post_ghost_id FROM public.posts WHERE id = p_post_id;
+  IF v_post_ghost_id IS NULL OR v_post_ghost_id <> v_ghost_id THEN
+    RAISE EXCEPTION 'Cannot attach mentions to a post you do not own';
+  END IF;
+
+  PERFORM public.insert_post_mentions(p_post_id, p_mentioned_ids);
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.attach_post_mentions(UUID, UUID[]) TO authenticated;

@@ -6,11 +6,18 @@ import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 type Client = SupabaseClient<Database>;
 
 // ── posts — master feed (3 independently-fetched sections, merged by the caller) ──
+// All three carry an explicit .order() -- without one Postgres/PostgREST
+// makes no ordering guarantee at all, so a fresh post could land anywhere in
+// the result set instead of near the top. Found while verifying @mentions:
+// a brand-new post was functionally correct (mention attached fine) but
+// invisible in practice, sorted behind an older, equally-0-engagement post
+// purely because the DB happened to return it that way.
 export async function getMembershipScopedPosts(supabase: Client, shapeIds: number[]) {
   let query = supabase
     .from("posts")
     .select("*, comments(*), post_boundaries!inner(map_shape_id, map_shapes(id, name)), news_articles(slug, event_date, published_at)")
-    .in("post_boundaries.map_shape_id", shapeIds);
+    .in("post_boundaries.map_shape_id", shapeIds)
+    .order("created_at", { ascending: false });
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }
@@ -20,7 +27,8 @@ export async function getCountryScopedPosts(supabase: Client, country: string) {
     .from("posts")
     .select("*, comments(*), news_articles(slug, event_date, published_at)")
     .eq("is_country", true)
-    .eq("country", country);
+    .eq("country", country)
+    .order("created_at", { ascending: false });
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }
@@ -29,7 +37,8 @@ export async function getInternationalScopedPosts(supabase: Client) {
   let query = supabase
     .from("posts")
     .select("*, comments(*), news_articles(slug, event_date, published_at)")
-    .eq("is_international", true);
+    .eq("is_international", true)
+    .order("created_at", { ascending: false });
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }
@@ -46,7 +55,14 @@ export async function createFeedPost(
     imageUrl,
     videoUrl,
     linkMetadata,
-  }: { content: string; imageUrl?: string | null; videoUrl?: string | null; linkMetadata?: Json | null }
+    mentionedPoliticianIds,
+  }: {
+    content: string;
+    imageUrl?: string | null;
+    videoUrl?: string | null;
+    linkMetadata?: Json | null;
+    mentionedPoliticianIds?: string[] | null;
+  }
 ) {
   const args: {
     p_content: string;
@@ -54,11 +70,13 @@ export async function createFeedPost(
     p_video_url?: string;
     p_link_metadata?: Json;
     p_is_test: boolean;
+    p_mentioned_politician_ids?: string[];
   } = { p_content: content, p_is_test: isDevEnvironment() };
 
   if (imageUrl) args.p_image_url = imageUrl;
   if (videoUrl) args.p_video_url = videoUrl;
   if (linkMetadata) args.p_link_metadata = linkMetadata;
+  if (mentionedPoliticianIds && mentionedPoliticianIds.length > 0) args.p_mentioned_politician_ids = mentionedPoliticianIds;
 
   return supabase.rpc("create_post", args);
 }
@@ -104,6 +122,38 @@ export async function hydratePoliticianAuthors(
           : `/wall/${buildPoliticianWallSlug(row.full_name)}`,
       });
     }
+  }
+  return map;
+}
+
+// @mention hydration — resolve each post's tagged politicians (post_mentions)
+// into display info so PostCard can linkify "@Full Name" to their wall.
+// Same shape/pattern as hydratePoliticianAuthors above, keyed by post id
+// instead of ghost_id since a mention targets a specific profile, not the
+// (anonymous) poster.
+export async function hydratePostMentions(
+  supabase: Client,
+  posts: { id: string }[]
+): Promise<Map<string, { politicianId: string; fullName: string; wallHref: string }[]>> {
+  const postIds = [...new Set(posts.map((p) => p.id))];
+  const map = new Map<string, { politicianId: string; fullName: string; wallHref: string }[]>();
+  if (postIds.length === 0) return map;
+
+  const { data } = await supabase
+    .from("post_mentions")
+    .select("post_id, politician_id, profiles(full_name, politician_profiles(wall_slug))")
+    .in("post_id", postIds);
+
+  for (const row of data || []) {
+    const prof = row.profiles as { full_name: string | null; politician_profiles: { wall_slug: string | null } | null } | null;
+    if (!prof) continue;
+    const fullName = prof.full_name || "Politician";
+    const wallHref = prof.politician_profiles?.wall_slug
+      ? `/wall/${prof.politician_profiles.wall_slug}`
+      : `/wall/${buildPoliticianWallSlug(fullName)}`;
+    const existing = map.get(row.post_id) || [];
+    existing.push({ politicianId: row.politician_id, fullName, wallHref });
+    map.set(row.post_id, existing);
   }
   return map;
 }

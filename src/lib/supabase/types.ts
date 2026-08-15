@@ -1826,6 +1826,39 @@ export type Database = {
           },
         ]
       }
+      post_mentions: {
+        Row: {
+          created_at: string | null
+          politician_id: string
+          post_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          politician_id: string
+          post_id: string
+        }
+        Update: {
+          created_at?: string | null
+          politician_id?: string
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_mentions_politician_id_fkey"
+            columns: ["politician_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "post_mentions_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       post_votes: {
         Row: {
           created_at: string | null
@@ -2854,6 +2887,10 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      attach_post_mentions: {
+        Args: { p_mentioned_ids?: string[]; p_post_id: string }
+        Returns: undefined
+      }
       backfill_politician_profile_from_officeholder: {
         Args: {
           p_claim_id?: string
@@ -2948,6 +2985,7 @@ export type Database = {
           p_image_url?: string
           p_is_test?: boolean
           p_link_metadata?: Json
+          p_mentioned_politician_ids?: string[]
           p_news_article_id?: string
           p_video_url?: string
         }
@@ -2986,6 +3024,7 @@ export type Database = {
           p_image_url?: string
           p_is_test?: boolean
           p_link_metadata?: Json
+          p_mentioned_politician_ids?: string[]
           p_video_url?: string
           p_wall_ghost_id?: string
         }

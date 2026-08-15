@@ -9,25 +9,28 @@ import AnswerValue from "./AnswerValue";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 import PostCard, { type PostWithComments } from "@/components/features/PostCard";
+import MentionTextarea from "./MentionTextarea";
 import {
   getPublicCandidateById,
   getPublicCandidateAnswers,
   getCandidacyWallPosts,
   createCandidatePost,
+  attachPostMentions,
   createAnswerComment,
   updateNominationFiled,
   requestCandidacyClaim,
 } from "@/lib/services/elections";
-import { getOwnProfile, getPoliticianProfile } from "@/lib/services/profile";
+import { getOwnProfile, getPoliticianProfile, getUserBoundaryShapeIds } from "@/lib/services/profile";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import PoliticianRatingModal from "./PoliticianRatingModal";
-import { uploadPostImage, createComment, hydratePoliticianAuthors, voteOnPost } from "@/lib/services/feed";
+import { uploadPostImage, createComment, hydratePoliticianAuthors, hydratePostMentions, voteOnPost } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import {
   getSupportStatus,
   getSupporterCount,
   withdrawSupport,
   addSupport,
+  getMentionedWallPosts,
 } from "@/lib/services/politicianWall";
 import {
   ArrowLeft,
@@ -62,6 +65,7 @@ import {
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
+import { mergeWallPosts } from "@/lib/utils/mergeWallPosts";
 import { trackPostCreated, trackPostEngagement, trackCommentAdded } from "@/lib/analytics/events";
 
 interface CandidateRecord {
@@ -153,7 +157,8 @@ export default function CandidacyWall({
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
 
-  const [profile, setProfile] = useState<{ id: string; current_ghost_id: string } | null>(null);
+  const [profile, setProfile] = useState<{ id: string; current_ghost_id: string; country?: string | null } | null>(null);
+  const [viewerShapeIds, setViewerShapeIds] = useState<number[]>([]);
   const [candidate, setCandidate] = useState<CandidateRecord | null>(initialCandidate);
   const [candidateProfile, setCandidateProfile] = useState<any>(initialCandidateProfile);
   const [answers, setAnswers] = useState<QuestionnaireAnswer[]>(initialAnswers);
@@ -161,6 +166,8 @@ export default function CandidacyWall({
   const [loading, setLoading] = useState(!initialCandidate);
 
   const [newPostContent, setNewPostContent] = useState("");
+  const [mentionedPoliticianIds, setMentionedPoliticianIds] = useState<string[]>([]);
+  const [postError, setPostError] = useState<string | null>(null);
   const [extractedUrl, setExtractedUrl] = useState<string | null>(null);
   const [linkMetadata, setLinkMetadata] = useState<{ url: string; title?: string; description?: string; image?: string } | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -207,13 +214,25 @@ export default function CandidacyWall({
   };
 
   const [politicianAuthors, setPoliticianAuthors] = useState<Map<string, { fullName: string; wallHref: string }>>(new Map());
+  const [postMentions, setPostMentions] = useState<Map<string, { politicianId: string; fullName: string; wallHref: string }[]>>(new Map());
+  const [mentionOnlyPostIds, setMentionOnlyPostIds] = useState<Set<string>>(new Set());
 
   const loadPosts = async (ghostId?: string) => {
     const targetGhostId = ghostId ?? candidate?.profiles?.current_ghost_id;
     const { data } = await getCandidacyWallPosts(supabase, candidateId, targetGhostId);
-    const rows = (data as PostWithComments[]) || [];
-    setPosts(rows);
-    const map = await hydratePoliticianAuthors(supabase, rows);
+    const authored = (data as PostWithComments[]) || [];
+
+    let mentioned: PostWithComments[] = [];
+    if (candidate?.politician_id) {
+      const { data: mentionedData } = await getMentionedWallPosts(supabase, candidate.politician_id);
+      mentioned = (mentionedData as PostWithComments[]) || [];
+    }
+    const { merged, mentionOnlyIds } = mergeWallPosts(authored, mentioned);
+    setPosts(merged);
+    setMentionOnlyPostIds(mentionOnlyIds);
+    setPostMentions(await hydratePostMentions(supabase, merged));
+
+    const map = await hydratePoliticianAuthors(supabase, merged);
     if (targetGhostId && candidate?.display_name) {
       map.set(targetGhostId, {
         fullName: candidate.display_name,
@@ -232,7 +251,12 @@ export default function CandidacyWall({
 
       if (user) {
         const { data: myProfile } = await getOwnProfile(supabase, user.id);
-        if (isMounted) setProfile(myProfile as { id: string; current_ghost_id: string } | null);
+        const myProfileTyped = myProfile as { id: string; current_ghost_id: string; country?: string | null } | null;
+        if (isMounted) setProfile(myProfileTyped);
+        if (myProfileTyped?.id) {
+          const { data: shapeRows } = await getUserBoundaryShapeIds(supabase, myProfileTyped.id);
+          if (isMounted) setViewerShapeIds((shapeRows || []).map((r) => r.map_shape_id));
+        }
       } else {
         if (isMounted) setProfile(null);
       }
@@ -333,8 +357,7 @@ export default function CandidacyWall({
     setShowClaimForm(false);
   };
 
-  const handlePostChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const text = e.target.value;
+  const handlePostChange = (text: string) => {
     setNewPostContent(text);
     const urlRegex = /(https?:\/\/[^\s]+)/;
     const match = text.match(urlRegex);
@@ -353,6 +376,7 @@ export default function CandidacyWall({
     if (!profile?.current_ghost_id) return;
 
     setSubmitting(true);
+    setPostError(null);
     try {
       let finalImageUrl: string | null = null;
       if (imageFile) {
@@ -362,14 +386,14 @@ export default function CandidacyWall({
           profile.current_ghost_id
         );
         if (uploadError) {
-          alert("Failed to upload image.");
+          setPostError("Failed to upload image.");
           setSubmitting(false);
           return;
         }
         finalImageUrl = publicUrl;
       }
 
-      const { error } = await createCandidatePost(supabase, {
+      const { data: newPost, error } = await createCandidatePost(supabase, {
         ghost_id: profile.current_ghost_id,
         content: newPostContent.trim(),
         election_candidate_id: candidateId,
@@ -379,6 +403,10 @@ export default function CandidacyWall({
 
       if (error) throw error;
 
+      if (newPost?.id && mentionedPoliticianIds.length > 0) {
+        await attachPostMentions(supabase, newPost.id, mentionedPoliticianIds);
+      }
+
       trackPostCreated({
         hasImage: Boolean(finalImageUrl),
         hasVideo: false,
@@ -387,14 +415,17 @@ export default function CandidacyWall({
       });
 
       setNewPostContent("");
+      setMentionedPoliticianIds([]);
       setExtractedUrl(null);
       setLinkMetadata(null);
       setImageFile(null);
       setImagePreview(null);
       setComposerOpen(false);
       await loadPosts();
-    } catch (err) {
-      console.error("Error creating post:", err);
+    } catch (err: any) {
+      const msg = err?.message || err?.details || err?.hint || (typeof err === "object" ? JSON.stringify(err) : String(err));
+      console.error("Error creating post:", msg, err);
+      setPostError(msg);
     } finally {
       setSubmitting(false);
     }
@@ -405,6 +436,7 @@ export default function CandidacyWall({
   const closeComposerIfEmpty = () => {
     if (!newPostContent.trim() && !imageFile) {
       setComposerOpen(false);
+      setPostError(null);
     }
   };
 
@@ -933,17 +965,23 @@ export default function CandidacyWall({
                 </button>
               ) : (
               <form onSubmit={handleCreatePost} className="space-y-3">
-                <Textarea
+                <MentionTextarea
+                  supabase={supabase}
                   placeholder={
                     isOwner
-                      ? "Post an update to your campaign wall..."
-                      : "Ask the candidate a question or leave a message..."
+                      ? "Post an update to your campaign wall... Type @ to tag a politician"
+                      : "Ask the candidate a question or leave a message... Type @ to tag a politician"
                   }
                   value={newPostContent}
                   onChange={handlePostChange}
+                  onMentionsChange={setMentionedPoliticianIds}
+                  viewerShapeIds={viewerShapeIds}
+                  viewerCountry={profile?.country}
                   rows={3}
                   autoFocus
                 />
+
+                {postError && <Alert tone="danger">{postError}</Alert>}
 
                 {imagePreview && (
                   <div className="relative rounded-xl overflow-hidden border border-border-light/45 max-h-60">
@@ -1036,6 +1074,8 @@ export default function CandidacyWall({
                   }
                   onReport={handleReport}
                   commentError={commentErrors[post.id]}
+                  mentions={postMentions.get(post.id)}
+                  mentionBadge={mentionOnlyPostIds.has(post.id)}
                 />
               ))}
             </div>

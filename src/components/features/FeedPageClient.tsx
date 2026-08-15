@@ -26,17 +26,18 @@ import StoryStrip, { StoryPost } from "./StoryStrip";
 import PitchViewerModal from "./PitchViewerModal";
 import PoliticianSidebar from "./PoliticianSidebar";
 import MediaThumbnail from "./MediaThumbnail";
+import MentionTextarea from "./MentionTextarea";
 import {
   Card,
   Button,
   Badge,
-  Textarea,
   Spinner,
   EmptyState,
   StoryViewerModal,
   RemoveMediaButton,
   ConfirmDialog,
   Avatar,
+  Alert,
 } from "@/components/primitives";
 import {
   getOwnProfile,
@@ -56,6 +57,7 @@ import {
   getActiveElectionsForUser,
   burnGhostIdentityViaRpc,
   hydratePoliticianAuthors,
+  hydratePostMentions,
 } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import { getPlatformRuleSettings } from "@/lib/services/settings";
@@ -115,7 +117,10 @@ export default function FeedPageClient() {
 
   const [posts, setPosts] = useState<PostWithComments[]>([]);
   const [politicianAuthors, setPoliticianAuthors] = useState<Map<string, { fullName: string; wallHref: string }>>(new Map());
+  const [postMentions, setPostMentions] = useState<Map<string, { politicianId: string; fullName: string; wallHref: string }[]>>(new Map());
   const [newPostContent, setNewPostContent] = useState("");
+  const [mentionedPoliticianIds, setMentionedPoliticianIds] = useState<string[]>([]);
+  const [postError, setPostError] = useState<string | null>(null);
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
   const [commentErrors, setCommentErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -346,14 +351,14 @@ export default function FeedPageClient() {
     const finalPosts = profile.role === "politician" ? sortByPoliticianEngagement(combined) : combined;
     setPosts(finalPosts);
     setPoliticianAuthors(await hydratePoliticianAuthors(supabase, finalPosts));
+    setPostMentions(await hydratePostMentions(supabase, finalPosts));
   };
 
   useEffect(() => {
     if (profile && profile.role !== "admin") Promise.resolve().then(() => loadFeedPosts());
   }, [masterFilter, memberships, profile]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handlePostTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const text = e.target.value;
+  const handlePostTextChange = (text: string) => {
     setNewPostContent(text);
 
     const urlRegex = /(https?:\/\/[^\s]+)/;
@@ -386,6 +391,7 @@ export default function FeedPageClient() {
   const closeComposerIfEmpty = () => {
     if (!newPostContent.trim() && !imageFile && !uploadedVideoUrl && !showVideoRecorder) {
       setComposerOpen(false);
+      setPostError(null);
     }
   };
 
@@ -395,6 +401,7 @@ export default function FeedPageClient() {
     if (!profile?.current_ghost_id) return;
 
     setSubmitting(true);
+    setPostError(null);
     try {
       let finalImageUrl: string | null = null;
       if (imageFile) {
@@ -404,7 +411,7 @@ export default function FeedPageClient() {
           profile.current_ghost_id
         );
         if (uploadError) {
-          alert("Failed to upload image.");
+          setPostError("Failed to upload image.");
           setSubmitting(false);
           return;
         }
@@ -416,6 +423,7 @@ export default function FeedPageClient() {
         imageUrl: finalImageUrl,
         videoUrl: uploadedVideoUrl,
         linkMetadata,
+        mentionedPoliticianIds,
       });
 
       if (error) throw error;
@@ -428,6 +436,7 @@ export default function FeedPageClient() {
       });
 
       setNewPostContent("");
+      setMentionedPoliticianIds([]);
       setExtractedUrl(null);
       setLinkMetadata(null);
       setImageFile(null);
@@ -440,7 +449,7 @@ export default function FeedPageClient() {
     } catch (err: any) {
       const msg = err?.message || err?.details || err?.hint || (typeof err === "object" ? JSON.stringify(err) : String(err));
       console.error("Error creating post:", msg, err);
-      alert("Failed to create post: " + msg);
+      setPostError(msg);
     } finally {
       setSubmitting(false);
     }
@@ -739,13 +748,19 @@ export default function FeedPageClient() {
                     </button>
                   ) : (
                     <form onSubmit={handleCreatePost} className="space-y-3">
-                      <Textarea
-                        placeholder="What's happening in your constituency?"
+                      <MentionTextarea
+                        supabase={supabase}
+                        placeholder="What's happening in your constituency? Type @ to tag a politician"
                         value={newPostContent}
                         onChange={handlePostTextChange}
+                        onMentionsChange={setMentionedPoliticianIds}
+                        viewerShapeIds={memberships.map((m) => m.id)}
+                        viewerCountry={profile?.country}
                         rows={3}
                         autoFocus
                       />
+
+                    {postError && <Alert tone="danger">{postError}</Alert>}
 
                     {(imagePreview || uploadedVideoUrl) && (
                       <div className="flex gap-3 items-end flex-wrap">
@@ -915,6 +930,7 @@ export default function FeedPageClient() {
                       onReport={handleReport}
                       commentError={commentErrors[post.id]}
                       boundaryName={getBoundaryNameFromPost(post)}
+                      mentions={postMentions.get(post.id)}
                     />
                   ))}
                 </div>

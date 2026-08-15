@@ -259,6 +259,21 @@ export async function getWallPosts(supabase: Client, ghostId: string) {
   return query;
 }
 
+// Posts where this politician was @mentioned by someone else (not their own
+// authored/wall posts, that's getWallPosts above) — independently fetched
+// and merged by the caller, same pattern as the 3-way feed fetch in feed.ts.
+// !inner on post_mentions so the .eq() filter on the embed actually narrows
+// the joined posts instead of returning every post with a null embed.
+export async function getMentionedWallPosts(supabase: Client, politicianId: string) {
+  let query = supabase
+    .from("posts")
+    .select(`*, comments (*), news_articles (slug, event_date, published_at), post_mentions!inner(politician_id)`)
+    .eq("post_mentions.politician_id", politicianId)
+    .order("created_at", { ascending: false });
+  if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
+  return query;
+}
+
 // Goes through the create_wall_post RPC (resolves ghost_id from auth.uid()
 // server-side, and sets is_country/is_international/post_boundaries so the
 // post also shows up in the main feed) — exempt from the politician
@@ -272,7 +287,15 @@ export async function createWallPost(
     videoUrl,
     linkMetadata,
     wallGhostId,
-  }: { content: string; imageUrl?: string | null; videoUrl?: string | null; linkMetadata?: Database["public"]["Tables"]["posts"]["Row"]["link_metadata"]; wallGhostId?: string | null }
+    mentionedPoliticianIds,
+  }: {
+    content: string;
+    imageUrl?: string | null;
+    videoUrl?: string | null;
+    linkMetadata?: Database["public"]["Tables"]["posts"]["Row"]["link_metadata"];
+    wallGhostId?: string | null;
+    mentionedPoliticianIds?: string[] | null;
+  }
 ) {
   return supabase.rpc("create_wall_post", {
     p_content: content,
@@ -280,6 +303,7 @@ export async function createWallPost(
     p_video_url: videoUrl ?? undefined,
     p_link_metadata: linkMetadata ?? undefined,
     p_wall_ghost_id: wallGhostId ?? undefined,
+    p_mentioned_politician_ids: mentionedPoliticianIds && mentionedPoliticianIds.length > 0 ? mentionedPoliticianIds : undefined,
     p_is_test: isDevEnvironment(),
   });
 }

@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { useAuth } from "@/contexts/AuthContext";
 import LinkPreview from "./LinkPreview";
 import PostCard, { type PostWithComments } from "@/components/features/PostCard";
+import MentionTextarea from "./MentionTextarea";
 import {
   Users,
   Heart,
@@ -20,7 +21,7 @@ import {
   ShieldCheck,
   CheckCircle2,
 } from "lucide-react";
-import { getOwnProfile } from "@/lib/services/profile";
+import { getOwnProfile, getUserBoundaryShapeIds } from "@/lib/services/profile";
 import {
   getWallOwnerProfile,
   getSupportStatus,
@@ -29,12 +30,13 @@ import {
   addSupport,
   getSupportersList,
   getWallPosts,
+  getMentionedWallPosts,
   createWallPost,
   subscribeToSupportChanges,
   unsubscribeFromSupportChanges,
   getActiveCandidacies,
 } from "@/lib/services/politicianWall";
-import { uploadPostImage, createComment, hydratePoliticianAuthors, voteOnPost } from "@/lib/services/feed";
+import { uploadPostImage, createComment, hydratePoliticianAuthors, hydratePostMentions, voteOnPost } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import { getWallClaimEligibility, requestCandidacyClaim, requestOfficeholderWallClaim } from "@/lib/services/elections";
@@ -70,6 +72,7 @@ import ReportDialog from "./ReportDialog";
 import { createClient } from "@/lib/supabase/client";
 import { trackPostCreated, trackPostEngagement, trackCommentAdded, trackPoliticianViewed } from "@/lib/analytics/events";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
+import { mergeWallPosts } from "@/lib/utils/mergeWallPosts";
 
 interface WallOwnerRecord {
   id: string;
@@ -124,10 +127,13 @@ export default function PoliticianWallClient({
 
   const trackedGhostViewRef = React.useRef<string | null>(null);
   const [wallOwner, setWallOwner] = useState<WallOwnerRecord | null>(initialWallOwner);
-  const [profile, setProfile] = useState<{ id: string; current_ghost_id: string } | null>(null);
+  const [profile, setProfile] = useState<{ id: string; current_ghost_id: string; country?: string | null } | null>(null);
+  const [viewerShapeIds, setViewerShapeIds] = useState<number[]>([]);
   const [posts, setPosts] = useState<PostWithComments[]>(initialPosts);
   const [loading, setLoading] = useState(!initialWallOwner);
   const [newPostContent, setNewPostContent] = useState("");
+  const [mentionedPoliticianIds, setMentionedPoliticianIds] = useState<string[]>([]);
+  const [postError, setPostError] = useState<string | null>(null);
   const [extractedUrl, setExtractedUrl] = useState<string | null>(null);
   const [linkMetadata, setLinkMetadata] = useState<{ url: string; title?: string; description?: string; image?: string } | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -154,6 +160,8 @@ export default function PoliticianWallClient({
   const [mediaPreview, setMediaPreview] = useState<{ url: string; type: "image" | "video" } | null>(null);
 
   const [politicianAuthors, setPoliticianAuthors] = useState<Map<string, { fullName: string; wallHref: string }>>(new Map());
+  const [postMentions, setPostMentions] = useState<Map<string, { politicianId: string; fullName: string; wallHref: string }[]>>(new Map());
+  const [mentionOnlyPostIds, setMentionOnlyPostIds] = useState<Set<string>>(new Set());
   const [candidacies, setCandidacies] = useState<any[]>([]);
 
   // Unified claim eligibility — see get_wall_claim_eligibility() (migration
@@ -264,9 +272,19 @@ export default function PoliticianWallClient({
     try {
       const { data, error } = await getWallPosts(supabase, ghostId);
       if (error) throw error;
-      const postRows = (data as PostWithComments[]) || [];
-      setPosts(postRows);
-      const map = await hydratePoliticianAuthors(supabase, postRows);
+      const authored = (data as PostWithComments[]) || [];
+
+      let mentioned: PostWithComments[] = [];
+      if (wallOwner?.id) {
+        const { data: mentionedData } = await getMentionedWallPosts(supabase, wallOwner.id);
+        mentioned = (mentionedData as PostWithComments[]) || [];
+      }
+      const { merged, mentionOnlyIds } = mergeWallPosts(authored, mentioned);
+      setPosts(merged);
+      setMentionOnlyPostIds(mentionOnlyIds);
+      setPostMentions(await hydratePostMentions(supabase, merged));
+
+      const map = await hydratePoliticianAuthors(supabase, merged);
       if (ghostId && wallOwner?.full_name) {
         map.set(ghostId, { fullName: wallOwner.full_name, wallHref: `/wall/${wallOwner.politician_profiles?.wall_slug || buildPoliticianWallSlug(wallOwner.full_name, wallOwner.politician_profiles?.political_target_role)}` });
       }
@@ -288,7 +306,12 @@ export default function PoliticianWallClient({
 
       if (user) {
         const { data: myProfile } = await getOwnProfile(supabase, user.id);
-        if (isMounted) setProfile(myProfile as { id: string; current_ghost_id: string } | null);
+        const myProfileTyped = myProfile as { id: string; current_ghost_id: string; country?: string | null } | null;
+        if (isMounted) setProfile(myProfileTyped);
+        if (myProfileTyped?.id) {
+          const { data: shapeRows } = await getUserBoundaryShapeIds(supabase, myProfileTyped.id);
+          if (isMounted) setViewerShapeIds((shapeRows || []).map((r) => r.map_shape_id));
+        }
       }
 
       const { data: owner } = await getWallOwnerProfile(supabase, ghostId);
@@ -351,9 +374,20 @@ export default function PoliticianWallClient({
 
       const { data: postRows, error: postErr } = await getWallPosts(supabase, ghostId);
       if (!postErr && isMounted) {
-        const rows = (postRows as PostWithComments[]) || [];
-        setPosts(rows);
-        const map = await hydratePoliticianAuthors(supabase, rows);
+        const authored = (postRows as PostWithComments[]) || [];
+
+        let mentioned: PostWithComments[] = [];
+        if (ownerRecord?.id) {
+          const { data: mentionedData } = await getMentionedWallPosts(supabase, ownerRecord.id);
+          mentioned = (mentionedData as PostWithComments[]) || [];
+        }
+        const { merged, mentionOnlyIds } = mergeWallPosts(authored, mentioned);
+        if (!isMounted) return;
+        setPosts(merged);
+        setMentionOnlyPostIds(mentionOnlyIds);
+        setPostMentions(await hydratePostMentions(supabase, merged));
+
+        const map = await hydratePoliticianAuthors(supabase, merged);
         if (ghostId && ownerRecord?.full_name) {
           map.set(ghostId, { fullName: ownerRecord.full_name, wallHref: `/wall/${ownerRecord.politician_profiles?.wall_slug || buildPoliticianWallSlug(ownerRecord.full_name, ownerRecord.politician_profiles?.political_target_role)}` });
         }
@@ -394,8 +428,7 @@ export default function PoliticianWallClient({
     if (data) setSupportersList(data as unknown as SupporterRecord[]);
   };
 
-  const handlePostChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const text = e.target.value;
+  const handlePostChange = (text: string) => {
     setNewPostContent(text);
 
     const urlRegex = /(https?:\/\/[^\s]+)/;
@@ -414,6 +447,7 @@ export default function PoliticianWallClient({
     if (!newPostContent.trim() || !profile?.current_ghost_id) return;
 
     setSubmitting(true);
+    setPostError(null);
     try {
       let finalImageUrl: string | null = null;
 
@@ -425,7 +459,7 @@ export default function PoliticianWallClient({
         );
 
         if (uploadError) {
-          alert("Failed to upload image.");
+          setPostError("Failed to upload image.");
           setSubmitting(false);
           return;
         }
@@ -439,6 +473,7 @@ export default function PoliticianWallClient({
         linkMetadata,
         imageUrl: finalImageUrl,
         videoUrl,
+        mentionedPoliticianIds,
       });
 
       if (error) throw error;
@@ -451,6 +486,7 @@ export default function PoliticianWallClient({
       });
 
       setNewPostContent("");
+      setMentionedPoliticianIds([]);
       setExtractedUrl(null);
       setLinkMetadata(null);
       setImageFile(null);
@@ -459,8 +495,10 @@ export default function PoliticianWallClient({
       setShowRecorder(false);
       setComposerOpen(false);
       await fetchPosts();
-    } catch (err) {
-      console.error("Error creating post:", err);
+    } catch (err: any) {
+      const msg = err?.message || err?.details || err?.hint || (typeof err === "object" ? JSON.stringify(err) : String(err));
+      console.error("Error creating post:", msg, err);
+      setPostError(msg);
     } finally {
       setSubmitting(false);
     }
@@ -471,6 +509,7 @@ export default function PoliticianWallClient({
   const closeComposerIfEmpty = () => {
     if (!newPostContent.trim() && !imageFile && !videoUrl && !showRecorder) {
       setComposerOpen(false);
+      setPostError(null);
     }
   };
 
@@ -805,17 +844,23 @@ export default function PoliticianWallClient({
             </button>
           ) : (
           <form onSubmit={handleCreatePost} className="space-y-3">
-            <Textarea
+            <MentionTextarea
+              supabase={supabase}
               placeholder={
                 isOwner
-                  ? "Post an update to your public wall..."
-                  : "Leave a post or message for this representative..."
+                  ? "Post an update to your public wall... Type @ to tag a politician"
+                  : "Leave a post or message for this representative... Type @ to tag a politician"
               }
               value={newPostContent}
               onChange={handlePostChange}
+              onMentionsChange={setMentionedPoliticianIds}
+              viewerShapeIds={viewerShapeIds}
+              viewerCountry={profile?.country}
               rows={3}
               autoFocus
             />
+
+            {postError && <Alert tone="danger">{postError}</Alert>}
 
             {imagePreview && (
               <div className="relative rounded-xl overflow-hidden border border-border-light/45 max-h-60">
@@ -948,6 +993,8 @@ export default function PoliticianWallClient({
               }
               onReport={handleReport}
               commentError={commentErrors[post.id]}
+              mentions={postMentions.get(post.id)}
+              mentionBadge={mentionOnlyPostIds.has(post.id)}
             />
           ))}
         </div>

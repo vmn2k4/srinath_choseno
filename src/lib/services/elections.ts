@@ -825,7 +825,21 @@ export async function getCandidacyWallPosts(supabase: Client, candidateId: strin
 }
 
 export async function createCandidatePost(supabase: Client, fields: PostInsert) {
-  return supabase.from("posts").insert({ ...fields, is_test: isDevEnvironment() });
+  // .select().single() (added alongside attachPostMentions below) so the
+  // caller gets the new post's id back to attach mentions in a second step.
+  return supabase.from("posts").insert({ ...fields, is_test: isDevEnvironment() }).select().single();
+}
+
+// createCandidatePost above is a direct table insert (this file's own
+// documented divergence from create_post/create_wall_post), so @mentions
+// can't ride along inside one RPC call the way they do for those two. Call
+// this as a second step right after a successful createCandidatePost — the
+// attach_post_mentions RPC verifies the post's ghost_id matches the caller's
+// current ghost before writing, so it can't be used to tag someone else's
+// post (see 20260815000002_post_mentions.sql).
+export async function attachPostMentions(supabase: Client, postId: string, mentionedPoliticianIds: string[]) {
+  if (!mentionedPoliticianIds || mentionedPoliticianIds.length === 0) return { data: null, error: null };
+  return supabase.rpc("attach_post_mentions", { p_post_id: postId, p_mentioned_ids: mentionedPoliticianIds });
 }
 
 // ── nomination_filed (self-editable, direct update — same pattern as
