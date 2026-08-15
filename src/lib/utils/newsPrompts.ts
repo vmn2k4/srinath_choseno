@@ -40,25 +40,35 @@ export function getSingleNewsAiPrompt(person?: NewsPromptPersonContext): string 
 The output must strictly be a valid JSON object matching the schema below, with no markdown code blocks outside of the JSON formatting (or pure JSON text).
 ${personInstructions(person)}
 ### Strict Guidelines:
-1. **Tone & Objectivity:** The content must be strictly neutral, fact-based, and objective. Avoid bias, loaded language, or sensationalism while maintaining plain, accessible language for a general audience.
+1. **Editorial Quality & Depth (Comprehensive Coverage):**
+   - Articles must be rich, substantive, and deeply informative (aim for 400–750 words across 3–4 structured sections). Never produce superficial 2-paragraph summaries.
+   - Readers come to Choseno for clear, authoritative civic analysis. Every article must answer:
+     - **The Core Action**: Exactly what policy, executive order, legislation, or appointment occurred.
+     - **Specifics & Numbers**: Dollar amounts, bill names/numbers, statutory timelines, affected districts, and concrete metrics.
+     - **Why It Matters (Constituent Impact)**: How residents, local businesses, or specific public services are directly affected.
+     - **Next Steps & Accountability**: Upcoming legislative votes, public comment periods, implementation dates, or opposition perspectives.
 
-2. **Anti-Hallucination & Accuracy Rules:**
+2. **Tone & Objectivity:** The content must be strictly neutral, fact-based, and objective. Avoid bias, loaded language, or sensationalism while maintaining plain, accessible language for a general audience.
+
+3. **Anti-Hallucination & Accuracy Rules:**
    - Never invent names, quotes, statistics, dates, locations, sources, or details not present in the input.
-   - If information is unavailable, explicitly omit it or state uncertainty rather than filling gaps with plausible assumptions.
+   - If information is unavailable, explicitly state context or omit rather than filling gaps with plausible assumptions.
 
-3. **Factual Openings (No Sensationalism):** Open the body immediately with a standard journalistic dateline (e.g., \`CITY, Prov. — \`) followed by a concrete, factual scene or verified statistic from the source material. Avoid dramatic metaphors or clickbait.
+4. **Factual Openings (No Sensationalism):** Open the body immediately with a standard journalistic dateline (e.g., \`CITY, Prov. — \`) followed by a concrete, factual scene or verified statistic from the source material. Avoid dramatic metaphors or clickbait.
 
-4. **Verified Quotes Only:** Integrate direct quotes or attributions *only* when explicitly provided in the source material. If no verified quotes are available, summarize perspectives using neutral paraphrasing without quotation marks.
+5. **Direct & Specific Source Citations:**
+   - In \`sources\`, provide the **exact, direct deep-link URL** to the specific article, government press release, or official report (e.g. \`https://news.gov.bc.ca/releases/2026PREM0045-001234\`), **never** generic homepages (e.g. \`https://apnews.com\` or \`https://cbc.ca\`).
+   - Use clear, professional publication labels (e.g., "B.C. Government Executive Office", "The Associated Press", "CBC British Columbia").
 
-5. **Structure & Readability:** Break up sections into shorter, digestible subsections with punchy, action-oriented subheads tailored to the specific story topic.
+6. **Structure & Readability:** Break up sections into shorter, digestible subsections with punchy, action-oriented subheads tailored to the specific story topic (using Markdown \`##\`). Use bulleted breakdowns for multi-part policies or financial allocations.
 
-6. **Format & Schema:** Fill out every field in the JSON accurately. The \`body\` must use standard Markdown formatting.
+7. **Format & Schema:** Fill out every field in the JSON accurately. The \`body\` must use standard Markdown formatting.
 
 ### Required JSON Structure:
 {
   "slug": "url-friendly-hyphenated-slug",
-  "headline": "Compelling, accurate news headline",
-  "summary": "Short, punchy card excerpt summarizing the core development",
+  "headline": "Compelling, accurate news headline (60-80 chars)",
+  "summary": "Short, punchy card excerpt summarizing the core development (100-150 chars)",
   "category": "Choose one: ${NEWS_CATEGORIES.join(", ")}",
   "country": "CA — ISO-2 code (CA, US, GB…); full names like \\"Canada\\" also work and get normalized. Blank = global",
   "province": "ON — province/state code (ON, BC, NY, CA…); full names like \\"Ontario\\" also work. Blank = country-wide",
@@ -68,21 +78,21 @@ ${personInstructions(person)}
   "impactArea": "Choose one: ${NEWS_IMPACT_AREAS.join(", ")} — how far the story's relevance reaches:\n${IMPACT_AREA_GUIDE}",
   "latitude": 49.1913 - OPTIONAL. Decimal latitude of where the event happened. REQUIRED if impactArea is "local" and the source material names a specific place. Omit if not determinable.,
   "longitude": -122.8490 - OPTIONAL. Decimal longitude, paired with latitude. Omit if not determinable.,
-  "body": "CITY, Prov. — [Concrete, factual opening based strictly on source material...]\\n\\n## [Action-Oriented Subhead]\\n\\n[Core details, verified facts, and bullet points for metrics...]\\n\\n## Outlook\\n\\n[Forward-looking context grounded strictly in the source material...]",
+  "body": "CITY, Prov. — [Concrete, factual opening based strictly on source material...]\\n\\n## [Action-Oriented Subhead: Policy Mechanics & Core Decisions]\\n\\n[Detailed explanation of the decision, key stakeholders involved, and concrete figures...]\\n\\n## [Key Takeaways & Regional Impact]\\n\\n* **Immediate Effect**: [Bullet point]\\n* **Fiscal & Policy Allocation**: [Bullet point]\\n\\n## Outlook & Next Steps\\n\\n[Timelines for implementation, legislative milestones, and public accountability mechanisms...]",
   "seoTitle": "Optimized SEO Title under 60 characters",
   "metaDescription": "Concise meta description under 160 characters summarizing the article for search engines",
   "tags": ["tag1", "tag2", "tag3"],
   "tweet": "REQUIRED & CLICK-OPTIMIZED. A highly engaging, captivating 1-2 sentence hook designed for X/Twitter sharing to maximize discovery and click-throughs. Focus on the civic stakes, key decision, or accountability angle (e.g. 'Premier David Eby reshuffles BC Cabinet amid surging healthcare demands — see how the changes impact your riding.'). Plain text ONLY — no emojis, no hashtags, no URLs (Choseno automatically appends the canonical card link and topic hashtags). Keep under 200 characters.",
   "breakingNews": false,
   "author": {
-    "name": "Jane Doe",
-    "bio": "Civic and investigative reporter",
+    "name": "Choseno Civic News Desk",
+    "bio": "Provincial and municipal political affairs reporting",
     "photoUrl": "https://... — OPTIONAL, omit if not provided"
   },
   "sources": [
     {
-      "label": "Source Name",
-      "url": "https://example.com/source"
+      "label": "Specific Outlet / Office Name",
+      "url": "https://example.com/exact-deep-link-article-url"
     }
   ],
   "hero_image_url": "https://example.com/photo.jpg — OPTIONAL. Only include if the source material explicitly provides an image URL. Never invent, guess, or reuse a stock URL — omit this field entirely if no image was given.",
@@ -94,36 +104,36 @@ ${personInstructions(person)}
 }
 
 ### Key Points:
+- Depth & Substance: 400–750 words. Do NOT create short 1-paragraph stubs. Every article must provide comprehensive background, civic impact, and actionable timelines.
 - Headline: 60-80 characters, compelling but factual
 - Summary: 100-150 characters, card-friendly excerpt
-- Body: Use Markdown formatting with ## for subheadings
+- Body: Use Markdown formatting with ## for subheadings and bullet points for complex breakdowns
 - Category: MUST be exactly one of: ${NEWS_CATEGORIES.join(", ")} — any other value will be miscategorized on the site
 - Status: MUST be exactly one of: ${NEWS_STATUSES.join(", ")} — any other value will be rejected when saving
+- Sources: Provide direct, canonical article links (deep URLs) to the specific reporting or government release, never generic domain root URLs.
 - eventDate vs published_at: these are TWO DIFFERENT DATES. eventDate is when the real-world thing happened (can be days/weeks/years in the past for a backfilled story). published_at is when this article itself becomes visible on Choseno. Do not merge them into one value.
 - impactArea: MUST be exactly one of: ${NEWS_IMPACT_AREAS.join(", ")} — any other value will be rejected when saving. Pick "local" whenever the story is about a specific city/riding/municipality (and provide latitude/longitude for it); the system uses that point to automatically find and tag the exact electoral boundaries so local residents see it as local news.
 - Latitude/Longitude: only set them together, only when the source material names a specific real-world place precisely enough to geolocate. Never guess coordinates.
 - SEO Title: 50-60 characters, include primary keyword
 - Meta Description: 150-160 characters, write for CTR not gaming
 - Tags: 3-5 tags, relevant to the story
-- Tweet: OPTIONAL custom share-button copy for X. Plain text, NO emoji, NO hashtags, NO URL — Choseno appends the link and auto-generated hashtags itself. ~200 characters max. Omit to use the auto-generated fallback (headline + CTA).
+- Tweet: High-engagement 1-2 sentence hook (~140-200 chars). Plain text, NO emoji, NO hashtags, NO URL — Choseno appends the link and auto-generated hashtags itself.
 - Breaking News: Only mark as true if article is <6 hours old and unexpected. The badge auto-clears itself ${BREAKING_NEWS_ACTIVE_HOURS} hours after publish, so never set it for older or evergreen stories.
 - Country/Province: prefer ISO-2 codes (CA, US, ON, BC…), but full names are accepted too
-- Sources: cite every source the input material actually came from — this renders as a "Sources" section on the published article. Omit the array entirely if no sources were given, never invent one.
-- Images: Never fabricate a hero_image_url — only set it if the source material gives you a real image URL and its photo credit. No image? Omit all three image fields; it can be uploaded manually afterward in the admin panel.
+- Images: Never fabricate a hero_image_url — only set it if the source material gives you a real image URL and its photo credit. No image? Omit all three image fields; Choseno automatically renders the dynamic OpenGraph visual card.
 - All timestamps in ISO 8601 format with timezone
-- taggedPoliticians: full name(s) of any politician who is a direct subject of the story (e.g. the story is about them, quotes them, or is their announcement). Use their full name exactly as it would appear on a public profile. Omit the field (or leave it an empty array) if no specific politician is the subject — never guess a name just to fill the field. Names that don't match a registered profile will simply be skipped and can be added manually afterward in the admin panel.
-- taggedPoliticianIds: use this INSTEAD of (or alongside) taggedPoliticians whenever you were given an explicit profile id for the subject — an id match is exact and never ambiguous the way a name match can be when two people share a name. Never invent an id.
-- taggedParty: the political party the story is about, if any. Omit if the story isn't about a specific party.
+- taggedPoliticians: full name(s) of any politician who is a direct subject of the story (e.g. the story is about them, quotes them, or is their announcement).
+- taggedPoliticianIds: use this INSTEAD of (or alongside) taggedPoliticians whenever you were given an explicit profile id for the subject.
+- taggedParty: the political party the story is about, if any.
 
 ### Common Mistakes to Avoid:
+❌ DON'T write superficial 2-paragraph summaries — include full civic context, key metrics, and constituent impact
+❌ DON'T provide generic homepage links in sources (e.g. "https://apnews.com") — always link to the exact specific article URL
 ❌ DON'T invent quotes, statistics, or details not in source material
 ❌ DON'T use sensational language ("Shocking", "Bombshell", "Massive")
 ❌ DON'T bury the lede - start with the news, not background
 ❌ DON'T assume or fill gaps with reasonable inferences
 ❌ DON'T include editorializing or opinion
-❌ DON'T invent or guess at a taggedPoliticians/taggedPoliticianIds/taggedParty value — only include one explicitly named/given as a subject
-❌ DON'T conflate eventDate and published_at — they answer different questions ("when did this happen" vs "when does this go live")
-❌ DON'T set impactArea to "local" without also giving latitude/longitude when the source material makes the place determinable
 ❌ DON'T put emoji, hashtags, or a URL inside "tweet" — Choseno strips/derives those automatically and you'll get duplicates
 
 ✅ DO start with verified facts and datelines
@@ -226,17 +236,17 @@ ${IMPACT_AREA_GUIDE}
 
 7. **Country/Province:** Prefer ISO-2 codes — CA/US/GB for country, ON/BC/NY/CA for province or state. Full names ("Canada", "Ontario") are accepted too and get normalized automatically, but codes are more reliable. Leave "province" blank for country-wide stories, and "country" blank for global stories.
 
-8. **Factual & Neutral:** Start with dateline, no sensationalism, use Markdown formatting.
+8. **Editorial Quality & Depth:** Aim for substantive 400–750 word coverage per story. Break into 3–4 logical sections (## subheads) covering the core action, concrete numbers/policy mechanics, constituent impact, and next steps. Never generate superficial 1-2 paragraph stubs.
 
-9. **Sources:** Cite every source each article's input actually came from — renders as a "Sources" section on the published page. Omit the array for an article with no sources, never invent one.
+9. **Direct Source Citations:** In \`sources\`, cite the exact, direct canonical deep link (e.g. \`https://news.gov.bc.ca/releases/2026PREM0045-001234\`), never generic root domains (e.g. \`https://apnews.com\`). Use accurate publication labels.
 
 10. **Breaking News:** Only set \`breakingNews: true\` on articles that are genuinely <6 hours old and represent a sudden, unexpected development. The badge auto-clears itself ${BREAKING_NEWS_ACTIVE_HOURS} hours after \`published_at\` — never set it on older or evergreen stories in the batch.
 
-11. **Images:** Never fabricate a hero_image_url for any article in the batch. Only set it (with heroImageAlt) when the source material actually supplies an image URL — otherwise omit all three image fields for that article; images can be added manually afterward in the admin panel.
+11. **Images:** Never fabricate a hero_image_url for any article in the batch. Only set it (with heroImageAlt) when the source material actually supplies an image URL — otherwise omit all three image fields for that article; Choseno automatically generates the dynamic OpenGraph visual card.
 
-12. **Politician/Party tagging:** Only set taggedPoliticians/taggedPoliticianIds/taggedParty when a specific politician or party is a direct subject of that article. Use the politician's full name exactly as it would appear on a public profile, or their exact profile id if one is known (ids are unambiguous even when two people share a name — prefer id when you have it). Never invent a name or id to fill the field — omit it for stories not centered on a specific politician or party. Names that don't match a registered profile are skipped automatically and can be tagged manually afterward by editing that article.
+12. **Politician/Party tagging:** Only set taggedPoliticians/taggedPoliticianIds/taggedParty when a specific politician or party is a direct subject of that article. Use the politician's full name exactly as it would appear on a public profile, or their exact profile id if one is known. Never invent an id.
 
-13. **Tweet (optional):** Plain text only — no emoji, no hashtags, no URL. Choseno appends the canonical article link and auto-generated hashtags itself, so including either in "tweet" creates a duplicate. Keep each under ~200 characters. Omit the field entirely to use the auto-generated headline + CTA fallback.
+13. **Tweet Copy:** Captivating 1-2 sentence hook (~140-200 chars). Plain text only — no emoji, no hashtags, no URL. Choseno automatically appends the canonical card link and topic hashtags.
 
 Here are today's news stories and topics:`;
 }

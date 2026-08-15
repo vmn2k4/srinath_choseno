@@ -114,9 +114,9 @@ Every article object must follow this structure:
 
 ```json
 {
-  "slug": "unique-hyphenated-slug-for-url",
-  "headline": "Clear, Journalistic Headline (60-80 chars)",
-  "summary": "Short 1-2 sentence card excerpt for feed display.",
+  "slug": "david-eby-realigns-bc-cabinet-portfolios-health-finance-2026",
+  "headline": "Premier David Eby Realigns B.C. Cabinet Portfolios for Health and Finance",
+  "summary": "Josie Osborne assumes Finance responsibilities while Ravi Kahlon oversees Health during Minister Bailey's medical leave.",
   "category": "Policy",
   "country": "CA",
   "province": "BC",
@@ -124,27 +124,39 @@ Every article object must follow this structure:
   "eventDate": "2026-08-14T15:00:00Z",
   "published_at": "2026-08-14T15:00:00Z",
   "impactArea": "state",
-  "latitude": 49.1762,
-  "longitude": -122.8436,
-  "body": "CITY, Prov. — Standard journalistic opening dateline...\n\n## Action-Oriented Subhead\n\nCore details, verified facts, and bullet points...\n\n## Outlook\n\nForward-looking context grounded strictly in facts.",
-  "seoTitle": "Optimized SEO Title under 60 characters",
-  "metaDescription": "Concise meta description under 160 characters summarizing the article",
-  "tags": ["Surrey", "Healthcare", "David Eby"],
+  "latitude": 48.4284,
+  "longitude": -123.3656,
+  "body": "VICTORIA, B.C. — Premier David Eby has announced interim adjustments to key British Columbia cabinet portfolios to maintain policy momentum while Minister of Finance Brenda Bailey undergoes treatment for a medical condition.\n\n## Portfolio Adjustments & Leadership Continuity\n\nUnder the interim configuration:\n\n* **Ministry of Finance**: Minister of Energy, Mines and Low Carbon Innovation Josie Osborne assumes the Finance portfolio on an acting basis, overseeing the province's quarterly fiscal updates and capital allocation reviews.\n* **Ministry of Health**: Minister of Housing and Municipal Affairs Ravi Kahlon will provide executive oversight for acute hospital infrastructure expansions and physician negotiation tables.\n\n\"Brenda Bailey is a dedicated public servant and trusted colleague,\" Premier Eby stated in Victoria. \"Our entire government stands with her as she focuses on her health, and Ministers Osborne and Kahlon have the deep administrative experience needed to lead these crucial files without disruption.\"\n\n## Budgetary Timelines & Fiscal Priorities\n\nThe cabinet realignment comes as the province prepares for fall legislative committee hearings on healthcare capital spending and housing tax incentives. With major regional hospital modernizations underway in Surrey, Nanaimo, and Richmond, administrative continuity remains a priority for the executive branch.\n\n## Outlook & Accountability\n\nMinister Bailey is expected to resume full ministerial duties in late autumn following her medical recovery. In the interim, both Osborne and Kahlon will manage their primary ministries alongside their temporary portfolios.",
+  "seoTitle": "David Eby BC Cabinet Realignment 2026 | Choseno",
+  "metaDescription": "Premier David Eby reassigns Finance and Health duties during Minister Brenda Bailey's medical leave.",
+  "tags": ["David Eby", "Ravi Kahlon", "Josie Osborne", "BC Politics", "Victoria", "Cabinet"],
+  "tweet": "Premier David Eby realigns BC Cabinet portfolios for Health and Finance during Minister Bailey's medical leave — see the new portfolio assignments.",
   "breakingNews": false,
   "author": {
     "name": "Choseno Civic News Desk",
     "bio": "Provincial and municipal political affairs reporting"
   },
   "sources": [
-    { "label": "BC Gov News", "url": "https://news.gov.bc.ca/releases/..." },
-    { "label": "CBC News", "url": "https://www.cbc.ca/news/..." }
+    { "label": "B.C. Government Executive Office", "url": "https://news.gov.bc.ca/releases/2026PREM0045-001122" },
+    { "label": "CBC News British Columbia", "url": "https://www.cbc.ca/news/canada/british-columbia/david-eby-cabinet-realignment-2026" }
   ],
   "taggedPoliticianIds": [
-    "b49511ad-b330-46e1-ae8f-3916b40cf8a2",
-    "a730729a-0a3b-4231-b93d-9b5524f9db5e"
+    "550e8400-e29b-41d4-a716-446655440000"
+  ],
+  "taggedPoliticians": [
+    "David Eby"
   ]
 }
 ```
+
+### Editorial Depth & Citation Standards
+
+1. **Substantive Journalistic Depth (400–750 Words)**:
+   - Articles must never be 1-2 paragraph stubs. Every article must provide full background, specific figures/bill numbers, constituent and regional impact, and upcoming milestones or accountability timelines.
+2. **Deep-Link Source URLs (Never Generic Homepages)**:
+   - Always link directly to the specific published article, government press release, or legislative transcript (e.g. `https://news.gov.bc.ca/releases/2026PREM0045-001122`), **never** generic root domains like `https://apnews.com` or `https://cbc.ca`.
+3. **Captivating `tweet` Copy for Social Discovery**:
+   - Write a high-stakes 1-2 sentence hook (~140-200 chars). Keep it plain text (no emojis, hashtags, or URLs in the string) so Choseno's share engine can append canonical links and topic hashtags cleanly.
 
 ### Allowed Enum Values
 
