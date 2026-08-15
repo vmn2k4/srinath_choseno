@@ -7,9 +7,9 @@ import NewsPageClient from "@/components/features/NewsPageClient";
 const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
-  title: "Live Civic & Political News: Real-Time Updates on Mayors, Premiers & 2026 Elections",
+  title: "Live Civic & Political News: Real-Time Updates on Mayors, Premiers & 2026 Elections | Choseno",
   description:
-    "Breaking civic news, policy announcements, mayoral decisions & verified candidate updates across Canada & the United States. Track the actions of your elected officials in real time.",
+    "Breaking civic news, policy announcements, mayoral decisions & verified candidate updates across Canada & the United States. Share verified news on representative walls and stay informed before voting.",
   keywords: [
     "breaking civic news",
     "political news today",
@@ -24,27 +24,27 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${BASE_URL}/news` },
   openGraph: {
-    title: "Live Civic & Political News: Real-Time Updates on Mayors, Premiers & 2026 Elections",
+    title: "Live Civic News & Mayoral Decisions. Real-Time Political Accountability | Choseno",
     description:
-      "Breaking civic news, policy announcements, mayoral decisions & verified candidate updates across Canada & the United States.",
+      "Share verified news on your representative's wall, track policy announcements, and stay informed before voting.",
     url: `${BASE_URL}/news`,
     siteName: "Choseno",
     type: "website",
     images: [
       {
-        url: `${BASE_URL}/news/opengraph-image`,
+        url: `${BASE_URL}/og-news.jpg`,
         width: 1200,
         height: 630,
-        alt: "Live Civic & Political News | Choseno",
+        alt: "Live Civic News & Mayoral Decisions. Real-Time Political Accountability | Choseno",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Live Civic & Political News: Real-Time Updates on Mayors, Premiers & 2026 Elections",
+    title: "Live Civic News & Mayoral Decisions. Real-Time Political Accountability | Choseno",
     description:
-      "Breaking civic news, policy announcements, mayoral decisions & verified candidate updates across Canada & the United States.",
-    images: [`${BASE_URL}/news/opengraph-image`],
+      "Share verified news on your representative's wall, track policy announcements, and stay informed before voting.",
+    images: [`${BASE_URL}/og-news.jpg`],
   },
 };
 

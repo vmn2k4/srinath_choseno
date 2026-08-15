@@ -7,30 +7,30 @@ const BASE_URL = SITE_URL;
 export const metadata: Metadata = {
   title: "Choseno — Rate Your Politician & See 2026 Candidate Reviews",
   description:
-    "Like Yelp, but for democracy. Rate your senators, representatives & local politicians. Read what voters in your district are saying — anonymously, free.",
+    "Rate your politicians' performance — like Yelp, but for democracy. We research restaurants before eating, why not politicians before voting? Find your district and rate your representatives today.",
   alternates: { canonical: BASE_URL },
   openGraph: {
-    title: "Choseno — Rate Your Politician & See 2026 Candidate Reviews",
+    title: "Rate Your Politicians' Performance. Like Yelp, but for Democracy.",
     description:
-      "Like Yelp, but for democracy. Rate your senators, representatives & local politicians. Read what voters in your district are saying — anonymously, free.",
+      "We research restaurants before eating, why not politicians before voting? Locate yourself, find who holds office in your area, and start rating them today.",
     url: BASE_URL,
     siteName: SITE_NAME,
     type: "website",
     images: [
       {
-        url: `${BASE_URL}/opengraph-image`,
+        url: `${BASE_URL}/og-home.jpg`,
         width: 1200,
         height: 630,
-        alt: "Choseno — Voice of the Silent Majority",
+        alt: "Choseno — Rate Your Politicians' Performance. Like Yelp, but for Democracy.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Choseno — Rate Your Politician & See 2026 Candidate Reviews",
+    title: "Rate Your Politicians' Performance. Like Yelp, but for Democracy.",
     description:
-      "Like Yelp, but for democracy. Rate your senators, representatives & local politicians. Read what voters in your district are saying.",
-    images: [`${BASE_URL}/opengraph-image`],
+      "We research restaurants before eating, why not politicians before voting? Locate yourself, find who holds office in your area, and start rating them today.",
+    images: [`${BASE_URL}/og-home.jpg`],
   },
 };
 

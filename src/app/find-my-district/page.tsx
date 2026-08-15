@@ -6,9 +6,9 @@ import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
 
-const pageTitle = "Find Your Electoral District, Representatives & 2026 Candidates | Choseno";
-const pageDescription = "Enter your address to find your electoral boundaries, federal/provincial/municipal representatives, and all 2026 election candidates. Free, non-partisan. Supports Canada, USA, India.";
-const keywords = "electoral district, find my district, representatives, elected officials, congressional district, state senate, city council, 2026 candidates, voter information, election";
+const pageTitle = "Find Your District. Rate Every Politician in Your Area | Choseno";
+const pageDescription = "We research restaurants before eating, so let's do research before elections! Enter your address to find your polling district, see who holds office, and rate your representatives.";
+const keywords = "electoral district, find my district, rate politicians, elected officials, reviews, congressional district, state senate, city council, 2026 candidates, voter information, election";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -32,12 +32,21 @@ export const metadata: Metadata = {
     siteName: "Choseno",
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: `${BASE_URL}/og-find-my-district.jpg`,
+        width: 1200,
+        height: 630,
+        alt: "Find Your District. Rate Every Politician in Your Area | Choseno",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: pageTitle,
     description: pageDescription,
     creator: "@choseno",
+    images: [`${BASE_URL}/og-find-my-district.jpg`],
   },
 };
 

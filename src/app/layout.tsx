@@ -69,10 +69,10 @@ export const metadata: Metadata = {
       "Empowering voters with verified civic journalism, real-time election coverage, and district-level politician accountability.",
     images: [
       {
-        url: `${SITE_URL}/opengraph-image`,
+        url: `${SITE_URL}/og-home.jpg`,
         width: 1200,
         height: 630,
-        alt: "Choseno — Civic Journalism and Democratic Accountability",
+        alt: "Choseno — Rate Your Politicians' Performance. Like Yelp, but for Democracy.",
       },
     ],
   },
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     title: "Choseno — Rate Politicians, Track Candidates & Live Civic News",
     description:
       "Empowering voters with verified civic journalism, real-time election coverage, and district-level politician accountability.",
-    images: [`${SITE_URL}/opengraph-image`],
+    images: [`${SITE_URL}/og-home.jpg`],
   },
   verification: {
     other: {

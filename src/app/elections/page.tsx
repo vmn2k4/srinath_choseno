@@ -19,32 +19,32 @@ import { SITE_URL } from "@/lib/constants/site";
 const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
-  title: "2026 Midterm Election Candidates by District | Choseno",
+  title: "Track 2026 Election Candidates by District | Choseno",
   description:
-    "Browse all 2026 U.S. House & Senate candidates by state and district. Read voter ratings, policy stances & constituent reviews on Choseno.",
+    "Explore 2026 U.S., Canada & India election seats by district. Compare candidates, rate policy stances, and read verified constituent reviews before voting.",
   alternates: { canonical: `${BASE_URL}/elections` },
   openGraph: {
-    title: "2026 Midterm Election Candidates by District | Choseno",
+    title: "Track All 2026 Candidates. Pitch Stances & Rate Who's Running | Choseno",
     description:
-      "Browse all 2026 U.S. House & Senate candidates by state and district. Read voter ratings, policy stances & constituent reviews on Choseno.",
+      "Explore 2026 election seats by district. Compare candidates, rate policy stances, and read verified constituent reviews before voting.",
     url: `${BASE_URL}/elections`,
     siteName: "Choseno",
     type: "website",
     images: [
       {
-        url: `${BASE_URL}/elections/opengraph-image`,
+        url: `${BASE_URL}/og-elections.jpg`,
         width: 1200,
         height: 630,
-        alt: "2026 Midterm Election Candidates by District | Choseno",
+        alt: "Track All 2026 Candidates. Pitch Stances & Rate Who's Running | Choseno",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "2026 Midterm Election Candidates by District | Choseno",
+    title: "Track All 2026 Candidates. Pitch Stances & Rate Who's Running | Choseno",
     description:
-      "Browse all 2026 U.S. House & Senate candidates by state and district. Read voter ratings, policy stances & constituent reviews.",
-    images: [`${BASE_URL}/elections/opengraph-image`],
+      "Explore 2026 election seats by district. Compare candidates, rate policy stances, and read verified constituent reviews before voting.",
+    images: [`${BASE_URL}/og-elections.jpg`],
   },
 };
 

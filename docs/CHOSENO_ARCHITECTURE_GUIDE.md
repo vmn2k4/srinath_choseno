@@ -121,6 +121,12 @@
 | Table | Purpose | Key Columns | Notes |
 |-------|---------|------------|-------|
 | **news_articles** | Editorial articles | `id`, `slug`, `headline`, `category`, `country`, `province`, `status` (draft/scheduled/published/archived), `published_at`, `hero_image_url`, `content` (JSONB) | Content: `{ seoTitle, metaDescription, body (markdown), author {name, photo, bio}, tags, sources }` |
+| **news_article_politicians** | Tagging articles to politicians | `news_article_id`, `politician_id` | Mirrors news to politician walls via `admin_sync_news_article_tags()` |
+
+**Dynamic Visual Generation & Social Sharing**: Complete architecture in [SOCIAL_SHARING_AND_IMAGE_GENERATION.md](SOCIAL_SHARING_AND_IMAGE_GENERATION.md).
+- **Dynamic OpenGraph Image Generation (`/news/[slug]/opengraph-image.tsx`)**: Edge-rendered `@vercel/og` ImageResponse (1200x630) featuring brand logo, politician photo/avatar spotlight, dominant bold typography, crisp takeaways, and 5-star rating CTA.
+- **Editorial Text-Wrap Layout (`NewsArticleDetailClient.tsx`)**: Right-floated visual card (`lg:float-right`) with journalistic body text wrapping seamlessly.
+- **1-Click Multi-Platform Share**: Context-aware sharing (X/Twitter, WhatsApp, LinkedIn, Native Share) with automatic conversion of article topic tags into PascalCase hashtags and canonical domain routing (`choseno.com`).
 
 ### 2.7 Historical Election Data (Scraped)
 

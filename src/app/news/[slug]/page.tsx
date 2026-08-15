@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   const modifiedTime = article.updated_at ?? publishedTime;
   const tags = content?.tags || [article.category, article.country || "Civic News"];
 
-  const ogImageUrl = article.hero_image_url || `${SITE_URL}/news/${slug}/opengraph-image`;
+  const ogImageUrl = `${SITE_URL}/news/${slug}/opengraph-image`;
 
   return {
     title: `${title} | Choseno Civic News`,
@@ -109,6 +109,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
         day: "numeric",
       })
     : null;
+  const ogImageUrl = `${SITE_URL}/news/${slug}/opengraph-image`;
 
   // ── JSON-LD NewsArticle + Breadcrumb structured data ──────────────────────
   const jsonLd = [
@@ -185,6 +186,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
         isBreaking={isBreaking}
         readingTime={readingTime}
         displayDate={displayDate}
+        ogImageUrl={ogImageUrl}
       />
     </>
   );

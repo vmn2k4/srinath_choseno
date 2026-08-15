@@ -13,6 +13,7 @@ import {
   Filter,
   UserCheck,
   Users,
+  Share2,
 } from "lucide-react";
 import { Card, PageHeader, Badge, Button } from "@/components/primitives";
 import { useTranslation } from "@/contexts/LanguageContext";
@@ -339,22 +340,21 @@ export default function NewsPageClient({
                   padding="none"
                   className="group flex flex-col justify-between h-full overflow-hidden cursor-pointer hover:border-primary/40 transition-all duration-200"
                 >
-                  {/* Hero image */}
-                  {article.hero_image_url && (
-                    <div className="relative h-40 w-full overflow-hidden bg-surface/30">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={article.hero_image_url}
-                        alt={content?.heroImageAlt ?? article.headline}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                      {isBreaking && (
-                        <span className="absolute top-2 left-2 flex items-center gap-1 bg-danger text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
-                          <Zap size={10} /> {t("newsPage.breaking")}
-                        </span>
-                      )}
-                    </div>
-                  )}
+                  {/* Hero or Dynamic Visual Briefing Image */}
+                  <div className="relative h-44 w-full overflow-hidden bg-slate-100 border-b border-border-light/20">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={article.hero_image_url || `/news/${article.slug}/opengraph-image`}
+                      alt={content?.heroImageAlt ?? article.headline}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    {isBreaking && (
+                      <span className="absolute top-2 left-2 flex items-center gap-1 bg-danger text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md z-10">
+                        <Zap size={10} /> {t("newsPage.breaking")}
+                      </span>
+                    )}
+                  </div>
 
                   <div className="flex flex-col flex-1 p-4 space-y-3">
                     <div className="flex items-center justify-between gap-2 flex-wrap">
@@ -396,8 +396,34 @@ export default function NewsPageClient({
                       </p>
                     )}
 
-                    <div className="hidden md:inline-flex items-center gap-1.5 text-xs font-bold text-primary group-hover:text-primary-hover transition-colors pt-2 mt-auto border-t border-border-light/20">
-                      {t("newsPage.readFull")} <ArrowRight size={13} />
+                    <div className="flex items-center justify-between pt-2 mt-auto border-t border-border-light/20">
+                      <div className="inline-flex items-center gap-1.5 text-xs font-bold text-primary group-hover:text-primary-hover transition-colors">
+                        {t("newsPage.readFull")} <ArrowRight size={13} />
+                      </div>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const url = `${window.location.origin}/news/${article.slug}`;
+                          const catTag = article.category ? `#${article.category.replace(/[^a-zA-Z0-9]/g, "")}` : "#CivicNews";
+                          const locTag = article.country ? `#${article.country.toUpperCase()}` : "";
+                          const shareMsg = `📰 ${article.headline}\n\nTrack local democracy & rate officials on @choseno!\n\n${[catTag, locTag, "#Choseno", "#RateYourPolitician"].filter(Boolean).join(" ")}`;
+                          
+                          if (navigator.share) {
+                            navigator.share({
+                              title: article.headline,
+                              text: shareMsg,
+                              url,
+                            }).catch(() => {});
+                          } else {
+                            navigator.clipboard?.writeText(url);
+                          }
+                        }}
+                        className="p-1.5 rounded-lg bg-surface/80 hover:bg-orange-500/20 text-text-muted hover:text-orange-500 transition-colors cursor-pointer"
+                        title="Share article"
+                      >
+                        <Share2 size={13} />
+                      </button>
                     </div>
                   </div>
                 </Card>

@@ -276,10 +276,15 @@ export async function uploadNewsHeroImage(supabase: Client, file: File, slug: st
 // ── News article comments (via create_post RPC) ───────────────────────────
 
 export async function getNewsArticleComments(supabase: Client, articleId: string) {
+  // System ghost ID used by admin_sync_news_article_tags to mirror stories onto politician walls
+  const SYSTEM_NEWS_GHOST_ID = "00000000-0000-0000-0000-000000000001";
+
   let query = supabase
     .from("posts")
     .select("*, comments(*)")
     .eq("news_article_id", articleId)
+    .neq("ghost_id", SYSTEM_NEWS_GHOST_ID)
+    .is("wall_ghost_id", null)
     .order("created_at", { ascending: false });
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
