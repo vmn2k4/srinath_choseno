@@ -56,33 +56,23 @@ export async function generateMetadata({
   const electionYear = activeCandidacy?.election_seats?.elections?.election_date?.slice(0, 4) || "2026";
 
   const partyLabel = partyName ? ` (${partyName})` : "";
-  const locationLabel = boundaryName ? ` in ${boundaryName}` : "";
+  const locationLabel = boundaryName ? ` (${boundaryName})` : "";
 
-  const keywords = [
-    name,
-    roleTitle,
-    boundaryName,
-    partyName,
-    `${name} approval rating`,
-    `${name} news`,
-    `${name} policy stances`,
-    `${name} voter reviews`,
-    "civic accountability",
-    "2026 election candidate",
-  ].filter(Boolean) as string[];
-
+  // Keep titles tight and under 60 characters for SERP display
   const title = activeCandidacy
-    ? `${name}${partyLabel} — ${electionYear} ${roleTitle} Candidate${locationLabel} | Ratings & Verified News`
-    : `${name}${partyLabel} — ${roleTitle}${locationLabel} | Approval Ratings & News Updates`;
+    ? `${name}${partyLabel} — ${roleTitle} Candidate${locationLabel}`
+    : `${name}${partyLabel} — ${roleTitle}${locationLabel} | Choseno`;
 
   const ratingPrefix =
     rating && rating.count > 0
       ? `${rating.count} voter${rating.count === 1 ? "" : "s"} rated ${name} ${rating.avg}★. `
       : "";
 
+  // Keep descriptions between 135-155 characters to avoid SERP truncation
   const description = activeCandidacy
-    ? `${ratingPrefix}Track ${name}'s 2026 campaign stances, verified news updates, constituent approval ratings, and community reviews in ${boundaryName || "local district"}. Free on Choseno.`
-    : `${ratingPrefix}See ${name}'s verified civic news, constituent approval ratings, policy decisions, and constituent discussion — anonymous & independent on Choseno.`;
+    ? `${ratingPrefix}View campaign stances, news, constituent ratings, and reviews for ${name} (${roleTitle}${locationLabel}).`
+    : `${ratingPrefix}Read verified news, constituent approval ratings, and community reviews for ${name} on Choseno.`;
+
   const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
   const canonicalUrl = `${BASE_URL}/wall/${canonicalWallSlug}`;
   const ogImageUrl = `${BASE_URL}/wall/${canonicalWallSlug}/opengraph-image`;
@@ -90,10 +80,9 @@ export async function generateMetadata({
   return {
     title,
     description,
-    keywords,
     alternates: { canonical: canonicalUrl },
     openGraph: {
-      title: `${title} | Choseno`,
+      title,
       description,
       url: canonicalUrl,
       siteName: "Choseno",
@@ -109,7 +98,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | Choseno`,
+      title,
       description,
       images: [ogImageUrl],
     },
@@ -238,36 +227,6 @@ export default async function WallPage({ params }: WallPageProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
       )}
-      <div aria-hidden="true" style={{ position: "absolute", width: "1px", height: "1px", padding: 0, margin: "-1px", overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap", border: 0 }}>
-        <h1>{name} — {roleTitle}</h1>
-        {bio && <p>{bio}</p>}
-        {rating && rating.count > 0 && (
-          <p>{rating.count} voter{rating.count === 1 ? "" : "s"} have rated {name} an average of {rating.avg} out of 5 stars on Choseno.</p>
-        )}
-        {seoPostsSnapshot.length > 0 && (
-          <section>
-            <h2>Recent civic updates and news coverage for {name} on Choseno</h2>
-            {seoPostsSnapshot.map((post) => {
-              const na = Array.isArray(post.news_articles) ? post.news_articles[0] : post.news_articles;
-              const newsSlug = na?.slug;
-              return post.content ? (
-                <article key={post.id}>
-                  <p>{post.content}</p>
-                  {newsSlug && (
-                    <p><a href={`/news/${newsSlug}`}>Read full news coverage for {name}</a></p>
-                  )}
-                  {post.created_at && (
-                    <time dateTime={post.created_at}>
-                      {new Date(post.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-                    </time>
-                  )}
-                </article>
-              ) : null;
-            })}
-          </section>
-        )}
-      </div>
-
       <PoliticianWallClient
         ghostId={owner.current_ghost_id}
         initialWallOwner={owner as any}

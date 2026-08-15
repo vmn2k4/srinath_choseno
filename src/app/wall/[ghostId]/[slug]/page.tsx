@@ -81,17 +81,19 @@ export async function generateMetadata({
     ? post.content.replace(/\s+/g, " ").trim()
     : null;
 
+  // Keep titles concise and under 60 characters for SERP
   const title = postExcerpt
-    ? `"${postExcerpt.slice(0, 55)}${postExcerpt.length > 55 ? "…" : ""}" — ${name}${partyLabel} | Choseno`
+    ? `"${postExcerpt.slice(0, 38)}${postExcerpt.length > 38 ? "…" : ""}" — ${name}${partyLabel}`
     : activeCandidacy
-    ? `${name}${partyLabel} — ${electionYear} ${roleTitle} Candidate${locationLabel} | Choseno`
-    : `${name}${partyLabel} — ${roleTitle}${locationLabel} | Public Wall | Choseno`;
+    ? `${name}${partyLabel} — ${roleTitle} Candidate${locationLabel}`
+    : `${name}${partyLabel} — ${roleTitle}${locationLabel} | Choseno`;
 
+  // Keep descriptions under 155 characters
   const description = postExcerpt
-    ? `${postExcerpt.slice(0, 140)} — Read official updates, voter ratings, and constituent discussion for ${name} (${roleTitle}) on Choseno.`
+    ? `${postExcerpt.slice(0, 110)} — Read updates, voter ratings, and civic news for ${name} on Choseno.`
     : activeCandidacy
-    ? `Read updates, constituent feedback, and campaign positions for ${name}, candidate for ${roleTitle}${locationLabel}${partyLabel} on Choseno.`
-    : `Read official updates, policy statements, and constituent discussion for ${name} (${roleTitle}${locationLabel}) on Choseno.`;
+    ? `Read updates, constituent feedback, and campaign positions for ${name} (${roleTitle}${locationLabel}) on Choseno.`
+    : `Read official updates, policy statements, and constituent reviews for ${name} (${roleTitle}) on Choseno.`;
 
   const ogImageUrl = post?.image_url || `${BASE_URL}/wall/${canonicalWallSlug}/${slug}/opengraph-image`;
 
