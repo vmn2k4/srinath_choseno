@@ -78,7 +78,18 @@ Platform Routing:
   └── Quick Copy: navigator.clipboard.writeText(url) + Toast feedback
 ```
 
-### 3.2 Canonical URL vs Localhost
+### 3.2 Post Text Generation & Emoji Policy
+
+The text posted to X/WhatsApp/native-share (`basePostText` in `NewsArticleDetailClient.tsx`) comes from one of two sources:
+
+1. **`content.tweet`** (optional, set on the article's JSON — see [NEWS_JSON_SCHEMA.md](NEWS_JSON_SCHEMA.md#tweet--custom-share-text-optional)) — a hand-written line for this specific article, used as-is (message only; Choseno still appends the canonical link + auto-generated hashtags after it).
+2. **Auto-generated fallback** — `"{headline}\n\nRate {tagged politician(s)} and track local democracy on @choseno!"` (or a politician-less variant) — used whenever `content.tweet` is unset.
+
+Either way, the result is passed through `stripEmoji()` (`src/lib/utils/text.ts`) before it reaches any share link. This is a hard backstop, not just prompt guidance: even if an admin or an AI-generated `content.tweet` slips an emoji in, what actually gets posted has none. `stripEmoji()` uses the `\p{Extended_Pictographic}` Unicode property (not a hand-rolled character range), so it removes emoji, emoji-presentation symbols, flag sequences, and their invisible modifiers (variation selector, ZWJ) without touching ordinary punctuation the article body relies on — em dashes in the dateline style ("CITY, Prov. — ...") survive untouched.
+
+`shareText` (used by WhatsApp and native share) = `basePostText + hashtags + canonical URL`, all in one string, since those two surfaces take a single text blob. `twitterShareUrl`'s `text` param is `basePostText` alone — X's intent API appends `url` and `hashtags` itself from their own separate params, so including them in the text would duplicate them.
+
+### 3.3 Canonical URL vs Localhost
 Social platform crawlers (TwitterBot, LinkedInBot, WhatsApp/Facebook OpenGraph fetchers) cannot access private local IP addresses (`localhost:3000`).
 All share buttons automatically use the production canonical domain (`https://www.choseno.com/news/[slug]`), ensuring social platforms fetch the `summary_large_image` Twitter card and OpenGraph tags to render rich media previews.
 

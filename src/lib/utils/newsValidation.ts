@@ -14,6 +14,7 @@
  */
 
 import { NEWS_CATEGORIES, NEWS_STATUSES, NEWS_IMPACT_AREAS, type NewsImpactArea } from "@/lib/services/news";
+import { containsEmoji } from "@/lib/utils/text";
 
 export interface NewsJsonIssues {
   errors: string[];
@@ -130,6 +131,22 @@ export function validateNewsArticleJson(item: any, opts: { label?: string } = {}
 
   if (flat.tags != null && !Array.isArray(flat.tags) && typeof flat.tags !== "string") {
     errors.push(`${prefix}"tags" must be an array of strings.`);
+  }
+
+  if (flat.tweet != null) {
+    if (typeof flat.tweet !== "string") {
+      errors.push(`${prefix}"tweet" must be a string.`);
+    } else {
+      if (containsEmoji(flat.tweet)) {
+        warnings.push(`${prefix}"tweet" contains an emoji — Choseno strips emoji before posting, so it's cleaner to leave them out of the source text.`);
+      }
+      if (/https?:\/\//i.test(flat.tweet)) {
+        warnings.push(`${prefix}"tweet" appears to contain a URL — Choseno already appends the canonical article link automatically; a URL inside "tweet" will show up twice.`);
+      }
+      if (flat.tweet.length > 220) {
+        warnings.push(`${prefix}"tweet" is ${flat.tweet.length} characters — Choseno appends hashtags and the article link after it, so keep it well under X's 280-character limit (220 or less is safest).`);
+      }
+    }
   }
 
   return { errors, warnings };

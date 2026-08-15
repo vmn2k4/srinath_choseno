@@ -224,6 +224,7 @@ Checks per article:
 | `taggedPoliticians` | Array of full names |
 | `body` | Required, Markdown formatted |
 | `sources` | Array of `{ label, url }` objects |
+| `tweet` | Highly recommended, 140-200 chars plain text (no emojis, URLs, or hashtags) |
 | `latitude/longitude` | Both required if impactArea="local", valid range |
 
 ### 3. Grok-Specific Validation

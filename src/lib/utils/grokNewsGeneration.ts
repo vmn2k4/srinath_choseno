@@ -281,6 +281,7 @@ export function mapGeneratedArticleToInsert(
     body: flat.body || undefined,
     heroImageAlt: flat.heroImageAlt || undefined,
     heroImageCaption: flat.heroImageCaption || undefined,
+    tweet: flat.tweet || undefined,
     breakingNews: flat.breakingNews || undefined,
     tags: Array.isArray(flat.tags)
       ? flat.tags

@@ -24,6 +24,7 @@ import NewsArticleBody from "@/components/features/NewsArticleBody";
 import NewsComments from "@/components/features/NewsComments";
 import NewsArticleLinkedPoliticians from "@/components/features/NewsArticleLinkedPoliticians";
 import type { NewsArticle, NewsArticleContent } from "@/lib/services/news";
+import { stripEmoji } from "@/lib/utils/text";
 
 interface NewsArticleDetailClientProps {
   article: NewsArticle;
@@ -154,19 +155,28 @@ export default function NewsArticleDetailClient({
 
   const formattedHashtagString = combinedTagList.map((t) => `#${t}`).join(" ");
 
-  const shareText = taggedReps.length > 0
-    ? `📰 ${activeHeadline}\n\nRate ${taggedReps.join(", ")} and track local democracy on @choseno!\n\n${formattedHashtagString}\n${shareUrl}`
-    : `📰 ${activeHeadline}\n\nTrack local democracy and rate your representatives on @choseno!\n\n${formattedHashtagString}\n${shareUrl}`;
+  // The article's own hand-written `content.tweet` wins when set (admin/AI
+  // JSON, see docs/NEWS_JSON_SCHEMA.md); otherwise fall back to the
+  // auto-generated headline + CTA line. Either way it goes through
+  // stripEmoji() — the schema tells authors not to put emoji in `tweet`, but
+  // this is the one place actually posted to X, so it's the backstop that
+  // guarantees it regardless of what slipped into the source JSON.
+  const customTweet = content?.tweet?.trim();
+  const basePostText = stripEmoji(
+    customTweet ||
+      (taggedReps.length > 0
+        ? `${activeHeadline}\n\nRate ${taggedReps.join(", ")} and track local democracy on @choseno!`
+        : `${activeHeadline}\n\nTrack local democracy and rate your representatives on @choseno!`)
+  );
+
+  const shareText = `${basePostText}\n\n${formattedHashtagString}\n${shareUrl}`;
 
   // Twitter/X intent parameters:
-  // - text: Headline + CTA
+  // - text: basePostText (custom `content.tweet` if the article has one, else the auto-generated headline + CTA)
   // - url: Canonical URL (X automatically renders this as a rich Summary Large Image Card)
   // - hashtags: Comma-separated list of all topics
   const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    `📰 ${activeHeadline}\n\n` +
-      (taggedReps.length > 0
-        ? `Rate ${taggedReps.join(", ")} on @choseno!`
-        : `Rate your local officials on @choseno!`)
+    basePostText
   )}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(combinedTagList.join(","))}`;
 
   const handleNativeShareOrCopy = async () => {
@@ -174,7 +184,7 @@ export default function NewsArticleDetailClient({
       try {
         await navigator.share({
           title: activeHeadline,
-          text: `📰 ${activeHeadline}\n\nRate your officials on @choseno!\n\n${formattedHashtagString}`,
+          text: `${basePostText}\n\n${formattedHashtagString}`,
           url: shareUrl,
         });
         return;
@@ -250,7 +260,7 @@ export default function NewsArticleDetailClient({
                 </a>
 
                 <a
-                  href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`}
+                  href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-emerald-50 text-emerald-700 font-semibold transition-colors text-left w-full"

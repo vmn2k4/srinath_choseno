@@ -49,6 +49,7 @@ import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { normalizeCountryCode, normalizeProvinceCode } from "@/lib/utils/newsGeography";
 import { getNewsAiPrompt, type NewsPromptPersonContext } from "@/lib/utils/newsPrompts";
 import { validateNewsArticleJson, validateNewsArticleBatchJson } from "@/lib/utils/newsValidation";
+import { containsEmoji } from "@/lib/utils/text";
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -71,6 +72,7 @@ interface ArticleFormData {
   body: string;
   heroImageAlt: string;
   heroImageCaption: string;
+  tweet: string;
   tags: string;
   breakingNews: boolean;
   authorName: string;
@@ -99,6 +101,7 @@ const EMPTY_FORM: ArticleFormData = {
   body: "",
   heroImageAlt: "",
   heroImageCaption: "",
+  tweet: "",
   tags: "",
   breakingNews: false,
   authorName: "",
@@ -148,6 +151,7 @@ function formToInsert(f: ArticleFormData): NewsArticleInsert {
     body:            f.body            || undefined,
     heroImageAlt:    f.heroImageAlt    || undefined,
     heroImageCaption:f.heroImageCaption|| undefined,
+    tweet:           f.tweet           || undefined,
     breakingNews:    f.breakingNews    || undefined,
     tags: f.tags
       ? f.tags.split(",").map((t) => t.trim()).filter(Boolean)
@@ -207,6 +211,7 @@ function articleToForm(a: NewsArticle): ArticleFormData {
     body:          c?.body           ?? "",
     heroImageAlt:  c?.heroImageAlt   ?? "",
     heroImageCaption:c?.heroImageCaption??"",
+    tweet:         c?.tweet          ?? "",
     tags:          (c?.tags ?? []).join(", "),
     breakingNews:  c?.breakingNews   ?? false,
     authorName:    c?.author?.name   ?? "",
@@ -260,6 +265,7 @@ function applyJsonToForm(parsed: any, prev: ArticleFormData): ArticleFormData {
     body:           flat.body           ?? prev.body,
     heroImageAlt:   flat.heroImageAlt   ?? prev.heroImageAlt,
     heroImageCaption:flat.heroImageCaption?? prev.heroImageCaption,
+    tweet:          flat.tweet          ?? prev.tweet,
     tags: Array.isArray(flat.tags)
       ? flat.tags.join(", ")
       : (flat.tags ?? prev.tags),
@@ -1327,6 +1333,24 @@ export default function AdminNewsPageClient() {
                     onChange={(e) => setField("tags", e.target.value)}
                     placeholder="elections, privacy, technology"
                   />
+                </FieldGroup>
+                <FieldGroup label={`Tweet / X Post Text (${form.tweet.length} chars — optional, falls back to auto-generated share text)`}>
+                  <Textarea
+                    value={form.tweet}
+                    onChange={(e) => setField("tweet", e.target.value)}
+                    placeholder="Leave blank to use the auto-generated headline + CTA. Plain text only — no emoji, hashtags, or URL; Choseno appends the link and hashtags automatically."
+                    rows={2}
+                  />
+                  {containsEmoji(form.tweet) && (
+                    <p className="text-xs text-amber-600 mt-1 flex items-center gap-1">
+                      <AlertTriangle size={12} /> Contains an emoji — Choseno strips emoji before posting, so it's cleaner to remove it here.
+                    </p>
+                  )}
+                  {form.tweet.length > 220 && (
+                    <p className="text-xs text-amber-600 mt-1 flex items-center gap-1">
+                      <AlertTriangle size={12} /> {form.tweet.length} characters — Choseno appends hashtags and the article link after this, so keep it under ~220 to stay within X's 280-character limit.
+                    </p>
+                  )}
                 </FieldGroup>
                 <FieldGroup label="Sources (one per line: Label | https://url)">
                   <Textarea

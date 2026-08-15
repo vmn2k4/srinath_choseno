@@ -67,6 +67,16 @@ export interface NewsArticleContent {
   };
   sources?: Array<{ label: string; url: string }>;
   readingTimeMinutes?: number;
+  /**
+   * Optional hand-written line used as the X/Twitter post text when a reader
+   * clicks Share, instead of the auto-generated "{headline} — Rate {reps} on
+   * @choseno!" fallback. Plain text only — no emoji, hashtags, or URL: the
+   * share flow (NewsArticleDetailClient) strips emoji defensively via
+   * stripEmoji() and appends the canonical link + auto-generated hashtags
+   * itself, so embedding either here would duplicate them. Falls back to the
+   * generated text when unset (see docs/NEWS_JSON_SCHEMA.md).
+   */
+  tweet?: string;
 }
 
 export interface NewsArticle {

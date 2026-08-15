@@ -28,9 +28,26 @@
 | `hero_image_url` | ❌ | URL string | ONLY if source provides real image — never invent |
 | `heroImageAlt` | ❌ | string | Accessible description (REQUIRED if hero_image_url set) |
 | `heroImageCaption` | ❌ | string | Photo credit |
+| `tweet` | 🌟 | string | **Captivating, click-optimized X/Twitter hook (~180-200 chars max)**. Plain text only — NO emojis, NO hashtags, NO URLs (Choseno automatically appends card link + topic hashtags). |
 | `author` | ❌ | object | {name, bio, photoUrl (optional)} |
 | `taggedParty` | ❌ | string | Political party name (if specific party is subject) |
 | `political_party_id` | ❌ | number | Internal DB ID (auto-set from taggedParty) |
+
+---
+
+## Captivating & Click-Optimized `tweet` Copy Guidelines
+
+The `tweet` field is what users share with 1-click to X (Twitter). Writing a high-performing tweet increases click-through rates (CTR) and search discovery:
+
+### 🎯 Best Practices for the `tweet` Field:
+1. **Focus on Stakes & Action**: Highlight the concrete decision, policy outcome, or leadership change and why it matters to voters/citizens.
+   - *Example*: `"Premier David Eby reassigns Health and Finance cabinet portfolios amid critical public infrastructure deadlines — see how the leadership shift impacts B.C. ridings."`
+2. **Accountability / Engagement Hook**: Give readers a clear reason to click and explore.
+   - *Example*: `"Austin Mayor Kirk Watson unveils the $1.4B balanced municipal budget framework prioritizing core utilities and emergency services."`
+3. **Strict Formatting Rules**:
+   - **Plain text ONLY**: Do **NOT** put `#hashtags`, `@handles`, or `http://...` links in this field.
+   - **No Emojis**: Keep the string clean. Choseno's share engine automatically wraps the text, appends the canonical rich preview card URL (`https://www.choseno.com/news/...`), and parses all article topic tags into clean PascalCase hashtags.
+   - **Character Limit**: Keep between **140 and 200 characters** so that when combined with hashtags and the link, it fits comfortably within standard tweet limits.
 
 ---
 
@@ -273,6 +290,44 @@ mayor budget announcement           (spaces)
 
 ---
 
+## Tweet — Custom Share Text (Optional)
+
+When a reader clicks "Share on X" on an article, Choseno needs some post text. By default it auto-generates one from the headline + a CTA ("{headline} — Rate {tagged politician(s)} and track local democracy on @choseno!"). Set `tweet` to override that with your own line — useful when the headline alone doesn't make a punchy post, or you want to lead with a specific number/fact instead.
+
+`tweet` is **just the message** — Choseno appends the canonical article link and its own auto-generated hashtags (from tags + politician names + category + location) after it automatically, for every article, whether or not `tweet` is set. Do not include either yourself.
+
+### ✅ Correct
+
+```json
+{
+  "tweet": "Illinois just committed $200M to build the country's largest quantum computing research hub in Chicago."
+}
+```
+
+### ❌ Incorrect
+
+```json
+{
+  "tweet": "🚀 Illinois just committed $200M to quantum computing! #Illinois #Tech"  // ❌ Emoji AND hashtags — Choseno adds its own hashtags separately
+}
+```
+
+```json
+{
+  "tweet": "Illinois just committed $200M to quantum computing — read more: https://www.choseno.com/news/..."  // ❌ URL — Choseno appends the canonical link automatically; this creates a duplicate
+}
+```
+
+```json
+{
+  "tweet": "A".repeat(280)  // ❌ Too long — Choseno appends hashtags + a link after this, so keep it under ~200 characters to stay within X's 280-char limit
+}
+```
+
+**Rule:** Omit the field entirely to just use the auto-generated fallback — there's no requirement to set it. When set, it's still run through the same emoji-stripping the auto-generated text gets, as a backstop — but the paste-JSON validator will warn (not block) if it detects emoji, a URL, or excessive length, so fix those before publishing rather than relying on the backstop.
+
+---
+
 ## Breaking News (Auto-Expires)
 
 ### ✅ Breaking News
@@ -364,6 +419,7 @@ Mayor Locke announced...  ❌ Missing dateline (CITY, PROV. — )
   "seoTitle": "Surrey mayor announces $50M budget increase",
   "metaDescription": "Mayor Brenda Locke unveils largest municipal budget in 5 years for Surrey, BC",
   "tags": ["Surrey", "budget", "municipal government"],
+  "tweet": "Surrey's mayor just unveiled the city's largest budget increase in five years — $50M more for transit and community services.",
   "breakingNews": false,
   "author": {
     "name": "Jane Smith",
@@ -397,6 +453,7 @@ Before running the script, verify Grok will generate:
 - [ ] All sources cited (no hallucinated articles)
 - [ ] Hero image URL only if source provides real image
 - [ ] If hero_image_url set, heroImageAlt also set
+- [ ] If `tweet` is set: no emoji, no hashtags, no URL, under ~200 characters
 
 ---
 

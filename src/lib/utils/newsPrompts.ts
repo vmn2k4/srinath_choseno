@@ -72,6 +72,7 @@ ${personInstructions(person)}
   "seoTitle": "Optimized SEO Title under 60 characters",
   "metaDescription": "Concise meta description under 160 characters summarizing the article for search engines",
   "tags": ["tag1", "tag2", "tag3"],
+  "tweet": "REQUIRED & CLICK-OPTIMIZED. A highly engaging, captivating 1-2 sentence hook designed for X/Twitter sharing to maximize discovery and click-throughs. Focus on the civic stakes, key decision, or accountability angle (e.g. 'Premier David Eby reshuffles BC Cabinet amid surging healthcare demands — see how the changes impact your riding.'). Plain text ONLY — no emojis, no hashtags, no URLs (Choseno automatically appends the canonical card link and topic hashtags). Keep under 200 characters.",
   "breakingNews": false,
   "author": {
     "name": "Jane Doe",
@@ -104,6 +105,7 @@ ${personInstructions(person)}
 - SEO Title: 50-60 characters, include primary keyword
 - Meta Description: 150-160 characters, write for CTR not gaming
 - Tags: 3-5 tags, relevant to the story
+- Tweet: OPTIONAL custom share-button copy for X. Plain text, NO emoji, NO hashtags, NO URL — Choseno appends the link and auto-generated hashtags itself. ~200 characters max. Omit to use the auto-generated fallback (headline + CTA).
 - Breaking News: Only mark as true if article is <6 hours old and unexpected. The badge auto-clears itself ${BREAKING_NEWS_ACTIVE_HOURS} hours after publish, so never set it for older or evergreen stories.
 - Country/Province: prefer ISO-2 codes (CA, US, ON, BC…), but full names are accepted too
 - Sources: cite every source the input material actually came from — this renders as a "Sources" section on the published article. Omit the array entirely if no sources were given, never invent one.
@@ -122,6 +124,7 @@ ${personInstructions(person)}
 ❌ DON'T invent or guess at a taggedPoliticians/taggedPoliticianIds/taggedParty value — only include one explicitly named/given as a subject
 ❌ DON'T conflate eventDate and published_at — they answer different questions ("when did this happen" vs "when does this go live")
 ❌ DON'T set impactArea to "local" without also giving latitude/longitude when the source material makes the place determinable
+❌ DON'T put emoji, hashtags, or a URL inside "tweet" — Choseno strips/derives those automatically and you'll get duplicates
 
 ✅ DO start with verified facts and datelines
 ✅ DO quote only when explicitly provided in source
@@ -189,6 +192,7 @@ The output MUST be a valid JSON object with a batch array:
       "seoTitle": "SEO title under 60 chars",
       "metaDescription": "Meta description under 160 chars",
       "tags": ["tag1", "tag2", "tag3"],
+      "tweet": "Captivating 1-2 sentence hook designed for high engagement on X/Twitter. Focus on civic stakes/key decisions. Plain text ONLY (no emoji, hashtags, or URLs — Choseno appends those). ~200 chars max.",
       "breakingNews": false,
       "author": { "name": "Author", "bio": "Role", "photoUrl": "https://... — OPTIONAL" },
       "sources": [{ "label": "Source", "url": "https://..." }],
@@ -231,6 +235,8 @@ ${IMPACT_AREA_GUIDE}
 11. **Images:** Never fabricate a hero_image_url for any article in the batch. Only set it (with heroImageAlt) when the source material actually supplies an image URL — otherwise omit all three image fields for that article; images can be added manually afterward in the admin panel.
 
 12. **Politician/Party tagging:** Only set taggedPoliticians/taggedPoliticianIds/taggedParty when a specific politician or party is a direct subject of that article. Use the politician's full name exactly as it would appear on a public profile, or their exact profile id if one is known (ids are unambiguous even when two people share a name — prefer id when you have it). Never invent a name or id to fill the field — omit it for stories not centered on a specific politician or party. Names that don't match a registered profile are skipped automatically and can be tagged manually afterward by editing that article.
+
+13. **Tweet (optional):** Plain text only — no emoji, no hashtags, no URL. Choseno appends the canonical article link and auto-generated hashtags itself, so including either in "tweet" creates a duplicate. Keep each under ~200 characters. Omit the field entirely to use the auto-generated headline + CTA fallback.
 
 Here are today's news stories and topics:`;
 }
