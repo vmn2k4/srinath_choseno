@@ -168,7 +168,9 @@ export async function getNewsArticleBySlug(
 ): Promise<{ data: NewsArticle | null; error: PostgrestError | null }> {
   return supabase
     .from("news_articles")
-    .select("*")
+    .select(
+      "*, news_article_politicians(politician_id, profiles(id, full_name, designation, constituency, current_ghost_id, politician_profiles(photo_url, avatar_url)))"
+    )
     .eq("slug", slug)
     .eq("status", "published")
     .lte("published_at", new Date().toISOString())

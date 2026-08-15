@@ -22,6 +22,7 @@ import { Card, Badge } from "@/components/primitives";
 import { useTranslation } from "@/contexts/LanguageContext";
 import NewsArticleBody from "@/components/features/NewsArticleBody";
 import NewsComments from "@/components/features/NewsComments";
+import NewsArticleLinkedPoliticians from "@/components/features/NewsArticleLinkedPoliticians";
 import type { NewsArticle, NewsArticleContent } from "@/lib/services/news";
 
 interface NewsArticleDetailClientProps {
@@ -430,6 +431,23 @@ export default function NewsArticleDetailClient({
           </div>
         )}
       </Card>
+
+      {/* Linked Politicians - Rate & Discuss */}
+      <NewsArticleLinkedPoliticians
+        politicians={
+          ((article as any).news_article_politicians
+            ?.map((p: any) => ({
+              id: p.profiles?.id,
+              full_name: p.profiles?.full_name,
+              designation: p.profiles?.designation,
+              constituency: p.profiles?.constituency,
+              current_ghost_id: p.profiles?.current_ghost_id,
+              politician_profiles: p.profiles?.politician_profiles,
+            }))
+            .filter((p: any) => p.id) as any[]) || []
+        }
+        articleTitle={article.headline}
+      />
 
       {/* Comments */}
       <NewsComments articleId={article.id} articleSlug={slug} />
