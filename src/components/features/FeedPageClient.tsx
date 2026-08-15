@@ -358,6 +358,34 @@ export default function FeedPageClient() {
     if (profile && profile.role !== "admin") Promise.resolve().then(() => loadFeedPosts());
   }, [masterFilter, memberships, profile]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Refetch when the user lands back on this page via the browser's
+  // Back/Forward buttons -- e.g. Feed -> post on My Wall -> Back to Feed.
+  // Per Next's own Client Cache docs ("Pages are not cached by default but
+  // are reused during browser back/forward navigation"), a popstate return
+  // to a route Next has already rendered reuses that in-memory RSC tree
+  // instead of re-running the page, bypassing staleTimes entirely -- so the
+  // effect above (keyed on masterFilter/memberships/profile, none of which
+  // changed) never re-fires and the feed silently shows whatever it had
+  // before the user navigated away. This isn't the browser's native
+  // page-unload bfcache (no `pageshow`/`event.persisted` fires -- the SPA
+  // never unloads), it's Next's own client-side cache, restored on the same
+  // native `popstate` event the browser always fires for back/forward, so
+  // that's the signal to listen for. `visibilitychange` is a secondary
+  // fallback for the "left the tab, came back" case popstate won't catch.
+  useEffect(() => {
+    if (!profile || profile.role === "admin") return;
+    const refetch = () => loadFeedPosts();
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") refetch();
+    };
+    window.addEventListener("popstate", refetch);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => {
+      window.removeEventListener("popstate", refetch);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+  }, [profile]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const handlePostTextChange = (text: string) => {
     setNewPostContent(text);
 
