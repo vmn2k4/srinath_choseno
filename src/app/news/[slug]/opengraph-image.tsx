@@ -1,10 +1,14 @@
 import { ImageResponse } from "next/og";
 import { OG_IMAGE_SIZE, OG_IMAGE_CONTENT_TYPE } from "@/lib/utils/og";
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
 
 export const alt = "Choseno News — Rate Your Politician";
 export const size = OG_IMAGE_SIZE;
 export const contentType = OG_IMAGE_CONTENT_TYPE;
+// Cookie-free createPublicClient (see src/lib/supabase/public.ts) keeps this
+// route eligible for Next's static image caching; revalidate bounds how
+// stale a cached card can get after an article is edited.
+export const revalidate = 3600;
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -12,7 +16,7 @@ interface Props {
 
 export default async function Image({ params }: Props) {
   const { slug } = await params;
-  const supabase = await createClient();
+  const supabase = createPublicClient();
 
   const { data } = await supabase
     .from("news_articles")
