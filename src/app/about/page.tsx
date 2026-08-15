@@ -1,14 +1,26 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Globe, Heart, ShieldCheck, Users, MessageSquare, ExternalLink } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { SITE_URL, SITE_NAME } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
 
 export default function AboutPage() {
+  const router = useRouter();
+  const { user } = useAuth();
   const { t } = useTranslation();
+
+  // Redirect to feed if user is signed in — About page is only for signed-out visitors
+  useEffect(() => {
+    if (user) {
+      router.push("/feed");
+    }
+  }, [user, router]);
 
   const jsonLd = {
     "@context": "https://schema.org",
