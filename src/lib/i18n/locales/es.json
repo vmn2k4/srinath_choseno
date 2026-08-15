@@ -41,6 +41,14 @@
       "nonpartisan": "Sin favoritismo de partidos",
       "realPeople": "Gente real, votos reales"
     },
+    "demo": {
+      "title": "¿Por qué Choseno?",
+      "quote": "\"Creado para ciudadanos comunes — impulsado por una democracia real.\"",
+      "line1": "Olvídate de la lealtad partidista y las cámaras de eco. Choseno te ofrece herramientas independientes y locales para evaluar candidatos y exigir cuentas a los gobernantes.",
+      "line2": "Todo lo que necesitas para hacerte escuchar — 100% gratuito y anónimo.",
+      "cardTitle": "Demostración Completa del Producto",
+      "cardSubtitle": "Mira nuestra demostración completa para ver todas las funciones de Choseno en acción"
+    },
     "bridge": {
       "title": "Democracia, sin vueltas.",
       "subtitle": "Igual que elegir un restaurante — pero esta vez eliges a quien te representa.",

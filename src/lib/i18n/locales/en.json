@@ -41,6 +41,14 @@
       "nonpartisan": "No favorite parties",
       "realPeople": "Real people, real votes"
     },
+    "demo": {
+      "title": "Why Choseno?",
+      "quote": "\"Built for everyday citizens — powered for real democracy.\"",
+      "line1": "Forget party loyalty and algorithmic echo chambers. Choseno gives you independent, hyperlocal tools to evaluate candidates and hold elected officials accountable.",
+      "line2": "Everything you need to make your voice heard — 100% free and anonymous.",
+      "cardTitle": "Complete Product Demo",
+      "cardSubtitle": "Watch our full demo to see all Choseno features in action"
+    },
     "bridge": {
       "title": "Democracy, simplified.",
       "subtitle": "Same as picking a restaurant — except this time you're choosing who represents you.",

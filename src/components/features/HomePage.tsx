@@ -36,6 +36,7 @@ import {
   ScrollRatingStars,
 } from "@/components/features/home/HomeMotion";
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
+import HomeDemoVideo from "@/components/features/home/HomeDemoVideo";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { SITE_URL } from "@/lib/constants/site";
 import { useRef } from "react";
@@ -370,6 +371,9 @@ export default function HomePage() {
           ))}
         </StaggerGroup>
       </section>
+
+      {/* ============ DEMO VIDEO SECTION ============ */}
+      <HomeDemoVideo />
 
       {/* ============ CONCEPT BRIDGE — Yelp analogy ============ */}
       <section className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden">

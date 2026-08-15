@@ -41,6 +41,14 @@
       "nonpartisan": "Aucun parti privilégié",
       "realPeople": "Vrais citoyens, vrais votes"
     },
+    "demo": {
+      "title": "Pourquoi Choseno ?",
+      "quote": "\"Conçu pour les citoyens — propulsé pour une vraie démocratie.\"",
+      "line1": "Oubliez les querelles partisanes et les algorithmes trompeurs. Choseno vous donne des outils indépendants et locaux pour évaluer les candidats et responsabiliser les élus.",
+      "line2": "Tout ce dont vous avez besoin pour vous faire entendre — 100% gratuit et anonyme.",
+      "cardTitle": "Démonstration Complète du Produit",
+      "cardSubtitle": "Regardez notre démonstration complète pour découvrir toutes les fonctionnalités de Choseno en action"
+    },
     "bridge": {
       "title": "La démocratie, tout simplement.",
       "subtitle": "Comme choisir un bon resto — sauf que là, vous choisissez qui parle en votre nom.",
