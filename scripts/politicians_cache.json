@@ -1,0 +1,4002 @@
+[
+  {
+    "id": "49060b52-ec8f-4957-92ac-fc5ed4cb1f12",
+    "full_name": "Eric Lefebvre",
+    "country": "Canada",
+    "constituency": "Richmond—Arthabaska",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a525e6e4-a842-450a-a16a-04bb8c0c34d3",
+    "full_name": "Maxime Blanchette-Joncas",
+    "country": "Canada",
+    "constituency": "Rimouski—La Matapédia",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1ffc394e-a8b8-4c46-983d-c46a27058cc5",
+    "full_name": "Linda Lapointe",
+    "country": "Canada",
+    "constituency": "Rivière-des-Mille-Îles",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "41323c17-b86e-4fd7-a5e1-4bf4de88524b",
+    "full_name": "Rhéal Éloi Fortin",
+    "country": "Canada",
+    "constituency": "Rivière-du-Nord",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "22ced6cf-4590-41dc-aa11-ba984a72f675",
+    "full_name": "Jean-Yves Duclos",
+    "country": "Canada",
+    "constituency": "Québec Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "fa26a178-0617-4180-b3e8-633b85cf9b8e",
+    "full_name": "Patrick Bonin",
+    "country": "Canada",
+    "constituency": "Repentigny",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "dea99950-d284-4222-966a-0089b8b07050",
+    "full_name": "Kevin Ryan",
+    "country": "USA",
+    "constituency": null,
+    "designation": null,
+    "role": "politician"
+  },
+  {
+    "id": "f9d4b47b-ae66-446c-8518-b58d032704f1",
+    "full_name": "Steven Guilbeault",
+    "country": "Canada",
+    "constituency": "Laurier—Sainte-Marie",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c15cc588-d614-4f55-84fb-ae30d9af96e0",
+    "full_name": "Fayçal El-Khoury",
+    "country": "Canada",
+    "constituency": "Laval—Les Îles",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "318e76f9-48c1-43e6-a849-4b8f57340869",
+    "full_name": "Tim Watchorn",
+    "country": "Canada",
+    "constituency": "Les Pays-d'en-Haut",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1236379f-5dfe-40b3-80aa-f87e4eef8211",
+    "full_name": "Sherry Romanado",
+    "country": "Canada",
+    "constituency": "Longueuil—Charles-LeMoyne",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "99a4fa84-ff79-4eba-822d-f438d455dd37",
+    "full_name": "Gérard Deltell",
+    "country": "Canada",
+    "constituency": "Louis-Saint-Laurent—Akiawenhrahk",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "181d4b4b-a5c1-45c3-a424-76d50a312a95",
+    "full_name": "Luc Berthold",
+    "country": "Canada",
+    "constituency": "Mégantic—L’Érable—Lotbinière",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "213789f0-7aae-4ac2-a72a-55ce8c9a25a6",
+    "full_name": "Jean-Denis Garon",
+    "country": "Canada",
+    "constituency": "Mirabel",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d9c31696-f1f6-4829-b777-4d775ccf8411",
+    "full_name": "Luc Thériault",
+    "country": "Canada",
+    "constituency": "Montcalm",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8a27e40a-3179-47ba-a748-c5c710bc1782",
+    "full_name": "Jacques Gourde",
+    "country": "Canada",
+    "constituency": "Lévis—Lotbinière",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a4758a16-9085-4e99-acae-000394548174",
+    "full_name": "Naresh Puri",
+    "country": "India",
+    "constituency": "Sujanpur",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "d0ce6645-1095-419c-853f-744f74ddf9c2",
+    "full_name": "Natilien Joseph",
+    "country": "Canada",
+    "constituency": "Longueuil—Saint-Hubert",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d1199a88-9c61-456e-a455-b611c3ef120e",
+    "full_name": "Gabriel Hardy",
+    "country": "Canada",
+    "constituency": "Montmorency—Charlevoix",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1ce42663-c412-4094-9ae3-f00ee03a8527",
+    "full_name": "Joël Lightbound",
+    "country": "Canada",
+    "constituency": "Louis-Hébert",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "45d119e0-4ed2-4900-b962-552b7db54b13",
+    "full_name": "Carlos Leitão",
+    "country": "Canada",
+    "constituency": "Marc-Aurèle-Fortin",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "24ea1fb9-40b8-41f3-9aad-40b5e912b052",
+    "full_name": "Rachel Bendayan",
+    "country": "Canada",
+    "constituency": "Outremont",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "9c15cc3e-8632-49a2-88e9-7a0cf5ee5452",
+    "full_name": "Anthony Housefather",
+    "country": "Canada",
+    "constituency": "Mount Royal",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "6705f081-2788-4d72-a994-92f24de1e0eb",
+    "full_name": "Bienvenu-Olivier Ntumba",
+    "country": "Canada",
+    "constituency": "Mont-Saint-Bruno—L’Acadie",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "74549fbb-6069-4a8e-8f82-c9e6ac7207bc",
+    "full_name": "Anna Gainey",
+    "country": "Canada",
+    "constituency": "Notre-Dame-de-Grâce—Westmount",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "14084281-e9b4-483c-b4ce-67f667f30c07",
+    "full_name": "Marjorie Michel",
+    "country": "Canada",
+    "constituency": "Papineau",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "79d7af42-b2ed-46a9-bdc1-5f69c14cef6b",
+    "full_name": "Xavier Barsalou-Duval",
+    "country": "Canada",
+    "constituency": "Pierre-Boucher—Les Patriotes—Verchères",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "854f5b0c-b161-4e96-b8c8-63bc924ad192",
+    "full_name": "Sameer Zuberi",
+    "country": "Canada",
+    "constituency": "Pierrefonds—Dollard",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a2599067-6a4e-45f3-9a5f-0652e48778f4",
+    "full_name": "Alexandre Boulerice",
+    "country": "Canada",
+    "constituency": "Rosemont—La Petite-Patrie",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c8b9e80d-6ba9-42bd-9fc3-9d26a6311d7c",
+    "full_name": "Sophie Chatel",
+    "country": "Canada",
+    "constituency": "Pontiac—Kitigan Zibi",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "3c153c61-eecd-48f0-9b43-a18898e4c508",
+    "full_name": "Joël Godin",
+    "country": "Canada",
+    "constituency": "Portneuf—Jacques-Cartier",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "6fb2f834-ceab-49e7-8914-d3e1dd1aebfd",
+    "full_name": "Simon-Pierre Savard-Tremblay",
+    "country": "Canada",
+    "constituency": "Saint-Hyacinthe—Bagot—Acton",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "5dc1f2ff-d3ee-4898-aec1-1b821362d1af",
+    "full_name": "Christine Normandin",
+    "country": "Canada",
+    "constituency": "Saint-Jean",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d41d8c83-6666-4f03-a064-9b3dbe8ee592",
+    "full_name": "Emmanuella Lambropoulos",
+    "country": "Canada",
+    "constituency": "Saint-Laurent",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "2c0ce875-b868-4e75-bd55-4d68e9937314",
+    "full_name": "Patricia Lattanzio",
+    "country": "Canada",
+    "constituency": "Saint-Léonard—Saint-Michel",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "5cb519eb-1895-4976-a426-14aa086b3e3f",
+    "full_name": "François-Philippe Champagne",
+    "country": "Canada",
+    "constituency": "Saint-Maurice—Champlain",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "0098ed18-5131-4cbb-8d6f-d12a24dc73c9",
+    "full_name": "Andréanne Larouche",
+    "country": "Canada",
+    "constituency": "Shefford",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1efee968-c3fa-414c-b033-4bb91c590c85",
+    "full_name": "Lal Chand Kataruchakk",
+    "country": "India",
+    "constituency": "Bhoa",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "83a822a8-d7d9-4d75-a73b-8d67de693e39",
+    "full_name": "Tester Politician 1",
+    "country": "Canada",
+    "constituency": "Abitibi—Baie-James—Nunavik—Eeyou",
+    "designation": null,
+    "role": "politician"
+  },
+  {
+    "id": "2ea3c8b5-8427-4d7b-b7db-85ebce04de82",
+    "full_name": "Srinath Priyankara",
+    "country": "Canada",
+    "constituency": "Abitibi—Baie-James—Nunavik—Eeyou",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "80ef0b52-040e-49b2-958c-fa6703f6724f",
+    "full_name": "Murugappan",
+    "country": "Canada",
+    "constituency": "South Surrey—White Rock",
+    "designation": "City Councillor",
+    "role": "politician"
+  },
+  {
+    "id": "75fa8e52-d430-41d0-bdd8-dfb4dc25712c",
+    "full_name": "Vijay",
+    "country": "Canada",
+    "constituency": null,
+    "designation": null,
+    "role": "politician"
+  },
+  {
+    "id": "478d3a92-3a01-4407-8448-5cf465b00a63",
+    "full_name": "Vijay",
+    "country": "Canada",
+    "constituency": null,
+    "designation": null,
+    "role": "politician"
+  },
+  {
+    "id": "98a363e3-5d48-4bde-8bdf-9f389d62ccf1",
+    "full_name": "Priya Nakamura",
+    "country": "Canada",
+    "constituency": null,
+    "designation": null,
+    "role": "politician"
+  },
+  {
+    "id": "6e812239-7fa5-4b52-90f4-c3af4dcfc81a",
+    "full_name": "Marcus Whitfield",
+    "country": "Canada",
+    "constituency": null,
+    "designation": null,
+    "role": "politician"
+  },
+  {
+    "id": "8f41d652-c430-4bce-8487-825e85b1b591",
+    "full_name": "Vijay",
+    "country": "Canada",
+    "constituency": "Pitt Meadows—Maple Ridge, Pitt Meadows, Maple Ridge-Pitt Meadows, Pitt Meadows",
+    "designation": null,
+    "role": "politician"
+  },
+  {
+    "id": "e8313db8-c3fd-4f94-b383-2db70911d4e4",
+    "full_name": "Ashwani Kumar Sharma",
+    "country": "India",
+    "constituency": "Pathankot",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "5a58a04d-98d4-42a2-b4a6-d8c3518b8bf0",
+    "full_name": "Kent MacDonald",
+    "country": "Canada",
+    "constituency": "Cardigan",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "9b2bed6a-0373-466b-b864-2bc49295e3d9",
+    "full_name": "Sean Casey",
+    "country": "Canada",
+    "constituency": "Charlottetown",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "96e16b58-4536-4184-a278-d2ade4f1ba38",
+    "full_name": "Robert J. Morrissey",
+    "country": "Canada",
+    "constituency": "Egmont",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "15ba59ae-3e5c-412e-8d79-9e74e937096b",
+    "full_name": "Heath MacDonald",
+    "country": "Canada",
+    "constituency": "Malpeque",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "eec96a86-d3ae-40a7-b90e-51730dc62a8d",
+    "full_name": "Élisabeth Brière",
+    "country": "Canada",
+    "constituency": "Sherbrooke",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "4371fc0e-3e8c-4750-a503-9fb6ccb73592",
+    "full_name": "Tatiana Auguste",
+    "country": "Canada",
+    "constituency": "Terrebonne",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "117be0e8-bbdc-49bb-bd55-54b123448ab9",
+    "full_name": "Madeleine Chenette",
+    "country": "Canada",
+    "constituency": "Thérèse-De Blainville",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "9b33ccbf-c93a-4de1-8c56-63f97c9df9b5",
+    "full_name": "Tom Osborne",
+    "country": "Canada",
+    "constituency": "Cape Spear",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "72fdcbe9-53e8-4740-91a4-601be64a3033",
+    "full_name": "Grace Lore",
+    "country": "Canada",
+    "constituency": "Victoria-Beacon Hill",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "8749e23a-a024-4646-bf2c-846d26d23867",
+    "full_name": "Clifford Small",
+    "country": "Canada",
+    "constituency": "Central Newfoundland",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "884bf43f-3b81-4b15-8975-fdeb35173c27",
+    "full_name": "Philip Earle",
+    "country": "Canada",
+    "constituency": "Labrador",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "362db097-b60b-4b2c-b711-3555aeb0086c",
+    "full_name": "Caroline Desrochers",
+    "country": "Canada",
+    "constituency": "Trois-Rivières",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "759d9917-f919-40d7-ba8f-4c4680dc84a4",
+    "full_name": "Peter Schiefke",
+    "country": "Canada",
+    "constituency": "Vaudreuil",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "6feaecf0-68b8-4eee-bd29-fd6d90979d00",
+    "full_name": "Carol Anstey",
+    "country": "Canada",
+    "constituency": "Long Range Mountains",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c718d4fe-0d88-4d0a-9be4-3e8828dee242",
+    "full_name": "Joanne Thompson",
+    "country": "Canada",
+    "constituency": "St. John's East",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "145ffaf0-716c-4c60-a702-069546e9857a",
+    "full_name": "Jonathan Rowe",
+    "country": "Canada",
+    "constituency": "Terra Nova—The Peninsulas",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "b3c22c4f-fddc-4342-97a0-0928efbbd0b6",
+    "full_name": "Chris d'Entremont",
+    "country": "Canada",
+    "constituency": "Acadie—Annapolis",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "faf4e516-9ff7-48c7-9e1a-28580462d76e",
+    "full_name": "Jaime Battiste",
+    "country": "Canada",
+    "constituency": "Cape Breton—Canso—Antigonish",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "2b908831-a9d1-4127-b43d-f0dc0c282710",
+    "full_name": "Sean Fraser",
+    "country": "Canada",
+    "constituency": "Central Nova",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "0557ae0f-7229-4db2-93a1-7c6065fdd896",
+    "full_name": "Alana Hirtle",
+    "country": "Canada",
+    "constituency": "Cumberland—Colchester",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "96511c8a-be29-4745-8653-7d577f282d23",
+    "full_name": "Darren Fisher",
+    "country": "Canada",
+    "constituency": "Dartmouth—Cole Harbour",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "cba9654c-f15f-4d37-a867-f2a61f3385e2",
+    "full_name": "Shannon Miedema",
+    "country": "Canada",
+    "constituency": "Halifax",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a1291031-0759-4ac2-9786-e3fc546f8e1e",
+    "full_name": "Lena Metlege Diab",
+    "country": "Canada",
+    "constituency": "Halifax West",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1b97feed-18db-4564-ba41-693a98e1b4af",
+    "full_name": "Kody Blois",
+    "country": "Canada",
+    "constituency": "Kings—Hants",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e9b261e9-5443-42d7-8416-e02d8825d4cb",
+    "full_name": "Braedon Clark",
+    "country": "Canada",
+    "constituency": "Sackville—Bedford—Preston",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "62ee1e2a-2b5a-45e6-b099-bc34e4720655",
+    "full_name": "Annie Koutrakis",
+    "country": "Canada",
+    "constituency": "Vimy",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "09ddd072-9c39-436c-8a74-60ff446cec51",
+    "full_name": "Jessica Fancy",
+    "country": "Canada",
+    "constituency": "South Shore—St. Margarets",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "fd4911db-609b-437f-9544-133b86eba6c6",
+    "full_name": "Mike Kelloway",
+    "country": "Canada",
+    "constituency": "Sydney—Glace Bay",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "5991dd7c-eb46-4ea1-9614-fd90016af7d7",
+    "full_name": "Serge Cormier",
+    "country": "Canada",
+    "constituency": "Acadie—Bathurst",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "885e12f5-33d9-42a1-8dc9-b276069da88d",
+    "full_name": "Dominic LeBlanc",
+    "country": "Canada",
+    "constituency": "Beauséjour",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "7f23f0fe-7adb-4e63-8feb-555015397d76",
+    "full_name": "David Myles",
+    "country": "Canada",
+    "constituency": "Fredericton—Oromocto",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e28f5094-46dc-4de0-85e4-b5ff019f66b5",
+    "full_name": "Derek Bennett",
+    "country": "Canada",
+    "constituency": "Lewisporte - Twillingate",
+    "designation": "MHA",
+    "role": "politician"
+  },
+  {
+    "id": "fe0d4aaf-4555-4469-a4cf-eb5acb7e0133",
+    "full_name": "Rob Moore",
+    "country": "Canada",
+    "constituency": "Fundy Royal",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ac1f4aaf-8cdf-448b-a95a-21151d71992a",
+    "full_name": "Guillaume Deschênes-Thériault",
+    "country": "Canada",
+    "constituency": "Madawaska—Restigouche",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "6ec10fbb-9fa4-47f5-9e72-a600bd584044",
+    "full_name": "Mike Dawson",
+    "country": "Canada",
+    "constituency": "Miramichi—Grand Lake",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "65f617f5-0441-48e8-a383-15646dbff56c",
+    "full_name": "Ginette Petitpas Taylor",
+    "country": "Canada",
+    "constituency": "Moncton—Dieppe",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "b6bdd860-5777-4e70-ba61-534f2b9c83d4",
+    "full_name": "Wayne Long",
+    "country": "Canada",
+    "constituency": "Saint John—Kennebecasis",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "2408232e-dacd-4414-9440-e7cee1bc9c08",
+    "full_name": "John Williamson",
+    "country": "Canada",
+    "constituency": "Saint John—St. Croix",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1130db62-7f3c-42d3-937a-87dd8689b050",
+    "full_name": "Richard Bragdon",
+    "country": "Canada",
+    "constituency": "Tobique—Mactaquac",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "54c037fb-62e7-4a36-b99f-f3f28321595f",
+    "full_name": "Mandy Gull-Masty",
+    "country": "Canada",
+    "constituency": "Abitibi—Baie-James—Nunavik—Eeyou",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "bae7061d-269f-4a24-b214-467534ea4b99",
+    "full_name": "Sébastien Lemire",
+    "country": "Canada",
+    "constituency": "Abitibi—Témiscamingue",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "9d4b37d7-06e7-4df1-b9a5-e068a776ba86",
+    "full_name": "Mélanie Joly",
+    "country": "Canada",
+    "constituency": "Ahuntsic-Cartierville",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "7597e136-62c8-48c9-a5d9-2c7da7e620e3",
+    "full_name": "Angelo Iacono",
+    "country": "Canada",
+    "constituency": "Alfred-Pellan",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "cc04b5b3-d35f-444f-a999-c0ea8f5e69da",
+    "full_name": "Stéphane Lauzon",
+    "country": "Canada",
+    "constituency": "Argenteuil—La Petite-Nation",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ebef79da-d3c9-4ae2-8fd8-ffdeebf39c7b",
+    "full_name": "Jason Groleau",
+    "country": "Canada",
+    "constituency": "Beauce",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "77cc0cd6-7ed5-4cc9-ac88-a7083b2a9f09",
+    "full_name": "Claude DeBellefeuille",
+    "country": "Canada",
+    "constituency": "Beauharnois—Salaberry—Soulanges—Huntingdon",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "fc4f937c-53ae-4fcf-a88f-d73e42f5908f",
+    "full_name": "Louis Plamondon",
+    "country": "Canada",
+    "constituency": "Bécancour—Nicolet—Saurel—Alnôbak",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "9426fc8b-90da-435b-b3ab-15217f3fae37",
+    "full_name": "Steeve Lavoie",
+    "country": "Canada",
+    "constituency": "Beauport—Limoilou",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "774f1838-da6f-4e33-9467-d5d52910ceb2",
+    "full_name": "Dominique Vien",
+    "country": "Canada",
+    "constituency": "Bellechasse—Les Etchemins—Lévis",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "2dffb263-e217-4ded-8c2a-26befa6a5a65",
+    "full_name": "Yves-François Blanchet",
+    "country": "Canada",
+    "constituency": "Beloeil—Chambly",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "86d35566-7afe-4975-8f56-4986a57bef8a",
+    "full_name": "Yves Perron",
+    "country": "Canada",
+    "constituency": "Berthier—Maskinongé",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "3f725d58-dd60-440e-b358-b6442a8cc004",
+    "full_name": "Abdelhaq Sari",
+    "country": "Canada",
+    "constituency": "Bourassa",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "2310c6fd-a152-4360-9c77-bb7e8c14dce1",
+    "full_name": "Louis Villeneuve",
+    "country": "Canada",
+    "constituency": "Brome—Missisquoi",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "0dab625f-9297-42c5-94d6-e6124a0cf45d",
+    "full_name": "Sima Acan",
+    "country": "Canada",
+    "constituency": "Oakville West",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "5874ca5a-1f4a-4016-9ddc-453013db78a5",
+    "full_name": "Alexandra Mendès",
+    "country": "Canada",
+    "constituency": "Brossard—Saint-Lambert",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ba09cd65-7284-41df-88ed-15b216cef41e",
+    "full_name": "Pierre Paul-Hus",
+    "country": "Canada",
+    "constituency": "Charlesbourg—Haute-Saint-Charles",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e425b237-dc33-49b9-9bd2-13a09ef4729d",
+    "full_name": "Nathalie Provost",
+    "country": "Canada",
+    "constituency": "Châteauguay—Les Jardins-de-Napierville",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "2ac47ab7-41a8-461c-ba81-5ea3d52caae7",
+    "full_name": "Richard Martel",
+    "country": "Canada",
+    "constituency": "Chicoutimi—Le Fjord",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ad4f5073-9ce7-419f-ae5d-e377c45312a5",
+    "full_name": "Marianne Dandurand",
+    "country": "Canada",
+    "constituency": "Compton—Stanstead",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f522d8c8-0760-4dcf-b8e7-ba4e5942619e",
+    "full_name": "Bernard Généreux",
+    "country": "Canada",
+    "constituency": "Côte-du-Sud—Rivière-du-Loup—Kataskomiq—Témiscouata",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "9f8b76f3-2222-406d-a35a-425b65bd44d1",
+    "full_name": "Marilène Gill",
+    "country": "Canada",
+    "constituency": "Côte-Nord—Kawawachikamach—Nitassinan",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "49c88fdb-e2ef-4629-9229-485fed69b2aa",
+    "full_name": "Anju Dhillon",
+    "country": "Canada",
+    "constituency": "Dorval—Lachine—LaSalle",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "3ac148cb-2df3-4f62-a98a-e087dbc50648",
+    "full_name": "Martin Champoux",
+    "country": "Canada",
+    "constituency": "Drummond",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "29a9a47b-de27-446c-951a-cfe2ef2060bc",
+    "full_name": "Alexis Deschênes",
+    "country": "Canada",
+    "constituency": "Gaspésie—Les Îles-de-la-Madeleine—Listuguj",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "12d69f29-f469-403c-96bb-16898336eabd",
+    "full_name": "Steven MacKinnon",
+    "country": "Canada",
+    "constituency": "Gatineau",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "89203eec-8d9b-4e97-9da0-a8f342813c0f",
+    "full_name": "Marie-Gabrielle Ménard",
+    "country": "Canada",
+    "constituency": "Hochelaga—Rosemont-Est",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "5a67241f-cc33-4e13-b3f4-7cfbaa10ce0f",
+    "full_name": "Eric St-Pierre",
+    "country": "Canada",
+    "constituency": "Honoré-Mercier",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f0ddce98-6333-4540-9754-d0815a2b5970",
+    "full_name": "Greg Fergus",
+    "country": "Canada",
+    "constituency": "Hull—Aylmer",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ab78bbc2-53f5-4366-a832-7c3866c1c7fa",
+    "full_name": "Gabriel Ste-Marie",
+    "country": "Canada",
+    "constituency": "Joliette—Manawan",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "26ae391a-dac9-44f2-8f0f-508ca722475a",
+    "full_name": "Mario Simard",
+    "country": "Canada",
+    "constituency": "Jonquière",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "6d38060c-5f09-45b5-a3f3-fdc8558a00fa",
+    "full_name": "Mario Beaulieu",
+    "country": "Canada",
+    "constituency": "La Pointe-de-l'Île",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "50a72c0e-a805-4443-a321-f4a16c9373da",
+    "full_name": "Alexis Brunelle-Duceppe",
+    "country": "Canada",
+    "constituency": "Lac-Saint-Jean",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "22500168-1766-40fa-831c-2fee4c799604",
+    "full_name": "Francis Scarpaleggia",
+    "country": "Canada",
+    "constituency": "Lac-Saint-Louis",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "81544124-564e-4042-ae55-c9043a211d57",
+    "full_name": "Jacques Ramsay",
+    "country": "Canada",
+    "constituency": "La Prairie—Atateken",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "6e3e7693-525c-427f-b615-c4cfa6dc91e8",
+    "full_name": "Claude Guay",
+    "country": "Canada",
+    "constituency": "LaSalle—Émard—Verdun",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "51561d1d-5294-4390-84ad-60129885d5e8",
+    "full_name": "Nina Krieger",
+    "country": "Canada",
+    "constituency": "Victoria-Swan Lake",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "553a4f89-e351-4f34-bdd3-6332884cf081",
+    "full_name": "Marie-Hélène Gaudreau",
+    "country": "Canada",
+    "constituency": "Laurentides—Labelle",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "67272cd2-1511-4a15-9fe7-553b60b102ef",
+    "full_name": "Blake Richards",
+    "country": "Canada",
+    "constituency": "Airdrie—Cochrane",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a0d8ee32-8927-48bc-9a98-fee27dd02d51",
+    "full_name": "Pierre Poilievre",
+    "country": "Canada",
+    "constituency": "Battle River—Crowfoot",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "cc2787cb-e0b5-4537-88e7-f2dbd3830b88",
+    "full_name": "David Bexte",
+    "country": "Canada",
+    "constituency": "Bow River",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "48908c93-a568-4bc1-a9d2-991208b27941",
+    "full_name": "Greg McLean",
+    "country": "Canada",
+    "constituency": "Calgary Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c0228a8e-1ee2-4ced-bc52-bed3d456e099",
+    "full_name": "Corey Hogan",
+    "country": "Canada",
+    "constituency": "Calgary Confederation",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e22f1e53-8691-41b3-bd43-4a5236953415",
+    "full_name": "Stephanie Kusie",
+    "country": "Canada",
+    "constituency": "Calgary Midnapore",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "aa0f3f53-ff8c-4677-8f56-9103b4112776",
+    "full_name": "Michelle Rempel Garner",
+    "country": "Canada",
+    "constituency": "Calgary Nose Hill",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "7b85f307-8d5e-46c3-8f44-7703524096ac",
+    "full_name": "Matt Jeneroux",
+    "country": "Canada",
+    "constituency": "Edmonton Riverbend",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e5510d27-3b84-499a-ae3c-3aac776fb27c",
+    "full_name": "Costas Menegakis",
+    "country": "Canada",
+    "constituency": "Aurora—Oak Ridges—Richmond Hill",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8828b275-90c4-4631-8ab8-167ebb4751b4",
+    "full_name": "John Brassard",
+    "country": "Canada",
+    "constituency": "Barrie South—Innisfil",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "067c04b1-16e5-4146-8d10-6f336b2b3a74",
+    "full_name": "Doug Shipley",
+    "country": "Canada",
+    "constituency": "Barrie—Springwater—Oro-Medonte",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "49d7c4c5-9b23-4212-8561-337431f99bac",
+    "full_name": "Chris Malette",
+    "country": "Canada",
+    "constituency": "Bay of Quinte",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c4e62635-9a73-4427-94f3-5a9661d1bd9e",
+    "full_name": "Nathaniel Erskine-Smith",
+    "country": "Canada",
+    "constituency": "Beaches—East York",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "694a2993-082b-47c8-8f3b-2e16183ae860",
+    "full_name": "Dominique O'Rourke",
+    "country": "Canada",
+    "constituency": "Guelph",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e8a2ef06-a7e2-49f0-9505-57ff5e35e4ec",
+    "full_name": "Lisa Hepfner",
+    "country": "Canada",
+    "constituency": "Hamilton Mountain",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "91380961-cc1a-4068-b0fb-f41d1a3348d0",
+    "full_name": "Shelby Kramp-Neuman",
+    "country": "Canada",
+    "constituency": "Hastings—Lennox and Addington—Tyendinaga",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1a5df9c4-2072-4f6e-a9cc-d835a55dbce7",
+    "full_name": "Judy A. Sgro",
+    "country": "Canada",
+    "constituency": "Humber River—Black Creek",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a8dae21f-6911-417f-bf85-d490cc1f2c1e",
+    "full_name": "Ben Lobb",
+    "country": "Canada",
+    "constituency": "Huron—Bruce",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "5d2237f9-05ff-4f6a-9c32-8e714a6dd1ed",
+    "full_name": "Michael Ma",
+    "country": "Canada",
+    "constituency": "Markham—Unionville",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "48756757-12a3-45c5-a418-8b5b5a562efd",
+    "full_name": "Kristina Tesser Derksen",
+    "country": "Canada",
+    "constituency": "Milton East—Halton Hills South",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c181b40b-cb9a-4465-9dcd-0c38464e04b8",
+    "full_name": "Pat Kelly",
+    "country": "Canada",
+    "constituency": "Calgary Crowfoot",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "64f32115-1357-4b90-aa14-52015372e873",
+    "full_name": "Jasraj Hallan",
+    "country": "Canada",
+    "constituency": "Calgary East",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ca1b908b-3212-4ee5-a27b-9336bac8dfaf",
+    "full_name": "Jamil Jivani",
+    "country": "Canada",
+    "constituency": "Bowmanville—Oshawa North",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a23d87a1-c44f-4c73-92d1-8bb9686ebb16",
+    "full_name": "Peter Fonseca",
+    "country": "Canada",
+    "constituency": "Mississauga East—Cooksville",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8eb3f999-939d-4e4e-a55b-f4e0c426930f",
+    "full_name": "Iqra Khalid",
+    "country": "Canada",
+    "constituency": "Mississauga—Erin Mills",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "957df1a0-36a9-4040-b6a6-d5647f266af3",
+    "full_name": "Charles Sousa",
+    "country": "Canada",
+    "constituency": "Mississauga—Lakeshore",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ae3250f3-2922-4b09-8d08-aa9df13d8803",
+    "full_name": "Jenna Sudds",
+    "country": "Canada",
+    "constituency": "Kanata",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "cd1b56c6-58eb-4b8b-91de-df0fe03215b2",
+    "full_name": "Fares Al Soud",
+    "country": "Canada",
+    "constituency": "Mississauga Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f01405df-865d-47df-9608-6b612f43ffa8",
+    "full_name": "Shuvaloy Majumdar",
+    "country": "Canada",
+    "constituency": "Calgary Heritage",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "33cf7a8f-8352-4745-b248-a81d54720df0",
+    "full_name": "Dalwinder Gill",
+    "country": "Canada",
+    "constituency": "Calgary McKnight",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a94ccc32-6a31-4b23-835f-2cf073d97d56",
+    "full_name": "Iqwinder Gaheer",
+    "country": "Canada",
+    "constituency": "Mississauga—Malton",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "72720986-e9b9-4a3f-be59-b7452bd952b7",
+    "full_name": "Rechie Valdez",
+    "country": "Canada",
+    "constituency": "Mississauga—Streetsville",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "3ec78351-9bec-46b8-afea-45931f29646e",
+    "full_name": "Mark Carney",
+    "country": "Canada",
+    "constituency": "Nepean",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "04aa560e-715a-4667-87dd-a27958af24f9",
+    "full_name": "Sandra Cobena",
+    "country": "Canada",
+    "constituency": "Newmarket—Aurora",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a2a185c8-2ae7-4374-a872-46ada7f4860e",
+    "full_name": "Scot Davidson",
+    "country": "Canada",
+    "constituency": "New Tecumseth—Gwillimbury",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e47bce96-2724-4e86-92dc-cfd3ac146025",
+    "full_name": "Dean Allison",
+    "country": "Canada",
+    "constituency": "Niagara West",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "0e560c8d-6c0b-4a55-8085-5ffe64cd677b",
+    "full_name": "Pauline Rochefort",
+    "country": "Canada",
+    "constituency": "Nipissing—Timiskaming",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "9b035d17-feed-4985-8278-386775e8f5b8",
+    "full_name": "Philip Lawrence",
+    "country": "Canada",
+    "constituency": "Northumberland—Clarke",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f3034dda-5553-444b-8646-0745fc91d2a4",
+    "full_name": "Tom Kmiec",
+    "country": "Canada",
+    "constituency": "Calgary Shepard",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "767b403f-eba1-4fe5-92df-6aa3b768e533",
+    "full_name": "David McKenzie",
+    "country": "Canada",
+    "constituency": "Calgary Signal Hill",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f71b5e37-a78a-4084-a82d-63a6be6655c6",
+    "full_name": "Tony Baldinelli",
+    "country": "Canada",
+    "constituency": "Niagara Falls—Niagara-on-the-Lake",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d508f6be-7712-45d7-8579-31aa52df53ae",
+    "full_name": "Fred Davies",
+    "country": "Canada",
+    "constituency": "Niagara South",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "7d3c1705-2fff-4ad8-b966-876fcf875c32",
+    "full_name": "Anita Anand",
+    "country": "Canada",
+    "constituency": "Oakville East",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f1823645-852c-4d01-889a-863e02a5c6bd",
+    "full_name": "Macklin McCall",
+    "country": "Canada",
+    "constituency": "West Kelowna-Peachland",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "370bb31d-caa2-4434-aaba-c61f56bfa7cf",
+    "full_name": "Marie-France Lalonde",
+    "country": "Canada",
+    "constituency": "Orléans",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1cce7704-7d91-4f68-a3f8-68ef5c186bf1",
+    "full_name": "Rhonda Kirkland",
+    "country": "Canada",
+    "constituency": "Oshawa",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "401a7c8a-f2e3-4bea-b41e-943589560137",
+    "full_name": "Arpan Khanna",
+    "country": "Canada",
+    "constituency": "Oxford",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "b36b46ac-d2d8-44cb-8b28-557fce1aa133",
+    "full_name": "Scott Aitchison",
+    "country": "Canada",
+    "constituency": "Parry Sound—Muskoka",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "0381d50f-b538-40d9-9b79-db50f2cf6cd8",
+    "full_name": "Amanpreet S. Gill",
+    "country": "Canada",
+    "constituency": "Calgary Skyview",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "77729560-d7a6-4345-aaf1-81d9f9036e20",
+    "full_name": "Eleanor Olszewski",
+    "country": "Canada",
+    "constituency": "Edmonton Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "58e6037b-d9e6-4964-a659-0420f7ea0a70",
+    "full_name": "Tim Uppal",
+    "country": "Canada",
+    "constituency": "Edmonton Gateway",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d2ff160c-d1e2-4c27-abb5-45e928f21e43",
+    "full_name": "Yasir Naqvi",
+    "country": "Canada",
+    "constituency": "Ottawa Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "3608e4f8-1b43-4283-80b6-2bbbe5c63691",
+    "full_name": "David J. McGuinty",
+    "country": "Canada",
+    "constituency": "Ottawa South",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f67ceb21-4b5a-49ad-b726-56e6cb1eef6f",
+    "full_name": "John Nater",
+    "country": "Canada",
+    "constituency": "Perth—Wellington",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "23b888af-224b-4a56-a614-6e95765e9aa8",
+    "full_name": "Emma Harrison",
+    "country": "Canada",
+    "constituency": "Peterborough",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "3df9b7e1-ee2a-44e3-8349-e5effb37ba5a",
+    "full_name": "Juanita Nathan",
+    "country": "Canada",
+    "constituency": "Pickering—Brooklin",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "39815acc-a32a-435c-9fb3-1bc99ccf149a",
+    "full_name": "Giovanna Mingarelli",
+    "country": "Canada",
+    "constituency": "Prescott—Russell—Cumberland",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1fe3d85b-eb03-4185-a22c-859435fac26f",
+    "full_name": "Marilyn Gladu",
+    "country": "Canada",
+    "constituency": "Sarnia—Lambton—Bkejwanong",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "aa6442af-832e-46b4-b02a-7b5e337d89fa",
+    "full_name": "Terry Sheehan",
+    "country": "Canada",
+    "constituency": "Sault Ste. Marie—Algoma",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d8029604-7d2a-4cb7-8625-93c4d8dc6293",
+    "full_name": "Gary Anandasangaree",
+    "country": "Canada",
+    "constituency": "Scarborough—Guildwood—Rouge Park",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "b8dde367-768d-4139-8de4-a52947c60e07",
+    "full_name": "Terry Dowdall",
+    "country": "Canada",
+    "constituency": "Simcoe—Grey",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8ff2d588-a51f-43bb-97b0-a13ce42952dd",
+    "full_name": "Adam Chambers",
+    "country": "Canada",
+    "constituency": "Simcoe North",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ad2d0ea7-8dbb-4fc4-bfe3-248ca4bbd1d6",
+    "full_name": "Kerry Diotte",
+    "country": "Canada",
+    "constituency": "Edmonton Griesbach",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "06e6056c-5706-4168-9bfb-606fc2cd436d",
+    "full_name": "Ziad Aboultaif",
+    "country": "Canada",
+    "constituency": "Edmonton Manning",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "eac9a6d4-a244-4848-9a93-3c0aae3d21d4",
+    "full_name": "Paul Connors",
+    "country": "Canada",
+    "constituency": "Avalon",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d629df5d-aedf-4ca3-b4b6-d01677875e12",
+    "full_name": "Mona Fortier",
+    "country": "Canada",
+    "constituency": "Ottawa—Vanier—Gloucester",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "00a3c25a-b3f3-439c-bad5-aa78b76318ea",
+    "full_name": "Lin Paddock",
+    "country": "Canada",
+    "constituency": "Baie Verte - Green Bay",
+    "designation": "MHA",
+    "role": "politician"
+  },
+  {
+    "id": "73c033d4-79fe-4da6-9b4e-fb87be77389a",
+    "full_name": "Anita Vandenbeld",
+    "country": "Canada",
+    "constituency": "Ottawa West—Nepean",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a4803841-fd83-4c09-9d31-534c198ed3a7",
+    "full_name": "Vincent Neil Ho",
+    "country": "Canada",
+    "constituency": "Richmond Hill South",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8db3208a-f581-4424-8b2f-32e9fee7b2c3",
+    "full_name": "Billy Morin",
+    "country": "Canada",
+    "constituency": "Edmonton Northwest",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8114f214-3aa5-4118-99cc-4fb37bfc6afe",
+    "full_name": "Jagsharan Singh Mahal",
+    "country": "Canada",
+    "constituency": "Edmonton Southeast",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d981d6fd-62c0-4cba-8ddb-3cbfa5328d8e",
+    "full_name": "Patty Hajdu",
+    "country": "Canada",
+    "constituency": "Thunder Bay—Superior North",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c1f8b6f7-8aac-49f8-a10b-dbf9f34ee434",
+    "full_name": "Evan Solomon",
+    "country": "Canada",
+    "constituency": "Toronto Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e1b76fef-8c36-4dc1-a05f-05a602ed7476",
+    "full_name": "Leslie Church",
+    "country": "Canada",
+    "constituency": "Toronto—St. Paul's",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "410c44c0-369e-4608-ab6b-eaeb77f2dee7",
+    "full_name": "Jean Yip",
+    "country": "Canada",
+    "constituency": "Scarborough—Agincourt",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1206e87a-2d23-4a19-9358-c12f2ff1c0c2",
+    "full_name": "Salma Zahid",
+    "country": "Canada",
+    "constituency": "Scarborough Centre—Don Valley East",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a90d1be8-8a4f-4ba3-aec3-ffd82c1c5f0c",
+    "full_name": "Chi Nguyen",
+    "country": "Canada",
+    "constituency": "Spadina—Harbourfront",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8bdc85eb-0b03-4569-9aaf-0c8506956256",
+    "full_name": "Eric Duncan",
+    "country": "Canada",
+    "constituency": "Stormont—Dundas—Glengarry",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ac9561f6-d9e9-4eec-81aa-28afb5ad6163",
+    "full_name": "Viviane Lapointe",
+    "country": "Canada",
+    "constituency": "Sudbury",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "fbf1d2db-4157-441a-9293-d5837981ff67",
+    "full_name": "Jim Bélanger",
+    "country": "Canada",
+    "constituency": "Sudbury East—Manitoulin—Nickel Belt",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "7b8771e0-3714-4934-9ec1-cce5061eaed4",
+    "full_name": "Julie Dabrusin",
+    "country": "Canada",
+    "constituency": "Toronto—Danforth",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "4674a6d5-d9c0-4ec8-95ab-9a12cc27b5fa",
+    "full_name": "Chrystia Freeland",
+    "country": "Canada",
+    "constituency": "University—Rosedale",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8582b912-397a-4269-b2d4-023487a660c6",
+    "full_name": "Michael Guglielmin",
+    "country": "Canada",
+    "constituency": "Vaughan—Woodbridge",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ae451875-c4f1-4411-8a51-106d37602768",
+    "full_name": "Bardish Chagger",
+    "country": "Canada",
+    "constituency": "Waterloo",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "64ecfb9d-1f1d-45b9-afef-283c03ae3d6d",
+    "full_name": "Michael D. Chong",
+    "country": "Canada",
+    "constituency": "Wellington—Halton Hills North",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "b63ecf19-ed5c-40fd-98d7-7591af20be08",
+    "full_name": "Ryan Turnbull",
+    "country": "Canada",
+    "constituency": "Whitby",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "acc9eb62-d76d-4b1a-b75a-070f8aa17e4b",
+    "full_name": "Kathy Borrelli",
+    "country": "Canada",
+    "constituency": "Windsor—Tecumseh—Lakeshore",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "4b9b2cda-7d19-4f25-a398-6b4dd6980f51",
+    "full_name": "Shaun Chen",
+    "country": "Canada",
+    "constituency": "Scarborough North",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "89911050-02ee-4ede-9848-9e0425d5255b",
+    "full_name": "Bill Blair",
+    "country": "Canada",
+    "constituency": "Scarborough Southwest",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "948c24c7-e7d6-44f6-aef9-87cbef9b32f2",
+    "full_name": "Michael Coteau",
+    "country": "Canada",
+    "constituency": "Scarborough—Woburn",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "975fc3c5-4ea7-4aa9-85fc-e75dca9ecf6b",
+    "full_name": "Ali Ehsassi",
+    "country": "Canada",
+    "constituency": "Willowdale",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "34287ca1-500d-4d94-86be-97d82b4c707b",
+    "full_name": "Harb Gill",
+    "country": "Canada",
+    "constituency": "Windsor West",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f74fc63d-2d00-4f1d-a952-45c5b16e6e9f",
+    "full_name": "Chris Bittle",
+    "country": "Canada",
+    "constituency": "St. Catharines",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "03816053-1a7b-44c0-a1cd-c2fc891e981e",
+    "full_name": "Karim Bardeesy",
+    "country": "Canada",
+    "constituency": "Taiaiako'n—Parkdale—High Park",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "3c2f9749-8933-44e0-94db-082143ca6596",
+    "full_name": "Melissa Lantsman",
+    "country": "Canada",
+    "constituency": "Thornhill",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "2b793c75-ad4c-4da0-9a3f-238e5752bca2",
+    "full_name": "Marcus Powlowski",
+    "country": "Canada",
+    "constituency": "Thunder Bay—Rainy River",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d877e5aa-1528-4043-b279-0a4c187f6318",
+    "full_name": "Roman Baber",
+    "country": "Canada",
+    "constituency": "York Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ce19c6a6-e07d-4a8a-8486-35e8d8408801",
+    "full_name": "Jacob Mantle",
+    "country": "Canada",
+    "constituency": "York—Durham",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "dc142ed4-3c07-428f-8872-14c08f52cf71",
+    "full_name": "Ahmed Hussen",
+    "country": "Canada",
+    "constituency": "York South—Weston—Etobicoke",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "22095b7b-ab71-4df2-9ff2-2a5d45d53662",
+    "full_name": "Brendan Hanley",
+    "country": "Canada",
+    "constituency": "Yukon",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "909cbe53-ade4-46cd-a0b4-77aa9b843ade",
+    "full_name": "Rebecca Alty",
+    "country": "Canada",
+    "constituency": "Northwest Territories",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "016d9b48-beeb-4538-8075-8bf8fb97975f",
+    "full_name": "Lori Idlout",
+    "country": "Canada",
+    "constituency": "Nunavut",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1f00d327-b385-4ef0-944f-72d5c32d9a27",
+    "full_name": "Sukhman Gill",
+    "country": "Canada",
+    "constituency": "Abbotsford—South Langley",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "b3a894be-1b76-4bd4-87e3-10e2832cfc80",
+    "full_name": "Wade Chang",
+    "country": "Canada",
+    "constituency": "Burnaby Central",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "23b2f11d-0dee-4635-9088-371ca70c7da9",
+    "full_name": "Terry Beech",
+    "country": "Canada",
+    "constituency": "Burnaby North—Seymour",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "08c62594-0a1f-41f9-98fc-3e345f58fca1",
+    "full_name": "Todd Doherty",
+    "country": "Canada",
+    "constituency": "Cariboo—Prince George",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "7498960b-e45a-46a8-8fae-cafce9625da0",
+    "full_name": "Mark Strahl",
+    "country": "Canada",
+    "constituency": "Chilliwack—Hope",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "59e4a51e-7a81-4884-8b87-a8d7b5b70a52",
+    "full_name": "Rob Morrison",
+    "country": "Canada",
+    "constituency": "Columbia—Kootenay—Southern Rockies",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "2b7e17d6-042d-48d1-98f7-2635d0b7b19f",
+    "full_name": "Ron McKinnon",
+    "country": "Canada",
+    "constituency": "Coquitlam—Port Coquitlam",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "fbc7a7b5-a3a0-43d7-94bc-a22445d532ce",
+    "full_name": "Tamara Jansen",
+    "country": "Canada",
+    "constituency": "Cloverdale—Langley City",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f06bd113-f869-4451-b37a-3b204a9f3755",
+    "full_name": "Gord Johns",
+    "country": "Canada",
+    "constituency": "Courtenay—Alberni",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "3461a3b9-83ef-4530-ad2b-04b92478bb3c",
+    "full_name": "Aris Babikian",
+    "country": "Canada",
+    "constituency": "Scarborough—Agincourt",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "1a338719-c80e-48c0-9606-1b64b114f8f2",
+    "full_name": "Jeff Kibble",
+    "country": "Canada",
+    "constituency": "Cowichan—Malahat—Langford",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "9d9d0bde-a183-4d79-ac72-f4b8147da622",
+    "full_name": "Jill McKnight",
+    "country": "Canada",
+    "constituency": "Delta",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c24d660c-1103-4cda-8620-90db43ea3694",
+    "full_name": "Stephanie McLean",
+    "country": "Canada",
+    "constituency": "Esquimalt—Saanich—Sooke",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "59245fd7-a438-47e3-819b-d7a4407ded97",
+    "full_name": "Gurbux Saini",
+    "country": "Canada",
+    "constituency": "Fleetwood—Port Kells",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "02a79879-b9b7-4000-8a86-35f9a15de011",
+    "full_name": "Heather McPherson",
+    "country": "Canada",
+    "constituency": "Edmonton Strathcona",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "4bceaa8c-5700-47ce-bf8d-fe5bfe9abd20",
+    "full_name": "Kelly McCauley",
+    "country": "Canada",
+    "constituency": "Edmonton West",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "9f40bd5b-209b-40df-ab48-bfdfbc191569",
+    "full_name": "John Barlow",
+    "country": "Canada",
+    "constituency": "Foothills",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1a9854b2-920e-4775-a342-dd3006b68640",
+    "full_name": "Laila Goodridge",
+    "country": "Canada",
+    "constituency": "Fort McMurray—Cold Lake",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8f5aaa25-371e-43ae-9b37-40b8226c9d66",
+    "full_name": "Chris Warkentin",
+    "country": "Canada",
+    "constituency": "Grande Prairie",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e75dd167-c1bf-44ee-abae-e196384e457f",
+    "full_name": "Shannon Stubbs",
+    "country": "Canada",
+    "constituency": "Lakeland",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "b70c5ed9-3e4b-4df9-8c14-e65befa3d4de",
+    "full_name": "Mike Lake",
+    "country": "Canada",
+    "constituency": "Leduc—Wetaskiwin",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "eef07db9-f7f2-408d-bd41-ddc3a3f11c28",
+    "full_name": "Rachael Thomas",
+    "country": "Canada",
+    "constituency": "Lethbridge",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "11773925-da21-4a0f-8f9b-46a35536a14e",
+    "full_name": "Glen Motz",
+    "country": "Canada",
+    "constituency": "Medicine Hat—Cardston—Warner",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "72023976-9c75-4a64-9981-6b39620599bc",
+    "full_name": "Dane Lloyd",
+    "country": "Canada",
+    "constituency": "Parkland",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8ce0980b-d4b2-42cb-9c8a-950f10a60acc",
+    "full_name": "Arnold Viersen",
+    "country": "Canada",
+    "constituency": "Peace River—Westlock",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1dab6561-fb62-4a1d-87dc-2aed8eaaa4e7",
+    "full_name": "Blaine Calkins",
+    "country": "Canada",
+    "constituency": "Ponoka—Didsbury",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "24f98757-8aed-483b-951b-80ed3a6f2eac",
+    "full_name": "Mel Arnold",
+    "country": "Canada",
+    "constituency": "Kamloops—Shuswap—Central Rockies",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e708dc69-13b9-40e9-96e2-aa989bd63335",
+    "full_name": "Frank Caputo",
+    "country": "Canada",
+    "constituency": "Kamloops—Thompson—Nicola",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "488aab80-0922-47ee-b53a-d0059547d918",
+    "full_name": "Stephen Fuhr",
+    "country": "Canada",
+    "constituency": "Kelowna",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d4d5d0af-8901-4786-adcf-f0d4fd717ee9",
+    "full_name": "Tako Van Popta",
+    "country": "Canada",
+    "constituency": "Langley Township—Fraser Heights",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "76bb7fa3-5f78-4842-a2b0-9213b7b25e72",
+    "full_name": "Brad Vis",
+    "country": "Canada",
+    "constituency": "Mission—Matsqui—Abbotsford",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "2be3dbf7-956d-43fd-8c03-d04a5f9c4dab",
+    "full_name": "Tamara Kronis",
+    "country": "Canada",
+    "constituency": "Nanaimo—Ladysmith",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "126344f2-a4e4-4459-ae56-121593b71433",
+    "full_name": "Jeff Dwyer",
+    "country": "Canada",
+    "constituency": "Placentia West - Bellevue",
+    "designation": "MHA",
+    "role": "politician"
+  },
+  {
+    "id": "2ea30261-64f3-4f44-a291-4d36b559b830",
+    "full_name": "Jake Sawatzky",
+    "country": "Canada",
+    "constituency": "New Westminster—Burnaby—Maillardville",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8d2c1540-2883-43ea-81cf-301448553004",
+    "full_name": "Aaron Gunn",
+    "country": "Canada",
+    "constituency": "North Island—Powell River",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c584c07e-815f-4294-94e6-ef53a78a603d",
+    "full_name": "Jonathan Wilkinson",
+    "country": "Canada",
+    "constituency": "North Vancouver—Capilano",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "2b88d731-9e70-48d7-990c-467858da036a",
+    "full_name": "Dan Albas",
+    "country": "Canada",
+    "constituency": "Okanagan Lake West—South Kelowna",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e2732321-27d6-432a-82e0-e01c3a8c6c00",
+    "full_name": "Marc Dalton",
+    "country": "Canada",
+    "constituency": "Pitt Meadows—Maple Ridge",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "fa2a75a2-6384-4c3d-9741-748b5dbc2598",
+    "full_name": "Zoe Royer",
+    "country": "Canada",
+    "constituency": "Port Moody—Coquitlam",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "85bda5ab-4fe7-4454-a356-90d0940f22da",
+    "full_name": "Bob Zimmer",
+    "country": "Canada",
+    "constituency": "Prince George—Peace River—Northern Rockies",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "12a6bef9-caa3-4283-9e9f-2006825266cf",
+    "full_name": "Burton Bailey",
+    "country": "Canada",
+    "constituency": "Red Deer",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "2d5a9ec8-e269-4fb7-b27e-4f68db4288df",
+    "full_name": "Garnett Genuis",
+    "country": "Canada",
+    "constituency": "Sherwood Park—Fort Saskatchewan",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "b3597957-0e13-43df-9fa8-eb8b90c46adf",
+    "full_name": "Michael Cooper",
+    "country": "Canada",
+    "constituency": "St. Albert—Sturgeon River",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "5535d808-0ecd-4c53-a555-b12b8411656a",
+    "full_name": "William Stevenson",
+    "country": "Canada",
+    "constituency": "Yellowhead",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ba6c6d63-ebbe-430a-bbed-c74d2bc75643",
+    "full_name": "Grant Jackson",
+    "country": "Canada",
+    "constituency": "Brandon—Souris",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "fef8a764-af64-4df3-86cd-92e6a7638b97",
+    "full_name": "Rebecca Chartrand",
+    "country": "Canada",
+    "constituency": "Churchill—Keewatinook Aski",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ec090dc3-13ef-4d37-a79c-6d008aed899e",
+    "full_name": "Colin Reynolds",
+    "country": "Canada",
+    "constituency": "Elmwood—Transcona",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "7f4800c1-564d-41cb-8b44-a6164121a1d7",
+    "full_name": "Raquel Dancho",
+    "country": "Canada",
+    "constituency": "Kildonan—St. Paul",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f8ee32ae-2e0f-4240-9fef-b70bd1a523c7",
+    "full_name": "Branden Leslie",
+    "country": "Canada",
+    "constituency": "Portage—Lisgar",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "20f90858-9875-427e-989e-0e6b8171bc1a",
+    "full_name": "Ted Falk",
+    "country": "Canada",
+    "constituency": "Provencher",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "29499656-5c65-4254-ac1e-db34a342dd89",
+    "full_name": "Dan Mazier",
+    "country": "Canada",
+    "constituency": "Riding Mountain",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "14d4cb49-b719-46e5-b5fd-c6a41ca3c92d",
+    "full_name": "Ginette Lavack",
+    "country": "Canada",
+    "constituency": "St. Boniface—St. Vital",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "88265352-7984-49ac-b55c-3114172c0163",
+    "full_name": "Amandeep Sodhi",
+    "country": "Canada",
+    "constituency": "Brampton Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "bd1b1699-ddea-49ec-893d-35b20a1be05c",
+    "full_name": "Shafqat Ali",
+    "country": "Canada",
+    "constituency": "Brampton—Chinguacousy Park",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d94f56d4-3cb1-4e95-a88d-f46f1db3aece",
+    "full_name": "Maninder Sidhu",
+    "country": "Canada",
+    "constituency": "Brampton East",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "429dbcc4-6a07-4f52-85a2-41debe33a6a6",
+    "full_name": "Chak Au",
+    "country": "Canada",
+    "constituency": "Richmond Centre—Marpole",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8d39d80f-8953-407a-bf6f-57e7e965c3a0",
+    "full_name": "Parm Bains",
+    "country": "Canada",
+    "constituency": "Richmond East—Steveston",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "50d60646-a942-415e-aea1-94d8293e888c",
+    "full_name": "Elizabeth May",
+    "country": "Canada",
+    "constituency": "Saanich—Gulf Islands",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1030bd4b-40eb-4a3e-9311-1f6127616136",
+    "full_name": "James Bezan",
+    "country": "Canada",
+    "constituency": "Selkirk—Interlake—Eastman",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "6558f6e4-ddf1-4530-9400-fb6fd8dfaa28",
+    "full_name": "Leah Gazan",
+    "country": "Canada",
+    "constituency": "Winnipeg Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "2668740b-e072-4f9e-8b66-172712c13405",
+    "full_name": "Kevin Lamoureux",
+    "country": "Canada",
+    "constituency": "Winnipeg North",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d5897d4a-8977-4a09-89c8-5728c46d6e6f",
+    "full_name": "Terry Duguid",
+    "country": "Canada",
+    "constituency": "Winnipeg South",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "81f83d96-3b1b-4c7f-ba22-7b6076924cf0",
+    "full_name": "Ben Carr",
+    "country": "Canada",
+    "constituency": "Winnipeg South Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "20403406-1b2e-4eef-9281-0c7c6aca8fc6",
+    "full_name": "Doug Eyolfson",
+    "country": "Canada",
+    "constituency": "Winnipeg West",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c8bcbadf-c2de-4401-a3f9-b9f1a8dca2d5",
+    "full_name": "Ruby Sahota",
+    "country": "Canada",
+    "constituency": "Brampton North—Caledon",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "1cdce1d5-f30c-477d-9539-ab33547fc261",
+    "full_name": "Sonia Sidhu",
+    "country": "Canada",
+    "constituency": "Brampton South",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "b5b0b59a-ad34-4851-b935-4b1016fb347e",
+    "full_name": "Amarjeet Gill",
+    "country": "Canada",
+    "constituency": "Brampton West",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f0ee17e7-a642-4d27-ba1a-fdea757c236d",
+    "full_name": "Larry Brock",
+    "country": "Canada",
+    "constituency": "Brantford—Brant South—Six Nations",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "533cf581-dfd3-4672-adae-86afdbfc1607",
+    "full_name": "Alex Ruff",
+    "country": "Canada",
+    "constituency": "Bruce—Grey—Owen Sound",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ede9d410-dfab-49fe-90a0-c7a4376ade24",
+    "full_name": "Karina Gould",
+    "country": "Canada",
+    "constituency": "Burlington",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "97bfbf81-e0e9-47c0-94f4-201ad96da90b",
+    "full_name": "Bruce Fanjoy",
+    "country": "Canada",
+    "constituency": "Carleton",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "bfac1370-5e85-40bf-9673-5161dce5cc87",
+    "full_name": "Dave Epp",
+    "country": "Canada",
+    "constituency": "Chatham-Kent—Leamington",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a11cfa3b-f429-44a1-b767-b8452024f450",
+    "full_name": "Gaétan Malette",
+    "country": "Canada",
+    "constituency": "Kapuskasing—Timmins—Mushkegowuk",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "5466bef6-0a99-4fc0-9843-84ee926c6966",
+    "full_name": "Eric Melillo",
+    "country": "Canada",
+    "constituency": "Kenora—Kiiwetinoong",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8cfc48aa-8c3e-40dd-bc4e-3e2d80c827cb",
+    "full_name": "Mark Gerretsen",
+    "country": "Canada",
+    "constituency": "Kingston and the Islands",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "eb00cefa-8a16-4910-9132-15c54f8930ad",
+    "full_name": "Anna Roberts",
+    "country": "Canada",
+    "constituency": "King—Vaughan",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c8db1ae8-6722-45e5-911a-640117bdaf6e",
+    "full_name": "Kelly DeRidder",
+    "country": "Canada",
+    "constituency": "Kitchener Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "32915b18-279b-41e3-beb7-07fc65fdf317",
+    "full_name": "Tim Louis",
+    "country": "Canada",
+    "constituency": "Kitchener—Conestoga",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "58de66ef-2b84-4be5-957d-6429f4577651",
+    "full_name": "Scott Reid",
+    "country": "Canada",
+    "constituency": "Lanark—Frontenac",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "b566d585-f1cc-4304-96e7-20d7698d85d6",
+    "full_name": "Michael Barrett",
+    "country": "Canada",
+    "constituency": "Leeds—Grenville—Thousand Islands—Rideau Lakes",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "88b99a8e-c2e2-47c1-8127-a50b1e572908",
+    "full_name": "Kurt Holman",
+    "country": "Canada",
+    "constituency": "London—Fanshawe",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "64b07c0b-7561-4d4b-8d2e-975af2e1c988",
+    "full_name": "Helena Konanz",
+    "country": "Canada",
+    "constituency": "Similkameen—South Okanagan—West Kootenay",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a1e7f135-d1ff-4495-845b-a4f6012c0460",
+    "full_name": "Ellis Ross",
+    "country": "Canada",
+    "constituency": "Skeena—Bulkley Valley",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "8a2cae84-d363-4fea-9a1a-9ab4f3984656",
+    "full_name": "Ernie Klassen",
+    "country": "Canada",
+    "constituency": "South Surrey—White Rock",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "117c57f6-5ff7-41e1-bce8-239ee2fc3bb8",
+    "full_name": "Randeep Sarai",
+    "country": "Canada",
+    "constituency": "Surrey Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "95f40e91-ba9d-47a1-8980-64df1149d59f",
+    "full_name": "Sukh Dhaliwal",
+    "country": "Canada",
+    "constituency": "Surrey Newton",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "05279697-b2d4-4554-b884-1de2532d4982",
+    "full_name": "Hedy Fry",
+    "country": "Canada",
+    "constituency": "Vancouver Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "7ee57cf1-90e1-48ca-9941-e7d61d55724a",
+    "full_name": "Rosemarie Falk",
+    "country": "Canada",
+    "constituency": "Battlefords—Lloydminster—Meadow Lake",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "03ccbaf4-9a86-4522-a2f0-08ad25debca1",
+    "full_name": "Kelly Block",
+    "country": "Canada",
+    "constituency": "Carlton Trail—Eagle Creek",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "39d8213d-58c7-48ce-9011-9f1d8e957789",
+    "full_name": "Buckley Belanger",
+    "country": "Canada",
+    "constituency": "Desnethé—Missinippi—Churchill River",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "26366c8f-2dbc-4848-afc4-41b230bd972c",
+    "full_name": "Fraser Tolmie",
+    "country": "Canada",
+    "constituency": "Moose Jaw—Lake Centre—Lanigan",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "eb73447c-cb12-4c6c-9ea0-a4dab60e067f",
+    "full_name": "Randy Hoback",
+    "country": "Canada",
+    "constituency": "Prince Albert",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "efffee27-23c5-4c79-8ff2-d7132ce15c0f",
+    "full_name": "Warren Steinley",
+    "country": "Canada",
+    "constituency": "Regina—Lewvan",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f93d2cf8-e63e-4761-89d2-136d6009ac09",
+    "full_name": "Andrew Scheer",
+    "country": "Canada",
+    "constituency": "Regina—Qu'Appelle",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "23d66fea-91dd-4b3c-af05-127f5007bdb0",
+    "full_name": "Michael Kram",
+    "country": "Canada",
+    "constituency": "Regina—Wascana",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a7655d9d-2029-4751-b1b1-769b6d3aa0ee",
+    "full_name": "Kevin Waugh",
+    "country": "Canada",
+    "constituency": "Saskatoon South",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "723f54db-c3fb-49d1-942d-61c889d1dbca",
+    "full_name": "Adam van Koeverden",
+    "country": "Canada",
+    "constituency": "Burlington North—Milton West",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "d0116ee7-856a-4702-bc08-54ea6a5eb20b",
+    "full_name": "Connie Cody",
+    "country": "Canada",
+    "constituency": "Cambridge",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "a1faa37e-9208-46ec-9e6c-50c4b3318cb7",
+    "full_name": "Julie Dzerowicz",
+    "country": "Canada",
+    "constituency": "Davenport",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "970ff4bf-8d86-40a2-a550-4a5710656749",
+    "full_name": "Matt Strauss",
+    "country": "Canada",
+    "constituency": "Kitchener South—Hespeler",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c989e5e4-7323-4d1c-af21-1e7f047700be",
+    "full_name": "Peter Fragiskatos",
+    "country": "Canada",
+    "constituency": "London Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c75e2bc9-117a-40a8-a5ba-028cde3f709f",
+    "full_name": "Arielle Kayabaga",
+    "country": "Canada",
+    "constituency": "London West",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "12f7005f-df5c-4e0a-bc52-6b821ce6e923",
+    "full_name": "Jenny Kwan",
+    "country": "Canada",
+    "constituency": "Vancouver East",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e9c5cd6e-fca0-4345-8120-3be78d8ccf7f",
+    "full_name": "Gregor Robertson",
+    "country": "Canada",
+    "constituency": "Vancouver Fraserview—South Burnaby",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "cf74c079-d1ba-4ae1-9292-8059f2a90efe",
+    "full_name": "Taleeb Noormohamed",
+    "country": "Canada",
+    "constituency": "Vancouver Granville",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c7fea941-cd3e-47b8-b2bf-523eb377d654",
+    "full_name": "Corey Tochor",
+    "country": "Canada",
+    "constituency": "Saskatoon—University",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "0724728f-1942-4ae6-b05d-5b639030ecec",
+    "full_name": "Brad Redekopp",
+    "country": "Canada",
+    "constituency": "Saskatoon West",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "88b3a3cf-9312-4217-92d0-9d04b15f55cd",
+    "full_name": "Steven Bonk",
+    "country": "Canada",
+    "constituency": "Souris—Moose Mountain",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "eab4cc96-dd40-4efd-aa6d-67008cebbc59",
+    "full_name": "Jeremy Patzer",
+    "country": "Canada",
+    "constituency": "Swift Current—Grasslands—Kindersley",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "4f446a7a-1232-40c7-9fc8-391a00e06c44",
+    "full_name": "Cathay Wagantall",
+    "country": "Canada",
+    "constituency": "Yorkton—Melville",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "9186feaf-ce20-4490-a23f-7b1bb88f7e46",
+    "full_name": "Jennifer McKelvie",
+    "country": "Canada",
+    "constituency": "Ajax",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "f78f26c7-1e44-42bc-b928-24c22755dc99",
+    "full_name": "Cheryl Gallant",
+    "country": "Canada",
+    "constituency": "Algonquin—Renfrew—Pembroke",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "782ff7a6-f26c-41f1-95a6-3fde93c3ae1b",
+    "full_name": "Maggie Chi",
+    "country": "Canada",
+    "constituency": "Don Valley North",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "58fce3e7-d604-4768-9137-2348a8b546a1",
+    "full_name": "Robert Oliphant",
+    "country": "Canada",
+    "constituency": "Don Valley West",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "51cf9f95-3770-4ae1-9591-9c66322adfe2",
+    "full_name": "Kyle Seeback",
+    "country": "Canada",
+    "constituency": "Dufferin—Caledon",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "29850018-9d19-4ec9-ba23-28e1423961e5",
+    "full_name": "Vince Gasparro",
+    "country": "Canada",
+    "constituency": "Eglinton—Lawrence",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "28a60441-d8b0-42ed-8ef3-a48b3625099c",
+    "full_name": "Andrew Lawton",
+    "country": "Canada",
+    "constituency": "Elgin—St. Thomas—London South",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "4f67dd48-e5bf-496f-baab-5081ec7416e2",
+    "full_name": "Chris Lewis",
+    "country": "Canada",
+    "constituency": "Essex",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "dc7e63b0-9b60-49ed-8c48-dc6a13fb1d8c",
+    "full_name": "Yvan Baker",
+    "country": "Canada",
+    "constituency": "Etobicoke Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "ffadd813-fdcd-45a2-af19-e94e6a331615",
+    "full_name": "James Maloney",
+    "country": "Canada",
+    "constituency": "Etobicoke—Lakeshore",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "e33f3a91-9356-438b-871f-d1d910add1f6",
+    "full_name": "John Zerucelli",
+    "country": "Canada",
+    "constituency": "Etobicoke North",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "9aa054c3-06ce-47eb-8f5e-05e3e2fcb85d",
+    "full_name": "Dan Muys",
+    "country": "Canada",
+    "constituency": "Flamborough—Glanbrook—Brant North",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "583afe91-85b4-487b-b858-0b0b9561c431",
+    "full_name": "Leslyn Lewis",
+    "country": "Canada",
+    "constituency": "Haldimand—Norfolk",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "5591cb49-5f5e-42dd-a9e1-797d31c663ec",
+    "full_name": "Jamie Schmale",
+    "country": "Canada",
+    "constituency": "Haliburton—Kawartha Lakes",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c56c9584-ca81-4ca3-b735-c595a979cb3f",
+    "full_name": "Aslam Rana",
+    "country": "Canada",
+    "constituency": "Hamilton Centre",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "0a37b05a-dd0a-455d-8417-772548cd7534",
+    "full_name": "Ned Kuruc",
+    "country": "Canada",
+    "constituency": "Hamilton East—Stoney Creek",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "7621e099-8ddd-4ff8-bada-fcb414534483",
+    "full_name": "John-Paul Danko",
+    "country": "Canada",
+    "constituency": "Hamilton West—Ancaster—Dundas",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "27088d71-a63a-4a21-b1f0-77fae88f546f",
+    "full_name": "Helena Jaczek",
+    "country": "Canada",
+    "constituency": "Markham—Stouffville",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "b35d7898-8cbd-40a2-a0b9-c966197cc58f",
+    "full_name": "Tim Hodgson",
+    "country": "Canada",
+    "constituency": "Markham—Thornhill",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "beb34006-6514-4ea4-bda9-6411aa63828c",
+    "full_name": "Lianne Rood",
+    "country": "Canada",
+    "constituency": "Middlesex—London",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "88059e16-2cff-4ba3-b653-07a2c660f8ef",
+    "full_name": "Don Davies",
+    "country": "Canada",
+    "constituency": "Vancouver Kingsway",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "b3d97235-b148-4e6c-971b-43a14703a011",
+    "full_name": "Wade Grant",
+    "country": "Canada",
+    "constituency": "Vancouver Quadra",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "157f75ae-aa0a-4e33-8fce-8a437ecc4d91",
+    "full_name": "Scott Anderson",
+    "country": "Canada",
+    "constituency": "Vernon—Lake Country—Monashee",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "c39074e3-64e4-49a9-9577-79017ff13a24",
+    "full_name": "Will Greaves",
+    "country": "Canada",
+    "constituency": "Victoria",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "385eed73-80a6-4209-ade1-4fd022c70209",
+    "full_name": "Patrick Weiler",
+    "country": "Canada",
+    "constituency": "West Vancouver—Sunshine Coast—Sea to Sky Country",
+    "designation": "MP",
+    "role": "politician"
+  },
+  {
+    "id": "5a189105-fb43-43c8-bf3f-699cddad80c9",
+    "full_name": "Charmaine A. Williams",
+    "country": "Canada",
+    "constituency": "Brampton Centre",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "c175fa96-a0df-4666-9ade-3ba95bf06367",
+    "full_name": "Vijay Thanigasalam",
+    "country": "Canada",
+    "constituency": "Scarborough—Rouge Park",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "195d4391-50a8-49b2-a8c2-1784cd9f7ac7",
+    "full_name": "Raymond Sung Joon Cho",
+    "country": "Canada",
+    "constituency": "Scarborough North",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "e300c54e-3376-43d8-955e-fd06c52a9acd",
+    "full_name": "Rob Cerjanec",
+    "country": "Canada",
+    "constituency": "Ajax",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "e667ea09-067d-4bf9-8f4e-11c4a2265beb",
+    "full_name": "Robert Bailey",
+    "country": "Canada",
+    "constituency": "Sarnia—Lambton",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "0890aedb-55d8-4394-9ffe-681a3e65d211",
+    "full_name": "Mary-Margaret McMahon",
+    "country": "Canada",
+    "constituency": "Beaches—East York",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "c9de4dac-a223-4b99-998f-13ddc8b232d9",
+    "full_name": "Deepak Anand",
+    "country": "Canada",
+    "constituency": "Mississauga—Malton",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "49336a6b-bff4-40fc-ac58-2a88eac9f47f",
+    "full_name": "John Fraser",
+    "country": "Canada",
+    "constituency": "Ottawa South",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "bf8c5f98-0339-4a10-bfac-98d934d5f929",
+    "full_name": "Bobbi Ann Brady",
+    "country": "Canada",
+    "constituency": "Haldimand—Norfolk",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "8a7dd3f9-6e45-4324-a435-210b163a2899",
+    "full_name": "Terence Kernaghan",
+    "country": "Canada",
+    "constituency": "London North Centre",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "5e39acc9-21f2-45b3-b3ef-1cd12b84a278",
+    "full_name": "Harwinder Sandhu",
+    "country": "Canada",
+    "constituency": "Vernon-Lumby",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "c95c33e6-4d7a-4786-aa3f-c4685b4880c7",
+    "full_name": "Billy Pang",
+    "country": "Canada",
+    "constituency": "Markham—Unionville",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "07c54c54-993e-4ef8-a15f-87cf0e255b2b",
+    "full_name": "Teresa J. Armstrong",
+    "country": "Canada",
+    "constituency": "London—Fanshawe",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "c112b7d9-fe9b-4b1d-a85d-bec92b3371b9",
+    "full_name": "Nolan Quinn",
+    "country": "Canada",
+    "constituency": "Stormont—Dundas—South Glengarry",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "24207f38-8855-4f1d-8804-7fd5c9e9ceb6",
+    "full_name": "Amarjot Sandhu",
+    "country": "Canada",
+    "constituency": "Brampton West",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "c95cfbbb-7372-489e-b551-7bb417e64480",
+    "full_name": "Catherine Fife",
+    "country": "Canada",
+    "constituency": "Waterloo",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "47d745d5-93e1-49c5-8841-fea40e8b3616",
+    "full_name": "Jonathan Tsao",
+    "country": "Canada",
+    "constituency": "Don Valley North",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "234b8e30-b1ce-4f78-9357-81aa90600b3e",
+    "full_name": "Kinga Surma",
+    "country": "Canada",
+    "constituency": "Etobicoke Centre",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "f5709fed-0cb4-460c-837a-1eb8951a5bb7",
+    "full_name": "Andrea Khanjin",
+    "country": "Canada",
+    "constituency": "Barrie—Innisfil",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "68f863a2-bc1b-4119-b811-06f406eea309",
+    "full_name": "Silvia Gualtieri",
+    "country": "Canada",
+    "constituency": "Mississauga East—Cooksville",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "019ff92b-cc18-4a1d-a616-661843a36b31",
+    "full_name": "Jennifer (Jennie) Stevens",
+    "country": "Canada",
+    "constituency": "St. Catharines",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "ea78b0e0-ebb4-438c-b670-cfe28fedf323",
+    "full_name": "Sam Oosterhoff",
+    "country": "Canada",
+    "constituency": "Niagara West",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "eaf91b73-86ea-44d0-8814-64cbad48dbc5",
+    "full_name": "Sandy Shaw",
+    "country": "Canada",
+    "constituency": "Hamilton West—Ancaster—Dundas",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "6fcedf08-7e4f-4528-ae35-9aaf6717dbb9",
+    "full_name": "Michael Parsa",
+    "country": "Canada",
+    "constituency": "Aurora—Oak Ridges—Richmond Hill",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "963858d0-1772-4395-bc08-0b83336b85da",
+    "full_name": "Natalia Kusendova-Bashta",
+    "country": "Canada",
+    "constituency": "Mississauga Centre",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "b8b7d1fd-9d3c-4216-811d-ab47257de3a3",
+    "full_name": "Rudy Cuzzetto",
+    "country": "Canada",
+    "constituency": "Mississauga—Lakeshore",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "88c62bd0-9ff4-43af-8851-d98546d17f2b",
+    "full_name": "Karen McCrimmon",
+    "country": "Canada",
+    "constituency": "Kanata—Carleton",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "040b6fde-1231-42b0-88ba-fa4ab6ac3f88",
+    "full_name": "Michael S. Kerzner",
+    "country": "Canada",
+    "constituency": "York Centre",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "95e7b3e9-0199-4eb8-a05b-c5025d019a54",
+    "full_name": "Dawn Gallagher Murphy",
+    "country": "Canada",
+    "constituency": "Newmarket—Aurora",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "e2e7620f-e694-4a31-875e-9de1378c8521",
+    "full_name": "Todd J. McCarthy",
+    "country": "Canada",
+    "constituency": "Durham",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "14140a20-5460-4fa5-afca-17a781cecdc1",
+    "full_name": "Jamie West",
+    "country": "Canada",
+    "constituency": "Sudbury",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "092f3fbf-6b1d-4e3f-9bb9-822e0feabfc2",
+    "full_name": "Victor Fedeli",
+    "country": "Canada",
+    "constituency": "Nipissing",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "fb4ea767-447f-4309-a3e7-b1993d273045",
+    "full_name": "Doug Downey",
+    "country": "Canada",
+    "constituency": "Barrie—Springwater—Oro-Medonte",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "db45e8c2-6ff2-4677-ad4c-70f513cf27a1",
+    "full_name": "Brian Saunderson",
+    "country": "Canada",
+    "constituency": "Simcoe—Grey",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "e6f5ffb6-a44f-4a66-b5f9-87e9167663e0",
+    "full_name": "Laurie Scott",
+    "country": "Canada",
+    "constituency": "Haliburton—Kawartha Lakes—Brock",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "817af23b-9db1-4f2f-91f9-a2b88f8c80ba",
+    "full_name": "Dave Smith",
+    "country": "Canada",
+    "constituency": "Peterborough—Kawartha",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "3a56bf2e-0224-43d4-af7e-929d3ab97cda",
+    "full_name": "Tyler Allsopp",
+    "country": "Canada",
+    "constituency": "Bay of Quinte",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "0ffeaef8-e972-4b07-b7fa-ba674a496a83",
+    "full_name": "Steve Clark",
+    "country": "Canada",
+    "constituency": "Leeds—Grenville—Thousand Islands and Rideau Lakes",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "92ae9f3e-b36e-4242-9048-ca7f819d5aba",
+    "full_name": "George Pirie",
+    "country": "Canada",
+    "constituency": "Timmins",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "abbb25b1-508e-45d1-b43b-7b25b34b2593",
+    "full_name": "Ted Hsu",
+    "country": "Canada",
+    "constituency": "Kingston and the Islands",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "18a80dd4-43d3-41a1-b908-0529e9398a1c",
+    "full_name": "Jennifer K. French",
+    "country": "Canada",
+    "constituency": "Oshawa",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "ed897481-7c0e-4b9c-8b4e-0506e9e470bd",
+    "full_name": "Lorne Coe",
+    "country": "Canada",
+    "constituency": "Whitby",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "64f91e4f-2281-4d71-9919-a9aeee512107",
+    "full_name": "Andrew Dowie",
+    "country": "Canada",
+    "constituency": "Windsor—Tecumseh",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "fb9a17db-c4a6-4f79-883c-a94d19f68854",
+    "full_name": "Lisa Gretzky",
+    "country": "Canada",
+    "constituency": "Windsor West",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "c4a468be-40ab-4549-9519-4271a6fa9466",
+    "full_name": "Anthony Leardi",
+    "country": "Canada",
+    "constituency": "Essex",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "d014d7cd-33a6-4e08-a19c-a85b756c40b1",
+    "full_name": "Guy Bourgouin",
+    "country": "Canada",
+    "constituency": "Mushkegowuk—James Bay",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "c4307108-e904-4b42-a9b9-e7bc02bcc533",
+    "full_name": "Logan Kanapathi",
+    "country": "Canada",
+    "constituency": "Markham—Thornhill",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "46d15b50-4b30-44cc-a5ca-73afd375a524",
+    "full_name": "Stephen Crawford",
+    "country": "Canada",
+    "constituency": "Oakville",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "5639fac1-df7a-476e-8ea9-5ae6155faf6d",
+    "full_name": "Sheref Sabawy",
+    "country": "Canada",
+    "constituency": "Mississauga—Erin Mills",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "db93eae4-ba23-43b0-8fb2-b8b834b21cf9",
+    "full_name": "Stan Cho",
+    "country": "Canada",
+    "constituency": "Willowdale",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "f93e2316-ccaf-4f0d-8ffc-0e6d33ba2f88",
+    "full_name": "Adil Shamji",
+    "country": "Canada",
+    "constituency": "Don Valley East",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "41a4d6e7-4fc1-4c19-9af0-fa0aefee4042",
+    "full_name": "Andrea Hazell",
+    "country": "Canada",
+    "constituency": "Scarborough—Guildwood",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "ce364bb8-e03e-41ab-aca8-e22da533e29b",
+    "full_name": "Ric Bresee",
+    "country": "Canada",
+    "constituency": "Hastings—Lennox and Addington",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "358b53d5-5580-4517-a9d5-0d44ed4996cc",
+    "full_name": "John Jordan",
+    "country": "Canada",
+    "constituency": "Lanark—Frontenac—Kingston",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "e04465d1-3df0-488e-ac03-f79277834be4",
+    "full_name": "User",
+    "country": "Canada",
+    "constituency": null,
+    "designation": null,
+    "role": "politician"
+  },
+  {
+    "id": "1b8af36e-be43-4ec9-b7dd-20a7c77fae80",
+    "full_name": "Peggy Sattler",
+    "country": "Canada",
+    "constituency": "London West",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "650617db-9928-42c2-bc8d-252107364a19",
+    "full_name": "David Smith",
+    "country": "Canada",
+    "constituency": "Scarborough Centre",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "7bfe77cc-bd7b-46e2-9de3-d36a6213642c",
+    "full_name": "Sylvia Jones",
+    "country": "Canada",
+    "constituency": "Dufferin—Caledon",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "69ae3f27-7e3e-41ce-a834-9c356ac0b625",
+    "full_name": "Stephanie Bowman",
+    "country": "Canada",
+    "constituency": "Don Valley West",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "061566de-84ee-4540-b078-ac314fbb6587",
+    "full_name": "Michelle Cooper",
+    "country": "Canada",
+    "constituency": "Eglinton—Lawrence",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "8a18d416-838b-484c-bfb1-c38dd8b73f85",
+    "full_name": "Jess Dixon",
+    "country": "Canada",
+    "constituency": "Kitchener South—Hespeler",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "ddf6018b-67c6-4ad5-b86c-56161d05f141",
+    "full_name": "Aislinn Clancy",
+    "country": "Canada",
+    "constituency": "Kitchener Centre",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "bcf4e71f-46a8-4c87-a2ad-94d85d37a91e",
+    "full_name": "Stephanie Smyth",
+    "country": "Canada",
+    "constituency": "Toronto—St. Paul's",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "c3498ca1-58a8-41f9-8b72-f2a615b633de",
+    "full_name": "Stephen Lecce",
+    "country": "Canada",
+    "constituency": "King—Vaughan",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "c3631f86-da1b-4461-ac10-faa1e8dd6613",
+    "full_name": "Daisy Wai",
+    "country": "Canada",
+    "constituency": "Richmond Hill",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "c576fed7-047d-4888-8a15-e11884808625",
+    "full_name": "Hardeep Singh Grewal",
+    "country": "Canada",
+    "constituency": "Brampton East",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "f25a7462-99d1-4739-90f2-60ca73125d3e",
+    "full_name": "Zee Hamid",
+    "country": "Canada",
+    "constituency": "Milton",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "f8702549-4758-47f6-8a97-44c81530a7f1",
+    "full_name": "Graham McGregor",
+    "country": "Canada",
+    "constituency": "Brampton North",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "e9153d30-4432-48ec-b6c8-4443b874925e",
+    "full_name": "Effie J. Triantafilopoulos",
+    "country": "Canada",
+    "constituency": "Oakville North—Burlington",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "f85aa7ce-f5ae-4f41-ad8a-cb404a69387c",
+    "full_name": "Natalie Pierre",
+    "country": "Canada",
+    "constituency": "Burlington",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "aade8709-3d4b-4d5b-8da6-8abe5b8c9c3e",
+    "full_name": "Joseph Racinsky",
+    "country": "Canada",
+    "constituency": "Wellington—Halton Hills",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "ff602730-696a-4f11-9410-c7f0bd74a4c7",
+    "full_name": "Mike Schreiner",
+    "country": "Canada",
+    "constituency": "Guelph",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "10da31d4-3f08-49f7-ae8e-ae4be27d42bc",
+    "full_name": "Trevor Jones",
+    "country": "Canada",
+    "constituency": "Chatham-Kent—Leamington",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "ed5da4b5-fb81-4cee-94c0-8c74fb81a0bd",
+    "full_name": "Peter Tabuns",
+    "country": "Canada",
+    "constituency": "Toronto—Danforth",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "c7ce7f00-25e7-407f-96ac-cdebb802ed2d",
+    "full_name": "Lee Fairclough",
+    "country": "Canada",
+    "constituency": "Etobicoke—Lakeshore",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "de8b1980-8ea6-46e6-853f-0ca293b44065",
+    "full_name": "Alexa Gilmour",
+    "country": "Canada",
+    "constituency": "Parkdale—High Park",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "9e8b47b1-b5a3-471d-837d-7071f9e61287",
+    "full_name": "Jessica Bell",
+    "country": "Canada",
+    "constituency": "University—Rosedale",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "514eff91-6cd3-4ddf-ae2d-ede3abacb1ee",
+    "full_name": "Kristyn Wong-Tam",
+    "country": "Canada",
+    "constituency": "Toronto Centre",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "f51c2761-0555-420c-aeef-660f6837ceb9",
+    "full_name": "Tyler Watt",
+    "country": "Canada",
+    "constituency": "Nepean",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "d3da1beb-03fd-4bac-b799-240c7c78d673",
+    "full_name": "Stéphane Sarrazin",
+    "country": "Canada",
+    "constituency": "Glengarry—Prescott—Russell",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "df3ba05d-869f-4479-b961-6509c583f9d5",
+    "full_name": "Donna Skelly",
+    "country": "Canada",
+    "constituency": "Flamborough—Glanbrook",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "009bb834-1943-488e-8540-eeea46e4ad15",
+    "full_name": "Wayne Gates",
+    "country": "Canada",
+    "constituency": "Niagara Falls",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "a22756eb-7042-4400-aeb5-b7899b0d9453",
+    "full_name": "Jeff Burch",
+    "country": "Canada",
+    "constituency": "Niagara Centre",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "5a00a973-51c9-4590-bfe8-d032363f3e07",
+    "full_name": "Will Bouma",
+    "country": "Canada",
+    "constituency": "Brantford—Brant",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "59766e70-627c-48cb-8a18-cc4f0fd0493b",
+    "full_name": "Brian Riddell",
+    "country": "Canada",
+    "constituency": "Cambridge",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "5ecf1db9-0d11-446c-a6d9-8262462cf3fe",
+    "full_name": "Nina Tangri",
+    "country": "Canada",
+    "constituency": "Mississauga—Streetsville",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "380ce961-e66c-4cbb-b147-63437cbf36e7",
+    "full_name": "Prabmeet Singh Sarkaria",
+    "country": "Canada",
+    "constituency": "Brampton South",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "e4565a55-e539-4bc5-a081-3aacc5ff8e30",
+    "full_name": "Paul Calandra",
+    "country": "Canada",
+    "constituency": "Markham—Stouffville",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "0b614c9b-9b87-47e3-b5b2-0e1b96e6bf49",
+    "full_name": "Monica Ciriello",
+    "country": "Canada",
+    "constituency": "Hamilton Mountain",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "963e7a71-aa2a-4487-8f4e-32414d33773d",
+    "full_name": "Robin Lennox",
+    "country": "Canada",
+    "constituency": "Hamilton Centre",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "a16c1420-8bc1-4804-a606-04f2dff662e6",
+    "full_name": "Neil Lumsden",
+    "country": "Canada",
+    "constituency": "Hamilton East—Stoney Creek",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "058599d6-3d58-412d-bd66-7de619948081",
+    "full_name": "France Gélinas",
+    "country": "Canada",
+    "constituency": "Nickel Belt",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "d85f32fc-6158-43f1-991b-75f21b2f1eb1",
+    "full_name": "Chris Scott",
+    "country": "Canada",
+    "constituency": "Sault Ste. Marie",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "68334bc9-52e3-48fc-b99a-c26dec9713f2",
+    "full_name": "Bill Rosenberg",
+    "country": "Canada",
+    "constituency": "Algoma—Manitoulin",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "1d5afce0-4eaa-40bc-bbf3-318cbf85bce4",
+    "full_name": "John Vanthof",
+    "country": "Canada",
+    "constituency": "Timiskaming—Cochrane",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "ad566c2f-9231-4dac-862e-f15991b8bac8",
+    "full_name": "Lucille Collard",
+    "country": "Canada",
+    "constituency": "Ottawa—Vanier",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "bc5d1063-d6cb-4e5d-ac89-1554ba5423bd",
+    "full_name": "Chandra Pasma",
+    "country": "Canada",
+    "constituency": "Ottawa West—Nepean",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "6a548b17-0eb6-4c07-8fd0-e8d7e9017587",
+    "full_name": "Stephen Blais",
+    "country": "Canada",
+    "constituency": "Orléans",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "b2cea388-eac5-4d2a-bb49-19277001e7eb",
+    "full_name": "Catherine McKenney",
+    "country": "Canada",
+    "constituency": "Ottawa Centre",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "12ed841a-877b-4c7d-984b-85716b2f2757",
+    "full_name": "Doug Ford",
+    "country": "Canada",
+    "constituency": "Etobicoke North",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "98dac907-76b6-4bd7-8423-2720ba1ae50d",
+    "full_name": "Mohamed Firin",
+    "country": "Canada",
+    "constituency": "York South—Weston",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "4d5a5f4c-5ef3-4904-9251-d7caf6a6597a",
+    "full_name": "Tom Rakocevic",
+    "country": "Canada",
+    "constituency": "Humber River—Black Creek",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "ca451783-decb-41cb-a70c-756059ef210b",
+    "full_name": "Paul Vickers",
+    "country": "Canada",
+    "constituency": "Bruce—Grey—Owen Sound",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "58297476-4a53-464a-a52b-de9fd284e495",
+    "full_name": "Matthew Rae",
+    "country": "Canada",
+    "constituency": "Perth—Wellington",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "a89daa95-e1d3-443d-be09-f675f9a44aae",
+    "full_name": "Laura Smith",
+    "country": "Canada",
+    "constituency": "Thornhill",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "4a07ef09-d320-40f0-bf81-0387eb45abbe",
+    "full_name": "Michael A. Tibollo",
+    "country": "Canada",
+    "constituency": "Vaughan—Woodbridge",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "94057281-68eb-4e9f-8e22-179ed17ec242",
+    "full_name": "Mike Harris",
+    "country": "Canada",
+    "constituency": "Kitchener—Conestoga",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "cf498fae-3a1c-4666-91c5-35aee885d94d",
+    "full_name": "Chris Glover",
+    "country": "Canada",
+    "constituency": "Spadina—Fort York",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "70a2c63d-e3de-4711-82ec-cd80c9bb6b26",
+    "full_name": "Marit Stiles",
+    "country": "Canada",
+    "constituency": "Davenport",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "500b4f78-881d-4594-a611-d33aedbf8097",
+    "full_name": "Ernie Hardeman",
+    "country": "Canada",
+    "constituency": "Oxford",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "8d0acce4-472d-4ac9-8d73-c1bc04dcf9b0",
+    "full_name": "Peter Bethlenfalvy",
+    "country": "Canada",
+    "constituency": "Pickering—Uxbridge",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "67575edc-5452-4887-93ae-6d9a4b3a7311",
+    "full_name": "Lisa M. Thompson",
+    "country": "Canada",
+    "constituency": "Huron—Bruce",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "e9254379-f0f5-40f3-9ced-cb337bf1dd45",
+    "full_name": "Rob Flack",
+    "country": "Canada",
+    "constituency": "Elgin—Middlesex—London",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "4fe7cddb-5e1b-4690-82b5-8d746fabeda8",
+    "full_name": "Graydon Smith",
+    "country": "Canada",
+    "constituency": "Parry Sound—Muskoka",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "e819bffd-9b70-41e4-822a-901d7cb31c1c",
+    "full_name": "Jill Dunlop",
+    "country": "Canada",
+    "constituency": "Simcoe North",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "60aaf44f-8876-49d0-8756-159b53470dc3",
+    "full_name": "Greg Rickford",
+    "country": "Canada",
+    "constituency": "Kenora—Rainy River",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "68dfb822-a1b4-452a-accb-f3675fb58843",
+    "full_name": "Kevin Holland",
+    "country": "Canada",
+    "constituency": "Thunder Bay—Atikokan",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "7e794a1b-bbb7-4bdf-96d8-1233a74928e7",
+    "full_name": "Billy Denault",
+    "country": "Canada",
+    "constituency": "Renfrew—Nipissing—Pembroke",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "2f00e05b-fcee-414f-9820-f14b31ffb5b2",
+    "full_name": "Steve Pinsonneault",
+    "country": "Canada",
+    "constituency": "Lambton—Kent—Middlesex",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "17a6ed84-5d48-4715-be3a-26daa65ceab9",
+    "full_name": "David Piccini",
+    "country": "Canada",
+    "constituency": "Northumberland—Peterborough South",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "323e57bb-d29f-4fd1-928c-12ff060615aa",
+    "full_name": "Sol Mamakwa",
+    "country": "Canada",
+    "constituency": "Kiiwetinoong",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "3c6115db-1beb-47db-8cec-c65f4d423580",
+    "full_name": "Lise Vaugeois",
+    "country": "Canada",
+    "constituency": "Thunder Bay—Superior North",
+    "designation": "MPP",
+    "role": "politician"
+  },
+  {
+    "id": "3b5c9173-e0c0-490f-8c35-cc75b4ad668f",
+    "full_name": "Reann Gasper",
+    "country": "Canada",
+    "constituency": "Abbotsford-Mission",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "2e0e5d8b-6094-408d-bc3a-341881b3f943",
+    "full_name": "Bruce Banman",
+    "country": "Canada",
+    "constituency": "Abbotsford South",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "fb7928c4-2f05-4954-ad7c-7690a9740a7d",
+    "full_name": "Korky Neufeld",
+    "country": "Canada",
+    "constituency": "Abbotsford West",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "21479b89-68ff-4f8c-88c6-a29d25d415b5",
+    "full_name": "Anne Kang",
+    "country": "Canada",
+    "constituency": "Burnaby Centre",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "da3bf125-d860-4456-b87b-414d0086b3b4",
+    "full_name": "Rohini Arora",
+    "country": "Canada",
+    "constituency": "Burnaby East",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "70081002-ed66-4dec-bc86-78aeaca12b23",
+    "full_name": "Raj Chouhan",
+    "country": "Canada",
+    "constituency": "Burnaby-New Westminster",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "90fd0874-3070-433b-8911-d57cc1e49536",
+    "full_name": "Janet Routledge",
+    "country": "Canada",
+    "constituency": "Burnaby North",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "5a9f95f3-385c-4964-800d-df5862024348",
+    "full_name": "Paul Choi",
+    "country": "Canada",
+    "constituency": "Burnaby South-Metrotown",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "f710d5cc-6961-465e-a4d3-638cd9f66a60",
+    "full_name": "Diana Gibson",
+    "country": "Canada",
+    "constituency": "Oak Bay-Gordon Head",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "931c8a63-73b1-4965-ad87-6c7e506cd147",
+    "full_name": "Amelia Boultbee",
+    "country": "Canada",
+    "constituency": "Penticton-Summerland",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "057bc598-0d25-4828-8f21-df110b04affc",
+    "full_name": "Mike Farnworth",
+    "country": "Canada",
+    "constituency": "Port Coquitlam",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "5e79d4c6-c5b7-4d9f-b04f-db52cce3b6d1",
+    "full_name": "Rick Glumac",
+    "country": "Canada",
+    "constituency": "Port Moody-Burquitlam",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "b4ed8797-1d84-447b-8061-b4cd55a9d56d",
+    "full_name": "Teresa Wat",
+    "country": "Canada",
+    "constituency": "Richmond-Bridgeport",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "a85419dd-4647-4bef-b972-ba5cf10bb91e",
+    "full_name": "Niki Sharma",
+    "country": "Canada",
+    "constituency": "Vancouver-Hastings",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "9fbb5739-1f46-42ee-81c2-bdfea3885213",
+    "full_name": "Mable Elmore",
+    "country": "Canada",
+    "constituency": "Vancouver-Kensington",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "df17388f-62cc-495e-8ff3-c483eb493ed5",
+    "full_name": "Sunita Dhir",
+    "country": "Canada",
+    "constituency": "Vancouver-Langara",
+    "designation": "MLA",
+    "role": "politician"
+  },
+  {
+    "id": "aeb93caf-9c05-466d-ae19-ec555358072e",
+    "full_name": "Christine Boyle",
+    "country": "Canada",
+    "constituency": "Vancouver-Little Mountain",
+    "designation": "MLA",
+    "role": "politician"
+  }
+]
