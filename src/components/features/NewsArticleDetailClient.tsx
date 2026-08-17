@@ -17,12 +17,15 @@ import {
   Check,
   Copy,
   MessageCircle,
+  Star,
+  ArrowRight,
 } from "lucide-react";
 import { Card, Badge } from "@/components/primitives";
 import { useTranslation } from "@/contexts/LanguageContext";
 import NewsArticleBody from "@/components/features/NewsArticleBody";
 import NewsComments from "@/components/features/NewsComments";
 import NewsArticleLinkedPoliticians from "@/components/features/NewsArticleLinkedPoliticians";
+import PoliticianInlineRating from "@/components/features/PoliticianInlineRating";
 import type { NewsArticle, NewsArticleContent } from "@/lib/services/news";
 import { stripEmoji } from "@/lib/utils/text";
 
@@ -54,6 +57,10 @@ export default function NewsArticleDetailClient({
   const [showTranslated, setShowTranslated] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
+  // Top "Review [Name]" CTA — expands the inline rating panel right here
+  // instead of navigating to their wall, when there's exactly one tagged
+  // politician to rate.
+  const [showTopInlineRating, setShowTopInlineRating] = useState(false);
 
   const handleToggleTranslate = async () => {
     if (translatedBody || translatedHeadline) {
@@ -207,34 +214,66 @@ export default function NewsArticleDetailClient({
     }
   };
 
+  // Politician data used by the top CTA button — resolved once here so both
+  // the button and its anchor/wall link share the same source of truth.
+  const linkedPoliticians = ((article as any).news_article_politicians?.filter((p: any) => p.profiles?.id) || []) as any[];
+  const primaryPolitician = linkedPoliticians[0]?.profiles;
+  const primaryWallUrl = primaryPolitician?.current_ghost_id ? `/wall/${primaryPolitician.current_ghost_id}` : null;
+  const rateCtaLabel =
+    linkedPoliticians.length === 1
+      ? `Review ${primaryPolitician?.full_name || "now"}`
+      : linkedPoliticians.length > 1
+        ? `Review ${linkedPoliticians.length} people in this article`
+        : null;
+  // Single politician -> straight to their wall. Multiple -> jump to the
+  // rating cards below (id set on NewsArticleLinkedPoliticians' wrapper).
+  const rateCtaHref = linkedPoliticians.length === 1 && primaryWallUrl ? primaryWallUrl : "#rate-politicians";
+
   return (
     <div className="w-full max-w-none pb-20 px-4 lg:px-8 space-y-6">
-      {/* Back & Share / Translate Control Bar */}
-      <div className="flex items-center justify-between gap-4 flex-wrap">
-        <Link
-          href="/news"
-          className="inline-flex items-center gap-2 text-xs font-bold text-text-muted hover:text-text-main transition-colors"
-        >
-          <ArrowLeft size={14} /> {t("newsPage.backToNews")}
-        </Link>
+      {/* Consolidated Nav + Article Meta Bar — back link, category, breaking
+          badge on the left; quick copy, share, translate on the right.
+          flex-nowrap keeps this pinned to a single row at every width;
+          labels drop to icon-only below `sm` instead of wrapping. */}
+      <div className="flex items-center justify-between gap-2 flex-nowrap">
+        <div className="flex items-center flex-nowrap gap-2 sm:gap-3 min-w-0">
+          <Link
+            href="/news"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-text-muted hover:text-text-main transition-colors shrink-0"
+          >
+            <ArrowLeft size={14} className="shrink-0" /> <span className="hidden sm:inline">{t("newsPage.backToNews")}</span>
+          </Link>
+          <span className="w-px h-4 bg-border-light/40 shrink-0 hidden sm:block" />
+          <Badge tone="primary" className="shrink-0">{article.category}</Badge>
+        </div>
 
-        <div className="flex items-center gap-2.5 relative">
+        <div className="flex items-center gap-1.5 sm:gap-2 relative flex-nowrap shrink-0">
+          {/* Quick Copy Pill */}
+          <button
+            onClick={handleCopyLink}
+            title="Quick Copy Link"
+            className="inline-flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all cursor-pointer shrink-0"
+          >
+            {copied ? <Check size={12} className="text-green-600 shrink-0" /> : <Copy size={12} className="shrink-0" />}
+            <span className="hidden sm:inline">{copied ? "Link Copied!" : "Quick Copy Link"}</span>
+          </button>
+
           {/* Share Button with Dropdown / Native Share */}
-          <div className="relative">
+          <div className="relative shrink-0">
             <button
               onClick={() => setShowShareMenu(!showShareMenu)}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-orange-500/40 bg-orange-500/10 hover:bg-orange-500/20 text-xs font-bold text-orange-600 transition-all cursor-pointer shadow-sm"
+              className="inline-flex items-center gap-1.5 px-2 sm:px-3.5 py-1.5 rounded-lg border border-orange-500/40 bg-orange-500/10 hover:bg-orange-500/20 text-xs font-bold text-orange-600 transition-all cursor-pointer shadow-sm shrink-0"
               title="Share news article"
             >
               {copied ? (
                 <>
-                  <Check size={14} className="text-green-600" />
-                  <span className="text-green-700">Link Copied!</span>
+                  <Check size={14} className="text-green-600 shrink-0" />
+                  <span className="hidden sm:inline text-green-700">Link Copied!</span>
                 </>
               ) : (
                 <>
-                  <Share2 size={14} />
-                  <span>Share</span>
+                  <Share2 size={14} className="shrink-0" />
+                  <span className="hidden sm:inline">Share</span>
                 </>
               )}
             </button>
@@ -294,17 +333,18 @@ export default function NewsArticleDetailClient({
           <button
             onClick={handleToggleTranslate}
             disabled={isTranslating}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-primary/30 bg-primary/10 hover:bg-primary/20 text-xs font-semibold text-primary transition-all cursor-pointer shadow-sm"
+            title={showTranslated ? t("newsPage.showingOriginal") : t("newsPage.translateArticle")}
+            className="inline-flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg border border-primary/30 bg-primary/10 hover:bg-primary/20 text-xs font-semibold text-primary transition-all cursor-pointer shadow-sm shrink-0"
           >
             {isTranslating ? (
               <>
-                <Loader2 size={14} className="animate-spin" />
-                <span>{t("newsPage.translatingArticle")}</span>
+                <Loader2 size={14} className="animate-spin shrink-0" />
+                <span className="hidden sm:inline">{t("newsPage.translatingArticle")}</span>
               </>
             ) : (
               <>
-                <Languages size={14} />
-                <span>
+                <Languages size={14} className="shrink-0" />
+                <span className="hidden sm:inline">
                   {showTranslated ? t("newsPage.showingOriginal") : t("newsPage.translateArticle")}
                 </span>
               </>
@@ -317,56 +357,90 @@ export default function NewsArticleDetailClient({
       <Card padding="md" className="space-y-6">
         {/* Article title & metadata bar */}
         <div className="space-y-3 pb-5 border-b border-border-light/20">
-          <div className="flex items-center justify-between gap-3 flex-wrap">
-            <div className="flex items-center flex-wrap gap-2">
-              <Badge tone="primary">{article.category}</Badge>
-              {isBreaking && (
-                <span className="inline-flex items-center gap-1 bg-danger/10 text-danger text-xs font-bold px-2.5 py-0.5 rounded-full">
-                  <Zap size={10} /> {t("newsPage.breaking")}
-                </span>
-              )}
-            </div>
-
-            {/* Direct Quick Share Pill */}
-            <button
-              onClick={handleCopyLink}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all cursor-pointer"
-            >
-              {copied ? <Check size={12} className="text-green-600" /> : <Copy size={12} />}
-              <span>{copied ? "Link Copied!" : "Quick Copy Link"}</span>
-            </button>
-          </div>
-
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-text-main leading-tight tracking-tight">
+          {/* Breaking badge lives here, not the compact top nav bar — that
+              row is already tight at mobile widths and the badge's text
+              would get squeezed until it visually overlapped the Quick
+              Copy/Share/Translate buttons. Full width here, own line, never
+              collides with anything. */}
+          {isBreaking && (
+            <span className="inline-flex items-center gap-1 bg-danger/10 text-danger text-xs font-bold px-2.5 py-1 rounded-full">
+              <Zap size={12} /> {t("newsPage.breaking")}
+            </span>
+          )}
+          <h1 className="text-[clamp(1.25rem,1rem+3vw,2.25rem)] font-extrabold text-text-main leading-tight tracking-tight text-balance">
             {activeHeadline}
           </h1>
 
           {activeSummary && (
-            <p className="text-base text-text-muted leading-relaxed font-medium">
+            <p className="text-[clamp(0.9375rem,0.85rem+0.5vw,1.125rem)] text-text-muted leading-relaxed font-medium text-pretty">
               {activeSummary}
             </p>
           )}
 
-          <div className="flex items-center flex-wrap gap-4 text-xs text-text-muted pt-1">
-            {content?.author?.name && (
-              <span className="flex items-center gap-1 font-semibold text-text-secondary">
-                <User size={12} /> {content.author.name}
-              </span>
-            )}
-            {displayDate && (
+          <div className="flex items-center flex-wrap gap-4 text-[clamp(0.6875rem,0.65rem+0.2vw,0.75rem)] text-text-muted pt-1 justify-between">
+            <div className="flex items-center flex-wrap gap-4">
+              {content?.author?.name && (
+                <span className="flex items-center gap-1 font-semibold text-text-secondary">
+                  <User size={12} /> {content.author.name}
+                </span>
+              )}
+              {displayDate && (
+                <span className="flex items-center gap-1">
+                  <Calendar size={12} /> {displayDate}
+                </span>
+              )}
               <span className="flex items-center gap-1">
-                <Calendar size={12} /> {displayDate}
+                <Clock size={12} /> {readingTime} {t("newsPage.minRead")}
               </span>
-            )}
-            <span className="flex items-center gap-1">
-              <Clock size={12} /> {readingTime} {t("newsPage.minRead")}
-            </span>
-            {article.country && (
-              <span className="flex items-center gap-1">
-                <Globe size={12} /> {article.province ? `${article.province}, ` : ""}{article.country.toUpperCase()}
-              </span>
+              {article.country && (
+                <span className="flex items-center gap-1">
+                  <Globe size={12} /> {article.province ? `${article.province}, ` : ""}{article.country.toUpperCase()}
+                </span>
+              )}
+            </div>
+
+            {/* Primary Rate CTA — a real button, not a label: solid fill,
+                full name. One tagged politician -> expands the inline rating
+                panel right here (no navigation). Multiple -> jumps to the
+                rating cards below, where each person already rates inline.
+                Label truncates instead of wrapping so the button stays one
+                tidy line at every viewport. */}
+            {rateCtaLabel && (
+              primaryWallUrl && linkedPoliticians.length === 1 ? (
+                <button
+                  type="button"
+                  onClick={() => setShowTopInlineRating((v) => !v)}
+                  aria-expanded={showTopInlineRating}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-[clamp(0.6875rem,0.65rem+0.2vw,0.8125rem)] font-bold shadow-sm hover:shadow-md transition-all max-w-full cursor-pointer"
+                >
+                  <Star size={13} className="fill-white shrink-0" />
+                  <span className="truncate">{rateCtaLabel}</span>
+                  <ArrowRight size={13} className={`shrink-0 transition-transform ${showTopInlineRating ? "rotate-90" : ""}`} />
+                </button>
+              ) : (
+                <Link
+                  href={rateCtaHref}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-[clamp(0.6875rem,0.65rem+0.2vw,0.8125rem)] font-bold shadow-sm hover:shadow-md transition-all max-w-full"
+                >
+                  <Star size={13} className="fill-white shrink-0" />
+                  <span className="truncate">{rateCtaLabel}</span>
+                  <ArrowRight size={13} className="shrink-0" />
+                </Link>
+              )
             )}
           </div>
+
+          {/* Inline rating panel for the single-politician case — expands
+              in place under the metadata row instead of the CTA navigating
+              away. Reuses the exact same widget as the wall page and the
+              rate-cards section below. */}
+          {showTopInlineRating && primaryPolitician?.id && (
+            <PoliticianInlineRating
+              politicianId={primaryPolitician.id}
+              politicianName={primaryPolitician.full_name || "This politician"}
+              onCancel={() => setShowTopInlineRating(false)}
+            />
+          )}
         </div>
 
         {/* Content Section: Text with Wrapped Visual Card on Right */}

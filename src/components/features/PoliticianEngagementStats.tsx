@@ -22,6 +22,7 @@ export default function PoliticianEngagementStats({
   commentCount,
   size = "xs",
   className = "",
+  onRateClick,
 }: {
   politicianId: string;
   politicianName: string;
@@ -31,6 +32,11 @@ export default function PoliticianEngagementStats({
   commentCount: number;
   size?: "xs" | "sm";
   className?: string;
+  // Opt-in: when provided, clicking the stats calls this instead of opening
+  // the built-in PoliticianRatingModal popup — lets a caller swap in an
+  // inline, on-page rating panel (see PoliticianInlineRating) without
+  // touching every other place this widget is already used.
+  onRateClick?: () => void;
 }) {
   const [open, setOpen] = useState(false);
   // Set only after a submit inside the modal, so the widget can reflect
@@ -59,7 +65,11 @@ export default function PoliticianEngagementStats({
           // navigation/selection.
           e.preventDefault();
           e.stopPropagation();
-          setOpen(true);
+          if (onRateClick) {
+            onRateClick();
+          } else {
+            setOpen(true);
+          }
         }}
         className={`inline-flex items-center gap-2.5 flex-wrap cursor-pointer hover:opacity-80 transition-opacity text-left ${className}`}
         title="View ratings and reviews"

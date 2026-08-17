@@ -43,6 +43,7 @@ import { reportContent, type ReportTargetType } from "@/lib/services/moderation"
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import { getWallClaimEligibility, requestCandidacyClaim, requestOfficeholderWallClaim } from "@/lib/services/elections";
 import PoliticianRatingModal from "./PoliticianRatingModal";
+import PoliticianInlineRating from "./PoliticianInlineRating";
 import {
   Card,
   Button,
@@ -154,6 +155,9 @@ export default function PoliticianWallClient({
 
   const [ratingSummary, setRatingSummary] = useState<{ avg: number; count: number }>({ avg: 0, count: 0 });
   const [showReviewsModal, setShowReviewsModal] = useState(false);
+  // Inline "leave a review" panel — expands under the header in place of
+  // opening the modal, so rating this wall's owner never navigates away.
+  const [showInlineRating, setShowInlineRating] = useState(false);
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -560,6 +564,16 @@ export default function PoliticianWallClient({
     return reportContent(supabase, targetType, targetId, abuseType);
   };
 
+  // Re-pulls just the avg/count pair after a rating is cast via the inline
+  // panel — the panel itself only knows the viewer's own vote, not the true
+  // new aggregate, so this is the source of truth for the header display.
+  const refreshRatingSummary = async () => {
+    if (!wallOwner?.id) return;
+    const { data: summaries } = await getPoliticianEngagementSummaries(supabase, [wallOwner.id]);
+    const summary = (summaries || [])[0] as { avg_rating: number; rating_count: number } | undefined;
+    setRatingSummary({ avg: summary?.avg_rating || 0, count: summary?.rating_count || 0 });
+  };
+
   if (loading) return <Spinner fullPage />;
 
   const isOwner = user && wallOwner?.id === user.id;
@@ -722,13 +736,36 @@ export default function PoliticianWallClient({
                 )}
                 <button
                   type="button"
-                  onClick={() => setShowReviewsModal(true)}
+                  onClick={() => setShowInlineRating((v) => !v)}
                   className="cursor-pointer hover:opacity-80 transition-opacity"
-                  title="View ratings and reviews"
+                  title="Rate this profile"
                 >
                   <StarRating value={ratingSummary.avg} count={ratingSummary.count} size="sm" />
                 </button>
+                {ratingSummary.count > 0 && (
+                  <>
+                    <span className="text-text-muted/40 text-xs">·</span>
+                    <button
+                      type="button"
+                      onClick={() => setShowReviewsModal(true)}
+                      className="text-xs font-semibold text-primary hover:underline cursor-pointer"
+                    >
+                      See reviews
+                    </button>
+                  </>
+                )}
               </div>
+
+              {/* Inline "leave a review" panel — expands in place instead of
+                  a popup, so rating never navigates away from the wall. */}
+              {showInlineRating && wallOwner?.id && (
+                <PoliticianInlineRating
+                  politicianId={wallOwner.id}
+                  politicianName={wallOwner.full_name || "This politician"}
+                  onSubmitted={refreshRatingSummary}
+                  onCancel={() => setShowInlineRating(false)}
+                />
+              )}
 
               {/* Contact + action icons share one row on mobile — below lg,
                   contact links are icon-only circular buttons (title attr

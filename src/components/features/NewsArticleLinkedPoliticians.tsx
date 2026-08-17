@@ -6,6 +6,7 @@ import { MessageSquare, ArrowRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import PoliticianEngagementStats from "@/components/features/PoliticianEngagementStats";
+import PoliticianInlineRating from "@/components/features/PoliticianInlineRating";
 
 interface LinkedPolitician {
   id: string;
@@ -34,13 +35,12 @@ interface NewsArticleLinkedPoliticiansProps {
 }
 
 // Rate-and-discuss strip shown below every news article for each office
-// holder tagged on it. Reuses the same rating stack as the rest of the app
-// (PoliticianEngagementStats -> PoliticianRatingModal -> upsert_politician_
-// rating RPC -> politician_ratings) rather than a bespoke star widget, so a
-// rating cast here is the exact same row the wall page, candidate chips, and
-// office-holder cards read back. Also links out to the politician's public
-// wall, turning a news read into a natural next-click toward more articles
-// and community sentiment about that person.
+// holder tagged on it. Clicking the stats expands PoliticianInlineRating in
+// place (upsert_politician_rating RPC -> politician_ratings) instead of a
+// modal or navigation, so a rating cast here is the exact same row the wall
+// page, candidate chips, and office-holder cards read back — just without
+// leaving the article. "View Wall" still links out to the politician's
+// public wall for the full discussion.
 export default function NewsArticleLinkedPoliticians({
   politicians,
   articleTitle,
@@ -48,6 +48,30 @@ export default function NewsArticleLinkedPoliticians({
   const supabase = createClient();
   const [engagement, setEngagement] = useState<EngagementMap>({});
   const [loading, setLoading] = useState(true);
+  // Which politician's inline "leave a review" panel is open — at most one
+  // at a time, expands in place under that row instead of a popup/nav.
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  const loadEngagementFor = async (ids: string[]) => {
+    if (ids.length === 0) return;
+    const { data: summaries } = await getPoliticianEngagementSummaries(supabase, ids);
+    const summaryById = new Map((summaries || []).map((s: any) => [s.politician_id, s]));
+    setEngagement((prev) => {
+      const next = { ...prev };
+      ids.forEach((id) => {
+        const summary = summaryById.get(id) as
+          | { supporter_count: number; avg_rating: number; rating_count: number; comment_count: number }
+          | undefined;
+        next[id] = {
+          supporterCount: summary?.supporter_count || 0,
+          avgRating: summary?.avg_rating || 0,
+          ratingCount: summary?.rating_count || 0,
+          commentCount: summary?.comment_count || 0,
+        };
+      });
+      return next;
+    });
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -57,26 +81,8 @@ export default function NewsArticleLinkedPoliticians({
         setLoading(false);
         return;
       }
-
-      const { data: summaries } = await getPoliticianEngagementSummaries(supabase, ids);
-
-      if (!isMounted) return;
-
-      const summaryById = new Map((summaries || []).map((s: any) => [s.politician_id, s]));
-      const map: EngagementMap = {};
-      ids.forEach((id) => {
-        const summary = summaryById.get(id) as
-          | { supporter_count: number; avg_rating: number; rating_count: number; comment_count: number }
-          | undefined;
-        map[id] = {
-          supporterCount: summary?.supporter_count || 0,
-          avgRating: summary?.avg_rating || 0,
-          ratingCount: summary?.rating_count || 0,
-          commentCount: summary?.comment_count || 0,
-        };
-      });
-      setEngagement(map);
-      setLoading(false);
+      await loadEngagementFor(ids);
+      if (isMounted) setLoading(false);
     }
     load();
     return () => {
@@ -98,68 +104,51 @@ export default function NewsArticleLinkedPoliticians({
   };
 
   return (
-    <div className="mt-12 pt-8 border-t border-slate-200">
-      <div className="mb-8">
-        <h3 className="text-xl font-bold text-slate-900 mb-2">
-          What do you think of the office holders mentioned in this article?
-        </h3>
-        <p className="text-slate-600">
-          Rate their performance or read what others think about them on their public walls.
-        </p>
-      </div>
+    <div id="rate-politicians" className="w-full space-y-2.5 scroll-mt-24">
+      {/* Header — title + value message together so the "why" rides along
+          with the "what" instead of eating its own paragraph. Tagline hides
+          below `sm` where every character of width is precious. */}
+      <h3 className="text-sm font-bold text-slate-900">
+        Rate the people mentioned in this article
+        <span className="font-normal text-slate-500 hidden sm:inline"> — helps other voters decide</span>
+      </h3>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* One compact row per politician: avatar, name + live stats, CTA —
+          all on a single line instead of a stacked multi-section card. */}
+      <div className="space-y-2">
         {politicians.map((politician) => {
           const avatarUrl = getAvatarUrl(politician);
           const wallUrl = politician.current_ghost_id ? `/wall/${politician.current_ghost_id}` : null;
           const stats = engagement[politician.id];
 
+          const isExpanded = expandedId === politician.id;
+
           return (
             <div
               key={politician.id}
-              className="border border-slate-200 rounded-lg overflow-hidden hover:border-orange-300 hover:shadow-md transition-all duration-200"
+              className="border border-slate-200 rounded-xl bg-white hover:border-orange-300 hover:shadow-sm transition-all"
             >
-              {/* Card Header with Politician Info */}
-              <div className="p-4 bg-gradient-to-r from-slate-50 to-orange-50">
-                <div className="flex items-start gap-4">
-                  {/* Avatar */}
-                  <div className="flex-shrink-0">
-                    {avatarUrl ? (
-                      <img
-                        src={avatarUrl}
-                        alt={politician.full_name}
-                        className="w-12 h-12 rounded-full object-cover border-2 border-orange-300"
-                      />
-                    ) : (
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 text-white flex items-center justify-center font-bold text-lg border-2 border-orange-300">
-                        {getInitial(politician.full_name)}
-                      </div>
-                    )}
+              <div className="flex items-center gap-3 p-3">
+                {/* Avatar */}
+                {avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt={politician.full_name}
+                    className="w-10 h-10 rounded-full object-cover border-2 border-orange-300 shrink-0"
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 text-white flex items-center justify-center font-bold border-2 border-orange-300 shrink-0">
+                    {getInitial(politician.full_name)}
                   </div>
+                )}
 
-                  {/* Info */}
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-slate-900 text-sm truncate">
-                      {politician.full_name}
-                    </h4>
-                    {politician.designation && (
-                      <p className="text-xs text-slate-600 truncate">
-                        {politician.designation}
-                        {politician.constituency && ` • ${politician.constituency}`}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Body - Actions */}
-              <div className="p-4 space-y-3">
-                {/* Live supporters · rating · comments — clicking opens the
-                    same PoliticianRatingModal (star + optional comment) used
-                    everywhere else in the app */}
-                <div className="p-3 bg-blue-50 rounded-lg">
+                {/* Name + live supporters · rating · comments — clicking the
+                    stats expands the inline rating panel below this row
+                    instead of a popup, so the page never navigates away. */}
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-sm text-slate-900 truncate">{politician.full_name}</p>
                   {loading || !stats ? (
-                    <div className="h-5 w-40 bg-blue-100 rounded animate-pulse" />
+                    <div className="h-4 w-32 bg-slate-100 rounded animate-pulse mt-1" />
                   ) : (
                     <PoliticianEngagementStats
                       politicianId={politician.id}
@@ -168,50 +157,40 @@ export default function NewsArticleLinkedPoliticians({
                       avgRating={stats.avgRating}
                       ratingCount={stats.ratingCount}
                       commentCount={stats.commentCount}
-                      size="sm"
+                      size="xs"
+                      onRateClick={() => setExpandedId(isExpanded ? null : politician.id)}
                     />
                   )}
                 </div>
 
-                {/* Wall Link */}
+                {/* Wall Link — for reading the full wall / discussion.
+                    Rating itself now happens inline via the stats above. */}
                 {wallUrl && (
-                  <Link href={wallUrl}>
-                    <button className="w-full flex items-center justify-between p-3 bg-gradient-to-r from-orange-50 to-orange-100 hover:from-orange-100 hover:to-orange-200 rounded-lg transition-all group">
-                      <div className="flex items-center gap-2">
-                        <MessageSquare className="w-4 h-4 text-orange-600" />
-                        <span className="text-sm font-medium text-orange-900">
-                          Read their wall
-                        </span>
-                      </div>
-                      <ArrowRight className="w-4 h-4 text-orange-600 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                  <Link
+                    href={wallUrl}
+                    title="View Wall"
+                    className="shrink-0 inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold rounded-lg transition-colors"
+                  >
+                    <MessageSquare size={13} className="shrink-0" />
+                    <span className="hidden sm:inline">View Wall</span>
+                    <ArrowRight size={13} className="shrink-0" />
                   </Link>
                 )}
               </div>
 
-              {/* Footer - Context */}
-              <div className="px-4 py-3 bg-slate-50 border-t border-slate-200">
-                <p className="text-xs text-slate-600">
-                  💬 See what constituents think about {politician.full_name.split(" ")[0]} based on this and other news
-                </p>
-              </div>
+              {isExpanded && (
+                <div className="px-3 pb-3">
+                  <PoliticianInlineRating
+                    politicianId={politician.id}
+                    politicianName={politician.full_name}
+                    onSubmitted={() => loadEngagementFor([politician.id])}
+                    onCancel={() => setExpandedId(null)}
+                  />
+                </div>
+              )}
             </div>
           );
         })}
-      </div>
-
-      {/* Call to Action */}
-      <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
-        <h4 className="font-semibold text-slate-900 mb-2">Want to discuss this article?</h4>
-        <p className="text-sm text-slate-700 mb-4">
-          Join the conversation on any politician's wall. Share your thoughts, ask questions, and see what others in your electoral district think about their performance.
-        </p>
-        <Link href="/news">
-          <button className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
-            Explore more civic news
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </Link>
       </div>
     </div>
   );
