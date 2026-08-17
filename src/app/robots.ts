@@ -43,6 +43,24 @@ export default function robots(): MetadataRoute.Robots {
         allow: ["/wall/", "/elections/", "/news/", "/about", "/feed/"],
         disallow: ["/admin/", "/profile/"],
       },
+      // OpenAI's answer engine crawler (powers ChatGPT web search & answers)
+      {
+        userAgent: "OAI-SearchBot",
+        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
+        disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/"],
+      },
+      // Apple News & Spotlight crawler
+      {
+        userAgent: "Applebot",
+        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
+        disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/"],
+      },
+      // Apple Intelligence web retrieval
+      {
+        userAgent: "Applebot-Extended",
+        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
+        disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/"],
+      },
     ],
     // news-sitemap.xml is the Google News-specific feed (rolling 48h
     // window, <news:news> tags) -- listed alongside the full archive

@@ -5,7 +5,19 @@ import type { Database } from "@/lib/supabase/types";
 // Refresh Supabase auth cookies before Server Components run. Otherwise an
 // expired access token can make the server render /admin as signed out while
 // the browser still has a refresh token, causing an auth redirect loop.
-export async function proxy(request: NextRequest) {
+//
+// Also enforce consistent domain: redirect www.* to non-www canonical domain
+// to avoid canonical link ping-pong loops.
+export async function middleware(request: NextRequest) {
+  const hostname = request.headers.get("host") || "";
+
+  // Redirect www.* to non-www domain for canonical consistency
+  if (hostname.startsWith("www.")) {
+    const url = request.nextUrl.clone();
+    url.host = hostname.replace(/^www\./, "");
+    return NextResponse.redirect(url, { status: 308 });
+  }
+
   let response = NextResponse.next({ request });
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL || "https://placeholder.supabase.co",

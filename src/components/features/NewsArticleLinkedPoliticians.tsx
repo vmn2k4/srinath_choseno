@@ -17,6 +17,8 @@ interface LinkedPolitician {
   politician_profiles?: {
     photo_url?: string | null;
     avatar_url?: string | null;
+    wall_slug?: string | null;
+    political_target_role?: string | null;
   } | null;
 }
 
@@ -118,7 +120,12 @@ export default function NewsArticleLinkedPoliticians({
       <div className="space-y-2">
         {politicians.map((politician) => {
           const avatarUrl = getAvatarUrl(politician);
-          const wallUrl = politician.current_ghost_id ? `/wall/${politician.current_ghost_id}` : null;
+          const wallSlug = politician.politician_profiles?.wall_slug;
+          const wallUrl = wallSlug
+            ? `/wall/${wallSlug}`
+            : politician.current_ghost_id
+              ? `/wall/${politician.current_ghost_id}`
+              : null;
           const stats = engagement[politician.id];
 
           const isExpanded = expandedId === politician.id;

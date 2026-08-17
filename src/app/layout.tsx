@@ -27,10 +27,7 @@ const bigShouldersDisplay = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: {
-    default: "Choseno — Rate Politicians, Track Candidates & Live Civic News",
-    template: "%s | Choseno",
-  },
+  title: "Choseno — Rate Politicians, Track Candidates & Live Civic News",
   description:
     "Empowering voters with verified civic journalism, real-time election coverage, and district-level politician accountability. Track your representatives and read authentic community reviews.",
   keywords: [

@@ -41,7 +41,8 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
   const article = data as unknown as NewsArticle;
   const content = article.content as NewsArticleContent;
-  const title = content?.seoTitle || article.headline;
+  const rawTitle = content?.seoTitle || article.headline;
+  const title = rawTitle.replace(/\s*\|\s*Choseno(?:\s+Civic\s+News)?$/i, "").trim();
   const description =
     content?.metaDescription ||
     article.summary ||
@@ -142,13 +143,11 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
         name: content?.author?.name || "Choseno Civic News Desk",
         url: SITE_URL,
       },
-      ...(article.hero_image_url && {
-        image: {
-          "@type": "ImageObject",
-          url: article.hero_image_url,
-          description: content?.heroImageAlt ?? article.headline,
-        },
-      }),
+      image: {
+        "@type": "ImageObject",
+        url: article.hero_image_url || ogImageUrl,
+        description: content?.heroImageAlt ?? article.headline,
+      },
       ...(content?.tags?.length && {
         keywords: content.tags.join(", "),
       }),

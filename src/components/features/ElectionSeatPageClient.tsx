@@ -400,9 +400,9 @@ export default function ElectionSeatPageClient({
               <Badge tone="amber" shape="pill" icon={<Vote size={12} />}>
                 {seat.elections?.status?.replace("_", " ") || "Active"}
               </Badge>
-              <h1 className="text-lg font-bold text-text-main tracking-tight truncate">
+              <h2 className="text-lg font-bold text-text-main tracking-tight truncate">
                 {seat.role_title}
-              </h1>
+              </h2>
               <span className="text-xs text-text-muted truncate">
                 {seat.elections?.name}
               </span>

@@ -7,6 +7,7 @@ const TABS = [
   { key: "boundaries", label: "Geospatial Boundaries", href: "/admin" },
   { key: "analytics", label: "Platform Analytics", href: "/admin/analytics" },
   { key: "traffic", label: "Google Analytics", href: "/admin/traffic" },
+  { key: "search-console", label: "Search Console", href: "/admin/search-console" },
   { key: "elections", label: "Elections & Seats", href: "/admin/elections" },
   { key: "election-admins", label: "Seat Administrators", href: "/admin/election-admins" },
   { key: "office-holders", label: "Office Holders", href: "/admin/office-holders" },

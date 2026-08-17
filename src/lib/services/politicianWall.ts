@@ -97,10 +97,16 @@ export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
          political_parties ( name )
        )
     `
-    )
-    .eq("current_ghost_id", ghostId);
+    );
+
+  if (isUuidString(ghostId)) {
+    query = query.or(`current_ghost_id.eq.${ghostId},id.eq.${ghostId}`);
+  } else {
+    query = query.eq("current_ghost_id", ghostId);
+  }
+
   if (!isDevEnvironment()) query = query.eq("is_test", false);
-  const res = await query.single();
+  const res = await query.maybeSingle();
   if (res.data) {
     res.data = await enrichProfileWithContactFallback(supabase, res.data);
   }

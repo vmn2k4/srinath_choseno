@@ -39,9 +39,7 @@ export async function generateMetadata({
 }: WallPageProps): Promise<Metadata> {
   const { ghostId } = await params;
   const { owner, activeCandidacy, partyName, rating } = await getProfileSummary(ghostId);
-  const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
   if (!owner) return { title: "Politician Wall | Choseno" };
-  if (wallSlug && ghostId !== wallSlug) redirect(`/wall/${wallSlug}`);
 
   const name = owner?.full_name || "Politician";
   const bio = owner?.politician_profiles?.bio || "";
@@ -54,6 +52,10 @@ export async function generateMetadata({
     (owner?.politician_profiles as any)?.target_boundary_name ||
     "";
   const electionYear = activeCandidacy?.election_seats?.elections?.election_date?.slice(0, 4) || "2026";
+
+  const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
+  const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
+  if (canonicalWallSlug && ghostId !== canonicalWallSlug) redirect(`/wall/${canonicalWallSlug}`);
 
   const partyLabel = partyName ? ` (${partyName})` : "";
   const locationLabel = boundaryName ? ` (${boundaryName})` : "";
@@ -73,7 +75,6 @@ export async function generateMetadata({
     ? `${ratingPrefix}View campaign stances, news, constituent ratings, and reviews for ${name} (${roleTitle}${locationLabel}).`
     : `${ratingPrefix}Read verified news, constituent approval ratings, and community reviews for ${name} on Choseno.`;
 
-  const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
   const canonicalUrl = `${BASE_URL}/wall/${canonicalWallSlug}`;
   const ogImageUrl = `${BASE_URL}/wall/${canonicalWallSlug}/opengraph-image`;
 
@@ -112,21 +113,22 @@ export default async function WallPage({ params }: WallPageProps) {
   const { owner, activeCandidacy, partyName, rating } = await getProfileSummary(ghostId);
   if (!owner?.current_ghost_id) notFound();
 
-  const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
-  if (wallSlug && ghostId !== wallSlug) redirect(`/wall/${wallSlug}`);
-
-  const [{ data: posts }, supportCountRes] = await Promise.all([
-    getWallPosts(supabase, owner.current_ghost_id),
-    owner?.id ? getSupporterCount(supabase, owner.id) : Promise.resolve({ count: 0 }),
-  ]);
-
   const name = owner?.full_name || "Politician";
   const bio = owner?.politician_profiles?.bio || "";
   const roleTitle =
     activeCandidacy?.election_seats?.role_title ||
     (owner?.politician_profiles as any)?.political_target_role ||
     "Representative";
+  const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
   const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
+
+  if (canonicalWallSlug && ghostId !== canonicalWallSlug) redirect(`/wall/${canonicalWallSlug}`);
+
+  const [{ data: posts }, supportCountRes] = await Promise.all([
+    getWallPosts(supabase, owner.current_ghost_id),
+    owner?.id ? getSupporterCount(supabase, owner.id) : Promise.resolve({ count: 0 }),
+  ]);
+
   const canonicalUrl = `${BASE_URL}/wall/${canonicalWallSlug}`;
 
   type PostRecord = {

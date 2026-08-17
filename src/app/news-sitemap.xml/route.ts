@@ -41,7 +41,7 @@ export async function GET() {
     .map((a) => {
       const loc = `${SITE_URL}/news/${a.slug}`;
       const pubDate = new Date(a.published_at as string).toISOString();
-      const title = escapeXml((a.content as { seoTitle?: string } | null)?.seoTitle || a.headline);
+      const title = escapeXml(a.headline);
       const keywords = escapeXml([a.category, a.country].filter(Boolean).join(", "));
 
       return `  <url>

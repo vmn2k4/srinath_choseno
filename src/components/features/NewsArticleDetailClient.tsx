@@ -28,6 +28,7 @@ import NewsArticleLinkedPoliticians from "@/components/features/NewsArticleLinke
 import PoliticianInlineRating from "@/components/features/PoliticianInlineRating";
 import type { NewsArticle, NewsArticleContent } from "@/lib/services/news";
 import { stripEmoji } from "@/lib/utils/text";
+import { SITE_URL } from "@/lib/constants/site";
 
 interface NewsArticleDetailClientProps {
   article: NewsArticle;
@@ -132,7 +133,7 @@ export default function NewsArticleDetailClient({
   
   // Always share the canonical production URL so social platforms (X, LinkedIn, WhatsApp)
   // fetch the real OpenGraph metadata and render the rich image card (localhost is not reachable by social crawlers)
-  const shareUrl = `https://www.choseno.com/news/${slug}`;
+  const shareUrl = `${SITE_URL}/news/${slug}`;
 
   // 1. Extract tagged politician names
   const taggedReps = ((article as any).news_article_politicians
@@ -218,7 +219,12 @@ export default function NewsArticleDetailClient({
   // the button and its anchor/wall link share the same source of truth.
   const linkedPoliticians = ((article as any).news_article_politicians?.filter((p: any) => p.profiles?.id) || []) as any[];
   const primaryPolitician = linkedPoliticians[0]?.profiles;
-  const primaryWallUrl = primaryPolitician?.current_ghost_id ? `/wall/${primaryPolitician.current_ghost_id}` : null;
+  const primaryWallSlug = primaryPolitician?.politician_profiles?.wall_slug;
+  const primaryWallUrl = primaryWallSlug
+    ? `/wall/${primaryWallSlug}`
+    : primaryPolitician?.current_ghost_id
+      ? `/wall/${primaryPolitician.current_ghost_id}`
+      : null;
   const rateCtaLabel =
     linkedPoliticians.length === 1
       ? `Review ${primaryPolitician?.full_name || "now"}`
