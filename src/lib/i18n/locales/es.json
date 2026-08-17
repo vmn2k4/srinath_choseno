@@ -293,7 +293,18 @@
     "orContinue": "o continuar con",
     "google": "Google",
     "noAccount": "¿No tienes una cuenta?",
-    "haveAccount": "¿Ya tienes una cuenta?"
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "forgotPasswordLink": "¿Olvidaste tu contraseña?",
+    "forgotPasswordTitle": "Restablecer tu Contraseña",
+    "forgotPasswordSubtitle": "Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.",
+    "forgotPasswordSent": "Si existe una cuenta con ese correo, un enlace de restablecimiento está en camino. Revisa tu bandeja de entrada.",
+    "sendResetLinkBtn": "Enviar Enlace",
+    "backToLogin": "Volver a Iniciar Sesión",
+    "resetPasswordTitle": "Establecer una Nueva Contraseña",
+    "resetPasswordSubtitle": "Elige una nueva contraseña para tu cuenta.",
+    "newPasswordLabel": "Nueva Contraseña",
+    "confirmPasswordLabel": "Confirmar Contraseña",
+    "updatePasswordBtn": "Actualizar Contraseña"
   },
   "post": {
     "translate": "Traducir",

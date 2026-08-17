@@ -21,6 +21,17 @@ export default async function AuthPage({
   // officeholder claim email's "merge with my existing account" link) —
   // independent of initialRole, which otherwise always defaults to Sign Up.
   const initialIntent = params.intent === "login" ? "login" : undefined;
+  // /auth/callback lands here with ?error=... when a magic-link/OAuth/
+  // recovery code fails to exchange (typically expired or already used) —
+  // most commonly reached via an old "forgot password" email link.
+  const initialError = typeof params.error === "string" ? params.error : undefined;
 
-  return <AuthPageClient initialRole={initialRole} nextPath={nextPath} initialIntent={initialIntent} />;
+  return (
+    <AuthPageClient
+      initialRole={initialRole}
+      nextPath={nextPath}
+      initialIntent={initialIntent}
+      initialError={initialError}
+    />
+  );
 }

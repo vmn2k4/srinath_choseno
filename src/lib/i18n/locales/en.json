@@ -293,7 +293,18 @@
     "orContinue": "or continue with",
     "google": "Google",
     "noAccount": "Don't have an account?",
-    "haveAccount": "Already have an account?"
+    "haveAccount": "Already have an account?",
+    "forgotPasswordLink": "Forgot password?",
+    "forgotPasswordTitle": "Reset Your Password",
+    "forgotPasswordSubtitle": "Enter your email and we'll send you a link to reset your password.",
+    "forgotPasswordSent": "If an account exists for that email, a reset link is on its way. Check your inbox.",
+    "sendResetLinkBtn": "Send Reset Link",
+    "backToLogin": "Back to Log In",
+    "resetPasswordTitle": "Set a New Password",
+    "resetPasswordSubtitle": "Choose a new password for your account.",
+    "newPasswordLabel": "New Password",
+    "confirmPasswordLabel": "Confirm Password",
+    "updatePasswordBtn": "Update Password"
   },
   "post": {
     "translate": "Translate",

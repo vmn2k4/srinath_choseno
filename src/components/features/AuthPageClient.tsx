@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTranslation } from "@/contexts/LanguageContext";
@@ -14,10 +15,12 @@ export default function AuthPageClient({
   initialRole,
   nextPath,
   initialIntent,
+  initialError,
 }: {
   initialRole?: "citizen" | "politician";
   nextPath?: string;
   initialIntent?: "login";
+  initialError?: string;
 }) {
   const { t } = useTranslation();
   const supabase = createClient();
@@ -26,11 +29,19 @@ export default function AuthPageClient({
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSignUp, setIsSignUp] = useState(initialIntent === "login" ? false : Boolean(initialRole));
-  const [message, setMessage] = useState<{ type: "error" | "success" | ""; text: string }>({
-    type: "",
-    text: "",
-  });
+  // An incoming ?error= (e.g. an expired "forgot password" link) always
+  // means the user needs to log in or retry, not sign up.
+  const [isSignUp, setIsSignUp] = useState(
+    initialIntent === "login" || initialError ? false : Boolean(initialRole)
+  );
+  const [message, setMessage] = useState<{ type: "error" | "success" | ""; text: string }>(
+    initialError
+      ? {
+          type: "error",
+          text: "This link has expired or was already used. Enter your email below to request a new one.",
+        }
+      : { type: "", text: "" }
+  );
 
   useEffect(() => {
     if (session && !authLoading && profile) {
@@ -174,6 +185,17 @@ export default function AuthPageClient({
               required
             />
           </div>
+
+          {!isSignUp && (
+            <div className="-mt-1 text-right">
+              <Link
+                href={`/auth/forgot-password${nextPath ? `?next=${encodeURIComponent(nextPath)}` : ""}`}
+                className="text-xs text-text-muted hover:text-text-main transition-colors font-semibold"
+              >
+                {t("auth.forgotPasswordLink")}
+              </Link>
+            </div>
+          )}
 
           <Button type="submit" size="lg" disabled={loading} className="mt-2 w-full font-bold">
             {loading ? "Processing..." : isSignUp ? t("auth.signUpBtn") : t("auth.signInBtn")}

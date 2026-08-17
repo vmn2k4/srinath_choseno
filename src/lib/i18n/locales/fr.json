@@ -293,7 +293,18 @@
     "orContinue": "ou continuer avec",
     "google": "Google",
     "noAccount": "Vous n'avez pas de compte ?",
-    "haveAccount": "Vous avez déjà un compte ?"
+    "haveAccount": "Vous avez déjà un compte ?",
+    "forgotPasswordLink": "Mot de passe oublié ?",
+    "forgotPasswordTitle": "Réinitialiser votre Mot de Passe",
+    "forgotPasswordSubtitle": "Entrez votre e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+    "forgotPasswordSent": "Si un compte existe pour cet e-mail, un lien de réinitialisation est en route. Vérifiez votre boîte de réception.",
+    "sendResetLinkBtn": "Envoyer le Lien",
+    "backToLogin": "Retour à la Connexion",
+    "resetPasswordTitle": "Définir un Nouveau Mot de Passe",
+    "resetPasswordSubtitle": "Choisissez un nouveau mot de passe pour votre compte.",
+    "newPasswordLabel": "Nouveau Mot de Passe",
+    "confirmPasswordLabel": "Confirmer le Mot de Passe",
+    "updatePasswordBtn": "Mettre à Jour le Mot de Passe"
   },
   "post": {
     "translate": "Traduire",

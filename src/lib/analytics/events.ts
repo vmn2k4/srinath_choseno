@@ -18,6 +18,14 @@ export function trackLogout() {
   sendEvent("logout");
 }
 
+export function trackPasswordResetRequested() {
+  sendEvent("password_reset_requested");
+}
+
+export function trackPasswordResetCompleted() {
+  sendEvent("password_reset_completed");
+}
+
 export function trackPostCreated(params: {
   hasImage: boolean;
   hasVideo: boolean;

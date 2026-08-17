@@ -34,6 +34,28 @@ export async function signOut(supabase: Client) {
   return supabase.auth.signOut();
 }
 
+// Sends the "reset your password" email. Supabase deliberately returns
+// success here even when no account exists for the email (unlike signUp's
+// identities-array tell) -- there's no equivalent leak to work around, so
+// the caller can always show the same "check your email" message.
+// redirectTo goes through the same /auth/callback code-exchange route as
+// signInWithGoogle/signUp above, with `next` pointed at the reset-password
+// page -- landing there leaves the user in an authenticated "recovery"
+// session, which is what updatePassword below requires.
+export async function resetPasswordForEmail(supabase: Client, email: string, nextPath?: string) {
+  const resetPasswordPath = `/auth/reset-password${nextPath ? `?next=${encodeURIComponent(nextPath)}` : ""}`;
+  const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(resetPasswordPath)}`;
+  return supabase.auth.resetPasswordForEmail(email, { redirectTo });
+}
+
+// Sets a new password for the currently-authenticated user. Used both for
+// the recovery-link flow (ResetPasswordClient, where the "current session"
+// is the short-lived recovery session created by the callback route) and
+// would work equally for a logged-in user changing their password directly.
+export async function updatePassword(supabase: Client, password: string) {
+  return supabase.auth.updateUser({ password });
+}
+
 export async function getSession(supabase: Client) {
   return supabase.auth.getSession();
 }
