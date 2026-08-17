@@ -14,7 +14,7 @@ import type { Database } from "@/lib/supabase/types";
 // going the other way ping-pongs against it forever. Canonicalization
 // belongs in exactly one place; keep it in the platform's Domain settings,
 // not here.
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL || "https://placeholder.supabase.co",
