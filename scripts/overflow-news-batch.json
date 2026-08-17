@@ -195,5 +195,85 @@
   {
     "rawCsv": "105,7.0,Minister Anita Anand Announces Targeted International Maritime Security Sanctions,International,\"ON, CA\",Anita Anand,2026-08-14T15:30:00+00:00,Evening News (5:00 PM - 7:00 PM EST),Minister Anita Anand Announces Targeted International Maritime Security Sanctions. Read more on Choseno.,High-stakes international policy in ON with significant civic impact.,https://www.choseno.com/news/anita-anand-announces-maritime-security-sanctions,https://www.choseno.com/wall/anita-anand",
     "archivedAt": "2026-08-17T18:36:05.712Z"
+  },
+  {
+    "rawRow": [
+      "101",
+      "7.0",
+      "Pierre Poilievre Demands Protection for Canadian Auto and Dairy Workers in U.S. Talks",
+      "National",
+      "ON, CA",
+      "Pierre Poilievre",
+      "2026-08-14T17:00:00+00:00",
+      "Evening News (5:00 PM - 7:00 PM EST)",
+      "Pierre Poilievre Demands Protection for Canadian Auto and Dairy Workers in U.S. Talks. Read more on Choseno.",
+      "High-stakes national policy in ON with significant civic impact.",
+      "https://www.choseno.com/news/pierre-poilievre-calls-for-uncompromising-us-trade-negotiation-stance",
+      "https://www.choseno.com/wall/pierre-poilievre"
+    ]
+  },
+  {
+    "rawRow": [
+      "102",
+      "7.0",
+      "Premier Danielle Smith Marks Full Clinical Launch of Arthur J.E. Child Cancer Centre",
+      "Healthcare",
+      "AB, CA",
+      "Danielle Smith",
+      "2026-08-14T16:30:00+00:00",
+      "Evening News (5:00 PM - 7:00 PM EST)",
+      "Premier Danielle Smith Marks Full Clinical Launch of Arthur J.E. Child Cancer Centre. Read more on Choseno.",
+      "High-stakes healthcare policy in AB with significant civic impact.",
+      "https://www.choseno.com/news/danielle-smith-calgary-cancer-centre-full-clinical-operations-2026",
+      "https://www.choseno.com/wall/danielle-smith"
+    ]
+  },
+  {
+    "rawRow": [
+      "103",
+      "7.0",
+      "Mayor Michelle Wu Unveils Boston Coastal Flood Barrier and Climate Resilience Plan",
+      "Environment",
+      "MA, US",
+      "Michelle Wu",
+      "2026-08-14T16:30:00+00:00",
+      "Evening News (5:00 PM - 7:00 PM EST)",
+      "Mayor Michelle Wu Unveils Boston Coastal Flood Barrier and Climate Resilience Plan. Read more on Choseno.",
+      "High-stakes environment policy in MA with significant civic impact.",
+      "https://www.choseno.com/news/mayor-michelle-wu-boston-coastal-flood-barrier-climate-resilience-2026",
+      "https://www.choseno.com/wall/michelle-wu"
+    ]
+  },
+  {
+    "rawRow": [
+      "104",
+      "7.0",
+      "Governor Josh Shapiro Directs Pennsylvania Advanced Manufacturing Workforce Grants",
+      "Economy",
+      "PA, US",
+      "Josh Shapiro",
+      "2026-08-14T16:00:00+00:00",
+      "Evening News (5:00 PM - 7:00 PM EST)",
+      "Governor Josh Shapiro Directs Pennsylvania Advanced Manufacturing Workforce Grants. Read more on Choseno.",
+      "High-stakes economy policy in PA with significant civic impact.",
+      "https://www.choseno.com/news/josh-shapiro-pennsylvania-advanced-manufacturing-grants-2026",
+      "https://www.choseno.com/wall/josh-shapiro"
+    ]
+  },
+  {
+    "rawRow": [
+      "105",
+      "7.0",
+      "Senator Mitch McConnell Secures $65M Federal Water Infrastructure Grant for Kentucky",
+      "Infrastructure",
+      "KY, US",
+      "Mitch McConnell",
+      "2026-08-14T16:00:00+00:00",
+      "Evening News (5:00 PM - 7:00 PM EST)",
+      "Senator Mitch McConnell Secures $65M Federal Water Infrastructure Grant for Kentucky. Read more on Choseno.",
+      "High-stakes infrastructure policy in KY with significant civic impact.",
+      "https://www.choseno.com/news/senator-mitch-mcconnell-kentucky-water-infrastructure-grant-2026",
+      "https://www.choseno.com/wall/mitch-mcconnell"
+    ]
   }
 ]
