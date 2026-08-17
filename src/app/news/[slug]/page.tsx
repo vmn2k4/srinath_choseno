@@ -11,6 +11,7 @@ import {
 } from "@/lib/services/news";
 import NewsArticleDetailClient from "@/components/features/NewsArticleDetailClient";
 import NewsArticleViewTracker from "@/components/analytics/NewsArticleViewTracker";
+import GoogleNewsShowcaseSync from "@/components/analytics/GoogleNewsShowcaseSync";
 import { SITE_URL, SITE_NAME } from "@/lib/constants/site";
 
 interface ArticlePageProps {
@@ -178,6 +179,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
       />
 
       <NewsArticleViewTracker slug={slug} category={article.category} />
+      <GoogleNewsShowcaseSync />
 
       <NewsArticleDetailClient
         article={article}
