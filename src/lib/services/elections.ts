@@ -88,6 +88,7 @@ export async function getOfficeHoldersByRoleTypeIds(supabase: Client, roleTypeId
        election_role_types(role_title, role_key)`
     )
     .in("election_role_type_id", roleTypeIds)
+    .eq("is_current", true)
     .order("full_name");
 }
 
@@ -164,13 +165,15 @@ export async function getOfficeHoldersForShape(supabase: Client, mapShapeId: num
     .from("office_holders")
     .select(
       `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
+       is_current, term_ended_at,
        contact_email, contact_phone, linked_profile_id,
        map_shapes(id, name, boundary_type, country),
        election_role_types(role_title, role_key, description),
        political_parties(name),
        profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url))`
     )
-    .eq("map_shape_id", Number(mapShapeId));
+    .eq("map_shape_id", Number(mapShapeId))
+    .eq("is_current", true);
 
   if (res.data) {
     res.data = await enrichOfficeHolders(supabase, res.data);
@@ -188,13 +191,15 @@ export async function getOfficeHoldersForShapes(
     .from("office_holders")
     .select(
       `id, map_shape_id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
+       is_current, term_ended_at,
        contact_email, contact_phone, linked_profile_id,
        map_shapes(id, name, boundary_type, country),
        election_role_types(role_title, role_key),
        political_parties(name),
        profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url, wall_slug))`
     )
-    .in("map_shape_id", ids);
+    .in("map_shape_id", ids)
+    .eq("is_current", true);
 
   if (res.data) {
     res.data = await enrichOfficeHolders(supabase, res.data);
@@ -210,12 +215,14 @@ export async function getFeaturedOfficeHolders(
     .from("office_holders")
     .select(
       `id, map_shape_id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
+       is_current, term_ended_at,
        contact_email, contact_phone, linked_profile_id,
        map_shapes!inner(id, name, boundary_type, country),
        election_role_types(role_title, role_key),
        political_parties(name),
        profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url))`
     )
+    .eq("is_current", true)
     .order("updated_at", { ascending: false })
     .limit(10);
 
@@ -239,6 +246,7 @@ export async function getOfficeHolderByRole(
     .from("office_holders")
     .select(
       `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
+       is_current, term_ended_at,
        contact_email, contact_phone, linked_profile_id,
        election_role_types(role_title, role_key),
        political_parties(name),
@@ -246,6 +254,7 @@ export async function getOfficeHolderByRole(
     )
     .eq("map_shape_id", Number(mapShapeId))
     .eq("election_role_type_id", electionRoleTypeId)
+    .eq("is_current", true)
     .maybeSingle();
 
   if (res.data) {
@@ -300,13 +309,68 @@ export async function upsertOfficeHolder(
         contact_email: fields.contactEmail ?? null,
         contact_phone: fields.contactPhone ?? null,
         linked_profile_id: fields.linkedProfileId ?? null,
+        is_current: true,
+        term_ended_at: null,
         updated_by: updatedBy,
         updated_at: new Date().toISOString(),
       } as any,
-      { onConflict: "map_shape_id,election_role_type_id" }
+      // Must match the live unique constraint exactly -- it's 3 columns
+      // (map_shape_id, election_role_type_id, full_name), not the 2-column
+      // one the original table definition declared; see the note in
+      // 20260816000000_office_holder_term_lifecycle.sql. The narrower
+      // 2-column target here would have made Postgres reject every upsert
+      // for a seat that already has any current row (councillors sharing a
+      // map_shape_id + role always do) with "no unique or exclusion
+      // constraint matching the ON CONFLICT specification".
+      { onConflict: "map_shape_id,election_role_type_id,full_name" }
     )
     .select()
     .single();
+}
+
+/**
+ * Ends one officeholder's term. Never delete or overwrite an outgoing
+ * holder's row in place -- office_holder_wall_claims.office_holder_id is ON
+ * DELETE RESTRICT (a claimed wall blocks a hard delete outright), and
+ * overwriting destroys their term history for no reason. Retiring keeps the
+ * row, its wall, and any claim intact; only the badge changes (current ->
+ * former) via the is_current check in politicianWall.ts / elections.ts reads.
+ */
+export async function retireOfficeHolder(
+  supabase: Client,
+  officeHolderId: string,
+  updatedBy: string,
+  termEndedAt?: string | null
+) {
+  return supabase
+    .from("office_holders")
+    .update({
+      is_current: false,
+      term_ended_at: termEndedAt ?? new Date().toISOString().slice(0, 10),
+      updated_by: updatedBy,
+      updated_at: new Date().toISOString(),
+    } as any)
+    .eq("id", officeHolderId)
+    .select()
+    .single();
+}
+
+/**
+ * The standard "an election happened" write: retire the outgoing holder and
+ * insert their successor as the new current holder for the same seat, in
+ * one call. For multi-seat roles (Councillor) this is called once per
+ * outgoing/incoming pair, not once per seat.
+ */
+export async function replaceOfficeHolder(
+  supabase: Client,
+  outgoingHolderId: string,
+  incoming: Parameters<typeof upsertOfficeHolder>[1],
+  updatedBy: string,
+  termEndedAt?: string | null
+) {
+  const retireRes = await retireOfficeHolder(supabase, outgoingHolderId, updatedBy, termEndedAt);
+  if (retireRes.error) return retireRes;
+  return upsertOfficeHolder(supabase, incoming, updatedBy);
 }
 
 export async function getOfficeHoldersByShapeAndRole(
@@ -318,12 +382,14 @@ export async function getOfficeHoldersByShapeAndRole(
     .from("office_holders")
     .select(
       `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
+       is_current, term_ended_at,
        contact_email, contact_phone, linked_profile_id,
        election_role_types(role_title, role_key),
        political_parties(name),
        profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id)`
     )
-    .eq("map_shape_id", Number(mapShapeId));
+    .eq("map_shape_id", Number(mapShapeId))
+    .eq("is_current", true);
 
   if (roleTitle) {
     query = query.eq("election_role_types.role_title", roleTitle);

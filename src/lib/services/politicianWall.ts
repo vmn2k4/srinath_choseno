@@ -13,15 +13,36 @@ async function enrichProfileWithContactFallback(supabase: Client, profileData: a
   const escapedName = profileData.full_name.replace(/"/g, '""');
   const { data: ohMatches } = await supabase
     .from("office_holders")
-    .select("contact_email, contact_phone, source_url, photo_url, holding_since")
+    .select("contact_email, contact_phone, source_url, photo_url, holding_since, is_current, term_ended_at")
     .or(`linked_profile_id.eq.${profileData.id},full_name.ilike."${escapedName}"`);
 
-  if (ohMatches && ohMatches.length > 0) {
+  // is_office_holder must mean "holds the seat right now" -- a row existing
+  // is not enough once rows can be retired in place (is_current = false) to
+  // preserve term history instead of being deleted. A former holder still
+  // has a match here (so their wall keeps using their own last-known contact
+  // info as a fallback below), just not the current-officeholder badge.
+  const currentMatches = (ohMatches || []).filter((m) => m.is_current);
+  const formerMatches = (ohMatches || []).filter((m) => !m.is_current);
+
+  if (currentMatches.length > 0) {
     pp.is_office_holder = true;
-    const emailMatch = ohMatches.find((m) => m.contact_email)?.contact_email;
-    const phoneMatch = ohMatches.find((m) => m.contact_phone)?.contact_phone;
-    const sourceMatch = ohMatches.find((m) => m.source_url)?.source_url;
-    const photoMatch = ohMatches.find((m) => m.photo_url)?.photo_url;
+  } else if (formerMatches.length > 0) {
+    pp.is_former_office_holder = true;
+    pp.term_ended_at = formerMatches
+      .map((m) => m.term_ended_at)
+      .filter(Boolean)
+      .sort()
+      .at(-1);
+  }
+
+  if (ohMatches && ohMatches.length > 0) {
+    // Prefer a current row's contact/photo details over a former one's when
+    // both exist (e.g. name collision across two different seats).
+    const preferred = currentMatches.length > 0 ? currentMatches : ohMatches;
+    const emailMatch = preferred.find((m) => m.contact_email)?.contact_email;
+    const phoneMatch = preferred.find((m) => m.contact_phone)?.contact_phone;
+    const sourceMatch = preferred.find((m) => m.source_url)?.source_url;
+    const photoMatch = preferred.find((m) => m.photo_url)?.photo_url;
 
     if (!pp.contact_email && emailMatch) pp.contact_email = emailMatch;
     if (!pp.contact_phone && phoneMatch) pp.contact_phone = phoneMatch;

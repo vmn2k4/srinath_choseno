@@ -210,6 +210,29 @@ INSERT INTO staging_muni_holders VALUES
 """ + join_tuples + """
 ;
 
+-- Retire outgoing holders BEFORE upserting: any currently-marked-current
+-- officeholder for a (map_shape_id, election_role_type_id) this fetch
+-- covers, whose name doesn't appear in this fetch's results for that same
+-- seat, lost their seat (or the API no longer lists them for it) and is
+-- retired rather than left dangling as a stale "current" row. This is what
+-- makes a re-run of this script actually pick up an election result instead
+-- of just adding the winner alongside whoever it fetched last time --
+-- see 20260816000000_office_holder_term_lifecycle.sql for why retire
+-- in place instead of delete/overwrite.
+UPDATE office_holders oh
+SET is_current = false, term_ended_at = CURRENT_DATE, updated_at = NOW()
+WHERE oh.is_current = true
+  AND EXISTS (
+    SELECT 1 FROM staging_muni_holders s
+    WHERE s.map_shape_id = oh.map_shape_id AND s.election_role_type_id = oh.election_role_type_id
+  )
+  AND NOT EXISTS (
+    SELECT 1 FROM staging_muni_holders s
+    WHERE s.map_shape_id = oh.map_shape_id
+      AND s.election_role_type_id = oh.election_role_type_id
+      AND s.full_name = oh.full_name
+  );
+
 INSERT INTO office_holders (
   map_shape_id,
   election_role_type_id,
@@ -221,6 +244,8 @@ INSERT INTO office_holders (
   holding_since,
   source_url,
   photo_url,
+  is_current,
+  term_ended_at,
   updated_at
 )
 SELECT DISTINCT ON (s.map_shape_id, s.election_role_type_id, s.full_name)
@@ -234,6 +259,8 @@ SELECT DISTINCT ON (s.map_shape_id, s.election_role_type_id, s.full_name)
   CASE WHEN s.holding_since IS NOT NULL AND s.holding_since != '' THEN s.holding_since::date ELSE NULL END,
   NULLIF(s.source_url, ''),
   NULLIF(s.photo_url, ''),
+  true,
+  NULL,
   NOW()
 FROM staging_muni_holders s
 LEFT JOIN political_parties pp ON pp.country = 'Canada' AND pp.name ILIKE s.political_party
@@ -245,6 +272,12 @@ ON CONFLICT (map_shape_id, election_role_type_id, full_name) DO UPDATE SET
   contact_phone = EXCLUDED.contact_phone,
   source_url = EXCLUDED.source_url,
   photo_url = EXCLUDED.photo_url,
+  -- A name that matches an existing (map_shape_id, election_role_type_id,
+  -- full_name) row is, by definition, still being reported for this seat --
+  -- re-affirm current in case this is the same person un-retiring (re-won
+  -- after a prior loss) rather than a continuously-serving incumbent.
+  is_current = true,
+  term_ended_at = NULL,
   updated_at = NOW();
 
 COMMIT;

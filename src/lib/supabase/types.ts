@@ -1456,11 +1456,13 @@ export type Database = {
           full_name: string
           holding_since: string | null
           id: string
+          is_current: boolean
           linked_profile_id: string | null
           map_shape_id: number
           photo_url: string | null
           political_party_id: number | null
           source_url: string | null
+          term_ended_at: string | null
           updated_at: string
           updated_by: string | null
         }
@@ -1472,11 +1474,13 @@ export type Database = {
           full_name: string
           holding_since?: string | null
           id?: string
+          is_current?: boolean
           linked_profile_id?: string | null
           map_shape_id: number
           photo_url?: string | null
           political_party_id?: number | null
           source_url?: string | null
+          term_ended_at?: string | null
           updated_at?: string
           updated_by?: string | null
         }
@@ -1488,11 +1492,13 @@ export type Database = {
           full_name?: string
           holding_since?: string | null
           id?: string
+          is_current?: boolean
           linked_profile_id?: string | null
           map_shape_id?: number
           photo_url?: string | null
           political_party_id?: number | null
           source_url?: string | null
+          term_ended_at?: string | null
           updated_at?: string
           updated_by?: string | null
         }

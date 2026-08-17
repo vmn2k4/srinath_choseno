@@ -123,7 +123,7 @@ function NodeCard({ node, emphasized }: { node: BranchHolderNode; emphasized?: b
 
       {node.ghost_id && (
         <div className="pt-1.5 mt-0.5 border-t border-border-light/30">
-          <Button as={Link} href={`/wall/${slugFor(node)}`} variant="primary" size="sm" className="w-full text-[11px] px-3 py-1.5">
+          <Button as={Link} href={`/wall/${node.ghost_id}/${slugFor(node)}`} variant="primary" size="sm" className="w-full text-[11px] px-3 py-1.5">
             <UserCheck size={12} />
             View Wall
             <ArrowRight size={11} />

@@ -96,6 +96,13 @@ interface WallOwnerRecord {
     // (badge text/contact fallback) — claim eligibility is a separate check,
     // see claimEligibility/get_wall_claim_eligibility() below.
     is_office_holder?: boolean;
+    // Set alongside is_office_holder when the only office_holders match(es)
+    // are retired (is_current = false) — e.g. lost re-election. Takes
+    // priority over the raw holding_since fallback below so a retired
+    // officeholder's stale holding_since (set back when they were claimed)
+    // doesn't make the badge read as still-current.
+    is_former_office_holder?: boolean;
+    term_ended_at?: string | null;
   } | null;
 }
 
@@ -693,9 +700,11 @@ export default function PoliticianWallClient({
                 <span className="truncate">{wallOwner?.full_name || "Politician Wall"}</span>
                 {wallOwner?.politician_profiles?.political_target_role && (
                   <Badge tone="primary" className="shrink-0">
-                    {wallOwner.politician_profiles.is_office_holder || wallOwner.politician_profiles.holding_since
-                      ? wallOwner.politician_profiles.political_target_role
-                      : `Aspiring ${wallOwner.politician_profiles.political_target_role}`}
+                    {wallOwner.politician_profiles.is_former_office_holder
+                      ? `Former ${wallOwner.politician_profiles.political_target_role}`
+                      : wallOwner.politician_profiles.is_office_holder || wallOwner.politician_profiles.holding_since
+                        ? wallOwner.politician_profiles.political_target_role
+                        : `Aspiring ${wallOwner.politician_profiles.political_target_role}`}
                   </Badge>
                 )}
               </h1>
