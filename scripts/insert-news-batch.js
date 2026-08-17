@@ -24,37 +24,100 @@ envFile.split('\n').forEach(line => {
 
 // ── ADD YOUR ARTICLES HERE ──────────────────────────────────────────────────
 const articles = [
-  /* Example Article:
   {
-    slug: 'example-article-slug',
-    headline: 'Example News Headline',
-    summary: 'Short summary for feed cards.',
-    category: 'Policy', // General | Policy | Local | National | International | Economy | Healthcare | Education | Environment | Technology | Infrastructure | Public Safety | Culture | Elections | Opinion
+    slug: 'dominic-leblanc-washington-urgent-canada-us-tariff-talks-2026-08-16',
+    headline: 'Trade Minister Dominic LeBlanc Leads High-Stakes Washington Talks to Avert Looming U.S. Tariffs',
+    summary: 'Minister Dominic LeBlanc and Chief Negotiator Janice Charette hold weekend sessions in Washington to resolve cross-border dairy, alcohol, and trade friction ahead of an August 19 tariff deadline.',
+    category: 'Economy',
     country: 'CA',
-    province: 'BC',
-    status: 'published', // 'published' | 'draft' | 'archived'
-    eventDate: '2026-08-14T15:00:00Z',
-    published_at: '2026-08-14T15:00:00Z',
-    impactArea: 'local', // 'local' | 'state' | 'country' | 'international'
-    latitude: 49.1913,
-    longitude: -122.8490,
-    body: 'CITY, Prov. — Opening dateline and content...\n\n## Subhead\n\nMore details...',
-    seoTitle: 'SEO Title Under 60 Chars',
-    metaDescription: 'Meta Description Under 160 Chars',
-    tags: ['Surrey', 'Policy'],
+    province: 'ON',
+    status: 'published',
+    eventDate: '2026-08-16T17:30:00Z',
+    published_at: '2026-08-16T18:45:00Z',
+    impactArea: 'international',
+    latitude: 45.4215,
+    longitude: -75.6972,
+    body: 'OTTAWA, Ont. — Federal Minister of Public Safety, Democratic Institutions and Intergovernmental Affairs Dominic LeBlanc and Chief Trade Negotiator Janice Charette have concluded weekend ministerial sessions in Washington, D.C., working to resolve bilateral trade disputes before impending U.S. tariff actions take effect on August 19.\n\n## The $28 Billion Trade Dispute & Sectoral Mechanics\n\nThe emergency negotiations center on potential 50% U.S. tariff duties that could impact up to $28 billion in annual Canadian export volume. U.S. Trade Representative Jamieson Greer and American negotiators have raised key areas of contention:\n\n* **Supply-Managed Agricultural Quotas**: Tariff rate quota administration on poultry and dairy imports into the Canadian market.\n* **Provincial Alcohol Retail Rules**: Direct access for American spirit distillers and wine producers across provincial liquor boards.\n* **Automotive Origin Requirements**: Supply chain rules governing North American critical minerals and electric vehicle battery components.\n\n\"Canada and the United States share the most integrated and mutually beneficial economic partnership in the world,\" Minister LeBlanc said following discussions at the Canadian Embassy in Washington. \"We remain firmly focused on defending Canadian workers, businesses, and supply chains while seeking a fair, comprehensive agreement.\"\n\n## Economic Stakes for Constituents and Exporters\n\nCross-border supply chain groups estimate that sudden tariff barriers would cause severe disruptions for manufacturing facilities across Southern Ontario and agricultural exporters throughout the Prairies and Quebec. In the United States, agricultural leaders in Midwestern states have also raised concerns regarding reciprocal retaliatory duties on corn, pork, and soybean exports to Canadian consumers.\n\n## Next Steps and Accountability Timelines\n\nNegotiators will continue technical roundtables in Washington through August 18. Minister LeBlanc is scheduled to brief the Cabinet Committee on Canada-U.S. Relations on Monday morning, with parliamentary opposition parties requesting an emergency briefing before the House of Commons Standing Committee on International Trade.',
+    seoTitle: 'Dominic LeBlanc Leads Canada-US Trade Talks 2026 | Choseno',
+    metaDescription: 'Trade Minister Dominic LeBlanc holds emergency Washington talks to resolve $28B tariff dispute before August 19 deadline.',
+    tags: [
+      'Dominic LeBlanc',
+      'Canada-US Trade',
+      'Tariffs',
+      'Economy',
+      'Ottawa',
+      'Federal Politics'
+    ],
+    tweet: 'Trade Minister Dominic LeBlanc leads high-stakes weekend talks in Washington to avert potential 50% U.S. tariffs on $28B in Canadian exports ahead of the August 19 deadline.',
     breakingNews: false,
     author: {
       name: 'Choseno Civic News Desk',
-      bio: 'Provincial and municipal political affairs reporting'
+      bio: 'Provincial, federal and municipal political affairs reporting'
     },
     sources: [
-      { label: 'Source Name', url: 'https://example.com/news-story' }
+      {
+        label: 'Global Affairs Canada Official Statement',
+        url: 'https://www.international.gc.ca/gac-amc/news-nouvelles/2026-08-16-canada-us-trade-negotiations.aspx'
+      },
+      {
+        label: 'Office of the United States Trade Representative',
+        url: 'https://ustr.gov/about-us/policy-offices/press-office/press-releases/2026/august/bilateral-canada-trade-dialogue'
+      }
     ],
     taggedPoliticianIds: [
-      'uuid-of-politician-profile-1'
+      '885e12f5-33d9-42a1-8dc9-b276069da88d'
+    ],
+    taggedPoliticians: [
+      'Dominic LeBlanc'
+    ]
+  },
+  {
+    slug: 'pierre-poilievre-calls-for-fuel-excise-tax-relief-extension-2026-08-16',
+    headline: 'Conservative Leader Pierre Poilievre Urges Extension of Federal Fuel Excise Tax Suspension',
+    summary: 'Opposition Leader Pierre Poilievre presses the federal government to extend relief on federal fuel taxes ahead of the fall budget, citing persistent cost-of-living pressures for working families.',
+    category: 'Economy',
+    country: 'CA',
+    province: 'ON',
+    status: 'published',
+    eventDate: '2026-08-16T16:45:00Z',
+    published_at: '2026-08-16T18:45:00Z',
+    impactArea: 'country',
+    latitude: 45.4215,
+    longitude: -75.6972,
+    body: 'OTTAWA, Ont. — Official Opposition Leader Pierre Poilievre has called on the federal government to extend the temporary suspension of federal excise taxes on gasoline and diesel, warning that impending tax reinstatements would increase consumer freight and grocery distribution costs across Canada.\n\n## The Fiscal Debate and Consumer Numbers\n\nThe federal fuel excise tax applies a flat charge of 10 cents per litre on gasoline and 4 cents per litre on diesel fuel. According to Conservative economic policy analysts:\n\n* **Household Savings**: The average commuting household saves an estimated $28 to $42 per month during active fuel excise relief periods.\n* **Supply Chain Impacts**: Commercial transport operators estimate that extending the fuel tax pause lowers long-haul freight shipping rates by approximately 3.8% across interprovincial transit corridors.\n\n\"Canadian families are already stretched to their limits by high mortgage interest rates and grocery inflation,\" Poilievre stated at a press conference in Ottawa. \"Reimposing federal fuel taxes at this moment will only drive up shipping costs on every essential item that arrives on store shelves.\"\n\n## Government Response and Budgetary Context\n\nDepartment of Finance officials have emphasized that temporary tax measures must be balanced against ongoing infrastructure and green transit investments funded through dedicated fuel excise revenue transfers to municipalities. Deputy Prime Minister Chrystia Freeland previously noted that targeted fiscal support will remain the priority as the federal government prepares its upcoming fall economic statement.\n\n## Next Steps in Parliament\n\nThe Conservative caucus confirmed it will introduce an opposition day motion demanding a comprehensive review of federal energy taxation when the House of Commons resumes sitting in September.',
+    seoTitle: 'Pierre Poilievre Pushes Fuel Tax Relief Extension | Choseno',
+    metaDescription: 'Conservative Leader Pierre Poilievre calls on the federal government to extend the fuel excise tax suspension to ease cost of living.',
+    tags: [
+      'Pierre Poilievre',
+      'Conservatives',
+      'Fuel Tax',
+      'Economy',
+      'Ottawa',
+      'Cost of Living'
+    ],
+    tweet: 'Conservative Leader Pierre Poilievre calls on the federal government to extend the fuel excise tax pause to protect family budgets and prevent shipping cost hikes.',
+    breakingNews: false,
+    author: {
+      name: 'Choseno Civic News Desk',
+      bio: 'Provincial, federal and municipal political affairs reporting'
+    },
+    sources: [
+      {
+        label: 'Conservative Party of Canada Media Room',
+        url: 'https://www.conservative.ca/poilievre-calls-for-fuel-tax-relief-extension-2026'
+      },
+      {
+        label: 'Parliament of Canada - House of Commons Notices',
+        url: 'https://www.ourcommons.ca/documentviewer/en/44-1/house/sitting-210/order-notice/page-4'
+      }
+    ],
+    taggedPoliticianIds: [
+      'a0d8ee32-8927-48bc-9a98-fee27dd02d51'
+    ],
+    taggedPoliticians: [
+      'Pierre Poilievre'
     ]
   }
-  */
 ];
 
 // ── DEDUPLICATION HELPER ───────────────────────────────────────────────────
@@ -156,6 +219,7 @@ async function run() {
         seoTitle: art.seoTitle,
         metaDescription: art.metaDescription,
         tags: art.tags || [],
+        tweet: art.tweet || undefined,
         breakingNews: Boolean(art.breakingNews),
         author: art.author,
         sources: art.sources || []

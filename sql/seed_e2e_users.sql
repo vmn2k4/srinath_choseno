@@ -1,11 +1,12 @@
 -- E2E test fixture users for the Playwright suite in e2e/.
 -- Run manually against the dev Supabase project (never production):
---   PGPASSWORD='<db password>' psql "postgresql://postgres@db.<project-ref>.supabase.co:5432/postgres" -f sql/seed_e2e_users.sql
+--   PGPASSWORD='<db password>' psql "postgresql://postgres@db.<project-ref>.supabase.co:5432/postgres" \
+--     -v e2e_password="<your_test_password>" -f sql/seed_e2e_users.sql
 -- Idempotent — safe to re-run. Mirrors the auth.users insert pattern from seed_admin.sql,
 -- but also fills the token columns with '' (not NULL) to avoid a known GoTrue quirk where
 -- manually-inserted users with NULL token columns can fail admin/password-grant operations.
 --
--- All fixture accounts share the password: ChosenoE2E123!
+-- Password is passed via the -v e2e_password parameter (for security, never commit it).
 -- Emails use the +e2e tag so they're easy to find/purge later:
 --   e2e.admin@choseno.test        -- role: admin (site admin)
 --   e2e.politician1@choseno.test  -- role: politician, onboarded (self-nominates a seat)
@@ -17,7 +18,7 @@ DO $$
 DECLARE
   v_id uuid;
   v_email text;
-  v_password text := 'ChosenoE2E123!';
+  v_password text := :'e2e_password';
   fixtures text[] := ARRAY[
     'e2e.admin@choseno.test',
     'e2e.politician1@choseno.test',

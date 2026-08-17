@@ -22,7 +22,7 @@ export default function StoryViewerModal({
   const isVideo = type ? type === "video" : isLikelyVideoUrl(normalized);
 
   return (
-    <Modal overlayClassName="bg-black/95 backdrop-blur-md" zIndexClassName="z-[100]" onOverlayClick={onClose}>
+    <Modal overlayClassName="bg-black/95 backdrop-blur-md" zIndexClassName="z-modal" onOverlayClick={onClose}>
       <div className="relative flex items-center justify-center w-full">
         <button
           onClick={onClose}

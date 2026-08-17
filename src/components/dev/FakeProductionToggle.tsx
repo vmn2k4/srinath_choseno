@@ -34,7 +34,7 @@ export default function FakeProductionToggle() {
     <button
       onClick={toggle}
       title={active ? "Previewing production — click to go back to dev" : "Click to preview production (hides test content)"}
-      className={`fixed bottom-4 right-4 z-[9999] flex items-center gap-2 rounded-full px-4 py-2.5 text-xs font-bold shadow-lg transition-colors cursor-pointer ${
+      className={`fixed bottom-4 right-4 z-debug flex items-center gap-2 rounded-full px-4 py-2.5 text-xs font-bold shadow-lg transition-colors cursor-pointer ${
         active
           ? "bg-warning text-text-on-primary hover:bg-warning-light animate-pulse"
           : "bg-surface border border-border-light text-text-muted hover:text-text-main hover:bg-surface-hover"

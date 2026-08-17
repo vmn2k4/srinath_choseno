@@ -3,7 +3,12 @@ import { Page, expect } from "@playwright/test";
 // Fixture accounts — provisioned by sql/seed_e2e_users.sql directly in the dev
 // Supabase project (bypasses signup/onboarding UI so specs start from a known state).
 // Run the seed script once before the suite: see e2e/README.md.
-export const FIXTURE_PASSWORD = "ChosenoE2E123!";
+// Password is loaded from E2E_TEST_PASSWORD env var (set in .env.local).
+export const FIXTURE_PASSWORD = process.env.E2E_TEST_PASSWORD || "";
+
+if (!process.env.E2E_TEST_PASSWORD) {
+  throw new Error("E2E_TEST_PASSWORD env var is not set. Check your .env.local file.");
+}
 
 export const FIXTURES = {
   admin: { email: "e2e.admin@choseno.test", label: "E2E Admin" },

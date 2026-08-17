@@ -11,7 +11,7 @@ import { useAuth } from "@/contexts/AuthContext";
 // accounts directly in the database (no signup/onboarding UI needed to get a usable persona
 // of each role). Not meant to ship: never import this from anything that runs in production.
 
-const DEBUG_PASSWORD = "ChosenoDebug123!";
+const DEBUG_PASSWORD = process.env.NEXT_PUBLIC_DEBUG_PASSWORD || "";
 
 const PERSONAS = [
   { email: "debug.candidate1@choseno.test", label: "Priya Nakamura", role: "Candidate" },
@@ -52,7 +52,7 @@ export default function DebugUserSwitcher() {
   };
 
   return (
-    <div className="fixed bottom-4 left-4 z-[9999] font-sans">
+    <div className="fixed bottom-4 left-4 z-debug font-sans">
       {open && (
         <div className="mb-2 w-72 rounded-2xl border border-border-light bg-surface shadow-2xl overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 border-b border-border-light bg-surface-hover">

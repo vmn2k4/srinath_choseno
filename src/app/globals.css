@@ -78,6 +78,17 @@
   --color-overlay: rgba(0, 0, 0, 0.25);
   --color-overlay-heavy: rgba(0, 0, 0, 0.95);
 
+  /* Z-index stacking layers — physical metaphor matching elevation levels */
+  --z-base: 0;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-fixed: 30;
+  --z-modal-backdrop: 40;
+  --z-modal: 50;
+  --z-popover: 60;
+  --z-tooltip: 70;
+  --z-debug: 9999;
+
   /* Specular highlight for the top edge of a glass surface -- simulates light
      catching the physical edge of the glass. Derived from --color-primary
      (not plain white) so it reads as a visible fleck in every theme instead
@@ -187,6 +198,14 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  /* Custom z-index utilities for stacking contexts */
+  .z-modal {
+    z-index: 100;
+  }
+  .z-debug {
+    z-index: 9999;
   }
 }
 

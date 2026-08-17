@@ -66,7 +66,7 @@ export default function PitchViewerModal({
   };
 
   return (
-    <Modal overlayClassName="bg-black/95" zIndexClassName="z-[100]">
+    <Modal overlayClassName="bg-black/95" zIndexClassName="z-modal">
       <div
         className="relative flex items-center justify-center"
         onWheel={(e) => {
