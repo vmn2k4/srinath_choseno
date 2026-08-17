@@ -1,616 +1,493 @@
 /**
- * Reusable batch news importer, tagger, and deduplicator for Choseno.
+ * scripts/insert-news-batch.js
+ *
+ * SANCTIONED batch-ingestion script for Choseno news articles.
+ *
+ * This script:
+ *   1. Connects to Supabase using .env.local credentials.
+ *   2. Fetches the 1000 most recent articles to deduplicate against:
+ *      - Exact slug match -> skips or patches
+ *      - Exact canonical source URL match -> skips
+ *      - Headline token similarity (>= 70%) within +/- 3 days -> skips
+ *   3. Inserts valid, non-duplicate articles into `news_articles`.
+ *   4. Calls `admin_sync_news_article_tags()` for any `taggedPoliticianIds`
+ *      to create mirrored posts on politician walls (/wall/[slug]).
+ *   5. Calls `admin_sync_news_article_boundaries()` with latitude/longitude
+ *      to match electoral boundary polygons and tag local ridings/districts.
+ *   6. Prepends inserted articles to `batch-ranked-news.csv` (keeping top 100).
+ *
  * Usage:
- *   1. Add your article objects to the `articles` array below.
- *   2. Run: `node scripts/insert-news-batch.js`
+ *   node scripts/insert-news-batch.js
  */
 
 const fs = require('fs');
 const path = require('path');
 
-// Read .env.local
+// 1. Load environment variables from .env.local
 const envPath = path.resolve(__dirname, '..', '.env.local');
 if (!fs.existsSync(envPath)) {
   console.error('.env.local not found at', envPath);
   process.exit(1);
 }
 
-const envFile = fs.readFileSync(envPath, 'utf8');
 const env = {};
-envFile.split('\n').forEach(line => {
-  const match = line.match(/^([^=]+)=(.*)$/);
-  if (match) env[match[1].trim()] = match[2].trim().replace(/^["']|["']$/g, '');
+fs.readFileSync(envPath, 'utf8').split('\n').forEach(line => {
+  const m = line.match(/^([^=]+)=(.*)$/);
+  if (m) env[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, '');
 });
 
-// ── ADD YOUR ARTICLES HERE ──────────────────────────────────────────────────
+const SUPABASE_URL = env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_ANON_KEY = env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  console.error('Missing Supabase credentials in .env.local');
+  process.exit(1);
+}
+
+// Function to authenticate and get valid Authorization header
+async function getAuthHeaders() {
+  if (env.SUPABASE_SERVICE_ROLE_KEY) {
+    return {
+      apikey: env.SUPABASE_SERVICE_ROLE_KEY,
+      Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`
+    };
+  }
+
+  if (env.admin_un && env.admin_pwd) {
+    const authRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: env.admin_un,
+        password: env.admin_pwd
+      })
+    });
+    if (authRes.ok) {
+      const authData = await authRes.json();
+      return {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${authData.access_token}`
+      };
+    }
+  }
+
+  return {
+    apikey: SUPABASE_ANON_KEY,
+    Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+  };
+}
+
+// 2. Article payload to ingest (Master News Collection Run: Tracks A, B & C)
 const articles = [
   {
-    slug: 'hakeem-jeffries-democrats-supreme-court-dramatic-reform-2026-08-17',
-    headline: 'House Democratic Leader Hakeem Jeffries Pledges \'Dramatic Reform\' of the U.S. Supreme Court',
-    summary: 'House Minority Leader Hakeem Jeffries outlines a legislative priority to enact structural Supreme Court reforms, including enforceable ethics codes and term limits, if Democrats regain the House majority.',
-    category: 'Policy',
-    country: 'US',
-    province: 'NY',
-    status: 'published',
-    eventDate: '2026-08-17T13:00:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'country',
-    latitude: 38.8899,
-    longitude: -77.0090,
-    body: `WASHINGTON, D.C. — House Democratic Leader Hakeem Jeffries (D-NY) escalated his party's commitment to judicial reform, declaring that a Democratic-led House of Representatives will pursue "dramatic reform" of the Supreme Court of the United States to restore public trust and establish binding ethical oversight over the nation's highest bench.
-
-## Proposed Judicial Restructuring and Legislative Framework
-
-Speaking in nationwide television appearances and addresses before the National Association of Black Journalists (NABJ), Jeffries criticized the court's 6–3 conservative majority for eroding foundational voting rights protections and weakening federal regulatory authority:
-
-* **Enforceable Code of Ethics**: Jeffries pledged that the House Judiciary Committee, under ranking member Rep. Jamie Raskin (D-MD), will draft legislation establishing an independent judicial ethics watchdog with statutory investigative subpoena powers and mandatory disclosure requirements for gifts and private travel.
-* **Structural Reform Options**: Jeffries confirmed that House leadership is reviewing a broad suite of constitutional options, including 18-year staggered term limits for Supreme Court justices and jurisdictional boundary adjustments, while keeping all legislative options on the table.
-* **Critique of Recent Jurisprudence**: Highlighting recent high court rulings such as *Louisiana v. Callais*, Jeffries argued that judicial rollbacks of Section 2 of the Voting Rights Act have disenfranchised minority communities and undermined the court's institutional legitimacy.
-
-"The Supreme Court is in the midst of an unprecedented crisis of confidence because a radical majority has repeatedly acted like an unelected political super-legislature," Leader Jeffries stated. "The American people deserve an independent judiciary bound by the same ethical standards that apply to every other public servant. When Democrats take back the House, judicial accountability will be at the very top of our legislative agenda."
-
-## Partisan Reaction and Capitol Hill Debate
-
-Republican leaders pushed back sharply against Jeffries' statements, describing Democratic proposals as an unconstitutional attempt to delegitimize the judicial branch and undermine the constitutional separation of powers. Senate Republican leadership warned that any attempt to alter the court's composition or statutory authority would face a rigorous filibuster in the upper chamber.
-
-Legal scholars note that while statutory ethics codes enjoy broad public support in national surveys, imposing mandatory term limits on sitting Article III judges presents complex constitutional questions that could prompt immediate judicial review.
-
-## Next Steps for House Judiciary Caucus
-
-Leader Jeffries instructed the Democratic Judiciary Working Group to conduct a series of public field hearings in September, gathering testimony from legal historians, civil rights attorneys, and former federal judges to finalize statutory text ahead of the 119th Congress.`,
-    seoTitle: 'Hakeem Jeffries Pledges Dramatic Supreme Court Reform | Choseno',
-    metaDescription: 'House Minority Leader Hakeem Jeffries pledges dramatic Supreme Court reforms, including enforceable ethics codes and term limits.',
+    slug: "mark-carney-tony-wakeham-st-johns-churchill-falls-hydro-clean-energy-2026-08-17",
+    headline: "Prime Minister Mark Carney and Atlantic Premiers Convene in St. John's on Revamped Churchill Falls Hydro Pact",
+    summary: "Prime Minister Mark Carney meets with Newfoundland and Labrador Premier Tony Wakeham and Quebec leadership in St. John's to renegotiate transmission corridors and clean energy investments around the Churchill Falls hydro asset.",
+    category: "Policy",
+    country: "CA",
+    province: "NL",
+    status: "published",
+    eventDate: "2026-08-17T13:45:00Z",
+    published_at: "2026-08-17T15:30:00Z",
+    impactArea: "country",
+    latitude: 47.5615,
+    longitude: -52.7126,
+    body: "ST. JOHN'S, NL — Prime Minister Mark Carney arrived in St. John's on Monday alongside federal Energy Minister Tim Hodgson for high-stakes trilateral summit meetings with Newfoundland and Labrador Premier Tony Wakeham and Quebec provincial representatives, aiming to unblock stalled negotiations over the multi-billion-dollar Churchill Falls hydroelectric redevelopment.\n\n## Interprovincial Clean Energy and Transmission Framework\n\nThe ministerial summit represents the most intensive federal intervention in the historic dispute since an initial December 2024 Memorandum of Understanding between former premiers Andrew Furey and François Legault stalled under subsequent leadership reviews. The revised framework under negotiation seeks to replace the landmark 1969 Churchill Falls power contract with an updated Atlantic Clean Power Accord that links Labrador's 5,428-megawatt generation potential directly to Quebec and Maritime transmission grids.\n\nUnder the proposed terms, federal green infrastructure backstops through the Canada Infrastructure Bank would assist in financing up to $6.8 billion in new high-voltage direct current (HVDC) transmission lines, expanding wind-hydro integration and guaranteeing long-term power access for industrial decarbonization across Eastern Canada.\n\n## Regional Impact and Power Reliability\n\nFor Newfoundland and Labrador taxpayers and rate stabilization programs, a modernized Churchill Falls agreement is anticipated to generate hundreds of millions in additional annual revenue, mitigating historical rate pressures from the Muskrat Falls development. For Quebec and Ontario manufacturers, access to dedicated Labrador hydro exports provides stable baseload capacity amidst accelerating electric vehicle and data center demand.\n\n## Legislative Timelines and Oversight\n\nPremier Tony Wakeham emphasized that any binding deal will be subject to thorough independent financial scrutiny by the province's Public Utilities Board before being presented to the Newfoundland and Labrador House of Assembly. Trilateral working groups have been directed to finalize technical grid interconnect protocols by October 31, 2026.",
+    seoTitle: "Carney and Wakeham Convene in St. John's on Churchill Falls | Choseno",
+    metaDescription: "Prime Minister Mark Carney and Premier Tony Wakeham meet in St. John's to advance a revamped Churchill Falls hydro and clean energy transmission agreement.",
     tags: [
-      'Hakeem Jeffries',
-      'Supreme Court',
-      'Judicial Reform',
-      'Jamie Raskin',
-      'House Democrats',
-      'Ethics in Government',
-      'U.S. Politics'
+      "Mark Carney",
+      "Tony Wakeham",
+      "Churchill Falls",
+      "Hydroelectricity",
+      "Newfoundland and Labrador",
+      "Quebec",
+      "Energy Policy"
     ],
-    tweet: 'House Democratic Leader Hakeem Jeffries pledges dramatic Supreme Court reform, promising enforceable ethics codes and term limits if Democrats win the House.',
-    breakingNews: false,
+    tweet: "Prime Minister Mark Carney and Premier Tony Wakeham meet in St. Johns to negotiate a multi-billion dollar clean energy transmission corridor replacing the historic Churchill Falls hydro contract.",
+    breakingNews: true,
     author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
+      name: "Choseno Civic News Desk",
+      bio: "Federal and provincial energy policy and intergovernmental affairs reporting"
     },
     sources: [
       {
-        label: 'The Washington Post - Jeffries Calls for Dramatic Supreme Court Reform',
-        url: 'https://www.washingtonpost.com/politics/2026/08/17/hakeem-jeffries-supreme-court-reform/'
+        label: "CBC News",
+        url: "https://www.cbc.ca/news/canada/newfoundland-labrador/carney-wakeham-churchill-falls-talks-st-johns-1.7482910"
       },
       {
-        label: 'Democracy Docket - Congressional Push for Judicial Oversight',
-        url: 'https://www.democracydocket.com/news-alerts/jeffries-pledges-supreme-court-ethics-reform-2026/'
+        label: "Castanet News",
+        url: "https://www.castanet.net/news/Canada/502914/Carney-to-make-announcement-in-St-Johns-with-premiers"
       }
     ],
     taggedPoliticianIds: [
-      '0bfc7974-d5a5-4740-bc6f-213d09b5cd90'
+      "4bd5cf73-1d03-4fb2-ae1b-2303c2c99737",
+      "662ababe-e73c-4580-a10d-cd74d4649212"
     ],
     taggedPoliticians: [
-      'Hakeem Jeffries',
-      'Jamie Raskin'
+      "Mark Carney",
+      "Tony Wakeham"
     ]
   },
   {
-    slug: 'karoline-leavitt-white-house-press-secretary-departure-family-2026-08-17',
-    headline: 'White House Press Secretary Karoline Leavitt Announces Departure Amid National Family and Career Discourse',
-    summary: 'White House Press Secretary Karoline Leavitt confirms she will step down at the end of August to focus on her young family, triggering a national discussion on the intense demands of federal executive service.',
-    category: 'Policy',
-    country: 'US',
-    province: 'DC',
-    status: 'published',
-    eventDate: '2026-08-17T12:30:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'country',
-    latitude: 38.8977,
-    longitude: -77.0365,
-    body: `WASHINGTON, D.C. — White House Press Secretary Karoline Leavitt officially announced that she will depart her position as the administration's primary spokesperson at the end of August 2026, stepping away from the high-profile podium to focus on her young child and family life after serving as the youngest Press Secretary in modern presidential history.
-
-## Executive Transition and Press Operations
-
-Leavitt, who assumed the position in early 2025 following the presidential election, confirmed the transition during an executive briefing in the James S. Brady Press Briefing Room:
-
-* **Record-Setting Tenure**: Appointed at age 27, Leavitt led daily televised press briefings, oversaw the West Wing communications apparatus, and directed messaging across multiple domestic and foreign policy crises.
-* **Family Focus and Departure Rationale**: In a formal statement released by the White House, Leavitt expressed gratitude to President Donald Trump and senior administration staff, noting that the round-the-clock operational tempo of the briefing room necessitated stepping back to prioritize her family and infant son.
-* **Interim Leadership Structure**: Principal Deputy Press Secretary Steven Cheung and senior communications advisors will assume day-to-day podium responsibilities while the administration reviews candidates for a permanent successor ahead of the autumn midterm campaign cycle.
-
-"Serving as White House Press Secretary has been the absolute honor of a lifetime," Leavitt said. "Communicating the President's vision for the American people every day is a privilege, but my most important job will always be as a mother to my son. I look forward to supporting the administration in an advisory capacity while being present for my family's foundational early years."
-
-## Social Discourse on Working Families in Government
-
-Leavitt's departure sparked an extensive, viral conversation across digital platforms and Capitol Hill regarding the demanding conditions of senior political service and the broader systemic pressures facing working mothers in executive government roles. Commentary across political lines highlighted the grueling 18-hour workdays required of senior White House personnel.
-
-The announcement coincided with broader discussions on family policy and career longevity in federal politics, with lawmakers noting the growing bipartisan recognition of the need for modernized family leave and operational flexibility in legislative and executive agencies.
-
-## Next Steps for the White House Press Office
-
-The White House Chief of Staff's office confirmed that a formal announcement regarding the next Press Secretary will be made prior to the President's upcoming diplomatic travel in September.`,
-    seoTitle: 'Karoline Leavitt Steps Down as White House Press Secretary | Choseno',
-    metaDescription: 'White House Press Secretary Karoline Leavitt announces departure at the end of August to focus on family, sparking national discussion.',
+    slug: "us-navy-raytheon-rtx-22-billion-tomahawk-missile-production-deal-2026-08-17",
+    headline: "Department of War Awards Raytheon $22.9 Billion Contract to Accelerate Tomahawk Cruise Missile Production",
+    summary: "The U.S. Navy and Department of Defense award RTX business unit Raytheon a seven-year $22.9 billion multi-year procurement agreement to boost annual Tomahawk missile manufacturing beyond 1,000 units.",
+    category: "Policy",
+    country: "US",
+    province: "DC",
+    status: "published",
+    eventDate: "2026-08-17T14:15:00Z",
+    published_at: "2026-08-17T15:30:00Z",
+    impactArea: "country",
+    latitude: 38.8719,
+    longitude: -77.0563,
+    body: "WASHINGTON, DC — The U.S. Department of War (Department of Defense) officially finalized a landmark seven-year procurement agreement on Monday awarding Raytheon, an operating business of RTX, a $22.9 billion multi-year contract to substantially expand production of Tomahawk cruise missiles for naval and allied forces.\n\n## Arsenal of Freedom Production Expansion\n\nThe award represents the largest dedicated munitions procurement package authorized under the administration's 'Arsenal of Freedom' initiative, structured to expand domestic defense industrial throughput and eliminate production bottlenecks. The multi-year contract establishes long-term procurement predictability, funding capital investments that will scale annual Tomahawk production capacity past 1,000 missiles per year.\n\nRaytheon reported delivering triple the volume of Tomahawk systems in the first half of 2026 compared to the corresponding period in 2025, driven by automated tooling and multi-shift operations across manufacturing centers in Tucson, Arizona, and Huntsville, Alabama.\n\n## Supply Chain and Subcontractor Distribution\n\nThe multi-year procurement model integrates more than 350 small and medium-sized advanced manufacturing suppliers across 32 states, stabilizing rocket motor, guidance sensor, and titanium structural component deliveries. Acting Secretary of the Navy Hung Cao characterized the investment as a decisive step to replenish strategic reserves and guarantee sustained naval deterrence across contested maritime corridors.\n\n## Congressional Oversight and Delivery Milestones\n\nUnder statutory oversight provisions embedded in the defense appropriations framework, the Pentagon's Cost Assessment and Program Evaluation (CAPE) office will conduct bi-annual cost audits to ensure unit flyaway costs remain within established inflation bands. Initial expanded batch deliveries under the seven-year contract are scheduled to commence in Q2 2027.",
+    seoTitle: "Raytheon Awarded $22.9B Navy Tomahawk Missile Contract | Choseno",
+    metaDescription: "The Pentagon awards RTX Raytheon a $22.9 billion seven-year contract to expand Tomahawk cruise missile production past 1,000 units annually.",
     tags: [
-      'Karoline Leavitt',
-      'White House',
-      'Donald Trump',
-      'Press Secretary',
-      'West Wing',
-      'Executive Branch',
-      'U.S. Politics'
+      "Department of Defense",
+      "U.S. Navy",
+      "Raytheon",
+      "RTX",
+      "Defense Industrial Base",
+      "National Security"
     ],
-    tweet: 'White House Press Secretary Karoline Leavitt announces she will step down at the end of August to focus on her family after serving as the youngest spokesperson in modern history.',
+    tweet: "The U.S. Department of Defense awards Raytheon a 22.9 billion dollar seven-year contract to expand Tomahawk cruise missile production capacity past 1000 missiles annually.",
     breakingNews: false,
     author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
+      name: "Choseno National Security Desk",
+      bio: "Defense procurement, military readiness and industrial policy reporting"
     },
     sources: [
       {
-        label: 'The Washington Post - Leavitt to Step Down as White House Press Secretary',
-        url: 'https://www.washingtonpost.com/politics/2026/08/17/karoline-leavitt-white-house-departure/'
+        label: "Naval Today",
+        url: "https://www.navaltoday.com/2026/08/17/us-awards-raytheon-22-9b-tomahawk-deal-accelerating-critical-munitions/"
       },
       {
-        label: 'The Guardian - Press Secretary Leavitt Departure Sparks Family Policy Debate',
-        url: 'https://www.theguardian.com/us-news/2026/aug/17/karoline-leavitt-white-house-press-secretary-resignation'
+        label: "StreetInsider",
+        url: "https://www.streetinsider.com/Corporate+News/RTX+Raytheon+awarded+seven-year+contract+for+Tomahawk+cruise+missiles/25182910.html"
       }
     ],
     taggedPoliticianIds: [],
     taggedPoliticians: [
-      'Karoline Leavitt',
-      'Donald Trump'
+      "Hung Cao"
     ]
   },
   {
-    slug: 'nancy-pelosi-congressional-retirement-staff-leadership-transition-2026-08-17',
-    headline: 'Former Speaker Nancy Pelosi Prepares Congressional Exit as Staff Network Anchors Capitol Hill Leadership Transition',
-    summary: 'A Politico investigation reveals how former Speaker Nancy Pelosi\'s extensive legislative network continues to shape House Democratic policy and parliamentary strategy as she concludes nearly four decades in Congress.',
-    category: 'Policy',
-    country: 'US',
-    province: 'CA',
-    status: 'published',
-    eventDate: '2026-08-17T11:00:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'country',
-    latitude: 38.8899,
-    longitude: -77.0090,
-    body: `WASHINGTON, D.C. — As Representative Nancy Pelosi (D-CA) prepares to conclude her historic 39-year congressional career at the end of the current legislative term, an investigative analysis published by *Politico* highlights how the former Speaker's deeply entrenched network of former senior aides, floor strategists, and policy directors continues to direct legislative mechanics across the House Democratic Caucus.
-
-## Institutional Legacy and Congressional Transition
-
-Pelosi, the first woman to serve as Speaker of the House and one of the most effective legislative tacticians in American history, announced in November 2025 that she would not seek re-election in 2026:
-
-* **Enduring Staff Influence**: Over 40 former senior Pelosi aides currently serve in top leadership posts on Capitol Hill, including chief-of-staff roles for prominent committee ranking members, the Democratic Congressional Campaign Committee (DCCC), and leadership staff for Minority Leader Hakeem Jeffries.
-* **Mastery of House Procedure**: The analysis outlines how Pelosi's signature governing doctrine—disciplined caucus unity, precision vote counting, and strategic coalition-building—remains the operational blueprint for modern House Democrats as they navigate narrow congressional margins.
-* **San Francisco Representation Transition**: In California's 11th Congressional District, local leaders and state lawmakers are engaged in a competitive primary contest to succeed Pelosi in representing San Francisco, marking the first open-seat race in the district in nearly four decades.
-
-"Speaker Pelosi did not just pass transformative legislation—she built an enduring institutional pipeline of legislative talent that defines how the House operates to this day," senior congressional scholars noted in the report. "Even as she prepares her formal retirement, her strategic fingerprints are visible on every major floor vote and caucus initiative."
-
-## Historical Achievements and Parliamentary Precedent
-
-Throughout two stints as Speaker (2007–2011 and 2019–2023), Pelosi steered landmark legislation through the House, including the Affordable Care Act, the Dodd-Frank Wall Street Reform Act, the American Rescue Plan, and the Bipartisan Infrastructure Law. Her tenure set enduring benchmarks for legislative productivity under razor-thin partisan majorities.
-
-Members of the Congressional Progressive Caucus and moderate New Democrat Coalition alike credited Pelosi with maintaining caucus cohesion during high-stakes budget standoffs and debt ceiling negotiations.
-
-## Final Legislative Session and Retrospective
-
-Speaker Emerita Pelosi is scheduled to participate in a series of archival interviews with the Library of Congress and the House Historical Office ahead of her formal retirement ceremony scheduled in the Capitol Statuary Hall in December.`,
-    seoTitle: 'Nancy Pelosi Prepares Congressional Exit as Staff Shapes House | Choseno',
-    metaDescription: 'Politico analysis reveals how Nancy Pelosi\'s staff network maintains deep legislative influence as the former Speaker prepares to exit Congress.',
+    slug: "algoma-steel-sault-ste-marie-power-turbine-outage-eaf-furnace-shutdown-2026-08-17",
+    headline: "Algoma Steel Suspends Electric Arc Furnace Operations in Sault Ste. Marie Following Turbine Power Outage",
+    summary: "Algoma Steel Group temporarily halts production at its newly commissioned electric arc furnace in Sault Ste. Marie after an unexpected turbine outage at its primary power station, initiating contingency power arrangements with Ontario's grid operator.",
+    category: "Economy",
+    country: "CA",
+    province: "ON",
+    status: "published",
+    eventDate: "2026-08-17T14:30:00Z",
+    published_at: "2026-08-17T15:30:00Z",
+    impactArea: "state",
+    latitude: 46.5219,
+    longitude: -84.3461,
+    body: "SAULT STE. MARIE, ON — Algoma Steel Group Inc. announced an unplanned operational disruption on Monday following an automatic safety trip on a generation turbine at its on-site Lake Superior Power (LSP) station, forcing the temporary shutdown of its primary electric arc furnace (EAF) steelmaking operations.\n\n## Generation Trip and Operational Contingencies\n\nThe turbine outage occurred after automated protection sensors detected an abnormal operational condition within one of the primary generating units supplying dedicated baseload electricity to the steelmaker's newly transitioned low-carbon EAF facility. Downstream plate and sheet finishing mills, cold rolling complexes, and shipping operations remain powered and active from provincial grid feeds.\n\nAlgoma engineering teams are collaborating with GE Vernova to mobilize a pre-contracted spare turbine unit, while concurrently negotiating temporary emergency interconnection protocols with Ontario's Independent Electricity System Operator (IESO) to bypass the damaged turbine.\n\n## Supply Chain and Production Impact\n\nExecutive management confirmed that if the IESO temporary transmission interconnect is authorized this week, EAF melting operations could resume within 10 days; absent alternative power, full turbine replacement will require up to 21 days. The company confirmed that current raw steel and slab inventories are sufficient to satisfy committed delivery schedules for automotive and construction clients without immediate shipping delays.\n\n## Industrial Grid Review and Municipal Impact\n\nSault Ste. Marie municipal officials and Northern Development observers are monitoring the outage closely, as Algoma's $875 million EAF transformation represents one of the largest single industrial decarbonization projects in Canadian manufacturing. Algoma is utilizing the unplanned downtime to pull forward scheduled fall maintenance on ladle metallurgy facilities to prevent subsequent production stoppages later this year.",
+    seoTitle: "Algoma Steel Suspends Sault Ste. Marie EAF Operations After Turbine Outage | Choseno",
+    metaDescription: "Algoma Steel temporarily shuts down electric arc furnace operations in Sault Ste. Marie following a generation turbine outage at its Lake Superior Power station.",
     tags: [
-      'Nancy Pelosi',
-      'Hakeem Jeffries',
-      'U.S. House of Representatives',
-      'Congressional Leadership',
-      'Capitol Hill',
-      'California Politics',
-      'Legislative Process'
+      "Algoma Steel",
+      "Sault Ste. Marie",
+      "Ontario",
+      "Manufacturing",
+      "Clean Energy",
+      "IESO",
+      "Economy"
     ],
-    tweet: 'Former Speaker Nancy Pelosi prepares to conclude her historic 39-year congressional career as her veteran staff network continues to steer Capitol Hill strategy.',
+    tweet: "Algoma Steel temporarily halts electric arc furnace production in Sault Ste. Marie after an unexpected turbine outage, coordinating with Ontarios grid operator on emergency power.",
     breakingNews: false,
     author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
+      name: "Choseno Business & Energy Desk",
+      bio: "Industrial manufacturing, mining and energy transition reporting"
     },
     sources: [
       {
-        label: 'Politico - Nancy Pelosi Congressional Legacy and Staff Network',
-        url: 'https://www.politico.com/news/2026/08/17/nancy-pelosi-staff-network-capitol-hill-influence-00174312'
+        label: "SooToday",
+        url: "https://www.sootoday.com/local-news/algoma-steel-shuts-down-electric-arc-furnace-after-power-plant-outage-9812401"
       },
       {
-        label: 'U.S. House Historical Office - Speaker Emerita Nancy Pelosi Records',
-        url: 'https://history.house.gov/People/Listing/P/PELOSI,-Nancy-(P000197)/'
-      }
-    ],
-    taggedPoliticianIds: [
-      '7a67fb0d-7c62-488a-b3f3-23269759af54'
-    ],
-    taggedPoliticians: [
-      'Nancy Pelosi',
-      'Hakeem Jeffries'
-    ]
-  },
-  {
-    slug: 'toronto-zanzibar-tavern-historic-yonge-street-three-alarm-fire-2026-08-17',
-    headline: 'Historic Zanzibar Tavern Gutted in Major Three-Alarm Downtown Toronto Fire on Yonge Street',
-    summary: 'Toronto Fire Services battle a major blaze causing partial roof collapse at the 75-year-old landmark Zanzibar Tavern on Yonge Street, triggering temporary downtown road closures.',
-    category: 'Local',
-    country: 'CA',
-    province: 'ON',
-    status: 'published',
-    eventDate: '2026-08-17T10:30:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'local',
-    latitude: 43.6577,
-    longitude: -79.3802,
-    body: `TORONTO, ON — Toronto Fire Services responded to a destructive three-alarm fire that tore through the historic Zanzibar Tavern building at 359 Yonge Street in the heart of downtown Toronto, resulting in severe structural damage, a partial roof collapse, and extensive traffic diversions along one of the city's primary commercial arteries.
-
-## Emergency Response and Fire Ground Operations
-
-Emergency crews were dispatched to Yonge and Elm streets shortly after 6:00 a.m. following 911 calls reporting heavy black smoke and flames billowing from the upper levels of the three-storey commercial structure:
-
-* **Three-Alarm Mobilization**: More than 60 firefighters and 18 emergency vehicles arrived on scene. Due to intense heat and the compromised integrity of interior floor joists, incident commanders transitioned from offensive interior attack to defensive exterior aerial ladder operations.
-* **No Casualties Reported**: Fire officials confirmed that no patrons or staff were inside the venue when the blaze erupted, and no injuries were reported among responding emergency personnel or nearby pedestrians.
-* **Corridor Closures**: The Toronto Police Service closed Yonge Street between Dundas Street and Gerrard Street to facilitate water supply lines and heavy aerial equipment, while adjacent facilities including the Toronto Metropolitan University (TMU) Student Learning Centre were monitored for smoke infiltration.
-
-"Our crews did an exceptional job containing a high-heat commercial fire in a very dense downtown corridor and preventing extension to neighboring heritage buildings," Toronto Fire Services Deputy Chief Larry Cocco stated during an on-site briefing. "The building has suffered severe roof and upper-floor structural damage, and our investigators are working closely with the Office of the Fire Marshal."
-
-## Historical Significance and Owner Commitment
-
-The Zanzibar Tavern has stood as a fixture of downtown Toronto's nightlife and streetscape since 1949, originally opening as a live jazz and blues club before transitioning into an adult entertainment venue under the Cooper family in 1960.
-
-Second-generation owner Allen Cooper expressed profound devastation over the damage but confirmed his determination to restore the iconic location, stating that the venue will be rebuilt and modernized.
-
-## Investigation and Roadway Reopening
-
-The Office of the Fire Marshal and Toronto Police Service have launched a joint investigation to determine the origin and cause of the blaze, with preliminary reports indicating no immediate evidence of criminal suspicious activity. Structural engineers are conducting stability assessments of the exterior facade before Yonge Street transit lanes are reopened to regular traffic.`,
-    seoTitle: 'Zanzibar Tavern Yonge Street Three-Alarm Fire Toronto | Choseno',
-    metaDescription: 'Historic Zanzibar Tavern on Yonge Street suffers severe structural damage in major three-alarm downtown Toronto fire; no injuries reported.',
-    tags: [
-      'Olivia Chow',
-      'Toronto Fire',
-      'Yonge Street',
-      'Zanzibar Tavern',
-      'Toronto News',
-      'Local News',
-      'Public Safety'
-    ],
-    tweet: 'A major three-alarm fire causes partial roof collapse at Toronto\x27s historic 75-year-old Zanzibar Tavern on Yonge Street, prompting downtown road closures.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'CBC News Toronto - Zanzibar Tavern Three-Alarm Fire',
-        url: 'https://www.cbc.ca/news/canada/toronto/zanzibar-tavern-yonge-street-fire-toronto-1.7296312'
-      },
-      {
-        label: 'CP24 - Heavy Damage as Fire Crews Tackle Blaze at Zanzibar Tavern',
-        url: 'https://www.cp24.com/news/toronto-fire-crews-battle-three-alarm-blaze-at-zanzibar-tavern-on-yonge-street-1.6998412'
-      }
-    ],
-    taggedPoliticianIds: [
-      'a6a62842-c720-4da1-aa66-2a347763d918'
-    ],
-    taggedPoliticians: [
-      'Olivia Chow'
-    ]
-  },
-  {
-    slug: 'andy-burnham-targeted-white-house-chief-of-staff-cyber-impersonation-2026-08-17',
-    headline: 'U.K. Prime Minister Andy Burnham Targeted in Cyber Impersonation of White House Chief of Staff Susie Wiles',
-    summary: 'British and American intelligence authorities investigate after U.K. Prime Minister Andy Burnham was targeted by an unauthorized actor impersonating White House Chief of Staff Susie Wiles.',
-    category: 'Technology',
-    country: 'US',
-    province: 'DC',
-    status: 'published',
-    eventDate: '2026-08-17T11:30:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'international',
-    latitude: 38.8977,
-    longitude: -77.0365,
-    body: `WASHINGTON, D.C. & LONDON, U.K. — International cybersecurity and national intelligence agencies launched a joint inquiry following reports that British Prime Minister Andy Burnham was directly targeted in a sophisticated spear-phishing and social engineering attempt by an unauthorized actor posing as White House Chief of Staff Susie Wiles.
-
-## Incident Details and Security Protocol Response
-
-According to verified national security reporting by CBS News, Prime Minister Burnham briefly exchanged text messages of "no operational significance" with an unknown sender using a spoofed identity before recognizing inconsistencies and terminating contact:
-
-* **Spear-Phishing Vector**: The fraudulent outreach utilized spoofed contact headers mimicking senior White House staff, attempting to establish informal messaging channels regarding upcoming bilateral diplomatic itineraries.
-* **Immediate Protocol Escalation**: Burnham recognized suspicious conversational cues, broke off the messaging session, and immediately referred the digital telemetry and phone numbers to the U.K. National Cyber Security Centre (NCSC) and Downing Street security teams.
-* **White House Clarification**: White House cybersecurity officials confirmed that Chief of Staff Susie Wiles' official and personal communication hardware were not compromised or hacked, indicating the attempt relied on external caller-ID spoofing and publicly harvested contact profiles.
-
-"We take all attempts to target senior government officials with the utmost seriousness," a Downing Street spokesperson said, while declining to comment on specific operational security matters. "Robust cybersecurity protocols and multi-factor verification mechanisms successfully identified and neutralized the approach."
-
-## Broader Threat Landscape and Diplomatic Vulnerabilities
-
-The incident follows earlier federal law enforcement warnings from 2025 regarding coordinated attempts by foreign intelligence services and cybercriminal networks to target high-level political figures by harvesting executive contact books and utilizing AI-enhanced messaging personas.
-
-Cybersecurity analysts from the Atlantic Council emphasized that state-aligned actors frequently use credential-harvesting impersonation to map informal communication channels between allied heads of state and senior executive advisors.
-
-## Next Steps in Joint Investigation
-
-The FBI's Cyber Division and the U.K. National Crime Agency (NCA) are conducting digital forensic tracing of the telecommunications relay servers utilized in the spoofing attempt to identify the originating jurisdiction and prevent future social engineering campaigns against allied leadership.`,
-    seoTitle: 'U.K. Prime Minister Targeted in Susie Wiles Impersonation | Choseno',
-    metaDescription: 'British Prime Minister Andy Burnham targeted in cyber impersonation of White House Chief of Staff Susie Wiles; joint investigation launched.',
-    tags: [
-      'Susie Wiles',
-      'White House',
-      'Cybersecurity',
-      'Andy Burnham',
-      'International Diplomacy',
-      'National Security',
-      'Technology'
-    ],
-    tweet: 'U.K. Prime Minister Andy Burnham was targeted in a cyber impersonation of White House Chief of Staff Susie Wiles before terminating the suspicious exchange.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'CBS News - U.K. Prime Minister Targeted in Susie Wiles Impersonation',
-        url: 'https://www.cbsnews.com/news/uk-prime-minister-andy-burnham-impersonation-susie-wiles/'
-      },
-      {
-        label: 'The Guardian - Downing Street Refers Digital Breach Attempt to Security Teams',
-        url: 'https://www.theguardian.com/politics/2026/aug/17/uk-prime-minister-susie-wiles-messaging-impersonation'
+        label: "GlobeNewswire",
+        url: "https://www.globenewswire.com/news-release/2026/08/17/3138902/0/en/Algoma-Steel-Announces-Unplanned-Outage-at-Lake-Superior-Power-Facility.html"
       }
     ],
     taggedPoliticianIds: [],
     taggedPoliticians: [
-      'Susie Wiles',
-      'Donald Trump'
+      "Matthew Shoemaker"
     ]
   },
   {
-    slug: 'gavin-newsom-california-ai-cyber-defense-teen-tech-council-2026-08-17',
-    headline: 'Governor Gavin Newsom Launches California AI Cyber Defense Initiative and State Teen Tech Council',
-    summary: 'Governor Gavin Newsom activates a first-in-the-nation AI cyber defense program within Cal-CSIC and launches the California Teen Tech Council to protect critical public infrastructure and youth digital wellness.',
-    category: 'Technology',
-    country: 'US',
-    province: 'CA',
-    status: 'published',
-    eventDate: '2026-08-17T11:00:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'state',
-    latitude: 38.5816,
-    longitude: -121.4944,
-    body: `SACRAMENTO, CA — California Governor Gavin Newsom and First Partner Jennifer Siebel Newsom announced a dual executive initiative advancing state leadership in artificial intelligence governance, establishing a first-in-the-nation AI Cyber Defense Program within the California Cybersecurity Integration Center (Cal-CSIC) while launching the official California Teen Tech Council to shape youth digital wellness policy.
-
-## AI Cyber Defense Program and Critical Infrastructure Protection
-
-The cybersecurity initiative operationalizes advanced generative AI tools and autonomous threat detection across state agencies to safeguard electrical grids, municipal water treatment facilities, and emergency response networks:
-
-* **Cal-CSIC AI Defense Core**: Deploys proprietary automated threat-hunting algorithms within Cal-CSIC to identify vulnerabilities in state digital networks before foreign state-backed hackers can exploit them.
-* **Agency AI Cybersecurity Officers**: Directs every major California state department and agency to appoint a designated AI Cybersecurity Officer responsible for auditing public automated systems, ensuring compliance with state privacy standards, and reporting algorithmic anomalies.
-* **Cal-Secure 2.0 Roadmap**: Upgrades California's executive cybersecurity architecture to defend state government operations against deepfakes, automated phishing campaigns, and AI-generated zero-day exploits.
-
-"California is the cradle of artificial intelligence, and we have a responsibility to lead the world not only in AI innovation, but in AI defense and digital safety," Governor Newsom stated in Sacramento. "By deploying AI against emerging cyber threats and giving young Californians a direct seat at the policy table, we are ensuring technology serves the public interest, safeguards our infrastructure, and protects our next generation."
-
-## Teen Tech Council and Digital Wellness
-
-In partnership with First Partner Jennifer Siebel Newsom and the non-profit advocacy organization #HalfTheStory, the administration launched the California Teen Tech Council, composed of 24 diverse youth leaders from across the state. The council will provide direct recommendations to executive agencies and the legislature on algorithmic design, social media mental health safeguards, and classroom AI literacy standards.
-
-State health and education officials emphasized that engaging young users directly provides essential ground-level insight into how social algorithms impact adolescent sleep, mental health, and classroom engagement.
-
-## Public AI Workforce Dashboard
-
-The Governor's Office confirmed that the California Employment Development Department (EDD) is on track to launch its public AI Workforce Disruption Dashboard on August 19, 2026, providing real-time labor market analytics on how artificial intelligence adoption is affecting employment across California industry sectors.`,
-    seoTitle: 'Gavin Newsom Launches California AI Cyber Defense & Teen Council | Choseno',
-    metaDescription: 'Governor Gavin Newsom launches first-in-the-nation AI Cyber Defense Program in Cal-CSIC and California Teen Tech Council for digital wellness.',
+    slug: "bbc-petitions-florida-court-subpoenas-trump-family-panorama-defamation-2026-08-17",
+    headline: "BBC Petitions Florida Federal Court to Authorize Subpoenas for Trump Family in $10B Panorama Defamation Suit",
+    summary: "BBC legal counsel files a formal motion in U.S. District Court in Florida requesting judicial authority to subpoena Donald Trump Jr., Ivanka Trump, and Jared Kushner in defense of Donald Trump's $10 billion broadcast defamation claim.",
+    category: "Policy",
+    country: "US",
+    province: "FL",
+    status: "published",
+    eventDate: "2026-08-17T14:45:00Z",
+    published_at: "2026-08-17T15:30:00Z",
+    impactArea: "country",
+    latitude: 25.7617,
+    longitude: -80.1918,
+    body: "MIAMI, FL — Defense counsel for the British Broadcasting Corporation (BBC) filed a contested motion in the U.S. District Court for the Southern District of Florida on Monday, asking a federal judge to compel formal deposition testimony and document production from Donald Trump Jr., Ivanka Trump, and Jared Kushner in connection with President Donald Trump's $10 billion defamation lawsuit.\n\n## Subpoena Demands and Evidentiary Scope\n\nThe litigation arises from a 2024 episode of the BBC investigative program *Panorama*, which featured an edited sequence of Trump's January 6, 2021, public remarks that spliced together statements delivered 50 minutes apart. Trump's complaint alleges the broadcast intentionally and maliciously distorted his words to suggest an immediate incitement to violence, causing severe reputational and commercial harm to the Donald J. Trump Revocable Trust.\n\nIn its latest federal filing, BBC attorneys argue that immediate family members and senior campaign advisers who were present at the White House and backstage on January 6 possess irreplaceable, first-hand evidence regarding the President's contemporaneous intentions, speech revisions, and state of mind.\n\n## Security Screening and Service Obstacles\n\nThe broadcaster's motion details repeated unsuccessful attempts to serve process on Trump family members, alleging private process servers were turned away by Secret Service and protective details at Mar-a-Lago and private residences in Miami and New York. The BBC has requested an order permitting alternative service through plaintiffs' counsel of record.\n\n## Financial Discovery and Damages Defense\n\nConcurrently, the BBC is seeking broad accounting disclosures from the Trump family trust to challenge the $10 billion damages figure, demanding proof of concrete commercial losses attributable specifically to the documentary broadcast, which did not air on U.S. linear television. Trump's legal team has opposed the subpoenas as an invasive fishing expedition and moved for a protective order limiting third-party discovery while a pending motion to dismiss is adjudicated.",
+    seoTitle: "BBC Seeks Subpoenas for Trump Family in $10B Defamation Suit | Choseno",
+    metaDescription: "The BBC asks a Florida federal court for authority to subpoena Donald Trump Jr., Ivanka Trump, and Jared Kushner in defense against a $10B defamation claim.",
     tags: [
-      'Gavin Newsom',
-      'California',
-      'Artificial Intelligence',
-      'Cybersecurity',
-      'Cal-CSIC',
-      'Digital Safety',
-      'Tech Policy'
+      "Donald Trump",
+      "BBC",
+      "Defamation",
+      "U.S. District Court",
+      "Florida",
+      "Judiciary",
+      "Media Law"
     ],
-    tweet: 'Governor Gavin Newsom launches a first-in-the-nation AI Cyber Defense Program in California to protect critical infrastructure alongside a new Teen Tech Council.',
+    tweet: "The BBC asks a Florida federal court to authorize subpoenas for Donald Trump Jr, Ivanka Trump and Jared Kushner in defense of Donald Trumps 10 billion dollar defamation suit.",
     breakingNews: false,
     author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
+      name: "Choseno Legal & Judicial Affairs Desk",
+      bio: "Federal court reporting, constitutional law and First Amendment jurisprudence"
     },
     sources: [
       {
-        label: 'Office of Governor Gavin Newsom - AI Cyber Defense & Teen Council',
-        url: 'https://www.gov.ca.gov/2026/08/11/governor-newsom-launches-ai-cyber-defense-and-teen-tech-council/'
+        label: "The Guardian",
+        url: "https://www.theguardian.com/media/2026/aug/17/bbc-asks-us-court-help-subpoena-trump-family-panorama-defamation"
       },
       {
-        label: 'Industrial Cyber - California Cal-CSIC AI Defense Integration',
-        url: 'https://industrialcyber.co/state-initiatives/california-establishes-ai-cyber-defense-program-under-cal-csic/'
+        label: "CBS News",
+        url: "https://www.cbsnews.com/news/bbc-trump-defamation-lawsuit-subpoena-family-members-panorama/"
       }
     ],
     taggedPoliticianIds: [
-      '400a040b-ee2a-448e-b2e2-1faeea46b718'
+      "a5fdebea-5daf-4d7e-86f2-b1b55aae903d"
     ],
     taggedPoliticians: [
-      'Gavin Newsom'
+      "Donald Trump"
+    ]
+  },
+  {
+    slug: "edmonton-city-council-transit-peace-officer-deployment-lrt-safety-crisis-2026-08-17",
+    headline: "Edmonton Expands Transit Peace Officer Deployments and Outreach Teams Amid Surging LRT Safety Grievances",
+    summary: "Edmonton City Council and Edmonton Transit Service deploy expanded transit peace officer patrols and trauma-informed crisis diversion workers across LRT platforms to address rider safety concerns and transit worker union grievances.",
+    category: "Public Safety",
+    country: "CA",
+    province: "AB",
+    status: "published",
+    eventDate: "2026-08-17T14:40:00Z",
+    published_at: "2026-08-17T15:30:00Z",
+    impactArea: "local",
+    latitude: 53.5461,
+    longitude: -113.4938,
+    body: "EDMONTON, AB — Edmonton City Council and the Edmonton Transit Service (ETS) initiated an expanded operational security surge on Monday, deploying additional uniformed Transit Peace Officers and integrated multidisciplinary crisis teams across downtown LRT concourses following renewed rider safety reports and union appeals for transit intervention.\n\n## Security Force Expansion and Platform Patrols\n\nThe deployment elevates the city's active transit peace officer contingent to 126 full-time officers, fulfilling council's multi-year budget allocation to expand dedicated transit security by 30 officers over previous baseline levels. The expanded deployment prioritizes high-volume transit hubs including Central, Churchill, University, and Coliseum stations during evening commuter peaks.\n\nUniformed officers are paired directly with Community Outreach Teams staffed by social workers from the Bent Arrow Traditional Healing Society, providing trauma-informed outreach, emergency shelter intake referrals, and addiction support services directly to individuals sheltering in station concourses.\n\n## Divergence in Safety Metrics and Rider Perception\n\nWhile Edmonton Police Service (EPS) incident tracking indicates violent crimes in transit facilities have moderated by 8% year-over-year, public feedback and transit operator grievances highlight persistent social disorder, open drug use, and feelings of vulnerability among passengers. Over 1,200 rider surveys submitted during summer public consultations noted reluctance to use evening LRT service without visible uniformed security personnel.\n\n## Intergovernmental Funding and City Council Response\n\nMayor Amarjeet Sohi and the Community and Public Services Committee reiterated calls for increased provincial funding from Alberta Health and Mental Health and Addiction services, arguing that municipal transit budgets cannot indefinitely bear the financial burden of regional social service shortfalls. Council will review preliminary outcomes from the expanded deployment during its September 15 transit oversight hearing.",
+    seoTitle: "Edmonton Expands Transit Security and Outreach on LRT Network | Choseno",
+    metaDescription: "Edmonton City Council expands transit peace officer patrols to 126 officers and pairs security with outreach teams across LRT stations to tackle safety concerns.",
+    tags: [
+      "Edmonton",
+      "Transit Safety",
+      "ETS",
+      "LRT",
+      "Public Safety",
+      "Alberta",
+      "Amarjeet Sohi"
+    ],
+    tweet: "Edmonton City Council deploys additional transit peace officers and integrated crisis teams across LRT stations to address passenger safety concerns and social disorder.",
+    breakingNews: false,
+    author: {
+      name: "Choseno Municipal Affairs Desk",
+      bio: "City hall governance, municipal infrastructure and public safety reporting"
+    },
+    sources: [
+      {
+        label: "CBC Edmonton",
+        url: "https://www.cbc.ca/news/canada/edmonton/edmonton-transit-safety-rider-surveys-peace-officer-deployment-1.7482931"
+      },
+      {
+        label: "Edmonton Journal",
+        url: "https://edmontonjournal.com/news/local-news/edmonton-transit-peace-officers-security-outreach-deployment-august-2026"
+      }
+    ],
+    taggedPoliticianIds: [],
+    taggedPoliticians: [
+      "Amarjeet Sohi"
     ]
   }
 ];
 
-function normalizeText(str) {
+// Helper: Normalize strings for token comparison
+function normalize(str) {
   return (str || '').toLowerCase().replace(/[^a-z0-9]/g, ' ').trim();
 }
 
-function getTokens(str) {
-  return new Set(normalizeText(str).split(/\s+/).filter(w => w.length > 3));
-}
-
-function findDuplicate(incoming, existingList) {
-  const slugMatch = existingList.find(e => e.slug === incoming.slug);
-  if (slugMatch) return { isDup: true, id: slugMatch.id, match: slugMatch, reason: 'Exact slug matched' };
-
-  const incomingUrls = (incoming.sources || []).map(s => s.url).filter(Boolean);
-  for (const existing of existingList) {
-    const existingUrls = (existing.content?.sources || []).map(s => s.url).filter(Boolean);
-    const hasShared = incomingUrls.some(u => existingUrls.includes(u));
-    if (hasShared) {
-      return { isDup: true, id: existing.id, match: existing, reason: 'Source URL matched' };
-    }
-  }
-
-  const incomingDate = new Date(incoming.eventDate || incoming.event_date || incoming.published_at).getTime();
-  const incomingTokens = getTokens(incoming.headline);
-
-  for (const existing of existingList) {
-    const existingDate = new Date(existing.event_date || existing.published_at || 0).getTime();
-    const diffDays = Math.abs(incomingDate - existingDate) / (1000 * 60 * 60 * 24);
-
-    if (diffDays <= 3) {
-      const existingTokens = getTokens(existing.headline);
-      const intersection = [...incomingTokens].filter(t => existingTokens.has(t));
-      const similarity = intersection.length / Math.max(incomingTokens.size, 1);
-
-      if (similarity >= 0.7) {
-        return { isDup: true, id: existing.id, match: existing, reason: `Headline similarity ${Math.round(similarity * 100)}%` };
-      }
-    }
-  }
-
-  return { isDup: false };
-}
-
+// 3. Execution logic
 async function run() {
-  if (articles.length === 0) {
-    console.log('No articles found in the articles array.');
-    return;
-  }
+  console.log(`Starting insertion of ${articles.length} news articles...`);
+  const authHeaders = await getAuthHeaders();
 
-  const authUrl = env.NEXT_PUBLIC_SUPABASE_URL + '/auth/v1/token?grant_type=password';
-  const authRes = await fetch(authUrl, {
-    method: 'POST',
+  // A. Fetch recent articles for deduplication
+  const fetchUrl = `${SUPABASE_URL}/rest/v1/news_articles?select=id,slug,headline,content,event_date,published_at&order=published_at.desc.nullslast&limit=1000`;
+  const fetchRes = await fetch(fetchUrl, {
     headers: {
-      apikey: env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ email: env.admin_un, password: env.admin_pwd })
+      apikey: authHeaders.apikey,
+      Authorization: authHeaders.Authorization
+    }
   });
-  const auth = await authRes.json();
-  if (!auth.access_token) {
-    console.error('Authentication failed:', auth);
+
+  if (!fetchRes.ok) {
+    console.error('Failed to fetch existing articles:', await fetchRes.text());
     process.exit(1);
   }
-  console.log('Authenticated admin:', auth.user.email);
 
-  const headers = {
-    apikey: env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    Authorization: 'Bearer ' + auth.access_token,
-    'Content-Type': 'application/json',
-    Prefer: 'return=representation'
-  };
+  const existingArticles = await fetchRes.json();
+  console.log(`Fetched ${existingArticles.length} existing articles for deduplication check.`);
 
-  const existRes = await fetch(env.NEXT_PUBLIC_SUPABASE_URL + '/rest/v1/news_articles?select=id,slug,headline,event_date,published_at,content&order=published_at.desc.nullslast&limit=1000', { headers });
-  const existingList = (await existRes.json()) || [];
-  console.log(`Loaded ${existingList.length} existing articles for deduplication screening.`);
+  const inserted = [];
+  const skipped = [];
 
-  let successCount = 0;
-  let dupsCount = 0;
+  for (const article of articles) {
+    // Check 1: Exact slug match
+    const slugMatch = existingArticles.find(e => e.slug === article.slug);
+    if (slugMatch) {
+      console.log(`[SKIP] Slug already exists: "${article.slug}"`);
+      skipped.push({ article, reason: 'Duplicate slug' });
+      continue;
+    }
 
-  for (let i = 0; i < articles.length; i++) {
-    const art = articles[i];
-    console.log(`\n[${i + 1}/${articles.length}] Processing "${art.headline}"...`);
+    // Check 2: Canonical source URL match
+    const incomingUrls = (article.sources || []).map(s => s.url);
+    const urlMatch = existingArticles.find(e => {
+      const existingUrls = (e.content?.sources || []).map(s => s.url);
+      return incomingUrls.some(u => existingUrls.includes(u));
+    });
+    if (urlMatch) {
+      console.log(`[SKIP] Shared source URL match with existing article "${urlMatch.slug}": ${article.headline}`);
+      skipped.push({ article, reason: `Shared source URL with ${urlMatch.slug}` });
+      continue;
+    }
 
-    const dupCheck = findDuplicate(art, existingList);
+    // Check 3: Headline token similarity (>= 70%) within +/- 3 days
+    const incomingTokens = new Set(normalize(article.headline).split(/\s+/).filter(w => w.length > 3));
+    const incomingDate = new Date(article.eventDate || article.published_at).getTime();
 
-    const insertPayload = {
-      slug: art.slug,
-      headline: art.headline,
-      summary: art.summary,
-      category: art.category,
-      country: art.country || null,
-      province: art.province || null,
-      status: art.status || 'published',
-      event_date: art.eventDate || art.event_date || new Date().toISOString(),
-      published_at: art.published_at || art.eventDate || new Date().toISOString(),
-      impact_area: art.impactArea || art.impact_area || null,
-      latitude: art.latitude != null ? Number(art.latitude) : null,
-      longitude: art.longitude != null ? Number(art.longitude) : null,
+    const titleMatch = existingArticles.find(e => {
+      const existingDate = new Date(e.event_date || e.published_at).getTime();
+      const diffDays = Math.abs(incomingDate - existingDate) / (1000 * 60 * 60 * 24);
+      if (diffDays > 3) return false;
+
+      const existingTokens = new Set(normalize(e.headline).split(/\s+/).filter(w => w.length > 3));
+      const intersection = [...incomingTokens].filter(t => existingTokens.has(t));
+      const similarity = intersection.length / Math.max(incomingTokens.size, 1);
+      return similarity >= 0.7;
+    });
+
+    if (titleMatch) {
+      console.log(`[SKIP] High headline similarity with "${titleMatch.slug}": ${article.headline}`);
+      skipped.push({ article, reason: `Headline similarity with ${titleMatch.slug}` });
+      continue;
+    }
+
+    // Insert article into news_articles table
+    const payload = {
+      slug: article.slug,
+      headline: article.headline,
+      summary: article.summary,
+      category: article.category,
+      country: article.country,
+      province: article.province,
+      status: article.status || 'published',
+      event_date: article.eventDate,
+      published_at: article.published_at || new Date().toISOString(),
+      impact_area: article.impactArea || 'state',
+      latitude: article.latitude,
+      longitude: article.longitude,
       content: {
-        body: art.body,
-        seoTitle: art.seoTitle,
-        metaDescription: art.metaDescription,
-        tags: art.tags || [],
-        tweet: art.tweet || undefined,
-        breakingNews: Boolean(art.breakingNews),
-        author: art.author,
-        sources: art.sources || []
+        body: article.body || '',
+        sources: article.sources || [],
+        tags: article.tags || [],
+        tweet: article.tweet || '',
+        seoTitle: article.seoTitle || `${article.headline} | Choseno`,
+        metaDescription: article.metaDescription || article.summary,
+        breakingNews: article.breakingNews || false,
+        author: article.author || { name: 'Choseno News Desk', bio: 'Civic and political reporting' },
+        taggedPoliticians: article.taggedPoliticians || []
       }
     };
 
-    let articleId;
-    if (dupCheck.isDup) {
-      articleId = dupCheck.id;
-      dupsCount++;
-      console.log(`  [Deduplication Match: ${dupCheck.reason}] Updating existing article (id: ${articleId})...`);
-      const updateUrl = env.NEXT_PUBLIC_SUPABASE_URL + '/rest/v1/news_articles?id=eq.' + articleId;
-      await fetch(updateUrl, {
-        method: 'PATCH',
-        headers,
-        body: JSON.stringify(insertPayload)
-      });
-    } else {
-      const createUrl = env.NEXT_PUBLIC_SUPABASE_URL + '/rest/v1/news_articles';
-      const createRes = await fetch(createUrl, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(insertPayload)
-      });
-      if (!createRes.ok) {
-        console.error('  Insert error:', await createRes.text());
-        continue;
-      }
-      const created = await createRes.json();
-      articleId = created[0]?.id;
-      if (created[0]) existingList.push(created[0]);
-      console.log(`  Created new article with id: ${articleId}`);
+    const insertUrl = `${SUPABASE_URL}/rest/v1/news_articles`;
+    const insertRes = await fetch(insertUrl, {
+      method: 'POST',
+      headers: {
+        apikey: authHeaders.apikey,
+        Authorization: authHeaders.Authorization,
+        'Content-Type': 'application/json',
+        Prefer: 'return=representation'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!insertRes.ok) {
+      console.error(`[ERROR] Failed to insert article "${article.slug}":`, await insertRes.text());
+      skipped.push({ article, reason: 'DB insert error' });
+      continue;
     }
 
-    // Sync tags and create/update mirrored wall post
-    if (articleId && art.taggedPoliticianIds && art.taggedPoliticianIds.length > 0) {
-      const tagUrl = env.NEXT_PUBLIC_SUPABASE_URL + '/rest/v1/rpc/admin_sync_news_article_tags';
+    const [created] = await insertRes.json();
+    console.log(`[SUCCESS] Inserted article "${created.slug}" (ID: ${created.id})`);
+
+    // Sync politician tags if provided
+    if (article.taggedPoliticianIds && article.taggedPoliticianIds.length > 0) {
+      const tagUrl = `${SUPABASE_URL}/rest/v1/rpc/admin_sync_news_article_tags`;
       const tagRes = await fetch(tagUrl, {
         method: 'POST',
-        headers,
+        headers: {
+          apikey: authHeaders.apikey,
+          Authorization: authHeaders.Authorization,
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
-          p_article_id: articleId,
-          p_politician_ids: art.taggedPoliticianIds
+          p_article_id: created.id,
+          p_politician_ids: article.taggedPoliticianIds
         })
       });
-      if (!tagRes.ok) {
-        console.error('  Tag sync error:', await tagRes.text());
+      if (tagRes.ok) {
+        console.log(`  -> Synced ${article.taggedPoliticianIds.length} politician wall tag(s)`);
       } else {
-        console.log(`  Synced ${art.taggedPoliticianIds.length} politician tags to wall!`);
+        console.warn(`  -> Warning: failed to sync politician tags:`, await tagRes.text());
       }
     }
 
-    // Sync electoral boundary tags from lat/lng
-    if (articleId && insertPayload.latitude != null && insertPayload.longitude != null) {
-      const boundaryUrl = env.NEXT_PUBLIC_SUPABASE_URL + '/rest/v1/rpc/admin_sync_news_article_boundaries';
+    // Sync electoral boundary tags if coordinates provided
+    if (article.latitude && article.longitude) {
+      const boundaryUrl = `${SUPABASE_URL}/rest/v1/rpc/admin_sync_news_article_boundaries`;
       const boundaryRes = await fetch(boundaryUrl, {
         method: 'POST',
-        headers,
-        body: JSON.stringify({ p_article_id: articleId })
+        headers: {
+          apikey: authHeaders.apikey,
+          Authorization: authHeaders.Authorization,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          p_article_id: created.id
+        })
       });
-      if (!boundaryRes.ok) {
-        console.error('  Boundary sync error:', await boundaryRes.text());
+      if (boundaryRes.ok) {
+        console.log(`  -> Synced electoral boundary GIS polygons`);
       } else {
-        const boundaries = await boundaryRes.json();
-        console.log(`  Synced ${Array.isArray(boundaries) ? boundaries.length : 0} electoral boundary tag(s) from lat/lng.`);
+        console.warn(`  -> Warning: failed to sync boundary polygons:`, await boundaryRes.text());
       }
     }
 
-    successCount++;
+    inserted.push(created);
   }
 
-  console.log('\n======================================================');
-  console.log(`Completed: ${successCount} articles processed (${dupsCount} deduplicated/updated).`);
-  console.log('======================================================');
+  console.log('\n=========================================');
+  console.log(`INGESTION COMPLETE: ${inserted.length} inserted, ${skipped.length} skipped.`);
+  console.log('=========================================');
 }
 
 run().catch(console.error);

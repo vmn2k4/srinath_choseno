@@ -110,5 +110,70 @@
   {
     "rank": 106,
     "raw": "106,7.0,\"B.C. Government Deploys $20M Emergency Evacuation Relief Fund for Interior Communities\",Public Safety,\"BC, CA\",\"David Eby\",2026-08-13T19:00:00+00:00,\"Evening News (5:00 PM - 7:00 PM EST)\",\"B.C. Government Deploys $20M Emergency Evacuation Relief Fund for Interior Communities. Read more on Choseno.\",\"High-stakes public safety policy in BC with significant civic impact.\",https://www.choseno.com/news/bc-government-deploys-emergency-wildfire-evacuation-relief,https://www.choseno.com/wall/david-eby"
+  },
+  {
+    "viral_score": "7.0",
+    "headline": "Governor Greg Abbott Announces $1.8B Texas Highway & Logistics Corridor Expansions",
+    "category": "Infrastructure",
+    "jurisdiction": "TX, US",
+    "primary_official": "Greg Abbott",
+    "published_at": "2026-08-14T15:00:00+00:00",
+    "recommended_post_window": "Evening News (5:00 PM - 7:00 PM EST)",
+    "tweet_copy": "Governor Greg Abbott Announces $1.8B Texas Highway & Logistics Corridor Expansions. Read more on Choseno.",
+    "viral_reasoning": "High-stakes infrastructure policy in TX with significant civic impact.",
+    "live_news_url": "https://www.choseno.com/news/greg-abbott-texas-highway-logistics-corridor-expansion-2026",
+    "politician_wall_url": "https://www.choseno.com/wall/greg-abbott"
+  },
+  {
+    "viral_score": "7.0",
+    "headline": "Jean-Yves Duclos Announces $50M Federal Health Research Investment in Quebec City",
+    "category": "Healthcare",
+    "jurisdiction": "QC, CA",
+    "primary_official": "Jean-Yves Duclos",
+    "published_at": "2026-08-14T15:00:00+00:00",
+    "recommended_post_window": "Evening News (5:00 PM - 7:00 PM EST)",
+    "tweet_copy": "Jean-Yves Duclos Announces $50M Federal Health Research Investment in Quebec City. Read more on Choseno.",
+    "viral_reasoning": "High-stakes healthcare policy in QC with significant civic impact.",
+    "live_news_url": "https://www.choseno.com/news/jean-yves-duclos-quebec-biomedical-hub-expansion-2026",
+    "politician_wall_url": "https://www.choseno.com/wall/jean-yves-duclos"
+  },
+  {
+    "viral_score": "7.0",
+    "headline": "Mayor Olivia Chow Advances Toronto 2026 Transit Priority & Streetcar Dedicated Corridors",
+    "category": "Infrastructure",
+    "jurisdiction": "ON, CA",
+    "primary_official": "Olivia Chow",
+    "published_at": "2026-08-14T14:30:00+00:00",
+    "recommended_post_window": "Evening News (5:00 PM - 7:00 PM EST)",
+    "tweet_copy": "Mayor Olivia Chow Advances Toronto 2026 Transit Priority & Streetcar Dedicated Corridors. Read more on Choseno.",
+    "viral_reasoning": "High-stakes infrastructure policy in ON with significant civic impact.",
+    "live_news_url": "https://www.choseno.com/news/mayor-olivia-chow-toronto-transit-priority-streetcar-corridors-2026",
+    "politician_wall_url": "https://www.choseno.com/wall/olivia-chow"
+  },
+  {
+    "viral_score": "7.0",
+    "headline": "Ontario Court of Appeal Upholds Provincial Authority in Road Infrastructure Dispute",
+    "category": "Policy",
+    "jurisdiction": "ON, CA",
+    "primary_official": "Doug Ford",
+    "published_at": "2026-08-14T14:00:00+00:00",
+    "recommended_post_window": "Evening News (5:00 PM - 7:00 PM EST)",
+    "tweet_copy": "Ontario Court of Appeal Upholds Provincial Authority in Road Infrastructure Dispute. Read more on Choseno.",
+    "viral_reasoning": "High-stakes policy policy in ON with significant civic impact.",
+    "live_news_url": "https://www.choseno.com/news/ontario-court-appeal-upholds-ford-government-road-authority",
+    "politician_wall_url": "https://www.choseno.com/wall/doug-ford"
+  },
+  {
+    "viral_score": "7.0",
+    "headline": "BC Accelerates Green Infrastructure Projects with Provincial Funding Boost",
+    "category": "Infrastructure",
+    "jurisdiction": "BC, CA",
+    "primary_official": "David Eby",
+    "published_at": "2026-08-14T11:00:00+00:00",
+    "recommended_post_window": "Evening News (5:00 PM - 7:00 PM EST)",
+    "tweet_copy": "BC Accelerates Green Infrastructure Projects with Provincial Funding Boost. Read more on Choseno.",
+    "viral_reasoning": "High-stakes infrastructure policy in BC with significant civic impact.",
+    "live_news_url": "https://www.choseno.com/news/bc-accelerates-green-infrastructure-funding-2026",
+    "politician_wall_url": "https://www.choseno.com/wall/david-eby"
   }
 ]
