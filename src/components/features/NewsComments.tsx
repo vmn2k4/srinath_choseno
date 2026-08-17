@@ -8,6 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import { getNewsArticleComments, createNewsArticleComment } from "@/lib/services/news";
 import { getSession, onAuthStateChange } from "@/lib/services/auth";
 import { getOwnProfile } from "@/lib/services/profile";
+import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import type { PostWithComments } from "./PostCard";
 import type { User } from "@supabase/supabase-js";
 import Link from "next/link";
@@ -110,8 +111,8 @@ export default function NewsComments({ articleId, articleSlug }: Props) {
               <>
                 {" "}
                 as{" "}
-                <span className="font-mono text-primary/70">
-                  #{ghostId.slice(0, 8)}
+                <span className="font-semibold text-primary/70">
+                  {getGhostDisplayName(ghostId)}
                 </span>
               </>
             ) : null}
@@ -143,8 +144,8 @@ export default function NewsComments({ articleId, articleSlug }: Props) {
             return (
               <div key={post.id} className="pt-3 space-y-1">
                 <div className="flex items-center gap-2 text-xs text-text-muted">
-                  <span className="font-mono text-primary/70">
-                    #{String(post.ghost_id).slice(0, 8)}
+                  <span className="font-semibold text-primary/70">
+                    {getGhostDisplayName(post.ghost_id)}
                   </span>
                   <span className="flex items-center gap-1">
                     <Clock size={10} /> {relativeTime}
