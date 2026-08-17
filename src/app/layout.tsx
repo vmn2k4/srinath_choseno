@@ -10,6 +10,8 @@ import SiteFooter from "@/components/SiteFooter";
 import DebugUserSwitcher from "@/components/dev/DebugUserSwitcher";
 import FakeProductionToggle from "@/components/dev/FakeProductionToggle";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import VercelAnalytics from "@/components/analytics/VercelAnalytics";
+import VercelSpeedInsights from "@/components/analytics/VercelSpeedInsights";
 
 import { SITE_URL } from "@/lib/constants/site";
 
@@ -117,6 +119,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </ThemeProvider>
         </LanguageProvider>
         <GoogleAnalytics />
+        <VercelAnalytics />
+        <VercelSpeedInsights />
       </body>
     </html>
   );
