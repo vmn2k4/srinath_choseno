@@ -80,245 +80,248 @@ async function getAuthHeaders() {
   };
 }
 
-// 2. Article payload to ingest (Master News Collection Run: Tracks A, B & C)
+/// 2. Article payload to ingest (Key Leaders News Collection Run: August 17, 2026 - Evening Cycle)
 const articles = [
   {
-    "slug": "mark-carney-10-billion-gull-island-churchill-falls-clean-energy-package-2026-08-17",
-    "headline": "Prime Minister Mark Carney Commits $10 Billion Federal Guarantee in $70B Eastern Clean Power Corridor",
-    "summary": "Prime Minister Mark Carney confirms a $10 billion federal clean energy financing commitment alongside Newfoundland and Labrador and Quebec leadership to unlock the $70 billion Gull Island and Churchill Falls expansion, adding thousands of megawatts of baseload power to Eastern grids.",
-    "category": "Economy",
-    "country": "CA",
-    "province": "NL",
-    "status": "published",
-    "eventDate": "2026-08-17T17:45:00Z",
-    "published_at": "2026-08-17T18:45:00Z",
-    "impactArea": "country",
-    "latitude": 53.535,
-    "longitude": -64.316,
-    "body": "ST. JOHN'S, NL \u2014 Prime Minister Mark Carney finalized a monumental intergovernmental energy accord in St. John's on Monday, confirming a $10 billion federal financing package through the Canada Infrastructure Bank and federal green loan guarantees to anchor a $70 billion clean electricity corridor across Labrador and Quebec.\n\n## Trilateral Energy Framework and Gull Island Development\n\nThe trilateral agreement between Ottawa, Newfoundland and Labrador Premier Tony Wakeham, and Quebec provincial leadership establishes the binding capital structure to modernize the Churchill Falls hydroelectric station and construct the long-anticipated Gull Island generation facility on the lower Churchill River. Together, the projects are engineered to triple Churchill Falls' generation potential, unlocking over 7,500 megawatts of clean, reliable baseload electricity for Eastern Canada and northeastern U.S. interconnects.\n\nThe $10 billion federal commitment includes low-cost sovereign debt guarantees and direct transmission equity backstops, lowering borrowing costs for provincial utilities Hydro-Qu\u00e9bec and NL Hydro while funding high-voltage direct current (HVDC) transmission lines traversing northern Quebec and the Maritimes.\n\n## Macroeconomic and Employment Impact\n\nIndependent economic modelling released alongside the announcement projects the $70 billion infrastructure corridor will support 23,000 direct and indirect construction and engineering jobs over a 15-year buildout. The development is estimated to contribute $31 billion directly to Canada's gross domestic product through 2040, providing heavy industrial manufacturers in Ontario and Quebec with stable electricity rates insulated from fossil fuel price volatility.\n\n## Legislative Oversight and Environmental Approvals\n\nPrime Minister Carney emphasized that federal environmental assessment panels and joint Indigenous co-ownership agreements with Innu Nation leadership will be prioritized throughout 2027. Bilateral technical teams will deliver final engineering design specifications to parliamentary and provincial oversight committees by December 15, 2026.",
-    "seoTitle": "Carney Commits $10B Federal Financing for $70B Clean Energy Corridor | Choseno",
-    "metaDescription": "Prime Minister Mark Carney confirms $10B in federal financing to unlock the $70B Churchill Falls and Gull Island clean power expansion in Labrador.",
-    "tags": [
-      "Mark Carney",
-      "Churchill Falls",
-      "Gull Island",
-      "Clean Energy",
-      "Hydroelectricity",
-      "Newfoundland and Labrador",
-      "Quebec",
-      "Economy"
-    ],
-    "tweet": "Prime Minister Mark Carney commits 10 billion dollars in federal financing toward a 70 billion dollar clean energy expansion at Churchill Falls and Gull Island.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Energy & Civic Desk",
-      "bio": "Federal clean energy policy, mega-infrastructure and intergovernmental affairs reporting"
-    },
-    "sources": [
-      {
-        "label": "Government of Canada",
-        "url": "https://www.canada.ca/en/natural-resources-canada/news/2026/08/prime-minister-announces-historic-clean-energy-investments-in-labrador-and-quebec.html"
-      },
-      {
-        "label": "CBC News",
-        "url": "https://www.cbc.ca/news/canada/newfoundland-labrador/carney-wakeham-10-billion-clean-energy-gull-island-churchill-falls-1.7482955"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "4bd5cf73-1d03-4fb2-ae1b-2303c2c99737"
-    ],
-    "taggedPoliticians": [
-      "Mark Carney"
-    ]
-  },
-  {
-    "slug": "pierre-poilievre-canada-us-tariffs-softwood-lumber-ultimatum-2026-08-17",
-    "headline": "Pierre Poilievre Demands Removal of U.S. Softwood Lumber Tariffs Ahead of August 19 Trade Deadline",
-    "summary": "Conservative Leader Pierre Poilievre issues a four-point trade ultimatum demanding Prime Minister Mark Carney insist on the complete elimination of U.S. softwood lumber duties and Buy America exemptions in final-hour tariff negotiations with Washington.",
+    "slug": "dominic-leblanc-greer-lutnick-50-percent-tariff-deadline-negotiations-2026-08-17",
+    "headline": "High-Stakes Tariff Countdown: LeBlanc Meets USTR Greer and Lutnick as August 19 Trade Deadline Looms",
+    "summary": "Canada-U.S. Trade Minister Dominic LeBlanc and chief negotiator Janice Charette conclude high-stakes Washington talks with USTR Jamieson Greer and Commerce Secretary Howard Lutnick to avert 50% tariffs on Canadian exports ahead of the August 19 deadline.",
     "category": "Economy",
     "country": "CA",
     "province": "ON",
     "status": "published",
-    "eventDate": "2026-08-17T17:50:00Z",
-    "published_at": "2026-08-17T18:45:00Z",
+    "eventDate": "2026-08-17T22:30:00Z",
+    "published_at": "2026-08-17T23:45:00Z",
     "impactArea": "country",
-    "latitude": 45.4248,
-    "longitude": -75.6997,
-    "body": "OTTAWA, ON \u2014 Conservative Leader Pierre Poilievre held a high-profile press conference on Parliament Hill on Monday, demanding that the federal government reject unilateral concessions and make the permanent elimination of U.S. softwood lumber tariffs a mandatory precondition for any bilateral trade resolution before Wednesday's August 19 tariff deadline.\n\n## Four-Point Trade Ultimatum\n\nFlanked by Conservative Canada-U.S. Relations Critic Shuvaloy Majumdar, Poilievre released a formal policy letter dispatched to Prime Minister Mark Carney and Trade Minister Dominic LeBlanc. The opposition framework outlines four non-negotiable terms for Canadian negotiators in Washington:\n1. Complete elimination of all U.S. countervailing and anti-dumping duties on Canadian softwood lumber, which currently hover near 45%;\n2. Permanent exemption of Canadian steel and aluminum from sectoral import caps and Section 232 levies;\n3. Reaffirmation of tariff-free cross-border automotive manufacturing under the USMCA rules of origin; and\n4. Comprehensive waivers for Canadian contractors and suppliers from federal and municipal 'Buy America' procurement restrictions.\n\nPoilievre criticized the government's negotiating posture, asserting that Canadian officials have repeatedly offered digital services tax adjustments and border enforcement concessions without securing binding protections for forestry workers in British Columbia, Quebec, and New Brunswick.\n\n## Cross-Border Economic Stakes and Sector Exposure\n\nThe standoff comes as Washington prepares to enact 50% across-the-board tariffs on $28 billion in targeted Canadian exports on August 19 unless an executive agreement is finalized. Industry groups, including the Forest Products Association of Canada and Canadian Manufacturers & Exporters, warn that without tariff relief, thousands of mill jobs across rural communities remain acutely vulnerable.\n\n## Parliamentary Debate and Opposition Strategy\n\nPoilievre confirmed that Conservative MPs will demand an emergency debate in the House of Commons upon Parliament's return if tariffs take effect on Wednesday, pledging to introduce statutory measures requiring parliamentary ratification for any major bilateral trade concessions.",
-    "seoTitle": "Pierre Poilievre Issues Softwood Lumber Ultimatum Ahead of Tariffs | Choseno",
-    "metaDescription": "Conservative Leader Pierre Poilievre demands zero tariffs on Canadian softwood lumber as Canada-U.S. trade deadline looms on August 19.",
+    "latitude": 45.4215,
+    "longitude": -75.6972,
+    "body": "WASHINGTON, D.C. — Canada-U.S. Trade Minister Dominic LeBlanc told reporters in Washington on Monday evening that the \"job is not yet done\" following intensive closed-door negotiations with U.S. Trade Representative Jamieson Greer and Commerce Secretary Howard Lutnick, as both nations race against a Wednesday, August 19 deadline to avert sweeping 50 percent punitive tariffs.\n\n## Final-Hour Washington Trade Talks and Tariff Scope\n\nThe emergency bilateral sessions, led by Minister LeBlanc and Canada's chief trade negotiator Janice Charette, were convened to resolve escalating trade friction stemming from President Donald Trump's July 20 executive directive. The proposed 50 percent duties threaten billions of dollars in cross-border commerce, targeting Canadian agricultural goods, manufactured building materials, wine, and consumer products.\n\nU.S. negotiators have maintained pressure on Canada to dismantle provincial restrictions on American alcohol distribution, review supply management quotas in the dairy sector, and adjust North American automotive content ratios. Canadian officials have insisted that any durable trade accord must include reciprocal tariff exemptions and permanent duty relief for Canadian softwood lumber, aluminum, and steel exporters.\n\n## Economic Stakes for Cross-Border Supply Chains\n\nThe Canadian Chamber of Commerce and the National Association of Manufacturers warn that a failure to reach an accord before midnight on August 19 would immediately disrupt integrated supply chains across Ontario, Quebec, Michigan, and New York. Freight logistics operators estimate that 50 percent tariffs would inflate intermediate manufacturing costs by 12 to 18 percent within 45 days, threatening cross-border automotive assembly and consumer retail inventories.\n\n## Prime Ministerial Engagement and Parliamentary Timelines\n\nPrime Minister Mark Carney is scheduled to hold a direct bilateral call with President Trump prior to the Wednesday deadline. Minister LeBlanc confirmed that federal contingency teams have finalized reciprocal tariff schedules, but emphasized that Canada remains focused on securing an ironclad negotiated settlement before statutory enforcement begins.",
+    "seoTitle": "LeBlanc Meets USTR Greer as Aug 19 Tariff Deadline Looms | Choseno",
+    "metaDescription": "Dominic LeBlanc meets USTR Greer and Commerce Secretary Lutnick in Washington in final-hour negotiations to avert 50% U.S. tariffs on Canadian exports.",
     "tags": [
-      "Pierre Poilievre",
-      "Mark Carney",
-      "Trade Policy",
-      "Softwood Lumber",
+      "Dominic LeBlanc",
+      "Jamieson Greer",
+      "Howard Lutnick",
+      "Canada US Trade",
       "Tariffs",
-      "USMCA",
+      "Softwood Lumber",
       "Economy"
     ],
-    "tweet": "Conservative Leader Pierre Poilievre demands the federal government reject trade concessions and secure zero tariffs on Canadian softwood lumber ahead of August 19.",
-    "breakingNews": false,
+    "tweet": "Trade Minister Dominic LeBlanc meets with USTR Jamieson Greer and Commerce Secretary Howard Lutnick in Washington to avert a 50 percent tariff deadline on Canadian exports.",
+    "breakingNews": true,
     "author": {
-      "name": "Choseno Parliamentary Affairs Desk",
-      "bio": "Federal politics, international trade negotiations and opposition oversight reporting"
+      "name": "Choseno Trade & Foreign Affairs Desk",
+      "bio": "Bilateral trade diplomacy, tariff negotiations and North American supply chain reporting"
     },
     "sources": [
       {
-        "label": "Conservative Party of Canada",
-        "url": "https://www.conservative.ca/press-releases/poilievre-calls-for-backbone-in-us-trade-negotiations-demands-end-to-softwood-lumber-tariffs"
+        "label": "Toronto Star",
+        "url": "https://www.thestar.com/politics/federal/leblanc-says-job-not-yet-done-after-meeting-with-greer-lutnick/article_89b21f30-6ca2-11ef-93a1-ef4495cb2e12.html"
       },
       {
-        "label": "National Post",
-        "url": "https://nationalpost.com/news/politics/poilievre-carney-us-trade-tariffs-softwood-lumber-deadline"
+        "label": "CityNews",
+        "url": "https://citynews.ca/2026/08/17/leblanc-greer-lutnick-trade-tariffs-negotiations-washington/"
       }
     ],
     "taggedPoliticianIds": [
-      "a0d8ee32-8927-48bc-9a98-fee27dd02d51"
+      "885e12f5-33d9-42a1-8dc9-b276069da88d"
     ],
     "taggedPoliticians": [
-      "Pierre Poilievre"
+      "Dominic LeBlanc"
     ]
   },
   {
-    "slug": "raul-torrez-new-mexico-meta-942-million-judgment-youth-safety-bills-2026-08-17",
-    "headline": "New Mexico Secures $942 Million Final Judgment Against Meta as AG Ra\u00fal Torrez Drafts Child Safety AI Bills",
-    "summary": "New Mexico Attorney General Ra\u00fal Torrez secures a landmark $942 million court-ordered penalty and public nuisance abatement fund against Meta, simultaneously introducing state legislation to regulate AI chatbot interactions with minors.",
-    "category": "Technology",
-    "country": "US",
-    "province": "NM",
-    "status": "published",
-    "eventDate": "2026-08-17T17:55:00Z",
-    "published_at": "2026-08-17T18:45:00Z",
-    "impactArea": "state",
-    "latitude": 35.687,
-    "longitude": -105.9378,
-    "body": "SANTA FE, NM \u2014 New Mexico Attorney General Ra\u00fal Torrez announced a landmark legal and regulatory victory on Monday following a final state district court order establishing a total financial penalty of $942 million against Meta Platforms Inc. for deceptive practices and public nuisance violations regarding youth safety.\n\n## Judgment Structure and Mandatory Abatement Fund\n\nThe historic $942 million total judgment combines two distinct judicial rulings in New Mexico's state litigation against the social media conglomerate:\n- A $375 million civil penalty awarded by a state jury in March 2026 finding Meta liable for consumer fraud and deceptive trade practices by concealing algorithmic harms from parents and children;\n- A $567 million equitable public nuisance abatement fund finalized this month, requiring Meta to finance statewide mental health clinics, adolescent crisis counseling networks, and school-based digital literacy programs over the next eight years.\n\nIn addition to monetary penalties, the state court issued permanent injunctive relief mandating that Meta disable overnight push notifications for minors, enforce strict age verification mechanisms, and block unverified adult accounts from initiating direct messaging with teenage users in New Mexico.\n\n## Expansion into AI Chatbot and Emerging Tech Regulation\n\nLeveraging the legal victory, Attorney General Torrez unveiled two upcoming state legislative bills drafted in collaboration with legislative leaders in Santa Fe. The proposed statutes expand state consumer protection oversight beyond conventional social feeds to encompass generative artificial intelligence chatbots, conversational companions, and algorithmic recommender engines accessible to minors under 18.\n\nThe legislation will require developers of commercial conversational agents to implement mandatory safety guardrails preventing manipulative emotional conditioning, self-harm discussions, and unmonitored data collection from children.\n\n## Appellate Strategy and National State AG Precedent\n\nMeta issued a formal response stating its intention to appeal the $942 million judgment to the New Mexico Court of Appeals, arguing the penalties exceed statutory caps under state law. However, attorneys general from 42 other states are reviewing the New Mexico ruling as a foundational model for multi-state trial remedies currently underway in federal court in California.",
-    "seoTitle": "New Mexico Wins $942M Meta Judgment as AG Torrez Prepares AI Safety Bills | Choseno",
-    "metaDescription": "New Mexico AG Ra\u00fal Torrez secures a $942M penalty and abatement fund against Meta, unveiling new state legislation targeting AI chatbot child safety.",
-    "tags": [
-      "Ra\u00fal Torrez",
-      "New Mexico",
-      "Meta",
-      "Youth Safety",
-      "Artificial Intelligence",
-      "Technology",
-      "Judiciary"
-    ],
-    "tweet": "New Mexico Attorney General Raul Torrez secures a 942 million dollar judgment against Meta and introduces state legislation restricting AI chatbot interactions with minors.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Tech Policy & Legal Desk",
-      "bio": "Digital privacy, consumer protection and state attorney general litigation reporting"
-    },
-    "sources": [
-      {
-        "label": "Office of the New Mexico Attorney General",
-        "url": "https://www.nmag.gov/news/press-releases/ag-torrez-secures-942-million-judgment-against-meta-advances-youth-ai-safety-legislation"
-      },
-      {
-        "label": "The Washington Post",
-        "url": "https://www.washingtonpost.com/technology/2026/08/17/new-mexico-meta-942-million-penalty-youth-mental-health/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": [
-      "Ra\u00fal Torrez"
-    ]
-  },
-  {
-    "slug": "danielle-smith-alberta-digital-refinery-data-centre-grid-levy-2026-08-17",
-    "headline": "Premier Danielle Smith Advances 'Digital Refinery' Strategy with 2% Grid Levy for Large Alberta Data Centres",
-    "summary": "Premier Danielle Smith champions Alberta's transition toward AI 'digital refineries' to monetize natural gas, outlining a new 2% corporate levy structure for facilities exceeding 75 megawatts while safeguarding provincial power grid stability.",
-    "category": "Technology",
+    "slug": "doug-ford-amo-ottawa-100m-recreation-fund-data-centre-playbook-2026-08-17",
+    "headline": "Ontario Opens $100M Recreation Fund and Enforces Full-Cost Power Rules on Data Centres at AMO Summit",
+    "summary": "Premier Doug Ford opens the $100M Community Sport and Recreation Infrastructure Fund at the AMO Conference in Ottawa and establishes strict full-cost electricity requirements for tech facilities under the Ontario Data Centre Playbook.",
+    "category": "Infrastructure",
     "country": "CA",
-    "province": "AB",
+    "province": "ON",
     "status": "published",
-    "eventDate": "2026-08-17T18:00:00Z",
-    "published_at": "2026-08-17T18:45:00Z",
+    "eventDate": "2026-08-17T21:00:00Z",
+    "published_at": "2026-08-17T23:45:00Z",
     "impactArea": "state",
-    "latitude": 53.5461,
-    "longitude": -113.4938,
-    "body": "EDMONTON, AB \u2014 Premier Danielle Smith articulated Alberta's industrial strategy for high-performance computing on Monday, promoting the expansion of artificial intelligence data centres as 'digital refineries' that convert Alberta's vast natural gas reserves into high-value global compute power while enforcing a new 2% fiscal levy on grid-connected facilities.\n\n## Digital Refineries and Natural Gas Monetization\n\nAddressing municipal delegates and energy executives in Edmonton, Premier Smith framed AI computing clusters as a direct technological evolution of Alberta's resource economy. Under this industrial model, abundant stranded natural gas is converted directly to on-site electricity, powering large-scale AI accelerator farms that export digital compute models rather than raw physical hydrocarbons.\n\nSmith highlighted ongoing development around a proposed $13 billion Meta hyperscale data centre campus in Sturgeon County as an anchor investment. To balance energy growth with residential grid security, Alberta has enacted a dedicated regulatory framework effective December 31, 2026, requiring commercial computing projects exceeding 75 megawatts to pay a 2% grid infrastructure levy, which can be credited against provincial corporate income tax upon achieving verified on-site power generation thresholds.\n\n## Water Conservation and Off-Grid Mandates\n\nAmid public feedback from summer town halls concerning power consumption and municipal water tables, the Alberta Electric System Operator (AESO) has been instructed to fast-track off-grid 'behind-the-meter' generation approvals. Facilities operating self-contained natural gas turbines with carbon capture readiness or closed-loop cooling systems will receive accelerated interconnection permits, ensuring residential consumers do not experience electricity rate spikes.\n\n## Interprovincial Infrastructure Alignment\n\nConcurrently, Premier Smith noted that discussions with Ontario Premier Doug Ford regarding the proposed 3,300-kilometre 'Northern Shield Energy Corridor' from Hardisty to Sarnia remain ongoing, emphasizing that Alberta's dual-track energy approach advances both traditional oil refinery feeds and cutting-edge digital compute infrastructure.",
-    "seoTitle": "Danielle Smith Advances Digital Refinery Strategy in Alberta | Choseno",
-    "metaDescription": "Premier Danielle Smith details Alberta's AI digital refinery strategy, introducing a 2% grid levy on data centres exceeding 75 megawatts.",
+    "latitude": 45.4215,
+    "longitude": -75.6972,
+    "body": "OTTAWA, ON — Premier Doug Ford delivered a wide-ranging address to municipal leaders at the 2026 Association of Municipalities of Ontario (AMO) annual conference in Ottawa on Monday, announcing the immediate launch of a $100 million recreation infrastructure funding intake and detailing operational guidelines for artificial intelligence data centres under Ontario's newly enacted Data Centre Playbook.\n\n## Community Recreation Allocations and Municipal Housing Partnerships\n\nThe $100 million intake represents the latest tranche of Ontario's $500 million Community Sport and Recreation Infrastructure Fund (CSRIF), open to all 444 Ontario municipalities through December 22, 2026. The capital program funds the modernization of community arenas, public pools, active transit corridors, and multi-use athletic centres.\n\nPremier Ford also outlined application timelines for the Canada-Ontario Partnership to Build, a joint $1 billion housing-enabling infrastructure program scheduled to open for municipal submissions on October 29, 2026. The funding specifically targets municipalities that refrain from levying development charges on entry-level residential builds, assisting cities in financing water main extensions and transit arterial upgrades.\n\n## Ontario Data Centre Playbook: No Energy Subsidies\n\nAddressing growing municipal concerns regarding grid reliability and industrial water consumption from large-scale technology campuses, Ford reaffirmed that Ontario will not subsidize energy rates for commercial data centres. Under the provincial Data Centre Playbook:\n\n* **Full Electricity Costs**: High-capacity computing centres must pay 100 percent of their electricity usage rates without provincial utility rebates.\n* **Strict Environmental Thresholds**: Operators must meet stringent acoustic noise limits and closed-loop water cooling conservation metrics.\n* **Community Capital Offsets**: Commercial tech developers must contribute directly to local municipal broadband, road resurfacing, and community amenities.\n\n## Municipal Advocacy and Fiscal Pressures\n\nAMO delegates commended the infrastructure intake but reiterated calls for a comprehensive provincial-municipal fiscal review to address chronic funding gaps in municipal transit systems, paramedic staffing, and social housing portfolios.",
+    "seoTitle": "Doug Ford Opens $100M Recreation Intake at AMO Summit | Choseno",
+    "metaDescription": "Premier Doug Ford launches $100M recreation infrastructure intake and details the Ontario Data Centre Playbook at the AMO municipal conference in Ottawa.",
     "tags": [
-      "Danielle Smith",
-      "Alberta",
+      "Doug Ford",
+      "Ontario",
+      "AMO Conference",
+      "Recreation Infrastructure",
       "Data Centres",
-      "Digital Refineries",
-      "Energy Policy",
-      "Technology",
-      "AESO"
+      "Infrastructure",
+      "Economy"
     ],
-    "tweet": "Premier Danielle Smith advances Albertas digital refinery strategy, implementing a 2 percent grid levy on data centres exceeding 75 megawatts to balance power reliability.",
+    "tweet": "Premier Doug Ford announces a 100 million dollar community recreation funding intake and enforces full-cost electricity rules for data centres at the AMO conference.",
     "breakingNews": false,
     "author": {
-      "name": "Choseno Energy & Technology Desk",
-      "bio": "Western Canadian energy policy, AI compute infrastructure and regulatory strategy reporting"
+      "name": "Choseno Provincial Affairs Desk",
+      "bio": "Ontario legislative affairs, municipal policy and infrastructure development reporting"
     },
     "sources": [
       {
-        "label": "Government of Alberta",
-        "url": "https://www.alberta.ca/release.cfm?xID=91280Danielle-Smith-digital-refineries-data-centre-grid-framework"
+        "label": "Government of Ontario Newsroom",
+        "url": "https://news.ontario.ca/en/release/1004942/ontario-supporting-community-sport-and-recreation-infrastructure-in-municipalities"
       },
       {
-        "label": "Calgary Herald",
-        "url": "https://calgaryherald.com/business/energy/danielle-smith-alberta-data-centres-digital-refinery-meta-investment"
+        "label": "CBC Ottawa",
+        "url": "https://www.cbc.ca/news/canada/ottawa/doug-ford-amo-conference-ottawa-infrastructure-data-centres-1.7482980"
       }
     ],
     "taggedPoliticianIds": [
-      "77d86f33-0e15-46c3-8d2d-dd882a679be7"
+      "26ddb710-1861-4652-b8ed-dcbcc1dd7300"
     ],
     "taggedPoliticians": [
-      "Danielle Smith"
+      "Doug Ford"
     ]
   },
   {
-    "slug": "ron-desantis-florida-primary-eve-gubernatorial-senate-succession-2026-08-17",
-    "headline": "Florida Prepares for Crucial August 18 Primary to Determine Gubernatorial and U.S. Senate Succession",
-    "summary": "On the eve of Florida's pivotal statewide primary election, voters prepare to choose nominees to succeed term-limited Governor Ron DeSantis and fill the vacant U.S. Senate seat previously held by Secretary of State Marco Rubio.",
+    "slug": "gavin-newsom-wildfire-utility-stabilization-refinery-safety-sb966-2026-08-17",
+    "headline": "California Pushes Wildfire Utility Stabilization Package as Administration Scrutinizes Refinery Safety Bill",
+    "summary": "Governor Gavin Newsom advances legislation to stabilize California utility wildfire liability and home insurance availability while scrutinizing Senate Bill 966 refinery regulations and enforcing local housing elements.",
+    "category": "Policy",
+    "country": "US",
+    "province": "CA",
+    "status": "published",
+    "eventDate": "2026-08-17T21:30:00Z",
+    "published_at": "2026-08-17T23:45:00Z",
+    "impactArea": "state",
+    "latitude": 38.5816,
+    "longitude": -121.4944,
+    "body": "SACRAMENTO, CA — In the closing weeks of California's 2026 legislative session, Governor Gavin Newsom's administration has intensified negotiations with legislative leaders to finalize a comprehensive utility liability stabilization framework designed to prevent catastrophic grid bankruptcies and restore solvency to the state's distressed residential property insurance market.\n\n## Wildfire Liability and Grid Modernization Package\n\nThe administration's legislative package establishes revised liability caps for electric utilities operating state-certified wildfire mitigation plans, while injecting additional capitalization into the California Wildfire Fund established under Assembly Bill 1054. The legislation aims to halt the withdrawal of major property insurers from high-risk foothill and mountain counties by standardizing catastrophe modelling and expediting rate-setting procedures through the California Department of Insurance.\n\nConsumer advocacy groups and survivor coalitions have petitioned legislative committees for strict audit covenants to ensure that utility safety investments are prioritized over executive compensation packages before ratepayer-backed liability shields take effect.\n\n## Regulatory Review of Senate Bill 966 and Energy Security\n\nConcurrently, administration officials signaled reservations regarding Senate Bill 966, a legislative measure advancing through the State Assembly that seeks to codify existing petroleum refinery maintenance and process safety regulations. The Newsom administration expressed concern that rigid statutory requirements could restrict operational flexibility during unplanned maintenance outages, driving up retail gasoline price volatility across the West Coast.\n\n## Enforcement of State Housing Element Laws\n\nGovernor Newsom simultaneously directed the California Department of Housing and Community Development (HCD) and the State Attorney General's Office to accelerate enforcement actions against twelve municipal jurisdictions that remain out of compliance with state-mandated Regional Housing Needs Allocation (RHNA) targets, reaffirming the state's intent to withhold discretionary transportation grants from non-compliant cities.",
+    "seoTitle": "Newsom Pushes Wildfire Utility Package in Sacramento | Choseno",
+    "metaDescription": "Governor Gavin Newsom negotiates California wildfire utility liability protections while reviewing refinery safety bill SB 966 in the final legislative stretch.",
+    "tags": [
+      "Gavin Newsom",
+      "California",
+      "Wildfire Insurance",
+      "SB 966",
+      "Housing Element",
+      "Energy Policy",
+      "Policy"
+    ],
+    "tweet": "Governor Gavin Newsom negotiates a landmark wildfire utility liability stabilization framework and intensifies enforcement on municipal housing mandates.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Western States Political Desk",
+      "bio": "California legislative policy, environmental regulation and municipal governance reporting"
+    },
+    "sources": [
+      {
+        "label": "Office of Governor Gavin Newsom",
+        "url": "https://www.gov.ca.gov/2026/08/17/governor-newsom-legislative-priorities-wildfire-resilience-housing/"
+      },
+      {
+        "label": "Los Angeles Times",
+        "url": "https://www.latimes.com/california/story/2026-08-17/newsom-wildfire-utility-package-sacramento-legislative-session"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "400a040b-ee2a-448e-b2e2-1faeea46b718"
+    ],
+    "taggedPoliticians": [
+      "Gavin Newsom"
+    ]
+  },
+  {
+    "slug": "greg-abbott-texas-supreme-court-ten-commandments-big-bend-pause-2026-08-17",
+    "headline": "Supreme Court Petitioned Over Texas Classroom Ten Commandments Mandate as Border Construction Pauses",
+    "summary": "Civil liberties organizations file an emergency petition with the U.S. Supreme Court challenging Texas's public school Ten Commandments mandate, as federal officials pause Big Bend border wall construction for an environmental review.",
+    "category": "Justice",
+    "country": "US",
+    "province": "TX",
+    "status": "published",
+    "eventDate": "2026-08-17T20:45:00Z",
+    "published_at": "2026-08-17T23:45:00Z",
+    "impactArea": "state",
+    "latitude": 30.2672,
+    "longitude": -97.7431,
+    "body": "AUSTIN, TX — A coalition of constitutional advocacy organizations and public school parents filed an emergency petition with the Supreme Court of the United States on Monday, requesting an expedited review of a Texas statute signed by Governor Greg Abbott that mandates the prominent display of the Ten Commandments in every public elementary and secondary classroom across the state.\n\n## Constitutional Challenge to Senate Bill 1511\n\nThe legal filing challenges the Fifth Circuit Court of Appeals' recent ruling that declined to issue a preliminary injunction against Texas Senate Bill 1511. Petitioners argue that the mandatory poster requirement violates the Establishment Clause of the First Amendment, citing longstanding federal precedent in *Stone v. Graham*.\n\nGovernor Abbott and Texas Attorney General Ken Paxton have defended the statute as a constitutional acknowledgment of historical legal traditions. The Texas Education Agency has instructed all 1,200 public school districts to implement compliant 16-by-20-inch displays prior to the commencement of the 2026–2027 academic year.\n\n## Federal Pause on Big Bend Border Construction\n\nSeparately, U.S. Customs and Border Protection (CBP) and Department of the Interior officials announced a temporary operational pause on border security barrier construction traversing portions of Big Bend National Park. The administrative halt was ordered to facilitate an on-site environmental assessment by federal engineers following concerns raised by park geologists regarding natural wildlife migration corridors along the Rio Grande basin.\n\nGovernor Abbott's office criticized the federal construction delay, maintaining that Texas will continue deploying National Guard personnel and tactical marine barriers under Operation Lone Star to secure unincorporated border sectors.",
+    "seoTitle": "Supreme Court Petitioned Over Texas Ten Commandments Law | Choseno",
+    "metaDescription": "Civil liberties groups ask Supreme Court to halt Texas's classroom Ten Commandments law as federal officials pause Big Bend border wall construction.",
+    "tags": [
+      "Greg Abbott",
+      "Texas",
+      "Supreme Court",
+      "First Amendment",
+      "Ten Commandments",
+      "Border Security",
+      "Justice"
+    ],
+    "tweet": "Civil liberties groups petition the U.S. Supreme Court over Texas's classroom Ten Commandments mandate as federal authorities pause Big Bend border wall construction.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Legal & Constitutional Affairs Desk",
+      "bio": "Federal courts, constitutional jurisprudence and state legislative review reporting"
+    },
+    "sources": [
+      {
+        "label": "Texas Tribune",
+        "url": "https://www.texastribune.org/2026/08/17/texas-ten-commandments-supreme-court-appeal-abbott-paxton/"
+      },
+      {
+        "label": "The Hill",
+        "url": "https://thehill.com/regulation/court-battles/texas-ten-commandments-classroom-supreme-court-petition-2026/"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "82d5f358-a471-4b4d-b052-843ef9934ad3"
+    ],
+    "taggedPoliticians": [
+      "Greg Abbott"
+    ]
+  },
+  {
+    "slug": "john-thune-chuck-schumer-senate-sanctions-recess-confirmations-2026-08-17",
+    "headline": "Senate Floor Battles Intensify Over Foreign Sanctions Package and Pending Executive Confirmations",
+    "summary": "Senate Majority Leader John Thune and Democratic Leader Chuck Schumer navigate floor negotiations over mandatory secondary sanctions, executive nominations, and federal spending bills as recess deadlines approach.",
     "category": "Elections",
     "country": "US",
-    "province": "FL",
+    "province": "DC",
     "status": "published",
-    "eventDate": "2026-08-17T18:05:00Z",
-    "published_at": "2026-08-17T18:45:00Z",
-    "impactArea": "state",
-    "latitude": 30.4383,
-    "longitude": -84.2807,
-    "body": "TALLAHASSEE, FL \u2014 Florida election supervisors across 67 counties completed final voting machine logic testing on Monday as more than 1.8 million mail-in and early in-person ballots were logged ahead of Tuesday's August 18 statewide primary election, which will decide the party nominees vying to succeed term-limited Governor Ron DeSantis.\n\n## High-Stakes Gubernatorial Primary\n\nWith Governor DeSantis barred by Florida's constitution from seeking a third consecutive four-year term, competitive primary battles have unfolded in both major parties. On the Republican ballot, candidates have sought to align with the Governor's conservative policy record on deregulation, education reform, and capital punishment enforcement while navigating endorsements from former President Donald Trump.\n\nDemocratic contenders have centered campaigns on property insurance affordability, public utility rate relief, and abortion access amendments that appeared on recent statewide ballots.\n\n## U.S. Senate Special Election Nomination\n\nVoters will simultaneously select candidates in a high-stakes special election primary to fill the remainder of the U.S. Senate term previously held by Marco Rubio, who resigned following his appointment as U.S. Secretary of State. Governor DeSantis appointed Florida Attorney General Ashley Moody on an interim basis to serve until voters elect a permanent senator in November.\n\n## Executive Actions and Capital Punishment Scrutiny\n\nThe primary eve comes amidst intense scrutiny surrounding executive clemency. The Florida Conference of Catholic Bishops and criminal justice organizations submitted formal petitions urging Governor DeSantis to grant clemency to death row inmate William Silvia, scheduled for execution on August 18. DeSantis's office confirmed the administration will not stay the lawful sentence, maintaining the state's longstanding capital punishment enforcement record.\n\nFlorida polling precincts open Tuesday at 7:00 a.m. and close at 7:00 p.m. local time, with early results expected shortly thereafter.",
-    "seoTitle": "Florida Primary Preview: Gubernatorial and U.S. Senate Succession | Choseno",
-    "metaDescription": "Florida voters prepare for the August 18 primary election to decide party nominees for Governor and U.S. Senate special election.",
+    "eventDate": "2026-08-17T21:15:00Z",
+    "published_at": "2026-08-17T23:45:00Z",
+    "impactArea": "country",
+    "latitude": 38.8899,
+    "longitude": -77.009,
+    "body": "WASHINGTON, D.C. — Senate Majority Leader John Thune and Senate Democratic Leader Chuck Schumer engaged in intense floor negotiations on Capitol Hill on Monday evening over legislative calendars and procedural agreements for high-priority national security sanctions, executive judicial appointments, and pending federal spending authorizations.\n\n## Sanctions Framework and Legislative Deliberations\n\nAt the center of cross-aisle deliberations is a comprehensive secondary sanctions package targeting foreign maritime logistics companies and financial intermediaries circumventing energy trade embargoes. While bipartisan consensus exists regarding the strategic imperative to curtail unauthorized petroleum transfers, negotiations remain contentious regarding presidential waiver authorities and statutory review intervals for congressional oversight committees.\n\nLeader Thune indicated that the Senate may curtail its planned calendar recess to conclude floor debate and process critical statutory packages, emphasizing that defense authorizations and judicial vacancies require decisive floor action before fiscal deadlines elapse.\n\n## Executive Nominations and Judicial Review\n\nDemocratic Leader Schumer underscored that the minority caucus will insist on regular-order committee hearings and full floor debate for pending executive cabinet appointments and federal appellate judicial nominees. Schumer cautioned against procedural shortcuts, asserting that thorough congressional vetting is essential for nominees assuming key regulatory portfolios across the Department of Justice and financial regulatory commissions.\n\n## Appropriations Timelines and Fiscal Milestones\n\nBilateral discussions between Senate and House leadership are scheduled to continue throughout the week to establish top-line discretionary spending targets for fiscal year 2027 appropriations bills. Both caucuses aim to avert stopgap continuing resolutions by finalizing subcommittee allocations before the September 30 statutory budget deadline.",
+    "seoTitle": "Senate Debates Sanctions Package and Nominations | Choseno",
+    "metaDescription": "Senate leaders John Thune and Chuck Schumer negotiate floor votes on secondary foreign sanctions and executive confirmations before recess.",
     "tags": [
-      "Ron DeSantis",
-      "Florida",
-      "Elections",
+      "John Thune",
+      "Chuck Schumer",
       "U.S. Senate",
-      "Gubernatorial Primary",
-      "Ashley Moody",
-      "Politics"
+      "Foreign Sanctions",
+      "Executive Nominations",
+      "Congress",
+      "Elections"
     ],
-    "tweet": "Florida voters head to the polls on August 18 for statewide primaries to select party nominees for the governors office and the open U.S. Senate special election.",
+    "tweet": "Senate leaders John Thune and Chuck Schumer hold high-stakes floor negotiations over foreign energy sanctions, executive nominations, and federal spending bills.",
     "breakingNews": false,
     "author": {
-      "name": "Choseno Elections & Political Desk",
-      "bio": "State electoral politics, gubernatorial transitions and primary campaign reporting"
+      "name": "Choseno Congressional Affairs Desk",
+      "bio": "Capitol Hill legislative proceedings, Senate leadership and federal governance reporting"
     },
     "sources": [
       {
-        "label": "Florida Division of Elections",
-        "url": "https://dos.fl.gov/elections/for-voters/election-dates/2026-primary-election-overview"
+        "label": "Politico",
+        "url": "https://www.politico.com/news/2026/08/17/senate-thune-schumer-sanctions-nominations-recess-negotiations-00174829"
       },
       {
-        "label": "Miami Herald",
-        "url": "https://www.miamiherald.com/news/politics-government/state-politics/article291039104.html"
+        "label": "Roll Call",
+        "url": "https://rollcall.com/2026/08/17/senate-floor-calendar-sanctions-appropriations-thune-schumer/"
       }
     ],
     "taggedPoliticianIds": [
-      "fc437e5a-1d25-4904-959e-88add7928b50"
+      "225f93a9-1ff0-4ccb-b8db-a4ff0e506873",
+      "b0e16d47-d85a-4702-8e73-7187c8c2dd2d"
     ],
     "taggedPoliticians": [
-      "Ron DeSantis"
+      "John Thune",
+      "Chuck Schumer"
     ]
   }
 ];
