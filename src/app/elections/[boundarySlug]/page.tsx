@@ -367,8 +367,14 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
     return `${top.full_name} serves as ${top.role_title} for ${districtName}`;
   }
 
+  // TS doesn't carry the `if (!shape) notFound()` null-narrowing above into
+  // a nested function declaration's body (only into loops/blocks in the
+  // same scope) -- capture the narrowed value once here so branchSentence
+  // can close over a definitely-non-null string instead of `shape` itself.
+  const shapeName = shape.name;
+
   function branchSentence(branch: RepresentationBranch): string | null {
-    const districtName = branch.districtName || shape.name;
+    const districtName = branch.districtName || shapeName;
     const bottomNames = branch.bottom.map((h) => `${h.full_name} (${h.role_title})`);
 
     if (branch.top && bottomNames.length > 0) {
