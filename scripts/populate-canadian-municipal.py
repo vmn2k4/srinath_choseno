@@ -23,6 +23,35 @@ def normalize_name(s):
     s = re.sub(r'[^a-z0-9]+', ' ', s)
     return s.strip()
 
+PROVINCES = [
+    'British Columbia', 'Alberta', 'Saskatchewan', 'Manitoba', 'Ontario',
+    'Quebec', 'New Brunswick', 'Nova Scotia', 'Prince Edward Island',
+    'Newfoundland and Labrador', 'Yukon', 'Northwest Territories', 'Nunavut',
+]
+
+def extract_csd_code(rep):
+    # OpenNorth's boundary_url is /boundaries/census-subdivisions/<code>/ for
+    # about half of municipal reps (some use custom ward-level boundary sets
+    # instead) -- when present it's an exact StatCan CSD code, the same
+    # numbering our map_shapes.code column uses for the 2021 Census
+    # Subdivisions upload. Its first 2 digits ARE the province/territory, so
+    # matching on it sidesteps the whole cross-province name-collision
+    # problem entirely instead of just scoping around it.
+    bu = ((rep.get('related') or {}).get('boundary_url')) or ''
+    m = re.search(r'census-subdivisions/(\d+)/?$', bu)
+    return m.group(1) if m else None
+
+def extract_province(rep):
+    # representative_set_name is inconsistently formatted -- some carry the
+    # province ("British Columbia municipal councils"), many don't ("Stratford
+    # Town Council", "Clarington Municipal Council") -- so this is a
+    # best-effort secondary signal, not a guarantee every rep gets scoped.
+    set_name = (rep.get('representative_set_name') or '')
+    for prov in PROVINCES:
+        if prov.lower() in set_name.lower():
+            return prov
+    return None
+
 def sql_val(val):
     if val is None or val == '':
         return 'NULL'
@@ -35,7 +64,13 @@ def main():
         "psql",
         "postgresql://postgres:pa.8tX5%2BHh%2FGZn2@db.qlzyfdwrkcxyqapewxwg.supabase.co:5432/postgres",
         "-t", "-A", "-F", "\t",
-        "-c", "SELECT id, name FROM map_shapes WHERE country = 'Canada' AND boundary_type = 'Municipal';"
+        "-c", """
+            SELECT ms.id, ms.name, ms.code, p.name
+            FROM map_shapes ms
+            LEFT JOIN shape_containers sc ON sc.map_shape_id = ms.id
+            LEFT JOIN map_shapes p ON p.id = sc.container_shape_id AND p.boundary_type = 'Province'
+            WHERE ms.country = 'Canada' AND ms.boundary_type = 'Municipal' AND ms.retired_at IS NULL;
+        """
     ]
     res = subprocess.run(psql_cmd, capture_output=True, text=True)
     if res.returncode != 0:
@@ -43,7 +78,16 @@ def main():
         sys.exit(1)
 
     muni_shapes = {}
-    norm_to_id = {}
+    code_to_id = {}
+    # (province, normalized name) -> shape_id -- primary name-based match
+    province_norm_to_id = {}
+    # normalized name -> list of shape_ids -- last-resort fallback, only
+    # used when a name is unambiguous nationally (exactly one candidate).
+    # Names collide across provinces constantly (Victoria: BC/MB/NL/PEI;
+    # Woodstock: NB/NL/ON; Richmond, Hope, Armstrong all repeat too) --
+    # guessing among multiple candidates is exactly what silently attached
+    # real BC officeholders to other provinces' shapes before this fix.
+    norm_to_ids = {}
     for line in res.stdout.strip().split('\n'):
         if not line.strip():
             continue
@@ -51,10 +95,16 @@ def main():
         if len(parts) >= 2:
             s_id = int(parts[0])
             s_name = parts[1].strip()
+            s_code = parts[2].strip() if len(parts) > 2 else ''
+            s_province = parts[3].strip() if len(parts) > 3 else ''
             muni_shapes[s_id] = s_name
+            if s_code:
+                code_to_id[s_code] = s_id
             norm = normalize_name(s_name)
-            if norm and norm not in norm_to_id:
-                norm_to_id[norm] = s_id
+            if norm:
+                norm_to_ids.setdefault(norm, []).append(s_id)
+                if s_province:
+                    province_norm_to_id[(s_province, norm)] = s_id
 
     print(f"Loaded {len(muni_shapes)} Canadian Municipal shapes from database.")
 
@@ -108,21 +158,32 @@ def main():
         clean_set = re.sub(r'\s+council$', '', clean_set, flags=re.IGNORECASE).strip()
 
         target_shape_id = None
-
-        # Try district_name norm
         norm_dist = normalize_name(dist_name)
         norm_set = normalize_name(clean_set)
 
-        if norm_dist in norm_to_id:
-            target_shape_id = norm_to_id[norm_dist]
-        elif norm_set in norm_to_id:
-            target_shape_id = norm_to_id[norm_set]
+        # Tier 1: exact StatCan census-subdivision code -- unambiguous by
+        # construction, sidesteps name collisions entirely. Available for
+        # roughly half of reps (OpenNorth uses custom ward-level boundary
+        # sets, not a plain CSD reference, for the rest).
+        csd_code = extract_csd_code(rep)
+        if csd_code and csd_code in code_to_id:
+            target_shape_id = code_to_id[csd_code]
         else:
-            # Fallback substring match
-            for norm_k, s_id in norm_to_id.items():
-                if norm_k and (norm_k == norm_dist or norm_k == norm_set or norm_k in norm_dist or norm_dist in norm_k):
-                    target_shape_id = s_id
-                    break
+            # Tier 2: province-scoped name match, when representative_set_name
+            # carries a recognizable province (not all of them do).
+            province = extract_province(rep)
+            if province:
+                target_shape_id = province_norm_to_id.get((province, norm_dist)) or province_norm_to_id.get((province, norm_set))
+            # Tier 3: unscoped exact name match, ONLY if that name is
+            # unambiguous nationally (exactly one shape has it) -- no
+            # substring fallback. A name with multiple candidates and no
+            # province signal is left unmatched rather than guessed at.
+            if not target_shape_id:
+                for norm_k in (norm_dist, norm_set):
+                    candidates = norm_to_ids.get(norm_k) or []
+                    if len(candidates) == 1:
+                        target_shape_id = candidates[0]
+                        break
 
         if target_shape_id:
             matched_count += 1

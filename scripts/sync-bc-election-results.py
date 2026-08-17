@@ -168,9 +168,29 @@ def main():
 
     rows = fetch_election_rows(args.year)
 
-    print("Loading map_shapes (Municipal + School District, Canada)...")
-    muni_shapes = run_sql("SELECT id, name FROM map_shapes WHERE country='Canada' AND boundary_type='Municipal';")
-    school_shapes = run_sql("SELECT id, name, code FROM map_shapes WHERE country='Canada' AND boundary_type='School District';")
+    # Scoped to British Columbia specifically -- NOT "WHERE country='Canada'"
+    # unscoped. Municipality names collide across provinces constantly
+    # (Victoria: BC/MB/NL/PEI; Woodstock: NB/NL/ON; Richmond, Hope,
+    # Armstrong, Mackenzie all repeat too) and this feed is BC-only by
+    # definition, so any name that happened to resolve to a different
+    # province's shape was always wrong. Confirmed this had already silently
+    # written real BC officeholders (Hope, Richmond, Armstrong, and via the
+    # substring-fallback match below, Mackenzie -> Alberta's "Mackenzie
+    # County") onto other provinces' shapes -- see
+    # scripts/fix-bc-cross-province-misassignment.sql for the cleanup.
+    print("Loading map_shapes (Municipal + School District, British Columbia only)...")
+    muni_shapes = run_sql("""
+        SELECT ms.id, ms.name FROM map_shapes ms
+        JOIN shape_containers sc ON sc.map_shape_id = ms.id
+        JOIN map_shapes p ON p.id = sc.container_shape_id AND p.name = 'British Columbia'
+        WHERE ms.boundary_type = 'Municipal' AND ms.retired_at IS NULL;
+    """)
+    school_shapes = run_sql("""
+        SELECT ms.id, ms.name, ms.code FROM map_shapes ms
+        JOIN shape_containers sc ON sc.map_shape_id = ms.id
+        JOIN map_shapes p ON p.id = sc.container_shape_id AND p.name = 'British Columbia'
+        WHERE ms.boundary_type = 'School District' AND ms.retired_at IS NULL;
+    """)
 
     muni_by_norm = {normalize_municipal_name(name): sid for sid, name in muni_shapes}
     school_by_norm = {normalize_school_name(name): sid for sid, name, code in school_shapes}
@@ -284,8 +304,19 @@ SET is_current = false, term_ended_at = CURRENT_DATE, updated_at = NOW()
 WHERE oh.is_current = true
   AND EXISTS (SELECT 1 FROM staging_bc_winners s WHERE s.map_shape_id = oh.map_shape_id)
   AND NOT EXISTS (
+    -- Matched on (shape, name, role), not just (shape, name): retiring by
+    -- name alone left a stale row behind whenever a re-run's fresh data
+    -- confirmed someone in a DIFFERENT role than an old row already on
+    -- file for them (e.g. Hope BC had Victor Smith as both a stale
+    -- Councillor row and the freshly-confirmed Mayor -- the Councillor
+    -- row survived because "Victor Smith" matched *something* in the
+    -- fresh set, just not that role). Matching on role too still handles
+    -- genuine role changes correctly: the old role's row won't be in the
+    -- fresh set for that role and gets retired, the new role gets its own
+    -- inserted row from the upsert below.
     SELECT 1 FROM staging_bc_winners s
     WHERE s.map_shape_id = oh.map_shape_id AND s.full_name = oh.full_name
+      AND s.election_role_type_id = oh.election_role_type_id
   );
 """)
 

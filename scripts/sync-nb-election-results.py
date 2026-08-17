@@ -293,8 +293,16 @@ SET is_current = false, term_ended_at = CURRENT_DATE, updated_at = NOW()
 WHERE oh.is_current = true
   AND EXISTS (SELECT 1 FROM staging_nb_winners s WHERE s.map_shape_id = oh.map_shape_id)
   AND NOT EXISTS (
+    -- Matched on (shape, name, role), not just (shape, name) -- see the
+    -- identical fix in sync-bc-election-results.py for why: matching by
+    -- name alone leaves a stale row behind whenever fresh data confirms
+    -- someone in a different role than an old row already had (a role
+    -- change retires the old role's row and the new role gets its own
+    -- inserted row, same as this would do anyway -- there's no case this
+    -- makes worse).
     SELECT 1 FROM staging_nb_winners s
     WHERE s.map_shape_id = oh.map_shape_id AND s.full_name = oh.full_name
+      AND s.election_role_type_id = oh.election_role_type_id
   );
 """)
 
