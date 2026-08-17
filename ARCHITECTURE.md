@@ -2118,3 +2118,22 @@ Every elected official in Choseno requires:
 
 **Why**: `RepresentationBranchTree.tsx` and boundary directory widgets only render the `"View Wall ->"` button if `node.ghost_id` exists (derived from `profiles.current_ghost_id`). Without this link, the official card renders in a truncated contact-only state without an interactive wall, breaking claiming and constituent engagement. Additionally, if the newly added role is the head of the branch (e.g. `Board Chair`, `Mayor`), it MUST be added to `HEAD_ROLE_TITLES` in `FindMyDistrictClient.tsx` and `src/app/elections/[boundarySlug]/page.tsx` so it renders at the top of the hierarchy tree.
 
+---
+
+## 33. News Ingestion, Verification & Directives Pipeline (Added 2026-08-17)
+
+Choseno employs a structured, multi-tier news ingestion pipeline designed to ingest substantive (350–750 words), verified political and civic news articles into the `news_articles` table, link them to politician profile walls, resolve them to PostGIS electoral boundary polygons, and generate ranked social distribution files.
+
+### 33.1 News Directives Suite (`NewsPrompts/`)
+All news collection operations are governed by standardized directives located in `NewsPrompts/`:
+1. **`NewsPrompts/NewsCollectionPrompt.md`**: Broad civic news directive focusing on wire feeds (AP, Reuters, CP), executive councils, and provincial/state portals (up to 100 articles/batch).
+2. **`NewsPrompts/KeyLeadersNewsCollectionPrompt.md`**: Targeted collection directive focused on the 30 designated Key Political Leaders in Canada and the U.S. with pre-mapped UUIDs for instant wall mirroring.
+3. **`NewsPrompts/UniversalWebNewsCollectionPrompt.md`**: Broad-spectrum Google and deep-web discovery directive spanning 50 U.S. states, 10 provinces, 100+ cities, and court dockets with dynamic politician profile lookup and tagging.
+
+### 33.2 Ingestion Engine & Execution (`scripts/insert-news-batch.js`)
+The sanctioned ingestion engine is `scripts/insert-news-batch.js`. It performs:
+- **Deduplication Screening**: Compares candidate articles against the 1000 most recent database rows across three axes: exact slug match, canonical source URL overlap, and headline token overlap (≥70%) within a ±3-day window. Colliding articles are `PATCH`ed with new information rather than creating duplicate rows.
+- **Politician Wall Synchronization**: Calls `admin_sync_news_article_tags(p_article_id, p_politician_ids)` to create mirrored wall post rows in the `posts` table backdated to the article's `event_date`.
+- **Geographic Electoral Boundary Synchronization**: Calls `admin_sync_news_article_boundaries(p_article_id)` to resolve the article's `latitude`/`longitude` against PostGIS boundary polygons (`news_article_boundaries`), automatically populating local riding and state feeds.
+- **Virality Ranking & Archive Tracking**: Prepend new stories to `batch-ranked-news.csv` (12-column format tracking top-100 ranked stories) and saves any overflow (#101+) to `scripts/overflow-news-batch.json`.
+

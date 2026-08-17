@@ -55,10 +55,18 @@ Complete guide to all Choseno documentation — architecture, features, data pip
 ### Content & Moderation
 
 - **[COMMENTS_AND_MODERATION.md](COMMENTS_AND_MODERATION.md)** — Threaded posts/comments, user flags, admin content review, hidden content log
+- **[ADDING_AND_TAGGING_NEWS_ARTICLES.md](ADDING_AND_TAGGING_NEWS_ARTICLES.md)** — Editorial news workflow, deduplication rules, electoral boundary mapping, and live wall syncing
 - **[NEWS_TAGGING.md](NEWS_TAGGING.md)** — Editorial news articles, tagging to politicians/parties, scheduling
-- **[NEWS_GENERATION_GUIDE.md](NEWS_GENERATION_GUIDE.md)** — Automated news generation with Grok AI, schema validation, batch scripts
+- **[NEWS_GENERATION_GUIDE.md](NEWS_GENERATION_GUIDE.md)** — Automated news generation, schema validation, batch scripts
 - **[GEMINI_NEWS_SCRAPING_STANDARD.md](GEMINI_NEWS_SCRAPING_STANDARD.md)** — Definitive operational standard & SOP for scraping, research, 400-750 word depth, statutory/dollar numbers, exact canonical deep links, high-CTR `tweet` hooks, and direct Supabase insertion
 - **[SOCIAL_SHARING_AND_IMAGE_GENERATION.md](SOCIAL_SHARING_AND_IMAGE_GENERATION.md)** — Dynamic Edge OpenGraph card generation (`@vercel/og`), right-floated editorial text wrap, 1-click social sharing (X, WhatsApp, LinkedIn), and smart topic hashtag extraction
+
+### News Directives Suite (`NewsPrompts/`)
+
+- **[`NewsPrompts/NewsCollectionPrompt.md`](../NewsPrompts/NewsCollectionPrompt.md)** — Standard high-impact civic & political news collection directive across all Canadian & U.S. jurisdictions (up to 100 stories/batch)
+- **[`NewsPrompts/KeyLeadersNewsCollectionPrompt.md`](../NewsPrompts/KeyLeadersNewsCollectionPrompt.md)** — Targeted news collection directive for the 30 Key Political Leaders in the U.S. and Canada with pre-mapped UUIDs for instant wall mirroring
+- **[`NewsPrompts/UniversalWebNewsCollectionPrompt.md`](../NewsPrompts/UniversalWebNewsCollectionPrompt.md)** — Broad-spectrum Google and deep web search directive covering all 50 states, 10 provinces, 100+ cities, and court dockets with dynamic politician profile tagging
+- **[`NewsPrompts/README.md`](../NewsPrompts/README.md)** — Overview and comparison of the 3 news collection directives and unified ingestion pipeline
 
 ### Engagement & Analytics
 

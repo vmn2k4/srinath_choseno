@@ -1,37 +1,53 @@
-# Automated News Generation for Politicians — Setup & Usage Guide
+# News Ingestion & Generation Architecture Guide
 
 ## Overview
 
-This system generates news articles about politicians using Grok AI, with **strict JSON validation** before any database operations. Articles are automatically tagged to the politician's profile and appear on their wall.
+Choseno operates a high-integrity, automated and editorial news ingestion system. Every published article undergoes strict structural validation, deduplication screening against existing database records, and canonical source verification before insertion into the `news_articles` table.
 
-### The Complete Flow
+Articles are automatically linked to politician profiles (`news_article_politicians`) to populate politician wall feeds (`/wall/[slug]`), and resolved against PostGIS electoral boundary polygons (`news_article_boundaries`) to power localized riding and state feeds.
+
+---
+
+## News Prompts Directive Suite (`NewsPrompts/`)
+
+For AI-assisted news discovery and editorial synthesis, three standardized directives in the [`NewsPrompts/`](../NewsPrompts/README.md) directory govern different ingestion operations:
+
+1. **[`NewsPrompts/NewsCollectionPrompt.md`](../NewsPrompts/NewsCollectionPrompt.md)** — General high-impact civic & political news ingestion from wire services, executive councils, and provincial/state portals (up to 100 stories/batch).
+2. **[`NewsPrompts/KeyLeadersNewsCollectionPrompt.md`](../NewsPrompts/KeyLeadersNewsCollectionPrompt.md)** — Targeted news collection for the 30 Key Political Leaders in Canada and the U.S. with pre-mapped UUIDs for instant wall mirroring.
+3. **[`NewsPrompts/UniversalWebNewsCollectionPrompt.md`](../NewsPrompts/UniversalWebNewsCollectionPrompt.md)** — Broad-spectrum Google and deep web search across all 50 states, 10 provinces, 100+ cities, and court dockets with dynamic politician profile lookup and tagging.
+
+---
+
+### The Complete Ingestion Flow
 
 ```
-┌──────────────────────┐
-│ Grok API             │ ← Fetch news + generate JSON
-└──────────────────────┘
-         ↓
-┌──────────────────────────────────────┐
-│ STRICT JSON Validation               │ ← Validate schema, tags, required fields
-│ (grokNewsGeneration.ts)              │
-└──────────────────────────────────────┘
-         ↓
-      (VALID?)
-    /      \
-  YES      NO → Log errors, abort
-  ↓
-┌──────────────────────────────────────┐
-│ Insert into news_articles table      │ ← createNewsArticle()
-└──────────────────────────────────────┘
-         ↓
-┌──────────────────────────────────────┐
-│ Sync politician tags                 │ ← syncNewsArticlePoliticianTags()
-│ (admin_sync_news_article_tags RPC)   │
-└──────────────────────────────────────┘
-         ↓
-┌──────────────────────────────────────┐
-│ Articles appear on politician's wall │ ← Via posts table mirror
-└──────────────────────────────────────┘
+┌──────────────────────────────────────────────────┐
+│ Discovery & Synthesis (NewsPrompts/ Directives)  │
+│ - Wires (AP, Reuters, CP), Google Trends, Feeds  │
+│ - 4-part structure, hard metrics, deep links     │
+└─────────────────────────┬────────────────────────┘
+                          │
+                          ▼
+┌──────────────────────────────────────────────────┐
+│ Ingestion Engine (`scripts/insert-news-batch.js`)│
+│ - Deduplication against 1000 recent stories      │
+│ - Match via slug, source URL, or ≥70% tokens     │
+└─────────────────────────┬────────────────────────┘
+                          │
+                          ▼
+┌──────────────────────────────────────────────────┐
+│ Dual Supabase Synchronization RPCs               │
+│ - admin_sync_news_article_tags()                 │
+│ - admin_sync_news_article_boundaries()           │
+└─────────────────────────┬────────────────────────┘
+                          │
+                          ▼
+┌──────────────────────────────────────────────────┐
+│ Multi-Surface Live Display & Social CSV          │
+│ - Politician Walls, Main News & Local Feeds      │
+│ - batch-ranked-news.csv (Top 100 virality rank)  │
+│ - scripts/overflow-news-batch.json (Archives)    │
+└──────────────────────────────────────────────────┘
 ```
 
 ---

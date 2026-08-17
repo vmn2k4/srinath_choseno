@@ -1,26 +1,30 @@
 # Adding and Tagging News Articles Guide
 
-This document explains how to add new news articles to Choseno, format them properly, link them to office holders/politicians, deduplicate incoming content, and have articles automatically mirror to public walls and the main news feed with accurate historical dates.
+This document explains how to add new news articles to Choseno, format them properly, link them to office holders/politicians, deduplicate incoming content, map them to real geographic electoral boundaries, and have articles automatically mirror to public walls and the main news feed with accurate historical dates.
 
 ---
 
 ## 1. Overview of the Pipeline
 
+Choseno utilizes a multi-tiered ingestion pipeline designed around standardized collection prompts located in [`NewsPrompts/`](../NewsPrompts/README.md) (`NewsCollectionPrompt.md`, `KeyLeadersNewsCollectionPrompt.md`, and `UniversalWebNewsCollectionPrompt.md`) executed via [`scripts/insert-news-batch.js`](../scripts/insert-news-batch.js).
+
 ```
 ┌──────────────────────────────────────────────────────────┐
-│ Article JSON (Manual or Scripted)                        │
-│ - Headline, Markdown Body, Summary, Dateline             │
-│ - Category, Impact Area, Coordinates                     │
+│ Article JSON (Hand-Authored / Verified)                  │
+│ - Headline, Markdown Body (350-750 words), Summary       │
+│ - Category, Impact Area, Precise Coordinates (lat/lng)   │
 │ - Historical Event Date (event_date)                     │
 │ - Tagged Politician Profile UUIDs (taggedPoliticianIds)  │
+│ - Canonical Source Deep Links (sources[])                │
+│ - Strict Tweet Hook (120-220 chars, no hashtags/handles) │
 └────────────────────────────┬─────────────────────────────┘
                              │
                              ▼
 ┌──────────────────────────────────────────────────────────┐
 │ Deduplication Engine (Slug, URL & Similarity Checks)     │
 │ - Verifies slug uniqueness & canonical source URLs       │
-│ - Detects duplicate stories within same event window     │
-│ - Merges sources & politician tags if story exists       │
+│ - Checks token overlap (≥70%) within ±3-day window       │
+│ - Auto-PATCHes existing records instead of duplicating   │
 └────────────────────────────┬─────────────────────────────┘
                              │
                              ▼
@@ -32,18 +36,22 @@ This document explains how to add new news articles to Choseno, format them prop
                              │
                              ▼
 ┌──────────────────────────────────────────────────────────┐
-│ RPC: `admin_sync_news_article_tags`                      │
-│ - Links article in `news_article_politicians`            │
-│ - Creates mirrored post in `posts` table for wall/feed   │
-│ - Sets post `created_at` to historical `event_date`      │
+│ Dual Automated Synchronization RPCs                      │
+│ 1. `admin_sync_news_article_tags`:                       │
+│    - Links politician in `news_article_politicians`      │
+│    - Mirrors post to `posts` table for `/wall/[slug]`    │
+│ 2. `admin_sync_news_article_boundaries`:                 │
+│    - Resolves lat/lng to electoral boundary polygons     │
+│    - Tags federal, provincial & municipal boundaries     │
 └────────────────────────────┬─────────────────────────────┘
                              │
                              ▼
 ┌──────────────────────────────────────────────────────────┐
-│ Live Display                                             │
+│ Live Display & Ranked Distribution                       │
 │ - Appears on Politician Wall (`/wall/[slug]`)            │
 │ - Appears in Main Feed (`/feed`) & News (`/news`)        │
-│ - Filterable by "My Representatives" for logged-in users │
+│ - Filtered into Local & Representative Feeds via GIS     │
+│ - Tracked in `batch-ranked-news.csv` & overflow archive  │
 └──────────────────────────────────────────────────────────┘
 ```
 
