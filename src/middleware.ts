@@ -6,18 +6,15 @@ import type { Database } from "@/lib/supabase/types";
 // expired access token can make the server render /admin as signed out while
 // the browser still has a refresh token, causing an auth redirect loop.
 //
-// Also enforce consistent domain: redirect www.* to non-www canonical domain
-// to avoid canonical link ping-pong loops.
+// NOTE: do NOT add a www <-> apex redirect here. It was added once (see git
+// blame) to enforce canonical-domain consistency and instead caused an
+// infinite redirect loop on www.choseno.com in production -- the hosting
+// platform's own Domain settings almost certainly already redirect one
+// direction (apex<->www) at the DNS/edge level, and an app-level redirect
+// going the other way ping-pongs against it forever. Canonicalization
+// belongs in exactly one place; keep it in the platform's Domain settings,
+// not here.
 export async function middleware(request: NextRequest) {
-  const hostname = request.headers.get("host") || "";
-
-  // Redirect www.* to non-www domain for canonical consistency
-  if (hostname.startsWith("www.")) {
-    const url = request.nextUrl.clone();
-    url.host = hostname.replace(/^www\./, "");
-    return NextResponse.redirect(url, { status: 308 });
-  }
-
   let response = NextResponse.next({ request });
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL || "https://placeholder.supabase.co",
