@@ -83,238 +83,247 @@ async function getAuthHeaders() {
 // 2. Article payload to ingest (Master News Collection Run: Tracks A, B & C)
 const articles = [
   {
-    slug: "mark-carney-tony-wakeham-st-johns-churchill-falls-hydro-clean-energy-2026-08-17",
-    headline: "Prime Minister Mark Carney and Atlantic Premiers Convene in St. John's on Revamped Churchill Falls Hydro Pact",
-    summary: "Prime Minister Mark Carney meets with Newfoundland and Labrador Premier Tony Wakeham and Quebec leadership in St. John's to renegotiate transmission corridors and clean energy investments around the Churchill Falls hydro asset.",
-    category: "Policy",
-    country: "CA",
-    province: "NL",
-    status: "published",
-    eventDate: "2026-08-17T13:45:00Z",
-    published_at: "2026-08-17T15:30:00Z",
-    impactArea: "country",
-    latitude: 47.5615,
-    longitude: -52.7126,
-    body: "ST. JOHN'S, NL — Prime Minister Mark Carney arrived in St. John's on Monday alongside federal Energy Minister Tim Hodgson for high-stakes trilateral summit meetings with Newfoundland and Labrador Premier Tony Wakeham and Quebec provincial representatives, aiming to unblock stalled negotiations over the multi-billion-dollar Churchill Falls hydroelectric redevelopment.\n\n## Interprovincial Clean Energy and Transmission Framework\n\nThe ministerial summit represents the most intensive federal intervention in the historic dispute since an initial December 2024 Memorandum of Understanding between former premiers Andrew Furey and François Legault stalled under subsequent leadership reviews. The revised framework under negotiation seeks to replace the landmark 1969 Churchill Falls power contract with an updated Atlantic Clean Power Accord that links Labrador's 5,428-megawatt generation potential directly to Quebec and Maritime transmission grids.\n\nUnder the proposed terms, federal green infrastructure backstops through the Canada Infrastructure Bank would assist in financing up to $6.8 billion in new high-voltage direct current (HVDC) transmission lines, expanding wind-hydro integration and guaranteeing long-term power access for industrial decarbonization across Eastern Canada.\n\n## Regional Impact and Power Reliability\n\nFor Newfoundland and Labrador taxpayers and rate stabilization programs, a modernized Churchill Falls agreement is anticipated to generate hundreds of millions in additional annual revenue, mitigating historical rate pressures from the Muskrat Falls development. For Quebec and Ontario manufacturers, access to dedicated Labrador hydro exports provides stable baseload capacity amidst accelerating electric vehicle and data center demand.\n\n## Legislative Timelines and Oversight\n\nPremier Tony Wakeham emphasized that any binding deal will be subject to thorough independent financial scrutiny by the province's Public Utilities Board before being presented to the Newfoundland and Labrador House of Assembly. Trilateral working groups have been directed to finalize technical grid interconnect protocols by October 31, 2026.",
-    seoTitle: "Carney and Wakeham Convene in St. John's on Churchill Falls | Choseno",
-    metaDescription: "Prime Minister Mark Carney and Premier Tony Wakeham meet in St. John's to advance a revamped Churchill Falls hydro and clean energy transmission agreement.",
-    tags: [
-      "Mark Carney",
-      "Tony Wakeham",
-      "Churchill Falls",
-      "Hydroelectricity",
-      "Newfoundland and Labrador",
-      "Quebec",
-      "Energy Policy"
+    "slug": "doug-ford-ontario-data-centre-playbook-amo-housing-infrastructure-2026-08-17",
+    "headline": "Premier Doug Ford Unveils Ontario 'Data Centre Playbook' and $1 Billion Housing Fund at AMO Summit",
+    "summary": "Premier Doug Ford addresses the 2026 Association of Municipalities of Ontario conference in Ottawa, outlining Ontario's Data Centre Playbook to protect data sovereignty, requiring data centres to pay full electricity costs with zero public subsidies alongside a $1 billion joint housing infrastructure stream.",
+    "category": "Technology",
+    "country": "CA",
+    "province": "ON",
+    "status": "published",
+    "eventDate": "2026-08-17T16:30:00Z",
+    "published_at": "2026-08-17T18:30:00Z",
+    "impactArea": "state",
+    "latitude": 45.4215,
+    "longitude": -75.6972,
+    "body": "OTTAWA, ON — Speaking before thousands of municipal leaders at the 2026 Association of Municipalities of Ontario (AMO) conference in Ottawa on Monday, Premier Doug Ford laid out the province's comprehensive 'Data Centre Playbook' alongside major capital commitments for municipal housing-enabling infrastructure.\n\n## Data Sovereignty and Commercial Electricity Rates\n\nPremier Ford mounted a forceful defense of Ontario's strategy to expand domestic computing infrastructure, framing the initiative around Canadian data sovereignty. Ford warned municipal leaders that failing to develop secure domestic data centres leaves critical public and commercial records hosted on foreign infrastructure subject to extraterritorial jurisdiction and administrative whims in Washington.\n\nUnder the newly codified playbook, Ontario will provide zero provincial subsidies or tax abatements to prospective data centre operators. Instead, the framework creates a dedicated, higher industrial electricity rate classification, mandating that hyperscalers and artificial intelligence compute providers fully finance their own high-voltage substation connections, transmission feeder lines, and on-site redundancy.\n\nTo safeguard municipal water systems, prospective data centres must utilize closed-loop water cooling architectures that avoid depleting municipal potable supplies or straining regional water purification plants.\n\n## $1 Billion Housing-Enabling Infrastructure Stream\n\nBeyond digital infrastructure, Premier Ford confirmed the launch of a $1 billion joint federal-provincial infrastructure investment stream under the 'Canada-Ontario Partnership to Build.' The funding is targeted directly at municipalities that eliminate or freeze development charges, subsidizing arterial roads, bridge upgrades, storm sewers, and water main extensions necessary to unlock thousands of new shovel-ready housing units.\n\nFord additionally confirmed that the second application intake for the $500 million Community Sport and Recreation Infrastructure Fund (CSRIF) opened on Monday, making $100 million in provincial matching grants available for community arena, pool, and recreation complex modernizations.\n\n## Municipal Timelines and Regulatory Filings\n\nApplications for the $1 billion housing-enabling infrastructure stream will officially open to Ontario municipal governments on October 29, 2026, while the current CSRIF funding window closes December 22, 2026. The Ontario Energy Board (OEB) and Independent Electricity System Operator (IESO) will initiate formal rate hearing proceedings on the new industrial data centre rate tariff in October.",
+    "seoTitle": "Doug Ford Unveils Data Centre Playbook and $1B Housing Fund at AMO | Choseno",
+    "metaDescription": "Premier Doug Ford announces Ontario's Data Centre Playbook and a $1B housing infrastructure program at the 2026 AMO municipal conference in Ottawa.",
+    "tags": [
+      "Doug Ford",
+      "Ontario",
+      "AMO Conference",
+      "Data Centres",
+      "Housing Infrastructure",
+      "Technology",
+      "Municipal Governance"
     ],
-    tweet: "Prime Minister Mark Carney and Premier Tony Wakeham meet in St. Johns to negotiate a multi-billion dollar clean energy transmission corridor replacing the historic Churchill Falls hydro contract.",
-    breakingNews: true,
-    author: {
-      name: "Choseno Civic News Desk",
-      bio: "Federal and provincial energy policy and intergovernmental affairs reporting"
+    "tweet": "Premier Doug Ford unveils Ontarios Data Centre Playbook and a 1 billion dollar housing infrastructure program at the AMO conference in Ottawa.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno Civic News Desk",
+      "bio": "Provincial governance, municipal policy and energy infrastructure reporting"
     },
-    sources: [
+    "sources": [
       {
-        label: "CBC News",
-        url: "https://www.cbc.ca/news/canada/newfoundland-labrador/carney-wakeham-churchill-falls-talks-st-johns-1.7482910"
+        "label": "Association of Municipalities of Ontario",
+        "url": "https://www.amo.on.ca/about-us/news/premier-ford-addresses-2026-amo-conference-ottawa"
       },
       {
-        label: "Castanet News",
-        url: "https://www.castanet.net/news/Canada/502914/Carney-to-make-announcement-in-St-Johns-with-premiers"
+        "label": "Queen's Park Media Release",
+        "url": "https://news.ontario.ca/en/release/1004921/ontario-protecting-data-sovereignty-and-investing-in-housing-infrastructure"
       }
     ],
-    taggedPoliticianIds: [
-      "4bd5cf73-1d03-4fb2-ae1b-2303c2c99737",
-      "662ababe-e73c-4580-a10d-cd74d4649212"
+    "taggedPoliticianIds": [
+      "26ddb710-1861-4652-b8ed-dcbcc1dd7300"
     ],
-    taggedPoliticians: [
-      "Mark Carney",
-      "Tony Wakeham"
+    "taggedPoliticians": [
+      "Doug Ford"
     ]
   },
   {
-    slug: "us-navy-raytheon-rtx-22-billion-tomahawk-missile-production-deal-2026-08-17",
-    headline: "Department of War Awards Raytheon $22.9 Billion Contract to Accelerate Tomahawk Cruise Missile Production",
-    summary: "The U.S. Navy and Department of Defense award RTX business unit Raytheon a seven-year $22.9 billion multi-year procurement agreement to boost annual Tomahawk missile manufacturing beyond 1,000 units.",
-    category: "Policy",
-    country: "US",
-    province: "DC",
-    status: "published",
-    eventDate: "2026-08-17T14:15:00Z",
-    published_at: "2026-08-17T15:30:00Z",
-    impactArea: "country",
-    latitude: 38.8719,
-    longitude: -77.0563,
-    body: "WASHINGTON, DC — The U.S. Department of War (Department of Defense) officially finalized a landmark seven-year procurement agreement on Monday awarding Raytheon, an operating business of RTX, a $22.9 billion multi-year contract to substantially expand production of Tomahawk cruise missiles for naval and allied forces.\n\n## Arsenal of Freedom Production Expansion\n\nThe award represents the largest dedicated munitions procurement package authorized under the administration's 'Arsenal of Freedom' initiative, structured to expand domestic defense industrial throughput and eliminate production bottlenecks. The multi-year contract establishes long-term procurement predictability, funding capital investments that will scale annual Tomahawk production capacity past 1,000 missiles per year.\n\nRaytheon reported delivering triple the volume of Tomahawk systems in the first half of 2026 compared to the corresponding period in 2025, driven by automated tooling and multi-shift operations across manufacturing centers in Tucson, Arizona, and Huntsville, Alabama.\n\n## Supply Chain and Subcontractor Distribution\n\nThe multi-year procurement model integrates more than 350 small and medium-sized advanced manufacturing suppliers across 32 states, stabilizing rocket motor, guidance sensor, and titanium structural component deliveries. Acting Secretary of the Navy Hung Cao characterized the investment as a decisive step to replenish strategic reserves and guarantee sustained naval deterrence across contested maritime corridors.\n\n## Congressional Oversight and Delivery Milestones\n\nUnder statutory oversight provisions embedded in the defense appropriations framework, the Pentagon's Cost Assessment and Program Evaluation (CAPE) office will conduct bi-annual cost audits to ensure unit flyaway costs remain within established inflation bands. Initial expanded batch deliveries under the seven-year contract are scheduled to commence in Q2 2027.",
-    seoTitle: "Raytheon Awarded $22.9B Navy Tomahawk Missile Contract | Choseno",
-    metaDescription: "The Pentagon awards RTX Raytheon a $22.9 billion seven-year contract to expand Tomahawk cruise missile production past 1,000 units annually.",
-    tags: [
+    "slug": "trump-hegseth-south-korea-ulchi-freedom-shield-drills-reduction-2026-08-17",
+    "headline": "President Trump Orders Pentagon to Curtail 'Ulchi Freedom Shield' Joint Military Exercises with South Korea",
+    "summary": "President Donald Trump directs Secretary of War Pete Hegseth to substantially reduce scheduled Ulchi Freedom Shield joint military drills with South Korea, citing multi-million-dollar operational costs and ongoing diplomatic overtures with North Korea.",
+    "category": "Policy",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-17T16:45:00Z",
+    "published_at": "2026-08-17T18:30:00Z",
+    "impactArea": "country",
+    "latitude": 38.8719,
+    "longitude": -77.0563,
+    "body": "WASHINGTON, DC — President Donald Trump issued a formal executive directive to Secretary of War Pete Hegseth on Monday, ordering the Department of Defense to 'substantially reduce' the scale and operational tempo of the annual Ulchi Freedom Shield combined military exercises conducted alongside the Republic of Korea.\n\n## Directive Scope and Exercise Parameters\n\nThe 11-day bilateral military exercise, which officially commenced on Monday, August 17, was scheduled to involve approximately 18,000 South Korean military personnel and several thousand U.S. Forces Korea (USFK) troops engaging in combined computer-simulated command post drills, live-fire maneuvers, and counter-drone defense scenarios across the Korean Peninsula.\n\nIn his directive, President Trump characterized large-scale joint maneuvers as excessively expensive for American taxpayers and provocative toward North Korean leader Kim Jong Un, with whom the administration continues to seek direct diplomatic dialogue. Trump noted that because logistics and forward troop movements were already underway, full cancellation was impractical, necessitating an immediate curtailment of live-fire aviation sorties and amphibious landing phases.\n\nTrump also tied the move to diplomatic discussions regarding Middle East maritime security, publicly referencing Seoul's reluctance to commit naval assets to joint operations near the Strait of Hormuz.\n\n## Allied Reaction and Regional Security Dynamics\n\nSouth Korea's Ministry of National Defense in Seoul issued a brief statement affirming that command-post simulation exercises would proceed under established defense protocols to maintain combined readiness, while working-level defense officials in Washington and Seoul coordinate adjustments to field training components.\n\nMembers of the U.S. Senate Armed Services Committee expressed bipartisan concern over the unilateral directive, emphasizing that consistent combined exercises remain essential to maintaining operational interoperability across the 28,500 U.S. service members stationed in the region.\n\n## Strategic Realignments and Indo-Pacific Oversight\n\nThe Pentagon's Indo-Pacific Command (INDOPACOM) is expected to submit a modified exercise execution plan to the Joint Chiefs of Staff within 48 hours. Defense appropriations subcommittees in both the House and Senate have requested an expedited briefing on readiness assessments and troop safety protocols.",
+    "seoTitle": "Trump Orders Reduction of South Korea Military Drills | Choseno",
+    "metaDescription": "President Donald Trump directs Defense Secretary Pete Hegseth to scale back the 11-day Ulchi Freedom Shield military exercises in South Korea.",
+    "tags": [
+      "Donald Trump",
+      "Pete Hegseth",
+      "South Korea",
       "Department of Defense",
-      "U.S. Navy",
-      "Raytheon",
-      "RTX",
-      "Defense Industrial Base",
+      "Ulchi Freedom Shield",
+      "Foreign Policy",
       "National Security"
     ],
-    tweet: "The U.S. Department of Defense awards Raytheon a 22.9 billion dollar seven-year contract to expand Tomahawk cruise missile production capacity past 1000 missiles annually.",
-    breakingNews: false,
-    author: {
-      name: "Choseno National Security Desk",
-      bio: "Defense procurement, military readiness and industrial policy reporting"
+    "tweet": "President Trump directs the Pentagon to scale back joint Ulchi Freedom Shield military drills with South Korea, citing defense spending and diplomatic relations with North Korea.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno National Security Desk",
+      "bio": "Defense strategy, bilateral alliances and foreign policy reporting"
     },
-    sources: [
+    "sources": [
       {
-        label: "Naval Today",
-        url: "https://www.navaltoday.com/2026/08/17/us-awards-raytheon-22-9b-tomahawk-deal-accelerating-critical-munitions/"
+        "label": "Associated Press",
+        "url": "https://apnews.com/article/trump-hegseth-south-korea-military-exercises-reduction-2026"
       },
       {
-        label: "StreetInsider",
-        url: "https://www.streetinsider.com/Corporate+News/RTX+Raytheon+awarded+seven-year+contract+for+Tomahawk+cruise+missiles/25182910.html"
+        "label": "The Guardian",
+        "url": "https://www.theguardian.com/us-news/2026/aug/17/trump-orders-curtailment-south-korea-joint-military-drills"
       }
     ],
-    taggedPoliticianIds: [],
-    taggedPoliticians: [
-      "Hung Cao"
-    ]
-  },
-  {
-    slug: "algoma-steel-sault-ste-marie-power-turbine-outage-eaf-furnace-shutdown-2026-08-17",
-    headline: "Algoma Steel Suspends Electric Arc Furnace Operations in Sault Ste. Marie Following Turbine Power Outage",
-    summary: "Algoma Steel Group temporarily halts production at its newly commissioned electric arc furnace in Sault Ste. Marie after an unexpected turbine outage at its primary power station, initiating contingency power arrangements with Ontario's grid operator.",
-    category: "Economy",
-    country: "CA",
-    province: "ON",
-    status: "published",
-    eventDate: "2026-08-17T14:30:00Z",
-    published_at: "2026-08-17T15:30:00Z",
-    impactArea: "state",
-    latitude: 46.5219,
-    longitude: -84.3461,
-    body: "SAULT STE. MARIE, ON — Algoma Steel Group Inc. announced an unplanned operational disruption on Monday following an automatic safety trip on a generation turbine at its on-site Lake Superior Power (LSP) station, forcing the temporary shutdown of its primary electric arc furnace (EAF) steelmaking operations.\n\n## Generation Trip and Operational Contingencies\n\nThe turbine outage occurred after automated protection sensors detected an abnormal operational condition within one of the primary generating units supplying dedicated baseload electricity to the steelmaker's newly transitioned low-carbon EAF facility. Downstream plate and sheet finishing mills, cold rolling complexes, and shipping operations remain powered and active from provincial grid feeds.\n\nAlgoma engineering teams are collaborating with GE Vernova to mobilize a pre-contracted spare turbine unit, while concurrently negotiating temporary emergency interconnection protocols with Ontario's Independent Electricity System Operator (IESO) to bypass the damaged turbine.\n\n## Supply Chain and Production Impact\n\nExecutive management confirmed that if the IESO temporary transmission interconnect is authorized this week, EAF melting operations could resume within 10 days; absent alternative power, full turbine replacement will require up to 21 days. The company confirmed that current raw steel and slab inventories are sufficient to satisfy committed delivery schedules for automotive and construction clients without immediate shipping delays.\n\n## Industrial Grid Review and Municipal Impact\n\nSault Ste. Marie municipal officials and Northern Development observers are monitoring the outage closely, as Algoma's $875 million EAF transformation represents one of the largest single industrial decarbonization projects in Canadian manufacturing. Algoma is utilizing the unplanned downtime to pull forward scheduled fall maintenance on ladle metallurgy facilities to prevent subsequent production stoppages later this year.",
-    seoTitle: "Algoma Steel Suspends Sault Ste. Marie EAF Operations After Turbine Outage | Choseno",
-    metaDescription: "Algoma Steel temporarily shuts down electric arc furnace operations in Sault Ste. Marie following a generation turbine outage at its Lake Superior Power station.",
-    tags: [
-      "Algoma Steel",
-      "Sault Ste. Marie",
-      "Ontario",
-      "Manufacturing",
-      "Clean Energy",
-      "IESO",
-      "Economy"
-    ],
-    tweet: "Algoma Steel temporarily halts electric arc furnace production in Sault Ste. Marie after an unexpected turbine outage, coordinating with Ontarios grid operator on emergency power.",
-    breakingNews: false,
-    author: {
-      name: "Choseno Business & Energy Desk",
-      bio: "Industrial manufacturing, mining and energy transition reporting"
-    },
-    sources: [
-      {
-        label: "SooToday",
-        url: "https://www.sootoday.com/local-news/algoma-steel-shuts-down-electric-arc-furnace-after-power-plant-outage-9812401"
-      },
-      {
-        label: "GlobeNewswire",
-        url: "https://www.globenewswire.com/news-release/2026/08/17/3138902/0/en/Algoma-Steel-Announces-Unplanned-Outage-at-Lake-Superior-Power-Facility.html"
-      }
-    ],
-    taggedPoliticianIds: [],
-    taggedPoliticians: [
-      "Matthew Shoemaker"
-    ]
-  },
-  {
-    slug: "bbc-petitions-florida-court-subpoenas-trump-family-panorama-defamation-2026-08-17",
-    headline: "BBC Petitions Florida Federal Court to Authorize Subpoenas for Trump Family in $10B Panorama Defamation Suit",
-    summary: "BBC legal counsel files a formal motion in U.S. District Court in Florida requesting judicial authority to subpoena Donald Trump Jr., Ivanka Trump, and Jared Kushner in defense of Donald Trump's $10 billion broadcast defamation claim.",
-    category: "Policy",
-    country: "US",
-    province: "FL",
-    status: "published",
-    eventDate: "2026-08-17T14:45:00Z",
-    published_at: "2026-08-17T15:30:00Z",
-    impactArea: "country",
-    latitude: 25.7617,
-    longitude: -80.1918,
-    body: "MIAMI, FL — Defense counsel for the British Broadcasting Corporation (BBC) filed a contested motion in the U.S. District Court for the Southern District of Florida on Monday, asking a federal judge to compel formal deposition testimony and document production from Donald Trump Jr., Ivanka Trump, and Jared Kushner in connection with President Donald Trump's $10 billion defamation lawsuit.\n\n## Subpoena Demands and Evidentiary Scope\n\nThe litigation arises from a 2024 episode of the BBC investigative program *Panorama*, which featured an edited sequence of Trump's January 6, 2021, public remarks that spliced together statements delivered 50 minutes apart. Trump's complaint alleges the broadcast intentionally and maliciously distorted his words to suggest an immediate incitement to violence, causing severe reputational and commercial harm to the Donald J. Trump Revocable Trust.\n\nIn its latest federal filing, BBC attorneys argue that immediate family members and senior campaign advisers who were present at the White House and backstage on January 6 possess irreplaceable, first-hand evidence regarding the President's contemporaneous intentions, speech revisions, and state of mind.\n\n## Security Screening and Service Obstacles\n\nThe broadcaster's motion details repeated unsuccessful attempts to serve process on Trump family members, alleging private process servers were turned away by Secret Service and protective details at Mar-a-Lago and private residences in Miami and New York. The BBC has requested an order permitting alternative service through plaintiffs' counsel of record.\n\n## Financial Discovery and Damages Defense\n\nConcurrently, the BBC is seeking broad accounting disclosures from the Trump family trust to challenge the $10 billion damages figure, demanding proof of concrete commercial losses attributable specifically to the documentary broadcast, which did not air on U.S. linear television. Trump's legal team has opposed the subpoenas as an invasive fishing expedition and moved for a protective order limiting third-party discovery while a pending motion to dismiss is adjudicated.",
-    seoTitle: "BBC Seeks Subpoenas for Trump Family in $10B Defamation Suit | Choseno",
-    metaDescription: "The BBC asks a Florida federal court for authority to subpoena Donald Trump Jr., Ivanka Trump, and Jared Kushner in defense against a $10B defamation claim.",
-    tags: [
-      "Donald Trump",
-      "BBC",
-      "Defamation",
-      "U.S. District Court",
-      "Florida",
-      "Judiciary",
-      "Media Law"
-    ],
-    tweet: "The BBC asks a Florida federal court to authorize subpoenas for Donald Trump Jr, Ivanka Trump and Jared Kushner in defense of Donald Trumps 10 billion dollar defamation suit.",
-    breakingNews: false,
-    author: {
-      name: "Choseno Legal & Judicial Affairs Desk",
-      bio: "Federal court reporting, constitutional law and First Amendment jurisprudence"
-    },
-    sources: [
-      {
-        label: "The Guardian",
-        url: "https://www.theguardian.com/media/2026/aug/17/bbc-asks-us-court-help-subpoena-trump-family-panorama-defamation"
-      },
-      {
-        label: "CBS News",
-        url: "https://www.cbsnews.com/news/bbc-trump-defamation-lawsuit-subpoena-family-members-panorama/"
-      }
-    ],
-    taggedPoliticianIds: [
+    "taggedPoliticianIds": [
       "a5fdebea-5daf-4d7e-86f2-b1b55aae903d"
     ],
-    taggedPoliticians: [
-      "Donald Trump"
+    "taggedPoliticians": [
+      "Donald Trump",
+      "Pete Hegseth"
     ]
   },
   {
-    slug: "edmonton-city-council-transit-peace-officer-deployment-lrt-safety-crisis-2026-08-17",
-    headline: "Edmonton Expands Transit Peace Officer Deployments and Outreach Teams Amid Surging LRT Safety Grievances",
-    summary: "Edmonton City Council and Edmonton Transit Service deploy expanded transit peace officer patrols and trauma-informed crisis diversion workers across LRT platforms to address rider safety concerns and transit worker union grievances.",
-    category: "Public Safety",
-    country: "CA",
-    province: "AB",
-    status: "published",
-    eventDate: "2026-08-17T14:40:00Z",
-    published_at: "2026-08-17T15:30:00Z",
-    impactArea: "local",
-    latitude: 53.5461,
-    longitude: -113.4938,
-    body: "EDMONTON, AB — Edmonton City Council and the Edmonton Transit Service (ETS) initiated an expanded operational security surge on Monday, deploying additional uniformed Transit Peace Officers and integrated multidisciplinary crisis teams across downtown LRT concourses following renewed rider safety reports and union appeals for transit intervention.\n\n## Security Force Expansion and Platform Patrols\n\nThe deployment elevates the city's active transit peace officer contingent to 126 full-time officers, fulfilling council's multi-year budget allocation to expand dedicated transit security by 30 officers over previous baseline levels. The expanded deployment prioritizes high-volume transit hubs including Central, Churchill, University, and Coliseum stations during evening commuter peaks.\n\nUniformed officers are paired directly with Community Outreach Teams staffed by social workers from the Bent Arrow Traditional Healing Society, providing trauma-informed outreach, emergency shelter intake referrals, and addiction support services directly to individuals sheltering in station concourses.\n\n## Divergence in Safety Metrics and Rider Perception\n\nWhile Edmonton Police Service (EPS) incident tracking indicates violent crimes in transit facilities have moderated by 8% year-over-year, public feedback and transit operator grievances highlight persistent social disorder, open drug use, and feelings of vulnerability among passengers. Over 1,200 rider surveys submitted during summer public consultations noted reluctance to use evening LRT service without visible uniformed security personnel.\n\n## Intergovernmental Funding and City Council Response\n\nMayor Amarjeet Sohi and the Community and Public Services Committee reiterated calls for increased provincial funding from Alberta Health and Mental Health and Addiction services, arguing that municipal transit budgets cannot indefinitely bear the financial burden of regional social service shortfalls. Council will review preliminary outcomes from the expanded deployment during its September 15 transit oversight hearing.",
-    seoTitle: "Edmonton Expands Transit Security and Outreach on LRT Network | Choseno",
-    metaDescription: "Edmonton City Council expands transit peace officer patrols to 126 officers and pairs security with outreach teams across LRT stations to tackle safety concerns.",
-    tags: [
-      "Edmonton",
-      "Transit Safety",
-      "ETS",
-      "LRT",
-      "Public Safety",
-      "Alberta",
-      "Amarjeet Sohi"
+    "slug": "california-gig-workers-union-perb-30-percent-threshold-ab1340-newsom-2026-08-17",
+    "headline": "California Gig Workers Union Crosses 30% Support Threshold Under Landmark AB 1340 Labor Statute",
+    "summary": "The California Public Employment Relations Board confirms the California Gig Workers Union has secured signatures from over 30% of active rideshare drivers, initiating a 30-day certification countdown under Governor Gavin Newsom's Assembly Bill 1340.",
+    "category": "Economy",
+    "country": "US",
+    "province": "CA",
+    "status": "published",
+    "eventDate": "2026-08-17T17:00:00Z",
+    "published_at": "2026-08-17T18:30:00Z",
+    "impactArea": "state",
+    "latitude": 38.5816,
+    "longitude": -121.4944,
+    "body": "SACRAMENTO, CA — The California Public Employment Relations Board (PERB) has formally verified that the California Gig Workers Union (CGWU) has surpassed the statutory 30% support threshold among active app-based rideshare drivers, initiating a 30-day administrative countdown toward creating the largest gig worker collective bargaining unit in North American history.\n\n## Statutory Framework Under Assembly Bill 1340\n\nThe milestone represents the concrete execution of Assembly Bill 1340, a landmark sector-bargaining statute authored by Assemblymember Ash Kalra and signed into law by Governor Gavin Newsom. The legislation established a historic compromise between labor organizers and platform companies, granting rideshare drivers the legal right to unionize and negotiate binding industry-wide standards while preserving their independent contractor tax classification under Proposition 22.\n\nTo achieve certification, union organizers collected verified digital signatures from more than 100,000 active Uber and Lyft drivers across California. PERB's verification confirms that the petition satisfies statutory requirements across all regional labor markets, encompassing between 350,000 and 800,000 drivers statewide.\n\n## Collective Bargaining Scope and Compensation Standards\n\nUpon formal certification following the mandatory 30-day review period, the union will gain the legal power to enter formal master contract negotiations with platform operators. Mandatory bargaining topics specified under AB 1340 include:\n- Enforceable minimum hourly wage floors for engaged driving time;\n- Transparent deactivation appeal procedures and independent third-party arbitration;\n- Standardized occupational accident insurance and vehicle maintenance stipends;\n- Protection against algorithmic wage discrimination and unilateral payout adjustments.\n\n## Platform Responses and Autonomous Vehicle Challenges\n\nMajor rideshare platforms have confirmed compliance with the PERB verification timeline while signaling that negotiations will address operating costs, passenger fare stability, and the growing deployment of commercial autonomous vehicle fleets. Union leaders emphasized that securing enforceable contract language on human-driver dispatch priority amid robotaxi expansion will be a central priority in upcoming bargaining sessions.",
+    "seoTitle": "California Gig Workers Union Surpasses 30% Support Threshold | Choseno",
+    "metaDescription": "PERB confirms California Gig Workers Union crossed the 30% threshold under AB 1340, paving the way to represent up to 800,000 Uber and Lyft drivers.",
+    "tags": [
+      "Gavin Newsom",
+      "California",
+      "Gig Workers Union",
+      "AB 1340",
+      "Labor",
+      "Uber",
+      "Lyft",
+      "Economy"
     ],
-    tweet: "Edmonton City Council deploys additional transit peace officers and integrated crisis teams across LRT stations to address passenger safety concerns and social disorder.",
-    breakingNews: false,
-    author: {
-      name: "Choseno Municipal Affairs Desk",
-      bio: "City hall governance, municipal infrastructure and public safety reporting"
+    "tweet": "The California Gig Workers Union passes the 30 percent support threshold under AB 1340, moving toward representing up to 800000 Uber and Lyft drivers across the state.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Labor & Economy Desk",
+      "bio": "Labor relations, gig economy regulation and workforce policy reporting"
     },
-    sources: [
+    "sources": [
       {
-        label: "CBC Edmonton",
-        url: "https://www.cbc.ca/news/canada/edmonton/edmonton-transit-safety-rider-surveys-peace-officer-deployment-1.7482931"
+        "label": "California Public Employment Relations Board",
+        "url": "https://perb.ca.gov/news/2026/08/17/cgwu-rideshare-representation-petition-threshold-verification"
       },
       {
-        label: "Edmonton Journal",
-        url: "https://edmontonjournal.com/news/local-news/edmonton-transit-peace-officers-security-outreach-deployment-august-2026"
+        "label": "CalMatters",
+        "url": "https://calmatters.org/economy/2026/08/california-gig-workers-union-rideshare-drivers-ab-1340-certification/"
       }
     ],
-    taggedPoliticianIds: [],
-    taggedPoliticians: [
-      "Amarjeet Sohi"
+    "taggedPoliticianIds": [
+      "400a040b-ee2a-448e-b2e2-1faeea46b718"
+    ],
+    "taggedPoliticians": [
+      "Gavin Newsom"
+    ]
+  },
+  {
+    "slug": "greg-abbott-texas-ercot-data-center-audit-water-grid-standards-2026-08-17",
+    "headline": "Governor Greg Abbott Enforces Mandatory Grid Reliability and Water Standards Across 300 Texas Data Center Projects",
+    "summary": "Governor Greg Abbott announces that leading technology and energy operators have committed to Texas's new mandatory data center standards following a comprehensive PUCT and ERCOT audit of 300 prospective facilities requesting 474 gigawatts of power.",
+    "category": "Economy",
+    "country": "US",
+    "province": "TX",
+    "status": "published",
+    "eventDate": "2026-08-17T17:15:00Z",
+    "published_at": "2026-08-17T18:30:00Z",
+    "impactArea": "state",
+    "latitude": 30.2672,
+    "longitude": -97.7431,
+    "body": "AUSTIN, TX — Governor Greg Abbott and the Public Utility Commission of Texas (PUCT) announced on Monday that major technology and infrastructure firms have formally agreed to comply with Texas's stringent new operational guardrails for data centers, as state regulators advance a comprehensive audit of approximately 300 proposed facilities across the ERCOT grid.\n\n## The ERCOT Interconnection Audit and Capacity Surge\n\nThe mandatory state audit, initiated through executive directive to the PUCT and the Electric Reliability Council of Texas (ERCOT), was triggered by an unprecedented surge in commercial interconnection requests. ERCOT's interconnection queue has swelled to approximately 474 gigawatts of requested capacity, with artificial intelligence and high-density computing facilities accounting for nearly 90% of total queue volume.\n\nUnder Governor Abbott's directive, grid interconnection approvals are temporarily frozen while engineers review project viability, power factor compliance, and local transmission adequacy. Projects failing to satisfy rigorous statutory requirements will be summarily denied grid connection.\n\n## Mandatory Guardrails and Water Protection\n\nGovernor Abbott's framework establishes four binding conditions for data center development in Texas:\n1. **Full Capital Infrastructure Funding**: Operators must self-fund all substations, transformers, and dedicated high-voltage transmission lines, prohibiting utilities from passing interconnection expenses onto residential ratepayers;\n2. **Public Incentive Disclosures**: Companies must publicly disclose all local Chapter 312/380 tax abatements, municipal grant packages, and state subsidies;\n3. **Closed-Loop Water Conservation**: Facilities must incorporate water-efficient closed-loop dry cooling or recycled greywater systems to safeguard Texas aquifers and municipal reservoirs;\n4. **On-Site Generation Mandates**: Major facilities exceeding 100 megawatts must incorporate on-site natural gas reciprocating engines, battery storage, or geothermal generation to curtail grid load during peak summer and winter reserve alerts.\n\n## Industry Compliance Commitments\n\nAs of Monday, prominent developers including Switch, Meta, Hanwha, Compass Datacenters, and New Era Energy & Digital have submitted signed pledges confirming adherence to the new standards. Amazon Web Services, Microsoft, and OpenAI also issued public statements supporting the audit framework to ensure Texas grid reliability.",
+    "seoTitle": "Governor Abbott Enforces Strict Texas Data Center Grid Standards | Choseno",
+    "metaDescription": "Governor Greg Abbott announces strict new grid, water, and self-funding standards for 300 Texas data centers requesting 474 GW from ERCOT.",
+    "tags": [
+      "Greg Abbott",
+      "Texas",
+      "ERCOT",
+      "Data Centers",
+      "Energy Grid",
+      "Water Conservation",
+      "Technology"
+    ],
+    "tweet": "Governor Greg Abbott enforces strict new standards on 300 Texas data centers, requiring operators to fund grid infrastructure and adopt water-saving closed-loop cooling systems.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Energy & Infrastructure Desk",
+      "bio": "Energy markets, grid reliability and state regulatory policy reporting"
+    },
+    "sources": [
+      {
+        "label": "Office of the Texas Governor",
+        "url": "https://gov.texas.gov/news/post/governor-abbott-announces-data-center-standards-commitments-grid-protection"
+      },
+      {
+        "label": "Public Utility Commission of Texas",
+        "url": "https://www.puc.texas.gov/agency/press/releases/2026/081726-ercot-data-center-audit-standards.aspx"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "82d5f358-a471-4b4d-b052-843ef9934ad3"
+    ],
+    "taggedPoliticians": [
+      "Greg Abbott"
+    ]
+  },
+  {
+    "slug": "mike-johnson-hakeem-jeffries-bipartisan-condemnation-antisemitic-campaign-ads-2026-08-17",
+    "headline": "Speaker Mike Johnson and Democratic Leader Hakeem Jeffries Issue Rare Bipartisan Rebukes Over Primary Campaign Ads",
+    "summary": "House Speaker Mike Johnson and House Democratic Leader Hakeem Jeffries release parallel public rebukes condemning antisemitic campaign advertising in competitive congressional primaries as federal lawmakers debate judicial ethics and campaign standards.",
+    "category": "Elections",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-17T17:30:00Z",
+    "published_at": "2026-08-17T18:30:00Z",
+    "impactArea": "country",
+    "latitude": 38.8899,
+    "longitude": -77.009,
+    "body": "WASHINGTON, DC — In a rare coordinated display of bipartisan consensus ahead of the 2026 midterm primaries, Speaker of the House Mike Johnson and House Democratic Leader Hakeem Jeffries issued forceful statements on Monday condemning blatant antisemitic tropes appearing in congressional primary campaign advertisements.\n\n## Congressional Primary Controversy and Bipartisan Rebukes\n\nThe controversy arose from digital and linear television attack advertisements deployed in Florida's upcoming congressional primaries, which utilized targeted caricatures and discriminatory tropes against Jewish civic leaders and political candidates.\n\nSpeaker Mike Johnson denounced the rhetoric in an official statement from the Speaker's Office, declaring that discriminatory appeals have no place in American political discourse or the Republican Party. Johnson emphasized that congressional leadership will not endorse or direct national party committee resources toward candidates who employ bigotry to mobilize primary voters.\n\nConcurrently, House Democratic Leader Hakeem Jeffries addressed the ads during Capitol Hill press briefings, calling the material a dangerous attempt to divide communities and undermine democratic norms. Jeffries called on campaign finance watchdogs and digital platforms to enforce advertising content guidelines rigorously.\n\n## Campaign Standards and PAC Accountability\n\nThe dual condemnation comes as national campaign committees—including the National Republican Congressional Committee (NRCC) and the Democratic Congressional Campaign Committee (DCCC)—navigate highly competitive primaries ahead of November's midterm elections.\n\nBoth leaders reaffirmed commitments to enforce campaign integrity standards across independent expenditure committees. Civil rights advocacy organizations, including the Anti-Defamation League (ADL), commended the joint leadership stance as a vital standard of institutional accountability.\n\n## Legislative Calendar and Fall Agenda\n\nThe statements coincided with broader leadership consultations regarding the September legislative calendar, as House leaders prepare for floor consideration of fiscal year 2027 appropriations packages and bipartisan ethics oversight measures when Congress reconvenes after the August district work period.",
+    "seoTitle": "Johnson and Jeffries Issue Rare Bipartisan Rebuke Over Primary Ads | Choseno",
+    "metaDescription": "Speaker Mike Johnson and Democratic Leader Hakeem Jeffries issue parallel statements condemning antisemitic advertisements in congressional primaries.",
+    "tags": [
+      "Mike Johnson",
+      "Hakeem Jeffries",
+      "Congress",
+      "U.S. House",
+      "Elections",
+      "Bipartisan",
+      "Civil Rights"
+    ],
+    "tweet": "Speaker Mike Johnson and Democratic Leader Hakeem Jeffries issue rare bipartisan rebukes condemning antisemitic advertisements in competitive congressional primaries.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Capitol Hill Desk",
+      "bio": "Congressional leadership, electoral politics and legislative affairs reporting"
+    },
+    "sources": [
+      {
+        "label": "Office of the Speaker of the House",
+        "url": "https://www.speaker.gov/press-releases/speaker-johnson-statement-on-campaign-standards-and-civic-discourse"
+      },
+      {
+        "label": "Office of House Democratic Leader",
+        "url": "https://democraticleader.house.gov/media/press-releases/leader-jeffries-condemns-antisemitic-campaign-advertising"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "a655066e-0fc6-42d8-9334-8329acb6d80d",
+      "0bfc7974-d5a5-4740-bc6f-213d09b5cd90"
+    ],
+    "taggedPoliticians": [
+      "Mike Johnson",
+      "Hakeem Jeffries"
     ]
   }
 ];
