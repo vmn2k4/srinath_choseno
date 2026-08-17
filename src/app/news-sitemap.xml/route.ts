@@ -43,6 +43,10 @@ export async function GET() {
       const pubDate = new Date(a.published_at as string).toISOString();
       const title = escapeXml(a.headline);
       const keywords = escapeXml([a.category, a.country].filter(Boolean).join(", "));
+      // Google News reads the thumbnail from this <image:image> entry, not
+      // from og:image/JSON-LD -- those are for social cards / rich results.
+      // Fall back to the generated OG image so every article still has one.
+      const imageUrl = a.hero_image_url || `${SITE_URL}/news/${a.slug}/opengraph-image`;
 
       return `  <url>
     <loc>${escapeXml(loc)}</loc>
@@ -55,13 +59,18 @@ export async function GET() {
       <news:title>${title}</news:title>
       ${keywords ? `<news:keywords>${keywords}</news:keywords>` : ""}
     </news:news>
+    <image:image>
+      <image:loc>${escapeXml(imageUrl)}</image:loc>
+      <image:title>${title}</image:title>
+    </image:image>
   </url>`;
     })
     .join("\n");
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/0.9">
 ${urlEntries}
 </urlset>`;
 

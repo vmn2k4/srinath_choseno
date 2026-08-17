@@ -34,6 +34,12 @@ export default function SiteFooter() {
           <Link href="/about#editorial-heading" className="hover:text-text-main hover:underline transition-colors">
             {t("footer.editorial")}
           </Link>
+          <Link href="/editorial-standards" className="hover:text-text-main hover:underline transition-colors">
+            Editorial Standards
+          </Link>
+          <Link href="/corrections-policy" className="hover:text-text-main hover:underline transition-colors">
+            Corrections Policy
+          </Link>
           <Link href="/privacy" className="hover:text-text-main hover:underline transition-colors">
             {t("footer.privacy")}
           </Link>

@@ -16,49 +16,49 @@ export default function robots(): MetadataRoute.Robots {
       // Explicitly allow OpenAI's GPTBot (powers ChatGPT web search)
       {
         userAgent: "GPTBot",
-        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
+        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/"],
       },
       // Explicitly allow Perplexity AI crawler
       {
         userAgent: "PerplexityBot",
-        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
+        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/"],
       },
       // Explicitly allow Anthropic's Claude crawler
       {
         userAgent: "ClaudeBot",
-        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
+        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/"],
       },
       // Google's extended crawlers for AI features (Gemini, SGE)
       {
         userAgent: "Google-Extended",
-        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
+        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/"],
       },
       // Meta's AI crawler
       {
         userAgent: "FacebookBot",
-        allow: ["/wall/", "/elections/", "/news/", "/about", "/feed/"],
+        allow: ["/wall/", "/elections/", "/news/", "/about", "/feed/", "/editorial-standards", "/corrections-policy"],
         disallow: ["/admin/", "/profile/"],
       },
       // OpenAI's answer engine crawler (powers ChatGPT web search & answers)
       {
         userAgent: "OAI-SearchBot",
-        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
+        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/"],
       },
       // Apple News & Spotlight crawler
       {
         userAgent: "Applebot",
-        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
+        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/"],
       },
       // Apple Intelligence web retrieval
       {
         userAgent: "Applebot-Extended",
-        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
+        allow: ["/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/"],
       },
     ],

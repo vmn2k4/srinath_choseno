@@ -480,15 +480,27 @@ export async function getActiveSeatsByShapeIds(supabase: Client, shapeIds: numbe
 }
 
 // Platform-wide active seats, unscoped by boundary membership — used for
-// public/anonymous browsing where there's no "my area" to filter by.
-export async function getActiveSeats(supabase: Client) {
-  return supabase
+// public/anonymous browsing where there's no "my area" to filter by. With no
+// location set, this is every open seat platform-wide (hundreds+), so it's
+// the one call site that actually needs limit/offset — a matched-boundary
+// lookup (getActiveSeatsByShapeIds) is naturally small and doesn't paginate.
+export async function getActiveSeats(
+  supabase: Client,
+  opts: { limit?: number; offset?: number; withCount?: boolean } = {}
+) {
+  let q = supabase
     .from("election_seats")
     .select(
-      "id, role_title, map_shape_id, map_shapes(id, name, boundary_type, properties), elections!inner(id, name, election_date, status)"
+      "id, role_title, map_shape_id, map_shapes(id, name, boundary_type, properties), elections!inner(id, name, election_date, status)",
+      opts.withCount ? { count: "exact" } : undefined
     )
     .in("elections.status", ["nominations_open", "active"])
     .order("role_title");
+
+  if (opts.limit) q = q.limit(opts.limit);
+  if (opts.offset) q = q.range(opts.offset, opts.offset + (opts.limit ?? 30) - 1);
+
+  return q;
 }
 
 export async function findOpenSeatsInContainer(supabase: Client, containerShapeId: number) {

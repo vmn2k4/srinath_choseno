@@ -4,6 +4,7 @@ import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import {
   getNewsArticleBySlug,
+  getPublishedNewsArticles,
   estimateReadingMinutes,
   isBreakingNewsActive,
   type NewsArticle,
@@ -104,6 +105,16 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
   const content = article.content as NewsArticleContent;
   const isBreaking = isBreakingNewsActive(article);
   const readingTime = estimateReadingMinutes(content?.body);
+
+  // "Related Coverage" grid at the bottom of the article -- same category,
+  // excluding this article, most recent first. Purely data-driven off
+  // article.category so it needs no manual curation as new stories publish.
+  const supabaseForRelated = await createClient();
+  const { data: relatedArticles } = await getPublishedNewsArticles(supabaseForRelated, {
+    category: article.category,
+    excludeSlug: slug,
+    limit: 3,
+  });
   const displayDate = (article.published_at || article.event_date || article.created_at)
     ? new Date(article.published_at || article.event_date || article.created_at || "").toLocaleDateString("en-CA", {
         year: "numeric",
@@ -162,6 +173,8 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
           "@type": "ImageObject",
           url: `${SITE_URL}/icon.svg`,
         },
+        publishingPrinciples: `${SITE_URL}/editorial-standards`,
+        correctionsPolicy: `${SITE_URL}/corrections-policy`,
       },
       author: {
         "@type": "Organization",
@@ -216,6 +229,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
         readingTime={readingTime}
         displayDate={displayDate}
         ogImageUrl={ogImageUrl}
+        relatedArticles={(relatedArticles ?? []) as NewsArticle[]}
       />
     </>
   );

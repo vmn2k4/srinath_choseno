@@ -1,10 +1,16 @@
 import { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
-import { getPublishedNewsArticles } from "@/lib/services/news";
+import {
+  getPublishedNewsArticles,
+  getNewsArticlesByPoliticians,
+  getPublishedNewsCountries,
+  NEWS_CATEGORIES,
+} from "@/lib/services/news";
 import { SITE_URL } from "@/lib/constants/site";
 import NewsPageClient from "@/components/features/NewsPageClient";
 
 const BASE_URL = SITE_URL;
+const PAGE_SIZE = 24;
 
 export const metadata: Metadata = {
   title: "Live Civic & Political News: Real-Time Updates on Mayors, Premiers & 2026 Elections | Choseno",
@@ -48,12 +54,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function NewsPage() {
+interface NewsPageProps {
+  searchParams: Promise<{
+    page?: string;
+    category?: string;
+    country?: string;
+    rep?: string;
+  }>;
+}
+
+export default async function NewsPage({ searchParams }: NewsPageProps) {
+  const sp = await searchParams;
   const supabase = await createClient();
-  const [{ data: articles, error }, { data: authData }] = await Promise.all([
-    getPublishedNewsArticles(supabase, { limit: 500 }),
-    supabase.auth.getUser(),
-  ]);
+  const [{ data: authData }] = await Promise.all([supabase.auth.getUser()]);
 
   const user = authData?.user;
   const userRepresentatives: Array<{ id: string; name: string; role?: string | null; district?: string | null }> = [];
@@ -90,19 +103,45 @@ export default async function NewsPage() {
     }
   }
 
-  const items = (articles ?? []) as any[];
+  const page = Math.max(1, parseInt(sp.page || "1", 10) || 1);
+  const category = sp.category && (NEWS_CATEGORIES as readonly string[]).includes(sp.category) ? sp.category : null;
+  const country = sp.country && sp.country !== "All" ? sp.country : null;
+  const rep = sp.rep || null;
+  const offset = (page - 1) * PAGE_SIZE;
 
+  // rep=all_reps or rep=<politicianId> routes through the same joined query
+  // (see getNewsArticlesByPoliticians) instead of the plain published-feed
+  // query -- it's a different filter axis (who's tagged, not category/
+  // country), so it takes over the fetch entirely rather than composing.
+  const repIds = rep === "all_reps" ? userRepresentatives.map((r) => r.id) : rep ? [rep] : null;
+
+  const [{ data: articles, error, count }, countries] = await Promise.all([
+    repIds
+      ? getNewsArticlesByPoliticians(supabase, repIds, { limit: PAGE_SIZE, offset })
+      : getPublishedNewsArticles(supabase, { category, country, limit: PAGE_SIZE, offset, withCount: true }),
+    getPublishedNewsCountries(supabase),
+  ]);
+
+  const items = (articles ?? []) as any[];
+  const total = count ?? items.length;
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  // Only the current page's items go into the schema -- previously this
+  // dumped every published article (hundreds) into one ItemList regardless
+  // of what was actually on-screen, ballooning crawl payload for no SEO gain
+  // (Google reads the paginated HTML for the actual page contents anyway).
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: "Civic News & Updates",
     description: "Stay informed with the latest civic news, electoral boundary updates, and democratic technology from Choseno.",
-    url: `${BASE_URL}/news`,
+    url: `${BASE_URL}/news${page > 1 ? `?page=${page}` : ""}`,
     mainEntity: {
       "@type": "ItemList",
+      numberOfItems: total,
       itemListElement: items.map((item, index) => ({
         "@type": "ListItem",
-        position: index + 1,
+        position: offset + index + 1,
         name: item.headline,
         url: `${BASE_URL}/news/${item.slug}`,
       })),
@@ -120,6 +159,15 @@ export default async function NewsPage() {
         error={error}
         userRepresentatives={userRepresentatives}
         isLoggedIn={Boolean(user)}
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={PAGE_SIZE}
+        category={category}
+        country={country}
+        rep={rep}
+        categories={NEWS_CATEGORIES as unknown as string[]}
+        countries={countries}
       />
     </>
   );

@@ -26,9 +26,11 @@ import NewsArticleBody from "@/components/features/NewsArticleBody";
 import NewsComments from "@/components/features/NewsComments";
 import NewsArticleLinkedPoliticians from "@/components/features/NewsArticleLinkedPoliticians";
 import PoliticianInlineRating from "@/components/features/PoliticianInlineRating";
+import RelatedNewsSection from "@/components/features/RelatedNewsSection";
 import type { NewsArticle, NewsArticleContent } from "@/lib/services/news";
 import { stripEmoji } from "@/lib/utils/text";
 import { SITE_URL } from "@/lib/constants/site";
+import { categoryToSlug, tagToSlug } from "@/lib/utils/newsTaxonomy";
 
 interface NewsArticleDetailClientProps {
   article: NewsArticle;
@@ -38,6 +40,7 @@ interface NewsArticleDetailClientProps {
   readingTime: number;
   displayDate: string | null;
   ogImageUrl?: string;
+  relatedArticles?: NewsArticle[];
 }
 
 export default function NewsArticleDetailClient({
@@ -48,6 +51,7 @@ export default function NewsArticleDetailClient({
   readingTime,
   displayDate,
   ogImageUrl,
+  relatedArticles = [],
 }: NewsArticleDetailClientProps) {
   const { t, locale } = useTranslation();
 
@@ -267,7 +271,11 @@ export default function NewsArticleDetailClient({
             <ArrowLeft size={14} className="shrink-0" /> <span className="hidden sm:inline">{t("newsPage.backToNews")}</span>
           </Link>
           <span className="w-px h-4 bg-border-light/40 shrink-0 hidden sm:block" />
-          <Badge tone="primary" className="shrink-0">{article.category}</Badge>
+          {article.category && (
+            <Link href={`/news/category/${categoryToSlug(article.category)}`} className="shrink-0">
+              <Badge tone="primary" className="shrink-0 hover:bg-primary/30 transition-colors">{article.category}</Badge>
+            </Link>
+          )}
         </div>
 
         <div className="flex items-center gap-1.5 sm:gap-2 relative flex-nowrap shrink-0">
@@ -513,7 +521,9 @@ export default function NewsArticleDetailClient({
             </h3>
             <div className="flex flex-wrap gap-2">
               {content.tags.map((tag) => (
-                <Badge key={tag} tone="neutral">{tag}</Badge>
+                <Link key={tag} href={`/news/topic/${tagToSlug(tag)}`}>
+                  <Badge tone="neutral" className="hover:bg-surface-active transition-colors cursor-pointer">{tag}</Badge>
+                </Link>
               ))}
             </div>
           </div>
@@ -559,6 +569,12 @@ export default function NewsArticleDetailClient({
         }
         articleTitle={article.headline}
       />
+
+      {/* Related Coverage -- same category, keeps a reader (and a crawler)
+          from hitting a dead end at the end of an article. */}
+      {article.category && (
+        <RelatedNewsSection articles={relatedArticles} category={article.category} />
+      )}
 
       {/* Comments */}
       <NewsComments articleId={article.id} articleSlug={slug} />

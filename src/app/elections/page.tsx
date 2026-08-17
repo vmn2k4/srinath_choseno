@@ -94,7 +94,11 @@ export default async function ElectionsPage() {
       seatRows = [];
     }
   } else {
-    const res = await getActiveSeats(supabase);
+    // Anonymous/no-boundary view — platform-wide, so it's the one branch
+    // that can actually run into the hundreds-of-seats crawl-budget problem
+    // (see the SEO audit). Capped here as a payload safety net; the render
+    // itself is windowed client-side (ElectionsPageClient) regardless.
+    const res = await getActiveSeats(supabase, { limit: 300 });
     seatRows = res.data as SeatWithCandidates[] | null;
   }
 
@@ -116,6 +120,11 @@ export default async function ElectionsPage() {
     candidates: candidatesBySeat[s.id] || [],
   }));
 
+  // Cap the schema to the first 30 seats -- previously this dumped every
+  // active seat platform-wide (900+ in the unscoped/anonymous case) into a
+  // single ItemList, which is what the SEO audit's "908 items in JSON-LD"
+  // finding was pointing at. numberOfItems still reports the true total.
+  const JSON_LD_ITEM_CAP = 30;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -123,7 +132,7 @@ export default async function ElectionsPage() {
     description: "Discover active electoral seats and candidate races on Choseno.",
     url: `${BASE_URL}/elections`,
     numberOfItems: seats.length,
-    itemListElement: seats.map((seat, index) => ({
+    itemListElement: seats.slice(0, JSON_LD_ITEM_CAP).map((seat, index) => ({
       "@type": "ListItem",
       position: index + 1,
       name: `${seat.role_title} — ${seat.map_shapes?.name || ""}`,

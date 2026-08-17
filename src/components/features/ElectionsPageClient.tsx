@@ -7,6 +7,7 @@ import {
   MapPin,
   Users,
   ChevronRight,
+  ChevronLeft,
   Check,
   Layers,
   Sparkles,
@@ -72,6 +73,13 @@ export default function ElectionsPageClient({
   const [seats, setSeats] = useState<SeatWithCandidates[]>(initialSeats);
   const [loading, setLoading] = useState(false);
 
+  // Renders the seat list windowed instead of dumping every matched seat's
+  // DOM (each carries an <h2>) into the page at once -- unscoped/anonymous
+  // browsing can return hundreds of active seats platform-wide, which is
+  // exactly the crawl-budget/DOM-bloat problem the SEO audit flagged.
+  const SEATS_PER_PAGE = 24;
+  const [seatsPage, setSeatsPage] = useState(1);
+
   const [currentLat, setCurrentLat] = useState<number | undefined>(undefined);
   const [currentLng, setCurrentLng] = useState<number | undefined>(undefined);
   const [matchedBoundaries, setMatchedBoundaries] =
@@ -93,6 +101,7 @@ export default function ElectionsPageClient({
   const fetchSeatsForBoundaries = useCallback(
     async (boundariesToFetch: MatchedBoundary[]) => {
       setLoading(true);
+      setSeatsPage(1);
       try {
         const shapeIds = boundariesToFetch.map((b) => b.id);
         let resSeats: SeatWithCandidates[] = [];
@@ -359,49 +368,86 @@ export default function ElectionsPageClient({
         </div>
       ) : (
         <div className="order-2 lg:order-3 space-y-4">
-          <div className="flex items-center justify-between text-xs text-text-muted px-1">
-            <span>
-              Showing {seats.length} active seat
-              {seats.length !== 1 ? "s" : ""}
-            </span>
-          </div>
+          {(() => {
+            const totalSeatsPages = Math.max(1, Math.ceil(seats.length / SEATS_PER_PAGE));
+            const validSeatsPage = Math.min(seatsPage, totalSeatsPages);
+            const seatsStart = (validSeatsPage - 1) * SEATS_PER_PAGE;
+            const pagedSeats = seats.slice(seatsStart, seatsStart + SEATS_PER_PAGE);
 
-          {seats.map((seat) => (
-            <Card
-              key={seat.id}
-              as={Link}
-              href={`/elections/seat/${buildSeatSlug(seat)}`}
-              interactive
-              className="w-full text-left overflow-hidden flex items-center justify-between gap-4 group"
-            >
-              <div className="min-w-0">
-                <p className="text-xs text-text-muted mb-1">
-                  {seat.elections?.name} · {seat.elections?.election_date}
-                </p>
-                <h2 className="text-lg font-bold text-text-main flex items-center gap-2 flex-wrap">
-                  {seat.role_title}
-                  {seat.map_shapes?.name && (
-                    <span className="text-sm font-normal text-text-muted flex items-center gap-1">
-                      <MapPin size={13} className="text-accent" />{" "}
-                      {seat.map_shapes.name}
+            return (
+              <>
+                <div className="flex items-center justify-between text-xs text-text-muted px-1">
+                  <span>
+                    Showing {seatsStart + 1}–{Math.min(seatsStart + SEATS_PER_PAGE, seats.length)} of {seats.length} active seat
+                    {seats.length !== 1 ? "s" : ""}
+                  </span>
+                </div>
+
+                {pagedSeats.map((seat) => (
+                  <Card
+                    key={seat.id}
+                    as={Link}
+                    href={`/elections/seat/${buildSeatSlug(seat)}`}
+                    interactive
+                    className="w-full text-left overflow-hidden flex items-center justify-between gap-4 group"
+                  >
+                    <div className="min-w-0">
+                      <p className="text-xs text-text-muted mb-1">
+                        {seat.elections?.name} · {seat.elections?.election_date}
+                      </p>
+                      <h2 className="text-lg font-bold text-text-main flex items-center gap-2 flex-wrap">
+                        {seat.role_title}
+                        {seat.map_shapes?.name && (
+                          <span className="text-sm font-normal text-text-muted flex items-center gap-1">
+                            <MapPin size={13} className="text-accent" />{" "}
+                            {seat.map_shapes.name}
+                          </span>
+                        )}
+                      </h2>
+                      <p className="text-xs text-text-muted mt-1.5 flex items-center gap-1.5">
+                        <Users size={12} />
+                        {seat.candidates.length === 0
+                          ? "No candidates yet"
+                          : `${seat.candidates.length} candidate${
+                              seat.candidates.length !== 1 ? "s" : ""
+                            }`}
+                      </p>
+                    </div>
+                    <ChevronRight
+                      size={18}
+                      className="text-text-darker group-hover:text-primary-light transition-colors shrink-0"
+                    />
+                  </Card>
+                ))}
+
+                {totalSeatsPages > 1 && (
+                  <div className="pt-4 flex items-center justify-center gap-1.5">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setSeatsPage((p) => Math.max(1, p - 1))}
+                      disabled={validSeatsPage === 1}
+                      className="px-2.5 py-1.5 text-xs inline-flex items-center gap-1 disabled:opacity-40"
+                    >
+                      <ChevronLeft size={14} /> Previous
+                    </Button>
+                    <span className="px-3 text-xs text-text-muted font-medium">
+                      Page {validSeatsPage} of {totalSeatsPages}
                     </span>
-                  )}
-                </h2>
-                <p className="text-xs text-text-muted mt-1.5 flex items-center gap-1.5">
-                  <Users size={12} />
-                  {seat.candidates.length === 0
-                    ? "No candidates yet"
-                    : `${seat.candidates.length} candidate${
-                        seat.candidates.length !== 1 ? "s" : ""
-                      }`}
-                </p>
-              </div>
-              <ChevronRight
-                size={18}
-                className="text-text-darker group-hover:text-primary-light transition-colors shrink-0"
-              />
-            </Card>
-          ))}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setSeatsPage((p) => Math.min(totalSeatsPages, p + 1))}
+                      disabled={validSeatsPage === totalSeatsPages}
+                      className="px-2.5 py-1.5 text-xs inline-flex items-center gap-1 disabled:opacity-40"
+                    >
+                      Next <ChevronRight size={14} />
+                    </Button>
+                  </div>
+                )}
+              </>
+            );
+          })()}
         </div>
       )}
     </div>

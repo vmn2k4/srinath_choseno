@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React from "react";
 import Link from "next/link";
 import {
   Newspaper,
@@ -47,110 +47,73 @@ export interface UserRepresentative {
   district?: string | null;
 }
 
-const ITEMS_PER_PAGE = 12;
+interface NewsPageClientProps {
+  items: NewsArticleRow[];
+  error: any;
+  userRepresentatives?: UserRepresentative[];
+  isLoggedIn?: boolean;
+  // Pagination + active filters -- all resolved server-side (see
+  // news/page.tsx) from the URL's searchParams. This component no longer
+  // holds the full article corpus and slices/filters it client-side: every
+  // filter or page change is a real navigation to a new `/news?...` URL, so
+  // the server only ever fetches (and schemas) the page actually being
+  // viewed. See docs discussion in the SEO audit this replaced.
+  page: number;
+  totalPages: number;
+  total: number;
+  pageSize: number;
+  category: string | null;
+  country: string | null;
+  rep: string | null;
+  categories: string[];
+  countries: string[];
+}
 
 export default function NewsPageClient({
   items,
   error,
   userRepresentatives = [],
   isLoggedIn = false,
-}: {
-  items: NewsArticleRow[];
-  error: any;
-  userRepresentatives?: UserRepresentative[];
-  isLoggedIn?: boolean;
-}) {
+  page,
+  totalPages,
+  total,
+  pageSize,
+  category,
+  country,
+  rep,
+  categories,
+  countries,
+}: NewsPageClientProps) {
   const { t } = useTranslation();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCountry, setSelectedCountry] = useState<string>("All");
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [repFilter, setRepFilter] = useState<string | null>(null);
 
-  // Map of user representative IDs for fast lookup
-  const repIdsSet = useMemo(() => {
-    return new Set(userRepresentatives.map((r) => r.id));
-  }, [userRepresentatives]);
-
-  // Sort strictly by the date the news happened (event_date falling back to published_at/created_at)
-  const sortedItems = useMemo(() => {
-    const getTimestamp = (a: NewsArticleRow) => {
-      const dateStr = a.event_date || a.published_at || a.created_at;
-      return dateStr ? new Date(dateStr).getTime() : 0;
+  // Builds a /news?... href starting from the current filter state, applying
+  // only the overrides passed in. Any category/country/rep override resets
+  // to page 1 (a fresh filter always starts its own first page) unless the
+  // caller is explicitly changing the page itself.
+  const buildHref = (overrides: {
+    category?: string | null;
+    country?: string | null;
+    rep?: string | null;
+    page?: number;
+  }) => {
+    const filtersChanged = "category" in overrides || "country" in overrides || "rep" in overrides;
+    const next = {
+      category: "category" in overrides ? overrides.category : category,
+      country: "country" in overrides ? overrides.country : country,
+      rep: "rep" in overrides ? overrides.rep : rep,
+      page: "page" in overrides ? overrides.page! : filtersChanged ? 1 : page,
     };
-    return [...items].sort((a, b) => getTimestamp(b) - getTimestamp(a));
-  }, [items]);
-
-  // Extract unique countries
-  const countries = useMemo(() => {
-    const set = new Set<string>();
-    items.forEach((item) => {
-      if (item.country) set.add(item.country.toUpperCase());
-    });
-    return ["All", ...Array.from(set).sort()];
-  }, [items]);
-
-  // Extract unique categories for quick tabs
-  const categories = useMemo(() => {
-    const set = new Set<string>();
-    items.forEach((item) => {
-      if (item.category) set.add(item.category);
-    });
-    return ["All", ...Array.from(set).sort()];
-  }, [items]);
-
-  // Filter items by country, category AND representative selection
-  const filteredItems = useMemo(() => {
-    return sortedItems.filter((item) => {
-      // 1. Country filter
-      if (selectedCountry !== "All" && item.country?.toUpperCase() !== selectedCountry.toUpperCase()) {
-        return false;
-      }
-
-      // 2. Category filter
-      if (selectedCategory !== "All" && item.category?.toLowerCase() !== selectedCategory.toLowerCase()) {
-        return false;
-      }
-
-      // 3. Representative filter check
-      if (repFilter === "all_reps") {
-        const tagged = item.news_article_politicians ?? [];
-        return tagged.some((p) => repIdsSet.has(p.politician_id));
-      } else if (repFilter) {
-        const tagged = item.news_article_politicians ?? [];
-        return tagged.some((p) => p.politician_id === repFilter);
-      }
-
-      return true;
-    });
-  }, [sortedItems, selectedCountry, selectedCategory, repFilter, repIdsSet]);
-
-  // Pagination calculations
-  const totalPages = Math.max(1, Math.ceil(filteredItems.length / ITEMS_PER_PAGE));
-  const validPage = Math.min(currentPage, totalPages);
-  const startIndex = (validPage - 1) * ITEMS_PER_PAGE;
-  const paginatedItems = filteredItems.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-
-  const handlePageChange = (newPage: number) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    const params = new URLSearchParams();
+    if (next.category) params.set("category", next.category);
+    if (next.country) params.set("country", next.country);
+    if (next.rep) params.set("rep", next.rep);
+    if (next.page > 1) params.set("page", String(next.page));
+    const qs = params.toString();
+    return `/news${qs ? `?${qs}` : ""}`;
   };
 
-  const handleCountrySelect = (c: string) => {
-    setSelectedCountry(c);
-    setCurrentPage(1);
-  };
-
-  const handleCategorySelect = (cat: string) => {
-    setSelectedCategory(cat);
-    setCurrentPage(1);
-  };
-
-  const handleRepFilterSelect = (val: string | null) => {
-    setRepFilter(val);
-    setCurrentPage(1);
-  };
+  const hasActiveFilters = Boolean(category || country || rep);
+  const startIndex = (page - 1) * pageSize;
 
   // Helper for generating page numbers with ellipsis
   const getPageNumbers = () => {
@@ -158,12 +121,12 @@ export default function NewsPageClient({
     if (totalPages <= 7) {
       for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
-      if (validPage <= 4) {
+      if (page <= 4) {
         pages.push(1, 2, 3, 4, 5, "...", totalPages);
-      } else if (validPage >= totalPages - 3) {
+      } else if (page >= totalPages - 3) {
         pages.push(1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
       } else {
-        pages.push(1, "...", validPage - 1, validPage, validPage + 1, "...", totalPages);
+        pages.push(1, "...", page - 1, page, page + 1, "...", totalPages);
       }
     }
     return pages;
@@ -175,9 +138,9 @@ export default function NewsPageClient({
         <PageHeader icon={Newspaper} title={t("newsPage.title")} />
 
         {/* Results counter */}
-        {filteredItems.length > 0 && (
+        {total > 0 && (
           <div className="text-xs text-text-muted font-medium bg-surface/50 px-3 py-1.5 rounded-full border border-border-light/30 w-fit">
-            Showing <span className="text-text-main font-semibold">{startIndex + 1}–{Math.min(startIndex + ITEMS_PER_PAGE, filteredItems.length)}</span> of <span className="text-text-main font-semibold">{filteredItems.length}</span> stories
+            Showing <span className="text-text-main font-semibold">{startIndex + 1}–{Math.min(startIndex + pageSize, total)}</span> of <span className="text-text-main font-semibold">{total}</span> stories
           </div>
         )}
       </div>
@@ -190,94 +153,92 @@ export default function NewsPageClient({
               <UserCheck size={15} />
               <span>Filter by My Representatives ({userRepresentatives.length})</span>
             </div>
-            {repFilter && (
-              <button
-                onClick={() => handleRepFilterSelect(null)}
-                className="text-[11px] text-primary hover:underline font-semibold cursor-pointer"
-              >
+            {rep && (
+              <Link href={buildHref({ rep: null })} className="text-[11px] text-primary hover:underline font-semibold">
                 Clear Representative Filter
-              </button>
+              </Link>
             )}
           </div>
 
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-            <button
-              onClick={() => handleRepFilterSelect(repFilter === "all_reps" ? null : "all_reps")}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
-                repFilter === "all_reps"
+            <Link
+              href={buildHref({ rep: rep === "all_reps" ? null : "all_reps" })}
+              className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                rep === "all_reps"
                   ? "bg-primary text-white shadow-sm"
                   : "bg-surface/80 hover:bg-surface text-text-main border border-border-light/40"
               }`}
             >
               <Users size={12} />
               All My Representatives
-            </button>
+            </Link>
 
-            {userRepresentatives.map((rep) => {
-              const isSelected = repFilter === rep.id;
+            {userRepresentatives.map((r) => {
+              const isSelected = rep === r.id;
               return (
-                <button
-                  key={rep.id}
-                  onClick={() => handleRepFilterSelect(isSelected ? null : rep.id)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1 ${
+                <Link
+                  key={r.id}
+                  href={buildHref({ rep: isSelected ? null : r.id })}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1 ${
                     isSelected
                       ? "bg-primary text-white shadow-sm"
                       : "bg-surface/60 hover:bg-surface text-text-muted hover:text-text-main border border-border-light/30"
                   }`}
                 >
-                  <span>{rep.name}</span>
-                  {rep.role && <span className="opacity-75 text-[10px]">({rep.role})</span>}
-                </button>
+                  <span>{r.name}</span>
+                  {r.role && <span className="opacity-75 text-[10px]">({r.role})</span>}
+                </Link>
               );
             })}
           </div>
         </div>
       )}
 
-      {/* Country & Category Filter Bar */}
+      {/* Country & Category Filter Bar -- real crawlable links to
+          /news?category=... and /news?country=..., not client-only state,
+          so a category tab is itself an internal-linking path a bot can
+          follow and index independently. */}
       <div className="space-y-2">
-        {/* Country selector */}
-        {countries.length > 2 && (
+        {countries.length > 1 && (
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
             <Globe size={14} className="text-text-muted shrink-0 mr-1 hidden sm:inline-block" />
-            {countries.map((c) => {
-              const isSelected = selectedCountry === c;
+            {["All", ...countries].map((c) => {
+              const isSelected = (country ?? "All") === c;
               const label = c === "All" ? "All Countries" : c === "CA" ? "Canada 🇨🇦" : c === "US" ? "United States 🇺🇸" : c;
               return (
-                <button
+                <Link
                   key={c}
-                  onClick={() => handleCountrySelect(c)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                  href={buildHref({ country: c === "All" ? null : c, rep: null })}
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
                     isSelected
                       ? "bg-primary text-white shadow-sm"
                       : "bg-surface/60 hover:bg-surface text-text-muted hover:text-text-main border border-border-light/30"
                   }`}
                 >
                   {label}
-                </button>
+                </Link>
               );
             })}
           </div>
         )}
 
-        {/* Category selector */}
-        {categories.length > 2 && (
+        {categories.length > 1 && (
           <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
             <Filter size={14} className="text-text-muted shrink-0 mr-1 hidden sm:inline-block" />
-            {categories.map((cat) => {
-              const isSelected = selectedCategory === cat;
+            {["All", ...categories].map((cat) => {
+              const isSelected = (category ?? "All") === cat;
               return (
-                <button
+                <Link
                   key={cat}
-                  onClick={() => handleCategorySelect(cat)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                  href={buildHref({ category: cat === "All" ? null : cat, rep: null })}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
                     isSelected
                       ? "bg-primary text-white shadow-sm"
                       : "bg-surface/60 hover:bg-surface text-text-muted hover:text-text-main border border-border-light/30"
                   }`}
                 >
                   {cat}
-                </button>
+                </Link>
               );
             })}
           </div>
@@ -290,20 +251,11 @@ export default function NewsPageClient({
         </div>
       )}
 
-      {filteredItems.length === 0 && !error ? (
+      {items.length === 0 && !error ? (
         <Card padding="md" className="text-center py-16 text-text-muted text-sm space-y-3">
-          <p>{repFilter ? "No news articles found for the selected representative." : t("newsPage.noArticles")}</p>
-          {(repFilter || selectedCategory !== "All" || selectedCountry !== "All") && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                setRepFilter(null);
-                setSelectedCategory("All");
-                setSelectedCountry("All");
-              }}
-              className="text-xs"
-            >
+          <p>{rep ? "No news articles found for the selected representative." : t("newsPage.noArticles")}</p>
+          {hasActiveFilters && (
+            <Button as={Link} href="/news" variant="outline" size="sm" className="text-xs">
               Show All News Articles
             </Button>
           )}
@@ -312,11 +264,12 @@ export default function NewsPageClient({
         <>
           {/* News Article Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {paginatedItems.map((article) => {
+            {items.map((article) => {
               const content = article.content as NewsArticleContent;
               const isBreaking = isBreakingNewsActive(article as any);
 
               // Check if this article tags any of the user's representatives
+              const repIdsSet = new Set(userRepresentatives.map((r) => r.id));
               const taggedUserReps = (article.news_article_politicians ?? []).filter((p) =>
                 repIdsSet.has(p.politician_id)
               );
@@ -408,7 +361,7 @@ export default function NewsPageClient({
                           const catTag = article.category ? `#${article.category.replace(/[^a-zA-Z0-9]/g, "")}` : "#CivicNews";
                           const locTag = article.country ? `#${article.country.toUpperCase()}` : "";
                           const shareMsg = `📰 ${article.headline}\n\nTrack local democracy & rate officials on @choseno!\n\n${[catTag, locTag, "#Choseno", "#RateYourPolitician"].filter(Boolean).join(" ")}`;
-                          
+
                           if (navigator.share) {
                             navigator.share({
                               title: article.headline,
@@ -431,53 +384,62 @@ export default function NewsPageClient({
             })}
           </div>
 
-          {/* Pagination Navigation Controls */}
+          {/* Pagination Navigation Controls -- real /news?page=N links */}
           {totalPages > 1 && (
             <div className="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <div className="flex items-center gap-1.5">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handlePageChange(validPage - 1)}
-                  disabled={validPage === 1}
-                  className="px-2.5 py-1.5 text-xs inline-flex items-center gap-1 disabled:opacity-40"
-                >
-                  <ChevronLeft size={14} /> Previous
-                </Button>
+                {page === 1 ? (
+                  <span className="px-2.5 py-1.5 text-xs inline-flex items-center gap-1 opacity-40 border border-border-light/30 rounded-lg">
+                    <ChevronLeft size={14} /> Previous
+                  </span>
+                ) : (
+                  <Link
+                    href={buildHref({ page: page - 1 })}
+                    className="px-2.5 py-1.5 text-xs inline-flex items-center gap-1 border border-border-light/40 rounded-lg hover:bg-surface transition-colors"
+                  >
+                    <ChevronLeft size={14} /> Previous
+                  </Link>
+                )}
 
-                {getPageNumbers().map((page, idx) => {
-                  if (page === "...") {
+                {getPageNumbers().map((p, idx) => {
+                  if (p === "...") {
                     return (
                       <span key={`ellipsis-${idx}`} className="px-2 py-1 text-xs text-text-muted select-none">
                         ...
                       </span>
                     );
                   }
-                  const isCurrent = page === validPage;
-                  return (
-                    <button
-                      key={`page-${page}`}
-                      onClick={() => handlePageChange(Number(page))}
-                      className={`min-w-[32px] h-8 px-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        isCurrent
-                          ? "bg-primary text-white shadow-sm"
-                          : "bg-surface/50 hover:bg-surface text-text-muted hover:text-text-main border border-border-light/30"
-                      }`}
+                  const isCurrent = p === page;
+                  return isCurrent ? (
+                    <span
+                      key={`page-${p}`}
+                      className="min-w-[32px] h-8 px-2 rounded-lg text-xs font-bold bg-primary text-white shadow-sm inline-flex items-center justify-center"
                     >
-                      {page}
-                    </button>
+                      {p}
+                    </span>
+                  ) : (
+                    <Link
+                      key={`page-${p}`}
+                      href={buildHref({ page: Number(p) })}
+                      className="min-w-[32px] h-8 px-2 rounded-lg text-xs font-bold transition-all bg-surface/50 hover:bg-surface text-text-muted hover:text-text-main border border-border-light/30 inline-flex items-center justify-center"
+                    >
+                      {p}
+                    </Link>
                   );
                 })}
 
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handlePageChange(validPage + 1)}
-                  disabled={validPage === totalPages}
-                  className="px-2.5 py-1.5 text-xs inline-flex items-center gap-1 disabled:opacity-40"
-                >
-                  Next <ChevronRight size={14} />
-                </Button>
+                {page === totalPages ? (
+                  <span className="px-2.5 py-1.5 text-xs inline-flex items-center gap-1 opacity-40 border border-border-light/30 rounded-lg">
+                    Next <ChevronRight size={14} />
+                  </span>
+                ) : (
+                  <Link
+                    href={buildHref({ page: page + 1 })}
+                    className="px-2.5 py-1.5 text-xs inline-flex items-center gap-1 border border-border-light/40 rounded-lg hover:bg-surface transition-colors"
+                  >
+                    Next <ChevronRight size={14} />
+                  </Link>
+                )}
               </div>
             </div>
           )}

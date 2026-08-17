@@ -153,12 +153,17 @@ export async function getPublishedNewsArticles(
     offset?: number;
     /** ISO timestamp -- only articles published at/after this instant. Used by the Google News sitemap's 48-hour window. */
     publishedAfter?: string;
+    /** Excludes one slug -- used to pull "related coverage" for an article without it linking to itself. */
+    excludeSlug?: string;
+    /** When true, requests an exact total count alongside the page of rows (see PostgREST `count`), so callers can build page-number UI without a second query. */
+    withCount?: boolean;
   } = {}
-): Promise<{ data: NewsArticle[] | null; error: PostgrestError | null }> {
+): Promise<{ data: NewsArticle[] | null; error: PostgrestError | null; count?: number | null }> {
   let q = supabase
     .from("news_articles")
     .select(
-      "id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, created_at, news_article_politicians(politician_id, profiles(id, full_name))"
+      "id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, created_at, news_article_politicians(politician_id, profiles(id, full_name))",
+      opts.withCount ? { count: "exact" } : undefined
     )
     .eq("status", "published")
     .lte("published_at", new Date().toISOString())
@@ -169,10 +174,11 @@ export async function getPublishedNewsArticles(
   if (opts.province) q = q.eq("province", opts.province);
   if (opts.category) q = q.eq("category", opts.category);
   if (opts.publishedAfter) q = q.gte("published_at", opts.publishedAfter);
+  if (opts.excludeSlug) q = q.neq("slug", opts.excludeSlug);
   if (opts.limit) q = q.limit(opts.limit);
   if (opts.offset) q = q.range(opts.offset, opts.offset + (opts.limit ?? 20) - 1);
 
-  return q as unknown as Promise<{ data: NewsArticle[] | null; error: PostgrestError | null }>;
+  return q as unknown as Promise<{ data: NewsArticle[] | null; error: PostgrestError | null; count?: number | null }>;
 }
 
 export async function getNewsArticleBySlug(
@@ -376,12 +382,13 @@ export async function syncNewsArticlePoliticianTags(
 export async function getNewsArticlesByPolitician(
   supabase: Client,
   politicianId: string,
-  opts: { limit?: number; offset?: number } = {}
-): Promise<{ data: NewsArticle[] | null; error: PostgrestError | null }> {
+  opts: { limit?: number; offset?: number; withCount?: boolean } = {}
+): Promise<{ data: NewsArticle[] | null; error: PostgrestError | null; count?: number | null }> {
   let q = supabase
     .from("news_articles")
     .select(
-      "id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, created_at, news_article_politicians!inner(politician_id)"
+      "id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, created_at, news_article_politicians!inner(politician_id)",
+      opts.withCount ? { count: "exact" } : undefined
     )
     .eq("news_article_politicians.politician_id", politicianId)
     .eq("status", "published")
@@ -391,7 +398,57 @@ export async function getNewsArticlesByPolitician(
   if (opts.limit) q = q.limit(opts.limit);
   if (opts.offset) q = q.range(opts.offset, opts.offset + (opts.limit ?? 10) - 1);
 
-  return q as unknown as Promise<{ data: NewsArticle[] | null; error: PostgrestError | null }>;
+  return q as unknown as Promise<{ data: NewsArticle[] | null; error: PostgrestError | null; count?: number | null }>;
+}
+
+/**
+ * Same as getNewsArticlesByPolitician but for several politicians at once --
+ * powers the /news feed's "All My Representatives" filter (news/page.tsx),
+ * which previously fetched up to 500 published articles and filtered
+ * client-side. `.in(...)` on the joined table matches any of the ids.
+ */
+export async function getNewsArticlesByPoliticians(
+  supabase: Client,
+  politicianIds: string[],
+  opts: { limit?: number; offset?: number } = {}
+): Promise<{ data: NewsArticle[] | null; error: PostgrestError | null; count?: number | null }> {
+  if (!politicianIds.length) return { data: [], error: null, count: 0 };
+
+  let q = supabase
+    .from("news_articles")
+    .select(
+      "id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, created_at, news_article_politicians!inner(politician_id, profiles(id, full_name))",
+      { count: "exact" }
+    )
+    .in("news_article_politicians.politician_id", politicianIds)
+    .eq("status", "published")
+    .lte("published_at", new Date().toISOString())
+    .order("published_at", { ascending: false });
+
+  if (opts.limit) q = q.limit(opts.limit);
+  if (opts.offset) q = q.range(opts.offset, opts.offset + (opts.limit ?? 10) - 1);
+
+  return q as unknown as Promise<{ data: NewsArticle[] | null; error: PostgrestError | null; count?: number | null }>;
+}
+
+/**
+ * Distinct countries with at least one published article, for the /news
+ * feed's country filter tabs. Selects one column only (not full article
+ * rows) so it stays cheap even as the article count grows.
+ */
+export async function getPublishedNewsCountries(supabase: Client): Promise<string[]> {
+  const { data } = await supabase
+    .from("news_articles")
+    .select("country")
+    .eq("status", "published")
+    .lte("published_at", new Date().toISOString())
+    .not("country", "is", null);
+
+  const set = new Set<string>();
+  (data ?? []).forEach((row: { country: string | null }) => {
+    if (row.country) set.add(row.country.toUpperCase());
+  });
+  return Array.from(set).sort();
 }
 
 // ── Boundary tagging (article geolocation → electoral boundaries) ──────────

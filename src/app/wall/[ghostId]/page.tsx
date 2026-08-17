@@ -9,10 +9,14 @@ import {
   getSEOProfileSummary,
   getSEOProfileSummaryBySlug,
 } from "@/lib/services/politicianWall";
+import { getNewsArticlesByPolitician } from "@/lib/services/news";
 import { redirect } from "next/navigation";
 import { notFound } from "next/navigation";
+import Link from "next/link";
+import { ArrowRight, Newspaper } from "lucide-react";
 import { SITE_URL } from "@/lib/constants/site";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
+import NewsArticleCard from "@/components/features/NewsArticleCard";
 
 const BASE_URL = SITE_URL;
 
@@ -147,9 +151,16 @@ export default async function WallPage({ params }: WallPageProps) {
 
   if (canonicalWallSlug && ghostId !== canonicalWallSlug) redirect(`/wall/${canonicalWallSlug}`);
 
-  const [{ data: posts }, supportCountRes] = await Promise.all([
+  const [{ data: posts }, supportCountRes, { data: newsArchivePreview, count: newsArchiveCount }] = await Promise.all([
     getWallPosts(supabase, owner.current_ghost_id),
     owner?.id ? getSupporterCount(supabase, owner.id) : Promise.resolve({ count: 0 }),
+    // Full indexed news archive for this politician now lives at
+    // /wall/[slug]/news (see that route) -- this is just a 3-card teaser so
+    // the wall itself links out to it, instead of the wall only ever
+    // linking to the couple of articles mirrored as posts.
+    owner?.id
+      ? getNewsArticlesByPolitician(supabase, owner.id, { limit: 3, withCount: true })
+      : Promise.resolve({ data: [], count: 0 }),
   ]);
 
   const canonicalUrl = `${BASE_URL}/wall/${canonicalWallSlug}`;
@@ -267,6 +278,29 @@ export default async function WallPage({ params }: WallPageProps) {
         initialPosts={(posts as any) || []}
         initialSupportCount={"count" in supportCountRes ? supportCountRes.count || 0 : 0}
       />
+
+      {/* News coverage teaser -- links out to the full indexed archive at
+          /wall/[slug]/news rather than dead-ending on the wall itself. */}
+      {newsArchivePreview && newsArchivePreview.length > 0 && (
+        <div className="w-full max-w-none px-4 lg:px-8 pb-16 -mt-6 space-y-4">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-sm font-bold text-text-main flex items-center gap-2">
+              <Newspaper size={16} className="text-primary" /> News Coverage of {name}
+            </h2>
+            <Link
+              href={`/wall/${canonicalWallSlug}/news`}
+              className="text-xs font-bold text-primary hover:text-primary-hover inline-flex items-center gap-1 shrink-0"
+            >
+              View all {newsArchiveCount ?? newsArchivePreview.length} stories <ArrowRight size={12} />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {newsArchivePreview.map((article: any) => (
+              <NewsArticleCard key={article.id} article={article} />
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 }
