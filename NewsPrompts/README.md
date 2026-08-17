@@ -1,0 +1,30 @@
+# Choseno News Prompts & Directives Suite
+
+This directory contains the standardized, modular news collection, verification, and ingestion directives for the **Choseno** platform.
+
+---
+
+## Directives Index
+
+| Directive File | Focus Area | Primary Discovery Vectors | Target Output |
+| :--- | :--- | :--- | :--- |
+| **[`NewsCollectionPrompt.md`](file:///Users/vmn2k4/Coding/Choseno/NewsPrompts/NewsCollectionPrompt.md)** | **General High-Impact Civic & Political News** | Wires (AP, Reuters, CP), Google Trends, RSS feeds, executive councils, provincial & federal portals. | Up to 100 verified stories per batch across all civic domains. |
+| **[`KeyLeadersNewsCollectionPrompt.md`](file:///Users/vmn2k4/Coding/Choseno/NewsPrompts/KeyLeadersNewsCollectionPrompt.md)** | **30 Key Political Leaders (US & Canada)** | Executive orders, legislative floor votes, bilateral negotiations, statements from the 30 designated key leaders. | Targeted stories pre-mapped to verified database UUIDs for instant profile wall mirroring. |
+| **[`UniversalWebNewsCollectionPrompt.md`](file:///Users/vmn2k4/Coding/Choseno/NewsPrompts/UniversalWebNewsCollectionPrompt.md)** | **Universal Web & Google Discovery with Dynamic Tagging** | Broad-spectrum Google search operators across 50 states, 10 provinces, 100+ cities, municipal councils, and court dockets. | Broad localized & municipal coverage with live database lookup & dynamic tagging for any official mentioned. |
+
+---
+
+## Universal Ingestion Workflow
+
+Regardless of which directive is executed, all three workflows adhere to the exact same execution pipeline:
+
+1. **Deduplication**: Compare against existing database records (by slug, canonical source URL, and headline tokens).
+2. **4-Part Journalistic Format**: Substantive articles (350–750 words) with Dateline, Hard Figures, Constituent Impact, and Accountability.
+3. **Database Ingestion**: Hand-authored article objects are placed into `scripts/insert-news-batch.js` and executed via:
+   ```bash
+   node scripts/insert-news-batch.js
+   ```
+4. **Automated Tagging**:
+   - `admin_sync_news_article_tags()` mirrors stories directly to politician profile walls (`/wall/[slug]`).
+   - `admin_sync_news_article_boundaries()` uses `latitude`/`longitude` to map articles into electoral boundaries.
+5. **Distribution Tracking**: Top-100 ranked stories are saved in `batch-ranked-news.csv`; overflow is stored in `scripts/overflow-news-batch.json`.
