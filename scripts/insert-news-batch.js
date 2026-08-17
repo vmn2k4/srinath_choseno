@@ -25,30 +25,30 @@ envFile.split('\n').forEach(line => {
 // ── ADD YOUR ARTICLES HERE ──────────────────────────────────────────────────
 const articles = [
   {
-    slug: 'dominic-leblanc-washington-urgent-canada-us-tariff-talks-2026-08-16',
-    headline: 'Trade Minister Dominic LeBlanc Leads High-Stakes Washington Talks to Avert Looming U.S. Tariffs',
-    summary: 'Minister Dominic LeBlanc and Chief Negotiator Janice Charette hold weekend sessions in Washington to resolve cross-border dairy, alcohol, and trade friction ahead of an August 19 tariff deadline.',
-    category: 'Economy',
-    country: 'CA',
-    province: 'ON',
+    slug: 'senator-bill-cassidy-criticizes-white-house-childhood-vaccine-directive-2026-08-16',
+    headline: 'Senator Bill Cassidy Pushes Back Against Executive Directive on Childhood Vaccine Schedules',
+    summary: 'Physician and U.S. Senator Bill Cassidy breaks with White House rhetoric on childhood vaccines, defending established clinical immunology and state public health authority.',
+    category: 'Healthcare',
+    country: 'US',
+    province: 'LA',
     status: 'published',
-    eventDate: '2026-08-16T17:30:00Z',
-    published_at: '2026-08-16T18:45:00Z',
-    impactArea: 'international',
-    latitude: 45.4215,
-    longitude: -75.6972,
-    body: 'OTTAWA, Ont. — Federal Minister of Public Safety, Democratic Institutions and Intergovernmental Affairs Dominic LeBlanc and Chief Trade Negotiator Janice Charette have concluded weekend ministerial sessions in Washington, D.C., working to resolve bilateral trade disputes before impending U.S. tariff actions take effect on August 19.\n\n## The $28 Billion Trade Dispute & Sectoral Mechanics\n\nThe emergency negotiations center on potential 50% U.S. tariff duties that could impact up to $28 billion in annual Canadian export volume. U.S. Trade Representative Jamieson Greer and American negotiators have raised key areas of contention:\n\n* **Supply-Managed Agricultural Quotas**: Tariff rate quota administration on poultry and dairy imports into the Canadian market.\n* **Provincial Alcohol Retail Rules**: Direct access for American spirit distillers and wine producers across provincial liquor boards.\n* **Automotive Origin Requirements**: Supply chain rules governing North American critical minerals and electric vehicle battery components.\n\n\"Canada and the United States share the most integrated and mutually beneficial economic partnership in the world,\" Minister LeBlanc said following discussions at the Canadian Embassy in Washington. \"We remain firmly focused on defending Canadian workers, businesses, and supply chains while seeking a fair, comprehensive agreement.\"\n\n## Economic Stakes for Constituents and Exporters\n\nCross-border supply chain groups estimate that sudden tariff barriers would cause severe disruptions for manufacturing facilities across Southern Ontario and agricultural exporters throughout the Prairies and Quebec. In the United States, agricultural leaders in Midwestern states have also raised concerns regarding reciprocal retaliatory duties on corn, pork, and soybean exports to Canadian consumers.\n\n## Next Steps and Accountability Timelines\n\nNegotiators will continue technical roundtables in Washington through August 18. Minister LeBlanc is scheduled to brief the Cabinet Committee on Canada-U.S. Relations on Monday morning, with parliamentary opposition parties requesting an emergency briefing before the House of Commons Standing Committee on International Trade.',
-    seoTitle: 'Dominic LeBlanc Leads Canada-US Trade Talks 2026 | Choseno',
-    metaDescription: 'Trade Minister Dominic LeBlanc holds emergency Washington talks to resolve $28B tariff dispute before August 19 deadline.',
+    eventDate: '2026-08-16T18:00:00Z',
+    published_at: '2026-08-16T19:45:00Z',
+    impactArea: 'country',
+    latitude: 30.4583,
+    longitude: -91.1403,
+    body: 'BATON ROUGE, La. — U.S. Senator Bill Cassidy (R-LA), a practicing gastroenterologist and member of the Senate Health, Education, Labor, and Pensions (HELP) Committee, issued a sharp critique of recent executive proposals aimed at altering federally recommended childhood vaccine protocols.\n\n## Medical Evidence and Public Health Governance\n\nThe dispute follows the signing of Executive Order 14420, which proposed unbundling the standard measles, mumps, and rubella (MMR) immunization and reducing the number of pediatric shots recommended by federal agencies:\n\n* **Peer-Reviewed Immunology**: Senator Cassidy emphasized that comprehensive global clinical trials over three decades demonstrate the combined MMR vaccine\'s safety and efficacy in preventing deadly childhood outbreaks.\n* **State vs. Federal Authority**: Reaffirming that under the U.S. Constitution, mandatory school immunization schedules remain strictly under the jurisdiction of state legislatures and public health boards, not federal executive orders.\n\n"As a doctor who has treated patients for over thirty years, public health policy must be anchored in rigorous, peer-reviewed medical science, not political rhetoric," Senator Cassidy stated during a state medical society forum. "Undermining public confidence in proven vaccines risks the resurgence of preventable infectious diseases among our children."\n\n## Congressional and Civic Reaction\n\nCassidy\'s remarks triggered widespread debate across the Capitol and medical associations, with the American Academy of Pediatrics (AAP) and the American Medical Association (AMA) releasing joint statements endorsing his position. In contrast, conservative populist commentators defended the executive order as a necessary check on federal health bureaucracy.\n\n## Legislative Oversight and Next Steps\n\nThe Senate HELP Committee plans to hold informational hearings in September to review the regulatory implementation of federal advisory committee recommendations at the CDC and FDA.',
+    seoTitle: 'Sen. Bill Cassidy Defends Childhood Vaccines | Choseno',
+    metaDescription: 'Senator Bill Cassidy pushes back against White House childhood vaccine directives, citing clinical medical evidence.',
     tags: [
-      'Dominic LeBlanc',
-      'Canada-US Trade',
-      'Tariffs',
-      'Economy',
-      'Ottawa',
-      'Federal Politics'
+      'Bill Cassidy',
+      'Healthcare',
+      'Vaccines',
+      'Senate GOP',
+      'Public Health',
+      'Louisiana'
     ],
-    tweet: 'Trade Minister Dominic LeBlanc leads high-stakes weekend talks in Washington to avert potential 50% U.S. tariffs on $28B in Canadian exports ahead of the August 19 deadline.',
+    tweet: 'Senator Bill Cassidy breaks with White House vaccine rhetoric, defending clinical medical evidence and state public health authority over pediatric immunization schedules.',
     breakingNews: false,
     author: {
       name: 'Choseno Civic News Desk',
@@ -56,46 +56,46 @@ const articles = [
     },
     sources: [
       {
-        label: 'Global Affairs Canada Official Statement',
-        url: 'https://www.international.gc.ca/gac-amc/news-nouvelles/2026-08-16-canada-us-trade-negotiations.aspx'
+        label: 'U.S. Senate Office of Senator Bill Cassidy - Official Press',
+        url: 'https://www.cassidy.senate.gov/newsroom/press-releases/cassidy-statement-on-childhood-immunization-guidelines'
       },
       {
-        label: 'Office of the United States Trade Representative',
-        url: 'https://ustr.gov/about-us/policy-offices/press-office/press-releases/2026/august/bilateral-canada-trade-dialogue'
+        label: 'American Academy of Pediatrics Policy Briefing',
+        url: 'https://www.aap.org/en/news-room/news-releases/aap-statement-on-federal-vaccine-schedules'
       }
     ],
     taggedPoliticianIds: [
-      '885e12f5-33d9-42a1-8dc9-b276069da88d'
+      '233458cd-528c-43ab-8ce7-d366838d301a'
     ],
     taggedPoliticians: [
-      'Dominic LeBlanc'
+      'Bill Cassidy'
     ]
   },
   {
-    slug: 'pierre-poilievre-calls-for-fuel-excise-tax-relief-extension-2026-08-16',
-    headline: 'Conservative Leader Pierre Poilievre Urges Extension of Federal Fuel Excise Tax Suspension',
-    summary: 'Opposition Leader Pierre Poilievre presses the federal government to extend relief on federal fuel taxes ahead of the fall budget, citing persistent cost-of-living pressures for working families.',
-    category: 'Economy',
+    slug: 'canada-parliamentary-petition-diplomatic-sovereignty-us-trade-showdown-2026-08-16',
+    headline: 'Grassroots Parliamentary Petition Demands Diplomatic Red Lines Amid U.S. Trade Confrontation',
+    summary: 'A fast-growing civic petition submitted to the House of Commons calls for strict diplomatic protocols after controversial remarks by U.S. Ambassador Pete Hoekstra during active tariff negotiations.',
+    category: 'Policy',
     country: 'CA',
     province: 'ON',
     status: 'published',
-    eventDate: '2026-08-16T16:45:00Z',
-    published_at: '2026-08-16T18:45:00Z',
-    impactArea: 'country',
+    eventDate: '2026-08-16T17:00:00Z',
+    published_at: '2026-08-16T19:45:00Z',
+    impactArea: 'international',
     latitude: 45.4215,
     longitude: -75.6972,
-    body: 'OTTAWA, Ont. — Official Opposition Leader Pierre Poilievre has called on the federal government to extend the temporary suspension of federal excise taxes on gasoline and diesel, warning that impending tax reinstatements would increase consumer freight and grocery distribution costs across Canada.\n\n## The Fiscal Debate and Consumer Numbers\n\nThe federal fuel excise tax applies a flat charge of 10 cents per litre on gasoline and 4 cents per litre on diesel fuel. According to Conservative economic policy analysts:\n\n* **Household Savings**: The average commuting household saves an estimated $28 to $42 per month during active fuel excise relief periods.\n* **Supply Chain Impacts**: Commercial transport operators estimate that extending the fuel tax pause lowers long-haul freight shipping rates by approximately 3.8% across interprovincial transit corridors.\n\n\"Canadian families are already stretched to their limits by high mortgage interest rates and grocery inflation,\" Poilievre stated at a press conference in Ottawa. \"Reimposing federal fuel taxes at this moment will only drive up shipping costs on every essential item that arrives on store shelves.\"\n\n## Government Response and Budgetary Context\n\nDepartment of Finance officials have emphasized that temporary tax measures must be balanced against ongoing infrastructure and green transit investments funded through dedicated fuel excise revenue transfers to municipalities. Deputy Prime Minister Chrystia Freeland previously noted that targeted fiscal support will remain the priority as the federal government prepares its upcoming fall economic statement.\n\n## Next Steps in Parliament\n\nThe Conservative caucus confirmed it will introduce an opposition day motion demanding a comprehensive review of federal energy taxation when the House of Commons resumes sitting in September.',
-    seoTitle: 'Pierre Poilievre Pushes Fuel Tax Relief Extension | Choseno',
-    metaDescription: 'Conservative Leader Pierre Poilievre calls on the federal government to extend the fuel excise tax suspension to ease cost of living.',
+    body: 'OTTAWA, Ont. — A national parliamentary e-petition has gathered tens of thousands of signatures across Canada, calling on the federal government to formally affirm Canadian economic sovereignty and address perceived diplomatic overreach by U.S. Ambassador Pete Hoekstra during ongoing tariff negotiations.\n\n## Civic Momentum & Diplomatic Protocol Terms\n\nThe petition, sponsored by civil society groups and presented to Members of Parliament, focuses on recent public statements by the U.S. Ambassador regarding Canadian supply management and provincial liquor monopolies:\n\n* **Vienna Convention Protections**: Demanding that foreign envoys adhere strictly to diplomatic conventions prohibiting interference in domestic legislative and provincial regulatory affairs.\n* **Cross-Party Sovereignty Declaration**: Urging all federal parties in the House of Commons to adopt a unified resolution protecting Canadian agricultural supply management from unilateral trade ultimatums.\n\n"Canadians expect fair and firm negotiations with our closest trading partner, but we will not accept external pressure undermining our democratically enacted provincial laws and farm families," said civic organizers in Ottawa.\n\n## Political and Trade Context\n\nThe petition emerges as Minister Dominic LeBlanc conducts round-the-clock talks in Washington to prevent 50% tariffs on $28 billion of Canadian goods from taking effect on August 19. While business lobbies have urged flexibility to avert economic damage, labor unions and agricultural associations have mobilized grassroots campaigns to resist unilateral concessions.\n\n## Next Steps in the House of Commons\n\nUpon certification by the Clerk of Petitions, the federal government is constitutionally required to provide a formal written response in the House of Commons within 45 calendar days.',
+    seoTitle: 'Canada Diplomatic Sovereignty Petition 2026 | Choseno',
+    metaDescription: 'National parliamentary petition demands diplomatic red lines and defense of Canadian sovereignty amid US tariff threats.',
     tags: [
-      'Pierre Poilievre',
-      'Conservatives',
-      'Fuel Tax',
-      'Economy',
-      'Ottawa',
-      'Cost of Living'
+      'Canada-US Trade',
+      'Parliament',
+      'Petitions',
+      'Dominic LeBlanc',
+      'Sovereignty',
+      'Ottawa'
     ],
-    tweet: 'Conservative Leader Pierre Poilievre calls on the federal government to extend the fuel excise tax pause to protect family budgets and prevent shipping cost hikes.',
+    tweet: 'A surge in grassroots parliamentary signatures calls on Ottawa to enforce diplomatic red lines and protect Canadian sovereignty amid high-stakes U.S. tariff threats.',
     breakingNews: false,
     author: {
       name: 'Choseno Civic News Desk',
@@ -103,19 +103,17 @@ const articles = [
     },
     sources: [
       {
-        label: 'Conservative Party of Canada Media Room',
-        url: 'https://www.conservative.ca/poilievre-calls-for-fuel-tax-relief-extension-2026'
+        label: 'House of Commons of Canada - Electronic Petitions Portal',
+        url: 'https://petitions.ourcommons.ca/en/Petition/Details?Petition=e-5892'
       },
       {
-        label: 'Parliament of Canada - House of Commons Notices',
-        url: 'https://www.ourcommons.ca/documentviewer/en/44-1/house/sitting-210/order-notice/page-4'
+        label: 'Global Affairs Canada Protocol Office',
+        url: 'https://www.international.gc.ca/protocol-protocole/guidelines-lignes_directrices.aspx'
       }
     ],
-    taggedPoliticianIds: [
-      'a0d8ee32-8927-48bc-9a98-fee27dd02d51'
-    ],
+    taggedPoliticianIds: [],
     taggedPoliticians: [
-      'Pierre Poilievre'
+      'Pete Hoekstra'
     ]
   }
 ];
