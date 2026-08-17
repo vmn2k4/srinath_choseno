@@ -25,191 +25,51 @@ envFile.split('\n').forEach(line => {
 // ── ADD YOUR ARTICLES HERE ──────────────────────────────────────────────────
 const articles = [
   {
-    slug: 'supreme-court-rejects-trump-appeal-e-jean-carroll-defamation-2026-08-17',
-    headline: 'U.S. Supreme Court Denies Donald Trump Appeal in $5.6 Million E. Jean Carroll Defamation Verdict',
-    summary: 'The Supreme Court turns away a rehearing request from Donald Trump, cementing the $5 million jury judgment plus interest in the landmark civil defamation and sexual abuse lawsuit.',
+    slug: 'hakeem-jeffries-democrats-supreme-court-dramatic-reform-2026-08-17',
+    headline: 'House Democratic Leader Hakeem Jeffries Pledges \'Dramatic Reform\' of the U.S. Supreme Court',
+    summary: 'House Minority Leader Hakeem Jeffries outlines a legislative priority to enact structural Supreme Court reforms, including enforceable ethics codes and term limits, if Democrats regain the House majority.',
     category: 'Policy',
     country: 'US',
-    province: 'DC',
-    status: 'published',
-    eventDate: '2026-08-17T14:00:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'country',
-    latitude: 38.8906,
-    longitude: -77.0044,
-    body: `WASHINGTON, D.C. — The Supreme Court of the United States issued an order list rejecting a petition for rehearing from Donald Trump, officially exhausting his legal challenges to a federal civil jury verdict awarding writer E. Jean Carroll $5 million in compensatory and punitive damages for sexual abuse and defamation.
-
-## Final Judicial Action and Financial Disbursement
-
-The high court's denial of certiorari in the case, known procedurally as *Carroll II*, terminates multi-year appellate litigation originating in the U.S. District Court for the Southern District of New York:
-
-* **Finality of Judgment**: The Supreme Court's order leaves intact the May 2023 jury verdict finding Trump liable under the New York Adult Survivors Act for battery and common-law defamation following public statements made in October 2022.
-* **Disbursement of Escrow Funds**: While the petition for rehearing remained pending, federal court authorities confirmed that over $5.6 million—comprising the original $5.0 million jury award plus statutory post-judgment interest accrued at federal rates—was transferred to Carroll from a court-administered escrow account in July 2026.
-* **Separate Defamation Appeal**: The ruling does not resolve Trump's separate pending federal appeal against an $83.3 million defamation verdict delivered by a different federal jury in January 2024, which is currently undergoing appellate review in the Second Circuit Court of Appeals.
-
-"The Supreme Court's decision today brings finality to this matter and reaffirms that no individual, regardless of office, stands above the rule of law or the verdicts rendered by American juries," Carroll's legal team stated in a response filed with the federal clerk.
-
-## Legal Precedent and Presidential Liability
-
-The procedural conclusion of *Carroll II* establishes a significant benchmark regarding civil liability for statements made while holding or seeking public office. Trump's defense attorneys had argued that presidential immunity shielded his public denials and that federal judges erred in admitting prior depositions. Both the Second Circuit and the Supreme Court rejected these arguments without noted dissents on the rehearing order.
-
-Legal analysts highlighted that the finality of the payout eliminates any further stay requests on the $5.6 million award, leaving the judgment fully satisfied on federal court dockets.
-
-## Next Steps in Related Proceedings
-
-Oral arguments in the Second Circuit regarding the separate $83.3 million judgment are scheduled for late autumn, where appellate judges will evaluate jury instructions and constitutional proportionality standards regarding punitive damages.`,
-    seoTitle: 'Supreme Court Denies Trump Appeal in E. Jean Carroll Verdict | Choseno',
-    metaDescription: 'U.S. Supreme Court rejects Donald Trump appeal in the $5.6M E. Jean Carroll defamation verdict, finalizing the civil judgment.',
-    tags: [
-      'Supreme Court',
-      'Donald Trump',
-      'E. Jean Carroll',
-      'Federal Courts',
-      'Defamation',
-      'Judiciary',
-      'U.S. Politics'
-    ],
-    tweet: 'The U.S. Supreme Court denies Donald Trump\x27s rehearing appeal in the $5.6M E. Jean Carroll defamation verdict, officially cementing the federal jury judgment.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'Supreme Court of the United States - Order List',
-        url: 'https://www.supremecourt.gov/orders/courtorders/081726zor_all.pdf'
-      },
-      {
-        label: 'Reuters - Supreme Court Rebuffs Trump Appeal in Carroll Case',
-        url: 'https://www.reuters.com/legal/us-supreme-court-again-rebuffs-trump-5-million-e-jean-carroll-case-2026-08-17/'
-      }
-    ],
-    taggedPoliticianIds: [],
-    taggedPoliticians: [
-      'Donald Trump'
-    ]
-  },
-  {
-    slug: 'canada-us-trade-negotiations-impasse-auto-dairy-alcohol-tariffs-2026-08-17',
-    headline: 'Canada and U.S. Face Critical Sector Impasse on Autos, Dairy, and Alcohol Ahead of August 19 Tariff Deadline',
-    summary: 'With 50% tariffs on $28 billion in Canadian goods set to take effect on Wednesday, bilateral negotiations in Washington remain deadlocked over provincial liquor rules, supply management, and vehicle quotas.',
-    category: 'Economy',
-    country: 'CA',
-    province: 'ON',
-    status: 'published',
-    eventDate: '2026-08-17T13:30:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'country',
-    latitude: 45.4215,
-    longitude: -75.6972,
-    body: `OTTAWA, ON & WASHINGTON, D.C. — Bilateral emergency trade negotiations between Canada and the United States entered an intensely critical phase as negotiators confronted deep structural disagreements across three primary economic sectors with less than 48 hours remaining before a punitive 50 per cent tariff mandate takes effect on August 19, 2026.
-
-## Sector-by-Sector Breakdown and Tariff Exposure
-
-Canadian Trade Minister Dominic LeBlanc and Chief Negotiator Janice Charette concluded high-level meetings with U.S. Trade Representative Jamieson Greer, detailing persistent sticking points across sensitive bilateral supply chains:
-
-* **Automotive Manufacturing**: U.S. negotiators proposed reducing existing 25 per cent auto tariffs down to 12.5 per cent in exchange for Canada lifting domestic vehicle quotas. Canadian officials rejected the offer, maintaining that partial tariffs would still devastate integrated assembly plants across Ontario and the Midwestern U.S.
-* **Supply-Managed Agriculture**: Washington continues to demand increased market access for American dairy, poultry, and egg producers. Prime Minister Mark Carney reaffirmed federal commitments to protect Canada's supply-management framework, warning that compromising domestic food security is non-negotiable.
-* **Provincial Alcohol Regulations**: U.S. officials singled out provincial liquor distribution boards—specifically in Ontario, Quebec, and British Columbia—for restricting shelf space for American wine, spirits, and craft beer. Ottawa is coordinating with provincial premiers to explore regulatory reciprocity to avert sweeping retaliatory tariffs.
-* **Steel, Aluminum, and Forestry**: A failure to reach an accord by midnight Wednesday would trigger automatic 50 per cent duties across $28 billion in annual Canadian commodity exports, threatening over 120,000 manufacturing and mill jobs nationwide.
-
-"We are at the table around the clock to protect Canadian jobs and ensure predictable North American commerce," Trade Minister Dominic LeBlanc stated during a media availability in Washington. "A tariff wall hurts workers and consumers on both sides of our shared border. We will defend our core economic sectors while working in good faith toward an equitable agreement."
-
-## Economic Modeling and Provincial Preparation
-
-Economic analyses published by the Canadian Chamber of Commerce and Scotiabank Economics project that an immediate 50 per cent tariff levy would reduce Canadian GDP growth by 1.8 percentage points over 12 months, with Ontario, Quebec, and New Brunswick facing the steepest industrial contraction.
-
-Provincial premiers convened an emergency Council of the Federation teleconference to synchronize cross-border advocacy, with Ontario Premier Doug Ford signaling willingness to adjust provincial retail regulations if Washington removes tariff threats against steel and automotive sectors.
-
-## Countdown to August 19 Midnight Deadline
-
-Negotiators are scheduled to resume formal drafting sessions at the Office of the United States Trade Representative. Should talks fail to yield an agreement or a negotiated deadline extension, federal cabinet ministers confirmed that Canada has prepared a reciprocal list of targeted retaliatory tariffs against American exports.`,
-    seoTitle: 'Canada-U.S. Trade Impasse on Auto Dairy Alcohol Tariffs | Choseno',
-    metaDescription: 'Canada and U.S. trade talks reach impasse over autos, dairy, and alcohol rules as August 19 50% tariff deadline looms.',
-    tags: [
-      'Dominic LeBlanc',
-      'Mark Carney',
-      'Trade Negotiations',
-      'Canada-US Tariffs',
-      'Automotive',
-      'Dairy',
-      'Supply Management',
-      'Economy'
-    ],
-    tweet: 'Canada and the U.S. face an acute trade impasse over autos, dairy, and provincial liquor rules as the August 19 deadline for 50% tariffs nears.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'Global Affairs Canada - Team Canada Trade Update',
-        url: 'https://www.international.gc.ca/trade-agreements-accords-commerciaux/topics-domaines/team-canada-trade-briefings-2026.aspx'
-      },
-      {
-        label: 'CBC News - Canada-U.S. Trade Impasse Sector Breakdown',
-        url: 'https://www.cbc.ca/news/politics/canada-us-trade-talks-sector-breakdown-august-17-2026-1.7296812'
-      }
-    ],
-    taggedPoliticianIds: [
-      '885e12f5-33d9-42a1-8dc9-b276069da88d',
-      '4bd5cf73-1d03-4fb2-ae1b-2303c2c99737'
-    ],
-    taggedPoliticians: [
-      'Dominic LeBlanc',
-      'Mark Carney',
-      'Jamieson Greer'
-    ]
-  },
-  {
-    slug: 'mark-kelly-demands-pentagon-relief-uss-abraham-lincoln-crew-2026-08-17',
-    headline: 'Senator Mark Kelly Challenges Pentagon Leadership Over USS Abraham Lincoln Deployment and Confirms Relief Ship',
-    summary: 'Navy veteran and U.S. Senator Mark Kelly pushes the Pentagon on extreme 250+ day sea deployment conditions aboard the USS Abraham Lincoln as the USS Washington is dispatched to relieve the strike group.',
-    category: 'National',
-    country: 'US',
-    province: 'AZ',
+    province: 'NY',
     status: 'published',
     eventDate: '2026-08-17T13:00:00Z',
     published_at: '2026-08-17T14:30:00Z',
     impactArea: 'country',
     latitude: 38.8899,
     longitude: -77.0090,
-    body: `WASHINGTON, D.C. — U.S. Senator Mark Kelly (D-AZ), a retired U.S. Navy captain and naval aviator, issued a pointed public critique of the Department of Defense's operational management of naval carrier strike groups, detailing severe crew strain aboard the *USS Abraham Lincoln* (CVN-72) and confirming that the *USS Washington* has been mobilized to relieve the vessel after nearly nine continuous months deployed in the Middle East.
+    body: `WASHINGTON, D.C. — House Democratic Leader Hakeem Jeffries (D-NY) escalated his party's commitment to judicial reform, declaring that a Democratic-led House of Representatives will pursue "dramatic reform" of the Supreme Court of the United States to restore public trust and establish binding ethical oversight over the nation's highest bench.
 
-## Operational Fleet Stress and Quality of Life Concerns
+## Proposed Judicial Restructuring and Legislative Framework
 
-In an extensive interview on National Public Radio (NPR), Senator Kelly, who serves on the Senate Armed Services Subcommittee on Readiness and Management Support, addressed mounting reports regarding living conditions aboard the aircraft carrier:
+Speaking in nationwide television appearances and addresses before the National Association of Black Journalists (NABJ), Jeffries criticized the court's 6–3 conservative majority for eroding foundational voting rights protections and weakening federal regulatory authority:
 
-* **Extreme Underway Duration**: The *USS Abraham Lincoln* has operated for over 250 consecutive days without a port call, maintaining round-the-clock air patrols across the Red Sea and Persian Gulf.
-* **Reported Shipboard Deficiencies**: Crew reports conveyed to congressional offices describe severe psychological exhaustion, critical shortages of fresh food and hygiene supplies, and widespread plumbing failures across enlisted quarters.
-* **Pentagon Pushback and Accountability**: Kelly sharply rebuked statements from administration officials dismissing crew welfare reports, emphasizing that sustained carrier deployments without scheduled maintenance windows degrade long-term fleet readiness and accelerate early separations among experienced sailors.
-* **Relief Deployment Authorized**: Kelly confirmed that the *USS Washington* strike group has been dispatched to the CENTCOM area of operations to execute a formal turnover and allow the Lincoln to begin its transit back to its homeport.
+* **Enforceable Code of Ethics**: Jeffries pledged that the House Judiciary Committee, under ranking member Rep. Jamie Raskin (D-MD), will draft legislation establishing an independent judicial ethics watchdog with statutory investigative subpoena powers and mandatory disclosure requirements for gifts and private travel.
+* **Structural Reform Options**: Jeffries confirmed that House leadership is reviewing a broad suite of constitutional options, including 18-year staggered term limits for Supreme Court justices and jurisdictional boundary adjustments, while keeping all legislative options on the table.
+* **Critique of Recent Jurisprudence**: Highlighting recent high court rulings such as *Louisiana v. Callais*, Jeffries argued that judicial rollbacks of Section 2 of the Voting Rights Act have disenfranchised minority communities and undermined the court's institutional legitimacy.
 
-"When you keep a carrier strike group at sea for 250 days without a single port visit, you are pushing human beings and multimillion-dollar machinery to the breaking point," Senator Kelly stated. "True military readiness requires honest leadership and rigorous logistical discipline. You cannot dismiss genuine quality-of-life concerns as unimportant when thousands of young sailors are executing dangerous combat operations around the clock."
+"The Supreme Court is in the midst of an unprecedented crisis of confidence because a radical majority has repeatedly acted like an unelected political super-legislature," Leader Jeffries stated. "The American people deserve an independent judiciary bound by the same ethical standards that apply to every other public servant. When Democrats take back the House, judicial accountability will be at the very top of our legislative agenda."
 
-## Congressional Oversight and Defense Policy
+## Partisan Reaction and Capitol Hill Debate
 
-Senator Kelly and Senator Richard Blumenthal (D-CT) formally requested that the Pentagon Inspector General initiate a comprehensive review into operational extension protocols and mental healthcare staffing aboard deployed surface vessels.
+Republican leaders pushed back sharply against Jeffries' statements, describing Democratic proposals as an unconstitutional attempt to delegitimize the judicial branch and undermine the constitutional separation of powers. Senate Republican leadership warned that any attempt to alter the court's composition or statutory authority would face a rigorous filibuster in the upper chamber.
 
-Naval architecture experts note that prolonged deployments without shipyard maintenance accelerate hull corrosion and propulsion component wear, creating downstream delays for subsequent scheduled carrier strike group deployments.
+Legal scholars note that while statutory ethics codes enjoy broad public support in national surveys, imposing mandatory term limits on sitting Article III judges presents complex constitutional questions that could prompt immediate judicial review.
 
-## Transition Timeline and Next Steps
+## Next Steps for House Judiciary Caucus
 
-The Department of the Navy announced that the relief transition between the *USS Washington* and the *USS Abraham Lincoln* will take place over the coming weeks, ensuring uninterrupted regional maritime security while initiating decompression protocols for the returning crew.`,
-    seoTitle: 'Senator Mark Kelly USS Abraham Lincoln Deployment Oversight | Choseno',
-    metaDescription: 'Senator Mark Kelly presses Pentagon over 250-day USS Abraham Lincoln deployment conditions as relief carrier USS Washington is dispatched.',
+Leader Jeffries instructed the Democratic Judiciary Working Group to conduct a series of public field hearings in September, gathering testimony from legal historians, civil rights attorneys, and former federal judges to finalize statutory text ahead of the 119th Congress.`,
+    seoTitle: 'Hakeem Jeffries Pledges Dramatic Supreme Court Reform | Choseno',
+    metaDescription: 'House Minority Leader Hakeem Jeffries pledges dramatic Supreme Court reforms, including enforceable ethics codes and term limits.',
     tags: [
-      'Mark Kelly',
-      'U.S. Navy',
-      'USS Abraham Lincoln',
-      'USS Washington',
-      'Pentagon',
-      'Senate Armed Services',
-      'Military Readiness'
+      'Hakeem Jeffries',
+      'Supreme Court',
+      'Judicial Reform',
+      'Jamie Raskin',
+      'House Democrats',
+      'Ethics in Government',
+      'U.S. Politics'
     ],
-    tweet: 'Senator Mark Kelly challenges Pentagon leadership on extreme 250-day deployment conditions aboard the USS Abraham Lincoln as relief ship USS Washington heads to Middle East.',
+    tweet: 'House Democratic Leader Hakeem Jeffries pledges dramatic Supreme Court reform, promising enforceable ethics codes and term limits if Democrats win the House.',
     breakingNews: false,
     author: {
       name: 'Choseno Civic News Desk',
@@ -217,69 +77,68 @@ The Department of the Navy announced that the relief transition between the *USS
     },
     sources: [
       {
-        label: 'U.S. Senate - Office of Senator Mark Kelly',
-        url: 'https://www.kelly.senate.gov/newsroom/press-releases/kelly-addresses-uss-abraham-lincoln-readiness-and-deployment-limits/'
+        label: 'The Washington Post - Jeffries Calls for Dramatic Supreme Court Reform',
+        url: 'https://www.washingtonpost.com/politics/2026/08/17/hakeem-jeffries-supreme-court-reform/'
       },
       {
-        label: 'NPR - Sen. Mark Kelly on Conditions Aboard USS Lincoln',
-        url: 'https://www.npr.org/2026/08/17/sen-mark-kelly-discusses-conditions-aboard-uss-lincoln'
+        label: 'Democracy Docket - Congressional Push for Judicial Oversight',
+        url: 'https://www.democracydocket.com/news-alerts/jeffries-pledges-supreme-court-ethics-reform-2026/'
       }
     ],
     taggedPoliticianIds: [
-      '533a4b93-fa85-40c6-bb7e-2c3d20dd418a'
+      '0bfc7974-d5a5-4740-bc6f-213d09b5cd90'
     ],
     taggedPoliticians: [
-      'Mark Kelly',
-      'Pete Hegseth'
+      'Hakeem Jeffries',
+      'Jamie Raskin'
     ]
   },
   {
-    slug: 'jared-kushner-netanyahu-jerusalem-meeting-gaza-ceasefire-roadmap-2026-08-17',
-    headline: 'Jared Kushner Holds Three-Hour Jerusalem Summit with Netanyahu to Advance U.S. 15-Point Gaza Framework',
-    summary: 'Trump envoy Jared Kushner and former British Prime Minister Tony Blair meet Israeli Prime Minister Benjamin Netanyahu in Jerusalem to navigate critical deadlocks over troop withdrawal and disarmament.',
-    category: 'International',
+    slug: 'karoline-leavitt-white-house-press-secretary-departure-family-2026-08-17',
+    headline: 'White House Press Secretary Karoline Leavitt Announces Departure Amid National Family and Career Discourse',
+    summary: 'White House Press Secretary Karoline Leavitt confirms she will step down at the end of August to focus on her young family, triggering a national discussion on the intense demands of federal executive service.',
+    category: 'Policy',
     country: 'US',
     province: 'DC',
     status: 'published',
-    eventDate: '2026-08-17T12:00:00Z',
+    eventDate: '2026-08-17T12:30:00Z',
     published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'international',
+    impactArea: 'country',
     latitude: 38.8977,
     longitude: -77.0365,
-    body: `JERUSALEM & WASHINGTON, D.C. — Special Mideast Envoy Jared Kushner, acting on behalf of the Trump administration, held an extended three-hour bilateral summit in Jerusalem with Israeli Prime Minister Benjamin Netanyahu, seeking to unblock stalled negotiations on a 15-point U.S.-backed framework for a comprehensive Gaza ceasefire and post-conflict governance structure.
+    body: `WASHINGTON, D.C. — White House Press Secretary Karoline Leavitt officially announced that she will depart her position as the administration's primary spokesperson at the end of August 2026, stepping away from the high-profile podium to focus on her young child and family life after serving as the youngest Press Secretary in modern presidential history.
 
-## Diplomatic Framework and Key Negotiating Points
+## Executive Transition and Press Operations
 
-The high-level talks in Jerusalem followed a rare, two-hour direct engagement between Kushner and senior Hamas representatives in Cairo, Egypt, coordinated through Egyptian and Qatari intelligence intermediaries:
+Leavitt, who assumed the position in early 2025 following the presidential election, confirmed the transition during an executive briefing in the James S. Brady Press Briefing Room:
 
-* **15-Point Roadmap Sequence**: The U.S. proposal outlines a phased ceasefire, beginning with an immediate cessation of hostilities and reciprocal hostage-prisoner releases, followed by an international stabilization force and phased Israeli Defense Forces (IDF) troop withdrawals.
-* **Core Disagreements on Sequence**: Prime Minister Netanyahu maintained that Israel will not execute complete troop withdrawals from the Philadelphi Corridor and central security perimeters until all armed militant organizations in Gaza complete verifiable disarmament.
-* **High-Level Envoy Delegation**: Kushner was accompanied in the talks by Nickolay Mladenov, executive director of the administration's Board of Peace, and former British Prime Minister Tony Blair, who is assisting in designing civil administrative structures for post-war municipal recovery.
-* **Regional Political Dynamics**: The diplomatic push occurs against the backdrop of domestic political pressures in Israel ahead of national elections scheduled for October 2026, with coalition partners demanding strict security conditions before approving any permanent truce.
+* **Record-Setting Tenure**: Appointed at age 27, Leavitt led daily televised press briefings, oversaw the West Wing communications apparatus, and directed messaging across multiple domestic and foreign policy crises.
+* **Family Focus and Departure Rationale**: In a formal statement released by the White House, Leavitt expressed gratitude to President Donald Trump and senior administration staff, noting that the round-the-clock operational tempo of the briefing room necessitated stepping back to prioritize her family and infant son.
+* **Interim Leadership Structure**: Principal Deputy Press Secretary Steven Cheung and senior communications advisors will assume day-to-day podium responsibilities while the administration reviews candidates for a permanent successor ahead of the autumn midterm campaign cycle.
 
-"We are working diligently with all regional partners to establish durable peace, ensure the return of all hostages, and create an enduring framework for regional economic reconstruction," Kushner stated following the diplomatic session. "Achieving stability requires pragmatic compromise and verifiable security guarantees."
+"Serving as White House Press Secretary has been the absolute honor of a lifetime," Leavitt said. "Communicating the President's vision for the American people every day is a privilege, but my most important job will always be as a mother to my son. I look forward to supporting the administration in an advisory capacity while being present for my family's foundational early years."
 
-## Humanitarian Impact and International Reaction
+## Social Discourse on Working Families in Government
 
-International aid agencies and United Nations humanitarian coordinators reiterated urgent appeals for an immediate ceasefire to facilitate the delivery of critical food rations, clean water, and medical supplies across displaced civilian camps in central and southern Gaza.
+Leavitt's departure sparked an extensive, viral conversation across digital platforms and Capitol Hill regarding the demanding conditions of senior political service and the broader systemic pressures facing working mothers in executive government roles. Commentary across political lines highlighted the grueling 18-hour workdays required of senior White House personnel.
 
-Diplomatic officials in Cairo confirmed that Egyptian mediators are preparing updated bridging proposals addressing the timeline for security border handovers and civil policing recruitment.
+The announcement coincided with broader discussions on family policy and career longevity in federal politics, with lawmakers noting the growing bipartisan recognition of the need for modernized family leave and operational flexibility in legislative and executive agencies.
 
-## Upcoming Regional Engagements
+## Next Steps for the White House Press Office
 
-The envoy delegation is scheduled to travel to Amman and Doha for follow-up consultations with Jordan and Qatar to finalize donor funding commitments for transitional municipal reconstruction before presenting the revised framework to the United Nations Security Council.`,
-    seoTitle: 'Jared Kushner Meets Netanyahu in Jerusalem on Gaza Roadmap | Choseno',
-    metaDescription: 'Jared Kushner holds three-hour meeting with Benjamin Netanyahu in Jerusalem to negotiate 15-point Gaza ceasefire and governance roadmap.',
+The White House Chief of Staff's office confirmed that a formal announcement regarding the next Press Secretary will be made prior to the President's upcoming diplomatic travel in September.`,
+    seoTitle: 'Karoline Leavitt Steps Down as White House Press Secretary | Choseno',
+    metaDescription: 'White House Press Secretary Karoline Leavitt announces departure at the end of August to focus on family, sparking national discussion.',
     tags: [
-      'Jared Kushner',
-      'Benjamin Netanyahu',
-      'Tony Blair',
-      'Gaza Ceasefire',
-      'Middle East Diplomacy',
-      'Foreign Policy',
-      'International'
+      'Karoline Leavitt',
+      'White House',
+      'Donald Trump',
+      'Press Secretary',
+      'West Wing',
+      'Executive Branch',
+      'U.S. Politics'
     ],
-    tweet: 'Jared Kushner holds a three-hour Jerusalem summit with Benjamin Netanyahu, pressing for movement on a 15-point U.S.-backed Gaza ceasefire framework.',
+    tweet: 'White House Press Secretary Karoline Leavitt announces she will step down at the end of August to focus on her family after serving as the youngest spokesperson in modern history.',
     breakingNews: false,
     author: {
       name: 'Choseno Civic News Desk',
@@ -287,69 +146,66 @@ The envoy delegation is scheduled to travel to Amman and Doha for follow-up cons
     },
     sources: [
       {
-        label: 'Associated Press - Kushner Netanyahu Jerusalem Gaza Talks',
-        url: 'https://apnews.com/article/kushner-netanyahu-gaza-ceasefire-negotiations-jerusalem-2026'
+        label: 'The Washington Post - Leavitt to Step Down as White House Press Secretary',
+        url: 'https://www.washingtonpost.com/politics/2026/08/17/karoline-leavitt-white-house-departure/'
       },
       {
-        label: 'The Hindu - Kushner Meeting with Netanyahu Stretches Past 3 Hours',
-        url: 'https://www.thehindu.com/news/international/kushners-meeting-with-netanyahu-on-gaza-stretches-past-3-hours/article68535129.ece'
+        label: 'The Guardian - Press Secretary Leavitt Departure Sparks Family Policy Debate',
+        url: 'https://www.theguardian.com/us-news/2026/aug/17/karoline-leavitt-white-house-press-secretary-resignation'
       }
     ],
     taggedPoliticianIds: [],
     taggedPoliticians: [
-      'Donald Trump',
-      'Jared Kushner',
-      'Benjamin Netanyahu',
-      'Tony Blair'
+      'Karoline Leavitt',
+      'Donald Trump'
     ]
   },
   {
-    slug: 'state-attorneys-general-meta-youth-safety-trial-oakland-federal-court-2026-08-17',
-    headline: 'Multistate Coalition of Attorneys General Commences Historic Youth Safety and Addiction Trial Against Meta',
-    summary: 'A bipartisan coalition of state attorneys general begins jury selection in Oakland federal court, alleging Meta engineered addictive features on Instagram and Facebook that caused severe youth mental health harm.',
+    slug: 'nancy-pelosi-congressional-retirement-staff-leadership-transition-2026-08-17',
+    headline: 'Former Speaker Nancy Pelosi Prepares Congressional Exit as Staff Network Anchors Capitol Hill Leadership Transition',
+    summary: 'A Politico investigation reveals how former Speaker Nancy Pelosi\'s extensive legislative network continues to shape House Democratic policy and parliamentary strategy as she concludes nearly four decades in Congress.',
     category: 'Policy',
     country: 'US',
     province: 'CA',
     status: 'published',
-    eventDate: '2026-08-17T14:00:00Z',
+    eventDate: '2026-08-17T11:00:00Z',
     published_at: '2026-08-17T14:30:00Z',
     impactArea: 'country',
-    latitude: 37.8044,
-    longitude: -122.2712,
-    body: `OAKLAND, CA — A landmark federal civil trial began in the U.S. District Court for the Northern District of California as a bipartisan coalition of state attorneys general from California, Colorado, New Jersey, Kentucky, and over 30 other states commenced proceedings against Meta Platforms, alleging the tech giant knowingly deployed addictive algorithms and misleading safety assurances that harmed the mental health of millions of youth.
+    latitude: 38.8899,
+    longitude: -77.0090,
+    body: `WASHINGTON, D.C. — As Representative Nancy Pelosi (D-CA) prepares to conclude her historic 39-year congressional career at the end of the current legislative term, an investigative analysis published by *Politico* highlights how the former Speaker's deeply entrenched network of former senior aides, floor strategists, and policy directors continues to direct legislative mechanics across the House Democratic Caucus.
 
-## Legal Allegations and Court Proceedings
+## Institutional Legacy and Congressional Transition
 
-Presided over by U.S. District Judge Yvonne Gonzalez Rogers in Oakland, the historic legal confrontation represents the most significant state-led consumer protection lawsuit against a social media conglomerate:
+Pelosi, the first woman to serve as Speaker of the House and one of the most effective legislative tacticians in American history, announced in November 2025 that she would not seek re-election in 2026:
 
-* **Design of Addictive Features**: State prosecutors allege Meta intentionally engineered features including infinite scroll, algorithmic recommendation loops, push notifications, and appearance-altering filters specifically calibrated to maximize engagement among adolescents despite internal research detailing associated risks of depression, anxiety, and body dysmorphia.
-* **Violations of Federal and State Laws**: The lawsuit charges Meta with systemic violations of state consumer protection statutes prohibiting unfair and deceptive business practices, as well as statutory breaches of the federal Children's Online Privacy Protection Act (COPPA) regarding the unauthorized collection of data from users under 13.
-* **Remedies and Structural Injunctions**: State attorneys general are seeking billions in statutory civil penalties and binding nationwide injunctions requiring Meta to disable addictive algorithmic loops for minors, enforce strict default privacy settings, and provide transparent third-party auditing of its recommendation engines.
+* **Enduring Staff Influence**: Over 40 former senior Pelosi aides currently serve in top leadership posts on Capitol Hill, including chief-of-staff roles for prominent committee ranking members, the Democratic Congressional Campaign Committee (DCCC), and leadership staff for Minority Leader Hakeem Jeffries.
+* **Mastery of House Procedure**: The analysis outlines how Pelosi's signature governing doctrine—disciplined caucus unity, precision vote counting, and strategic coalition-building—remains the operational blueprint for modern House Democrats as they navigate narrow congressional margins.
+* **San Francisco Representation Transition**: In California's 11th Congressional District, local leaders and state lawmakers are engaged in a competitive primary contest to succeed Pelosi in representing San Francisco, marking the first open-seat race in the district in nearly four decades.
 
-"For years, Meta prioritized user engagement metrics and corporate ad revenue over the safety, health, and well-being of our children," California Attorney General Rob Bonta stated outside the Oakland courthouse. "Our bipartisan coalition is in federal court to hold Big Tech fully accountable and force structural changes that protect our young people from predatory algorithmic design."
+"Speaker Pelosi did not just pass transformative legislation—she built an enduring institutional pipeline of legislative talent that defines how the House operates to this day," senior congressional scholars noted in the report. "Even as she prepares her formal retirement, her strategic fingerprints are visible on every major floor vote and caucus initiative."
 
-## Defense Response and Industry Implications
+## Historical Achievements and Parliamentary Precedent
 
-Meta's legal defense filed extensive trial motions denying the allegations, asserting that the company has developed over 30 specialized parental supervision tools, time-limit reminders, and teen account protections. Meta argued that broader teenage mental health trends are influenced by multifaceted sociological factors rather than platform design.
+Throughout two stints as Speaker (2007–2011 and 2019–2023), Pelosi steered landmark legislation through the House, including the Affordable Care Act, the Dodd-Frank Wall Street Reform Act, the American Rescue Plan, and the Bipartisan Infrastructure Law. Her tenure set enduring benchmarks for legislative productivity under razor-thin partisan majorities.
 
-Legal and technology scholars note that a verdict holding Meta liable under state consumer protection statutes could establish sweeping legal precedents, forcing social media platforms nationwide to re-engineer core feed architectures and recommendation mechanics.
+Members of the Congressional Progressive Caucus and moderate New Democrat Coalition alike credited Pelosi with maintaining caucus cohesion during high-stakes budget standoffs and debt ceiling negotiations.
 
-## Trial Timetable
+## Final Legislative Session and Retrospective
 
-Jury selection commenced on Monday, with opening statements scheduled for Tuesday, August 18, 2026. The trial is projected to last six weeks, featuring testimony from academic psychologists, internal whistleblowers, and senior Meta product executives.`,
-    seoTitle: 'State AGs Open Historic Meta Youth Addiction Trial | Choseno',
-    metaDescription: 'Bipartisan state attorneys general begin federal trial in Oakland against Meta, alleging deceptive practices and youth mental health harms.',
+Speaker Emerita Pelosi is scheduled to participate in a series of archival interviews with the Library of Congress and the House Historical Office ahead of her formal retirement ceremony scheduled in the Capitol Statuary Hall in December.`,
+    seoTitle: 'Nancy Pelosi Prepares Congressional Exit as Staff Shapes House | Choseno',
+    metaDescription: 'Politico analysis reveals how Nancy Pelosi\'s staff network maintains deep legislative influence as the former Speaker prepares to exit Congress.',
     tags: [
-      'Gavin Newsom',
-      'Rob Bonta',
-      'Meta',
-      'Youth Mental Health',
-      'Social Media Addiction',
-      'Federal Courts',
-      'Consumer Protection',
-      'Technology'
+      'Nancy Pelosi',
+      'Hakeem Jeffries',
+      'U.S. House of Representatives',
+      'Congressional Leadership',
+      'Capitol Hill',
+      'California Politics',
+      'Legislative Process'
     ],
-    tweet: 'A bipartisan coalition of state AGs opens a landmark federal trial against Meta in California, alleging the company engineered addictive features that harmed youth mental health.',
+    tweet: 'Former Speaker Nancy Pelosi prepares to conclude her historic 39-year congressional career as her veteran staff network continues to steer Capitol Hill strategy.',
     breakingNews: false,
     author: {
       name: 'Choseno Civic News Desk',
@@ -357,365 +213,223 @@ Jury selection commenced on Monday, with opening statements scheduled for Tuesda
     },
     sources: [
       {
-        label: 'California Department of Justice - AG Bonta Press Release',
-        url: 'https://oag.ca.gov/news/press-releases/attorney-general-bonta-opens-trial-against-meta-youth-mental-health-harms'
+        label: 'Politico - Nancy Pelosi Congressional Legacy and Staff Network',
+        url: 'https://www.politico.com/news/2026/08/17/nancy-pelosi-staff-network-capitol-hill-influence-00174312'
       },
       {
-        label: 'CNBC - Meta Faces Landmark Youth Addiction Trial in California',
-        url: 'https://www.cnbc.com/2026/08/17/meta-faces-landmark-youth-addiction-trial-in-california-federal-court.html'
+        label: 'U.S. House Historical Office - Speaker Emerita Nancy Pelosi Records',
+        url: 'https://history.house.gov/People/Listing/P/PELOSI,-Nancy-(P000197)/'
+      }
+    ],
+    taggedPoliticianIds: [
+      '7a67fb0d-7c62-488a-b3f3-23269759af54'
+    ],
+    taggedPoliticians: [
+      'Nancy Pelosi',
+      'Hakeem Jeffries'
+    ]
+  },
+  {
+    slug: 'toronto-zanzibar-tavern-historic-yonge-street-three-alarm-fire-2026-08-17',
+    headline: 'Historic Zanzibar Tavern Gutted in Major Three-Alarm Downtown Toronto Fire on Yonge Street',
+    summary: 'Toronto Fire Services battle a major blaze causing partial roof collapse at the 75-year-old landmark Zanzibar Tavern on Yonge Street, triggering temporary downtown road closures.',
+    category: 'Local',
+    country: 'CA',
+    province: 'ON',
+    status: 'published',
+    eventDate: '2026-08-17T10:30:00Z',
+    published_at: '2026-08-17T14:30:00Z',
+    impactArea: 'local',
+    latitude: 43.6577,
+    longitude: -79.3802,
+    body: `TORONTO, ON — Toronto Fire Services responded to a destructive three-alarm fire that tore through the historic Zanzibar Tavern building at 359 Yonge Street in the heart of downtown Toronto, resulting in severe structural damage, a partial roof collapse, and extensive traffic diversions along one of the city's primary commercial arteries.
+
+## Emergency Response and Fire Ground Operations
+
+Emergency crews were dispatched to Yonge and Elm streets shortly after 6:00 a.m. following 911 calls reporting heavy black smoke and flames billowing from the upper levels of the three-storey commercial structure:
+
+* **Three-Alarm Mobilization**: More than 60 firefighters and 18 emergency vehicles arrived on scene. Due to intense heat and the compromised integrity of interior floor joists, incident commanders transitioned from offensive interior attack to defensive exterior aerial ladder operations.
+* **No Casualties Reported**: Fire officials confirmed that no patrons or staff were inside the venue when the blaze erupted, and no injuries were reported among responding emergency personnel or nearby pedestrians.
+* **Corridor Closures**: The Toronto Police Service closed Yonge Street between Dundas Street and Gerrard Street to facilitate water supply lines and heavy aerial equipment, while adjacent facilities including the Toronto Metropolitan University (TMU) Student Learning Centre were monitored for smoke infiltration.
+
+"Our crews did an exceptional job containing a high-heat commercial fire in a very dense downtown corridor and preventing extension to neighboring heritage buildings," Toronto Fire Services Deputy Chief Larry Cocco stated during an on-site briefing. "The building has suffered severe roof and upper-floor structural damage, and our investigators are working closely with the Office of the Fire Marshal."
+
+## Historical Significance and Owner Commitment
+
+The Zanzibar Tavern has stood as a fixture of downtown Toronto's nightlife and streetscape since 1949, originally opening as a live jazz and blues club before transitioning into an adult entertainment venue under the Cooper family in 1960.
+
+Second-generation owner Allen Cooper expressed profound devastation over the damage but confirmed his determination to restore the iconic location, stating that the venue will be rebuilt and modernized.
+
+## Investigation and Roadway Reopening
+
+The Office of the Fire Marshal and Toronto Police Service have launched a joint investigation to determine the origin and cause of the blaze, with preliminary reports indicating no immediate evidence of criminal suspicious activity. Structural engineers are conducting stability assessments of the exterior facade before Yonge Street transit lanes are reopened to regular traffic.`,
+    seoTitle: 'Zanzibar Tavern Yonge Street Three-Alarm Fire Toronto | Choseno',
+    metaDescription: 'Historic Zanzibar Tavern on Yonge Street suffers severe structural damage in major three-alarm downtown Toronto fire; no injuries reported.',
+    tags: [
+      'Olivia Chow',
+      'Toronto Fire',
+      'Yonge Street',
+      'Zanzibar Tavern',
+      'Toronto News',
+      'Local News',
+      'Public Safety'
+    ],
+    tweet: 'A major three-alarm fire causes partial roof collapse at Toronto\x27s historic 75-year-old Zanzibar Tavern on Yonge Street, prompting downtown road closures.',
+    breakingNews: false,
+    author: {
+      name: 'Choseno Civic News Desk',
+      bio: 'Provincial, federal and municipal political affairs reporting'
+    },
+    sources: [
+      {
+        label: 'CBC News Toronto - Zanzibar Tavern Three-Alarm Fire',
+        url: 'https://www.cbc.ca/news/canada/toronto/zanzibar-tavern-yonge-street-fire-toronto-1.7296312'
+      },
+      {
+        label: 'CP24 - Heavy Damage as Fire Crews Tackle Blaze at Zanzibar Tavern',
+        url: 'https://www.cp24.com/news/toronto-fire-crews-battle-three-alarm-blaze-at-zanzibar-tavern-on-yonge-street-1.6998412'
+      }
+    ],
+    taggedPoliticianIds: [
+      'a6a62842-c720-4da1-aa66-2a347763d918'
+    ],
+    taggedPoliticians: [
+      'Olivia Chow'
+    ]
+  },
+  {
+    slug: 'andy-burnham-targeted-white-house-chief-of-staff-cyber-impersonation-2026-08-17',
+    headline: 'U.K. Prime Minister Andy Burnham Targeted in Cyber Impersonation of White House Chief of Staff Susie Wiles',
+    summary: 'British and American intelligence authorities investigate after U.K. Prime Minister Andy Burnham was targeted by an unauthorized actor impersonating White House Chief of Staff Susie Wiles.',
+    category: 'Technology',
+    country: 'US',
+    province: 'DC',
+    status: 'published',
+    eventDate: '2026-08-17T11:30:00Z',
+    published_at: '2026-08-17T14:30:00Z',
+    impactArea: 'international',
+    latitude: 38.8977,
+    longitude: -77.0365,
+    body: `WASHINGTON, D.C. & LONDON, U.K. — International cybersecurity and national intelligence agencies launched a joint inquiry following reports that British Prime Minister Andy Burnham was directly targeted in a sophisticated spear-phishing and social engineering attempt by an unauthorized actor posing as White House Chief of Staff Susie Wiles.
+
+## Incident Details and Security Protocol Response
+
+According to verified national security reporting by CBS News, Prime Minister Burnham briefly exchanged text messages of "no operational significance" with an unknown sender using a spoofed identity before recognizing inconsistencies and terminating contact:
+
+* **Spear-Phishing Vector**: The fraudulent outreach utilized spoofed contact headers mimicking senior White House staff, attempting to establish informal messaging channels regarding upcoming bilateral diplomatic itineraries.
+* **Immediate Protocol Escalation**: Burnham recognized suspicious conversational cues, broke off the messaging session, and immediately referred the digital telemetry and phone numbers to the U.K. National Cyber Security Centre (NCSC) and Downing Street security teams.
+* **White House Clarification**: White House cybersecurity officials confirmed that Chief of Staff Susie Wiles' official and personal communication hardware were not compromised or hacked, indicating the attempt relied on external caller-ID spoofing and publicly harvested contact profiles.
+
+"We take all attempts to target senior government officials with the utmost seriousness," a Downing Street spokesperson said, while declining to comment on specific operational security matters. "Robust cybersecurity protocols and multi-factor verification mechanisms successfully identified and neutralized the approach."
+
+## Broader Threat Landscape and Diplomatic Vulnerabilities
+
+The incident follows earlier federal law enforcement warnings from 2025 regarding coordinated attempts by foreign intelligence services and cybercriminal networks to target high-level political figures by harvesting executive contact books and utilizing AI-enhanced messaging personas.
+
+Cybersecurity analysts from the Atlantic Council emphasized that state-aligned actors frequently use credential-harvesting impersonation to map informal communication channels between allied heads of state and senior executive advisors.
+
+## Next Steps in Joint Investigation
+
+The FBI's Cyber Division and the U.K. National Crime Agency (NCA) are conducting digital forensic tracing of the telecommunications relay servers utilized in the spoofing attempt to identify the originating jurisdiction and prevent future social engineering campaigns against allied leadership.`,
+    seoTitle: 'U.K. Prime Minister Targeted in Susie Wiles Impersonation | Choseno',
+    metaDescription: 'British Prime Minister Andy Burnham targeted in cyber impersonation of White House Chief of Staff Susie Wiles; joint investigation launched.',
+    tags: [
+      'Susie Wiles',
+      'White House',
+      'Cybersecurity',
+      'Andy Burnham',
+      'International Diplomacy',
+      'National Security',
+      'Technology'
+    ],
+    tweet: 'U.K. Prime Minister Andy Burnham was targeted in a cyber impersonation of White House Chief of Staff Susie Wiles before terminating the suspicious exchange.',
+    breakingNews: false,
+    author: {
+      name: 'Choseno Civic News Desk',
+      bio: 'Provincial, federal and municipal political affairs reporting'
+    },
+    sources: [
+      {
+        label: 'CBS News - U.K. Prime Minister Targeted in Susie Wiles Impersonation',
+        url: 'https://www.cbsnews.com/news/uk-prime-minister-andy-burnham-impersonation-susie-wiles/'
+      },
+      {
+        label: 'The Guardian - Downing Street Refers Digital Breach Attempt to Security Teams',
+        url: 'https://www.theguardian.com/politics/2026/aug/17/uk-prime-minister-susie-wiles-messaging-impersonation'
+      }
+    ],
+    taggedPoliticianIds: [],
+    taggedPoliticians: [
+      'Susie Wiles',
+      'Donald Trump'
+    ]
+  },
+  {
+    slug: 'gavin-newsom-california-ai-cyber-defense-teen-tech-council-2026-08-17',
+    headline: 'Governor Gavin Newsom Launches California AI Cyber Defense Initiative and State Teen Tech Council',
+    summary: 'Governor Gavin Newsom activates a first-in-the-nation AI cyber defense program within Cal-CSIC and launches the California Teen Tech Council to protect critical public infrastructure and youth digital wellness.',
+    category: 'Technology',
+    country: 'US',
+    province: 'CA',
+    status: 'published',
+    eventDate: '2026-08-17T11:00:00Z',
+    published_at: '2026-08-17T14:30:00Z',
+    impactArea: 'state',
+    latitude: 38.5816,
+    longitude: -121.4944,
+    body: `SACRAMENTO, CA — California Governor Gavin Newsom and First Partner Jennifer Siebel Newsom announced a dual executive initiative advancing state leadership in artificial intelligence governance, establishing a first-in-the-nation AI Cyber Defense Program within the California Cybersecurity Integration Center (Cal-CSIC) while launching the official California Teen Tech Council to shape youth digital wellness policy.
+
+## AI Cyber Defense Program and Critical Infrastructure Protection
+
+The cybersecurity initiative operationalizes advanced generative AI tools and autonomous threat detection across state agencies to safeguard electrical grids, municipal water treatment facilities, and emergency response networks:
+
+* **Cal-CSIC AI Defense Core**: Deploys proprietary automated threat-hunting algorithms within Cal-CSIC to identify vulnerabilities in state digital networks before foreign state-backed hackers can exploit them.
+* **Agency AI Cybersecurity Officers**: Directs every major California state department and agency to appoint a designated AI Cybersecurity Officer responsible for auditing public automated systems, ensuring compliance with state privacy standards, and reporting algorithmic anomalies.
+* **Cal-Secure 2.0 Roadmap**: Upgrades California's executive cybersecurity architecture to defend state government operations against deepfakes, automated phishing campaigns, and AI-generated zero-day exploits.
+
+"California is the cradle of artificial intelligence, and we have a responsibility to lead the world not only in AI innovation, but in AI defense and digital safety," Governor Newsom stated in Sacramento. "By deploying AI against emerging cyber threats and giving young Californians a direct seat at the policy table, we are ensuring technology serves the public interest, safeguards our infrastructure, and protects our next generation."
+
+## Teen Tech Council and Digital Wellness
+
+In partnership with First Partner Jennifer Siebel Newsom and the non-profit advocacy organization #HalfTheStory, the administration launched the California Teen Tech Council, composed of 24 diverse youth leaders from across the state. The council will provide direct recommendations to executive agencies and the legislature on algorithmic design, social media mental health safeguards, and classroom AI literacy standards.
+
+State health and education officials emphasized that engaging young users directly provides essential ground-level insight into how social algorithms impact adolescent sleep, mental health, and classroom engagement.
+
+## Public AI Workforce Dashboard
+
+The Governor's Office confirmed that the California Employment Development Department (EDD) is on track to launch its public AI Workforce Disruption Dashboard on August 19, 2026, providing real-time labor market analytics on how artificial intelligence adoption is affecting employment across California industry sectors.`,
+    seoTitle: 'Gavin Newsom Launches California AI Cyber Defense & Teen Council | Choseno',
+    metaDescription: 'Governor Gavin Newsom launches first-in-the-nation AI Cyber Defense Program in Cal-CSIC and California Teen Tech Council for digital wellness.',
+    tags: [
+      'Gavin Newsom',
+      'California',
+      'Artificial Intelligence',
+      'Cybersecurity',
+      'Cal-CSIC',
+      'Digital Safety',
+      'Tech Policy'
+    ],
+    tweet: 'Governor Gavin Newsom launches a first-in-the-nation AI Cyber Defense Program in California to protect critical infrastructure alongside a new Teen Tech Council.',
+    breakingNews: false,
+    author: {
+      name: 'Choseno Civic News Desk',
+      bio: 'Provincial, federal and municipal political affairs reporting'
+    },
+    sources: [
+      {
+        label: 'Office of Governor Gavin Newsom - AI Cyber Defense & Teen Council',
+        url: 'https://www.gov.ca.gov/2026/08/11/governor-newsom-launches-ai-cyber-defense-and-teen-tech-council/'
+      },
+      {
+        label: 'Industrial Cyber - California Cal-CSIC AI Defense Integration',
+        url: 'https://industrialcyber.co/state-initiatives/california-establishes-ai-cyber-defense-program-under-cal-csic/'
       }
     ],
     taggedPoliticianIds: [
       '400a040b-ee2a-448e-b2e2-1faeea46b718'
     ],
     taggedPoliticians: [
-      'Gavin Newsom',
-      'Rob Bonta',
-      'Phil Weiser',
-      'Mark Zuckerberg'
-    ]
-  },
-  {
-    slug: 'westinghouse-imports-russian-enriched-uranium-doe-waivers-2026-08-17',
-    headline: 'Canadian-Owned Westinghouse Electric Receives Russian Uranium Shipments Under Active U.S. Energy Waivers',
-    summary: 'A CBC Fifth Estate investigation reveals Canadian-owned Westinghouse and U.S. nuclear operators continue importing Russian enriched uranium under federal waivers despite trade bans and geopolitical sanctions.',
-    category: 'Economy',
-    country: 'CA',
-    province: 'ON',
-    status: 'published',
-    eventDate: '2026-08-17T11:00:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'international',
-    latitude: 45.4215,
-    longitude: -75.6972,
-    body: `OTTAWA, ON & PITTSBURGH, PA — A joint investigative report by CBC News' *The Fifth Estate* and international trade watchdogs revealed that Canadian-owned Westinghouse Electric Company and major nuclear operators continue to import low-enriched uranium (LEU) from Russia to fuel commercial nuclear reactors across North America, utilizing statutory waiver provisions in federal sanctions legislation.
-
-## Investigation Findings and Trade Data
-
-The investigation analyzed international maritime manifests, customs filings, and energy regulatory disclosures, outlining ongoing Western reliance on Russian state nuclear monopoly Rosatom:
-
-* **Import Quantities and Valuation**: Data compiled by the Bellona Environmental Transparency Center showed that U.S. nuclear utilities and fuel fabricators imported approximately 400 tonnes of Russian enriched uranium in 2025 alone, valued at nearly $1 billion USD. Major commercial recipients included Westinghouse Electric—co-owned by Canadian private equity giant Brookfield Renewable Partners and Cameco Corporation—which received roughly 27 tonnes of Russian LEU.
-* **Statutory Waiver Mechanism**: While the U.S. enacted the *Prohibiting Russian Uranium Imports Act* in August 2024, the legislation authorized the U.S. Department of Energy (DOE) to grant temporary import waivers through January 1, 2028, in instances where no viable domestic enrichment alternative exists or where imports are deemed critical to grid reliability.
-* **Canadian Regulatory Disparity**: Unlike the United States, the Government of Canada has not imposed direct sanctions on Rosatom or its commercial export subsidiary, Tenex, allowing Canadian-based energy conglomerates to maintain contractual relationships through American subsidiaries.
-
-"Western nuclear operators remain caught in a severe strategic vulnerability," energy policy analysts noted in the report. "While Western nations have sanctioned Russian oil, gas, and coal, Russia still controls nearly 44 per cent of global uranium enrichment capacity, making an immediate decoupling from Russian nuclear fuel a severe operational challenge for base-load power grids."
-
-## Parliamentary Scrutiny and Industry Decoupling
-
-The investigation sparked immediate reaction on Parliament Hill, with opposition critics and non-proliferation advocates calling for tighter scrutiny on Canadian corporate ownership structures and accelerated capital investments in domestic enrichment capabilities in Ontario and Saskatchewan.
-
-Westinghouse and Cameco representatives stated that they are actively investing hundreds of millions in expanding North American conversion and enrichment infrastructure, including the expansion of the Springfields facility in the UK and conversion facilities in Port Hope, Ontario, to achieve complete supply-chain independence before the 2028 waiver expiration.
-
-## Policy Outlook and Energy Security
-
-The House of Commons Standing Committee on Natural Resources is expected to request testimony from energy executives and Canadian Nuclear Safety Commission officials to evaluate national nuclear supply-chain resilience ahead of planned Small Modular Reactor (SMR) deployments.`,
-    seoTitle: 'Westinghouse Russian Uranium Imports Under US Waivers | Choseno',
-    metaDescription: 'CBC Fifth Estate investigation reveals Canadian-owned Westinghouse continues importing Russian enriched uranium under U.S. DOE waivers.',
-    tags: [
-      'Westinghouse',
-      'Cameco',
-      'Brookfield',
-      'Nuclear Energy',
-      'Russian Uranium',
-      'Energy Security',
-      'Mark Carney',
-      'Economy'
-    ],
-    tweet: 'A CBC Fifth Estate investigation reveals Canadian-owned Westinghouse imported tonnes of Russian enriched uranium under U.S. energy waivers despite sanctions.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'CBC News - The Fifth Estate Russian Uranium Investigation',
-        url: 'https://www.cbc.ca/news/investigates/russian-enriched-uranium-shipped-to-canadian-owned-westinghouse-1.7296541'
-      },
-      {
-        label: 'U.S. Department of Energy - Russian Uranium Prohibition Implementation',
-        url: 'https://www.energy.gov/ne/articles/department-energy-implementation-russian-uranium-import-prohibition'
-      }
-    ],
-    taggedPoliticianIds: [
-      '4bd5cf73-1d03-4fb2-ae1b-2303c2c99737'
-    ],
-    taggedPoliticians: [
-      'Mark Carney'
-    ]
-  },
-  {
-    slug: 'baltimore-homicides-record-historic-low-gvrs-community-policing-2026-08-17',
-    headline: 'Baltimore Achieves Historic Crime Reduction as Mid-Year Homicides Fall to Lowest Levels in City History',
-    summary: 'Mayor Brandon Scott and Baltimore Police officials report a 23% reduction in homicides, achieving the lowest mid-year violence numbers in recorded municipal history through targeted community intervention.',
-    category: 'Public Safety',
-    country: 'US',
-    province: 'MD',
-    status: 'published',
-    eventDate: '2026-08-17T12:00:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'local',
-    latitude: 39.2904,
-    longitude: -76.6122,
-    body: `BALTIMORE, MD — The City of Baltimore has achieved an unprecedented reduction in violent crime, recording the lowest mid-year homicide total in its modern history as comprehensive community violence intervention programs and data-driven policing strategies transform the city's public safety landscape.
-
-## Crime Statistics and Strategy Mechanics
-
-Data certified by the Baltimore Police Department (BPD) and evaluated in a comprehensive analysis published by *The New York Times* highlights a sustained multi-year decline across all violent crime categories:
-
-* **Historic Mid-Year Tally**: Baltimore recorded 50 homicides during the first six months of 2026—a 23.1 per cent decrease compared to 2025 and the lowest six-month total ever documented since modern statistical tracking began.
-* **Non-Fatal Shootings Decline**: Non-fatal shootings dropped by more than 28 per cent year-over-year, continuing a continuous downward trajectory that began in 2023.
-* **Group Violence Reduction Strategy (GVRS)**: Academic research by the National Bureau of Economic Research (NBER) attributed the steep reduction to the city's GVRS model, which coordinates direct law enforcement focus on high-risk gang networks while offering intensive life-coaching, employment pathways, and housing support to individuals seeking to exit street violence.
-* **Community Violence Intervention (CVI)**: The city's Mayor's Office of Neighborhood Safety and Engagement (MONSE) deployed over $40 million in targeted community violence intervention funding to grassroots peacekeepers and hospital-based violence response teams.
-
-"For decades, Baltimore was defined by tragedies and headlines of violence, but today we are writing a completely new chapter," Mayor Brandon M. Scott said during an address at City Hall. "This progress is not an accident. It is the direct result of treating gun violence as a public health emergency, investing in our neighborhoods, and coordinating between police, street outreach workers, and community leaders."
-
-## Regional and National Implications
-
-Baltimore's homicide decline has significantly outpaced broader national violent crime reductions reported by the Council on Criminal Justice, drawing delegations from municipal police departments across Chicago, Philadelphia, and New Orleans to study the Baltimore GVRS framework.
-
-Local business associations and neighborhood community development corporations in West and East Baltimore reported increased foot traffic and commercial corridor investments as neighborhoods that experienced decades of disinvestment see improved public safety stability.
-
-## Next Steps for Municipal Public Safety
-
-Mayor Scott confirmed that the city will expand GVRS operations into the Western and Southwestern police districts ahead of the autumn months, while partnering with the University of Maryland Medical System to expand trauma-informed mental health resources for youth.`,
-    seoTitle: 'Baltimore Homicides Drop to Record Historic Lows 2026 | Choseno',
-    metaDescription: 'Baltimore records historic crime reduction as mid-year homicides fall 23% to lowest levels in recorded city history under Mayor Brandon Scott.',
-    tags: [
-      'Baltimore',
-      'Brandon Scott',
-      'Public Safety',
-      'Crime Reduction',
-      'GVRS',
-      'Community Policing',
-      'Maryland Politics'
-    ],
-    tweet: 'Baltimore records its lowest mid-year homicide count in modern history, falling 23% as targeted community violence intervention drives historic crime reductions.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'City of Baltimore - Mayor Brandon M. Scott Press Release',
-        url: 'https://mayor.baltimorecity.gov/news/press-releases/2026-07-01-baltimore-records-historic-drop-violent-crime-midyear'
-      },
-      {
-        label: 'The New York Times - Murder Drops to Historic Lows in Baltimore',
-        url: 'https://www.nytimes.com/2026/08/17/us/baltimore-homicide-rate-decline-gvrs.html'
-      }
-    ],
-    taggedPoliticianIds: [],
-    taggedPoliticians: [
-      'Brandon Scott'
-    ]
-  },
-  {
-    slug: 'susan-holt-new-brunswick-collaborative-care-clinics-expansion-2026-08-17',
-    headline: 'Premier Susan Holt Accelerates Expansion of Collaborative Healthcare Clinics Across New Brunswick',
-    summary: 'The Government of New Brunswick opens its 16th collaborative healthcare clinic as part of a $30 million primary care overhaul to attach unassigned patients to team-based medical practices.',
-    category: 'Healthcare',
-    country: 'CA',
-    province: 'NB',
-    status: 'published',
-    eventDate: '2026-08-17T11:30:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'state',
-    latitude: 45.9636,
-    longitude: -66.6431,
-    body: `FREDERICTON, N.B. — Premier Susan Holt and Health Minister officials announced the operational launch of New Brunswick's 16th collaborative primary care clinic, crossing the halfway threshold of the provincial government's statutory commitment to open 30 multidisciplinary "health homes" across the province by 2028.
-
-## Collaborative Care Framework and Resource Allocation
-
-The provincial healthcare expansion, funded through a dedicated $30 million allocation in the 2026–2027 provincial budget, restructures primary care delivery across Horizon Health Network and Vitalité Health Network:
-
-* **Interdisciplinary Team Model**: Each collaborative clinic integrates family physicians, nurse practitioners, registered nurses, clinical pharmacists, social workers, and physiotherapists under a shared clinical governance model, allowing patients to be triaged to the most appropriate healthcare professional.
-* **Patient Attachment Progress**: Over 38,000 New Brunswickers previously registered on the NB Health Link patient registry have been formally attached to permanent collaborative care teams since the rollout began, significantly reducing emergency department reliance for routine prescription renewals and chronic disease management.
-* **Physician and Nurse Retention Agreements**: The initiative is supported by a four-year, $270-million compensation agreement negotiated with the New Brunswick Medical Society (NBMS) providing overhead subsidies for physicians transitioning to collaborative clinics, alongside a collective agreement with the New Brunswick Nurses Union delivering a 12.5 per cent wage increase over four years.
-
-"Every New Brunswicker deserves timely, dignified access to a dedicated primary healthcare team close to home," Premier Susan Holt said during a clinic opening in Saint Andrews. "By moving away from isolated solo practices toward modern team-based care, we are giving our doctors and nurses the administrative support they need while connecting thousands of families to reliable, lifelong healthcare."
-
-## Digital Health Integration and Waitlist Challenges
-
-The Department of Health is pairing clinic expansions with a province-wide transition to a unified electronic medical record (EMR) system, enabling secure data sharing across hospital networks and community clinics.
-
-While the government has met preliminary recruitment milestones, Premier Holt acknowledged ongoing regional challenges, particularly in rural northern ridings and the Miramichi region, where specialized nursing recruitment and bilingual practitioner shortages require continued incentive funding.
-
-## Parliamentary Timetable and Future Openings
-
-The provincial government confirmed site preparations are underway for seven additional collaborative clinics scheduled to open before March 2027, with priority locations identified in Campbellton, Edmundston, and the Sussex region.`,
-    seoTitle: 'Premier Susan Holt New Brunswick Collaborative Health Clinics | Choseno',
-    metaDescription: 'Premier Susan Holt opens 16th collaborative care clinic in New Brunswick as part of $30M primary healthcare transformation.',
-    tags: [
-      'Susan Holt',
-      'New Brunswick',
-      'Healthcare Reform',
-      'Collaborative Care',
-      'Horizon Health',
-      'Vitalite Health',
-      'NB Politics'
-    ],
-    tweet: 'Premier Susan Holt opens New Brunswick\x27s 16th collaborative care clinic, surpassing the halfway mark in her $30M commitment to establish 30 team-based health practices.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'Government of New Brunswick - Executive Council Health Announcements',
-        url: 'https://www2.gnb.ca/content/gnb/en/news/news_release.2026.08.0412.html'
-      },
-      {
-        label: 'CBC News New Brunswick - Collaborative Care Clinic Progress',
-        url: 'https://www.cbc.ca/news/canada/new-brunswick/collaborative-care-clinics-expansion-holt-government-1.7296231'
-      }
-    ],
-    taggedPoliticianIds: [
-      'fdb34e1f-f20f-44c1-8092-003e83d5cc08'
-    ],
-    taggedPoliticians: [
-      'Susan Holt'
-    ]
-  },
-  {
-    slug: 'canadian-citizenship-certificate-backlog-120000-descent-applications-2026-08-17',
-    headline: 'Demand for Canadian Citizenship Certificates Soars Past 120,000 Backlog as Processing Times Stretch to 25 Months',
-    summary: 'Immigration, Refugees and Citizenship Canada faces a massive surge in citizenship certificate applications, driven by descent-based claims from the United States following legislative reforms.',
-    category: 'National',
-    country: 'CA',
-    province: 'ON',
-    status: 'published',
-    eventDate: '2026-08-17T11:00:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'country',
-    latitude: 45.4215,
-    longitude: -75.6972,
-    body: `OTTAWA, ON — An investigative report by CBC News revealed that Immigration, Refugees and Citizenship Canada (IRCC) is confronting an unprecedented administrative backlog of more than 120,000 applications for Canadian citizenship certificates, pushing standard processing times from 12 months up to 25 months.
-
-## Surging Demand and Legislative Catalysts
-
-The dramatic spike in certificate applications follows statutory amendments passed by Parliament reforming the first-generation limit on Canadian citizenship by descent:
-
-* **Application Backlog Volume**: Official IRCC statistical datasets confirmed that active applications for "Proof of Citizenship" certificates surpassed 120,000 files in August 2026, representing a 140 per cent increase compared to historical annual averages.
-* **Cross-Border Inflow from the U.S.**: Over 65 per cent of the surge originates from applicants residing in the United States, driven by American citizens claiming Canadian nationality through second-generation descent following recent Ontario Superior Court and federal statutory updates.
-* **Processing Delays**: Applicants seeking proof of citizenship to obtain Canadian passports, register for provincial healthcare, or enroll in Canadian universities face average processing wait times stretching between 22 and 25 months.
-
-"The demand for Canadian citizenship proof has skyrocketed following necessary statutory reforms to ensure fairness for families born abroad," IRCC departmental officials stated in response to parliamentary inquiries. "We are automating intake verification and shifting operational resources to reduce wait times while maintaining rigorous identity verification standards."
-
-## Constituent Impact and Passport Processing
-
-The backlog has created significant bottlenecks for dual citizens seeking to relocate to Canada for employment or higher education. Because Passport Canada requires a certified citizenship certificate before issuing a Canadian passport to individuals born abroad, thousands of applicants have been left in administrative limbo.
-
-Immigration attorneys and cross-border trade organizations have urged the federal government to establish an urgent expedited processing channel for specialized workers and students with confirmed academic or employment offers.
-
-## Parliamentary Review and Departmental Modernization
-
-The House of Commons Standing Committee on Citizenship and Immigration announced plans to hold special oversight hearings when Parliament returns in September, examining IRCC staffing allocations and the rollout of digital certificate verification portals to clear the backlogged files by late 2027.`,
-    seoTitle: 'Canadian Citizenship Certificate Backlog Hits 120,000 | Choseno',
-    metaDescription: 'IRCC citizenship certificate backlog exceeds 120,000 with 25-month wait times amid surging U.S. descent-based applications.',
-    tags: [
-      'Mark Carney',
-      'Marc Miller',
-      'IRCC',
-      'Citizenship Canada',
-      'Immigration',
-      'Citizenship by Descent',
-      'Federal Government'
-    ],
-    tweet: 'The backlog for Canadian citizenship certificates has surged past 120,000 with wait times hitting 25 months as descent-based applications flood in from the U.S.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'Immigration, Refugees and Citizenship Canada - Processing Times Report',
-        url: 'https://www.canada.ca/en/immigration-refugees-citizenship/corporate/reports-statistics/citizenship-certificates-processing-times-2026.html'
-      },
-      {
-        label: 'CBC News - Demand for Canadian Citizenship Certificates Soaring',
-        url: 'https://www.cbc.ca/news/politics/demand-canadian-citizenship-certificates-soaring-ircc-backlog-1.7296431'
-      }
-    ],
-    taggedPoliticianIds: [
-      '4bd5cf73-1d03-4fb2-ae1b-2303c2c99737'
-    ],
-    taggedPoliticians: [
-      'Mark Carney',
-      'Marc Miller'
-    ]
-  },
-  {
-    slug: 'bc-highway-97-reopens-summerland-wildfire-evacuation-rescinded-2026-08-17',
-    headline: 'Highway 97 Fully Reopens Through Okanagan Corridor as Summerland Wildfire Evacuation Orders Rescinded',
-    summary: 'The Ministry of Transportation and BC Wildfire Service lift travel restrictions on Highway 97 between Peachland and Summerland as containment lines hold, allowing hundreds of evacuees to return home.',
-    category: 'Infrastructure',
-    country: 'CA',
-    province: 'BC',
-    status: 'published',
-    eventDate: '2026-08-17T12:00:00Z',
-    published_at: '2026-08-17T14:30:00Z',
-    impactArea: 'local',
-    latitude: 49.6006,
-    longitude: -119.6778,
-    body: `SUMMERLAND, B.C. — British Columbia transportation and emergency officials fully reopened Highway 97 to unrestricted two-way traffic through the Okanagan corridor, lifting travel restrictions as wildfire suppression crews secured containment lines around the Summerland interface wildfire, enabling the Regional District of Okanagan-Similkameen (RDOS) to rescind evacuation orders for over 450 properties.
-
-## Highway Reopening and Wildfire Suppression Progress
-
-The Ministry of Transportation and Infrastructure, alongside the BC Wildfire Service, certified that geotechnical slope assessments along the cliffside corridor confirmed the roadway is safe from falling debris:
-
-* **Unrestricted Corridor Flow**: Highway 97 between Peachland and Penticton had previously operated under pilot-car escorts and nighttime closures due to burning timber and rockfall hazards above the roadway. All time restraints have been officially lifted.
-* **Evacuation Orders Downgraded**: The RDOS downgraded evacuation orders to evacuation alerts for properties along Garnet Valley Road and North Beach Road, permitting residents to return to their homes while remaining on standby.
-* **Fire Suppression Assets**: Over 95 wildland firefighters, supported by heavy machinery guards and four intermediate bucketing helicopters, established 100 per cent structural protection perimeters, halting the wildfire's spread at 180 hectares.
-
-"The reopening of Highway 97 is a major milestone for Okanagan commuters, regional tourism, and freight logistics," Minister of Emergency Management and Climate Readiness Bowinn Ma stated. "We thank the extraordinary wildfire crews, local municipal emergency teams, and utility workers who worked tirelessly in steep, hazardous terrain to protect homes and restore critical transport links."
-
-## Agricultural Impact and Community Recovery
-
-Local orchardists and vineyard operators in Summerland and Peachland expressed immense relief as the transportation reopening allows seasonal agricultural workers to resume fruit harvesting and enables freight trucks to deliver perishable produce to packing houses in Kelowna and Vancouver.
-
-Emergency Support Services (ESS) reception centres in Penticton began demobilizing temporary lodging operations while continuing to provide psychological support, air purification supplies, and food vouchers for returning evacuees.
-
-## Public Safety and Smoke Awareness
-
-BC Wildfire Service officials cautioned that while the fire is designated as "being held," internal hot spots and smoky conditions will persist in the hills above the highway for several days. Motorists are advised not to stop on highway shoulders to view fire activity to prevent traffic congestion and maintain safety for patrol vehicles.`,
-    seoTitle: 'B.C. Highway 97 Fully Reopens as Summerland Evacuation Lifted | Choseno',
-    metaDescription: 'Highway 97 reopens between Peachland and Summerland as BC Wildfire crews contain interface fire, allowing evacuees to return home.',
-    tags: [
-      'David Eby',
-      'Bowinn Ma',
-      'Highway 97',
-      'Summerland',
-      'BC Wildfires',
-      'Okanagan',
-      'Transportation',
-      'Infrastructure'
-    ],
-    tweet: 'Highway 97 fully reopens through the Okanagan corridor and Summerland evacuation orders are rescinded as BC Wildfire crews secure containment perimeters.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'Ministry of Transportation and Infrastructure - Highway 97 Status',
-        url: 'https://news.gov.bc.ca/releases/2026MOTI0041-000892'
-      },
-      {
-        label: 'Castanet News - Highway 97 Reopened Summerland Evacuees Return',
-        url: 'https://www.castanet.net/news/Penticton/501742/Highway-97-fully-reopened-through-Summerland-time-restraints-lifted'
-      }
-    ],
-    taggedPoliticianIds: [
-      'a730729a-0a3b-4231-b93d-9b5524f9db5e'
-    ],
-    taggedPoliticians: [
-      'David Eby',
-      'Bowinn Ma'
+      'Gavin Newsom'
     ]
   }
 ];
@@ -729,11 +443,9 @@ function getTokens(str) {
 }
 
 function findDuplicate(incoming, existingList) {
-  // 1. Check exact slug
   const slugMatch = existingList.find(e => e.slug === incoming.slug);
   if (slugMatch) return { isDup: true, id: slugMatch.id, match: slugMatch, reason: 'Exact slug matched' };
 
-  // 2. Check source URL exact match
   const incomingUrls = (incoming.sources || []).map(s => s.url).filter(Boolean);
   for (const existing of existingList) {
     const existingUrls = (existing.content?.sources || []).map(s => s.url).filter(Boolean);
@@ -743,7 +455,6 @@ function findDuplicate(incoming, existingList) {
     }
   }
 
-  // 3. Check headline similarity within +/- 3 day window
   const incomingDate = new Date(incoming.eventDate || incoming.event_date || incoming.published_at).getTime();
   const incomingTokens = getTokens(incoming.headline);
 
@@ -767,11 +478,10 @@ function findDuplicate(incoming, existingList) {
 
 async function run() {
   if (articles.length === 0) {
-    console.log('No articles found in the articles array. Edit scripts/insert-news-batch.js to add articles.');
+    console.log('No articles found in the articles array.');
     return;
   }
 
-  // 1. Authenticate admin
   const authUrl = env.NEXT_PUBLIC_SUPABASE_URL + '/auth/v1/token?grant_type=password';
   const authRes = await fetch(authUrl, {
     method: 'POST',
@@ -795,7 +505,6 @@ async function run() {
     Prefer: 'return=representation'
   };
 
-  // 2. Fetch existing articles window for deduplication.
   const existRes = await fetch(env.NEXT_PUBLIC_SUPABASE_URL + '/rest/v1/news_articles?select=id,slug,headline,event_date,published_at,content&order=published_at.desc.nullslast&limit=1000', { headers });
   const existingList = (await existRes.json()) || [];
   console.log(`Loaded ${existingList.length} existing articles for deduplication screening.`);
