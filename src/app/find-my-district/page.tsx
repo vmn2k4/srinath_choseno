@@ -57,7 +57,7 @@ const schemaData = {
   name: "Find Your Electoral District",
   description: pageDescription,
   url: `${BASE_URL}/find-my-district`,
-  image: `${BASE_URL}/og-image.png`,
+  image: `${BASE_URL}/og-find-my-district.jpg`,
   inLanguage: "en-US",
   isPartOf: {
     "@type": "Website",
