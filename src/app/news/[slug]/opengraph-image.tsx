@@ -5,13 +5,22 @@ import { createPublicClient } from "@/lib/supabase/public";
 export const alt = "Choseno News — Rate Your Politician";
 export const size = OG_IMAGE_SIZE;
 export const contentType = OG_IMAGE_CONTENT_TYPE;
-// Cookie-free createPublicClient (see src/lib/supabase/public.ts) keeps this
-// route eligible for Next's static image caching; revalidate bounds how
-// stale a cached card can get after an article is edited.
+// Cookie-free createPublicClient keeps this route eligible for static caching;
+// revalidate bounds how stale a cached card can get after an article is edited.
 export const revalidate = 3600;
 
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+function truncateWordSafe(text: string, maxLen: number): string {
+  if (text.length <= maxLen) return text;
+  const truncated = text.slice(0, maxLen);
+  const lastSpace = truncated.lastIndexOf(" ");
+  if (lastSpace > maxLen * 0.65) {
+    return `${truncated.slice(0, lastSpace).trimEnd()}…`;
+  }
+  return `${truncated.trimEnd()}…`;
 }
 
 export default async function Image({ params }: Props) {
@@ -69,7 +78,7 @@ export default async function Image({ params }: Props) {
             fontFamily: "sans-serif",
           }}
         >
-          <div style={{ fontSize: 48, fontWeight: 800, color: "#0f172a" }}>Choseno Civic News</div>
+          <div style={{ fontSize: 48, fontWeight: 900, color: "#0f172a" }}>Choseno Civic News</div>
         </div>
       ),
       { ...OG_IMAGE_SIZE }
@@ -79,11 +88,12 @@ export default async function Image({ params }: Props) {
   // Extract primary tagged politician
   const taggedList = article.news_article_politicians?.map((p) => p.profiles).filter(Boolean) || [];
   const primaryPolitician = taggedList[0];
-  const politicianName = primaryPolitician?.full_name || "Civic Leader";
+  const hasPolitician = Boolean(primaryPolitician?.full_name);
+  const politicianName = primaryPolitician?.full_name || "Civic Leaders";
   const politicianRole = primaryPolitician?.designation
     ? `${primaryPolitician.designation}${primaryPolitician.constituency ? ` (${primaryPolitician.constituency})` : ""}`
     : article.province || article.country || "Elected Official";
-  
+
   const politicianPhotoUrl =
     primaryPolitician?.politician_profiles?.photo_url ||
     primaryPolitician?.politician_profiles?.avatar_url ||
@@ -95,28 +105,28 @@ export default async function Image({ params }: Props) {
   const bodyText = article.content?.body || "";
   const rawBullets: string[] = [];
 
-  // Match bullet lines (* or -)
   const lines = bodyText.split("\n");
   for (const line of lines) {
     const trimmed = line.trim();
     if (trimmed.startsWith("* ") || trimmed.startsWith("- ")) {
       const clean = trimmed.replace(/^[\*\-]\s+/, "").replace(/\*\*/g, "").trim();
-      if (clean.length > 15 && clean.length < 120) {
+      if (clean.length > 15 && clean.length < 180) {
         rawBullets.push(clean);
       }
     }
   }
 
   // Fallback crisp points if no bullet points exist in body
-  const crispHighlights = rawBullets.length >= 2
-    ? rawBullets.slice(0, 3)
-    : [
-        article.summary || "Verified provincial and municipal civic policy update.",
-        `Key policy decision impacting residents across ${article.province || article.country || "your district"}.`,
-        `Read voter community perspectives & rate ${politicianName}'s performance.`
-      ];
+  const crispHighlights =
+    rawBullets.length >= 2
+      ? rawBullets.slice(0, 2).map((b) => truncateWordSafe(b, 160))
+      : [
+          truncateWordSafe(article.summary || "Verified provincial and municipal civic policy update.", 160),
+          `Key policy decision impacting residents across ${article.province || article.country || "your district"}.`,
+        ];
 
-  const headline = article.headline.length > 78 ? `${article.headline.slice(0, 77)}…` : article.headline;
+  const headline = truncateWordSafe(article.headline, 105);
+  const headlineFontSize = headline.length > 75 ? 28 : headline.length > 48 ? 32 : 36;
   const dateStr = article.event_date || article.published_at || new Date().toISOString();
   const formattedDate = new Date(dateStr).toLocaleDateString("en-US", {
     month: "short",
@@ -133,8 +143,8 @@ export default async function Image({ params }: Props) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "36px 44px",
-          background: "linear-gradient(135deg, #fff7ed 0%, #f0fdf4 35%, #eff6ff 70%, #faf5ff 100%)",
+          padding: "32px 42px",
+          background: "linear-gradient(135deg, #fffaf5 0%, #f0fdf4 38%, #eff6ff 72%, #faf5ff 100%)",
           fontFamily: "sans-serif",
           position: "relative",
         }}
@@ -145,31 +155,31 @@ export default async function Image({ params }: Props) {
             position: "absolute",
             top: -60,
             right: -60,
-            width: 340,
-            height: 340,
-            borderRadius: 170,
-            background: "radial-gradient(circle, rgba(249, 115, 22, 0.18) 0%, rgba(249, 115, 22, 0) 70%)",
+            width: 360,
+            height: 360,
+            borderRadius: 180,
+            background: "radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, rgba(249, 115, 22, 0) 70%)",
           }}
         />
         <div
           style={{
             position: "absolute",
-            bottom: -40,
-            left: -40,
-            width: 300,
-            height: 300,
-            borderRadius: 150,
-            background: "radial-gradient(circle, rgba(59, 130, 246, 0.18) 0%, rgba(59, 130, 246, 0) 70%)",
+            bottom: -50,
+            left: -50,
+            width: 320,
+            height: 320,
+            borderRadius: 160,
+            background: "radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0) 70%)",
           }}
         />
 
-        {/* Top Header Bar */}
+        {/* ── Top Header Bar ────────────────────────────────────────────── */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", zIndex: 10 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             {/* Official Choseno Logo SVG */}
             <svg
-              width="42"
-              height="42"
+              width="44"
+              height="44"
               viewBox="0 0 48 48"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -196,7 +206,7 @@ export default async function Image({ params }: Props) {
               <circle cx="24" cy="24" r="3.5" fill="#f97316" />
             </svg>
 
-            <div style={{ display: "flex", fontSize: 30, fontWeight: 900, letterSpacing: "-0.03em" }}>
+            <div style={{ display: "flex", fontSize: 32, fontWeight: 900, letterSpacing: "-0.03em" }}>
               <span style={{ color: "#0f172a" }}>Chosen</span>
               <span style={{ color: "#f97316" }}>o</span>
             </div>
@@ -205,9 +215,10 @@ export default async function Image({ params }: Props) {
                 display: "flex",
                 fontSize: 12,
                 fontWeight: 900,
-                color: "#f97316",
+                color: "#c2410c",
                 background: "#ffedd5",
-                padding: "3px 9px",
+                border: "1px solid #fed7aa",
+                padding: "3px 10px",
                 borderRadius: 6,
                 textTransform: "uppercase",
                 letterSpacing: 1.5,
@@ -224,13 +235,13 @@ export default async function Image({ params }: Props) {
                 display: "flex",
                 padding: "6px 14px",
                 borderRadius: 999,
-                background: "linear-gradient(135deg, #2563eb, #1d4ed8)",
+                background: "linear-gradient(135deg, #1d4ed8, #2563eb)",
                 color: "#ffffff",
                 fontSize: 13,
-                fontWeight: 800,
+                fontWeight: 900,
                 textTransform: "uppercase",
                 letterSpacing: 1,
-                boxShadow: "0 4px 10px rgba(37, 99, 235, 0.25)",
+                boxShadow: "0 4px 10px rgba(37, 99, 235, 0.3)",
               }}
             >
               {article.category || "Policy"}
@@ -238,66 +249,65 @@ export default async function Image({ params }: Props) {
             <div
               style={{
                 display: "flex",
-                padding: "5px 12px",
+                padding: "6px 14px",
                 borderRadius: 999,
-                background: "rgba(255, 255, 255, 0.85)",
-                border: "1px solid #cbd5e1",
+                background: "rgba(255, 255, 255, 0.95)",
+                border: "1.5px solid #cbd5e1",
                 fontSize: 13,
-                fontWeight: 700,
-                color: "#475569",
+                fontWeight: 800,
+                color: "#334155",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.04)",
               }}
             >
-              {formattedDate} · {article.province ? `${article.province}, ` : ""}{article.country?.toUpperCase()}
+              {formattedDate} · {article.province ? `${article.province}, ` : ""}{article.country?.toUpperCase() || "CA"}
             </div>
           </div>
         </div>
 
-        {/* Main Content Area: Left Dominant Headline & Takeaways + Right Featured Photo */}
+        {/* ── Main Content Area: Left Dominant Headline + Right Politician Rating Spotlight ── */}
         <div
           style={{
             display: "flex",
             alignItems: "stretch",
-            gap: 24,
+            gap: 20,
             zIndex: 10,
-            marginTop: 6,
-            marginBottom: 6,
+            marginTop: 4,
+            marginBottom: 4,
           }}
         >
-          {/* Left: Dominant Bold Headline & Crisp Takeaways */}
+          {/* Left: Dominant Bold Headline & High-Contrast Takeaways */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
               flex: 1,
-              padding: "24px 28px",
-              borderRadius: 24,
-              background: "rgba(255, 255, 255, 0.96)",
-              border: "1.5px solid rgba(226, 232, 240, 0.95)",
-              boxShadow: "0 12px 28px -5px rgba(15, 23, 42, 0.08)",
+              padding: "22px 26px",
+              borderRadius: 22,
+              background: "#ffffff",
+              border: "1.5px solid #e2e8f0",
+              boxShadow: "0 12px 28px -5px rgba(15, 23, 42, 0.09)",
             }}
           >
             {/* High-Impact Dominant Headline */}
             <div
               style={{
                 display: "flex",
-                fontSize: headline.length > 55 ? 34 : 40,
+                fontSize: headlineFontSize,
                 fontWeight: 900,
-                lineHeight: 1.15,
+                lineHeight: 1.18,
                 color: "#090d16",
                 letterSpacing: "-0.03em",
-                marginBottom: 14,
+                marginBottom: 12,
               }}
             >
               {headline}
             </div>
 
-            {/* Crisp Highlights */}
+            {/* Crisp High-Contrast Highlights */}
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {crispHighlights.slice(0, 2).map((point, idx) => {
-                const bgColors = ["#f0fdf4", "#eff6ff"];
-                const borderColors = ["#bbf7d0", "#bfdbfe"];
-                const numBgs = ["#16a34a", "#2563eb"];
+                const isFirst = idx === 0;
                 return (
                   <div
                     key={idx}
@@ -306,20 +316,20 @@ export default async function Image({ params }: Props) {
                       alignItems: "center",
                       gap: 12,
                       padding: "10px 14px",
-                      borderRadius: 14,
-                      background: bgColors[idx % bgColors.length],
-                      border: `1px solid ${borderColors[idx % borderColors.length]}`,
+                      borderRadius: 12,
+                      background: isFirst ? "#f0fdf4" : "#eff6ff",
+                      border: `1.5px solid ${isFirst ? "#86efac" : "#93c5fd"}`,
                     }}
                   >
                     <div
                       style={{
                         display: "flex",
-                        width: 22,
-                        height: 22,
-                        borderRadius: 11,
-                        background: numBgs[idx % numBgs.length],
+                        width: 24,
+                        height: 24,
+                        borderRadius: 12,
+                        background: isFirst ? "#16a34a" : "#2563eb",
                         color: "#ffffff",
-                        fontSize: 12,
+                        fontSize: 13,
                         fontWeight: 900,
                         alignItems: "center",
                         justifyContent: "center",
@@ -328,7 +338,7 @@ export default async function Image({ params }: Props) {
                     >
                       {idx + 1}
                     </div>
-                    <div style={{ display: "flex", fontSize: 16, color: "#1e293b", lineHeight: 1.3, fontWeight: 600 }}>
+                    <div style={{ display: "flex", fontSize: 16, color: "#0f172a", lineHeight: 1.35, fontWeight: 700 }}>
                       {point}
                     </div>
                   </div>
@@ -337,82 +347,149 @@ export default async function Image({ params }: Props) {
             </div>
           </div>
 
-          {/* Right: Large Featured Politician Photo / Avatar Spotlight */}
+          {/* Right: Politician Rating Spotlight Card */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              width: 220,
+              width: 245,
               padding: "18px 14px",
-              borderRadius: 24,
-              background: "linear-gradient(135deg, #ffffff 0%, #fff7ed 100%)",
-              border: "2px solid #fed7aa",
-              boxShadow: "0 12px 28px -5px rgba(249, 115, 22, 0.2)",
+              borderRadius: 22,
+              background: "linear-gradient(180deg, #ffffff 0%, #fff7ed 100%)",
+              border: "2px solid #fdba74",
+              boxShadow: "0 12px 28px -5px rgba(249, 115, 22, 0.25)",
               position: "relative",
             }}
           >
+            {/* Top Pill: "RATE OFFICIAL" badge */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
+                padding: "3px 10px",
+                borderRadius: 999,
+                background: "#ffedd5",
+                border: "1px solid #fed7aa",
+                marginBottom: 8,
+              }}
+            >
+              <div style={{ width: 6, height: 6, borderRadius: 3, background: "#ea580c" }} />
+              <span style={{ fontSize: 11, fontWeight: 900, color: "#c2410c", textTransform: "uppercase", letterSpacing: 1.2 }}>
+                {hasPolitician ? "Rate Leader" : "Civic Action"}
+              </span>
+            </div>
+
+            {/* Politician Photo or Initials */}
             {politicianPhotoUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={politicianPhotoUrl}
                 alt={politicianName}
-                width="128"
-                height="128"
+                width="104"
+                height="104"
                 style={{
-                  width: 128,
-                  height: 128,
-                  borderRadius: 64,
+                  width: 104,
+                  height: 104,
+                  borderRadius: 52,
                   objectFit: "cover",
-                  border: "4.5px solid #f97316",
-                  boxShadow: "0 10px 22px rgba(249, 115, 22, 0.4)",
+                  border: "4px solid #f97316",
+                  boxShadow: "0 8px 20px rgba(249, 115, 22, 0.4)",
                 }}
               />
             ) : (
               <div
                 style={{
                   display: "flex",
-                  width: 120,
-                  height: 120,
-                  borderRadius: 60,
+                  width: 100,
+                  height: 100,
+                  borderRadius: 50,
                   background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                   color: "#ffffff",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: 54,
+                  fontSize: 48,
                   fontWeight: 900,
                   border: "3.5px solid #ffffff",
-                  boxShadow: "0 10px 22px rgba(249, 115, 22, 0.35)",
+                  boxShadow: "0 8px 20px rgba(249, 115, 22, 0.35)",
                 }}
               >
                 <span>{initialLetter}</span>
               </div>
             )}
-            <div style={{ display: "flex", fontSize: 17, fontWeight: 900, color: "#0f172a", marginTop: 12, textAlign: "center" }}>
-              {politicianName}
+
+            {/* Name */}
+            <div style={{ display: "flex", fontSize: 19, fontWeight: 900, color: "#0f172a", marginTop: 8, textAlign: "center", lineHeight: 1.15 }}>
+              {truncateWordSafe(politicianName, 22)}
             </div>
-            <div style={{ display: "flex", fontSize: 12, fontWeight: 700, color: "#ea580c", textAlign: "center", marginTop: 2 }}>
-              {politicianRole}
+
+            {/* Designation / Role Pill */}
+            <div
+              style={{
+                display: "flex",
+                padding: "2px 8px",
+                borderRadius: 6,
+                background: "#f1f5f9",
+                border: "1px solid #e2e8f0",
+                marginTop: 4,
+                maxWidth: "100%",
+                justifyContent: "center",
+              }}
+            >
+              <span style={{ fontSize: 11, fontWeight: 700, color: "#334155", textAlign: "center" }}>
+                {truncateWordSafe(politicianRole, 26)}
+              </span>
+            </div>
+
+            {/* 5 Prominent Gold Rating Stars */}
+            <div style={{ display: "flex", gap: 3, marginTop: 7 }}>
+              {[1, 2, 3, 4, 5].map((i) => (
+                <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+              ))}
+            </div>
+
+            {/* Direct Card CTA Button */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
+                marginTop: 6,
+                padding: "5px 14px",
+                borderRadius: 8,
+                background: "linear-gradient(135deg, #f97316, #ea580c)",
+                color: "#ffffff",
+                fontSize: 12,
+                fontWeight: 900,
+                boxShadow: "0 4px 12px rgba(249, 115, 22, 0.4)",
+              }}
+            >
+              <span>Rate Profile</span>
+              <span style={{ fontSize: 13 }}>→</span>
             </div>
           </div>
         </div>
 
-        {/* Action Bar: High Impact Gradient Rating Callout with SVG Stars */}
+        {/* ── Bottom Action Bar: High-Contrast Rating Banner ─────────────── */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "16px 26px",
-            borderRadius: 20,
-            background: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 60%, #311042 100%)",
-            boxShadow: "0 12px 30px -5px rgba(249, 115, 22, 0.35), 0 4px 15px rgba(0,0,0,0.2)",
+            padding: "14px 24px",
+            borderRadius: 18,
+            background: "linear-gradient(135deg, #090d16 0%, #0f172a 50%, #1e1b4b 100%)",
+            boxShadow: "0 12px 30px -4px rgba(249, 115, 22, 0.35), 0 4px 16px rgba(0,0,0,0.3)",
             border: "2px solid #f97316",
             zIndex: 10,
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            {/* Glowing Star Icon Badge */}
             <div
               style={{
                 display: "flex",
@@ -422,10 +499,10 @@ export default async function Image({ params }: Props) {
                 background: "linear-gradient(135deg, #f97316, #ea580c)",
                 alignItems: "center",
                 justifyContent: "center",
-                boxShadow: "0 0 14px rgba(249, 115, 22, 0.6)",
+                boxShadow: "0 0 16px rgba(249, 115, 22, 0.7)",
+                flexShrink: 0,
               }}
             >
-              {/* Star Icon in badge */}
               <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
               </svg>
@@ -433,11 +510,11 @@ export default async function Image({ params }: Props) {
 
             <div style={{ display: "flex", flexDirection: "column" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 19, fontWeight: 900, color: "#ffffff", letterSpacing: "-0.01em" }}>
-                  Rate {politicianName} today on Choseno
+                <span style={{ fontSize: 20, fontWeight: 900, color: "#ffffff", letterSpacing: "-0.01em" }}>
+                  {hasPolitician ? `Rate ${politicianName} on Choseno` : "Rate Elected Officials on Choseno"}
                 </span>
                 {/* 5 Real SVG Star Shapes */}
-                <div style={{ display: "flex", gap: 4 }}>
+                <div style={{ display: "flex", gap: 3 }}>
                   {[1, 2, 3, 4, 5].map((i) => (
                     <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="#fbbf24">
                       <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
@@ -445,8 +522,8 @@ export default async function Image({ params }: Props) {
                   ))}
                 </div>
               </div>
-              <div style={{ display: "flex", fontSize: 13, color: "#cbd5e1", fontWeight: 600, marginTop: 2 }}>
-                Rate before elections · Hold local leaders accountable
+              <div style={{ display: "flex", fontSize: 13, color: "#e2e8f0", fontWeight: 700, marginTop: 2 }}>
+                Hold leaders accountable · Citizen-powered verified civic ratings
               </div>
             </div>
           </div>
@@ -456,7 +533,7 @@ export default async function Image({ params }: Props) {
               display: "flex",
               alignItems: "center",
               gap: 8,
-              padding: "12px 24px",
+              padding: "11px 22px",
               borderRadius: 12,
               background: "linear-gradient(135deg, #f97316, #ea580c)",
               color: "#ffffff",
@@ -474,5 +551,3 @@ export default async function Image({ params }: Props) {
     { ...OG_IMAGE_SIZE }
   );
 }
-
-

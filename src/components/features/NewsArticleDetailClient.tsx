@@ -117,7 +117,11 @@ export default function NewsArticleDetailClient({
   const activeSummary = showTranslated && translatedSummary ? translatedSummary : article.summary;
   const activeBody = showTranslated && translatedBody ? translatedBody : content?.body;
 
-  const currentOgImageUrl = ogImageUrl || `/news/${slug}/opengraph-image`;
+  const imageVersion = article.updated_at || article.published_at || "v2";
+  const rawOgUrl = ogImageUrl || `/news/${slug}/opengraph-image`;
+  const currentOgImageUrl = rawOgUrl.includes("?")
+    ? `${rawOgUrl}&v=${encodeURIComponent(imageVersion)}`
+    : `${rawOgUrl}?v=${encodeURIComponent(imageVersion)}`;
   
   // Always share the canonical production URL so social platforms (X, LinkedIn, WhatsApp)
   // fetch the real OpenGraph metadata and render the rich image card (localhost is not reachable by social crawlers)

@@ -1079,7 +1079,227 @@
       "firstSeen": "2026-08-17T14:29:27.222Z",
       "source": "cbc_politics",
       "title": "Russian enriched uranium shipped to Canadian-owned Westinghouse in U.S."
+    },
+    "algoma steel power outage": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "algoma steel power outage"
+    },
+    "military air base": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "military air base"
+    },
+    "e jean carroll": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "e. jean carroll"
+    },
+    "breece hall": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "breece hall"
+    },
+    "jonas brothers": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "jonas brothers"
+    },
+    "nebius stock": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "nebius stock"
+    },
+    "nato": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "nato"
+    },
+    "mrvl stock": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "mrvl stock"
+    },
+    "bruce springsteen": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "bruce springsteen"
+    },
+    "the diplomat netflix season 4": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "the diplomat netflix season 4"
+    },
+    "bbc trump defamation lawsuit": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "bbc trump defamation lawsuit"
+    },
+    "erasto crisanto valdez cenote rescue": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "erasto crisanto valdez cenote rescue"
+    },
+    "glenpool fire": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "glenpool fire"
+    },
+    "costco stock": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "costco stock"
+    },
+    "rtx stock": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "rtx stock"
+    },
+    "nflx stock": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "nflx stock"
+    },
+    "marvell stock": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "marvell stock"
+    },
+    "nasdaq index": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_trends",
+      "title": "nasdaq index"
+    },
+    "piyush goyal named bjp treasurer a hint at modi cabinet reshuffle india today": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Piyush Goyal named BJP treasurer. A hint at Modi Cabinet reshuffle? - India Today"
+    },
+    "dup mp jim shannon charged with common assault of a woman bbc": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "DUP MP Jim Shannon charged with common assault of a woman - BBC"
+    },
+    "xi leads event marking late leader jiang zemin s 100th birth anniversary reuters": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Xi leads event marking late leader Jiang Zemin's 100th birth anniversary - Reuters"
+    },
+    "burnham exchanged messages with person posing as trump s chief of staff bbc": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Burnham exchanged messages with person posing as Trump's chief of staff - BBC"
+    },
+    "exclusive billionaire civil war brews between ex google bosses as eric schmidt rages at mega rich wealth tax coalition nypost com": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Exclusive | Billionaire civil war brews between ex-Google bosses as Eric Schmidt rages at mega-rich wealth tax coalition - nypost.com"
+    },
+    "trump threatens to bomb oman if it impedes strait of hormuz talks euronews com": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Trump threatens to bomb Oman if it impedes Strait of Hormuz talks - Euronews.com"
+    },
+    "i just wanted to get out of there edmonton transit riders report drug use assaults cbc": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "‘I just wanted to get out of there': Edmonton transit riders report drug use, assaults - CBC"
+    },
+    "manitoba man found safe after cross border abduction ends in minnesota pembinavalleyonline": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Manitoba man found safe after cross-border abduction ends in Minnesota - PembinaValleyOnline"
+    },
+    "trump fails to toss out 5 million verdict in e jean carroll case castanet": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Trump fails to toss out $5 million verdict in E. Jean Carroll case - Castanet"
+    },
+    "thousands await aid after deadly indonesia quake as rescue work under way al jazeera": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Thousands await aid after deadly Indonesia quake as rescue work under way - Al Jazeera"
+    },
+    "at least five people dead in indiana amid worst flooding in over 30 years officials say the guardian": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "At least five people dead in Indiana amid worst flooding in over 30 years, officials say - The Guardian"
+    },
+    "at least seven people killed in ukrainian air attacks on russia al jazeera": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "At least seven people killed in Ukrainian air attacks on Russia - Al Jazeera"
+    },
+    "carney to make announcement in st john s with quebec n l premiers castanet": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Carney to make announcement in St. John's with Quebec, N.L. premiers - Castanet"
+    },
+    "taxpayers federation calls on pm to eliminate fuel excise tax for good vocm": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Taxpayers Federation Calls on PM to Eliminate Fuel Excise Tax For Good - VOCM"
+    },
+    "south korea hopes for talks between us and north korea after trump downsizes military drills ap news": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "South Korea hopes for talks between US and North Korea after Trump downsizes military drills - AP News"
+    },
+    "live updates trump threatens to bomb oman with iran war stuck in stalemate as 60 day negotiation period ends cbs news": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Live Updates: Trump threatens to bomb Oman with Iran war stuck in stalemate as 60-day negotiation period ends - CBS News"
+    },
+    "power out for 178k heco customers company says prepare for extended outages honolulu star advertiser": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Power out for 178k HECO customers; company says ‘prepare for extended outages’ - Honolulu Star-Advertiser"
+    },
+    "a mcdonald s provides normalcy in ukraine and actor hayden panettiere dies morning rundown nbc news": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "A McDonald’s provides normalcy in Ukraine and actor Hayden Panettiere dies: Morning Rundown - NBC News"
+    },
+    "capitol agenda congress tries again to police itself politico": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Capitol agenda: Congress tries again to police itself - Politico"
+    },
+    "south heat wave to bring dozens of records this week the weather channel": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "South heat wave to bring dozens of records this week - The Weather Channel"
+    },
+    "thousands in indonesia await aid after quake kills 68 overshadowing independence day ap news": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Thousands in Indonesia await aid after quake kills 68, overshadowing Independence Day - AP News"
+    },
+    "uk made drones strike targets inside russia bbc com": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "UK-made drones strike targets inside Russia - bbc.com"
+    },
+    "nvidia to invest 100bn for openai data centre in ohio ft com": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Nvidia to invest $100bn for OpenAI data centre in Ohio - ft.com"
+    },
+    "micron strong buy as kospi fear looks overdone nasdaq mu seeking alpha": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Micron: Strong Buy As KOSPI Fear Looks Overdone (NASDAQ:MU) - Seeking Alpha"
+    },
+    "samsung is reportedly building an even wider galaxy z fold 9 for video viewing 9to5google": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "google_news",
+      "title": "Samsung is reportedly building an even wider Galaxy Z Fold 9 for video viewing - 9to5Google"
+    },
+    "inflation rate rose to 3 in july as gas prices climbed again": {
+      "firstSeen": "2026-08-17T15:32:48.904Z",
+      "source": "cbc_politics",
+      "title": "Inflation rate rose to 3% in July as gas prices climbed again"
     }
   },
-  "lastRun": "2026-08-17T14:29:27.222Z"
+  "lastRun": "2026-08-17T15:32:48.904Z"
 }
