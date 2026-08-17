@@ -9,34 +9,51 @@ You are responsible for journalistic accuracy, source verification, relevance, f
 ---
 
 > [!IMPORTANT]
-> **MANDATORY END-TO-END EXECUTION DIRECTIVE (DO NOT JUST RETURN RAW JSON):**
+> **MANDATORY END-TO-END EXECUTION DIRECTIVE — MAXIMUM STORY COLLECTION (DO NOT JUST RETURN RAW JSON):**
+> **OBJECTIVE: Discover and publish a MAXIMUM of 100 genuine, high-impact articles per batch. More stories = more value. Push to the limit.**
+>
 > As part of this task, you **MUST** actively:
-> 1. **Identify the Time Window**: Query the database for the most recent `published_at` timestamp in `news_articles` and target the interval between that time and `NOW`.
-> 2. **Extract Real-Time Trends & Wire Signals**: Execute `node scripts/fetch-trending-topics.js --past-hour` to inspect [`scripts/latest-trending-topics.csv`](file:///Users/vmn2k4/Coding/Choseno/scripts/latest-trending-topics.csv) as one of your primary discovery signals, alongside multi-feed wire searches.
-> 3. **Pre-Flight Fast Deduplication (Token Protection)**: Check candidate topics against existing database slugs and headlines *before* performing deep research to avoid wasting tokens or duplicating covered stories.
-> 4. **Synthesize Genuine, High-Impact Articles**: Write substantive, 4-part structured journalistic articles (350–750 words) with verified numbers, bill citations, and canonical source deep links. **NEVER generate templated placeholders or repetitive filler.**
-> 5. **Populate & Ingest**: Write the article JSON array into [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js) and execute:
+> 1. **Identify the Time Window & Maximize Discovery**: Query the database for the most recent `published_at` timestamp in `news_articles` and target the interval between that time and `NOW` (fallback to 24 hours). Cast a wide net across all Canadian and U.S. jurisdictions (federal, provincial/state, municipal, and territorial).
+> 2. **Extract Real-Time Trends & Multi-Feed Wire Signals**: Execute `node scripts/fetch-trending-topics.js --max-hours 24` (a 100-story batch needs the full 24-hour window as a discovery signal — `--past-hour` alone is too narrow and will starve the batch) to inspect [`scripts/latest-trending-topics.csv`](file:///Users/vmn2k4/Coding/Choseno/scripts/latest-trending-topics.csv). Supplement with exhaustive searches across government press releases, legislative records, wire feeds (AP, Reuters, Canadian Press), provincial/state newsrooms, and municipal news archives. **Prioritize breadth: search multiple jurisdictions, agencies, and topic domains in parallel.**
+> 3. **Pre-Flight Fast Deduplication (Token Protection)**: Check ALL candidate topics against existing database slugs and headlines *before* performing deep research to avoid wasting tokens or duplicating covered stories. If a story already exists in Choseno, skip it unless there is a material new development.
+> 4. **Synthesize Genuine, High-Impact Articles at Scale**: Write substantive, 4-part structured journalistic articles (350–750 words) with verified numbers, bill citations, and canonical source deep links for EVERY genuinely verified story you find. **NEVER generate templated placeholders or repetitive filler, and NEVER programmatically synthesize a field** (a `for` loop fabricating headlines, dollar figures from index arithmetic, a reused lat/lng pair across unrelated stories, or a guessed source-URL pattern like `https://news.gov.{country}/releases/{slug}`). Every one of the up to 100 article objects — `body`, `sources`, `latitude`/`longitude`, `tags`, `tweet` — must be individually hand-researched and hand-written from a real, checkable source. If you catch yourself writing a loop that generates article content, stop — that is exactly the failure mode `scripts/publish-100-stories-batch.js` fell into (see its deprecation header) and it produced a fully fabricated batch that later had to be manually cleaned up.
+> 5. **Populate & Ingest Up to 100 Stories**: Write the article JSON array (up to 100 hand-authored objects) into [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js)'s `articles` array (replace the old sample entries already there) and execute:
 >    ```bash
 >    node scripts/insert-news-batch.js
 >    ```
-> 6. **Update Ranked Distribution CSV ([`batch-ranked-news.csv`](file:///Users/vmn2k4/Coding/Choseno/batch-ranked-news.csv))**: Record all genuine published stories ranked from **#1 downwards** by predicted Twitter virality and CTR.
-> 7. **Output Final Report**: Provide a live distribution summary table with canonical URLs and mirrored politician wall links.
+>    **Do not use `scripts/publish-100-stories-batch.js`** — it is deprecated and refuses to run; it fabricates body text, source URLs, and figures (see its file header for why). `insert-news-batch.js` is the only sanctioned ingestion path, and it already: deduplicates against the 1000 most recent existing articles (by slug, shared source URL, and headline similarity within a 3-day window), syncs politician wall tags via `admin_sync_news_article_tags()`, and syncs electoral boundary tags from lat/lng via `admin_sync_news_article_boundaries()` — provide accurate `latitude`/`longitude` per story so this actually fires.
+> 6. **Rank & Distribute All Published Stories**: Update Ranked Distribution CSV ([`batch-ranked-news.csv`](file:///Users/vmn2k4/Coding/Choseno/batch-ranked-news.csv)) with all genuine published stories ranked from **#1 downwards** by predicted Twitter virality and CTR, using the exact 12-column header already in that file (`batch_rank,viral_score,headline,category,jurisdiction,primary_official,published_at,recommended_post_window,tweet_copy,viral_reasoning,live_news_url,politician_wall_url`) and CSV-quoting any field that may contain a comma (headline, tweet_copy, viral_reasoning, jurisdiction). If >100 stories qualify, rank all and publish the top 100 only; write rejected stories (#101+) to `scripts/overflow-news-batch.json` (slug, headline, category, viral_score, reason) as a plain JSON file for a follow-up batch — never discard them silently.
+> 7. **Output Final Report**: Provide a live distribution summary table with all published stories, canonical URLs, and mirrored politician wall links. Include total count, overflow count (if any), and virality score distribution.
 
 ---
 
-### 1. NEWS DISCOVERY & TIME WINDOW
-Find significant political and civic developments that occurred, were announced, or materially developed between the platform's **last published timestamp and now** (or within the last 24 hours).
+### 1. NEWS DISCOVERY & TIME WINDOW — MAXIMIZE STORY VOLUME
 
-**Prioritize:**
+**Objective: Cast the widest possible net to identify ALL genuinely newsworthy civic/political developments.**
+
+Find significant political and civic developments that occurred, were announced, or materially developed between the platform's **last published timestamp and now** (or within the last 24 hours). Your goal is to discover and publish **up to 100 high-quality, verified articles per batch.**
+
+**Discovery Strategy — Search Exhaustively Across:**
+- **Federal**: Prime Minister's Office, Parliament of Canada, Government of Canada press releases, House Commons/Senate votes, federal agency announcements (RCMP, Stats Canada, Health Canada, etc.)
+- **Provincial/State**: Each province/territory executive council, legislatures, provincial agencies, health ministries, environment ministries, education boards, housing authorities
+- **Municipal**: City halls, county commissions, regional transit authorities, municipal bylaws, zoning boards, school board decisions (top 50+ cities across CA/US)
+- **Legislative Records**: Active bills, votes, committee minutes, statutory notices, regulatory filings
+- **Court Decisions**: Appeals courts, supreme courts, administrative tribunals, injunctions affecting public policy
+- **Wire Services**: Canadian Press, AP, Reuters, Bloomberg (where free tier available)
+- **Topic Domains** (search each jurisdiction + domain combination): housing, healthcare, education, public safety, transportation, environmental regulation, tax policy, labor relations, election administration, government spending
+
+**Prioritize High-Impact Stories:**
 - Federal, provincial/state, and municipal politics
 - High-stakes legislation, statutory amendments, and regulations
-- Government spending, capital investments, budgets, and taxes
+- Government spending, capital investments, budgets, and taxes ($50M+)
 - Housing, healthcare emergency wait times, education funding, public safety, infrastructure, and clean energy
 - Major court decisions affecting government or public policy
 - Government appointments, resignations, executive orders, and cabinet decisions
 - Bread-and-butter constituent developments that trigger strong public discussion
 
-Prioritize stories with meaningful public impact over trivial political gossip. Do not publish trivial commentary, repetitive coverage, unverified claims, or partisan outrage.
+**Quality Gate**: Publish only stories with meaningful public impact. **Do not publish** trivial commentary, repetitive coverage, unverified claims, or partisan outrage.
+
+**Efficiency Note**: Use parallel searches across jurisdictions and domains to maximize discovery speed. If you find 50 genuine stories in 2 hours, continue searching for 50 more. Push toward 100.
 
 ---
 
@@ -98,9 +115,10 @@ Maintain a neutral, authoritative journalistic tone:
 Identify politicians, candidates, and office holders directly connected to the story. Tag a politician only when they have a meaningful connection to the event.
 
 - **CRITICAL RULE**: NEVER INVENT OR GUESS A `linked_profile_id`.
-- Match politician names against `office_holders` / `profiles` in Supabase to obtain their verified `linked_profile_id` UUID.
+- Match politician names against `office_holders` / `profiles` in Supabase to obtain their verified `linked_profile_id` UUID (full name match, exact — not a fuzzy/partial guess).
+- **Do not rely solely on `scripts/all_profiles_dump.json`** for this lookup — it is a static snapshot (check its file mtime) and will miss any office holder added, renamed, or changed since it was last generated. Cross-check a live query against Supabase (`profiles`/`office_holders` REST endpoints, same credentials as `insert-news-batch.js`) for any politician the dump doesn't resolve, before concluding no verified ID exists.
 - When a verified profile UUID exists, include it in `taggedPoliticianIds: ["verified-profile-uuid"]` so `admin_sync_news_article_tags()` automatically mirrors the post to the politician's wall (`/wall/[slug]`) and backdates the post to `event_date`.
-- If no verified profile ID exists, leave `taggedPoliticianIds` as an empty array `[]` and include their full name in `taggedPoliticians`.
+- If no verified profile ID exists after both checks, leave `taggedPoliticianIds` as an empty array `[]` and include their full name in `taggedPoliticians`. Do not leave it empty just because the dump file didn't have a match — verify live first.
 
 ---
 
@@ -187,7 +205,7 @@ Every entry in `sources` must link directly to the specific published article, g
 - **`country`**: 2-letter ISO code (`"CA"`, `"US"`).
 - **`province`**: 2-letter postal code (e.g., `"BC"`, `"ON"`, `"AB"`, `"QC"`, `"IL"`, `"CA"`, `"TX"`, `"NY"`, `"FL"`).
 - **`breakingNews`**: `true` only for major emergency/breaking events occurring in the past 1–3 hours; otherwise `false`.
-- Coordinates (`latitude`, `longitude`): Provide accurate floats only when confident; otherwise omit or set null.
+- Coordinates (`latitude`, `longitude`): Provide accurate floats only when confident; otherwise omit or set null. These are not decorative — `insert-news-batch.js` calls `admin_sync_news_article_boundaries()` on every article that has both set, which resolves them to real electoral boundary rows (`news_article_boundaries`) used for local/state feed targeting. A wrong or reused coordinate pair mis-targets the story to the wrong riding/district, and omitting it entirely means the story never surfaces in any local feed. Use the specific event location (city hall, legislature, courthouse) — never a generic "somewhere in the province/state" placeholder, and never reuse one jurisdiction's coordinates across multiple stories in different jurisdictions.
 
 ---
 
@@ -206,22 +224,52 @@ Assign a **Viral Score (1.0–10.0)** and a **Recommended Posting Window**:
 
 ---
 
-### 13. EXECUTION: DATABASE INGESTION & CSV DISTRIBUTION
+### 12.5 BATCH SIZE TARGET: MAXIMUM 100 STORIES PER BATCH
 
-1. **Populate & Ingest**:
-   Add all genuine article objects to [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js) and execute:
-   ```bash
-   node scripts/insert-news-batch.js
-   ```
+**Target**: Discover and publish **up to 100 genuine, verified articles per batch**. The goal is volume — more stories = more value for the Choseno platform.
 
-2. **Update Ranked Distribution CSV ([`batch-ranked-news.csv`](file:///Users/vmn2k4/Coding/Choseno/batch-ranked-news.csv))**:
-   Record each genuine story with:
-   - `batch_rank`: Rank #1, #2...
-   - `viral_score`: Score 1.0 to 10.0 (based on Google Trends search surge + civic impact + social velocity)
+**Batch Size Guidelines:**
+- **Minimum acceptable**: 3 stories (if fewer than 3 genuinely verified stories exist, publish what you find and document why more were not available)
+- **Target range**: 50–100 stories per batch
+- **Hard limit**: 100 stories maximum per batch. If you identify >100 genuine, verified stories, rank them all by virality and **publish only the top 100**. Log overflow stories separately.
+
+**Scaling Discovery for Volume:**
+- If you have found 30 stories in the first hour, accelerate search across additional municipalities/topic domains to find 70 more.
+- Prioritize breadth (more jurisdictions, more agencies) over depth (longer articles) to maximize count.
+- Use trending topics as discovery signals to bootstrap searches into underexplored areas.
+- Parallelize searches: don't wait for one jurisdiction's search to complete before starting the next.
+
+**Quality Maintained**: Each of the up to 100 stories must meet the same source verification, deduplication, and editorial standards as outlined elsewhere in this prompt. **Never publish low-quality or unverified articles just to reach a count.** If fewer than 100 genuine stories exist, publish only what you can verify.
+
+---
+
+### 13. EXECUTION: DATABASE INGESTION & CSV DISTRIBUTION — MAXIMUM 100 STORIES
+
+1. **Populate & Ingest (Top 100 Stories)**:
+   - Rank ALL discovered genuine stories by virality score (Section 12).
+   - Take the **top 100** highest-virality stories.
+   - Replace the `articles` array in [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js) (it ships with old sample entries — remove them, they are not part of this batch) with these 100 (or fewer, if <100 qualify) fully hand-authored article JSON objects, then execute:
+     ```bash
+     node scripts/insert-news-batch.js
+     ```
+   - The script authenticates as the admin account from `.env.local` (`admin_un`/`admin_pwd`), dedupes each article against the 1000 most-recent existing rows (slug, shared source URL, or ≥70% headline-token overlap within a 3-day window — a match PATCHes the existing row instead of inserting a duplicate), then for every article: syncs politician wall tags (`admin_sync_news_article_tags`) and, when `latitude`/`longitude` are set, syncs electoral boundary tags (`admin_sync_news_article_boundaries`). Read its console output — it reports per-article dedup matches, tag-sync counts, and boundary-sync counts; a story that logs 0 boundaries when you expected local targeting means the coordinates didn't resolve inside any map_shape and should be rechecked.
+   - **Never use `scripts/publish-100-stories-batch.js`** for this — see its deprecation header; it fabricates content and will refuse to run.
+
+2. **Overflow Log** (If >100 Stories Identified):
+   - If you identified >100 genuine stories, write `scripts/overflow-news-batch.json` (a plain JSON array — no script needed, just create the file) listing the **rejected stories (#101 onward)** with: slug, headline, category, viral_score, and reason for non-inclusion.
+   - Keep this file for future reference or secondary batch runs.
+
+3. **Update Ranked Distribution CSV ([`batch-ranked-news.csv`](file:///Users/vmn2k4/Coding/Choseno/batch-ranked-news.csv))**:
+   Record each published story (all 100, or fewer if <100 qualify) with:
+   - `batch_rank`: Rank #1, #2, ..., up to #100
+   - `viral_score`: Score 1.0 to 10.0 (based on civic impact, social velocity, and public resonance)
    - `headline`, `category`, `jurisdiction`, `primary_official`, `published_at`
    - `recommended_post_window`: e.g. `Morning Peak (8:00 AM - 10:00 AM EST)`
    - `tweet_copy`, `viral_reasoning`
    - `live_news_url`: `https://www.choseno.com/news/[slug]`
    - `politician_wall_url`: `https://www.choseno.com/wall/[politician-slug]`
 
-3. **Final Distribution Table**: Output the ranked table with live markdown links in the chat response.
+4. **Final Distribution Report**: 
+   - Output a comprehensive markdown table in the chat response showing all published stories ranked by virality.
+   - Include: batch count (e.g., "100 published, 15 overflow"), virality score range, jurisdictions covered, and top-3 stories by projected impact.
+   - Provide live canonical URLs and politician wall links for easy sharing/verification.

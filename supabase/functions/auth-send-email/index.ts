@@ -11,6 +11,23 @@
 // independent of Titan itself — Titan is reachable and the send-email
 // function already delivers through it successfully.
 //
+// IMPORTANT: because this hook is active, the Dashboard's own Email
+// Templates editor is inert for every auth email ("Email templates are not
+// used" banner) — this file is the only place that controls what these
+// emails link to. It intentionally does NOT link to GoTrue's own
+// `/auth/v1/verify?token=pkce_...` endpoint (the default `{{ .ConfirmationURL }}`
+// would). That endpoint issues a PKCE code and exchanging it needs the
+// code_verifier cookie from whichever browser originally triggered the
+// email — broken whenever the link is opened somewhere else (a mail app's
+// in-app browser, a different device, a corporate email-security scanner
+// prefetching links to scan them), which surfaced as links reading
+// "expired" seconds after being sent, or worse, a silent auto-login via the
+// client SDK's detectSessionInUrl with no password-reset step ever
+// happening. Instead every link below points at our own
+// `/auth/confirm` route (src/app/auth/confirm/route.ts), which calls
+// `verifyOtp({ type, token_hash })` — stateless, no code_verifier needed,
+// works regardless of where the link is opened.
+//
 // Deployed with --no-verify-jwt: GoTrue does not send a Supabase JWT here,
 // only the webhook signature below.
 
@@ -119,18 +136,44 @@ function paragraph(text: string): string {
   return `<p style="margin:0 0 14px;font-size:15px;line-height:1.6;color:${BRAND.slate};">${text}</p>`;
 }
 
+// Our own app's origin — matches src/lib/constants/site.ts's SITE_URL.
+// Hardcoded (this Deno function can't import from the Next.js app) rather
+// than derived from emailData.site_url/redirect_to: GoTrue validates
+// resetPasswordForEmail's/signUp's redirectTo against the project's
+// Redirect URLs allow-list *before* invoking this hook, and silently
+// substitutes the bare Site URL when it doesn't match — which is exactly
+// what redirect_to was observed carrying. Building the link from a known
+// value here means the reset/confirm flow itself doesn't depend on that
+// allow-list being kept in sync; only the "return to wherever the user
+// was headed" `next` param (extracted below) does.
+const SITE_URL = "https://choseno.com";
+
+// The `next` query param our own client code appends to redirectTo
+// (src/lib/services/auth.ts) — e.g. `/auth/callback?next=%2Fauth%2Freset-password`.
+// Recovered here so /auth/confirm can still forward the user to the right
+// place post-verification even though the link no longer routes through
+// /auth/callback at all. Returns undefined if redirect_to didn't validate
+// (fell back to the bare Site URL) or carries no next param — /auth/confirm
+// has its own sensible per-type default for that case.
+function extractNextPath(redirectTo: string): string | undefined {
+  try {
+    const next = new URL(redirectTo).searchParams.get("next");
+    return next && next.startsWith("/") && !next.startsWith("//") ? next : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 function buildEmail(
   emailData: EmailData,
-  apiBaseUrl: string,
+  siteUrl: string,
   recipientEmail: string,
 ): { subject: string; html: string; text: string } {
   const { token, token_hash, redirect_to, email_action_type } = emailData;
-  // Deliberately NOT using emailData.site_url here: for this hook it arrives
-  // as the GoTrue API base (already including /auth/v1), not the bare
-  // origin the Supabase docs' examples assume — appending /auth/v1/verify
-  // on top of it produced a doubled /auth/v1/auth/v1/verify link. apiBaseUrl
-  // (SUPABASE_URL, a bare origin) is unambiguous.
-  const verifyUrl = `${apiBaseUrl}/auth/v1/verify?token=${token_hash}&type=${email_action_type}&redirect_to=${encodeURIComponent(redirect_to)}`;
+  const nextPath = extractNextPath(redirect_to);
+  const verifyUrl = `${siteUrl}/auth/confirm?token_hash=${encodeURIComponent(token_hash)}&type=${encodeURIComponent(email_action_type)}${
+    nextPath ? `&next=${encodeURIComponent(nextPath)}` : ""
+  }`;
 
   switch (email_action_type) {
     case "signup":
@@ -236,7 +279,7 @@ Deno.serve(async (req) => {
     const { user, email_data } = wh.verify(payload, headers) as HookPayload;
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const { subject, html, text } = buildEmail(email_data, supabaseUrl, user.email);
+    const { subject, html, text } = buildEmail(email_data, SITE_URL, user.email);
 
     const admin = createClient(supabaseUrl, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
     const { error } = await admin.functions.invoke("send-email", {
