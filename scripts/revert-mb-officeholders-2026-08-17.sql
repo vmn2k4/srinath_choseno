@@ -1,0 +1,55 @@
+-- One-off revert: scripts/sync-mb-election-results.py was applied against
+-- production (646 officeholders across ~108 Manitoba municipalities), then
+-- found to have TWO independent parsing bugs only after the fact:
+--
+-- 1. Block-boundary misdetection. Winnipeg's directory entry has no
+--    listed mayor (it refers readers to a different page/section for
+--    council), and the immediately following entry, Winnipeg Beach,
+--    starts with "Administrator" instead of "Mayor"/"Reeve" -- neither
+--    triggered the (at the time) role-label-only new-block detection, so
+--    unrelated CAO/Administrator names from OTHER municipalities' rows
+--    got silently absorbed into "Winnipeg"'s councillor list and written
+--    to the database as if real (two garbage single-surname entries,
+--    "Salamanowicz" and "Desiatnyk"), while Winnipeg's real mayor (Scott
+--    Gillingham) and 15 real councillors -- already correctly in the
+--    database from an earlier, working ingestion -- got wrongly retired
+--    by the same sync because their map_shape_id existed in its staging
+--    set. That specific damage was found and repaired immediately
+--    (restored Gillingham + 15 councillors to is_current, deleted the two
+--    garbage rows and their auto-created ghost profiles) before this
+--    broader revert.
+--
+-- 2. Row-splitting name truncation. Two words on the same visual PDF row
+--    (a person's first and last name) occasionally rendered at `top`
+--    values differing by under 1px, which a naive round(top) grouping
+--    split into two separate "rows" -- silently dropping the first name
+--    and leaving a bare surname as if it were a whole person's name.
+--    Confirmed 64 such truncated entries already live in the 646 applied
+--    (e.g. "Delbert Pederson" -> "Pederson", "Chantelle Shwaluk" ->
+--    "Shwaluk"). A wider proximity-based clustering fix was attempted but
+--    itself caused a NEW misalignment (a councillor's name jumping into
+--    the following municipality's mayor field) on the very next
+--    verification pass -- this PDF's row layout is fragile enough that a
+--    third undetected bug can't be ruled out with confidence.
+--
+-- Given two independent, silent corruption bugs surfaced only after
+-- production had already been written to, the responsible choice is a
+-- full revert rather than patching the visible instances and hoping nothing
+-- else got through. Manitoba needs a more robust extraction approach
+-- (e.g. pdfplumber's line-based extract_table(), or an alternate source
+-- entirely) and a full re-verification pass before being reattempted --
+-- see OFFICE_HOLDERS_DATA_GUIDE.md.
+--
+-- This retires (not deletes) every row the MB sync wrote, preserving them
+-- for audit. It deliberately does NOT restore the handful of pre-existing
+-- rows this sync's retirement step also touched that turned out to be
+-- unrelated, pre-existing cross-province mis-assignments (e.g. a Montreal
+-- borough councillor and a New Brunswick Stanley councillor were both
+-- incorrectly linked to Manitoba's "Cartier"/"Stanley"-named shapes by an
+-- earlier, separate ingestion process, predating this session) --
+-- restoring those would just re-introduce a different, pre-existing bug;
+-- flagged in OFFICE_HOLDERS_DATA_GUIDE.md as a separate follow-up instead.
+UPDATE office_holders
+SET is_current = false, term_ended_at = CURRENT_DATE, updated_at = NOW()
+WHERE source_url = 'https://www.gov.mb.ca/mr/municipal-officials-directory.html'
+  AND is_current = true;

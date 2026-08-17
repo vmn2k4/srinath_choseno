@@ -6,7 +6,7 @@ This document explains where Choseno's active office holder data comes from, how
 
 ## 1. Overview & Data Scope
 
-Choseno maintains **11,208 currently-serving elected officials** (`is_current = true`) across Canada and the United States, fully mapped to PostGIS electoral boundary shapes (`map_shapes`) and linked to dedicated **Politician Wall Profiles** (`/wall/[ghostId]/[slug]`). Anyone who has left office is retired, not deleted — see the term-lifecycle note in section 3. Counts below refreshed 2026-08-17 after the BC re-sync described in section 2.
+Choseno maintains **22,598 currently-serving elected officials** (`is_current = true`) across Canada and the United States, fully mapped to PostGIS electoral boundary shapes (`map_shapes`) and linked to dedicated **Politician Wall Profiles** (`/wall/[ghostId]/[slug]`). Anyone who has left office is retired, not deleted — see the term-lifecycle note in section 3. Counts below refreshed 2026-08-17 after the BC, NB, Quebec, and Saskatchewan municipal syncs described in section 2 (Manitoba was attempted and reverted the same day — see its section for why).
 
 ### Breakdown by Geography & Tier
 
@@ -14,8 +14,8 @@ Choseno maintains **11,208 currently-serving elected officials** (`is_current = 
 | :--- | :--- | :--- | :---: |
 | **Canada** | **Federal** (House of Commons) | Member of Parliament (MP) | **342** |
 | **Canada** | **Provincial** (BC, AB, SK, MB, ON, QC, NB, NS, PEI, NL, YK, NWT) | MLA / MPP / MHA | **591** |
-| **Canada** | **Municipal** (Cities / Towns / Municipalities) | Mayor / Maire | **372** |
-| **Canada** | **Municipal** (City & Regional Councils across Canada) | Councillor / Conseiller | **2,379** |
+| **Canada** | **Municipal** (Cities / Towns / Municipalities) | Mayor / Maire / Reeve | **2,086** |
+| **Canada** | **Municipal** (City & Regional Councils across Canada) | Councillor / Conseiller | **12,055** |
 | **Canada** | **School District** (BC — 60 districts) | School Trustee | **352** |
 | **Canada** | **School District** (BC — 60 districts) | Board Chair | **52** |
 | **USA** | **Federal** (House of Representatives) | U.S. Representative | **431** |
@@ -25,7 +25,7 @@ Choseno maintains **11,208 currently-serving elected officials** (`is_current = 
 | **USA** | **State House** (Lower Chamber) | State Representative | **4,169** |
 | **USA** | **Municipal** (571 Cities / Towns / Municipalities) | Mayor | **598** |
 | **USA** | **Municipal** (City Councils & Boards of Aldermen) | Council Member | **8** |
-| **TOTAL** | | | **11,208** |
+| **TOTAL** | | | **22,598** |
 
 ---
 
@@ -58,6 +58,28 @@ Choseno maintains **11,208 currently-serving elected officials** (`is_current = 
 - **Pipeline**: [`scripts/sync-nb-election-results.py`](scripts/sync-nb-election-results.py) `--apply`. Run the boundary import above first, or every municipality created by the 2023 reform will be reported unmatched.
 - **Known gaps**: ~2 of ~73 municipalities (Grand Falls' bilingual North/South ward-naming) don't parse cleanly out of the candidates PDF's 3-column layout — printed as unresolved by the script, not silently dropped, rather than chasing every PDF layout edge case.
 - **Refresh cadence**: tied to NB's local election schedule (next expected ~2030 per the reform's cycle; check electionsnb.ca for by-elections in between).
+
+### Quebec Municipal Office Holders
+- **Primary Data Provider**: MAMH's (Ministère des Affaires municipales et de l'Habitation) official, continuously-updated open-data "Répertoire des municipalités" — specifically [`MUN.csv`](https://donneesouvertes.affmunqc.net/repertoire/MUN.csv), which lists every Quebec municipality's current mayor and full council **by name directly** (no vote-count parsing needed, unlike BC/NB) — **not** the OpenNorth Represent API, which only ever meaningfully covered 5 of Quebec's largest cities.
+- **Why**: validated before applying — Montréal (Soraya Martinez Ferrada) and Sherbrooke (Marie-Claude Bibeau) both matched the confirmed outcome of Quebec's Nov 2, 2025 general municipal election exactly.
+- **Pipeline**: [`scripts/sync-qc-election-results.py`](scripts/sync-qc-election-results.py) `--apply`.
+- **Coverage**: 1,023 of Quebec's 1,280 municipalities (7,286 officeholders). 56 excluded — `map_shapes` has duplicate-named rows for them, same root cause as New Brunswick (both copies are real pre-merger entities, e.g. a town and its surrounding rural municipality, from the 2021 Census upload) — printed, not guessed at.
+
+### Saskatchewan Municipal Office Holders
+- **Primary Data Provider**: the Government of Saskatchewan's own official [Municipal Directory](https://www.saskatchewan.ca/government/municipal-administration/municipal-directory) — no bulk export exists, so the pipeline crawls its 9 category pages for ~761 municipality GUIDs, then fetches each municipality's own detail page concurrently (schema.org Person microdata per official).
+- **Pipeline**: [`scripts/sync-sk-election-results.py`](scripts/sync-sk-election-results.py) `--apply --workers N`.
+- **Coverage**: 754 of 761 municipalities (4,361 officeholders). Rural Municipalities elect a Reeve (mapped to the Mayor role, matching the reeve/warden convention used elsewhere) and commonly share their base name with a same-named Town/Village at their centre (the Town of Aberdeen and the RM of Aberdeen No. 373 both really exist) — the normalizer keeps the RM number as part of its match key specifically so that legitimate pairing doesn't collide into one ambiguous shape.
+- **Verified**: Saskatoon (Cynthia Block), Regina (Chad Bachynski — confirmed against real 2024 election results), Moose Jaw (James Murdock).
+
+### Manitoba Municipal Office Holders — attempted 2026-08-17, reverted, needs rework
+- **Candidate source**: Manitoba Municipal Relations' official ["Municipal Officials Directory" PDF](https://www.gov.mb.ca/mr/contactus/pubs/mod.pdf) (updated monthly, covers ~137 incorporated municipalities in a 3-column-per-row layout).
+- **What happened**: a pipeline was built and applied (646 officeholders across ~108 municipalities), then found — only *after* being live — to have two independent, silent parsing bugs: (1) block-boundary misdetection, where Winnipeg's entry (which has no listed mayor and refers readers elsewhere) and the following entry, Winnipeg Beach (which starts with "Administrator" instead of "Mayor"/"Reeve"), both failed to trigger a new-block boundary under role-label-only detection, so unrelated CAO/Administrator names from *other* municipalities' rows got absorbed into "Winnipeg"'s councillor list and written to the database as if real, while Winnipeg's actual mayor and 15 real councillors — already correct from an earlier ingestion — got wrongly retired in the process; (2) row-splitting name truncation, where two words on the same visual PDF row occasionally rendered at `top` values under 1px apart, which naive rounding split into two separate "rows," silently dropping a first name and leaving a bare surname as if it were a whole person (confirmed 64 such truncated entries already live: "Delbert Pederson" → "Pederson", "Chantelle Shwaluk" → "Shwaluk"). A wider-tolerance fix for bug 2 caused a *new* misalignment on the next verification pass, which is the actual reason for stopping rather than continuing to patch: this PDF's row layout is fragile enough that a third undetected bug can't be ruled out with confidence.
+- **Current state**: fully reverted ([`scripts/revert-mb-officeholders-2026-08-17.sql`](scripts/revert-mb-officeholders-2026-08-17.sql) — retires every row the sync wrote, does not delete). Winnipeg's real mayor/council were separately restored to `is_current = true` before the broader revert. Manitoba is back to whatever pre-existing data it had (~88 current rows), still largely unverified.
+- **Found in passing, unrelated to this attempt**: a handful of pre-existing rows (a Montreal borough councillor, three New Brunswick "Stanley" councillors, a Quebec MNA, a Quebec City councillor) were incorrectly linked to Manitoba-named shapes ("Cartier", "Stanley") by an **earlier, separate ingestion process that predates this session** — the same unscoped-name-matching failure mode as the BC incident, just from a different, unidentified pipeline. Not restored (that would just reintroduce the wrong assignment) and not yet root-caused — flagged here as a real, live, un-owned bug elsewhere in the data.
+- **Next attempt should**: try `pdfplumber`'s line-based `extract_table()` instead of word-position clustering, or find an alternative Manitoba source (AMM's own directory was found earlier but not evaluated), and re-verify thoroughly — including specifically Winnipeg and a spot-check of multi-councillor entries for truncation — *before* applying to production, not after.
+
+### Alberta Municipal Office Holders — source found, not yet built
+Alberta's [official Municipal Officials Directory](https://www.alberta.ca/find-a-municipal-official) ("collected and published on a weekly basis") is a **SAS Visual Analytics BI dashboard** (`visualizations.alberta.ca`), not a bulk export or plain HTML page — the underlying data loads via SAS's proprietary `reportData/jobs` REST API (session-scoped executor/job IDs, data-definition IDs that don't map obviously to which report table they belong to). Extracting the full ~3,000+-official dataset this way would need meaningfully more reverse-engineering than BC/NB/QC/SK's sources took; not attempted yet. Alberta's Open Government CKAN dataset for this ("Alberta municipal officials directory") just points back to the same dashboard, not a separate download.
 
 ### India Municipal Wards — Known Boundary Duplication (Tamil Nadu, fixed 2026-08-17)
 `map_shapes` for India Wards has four separate uploads, not one — a nationwide "Swachh Bharat Mission" set (63,674 wards) and a supplementary "Tamil Nadu Municipal Wards (LivingAtlas/Esri)" set (737 wards, 10 cities) that turned out to genuinely overlap the nationwide set for exactly 3 of those 10 cities (Chennai, Coimbatore, Erode — confirmed via matching `ulbname`, not by upload recency, since the nationwide set is both older *and* the better-quality one here: proper `ulbcode`, an explicit `APPROVED` status, and a ward count that matches the known-correct figure for Chennai). The other 7 LivingAtlas cities (Chengalpattu, Dindigul, Hosur, Kanchipuram, Karur, Madurai, Thanjavur) have **no** nationwide coverage at all — LivingAtlas is the only source for them, so the fix retires only the 3 truly-overlapping cities' LivingAtlas rows ([`scripts/fix-tamil-nadu-ward-duplicates.sql`](scripts/fix-tamil-nadu-ward-duplicates.sql)), not the whole upload. **This is not the only duplication in `map_shapes`** — a full audit (`GROUP BY country, boundary_type, name HAVING count(*) > 1`) turns up large numbers of same-named rows elsewhere (USA Municipal, India Ward broadly, Canada Advance Polling District, ...), but most of those are legitimate distinct places that happen to share a plain name across different states/cities (e.g. "Ward 1" exists once per city nationwide, "Franklin" is a real town name in a dozen US states) — false positives from a name-only grouping, not bugs. Distinguishing a real duplicate from a coincidental name match requires checking upload provenance and geographic/administrative scope per case, the way this fix and the NB boundary fix above both did; don't retire on a bare name-collision count alone.
