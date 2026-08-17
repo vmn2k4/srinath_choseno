@@ -113,6 +113,31 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
     : null;
   const ogImageUrl = `${SITE_URL}/news/${slug}/opengraph-image`;
 
+  // Politicians tagged on this article -- surfaced as schema.org `mentions`
+  // Person entities so an AI answer engine reading this article can also
+  // resolve who's actually being written about, their role/district, and
+  // how to reach them, instead of just seeing prose that names them.
+  const mentionedPersons = ((article as any).news_article_politicians || [])
+    .map((np: any) => np.profiles)
+    .filter((p: any) => p?.id && p?.full_name)
+    .map((p: any) => {
+      const pp = p.politician_profiles;
+      const wallSlug = pp?.wall_slug;
+      const wallUrl = wallSlug ? `${SITE_URL}/wall/${wallSlug}` : p.current_ghost_id ? `${SITE_URL}/wall/${p.current_ghost_id}` : undefined;
+      const jobTitle = p.designation || pp?.political_target_role || undefined;
+      return {
+        "@type": "Person",
+        name: p.full_name,
+        ...(jobTitle ? { jobTitle } : {}),
+        ...(p.constituency
+          ? { worksFor: { "@type": "GovernmentOrganization", name: jobTitle ? `${jobTitle} — ${p.constituency}` : p.constituency } }
+          : {}),
+        ...(pp?.contact_phone ? { telephone: pp.contact_phone } : {}),
+        ...(pp?.contact_email ? { email: pp.contact_email } : {}),
+        ...(wallUrl ? { url: wallUrl } : {}),
+      };
+    });
+
   // ── JSON-LD NewsArticle + Breadcrumb structured data ──────────────────────
   const jsonLd = [
     {
@@ -150,6 +175,9 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
       },
       ...(content?.tags?.length && {
         keywords: content.tags.join(", "),
+      }),
+      ...(mentionedPersons.length > 0 && {
+        mentions: mentionedPersons,
       }),
       ...(article.country && {
         spatialCoverage: {

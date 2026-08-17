@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { MessageSquare, ArrowRight } from "lucide-react";
+import { MessageSquare, ArrowRight, Mail, Phone } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import PoliticianEngagementStats from "@/components/features/PoliticianEngagementStats";
@@ -19,6 +19,8 @@ interface LinkedPolitician {
     avatar_url?: string | null;
     wall_slug?: string | null;
     political_target_role?: string | null;
+    contact_email?: string | null;
+    contact_phone?: string | null;
   } | null;
 }
 
@@ -154,6 +156,39 @@ export default function NewsArticleLinkedPoliticians({
                     instead of a popup, so the page never navigates away. */}
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-sm text-slate-900 truncate">{politician.full_name}</p>
+                  {/* Role/district — designation & constituency were already
+                      fetched for every tagged politician but never actually
+                      shown here, so a reader (or crawler) had no way to know
+                      WHICH office/district this row refers to. */}
+                  {(politician.designation || politician.constituency) && (
+                    <p className="text-xs text-slate-500 truncate">
+                      {politician.designation}
+                      {politician.designation && politician.constituency ? " — " : ""}
+                      {politician.constituency}
+                    </p>
+                  )}
+                  {(politician.politician_profiles?.contact_email || politician.politician_profiles?.contact_phone) && (
+                    <div className="flex items-center gap-2 mt-0.5">
+                      {politician.politician_profiles?.contact_email && (
+                        <a
+                          href={`mailto:${politician.politician_profiles.contact_email}`}
+                          className="inline-flex items-center gap-1 text-[11px] text-orange-700 hover:underline"
+                        >
+                          <Mail size={11} className="shrink-0" />
+                          <span className="truncate max-w-[140px]">{politician.politician_profiles.contact_email}</span>
+                        </a>
+                      )}
+                      {politician.politician_profiles?.contact_phone && (
+                        <a
+                          href={`tel:${politician.politician_profiles.contact_phone}`}
+                          className="inline-flex items-center gap-1 text-[11px] text-orange-700 hover:underline"
+                        >
+                          <Phone size={11} className="shrink-0" />
+                          {politician.politician_profiles.contact_phone}
+                        </a>
+                      )}
+                    </div>
+                  )}
                   {loading || !stats ? (
                     <div className="h-4 w-32 bg-slate-100 rounded animate-pulse mt-1" />
                   ) : (

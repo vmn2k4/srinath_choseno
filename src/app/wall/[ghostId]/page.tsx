@@ -119,6 +119,13 @@ export default async function WallPage({ params }: WallPageProps) {
     activeCandidacy?.election_seats?.role_title ||
     (owner?.politician_profiles as any)?.political_target_role ||
     "Representative";
+  // Same fallback chain generateMetadata above uses for its title/OG copy --
+  // kept in sync here so the Person JSON-LD below can name the district a
+  // wall owner actually represents, which it previously omitted entirely.
+  const boundaryName =
+    activeCandidacy?.election_seats?.map_shapes?.name ||
+    (owner?.politician_profiles as any)?.target_boundary_name ||
+    "";
   const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
   const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
 
@@ -174,6 +181,15 @@ export default async function WallPage({ params }: WallPageProps) {
           }),
           ...(owner.politician_profiles?.source_url && {
             sameAs: [owner.politician_profiles.source_url],
+          }),
+          // Previously missing entirely -- jobTitle alone ("Councillor")
+          // doesn't say WHICH district, which is exactly the fact an AI
+          // answer engine needs to resolve "who is my councillor in X".
+          ...(boundaryName && {
+            worksFor: {
+              "@type": "GovernmentOrganization",
+              name: `${roleTitle} — ${boundaryName}`,
+            },
           }),
           ...(partyName && {
             memberOf: {

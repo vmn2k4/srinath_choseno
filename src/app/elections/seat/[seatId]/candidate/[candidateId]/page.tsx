@@ -147,7 +147,8 @@ function buildPersonSchema(
   if (!candidateName) return null;
 
   const pol = candidate.profiles?.politician_profiles;
-  const avatarUrl = Array.isArray(pol) ? pol[0]?.avatar_url : pol?.avatar_url;
+  const p = Array.isArray(pol) ? pol[0] : pol;
+  const avatarUrl = p?.avatar_url;
   const districtName = seat.map_shapes?.name;
 
   return {
@@ -157,7 +158,13 @@ function buildPersonSchema(
     url: `${BASE_URL}/elections/seat/${seatSlug}/candidate/${candidateSlug}`,
     ...(avatarUrl ? { image: avatarUrl } : {}),
     ...(candidate.statement ? { description: candidate.statement } : {}),
-    jobTitle: seat.role_title,
+    jobTitle: `${seat.role_title} Candidate`,
+    // Candidate contact details (from politician_profiles, when the
+    // person has claimed/filled out a profile) -- so a page about someone
+    // running for office can also answer "how do I contact this
+    // candidate", not just who they are.
+    ...(p?.contact_phone ? { telephone: p.contact_phone } : {}),
+    ...(p?.contact_email ? { email: p.contact_email } : {}),
     ...(districtName
       ? {
           affiliation: {

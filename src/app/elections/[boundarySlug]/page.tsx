@@ -329,11 +329,176 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
 
   const totalRepresentatives = branches.reduce((sum, b) => sum + (b.top ? 1 : 0) + b.bottom.length, 0);
 
+  // SEO overview -- a few sentences of crawlable body text summarizing
+  // current representation and election activity. This page was previously
+  // almost entirely interactive UI (the org chart), which gives search
+  // engines very little indexable text to match against long-tail queries
+  // like "who represents {district}". Everything here is derived from data
+  // the page already fetched above -- no new source of truth, and nothing
+  // fabricated (no invented population/history the way an LLM might guess).
+  const locationPhrase =
+    containerNames.length > 0
+      ? `${shape.name}, located in ${containerNames.join(", ")}, ${shape.country},`
+      : `${shape.name}, ${shape.country},`;
+
+  // One sentence PER branch rather than flattening every branch's holders
+  // into a single, globally-capped list -- a global cap silently drops
+  // names once hit (an 8-councillor municipal branch alone fills a cap of
+  // 4, so a second branch like School District -- shown when a signed-in
+  // visitor's memberships span more than one boundary type -- never gets a
+  // mention, and even within one branch, councillors/trustees past the cap
+  // vanish into an unnamed "and others"). Naming every holder, branch by
+  // branch, is also what actually lets a page answer a branch-specific
+  // query like "who is my councillor" or "who is the school board chair".
+  // A branch's "top" holder isn't always specific to that branch's own
+  // district -- e.g. a Federal riding's chain resolves its top to the
+  // country's Prime Minister (sourced from the National shape via
+  // SUPERIOR_SOURCE, not found at the riding itself), and a Provincial
+  // riding's top resolves to the Premier of the whole province. Their own
+  // recorded boundary_name (set from map_shapes at the shape they were
+  // actually fetched from) reveals this: it matches the branch's district
+  // only when the head was found AT that district's own shape. Saying
+  // "Prime Minister of {riding}" would be flatly wrong, so use whichever
+  // jurisdiction they're actually the head of.
+  function topHolderClause(top: BranchHolderNode, districtName: string): string {
+    if (top.boundary_name && top.boundary_name !== districtName) {
+      return `${top.full_name} is ${top.boundary_name}'s ${top.role_title}`;
+    }
+    return `${top.full_name} serves as ${top.role_title} for ${districtName}`;
+  }
+
+  function branchSentence(branch: RepresentationBranch): string | null {
+    const districtName = branch.districtName || shape.name;
+    const bottomNames = branch.bottom.map((h) => `${h.full_name} (${h.role_title})`);
+
+    if (branch.top && bottomNames.length > 0) {
+      return `${topHolderClause(branch.top, districtName)} (${branch.label}), alongside ${bottomNames.join(", ")}.`;
+    }
+    if (branch.top) {
+      return `${topHolderClause(branch.top, districtName)} (${branch.label}).`;
+    }
+    if (bottomNames.length > 0) {
+      return `${districtName}'s ${branch.label} representatives are ${bottomNames.join(", ")}.`;
+    }
+    return null;
+  }
+
+  const branchSentences = branches.map(branchSentence).filter((s): s is string => s != null);
+
+  const representationSentence =
+    branchSentences.length > 0
+      ? `${locationPhrase} is a ${shape.boundary_type} district. ${branchSentences.join(" ")}`
+      : `${locationPhrase} is a ${shape.boundary_type} district. No office holders have been recorded for this seat yet -- if you know who represents ${shape.name}, help other constituents by adding them.`;
+
+  // Same branches data, re-keyed by role_title -- lets the Roles &
+  // Responsibilities reference below pair its generic description (from
+  // election_role_types, e.g. what a "Board Chair" does in general) with
+  // who actually holds that role here and how to reach them, instead of
+  // staying purely generic.
+  const holdersByRole = new Map<string, BranchHolderNode[]>();
+  for (const b of branches) {
+    for (const h of [b.top, ...b.bottom]) {
+      if (!h) continue;
+      const list = holdersByRole.get(h.role_title) || [];
+      list.push(h);
+      holdersByRole.set(h.role_title, list);
+    }
+  }
+
+  const totalActiveCandidates = seatRows.reduce((sum, s) => sum + (candidateCountBySeat.get(s.id) || 0), 0);
+  const electionSentence =
+    seatRows.length > 0
+      ? `There ${seatRows.length === 1 ? "is" : "are"} currently ${seatRows.length} active election seat${
+          seatRows.length === 1 ? "" : "s"
+        } for ${shape.name} in the 2026 election cycle, with ${totalActiveCandidates} declared candidate${
+          totalActiveCandidates === 1 ? "" : "s"
+        } so far. Compare candidate positions and read verified constituent ratings before you vote.`
+      : null;
+
+  // FAQPage structured data -- the schema.org type search engines and AI
+  // answer engines (Google AI Overviews, Perplexity, ChatGPT search, which
+  // robots.ts already explicitly welcomes via GPTBot/PerplexityBot/
+  // OAI-SearchBot) most reliably lift Q&A content from and cite directly.
+  // Built from the exact same branches/electionSentence data rendered
+  // above -- every answer here matches what a visitor sees, nothing added
+  // for the schema alone.
+  type FaqEntry = { "@type": "Question"; name: string; acceptedAnswer: { "@type": "Answer"; text: string } };
+  const faqEntities: FaqEntry[] = [
+    {
+      "@type": "Question",
+      name: `Who represents ${shape.name}?`,
+      acceptedAnswer: { "@type": "Answer", text: representationSentence },
+    },
+  ];
+
+  for (const b of branches) {
+    const districtName = b.districtName || shape.name;
+
+    if (b.top) {
+      // Same jurisdiction check as topHolderClause above -- ask "who is the
+      // PM of Canada", not "of {riding}", whenever the head resolves up to
+      // a wider jurisdiction than this branch's own district.
+      const topJurisdiction =
+        b.top.boundary_name && b.top.boundary_name !== districtName ? b.top.boundary_name : districtName;
+      faqEntities.push({
+        "@type": "Question",
+        name: `Who is the ${b.top.role_title} of ${topJurisdiction}?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `${topHolderClause(b.top, districtName)}.${
+            b.top.contact_email ? ` They can be contacted at ${b.top.contact_email}.` : ""
+          }`,
+        },
+      });
+    }
+
+    // Bottom holders in a branch aren't guaranteed to share one role_title,
+    // so group before asking/answering per role rather than assuming.
+    const bottomByRole = new Map<string, BranchHolderNode[]>();
+    for (const h of b.bottom) {
+      const list = bottomByRole.get(h.role_title) || [];
+      list.push(h);
+      bottomByRole.set(h.role_title, list);
+    }
+    for (const [roleTitle, holders] of bottomByRole) {
+      const isSingle = holders.length === 1;
+      const plural = roleTitle.endsWith("s") ? roleTitle : `${roleTitle}s`;
+      faqEntities.push({
+        "@type": "Question",
+        name: `Who ${isSingle ? "is" : "are"} the ${isSingle ? roleTitle : plural} of ${districtName}?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `The current ${isSingle ? roleTitle : plural} of ${districtName} ${
+            isSingle ? "is" : "are"
+          } ${holders.map((h) => h.full_name).join(", ")}.`,
+        },
+      });
+    }
+  }
+
+  if (electionSentence) {
+    faqEntities.push({
+      "@type": "Question",
+      name: `Are there active elections in ${shape.name}?`,
+      acceptedAnswer: { "@type": "Answer", text: electionSentence },
+    });
+  }
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqEntities,
+  };
+
   return (
     <div className="w-full max-w-5xl mx-auto px-4 py-10 space-y-8">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c") }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
       />
 
       {/* Navigation Breadcrumb */}
@@ -425,6 +590,15 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
         />
       </div>
 
+      {/* Overview — real crawlable body text (see comment above where these
+          sentences are built) so the page isn't almost entirely interactive
+          UI with nothing for search engines to match long-tail queries
+          against. */}
+      <div className="space-y-2 text-sm text-text-muted leading-relaxed max-w-3xl">
+        <p>{representationSentence}</p>
+        {electionSentence && <p>{electionSentence}</p>}
+      </div>
+
       {/* Active Election Nominations */}
       {seatRows.length > 0 && (
         <div className="space-y-3">
@@ -458,14 +632,41 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
             Roles &amp; Responsibilities
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {roleTypes.map((role) => (
-              <Card key={role.id} padding="sm" className="space-y-1">
-                <div className="font-bold text-sm text-text-main">{role.role_title}</div>
-                {role.description && (
-                  <p className="text-xs text-text-muted leading-relaxed">{role.description}</p>
-                )}
-              </Card>
-            ))}
+            {roleTypes.map((role) => {
+              const holders = holdersByRole.get(role.role_title) || [];
+              return (
+                <Card key={role.id} padding="sm" className="space-y-1">
+                  <div className="font-bold text-sm text-text-main">{role.role_title}</div>
+                  {role.description && (
+                    <p className="text-xs text-text-muted leading-relaxed">{role.description}</p>
+                  )}
+                  {holders.length > 0 && (
+                    <div className="pt-1.5 mt-1 border-t border-border-light/20 space-y-1">
+                      {holders.map((h) => (
+                        <div key={h.id} className="text-xs flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+                          <span className="text-text-muted">Currently:</span>
+                          <span className="font-semibold text-text-main">{h.full_name}</span>
+                          {h.boundary_name && <span className="text-text-muted">({h.boundary_name})</span>}
+                          {h.contact_email && (
+                            <a
+                              href={`mailto:${h.contact_email}`}
+                              className="text-primary hover:underline"
+                            >
+                              {h.contact_email}
+                            </a>
+                          )}
+                          {h.contact_phone && (
+                            <a href={`tel:${h.contact_phone}`} className="text-primary hover:underline">
+                              {h.contact_phone}
+                            </a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </Card>
+              );
+            })}
           </div>
         </div>
       )}

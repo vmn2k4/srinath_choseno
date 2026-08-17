@@ -126,7 +126,24 @@ export default function NewsArticleDetailClient({
   const activeBody = showTranslated && translatedBody ? translatedBody : content?.body;
 
   const imageVersion = article.updated_at || article.published_at || "v2";
-  const rawOgUrl = ogImageUrl || `/news/${slug}/opengraph-image`;
+  // ogImageUrl (from generateMetadata) is an ABSOLUTE SITE_URL (production)
+  // URL -- correct for <meta og:image>, which social crawlers need
+  // absolute, but wrong for this on-page <img>: using it as-is made the
+  // visible image always fetch from production even when the page itself
+  // was being served from localhost or a staging deploy, breaking for any
+  // article that only exists in that environment's own database. Strip to
+  // a relative path so the browser resolves it against whatever origin is
+  // actually serving the page.
+  const rawOgUrl = ogImageUrl
+    ? (() => {
+        try {
+          const u = new URL(ogImageUrl);
+          return `${u.pathname}${u.search}`;
+        } catch {
+          return ogImageUrl;
+        }
+      })()
+    : `/news/${slug}/opengraph-image`;
   const currentOgImageUrl = rawOgUrl.includes("?")
     ? `${rawOgUrl}&v=${encodeURIComponent(imageVersion)}`
     : `${rawOgUrl}?v=${encodeURIComponent(imageVersion)}`;

@@ -182,7 +182,7 @@ export async function getNewsArticleBySlug(
   return supabase
     .from("news_articles")
     .select(
-      "*, news_article_politicians(politician_id, profiles(id, full_name, designation, constituency, current_ghost_id, politician_profiles(wall_slug, political_target_role, photo_url, avatar_url)))"
+      "*, news_article_politicians(politician_id, profiles(id, full_name, designation, constituency, current_ghost_id, politician_profiles(wall_slug, political_target_role, photo_url, avatar_url, contact_email, contact_phone)))"
     )
     .eq("slug", slug)
     .eq("status", "published")
