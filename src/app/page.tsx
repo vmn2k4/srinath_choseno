@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import HomePageClient from "@/components/features/HomePageClient";
+import { createClient } from "@/lib/supabase/server";
+import { getPublishedNewsArticles } from "@/lib/services/news";
 import { SITE_URL, SITE_NAME } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -34,7 +36,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
+export default async function Page() {
+  const supabase = await createClient();
+  const { data: articles } = await getPublishedNewsArticles(supabase, { limit: 6 });
+  const latestNews = (articles || []).map((a) => ({
+    slug: a.slug,
+    headline: a.headline,
+    summary: a.summary,
+    category: a.category,
+    publishedAt: a.published_at,
+  }));
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -94,7 +106,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
-      <HomePageClient />
+      <HomePageClient latestNews={latestNews} />
     </>
   );
 }

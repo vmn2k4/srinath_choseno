@@ -230,6 +230,24 @@ function generateSlug(headline: string): string {
     .slice(0, 80);
 }
 
+/**
+ * Best-effort push of newly-published article URLs to IndexNow (Bing,
+ * Yandex, etc.) via the server-side route -- never blocks or surfaces an
+ * error to the publish flow, since a missed ping just means Bing falls back
+ * to its normal sitemap crawl instead of an instant recrawl.
+ */
+function notifyIndexNow(slugs: string[]) {
+  const urls = slugs.filter(Boolean).map((slug) => `/news/${slug}`);
+  if (urls.length === 0) return;
+  fetch("/api/admin/indexnow", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ urls }),
+  }).catch(() => {
+    // Swallow -- see comment above.
+  });
+}
+
 /** Case/whitespace-tolerant match of a pasted impactArea string against the enum; null if it doesn't match anything. */
 function normalizeImpactArea(input: unknown): NewsImpactArea | null {
   if (typeof input !== "string") return null;
@@ -714,6 +732,8 @@ export default function AdminNewsPageClient() {
       }
     }
 
+    notifyIndexNow(created.filter((a) => a.status === "published").map((a) => a.slug));
+
     setBatchImporting(false);
     const tagNote = unmatchedByArticle.length
       ? ` Couldn't auto-match politician(s) on: ${unmatchedByArticle.join("; ")} — edit those articles to tag manually.`
@@ -804,6 +824,7 @@ export default function AdminNewsPageClient() {
     if (err) {
       setStatusMsg({ type: "error", msg: err.message });
     } else {
+      if (payload.status === "published") notifyIndexNow([payload.slug]);
       setStatusMsg({ type: "success", msg: editingId ? "Article updated!" : "Article created!" });
       await loadArticles();
       closeForm();
@@ -824,6 +845,7 @@ export default function AdminNewsPageClient() {
       setStatusMsg({ type: "error", msg: error.message });
     } else {
       await syncNewsArticlePoliticianTags(supabase, id);
+      notifyIndexNow([article.slug]);
       setStatusMsg({ type: "success", msg: `"${article.headline}" published!` });
       await loadArticles();
     }

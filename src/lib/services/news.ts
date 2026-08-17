@@ -151,6 +151,8 @@ export async function getPublishedNewsArticles(
     category?: string | null;
     limit?: number;
     offset?: number;
+    /** ISO timestamp -- only articles published at/after this instant. Used by the Google News sitemap's 48-hour window. */
+    publishedAfter?: string;
   } = {}
 ): Promise<{ data: NewsArticle[] | null; error: PostgrestError | null }> {
   let q = supabase
@@ -166,6 +168,7 @@ export async function getPublishedNewsArticles(
   if (opts.country) q = q.eq("country", opts.country);
   if (opts.province) q = q.eq("province", opts.province);
   if (opts.category) q = q.eq("category", opts.category);
+  if (opts.publishedAfter) q = q.gte("published_at", opts.publishedAfter);
   if (opts.limit) q = q.limit(opts.limit);
   if (opts.offset) q = q.range(opts.offset, opts.offset + (opts.limit ?? 20) - 1);
 

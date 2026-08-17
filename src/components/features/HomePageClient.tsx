@@ -4,8 +4,13 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import HomePage from "./HomePage";
+import type { HomeLatestNewsArticle } from "@/components/features/home/HomeLatestNews";
 
-export default function HomePageClient() {
+interface HomePageClientProps {
+  latestNews?: HomeLatestNewsArticle[];
+}
+
+export default function HomePageClient({ latestNews }: HomePageClientProps) {
   const { session, profile } = useAuth();
   const router = useRouter();
 
@@ -24,5 +29,5 @@ export default function HomePageClient() {
     return null; // Will redirect
   }
 
-  return <HomePage />;
+  return <HomePage latestNews={latestNews} />;
 }

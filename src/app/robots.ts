@@ -44,6 +44,9 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin/", "/profile/"],
       },
     ],
-    sitemap: `${SITE_URL}/sitemap.xml`,
+    // news-sitemap.xml is the Google News-specific feed (rolling 48h
+    // window, <news:news> tags) -- listed alongside the full archive
+    // sitemap so News/Googlebot discovers it without a separate submission.
+    sitemap: [`${SITE_URL}/sitemap.xml`, `${SITE_URL}/news-sitemap.xml`],
   };
 }

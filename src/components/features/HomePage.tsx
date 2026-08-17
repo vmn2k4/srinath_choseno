@@ -38,6 +38,7 @@ import {
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
 import HomeDemoVideo from "@/components/features/home/HomeDemoVideo";
 import HomeSupportedCountries from "@/components/features/home/HomeSupportedCountries";
+import HomeLatestNews, { type HomeLatestNewsArticle } from "@/components/features/home/HomeLatestNews";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { SITE_URL } from "@/lib/constants/site";
 import { useRef } from "react";
@@ -213,7 +214,11 @@ const faqJsonLd = {
   })),
 };
 
-export default function HomePage() {
+interface HomePageProps {
+  latestNews?: HomeLatestNewsArticle[];
+}
+
+export default function HomePage({ latestNews = [] }: HomePageProps) {
   const { t } = useTranslation();
   const ratingSectionRef = useRef<HTMLDivElement>(null);
 
@@ -592,6 +597,9 @@ export default function HomePage() {
           </StaggerGroup>
         </div>
       </section>
+
+      {/* ============ LATEST NEWS ============ */}
+      <HomeLatestNews articles={latestNews} />
 
       {/* ============ FAQ ============ */}
       <section className="relative py-16 sm:py-20 px-4 sm:px-6">
