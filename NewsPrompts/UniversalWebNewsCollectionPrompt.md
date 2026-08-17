@@ -9,12 +9,17 @@ You are responsible for journalistic accuracy, source verification, relevance, f
 ---
 
 > [!IMPORTANT]
-> **MANDATORY END-TO-END EXECUTION DIRECTIVE — BROAD-SPECTRUM DISCOVERY & DYNAMIC TAGGING:**
-> **OBJECTIVE: Discover and publish high-impact civic news across all levels of government in the U.S. and Canada, resolving and tagging every involved politician to their Choseno profile wall.**
+> **MANDATORY END-TO-END EXECUTION DIRECTIVE — DYNAMIC LOOKBACK & DEEP DISCOVERY:**
+> **OBJECTIVE: Discover and publish high-impact civic news across all levels of government in the U.S. and Canada published strictly between the last publication timestamp in Supabase and NOW, resolving and tagging every involved politician to their Choseno profile wall.**
 >
 > As part of this task, you **MUST** actively:
-> 1. **Execute Broad-Spectrum Google & Deep Web Queries**: Run multi-tier search matrices spanning federal agencies, all 50 U.S. states, all 10 Canadian provinces and 3 territories, top 100 municipal/regional governments, court dockets, and local press networks.
-> 2. **Extract & Verify Real-Time Breaking Events**: Query the database for the most recent `published_at` timestamp in `news_articles` and target developments between that time and `NOW` (fallback to 24 hours).
+> 1. **Determine Exact Dynamic Lookback Window**:
+>    - Execute the window calculation script:
+>      ```bash
+>      node scripts/get-last-publish-window.js
+>      ```
+>    - Note the `lastPublishedAt` timestamp and `lookbackHours` (e.g. `1`, `2`, or `4` hours).
+> 2. **Execute Broad-Spectrum Google & Deep Web Queries (Scoped to Window)**: Run multi-tier search matrices across federal agencies, 50 states, 10 provinces, 100+ cities, and court dockets parameterized with `(past <lookbackHours> hours OR "[today's date]")`.
 > 3. **Perform Live Database Politician Profile Lookup**: For EVERY official, politician, or minister involved in the story, query Supabase `profiles` and `office_holders` to fetch their exact UUID for `taggedPoliticianIds`. If a verified profile exists, include the UUID so `admin_sync_news_article_tags()` mirrors the story to their live `/wall/[slug]`.
 > 4. **Pre-Flight Fast Deduplication**: Check candidate topics against existing database slugs and headlines *before* deep research to avoid duplicating covered stories.
 > 5. **Synthesize Genuine, High-Impact Articles**: Write substantive, 4-part structured journalistic articles (350–750 words) with verified numbers, bill citations, and canonical source deep links. Every article object — `body`, `sources`, `latitude`/`longitude`, `tags`, `tweet`, `taggedPoliticianIds` — must be individually researched and hand-written from checkable sources.
@@ -22,42 +27,40 @@ You are responsible for journalistic accuracy, source verification, relevance, f
 >    ```bash
 >    node scripts/insert-news-batch.js
 >    ```
->    This automatically: deduplicates against the 1000 most recent articles, syncs politician profile tags to their live profile walls, and syncs electoral boundary tags from lat/lng via `admin_sync_news_article_boundaries()`.
-> 7. **Rank & Distribute All Published Stories**: Update Ranked Distribution CSV ([`batch-ranked-news.csv`](file:///Users/vmn2k4/Coding/Choseno/batch-ranked-news.csv)) with all genuine published stories ranked from **#1 downwards** by predicted Twitter virality and CTR. If >100 stories qualify, publish the top 100 and write overflow stories (#101+) to `scripts/overflow-news-batch.json`.
+> 7. **Rank & Distribute All Published Stories**: Update Ranked Distribution CSV ([`batch-ranked-news.csv`](file:///Users/vmn2k4/Coding/Choseno/batch-ranked-news.csv)) with all genuine published stories ranked from **#1 downwards** by predicted Twitter virality. If >100 stories qualify, publish the top 100 and write overflow stories (#101+) to `scripts/overflow-news-batch.json`.
 > 8. **Output Final Report**: Provide a live distribution summary table with all published stories, canonical URLs, and mirrored politician wall links.
 
 ---
 
-### 1. GOOGLE SEARCH & DEEP WEB DISCOVERY MATRIX
+### 1. GOOGLE SEARCH & DEEP WEB DISCOVERY MATRIX (PARAMETERIZED)
 
-To discover genuine, localized, and high-impact stories everywhere on the internet across Canada and the United States, deploy the following search operator matrices:
+Run `node scripts/get-last-publish-window.js` to get `<lookbackHours>` and `<today's date>`. Deploy these parameterized queries:
 
 #### A. Executive, Cabinet & Federal Governance
 ```
-("executive order" OR "cabinet decision" OR "regulatory change" OR "statutory notice") (site:gov OR site:gc.ca OR site:whitehouse.gov OR site:pm.gc.ca)
-("Government of Canada" OR "White House" OR "Department of Justice" OR "Department of Energy") ("announced" OR "bill" OR "investigation")
+("executive order" OR "cabinet decision" OR "regulatory change" OR "statutory notice") (site:gov OR site:gc.ca OR site:whitehouse.gov OR site:pm.gc.ca) (past <lookbackHours> hours OR "<today's date>")
+("Government of Canada" OR "White House" OR "Department of Justice" OR "Department of Energy") ("announced" OR "bill" OR "investigation") (past <lookbackHours> hours OR "<today's date>")
 ```
 
 #### B. State & Provincial Legislative Dockets & Executive Councils
 ```
-("Governor" OR "Premier") ("signed legislation" OR "executive directive" OR "veto" OR "budget allocation") (site:gov.bc.ca OR site:ontario.ca OR site:alberta.ca OR site:gov.ca.gov OR site:texas.gov OR site:ny.gov OR site:florida.gov)
-("State Senate" OR "Legislative Assembly" OR "House of Delegates" OR "National Assembly") ("passed bill" OR "committee amendment" OR "floor vote")
+("Governor" OR "Premier") ("signed legislation" OR "executive directive" OR "veto" OR "budget allocation") (site:gov.bc.ca OR site:ontario.ca OR site:alberta.ca OR site:gov.ca.gov OR site:texas.gov OR site:ny.gov OR site:florida.gov) (past <lookbackHours> hours)
+("State Senate" OR "Legislative Assembly" OR "House of Delegates" OR "National Assembly") ("passed bill" OR "committee amendment" OR "floor vote") (past <lookbackHours> hours OR "<today's date>")
 ```
 
 #### C. Municipal & Regional Infrastructure, Housing & Public Safety
 ```
-("City Council" OR "Mayor" OR "County Commissioners") ("approved funding" OR "zoning amendment" OR "transit expansion" OR "emergency declaration") ("Toronto" OR "Vancouver" OR "Montreal" OR "Calgary" OR "Ottawa" OR "New York" OR "Los Angeles" OR "Chicago" OR "Houston" OR "Phoenix" OR "Philadelphia" OR "San Antonio" OR "San Diego" OR "Dallas")
-("water infrastructure" OR "bridge repair" OR "light rail" OR "shelter capacity" OR "property tax rate") ("millions" OR "budget")
+("City Council" OR "Mayor" OR "County Commissioners") ("approved funding" OR "zoning amendment" OR "transit expansion" OR "emergency declaration") ("Toronto" OR "Vancouver" OR "Montreal" OR "Calgary" OR "Ottawa" OR "New York" OR "Los Angeles" OR "Chicago" OR "Houston" OR "Phoenix" OR "Philadelphia" OR "San Antonio" OR "San Diego" OR "Dallas") (past <lookbackHours> hours OR "<today's date>")
 ```
 
 #### D. Judicial Decisions & Legal Regulatory Rulings
 ```
-("Supreme Court" OR "Court of Appeal" OR "District Court" OR "Federal Court") ("ruled" OR "struck down" OR "injunction" OR "settlement" OR "consent decree") (site:uscourts.gov OR site:scc-csc.ca OR site:canlii.org)
+("Supreme Court" OR "Court of Appeal" OR "District Court" OR "Federal Court") ("ruled" OR "struck down" OR "injunction" OR "settlement" OR "consent decree") (site:uscourts.gov OR site:scc-csc.ca OR site:canlii.org) (past <lookbackHours> hours OR "<today's date>")
 ```
 
 #### E. Wire Feeds & High-Impact Investigative Outlets
 ```
-("Associated Press" OR "Reuters" OR "The Canadian Press" OR "Bloomberg" OR "CBC News" OR "CTV News" OR "The Globe and Mail" OR "The Washington Post" OR "The New York Times" OR "Politico") ("politics" OR "policy" OR "civic") [today's date]
+("Associated Press" OR "Reuters" OR "The Canadian Press" OR "Bloomberg" OR "CBC News" OR "CTV News" OR "The Globe and Mail" OR "The Washington Post" OR "The New York Times" OR "Politico") ("politics" OR "policy" OR "civic") (past <lookbackHours> hours OR "<today's date>")
 ```
 
 ---

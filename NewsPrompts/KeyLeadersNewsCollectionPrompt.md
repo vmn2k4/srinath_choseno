@@ -9,21 +9,30 @@ You are responsible for journalistic accuracy, source verification, relevance, f
 ---
 
 > [!IMPORTANT]
-> **MANDATORY END-TO-END EXECUTION DIRECTIVE — KEY LEADER FOCUS:**
-> **OBJECTIVE: Discover and publish genuine, high-impact articles directly involving or significantly impacting the designated 30 Key Political Leaders in Canada and the United States.**
+> **MANDATORY END-TO-END EXECUTION DIRECTIVE — KEY LEADER FOCUS & DYNAMIC LOOKBACK:**
+> **OBJECTIVE: Discover and publish genuine, high-impact articles directly involving or significantly impacting the designated 30 Key Political Leaders in Canada and the United States published strictly between the last publication timestamp in Supabase and NOW.**
 >
 > As part of this task, you **MUST** actively:
-> 1. **Focus on the 30 Designated Key Leaders**: Discover major policy actions, legislative votes, executive orders, official statements, bilateral negotiations, cabinet changes, and significant political developments involving the target leaders listed in Section 6.
-> 2. **Identify the Time Window & Maximize Discovery**: Query the database for the most recent `published_at` timestamp in `news_articles` and target the interval between that time and `NOW` (fallback to 24 hours).
-> 3. **Extract Real-Time Trends & Multi-Feed Wire Signals**: Execute `node scripts/fetch-trending-topics.js --max-hours 24` to inspect [`scripts/latest-trending-topics.csv`](file:///Users/vmn2k4/Coding/Choseno/scripts/latest-trending-topics.csv) and filter for wire signals and Twitter/X discourse mentioning target leaders. Supplement with targeted web searches across government portals, parliamentary/congressional records, and credible newsrooms.
-> 4. **Pre-Flight Fast Deduplication (Token Protection)**: Check ALL candidate topics against existing database slugs and headlines *before* performing deep research to avoid duplicating covered stories. If a story already exists in Choseno, skip it unless there is a material new development.
-> 5. **Synthesize Genuine, High-Impact Articles**: Write substantive, 4-part structured journalistic articles (350–750 words) with verified numbers, bill citations, and canonical source deep links for EVERY genuinely verified story you find. **NEVER generate templated placeholders or repetitive filler, and NEVER programmatically synthesize a field**. Every article object — `body`, `sources`, `latitude`/`longitude`, `tags`, `tweet` — must be individually hand-researched and hand-written from a real, checkable source.
+> 1. **Determine Exact Dynamic Lookback Window**:
+>    - Execute the window calculation script:
+>      ```bash
+>      node scripts/get-last-publish-window.js
+>      ```
+>    - Note the `lastPublishedAt` timestamp and `lookbackHours` (e.g. `1`, `2`, or `4` hours).
+> 2. **Focus on the 30 Designated Key Leaders (Scoped to Window)**: Discover major policy actions, legislative votes, executive orders, official statements, bilateral negotiations, and cabinet changes involving the target leaders occurring after `lastPublishedAt`.
+> 3. **Extract Real-Time Trends & Multi-Feed Wire Signals**:
+>    - Execute trending topic extraction parameterized by the calculated lookback duration:
+>      ```bash
+>      node scripts/fetch-trending-topics.js --max-hours <lookbackHours>
+>      ```
+>    - Filter [`scripts/latest-trending-topics.csv`](file:///Users/vmn2k4/Coding/Choseno/scripts/latest-trending-topics.csv) for wire signals and Twitter/X discourse mentioning target leaders.
+> 4. **Pre-Flight Fast Deduplication**: Check ALL candidate topics against existing database slugs and headlines *before* performing deep research.
+> 5. **Synthesize Genuine, High-Impact Articles**: Write substantive, 4-part structured journalistic articles (350–750 words) with verified numbers, bill citations, and canonical source deep links for EVERY genuinely verified story you find.
 > 6. **Populate & Ingest Stories**: Write the article JSON array into [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js)'s `articles` array and execute:
 >    ```bash
 >    node scripts/insert-news-batch.js
 >    ```
->    This automatically: deduplicates against existing articles, syncs politician profile tags to their live profile wall (`/wall/[slug]`) via `admin_sync_news_article_tags()`, and syncs electoral boundary tags from lat/lng via `admin_sync_news_article_boundaries()`.
-> 7. **Rank & Distribute All Published Stories**: Update Ranked Distribution CSV ([`batch-ranked-news.csv`](file:///Users/vmn2k4/Coding/Choseno/batch-ranked-news.csv)) with all genuine published stories ranked from **#1 downwards** by predicted Twitter virality and CTR, using the exact 12-column header. If >100 stories qualify, publish the top 100 and write overflow stories (#101+) to `scripts/overflow-news-batch.json`.
+> 7. **Rank & Distribute All Published Stories**: Update Ranked Distribution CSV ([`batch-ranked-news.csv`](file:///Users/vmn2k4/Coding/Choseno/batch-ranked-news.csv)) with all genuine published stories ranked from **#1 downwards** by predicted Twitter virality. If >100 stories qualify, publish the top 100 and write overflow stories (#101+) to `scripts/overflow-news-batch.json`.
 > 8. **Output Final Report**: Provide a live distribution summary table with all published stories, canonical URLs, and mirrored politician wall links.
 
 ---
@@ -76,13 +85,16 @@ Every article in this workflow must directly feature, quote, or materially conce
 
 ### 2. NEWS DISCOVERY STRATEGY FOR KEY LEADERS
 
-**Objective: Discover all major policy announcements, legislative actions, executive directives, and public statements directly involving the 30 Key Leaders in the last 24 hours.**
+**Objective: Discover all major policy announcements, legislative actions, executive directives, and public statements directly involving the 30 Key Leaders occurring between `lastPublishedAt` and NOW.**
 
-**Targeted Query Templates:**
-- `"[Leader Name]" (announcement OR bill OR policy OR executive order OR speech OR legislation OR tariff OR budget) [today's date]`
-- `"[Leader Name]" site:gov.bc.ca OR site:ontario.ca OR site:alberta.ca OR site:quebec.ca OR site:canada.ca`
-- `"[Leader Name]" site:whitehouse.gov OR site:senate.gov OR site:house.gov OR site:gov.ca.gov OR site:texas.gov`
-- `"[Leader Name]" ("CBC" OR "CTV" OR "Globe and Mail" OR "AP News" OR "Reuters" OR "Washington Post" OR "Politico")`
+1. Run `node scripts/get-last-publish-window.js` to get `<lookbackHours>` and `<lastPublishedAt>`.
+2. Run `node scripts/fetch-trending-topics.js --max-hours <lookbackHours>`.
+
+**Targeted Dynamic Query Templates (Inject `<lookbackHours>` and `<today's date>`):**
+- `"[Leader Name]" (announcement OR bill OR policy OR executive order OR speech OR legislation OR tariff OR budget) (past <lookbackHours> hours OR "<today's date>")`
+- `"[Leader Name]" site:gov.bc.ca OR site:ontario.ca OR site:alberta.ca OR site:quebec.ca OR site:canada.ca (past <lookbackHours> hours)`
+- `"[Leader Name]" site:whitehouse.gov OR site:senate.gov OR site:house.gov OR site:gov.ca.gov OR site:texas.gov (past <lookbackHours> hours)`
+- `"[Leader Name]" ("CBC" OR "CTV" OR "Globe and Mail" OR "AP News" OR "Reuters" OR "Washington Post" OR "Politico") (past <lookbackHours> hours OR "<today's date>")`
 
 **Focus Areas:**
 1. **Executive Orders, Directives & Policy Decisions**: Major regulatory changes, task forces, appointments, or administrative initiatives launched by the President, Prime Minister, Governors, or Premiers.

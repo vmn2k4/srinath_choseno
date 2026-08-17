@@ -9,29 +9,42 @@ You are responsible for journalistic accuracy, source verification, relevance, f
 ---
 
 > [!IMPORTANT]
-> **MANDATORY END-TO-END EXECUTION DIRECTIVE — MAXIMUM STORY COLLECTION (DO NOT JUST RETURN RAW JSON):**
-> **OBJECTIVE: Discover and publish a MAXIMUM of 100 genuine, high-impact articles per batch. More stories = more value. Push to the limit.**
+> **MANDATORY END-TO-END EXECUTION DIRECTIVE — DYNAMIC LOOKBACK & MAXIMUM DISCOVERY:**
+> **OBJECTIVE: Discover and publish a MAXIMUM of 100 genuine, high-impact articles published strictly between the last publication timestamp in Supabase and NOW.**
 >
 > As part of this task, you **MUST** actively:
-> 1. **Identify the Time Window & Maximize Discovery**: Query the database for the most recent `published_at` timestamp in `news_articles` and target the interval between that time and `NOW` (fallback to 24 hours). Cast a wide net across all Canadian and U.S. jurisdictions (federal, provincial/state, municipal, and territorial).
-> 2. **Extract Real-Time Trends & Multi-Feed Wire Signals**: Execute `node scripts/fetch-trending-topics.js --max-hours 24` (a 100-story batch needs the full 24-hour window as a discovery signal — `--past-hour` alone is too narrow and will starve the batch) to inspect [`scripts/latest-trending-topics.csv`](file:///Users/vmn2k4/Coding/Choseno/scripts/latest-trending-topics.csv). Supplement with exhaustive searches across government press releases, legislative records, wire feeds (AP, Reuters, Canadian Press), provincial/state newsrooms, and municipal news archives. **Prioritize breadth: search multiple jurisdictions, agencies, and topic domains in parallel.**
+> 1. **Determine Exact Dynamic Lookback Window**:
+>    - Execute the window calculation script:
+>      ```bash
+>      node scripts/get-last-publish-window.js
+>      ```
+>    - Note the `lastPublishedAt` timestamp and `lookbackHours` (e.g., `1`, `2`, or `4` hours).
+> 2. **Extract Real-Time Trends & Multi-Feed Wire Signals**:
+>    - Execute trending topic extraction parameterized by the calculated lookback duration:
+>      ```bash
+>      node scripts/fetch-trending-topics.js --max-hours <lookbackHours>
+>      ```
+>    - Inspect [`scripts/latest-trending-topics.csv`](file:///Users/vmn2k4/Coding/Choseno/scripts/latest-trending-topics.csv). Supplement with searches parameterized by the time window: `[query] (past <lookbackHours> hours OR "[today's date]")`.
 > 3. **Pre-Flight Fast Deduplication (Token Protection)**: Check ALL candidate topics against existing database slugs and headlines *before* performing deep research to avoid wasting tokens or duplicating covered stories. If a story already exists in Choseno, skip it unless there is a material new development.
-> 4. **Synthesize Genuine, High-Impact Articles at Scale**: Write substantive, 4-part structured journalistic articles (350–750 words) with verified numbers, bill citations, and canonical source deep links for EVERY genuinely verified story you find. **NEVER generate templated placeholders or repetitive filler, and NEVER programmatically synthesize a field** (a `for` loop fabricating headlines, dollar figures from index arithmetic, a reused lat/lng pair across unrelated stories, or a guessed source-URL pattern like `https://news.gov.{country}/releases/{slug}`). Every one of the up to 100 article objects — `body`, `sources`, `latitude`/`longitude`, `tags`, `tweet` — must be individually hand-researched and hand-written from a real, checkable source. If you catch yourself writing a loop that generates article content, stop — that is exactly the failure mode `scripts/publish-100-stories-batch.js` fell into (see its deprecation header) and it produced a fully fabricated batch that later had to be manually cleaned up.
-> 5. **Populate & Ingest Up to 100 Stories**: Write the article JSON array (up to 100 hand-authored objects) into [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js)'s `articles` array (replace the old sample entries already there) and execute:
+> 4. **Synthesize Genuine, High-Impact Articles at Scale**: Write substantive, 4-part structured journalistic articles (350–750 words) with verified numbers, bill citations, and canonical source deep links for EVERY genuinely verified story you find occurring in this window. Every article object — `body`, `sources`, `latitude`/`longitude`, `tags`, `tweet` — must be individually hand-researched and hand-written from a real, checkable source.
+> 5. **Populate & Ingest Up to 100 Stories**: Write the article JSON array into [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js)'s `articles` array and execute:
 >    ```bash
 >    node scripts/insert-news-batch.js
 >    ```
->    **Do not use `scripts/publish-100-stories-batch.js`** — it is deprecated and refuses to run; it fabricates body text, source URLs, and figures (see its file header for why). `insert-news-batch.js` is the only sanctioned ingestion path, and it already: deduplicates against the 1000 most recent existing articles (by slug, shared source URL, and headline similarity within a 3-day window), syncs politician wall tags via `admin_sync_news_article_tags()`, and syncs electoral boundary tags from lat/lng via `admin_sync_news_article_boundaries()` — provide accurate `latitude`/`longitude` per story so this actually fires.
-> 6. **Rank & Distribute All Published Stories**: Update Ranked Distribution CSV ([`batch-ranked-news.csv`](file:///Users/vmn2k4/Coding/Choseno/batch-ranked-news.csv)) with all genuine published stories ranked from **#1 downwards** by predicted Twitter virality and CTR, using the exact 12-column header already in that file (`batch_rank,viral_score,headline,category,jurisdiction,primary_official,published_at,recommended_post_window,tweet_copy,viral_reasoning,live_news_url,politician_wall_url`) and CSV-quoting any field that may contain a comma (headline, tweet_copy, viral_reasoning, jurisdiction). If >100 stories qualify, rank all and publish the top 100 only; write rejected stories (#101+) to `scripts/overflow-news-batch.json` (slug, headline, category, viral_score, reason) as a plain JSON file for a follow-up batch — never discard them silently.
-> 7. **Output Final Report**: Provide a live distribution summary table with all published stories, canonical URLs, and mirrored politician wall links. Include total count, overflow count (if any), and virality score distribution.
+> 6. **Rank & Distribute All Published Stories**: Update Ranked Distribution CSV ([`batch-ranked-news.csv`](file:///Users/vmn2k4/Coding/Choseno/batch-ranked-news.csv)) with all genuine published stories ranked from **#1 downwards** by predicted Twitter virality. If >100 stories qualify, publish the top 100 and write overflow stories (#101+) to `scripts/overflow-news-batch.json`.
+> 7. **Output Final Report**: Provide a live distribution summary table with all published stories, canonical URLs, and mirrored politician wall links.
 
 ---
 
-### 1. NEWS DISCOVERY & TIME WINDOW — MAXIMIZE STORY VOLUME
+### 1. NEWS DISCOVERY & DYNAMIC TIME WINDOW
 
-**Objective: Cast the widest possible net to identify ALL genuinely newsworthy civic/political developments.**
+**Objective: Cast a targeted net to identify ALL genuine civic/political developments that occurred between `lastPublishedAt` and NOW.**
 
-Find significant political and civic developments that occurred, were announced, or materially developed between the platform's **last published timestamp and now** (or within the last 24 hours). Your goal is to discover and publish **up to 100 high-quality, verified articles per batch.**
+1. **Calculate the Lookback Hours**: Run `node scripts/get-last-publish-window.js`.
+2. **Apply Time Filters to All Web Queries**:
+   - `("breaking" OR "announced" OR "bill" OR "legislation") ("AP News" OR "Reuters" OR "The Canadian Press" OR "CBC" OR "CTV") (past <lookbackHours> hours OR "<today's date>")`
+   - `site:news.gov.bc.ca OR site:news.ontario.ca OR site:pm.gc.ca (past <lookbackHours> hours)`
+   - `site:whitehouse.gov OR site:senate.gov OR site:house.gov (past <lookbackHours> hours)`
 
 **Discovery Strategy — Search Exhaustively Across:**
 - **Federal**: Prime Minister's Office, Parliament of Canada, Government of Canada press releases, House Commons/Senate votes, federal agency announcements (RCMP, Stats Canada, Health Canada, etc.)

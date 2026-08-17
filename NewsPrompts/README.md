@@ -17,15 +17,27 @@ This directory contains the standardized, modular news collection, verification,
 
 ## Universal Ingestion Workflow
 
-Regardless of which directive is executed, all three workflows adhere to the exact same execution pipeline:
+Regardless of which directive is executed, all workflows adhere to the exact same execution pipeline:
 
-1. **Deduplication**: Compare against existing database records (by slug, canonical source URL, and headline tokens).
-2. **4-Part Journalistic Format**: Substantive articles (350–750 words) with Dateline, Hard Figures, Constituent Impact, and Accountability.
-3. **Database Ingestion**: Hand-authored article objects are placed into `scripts/insert-news-batch.js` and executed via:
+1. **Calculate Dynamic Lookback Window**:
+   ```bash
+   node scripts/get-last-publish-window.js
+   ```
+   This retrieves the exact timestamp of the last published article in Supabase, calculates the elapsed hours (`lookbackHours`), and provides the exact parameter to pass to trending scripts and search queries.
+
+2. **Scoped Discovery & Trend Extraction**:
+   ```bash
+   node scripts/fetch-trending-topics.js --max-hours <lookbackHours>
+   ```
+   All Google and web queries incorporate `(past <lookbackHours> hours OR "<today's date>")` to ensure strictly new developments are analyzed.
+
+3. **Deduplication**: Compare candidate topics against existing database records (by slug, canonical source URL, and headline tokens).
+4. **4-Part Journalistic Format**: Substantive articles (350–750 words) with Dateline, Hard Figures, Constituent Impact, and Accountability.
+5. **Database Ingestion**: Hand-authored article objects are placed into `scripts/insert-news-batch.js` and executed via:
    ```bash
    node scripts/insert-news-batch.js
    ```
-4. **Automated Tagging**:
+6. **Automated Tagging**:
    - `admin_sync_news_article_tags()` mirrors stories directly to politician profile walls (`/wall/[slug]`).
    - `admin_sync_news_article_boundaries()` uses `latitude`/`longitude` to map articles into electoral boundaries.
-5. **Distribution Tracking**: Top-100 ranked stories are saved in `batch-ranked-news.csv`; overflow is stored in `scripts/overflow-news-batch.json`.
+7. **Distribution Tracking**: Top-100 ranked stories are saved in `batch-ranked-news.csv`; overflow is stored in `scripts/overflow-news-batch.json`.
