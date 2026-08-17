@@ -25,195 +25,51 @@ envFile.split('\n').forEach(line => {
 // ── ADD YOUR ARTICLES HERE ──────────────────────────────────────────────────
 const articles = [
   {
-    slug: 'david-eby-bc-cabinet-shuffle-osborne-kahlon-bailey-2026-08-17',
-    headline: 'Premier David Eby Announces B.C. Cabinet Reassignment as Brenda Bailey Begins Medical Leave',
-    summary: 'Premier David Eby reassigns key portfolios in the provincial cabinet, appointing Josie Osborne as Minister of Finance and Ravi Kahlon as Minister of Health while Jobs Minister Brenda Bailey undergoes cancer treatment.',
-    category: 'Policy',
-    country: 'CA',
-    province: 'BC',
-    status: 'published',
-    eventDate: '2026-08-16T18:00:00Z',
-    published_at: '2026-08-17T05:30:00Z',
-    impactArea: 'state',
-    latitude: 48.4284,
-    longitude: -123.3656,
-    body: `VICTORIA, B.C. — British Columbia Premier David Eby announced an executive cabinet realignment at the Parliament Buildings in Victoria, restructuring key ministerial portfolios following Jobs, Economic Development and Innovation Minister Brenda Bailey's decision to step away on medical leave for cancer treatment.
-
-## Cabinet Portfolio Reallocations and Executive Continuity
-
-Under the newly certified executive order, Premier Eby transferred responsibility for the province's fiscal framework and statutory health administration among senior cabinet veterans:
-
-* **Ministry of Finance**: Josie Osborne, MLA for Mid Island-Pacific Rim and previously Minister of Health, assumes the role of Minister of Finance. Osborne will steer the preparation of B.C.'s 2027 provincial budget, oversee public debt financing, and manage ongoing public sector collective bargaining.
-* **Ministry of Health**: Ravi Kahlon, MLA for Delta North and previously Minister of Jobs and Economic Growth, takes over as Minister of Health, assuming executive leadership over regional health authority budgets, emergency room stabilization initiatives, and physician contract implementations.
-* **Ministry of Jobs and Economic Growth**: Energy and Climate Solutions Minister Adrian Dix will assume acting ministerial responsibility for the Jobs and Innovation portfolio during Bailey's medical absence, ensuring statutory continuity for clean industry investments and regional economic development tables. Minister Bailey remains a member of cabinet and is scheduled to resume her duties in early October 2026 following clinical treatment.
-
-"Brenda Bailey is a tireless advocate for workers, businesses, and modern economic growth across British Columbia," Premier Eby stated during the executive announcement. "As Brenda focuses on her health and treatment, our cabinet team is ensuring seamless continuity on the issues that matter most to British Columbians—building an economy that works for regular families, strengthening front-line healthcare delivery, and maintaining disciplined fiscal oversight."
-
-## Policy Priorities and Economic Strategy
-
-The cabinet reassignments place experienced ministers at the helm of British Columbia's two most resource-intensive ministries. Minister Osborne brings direct experience in navigating complex municipal infrastructure and regional healthcare files to the Finance portfolio, where she faces balancing infrastructure investments against macroeconomic pressures and shifting North American trade dynamics.
-
-In Health, Minister Kahlon takes leadership of provincial efforts to recruit and retain family physicians, expand urgent primary care centres across suburban and rural ridings, and accelerate capital replacements across major acute care hospitals.
-
-## Next Steps and Parliamentary Schedule
-
-The ministers were sworn into their respective portfolios by Lieutenant Governor Janet Austin at Government House. The revamped executive council will convene in Victoria ahead of the fall legislative sitting to finalize government bills on provincial housing targets, healthcare workforce retention, and clean technology investment tax credits.`,
-    seoTitle: 'B.C. Cabinet Reorganization 2026 | Choseno',
-    metaDescription: 'Premier David Eby announces B.C. cabinet shuffle appointing Josie Osborne to Finance and Ravi Kahlon to Health as Brenda Bailey begins cancer treatment.',
-    tags: [
-      'David Eby',
-      'Josie Osborne',
-      'Ravi Kahlon',
-      'Brenda Bailey',
-      'Adrian Dix',
-      'BC NDP',
-      'BC Politics',
-      'Healthcare',
-      'Finance'
-    ],
-    tweet: 'Premier David Eby reassigns key B.C. cabinet portfolios, naming Josie Osborne Minister of Finance and Ravi Kahlon Minister of Health as Brenda Bailey steps away for cancer treatment.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'B.C. Office of the Premier - Executive Council Changes',
-        url: 'https://news.gov.bc.ca/releases/2026PREM0045-001122'
-      },
-      {
-        label: 'Vancouver Sun - B.C. Cabinet Reorganization',
-        url: 'https://vancouversun.com/news/local-news/bc-cabinet-shuffle-david-eby-josie-osborne-ravi-kahlon'
-      }
-    ],
-    taggedPoliticianIds: [
-      'a730729a-0a3b-4231-b93d-9b5524f9db5e',
-      '025098f0-5553-4df5-b1e6-1e9a5c6773fd',
-      '472949c0-825a-498c-8a8e-33b6d292286e',
-      'f4ba4f3c-0dfa-4b7b-a6d8-06b3b456a1f2'
-    ],
-    taggedPoliticians: [
-      'David Eby',
-      'Josie Osborne',
-      'Ravi Kahlon',
-      'Brenda Bailey',
-      'Adrian Dix'
-    ]
-  },
-  {
-    slug: 'ro-khanna-data-center-bill-of-rights-ai-grid-regulation-2026-08-17',
-    headline: 'Rep. Ro Khanna Introduces \'Data Center Bill of Rights\' to Protect Local Grids and Power Rates from AI Surge',
-    summary: 'U.S. Representative Ro Khanna introduces a federal resolution establishing 2,500-foot buffer zones, mandatory water transparency, and ratepayer cost shields for hyperscale AI data centers.',
-    category: 'Technology',
-    country: 'US',
-    province: 'CA',
-    status: 'published',
-    eventDate: '2026-08-16T19:00:00Z',
-    published_at: '2026-08-17T05:30:00Z',
-    impactArea: 'country',
-    latitude: 38.8899,
-    longitude: -77.0090,
-    body: `WASHINGTON, D.C. — Representative Ro Khanna (D-CA) introduced a landmark congressional resolution entitled the "Data Center Bill of Rights," establishing a comprehensive federal framework to safeguard residential communities, municipal water supplies, and electrical grid stability amidst the rapid expansion of generative AI infrastructure.
-
-## Federal Standards and Local Zoning Protections
-
-The resolution addresses the rapid buildout of more than 4,400 commercial data centers operating nationwide, establishing national baseline protections for municipalities facing proposed hyperscale developments:
-
-* **Mandatory Buffer Distances**: Establishes a federal guideline prohibiting data center construction in residential zones and within 2,500 feet of residential homes, public and private schools, licensed childcare facilities, hospitals, and senior care homes.
-* **Ratepayer Cost Insulation**: Requires federal and state utility regulators to prevent hyperscale data centers from shifting transmission grid upgrades, substation construction, and high-voltage interconnect fees onto ordinary residential utility ratepayers.
-* **Resource and Environmental Transparency**: Mandates comprehensive reporting on projected daily water usage for evaporative cooling systems, as well as strict emission and acoustic standards for backup diesel generators and on-site gas turbines.
-* **Local Preemption Protection**: Explicitly affirms the authority of municipal zoning boards, county commissions, and local town councils to review, condition, or reject data center proposals without state-level legislative preemption.
-
-"Artificial intelligence offers immense potential, but the physical reality of powering AI cannot come at the expense of working families' utility bills, drinking water, or neighborhood tranquility," Congressman Khanna stated upon filing the measure. "Communities deserve a seat at the table, clear environmental transparency, and ironclad guarantees that tech conglomerates pay for their own power infrastructure."
-
-## Regional Grid Stress and Community Backlash
-
-The legislative push follows high-profile public hearings across Pennsylvania, Virginia, Ohio, and Georgia, where rural and suburban residents have voiced alarm over skyrocketing local electricity rates and deafening cooling fans adjacent to residential subdivisions. During a recent fact-finding mission to Pennsylvania, Khanna urged local authorities to pause new permitting approvals pending comprehensive grid capacity audits.
-
-Industry analysts estimate that hyperscale AI facilities could consume up to 9% of total U.S. electricity generation by 2030, putting acute pressure on regional transmission organizations such as PJM Interconnection and ERCOT.
-
-## Congressional Path and Stakeholder Reaction
-
-The resolution has gathered initial support from members of the Congressional Progressive Caucus and lawmakers representing districts with high concentrations of data infrastructure. While technology industry trade groups argue that stringent federal zoning mandates could slow domestic AI innovation, environmental organizations and consumer utility advocates have endorsed the resolution as an essential step toward responsible computational growth.`,
-    seoTitle: 'Ro Khanna Data Center Bill of Rights | Choseno',
-    metaDescription: 'Rep. Ro Khanna introduces the Data Center Bill of Rights setting 2,500-foot buffer zones, ratepayer cost shields, and water transparency for AI infrastructure.',
-    tags: [
-      'Ro Khanna',
-      'AI Infrastructure',
-      'Energy Grid',
-      'Data Centers',
-      'Federal Legislation',
-      'Ratepayer Protection',
-      'Technology Policy'
-    ],
-    tweet: 'Rep. Ro Khanna introduces the Data Center Bill of Rights, demanding 2,500-foot buffer zones from homes and federal protections to prevent AI power demands from spiking residential utility bills.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'U.S. House of Representatives - Office of Rep. Ro Khanna',
-        url: 'https://khanna.house.gov/media/press-releases/khanna-introduces-data-center-bill-of-rights'
-      },
-      {
-        label: 'MeriTalk - Congressional Data Center Regulatory Framework',
-        url: 'https://www.meritalk.com/articles/rep-khanna-proposes-data-center-bill-of-rights/'
-      }
-    ],
-    taggedPoliticianIds: [],
-    taggedPoliticians: [
-      'Ro Khanna'
-    ]
-  },
-  {
-    slug: 'todd-blanche-rescinds-anti-weaponization-fund-doj-independence-2026-08-17',
-    headline: 'Attorney General Todd Blanche Formally Rescinds $1.8 Billion \'Anti-Weaponization\' Settlement Fund',
-    summary: 'Confirmed following a narrow 50–49 Senate vote, U.S. Attorney General Todd Blanche issues a formal order terminating the controversial $1.8 billion IRS settlement fund while addressing questions on executive authority.',
+    slug: 'supreme-court-rejects-trump-appeal-e-jean-carroll-defamation-2026-08-17',
+    headline: 'U.S. Supreme Court Denies Donald Trump Appeal in $5.6 Million E. Jean Carroll Defamation Verdict',
+    summary: 'The Supreme Court turns away a rehearing request from Donald Trump, cementing the $5 million jury judgment plus interest in the landmark civil defamation and sexual abuse lawsuit.',
     category: 'Policy',
     country: 'US',
     province: 'DC',
     status: 'published',
-    eventDate: '2026-08-16T21:00:00Z',
-    published_at: '2026-08-17T05:30:00Z',
+    eventDate: '2026-08-17T14:00:00Z',
+    published_at: '2026-08-17T14:30:00Z',
     impactArea: 'country',
-    latitude: 38.8925,
-    longitude: -77.0256,
-    body: `WASHINGTON, D.C. — United States Attorney General Todd Blanche issued a formal administrative order rescinding the controversial $1.8 billion "Anti-Weaponization Fund," delivering on a written commitment that secured his confirmation by the narrowest Senate margin for an Attorney General in modern history.
+    latitude: 38.8906,
+    longitude: -77.0044,
+    body: `WASHINGTON, D.C. — The Supreme Court of the United States issued an order list rejecting a petition for rehearing from Donald Trump, officially exhausting his legal challenges to a federal civil jury verdict awarding writer E. Jean Carroll $5 million in compensatory and punitive damages for sexual abuse and defamation.
 
-## Formal Rescission and Legal Architecture
+## Final Judicial Action and Financial Disbursement
 
-The administrative directive formally revokes the Department of Justice's framework establishing the multi-billion-dollar compensation mechanism, which originated from a settlement structure in an IRS civil lawsuit brought by Donald Trump:
+The high court's denial of certiorari in the case, known procedurally as *Carroll II*, terminates multi-year appellate litigation originating in the U.S. District Court for the Southern District of New York:
 
-* **Complete Termination of Fund**: The order instructs DOJ and Department of the Treasury disbursements officers that the $1.8 billion allocation is definitively dissolved and that no federal taxpayer funds will be dispersed to individuals alleging historical political targeting.
-* **Settlement Compliance Review**: Blanche directed senior career DOJ attorneys to review underlying contractual obligations to ensure that alternative federal mechanisms, including the statutory Judgment Fund, cannot be utilized to revive unauthorized payouts.
-* **Confirmation Backdrop**: The formal rescission follows intense negotiations on Capitol Hill, where Republican Senators John Cornyn and Thom Tillis conditioned their confirmation votes on an unequivocal, binding dissolution of the fund prior to Blanche taking the oath of office.
+* **Finality of Judgment**: The Supreme Court's order leaves intact the May 2023 jury verdict finding Trump liable under the New York Adult Survivors Act for battery and common-law defamation following public statements made in October 2022.
+* **Disbursement of Escrow Funds**: While the petition for rehearing remained pending, federal court authorities confirmed that over $5.6 million—comprising the original $5.0 million jury award plus statutory post-judgment interest accrued at federal rates—was transferred to Carroll from a court-administered escrow account in July 2026.
+* **Separate Defamation Appeal**: The ruling does not resolve Trump's separate pending federal appeal against an $83.3 million defamation verdict delivered by a different federal jury in January 2024, which is currently undergoing appellate review in the Second Circuit Court of Appeals.
 
-"This order confirms beyond any doubt that the fund is dead," Attorney General Blanche stated in remarks following the signing. "The Department of Justice will focus its institutional energy and resources on constitutional law enforcement, combating violent crime, securing our borders, and restoring public trust in the fair application of the law."
+"The Supreme Court's decision today brings finality to this matter and reaffirms that no individual, regardless of office, stands above the rule of law or the verdicts rendered by American juries," Carroll's legal team stated in a response filed with the federal clerk.
 
-## Senate Scrutiny and Departmental Independence
+## Legal Precedent and Presidential Liability
 
-Blanche was confirmed on August 8, 2026, by a 50–49 vote along strict party lines. During his confirmation hearings and subsequent media interviews, lawmakers pressed Blanche extensively on DOJ independence and his previous role as personal defense counsel to President Trump.
+The procedural conclusion of *Carroll II* establishes a significant benchmark regarding civil liability for statements made while holding or seeking public office. Trump's defense attorneys had argued that presidential immunity shielded his public denials and that federal judges erred in admitting prior depositions. Both the Second Circuit and the Supreme Court rejected these arguments without noted dissents on the rehearing order.
 
-Legal scholars and congressional oversight committees have indicated they will continue monitoring DOJ proceedings, noting that the underlying settlement documentation remains a matter of active inquiry in federal court. Critics have also scrutinized Blanche's statements indicating that the Justice Department will take executive policy perspectives into account when determining federal enforcement priorities.
+Legal analysts highlighted that the finality of the payout eliminates any further stay requests on the $5.6 million award, leaving the judgment fully satisfied on federal court dockets.
 
-## Next Steps for Federal Law Enforcement
+## Next Steps in Related Proceedings
 
-The Attorney General convened an all-hands leadership briefing with U.S. Attorneys and FBI executive leadership to outline initial priorities for the department's fall docket, emphasizing counter-narcotics task forces, public corruption enforcement, and compliance with congressional oversight mandates.`,
-    seoTitle: 'Todd Blanche Rescinds $1.8B Anti-Weaponization Fund | Choseno',
-    metaDescription: 'Attorney General Todd Blanche signs order dissolving the $1.8B Anti-Weaponization Fund following narrow 50-49 Senate confirmation vote.',
+Oral arguments in the Second Circuit regarding the separate $83.3 million judgment are scheduled for late autumn, where appellate judges will evaluate jury instructions and constitutional proportionality standards regarding punitive damages.`,
+    seoTitle: 'Supreme Court Denies Trump Appeal in E. Jean Carroll Verdict | Choseno',
+    metaDescription: 'U.S. Supreme Court rejects Donald Trump appeal in the $5.6M E. Jean Carroll defamation verdict, finalizing the civil judgment.',
     tags: [
-      'Todd Blanche',
-      'Department of Justice',
-      'Senate Judiciary',
+      'Supreme Court',
+      'Donald Trump',
+      'E. Jean Carroll',
       'Federal Courts',
-      'IRS Settlement',
-      'Legal Affairs',
+      'Defamation',
+      'Judiciary',
       'U.S. Politics'
     ],
-    tweet: 'Attorney General Todd Blanche signs an administrative order formally killing the $1.8B Anti-Weaponization Fund following contentious Senate confirmation hearings.',
+    tweet: 'The U.S. Supreme Court denies Donald Trump\x27s rehearing appeal in the $5.6M E. Jean Carroll defamation verdict, officially cementing the federal jury judgment.',
     breakingNews: false,
     author: {
       name: 'Choseno Civic News Desk',
@@ -221,65 +77,139 @@ The Attorney General convened an all-hands leadership briefing with U.S. Attorne
     },
     sources: [
       {
-        label: 'U.S. Department of Justice - Office of the Attorney General',
-        url: 'https://www.justice.gov/ag/orders/rescission-anti-weaponization-settlement-fund-2026'
+        label: 'Supreme Court of the United States - Order List',
+        url: 'https://www.supremecourt.gov/orders/courtorders/081726zor_all.pdf'
       },
       {
-        label: 'The Hill - Todd Blanche Confirmation and Rescission Order',
-        url: 'https://thehill.com/homenews/administration/todd-blanche-anti-weaponization-fund-rescinded'
+        label: 'Reuters - Supreme Court Rebuffs Trump Appeal in Carroll Case',
+        url: 'https://www.reuters.com/legal/us-supreme-court-again-rebuffs-trump-5-million-e-jean-carroll-case-2026-08-17/'
       }
     ],
     taggedPoliticianIds: [],
     taggedPoliticians: [
-      'Todd Blanche'
+      'Donald Trump'
     ]
   },
   {
-    slug: 'ruben-gallego-uss-abraham-lincoln-carrier-deployment-oversight-2026-08-17',
-    headline: 'Senator Ruben Gallego Demands Congressional Investigation into Record 260-Day USS Abraham Lincoln Deployment',
-    summary: 'Marine veteran and U.S. Senator Ruben Gallego calls for a formal congressional delegation to inspect conditions aboard the USS Abraham Lincoln after more than 260 consecutive days at sea in the Middle East.',
+    slug: 'canada-us-trade-negotiations-impasse-auto-dairy-alcohol-tariffs-2026-08-17',
+    headline: 'Canada and U.S. Face Critical Sector Impasse on Autos, Dairy, and Alcohol Ahead of August 19 Tariff Deadline',
+    summary: 'With 50% tariffs on $28 billion in Canadian goods set to take effect on Wednesday, bilateral negotiations in Washington remain deadlocked over provincial liquor rules, supply management, and vehicle quotas.',
+    category: 'Economy',
+    country: 'CA',
+    province: 'ON',
+    status: 'published',
+    eventDate: '2026-08-17T13:30:00Z',
+    published_at: '2026-08-17T14:30:00Z',
+    impactArea: 'country',
+    latitude: 45.4215,
+    longitude: -75.6972,
+    body: `OTTAWA, ON & WASHINGTON, D.C. — Bilateral emergency trade negotiations between Canada and the United States entered an intensely critical phase as negotiators confronted deep structural disagreements across three primary economic sectors with less than 48 hours remaining before a punitive 50 per cent tariff mandate takes effect on August 19, 2026.
+
+## Sector-by-Sector Breakdown and Tariff Exposure
+
+Canadian Trade Minister Dominic LeBlanc and Chief Negotiator Janice Charette concluded high-level meetings with U.S. Trade Representative Jamieson Greer, detailing persistent sticking points across sensitive bilateral supply chains:
+
+* **Automotive Manufacturing**: U.S. negotiators proposed reducing existing 25 per cent auto tariffs down to 12.5 per cent in exchange for Canada lifting domestic vehicle quotas. Canadian officials rejected the offer, maintaining that partial tariffs would still devastate integrated assembly plants across Ontario and the Midwestern U.S.
+* **Supply-Managed Agriculture**: Washington continues to demand increased market access for American dairy, poultry, and egg producers. Prime Minister Mark Carney reaffirmed federal commitments to protect Canada's supply-management framework, warning that compromising domestic food security is non-negotiable.
+* **Provincial Alcohol Regulations**: U.S. officials singled out provincial liquor distribution boards—specifically in Ontario, Quebec, and British Columbia—for restricting shelf space for American wine, spirits, and craft beer. Ottawa is coordinating with provincial premiers to explore regulatory reciprocity to avert sweeping retaliatory tariffs.
+* **Steel, Aluminum, and Forestry**: A failure to reach an accord by midnight Wednesday would trigger automatic 50 per cent duties across $28 billion in annual Canadian commodity exports, threatening over 120,000 manufacturing and mill jobs nationwide.
+
+"We are at the table around the clock to protect Canadian jobs and ensure predictable North American commerce," Trade Minister Dominic LeBlanc stated during a media availability in Washington. "A tariff wall hurts workers and consumers on both sides of our shared border. We will defend our core economic sectors while working in good faith toward an equitable agreement."
+
+## Economic Modeling and Provincial Preparation
+
+Economic analyses published by the Canadian Chamber of Commerce and Scotiabank Economics project that an immediate 50 per cent tariff levy would reduce Canadian GDP growth by 1.8 percentage points over 12 months, with Ontario, Quebec, and New Brunswick facing the steepest industrial contraction.
+
+Provincial premiers convened an emergency Council of the Federation teleconference to synchronize cross-border advocacy, with Ontario Premier Doug Ford signaling willingness to adjust provincial retail regulations if Washington removes tariff threats against steel and automotive sectors.
+
+## Countdown to August 19 Midnight Deadline
+
+Negotiators are scheduled to resume formal drafting sessions at the Office of the United States Trade Representative. Should talks fail to yield an agreement or a negotiated deadline extension, federal cabinet ministers confirmed that Canada has prepared a reciprocal list of targeted retaliatory tariffs against American exports.`,
+    seoTitle: 'Canada-U.S. Trade Impasse on Auto Dairy Alcohol Tariffs | Choseno',
+    metaDescription: 'Canada and U.S. trade talks reach impasse over autos, dairy, and alcohol rules as August 19 50% tariff deadline looms.',
+    tags: [
+      'Dominic LeBlanc',
+      'Mark Carney',
+      'Trade Negotiations',
+      'Canada-US Tariffs',
+      'Automotive',
+      'Dairy',
+      'Supply Management',
+      'Economy'
+    ],
+    tweet: 'Canada and the U.S. face an acute trade impasse over autos, dairy, and provincial liquor rules as the August 19 deadline for 50% tariffs nears.',
+    breakingNews: false,
+    author: {
+      name: 'Choseno Civic News Desk',
+      bio: 'Provincial, federal and municipal political affairs reporting'
+    },
+    sources: [
+      {
+        label: 'Global Affairs Canada - Team Canada Trade Update',
+        url: 'https://www.international.gc.ca/trade-agreements-accords-commerciaux/topics-domaines/team-canada-trade-briefings-2026.aspx'
+      },
+      {
+        label: 'CBC News - Canada-U.S. Trade Impasse Sector Breakdown',
+        url: 'https://www.cbc.ca/news/politics/canada-us-trade-talks-sector-breakdown-august-17-2026-1.7296812'
+      }
+    ],
+    taggedPoliticianIds: [
+      '885e12f5-33d9-42a1-8dc9-b276069da88d',
+      '4bd5cf73-1d03-4fb2-ae1b-2303c2c99737'
+    ],
+    taggedPoliticians: [
+      'Dominic LeBlanc',
+      'Mark Carney',
+      'Jamieson Greer'
+    ]
+  },
+  {
+    slug: 'mark-kelly-demands-pentagon-relief-uss-abraham-lincoln-crew-2026-08-17',
+    headline: 'Senator Mark Kelly Challenges Pentagon Leadership Over USS Abraham Lincoln Deployment and Confirms Relief Ship',
+    summary: 'Navy veteran and U.S. Senator Mark Kelly pushes the Pentagon on extreme 250+ day sea deployment conditions aboard the USS Abraham Lincoln as the USS Washington is dispatched to relieve the strike group.',
     category: 'National',
     country: 'US',
     province: 'AZ',
     status: 'published',
-    eventDate: '2026-08-16T20:30:00Z',
-    published_at: '2026-08-17T05:30:00Z',
+    eventDate: '2026-08-17T13:00:00Z',
+    published_at: '2026-08-17T14:30:00Z',
     impactArea: 'country',
     latitude: 38.8899,
     longitude: -77.0090,
-    body: `WASHINGTON, D.C. — U.S. Senator Ruben Gallego (D-AZ), an Iraq War combat Marine veteran and senior member of the Senate Armed Services Committee, demanded immediate congressional oversight and announced plans to lead a bipartisan delegation to inspect the USS Abraham Lincoln carrier strike group following reports of severe crew strain during an unprecedented 260-consecutive-day deployment.
+    body: `WASHINGTON, D.C. — U.S. Senator Mark Kelly (D-AZ), a retired U.S. Navy captain and naval aviator, issued a pointed public critique of the Department of Defense's operational management of naval carrier strike groups, detailing severe crew strain aboard the *USS Abraham Lincoln* (CVN-72) and confirming that the *USS Washington* has been mobilized to relieve the vessel after nearly nine continuous months deployed in the Middle East.
 
-## Deployment Timeline and Living Conditions
+## Operational Fleet Stress and Quality of Life Concerns
 
-The Nimitz-class aircraft carrier *USS Abraham Lincoln* (CVN-72) and its carrier strike group have operated in the U.S. Central Command area of responsibility since late 2025, providing regional deterrent capabilities and close-air support during ongoing regional hostilities:
+In an extensive interview on National Public Radio (NPR), Senator Kelly, who serves on the Senate Armed Services Subcommittee on Readiness and Management Support, addressed mounting reports regarding living conditions aboard the aircraft carrier:
 
-* **Extended Sea Time**: Operating without scheduled port visits for over 260 days, the deployment represents one of the longest continuous underway periods for an American supercarrier since the Vietnam War.
-* **Reported Operational Pressures**: Congressional inquiries received testimony from sailors' families detailing 16-hour shifts, acute sleep deprivation, deferred maintenance on sanitation systems, and limited access to mental health professionals.
-* **Oversight Delegation Request**: Senator Gallego formally petitioned the Pentagon and Senate Armed Services Committee Chairman to authorize an immediate CODEL (Congressional Delegation) flight to the carrier to review logistical resupply chains, medical resources, and crew rotation schedules.
+* **Extreme Underway Duration**: The *USS Abraham Lincoln* has operated for over 250 consecutive days without a port call, maintaining round-the-clock air patrols across the Red Sea and Persian Gulf.
+* **Reported Shipboard Deficiencies**: Crew reports conveyed to congressional offices describe severe psychological exhaustion, critical shortages of fresh food and hygiene supplies, and widespread plumbing failures across enlisted quarters.
+* **Pentagon Pushback and Accountability**: Kelly sharply rebuked statements from administration officials dismissing crew welfare reports, emphasizing that sustained carrier deployments without scheduled maintenance windows degrade long-term fleet readiness and accelerate early separations among experienced sailors.
+* **Relief Deployment Authorized**: Kelly confirmed that the *USS Washington* strike group has been dispatched to the CENTCOM area of operations to execute a formal turnover and allow the Lincoln to begin its transit back to its homeport.
 
-"Our service members and their families are carrying an immense burden, and when deployments are stretched indefinitely without proper logistical planning, that is a failure of senior leadership," Senator Gallego stated in an interview on Capitol Hill. "You cannot run our sailors ragged and treat mission planning like something you just wing as you go. Congress has a constitutional duty to ensure our troops have the support, equipment, and rotation schedules they deserve."
+"When you keep a carrier strike group at sea for 250 days without a single port visit, you are pushing human beings and multimillion-dollar machinery to the breaking point," Senator Kelly stated. "True military readiness requires honest leadership and rigorous logistical discipline. You cannot dismiss genuine quality-of-life concerns as unimportant when thousands of young sailors are executing dangerous combat operations around the clock."
 
-## Pentagon Response and Fleet Readiness
+## Congressional Oversight and Defense Policy
 
-Defense Secretary Pete Hegseth and Acting Navy Secretary Hung Cao responded to congressional inquiries, maintaining that the *USS Abraham Lincoln* remains fully mission-capable and that operational extensions were essential to protect vital maritime choke points and allied airspace. Navy officials emphasized that medical officers and chaplain teams are actively providing support across the strike group.
+Senator Kelly and Senator Richard Blumenthal (D-CT) formally requested that the Pentagon Inspector General initiate a comprehensive review into operational extension protocols and mental healthcare staffing aboard deployed surface vessels.
 
-Military readiness analysts note that extended carrier deployments create severe downstream maintenance backlogs at naval shipyards, delaying drydock overhauls and impacting fleet availability for future Indo-Pacific rotations.
+Naval architecture experts note that prolonged deployments without shipyard maintenance accelerate hull corrosion and propulsion component wear, creating downstream delays for subsequent scheduled carrier strike group deployments.
 
-## Legislative Actions and Next Steps
+## Transition Timeline and Next Steps
 
-The Senate Armed Services Committee is scheduled to hold a closed-door briefing with naval operations leadership to review strike group deployment limits and examine provisions in the upcoming National Defense Authorization Act (NDAA) that would mandate strict statutory review for any naval deployment exceeding 210 days.`,
-    seoTitle: 'Ruben Gallego USS Abraham Lincoln Deployment Oversight | Choseno',
-    metaDescription: 'Senator Ruben Gallego calls for congressional investigation into the record 260-day deployment of the USS Abraham Lincoln carrier strike group.',
+The Department of the Navy announced that the relief transition between the *USS Washington* and the *USS Abraham Lincoln* will take place over the coming weeks, ensuring uninterrupted regional maritime security while initiating decompression protocols for the returning crew.`,
+    seoTitle: 'Senator Mark Kelly USS Abraham Lincoln Deployment Oversight | Choseno',
+    metaDescription: 'Senator Mark Kelly presses Pentagon over 250-day USS Abraham Lincoln deployment conditions as relief carrier USS Washington is dispatched.',
     tags: [
-      'Ruben Gallego',
+      'Mark Kelly',
       'U.S. Navy',
       'USS Abraham Lincoln',
+      'USS Washington',
       'Pentagon',
-      'Middle East',
-      'Armed Services',
-      'Defense Oversight'
+      'Senate Armed Services',
+      'Military Readiness'
     ],
-    tweet: 'Senator Ruben Gallego calls for immediate congressional oversight into the USS Abraham Lincoln as the aircraft carrier exceeds 260 consecutive days deployed at sea.',
+    tweet: 'Senator Mark Kelly challenges Pentagon leadership on extreme 250-day deployment conditions aboard the USS Abraham Lincoln as relief ship USS Washington heads to Middle East.',
     breakingNews: false,
     author: {
       name: 'Choseno Civic News Desk',
@@ -287,66 +217,69 @@ The Senate Armed Services Committee is scheduled to hold a closed-door briefing 
     },
     sources: [
       {
-        label: 'U.S. Senate Armed Services Committee - Senator Ruben Gallego',
-        url: 'https://www.gallego.senate.gov/news/press-releases/gallego-calls-for-carrier-strike-group-oversight-uss-abraham-lincoln'
+        label: 'U.S. Senate - Office of Senator Mark Kelly',
+        url: 'https://www.kelly.senate.gov/newsroom/press-releases/kelly-addresses-uss-abraham-lincoln-readiness-and-deployment-limits/'
       },
       {
-        label: 'Politico - Extended Navy Carrier Deployment Controversy',
-        url: 'https://www.politico.com/news/2026/08/16/extended-carrier-deployment-navy-gallego-00174211'
+        label: 'NPR - Sen. Mark Kelly on Conditions Aboard USS Lincoln',
+        url: 'https://www.npr.org/2026/08/17/sen-mark-kelly-discusses-conditions-aboard-uss-lincoln'
       }
     ],
-    taggedPoliticianIds: [],
+    taggedPoliticianIds: [
+      '533a4b93-fa85-40c6-bb7e-2c3d20dd418a'
+    ],
     taggedPoliticians: [
-      'Ruben Gallego',
+      'Mark Kelly',
       'Pete Hegseth'
     ]
   },
   {
-    slug: 'josh-green-hawaii-hurricane-lala-emergency-power-restoration-2026-08-17',
-    headline: 'Governor Josh Green Declares State of Emergency as Hurricane Lala Knocks Out Power to 200,000 in Hawaii',
-    summary: 'Hawaii Governor Josh Green mobilizes the National Guard, activates state emergency funding, and closes government offices as Hurricane Lala inflicts severe power grid and flood damage across Maui and Hawaii County.',
-    category: 'Infrastructure',
+    slug: 'jared-kushner-netanyahu-jerusalem-meeting-gaza-ceasefire-roadmap-2026-08-17',
+    headline: 'Jared Kushner Holds Three-Hour Jerusalem Summit with Netanyahu to Advance U.S. 15-Point Gaza Framework',
+    summary: 'Trump envoy Jared Kushner and former British Prime Minister Tony Blair meet Israeli Prime Minister Benjamin Netanyahu in Jerusalem to navigate critical deadlocks over troop withdrawal and disarmament.',
+    category: 'International',
     country: 'US',
-    province: 'HI',
+    province: 'DC',
     status: 'published',
-    eventDate: '2026-08-16T22:00:00Z',
-    published_at: '2026-08-17T05:30:00Z',
-    impactArea: 'state',
-    latitude: 21.3069,
-    longitude: -157.8583,
-    body: `HONOLULU, HI — Hawaii Governor Josh Green signed a comprehensive statewide Emergency Proclamation as Hurricane Lala—which tracked just south of the island chain bringing torrential rainfall and sustained tropical-storm-force winds—left more than 200,000 residences and commercial properties without electrical power and triggered destructive flash flooding across Hawaii and Maui counties.
+    eventDate: '2026-08-17T12:00:00Z',
+    published_at: '2026-08-17T14:30:00Z',
+    impactArea: 'international',
+    latitude: 38.8977,
+    longitude: -77.0365,
+    body: `JERUSALEM & WASHINGTON, D.C. — Special Mideast Envoy Jared Kushner, acting on behalf of the Trump administration, held an extended three-hour bilateral summit in Jerusalem with Israeli Prime Minister Benjamin Netanyahu, seeking to unblock stalled negotiations on a 15-point U.S.-backed framework for a comprehensive Gaza ceasefire and post-conflict governance structure.
 
-## Disaster Proclamation and State Emergency Mobilization
+## Diplomatic Framework and Key Negotiating Points
 
-The executive proclamation mobilizes state disaster relief funds, activates the Hawaii National Guard for high-water search-and-rescue operations, and coordinates emergency grid stabilization with Hawaiian Electric:
+The high-level talks in Jerusalem followed a rare, two-hour direct engagement between Kushner and senior Hamas representatives in Cairo, Egypt, coordinated through Egyptian and Qatari intelligence intermediaries:
 
-* **Statewide Outages and Grid Damage**: Sustained winds of 65 mph with gusts exceeding 80 mph brought down critical high-voltage transmission lines, leaving roughly 200,000 customers dark. Officials warned that while urban Honolulu and West Oahu will see rapid reconnection, isolated rural communities in East Maui and the Puna district of Hawaii Island could face multi-week restoration timelines.
-* **Government and School Closures**: Governor Green ordered the closure of all non-essential state and county offices, public school campuses, and state courthouse facilities across Hawaii, Maui, and Oahu to clear transit corridors for emergency response crews.
-* **Emergency Funding Allocation**: The proclamation unlocks $10 million from the state emergency reserve to expedite debris removal, restore damaged culverts along the Hana Highway, and support temporary emergency shelters operated by the American Red Cross.
+* **15-Point Roadmap Sequence**: The U.S. proposal outlines a phased ceasefire, beginning with an immediate cessation of hostilities and reciprocal hostage-prisoner releases, followed by an international stabilization force and phased Israeli Defense Forces (IDF) troop withdrawals.
+* **Core Disagreements on Sequence**: Prime Minister Netanyahu maintained that Israel will not execute complete troop withdrawals from the Philadelphi Corridor and central security perimeters until all armed militant organizations in Gaza complete verifiable disarmament.
+* **High-Level Envoy Delegation**: Kushner was accompanied in the talks by Nickolay Mladenov, executive director of the administration's Board of Peace, and former British Prime Minister Tony Blair, who is assisting in designing civil administrative structures for post-war municipal recovery.
+* **Regional Political Dynamics**: The diplomatic push occurs against the backdrop of domestic political pressures in Israel ahead of national elections scheduled for October 2026, with coalition partners demanding strict security conditions before approving any permanent truce.
 
-"Our first and only priority is protecting life and securing essential services for our families," Governor Green said from the State Emergency Operations Center in Diamond Head. "We have deployed our National Guard teams, opened emergency evacuation shelters, and instructed all state emergency assets to work around the clock alongside utility line crews to restore electricity and ensure our hospitals and vulnerable residents remain safe."
+"We are working diligently with all regional partners to establish durable peace, ensure the return of all hostages, and create an enduring framework for regional economic reconstruction," Kushner stated following the diplomatic session. "Achieving stability requires pragmatic compromise and verifiable security guarantees."
 
-## Regional Flooding and Infrastructure Impact
+## Humanitarian Impact and International Reaction
 
-Heavy squalls dumped 8 to 14 inches of rain across windward slopes, causing localized mudslides and structural flooding that damaged over 100 homes. Emergency crews conducted water rescues in Kau and South Hilo after swollen streams breached residential perimeters. One storm-related fatality was confirmed following a vehicle collision during torrential conditions on Route 11.
+International aid agencies and United Nations humanitarian coordinators reiterated urgent appeals for an immediate ceasefire to facilitate the delivery of critical food rations, clean water, and medical supplies across displaced civilian camps in central and southern Gaza.
 
-Hawaiian Electric reported staging specialized utility crews and bucket trucks across key switchyards to begin replacing downed utility poles as soon as wind speeds subside below safety thresholds.
+Diplomatic officials in Cairo confirmed that Egyptian mediators are preparing updated bridging proposals addressing the timeline for security border handovers and civil policing recruitment.
 
-## Next Steps and Public Safety Warnings
+## Upcoming Regional Engagements
 
-The Hawaii Emergency Management Agency (HI-EMA) urged residents to stay off flooded roadways, treat all downed power lines as energized, and monitor emergency notifications through local broadcast networks and the official state disaster portal at ready.hawaii.gov.`,
-    seoTitle: 'Governor Josh Green Hawaii Hurricane Lala Emergency | Choseno',
-    metaDescription: 'Governor Josh Green issues emergency proclamation as Tropical Storm Lala knocks out power to 200,000 customers in Hawaii and causes flash flooding.',
+The envoy delegation is scheduled to travel to Amman and Doha for follow-up consultations with Jordan and Qatar to finalize donor funding commitments for transitional municipal reconstruction before presenting the revised framework to the United Nations Security Council.`,
+    seoTitle: 'Jared Kushner Meets Netanyahu in Jerusalem on Gaza Roadmap | Choseno',
+    metaDescription: 'Jared Kushner holds three-hour meeting with Benjamin Netanyahu in Jerusalem to negotiate 15-point Gaza ceasefire and governance roadmap.',
     tags: [
-      'Josh Green',
-      'Hawaii',
-      'Hurricane Lala',
-      'Emergency Declaration',
-      'Power Grid',
-      'Hawaiian Electric',
-      'Public Safety'
+      'Jared Kushner',
+      'Benjamin Netanyahu',
+      'Tony Blair',
+      'Gaza Ceasefire',
+      'Middle East Diplomacy',
+      'Foreign Policy',
+      'International'
     ],
-    tweet: 'Governor Josh Green signs a statewide emergency proclamation as Tropical Storm Lala cuts electricity to 200,000 residents across Hawaii and triggers extensive flash flooding.',
+    tweet: 'Jared Kushner holds a three-hour Jerusalem summit with Benjamin Netanyahu, pressing for movement on a 15-point U.S.-backed Gaza ceasefire framework.',
     breakingNews: false,
     author: {
       name: 'Choseno Civic News Desk',
@@ -354,208 +287,141 @@ The Hawaii Emergency Management Agency (HI-EMA) urged residents to stay off floo
     },
     sources: [
       {
-        label: 'Office of the Governor of Hawaii - Emergency Proclamation Lala',
-        url: 'https://governor.hawaii.gov/newsroom/emergency-proclamation-tropical-storm-lala'
+        label: 'Associated Press - Kushner Netanyahu Jerusalem Gaza Talks',
+        url: 'https://apnews.com/article/kushner-netanyahu-gaza-ceasefire-negotiations-jerusalem-2026'
       },
       {
-        label: 'Honolulu Civil Beat - Hurricane Lala Power Grid Damage',
-        url: 'https://www.civilbeat.org/2026/08/hurricane-lala-hits-hawaii-power-outages/'
+        label: 'The Hindu - Kushner Meeting with Netanyahu Stretches Past 3 Hours',
+        url: 'https://www.thehindu.com/news/international/kushners-meeting-with-netanyahu-on-gaza-stretches-past-3-hours/article68535129.ece'
       }
     ],
-    taggedPoliticianIds: [
-      'e35046bb-c28e-4155-bced-800ac177f7fa'
-    ],
+    taggedPoliticianIds: [],
     taggedPoliticians: [
-      'Josh Green'
+      'Donald Trump',
+      'Jared Kushner',
+      'Benjamin Netanyahu',
+      'Tony Blair'
     ]
   },
   {
-    slug: 'mike-braun-indiana-flooding-state-disaster-emergency-fema-2026-08-17',
-    headline: 'Governor Mike Braun Secures Presidential Disaster Aid as Indiana Battens Down from 1-in-1,000-Year Floods',
-    summary: 'Governor Mike Braun mobilizes the Indiana National Guard and coordinates federal emergency assistance following historic rainfall exceeding 11 inches that inundated the White River basin and claimed seven lives.',
-    category: 'Environment',
-    country: 'US',
-    province: 'IN',
-    status: 'published',
-    eventDate: '2026-08-16T21:30:00Z',
-    published_at: '2026-08-17T05:30:00Z',
-    impactArea: 'state',
-    latitude: 39.7684,
-    longitude: -86.1581,
-    body: `INDIANAPOLIS, IN — Indiana Governor Mike Braun mobilized the Indiana National Guard and coordinated immediate federal disaster assistance under a newly approved Presidential Emergency Declaration following a week of catastrophic storms that produced over 11 inches of rain, resulting in seven fatalities and historic flooding along the White River and Wabash River basins.
-
-## Disaster Declaration and Federal Support
-
-The multi-agency emergency response marshals state resources alongside federal funding to stabilize heavily inundated counties:
-
-* **Presidential Emergency Declaration**: Following an urgent request from Governor Braun, the White House approved a federal emergency declaration unlocking up to $5 million in direct federal assistance through the Federal Emergency Management Agency (FEMA) to support debris removal, water rescues, and sandbagging operations.
-* **National Guard Deployment**: Governor Braun activated specialized National Guard engineering and high-water rescue units across Marion, Morgan, Johnson, and Bartholomew counties to assist local first responders.
-* **Historic River Crests**: Hydrological stations along the White River recorded flood stages exceeding 100-year historical highs, inundating low-lying agricultural land, municipal water treatment facilities, and major transportation corridors.
-
-"Our hearts go out to the families who have lost loved ones in these devastating storms," Governor Braun said during a briefing at the State Emergency Operations Center in Indianapolis. "We are marshaling every asset of state government—from our National Guard soldiers to our Department of Transportation crews—to protect Hoosier families, safeguard our critical infrastructure, and begin the complex work of recovery."
-
-## Regional Impact on Communities and Agriculture
-
-The storm system triggered flash floods that submerged hundreds of residential basements and washed out county bridges across central Indiana. Over 250,000 utility customers experienced localized power outages as falling trees downed distribution lines. In Morgan and Johnson counties, agricultural officials reported extensive crop washouts across corn and soybean acreage, with early estimates indicating tens of millions in agricultural losses.
-
-Public health authorities issued boil-water advisories for municipal utilities where floodwaters infiltrated distribution networks, setting up potable water distribution stations in cooperation with local county emergency management agencies.
-
-## Recovery Phase and Safety Protocols
-
-As river levels begin their slow crest, the Indiana Department of Homeland Security (IDHS) advised displaced residents not to return to flooded neighborhoods until building inspectors and utility technicians have certified structural integrity and gas line safety. Governor Braun confirmed that state teams are compiling damage assessments to submit a formal petition for a Major Disaster Declaration to unlock individual household FEMA grants.`,
-    seoTitle: 'Governor Mike Braun Indiana Flood Emergency Aid | Choseno',
-    metaDescription: 'Governor Mike Braun mobilizes National Guard and secures federal emergency aid following 1-in-1,000-year rainfall and catastrophic flooding in Indiana.',
-    tags: [
-      'Mike Braun',
-      'Indiana',
-      'Flooding',
-      'Disaster Emergency',
-      'FEMA',
-      'National Guard',
-      'Public Safety'
-    ],
-    tweet: 'Governor Mike Braun deploys the National Guard and secures emergency federal assistance after historic 11-inch downpours cause catastrophic flooding across central and southern Indiana.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'Office of Governor Mike Braun - State Disaster Emergency Declaration',
-        url: 'https://events.in.gov/event/governor-braun-issues-disaster-emergency-flooding'
-      },
-      {
-        label: 'WFYI Public Media - Indiana Flood Disaster Response',
-        url: 'https://www.wfyi.org/news/articles/indiana-flooding-emergency-declaration-braun-white-river-2026'
-      }
-    ],
-    taggedPoliticianIds: [
-      'b6fda729-1ed0-498b-b2e2-46a5132323a9'
-    ],
-    taggedPoliticians: [
-      'Mike Braun'
-    ]
-  },
-  {
-    slug: 'mark-carney-calls-chicoutimi-le-fjord-federal-byelections-2026-08-17',
-    headline: 'Prime Minister Mark Carney Issues Writs for August 31 Federal By-Election in Chicoutimi—Le Fjord',
-    summary: 'Prime Minister Mark Carney sets August 31 for a high-stakes federal by-election in Chicoutimi—Le Fjord following the appointment of former Conservative MP Richard Martel to the Senate of Canada.',
-    category: 'Elections',
-    country: 'CA',
-    province: 'QC',
-    status: 'published',
-    eventDate: '2026-08-16T17:00:00Z',
-    published_at: '2026-08-17T05:30:00Z',
-    impactArea: 'country',
-    latitude: 48.4284,
-    longitude: -71.0664,
-    body: `OTTAWA, ON — Prime Minister Mark Carney formally issued the writs of election for three federal by-elections scheduled for Monday, August 31, 2026, setting the stage for a critical regional test of party strength in the Saguenay–Lac-Saint-Jean riding of Chicoutimi—Le Fjord.
-
-## Electoral Context and Senate Appointment
-
-The vacancy in Chicoutimi—Le Fjord was created following the resignation of veteran Conservative Member of Parliament Richard Martel on July 7, 2026, upon his appointment by Prime Minister Carney to the Senate of Canada representing Quebec:
-
-* **Parliamentary Arithmetic**: The August 31 vote represents an important bellwether for the governing Liberal Party under Prime Minister Carney's leadership as it seeks to expand its parliamentary standing following recent floor-crossings and by-election pickups across Ontario and Atlantic Canada.
-* **Liberal Nomination**: The Liberal Party confirmed local agricultural and dairy leader Daniel Gobeil as its candidate, campaigning on federal investments in regional aluminum decarbonization, forestry supply-chain protection, and supply-management stability.
-* **Opposition Challenge**: The Conservative Party of Canada and the Bloc Québécois have launched intensive regional ground campaigns, framing the by-election as a verdict on federal industrial policy and Canada-U.S. trade negotiations.
-
-"The residents of Chicoutimi—Le Fjord deserve an energetic voice in the House of Commons who will fight for clean regional industry, support our world-class forestry and aluminum workers, and defend Quebec's economic interests," Prime Minister Carney said in a statement released by the Prime Minister's Office.
-
-## Local Economic Staking and Trade Dynamics
-
-The by-election campaign is unfolding against the backdrop of intense bilateral trade negotiations between Canada and the United States ahead of the impending August 19 tariff deadline. Chicoutimi—Le Fjord is home to major low-carbon aluminum smelters operated by Rio Tinto and extensive forestry operations, making trade stability and market access central voter concerns.
-
-Elections Canada confirmed that advanced voting stations will operate across the riding from August 21 to August 24, with return offices fully operational in Chicoutimi and La Baie to facilitate special ballot applications.
-
-## Campaign Timetable and Final Vote
-
-With the official writs issued, candidates face a condensed two-week campaign window leading up to polling day on August 31. The result will determine representation for one of Quebec's most economically pivotal resource ridings as Parliament prepares to resume its fall sitting in Ottawa.`,
-    seoTitle: 'Carney Calls Chicoutimi-Le Fjord Federal By-Election 2026 | Choseno',
-    metaDescription: 'Prime Minister Mark Carney issues writs for August 31 federal by-election in Chicoutimi—Le Fjord following Richard Martel\'s Senate appointment.',
-    tags: [
-      'Mark Carney',
-      'Richard Martel',
-      'Chicoutimi—Le Fjord',
-      'By-Elections',
-      'Elections Canada',
-      'Liberal Party',
-      'Conservative Party',
-      'Quebec Politics'
-    ],
-    tweet: 'Prime Minister Mark Carney calls federal by-elections for August 31, 2026, setting up a major parliamentary showdown in the Quebec riding of Chicoutimi—Le Fjord.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'Prime Minister of Canada - Official By-Election Announcement',
-        url: 'https://pm.gc.ca/en/news/news-releases/2026/08/10/prime-minister-announces-by-elections'
-      },
-      {
-        label: 'Elections Canada - Notice of Election Chicoutimi—Le Fjord',
-        url: 'https://www.elections.ca/content.aspx?section=med&dir=pre&document=aug1026&lang=e'
-      }
-    ],
-    taggedPoliticianIds: [
-      '4bd5cf73-1d03-4fb2-ae1b-2303c2c99737',
-      '2ac47ab7-41a8-461c-ba81-5ea3d52caae7'
-    ],
-    taggedPoliticians: [
-      'Mark Carney',
-      'Richard Martel',
-      'Daniel Gobeil'
-    ]
-  },
-  {
-    slug: 'canada-bill-c34-safe-social-media-act-age-verification-2026-08-17',
-    headline: 'Federal Government Advances Digital Safety Standards Under Bill C-34 \'Safe Social Media Act\'',
-    summary: 'The federal government and the newly constituted Digital Safety Commission establish technical benchmarks to restrict social media access for youth under 16 while safeguarding user privacy.',
+    slug: 'state-attorneys-general-meta-youth-safety-trial-oakland-federal-court-2026-08-17',
+    headline: 'Multistate Coalition of Attorneys General Commences Historic Youth Safety and Addiction Trial Against Meta',
+    summary: 'A bipartisan coalition of state attorneys general begins jury selection in Oakland federal court, alleging Meta engineered addictive features on Instagram and Facebook that caused severe youth mental health harm.',
     category: 'Policy',
+    country: 'US',
+    province: 'CA',
+    status: 'published',
+    eventDate: '2026-08-17T14:00:00Z',
+    published_at: '2026-08-17T14:30:00Z',
+    impactArea: 'country',
+    latitude: 37.8044,
+    longitude: -122.2712,
+    body: `OAKLAND, CA — A landmark federal civil trial began in the U.S. District Court for the Northern District of California as a bipartisan coalition of state attorneys general from California, Colorado, New Jersey, Kentucky, and over 30 other states commenced proceedings against Meta Platforms, alleging the tech giant knowingly deployed addictive algorithms and misleading safety assurances that harmed the mental health of millions of youth.
+
+## Legal Allegations and Court Proceedings
+
+Presided over by U.S. District Judge Yvonne Gonzalez Rogers in Oakland, the historic legal confrontation represents the most significant state-led consumer protection lawsuit against a social media conglomerate:
+
+* **Design of Addictive Features**: State prosecutors allege Meta intentionally engineered features including infinite scroll, algorithmic recommendation loops, push notifications, and appearance-altering filters specifically calibrated to maximize engagement among adolescents despite internal research detailing associated risks of depression, anxiety, and body dysmorphia.
+* **Violations of Federal and State Laws**: The lawsuit charges Meta with systemic violations of state consumer protection statutes prohibiting unfair and deceptive business practices, as well as statutory breaches of the federal Children's Online Privacy Protection Act (COPPA) regarding the unauthorized collection of data from users under 13.
+* **Remedies and Structural Injunctions**: State attorneys general are seeking billions in statutory civil penalties and binding nationwide injunctions requiring Meta to disable addictive algorithmic loops for minors, enforce strict default privacy settings, and provide transparent third-party auditing of its recommendation engines.
+
+"For years, Meta prioritized user engagement metrics and corporate ad revenue over the safety, health, and well-being of our children," California Attorney General Rob Bonta stated outside the Oakland courthouse. "Our bipartisan coalition is in federal court to hold Big Tech fully accountable and force structural changes that protect our young people from predatory algorithmic design."
+
+## Defense Response and Industry Implications
+
+Meta's legal defense filed extensive trial motions denying the allegations, asserting that the company has developed over 30 specialized parental supervision tools, time-limit reminders, and teen account protections. Meta argued that broader teenage mental health trends are influenced by multifaceted sociological factors rather than platform design.
+
+Legal and technology scholars note that a verdict holding Meta liable under state consumer protection statutes could establish sweeping legal precedents, forcing social media platforms nationwide to re-engineer core feed architectures and recommendation mechanics.
+
+## Trial Timetable
+
+Jury selection commenced on Monday, with opening statements scheduled for Tuesday, August 18, 2026. The trial is projected to last six weeks, featuring testimony from academic psychologists, internal whistleblowers, and senior Meta product executives.`,
+    seoTitle: 'State AGs Open Historic Meta Youth Addiction Trial | Choseno',
+    metaDescription: 'Bipartisan state attorneys general begin federal trial in Oakland against Meta, alleging deceptive practices and youth mental health harms.',
+    tags: [
+      'Gavin Newsom',
+      'Rob Bonta',
+      'Meta',
+      'Youth Mental Health',
+      'Social Media Addiction',
+      'Federal Courts',
+      'Consumer Protection',
+      'Technology'
+    ],
+    tweet: 'A bipartisan coalition of state AGs opens a landmark federal trial against Meta in California, alleging the company engineered addictive features that harmed youth mental health.',
+    breakingNews: false,
+    author: {
+      name: 'Choseno Civic News Desk',
+      bio: 'Provincial, federal and municipal political affairs reporting'
+    },
+    sources: [
+      {
+        label: 'California Department of Justice - AG Bonta Press Release',
+        url: 'https://oag.ca.gov/news/press-releases/attorney-general-bonta-opens-trial-against-meta-youth-mental-health-harms'
+      },
+      {
+        label: 'CNBC - Meta Faces Landmark Youth Addiction Trial in California',
+        url: 'https://www.cnbc.com/2026/08/17/meta-faces-landmark-youth-addiction-trial-in-california-federal-court.html'
+      }
+    ],
+    taggedPoliticianIds: [
+      '400a040b-ee2a-448e-b2e2-1faeea46b718'
+    ],
+    taggedPoliticians: [
+      'Gavin Newsom',
+      'Rob Bonta',
+      'Phil Weiser',
+      'Mark Zuckerberg'
+    ]
+  },
+  {
+    slug: 'westinghouse-imports-russian-enriched-uranium-doe-waivers-2026-08-17',
+    headline: 'Canadian-Owned Westinghouse Electric Receives Russian Uranium Shipments Under Active U.S. Energy Waivers',
+    summary: 'A CBC Fifth Estate investigation reveals Canadian-owned Westinghouse and U.S. nuclear operators continue importing Russian enriched uranium under federal waivers despite trade bans and geopolitical sanctions.',
+    category: 'Economy',
     country: 'CA',
     province: 'ON',
     status: 'published',
-    eventDate: '2026-08-16T16:00:00Z',
-    published_at: '2026-08-17T05:30:00Z',
-    impactArea: 'country',
+    eventDate: '2026-08-17T11:00:00Z',
+    published_at: '2026-08-17T14:30:00Z',
+    impactArea: 'international',
     latitude: 45.4215,
     longitude: -75.6972,
-    body: `OTTAWA, ON — The Government of Canada advanced technical regulatory guidelines for the implementation of Bill C-34, the *Safe Social Media Act*, moving forward with nationwide requirements to restrict commercial social media platforms from maintaining active user accounts for children under the age of 16.
+    body: `OTTAWA, ON & PITTSBURGH, PA — A joint investigative report by CBC News' *The Fifth Estate* and international trade watchdogs revealed that Canadian-owned Westinghouse Electric Company and major nuclear operators continue to import low-enriched uranium (LEU) from Russia to fuel commercial nuclear reactors across North America, utilizing statutory waiver provisions in federal sanctions legislation.
 
-## Statutory Framework and Digital Safety Commission
+## Investigation Findings and Trade Data
 
-The legislative architecture, originally introduced in Parliament in June 2026, establishes strict corporate compliance standards for global technology platforms operating within Canadian jurisdiction:
+The investigation analyzed international maritime manifests, customs filings, and energy regulatory disclosures, outlining ongoing Western reliance on Russian state nuclear monopoly Rosatom:
 
-* **Under-16 Account Restrictions**: Prohibits social media platforms from creating or maintaining user profiles for minors under 16 years of age, addressing growing clinical evidence regarding youth mental health, algorithmic addiction, and cyberbullying.
-* **Enforcement Authority**: Empowers the newly created Digital Safety Commission of Canada to audit platform compliance, issue corrective orders, and levy administrative monetary penalties reaching up to 5% of global annual turnover for systemic non-compliance.
-* **Age Assurance Technical Consultations**: Initiates formal regulatory consultations between the Department of Canadian Heritage, the Office of the Privacy Commissioner of Canada, and digital platforms to define certified age-estimation technologies that do not require mandatory government-issued ID collection or biometric data hoarding.
+* **Import Quantities and Valuation**: Data compiled by the Bellona Environmental Transparency Center showed that U.S. nuclear utilities and fuel fabricators imported approximately 400 tonnes of Russian enriched uranium in 2025 alone, valued at nearly $1 billion USD. Major commercial recipients included Westinghouse Electric—co-owned by Canadian private equity giant Brookfield Renewable Partners and Cameco Corporation—which received roughly 27 tonnes of Russian LEU.
+* **Statutory Waiver Mechanism**: While the U.S. enacted the *Prohibiting Russian Uranium Imports Act* in August 2024, the legislation authorized the U.S. Department of Energy (DOE) to grant temporary import waivers through January 1, 2028, in instances where no viable domestic enrichment alternative exists or where imports are deemed critical to grid reliability.
+* **Canadian Regulatory Disparity**: Unlike the United States, the Government of Canada has not imposed direct sanctions on Rosatom or its commercial export subsidiary, Tenex, allowing Canadian-based energy conglomerates to maintain contractual relationships through American subsidiaries.
 
-"Every parent in this country knows the profound toll that unregulated algorithmic feeds are taking on our children's mental well-being and development," Minister of Canadian Heritage Marc Miller said during a policy briefing in Ottawa. "Bill C-34 establishes clear digital guardrails. We are holding tech platforms accountable to protect our youth while upholding the highest standards of user privacy and data security."
+"Western nuclear operators remain caught in a severe strategic vulnerability," energy policy analysts noted in the report. "While Western nations have sanctioned Russian oil, gas, and coal, Russia still controls nearly 44 per cent of global uranium enrichment capacity, making an immediate decoupling from Russian nuclear fuel a severe operational challenge for base-load power grids."
 
-## Privacy Commissioner Guidance and Public Debate
+## Parliamentary Scrutiny and Industry Decoupling
 
-The regulatory framework incorporates binding recommendations from Privacy Commissioner Philippe Dufresne, ensuring that platforms utilize zero-knowledge age verification protocols or device-level tokenization to prevent the centralized tracking of browsing habits.
+The investigation sparked immediate reaction on Parliament Hill, with opposition critics and non-proliferation advocates calling for tighter scrutiny on Canadian corporate ownership structures and accelerated capital investments in domestic enrichment capabilities in Ontario and Saskatchewan.
 
-Recent national polling by the Angus Reid Institute indicated that over 74% of Canadian parents support statutory age limits for social media, mirroring recent legislative frameworks adopted in Australia and several European jurisdictions. However, digital civil liberties organizations have emphasized the need for vigilant oversight to ensure that age assurance mechanisms do not inadvertently restrict adult digital anonymity.
+Westinghouse and Cameco representatives stated that they are actively investing hundreds of millions in expanding North American conversion and enrichment infrastructure, including the expansion of the Springfields facility in the UK and conversion facilities in Port Hope, Ontario, to achieve complete supply-chain independence before the 2028 waiver expiration.
 
-## Implementation Timetable and Parliamentary Review
+## Policy Outlook and Energy Security
 
-The standing committee on Canadian Heritage will resume clause-by-clause consideration of Bill C-34 when Parliament returns from the summer recess, with full statutory compliance required for major platforms within 12 months of royal assent.`,
-    seoTitle: 'Canada Bill C-34 Safe Social Media Act Age Verification | Choseno',
-    metaDescription: 'Ottawa advances regulatory standards under Bill C-34 Safe Social Media Act restricting under-16 accounts and enforcing privacy-first age verification.',
+The House of Commons Standing Committee on Natural Resources is expected to request testimony from energy executives and Canadian Nuclear Safety Commission officials to evaluate national nuclear supply-chain resilience ahead of planned Small Modular Reactor (SMR) deployments.`,
+    seoTitle: 'Westinghouse Russian Uranium Imports Under US Waivers | Choseno',
+    metaDescription: 'CBC Fifth Estate investigation reveals Canadian-owned Westinghouse continues importing Russian enriched uranium under U.S. DOE waivers.',
     tags: [
-      'Bill C-34',
-      'Safe Social Media Act',
-      'Online Safety',
-      'Digital Safety Commission',
-      'Privacy Commissioner',
+      'Westinghouse',
+      'Cameco',
+      'Brookfield',
+      'Nuclear Energy',
+      'Russian Uranium',
+      'Energy Security',
       'Mark Carney',
-      'Marc Miller',
-      'Tech Policy'
+      'Economy'
     ],
-    tweet: 'Ottawa advances privacy guidelines under Bill C-34, requiring digital platforms to implement strict age verification standards to block social media accounts for minors under 16.',
+    tweet: 'A CBC Fifth Estate investigation reveals Canadian-owned Westinghouse imported tonnes of Russian enriched uranium under U.S. energy waivers despite sanctions.',
     breakingNews: false,
     author: {
       name: 'Choseno Civic News Desk',
@@ -563,12 +429,215 @@ The standing committee on Canadian Heritage will resume clause-by-clause conside
     },
     sources: [
       {
-        label: 'Department of Canadian Heritage - Safe Social Media Act Overview',
-        url: 'https://www.canada.ca/en/canadian-heritage/services/online-safety/safe-social-media-act.html'
+        label: 'CBC News - The Fifth Estate Russian Uranium Investigation',
+        url: 'https://www.cbc.ca/news/investigates/russian-enriched-uranium-shipped-to-canadian-owned-westinghouse-1.7296541'
       },
       {
-        label: 'CTV News - Age Verification Enforcement Under Bill C-34',
-        url: 'https://www.ctvnews.ca/politics/ottawa-wants-to-block-kids-from-social-media-how-would-age-verification-work-1.6998234'
+        label: 'U.S. Department of Energy - Russian Uranium Prohibition Implementation',
+        url: 'https://www.energy.gov/ne/articles/department-energy-implementation-russian-uranium-import-prohibition'
+      }
+    ],
+    taggedPoliticianIds: [
+      '4bd5cf73-1d03-4fb2-ae1b-2303c2c99737'
+    ],
+    taggedPoliticians: [
+      'Mark Carney'
+    ]
+  },
+  {
+    slug: 'baltimore-homicides-record-historic-low-gvrs-community-policing-2026-08-17',
+    headline: 'Baltimore Achieves Historic Crime Reduction as Mid-Year Homicides Fall to Lowest Levels in City History',
+    summary: 'Mayor Brandon Scott and Baltimore Police officials report a 23% reduction in homicides, achieving the lowest mid-year violence numbers in recorded municipal history through targeted community intervention.',
+    category: 'Public Safety',
+    country: 'US',
+    province: 'MD',
+    status: 'published',
+    eventDate: '2026-08-17T12:00:00Z',
+    published_at: '2026-08-17T14:30:00Z',
+    impactArea: 'local',
+    latitude: 39.2904,
+    longitude: -76.6122,
+    body: `BALTIMORE, MD — The City of Baltimore has achieved an unprecedented reduction in violent crime, recording the lowest mid-year homicide total in its modern history as comprehensive community violence intervention programs and data-driven policing strategies transform the city's public safety landscape.
+
+## Crime Statistics and Strategy Mechanics
+
+Data certified by the Baltimore Police Department (BPD) and evaluated in a comprehensive analysis published by *The New York Times* highlights a sustained multi-year decline across all violent crime categories:
+
+* **Historic Mid-Year Tally**: Baltimore recorded 50 homicides during the first six months of 2026—a 23.1 per cent decrease compared to 2025 and the lowest six-month total ever documented since modern statistical tracking began.
+* **Non-Fatal Shootings Decline**: Non-fatal shootings dropped by more than 28 per cent year-over-year, continuing a continuous downward trajectory that began in 2023.
+* **Group Violence Reduction Strategy (GVRS)**: Academic research by the National Bureau of Economic Research (NBER) attributed the steep reduction to the city's GVRS model, which coordinates direct law enforcement focus on high-risk gang networks while offering intensive life-coaching, employment pathways, and housing support to individuals seeking to exit street violence.
+* **Community Violence Intervention (CVI)**: The city's Mayor's Office of Neighborhood Safety and Engagement (MONSE) deployed over $40 million in targeted community violence intervention funding to grassroots peacekeepers and hospital-based violence response teams.
+
+"For decades, Baltimore was defined by tragedies and headlines of violence, but today we are writing a completely new chapter," Mayor Brandon M. Scott said during an address at City Hall. "This progress is not an accident. It is the direct result of treating gun violence as a public health emergency, investing in our neighborhoods, and coordinating between police, street outreach workers, and community leaders."
+
+## Regional and National Implications
+
+Baltimore's homicide decline has significantly outpaced broader national violent crime reductions reported by the Council on Criminal Justice, drawing delegations from municipal police departments across Chicago, Philadelphia, and New Orleans to study the Baltimore GVRS framework.
+
+Local business associations and neighborhood community development corporations in West and East Baltimore reported increased foot traffic and commercial corridor investments as neighborhoods that experienced decades of disinvestment see improved public safety stability.
+
+## Next Steps for Municipal Public Safety
+
+Mayor Scott confirmed that the city will expand GVRS operations into the Western and Southwestern police districts ahead of the autumn months, while partnering with the University of Maryland Medical System to expand trauma-informed mental health resources for youth.`,
+    seoTitle: 'Baltimore Homicides Drop to Record Historic Lows 2026 | Choseno',
+    metaDescription: 'Baltimore records historic crime reduction as mid-year homicides fall 23% to lowest levels in recorded city history under Mayor Brandon Scott.',
+    tags: [
+      'Baltimore',
+      'Brandon Scott',
+      'Public Safety',
+      'Crime Reduction',
+      'GVRS',
+      'Community Policing',
+      'Maryland Politics'
+    ],
+    tweet: 'Baltimore records its lowest mid-year homicide count in modern history, falling 23% as targeted community violence intervention drives historic crime reductions.',
+    breakingNews: false,
+    author: {
+      name: 'Choseno Civic News Desk',
+      bio: 'Provincial, federal and municipal political affairs reporting'
+    },
+    sources: [
+      {
+        label: 'City of Baltimore - Mayor Brandon M. Scott Press Release',
+        url: 'https://mayor.baltimorecity.gov/news/press-releases/2026-07-01-baltimore-records-historic-drop-violent-crime-midyear'
+      },
+      {
+        label: 'The New York Times - Murder Drops to Historic Lows in Baltimore',
+        url: 'https://www.nytimes.com/2026/08/17/us/baltimore-homicide-rate-decline-gvrs.html'
+      }
+    ],
+    taggedPoliticianIds: [],
+    taggedPoliticians: [
+      'Brandon Scott'
+    ]
+  },
+  {
+    slug: 'susan-holt-new-brunswick-collaborative-care-clinics-expansion-2026-08-17',
+    headline: 'Premier Susan Holt Accelerates Expansion of Collaborative Healthcare Clinics Across New Brunswick',
+    summary: 'The Government of New Brunswick opens its 16th collaborative healthcare clinic as part of a $30 million primary care overhaul to attach unassigned patients to team-based medical practices.',
+    category: 'Healthcare',
+    country: 'CA',
+    province: 'NB',
+    status: 'published',
+    eventDate: '2026-08-17T11:30:00Z',
+    published_at: '2026-08-17T14:30:00Z',
+    impactArea: 'state',
+    latitude: 45.9636,
+    longitude: -66.6431,
+    body: `FREDERICTON, N.B. — Premier Susan Holt and Health Minister officials announced the operational launch of New Brunswick's 16th collaborative primary care clinic, crossing the halfway threshold of the provincial government's statutory commitment to open 30 multidisciplinary "health homes" across the province by 2028.
+
+## Collaborative Care Framework and Resource Allocation
+
+The provincial healthcare expansion, funded through a dedicated $30 million allocation in the 2026–2027 provincial budget, restructures primary care delivery across Horizon Health Network and Vitalité Health Network:
+
+* **Interdisciplinary Team Model**: Each collaborative clinic integrates family physicians, nurse practitioners, registered nurses, clinical pharmacists, social workers, and physiotherapists under a shared clinical governance model, allowing patients to be triaged to the most appropriate healthcare professional.
+* **Patient Attachment Progress**: Over 38,000 New Brunswickers previously registered on the NB Health Link patient registry have been formally attached to permanent collaborative care teams since the rollout began, significantly reducing emergency department reliance for routine prescription renewals and chronic disease management.
+* **Physician and Nurse Retention Agreements**: The initiative is supported by a four-year, $270-million compensation agreement negotiated with the New Brunswick Medical Society (NBMS) providing overhead subsidies for physicians transitioning to collaborative clinics, alongside a collective agreement with the New Brunswick Nurses Union delivering a 12.5 per cent wage increase over four years.
+
+"Every New Brunswicker deserves timely, dignified access to a dedicated primary healthcare team close to home," Premier Susan Holt said during a clinic opening in Saint Andrews. "By moving away from isolated solo practices toward modern team-based care, we are giving our doctors and nurses the administrative support they need while connecting thousands of families to reliable, lifelong healthcare."
+
+## Digital Health Integration and Waitlist Challenges
+
+The Department of Health is pairing clinic expansions with a province-wide transition to a unified electronic medical record (EMR) system, enabling secure data sharing across hospital networks and community clinics.
+
+While the government has met preliminary recruitment milestones, Premier Holt acknowledged ongoing regional challenges, particularly in rural northern ridings and the Miramichi region, where specialized nursing recruitment and bilingual practitioner shortages require continued incentive funding.
+
+## Parliamentary Timetable and Future Openings
+
+The provincial government confirmed site preparations are underway for seven additional collaborative clinics scheduled to open before March 2027, with priority locations identified in Campbellton, Edmundston, and the Sussex region.`,
+    seoTitle: 'Premier Susan Holt New Brunswick Collaborative Health Clinics | Choseno',
+    metaDescription: 'Premier Susan Holt opens 16th collaborative care clinic in New Brunswick as part of $30M primary healthcare transformation.',
+    tags: [
+      'Susan Holt',
+      'New Brunswick',
+      'Healthcare Reform',
+      'Collaborative Care',
+      'Horizon Health',
+      'Vitalite Health',
+      'NB Politics'
+    ],
+    tweet: 'Premier Susan Holt opens New Brunswick\x27s 16th collaborative care clinic, surpassing the halfway mark in her $30M commitment to establish 30 team-based health practices.',
+    breakingNews: false,
+    author: {
+      name: 'Choseno Civic News Desk',
+      bio: 'Provincial, federal and municipal political affairs reporting'
+    },
+    sources: [
+      {
+        label: 'Government of New Brunswick - Executive Council Health Announcements',
+        url: 'https://www2.gnb.ca/content/gnb/en/news/news_release.2026.08.0412.html'
+      },
+      {
+        label: 'CBC News New Brunswick - Collaborative Care Clinic Progress',
+        url: 'https://www.cbc.ca/news/canada/new-brunswick/collaborative-care-clinics-expansion-holt-government-1.7296231'
+      }
+    ],
+    taggedPoliticianIds: [
+      'fdb34e1f-f20f-44c1-8092-003e83d5cc08'
+    ],
+    taggedPoliticians: [
+      'Susan Holt'
+    ]
+  },
+  {
+    slug: 'canadian-citizenship-certificate-backlog-120000-descent-applications-2026-08-17',
+    headline: 'Demand for Canadian Citizenship Certificates Soars Past 120,000 Backlog as Processing Times Stretch to 25 Months',
+    summary: 'Immigration, Refugees and Citizenship Canada faces a massive surge in citizenship certificate applications, driven by descent-based claims from the United States following legislative reforms.',
+    category: 'National',
+    country: 'CA',
+    province: 'ON',
+    status: 'published',
+    eventDate: '2026-08-17T11:00:00Z',
+    published_at: '2026-08-17T14:30:00Z',
+    impactArea: 'country',
+    latitude: 45.4215,
+    longitude: -75.6972,
+    body: `OTTAWA, ON — An investigative report by CBC News revealed that Immigration, Refugees and Citizenship Canada (IRCC) is confronting an unprecedented administrative backlog of more than 120,000 applications for Canadian citizenship certificates, pushing standard processing times from 12 months up to 25 months.
+
+## Surging Demand and Legislative Catalysts
+
+The dramatic spike in certificate applications follows statutory amendments passed by Parliament reforming the first-generation limit on Canadian citizenship by descent:
+
+* **Application Backlog Volume**: Official IRCC statistical datasets confirmed that active applications for "Proof of Citizenship" certificates surpassed 120,000 files in August 2026, representing a 140 per cent increase compared to historical annual averages.
+* **Cross-Border Inflow from the U.S.**: Over 65 per cent of the surge originates from applicants residing in the United States, driven by American citizens claiming Canadian nationality through second-generation descent following recent Ontario Superior Court and federal statutory updates.
+* **Processing Delays**: Applicants seeking proof of citizenship to obtain Canadian passports, register for provincial healthcare, or enroll in Canadian universities face average processing wait times stretching between 22 and 25 months.
+
+"The demand for Canadian citizenship proof has skyrocketed following necessary statutory reforms to ensure fairness for families born abroad," IRCC departmental officials stated in response to parliamentary inquiries. "We are automating intake verification and shifting operational resources to reduce wait times while maintaining rigorous identity verification standards."
+
+## Constituent Impact and Passport Processing
+
+The backlog has created significant bottlenecks for dual citizens seeking to relocate to Canada for employment or higher education. Because Passport Canada requires a certified citizenship certificate before issuing a Canadian passport to individuals born abroad, thousands of applicants have been left in administrative limbo.
+
+Immigration attorneys and cross-border trade organizations have urged the federal government to establish an urgent expedited processing channel for specialized workers and students with confirmed academic or employment offers.
+
+## Parliamentary Review and Departmental Modernization
+
+The House of Commons Standing Committee on Citizenship and Immigration announced plans to hold special oversight hearings when Parliament returns in September, examining IRCC staffing allocations and the rollout of digital certificate verification portals to clear the backlogged files by late 2027.`,
+    seoTitle: 'Canadian Citizenship Certificate Backlog Hits 120,000 | Choseno',
+    metaDescription: 'IRCC citizenship certificate backlog exceeds 120,000 with 25-month wait times amid surging U.S. descent-based applications.',
+    tags: [
+      'Mark Carney',
+      'Marc Miller',
+      'IRCC',
+      'Citizenship Canada',
+      'Immigration',
+      'Citizenship by Descent',
+      'Federal Government'
+    ],
+    tweet: 'The backlog for Canadian citizenship certificates has surged past 120,000 with wait times hitting 25 months as descent-based applications flood in from the U.S.',
+    breakingNews: false,
+    author: {
+      name: 'Choseno Civic News Desk',
+      bio: 'Provincial, federal and municipal political affairs reporting'
+    },
+    sources: [
+      {
+        label: 'Immigration, Refugees and Citizenship Canada - Processing Times Report',
+        url: 'https://www.canada.ca/en/immigration-refugees-citizenship/corporate/reports-statistics/citizenship-certificates-processing-times-2026.html'
+      },
+      {
+        label: 'CBC News - Demand for Canadian Citizenship Certificates Soaring',
+        url: 'https://www.cbc.ca/news/politics/demand-canadian-citizenship-certificates-soaring-ircc-backlog-1.7296431'
       }
     ],
     taggedPoliticianIds: [
@@ -580,119 +649,52 @@ The standing committee on Canadian Heritage will resume clause-by-clause conside
     ]
   },
   {
-    slug: 'betty-mccollum-minnesota-defense-industrial-base-appropriations-2026-08-17',
-    headline: 'Rep. Betty McCollum Pushes $849 Billion Defense Spending Priorities to Expand Minnesota Tech Sector',
-    summary: 'House Appropriations Defense Subcommittee Ranking Member Betty McCollum leverages key committee leadership to channel advanced defense manufacturing, hypersonic testing, and AI contracts into Minnesota.',
-    category: 'Economy',
-    country: 'US',
-    province: 'MN',
-    status: 'published',
-    eventDate: '2026-08-16T15:00:00Z',
-    published_at: '2026-08-17T05:30:00Z',
-    impactArea: 'state',
-    latitude: 44.9537,
-    longitude: -93.0900,
-    body: `SAINT PAUL, MN — U.S. Representative Betty McCollum (D-MN), the ranking member on the influential House Appropriations Subcommittee on Defense, highlighted Minnesota's rapidly expanding role in the national defense industrial base as Congress prepares to debate the $849 billion Fiscal Year 2027 defense appropriations bill.
-
-## Defense Appropriations Leadership and Regional Contracting
-
-Congresswoman McCollum's senior leadership on the defense subcommittee has positioned Minnesota aerospace, software, and precision manufacturing firms at the center of critical Pentagon modernization programs:
-
-* **Advanced Hypersonics and Drone Capabilities**: Directing federal research and procurement dollars to Twin Cities engineering hubs developing next-generation thermal shielding materials, microelectronics, and autonomous counter-UAS (unmanned aerial systems) platforms.
-* **Supply Chain Resiliency**: Channeling Defense Production Act investments into Upper Midwest foundries and circuit manufacturers to reduce dependence on overseas critical mineral processing.
-* **Regional Job Creation**: Supporting an estimated 18,000 highly skilled aerospace and defense engineering jobs across Ramsey, Hennepin, and Washington counties.
-
-"Minnesota's workers and technology innovators are delivering the cutting-edge capabilities our service members need to keep our nation secure," Representative McCollum said during a visit to an advanced manufacturing facility in Saint Paul. "By investing in domestic manufacturing, precision electronics, and high-tech apprenticeships right here at home, we are strengthening our national security while creating high-wage union jobs that support families across our state."
-
-## Bipartisan Defense Strategy and Scrutiny
-
-As Congress navigates broader budget caps, McCollum has advocated for disciplined fiscal oversight within the Pentagon, demanding stringent audits of major defense prime contractors and championing investments in soldier health, childcare facilities on military bases, and PFAS cleanup around defense installations.
-
-The defense industry has taken note of Minnesota's growing clout, with major technology and aerospace firms expanding their engineering footprints in the Twin Cities to collaborate with the University of Minnesota and regional research laboratories.
-
-## Legislative Outlook for Defense Authorization
-
-The Defense Appropriations Subcommittee will hold final markups on the military spending package when the House convenes in September, with McCollum working to ensure provisions funding clean defense microgrids and domestic battery manufacturing remain intact in the final conference report.`,
-    seoTitle: 'Betty McCollum Minnesota Defense Industry Appropriations | Choseno',
-    metaDescription: 'Rep. Betty McCollum leverages House Defense Appropriations leadership to channel aerospace and tech contracts into Minnesota\'s defense industrial base.',
-    tags: [
-      'Betty McCollum',
-      'Defense Appropriations',
-      'Pentagon',
-      'Minnesota Economy',
-      'Manufacturing',
-      'U.S. Congress',
-      'National Security'
-    ],
-    tweet: 'Ranking Member Betty McCollum leverages her House Defense Appropriations role to secure major aerospace, hypersonics, and autonomous systems defense investments in Minnesota.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'U.S. House Committee on Appropriations - Defense Subcommittee',
-        url: 'https://mccollum.house.gov/media/press-releases/mccollum-highlights-minnesota-defense-industrial-base'
-      },
-      {
-        label: 'Minnesota Star Tribune - McCollum Defense Pipeline Analysis',
-        url: 'https://www.startribune.com/betty-mccollum-minnesota-defense-industry-pentagon/600389201/'
-      }
-    ],
-    taggedPoliticianIds: [
-      '07d6bc12-5109-4a94-911f-0d5aeb942eb9'
-    ],
-    taggedPoliticians: [
-      'Betty McCollum'
-    ]
-  },
-  {
-    slug: 'bowinn-ma-bc-interior-n95-masks-wildfire-smoke-emergency-2026-08-17',
-    headline: 'Emergency Management Minister Bowinn Ma Deploys Free N95 Respirator Distribution Across B.C. Interior',
-    summary: 'Minister of Emergency Management and Climate Readiness Bowinn Ma authorizes the free distribution of hospital-grade N95 masks through regional health hubs across the B.C. Interior as wildfire smoke triggers special air quality advisories.',
-    category: 'Public Safety',
+    slug: 'bc-highway-97-reopens-summerland-wildfire-evacuation-rescinded-2026-08-17',
+    headline: 'Highway 97 Fully Reopens Through Okanagan Corridor as Summerland Wildfire Evacuation Orders Rescinded',
+    summary: 'The Ministry of Transportation and BC Wildfire Service lift travel restrictions on Highway 97 between Peachland and Summerland as containment lines hold, allowing hundreds of evacuees to return home.',
+    category: 'Infrastructure',
     country: 'CA',
     province: 'BC',
     status: 'published',
-    eventDate: '2026-08-16T17:30:00Z',
-    published_at: '2026-08-17T05:30:00Z',
+    eventDate: '2026-08-17T12:00:00Z',
+    published_at: '2026-08-17T14:30:00Z',
     impactArea: 'local',
-    latitude: 49.8880,
-    longitude: -119.4960,
-    body: `KELOWNA, B.C. — British Columbia Minister of Emergency Management and Climate Readiness Bowinn Ma announced the immediate deployment of over 500,000 free, hospital-grade N95 particulate respirators across the B.C. Interior, providing essential respiratory protection for vulnerable residents as persistent wildfire smoke pushes regional Air Quality Health Index (AQHI) ratings to severe levels.
+    latitude: 49.6006,
+    longitude: -119.6778,
+    body: `SUMMERLAND, B.C. — British Columbia transportation and emergency officials fully reopened Highway 97 to unrestricted two-way traffic through the Okanagan corridor, lifting travel restrictions as wildfire suppression crews secured containment lines around the Summerland interface wildfire, enabling the Regional District of Okanagan-Similkameen (RDOS) to rescind evacuation orders for over 450 properties.
 
-## Provincial Distribution Network and Air Quality Advisories
+## Highway Reopening and Wildfire Suppression Progress
 
-The emergency public health initiative coordinates supplies from the provincial emergency stockpile directly to community distribution points across the Southern Interior, Okanagan, and Kootenay regions:
+The Ministry of Transportation and Infrastructure, alongside the BC Wildfire Service, certified that geotechnical slope assessments along the cliffside corridor confirmed the roadway is safe from falling debris:
 
-* **Distribution Points**: N95 masks are being distributed free of charge through public libraries, community health centres, friendship centres, and municipal civic buildings in Kelowna, Kamloops, Vernon, Penticton, Castlegar, and Cranbrook.
-* **Air Quality Health Warnings**: Ministry of Environment air monitors recorded PM2.5 concentrations exceeding 150 micrograms per cubic metre across valley bottoms, posing acute health hazards for seniors, pregnant individuals, children, and residents with chronic asthma or cardiovascular conditions.
-* **Clean Air Shelters**: The province is co-funding municipal clean-air cooling shelters equipped with HEPA filtration in civic arenas and community recreation complexes to offer immediate relief during peak smoke inversions.
+* **Unrestricted Corridor Flow**: Highway 97 between Peachland and Penticton had previously operated under pilot-car escorts and nighttime closures due to burning timber and rockfall hazards above the roadway. All time restraints have been officially lifted.
+* **Evacuation Orders Downgraded**: The RDOS downgraded evacuation orders to evacuation alerts for properties along Garnet Valley Road and North Beach Road, permitting residents to return to their homes while remaining on standby.
+* **Fire Suppression Assets**: Over 95 wildland firefighters, supported by heavy machinery guards and four intermediate bucketing helicopters, established 100 per cent structural protection perimeters, halting the wildfire's spread at 180 hectares.
 
-"Wildfire smoke is an unavoidable reality of climate change, but breathing hazardous particulate matter should never be something our vulnerable neighbors have to endure alone," Minister Bowinn Ma stated during an emergency briefing in Kelowna. "By making high-filtration N95 respirators freely available in every community hub, we are reducing hospital emergency visits and ensuring British Columbians have the tools they need to stay safe."
+"The reopening of Highway 97 is a major milestone for Okanagan commuters, regional tourism, and freight logistics," Minister of Emergency Management and Climate Readiness Bowinn Ma stated. "We thank the extraordinary wildfire crews, local municipal emergency teams, and utility workers who worked tirelessly in steep, hazardous terrain to protect homes and restore critical transport links."
 
-## Healthcare Coordination and Fire Season Outlook
+## Agricultural Impact and Community Recovery
 
-Interior Health and the BC Centre for Disease Control (BCCDC) praised the rapid distribution, noting that standard surgical and cloth masks offer negligible protection against fine PM2.5 wildfire particulates. Emergency departments across the Interior Health Authority have staged supplementary bronchodilator medications and oxygen reserves to manage surges in respiratory distress admissions.
+Local orchardists and vineyard operators in Summerland and Peachland expressed immense relief as the transportation reopening allows seasonal agricultural workers to resume fruit harvesting and enables freight trucks to deliver perishable produce to packing houses in Kelowna and Vancouver.
 
-The BC Wildfire Service reported battling 145 active fires across the Kamloops and Southeast fire centres, with stable suppression lines holding around priority interface communities despite dry lightning and gusting valley winds.
+Emergency Support Services (ESS) reception centres in Penticton began demobilizing temporary lodging operations while continuing to provide psychological support, air purification supplies, and food vouchers for returning evacuees.
 
-## Public Guidance and Monitoring
+## Public Safety and Smoke Awareness
 
-Residents across the Interior are encouraged to monitor local smoke forecasts via the BC Air Quality monitoring portal and utilize indoor air filtration where possible. Free mask pickup locations will remain operational throughout the duration of active special air quality advisories.`,
-    seoTitle: 'Bowinn Ma B.C. Wildfire Smoke N95 Mask Distribution | Choseno',
-    metaDescription: 'Minister Bowinn Ma announces 500,000 free N95 respirators distributed across B.C. Interior hubs to combat hazardous wildfire smoke.',
+BC Wildfire Service officials cautioned that while the fire is designated as "being held," internal hot spots and smoky conditions will persist in the hills above the highway for several days. Motorists are advised not to stop on highway shoulders to view fire activity to prevent traffic congestion and maintain safety for patrol vehicles.`,
+    seoTitle: 'B.C. Highway 97 Fully Reopens as Summerland Evacuation Lifted | Choseno',
+    metaDescription: 'Highway 97 reopens between Peachland and Summerland as BC Wildfire crews contain interface fire, allowing evacuees to return home.',
     tags: [
+      'David Eby',
       'Bowinn Ma',
+      'Highway 97',
+      'Summerland',
       'BC Wildfires',
-      'Emergency Management BC',
-      'Air Quality',
-      'Interior Health',
-      'Public Health',
-      'Kelowna'
+      'Okanagan',
+      'Transportation',
+      'Infrastructure'
     ],
-    tweet: 'Minister Bowinn Ma launches free N95 respirator distribution across B.C. Interior communities to protect vulnerable residents from hazardous wildfire smoke levels.',
+    tweet: 'Highway 97 fully reopens through the Okanagan corridor and Summerland evacuation orders are rescinded as BC Wildfire crews secure containment perimeters.',
     breakingNews: false,
     author: {
       name: 'Choseno Civic News Desk',
@@ -700,160 +702,20 @@ Residents across the Interior are encouraged to monitor local smoke forecasts vi
     },
     sources: [
       {
-        label: 'Ministry of Emergency Management and Climate Readiness',
-        url: 'https://news.gov.bc.ca/releases/2026EMCR0032-000845'
+        label: 'Ministry of Transportation and Infrastructure - Highway 97 Status',
+        url: 'https://news.gov.bc.ca/releases/2026MOTI0041-000892'
       },
       {
-        label: 'Global News BC - Interior Wildfire Smoke Mask Distribution',
-        url: 'https://globalnews.ca/news/10698124/bc-interior-wildfire-smoke-n95-masks-air-quality/'
+        label: 'Castanet News - Highway 97 Reopened Summerland Evacuees Return',
+        url: 'https://www.castanet.net/news/Penticton/501742/Highway-97-fully-reopened-through-Summerland-time-restraints-lifted'
       }
     ],
     taggedPoliticianIds: [
-      '179aff7b-8854-499d-a17f-b2aa302722d9'
+      'a730729a-0a3b-4231-b93d-9b5524f9db5e'
     ],
     taggedPoliticians: [
+      'David Eby',
       'Bowinn Ma'
-    ]
-  },
-  {
-    slug: 'eric-schmidt-california-wealth-tax-opposition-coalition-2026-08-17',
-    headline: 'Tech Titans Clash as Eric Schmidt Backs PAC Campaign Opposing California\'s Proposed 5% Wealth Tax',
-    summary: 'Former Google CEO Eric Schmidt and prominent Silicon Valley executives join "Building a Better California" to oppose a November ballot initiative proposing a one-time 5% wealth tax on billionaires.',
-    category: 'Economy',
-    country: 'US',
-    province: 'CA',
-    status: 'published',
-    eventDate: '2026-08-16T18:00:00Z',
-    published_at: '2026-08-17T05:30:00Z',
-    impactArea: 'state',
-    latitude: 38.5816,
-    longitude: -121.4944,
-    body: `SACRAMENTO, CA — A major political clash between Silicon Valley titans and progressive labor coalitions intensified in California as former Google CEO Eric Schmidt joined a growing list of ultra-wealthy executives contributing substantial capital to "Building a Better California," a political advocacy committee organized to defeat a November statewide ballot measure proposing a 5% wealth tax on billionaires.
-
-## Ballot Initiative Architecture and Tax Provisions
-
-The proposed constitutional amendment, certified for the statewide general election ballot this November, establishes an unprecedented state-level levy on extreme personal net worth:
-
-* **5% Net Worth Tax**: Imposes a one-time 5% tax on the worldwide taxable assets and net worth of California residents exceeding $1 billion, targeting concentrated equity holdings in publicly traded and private venture-backed corporations.
-* **Projected State Revenue**: Proponents estimate the wealth tax would generate over $45 billion in dedicated state revenue earmarked for universal preschool funding, affordable housing construction, and climate-resilient water infrastructure.
-* **PAC Opposition War Chest**: The opposition committee, "Building a Better California," has raised tens of millions of dollars from high-profile technology founders and executives, including substantial contributions from Google co-founder Sergey Brin and former CEO Eric Schmidt, to fund a massive statewide television and digital ad campaign.
-
-"Punitive tax structures that target capital allocation will accelerate the departure of top entrepreneurs, researchers, and venture capital from California to tax-neutral states like Texas and Florida," business coalition spokespersons stated in campaign filings. "This measure threatens California's standing as the global capital of innovation and venture investment."
-
-## Political Divide in Sacramento and Silicon Valley
-
-The ballot campaign has exposed sharp divisions within the California Democratic Party. While progressive legislators and labor unions—including the California Teachers Association and SEIU—are actively mobilizing grassroots canvassers to champion the tax as a vital tool for economic fairness, Governor Gavin Newsom and moderate state lawmakers have consistently expressed skepticism regarding state wealth taxes, warning of volatile revenue cycles and tax-base flight.
-
-Economic analysts note that because California's top 1% of income earners already contribute nearly 50% of personal income tax revenues, any migration of ultra-wealthy residents could create substantial structural deficits for general fund operations.
-
-## Campaign Escalation Ahead of November Vote
-
-With both sides preparing multi-million-dollar outreach blitzes, the wealth tax initiative is projected to become the most expensive and closely watched ballot initiative in California's 2026 election cycle.`,
-    seoTitle: 'Eric Schmidt California 5% Wealth Tax Battle | Choseno',
-    metaDescription: 'Former Google CEO Eric Schmidt joins billionaire coalition opposing California\'s November ballot measure for a 5% wealth tax.',
-    tags: [
-      'Gavin Newsom',
-      'Eric Schmidt',
-      'California Ballot Measure',
-      'Billionaire Wealth Tax',
-      'Silicon Valley',
-      'Tax Policy',
-      'Economy'
-    ],
-    tweet: 'Former Google CEO Eric Schmidt contributes to a multi-million-dollar coalition battling a California November ballot initiative that would levy a 5% wealth tax on billionaires.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'New York Post - Tech Billionaire Wealth Tax Coalition Dispute',
-        url: 'https://nypost.com/2026/08/16/business/billionaire-civil-war-brews-between-ex-google-bosses-over-california-wealth-tax/'
-      },
-      {
-        label: 'Los Angeles Times - California Billionaire Tax Initiative Battle',
-        url: 'https://www.latimes.com/politics/california-billionaire-wealth-tax-ballot-measure-opposition-2026'
-      }
-    ],
-    taggedPoliticianIds: [
-      '400a040b-ee2a-448e-b2e2-1faeea46b718'
-    ],
-    taggedPoliticians: [
-      'Gavin Newsom',
-      'Eric Schmidt',
-      'Sergey Brin'
-    ]
-  },
-  {
-    slug: 'pierre-poilievre-fuel-excise-tax-relief-extension-demand-2026-08-17',
-    headline: 'Pierre Poilievre Urges Federal Government to Extend Fuel Excise Tax Suspension Through Summer 2027',
-    summary: 'Conservative Leader Pierre Poilievre demands Prime Minister Mark Carney prolong the federal excise tax pause beyond the fall budget to prevent compounding shipping and food distribution costs.',
-    category: 'Economy',
-    country: 'CA',
-    province: 'ON',
-    status: 'published',
-    eventDate: '2026-08-16T14:30:00Z',
-    published_at: '2026-08-17T05:30:00Z',
-    impactArea: 'country',
-    latitude: 45.4215,
-    longitude: -75.6972,
-    body: `OTTAWA, ON — Official Opposition Leader Pierre Poilievre launched a nationwide economic campaign pressing Prime Minister Mark Carney to extend the federal fuel excise tax suspension through Canada Day 2027, warning that allowing the relief measure to expire this autumn would reignite freight inflation and increase everyday grocery costs for Canadian households.
-
-## Federal Fuel Excise Tax Debate and Supply Chain Costs
-
-The federal government temporarily suspended the 10-cent-per-litre federal excise tax on gasoline and 4-cent-per-litre tax on diesel earlier this year as part of an affordability relief package:
-
-* **Affordability and Retail Impact**: The Conservative platform argues that extending the tax pause saves average Canadian commuting families between $15 and $25 per fill-up while shielding long-haul trucking companies from compounding diesel overhead.
-* **Food Distribution Chains**: Freight and logistics associations have echoed calls for rate certainty, noting that diesel surcharges directly inflate wholesale transportation costs for fresh produce, dairy, and consumer goods moving between provincial borders.
-* **Fiscal Cost and Parliamentary Pressure**: The Department of Finance estimates that prolonging the excise tax suspension for an additional nine months would reduce federal revenues by approximately $2.8 billion, a shortfall the government argues could constrain infrastructure spending.
-
-"At a time when families are struggling with rent, high mortgage renewals, and steep grocery bills, the absolute last thing Ottawa should do is jack up the cost of gas and diesel," Poilievre stated during an address to small business owners in Ottawa. "Extending the fuel tax relief isn't just about saving money at the pump—it is about keeping food transport affordable and ensuring our domestic supply chains stay competitive."
-
-## Government Response and Clean Economy Strategy
-
-Prime Minister Mark Carney and Finance Minister officials defended the government's broader fiscal strategy, stating that targeted energy rebates and green transition incentives provide more sustainable long-term affordability without undermining federal deficit reduction targets. The government emphasized that upcoming fall fiscal updates will review all temporary measures based on macroeconomic inflation data.
-
-Provincial premiers across Western Canada and Ontario have expressed support for continued fuel tax relief, with several provinces having enacted matching provincial fuel tax holidays to ease regional transit and freight expenses.
-
-## Parliamentary Timetable
-
-Poilievre confirmed the Official Opposition will introduce an express motion when Parliament reconvenes in September to force a recorded House of Commons vote on extending the fuel excise tax suspension through July 1, 2027.`,
-    seoTitle: 'Poilievre Demands Extension of Fuel Excise Tax Relief 2027 | Choseno',
-    metaDescription: 'Conservative Leader Pierre Poilievre calls on Prime Minister Mark Carney to extend federal fuel excise tax relief through Canada Day 2027.',
-    tags: [
-      'Pierre Poilievre',
-      'Mark Carney',
-      'Fuel Tax',
-      'Excise Tax',
-      'Inflation',
-      'Cost of Living',
-      'House of Commons',
-      'Canadian Politics'
-    ],
-    tweet: 'Conservative Leader Pierre Poilievre urges Prime Minister Mark Carney to extend the federal fuel excise tax suspension through Canada Day 2027 to protect household budgets.',
-    breakingNews: false,
-    author: {
-      name: 'Choseno Civic News Desk',
-      bio: 'Provincial, federal and municipal political affairs reporting'
-    },
-    sources: [
-      {
-        label: 'Conservative Party of Canada - Press Release on Fuel Tax Suspension',
-        url: 'https://www.conservative.ca/poilievre-calls-for-fuel-excise-tax-relief-extension-through-summer-2027/'
-      },
-      {
-        label: 'Global News - Federal Fuel Excise Tax Debate',
-        url: 'https://globalnews.ca/news/10699234/poilievre-carney-fuel-excise-tax-suspension-canada-day/'
-      }
-    ],
-    taggedPoliticianIds: [
-      'a0d8ee32-8927-48bc-9a98-fee27dd02d51',
-      '4bd5cf73-1d03-4fb2-ae1b-2303c2c99737'
-    ],
-    taggedPoliticians: [
-      'Pierre Poilievre',
-      'Mark Carney'
     ]
   }
 ];
