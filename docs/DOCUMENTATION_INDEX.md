@@ -63,10 +63,11 @@ Complete guide to all Choseno documentation — architecture, features, data pip
 
 ### News Directives Suite (`NewsPrompts/`)
 
+- **[`NewsPrompts/MasterNewsCollectionPrompt.md`](../NewsPrompts/MasterNewsCollectionPrompt.md)** — Master execution directive combining Wire discovery, 30 Key Leaders, and Universal Google searches in a unified pipeline
 - **[`NewsPrompts/NewsCollectionPrompt.md`](../NewsPrompts/NewsCollectionPrompt.md)** — Standard high-impact civic & political news collection directive across all Canadian & U.S. jurisdictions (up to 100 stories/batch)
 - **[`NewsPrompts/KeyLeadersNewsCollectionPrompt.md`](../NewsPrompts/KeyLeadersNewsCollectionPrompt.md)** — Targeted news collection directive for the 30 Key Political Leaders in the U.S. and Canada with pre-mapped UUIDs for instant wall mirroring
 - **[`NewsPrompts/UniversalWebNewsCollectionPrompt.md`](../NewsPrompts/UniversalWebNewsCollectionPrompt.md)** — Broad-spectrum Google and deep web search directive covering all 50 states, 10 provinces, 100+ cities, and court dockets with dynamic politician profile tagging
-- **[`NewsPrompts/README.md`](../NewsPrompts/README.md)** — Overview and comparison of the 3 news collection directives and unified ingestion pipeline
+- **[`NewsPrompts/README.md`](../NewsPrompts/README.md)** — Overview and comparison of all 4 news collection directives and unified ingestion pipeline
 
 ### Engagement & Analytics
 
