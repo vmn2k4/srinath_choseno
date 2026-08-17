@@ -48,21 +48,36 @@ ${personInstructions(person)}
      - **Why It Matters (Constituent Impact)**: How residents, local businesses, or specific public services are directly affected.
      - **Next Steps & Accountability**: Upcoming legislative votes, public comment periods, implementation dates, or opposition perspectives.
 
-2. **Tone & Objectivity:** The content must be strictly neutral, fact-based, and objective. Avoid bias, loaded language, or sensationalism while maintaining plain, accessible language for a general audience.
+2. **Headline Integrity & Anti-Scaled Content Abuse (CRITICAL):**
+   - **Google Search Essentials strictly bans formulaic, template-swapped content ("Scaled Content Abuse").**
+   - 🚫 **BANNED HEADLINE FORMULAS:**
+     - NEVER use: \`[Name] Advances [Topic] [Initiative/Expansion] for [City]\`
+     - NEVER use: \`[Name] Unveils [Topic] Plan for [City]\`
+     - NEVER use crutch verbs: *"Advances"*, *"Champions"*, *"Spearheads"*, *"Unveils"*, *"Rolls Out"*, *"Pushes for"*, *"Highlights"*.
+     - AVOID ending headlines with repetitive prepositional tails like \`"...for [City]"\`. Integrate location naturally into the action or subject.
+   - ✅ **ROTATE ACROSS 6 JOURNALISTIC ARCHETYPES:**
+     1. *Outcome/Fiscal Impact Lead*: E.g. *"Henderson Secures $14M Regional Emergency Care Expansion as Patient Volume Climbs"*
+     2. *Institutional Action Lead*: E.g. *"Bakersfield City Council Restructures Community Patrols in $3.2M Safety Overhaul"*
+     3. *Conflict & Oversight*: E.g. *"Manhattan Council Hearing Sparks Clash Over Transit Safety and Mental Health Teams"*
+     4. *Regulatory / Statutory Specifics*: E.g. *"Alberta Institutes 2% Grid Levy on Large AI Data Centers Exceeding 75 Megawatts"*
+     5. *Direct Quote / Active Stance*: E.g. *"'Quite Firm': Trade Negotiators Meet in Final Push to Avert 14% Softwood Lumber Tariffs"*
+     6. *Electoral / Regional Stakes*: E.g. *"Florida Primary Eve: High-Stakes Race to Decide Gubernatorial and U.S. Senate Succession"*
 
-3. **Anti-Hallucination & Accuracy Rules:**
+3. **Tone & Objectivity:** The content must be strictly neutral, fact-based, and objective. Avoid bias, loaded language, or sensationalism while maintaining plain, accessible language for a general audience.
+
+4. **Anti-Hallucination & Accuracy Rules:**
    - Never invent names, quotes, statistics, dates, locations, sources, or details not present in the input.
    - If information is unavailable, explicitly state context or omit rather than filling gaps with plausible assumptions.
 
-4. **Factual Openings (No Sensationalism):** Open the body immediately with a standard journalistic dateline (e.g., \`CITY, Prov. — \`) followed by a concrete, factual scene or verified statistic from the source material. Avoid dramatic metaphors or clickbait.
+5. **Factual Openings (No Sensationalism):** Open the body immediately with a standard journalistic dateline (e.g., \`CITY, Prov. — \`) followed by a concrete, factual scene or verified statistic from the source material. Avoid dramatic metaphors or clickbait.
 
-5. **Direct & Specific Source Citations:**
+6. **Direct & Specific Source Citations:**
    - In \`sources\`, provide the **exact, direct deep-link URL** to the specific article, government press release, or official report (e.g. \`https://news.gov.bc.ca/releases/2026PREM0045-001234\`), **never** generic homepages (e.g. \`https://apnews.com\` or \`https://cbc.ca\`).
    - Use clear, professional publication labels (e.g., "B.C. Government Executive Office", "The Associated Press", "CBC British Columbia").
 
-6. **Structure & Readability:** Break up sections into shorter, digestible subsections with punchy, action-oriented subheads tailored to the specific story topic (using Markdown \`##\`). Use bulleted breakdowns for multi-part policies or financial allocations.
+7. **Structure & Readability:** Break up sections into shorter, digestible subsections with punchy, action-oriented subheads tailored to the specific story topic (using Markdown \`##\`). Use bulleted breakdowns for multi-part policies or financial allocations.
 
-7. **Format & Schema:** Fill out every field in the JSON accurately. The \`body\` must use standard Markdown formatting.
+8. **Format & Schema:** Fill out every field in the JSON accurately. The \`body\` must use standard Markdown formatting.
 
 ### Required JSON Structure:
 {
@@ -105,7 +120,7 @@ ${personInstructions(person)}
 
 ### Key Points:
 - Depth & Substance: 400–750 words. Do NOT create short 1-paragraph stubs. Every article must provide comprehensive background, civic impact, and actionable timelines.
-- Headline: 60-80 characters, compelling but factual
+- Headline: 60-80 characters, compelling but factual. Strictly avoid repetitive formulaic templates like '[Name] Advances [Topic] for [City]'.
 - Summary: 100-150 characters, card-friendly excerpt
 - Body: Use Markdown formatting with ## for subheadings and bullet points for complex breakdowns
 - Category: MUST be exactly one of: ${NEWS_CATEGORIES.join(", ")} — any other value will be miscategorized on the site
@@ -127,6 +142,7 @@ ${personInstructions(person)}
 - taggedParty: the political party the story is about, if any.
 
 ### Common Mistakes to Avoid:
+❌ DON'T use robotic formulaic headlines like "[Name] Advances [Topic] Initiative for [City]" — rotate across diverse journalistic archetypes
 ❌ DON'T write superficial 2-paragraph summaries — include full civic context, key metrics, and constituent impact
 ❌ DON'T provide generic homepage links in sources (e.g. "https://apnews.com") — always link to the exact specific article URL
 ❌ DON'T invent quotes, statistics, or details not in source material
@@ -220,33 +236,51 @@ The output MUST be a valid JSON object with a batch array:
 
 ### Strict Guidelines:
 
-1. **Diversity:** Cover different topics, regions, categories, or angles. Avoid repetition.
+1. **Editorial Quality & Depth:** Aim for substantive 400–750 word coverage per story. Break into 3–4 logical sections (## subheads) covering the core action, concrete numbers/policy mechanics, constituent impact, and next steps. Never generate superficial 1-2 paragraph stubs.
 
-2. **Anti-Hallucination:** Never invent facts, quotes, or statistics not in source material.
+2. **Headline Integrity & Anti-Scaled Content Abuse (CRITICAL):**
+   - **Google Search Essentials strictly penalize repetitive formulaic content ("Scaled Content Abuse").**
+   - 🚫 **BANNED HEADLINE FORMULAS:**
+     - NEVER use: \`[Name] Advances [Topic] [Initiative/Expansion] for [City]\`
+     - NEVER use: \`[Name] Unveils [Topic] Plan for [City]\`
+     - NEVER use crutch verbs: *"Advances"*, *"Champions"*, *"Spearheads"*, *"Unveils"*, *"Rolls Out"*, *"Pushes for"*, *"Highlights"*.
+     - AVOID ending headlines with repetitive prepositional tails like \`"...for [City]"\`. Integrate location naturally into the subject or action.
+   - ✅ **ROTATE ACROSS 6 JOURNALISTIC ARCHETYPES:**
+     1. *Outcome/Fiscal Impact Lead*: E.g. *"Henderson Secures $14M Regional Emergency Care Expansion as Patient Volume Climbs"*
+     2. *Institutional Action Lead*: E.g. *"Bakersfield City Council Restructures Community Patrols in $3.2M Safety Overhaul"*
+     3. *Conflict & Oversight*: E.g. *"Manhattan Council Hearing Sparks Clash Over Transit Safety and Mental Health Teams"*
+     4. *Regulatory / Statutory Specifics*: E.g. *"Alberta Institutes 2% Grid Levy on Large AI Data Centers Exceeding 75 Megawatts"*
+     5. *Direct Quote / Active Stance*: E.g. *"'Quite Firm': Trade Negotiators Meet in Final Push to Avert 14% Softwood Lumber Tariffs"*
+     6. *Electoral / Regional Stakes*: E.g. *"Florida Primary Eve: High-Stakes Race to Decide Gubernatorial and U.S. Senate Succession"*
+   - 📐 **BATCH DIVERSITY RATIO:**
+     - Maximum 20% Name-Led: In a batch of 5-10 stories, at least 80% must lead with the city, agency, bill, or outcome—NOT the politician's personal name.
+     - Zero Shared Verbs: No two headlines in the batch may share the same primary verb.
 
-3. **Category:** MUST be exactly one of ${NEWS_CATEGORIES.join(", ")} for every article — no other values, they won't display correctly on the site.
+3. **Diversity:** Cover different topics, regions, categories, or angles. Avoid repetition.
 
-4. **Status:** MUST be exactly one of ${NEWS_STATUSES.join(", ")} — any other value will be rejected when saving.
+4. **Anti-Hallucination:** Never invent facts, quotes, or statistics not in source material.
 
-5. **eventDate vs published_at:** two different dates per article — eventDate is when the real-world thing happened, published_at is when the article itself goes live on Choseno. Never merge them.
+5. **Category:** MUST be exactly one of ${NEWS_CATEGORIES.join(", ")} for every article — no other values, they won't display correctly on the site.
 
-6. **impactArea:** MUST be exactly one of ${NEWS_IMPACT_AREAS.join(", ")} for every article:
+6. **Status:** MUST be exactly one of ${NEWS_STATUSES.join(", ")} — any other value will be rejected when saving.
+
+7. **eventDate vs published_at:** two different dates per article — eventDate is when the real-world thing happened, published_at is when the article itself goes live on Choseno. Never merge them.
+
+8. **impactArea:** MUST be exactly one of ${NEWS_IMPACT_AREAS.join(", ")} for every article:
 ${IMPACT_AREA_GUIDE}
    Set latitude/longitude whenever impactArea is "local" and the story names a determinable place — the system uses that point to automatically find and tag the matching electoral boundaries.
 
-7. **Country/Province:** Prefer ISO-2 codes — CA/US/GB for country, ON/BC/NY/CA for province or state. Full names ("Canada", "Ontario") are accepted too and get normalized automatically, but codes are more reliable. Leave "province" blank for country-wide stories, and "country" blank for global stories.
+9. **Country/Province:** Prefer ISO-2 codes — CA/US/GB for country, ON/BC/NY/CA for province or state. Full names ("Canada", "Ontario") are accepted too and get normalized automatically, but codes are more reliable. Leave "province" blank for country-wide stories, and "country" blank for global stories.
 
-8. **Editorial Quality & Depth:** Aim for substantive 400–750 word coverage per story. Break into 3–4 logical sections (## subheads) covering the core action, concrete numbers/policy mechanics, constituent impact, and next steps. Never generate superficial 1-2 paragraph stubs.
+10. **Direct Source Citations:** In \`sources\`, cite the exact, direct canonical deep link (e.g. \`https://news.gov.bc.ca/releases/2026PREM0045-001234\`), never generic root domains (e.g. \`https://apnews.com\`). Use accurate publication labels.
 
-9. **Direct Source Citations:** In \`sources\`, cite the exact, direct canonical deep link (e.g. \`https://news.gov.bc.ca/releases/2026PREM0045-001234\`), never generic root domains (e.g. \`https://apnews.com\`). Use accurate publication labels.
+11. **Breaking News:** Only set \`breakingNews: true\` on articles that are genuinely <6 hours old and represent a sudden, unexpected development. The badge auto-clears itself ${BREAKING_NEWS_ACTIVE_HOURS} hours after \`published_at\` — never set it on older or evergreen stories in the batch.
 
-10. **Breaking News:** Only set \`breakingNews: true\` on articles that are genuinely <6 hours old and represent a sudden, unexpected development. The badge auto-clears itself ${BREAKING_NEWS_ACTIVE_HOURS} hours after \`published_at\` — never set it on older or evergreen stories in the batch.
+12. **Images:** Never fabricate a hero_image_url for any article in the batch. Only set it (with heroImageAlt) when the source material actually supplies an image URL — otherwise omit all three image fields for that article; Choseno automatically generates the dynamic OpenGraph visual card.
 
-11. **Images:** Never fabricate a hero_image_url for any article in the batch. Only set it (with heroImageAlt) when the source material actually supplies an image URL — otherwise omit all three image fields for that article; Choseno automatically generates the dynamic OpenGraph visual card.
+13. **Politician/Party tagging:** Only set taggedPoliticians/taggedPoliticianIds/taggedParty when a specific politician or party is a direct subject of that article. Use the politician's full name exactly as it would appear on a public profile, or their exact profile id if one is known. Never invent an id.
 
-12. **Politician/Party tagging:** Only set taggedPoliticians/taggedPoliticianIds/taggedParty when a specific politician or party is a direct subject of that article. Use the politician's full name exactly as it would appear on a public profile, or their exact profile id if one is known. Never invent an id.
-
-13. **Tweet Copy:** Captivating 1-2 sentence hook (~140-200 chars). Plain text only — no emoji, no hashtags, no URL. Choseno automatically appends the canonical card link and topic hashtags.
+14. **Tweet Copy:** Captivating 1-2 sentence hook (~140-200 chars). Plain text only — no emoji, no hashtags, no URL. Choseno automatically appends the canonical card link and topic hashtags.
 
 Here are today's news stories and topics:`;
 }

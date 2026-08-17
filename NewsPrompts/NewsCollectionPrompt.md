@@ -102,7 +102,36 @@ If an existing story has a material new development, publish only if the new dev
 
 ---
 
-### 4. EDITORIAL DEPTH & STRUCTURE
+### 4. EDITORIAL DEPTH & HEADLINE INTEGRITY (ANTI-SCALED CONTENT ABUSE)
+
+Google Search Essentials and Google News Publisher Guidelines strictly penalize templated or formulaic writing ("Scaled Content Abuse"). You must write headlines and body copy like an experienced investigative metro editor, NOT an automated aggregator.
+
+#### 🚫 STRICTLY BANNED HEADLINE PATTERNS & CRUTCH WORDS:
+- ❌ **NO formulaic slots:** `[Name] Advances [Topic] [Initiative/Expansion] for [City/Region]`
+- ❌ **NO repetitive announcements:** `[Name] Unveils [Topic] Plan for [City]`
+- ❌ **NO crutch verbs:** Banned as primary headline verbs: *"Advances"*, *"Champions"*, *"Spearheads"*, *"Unveils"*, *"Rolls Out"*, *"Pushes for"*, *"Highlights"*.
+- ❌ **NO repetitive prepositional tails:** Avoid ending headlines with `"...for [City]"` or `"...for [State]"`. Integrate the location naturally into the subject or action.
+
+#### ✅ MANDATORY HEADLINE DIVERSITY (Rotate across 6 Journalistic Archetypes):
+1. **Outcome / Fiscal Impact Lead**: Start with the hard dollar amount, public consequence, or measurable result:
+   - *"Henderson Secures $14M Regional Emergency Care Expansion as ER Volume Climbs"*
+2. **Institutional & Council Action**: Focus on council votes, agency rulings, or court decisions:
+   - *"Bakersfield City Council Restructures Community Patrols in $3.2M Safety Overhaul"*
+3. **Conflict, Debate & Oversight**: Highlight legislative debate, committee friction, or audit findings:
+   - *"Manhattan Council Hearing Sparks Clash Over Transit Safety and Mental Health Deployments"*
+4. **Regulatory & Statutory Specifics**: Cite the bill number, capacity threshold, or standard:
+   - *"Alberta Institutes 2% Grid Levy on Large AI Data Centers Exceeding 75 Megawatts"*
+5. **Direct Quote / Stance**: Highlight a decisive quote or trade stance:
+   - *"'Quite Firm': Trade Negotiators Meet in Final Push to Avert 14% Softwood Lumber Tariffs"*
+6. **Electoral & Regional Context**: Emphasize district boundaries, primary stakes, or succession:
+   - *"Florida Primary Eve: High-Stakes Race to Decide Gubernatorial and U.S. Senate Succession"*
+
+#### 📐 BATCH DIVERSITY RATIO:
+- **Maximum 20% Name-Led**: At least 8 out of 10 stories in a batch must lead with the city, agency, policy outcome, or bill—NOT the politician's personal name.
+- **Zero Shared Verbs**: Every headline in a batch must use a distinct, active verb (e.g. *Secures, Imposes, Restructures, Petitions, Tightens, Enforces, Voids, Clashes*).
+- **Varied Ledes**: Never open articles with the formula `"[CITY], [ST] — [Official] on [Day] announced..."`. Lead with the hard numbers, community consequence, or legislative vote first.
+
+#### 4-PART JOURNALISTIC BODY STRUCTURE (350–750 WORDS):
 Target **350–750 words** for substantive stories. Do not pad articles to reach a word count.
 
 Structure the markdown `body` using this 4-part framework:
