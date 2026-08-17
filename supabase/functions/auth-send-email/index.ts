@@ -146,7 +146,7 @@ function paragraph(text: string): string {
 // value here means the reset/confirm flow itself doesn't depend on that
 // allow-list being kept in sync; only the "return to wherever the user
 // was headed" `next` param (extracted below) does.
-const SITE_URL = "https://choseno.com";
+const SITE_URL = "https://www.choseno.com";
 
 // The `next` query param our own client code appends to redirectTo
 // (src/lib/services/auth.ts) — e.g. `/auth/callback?next=%2Fauth%2Freset-password`.

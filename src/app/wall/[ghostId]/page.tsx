@@ -53,6 +53,22 @@ export async function generateMetadata({
     "";
   const electionYear = activeCandidacy?.election_seats?.elections?.election_date?.slice(0, 4) || "2026";
 
+  // roleTitle stays unprefixed -- it feeds buildPoliticianWallSlug below, and
+  // prefixing it there would change a former officeholder's canonical wall
+  // URL the moment their term ends, breaking existing links/bookmarks.
+  // displayRoleTitle is the title/description-only variant: getWallOwnerProfile
+  // (via enrichProfileWithContactFallback) already computes is_former_office_holder,
+  // but this metadata function wasn't reading it, so the page's <title>/OG/
+  // Twitter card kept calling a former officeholder "Mayor" (present tense)
+  // even though the in-page badge (PoliticianWallClient.tsx) correctly shows
+  // "Former Mayor" -- this is what a shared-link preview or SERP snippet
+  // shows, so it drifting from the actual page content is a real bug, not
+  // cosmetic. Skipped when there's an activeCandidacy: someone actively
+  // running again this cycle should read as "Mayor Candidate", not the
+  // self-contradictory "Former Mayor Candidate".
+  const isFormerHolder = !activeCandidacy && Boolean((owner?.politician_profiles as any)?.is_former_office_holder);
+  const displayRoleTitle = isFormerHolder ? `Former ${roleTitle}` : roleTitle;
+
   const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;
   const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
   if (canonicalWallSlug && ghostId !== canonicalWallSlug) redirect(`/wall/${canonicalWallSlug}`);
@@ -63,7 +79,7 @@ export async function generateMetadata({
   // Keep titles tight and under 60 characters for SERP display
   const title = activeCandidacy
     ? `${name}${partyLabel} — ${roleTitle} Candidate${locationLabel}`
-    : `${name}${partyLabel} — ${roleTitle}${locationLabel} | Choseno`;
+    : `${name}${partyLabel} — ${displayRoleTitle}${locationLabel} | Choseno`;
 
   const ratingPrefix =
     rating && rating.count > 0
