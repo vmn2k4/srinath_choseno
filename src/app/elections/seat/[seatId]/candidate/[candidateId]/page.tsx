@@ -2,12 +2,18 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient";
-import { createClient as createServerClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
 import { buildSeatSlug, buildCandidateSlug, extractIdFromSlug } from "@/lib/utils/slugs";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
+
+// Same reasoning as the parent seat page (src/app/elections/seat/[seatId]/
+// page.tsx) — ElectionSeatPageClient re-fetches with the real session
+// client-side regardless of this SSR shell, so an admin previewing a draft
+// election just sees a brief loading state instead of instant content.
+export const revalidate = 300;
 
 interface CandidateSeatPageProps {
   params: Promise<{ seatId: string; candidateId: string }>;
@@ -17,7 +23,7 @@ interface CandidateSeatPageProps {
 // candidates for the same seatId. Deduped via React cache() so it's one
 // pair of DB round trips per request instead of two.
 const getSeatWithCandidates = cache(async (seatId: string) => {
-  const supabase = await createServerClient();
+  const supabase = await createPublicClient();
   const [{ data: seat }, { data: candidates }] = await Promise.all([
     getSeatById(supabase, seatId),
     getCandidatesBySeatIds(supabase, [seatId]),

@@ -667,7 +667,14 @@ export default function ElectionSeatPageClient({
                         if (!ghostId) return null;
                         const candName = activeCand.display_name || activeCand.profiles?.full_name || "candidate";
                         const roleTitle = seat?.role_title || "";
-                        const slug = buildPoliticianWallSlug(candName, roleTitle);
+                        // Prefer the candidate's real stored wall_slug — a
+                        // computed name+role slug can collide with an
+                        // unrelated profile's actual slug and silently link
+                        // to the wrong wall (see resolvePoliticianWallSlug
+                        // in CandidacyWall.tsx for the confirmed case).
+                        const pol = activeCand.profiles?.politician_profiles;
+                        const realSlug = Array.isArray(pol) ? pol[0]?.wall_slug : pol?.wall_slug;
+                        const slug = realSlug || buildPoliticianWallSlug(candName, roleTitle);
                         const wallHref = `/wall/${slug}`;
                         return (
                           <Link href={wallHref}>

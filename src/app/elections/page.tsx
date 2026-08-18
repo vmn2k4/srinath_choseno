@@ -3,20 +3,26 @@ import ElectionsPageClient, {
   SeatWithCandidates,
   MatchedBoundary,
 } from "@/components/features/ElectionsPageClient";
-import { createClient } from "@/lib/supabase/server";
-import {
-  getActiveSeatsByShapeIds,
-  getActiveSeats,
-  getCandidatesBySeatIds,
-} from "@/lib/services/elections";
-import {
-  getProfileRole,
-  getUserBoundaryMemberships,
-} from "@/lib/services/profile";
+import { createPublicClient } from "@/lib/supabase/publicServer";
+import { getActiveSeats, getCandidatesBySeatIds } from "@/lib/services/elections";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
+
+// This page used to call auth.getUser() server-side to decide between a
+// personalized (your boundary's seats) or anonymous (platform-wide, capped)
+// view -- which meant every visit was fully dynamic, cached or not.
+// Personalization now happens client-side instead (ElectionsPageClient's
+// own effect, mirroring the pattern already used for its guest-location
+// flow): this SSR shell always renders the same anonymous, cacheable view,
+// and a signed-in visitor's real boundary-scoped seats replace it
+// client-side right after mount using their own session. Unlike the
+// candidate-facing pages (which just re-render the same content on a
+// flash), this one visibly SWAPS from the generic list to the personalized
+// one for a returning signed-in user -- a real, if brief, UI change worth
+// knowing about if it ever needs revisiting.
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Track 2026 Election Candidates by District | Choseno",
@@ -49,58 +55,17 @@ export const metadata: Metadata = {
 };
 
 export default async function ElectionsPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const supabase = await createPublicClient();
 
-  let role: string | null = null;
-  let seatRows: SeatWithCandidates[] | null = null;
-  let initialBoundaries: MatchedBoundary[] = [];
-
-  if (user) {
-    const [{ data: myProfile }, { data: memberships }] = await Promise.all([
-      getProfileRole(supabase, user.id),
-      getUserBoundaryMemberships(supabase, user.id),
-    ]);
-    role = myProfile?.role || null;
-
-    const memRows = (memberships || []) as Array<{
-      map_shape_id: number;
-      map_shapes?: {
-        id: number;
-        name: string;
-        country?: string;
-        boundary_type?: string;
-      } | null;
-    }>;
-
-    initialBoundaries = memRows
-      .map((m) => m.map_shapes)
-      .filter((s): s is NonNullable<typeof s> => Boolean(s))
-      .map((s) => ({
-        id: s.id,
-        name: s.name,
-        country: s.country,
-        boundary_type: s.boundary_type,
-      }));
-
-    const shapeIds = initialBoundaries.map((b) => b.id);
-
-    if (shapeIds.length > 0) {
-      const res = await getActiveSeatsByShapeIds(supabase, shapeIds);
-      seatRows = res.data as SeatWithCandidates[] | null;
-    } else {
-      seatRows = [];
-    }
-  } else {
-    // Anonymous/no-boundary view — platform-wide, so it's the one branch
-    // that can actually run into the hundreds-of-seats crawl-budget problem
-    // (see the SEO audit). Capped here as a payload safety net; the render
-    // itself is windowed client-side (ElectionsPageClient) regardless.
-    const res = await getActiveSeats(supabase, { limit: 300 });
-    seatRows = res.data as SeatWithCandidates[] | null;
-  }
+  // Always the anonymous, platform-wide view now (capped — the one branch
+  // that can actually run into the hundreds-of-seats crawl-budget problem,
+  // see the SEO audit; the render itself is windowed client-side too,
+  // ElectionsPageClient, regardless). A signed-in visitor's real
+  // boundary-scoped seats replace this client-side right after mount.
+  const res = await getActiveSeats(supabase, { limit: 300 });
+  const seatRows = res.data as SeatWithCandidates[] | null;
+  const role: string | null = null;
+  const initialBoundaries: MatchedBoundary[] = [];
 
   const seatIds = (seatRows || []).map((s) => s.id);
   const candidatesBySeat: Record<string, unknown[]> = {};

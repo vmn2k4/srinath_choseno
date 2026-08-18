@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient";
-import { createClient as createServerClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import {
@@ -15,6 +15,17 @@ import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
 
+// election_candidates/election_seats/elections all share a "status <>
+// 'draft' OR is-admin" RLS branch (an admin previewing a still-draft
+// election is the one case this client can't see -- the anon session has
+// no admin bypass). Safe here anyway: ElectionSeatPageClient re-fetches
+// everything client-side on mount using the browser's own authenticated
+// session regardless of what this SSR shell returned, so an admin viewing
+// a draft election sees a brief loading state instead of instant content,
+// never wrong/missing content. Everyone else (the overwhelming majority —
+// non-draft elections, non-admin visitors) gets the real caching win.
+export const revalidate = 300;
+
 interface SeatPageProps {
   params: Promise<{ seatId: string }>;
   searchParams: Promise<{ candidate?: string }>;
@@ -24,7 +35,7 @@ interface SeatPageProps {
 // candidates for the same seatId. Deduped via React cache() so it's one
 // pair of DB round trips per request instead of two.
 const getSeatWithCandidates = cache(async (seatId: string) => {
-  const supabase = await createServerClient();
+  const supabase = await createPublicClient();
   const { data: seat } = await getSeatById(supabase, seatId);
   const { data: candidates } = await getCandidatesBySeatIds(
     supabase,

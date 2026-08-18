@@ -3,6 +3,7 @@ import type { Database } from "@/lib/supabase/types";
 import { fetchAllPages } from "@/lib/utils/fetchAllPages";
 import { extractIdFromSlug, buildSeatSlug, buildLegacySeatSlug, buildCandidateSlug, slugifyText } from "@/lib/utils/slugs";
 import { isDevEnvironment } from "@/lib/utils/environment";
+import { getShapeContainers, getNationalShapeForCountry } from "@/lib/services/boundaries";
 
 type Client = SupabaseClient<Database>;
 type ElectionSeatInsert = Database["public"]["Tables"]["election_seats"]["Insert"];
@@ -179,6 +180,134 @@ export async function getOfficeHoldersForShape(supabase: Client, mapShapeId: num
     res.data = await enrichOfficeHolders(supabase, res.data);
   }
   return res;
+}
+
+// ── representation branch resolution (boundary directory page) ─────────────
+// Moved here from src/app/elections/[boundarySlug]/page.tsx so it's callable
+// from both the server (the primary branch — the boundary the URL names)
+// and the client (a signed-in visitor's OTHER branches — their own
+// Provincial riding, Municipal ward, etc. — resolved after mount using
+// their own session, once the page itself stopped resolving auth
+// server-side to become cacheable). Same reasoning as every other
+// personalization-moved-client-side page this pass: page.tsx's SEO content
+// (FAQ schema, representation sentences) only needs the primary branch
+// anyway, since a crawler is never signed in to have "other" branches.
+//
+// Return shape matches RepresentationBranch/BranchHolderNode
+// (src/components/features/RepresentationBranchTree.tsx) structurally —
+// not imported by name here, since a service file must never import from
+// the component layer above it.
+type ShapeRow = { id: number; name: string; country: string; boundary_type: string; properties?: unknown };
+
+type OfficeHolderRow = {
+  id: string;
+  full_name: string;
+  bio?: string | null;
+  source_url?: string | null;
+  photo_url?: string | null;
+  contact_email?: string | null;
+  contact_phone?: string | null;
+  map_shapes?: { id?: number; name?: string; boundary_type?: string } | null;
+  election_role_types?: { role_title?: string; role_key?: string; description?: string | null } | null;
+  political_parties?: { name?: string } | null;
+  profiles?: {
+    current_ghost_id?: string | null;
+    politician_profiles?: { photo_url?: string | null; avatar_url?: string | null; contact_email?: string | null; contact_phone?: string | null; source_url?: string | null } | null;
+  } | null;
+};
+
+// The role a person holds when they ARE the head of their branch, rather
+// than a local representative reporting up to one -- used to split a
+// shape's own office holders into a "top" node (Mayor, or a fetched
+// Premier/Governor/Prime Minister/President) vs. "bottom" nodes
+// (Councillors, or the shape's own MP/MLA/etc.).
+const HEAD_ROLE_TITLES = new Set(["Mayor", "Governor", "Premier", "Prime Minister", "President", "Chief Minister", "Board Chair"]);
+
+// Where to find the "top" office for a boundary_type that ISN'T itself a
+// head-of-branch shape (a riding/district has no head role of its own, so
+// its superior comes from the National shape directly, or from the
+// container (Province/State) it geometrically sits inside). Boundary types
+// not listed here (Municipal, Province, State, National) resolve their top
+// node from their OWN office holders instead.
+const SUPERIOR_SOURCE: Record<string, { source: "national" } | { source: "container"; containerType: string }> = {
+  "Canada:Federal": { source: "national" },
+  "USA:Federal": { source: "national" },
+  "India:Lok Sabha": { source: "national" },
+  "Canada:Provincial": { source: "container", containerType: "Province" },
+  "USA:State Senate": { source: "container", containerType: "State" },
+  "USA:State House": { source: "container", containerType: "State" },
+  "India:Vidhan Sabha": { source: "container", containerType: "State" },
+};
+
+function toNode(row: OfficeHolderRow) {
+  const pp = row.profiles?.politician_profiles;
+  return {
+    id: row.id,
+    full_name: row.full_name,
+    role_title: row.election_role_types?.role_title || "Elected Official",
+    role_description: row.election_role_types?.description || null,
+    party_name: row.political_parties?.name || null,
+    photo_url: row.photo_url || pp?.photo_url || pp?.avatar_url || null,
+    ghost_id: row.profiles?.current_ghost_id || null,
+    boundary_name: row.map_shapes?.name || null,
+    contact_email: row.contact_email || pp?.contact_email || null,
+    contact_phone: row.contact_phone || pp?.contact_phone || null,
+    source_url: row.source_url || pp?.source_url || null,
+  };
+}
+
+export function branchKeyFor(shape: ShapeRow): string {
+  return shape.boundary_type.toLowerCase().replace(/\s+/g, "-");
+}
+
+export async function resolveRepresentationBranch(supabase: Client, shape: ShapeRow) {
+  const { data } = await getOfficeHoldersForShape(supabase, shape.id);
+  const rows = (data || []) as unknown as OfficeHolderRow[];
+
+  const headHere = rows.filter((r) => HEAD_ROLE_TITLES.has(r.election_role_types?.role_title || ""));
+  const restHere = rows.filter((r) => !HEAD_ROLE_TITLES.has(r.election_role_types?.role_title || ""));
+
+  let top: ReturnType<typeof toNode> | null = null;
+  let bottom: ReturnType<typeof toNode>[] = [];
+
+  if (headHere.length > 0) {
+    top = toNode(headHere[0]);
+    bottom = restHere.map(toNode);
+  } else {
+    bottom = rows.map(toNode);
+    const config = SUPERIOR_SOURCE[`${shape.country}:${shape.boundary_type}`];
+
+    if (config?.source === "national") {
+      const { data: national } = await getNationalShapeForCountry(supabase, shape.country);
+      if (national?.id) {
+        const { data: nHolders } = await getOfficeHoldersForShape(supabase, national.id);
+        const head = ((nHolders || []) as unknown as OfficeHolderRow[]).find((h) =>
+          HEAD_ROLE_TITLES.has(h.election_role_types?.role_title || "")
+        );
+        if (head) top = toNode(head);
+      }
+    } else if (config?.source === "container") {
+      const { data: containers } = await getShapeContainers(supabase, shape.id);
+      const match = (containers || []).find(
+        (c: any) => c.map_shapes?.boundary_type === config.containerType
+      );
+      if (match?.container_shape_id) {
+        const { data: cHolders } = await getOfficeHoldersForShape(supabase, match.container_shape_id);
+        const head = ((cHolders || []) as unknown as OfficeHolderRow[]).find((h) =>
+          HEAD_ROLE_TITLES.has(h.election_role_types?.role_title || "")
+        );
+        if (head) top = toNode(head);
+      }
+    }
+  }
+
+  return {
+    key: branchKeyFor(shape),
+    label: shape.boundary_type,
+    districtName: shape.name || null,
+    top,
+    bottom,
+  };
 }
 
 export async function getOfficeHoldersForShapes(
@@ -597,8 +726,12 @@ export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]
   // political_parties(name) reuses the same embed getPoliticianProfile()
   // already does for the candidate-wall party badge — widened here so the
   // seat page's roster/results view can show it without a second query.
+  // wall_slug: the candidate's real stored wall slug — callers must prefer
+  // this over a computed buildPoliticianWallSlug(name, role) fallback when
+  // building a "View Politician Wall" link; see resolvePoliticianWallSlug
+  // in CandidacyWall.tsx for why the computed fallback is unsafe on its own.
   const columns =
-    "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url, contact_email, contact_phone, political_parties(name)))";
+    "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url, contact_email, contact_phone, wall_slug, political_parties(name)))";
 
   let query = supabase.from("election_candidates").select(columns).in("seat_id", resolvedIds);
   if (!isDevEnvironment()) query = query.eq("profiles.is_test", false);
@@ -655,10 +788,17 @@ export async function getPublicCandidateById(supabase: Client, candidateId: stri
   // entirely in production rather than surviving with a null-embedded
   // profile (the default to-one embed behavior when an .eq() filter on the
   // embed doesn't match).
+  // profiles.politician_profiles(wall_slug): the candidate's real, stored
+  // wall slug -- callers must prefer this over a computed
+  // buildPoliticianWallSlug(name, role) fallback when linking to "View
+  // Politician Wall". Two different profiles can each have a valid, real
+  // wall_slug; buildPoliticianWallSlug() only ever recomputes name+role, so
+  // it can (and did, for a real candidate) collide with an unrelated
+  // profile's actual stored slug and silently link to the wrong wall.
   const columns = `
     id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, seat_id,
     election_seats ( role_title, map_shapes ( name, boundary_type, properties ), elections ( name, status ) ),
-    profiles!election_candidates_politician_id_fkey!inner ( full_name, current_ghost_id )
+    profiles!election_candidates_politician_id_fkey!inner ( full_name, current_ghost_id, politician_profiles ( wall_slug ) )
   `;
 
   const realCandidateId = extractIdFromSlug(candidateId);

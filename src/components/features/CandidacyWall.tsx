@@ -85,6 +85,13 @@ interface CandidateRecord {
     id?: string;
     full_name?: string;
     current_ghost_id?: string;
+    // The candidate's real, stored wall slug -- must be preferred over a
+    // computed buildPoliticianWallSlug(name, role) fallback. See
+    // getPublicCandidateById's comment: two different profiles can each
+    // have their own valid wall_slug, and the computed fallback only ever
+    // recomputes name+role, so it can collide with an unrelated profile's
+    // actual slug and silently link to the wrong wall.
+    politician_profiles?: { wall_slug?: string | null } | { wall_slug?: string | null }[] | null;
   };
   election_seats?: {
     role_title?: string;
@@ -127,6 +134,19 @@ interface QuestionnaireAnswer {
     content: string;
     created_at: string;
   }>;
+}
+
+// Resolves the URL for a candidate's own Politician Wall. Always prefer the
+// real, stored wall_slug over the computed buildPoliticianWallSlug(name,
+// role) fallback -- two different profiles can each have a valid wall_slug,
+// and the computed one only ever recomputes name+role, so it can (and for a
+// real candidate, did) collide with an unrelated profile's actual slug and
+// silently route to the wrong wall entirely. Only fall back to the computed
+// slug when no real one is on record yet (e.g. a freshly claimed profile).
+function resolvePoliticianWallSlug(candidate: CandidateRecord | null, displayName: string, roleTitle?: string | null) {
+  const pp = candidate?.profiles?.politician_profiles;
+  const realSlug = Array.isArray(pp) ? pp[0]?.wall_slug : pp?.wall_slug;
+  return realSlug || buildPoliticianWallSlug(displayName, roleTitle);
 }
 
 interface CandidacyWallProps {
@@ -239,7 +259,7 @@ export default function CandidacyWall({
     if (targetGhostId && candidate?.display_name) {
       map.set(targetGhostId, {
         fullName: candidate.display_name,
-        wallHref: `/wall/${buildPoliticianWallSlug(candidate.display_name, candidate.election_seats?.role_title)}`,
+        wallHref: `/wall/${resolvePoliticianWallSlug(candidate, candidate.display_name, candidate.election_seats?.role_title)}`,
       });
     }
     setPoliticianAuthors(map);
@@ -789,10 +809,7 @@ export default function CandidacyWall({
               <div className="flex items-center gap-2 flex-wrap shrink-0">
                 {candidate.profiles?.current_ghost_id && (
                   <Link
-                    href={(() => {
-                      const roleTitle = candidate.election_seats?.role_title || "";
-                      return `/wall/${buildPoliticianWallSlug(displayName, roleTitle)}`;
-                    })()}
+                    href={`/wall/${resolvePoliticianWallSlug(candidate, displayName, candidate.election_seats?.role_title)}`}
                   >
                     <Button
                       variant="outline"
@@ -1102,7 +1119,7 @@ export default function CandidacyWall({
                     (post.ghost_id === candidate?.profiles?.current_ghost_id && candidate?.display_name
                       ? {
                           fullName: candidate.display_name,
-                          wallHref: `/wall/${buildPoliticianWallSlug(candidate.display_name, candidate.election_seats?.role_title)}`,
+                          wallHref: `/wall/${resolvePoliticianWallSlug(candidate, candidate.display_name, candidate.election_seats?.role_title)}`,
                         }
                       : null)
                   }

@@ -3,15 +3,14 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 import Link from "next/link";
 import { MapPin, Landmark, ArrowRight, Building, Sparkles, Network } from "lucide-react";
-import { createClient as createServerClient } from "@/lib/supabase/server";
-import { getMapShapeById, getShapeContainers, getNationalShapeForCountry } from "@/lib/services/boundaries";
+import { createPublicClient } from "@/lib/supabase/publicServer";
+import { getMapShapeById, getShapeContainers } from "@/lib/services/boundaries";
 import {
   getElectionRoleTypes,
-  getOfficeHoldersForShape,
   getActiveSeatsByShapeIds,
   getCandidatesBySeatIds,
+  resolveRepresentationBranch,
 } from "@/lib/services/elections";
-import { getUserBoundaryMemberships } from "@/lib/services/profile";
 import BoundaryDirectoryClient from "@/components/features/BoundaryDirectoryClient";
 import type { BranchHolderNode, RepresentationBranch } from "@/components/features/RepresentationBranchTree";
 import { buildBoundarySlug, buildSeatSlug, extractShapeIdFromSlug } from "@/lib/utils/slugs";
@@ -20,6 +19,18 @@ import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
 
+// Personalization (a signed-in citizen's OTHER civic branches -- their own
+// Provincial riding, Municipal ward, etc.) moved client-side, same pattern
+// as /elections/page.tsx: this SSR shell always resolves just the primary
+// branch (the boundary the URL itself names) via the cookie-free client, so
+// it can actually be cached. BoundaryDirectoryClient resolves the viewer's
+// extra branches after mount using their own session and appends them to
+// the tab strip. The SEO content below (FAQ schema, representation
+// sentences) only ever needs the primary branch anyway -- a crawler is
+// never signed in to have "other" branches, so this is more correct for
+// its actual audience, not a reduction.
+export const revalidate = 300;
+
 interface PageProps {
   params: Promise<{ boundarySlug: string }>;
   searchParams: Promise<{ view?: string }>;
@@ -27,123 +38,12 @@ interface PageProps {
 
 type ShapeRow = { id: number; name: string; country: string; boundary_type: string; properties?: unknown };
 
-type OfficeHolderRow = {
-  id: string;
-  full_name: string;
-  bio?: string | null;
-  source_url?: string | null;
-  photo_url?: string | null;
-  contact_email?: string | null;
-  contact_phone?: string | null;
-  map_shapes?: { id?: number; name?: string; boundary_type?: string } | null;
-  election_role_types?: { role_title?: string; role_key?: string; description?: string | null } | null;
-  political_parties?: { name?: string } | null;
-  profiles?: { current_ghost_id?: string | null } | null;
-};
-
-// The role a person holds when they ARE the head of their branch, rather than
-// a local representative reporting up to one -- used to split a shape's own
-// office holders into a "top" node (Mayor, or a fetched Premier/Governor/
-// Prime Minister/President) vs. "bottom" nodes (Councillors, or the shape's
-// own MP/MLA/etc.).
-const HEAD_ROLE_TITLES = new Set(["Mayor", "Governor", "Premier", "Prime Minister", "President", "Chief Minister", "Board Chair"]);
-
-// Where to find the "top" office for a boundary_type that ISN'T itself a
-// head-of-branch shape (a riding/district has no head role of its own, so its
-// superior comes from the National shape directly, or from the container
-// (Province/State) it geometrically sits inside). Boundary types not listed
-// here (Municipal, Province, State, National) resolve their top node from
-// their OWN office holders instead (see resolveBranch).
-const SUPERIOR_SOURCE: Record<string, { source: "national" } | { source: "container"; containerType: string }> = {
-  "Canada:Federal": { source: "national" },
-  "USA:Federal": { source: "national" },
-  "India:Lok Sabha": { source: "national" },
-  "Canada:Provincial": { source: "container", containerType: "Province" },
-  "USA:State Senate": { source: "container", containerType: "State" },
-  "USA:State House": { source: "container", containerType: "State" },
-  "India:Vidhan Sabha": { source: "container", containerType: "State" },
-};
-
-function toNode(row: OfficeHolderRow & { profiles?: { politician_profiles?: { photo_url?: string | null; avatar_url?: string | null; contact_email?: string | null; contact_phone?: string | null; source_url?: string | null } | null } | null }): BranchHolderNode {
-  const pp = row.profiles?.politician_profiles;
-  return {
-    id: row.id,
-    full_name: row.full_name,
-    role_title: row.election_role_types?.role_title || "Elected Official",
-    role_description: row.election_role_types?.description || null,
-    party_name: row.political_parties?.name || null,
-    photo_url: row.photo_url || pp?.photo_url || pp?.avatar_url || null,
-    ghost_id: row.profiles?.current_ghost_id || null,
-    boundary_name: row.map_shapes?.name || null,
-    contact_email: row.contact_email || pp?.contact_email || null,
-    contact_phone: row.contact_phone || pp?.contact_phone || null,
-    source_url: row.source_url || pp?.source_url || null,
-  };
-}
-
-function branchKeyFor(shape: ShapeRow): string {
-  return shape.boundary_type.toLowerCase().replace(/\s+/g, "-");
-}
-
-async function resolveBranch(
-  supabase: Awaited<ReturnType<typeof createServerClient>>,
-  shape: ShapeRow
-): Promise<RepresentationBranch> {
-  const { data } = await getOfficeHoldersForShape(supabase, shape.id);
-  const rows = (data || []) as unknown as OfficeHolderRow[];
-
-  const headHere = rows.filter((r) => HEAD_ROLE_TITLES.has(r.election_role_types?.role_title || ""));
-  const restHere = rows.filter((r) => !HEAD_ROLE_TITLES.has(r.election_role_types?.role_title || ""));
-
-  let top: BranchHolderNode | null = null;
-  let bottom: BranchHolderNode[] = [];
-
-  if (headHere.length > 0) {
-    top = toNode(headHere[0]);
-    bottom = restHere.map(toNode);
-  } else {
-    bottom = rows.map(toNode);
-    const config = SUPERIOR_SOURCE[`${shape.country}:${shape.boundary_type}`];
-
-    if (config?.source === "national") {
-      const { data: national } = await getNationalShapeForCountry(supabase, shape.country);
-      if (national?.id) {
-        const { data: nHolders } = await getOfficeHoldersForShape(supabase, national.id);
-        const head = ((nHolders || []) as unknown as OfficeHolderRow[]).find((h) =>
-          HEAD_ROLE_TITLES.has(h.election_role_types?.role_title || "")
-        );
-        if (head) top = toNode(head);
-      }
-    } else if (config?.source === "container") {
-      const { data: containers } = await getShapeContainers(supabase, shape.id);
-      const match = (containers || []).find(
-        (c: any) => c.map_shapes?.boundary_type === config.containerType
-      );
-      if (match?.container_shape_id) {
-        const { data: cHolders } = await getOfficeHoldersForShape(supabase, match.container_shape_id);
-        const head = ((cHolders || []) as unknown as OfficeHolderRow[]).find((h) =>
-          HEAD_ROLE_TITLES.has(h.election_role_types?.role_title || "")
-        );
-        if (head) top = toNode(head);
-      }
-    }
-  }
-
-  return {
-    key: branchKeyFor(shape),
-    label: shape.boundary_type,
-    districtName: shape.name || null,
-    top,
-    bottom,
-  };
-}
-
 // generateMetadata and the page component below both resolve the same
 // shape from boundarySlug. Deduped via React cache() so it's one DB round
 // trip per request instead of two.
 const loadShape = cache(async (boundarySlug: string) => {
   const shapeId = extractShapeIdFromSlug(boundarySlug);
-  const supabase = await createServerClient();
+  const supabase = await createPublicClient();
   const { data: shape } = await getMapShapeById(supabase, shapeId);
   return { supabase, shape };
 });
@@ -176,13 +76,9 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
 
   if (!shape) notFound();
 
-  // These three don't depend on each other -- the seats/candidates lookup,
-  // the primary branch's office holders, and the auth check (which itself
-  // is a network round trip to validate the session) -- so run them
-  // concurrently instead of one after another.
-  const [{ containers, seatRows, candidateCountBySeat }, primaryBranch, {
-    data: { user },
-  }] = await Promise.all([
+  // Seats/candidates and the primary branch's office holders don't depend
+  // on each other -- run concurrently instead of one after another.
+  const [{ containers, seatRows, candidateCountBySeat }, primaryBranch] = await Promise.all([
     (async () => {
       const [{ data: containers }, { data: seats }] = await Promise.all([
         getShapeContainers(supabase, shape.id),
@@ -201,42 +97,13 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
     })(),
     // Primary branch: whichever hierarchy the boundary being viewed itself
     // belongs to (a Federal riding page always shows Prime Minister → MP, a
-    // Municipal page always shows Mayor → Councillors, etc).
-    resolveBranch(supabase, shape as ShapeRow),
-    supabase.auth.getUser(),
+    // Municipal page always shows Mayor → Councillors, etc). A signed-in
+    // visitor's OTHER branches are resolved client-side now, by
+    // BoundaryDirectoryClient, using their own session after mount.
+    resolveRepresentationBranch(supabase, shape as ShapeRow),
   ]);
 
-  const branches: RepresentationBranch[] = [primaryBranch];
-
-  // Plus, for a signed-in citizen, their OTHER branches too (their own
-  // Provincial riding, Municipal ward, etc.) -- so "All" genuinely shows
-  // their whole civic picture: PM→MP, Premier→MLA, and Mayor→Councillors
-  // together, not just whichever single boundary the URL happens to name.
-  if (user) {
-    const { data: memberships } = await getUserBoundaryMemberships(supabase, user.id);
-    const memberShapes = (memberships || [])
-      .map((m: any) => m.map_shapes as ShapeRow | null)
-      .filter(
-        (s): s is ShapeRow =>
-          s != null && s.country === shape.country && !s.boundary_type.toLowerCase().includes("polling")
-      );
-
-    // Dedup synchronously first (two member shapes could share a branch
-    // key), then resolve every distinct branch concurrently instead of
-    // one seat/office-holder lookup at a time.
-    const seenKeys = new Set(branches.map((b) => b.key));
-    const shapesToResolve: ShapeRow[] = [];
-    for (const memberShape of memberShapes) {
-      const key = branchKeyFor(memberShape);
-      if (seenKeys.has(key)) continue;
-      seenKeys.add(key);
-      shapesToResolve.push(memberShape);
-    }
-    const resolvedBranches = await Promise.all(
-      shapesToResolve.map((memberShape) => resolveBranch(supabase, memberShape))
-    );
-    branches.push(...resolvedBranches);
-  }
+  const branches: RepresentationBranch[] = [primaryBranch as RepresentationBranch];
 
   const containerList = (containers || []) as Array<{ map_shapes?: { id?: number; name?: string; boundary_type?: string } | null }>;
   const containerNames = containerList.map((c) => c.map_shapes?.name).filter((n): n is string => Boolean(n));
@@ -589,6 +456,7 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
         </h2>
         <BoundaryDirectoryClient
           branches={branches}
+          country={shape.country}
           // ?view=all lands on the combined view (linked from the feed
           // sidebar's "All Districts" Directory shortcut) instead of
           // whichever single branch the URL's own boundary belongs to.

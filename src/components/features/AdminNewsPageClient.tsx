@@ -28,6 +28,8 @@ import {
   updateNewsArticle,
   deleteNewsArticle,
   uploadNewsHeroImage,
+  uploadNewsOgImage,
+  getNewsArticleBySlug,
   isBreakingNewsActive,
   BREAKING_NEWS_ACTIVE_HOURS,
   getNewsArticlePoliticianTags,
@@ -50,6 +52,7 @@ import { normalizeCountryCode, normalizeProvinceCode } from "@/lib/utils/newsGeo
 import { getNewsAiPrompt, type NewsPromptPersonContext } from "@/lib/utils/newsPrompts";
 import { validateNewsArticleJson, validateNewsArticleBatchJson } from "@/lib/utils/newsValidation";
 import { containsEmoji } from "@/lib/utils/text";
+import { renderNewsArticleOgCardToPngBlob } from "@/lib/utils/ogCardBrowser";
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -250,19 +253,70 @@ function notifyIndexNow(slugs: string[]) {
 
 /**
  * Fires the one-time branded share-card generation for newly published
- * articles (api/news/[slug]/og-image/route.ts -> generateNewsArticleOgImage)
- * so hero_image_url is a static, pre-rendered PNG by the time anyone shares
- * the link, instead of depending on a live next/og render at share time
- * (the cause of X/Twitter sometimes showing no image). Fire-and-forget, same
- * as notifyIndexNow above: never overwrites an article that already has a
- * hero_image_url, so calling this on every publish is always safe/idempotent.
+ * articles so hero_image_url is a static, pre-rendered PNG by the time
+ * anyone shares the link, instead of depending on a live next/og render at
+ * share time (the cause of X/Twitter sometimes showing no image).
+ *
+ * Renders entirely in the browser (renderNewsArticleOgCardToPngBlob, Satori
+ * + canvas -- shares its layout code with the server renderer via
+ * ogCard.tsx) and uploads straight to Supabase Storage, so publishing from
+ * this admin UI never has to invoke the deployed Vercel Function
+ * (api/news/[slug]/og-image) either. Falls back to that route if browser
+ * rendering throws for any reason -- unsupported browser, a font/photo
+ * fetch hiccup, etc. -- which is itself idempotent (never overwrites an
+ * article that already has a hero_image_url), so this is always safe to
+ * call on every publish, fire-and-forget, same as notifyIndexNow above.
  */
-function generateOgImages(slugs: string[]) {
-  slugs.filter(Boolean).forEach((slug) => {
-    fetch(`/api/news/${slug}/og-image`, { method: "POST" }).catch(() => {
-      // Swallow -- best-effort; the live opengraph-image.tsx route still
-      // works as a fallback if this never succeeds.
-    });
+function generateOgImages(supabase: ReturnType<typeof createClient>, slugs: string[]) {
+  slugs.filter(Boolean).forEach(async (slug) => {
+    try {
+      const { data: articleData } = await getNewsArticleBySlug(supabase, slug);
+      if (!articleData || articleData.hero_image_url) return;
+
+      // getNewsArticleBySlug's declared return type is the base NewsArticle
+      // row -- its `select("*", ...)` also joins news_article_politicians,
+      // which isn't on that interface. Same cast newsOgImage.ts uses for the
+      // identical join shape server-side.
+      const article = articleData as NewsArticle & {
+        news_article_politicians?: Array<{
+          profiles?: {
+            full_name?: string;
+            designation?: string | null;
+            constituency?: string | null;
+            politician_profiles?: { photo_url?: string | null; avatar_url?: string | null } | null;
+          } | null;
+        }> | null;
+      };
+
+      const primaryPolitician = article.news_article_politicians?.map((p) => p.profiles).filter(Boolean)[0];
+
+      const blob = await renderNewsArticleOgCardToPngBlob({
+        headline: article.headline,
+        summary: article.summary,
+        category: article.category,
+        country: article.country,
+        province: article.province,
+        eventDate: article.event_date,
+        publishedAt: article.published_at,
+        bodyMarkdown: article.content?.body,
+        politicianName: primaryPolitician?.full_name,
+        politicianDesignation: primaryPolitician?.designation,
+        politicianConstituency: primaryPolitician?.constituency,
+        politicianPhotoUrl:
+          primaryPolitician?.politician_profiles?.photo_url || primaryPolitician?.politician_profiles?.avatar_url,
+      });
+
+      const { publicUrl, error: uploadError } = await uploadNewsOgImage(supabase, blob, slug);
+      if (uploadError || !publicUrl) throw uploadError ?? new Error("Upload returned no URL");
+      await updateNewsArticle(supabase, article.id, { hero_image_url: publicUrl });
+    } catch {
+      // Browser rendering/upload failed -- fall back to the deployed route
+      // (same fallback shape as scripts/insert-news-batch.js uses for the
+      // script-ingestion path). Swallow: best-effort, and the live
+      // opengraph-image.tsx route still works as a last-resort fallback if
+      // this never succeeds either.
+      fetch(`/api/news/${slug}/og-image`, { method: "POST" }).catch(() => {});
+    }
   });
 }
 
@@ -751,7 +805,7 @@ export default function AdminNewsPageClient() {
     }
 
     notifyIndexNow(created.filter((a) => a.status === "published").map((a) => a.slug));
-    generateOgImages(created.filter((a) => a.status === "published").map((a) => a.slug));
+    generateOgImages(supabase, created.filter((a) => a.status === "published").map((a) => a.slug));
 
     setBatchImporting(false);
     const tagNote = unmatchedByArticle.length
@@ -845,7 +899,7 @@ export default function AdminNewsPageClient() {
     } else {
       if (payload.status === "published") {
         notifyIndexNow([payload.slug]);
-        generateOgImages([payload.slug]);
+        generateOgImages(supabase, [payload.slug]);
       }
       setStatusMsg({ type: "success", msg: editingId ? "Article updated!" : "Article created!" });
       await loadArticles();
@@ -868,7 +922,7 @@ export default function AdminNewsPageClient() {
     } else {
       await syncNewsArticlePoliticianTags(supabase, id);
       notifyIndexNow([article.slug]);
-      generateOgImages([article.slug]);
+      generateOgImages(supabase, [article.slug]);
       setStatusMsg({ type: "success", msg: `"${article.headline}" published!` });
       await loadArticles();
     }

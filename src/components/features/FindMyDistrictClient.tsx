@@ -472,6 +472,7 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
             ) : branches.length > 0 ? (
               <BoundaryDirectoryClient
                 branches={branches}
+                country={boundaries[0]?.country || ""}
                 defaultBranchKey="all"
               />
             ) : (

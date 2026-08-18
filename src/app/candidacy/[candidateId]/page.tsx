@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { cache } from "react";
 import CandidacyWall from "@/components/features/CandidacyWall";
-import { createClient as createServerClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/publicServer";
 import {
   getPublicCandidateById,
   getPublicCandidateAnswers,
@@ -13,6 +13,13 @@ import { buildCandidateSlug, buildSeatSlug, extractIdFromSlug } from "@/lib/util
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
+
+// Same reasoning as the seat pages — election_candidates' RLS has a
+// "draft election requires admin" branch this anon client can't see, but
+// CandidacyWall re-fetches client-side with the real session on mount
+// regardless of this SSR shell, so the only cost is a brief loading state
+// for that rare admin-preview case, never wrong content.
+export const revalidate = 300;
 
 interface CandidatePageProps {
   params: Promise<{ candidateId: string }>;
@@ -31,7 +38,7 @@ type PublicCandidate = {
 // candidate. Deduped via React cache() so it's one DB round trip per
 // request instead of two.
 const getCandidate = cache(async (realCandidateId: string) => {
-  const supabase = await createServerClient();
+  const supabase = await createPublicClient();
   const { data } = await getPublicCandidateById(supabase, realCandidateId);
   return data as unknown as PublicCandidate | null;
 });
@@ -94,7 +101,7 @@ export async function generateMetadata({
 export default async function CandidacyPage({ params }: CandidatePageProps) {
   const { candidateId } = await params;
   const realCandidateId = extractIdFromSlug(candidateId);
-  const supabase = await createServerClient();
+  const supabase = await createPublicClient();
 
   const candidate = await getCandidate(realCandidateId);
 

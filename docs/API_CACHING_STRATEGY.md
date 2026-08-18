@@ -2,6 +2,8 @@
 
 In-memory and Supabase query caching to reduce database load and improve response times.
 
+> **This doc covers client-side/in-memory caching only.** A second, separate caching layer was added 2026-08-18: Next.js server-side route caching (`export const revalidate` + `createPublicClient()`), which is what actually stops a repeat page view from hitting Supabase at all — see [CHOSENO_ARCHITECTURE_GUIDE.md §13.6](CHOSENO_ARCHITECTURE_GUIDE.md#136-publicanonymous-supabase-client-for-cacheable-routes). The two are complementary, not overlapping: the route cache serves the same rendered page to every visitor for a window; the in-memory cache below is per-browser-session and mostly useful for repeat interactions within one visit.
+
 ---
 
 ## Overview

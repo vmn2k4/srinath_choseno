@@ -1,25 +1,74 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs } from "@/components/primitives";
 import RepresentationBranchTree, { RepresentationBranch } from "./RepresentationBranchTree";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import { createClient } from "@/lib/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { resolveRepresentationBranch, branchKeyFor } from "@/lib/services/elections";
+import { getUserBoundaryMemberships } from "@/lib/services/profile";
 
 // "All" stacks every branch (Federal, Provincial, Municipal, ...) the viewer
 // has -- their own memberships plus whichever branch the boundary being
 // viewed belongs to. Picking a specific tab (e.g. "Federal") narrows to just
 // that branch's Prime Minister → MP tree, mirroring the Feed's own
 // All Districts / Federal / Provincial / Municipal filter pills.
+//
+// `branches` from the server is always just the primary branch now (the
+// page stopped resolving auth server-side so it can be cached -- see
+// src/app/elections/[boundarySlug]/page.tsx). A signed-in visitor's OTHER
+// branches (their own Provincial riding, Municipal ward, etc.) are resolved
+// here instead, right after mount, using their own session, then appended
+// to local state -- so "All" still shows their whole civic picture, just a
+// beat later than before instead of baked into the SSR HTML.
 export default function BoundaryDirectoryClient({
-  branches,
+  branches: initialBranches,
+  country,
   defaultBranchKey,
 }: {
   branches: RepresentationBranch[];
+  country: string;
   defaultBranchKey: string;
 }) {
   const [activeKey, setActiveKey] = useState(defaultBranchKey);
+  const [branches, setBranches] = useState(initialBranches);
+  const { user, loading: authLoading } = useAuth();
   const supabase = createClient();
+
+  useEffect(() => {
+    if (authLoading || !user) return;
+    let cancelled = false;
+    (async () => {
+      const { data: memberships } = await getUserBoundaryMemberships(supabase, user.id);
+      const memberShapes = (memberships || [])
+        .map((m: any) => m.map_shapes)
+        .filter(
+          (s: any): s is { id: number; name: string; country: string; boundary_type: string } =>
+            s != null && s.country === country && !s.boundary_type.toLowerCase().includes("polling")
+        );
+
+      const seenKeys = new Set(initialBranches.map((b) => b.key));
+      const shapesToResolve: typeof memberShapes = [];
+      for (const memberShape of memberShapes) {
+        const key = branchKeyFor(memberShape);
+        if (seenKeys.has(key)) continue;
+        seenKeys.add(key);
+        shapesToResolve.push(memberShape);
+      }
+      if (shapesToResolve.length === 0) return;
+
+      const resolvedBranches = await Promise.all(
+        shapesToResolve.map((memberShape) => resolveRepresentationBranch(supabase, memberShape))
+      );
+      if (cancelled) return;
+      setBranches((prev) => [...prev, ...(resolvedBranches as RepresentationBranch[])]);
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, authLoading, country, supabase]);
 
   // Owns the actual reportContent RPC call (per the layered-architecture
   // rule that only page-level clients touch services) and hands it down to

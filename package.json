@@ -17,7 +17,8 @@
     "send-invites:test": "head -6 scripts/bc-municipal-outreach.csv > scripts/test.csv && ts-node scripts/send-politician-invites.ts scripts/test.csv 'Test Campaign'",
     "send-invites:mayors": "ts-node scripts/send-politician-invites.ts scripts/bc-municipal-outreach.csv 'BC Mayors & Councillors 2026'",
     "send-invites:parties": "ts-node scripts/send-politician-invites.ts scripts/bc-civic-parties-contacts.csv 'BC Civic Parties 2026'",
-    "fetch:trends": "node scripts/fetch-trending-topics.js"
+    "fetch:trends": "node scripts/fetch-trending-topics.js",
+    "ingest:news-batch": "node --import tsx scripts/insert-news-batch.js"
   },
   "dependencies": {
     "@google-analytics/data": "^6.1.0",
@@ -33,7 +34,8 @@
     "qrcode.react": "^4.2.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-markdown": "^10.1.0"
+    "react-markdown": "^10.1.0",
+    "satori": "^0.29.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",
@@ -42,9 +44,12 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/ws": "^8.18.1",
     "eslint": "^9",
     "eslint-config-next": "16.3.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "^4.23.12",
+    "typescript": "^5",
+    "ws": "^8.21.3"
   }
 }

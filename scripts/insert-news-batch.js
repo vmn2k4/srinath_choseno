@@ -17,8 +17,14 @@
  *      to match electoral boundary polygons and tag local ridings/districts.
  *   7. Prepends inserted articles to `batch-ranked-news.csv` (keeping top 100).
  *
- * Usage:
- *   node scripts/insert-news-batch.js
+ * Usage (preferred -- enables in-process share-card generation, see step 8
+ * below and the big comment near the og-image block in run()):
+ *   node --import tsx scripts/insert-news-batch.js
+ *   (or: npm run ingest:news-batch)
+ *
+ * Also still works with plain `node scripts/insert-news-batch.js` -- everything
+ * runs the same except step 8 transparently falls back to the deployed API
+ * route per article instead of rendering locally.
  */
 
 const fs = require('fs');
@@ -1009,6 +1015,70 @@ const articles = [
     ],
     "taggedPoliticianIds": [],
     "taggedPoliticians": ["Daniella Levine Cava"]
+  },
+  {
+    "slug": "delaware-voting-rights-act-signed-2026-08-06",
+    "headline": "Delaware Becomes First State to Enact Its Own John Lewis Voting Rights Act",
+    "summary": "Governor Matt Meyer signs House Bill 444, creating state-level voter discrimination protections, language-assistance requirements, and a private right of action, effective July 1, 2027.",
+    "category": "Elections",
+    "country": "US",
+    "province": "DE",
+    "status": "published",
+    "eventDate": "2026-08-06T18:00:00Z",
+    "published_at": "2026-08-18T07:35:00Z",
+    "impactArea": "state",
+    "latitude": 39.7391,
+    "longitude": -75.5398,
+    "body": "WILMINGTON, DE — Governor Matt Meyer signed House Bill 444, the Delaware John Lewis Voting Rights Act, into law Thursday at Shiloh Baptist Church, making Delaware the first state in the nation to codify its own version of the federal statute since congressional efforts to reauthorize the original 1965 law stalled in Washington.\n\n## Statutory Protections and Enforcement Mechanism\n\nThe law bars voter discrimination, suppression and vote dilution under state statute, and requires Delaware's Department of Elections to provide language assistance to voters with limited English proficiency. It creates a private right of action, letting members of a protected class bring civil suits over alleged violations, while giving counties and municipalities a defined window to cure discriminatory practices before litigation can proceed. The measure takes effect July 1, 2027, giving the Department of Elections roughly eleven months to draft implementing regulations and train county election staff before it becomes enforceable.\n\nRepresentative Larry Lambert carried the bill in the House and Senator Marie Pinkney led the Senate version. \"Delaware is once again leading as the First State – becoming the first in the nation to enshrine these protections into state law,\" Pinkney said after the signing. Lambert credited a broad coalition for the bill's passage: \"I'm deeply grateful to my colleagues in the General Assembly, to Governor Meyer, and to the many advocates who helped get this bill over the finish line.\"\n\n## Constituent and Regional Impact\n\nVoting rights groups say the civil-suit provision gives Delaware residents a direct legal remedy that previously required federal intervention, which advocates argued had become slower and less reliable as national voting rights enforcement contracted. The language-assistance mandate is expected to affect election administration most directly in New Castle County, home to Delaware's largest population of voters with limited English proficiency, where the Department of Elections will need to expand translated ballots, signage and poll-worker training ahead of the 2028 presidential cycle.\n\n## Accountability and Next Steps\n\nGovernor Meyer framed the signing as a direct response to federal inaction. \"Today, we sent a clear message to the nation: when Washington retreats on voting rights, Delaware steps up,\" Meyer said. House Speaker Melissa Minor-Brown added, \"Delaware will not go back to a time where only one group has a say in our democratic process.\" The Department of Elections is now expected to open a public rulemaking process over the coming months to define the preclearance-style cure period local governments will get before facing suit, with final regulations due ahead of the law's July 2027 effective date.",
+    "seoTitle": "Delaware Signs First State-Level John Lewis Voting Rights Act | Choseno",
+    "metaDescription": "Delaware Gov. Matt Meyer signs House Bill 444, the state's own John Lewis Voting Rights Act, adding voter protections effective July 2027.",
+    "tags": ["Matt Meyer", "Delaware", "Voting Rights", "Elections", "State Legislature"],
+    "tweet": "Delaware becomes the first state to enact its own John Lewis Voting Rights Act, adding language-access rules and a private right of action against voter suppression.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Civic News Desk",
+      "bio": "State legislation, voting rights, and election administration reporting"
+    },
+    "sources": [
+      {
+        "label": "Delaware Governor's Office",
+        "url": "https://news.delaware.gov/2026/08/06/governor-meyer-signs-john-lewis-voting-rights-act-strengthening-voting-rights-protections-in-delaware/"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": ["Matt Meyer"]
+  },
+  {
+    "slug": "new-york-cannabis-showcase-events-signed-2026-08-06",
+    "headline": "New York Creates Cannabis Showcase Events for Microbusinesses and Small Dispensaries",
+    "summary": "Governor Hochul signs S.10113/A.11217, letting licensed cannabis microbusinesses and dispensaries sell at farmers' markets and community pop-ups through new state-approved showcase events.",
+    "category": "Policy",
+    "country": "US",
+    "province": "NY",
+    "status": "published",
+    "eventDate": "2026-08-06T16:00:00Z",
+    "published_at": "2026-08-18T07:36:00Z",
+    "impactArea": "state",
+    "latitude": 42.6526,
+    "longitude": -73.7562,
+    "body": "ALBANY, NY — Governor Kathy Hochul signed S.10113/A.11217 on Thursday, creating a licensing track that lets cannabis microbusinesses and small dispensaries sell directly to the public at farmers' markets, street fairs and other approved community gatherings through what the state's Office of Cannabis Management is calling Cannabis Showcase Events.\n\n## New Sales Channel and Regulatory Mechanics\n\nThe law directs OCM to establish an application and approval process for Cannabis Showcase Events, giving licensed microbusinesses and dispensaries a temporary retail channel outside their fixed storefronts. Supporters say the change addresses a structural disadvantage: microbusinesses, which combine small-scale cultivation and processing under a single license, typically lack the marketing budgets and real estate to compete with larger vertically integrated operators for retail shelf space and foot traffic.\n\n\"This new law gives licensed microbusinesses and dispensaries a real chance to succeed in New York's legal cannabis market,\" Hochul said at the signing. OCM Executive Director John Kagia said the showcase events reinforce the state's broader equity goals: \"Regulated cannabis has proven to be an economic engine for New York, but the strength of this market lies in the businesses operating across the supply chain.\"\n\n## Constituent and Regional Impact\n\nState Senator Michelle Hinchey, who sponsored the Senate bill, said the change targets small, often rural operators squeezed out of the traditional retail buildout: \"Cannabis microbusinesses are often small farms without big marketing budgets or easy access to retail markets.\" Assemblymember Donna Lupardo, the Assembly sponsor, said the law is designed to reach growers and processors across the state, not just those near major dispensary corridors: \"The bill ensures that NY's cannabis microbusinesses can participate in Showcase Events occurring across the state.\"\n\n## Accountability and Next Steps\n\nThe Office of Cannabis Management must now write the application rules and approval criteria that will determine how quickly microbusinesses can begin using the new showcase-event pathway, including what local permitting or venue-partner requirements apply. Hinchey's and Lupardo's offices say they will track OCM's rulemaking timeline and push for the first showcase-event approvals to be issued before the state's 2027 growing season, so newly licensed cultivators have a retail outlet during their first full harvest cycle.",
+    "seoTitle": "New York Legalizes Cannabis Showcase Events for Microbusinesses | Choseno",
+    "metaDescription": "Gov. Hochul signs S.10113/A.11217, letting NY cannabis microbusinesses and dispensaries sell at farmers' markets via new Showcase Events.",
+    "tags": ["Kathy Hochul", "New York", "Cannabis", "Small Business", "State Legislature"],
+    "tweet": "New York now lets licensed cannabis microbusinesses and dispensaries sell at farmers' markets and street fairs through new state-approved Showcase Events.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Civic News Desk",
+      "bio": "State legislation, cannabis policy, and small-business regulation reporting"
+    },
+    "sources": [
+      {
+        "label": "New York Governor's Office",
+        "url": "https://www.governor.ny.gov/news/governor-hochul-signs-cannabis-bill-law-expanding-opportunities-microbusinesses-and"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": ["Kathy Hochul"]
   }
 ];
 
@@ -1016,6 +1086,37 @@ const articles = [
 async function run() {
   console.log(`Starting ingestion of ${articles.length} civic news articles...`);
   const authHeaders = await getAuthHeaders();
+
+  // In-process share-card generation setup -- see the big comment at the
+  // og-image block below for why. `require()`-ing the shared .tsx render
+  // code only works when this process was started with `node --import tsx`
+  // (tsx's loader hook lets plain CJS `require()` pull in TS/JSX files); on
+  // plain `node`, the require throws a SyntaxError and we fall back to the
+  // deployed API route per article, same as before this existed.
+  let generateNewsArticleOgImage = null;
+  let ogSupabaseClient = null;
+  try {
+    // @supabase/supabase-js constructs a Realtime client (unused here) that
+    // requires a global WebSocket, which Node only ships natively from v22+;
+    // on older Node this polyfills it with `ws` so createClient() below
+    // doesn't throw. No-ops if a native WebSocket is already present.
+    if (typeof globalThis.WebSocket === 'undefined') {
+      globalThis.WebSocket = require('ws');
+    }
+    ({ generateNewsArticleOgImage } = require('../src/lib/services/newsOgImage'));
+    const { createClient } = require('@supabase/supabase-js');
+    ogSupabaseClient = createClient(SUPABASE_URL, authHeaders.apikey, {
+      auth: { persistSession: false },
+      global: { headers: { Authorization: authHeaders.Authorization } },
+    });
+  } catch (e) {
+    console.warn(
+      `[og-image] In-process generation unavailable (${e.message}). Run via ` +
+      `\`node --import tsx scripts/insert-news-batch.js\` to render share-cards ` +
+      `locally instead of on the deployed Vercel Function. Falling back to the ` +
+      `API route per article for now.`
+    );
+  }
 
   // Fetch recent articles for deduplication
   const recentsUrl = `${SUPABASE_URL}/rest/v1/news_articles?select=id,slug,headline,published_at&order=published_at.desc&limit=1000`;
@@ -1133,18 +1234,43 @@ async function run() {
       }
     }
 
-    // Generate static OG card if local/deployed route is active
+    // 8. Generate the static share-card PNG. Tried in-process first (renders
+    // and uploads to Supabase Storage right here on this machine, using the
+    // exact same generateNewsArticleOgImage as the API route -- see setup
+    // above) so a whole batch never has to invoke a Vercel Function at all;
+    // this is what previously fired 25 requests at the deployed
+    // api/news/[slug]/og-image route back-to-back and spiked Fluid CPU usage.
+    // The deployed route stays as the backup: it's idempotent
+    // (generateNewsArticleOgImage no-ops once hero_image_url is set), so it's
+    // safe to call whenever in-process generation isn't available or fails.
     if (created.status === 'published') {
-      try {
-        const ogRes = await fetch(`${SITE_URL}/api/news/${created.slug}/og-image`, {
-          method: 'POST',
-          headers: { Authorization: authHeaders.Authorization }
-        });
-        if (ogRes.ok) {
-          console.log(`  -> Generated share-card image`);
+      let generatedLocally = false;
+      if (generateNewsArticleOgImage && ogSupabaseClient) {
+        try {
+          const { error: ogError } = await generateNewsArticleOgImage(ogSupabaseClient, created.slug);
+          if (ogError) {
+            console.warn(`  -> In-process share-card generation failed: ${ogError}`);
+          } else {
+            console.log(`  -> Generated share-card image (in-process)`);
+            generatedLocally = true;
+          }
+        } catch (ogErr) {
+          console.warn(`  -> In-process share-card generation threw: ${ogErr.message}`);
         }
-      } catch (ogErr) {
-        // Silently skip if local dev server isn't running on site_url
+      }
+
+      if (!generatedLocally) {
+        try {
+          const ogRes = await fetch(`${SITE_URL}/api/news/${created.slug}/og-image`, {
+            method: 'POST',
+            headers: { Authorization: authHeaders.Authorization }
+          });
+          if (ogRes.ok) {
+            console.log(`  -> Generated share-card image (server fallback)`);
+          }
+        } catch (ogErr) {
+          // Silently skip if local dev server isn't running on site_url
+        }
       }
     }
 

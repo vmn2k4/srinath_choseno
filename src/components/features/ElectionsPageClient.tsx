@@ -28,11 +28,13 @@ import { createClient } from "@/lib/supabase/client";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 import { findBoundariesByPoint } from "@/lib/services/boundaries";
 import { useTranslation } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   getActiveSeatsByShapeIds,
   getActiveSeats,
   getCandidatesBySeatIds,
 } from "@/lib/services/elections";
+import { getProfileRole, getUserBoundaryMemberships } from "@/lib/services/profile";
 import {
   useGuestLocation,
   setGuestLocation,
@@ -67,9 +69,22 @@ export default function ElectionsPageClient({
 }: ElectionsPageClientProps) {
   const { t } = useTranslation();
   const supabase = createClient();
+  const { user, loading: authLoading } = useAuth();
   const guestLocation = useGuestLocation();
-  const isGuest = initialBoundaries.length === 0;
+  // page.tsx no longer resolves auth server-side (see its comment), so
+  // initialBoundaries is always empty on first paint now regardless of who's
+  // visiting -- this has to key off the real client-side session instead.
+  // While auth itself is still resolving, isGuest stays false so the
+  // localStorage guest-location sync below doesn't briefly run for someone
+  // who turns out to be signed in.
+  const isGuest = !authLoading && !user;
 
+  const [role, setRole] = useState<string | null>(initialRole);
+  // A signed-in visitor's real, verified boundary memberships (once the
+  // personalization effect below resolves them) -- kept separate from
+  // matchedBoundaries so "Reset to Default" can return to the account's own
+  // districts instead of always resetting to empty/guest.
+  const [accountBoundaries, setAccountBoundaries] = useState<MatchedBoundary[]>(initialBoundaries);
   const [seats, setSeats] = useState<SeatWithCandidates[]>(initialSeats);
   const [loading, setLoading] = useState(false);
 
@@ -145,6 +160,52 @@ export default function ElectionsPageClient({
     [supabase]
   );
 
+  // Signed-in personalization -- the SSR shell (page.tsx) always renders the
+  // anonymous, cacheable platform-wide view now (no more server-side
+  // auth.getUser()); a verified account's real role and boundary-scoped
+  // seats replace it here right after mount, using the browser's own
+  // session. Mirrors the guest-location effect below, just for a real
+  // account instead of a localStorage-remembered point.
+  useEffect(() => {
+    if (authLoading || !user) return;
+    let cancelled = false;
+    (async () => {
+      const [{ data: myProfile }, { data: memberships }] = await Promise.all([
+        getProfileRole(supabase, user.id),
+        getUserBoundaryMemberships(supabase, user.id),
+      ]);
+      if (cancelled) return;
+      setRole(myProfile?.role || null);
+
+      const memRows = (memberships || []) as Array<{
+        map_shape_id: number;
+        map_shapes?: { id: number; name: string; country?: string; boundary_type?: string } | null;
+      }>;
+      const boundaries: MatchedBoundary[] = memRows
+        .map((m) => m.map_shapes)
+        .filter((s): s is NonNullable<typeof s> => Boolean(s))
+        .map((s) => ({ id: s.id, name: s.name, country: s.country, boundary_type: s.boundary_type }));
+
+      setAccountBoundaries(boundaries);
+      setMatchedBoundaries(boundaries);
+      setShowPicker(boundaries.length === 0);
+      setMobileFinderOpen(boundaries.length === 0);
+
+      if (boundaries.length > 0) {
+        await fetchSeatsForBoundaries(boundaries);
+      } else {
+        // Matches the old server behavior exactly: a verified account with
+        // no boundary memberships yet sees an empty list (prompting them to
+        // find their district), not the generic platform-wide one.
+        setSeats([]);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, authLoading, supabase]);
+
   // Sync with guest location from localStorage / cross-tab storage events
   useEffect(() => {
     if (!isGuest) return;
@@ -200,8 +261,13 @@ export default function ElectionsPageClient({
   };
 
   const handleResetLocation = async () => {
+    // A signed-in visitor resets to their own verified account boundaries
+    // (resolved client-side, see the personalization effect above); a guest
+    // resets to the empty default, same as before.
+    const resetTarget = isGuest ? initialBoundaries : accountBoundaries;
+
     setHasCustomLocation(false);
-    setMatchedBoundaries(initialBoundaries);
+    setMatchedBoundaries(resetTarget);
     setCurrentLat(undefined);
     setCurrentLng(undefined);
 
@@ -209,14 +275,14 @@ export default function ElectionsPageClient({
       clearGuestLocation();
     }
 
-    await fetchSeatsForBoundaries(initialBoundaries);
+    await fetchSeatsForBoundaries(resetTarget);
   };
 
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 flex flex-col gap-6 lg:gap-8">
       <PageHeader icon={Vote} title={t("elections.title")} />
 
-      {initialRole === "normal" && (
+      {role === "normal" && (
         <Card
           padding="sm"
           className="flex items-center justify-between gap-4 flex-wrap"

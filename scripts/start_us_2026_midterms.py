@@ -231,19 +231,50 @@ def get_or_create_election(db_url):
     return out
 
 
-def build_seat_and_candidates_sql(election_id, map_shape_id, role_title, candidates_with_party, source_url_val):
+def find_existing_officeholder_profile(db_url, map_shape_id, name):
+    """
+    Look for a profile already linked (via office_holders.linked_profile_id)
+    to the CURRENT officeholder for this exact seat's map_shape_id, matching
+    by name. If one exists, the new election_candidates row must point at
+    THIS profile instead of minting a fresh stub -- otherwise a sitting
+    officeholder who's also running for their own seat this cycle ends up
+    with two independent, unlinked profiles (one from the officeholder
+    import, one freshly created here).
+    This is not a hypothetical: it happened for ~180 real candidates across
+    an earlier run of this script before this check existed. See
+    supabase/migrations/20260818000005_merge_officeholder_candidate_
+    duplicate_profiles.sql for the one-time cleanup and its comment for the
+    full root-cause writeup.
+    """
+    result = psql_scalar(
+        db_url,
+        f"""
+        SELECT p.id FROM public.office_holders oh
+        JOIN public.profiles p ON p.id = oh.linked_profile_id
+        WHERE oh.map_shape_id = {map_shape_id} AND lower(p.full_name) = lower({sql_str(name)})
+        LIMIT 1;
+        """,
+    )
+    return result or None
+
+
+def build_seat_and_candidates_sql(db_url, election_id, map_shape_id, role_title, candidates_with_party, source_url_val):
     """
     candidates_with_party: list of (candidate_name, party_name_or_None)
     Returns one multi-statement psql script that:
       1. Upserts the election_seat, \\gset's its id.
-      2. For each candidate: upserts its party (if any), then inserts a stub
-         profile + politician_profiles + election_candidates row, each
-         individually guarded by a "WHERE NOT EXISTS" so re-runs don't
-         duplicate. (Deliberately no DO $$ ... $$ blocks here -- psql's
-         \\gset/:'var' interpolation does not reach inside dollar-quoted
-         bodies, confirmed the hard way against the real DB; the stub id is
-         instead generated client-side in Python and inlined as a literal,
-         so no server-side variable needs to cross that boundary at all.)
+      2. For each candidate: if find_existing_officeholder_profile() finds a
+         sitting officeholder for this seat with the same name, links the
+         election_candidates row straight to THAT existing profile (no new
+         profiles/politician_profiles rows at all). Otherwise, upserts the
+         candidate's party (if any) and inserts a stub profile +
+         politician_profiles + election_candidates row, each individually
+         guarded by a "WHERE NOT EXISTS" so re-runs don't duplicate.
+         (Deliberately no DO $$ ... $$ blocks here -- psql's \\gset/:'var'
+         interpolation does not reach inside dollar-quoted bodies, confirmed
+         the hard way against the real DB; the stub id is instead generated
+         client-side in Python and inlined as a literal, so no server-side
+         variable needs to cross that boundary at all.)
     """
     parts = [
         f"""
@@ -254,6 +285,27 @@ def build_seat_and_candidates_sql(election_id, map_shape_id, role_title, candida
         """
     ]
     for i, (name, party) in enumerate(candidates_with_party):
+        not_exists_clause = f"""
+                NOT EXISTS (
+                  SELECT 1 FROM public.election_candidates ec
+                  JOIN public.profiles p ON p.id = ec.politician_id
+                  WHERE ec.seat_id = :'seat_id' AND lower(p.full_name) = lower({sql_str(name)})
+                )"""
+
+        existing_profile_id = find_existing_officeholder_profile(db_url, map_shape_id, name)
+        if existing_profile_id:
+            # Sitting officeholder running for their own seat -- link to
+            # their existing profile instead of minting a second one.
+            parts.append(
+                f"""
+                INSERT INTO public.election_candidates
+                    (seat_id, politician_id, status, submitted_at, added_by_election_admin_id)
+                SELECT :'seat_id', {sql_str(existing_profile_id)}, 'approved', now(), {sql_str(ADMIN_PROFILE_ID)}
+                WHERE {not_exists_clause};
+                """
+            )
+            continue
+
         canon = canonical_party_name(party)
         party_gset = f"party_id_{i}"
         if canon:
@@ -270,12 +322,6 @@ def build_seat_and_candidates_sql(election_id, map_shape_id, role_title, candida
             party_ref = "NULL"
         stub_id = str(uuid.uuid4())
         bio = None if canon else (f"Party (from FEC): {party}" if party else None)
-        not_exists_clause = f"""
-                NOT EXISTS (
-                  SELECT 1 FROM public.election_candidates ec
-                  JOIN public.profiles p ON p.id = ec.politician_id
-                  WHERE ec.seat_id = :'seat_id' AND lower(p.full_name) = lower({sql_str(name)})
-                )"""
         parts.append(
             f"""
             INSERT INTO public.profiles (id, role, full_name, onboarding_completed, country, current_ghost_id)
@@ -327,7 +373,7 @@ def run_office(db_url, api_key, election_id, office, cycle, states=None):
                     continue
                 pairs = [(normalize_candidate_name(c["name"]), c.get("party_full")) for c in cands]
                 sql = build_seat_and_candidates_sql(
-                    election_id, map_shape_id, "U.S. Representative", pairs,
+                    db_url, election_id, map_shape_id, "U.S. Representative", pairs,
                     source_url(cycle, "H", state=state, district=district),
                 )
                 psql_run(db_url, sql)
@@ -364,7 +410,7 @@ def run_office(db_url, api_key, election_id, office, cycle, states=None):
                     continue
                 pairs = [(normalize_candidate_name(c["name"]), c.get("party_full")) for c in cands]
                 sql = build_seat_and_candidates_sql(
-                    election_id, map_shape_id, "U.S. Senator", pairs, source_url(cycle, "S", state=state),
+                    db_url, election_id, map_shape_id, "U.S. Senator", pairs, source_url(cycle, "S", state=state),
                 )
                 psql_run(db_url, sql)
             except Exception as e:

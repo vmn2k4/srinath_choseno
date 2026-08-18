@@ -451,7 +451,9 @@ SELECT * FROM content_reports WHERE status = 'open';
 
 ## 13. Performance Architecture & Conventions
 
-This project uses the Next.js App Router **without** `cacheComponents` (`next.config.ts` doesn't set it — see the "Previous Model" caching guide, not the Cache Components one, when consulting Next.js docs). The reason: `src/lib/supabase/server.ts`'s `createClient()` calls `cookies()` to read the session, and any route that reads `cookies()`/`headers()`/`searchParams` is forced into per-request dynamic rendering regardless of `revalidate` config — so route-level ISR wouldn't actually cache anything here. Getting real ISR would require splitting an anonymous/public data client from the session-reading one; that's a real architecture change, not attempted in the pass below. Follow the four conventions this codebase actually uses instead:
+This project uses the Next.js App Router **without** `cacheComponents` (`next.config.ts` doesn't set it — see the "Previous Model" caching guide, not the Cache Components one, when consulting Next.js docs). The reason: `src/lib/supabase/server.ts`'s `createClient()` calls `cookies()` to read the session, and any route that reads `cookies()`/`headers()`/`searchParams` is forced into per-request dynamic rendering regardless of `revalidate` config — so route-level ISR wouldn't actually cache anything here.
+
+That split — an anonymous/public data client separate from the session-reading one — was flagged in an earlier version of this section as "a real architecture change, not attempted." It's since been done (2026-08-18 pass, §13.6–§13.8 below); the six conventions this codebase actually uses now:
 
 ### 13.1 Request-scoped Supabase client + fetch dedup
 
@@ -525,6 +527,44 @@ const VideoRecorder = dynamic(() => import("./VideoRecorder"), {
 
 Applied to `qrcode.react` and `VideoRecorder` in `PoliticianWallClient`, `FeedPageClient`, and `CandidateApplicationClient` — all three are among the highest-traffic client bundles in the app. Don't apply this to content that's needed immediately/above-the-fold or that matters for SEO (e.g. `react-markdown` rendering an article body stays a static import).
 
+### 13.6 Public/anonymous Supabase client for cacheable routes
+
+`src/lib/supabase/publicServer.ts` exports `createPublicClient()` — a plain `@supabase/supabase-js` client (anon key, `persistSession: false`, no cookie adapter), wrapped in React's `cache()` the same way as `server.ts`'s session-reading client. It never calls `cookies()`, so a page that uses it instead of `server.ts`'s `createClient()` is free to actually use `export const revalidate = N` — the route-level ISR that §13's intro explains doesn't work with the cookie-reading client.
+
+**The one rule that matters: only use it for a query whose RLS `SELECT` policy doesn't branch on `auth.uid()`.** This client always presents an anonymous session, so an auth-gated branch doesn't error — it just silently returns fewer rows, which is a much worse failure mode than a crash. Check the *actual* `CREATE POLICY` text in `supabase/migrations/**` before switching a page over; don't assume from the table name or from "it's public-facing." The concrete counterexample that motivated this rule: `election_candidates`/`election_seats`/`elections` all share a `status <> 'draft' OR (caller is admin)` policy — an admin previewing a still-in-setup draft election depends on their session passing that check, and there's no separate admin-only preview route for it (the public seat/candidacy pages *are* the preview surface, confirmed by grepping the whole `src/` tree for any other `'draft'`-aware code path — there is none).
+
+Where that risk is real but the page's own client component already re-fetches everything on mount using the browser's authenticated session anyway (`ElectionSeatPageClient`, `CandidacyWall`) — the SSR shell using the public client just means an admin previewing a draft sees a brief loading state before the client-side fetch (with their real session) corrects it, never wrong or missing content. That's why `/elections/seat/[seatId]`, its `/candidate/[candidateId]` sibling, and `/candidacy/[candidateId]` are on the public client despite touching `election_candidates` — the client-side rehydration is the safety net, not the RLS policy.
+
+Pages now on `createPublicClient()` + `revalidate = 300`s:
+- `/news/[slug]`, `/news/category/[slug]`, `/news/topic/[slug]`
+- `/wall/[ghostId]`, `/wall/[ghostId]/[slug]`
+- `/elections/seat/[seatId]`, `/elections/seat/[seatId]/candidate/[candidateId]`
+- `/candidacy/[candidateId]`
+- `/elections`, `/elections/[boundarySlug]`
+
+**Caveat that trips people up:** Next.js never caches anything in `next dev` (confirmed in the bundled framework docs — always check `node_modules/next/dist/docs/` for this project's actual version, not training-data assumptions, per the top of this codebase's `CLAUDE.md`). You cannot observe the caching win locally; you can only verify *correctness* (same data, same client) by comparing rendered output before/after. The performance win itself needs a production smoke-test — Supabase's own request log flattening after the first hit per page, or a `revalidate`-aware CDN cache header.
+
+#### Moving personalization client-side when the SSR content depended on it
+
+Two pages didn't just need a client swap — their server-rendered content (including the crawlable SEO text/JSON-LD) depended on `auth.getUser()` for real personalization, not just an RLS edge case:
+
+- **`/elections/page.tsx`** used to branch its whole query (a signed-in citizen's own boundary-scoped seats vs. the anonymous platform-wide list) on `auth.getUser()`. Now it always renders the anonymous view server-side; `ElectionsPageClient` gained a `useEffect` (mirrors its pre-existing guest-location-sync effect) that fetches the real signed-in role + boundary memberships after mount and replaces the generic list — including resetting "Reset to Default" to the account's real boundaries (`accountBoundaries` state) rather than the now-always-empty server props.
+- **`/elections/[boundarySlug]/page.tsx`** was the deeper case: the FAQ schema and representation sentences (both meant for crawlers, who are never signed in) were built from a signed-in citizen's *other* civic branches too, resolved server-side via `resolveBranch()` — a ~130-line function that lived directly in the page file and called Supabase itself, already a small layering violation independent of caching. It's been extracted into `resolveRepresentationBranch()` in `src/lib/services/elections.ts` (return type is structurally, not nominally, typed to `RepresentationBranch` from `RepresentationBranchTree.tsx` — a service file must never import a type from the component layer above it). The server now resolves only the primary branch (the boundary the URL names); `BoundaryDirectoryClient` calls the same service function client-side after mount to resolve a signed-in visitor's other branches and appends them, deduped against what the server already sent.
+
+The general recipe when a page's SSR content depends on `auth.getUser()`: (1) check whether the branch/query logic driving that personalization is already a service function reachable from a client component — if it's still inline in the page file, extract it first, structurally-typed rather than importing component types into the service layer; (2) drop the server-side auth check, always render the generic/anonymous branch via `createPublicClient()`; (3) add a client-side effect (`useAuth()` + the same service function) that resolves the personalized version after mount and replaces/merges it into state. This is strictly more work than a client swap — reach for it only when the personalization is genuinely baked into what gets rendered, not as a default.
+
+### 13.7 Index only what a traced query actually needs
+
+Three `CREATE INDEX` migrations landed 2026-08-18 (`20260818000003`, `20260818000004`), all built the same way: grep every `.eq()`/`.in()`/`.order()` in `src/lib/services/**`, cross-reference against every existing `CREATE INDEX` across the full migration history (a composite index only serves a query that filters on its *leading* column — `news_articles_public_idx (country, status, published_at)` doesn't help a query that filters `status`+`published_at` without `country`), then add an index only where a real, currently-running query has none. Not a blanket "index everything" pass — every index slows every future write on that table and costs storage, so a column nobody filters on doesn't earn one.
+
+Added: `politician_supporters(supporter_id)`, `profiles(current_ghost_id)` (partial, `WHERE NOT NULL`), `posts(wall_ghost_id)`, `posts(country, created_at desc)` (partial, `WHERE is_country`), `posts(created_at desc)` (partial, `WHERE is_international`), `news_articles(status, published_at desc)`, `election_administrators(profile_id)`, `election_administrators(submitted_at)` (partial, `WHERE status='pending'`), `office_holders(election_role_type_id)`.
+
+`posts` is the highest-write-volume table in the app (every user post/comment), so its new indexes are deliberately **partial** (`WHERE is_country` / `WHERE is_international`) — a post that's neither (the common case: an ordinary boundary-scoped feed post) never touches either index's maintenance cost on insert, only the minority of rows that actually match the predicate do.
+
+### 13.8 Pagination defaults on list-returning service functions
+
+Eight functions in `src/lib/services/**` fetched an entire growing table with no `.limit()` at all — `getWallPosts`, `getMentionedWallPosts`, `getSupportersList` (`politicianWall.ts`), `getCandidacyWallPosts` (`elections.ts`), `getMembershipScopedPosts`/`getCountryScopedPosts`/`getInternationalScopedPosts` (`feed.ts`), `getNewsArticleComments` (`news.ts`). Each now takes an optional `{ limit?, offset? }` and defaults to 50 rows via `.range()` when the caller doesn't pass one — every existing call site is protected automatically, no caller had to change. This is a **safety cap**, page 1 of a real pager, not a finished "Load more" feature; the `offset` param exists for that UI to be built on top without another signature change.
+
 ---
 
 ## 14. Next Steps for New Contributors
@@ -537,12 +577,14 @@ Applied to `qrcode.react` and `VideoRecorder` in `PoliticianWallClient`, `FeedPa
 6. **Document as you go**: Service layer is self-documenting; migrations are versioned; update schema docs if you add tables
 7. **New page with SEO metadata?** Read [§13.1](#131-request-scoped-supabase-client--fetch-dedup) before writing `generateMetadata` — dedupe its fetch against the page body from the start rather than fixing it later
 8. **New slugged entity?** Read [§13.2](#132-slugs-that-carry-a-short-hash-need-an-indexed-lookup-not-a-full-table-fetch) — a short-hash slug needs its indexed RPC lookup from day one, not after the table grows large enough to notice
+9. **New public/SEO page?** Read [§13.6](#136-publicanonymous-supabase-client-for-cacheable-routes) before deciding whether it can use `createPublicClient()` + `revalidate` — check the actual RLS policy text for every table it touches, don't assume from the table name
+10. **New list-returning service function?** Default it to a capped `{ limit, offset }` from the start (see [§13.8](#138-pagination-defaults-on-list-returning-service-functions)) — an unbounded `.select()` is free to write and expensive to notice later
 
 ---
 
 **Generated**: 2026-08-17 (Updated from 2026-08-11)  
 **Status**: Active Development (Search + Reporting + Social Sharing + News Master Cycle + Office Holders Phase 2; Elections stable)
-**Last performance pass**: 2026-08-11 — see [§13](#13-performance-architecture--conventions)  
+**Last performance pass**: 2026-08-18 — indexing, pagination defaults, and public-client route caching (§13.6–§13.8); previous pass 2026-08-11 — see [§13](#13-performance-architecture--conventions)  
 **Latest features**: 2026-08-17 — Search, Reporting, Sharing, News Ingestion, Office Holders (6 provinces/territories), SEO infrastructure
 
 ---

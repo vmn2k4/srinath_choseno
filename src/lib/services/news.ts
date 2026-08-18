@@ -294,16 +294,35 @@ export async function uploadNewsHeroImage(supabase: Client, file: File, slug: st
   return { publicUrl, error: null };
 }
 
-// generateNewsArticleOgImage lives in ./newsOgImage.ts, not here, even
-// though it's the same "services call Supabase" pattern as everything else
-// in this file. Reason: it imports src/lib/utils/og.tsx, which pulls in
-// next/og -> sharp -> Node builtins (fs, child_process). This file
-// (services/news.ts) is imported by client components (AdminNewsPageClient,
-// NewsArticleDetailClient per the layered architecture), so anything it
-// imports ends up in the client bundle -- next/og's Node-only code doesn't
-// resolve there and breaks the build. newsOgImage.ts is only ever imported
-// by the server-only API route that needs it, so it never crosses that
-// boundary.
+// generateNewsArticleOgImage (the next/og-based renderer) lives in
+// ./newsOgImage.ts, not here, even though it's the same "services call
+// Supabase" pattern as everything else in this file. Reason: it imports
+// src/lib/utils/og.tsx, which pulls in next/og -> sharp -> Node builtins
+// (fs, child_process). This file (services/news.ts) is imported by client
+// components (AdminNewsPageClient, NewsArticleDetailClient per the layered
+// architecture), so anything it imports ends up in the client bundle --
+// next/og's Node-only code doesn't resolve there and breaks the build.
+// newsOgImage.ts is only ever imported by the server-only API route that
+// needs it, so it never crosses that boundary.
+//
+// uploadNewsOgImage below is safe here, though: it's just a Storage call
+// with no next/og import. It's the upload half of the *browser* render path
+// (renderNewsArticleOgCardToPngBlob in ogCardBrowser.ts, which uses Satori
+// instead of next/og), called from AdminNewsPageClient's generateOgImages()
+// right at publish time -- same og-cards/{slug}.png path as
+// generateNewsArticleOgImage so both paths produce interchangeable output.
+
+export async function uploadNewsOgImage(supabase: Client, image: Blob, slug: string) {
+  const filePath = `og-cards/${slug}.png`;
+  const { error: uploadError } = await supabase.storage
+    .from("news-images")
+    .upload(filePath, image, { contentType: "image/png", upsert: true });
+  if (uploadError) return { publicUrl: null, error: uploadError };
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("news-images").getPublicUrl(filePath);
+  return { publicUrl, error: null };
+}
 
 // ── News article comments (via create_post RPC) ───────────────────────────
 
