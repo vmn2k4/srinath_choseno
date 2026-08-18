@@ -330,18 +330,30 @@ export default function PoliticianWallClient({
       if (!ghostId) return;
       if (!wallOwner) setLoading(true);
 
-      if (user) {
-        const { data: myProfile } = await getOwnProfile(supabase, user.id);
-        const myProfileTyped = myProfile as { id: string; current_ghost_id: string; country?: string | null } | null;
-        if (isMounted) setProfile(myProfileTyped);
-        if (myProfileTyped?.id) {
-          const { data: shapeRows } = await getUserBoundaryShapeIds(supabase, myProfileTyped.id);
-          if (isMounted) setViewerShapeIds((shapeRows || []).map((r) => r.map_shape_id));
-        }
-      }
+      // Three independent reads -- the signed-in viewer's own profile, the
+      // wall owner's profile, and the wall's posts -- none need each
+      // other's result, so they go out together instead of one at a time.
+      // (getOwnProfile -> getUserBoundaryShapeIds is its own short chain,
+      // wrapped in one promise so it still joins this same batch.)
+      const profilePromise = user
+        ? getOwnProfile(supabase, user.id).then(async ({ data: myProfile }) => {
+            const myProfileTyped = myProfile as { id: string; current_ghost_id: string; country?: string | null } | null;
+            if (isMounted) setProfile(myProfileTyped);
+            if (myProfileTyped?.id) {
+              const { data: shapeRows } = await getUserBoundaryShapeIds(supabase, myProfileTyped.id);
+              if (isMounted) setViewerShapeIds((shapeRows || []).map((r) => r.map_shape_id));
+            }
+          })
+        : Promise.resolve();
 
-      const { data: owner } = await getWallOwnerProfile(supabase, ghostId);
+      const [, { data: owner }, { data: postRows, error: postErr }] = await Promise.all([
+        profilePromise,
+        getWallOwnerProfile(supabase, ghostId),
+        getWallPosts(supabase, ghostId),
+      ]);
       const ownerRecord = owner as WallOwnerRecord | null;
+
+      let mentioned: PostWithComments[] = [];
 
       if (ownerRecord) {
         if (isMounted) {
@@ -367,23 +379,24 @@ export default function PoliticianWallClient({
           trackPoliticianViewed({ ghostId, source: "wall" });
         }
         if (ownerRecord.id) {
-          if (user) {
-            const { data: mySupport } = await getSupportStatus(
-              supabase,
-              ownerRecord.id,
-              user.id
-            );
-            if (isMounted) setIsSupporting(!!mySupport);
-          }
-          const { count } = await getSupporterCount(supabase, ownerRecord.id);
-          if (isMounted) setSupportCount(count || 0);
+          // These five all depend only on ownerRecord.id, not on each
+          // other (mentioned-posts included -- it only needs the owner's
+          // id, not the authored posts fetched above), so they fire as one
+          // batch instead of five sequential round trips.
+          const [supportResult, supporterCountResult, candsResult, summariesResult, mentionedResult] = await Promise.all([
+            user ? getSupportStatus(supabase, ownerRecord.id, user.id) : Promise.resolve({ data: null }),
+            getSupporterCount(supabase, ownerRecord.id),
+            getActiveCandidacies(supabase, ownerRecord.id),
+            getPoliticianEngagementSummaries(supabase, [ownerRecord.id]),
+            getMentionedWallPosts(supabase, ownerRecord.id),
+          ]);
 
-          const { data: cands } = await getActiveCandidacies(supabase, ownerRecord.id);
-          if (isMounted) setCandidacies((cands || []) as any[]);
-
-          const { data: summaries } = await getPoliticianEngagementSummaries(supabase, [ownerRecord.id]);
-          const summary = (summaries || [])[0] as { avg_rating: number; rating_count: number } | undefined;
+          if (user && isMounted) setIsSupporting(!!supportResult.data);
+          if (isMounted) setSupportCount(supporterCountResult.count || 0);
+          if (isMounted) setCandidacies((candsResult.data || []) as any[]);
+          const summary = (summariesResult.data || [])[0] as { avg_rating: number; rating_count: number } | undefined;
           if (isMounted) setRatingSummary({ avg: summary?.avg_rating || 0, count: summary?.rating_count || 0 });
+          mentioned = (mentionedResult.data as PostWithComments[]) || [];
 
           supportChannel = subscribeToSupportChanges(supabase, ownerRecord.id, () => {
             getSupporterCount(supabase, ownerRecord.id).then(({ count }) => {
@@ -398,26 +411,24 @@ export default function PoliticianWallClient({
         setWallOwner(null);
       }
 
-      const { data: postRows, error: postErr } = await getWallPosts(supabase, ghostId);
       if (!postErr && isMounted) {
         const authored = (postRows as PostWithComments[]) || [];
-
-        let mentioned: PostWithComments[] = [];
-        if (ownerRecord?.id) {
-          const { data: mentionedData } = await getMentionedWallPosts(supabase, ownerRecord.id);
-          mentioned = (mentionedData as PostWithComments[]) || [];
-        }
         const { merged, mentionOnlyIds } = mergeWallPosts(authored, mentioned);
         if (!isMounted) return;
         setPosts(merged);
         setMentionOnlyPostIds(mentionOnlyIds);
-        setPostMentions(await hydratePostMentions(supabase, merged));
 
-        const map = await hydratePoliticianAuthors(supabase, merged);
+        // Independent of each other -- both just derive from `merged`.
+        const [mentionsMap, authorsMap] = await Promise.all([
+          hydratePostMentions(supabase, merged),
+          hydratePoliticianAuthors(supabase, merged),
+        ]);
+        if (!isMounted) return;
+        setPostMentions(mentionsMap);
         if (ghostId && ownerRecord?.full_name) {
-          map.set(ghostId, { fullName: ownerRecord.full_name, wallHref: `/wall/${ownerRecord.politician_profiles?.wall_slug || buildPoliticianWallSlug(ownerRecord.full_name, ownerRecord.politician_profiles?.political_target_role)}` });
+          authorsMap.set(ghostId, { fullName: ownerRecord.full_name, wallHref: `/wall/${ownerRecord.politician_profiles?.wall_slug || buildPoliticianWallSlug(ownerRecord.full_name, ownerRecord.politician_profiles?.political_target_role)}` });
         }
-        if (isMounted) setPoliticianAuthors(map);
+        setPoliticianAuthors(authorsMap);
       }
       if (isMounted) setLoading(false);
     }

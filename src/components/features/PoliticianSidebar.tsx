@@ -322,6 +322,7 @@ export default function PoliticianSidebar({
                         commentCount={engagement?.commentCount ?? 0}
                         size="xs"
                         className="mt-0.5"
+                        disableRating
                       />
                     )}
                     <p className="text-text-muted text-[11px] truncate mt-0.5">
@@ -410,6 +411,7 @@ export default function PoliticianSidebar({
                         commentCount={engagement?.commentCount ?? 0}
                         size="xs"
                         className="mt-0.5"
+                        disableRating
                       />
                     )}
                     <p className="text-text-muted text-[11px] truncate">{pol.political_target_role}</p>

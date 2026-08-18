@@ -1,10 +1,20 @@
 import { Metadata } from "next";
 import HomePageClient from "@/components/features/HomePageClient";
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getPublishedNewsArticles } from "@/lib/services/news";
 import { SITE_URL, SITE_NAME } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
+
+// getPublishedNewsArticles below is pure public data (status = 'published'
+// AND published_at <= now(), same as every other public-read page) -- no
+// auth.uid() branch, so createPublicClient (cookie-free) is safe here. This
+// used to import the cookie-reading server client for this same query,
+// which -- per publicServer.ts's own warning -- forces the entire route to
+// render dynamically on every request with zero caching, on what's the
+// single highest-traffic page on the site. Sign-in state itself is read
+// client-side by HomePageClient via AuthContext, not from this SSR pass.
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Choseno — Rate Your Politician & See 2026 Candidate Reviews",
@@ -37,7 +47,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const supabase = await createClient();
+  const supabase = await createPublicClient();
   const { data: articles } = await getPublishedNewsArticles(supabase, { limit: 6 });
   const latestNews = (articles || []).map((a) => ({
     slug: a.slug,

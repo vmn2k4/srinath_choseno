@@ -186,34 +186,39 @@ export default function FeedPageClient() {
         return;
       }
       setLoading(true);
+      setLoadingMemberships(true);
 
-      const { data: profData } = await getOwnProfile(supabase, user.id);
+      // Four independent reads -- none need each other's result (score and
+      // active-elections need nothing at all; memberships only needs
+      // user.id) -- so they fire together instead of four sequential round
+      // trips before anything below could even start.
+      const [{ data: profData }, { data: freshScore }, { data: memData }, { data: elecData }] = await Promise.all([
+        getOwnProfile(supabase, user.id),
+        calculateMyScore(supabase),
+        getUserBoundaryMemberships(supabase, user.id),
+        getActiveElectionsForUser(supabase),
+      ]);
+
       const profRecord = profData as any;
       if (isMounted) {
         setProfile(profRecord);
         setScore(profRecord?.cached_total_score ?? 0);
       }
-
-      if (profRecord?.role === "politician") {
-        const { data: polData } = await getPoliticianProfileFull(supabase, user.id);
-        if (isMounted) setAvatarUrl(polData?.avatar_url || null);
-      }
-
-      const { data: freshScore } = await calculateMyScore(supabase);
       if (isMounted && freshScore != null) setScore(freshScore);
+      if (isMounted && elecData) setActiveElections(elecData as any[]);
 
-      // Memberships
-      setLoadingMemberships(true);
-      const { data: memData } = await getUserBoundaryMemberships(supabase, user.id);
       const shapes = (memData || []).map((m: any) => m.map_shapes).filter(Boolean);
+      const countries = [...new Set(shapes.map((s: any) => s.country))];
+
+      // These two depend on the batch above (profile.role, shapes) but not
+      // on each other, so they also fire together.
+      const [{ data: polData }, { data: types }] = await Promise.all([
+        profRecord?.role === "politician" ? getPoliticianProfileFull(supabase, user.id) : Promise.resolve({ data: null }),
+        shapes.length > 0 ? getBoundaryTypesForCountries(supabase, countries as string[]) : Promise.resolve({ data: [] }),
+      ]);
+      if (isMounted) setAvatarUrl(polData?.avatar_url || null);
 
       if (shapes.length > 0) {
-        const countries = [...new Set(shapes.map((s: any) => s.country))];
-        const { data: types } = await getBoundaryTypesForCountries(
-          supabase,
-          countries as string[]
-        );
-
         const rankOf = (countryName: string, typeName: string) =>
           (types as any[])?.find(
             (t: any) => t.country === countryName && t.type_name === typeName
@@ -230,11 +235,6 @@ export default function FeedPageClient() {
         if (isMounted) setMemberships([]);
       }
       if (isMounted) setLoadingMemberships(false);
-
-      // Active elections banner
-      const { data: elecData } = await getActiveElectionsForUser(supabase);
-      if (isMounted && elecData) setActiveElections(elecData as any[]);
-
       if (isMounted) setLoading(false);
     }
 

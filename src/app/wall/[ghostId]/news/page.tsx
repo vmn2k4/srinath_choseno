@@ -1,8 +1,9 @@
 import { Metadata } from "next";
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Newspaper } from "lucide-react";
-import { createClient as createServerClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getSEOProfileSummary, getSEOProfileSummaryBySlug } from "@/lib/services/politicianWall";
 import { getNewsArticlesByPolitician } from "@/lib/services/news";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
@@ -13,6 +14,12 @@ import NewsPager from "@/components/features/NewsPager";
 const BASE_URL = SITE_URL;
 const PAGE_SIZE = 24;
 
+// Same reasoning as the sibling wall pages (see src/app/wall/[ghostId]/
+// page.tsx) -- everything this page reads is public, so it doesn't need the
+// cookie-reading client, and revalidate actually works instead of silently
+// no-opping.
+export const revalidate = 300;
+
 interface WallNewsPageProps {
   params: Promise<{ ghostId: string }>;
   searchParams: Promise<{ page?: string }>;
@@ -22,13 +29,17 @@ function isUuid(value: string) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
 
-async function resolveOwner(ghostId: string) {
-  const supabase = await createServerClient();
+// generateMetadata and the page component below both need the same owner
+// summary for ghostId -- deduped via React cache() so it's one DB round trip
+// per request instead of two (this page was missing the dedup its sibling
+// wall routes already have).
+const resolveOwner = cache(async (ghostId: string) => {
+  const supabase = await createPublicClient();
   const { owner } = isUuid(ghostId)
     ? await getSEOProfileSummary(supabase, ghostId)
     : await getSEOProfileSummaryBySlug(supabase, ghostId);
   return owner;
-}
+});
 
 export async function generateMetadata({ params }: WallNewsPageProps): Promise<Metadata> {
   const { ghostId } = await params;
@@ -62,7 +73,7 @@ export default async function WallNewsArchivePage({ params, searchParams }: Wall
   const page = Math.max(1, parseInt(sp.page || "1", 10) || 1);
   const offset = (page - 1) * PAGE_SIZE;
 
-  const supabase = await createServerClient();
+  const supabase = await createPublicClient();
   const { data: articles, count } = await getNewsArticlesByPolitician(supabase, owner.id, {
     limit: PAGE_SIZE,
     offset,
