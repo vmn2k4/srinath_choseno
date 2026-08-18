@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
+import { fetchWithCache, invalidateCache } from "@/lib/utils/apiCache";
 
 type Client = SupabaseClient<Database>;
 
@@ -20,8 +21,10 @@ export async function reportContent(
 }
 
 export async function getModerationRules(supabase: Client, { includeDisabled = false }: { includeDisabled?: boolean } = {}) {
-  const q = supabase.from("moderation_rules").select("*").order("abuse_type");
-  return includeDisabled ? q : q.eq("enabled", true);
+  return fetchWithCache(`moderation_rules:${includeDisabled ? "all" : "enabled"}`, () => {
+    const q = supabase.from("moderation_rules").select("*").order("abuse_type");
+    return includeDisabled ? q : q.eq("enabled", true);
+  });
 }
 
 // ── admin-only ───────────────────────────────────────────────────────────
@@ -64,6 +67,7 @@ export async function adminUpdateModerationRule(
   scorePenalty: number,
   enabled: boolean
 ) {
+  invalidateCache("moderation_rules");
   return supabase.rpc("admin_update_moderation_rule", {
     p_abuse_type: abuseType,
     p_auto_remove_threshold: autoRemoveThreshold,

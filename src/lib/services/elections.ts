@@ -4,6 +4,7 @@ import { fetchAllPages } from "@/lib/utils/fetchAllPages";
 import { extractIdFromSlug, buildSeatSlug, buildLegacySeatSlug, buildCandidateSlug, slugifyText } from "@/lib/utils/slugs";
 import { isDevEnvironment } from "@/lib/utils/environment";
 import { getShapeContainers, getNationalShapeForCountry } from "@/lib/services/boundaries";
+import { fetchWithCache } from "@/lib/utils/apiCache";
 
 type Client = SupabaseClient<Database>;
 type ElectionSeatInsert = Database["public"]["Tables"]["election_seats"]["Insert"];
@@ -43,12 +44,16 @@ export async function deleteElection(supabase: Client, electionId: string) {
 }
 
 // ── election_role_types ─────────────────────────────────────────────────
+// Seeded via migrations only -- no service function ever writes to this
+// table, so it's safe to cache indefinitely with no invalidation path.
 export async function getElectionRoleTypes(supabase: Client, country: string, boundaryType: string) {
-  return supabase
-    .from("election_role_types")
-    .select("id, role_key, region_override, role_title, description")
-    .eq("country", country)
-    .eq("boundary_type", boundaryType);
+  return fetchWithCache(`election_role_types:${country}:${boundaryType}`, () =>
+    supabase
+      .from("election_role_types")
+      .select("id, role_key, region_override, role_title, description")
+      .eq("country", country)
+      .eq("boundary_type", boundaryType)
+  );
 }
 
 /**
@@ -61,12 +66,14 @@ export async function getElectionRoleTypes(supabase: Client, country: string, bo
  * regardless of what a given province calls the seat.
  */
 export async function getAllElectionRoleTypesForCountry(supabase: Client, country: string) {
-  return supabase
-    .from("election_role_types")
-    .select("id, boundary_type, role_key, region_override, role_title")
-    .eq("country", country)
-    .order("boundary_type")
-    .order("role_key");
+  return fetchWithCache(`election_role_types:all:${country}`, () =>
+    supabase
+      .from("election_role_types")
+      .select("id, boundary_type, role_key, region_override, role_title")
+      .eq("country", country)
+      .order("boundary_type")
+      .order("role_key")
+  );
 }
 
 /**
