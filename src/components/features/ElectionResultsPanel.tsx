@@ -201,14 +201,18 @@ export default function ElectionResultsPanel({
               {/* Identity block: avatar + name + party. Full width of its
                   own row on mobile so the name never has to compete with
                   the support button/stats for space and gets truncated
-                  into unreadable "Rick L..." — it only fights for room
-                  with the stats row again once there's a whole desktop
-                  row to spread across. */}
-              <div className="flex items-center gap-2.5 sm:flex-1 sm:min-w-0">
+                  into unreadable "Rick L..." On desktop it's a FIXED width
+                  (not flex-1) so it hugs the name instead of stretching
+                  and dragging the support button away with it — that fixed
+                  width is also what makes the button column up across
+                  rows regardless of name length, same as the progress bar
+                  now getting to spend that freed-up space instead of
+                  sitting in a sliver next to a wall of empty gap. */}
+              <div className="flex items-center gap-2.5 sm:w-48 sm:shrink-0 sm:min-w-0">
                 <Avatar src={avatarUrl} name={name} size="sm" />
                 <div className="flex flex-col min-w-0 flex-1 gap-0.5">
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-[15px] sm:text-sm font-bold text-text-main group-hover:underline leading-tight">
+                    <span className="text-[15px] sm:text-sm font-bold text-text-main group-hover:underline leading-tight truncate">
                       {name}
                     </span>
                     {isLeader && (
@@ -230,11 +234,11 @@ export default function ElectionResultsPanel({
                 </div>
               </div>
 
-              {/* Stats/action row: support button, progress bar, percentage,
-                  vote count, and a tap-through chevron. Its own full-width
-                  row on mobile — plenty of room for a readable "Support"
-                  label and a progress bar that isn't squeezed to a sliver. */}
-              <div className="flex items-center gap-2 sm:gap-2.5 sm:shrink-0">
+              {/* Stats/action row: support button (right next to the name
+                  column), a progress bar that now actually extends to
+                  fill the row, percentage, vote count, and a tap-through
+                  chevron. Its own full-width row on mobile. */}
+              <div className="flex items-center gap-2 sm:gap-2.5 sm:flex-1 sm:min-w-0">
                 <div className="relative shrink-0">
                   {!isSupporting && (
                     <span
@@ -269,7 +273,7 @@ export default function ElectionResultsPanel({
                   </Button>
                 </div>
 
-                <div className="h-2 flex-1 sm:w-20 sm:flex-initial rounded-full bg-surface-active overflow-hidden">
+                <div className="h-2 flex-1 rounded-full bg-surface-active overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
                       isTopRow ? "bg-primary" : "bg-primary/40"
