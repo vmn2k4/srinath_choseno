@@ -5,29 +5,15 @@ import Link from "next/link";
 import { MapPin, ArrowRight, Layers, Network, ChevronDown, Sparkles } from "lucide-react";
 import InteractiveLocationPicker from "./InteractiveLocationPicker";
 import BoundaryDirectoryClient from "./BoundaryDirectoryClient";
-import { findBoundariesByPoint, getShapeContainers, getNationalShapeForCountry } from "@/lib/services/boundaries";
-import { getOfficeHoldersForShape, getActiveSeatsByShapeIds, getCandidatesBySeatIds } from "@/lib/services/elections";
+import { findBoundariesByPoint } from "@/lib/services/boundaries";
+import { getActiveSeatsByShapeIds, getCandidatesBySeatIds, resolveRepresentationBranch } from "@/lib/services/elections";
 import { buildBoundarySlug, buildSeatSlug } from "@/lib/utils/slugs";
 import { Card, Spinner } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { trackFindDistrictCompleted } from "@/lib/analytics/events";
 import { useTranslation } from "@/contexts/LanguageContext";
-import type { BranchHolderNode, RepresentationBranch } from "./RepresentationBranchTree";
+import type { RepresentationBranch } from "./RepresentationBranchTree";
 import { useGuestLocation, setGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
-
-interface OfficeHolderRow {
-  id: string;
-  full_name: string;
-  bio?: string | null;
-  source_url?: string | null;
-  photo_url?: string | null;
-  contact_email?: string | null;
-  contact_phone?: string | null;
-  map_shapes?: { id?: number; name?: string; boundary_type?: string } | null;
-  election_role_types?: { role_title?: string; role_key?: string; description?: string | null } | null;
-  political_parties?: { name?: string } | null;
-  profiles?: { current_ghost_id?: string | null; politician_profiles?: { wall_slug?: string | null } | null } | null;
-}
 
 type ShapeRow = { id: number; name: string; country: string; boundary_type: string; properties?: unknown };
 
@@ -39,8 +25,6 @@ type SeatWithElections = {
   elections?: { name?: string; election_date?: string } | null;
 };
 
-const HEAD_ROLE_TITLES = new Set(["Mayor", "Governor", "Premier", "Prime Minister", "President", "Chief Minister", "Board Chair"]);
-
 function formatElectionDate(dateString?: string): string {
   if (!dateString) return "";
   try {
@@ -51,89 +35,20 @@ function formatElectionDate(dateString?: string): string {
   }
 }
 
-const SUPERIOR_SOURCE: Record<string, { source: "national" } | { source: "container"; containerType: string }> = {
-  "Canada:Federal": { source: "national" },
-  "USA:Federal": { source: "national" },
-  "India:Lok Sabha": { source: "national" },
-  "Canada:Provincial": { source: "container", containerType: "Province" },
-  "USA:State Senate": { source: "container", containerType: "State" },
-  "USA:State House": { source: "container", containerType: "State" },
-  "India:Vidhan Sabha": { source: "container", containerType: "State" },
-};
-
-function toNode(row: OfficeHolderRow): BranchHolderNode {
-  return {
-    id: row.id,
-    full_name: row.full_name,
-    role_title: row.election_role_types?.role_title || "Elected Official",
-    role_description: row.election_role_types?.description || null,
-    party_name: row.political_parties?.name || null,
-    photo_url: row.photo_url || null,
-    ghost_id: row.profiles?.current_ghost_id || null,
-    wall_slug: row.profiles?.politician_profiles?.wall_slug || null,
-    boundary_name: row.map_shapes?.name || null,
-    contact_email: row.contact_email || null,
-    contact_phone: row.contact_phone || null,
-    source_url: row.source_url || null,
-  };
-}
-
-function branchKeyFor(shape: ShapeRow): string {
-  return shape.boundary_type.toLowerCase().replace(/\s+/g, "-");
-}
-
+// Thin wrapper around the shared resolveRepresentationBranch (src/lib/
+// services/elections.ts) -- this used to be a full copy-pasted
+// reimplementation (toNode, HEAD_ROLE_TITLES, SUPERIOR_SOURCE, and the
+// branch-resolution walk) that had drifted out of sync with the server-side
+// version (it was missing wall_slug, which is what sent "View Wall" through
+// two redirects). One bad boundary shouldn't fail the whole batch in
+// resolveAllBranches below, so the try/catch that used to live inside the
+// duplicate stays here instead.
 async function resolveBranch(
   supabase: ReturnType<typeof createClient>,
   shape: ShapeRow
 ): Promise<RepresentationBranch | null> {
   try {
-    const { data } = await getOfficeHoldersForShape(supabase, shape.id);
-    const rows = (data || []) as unknown as OfficeHolderRow[];
-
-    const headHere = rows.filter((r) => HEAD_ROLE_TITLES.has(r.election_role_types?.role_title || ""));
-    const restHere = rows.filter((r) => !HEAD_ROLE_TITLES.has(r.election_role_types?.role_title || ""));
-
-    let top: BranchHolderNode | null = null;
-    let bottom: BranchHolderNode[] = [];
-
-    if (headHere.length > 0) {
-      top = toNode(headHere[0]);
-      bottom = restHere.map(toNode);
-    } else {
-      bottom = rows.map(toNode);
-      const config = SUPERIOR_SOURCE[`${shape.country}:${shape.boundary_type}`];
-
-      if (config?.source === "national") {
-        const { data: national } = await getNationalShapeForCountry(supabase, shape.country);
-        if (national?.id) {
-          const { data: nHolders } = await getOfficeHoldersForShape(supabase, national.id);
-          const head = ((nHolders || []) as unknown as OfficeHolderRow[]).find((h) =>
-            HEAD_ROLE_TITLES.has(h.election_role_types?.role_title || "")
-          );
-          if (head) top = toNode(head);
-        }
-      } else if (config?.source === "container") {
-        const { data: containers } = await getShapeContainers(supabase, shape.id);
-        const match = (containers || []).find(
-          (c: any) => c.map_shapes?.boundary_type === config.containerType
-        );
-        if (match?.container_shape_id) {
-          const { data: cHolders } = await getOfficeHoldersForShape(supabase, match.container_shape_id);
-          const head = ((cHolders || []) as unknown as OfficeHolderRow[]).find((h) =>
-            HEAD_ROLE_TITLES.has(h.election_role_types?.role_title || "")
-          );
-          if (head) top = toNode(head);
-        }
-      }
-    }
-
-    return {
-      key: branchKeyFor(shape),
-      label: shape.boundary_type,
-      districtName: shape.name || null,
-      top,
-      bottom,
-    };
+    return await resolveRepresentationBranch(supabase, shape);
   } catch (err) {
     console.error("Error resolving branch:", err);
     return null;
