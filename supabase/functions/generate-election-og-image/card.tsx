@@ -45,6 +45,19 @@ export function ElectionOgCard({
   const avatarSize = n > 8 ? 26 : n > 5 ? 36 : 50;
   const nameFontSize = n > 8 ? 14 : n > 5 ? 17 : 21;
   const showParty = n <= 8;
+  // Show the raw supporter count next to the percentage (social proof: a
+  // stranger seeing "1 supporter" versus "50%" alone has an actual number
+  // to feel is winnable to move) -- only once the roster is small enough
+  // that another number per row doesn't crowd out the name.
+  const showSupporterCount = n <= 5;
+  // Same "Leading" vs "Tied" distinction the live app makes (isTie in
+  // ElectionResultsPanel.tsx): a single top candidate reads as "Leading",
+  // but if two+ people share the top spot, calling it "Leading" implies a
+  // settled result that isn't real. "Tied" is both more honest and a
+  // stronger hook -- ties are what actually make someone want to click
+  // through and cast the tiebreaker themselves.
+  const topRowCount = candidates.filter((c) => c.isTop).length;
+  const isTieOverall = topRowCount > 1;
 
   return (
     <div
@@ -108,7 +121,7 @@ export function ElectionOgCard({
           {roleTitle} — {boundaryName}
         </div>
         <div style={{ display: 'flex', fontSize: 16, fontWeight: 700, color: '#334155', marginTop: 5 }}>
-          {n} candidate{n === 1 ? '' : 's'} running · Who will YOU vote for? See what they stand for on Choseno.
+          {n} candidate{n === 1 ? '' : 's'} running. Add your support and see full profiles on Choseno.
         </div>
       </div>
 
@@ -138,7 +151,7 @@ export function ElectionOgCard({
         ) : (
           candidates.map((c, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-              <div style={{ display: 'flex', width: 24, fontSize: nameFontSize, fontWeight: 900, color: c.isTop ? '#16a34a' : '#94a3b8' }}>
+              <div style={{ display: 'flex', width: 24, fontSize: nameFontSize, fontWeight: 900, color: c.isTop ? '#10b981' : '#94a3b8' }}>
                 {i + 1}
               </div>
               {c.avatarUrl ? (
@@ -151,7 +164,7 @@ export function ElectionOgCard({
                     height: avatarSize,
                     borderRadius: avatarSize / 2,
                     objectFit: 'cover',
-                    border: `2.5px solid ${c.isTop ? '#16a34a' : '#e2e8f0'}`,
+                    border: `2.5px solid ${c.isTop ? '#10b981' : '#e2e8f0'}`,
                   }}
                 />
               ) : (
@@ -182,15 +195,15 @@ export function ElectionOgCard({
                         display: 'flex',
                         fontSize: 10,
                         fontWeight: 900,
-                        color: '#166534',
-                        background: '#dcfce7',
+                        color: isTieOverall ? '#92400e' : '#166534',
+                        background: isTieOverall ? '#fef3c7' : '#dcfce7',
                         padding: '2px 9px',
                         borderRadius: 999,
                         textTransform: 'uppercase',
                         letterSpacing: 0.5,
                       }}
                     >
-                      Leading
+                      {isTieOverall ? 'Tied' : 'Leading'}
                     </span>
                   )}
                   {c.partyName && showParty && (
@@ -206,21 +219,29 @@ export function ElectionOgCard({
                       width: `${Math.max(c.pct, 2)}%`,
                       height: '100%',
                       borderRadius: 4,
-                      background: c.isTop ? 'linear-gradient(90deg, #16a34a, #22c55e)' : '#cbd5e1',
+                      background: c.isTop ? 'linear-gradient(90deg, #10b981, #34d399)' : '#cbd5e1',
                     }}
                   />
                 </div>
               </div>
-              <div style={{ display: 'flex', fontSize: nameFontSize, fontWeight: 900, color: '#0f172a' }}>{c.pct}%</div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                <div style={{ display: 'flex', fontSize: nameFontSize, fontWeight: 900, color: '#0f172a' }}>{c.pct}%</div>
+                {showSupporterCount && (
+                  <div style={{ display: 'flex', fontSize: 11, fontWeight: 700, color: '#94a3b8' }}>
+                    {c.supporterCount} supporter{c.supporterCount === 1 ? '' : 's'}
+                  </div>
+                )}
+              </div>
             </div>
           ))
         )}
       </div>
 
-      {/* Footer: call-to-action bar, same dark/orange branding as the
-          "Rate & Review on Choseno" bar in ogCard.tsx's buildOgCardElement --
-          drives the share itself (someone else's support numbers) toward an
-          action ("go add your own"), not just a passive stat. */}
+      {/* Footer: call-to-action bar. Emerald instead of the old
+          orange/"Join" framing -- matches the exact Support button color
+          the visitor lands on after clicking through (ElectionResultsPanel
+          .tsx's #10b981), so the image itself telegraphs the action they're
+          about to take rather than a generic "join this site" pitch. */}
       <div style={{ display: 'flex', flexDirection: 'column', marginTop: 10 }}>
         {electionDateLabel && (
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 4 }}>
@@ -237,13 +258,13 @@ export function ElectionOgCard({
             padding: '12px 20px',
             borderRadius: 14,
             background: 'linear-gradient(135deg, #090d16 0%, #0f172a 50%, #1e1b4b 100%)',
-            boxShadow: '0 12px 30px -4px rgba(249, 115, 22, 0.35), 0 4px 16px rgba(0,0,0,0.3)',
-            border: '2px solid #f97316',
+            boxShadow: '0 12px 30px -4px rgba(16, 185, 129, 0.35), 0 4px 16px rgba(0,0,0,0.3)',
+            border: '2px solid #10b981',
           }}
         >
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ display: 'flex', fontSize: 16, fontWeight: 900, color: '#ffffff', letterSpacing: '-0.01em' }}>
-              Join Choseno — tell us who YOU support in {boundaryName}
+              Cast your vote — tell the world who YOU support in {boundaryName}
             </span>
             <span style={{ display: 'flex', fontSize: 11, color: '#cbd5e1', fontWeight: 600, marginTop: 2 }}>
               As of {asOfLabel} · Community support only, not an official result
@@ -256,14 +277,14 @@ export function ElectionOgCard({
               gap: 6,
               padding: '8px 18px',
               borderRadius: 10,
-              background: 'linear-gradient(135deg, #f97316, #ea580c)',
+              background: 'linear-gradient(135deg, #10b981, #059669)',
               color: '#ffffff',
               fontSize: 14,
               fontWeight: 900,
-              boxShadow: '0 6px 18px rgba(249, 115, 22, 0.45)',
+              boxShadow: '0 6px 18px rgba(16, 185, 129, 0.45)',
             }}
           >
-            <span>Join</span>
+            <span>Vote Now</span>
             <span style={{ fontSize: 16 }}>→</span>
           </div>
         </div>

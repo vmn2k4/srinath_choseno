@@ -58,6 +58,12 @@ export default function ElectionResultsPanel({
     electionDate && !Number.isNaN(electionDate.getTime())
       ? electionDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
       : null;
+  // Short form for the compact mobile meta row — "Nov 2" instead of
+  // "November 2, 2026", which alone was wider than the phone screen.
+  const formattedDateShort =
+    electionDate && !Number.isNaN(electionDate.getTime())
+      ? electionDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })
+      : null;
   const daysUntil =
     electionDate && !Number.isNaN(electionDate.getTime())
       ? Math.ceil((electionDate.getTime() - Date.now()) / 86_400_000)
@@ -102,23 +108,33 @@ export default function ElectionResultsPanel({
   const shareUrl = seatSlug ? `${SITE_URL}/elections/seat/${seatSlug}` : SITE_URL;
   const otherNames = rows.map((r) => r.name).filter((n) => n !== leader?.name);
 
+  // No emojis, direct imperative phrasing — "cast your vote now" reads as
+  // an instruction to act immediately, not a passive stat someone might
+  // glance at and move on from. A tie is framed as something the reader's
+  // own vote resolves, since "your vote decides this" recruits harder than
+  // "this one's wide open."
   const standingsLine = leader
     ? otherNames.length > 0
-      ? `🏆 ${leader.name} is leading with ${topPct}% community support, ahead of ${otherNames.slice(0, 2).join(", ")}${otherNames.length > 2 ? " & others" : ""}.`
-      : `🏆 ${leader.name} is leading with ${topPct}% community support.`
+      ? `${leader.name} is leading with ${topPct}% community support, ahead of ${otherNames.slice(0, 2).join(", ")}${otherNames.length > 2 ? " & others" : ""}. Vote now to keep it that way — or change it.`
+      : `${leader.name} is leading with ${topPct}% community support. Cast your vote now.`
     : isTie
-    ? `🤝 ${topRows.map((r) => r.name).join(" & ")} are tied for the lead at ${topPct}% each — this one's wide open.`
+    ? `${topRows.map((r) => r.name).join(" & ")} are tied at ${topPct}% each. Your vote decides who leads.`
     : rows.length > 0
-    ? `${rows.length} candidates are running and nobody's cast their support yet. Be the first!`
+    ? `${rows.length} candidates are running and nobody's cast their support yet. Be the first — vote now.`
     : `Candidates for this seat haven't been added yet.`;
 
-  const basePostText = `🗳️ Choseno Community Poll: ${roleTitle} — ${boundaryName}\n${standingsLine}\nCast your support & see who's really leading 👉`;
+  const basePostText = `Choseno Community Poll: ${roleTitle} — ${boundaryName}\n${standingsLine}\nVote now:`;
 
   const cleanTag = (s: string) => s.replace(/[^a-zA-Z0-9]/g, "");
   const yearTag =
     electionDate && !Number.isNaN(electionDate.getTime()) ? `Vote${electionDate.getFullYear()}` : "Vote2026";
+  // Candidate names as hashtags make the post discoverable to anyone
+  // searching for that candidate specifically, not just the race in
+  // general — capped at the top 4 so a crowded primary doesn't bury the
+  // post under twenty tags.
+  const candidateTags = rows.slice(0, 4).map((r) => cleanTag(r.name)).filter(Boolean);
   const hashtags = Array.from(
-    new Set([cleanTag(roleTitle) || "Election", cleanTag(boundaryName), yearTag, "CommunitySupport", "Choseno"].filter(Boolean))
+    new Set([...candidateTags, cleanTag(roleTitle) || "Election", cleanTag(boundaryName), yearTag, "CommunitySupport", "Choseno"].filter(Boolean))
   );
   const formattedHashtagString = hashtags.map((t) => `#${t}`).join(" ");
   const shareText = `${basePostText}\n\n${formattedHashtagString}\n${shareUrl}`;
@@ -160,7 +176,11 @@ export default function ElectionResultsPanel({
               : `Be the first to support a candidate.`}
           </p>
         </div>
-        <div className="flex flex-col items-end gap-1 text-xs text-text-muted shrink-0">
+        {/* Desktop meta: stacked, right-aligned column next to the header.
+            Hidden on mobile — stacking three right-aligned lines under a
+            left-aligned title read as disjointed and ate a lot of height;
+            the compact single-line row below replaces it there. */}
+        <div className="hidden sm:flex flex-col items-end gap-1 text-xs text-text-muted shrink-0">
           {formattedDate && (
             <span className="flex items-center gap-1">
               <Calendar size={13} className="text-accent" />
@@ -175,6 +195,24 @@ export default function ElectionResultsPanel({
             <Users size={13} className="text-accent" /> {candidates.length} candidate{candidates.length === 1 ? "" : "s"}
           </span>
         </div>
+      </div>
+
+      {/* Mobile meta: one compact, left-aligned row instead of three
+          stacked right-aligned lines. */}
+      <div className="flex sm:hidden flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-text-muted -mt-3">
+        {formattedDateShort && (
+          <span className="flex items-center gap-1">
+            <Calendar size={12} className="text-accent" />
+            {formattedDateShort}
+            {daysUntil !== null && daysUntil >= 0 ? ` · ${daysUntil}d left` : ""}
+          </span>
+        )}
+        <span className="flex items-center gap-1">
+          <MapPin size={12} className="text-accent" /> {boundaryName}
+        </span>
+        <span className="flex items-center gap-1">
+          <Users size={12} className="text-accent" /> {candidates.length} candidate{candidates.length === 1 ? "" : "s"}
+        </span>
       </div>
 
       <div className="space-y-1.5">
