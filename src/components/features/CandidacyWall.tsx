@@ -790,21 +790,19 @@ export default function CandidacyWall({
                   <h1 className="text-xl font-bold text-text-main flex items-center gap-2">
                     {displayName}
                   </h1>
-                  {ratingSummary && candidate?.politician_id && (
-                    <button
-                      type="button"
-                      onClick={() => setShowInlineRating((v) => !v)}
-                      className="mt-1 cursor-pointer hover:opacity-80 transition-opacity"
-                      title="Rate this candidate"
-                    >
-                      <StarRating value={ratingSummary.avg} count={ratingSummary.count} size="sm" />
-                    </button>
-                  )}
-                  {partyName && (
-                    <Badge tone="primary" className="mt-1">
-                      {partyName}
-                    </Badge>
-                  )}
+                  <div className="mt-1 flex items-center gap-2 flex-wrap">
+                    {ratingSummary && candidate?.politician_id && (
+                      <button
+                        type="button"
+                        onClick={() => setShowInlineRating((v) => !v)}
+                        className="cursor-pointer hover:opacity-80 transition-opacity"
+                        title="Rate this candidate"
+                      >
+                        <StarRating value={ratingSummary.avg} count={ratingSummary.count} size="sm" />
+                      </button>
+                    )}
+                    {partyName && <Badge tone="primary">{partyName}</Badge>}
+                  </div>
                 </div>
               </div>
 
