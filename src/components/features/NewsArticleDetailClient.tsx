@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -13,10 +13,8 @@ import {
   Tag,
   Languages,
   Loader2,
-  Share2,
   Check,
   Copy,
-  MessageCircle,
   Star,
   ArrowRight,
 } from "lucide-react";
@@ -27,6 +25,7 @@ import NewsComments from "@/components/features/NewsComments";
 import NewsArticleLinkedPoliticians from "@/components/features/NewsArticleLinkedPoliticians";
 import PoliticianInlineRating from "@/components/features/PoliticianInlineRating";
 import RelatedNewsSection from "@/components/features/RelatedNewsSection";
+import ShareMenu, { type ShareData } from "@/components/features/ShareMenu";
 import type { NewsArticle, NewsArticleContent } from "@/lib/services/news";
 import { stripEmoji } from "@/lib/utils/text";
 import { SITE_URL } from "@/lib/constants/site";
@@ -61,30 +60,6 @@ export default function NewsArticleDetailClient({
   const [isTranslating, setIsTranslating] = useState(false);
   const [showTranslated, setShowTranslated] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [showShareMenu, setShowShareMenu] = useState(false);
-  // Separate open state for the briefing-card's own share popover (below)
-  // so it doesn't fight over showShareMenu with the header button and pop
-  // open in the wrong place on screen.
-  const [showBriefingShareMenu, setShowBriefingShareMenu] = useState(false);
-  // Click-outside-to-close for both share popovers -- each ref wraps its
-  // button + dropdown, so a click landing inside either is left alone and
-  // anything else closes whichever one is open.
-  const shareMenuRef = useRef<HTMLDivElement>(null);
-  const briefingShareMenuRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!showShareMenu && !showBriefingShareMenu) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as Node;
-      if (showShareMenu && shareMenuRef.current && !shareMenuRef.current.contains(target)) {
-        setShowShareMenu(false);
-      }
-      if (showBriefingShareMenu && briefingShareMenuRef.current && !briefingShareMenuRef.current.contains(target)) {
-        setShowBriefingShareMenu(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [showShareMenu, showBriefingShareMenu]);
   // Top "Review [Name]" CTA — expands the inline rating panel right here
   // instead of navigating to their wall, when there's exactly one tagged
   // politician to rate.
@@ -245,76 +220,19 @@ export default function NewsArticleDetailClient({
     basePostText
   )}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(combinedTagList.join(","))}`;
 
-  const handleNativeShareOrCopy = async () => {
-    if (typeof navigator !== "undefined" && navigator.share) {
-      try {
-        await navigator.share({
-          title: activeHeadline,
-          text: `${basePostText}\n\n${formattedHashtagString}`,
-          url: shareUrl,
-        });
-        return;
-      } catch {
-        // Fallback to menu toggle if share dialog dismissed or unsupported
-      }
-    }
-    handleCopyLink();
+  // Feeds the shared <ShareMenu/> -- both the header "Share" button and the
+  // briefing card's "Share This Briefing" button pass this same object, so
+  // they open the exact same set of destinations (Copy Link, X, WhatsApp,
+  // LinkedIn, Facebook, Telegram, Pinterest, Email) as the /news list cards
+  // instead of maintaining their own subset.
+  const shareData: ShareData = {
+    url: shareUrl,
+    basePostText,
+    hashtagList: formattedHashtagString,
+    shareText,
+    hashtags: combinedTagList,
+    twitterUrl: twitterShareUrl,
   };
-
-  // Shared by both share popovers (the header "Share" button and the
-  // briefing card's "Share This Briefing" button) so they open the exact
-  // same X/WhatsApp/LinkedIn/Copy options instead of drifting apart.
-  const renderShareMenuItems = (onSelect: () => void) => (
-    <>
-      <button
-        onClick={() => {
-          handleNativeShareOrCopy();
-          onSelect();
-        }}
-        className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left w-full cursor-pointer"
-      >
-        {copied ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
-        <span>{copied ? "Copied to Clipboard!" : "Copy Link"}</span>
-      </button>
-
-      <a
-        href={twitterShareUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-sky-50 text-sky-700 font-semibold transition-colors text-left w-full"
-        onClick={onSelect}
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-        </svg>
-        <span>Share on X (Twitter)</span>
-      </a>
-
-      <a
-        href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-emerald-50 text-emerald-700 font-semibold transition-colors text-left w-full"
-        onClick={onSelect}
-      >
-        <MessageCircle size={14} />
-        <span>Share on WhatsApp</span>
-      </a>
-
-      <a
-        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-blue-700 font-semibold transition-colors text-left w-full"
-        onClick={onSelect}
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
-        </svg>
-        <span>Share on LinkedIn</span>
-      </a>
-    </>
-  );
 
   const handleCopyLink = () => {
     if (typeof navigator !== "undefined" && navigator.clipboard) {
@@ -378,32 +296,15 @@ export default function NewsArticleDetailClient({
           </button>
 
           {/* Share Button with Dropdown / Native Share */}
-          <div className="relative shrink-0" ref={shareMenuRef}>
-            <button
-              onClick={() => setShowShareMenu(!showShareMenu)}
-              className="inline-flex items-center gap-1.5 px-2 sm:px-3.5 py-1.5 rounded-lg border border-orange-500/40 bg-orange-500/10 hover:bg-orange-500/20 text-xs font-bold text-orange-600 transition-all cursor-pointer shadow-sm shrink-0"
-              title="Share news article"
-            >
-              {copied ? (
-                <>
-                  <Check size={14} className="text-green-600 shrink-0" />
-                  <span className="hidden sm:inline text-green-700">Link Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Share2 size={14} className="shrink-0" />
-                  <span className="hidden sm:inline">Share</span>
-                </>
-              )}
-            </button>
-
-            {/* Share Popover Menu */}
-            {showShareMenu && (
-              <div className="absolute right-0 top-full mt-2 w-56 p-2 rounded-xl bg-white border border-slate-200 shadow-xl z-50 flex flex-col gap-1 text-xs">
-                {renderShareMenuItems(() => setShowShareMenu(false))}
-              </div>
-            )}
-          </div>
+          <ShareMenu
+            articleId={article.id}
+            shareData={shareData}
+            label="Share"
+            hideLabelOnMobile
+            menuAlign="below"
+            className="inline-flex items-center gap-1.5 px-2 sm:px-3.5 py-1.5 rounded-lg border border-orange-500/40 bg-orange-500/10 hover:bg-orange-500/20 text-xs font-bold text-orange-600 transition-all cursor-pointer shadow-sm shrink-0"
+            iconSize={14}
+          />
 
           {/* Translate Button */}
           <button
@@ -542,21 +443,14 @@ export default function NewsArticleDetailClient({
                 <span className="font-semibold text-orange-600 flex items-center gap-1">
                   ★ Choseno Civic Briefing
                 </span>
-                <div className="relative shrink-0" ref={briefingShareMenuRef}>
-                  <button
-                    onClick={() => setShowBriefingShareMenu(!showBriefingShareMenu)}
-                    className="inline-flex items-center gap-1 font-bold text-orange-600 hover:text-orange-700 bg-orange-100/80 px-2.5 py-1 rounded-md transition-colors cursor-pointer"
-                  >
-                    <Share2 size={11} />
-                    <span>Share This Briefing</span>
-                  </button>
-
-                  {showBriefingShareMenu && (
-                    <div className="absolute right-0 top-full mt-2 w-56 p-2 rounded-xl bg-white border border-slate-200 shadow-xl z-50 flex flex-col gap-1 text-xs">
-                      {renderShareMenuItems(() => setShowBriefingShareMenu(false))}
-                    </div>
-                  )}
-                </div>
+                <ShareMenu
+                  articleId={article.id}
+                  shareData={shareData}
+                  label="Share This Briefing"
+                  menuAlign="below"
+                  className="inline-flex items-center gap-1 font-bold text-orange-600 hover:text-orange-700 bg-orange-100/80 px-2.5 py-1 rounded-md transition-colors cursor-pointer"
+                  iconSize={11}
+                />
               </div>
             </div>
           </div>

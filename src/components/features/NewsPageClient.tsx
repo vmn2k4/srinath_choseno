@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   Newspaper,
@@ -13,11 +13,12 @@ import {
   Filter,
   UserCheck,
   Users,
-  Share2,
 } from "lucide-react";
 import { Card, PageHeader, Badge, Button } from "@/components/primitives";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { isBreakingNewsActive, type NewsArticleContent } from "@/lib/services/news";
+import ShareMenu, { type ShareData } from "@/components/features/ShareMenu";
+import { SITE_URL } from "@/lib/constants/site";
 
 interface NewsArticleRow {
   id: string;
@@ -130,6 +131,26 @@ export default function NewsPageClient({
       }
     }
     return pages;
+  };
+
+  // Generate share data for an article
+  const generateShareData = (article: NewsArticleRow): ShareData => {
+    const shareUrl = `${SITE_URL}/news/${article.slug}`;
+    const basePostText = `📰 ${article.headline}\n\nTrack local democracy & rate officials on @choseno!`;
+    const categoryTag = article.category ? `#${article.category.replace(/[^a-zA-Z0-9]/g, "")}` : "#CivicNews";
+    const locTag = article.country ? `#${article.country.toUpperCase()}` : "";
+    const hashtagList = [categoryTag, locTag, "#Choseno", "#RateYourPolitician"].filter(Boolean).join(" ");
+    const shareText = `${basePostText}\n\n${hashtagList}\n${shareUrl}`;
+    const hashtags = [categoryTag.replace("#", ""), locTag.replace("#", ""), "Choseno", "RateYourPolitician"].filter(Boolean);
+
+    return {
+      url: shareUrl,
+      basePostText,
+      hashtagList,
+      shareText,
+      hashtags,
+      twitterUrl: `https://twitter.com/intent/tweet?text=${encodeURIComponent(basePostText)}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(hashtags.join(","))}`,
+    };
   };
 
   return (
@@ -354,29 +375,12 @@ export default function NewsPageClient({
                         {t("newsPage.readFull")} <ArrowRight size={13} />
                       </div>
 
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          const url = `${window.location.origin}/news/${article.slug}`;
-                          const catTag = article.category ? `#${article.category.replace(/[^a-zA-Z0-9]/g, "")}` : "#CivicNews";
-                          const locTag = article.country ? `#${article.country.toUpperCase()}` : "";
-                          const shareMsg = `📰 ${article.headline}\n\nTrack local democracy & rate officials on @choseno!\n\n${[catTag, locTag, "#Choseno", "#RateYourPolitician"].filter(Boolean).join(" ")}`;
-
-                          if (navigator.share) {
-                            navigator.share({
-                              title: article.headline,
-                              text: shareMsg,
-                              url,
-                            }).catch(() => {});
-                          } else {
-                            navigator.clipboard?.writeText(url);
-                          }
-                        }}
+                      <ShareMenu
+                        articleId={article.id}
+                        shareData={generateShareData(article)}
                         className="p-1.5 rounded-lg bg-surface/80 hover:bg-orange-500/20 text-text-muted hover:text-orange-500 transition-colors cursor-pointer"
-                        title="Share article"
-                      >
-                        <Share2 size={13} />
-                      </button>
+                        iconSize={13}
+                      />
                     </div>
                   </div>
                 </Card>
