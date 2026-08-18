@@ -1,7 +1,14 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { Mail, Phone, ExternalLink, UserCheck, ArrowRight } from "lucide-react";
+import { Mail, Phone, ExternalLink, UserCheck, ArrowRight, Flag } from "lucide-react";
 import { Avatar, Badge, Button, Card } from "@/components/primitives";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
+import ReportDialog from "./ReportDialog";
+import type { ReportTargetType } from "@/lib/services/moderation";
+
+type ReportFn = (targetType: ReportTargetType, targetId: string, abuseType: string) => Promise<{ error?: unknown }>;
 
 export interface BranchHolderNode {
   id: string;
@@ -34,7 +41,9 @@ function slugFor(node: BranchHolderNode) {
 // tags for contact info, and nested <a> elements are invalid HTML that
 // triggers a hydration mismatch (the browser silently un-nests them
 // client-side, producing a different DOM than what the server rendered).
-function NodeCard({ node, emphasized }: { node: BranchHolderNode; emphasized?: boolean }) {
+function NodeCard({ node, emphasized, onReport }: { node: BranchHolderNode; emphasized?: boolean; onReport?: ReportFn }) {
+  const [showReport, setShowReport] = useState(false);
+
   return (
     <Card
       padding="sm"
@@ -45,10 +54,21 @@ function NodeCard({ node, emphasized }: { node: BranchHolderNode; emphasized?: b
       // instead of each card sizing to its own content (a flex-wrap row
       // with no explicit item basis lets w-full collapse to max-content,
       // so a longer name/party badge silently made that one card wider).
-      className={`w-full max-w-xs mx-auto space-y-1.5 transition-all hover:shadow-md ${
+      className={`relative w-full max-w-xs mx-auto space-y-1.5 transition-all hover:shadow-md group/node ${
         emphasized ? "border-2 border-primary/40 bg-primary/5" : "border border-border-light/50"
       }`}
     >
+      {onReport && (
+        <button
+          type="button"
+          onClick={() => setShowReport(true)}
+          className="absolute top-2 right-2 z-10 text-text-muted/40 hover:text-danger opacity-0 group-hover/node:opacity-100 focus-visible:opacity-100 transition-opacity cursor-pointer"
+          title="Report incorrect information"
+        >
+          <Flag size={12} />
+        </button>
+      )}
+
       <div className="flex items-center gap-2.5">
         <Avatar src={node.photo_url} name={node.full_name} size={emphasized ? "md" : "sm"} />
         <div className="min-w-0 flex-1">
@@ -130,6 +150,15 @@ function NodeCard({ node, emphasized }: { node: BranchHolderNode; emphasized?: b
           </Button>
         </div>
       )}
+
+      {showReport && onReport && (
+        <ReportDialog
+          targetType="office_holder"
+          targetId={node.id}
+          onReport={onReport}
+          onClose={() => setShowReport(false)}
+        />
+      )}
     </Card>
   );
 }
@@ -141,7 +170,7 @@ function NodeCard({ node, emphasized }: { node: BranchHolderNode; emphasized?: b
 // directly to the viewed boundary (MP/MLA, or Councillors alongside a Mayor
 // top node). A vertical stub connects top to bottom; multiple bottom nodes
 // share a horizontal trunk line (border-top) so they read as siblings.
-export default function RepresentationBranchTree({ branch }: { branch: RepresentationBranch }) {
+export default function RepresentationBranchTree({ branch, onReport }: { branch: RepresentationBranch; onReport?: ReportFn }) {
   if (!branch.top && branch.bottom.length === 0) {
     return (
       <p className="text-sm text-text-muted text-center py-6">
@@ -152,12 +181,12 @@ export default function RepresentationBranchTree({ branch }: { branch: Represent
 
   return (
     <div className="flex flex-col items-center py-1">
-      {branch.top && <NodeCard node={branch.top} emphasized />}
+      {branch.top && <NodeCard node={branch.top} emphasized onReport={onReport} />}
 
       {branch.top && branch.bottom.length > 0 && <div className="w-px h-5 bg-border-light" />}
 
       {branch.bottom.length === 1 ? (
-        <NodeCard node={branch.bottom[0]} />
+        <NodeCard node={branch.bottom[0]} onReport={onReport} />
       ) : branch.bottom.length > 1 ? (
         // Grid, not flex-wrap: grid columns are equal-width by definition,
         // which is what actually guarantees every card in the row matches —
@@ -168,7 +197,7 @@ export default function RepresentationBranchTree({ branch }: { branch: Represent
           {branch.bottom.map((node) => (
             <div key={node.id} className="relative flex flex-col items-center">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-border-light" />
-              <NodeCard node={node} />
+              <NodeCard node={node} onReport={onReport} />
             </div>
           ))}
         </div>

@@ -7,11 +7,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, Navigation, Loader2, MapPin, Star, Users } from "lucide-react";
+import { Search, Navigation, Loader2, MapPin, Star, Users, Flag } from "lucide-react";
 import { Card, Button, Input } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { findBoundariesByPoint } from "@/lib/services/boundaries";
 import { getOfficeHoldersForShapes } from "@/lib/services/elections";
+import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
+import ReportDialog from "../ReportDialog";
 import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { geocodeAddressFree, type GeocodeSuggestion } from "@/lib/utils/geocode";
 import { trackSearch } from "@/lib/analytics/events";
@@ -64,6 +66,14 @@ export default function HomeLocateWidget() {
   const [error, setError] = useState("");
   const [boundaries, setBoundaries] = useState<MatchedBoundary[] | null>(null);
   const [reps, setReps] = useState<RepRow[]>([]);
+  const [reportRepId, setReportRepId] = useState<string | null>(null);
+
+  // Component-owned service call (nothing else here plays the "page-level
+  // client" role this widget could hand it off to) -- flags a rep row's
+  // office_holders record as wrong right from the homepage preview, same
+  // report_content() RPC and admin queue as the full directory pages.
+  const handleReport = (targetType: ReportTargetType, targetId: string, abuseType: string) =>
+    reportContent(supabase, targetType, targetId, abuseType);
 
   useEffect(() => {
     if (!query.trim() || query.trim().length < 3) {
@@ -301,7 +311,7 @@ export default function HomeLocateWidget() {
                             {displayReps.map((rep) => {
                               const wallHref = wallHrefFor(rep);
                               return (
-                                <div key={rep.id} className="flex items-center justify-between gap-2">
+                                <div key={rep.id} className="flex items-center justify-between gap-2 group/rep">
                                   <p className="min-w-0 text-xs text-text-muted flex items-center gap-1.5">
                                     <Users size={11} className="shrink-0" aria-hidden="true" />
                                     <span className="truncate">
@@ -311,16 +321,26 @@ export default function HomeLocateWidget() {
                                         : ""}
                                     </span>
                                   </p>
-                                  {wallHref && (
-                                    <Link
-                                      href={wallHref}
-                                      className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold text-primary bg-primary/10 hover:bg-primary/15 transition-colors whitespace-nowrap"
-                                      title="Rate this representative"
+                                  <div className="shrink-0 flex items-center gap-1.5">
+                                    <button
+                                      type="button"
+                                      onClick={() => setReportRepId(rep.id)}
+                                      className="text-text-muted/40 hover:text-danger opacity-0 group-hover/rep:opacity-100 focus-visible:opacity-100 transition-opacity cursor-pointer"
+                                      title="Report incorrect information"
                                     >
-                                      <Star size={12} className="fill-primary" aria-hidden="true" />
-                                      Rate
-                                    </Link>
-                                  )}
+                                      <Flag size={12} aria-hidden="true" />
+                                    </button>
+                                    {wallHref && (
+                                      <Link
+                                        href={wallHref}
+                                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold text-primary bg-primary/10 hover:bg-primary/15 transition-colors whitespace-nowrap"
+                                        title="Rate this representative"
+                                      >
+                                        <Star size={12} className="fill-primary" aria-hidden="true" />
+                                        Rate
+                                      </Link>
+                                    )}
+                                  </div>
                                 </div>
                               );
                             })}
@@ -349,6 +369,15 @@ export default function HomeLocateWidget() {
             </div>
           )}
         </>
+      )}
+
+      {reportRepId && (
+        <ReportDialog
+          targetType="office_holder"
+          targetId={reportRepId}
+          onReport={handleReport}
+          onClose={() => setReportRepId(null)}
+        />
       )}
     </Card>
   );

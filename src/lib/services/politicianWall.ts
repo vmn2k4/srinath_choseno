@@ -13,7 +13,9 @@ async function enrichProfileWithContactFallback(supabase: Client, profileData: a
   const escapedName = profileData.full_name.replace(/"/g, '""');
   const { data: ohMatches } = await supabase
     .from("office_holders")
-    .select("contact_email, contact_phone, source_url, photo_url, holding_since, is_current, term_ended_at")
+    .select(
+      "linked_profile_id, contact_email, contact_phone, source_url, photo_url, holding_since, is_current, term_ended_at, election_role_types(role_title), map_shapes(name, boundary_type)"
+    )
     .or(`linked_profile_id.eq.${profileData.id},full_name.ilike."${escapedName}"`);
 
   // is_office_holder must mean "holds the seat right now" -- a row existing
@@ -34,6 +36,27 @@ async function enrichProfileWithContactFallback(supabase: Client, profileData: a
       .sort()
       .at(-1);
   }
+
+  // Every CURRENT office this profile is explicitly linked_profile_id-linked
+  // to -- deliberately narrower than the full_name-coincidence matches used
+  // for the contact/photo fallback below, since a same-named stranger's seat
+  // must never show up as "this person's position". One real person can
+  // legitimately hold more than one office at once (a Premier/Governor who
+  // is also the sitting MLA/Assembly member for their home riding, for
+  // example) -- see office_holder_wall_claims merges, which is how two
+  // previously-separate profiles for the same office holder get combined
+  // into one linked_profile_id in the first place.
+  pp.positions = currentMatches
+    .filter((m: any) => m.linked_profile_id === profileData.id && m.election_role_types?.role_title)
+    .map((m: any) => ({
+      roleTitle: m.election_role_types.role_title as string,
+      jurisdictionName: (m.map_shapes?.name as string | undefined) || null,
+      boundaryType: (m.map_shapes?.boundary_type as string | undefined) || null,
+    }))
+    .reduce((acc: any[], p: any) => {
+      if (!acc.some((x) => x.roleTitle === p.roleTitle && x.jurisdictionName === p.jurisdictionName)) acc.push(p);
+      return acc;
+    }, []);
 
   if (ohMatches && ohMatches.length > 0) {
     // Prefer a current row's contact/photo details over a former one's when

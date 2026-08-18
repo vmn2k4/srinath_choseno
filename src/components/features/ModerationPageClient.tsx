@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import Link from "next/link";
 import AdminSubNav from "./AdminSubNav";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import {
@@ -26,7 +27,7 @@ import {
   PageHeader,
   ConfirmDialog,
 } from "@/components/primitives";
-import { ShieldAlert, Trash2, Check, Settings2, Sliders } from "lucide-react";
+import { ShieldAlert, Trash2, Check, Settings2, Sliders, Pencil } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 interface QueueRow {
@@ -172,8 +173,13 @@ export default function ModerationPageClient() {
     fetchRuleSettings();
   };
 
+  // politician_profile and office_holder rows carry a plain-text name in
+  // author_label (see get_moderation_queue()), not a ghost_id -- decoding
+  // either through getGhostDisplayName would just print "Unknown".
   const authorFor = (row: QueueRow) =>
-    row.target_type === "politician_profile" ? row.author_label || "Unknown" : getGhostDisplayName(row.author_label);
+    row.target_type === "politician_profile" || row.target_type === "office_holder"
+      ? row.author_label || "Unknown"
+      : getGhostDisplayName(row.author_label);
 
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-8">
@@ -251,6 +257,7 @@ export default function ModerationPageClient() {
             <option value="post">Post</option>
             <option value="comment">Comment</option>
             <option value="politician_profile">Politician Profile</option>
+            <option value="office_holder">Office Holder Listing</option>
           </Select>
           <Select value={filterAbuseType} onChange={(e) => setFilterAbuseType(e.target.value)} className="text-xs w-44">
             <option value="all">All Abuse Types</option>
@@ -295,10 +302,19 @@ export default function ModerationPageClient() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
+                  {row.target_type === "office_holder" && (
+                    // No auto-correct action exists (or should) for a data-accuracy
+                    // report -- an admin has to actually verify and edit the record.
+                    // content_snippet above carries the role + boundary name to
+                    // search for, since this search-driven tool isn't ID-addressable.
+                    <Button as={Link} href="/admin/office-holders" variant="outline" size="sm" className="gap-1">
+                      <Pencil size={12} /> Fix
+                    </Button>
+                  )}
                   <Button variant="outline" size="sm" onClick={() => handleDismiss(row)} className="gap-1">
                     <Check size={12} /> Dismiss
                   </Button>
-                  {row.target_type !== "politician_profile" && !row.is_removed && (
+                  {row.target_type !== "politician_profile" && row.target_type !== "office_holder" && !row.is_removed && (
                     <Button variant="danger" size="sm" onClick={() => setConfirmRemove(row)} className="gap-1">
                       <Trash2 size={12} /> Remove
                     </Button>

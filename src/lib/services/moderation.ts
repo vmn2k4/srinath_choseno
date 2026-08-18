@@ -3,7 +3,7 @@ import type { Database } from "@/lib/supabase/types";
 
 type Client = SupabaseClient<Database>;
 
-export type ReportTargetType = "post" | "comment" | "politician_profile";
+export type ReportTargetType = "post" | "comment" | "politician_profile" | "office_holder";
 
 // ── reporting (any authenticated user) ──────────────────────────────────
 export async function reportContent(

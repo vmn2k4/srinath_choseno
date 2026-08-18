@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Tabs } from "@/components/primitives";
 import RepresentationBranchTree, { RepresentationBranch } from "./RepresentationBranchTree";
+import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
+import { createClient } from "@/lib/supabase/client";
 
 // "All" stacks every branch (Federal, Provincial, Municipal, ...) the viewer
 // has -- their own memberships plus whichever branch the boundary being
@@ -17,6 +19,16 @@ export default function BoundaryDirectoryClient({
   defaultBranchKey: string;
 }) {
   const [activeKey, setActiveKey] = useState(defaultBranchKey);
+  const supabase = createClient();
+
+  // Owns the actual reportContent RPC call (per the layered-architecture
+  // rule that only page-level clients touch services) and hands it down to
+  // every card in the tree below -- lets a viewer flag an office holder's
+  // directory listing (name/role/party/contact info) as wrong right from
+  // where they're reading it, on both the boundary directory page and
+  // /find-my-district (both render through this same client).
+  const handleReport = (targetType: ReportTargetType, targetId: string, abuseType: string) =>
+    reportContent(supabase, targetType, targetId, abuseType);
 
   if (branches.length === 0) return null;
 
@@ -50,7 +62,7 @@ export default function BoundaryDirectoryClient({
           </>
         )}
       </h3>
-      <RepresentationBranchTree branch={branch} />
+      <RepresentationBranchTree branch={branch} onReport={handleReport} />
     </div>
   );
 

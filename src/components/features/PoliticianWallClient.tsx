@@ -104,6 +104,13 @@ interface WallOwnerRecord {
     // doesn't make the badge read as still-current.
     is_former_office_holder?: boolean;
     term_ended_at?: string | null;
+    // Every current office this profile is linked_profile_id-linked to (see
+    // enrichProfileWithContactFallback in politicianWall.ts) -- a person can
+    // hold more than one at once (e.g. a Premier who's also their home
+    // riding's sitting MLA). Renders as one badge per position; falls back
+    // to the single political_target_role badge below when empty (a
+    // declared candidate with no office_holders link yet, for instance).
+    positions?: { roleTitle: string; jurisdictionName: string | null; boundaryType?: string | null }[];
   } | null;
 }
 
@@ -710,9 +717,17 @@ export default function PoliticianWallClient({
               className="!w-12 !h-12 !text-lg lg:!w-20 lg:!h-20 lg:!text-2xl"
             />
             <div className="min-w-0 flex-1">
-              <h1 className="text-lg lg:text-2xl font-bold text-text-main flex items-center gap-2 min-w-0">
+              <h1 className="text-lg lg:text-2xl font-bold text-text-main flex items-center gap-2 min-w-0 flex-wrap">
                 <span className="truncate">{wallOwner?.full_name || "Politician Wall"}</span>
-                {wallOwner?.politician_profiles?.political_target_role && (
+                {wallOwner?.politician_profiles?.positions && wallOwner.politician_profiles.positions.length > 1 ? (
+                  // Holds more than one office at once (e.g. Premier + home-riding MLA) --
+                  // one badge per position instead of picking just one to show.
+                  wallOwner.politician_profiles.positions.map((pos) => (
+                    <Badge key={`${pos.roleTitle}-${pos.jurisdictionName}`} tone="primary" className="shrink-0">
+                      {pos.roleTitle}
+                    </Badge>
+                  ))
+                ) : wallOwner?.politician_profiles?.political_target_role ? (
                   <Badge tone="primary" className="shrink-0">
                     {wallOwner.politician_profiles.is_former_office_holder
                       ? `Former ${wallOwner.politician_profiles.political_target_role}`
@@ -720,20 +735,28 @@ export default function PoliticianWallClient({
                         ? wallOwner.politician_profiles.political_target_role
                         : `Aspiring ${wallOwner.politician_profiles.political_target_role}`}
                   </Badge>
-                )}
+                ) : null}
               </h1>
               {/* Location + rating collapsed onto one line on mobile instead
                   of two — they're both short, low-priority metadata and
                   don't need a row each. */}
               <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
-                {wallOwner?.politician_profiles?.target_boundary_name && (
-                  <span className="text-xs text-text-muted truncate">
-                    {wallOwner.politician_profiles.target_boundary_name}
-                  </span>
-                )}
-                {wallOwner?.politician_profiles?.target_boundary_name && (
-                  <span className="text-text-muted/40 text-xs">·</span>
-                )}
+                {(() => {
+                  const positions = wallOwner?.politician_profiles?.positions;
+                  const jurisdictionLine =
+                    positions && positions.length > 1
+                      ? positions
+                          .map((p) => p.jurisdictionName)
+                          .filter((name, i, arr) => Boolean(name) && arr.indexOf(name) === i)
+                          .join(" · ")
+                      : wallOwner?.politician_profiles?.target_boundary_name;
+                  return jurisdictionLine ? (
+                    <>
+                      <span className="text-xs text-text-muted truncate">{jurisdictionLine}</span>
+                      <span className="text-text-muted/40 text-xs">·</span>
+                    </>
+                  ) : null;
+                })()}
                 <button
                   type="button"
                   onClick={() => setShowInlineRating((v) => !v)}
