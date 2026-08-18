@@ -31,6 +31,14 @@ import { ElectionOgCard } from './card.tsx';
 const BUCKET = 'election-og-images';
 const TTL_MS = 24 * 60 * 60 * 1000;
 const SIZE = { width: 1200, height: 630 };
+// Bump this whenever card.tsx's layout/copy changes. It's folded into the
+// cached object's path, so a deploy invalidates every cached PNG instantly
+// instead of waiting out the 24h TTL -- without this, a design fix can sit
+// behind a stale cached image (rendered by the OLD code) for up to a day
+// after the fix ships, which reads as "the image generation is broken"
+// even though the function itself is fine. Old-version objects just become
+// orphaned in the bucket; harmless, and cheap enough not to bother pruning.
+const CARD_VERSION = 'v2';
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -51,7 +59,7 @@ Deno.serve(async (req) => {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
   );
 
-  const objectPath = `seat/${seatId}.png`;
+  const objectPath = `seat/${seatId}-${CARD_VERSION}.png`;
 
   try {
     const cached = await tryServeCached(supabaseAdmin, objectPath);

@@ -21,9 +21,14 @@ interface Props {
 // first request after that. This route just proxies those bytes through so
 // the public og:image URL stays same-origin
 // (choseno.com/elections/seat/[seatId]/opengraph-image) -- Vercel does no
-// PNG rendering here any more, Supabase does. Falls back to the old live
-// next/og card if the Edge Function is ever unreachable or errors, so a
-// Supabase hiccup never breaks the share card outright.
+// PNG rendering here any more, Supabase does.
+//
+// Falls back to the site's own homepage card (same content as
+// src/app/opengraph-image.tsx) if the Edge Function is ever unreachable or
+// errors, rather than a seat-specific-but-sparse generic card -- a
+// half-empty "Election Seat / {role title}" card with no candidate content
+// reads as broken to anyone who sees it shared, whereas the homepage card
+// is a complete, intentional design that never looks like a failure.
 export default async function Image({ params }: Props) {
   const { seatId } = await params;
   const supabase = createPublicClient();
@@ -41,13 +46,13 @@ export default async function Image({ params }: Props) {
         });
       }
     } catch {
-      // Fall through to the live next/og render below.
+      // Fall through to the homepage card below.
     }
   }
 
   return renderOgCard({
-    eyebrow: "Election Seat",
-    title: seat?.role_title || "Electoral Seat",
-    subtitle: seat?.map_shapes?.name || undefined,
+    eyebrow: "Civic Platform",
+    title: "Your voice, heard where you live",
+    subtitle: "Choseno connects citizens and politicians inside real electoral boundaries.",
   });
 }
