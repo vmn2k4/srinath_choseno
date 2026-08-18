@@ -2,7 +2,7 @@
 
 Complete guide to all Choseno documentation — architecture, features, data pipelines, and developer guides.
 
-**Last Updated**: August 17, 2026 | **Status**: Current & Comprehensive
+**Last Updated**: August 18, 2026 | **Status**: Current & Comprehensive
 
 ---
 
@@ -113,6 +113,7 @@ Complete guide to all Choseno documentation — architecture, features, data pip
 - **[SCHEMA_RELATIONSHIPS.md](SCHEMA_RELATIONSHIPS.md)** — Foreign key diagrams, cardinality, join patterns
 - **[SCHEMA_TABLE_INDEX.md](SCHEMA_TABLE_INDEX.md)** — Alphabetical table listing with column counts, row counts
 - **[SUPABASE_CONFIGURATION.md](SUPABASE_CONFIGURATION.md)** — Local dev setup (CLI, Docker), migrations, production deployment, RLS, storage
+- **[CHOSENO_ARCHITECTURE_GUIDE.md §13](CHOSENO_ARCHITECTURE_GUIDE.md#13-performance-architecture--conventions)** — Indexing methodology, pagination defaults, and the public/anonymous Supabase client pattern for cacheable routes [UPDATED 2026-08-18]
 
 ### Frontend
 
@@ -304,6 +305,7 @@ When adding a new feature:
 
 | Date | Added | Author |
 |---|---|---|
+| 2026-08-18 | Updated CHOSENO_ARCHITECTURE_GUIDE.md §13 (new §13.6–§13.8: public/anonymous Supabase client + cacheable routes, index-only-what's-traced methodology, pagination defaults), API_CACHING_STRATEGY.md (cross-link to the new route-caching layer), SUPABASE_CONFIGURATION.md (index migration pointer), CODE_LAYERS.md (`publicServer.ts`, services-must-not-import-component-types note), SUPABASE_SCHEMA.md (6 new indexes across `posts`, `politician_supporters`, `news_articles`, `election_administrators`, `office_holders`), adding-us-2026-midterm-candidates.md (duplicate officeholder/candidate profile bug — 179 profiles merged, root-cause prevention added to `start_us_2026_midterms.py`) | Claude |
 | 2026-08-11 | Updated CHOSENO_ARCHITECTURE_GUIDE.md, OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md, OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md — manual audit fixes (missing merge/reverse UI, reversal data-integrity bug, unreachable-wall-after-merge bug, unrelated Claim Profile FK bug) + signup-time profile prefill feature | Claude |
 | 2026-08-11 | CHOSENO_ARCHITECTURE_GUIDE.md, OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md, TEST_RESULTS_OFFICEHOLDER_CLAIM.md | Claude |
 | 2026-08-11 | Updated OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md, OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md — unified claim eligibility across officeholder and generic politician walls, self-service claim requests (no admin invite needed), admin discoverability panel; fixed "Claim Profile" button showing on already-owned walls and a related FK-violation bug | Claude |

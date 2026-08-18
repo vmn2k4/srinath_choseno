@@ -278,6 +278,9 @@ The core social content table — every post, politician video pitch, news artic
 - `(ghost_id)` for "posts by this ghost ID"
 - `(election_candidate_id)` for candidate campaign walls
 - `(news_article_id)` for article comment threads
+- `(wall_ghost_id)` — added 2026-08-18; the other half of `getWallPosts()`'s `.or(ghost_id.eq, wall_ghost_id.eq)` filter, previously unindexed on this side
+- `(country, created_at desc) WHERE is_country` — added 2026-08-18, partial; the Feed's Country tab (`getCountryScopedPosts`) had no index on either its filter or its sort column
+- `(created_at desc) WHERE is_international` — added 2026-08-18, partial; same gap for the Feed's International tab
 
 **Triggers**:
 - `on_post_vote`: Updates `likes_count`/`dislikes_count` when votes are added/removed.
@@ -608,6 +611,8 @@ Volunteer moderators for individual seats — one per (seat, admin) with approva
 - PK: `(id)`
 - Unique compound: `(seat_id, profile_id)` — one volunteer per seat
 - `(seat_id)` for administrators of a seat
+- `(profile_id)` — added 2026-08-18; "my own admin applications" (`getMyElectionAdminApplications`) had no supporting index, since the compound unique index above leads with `seat_id`
+- `(submitted_at) WHERE status='pending'` — added 2026-08-18, partial; the admin review queue (`listPendingElectionAdminApplications`)
 
 **RLS**: Candidates can insert own applications, admins manage.
 
@@ -685,6 +690,10 @@ Tracks support/endorsements — who supports which politician.
 | `supporter_id` | uuid | NO | — | FK to `profiles(id)` ON DELETE CASCADE; part of PK |
 | `created_at` | timestamptz | YES | `now()` | When support added |
 
+**Indexes**:
+- PK (composite): `(politician_id, supporter_id)` — serves any lookup led by `politician_id` (`getSupportStatus`, `getSupporterCount`) as a byproduct, but not one led by `supporter_id`
+- `(supporter_id)` — added 2026-08-18; `getMySupportedPoliticianIds()` ("which of these candidates does the viewer already support", the election Results poll) filters by `supporter_id` first with a small `politician_id` IN-list, which the composite PK alone can't serve as an index-only scan
+
 **RLS**: Public read, authenticated can insert.
 
 **Used by**: Politician wall support button + count.
@@ -749,6 +758,7 @@ Editorial articles written by admins — distinct from user posts in Feed.
 - PK: `(id)`
 - Unique: `(slug)`
 - Composite: `(country, status, published_at DESC)` for public listing query
+- `(status, published_at DESC)` — added 2026-08-18; the `country`-leading composite above doesn't help `getNewsArticlesByPolitician(s)`/`getPublishedNewsCountries`, which filter `status`+`published_at` without `country` as a predicate
 
 **Triggers**:
 - `news_articles_updated_at`: Auto-updates `updated_at` on each modification.
@@ -822,10 +832,11 @@ Registry of real-world elected officials and appointed appointees — e.g., curr
 - PK: `(id)`
 - Unique compound: `(map_shape_id, election_role_type_id)` — one office holder per role per jurisdiction
 - `(linked_profile_id)` for finding office holders by Choseno account
+- `(election_role_type_id)` — added 2026-08-18; `getOfficeHoldersByRoleTypeIds()` ("select all MLAs"-style bulk queries for the news-import admin tool) filters on this alone, which the compound unique index above (leading with `map_shape_id`) can't serve
 
 **RLS**: Public read, admin write.
 
-**Used by**: Proposed "incumbent" indicator on candidate pages (not yet implemented in UI).
+**Used by**: Boundary directory pages ("Chain of Representation" — every current officeholder's tree, via `resolveRepresentationBranch()` in `elections.ts`), Feed sidebar's "Current Office Holders" card, news-import admin bulk tagging.
 
 ---
 

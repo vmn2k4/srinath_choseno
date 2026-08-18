@@ -74,6 +74,8 @@ supabase db reset
 
 ## Migrations
 
+**Adding an index?** Don't guess — trace the actual query first. See [CHOSENO_ARCHITECTURE_GUIDE.md §13.7](CHOSENO_ARCHITECTURE_GUIDE.md#137-index-only-what-a-traced-query-actually-needs) for the method and `supabase/migrations/20260818000003_support_and_wall_query_indexes.sql` / `20260818000004_feed_and_admin_query_indexes.sql` for worked examples — each one's comment names the exact service function and existing (or missing) index that motivated it, not just what column it's on.
+
 ### Creating a Migration
 
 **1. Write SQL**:

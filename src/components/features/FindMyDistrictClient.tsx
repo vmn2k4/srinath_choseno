@@ -26,7 +26,7 @@ interface OfficeHolderRow {
   map_shapes?: { id?: number; name?: string; boundary_type?: string } | null;
   election_role_types?: { role_title?: string; role_key?: string; description?: string | null } | null;
   political_parties?: { name?: string } | null;
-  profiles?: { current_ghost_id?: string | null } | null;
+  profiles?: { current_ghost_id?: string | null; politician_profiles?: { wall_slug?: string | null } | null } | null;
 }
 
 type ShapeRow = { id: number; name: string; country: string; boundary_type: string; properties?: unknown };
@@ -70,6 +70,7 @@ function toNode(row: OfficeHolderRow): BranchHolderNode {
     party_name: row.political_parties?.name || null,
     photo_url: row.photo_url || null,
     ghost_id: row.profiles?.current_ghost_id || null,
+    wall_slug: row.profiles?.politician_profiles?.wall_slug || null,
     boundary_name: row.map_shapes?.name || null,
     contact_email: row.contact_email || null,
     contact_phone: row.contact_phone || null,

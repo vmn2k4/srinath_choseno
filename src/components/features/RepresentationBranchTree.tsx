@@ -18,6 +18,7 @@ export interface BranchHolderNode {
   party_name: string | null;
   photo_url: string | null;
   ghost_id: string | null;
+  wall_slug?: string | null;
   boundary_name: string | null;
   contact_email?: string | null;
   contact_phone?: string | null;
@@ -143,7 +144,12 @@ function NodeCard({ node, emphasized, onReport }: { node: BranchHolderNode; emph
 
       {node.ghost_id && (
         <div className="pt-1.5 mt-0.5 border-t border-border-light/30">
-          <Button as={Link} href={`/wall/${node.ghost_id}/${slugFor(node)}`} variant="primary" size="sm" className="w-full text-[11px] px-3 py-1.5">
+          {/* Link straight to the canonical single-segment wall URL (stored
+              wall_slug, same fallback every other wall link in the app
+              uses) instead of /wall/<ghost_id>/<slug> -- that two-segment
+              form always cost two server redirects (ghost_id -> slug,
+              then slug/slug -> slug) before landing on the real page. */}
+          <Button as={Link} href={`/wall/${node.wall_slug || slugFor(node)}`} variant="primary" size="sm" className="w-full text-[11px] px-3 py-1.5">
             <UserCheck size={12} />
             View Wall
             <ArrowRight size={11} />

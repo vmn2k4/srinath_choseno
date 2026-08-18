@@ -55,6 +55,10 @@ Every Supabase call in the app, domain-organized (`elections.js`, `boundaries.js
 
 **New code here when:** anything talks to Supabase. This is the only layer allowed to import `src/services/supabase.js`'s `supabase` client directly (aside from `supabase.js` itself).
 
+Two Supabase client factories exist at this layer now, not one — `src/lib/supabase/server.ts` (cookie-based, reads the session, used by anything auth-aware) and `src/lib/supabase/publicServer.ts` (cookie-free, anon-key only, used by cacheable public pages — see [CHOSENO_ARCHITECTURE_GUIDE.md §13.6](CHOSENO_ARCHITECTURE_GUIDE.md#136-publicanonymous-supabase-client-for-cacheable-routes) for when each is safe to use). Both are consumed the same way by service functions (`Client` = `SupabaseClient<Database>`, either one satisfies it) — the choice of which to construct belongs to the page, not the service function.
+
+The dependency direction cuts both ways: a service function's *return type* must never be nominally typed to something defined in a component file, even when the shapes match. `resolveRepresentationBranch()` in `elections.ts` returns a plain object structurally identical to `RepresentationBranch` (defined in `RepresentationBranchTree.tsx`, a component) — the service file defines its own local types rather than importing that one, and callers assign across the boundary structurally. This came up when branch-resolution logic that used to live directly in a page file (already a minor layering violation — a page calling `supabase.from(...)` itself) got extracted into the service layer so a client component could reuse it too.
+
 ### 6. Utils — `src/utils/**`
 
 Pure, stateless helpers with no I/O — `fetchAllPages`, `countVertices`. Not for anything that touches the network or Supabase; that's a service function.

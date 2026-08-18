@@ -171,7 +171,7 @@ export async function getOfficeHoldersForShape(supabase: Client, mapShapeId: num
        map_shapes(id, name, boundary_type, country),
        election_role_types(role_title, role_key, description),
        political_parties(name),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url))`
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url, wall_slug))`
     )
     .eq("map_shape_id", Number(mapShapeId))
     .eq("is_current", true);
@@ -212,7 +212,7 @@ type OfficeHolderRow = {
   political_parties?: { name?: string } | null;
   profiles?: {
     current_ghost_id?: string | null;
-    politician_profiles?: { photo_url?: string | null; avatar_url?: string | null; contact_email?: string | null; contact_phone?: string | null; source_url?: string | null } | null;
+    politician_profiles?: { photo_url?: string | null; avatar_url?: string | null; contact_email?: string | null; contact_phone?: string | null; source_url?: string | null; wall_slug?: string | null } | null;
   } | null;
 };
 
@@ -249,6 +249,10 @@ function toNode(row: OfficeHolderRow) {
     party_name: row.political_parties?.name || null,
     photo_url: row.photo_url || pp?.photo_url || pp?.avatar_url || null,
     ghost_id: row.profiles?.current_ghost_id || null,
+    // Stored wall_slug, when present, is the canonical URL -- linking to it
+    // directly skips the ghost_id -> slug redirect hop below (see
+    // RepresentationBranchTree's use of this field).
+    wall_slug: pp?.wall_slug || null,
     boundary_name: row.map_shapes?.name || null,
     contact_email: row.contact_email || pp?.contact_email || null,
     contact_phone: row.contact_phone || pp?.contact_phone || null,
