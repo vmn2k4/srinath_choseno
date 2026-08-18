@@ -1095,6 +1095,17 @@ export default function CandidacyWall({
             </Card>
           )}
 
+          {!user && (
+            <Card padding="sm" className="bg-primary/10 border-primary/25 text-center">
+              <p className="text-xs text-text-secondary mb-3">
+                Sign in to post on {displayName}&apos;s campaign wall.
+              </p>
+              <Button size="sm" onClick={() => router.push("/auth")} className="w-full">
+                Sign In to Post
+              </Button>
+            </Card>
+          )}
+
           {posts.length === 0 ? (
             <EmptyState description="No posts on this candidate wall yet." />
           ) : (
