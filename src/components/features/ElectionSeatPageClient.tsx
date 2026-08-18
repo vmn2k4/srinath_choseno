@@ -540,7 +540,7 @@ export default function ElectionSeatPageClient({
             />
           ) : (
             <div className="space-y-6">
-              {/* Tab strip: "Results" poll pill first, then one pill per
+              {/* Tab strip: "Community Support" poll pill first, then one pill per
                   candidate — same row, same pill styling, so the poll reads
                   as a tab among the candidate tabs rather than a separate
                   control above them. */}
@@ -570,7 +570,7 @@ export default function ElectionSeatPageClient({
                       activeMainTab === "results" ? "text-primary-light" : "text-text-secondary"
                     }`}
                   >
-                    Results
+                    Community Support
                   </span>
                 </div>
 

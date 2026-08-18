@@ -38,6 +38,13 @@ interface ShareMenuProps {
   // opens upward by default; the detail page's header/briefing buttons sit
   // near the top of the page and open downward instead.
   menuAlign?: "above" | "below";
+  // Trigger tooltip + native share-sheet title. Both default to the
+  // original news-article copy so every existing call site (list cards,
+  // article detail page) keeps behaving exactly as before without passing
+  // anything -- only a non-news caller (e.g. ElectionResultsPanel's "Share
+  // This Race") needs to override these.
+  triggerTitle?: string;
+  shareTitle?: string;
 }
 
 export default function ShareMenu({
@@ -49,6 +56,8 @@ export default function ShareMenu({
   label,
   hideLabelOnMobile = false,
   menuAlign = "above",
+  triggerTitle = "Share article",
+  shareTitle = "News Article",
 }: ShareMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -79,7 +88,7 @@ export default function ShareMenu({
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
-          title: "News Article",
+          title: shareTitle,
           text: shareData.basePostText,
           url: shareData.url,
         });
@@ -111,7 +120,7 @@ export default function ShareMenu({
           e.stopPropagation();
         }}
         className={className}
-        title="Share article"
+        title={triggerTitle}
       >
         {copied ? (
           <>

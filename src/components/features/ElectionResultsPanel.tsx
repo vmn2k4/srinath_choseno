@@ -1,7 +1,10 @@
 "use client";
 
-import { TrendingUp, Calendar, MapPin, Heart, Users } from "lucide-react";
+import { TrendingUp, Calendar, MapPin, Heart, Users, Share2 } from "lucide-react";
 import { Card, Avatar, Badge, Button } from "@/components/primitives";
+import ShareMenu, { type ShareData } from "./ShareMenu";
+import { SITE_URL } from "@/lib/constants/site";
+import { buildSeatSlug } from "@/lib/utils/slugs";
 
 // Comprehensive "who's leading" view for a seat's candidate roster.
 // No new fields, no new table: the underlying number is the same
@@ -88,6 +91,50 @@ export default function ElectionResultsPanel({
   const leader = topRows.length === 1 ? topRows[0] : null;
   const topPct = totalSupport > 0 ? Math.round((topSupportCount / totalSupport) * 1000) / 10 : 0;
 
+  // ── Share card copy ──────────────────────────────────────────────────
+  // Reuses the same ShareMenu (Copy Link, X, WhatsApp, LinkedIn, Facebook,
+  // Telegram, Pinterest, Email) already wired up for news articles
+  // (NewsArticleDetailClient.tsx) instead of a second share widget -- see
+  // docs/SERVICES.md's "extend, don't duplicate" rule. The standings line
+  // is the hook: naming who's leading (or that it's wide open) is what
+  // makes a friend want to click through and cast the tiebreaker.
+  const seatSlug = buildSeatSlug(seat);
+  const shareUrl = seatSlug ? `${SITE_URL}/elections/seat/${seatSlug}` : SITE_URL;
+  const otherNames = rows.map((r) => r.name).filter((n) => n !== leader?.name);
+
+  const standingsLine = leader
+    ? otherNames.length > 0
+      ? `🏆 ${leader.name} is leading with ${topPct}% community support, ahead of ${otherNames.slice(0, 2).join(", ")}${otherNames.length > 2 ? " & others" : ""}.`
+      : `🏆 ${leader.name} is leading with ${topPct}% community support.`
+    : isTie
+    ? `🤝 ${topRows.map((r) => r.name).join(" & ")} are tied for the lead at ${topPct}% each — this one's wide open.`
+    : rows.length > 0
+    ? `${rows.length} candidates are running and nobody's cast their support yet. Be the first!`
+    : `Candidates for this seat haven't been added yet.`;
+
+  const basePostText = `🗳️ Choseno Community Poll: ${roleTitle} — ${boundaryName}\n${standingsLine}\nCast your support & see who's really leading 👉`;
+
+  const cleanTag = (s: string) => s.replace(/[^a-zA-Z0-9]/g, "");
+  const yearTag =
+    electionDate && !Number.isNaN(electionDate.getTime()) ? `Vote${electionDate.getFullYear()}` : "Vote2026";
+  const hashtags = Array.from(
+    new Set([cleanTag(roleTitle) || "Election", cleanTag(boundaryName), yearTag, "CommunitySupport", "Choseno"].filter(Boolean))
+  );
+  const formattedHashtagString = hashtags.map((t) => `#${t}`).join(" ");
+  const shareText = `${basePostText}\n\n${formattedHashtagString}\n${shareUrl}`;
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(basePostText)}&url=${encodeURIComponent(
+    shareUrl
+  )}&hashtags=${encodeURIComponent(hashtags.join(","))}`;
+
+  const shareData: ShareData = {
+    url: shareUrl,
+    basePostText,
+    hashtagList: formattedHashtagString,
+    shareText,
+    hashtags,
+    twitterUrl,
+  };
+
   return (
     <Card padding="md" className="space-y-5">
       <div className="flex items-start justify-between gap-3 flex-wrap">
@@ -147,12 +194,15 @@ export default function ElectionResultsPanel({
               }}
               className="w-full text-left cursor-pointer"
             >
-              <div className="flex items-center gap-3 mb-1.5">
+              <div className="flex items-start gap-3 mb-2">
                 <Avatar src={avatarUrl} name={name} size="sm" />
-                <div className="flex-1 min-w-0 flex items-center justify-between gap-2">
-                  <span className="min-w-0">
-                    <span className="text-sm font-semibold text-text-main truncate flex items-center gap-1.5">
-                      {name}
+                <div className="flex-1 min-w-0 flex flex-col gap-1.5">
+                  {/* Name + badges + support button packed tightly together, percentage at the end */}
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0 flex items-center gap-1">
+                      <span className="text-sm font-semibold text-text-main truncate">
+                        {name}
+                      </span>
                       {isLeader && (
                         <Badge tone="emerald" size="xs" shape="pill">
                           Leading
@@ -163,44 +213,88 @@ export default function ElectionResultsPanel({
                           Tied
                         </Badge>
                       )}
-                    </span>
-                    {partyName && (
-                      <span className="block text-[11px] font-medium text-text-muted truncate">{partyName}</span>
-                    )}
-                  </span>
-                  <span className="text-sm font-bold text-text-main shrink-0 tabular-nums">{pct}%</span>
+                      {/* The main per-candidate CTA — sized and animated to read as
+                          an action, not a stray label off to the side. The
+                          un-supported state gets a pulsing ring to draw the eye;
+                          once supported, the ring drops and the button settles
+                          into a calmer "done" state. */}
+                      <div className="relative shrink-0">
+                        {!isSupporting && (
+                          <span className="absolute inset-0 rounded-lg bg-primary/50 animate-ping pointer-events-none" />
+                        )}
+                        <Button
+                          type="button"
+                          variant={isSupporting ? "primary" : "outline"}
+                          size="sm"
+                          className={`relative gap-1 !py-1.5 !px-3 text-xs font-bold transition-transform hover:scale-105 active:scale-95 ${
+                            isSupporting
+                              ? ""
+                              : "!border-2 !border-primary !text-primary-light !bg-primary/10 hover:!bg-primary/20"
+                          }`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onToggleSupport?.(candidate);
+                          }}
+                          title={isSupporting ? `Withdraw your support for ${name}` : `Cast your support for ${name}`}
+                        >
+                          <Heart size={12} className={isSupporting ? "fill-current" : ""} />
+                          {isSupporting ? "Supported" : "Support"}
+                        </Button>
+                      </div>
+                    </div>
+                    <span className="text-sm font-bold text-text-main tabular-nums shrink-0 ml-2">{pct}%</span>
+                  </div>
+
+                  {/* Progress bar */}
+                  <div className="h-2.5 w-full rounded-full bg-surface-active overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-500 ${
+                        isTopRow ? "bg-primary" : "bg-primary/40"
+                      }`}
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+
+                  {/* Supporter count */}
+                  <p className="text-[11px] text-text-muted flex items-center gap-1">
+                    <Heart size={11} /> {supporterCount} supporter{supporterCount === 1 ? "" : "s"} on Choseno
+                  </p>
                 </div>
-              </div>
-              <div className="h-2.5 w-full rounded-full bg-surface-active overflow-hidden">
-                <div
-                  className={`h-full rounded-full transition-all duration-500 ${
-                    isTopRow ? "bg-primary" : "bg-primary/40"
-                  }`}
-                  style={{ width: `${pct}%` }}
-                />
-              </div>
-              <div className="flex items-center justify-between gap-2 mt-1.5">
-                <p className="text-[11px] text-text-muted flex items-center gap-1">
-                  <Heart size={11} /> {supporterCount} supporter{supporterCount === 1 ? "" : "s"} on Choseno
-                </p>
-                <Button
-                  type="button"
-                  variant={isSupporting ? "primary" : "outline"}
-                  size="sm"
-                  className="gap-1.5 shrink-0 !py-1 !px-2.5 text-xs"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onToggleSupport?.(candidate);
-                  }}
-                  title={isSupporting ? `Withdraw your support for ${name}` : `Cast your support for ${name}`}
-                >
-                  <Heart size={12} className={isSupporting ? "fill-current" : ""} />
-                  {isSupporting ? "Supported" : "Support"}
-                </Button>
               </div>
             </div>
           );
         })}
+      </div>
+
+      {/* Share CTA — the other half of the "support, then spread the word"
+          loop this panel is built around. Framed as a nudge to go swing the
+          standings, not a plain "share this page" afterthought, since that's
+          what actually gets someone to forward it to a friend. */}
+      <div className="rounded-2xl border-2 border-primary/40 bg-gradient-to-br from-primary/15 via-accent/10 to-primary/5 p-4 sm:p-5 flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="shrink-0 w-11 h-11 rounded-full bg-primary/20 flex items-center justify-center animate-pulse">
+            <Share2 size={20} className="text-primary-light" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-bold text-text-main">Think the standings should look different?</p>
+            <p className="text-xs text-text-muted mt-0.5">
+              Share this race with friends and rally more support for your candidate.
+            </p>
+          </div>
+        </div>
+        <div className="relative shrink-0 z-40">
+          <span className="absolute inset-0 rounded-xl bg-primary/40 animate-ping pointer-events-none" />
+          <ShareMenu
+            articleId={seat?.id || "election-seat"}
+            shareData={shareData}
+            label="Share This Race"
+            triggerTitle="Share this race"
+            shareTitle={`${roleTitle} — ${boundaryName}`}
+            menuAlign="above"
+            iconSize={16}
+            className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-text-on-primary font-extrabold text-sm shadow-[0_6px_18px_color-mix(in_srgb,var(--color-primary)_25%,transparent)] hover:shadow-[0_8px_22px_color-mix(in_srgb,var(--color-primary)_35%,transparent)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+          />
+        </div>
       </div>
 
       <p className="text-[11px] text-text-muted/80 border-t border-border-light/30 pt-3">
