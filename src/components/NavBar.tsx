@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useTheme, THEMES, ThemeKey } from "@/contexts/ThemeContext";
 import { useTranslation } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import GlobalPoliticianSearch from "@/components/features/GlobalPoliticianSearch";
 import ChosenoLogo from "@/components/primitives/ChosenoLogo";
 import { trackLogout } from "@/lib/analytics/events";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
@@ -233,6 +234,7 @@ export default function NavBar() {
           )}
 
           <div className="ml-1 flex items-center gap-2">
+            <GlobalPoliticianSearch />
             <LanguageSwitcher />
           </div>
 
@@ -302,6 +304,7 @@ export default function NavBar() {
 
         {/* Mobile / Tablet Controls */}
         <div className="flex lg:hidden items-center gap-2">
+          <GlobalPoliticianSearch />
           <LanguageSwitcher compact />
 
           {/* Theme Button for Mobile - Admin Only */}

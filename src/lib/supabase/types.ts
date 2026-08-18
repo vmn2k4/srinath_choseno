@@ -1540,6 +1540,65 @@ export type Database = {
           },
         ]
       }
+      key_political_leaders: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          full_name: string
+          id: string
+          normalized_name: string
+          notes: string | null
+          office_holder_id: string | null
+          politician_profile_id: string | null
+          priority: number
+          role_title: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          full_name: string
+          id?: string
+          notes?: string | null
+          office_holder_id?: string | null
+          politician_profile_id?: string | null
+          priority?: number
+          role_title?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          full_name?: string
+          id?: string
+          notes?: string | null
+          office_holder_id?: string | null
+          politician_profile_id?: string | null
+          priority?: number
+          role_title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "key_political_leaders_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "key_political_leaders_office_holder_id_fkey"
+            columns: ["office_holder_id"]
+            isOneToOne: false
+            referencedRelation: "office_holders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "key_political_leaders_politician_profile_id_fkey"
+            columns: ["politician_profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       political_parties: {
         Row: {
           country: string
@@ -2905,6 +2964,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      boundary_locality_scope: {
+        Args: { p_boundary_type: string }
+        Returns: number
+      }
       burn_ghost_identity: { Args: never; Returns: undefined }
       calculate_my_score: { Args: never; Returns: number }
       cancel_officeholder_wall_claim: {
@@ -3615,6 +3678,31 @@ export type Database = {
           isOneToOne: true
           isSetofReturn: false
         }
+      }
+      search_politicians_and_officeholders: {
+        Args: {
+          p_lat?: number
+          p_limit?: number
+          p_lng?: number
+          p_query: string
+        }
+        Returns: {
+          boundary_type: string | null
+          country: string | null
+          full_name: string
+          is_key_leader: boolean
+          jurisdiction_name: string | null
+          key_priority: number | null
+          map_shape_id: number | null
+          office_holder_id: string | null
+          party_name: string | null
+          photo_url: string | null
+          politician_profile_id: string | null
+          result_key: string
+          role_title: string | null
+          source: string
+          wall_slug: string | null
+        }[]
       }
       st_3dclosestpoint: {
         Args: { geom1: unknown; geom2: unknown }
