@@ -780,8 +780,10 @@ export default function CandidacyWall({
         {/* Left Column: Candidate Info & Campaign Details */}
         <div className="lg:col-span-5 space-y-6">
           <Card padding="md" className="space-y-4">
-            {/* Header */}
-            <div className="flex items-start justify-between gap-4">
+            {/* Header — its own row on mobile so the action buttons get a
+                full-width row to wrap into instead of squeezing next to
+                the avatar/name and getting clipped off-screen. */}
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
               <div className="flex items-center gap-3">
                 <Avatar src={avatarUrl} name={displayName} size="lg" />
                 <div>
@@ -806,7 +808,7 @@ export default function CandidacyWall({
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 flex-wrap shrink-0">
+              <div className="flex items-center gap-2 flex-wrap sm:shrink-0">
                 {candidate.profiles?.current_ghost_id && (
                   <Link
                     href={`/wall/${resolvePoliticianWallSlug(candidate, displayName, candidate.election_seats?.role_title)}`}
@@ -818,7 +820,8 @@ export default function CandidacyWall({
                       title={`View ${displayName}'s full Politician Wall`}
                     >
                       <ExternalLink size={13} />
-                      View Politician Wall
+                      <span className="sm:hidden">View Wall</span>
+                      <span className="hidden sm:inline">View Politician Wall</span>
                     </Button>
                   </Link>
                 )}

@@ -551,11 +551,23 @@ export default function ElectionSeatPageClient({
                 <div
                   role="button"
                   tabIndex={0}
-                  onClick={() => setActiveMainTab("results")}
+                  onClick={() => {
+                    setActiveMainTab("results");
+                    if (typeof window !== "undefined") {
+                      const seatSlug = seat ? buildSeatSlug(seat) : seatId;
+                      const newUrl = `/elections/seat/${seatSlug}`;
+                      window.history.replaceState(null, "", newUrl);
+                    }
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
                       setActiveMainTab("results");
+                      if (typeof window !== "undefined") {
+                        const seatSlug = seat ? buildSeatSlug(seat) : seatId;
+                        const newUrl = `/elections/seat/${seatSlug}`;
+                        window.history.replaceState(null, "", newUrl);
+                      }
                     }
                   }}
                   className={`flex items-center gap-2 shrink-0 px-4 py-2 rounded-2xl border-2 transition-all cursor-pointer ${

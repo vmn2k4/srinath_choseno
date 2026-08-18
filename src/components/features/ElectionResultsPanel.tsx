@@ -1,6 +1,6 @@
 "use client";
 
-import { TrendingUp, Calendar, MapPin, Heart, Users, Share2 } from "lucide-react";
+import { TrendingUp, Calendar, MapPin, Heart, Users, Share2, ExternalLink, ChevronRight } from "lucide-react";
 import { Card, Avatar, Badge, Button } from "@/components/primitives";
 import ShareMenu, { type ShareData } from "./ShareMenu";
 import { SITE_URL } from "@/lib/constants/site";
@@ -143,12 +143,21 @@ export default function ElectionResultsPanel({
             <TrendingUp size={18} className="text-primary" />
             Community Support
           </h3>
-          <p className="text-xs text-text-muted mt-1 max-w-md">
+          {/* Full sentence on desktop; a shorter version on mobile so this
+              doesn't eat three lines before the candidate rows even start. */}
+          <p className="hidden sm:block text-xs text-text-muted mt-1 max-w-md">
             {leader
               ? `${leader.name} is currently leading with ${topPct}% community support.`
               : isTie
               ? `${topRows.map((r) => r.name).join(" and ")} are tied at ${topPct}% community support each.`
               : `No community support recorded yet for ${roleTitle} in ${boundaryName} — be the first to support a candidate.`}
+          </p>
+          <p className="sm:hidden text-xs text-text-muted mt-1">
+            {leader
+              ? `${leader.name} leads with ${topPct}%.`
+              : isTie
+              ? `${topRows.map((r) => r.name).join(" & ")} tied at ${topPct}%.`
+              : `Be the first to support a candidate.`}
           </p>
         </div>
         <div className="flex flex-col items-end gap-1 text-xs text-text-muted shrink-0">
@@ -168,7 +177,7 @@ export default function ElectionResultsPanel({
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-1.5">
         {rows.map(({ candidate, name, avatarUrl, partyName, supporterCount }) => {
           const pct = totalSupport > 0 ? Math.round((supporterCount / totalSupport) * 1000) / 10 : 0;
           const isTopRow = totalSupport > 0 && supporterCount === topSupportCount;
@@ -176,11 +185,6 @@ export default function ElectionResultsPanel({
           const politicianId = candidate.profiles?.id;
           const isSupporting = Boolean(politicianId && mySupportedPoliticianIds?.has(politicianId));
           return (
-            // A <div role="button">, not a <button> — it wraps the Heart CTA
-            // below, which is itself a <button>; nesting <button> inside
-            // <button> gets silently auto-closed by the HTML parser (same
-            // fix already applied to the candidate roster in
-            // ElectionSeatPageClient).
             <div
               key={candidate.id}
               role="button"
@@ -192,74 +196,107 @@ export default function ElectionResultsPanel({
                   onSelectCandidate?.(candidate);
                 }
               }}
-              className="w-full text-left cursor-pointer"
+              className="group w-full text-left cursor-pointer rounded-xl border border-border-light/25 bg-surface/15 hover:bg-surface/40 active:bg-surface/50 transition-all p-3 sm:p-2.5 hover:border-primary/25 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3"
             >
-              <div className="flex items-start gap-3 mb-2">
+              {/* Identity block: avatar + name + party. Full width of its
+                  own row on mobile so the name never has to compete with
+                  the support button/stats for space and gets truncated
+                  into unreadable "Rick L..." — it only fights for room
+                  with the stats row again once there's a whole desktop
+                  row to spread across. */}
+              <div className="flex items-center gap-2.5 sm:flex-1 sm:min-w-0">
                 <Avatar src={avatarUrl} name={name} size="sm" />
-                <div className="flex-1 min-w-0 flex flex-col gap-1.5">
-                  {/* Name + badges + support button packed tightly together, percentage at the end */}
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="min-w-0 flex items-center gap-1">
-                      <span className="text-sm font-semibold text-text-main truncate">
-                        {name}
-                      </span>
-                      {isLeader && (
-                        <Badge tone="emerald" size="xs" shape="pill">
-                          Leading
-                        </Badge>
-                      )}
-                      {isTie && isTopRow && (
-                        <Badge tone="amber" size="xs" shape="pill">
-                          Tied
-                        </Badge>
-                      )}
-                      {/* The main per-candidate CTA — sized and animated to read as
-                          an action, not a stray label off to the side. The
-                          un-supported state gets a pulsing ring to draw the eye;
-                          once supported, the ring drops and the button settles
-                          into a calmer "done" state. */}
-                      <div className="relative shrink-0">
-                        {!isSupporting && (
-                          <span className="absolute inset-0 rounded-lg bg-primary/50 animate-ping pointer-events-none" />
-                        )}
-                        <Button
-                          type="button"
-                          variant={isSupporting ? "primary" : "outline"}
-                          size="sm"
-                          className={`relative gap-1 !py-1.5 !px-3 text-xs font-bold transition-transform hover:scale-105 active:scale-95 ${
-                            isSupporting
-                              ? ""
-                              : "!border-2 !border-primary !text-primary-light !bg-primary/10 hover:!bg-primary/20"
-                          }`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onToggleSupport?.(candidate);
-                          }}
-                          title={isSupporting ? `Withdraw your support for ${name}` : `Cast your support for ${name}`}
-                        >
-                          <Heart size={12} className={isSupporting ? "fill-current" : ""} />
-                          {isSupporting ? "Supported" : "Support"}
-                        </Button>
-                      </div>
-                    </div>
-                    <span className="text-sm font-bold text-text-main tabular-nums shrink-0 ml-2">{pct}%</span>
+                <div className="flex flex-col min-w-0 flex-1 gap-0.5">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-[15px] sm:text-sm font-bold text-text-main group-hover:underline leading-tight">
+                      {name}
+                    </span>
+                    {isLeader && (
+                      <Badge tone="emerald" size="xs" shape="pill">
+                        Leading
+                      </Badge>
+                    )}
+                    {isTie && isTopRow && (
+                      <Badge tone="amber" size="xs" shape="pill">
+                        Tied
+                      </Badge>
+                    )}
                   </div>
-
-                  {/* Progress bar */}
-                  <div className="h-2.5 w-full rounded-full bg-surface-active overflow-hidden">
-                    <div
-                      className={`h-full rounded-full transition-all duration-500 ${
-                        isTopRow ? "bg-primary" : "bg-primary/40"
-                      }`}
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-
-                  {/* Supporter count */}
-                  <p className="text-[11px] text-text-muted flex items-center gap-1">
-                    <Heart size={11} /> {supporterCount} supporter{supporterCount === 1 ? "" : "s"} on Choseno
-                  </p>
+                  {partyName && (
+                    <span className="text-xs text-text-muted truncate leading-tight">
+                      {partyName}
+                    </span>
+                  )}
                 </div>
+              </div>
+
+              {/* Stats/action row: support button, progress bar, percentage,
+                  vote count, and a tap-through chevron. Its own full-width
+                  row on mobile — plenty of room for a readable "Support"
+                  label and a progress bar that isn't squeezed to a sliver. */}
+              <div className="flex items-center gap-2 sm:gap-2.5 sm:shrink-0">
+                <div className="relative shrink-0">
+                  {!isSupporting && (
+                    <span
+                      className="absolute inset-0 rounded-lg animate-ping pointer-events-none"
+                      style={{ backgroundColor: "color-mix(in srgb, var(--color-success) 50%, transparent)" }}
+                    />
+                  )}
+                  <Button
+                    type="button"
+                    variant={isSupporting ? "primary" : "outline"}
+                    size="sm"
+                    className={`relative gap-1.5 !py-1.5 !px-3 text-xs font-bold transition-transform hover:scale-105 active:scale-95 ${
+                      isSupporting ? "" : "!border-2"
+                    }`}
+                    style={isSupporting ? {
+                      backgroundColor: "#10b981",
+                      color: "white",
+                      borderColor: "#10b981",
+                    } : {
+                      borderColor: "#10b981",
+                      color: "#10b981",
+                      backgroundColor: "rgba(16, 185, 129, 0.1)",
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleSupport?.(candidate);
+                    }}
+                    title={isSupporting ? `Withdraw your support for ${name}` : `Cast your support for ${name}`}
+                  >
+                    <Heart size={12} className={isSupporting ? "fill-current" : ""} />
+                    {isSupporting ? "Supported" : "Support"}
+                  </Button>
+                </div>
+
+                <div className="h-2 flex-1 sm:w-20 sm:flex-initial rounded-full bg-surface-active overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all duration-500 ${
+                      isTopRow ? "bg-primary" : "bg-primary/40"
+                    }`}
+                    style={{ width: `${pct}%` }}
+                  />
+                </div>
+
+                <span className="text-xs sm:text-sm font-bold text-text-main tabular-nums shrink-0 w-9 sm:w-12 text-right">
+                  {pct}%
+                </span>
+
+                <span className="flex items-center gap-0.5 text-xs text-text-muted shrink-0">
+                  <Heart size={10} /> {supporterCount}
+                </span>
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSelectCandidate?.(candidate);
+                  }}
+                  className="flex items-center gap-0.5 text-xs font-semibold text-primary hover:text-primary-hover transition-colors shrink-0"
+                  title={`View ${name}'s full profile`}
+                >
+                  <span className="hidden sm:inline">View Profile</span>
+                  <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                </button>
               </div>
             </div>
           );
@@ -277,8 +314,11 @@ export default function ElectionResultsPanel({
           </div>
           <div className="min-w-0">
             <p className="text-sm font-bold text-text-main">Think the standings should look different?</p>
-            <p className="text-xs text-text-muted mt-0.5">
+            <p className="hidden sm:block text-xs text-text-muted mt-0.5">
               Share this race with friends and rally more support for your candidate.
+            </p>
+            <p className="sm:hidden text-xs text-text-muted mt-0.5">
+              Share it to rally more support.
             </p>
           </div>
         </div>
@@ -297,9 +337,12 @@ export default function ElectionResultsPanel({
         </div>
       </div>
 
-      <p className="text-[11px] text-text-muted/80 border-t border-border-light/30 pt-3">
+      <p className="hidden sm:block text-[11px] text-text-muted/80 border-t border-border-light/30 pt-3">
         Community Support reflects Choseno user activity (favorites/support clicks), not a scientific poll,
         certified result, or prediction of the official {formattedDate ? `${formattedDate} ` : ""}election outcome.
+      </p>
+      <p className="sm:hidden text-[11px] text-text-muted/80 border-t border-border-light/30 pt-3">
+        Reflects user activity, not an official poll or prediction.
       </p>
     </Card>
   );
