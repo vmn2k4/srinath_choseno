@@ -101,40 +101,66 @@ export default function ElectionResultsPanel({
   // Reuses the same ShareMenu (Copy Link, X, WhatsApp, LinkedIn, Facebook,
   // Telegram, Pinterest, Email) already wired up for news articles
   // (NewsArticleDetailClient.tsx) instead of a second share widget -- see
-  // docs/SERVICES.md's "extend, don't duplicate" rule. The standings line
-  // is the hook: naming who's leading (or that it's wide open) is what
-  // makes a friend want to click through and cast the tiebreaker.
+  // docs/SERVICES.md's "extend, don't duplicate" rule.
+  //
+  // Three distinct templates, not one generic one stretched across every
+  // state -- "someone's leading", "it's tied", and "nobody's voted yet"
+  // are different hooks and read as flat/wrong when forced through the
+  // same sentence. No emojis (deliberate, per feedback); candidate names
+  // double as inline hashtags ("#RickLarsen: 42% (3 votes)") so each
+  // candidate is individually discoverable without also cramming every
+  // name into the trailing hashtag list.
   const seatSlug = buildSeatSlug(seat);
   const shareUrl = seatSlug ? `${SITE_URL}/elections/seat/${seatSlug}` : SITE_URL;
   const otherNames = rows.map((r) => r.name).filter((n) => n !== leader?.name);
-
-  // No emojis, direct imperative phrasing — "cast your vote now" reads as
-  // an instruction to act immediately, not a passive stat someone might
-  // glance at and move on from. A tie is framed as something the reader's
-  // own vote resolves, since "your vote decides this" recruits harder than
-  // "this one's wide open."
-  const standingsLine = leader
-    ? otherNames.length > 0
-      ? `${leader.name} is leading with ${topPct}% community support, ahead of ${otherNames.slice(0, 2).join(", ")}${otherNames.length > 2 ? " & others" : ""}. Vote now to keep it that way — or change it.`
-      : `${leader.name} is leading with ${topPct}% community support. Cast your vote now.`
-    : isTie
-    ? `${topRows.map((r) => r.name).join(" & ")} are tied at ${topPct}% each. Your vote decides who leads.`
-    : rows.length > 0
-    ? `${rows.length} candidates are running and nobody's cast their support yet. Be the first — vote now.`
-    : `Candidates for this seat haven't been added yet.`;
-
-  const basePostText = `Choseno Community Poll: ${roleTitle} — ${boundaryName}\n${standingsLine}\nVote now:`;
+  const hasSupport = totalSupport > 0;
 
   const cleanTag = (s: string) => s.replace(/[^a-zA-Z0-9]/g, "");
+  const pctFor = (supporterCount: number) =>
+    totalSupport > 0 ? Math.round((supporterCount / totalSupport) * 1000) / 10 : 0;
+
+  // Capped so a crowded primary doesn't turn the post into a wall of
+  // text -- anything past the cap gets an honest "+N more" instead of
+  // silently vanishing.
+  const MAX_LISTED_CANDIDATES = 6;
+  const listedRows = rows.slice(0, MAX_LISTED_CANDIDATES);
+  const hiddenRowCount = rows.length - listedRows.length;
+  const standingsBlock =
+    listedRows
+      .map((r) => `• #${cleanTag(r.name)}: ${pctFor(r.supporterCount)}% (${r.supporterCount} vote${r.supporterCount === 1 ? "" : "s"})`)
+      .join("\n") + (hiddenRowCount > 0 ? `\n+ ${hiddenRowCount} more on Choseno` : "");
+  const ballotLine = `On the ballot: ${listedRows.map((r) => `#${cleanTag(r.name)}`).join(", ")}${hiddenRowCount > 0 ? ` & ${hiddenRowCount} more` : ""}`;
+
+  const introLine = leader
+    ? otherNames.length > 0
+      ? `${leader.name} is currently leading with ${topPct}% of the community's support, ahead of ${otherNames.slice(0, 2).join(", ")}${otherNames.length > 2 ? " & others" : ""}.`
+      : `${leader.name} is currently leading with ${topPct}% of the community's support.`
+    : isTie
+    ? `It's a dead heat — ${topRows.map((r) => r.name).join(" & ")} are tied at ${topPct}% each. Your vote breaks the tie.`
+    : rows.length > 0
+    ? `We're starting the poll now — spend two minutes to show your support for ${boundaryName}'s next ${roleTitle}.`
+    : `Candidates for this seat haven't been added yet.`;
+
+  // A short hook after the candidate breakdown that recruits the reader to
+  // understand why their community supports these candidates, then make an
+  // informed choice themselves. Bridges from "here's what people picked" to
+  // "now it's your turn."
+  const whyLine = "See why your community supports — make your choice and join.";
+
+  const ctaLine = rows.length === 0 ? null : hasSupport ? "Cast your vote & join the conversation:" : "Be the first to vote:";
+
+  const header = `Choseno Community Poll — ${roleTitle} | ${boundaryName}`;
+  const basePostText =
+    rows.length === 0
+      ? `${header}\n\n${introLine}`
+      : hasSupport
+      ? `${header}\n\n${introLine}\n\n${standingsBlock}\n\n${whyLine}\n\n${ctaLine}`
+      : `${header}\n\n${introLine}\n\n${ballotLine}\n\n${whyLine}\n\n${ctaLine}`;
+
   const yearTag =
     electionDate && !Number.isNaN(electionDate.getTime()) ? `Vote${electionDate.getFullYear()}` : "Vote2026";
-  // Candidate names as hashtags make the post discoverable to anyone
-  // searching for that candidate specifically, not just the race in
-  // general — capped at the top 4 so a crowded primary doesn't bury the
-  // post under twenty tags.
-  const candidateTags = rows.slice(0, 4).map((r) => cleanTag(r.name)).filter(Boolean);
   const hashtags = Array.from(
-    new Set([...candidateTags, cleanTag(roleTitle) || "Election", cleanTag(boundaryName), yearTag, "CommunitySupport", "Choseno"].filter(Boolean))
+    new Set([cleanTag(roleTitle) || "Election", cleanTag(boundaryName), yearTag, "CommunitySupport", "Choseno"].filter(Boolean))
   );
   const formattedHashtagString = hashtags.map((t) => `#${t}`).join(" ");
   const shareText = `${basePostText}\n\n${formattedHashtagString}\n${shareUrl}`;
