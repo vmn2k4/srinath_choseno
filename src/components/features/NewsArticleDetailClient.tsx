@@ -148,9 +148,19 @@ export default function NewsArticleDetailClient({
         }
       })()
     : `/news/${slug}/opengraph-image`;
-  const currentOgImageUrl = rawOgUrl.includes("?")
-    ? `${rawOgUrl}&v=${encodeURIComponent(imageVersion)}`
-    : `${rawOgUrl}?v=${encodeURIComponent(imageVersion)}`;
+  // article.hero_image_url (a real source photo, or the PNG saved by
+  // generateNewsArticleOgImage) lives on Supabase Storage -- one absolute
+  // URL, identical in every environment, unlike the dynamic route above.
+  // Use it as-is rather than running it through the relative-path
+  // rewrite, which would strip its storage host and try to resolve the
+  // bare path against this app's own origin (404). No cache-busting
+  // needed here either: hero uploads get a unique per-upload filename, and
+  // generateNewsArticleOgImage never re-renders once the URL is set.
+  const currentOgImageUrl = article.hero_image_url
+    ? article.hero_image_url
+    : rawOgUrl.includes("?")
+      ? `${rawOgUrl}&v=${encodeURIComponent(imageVersion)}`
+      : `${rawOgUrl}?v=${encodeURIComponent(imageVersion)}`;
   
   // Always share the canonical production URL so social platforms (X, LinkedIn, WhatsApp)
   // fetch the real OpenGraph metadata and render the rich image card (localhost is not reachable by social crawlers)
