@@ -117,7 +117,7 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
 
   const [{ data: articles, error, count }, countries] = await Promise.all([
     repIds
-      ? getNewsArticlesByPoliticians(supabase, repIds, { limit: PAGE_SIZE, offset })
+      ? getNewsArticlesByPoliticians(supabase, repIds, { limit: PAGE_SIZE, offset, withCount: true })
       : getPublishedNewsArticles(supabase, { category, country, limit: PAGE_SIZE, offset, withCount: true }),
     getPublishedNewsCountries(supabase),
   ]);

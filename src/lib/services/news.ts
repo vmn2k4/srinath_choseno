@@ -307,9 +307,14 @@ export async function uploadNewsHeroImage(supabase: Client, file: File, slug: st
 
 // ── News article comments (via create_post RPC) ───────────────────────────
 
-export async function getNewsArticleComments(supabase: Client, articleId: string) {
+export async function getNewsArticleComments(
+  supabase: Client,
+  articleId: string,
+  opts: { limit?: number; offset?: number } = {}
+) {
   // System ghost ID used by admin_sync_news_article_tags to mirror stories onto politician walls
   const SYSTEM_NEWS_GHOST_ID = "00000000-0000-0000-0000-000000000001";
+  const limit = opts.limit ?? 50;
 
   let query = supabase
     .from("posts")
@@ -317,7 +322,8 @@ export async function getNewsArticleComments(supabase: Client, articleId: string
     .eq("news_article_id", articleId)
     .neq("ghost_id", SYSTEM_NEWS_GHOST_ID)
     .is("wall_ghost_id", null)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(opts.offset ?? 0, (opts.offset ?? 0) + limit - 1);
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }
@@ -421,7 +427,7 @@ export async function getNewsArticlesByPolitician(
 export async function getNewsArticlesByPoliticians(
   supabase: Client,
   politicianIds: string[],
-  opts: { limit?: number; offset?: number } = {}
+  opts: { limit?: number; offset?: number; withCount?: boolean } = {}
 ): Promise<{ data: NewsArticle[] | null; error: PostgrestError | null; count?: number | null }> {
   if (!politicianIds.length) return { data: [], error: null, count: 0 };
 
@@ -429,7 +435,12 @@ export async function getNewsArticlesByPoliticians(
     .from("news_articles")
     .select(
       "id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, created_at, news_article_politicians!inner(politician_id, profiles(id, full_name))",
-      { count: "exact" }
+      // Was unconditionally { count: "exact" } — an exact COUNT(*) on every
+      // call regardless of whether the caller even reads it, unlike its
+      // sibling getNewsArticlesByPolitician which already gates this behind
+      // opts.withCount. Matched here so callers only pay for the count when
+      // they actually need page-number UI.
+      opts.withCount ? { count: "exact" } : undefined
     )
     .in("news_article_politicians.politician_id", politicianIds)
     .eq("status", "published")

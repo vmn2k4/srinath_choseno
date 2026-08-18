@@ -291,7 +291,12 @@ export function unsubscribeFromSupportChanges(
   if (channel) supabase.removeChannel(channel);
 }
 
-export async function getSupportersList(supabase: Client, politicianId: string) {
+export async function getSupportersList(
+  supabase: Client,
+  politicianId: string,
+  opts: { limit?: number; offset?: number } = {}
+) {
+  const limit = opts.limit ?? 50;
   // profiles joined via !inner so a test-flagged supporter's row drops out
   // of the result entirely in production, instead of surviving with a
   // null-embedded profile (the default to-one embed behavior when an
@@ -308,18 +313,33 @@ export async function getSupportersList(supabase: Client, politicianId: string) 
     `
     )
     .eq("politician_id", politicianId)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(opts.offset ?? 0, (opts.offset ?? 0) + limit - 1);
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("profiles.is_test", false);
   return query;
 }
 
 // ── wall posts ───────────────────────────────────────────────────────────
-export async function getWallPosts(supabase: Client, ghostId: string) {
+// Default page size — this was the single highest-traffic query in the app
+// with zero limit (per the migration comment on idx_posts_wall_ghost_id): a
+// long-serving politician's ENTIRE post+comment history, every wall visit.
+// Capped here so every existing caller is protected immediately; {offset}
+// is threaded through for a future "load more" without another signature
+// change.
+const WALL_PAGE_SIZE = 50;
+
+export async function getWallPosts(
+  supabase: Client,
+  ghostId: string,
+  opts: { limit?: number; offset?: number } = {}
+) {
+  const limit = opts.limit ?? WALL_PAGE_SIZE;
   let query = supabase
     .from("posts")
     .select(`*, comments (*), news_articles (slug, event_date, published_at)`)
     .or(`ghost_id.eq.${ghostId},wall_ghost_id.eq.${ghostId}`)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(opts.offset ?? 0, (opts.offset ?? 0) + limit - 1);
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }
@@ -329,12 +349,18 @@ export async function getWallPosts(supabase: Client, ghostId: string) {
 // and merged by the caller, same pattern as the 3-way feed fetch in feed.ts.
 // !inner on post_mentions so the .eq() filter on the embed actually narrows
 // the joined posts instead of returning every post with a null embed.
-export async function getMentionedWallPosts(supabase: Client, politicianId: string) {
+export async function getMentionedWallPosts(
+  supabase: Client,
+  politicianId: string,
+  opts: { limit?: number; offset?: number } = {}
+) {
+  const limit = opts.limit ?? WALL_PAGE_SIZE;
   let query = supabase
     .from("posts")
     .select(`*, comments (*), news_articles (slug, event_date, published_at), post_mentions!inner(politician_id)`)
     .eq("post_mentions.politician_id", politicianId)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(opts.offset ?? 0, (opts.offset ?? 0) + limit - 1);
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }

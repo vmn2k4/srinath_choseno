@@ -12,33 +12,57 @@ type Client = SupabaseClient<Database>;
 // a brand-new post was functionally correct (mention attached fine) but
 // invisible in practice, sorted behind an older, equally-0-engagement post
 // purely because the DB happened to return it that way.
-export async function getMembershipScopedPosts(supabase: Client, shapeIds: number[]) {
+// Default page size for the three feed sections below. None of these had
+// any limit before -- each fetched every matching post (plus every nested
+// comment) platform-wide, forever. A default cap here protects every
+// existing caller immediately without needing a "Load More" UI first;
+// {offset} is already threaded through so pager UI can layer on top later.
+const FEED_PAGE_SIZE = 50;
+
+export async function getMembershipScopedPosts(
+  supabase: Client,
+  shapeIds: number[],
+  opts: { limit?: number; offset?: number } = {}
+) {
+  const limit = opts.limit ?? FEED_PAGE_SIZE;
   let query = supabase
     .from("posts")
     .select("*, comments(*), post_boundaries!inner(map_shape_id, map_shapes(id, name)), news_articles(slug, event_date, published_at)")
     .in("post_boundaries.map_shape_id", shapeIds)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(opts.offset ?? 0, (opts.offset ?? 0) + limit - 1);
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }
 
-export async function getCountryScopedPosts(supabase: Client, country: string) {
+export async function getCountryScopedPosts(
+  supabase: Client,
+  country: string,
+  opts: { limit?: number; offset?: number } = {}
+) {
+  const limit = opts.limit ?? FEED_PAGE_SIZE;
   let query = supabase
     .from("posts")
     .select("*, comments(*), news_articles(slug, event_date, published_at)")
     .eq("is_country", true)
     .eq("country", country)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(opts.offset ?? 0, (opts.offset ?? 0) + limit - 1);
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }
 
-export async function getInternationalScopedPosts(supabase: Client) {
+export async function getInternationalScopedPosts(
+  supabase: Client,
+  opts: { limit?: number; offset?: number } = {}
+) {
+  const limit = opts.limit ?? FEED_PAGE_SIZE;
   let query = supabase
     .from("posts")
     .select("*, comments(*), news_articles(slug, event_date, published_at)")
     .eq("is_international", true)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(opts.offset ?? 0, (opts.offset ?? 0) + limit - 1);
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }

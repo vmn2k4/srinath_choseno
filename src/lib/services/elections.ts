@@ -897,10 +897,21 @@ export async function resolveRegionNames(supabase: Client, shapeIds: number[], c
 // When ghostId IS resolvable this also pulls in the same person's permanent
 // wall posts, unifying the two views — see
 // 20260730000003_unify_candidacy_and_wall_posts.sql.
-export async function getCandidacyWallPosts(supabase: Client, candidateId: string, ghostId?: string | null) {
+export async function getCandidacyWallPosts(
+  supabase: Client,
+  candidateId: string,
+  ghostId?: string | null,
+  opts: { limit?: number; offset?: number } = {}
+) {
+  const limit = opts.limit ?? 50;
   const filters = [`election_candidate_id.eq.${candidateId}`];
   if (ghostId) filters.push(`ghost_id.eq.${ghostId}`, `wall_ghost_id.eq.${ghostId}`);
-  let query = supabase.from("posts").select("*, comments (*)").or(filters.join(",")).order("created_at", { ascending: false });
+  let query = supabase
+    .from("posts")
+    .select("*, comments (*)")
+    .or(filters.join(","))
+    .order("created_at", { ascending: false })
+    .range(opts.offset ?? 0, (opts.offset ?? 0) + limit - 1);
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query;
 }
