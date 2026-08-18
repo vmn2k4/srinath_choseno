@@ -294,6 +294,17 @@ export async function uploadNewsHeroImage(supabase: Client, file: File, slug: st
   return { publicUrl, error: null };
 }
 
+// generateNewsArticleOgImage lives in ./newsOgImage.ts, not here, even
+// though it's the same "services call Supabase" pattern as everything else
+// in this file. Reason: it imports src/lib/utils/og.tsx, which pulls in
+// next/og -> sharp -> Node builtins (fs, child_process). This file
+// (services/news.ts) is imported by client components (AdminNewsPageClient,
+// NewsArticleDetailClient per the layered architecture), so anything it
+// imports ends up in the client bundle -- next/og's Node-only code doesn't
+// resolve there and breaks the build. newsOgImage.ts is only ever imported
+// by the server-only API route that needs it, so it never crosses that
+// boundary.
+
 // ── News article comments (via create_post RPC) ───────────────────────────
 
 export async function getNewsArticleComments(supabase: Client, articleId: string) {

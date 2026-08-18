@@ -248,6 +248,24 @@ function notifyIndexNow(slugs: string[]) {
   });
 }
 
+/**
+ * Fires the one-time branded share-card generation for newly published
+ * articles (api/news/[slug]/og-image/route.ts -> generateNewsArticleOgImage)
+ * so hero_image_url is a static, pre-rendered PNG by the time anyone shares
+ * the link, instead of depending on a live next/og render at share time
+ * (the cause of X/Twitter sometimes showing no image). Fire-and-forget, same
+ * as notifyIndexNow above: never overwrites an article that already has a
+ * hero_image_url, so calling this on every publish is always safe/idempotent.
+ */
+function generateOgImages(slugs: string[]) {
+  slugs.filter(Boolean).forEach((slug) => {
+    fetch(`/api/news/${slug}/og-image`, { method: "POST" }).catch(() => {
+      // Swallow -- best-effort; the live opengraph-image.tsx route still
+      // works as a fallback if this never succeeds.
+    });
+  });
+}
+
 /** Case/whitespace-tolerant match of a pasted impactArea string against the enum; null if it doesn't match anything. */
 function normalizeImpactArea(input: unknown): NewsImpactArea | null {
   if (typeof input !== "string") return null;
@@ -733,6 +751,7 @@ export default function AdminNewsPageClient() {
     }
 
     notifyIndexNow(created.filter((a) => a.status === "published").map((a) => a.slug));
+    generateOgImages(created.filter((a) => a.status === "published").map((a) => a.slug));
 
     setBatchImporting(false);
     const tagNote = unmatchedByArticle.length
@@ -824,7 +843,10 @@ export default function AdminNewsPageClient() {
     if (err) {
       setStatusMsg({ type: "error", msg: err.message });
     } else {
-      if (payload.status === "published") notifyIndexNow([payload.slug]);
+      if (payload.status === "published") {
+        notifyIndexNow([payload.slug]);
+        generateOgImages([payload.slug]);
+      }
       setStatusMsg({ type: "success", msg: editingId ? "Article updated!" : "Article created!" });
       await loadArticles();
       closeForm();
@@ -846,6 +868,7 @@ export default function AdminNewsPageClient() {
     } else {
       await syncNewsArticlePoliticianTags(supabase, id);
       notifyIndexNow([article.slug]);
+      generateOgImages([article.slug]);
       setStatusMsg({ type: "success", msg: `"${article.headline}" published!` });
       await loadArticles();
     }

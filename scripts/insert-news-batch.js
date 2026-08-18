@@ -38,6 +38,9 @@ fs.readFileSync(envPath, 'utf8').split('\n').forEach(line => {
 
 const SUPABASE_URL = env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// Matches src/lib/constants/site.ts -- used to call the deployed app's
+// og-image generation endpoint after inserting a published article.
+const SITE_URL = env.NEXT_PUBLIC_SITE_URL || 'https://www.choseno.com';
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   console.error('Missing Supabase credentials in .env.local');
@@ -486,6 +489,30 @@ async function run() {
         console.log(`  -> Synced electoral boundary GIS polygons`);
       } else {
         console.warn(`  -> Warning: failed to sync boundary polygons:`, await boundaryRes.text());
+      }
+    }
+
+    // Auto-generate the branded share-card PNG and save it to
+    // hero_image_url (see api/news/[slug]/og-image/route.ts ->
+    // generateNewsArticleOgImage in src/lib/services/news.ts) so the image
+    // is a static file, already sitting there, by the time this article is
+    // ever shared -- instead of depending on a live next/og render at share
+    // time, which is what made the X/Twitter card unreliable. Best-effort:
+    // a failure here just leaves the live opengraph-image.tsx route as the
+    // fallback, so it never blocks the batch.
+    if (created.status === 'published') {
+      try {
+        const ogRes = await fetch(`${SITE_URL}/api/news/${created.slug}/og-image`, {
+          method: 'POST',
+          headers: { Authorization: authHeaders.Authorization }
+        });
+        if (ogRes.ok) {
+          console.log(`  -> Generated share-card image`);
+        } else {
+          console.warn(`  -> Warning: failed to generate share-card image:`, await ogRes.text());
+        }
+      } catch (ogErr) {
+        console.warn(`  -> Warning: failed to generate share-card image:`, ogErr.message);
       }
     }
 
