@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Newspaper } from "lucide-react";
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getPublishedNewsArticles, NEWS_CATEGORIES } from "@/lib/services/news";
 import { categoryToSlug, resolveCategoryFromSlug } from "@/lib/utils/newsTaxonomy";
 import { SITE_URL } from "@/lib/constants/site";
@@ -11,6 +11,9 @@ import NewsPager from "@/components/features/NewsPager";
 
 const BASE_URL = SITE_URL;
 const PAGE_SIZE = 24;
+// news_articles' public policy ("status = 'published' AND published_at <=
+// now()") doesn't branch on auth.uid() -- safe for the cookie-free client.
+export const revalidate = 300;
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
@@ -51,7 +54,7 @@ export default async function NewsCategoryPage({ params, searchParams }: Categor
   const page = Math.max(1, parseInt(sp.page || "1", 10) || 1);
   const offset = (page - 1) * PAGE_SIZE;
 
-  const supabase = await createClient();
+  const supabase = await createPublicClient();
   const { data: articles, count } = await getPublishedNewsArticles(supabase, {
     category,
     limit: PAGE_SIZE,

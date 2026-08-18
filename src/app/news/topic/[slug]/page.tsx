@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { cache } from "react";
 import { Tag } from "lucide-react";
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getPublishedNewsArticles } from "@/lib/services/news";
 import { findArticlesByTagSlug, collectTagFrequency } from "@/lib/utils/newsTaxonomy";
 import { SITE_URL } from "@/lib/constants/site";
@@ -18,6 +18,8 @@ const PAGE_SIZE = 24;
 // at the current corpus size; if published articles grow well past this,
 // move tag storage to its own indexed table/column.
 const TAG_SCAN_LIMIT = 400;
+// Same public-policy reasoning as the category page.
+export const revalidate = 300;
 
 interface TopicPageProps {
   params: Promise<{ slug: string }>;
@@ -27,7 +29,7 @@ interface TopicPageProps {
 // generateMetadata and the page component both need the same scan+match.
 // Deduped via cache() so it's one DB round trip per request, not two.
 const getTopicMatch = cache(async (slug: string) => {
-  const supabase = await createClient();
+  const supabase = await createPublicClient();
   const { data } = await getPublishedNewsArticles(supabase, { limit: TAG_SCAN_LIMIT });
   return findArticlesByTagSlug(data ?? [], slug);
 });

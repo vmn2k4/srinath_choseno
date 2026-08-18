@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { cache } from "react";
 import PoliticianWallClient from "@/components/features/PoliticianWallClient";
-import { createClient as createServerClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/publicServer";
 import {
   getWallOwnerProfile,
   getWallPosts,
@@ -20,6 +20,14 @@ import NewsArticleCard from "@/components/features/NewsArticleCard";
 
 const BASE_URL = SITE_URL;
 
+// Every table this page reads (profiles' politician branch, politician_
+// profiles/supporters/ratings, non-removed posts, office_holders,
+// news_articles) is publicly readable independent of who's asking -- see
+// src/lib/supabase/publicServer.ts. 5 minutes: fresh enough that a just-cast
+// support/rating shows up quickly, long enough to spare the DB on repeat
+// visits to what's likely the highest-traffic page type in the app.
+export const revalidate = 300;
+
 interface WallPageProps {
   params: Promise<{ ghostId: string }>;
 }
@@ -32,7 +40,7 @@ function isUuid(value: string) {
 // summary for ghostId. Deduped via React cache() so it's one DB round trip
 // per request instead of two.
 const getProfileSummary = cache(async (ghostId: string) => {
-  const supabase = await createServerClient();
+  const supabase = await createPublicClient();
   return isUuid(ghostId)
     ? getSEOProfileSummary(supabase, ghostId)
     : getSEOProfileSummaryBySlug(supabase, ghostId);
@@ -128,7 +136,7 @@ export async function generateMetadata({
 
 export default async function WallPage({ params }: WallPageProps) {
   const { ghostId } = await params;
-  const supabase = await createServerClient();
+  const supabase = await createPublicClient();
 
   const { owner, activeCandidacy, partyName, rating } = await getProfileSummary(ghostId);
   if (!owner?.current_ghost_id) notFound();

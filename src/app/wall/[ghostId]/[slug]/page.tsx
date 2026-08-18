@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { cache } from "react";
 import PoliticianWallClient from "@/components/features/PoliticianWallClient";
-import { createClient as createServerClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/publicServer";
 import {
   getWallOwnerProfile,
   getWallPosts,
@@ -15,6 +15,9 @@ import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 import { notFound, redirect } from "next/navigation";
 
 const BASE_URL = SITE_URL;
+
+// Same reasoning as the wall page above (see src/app/wall/[ghostId]/page.tsx).
+export const revalidate = 300;
 
 interface WallSlugPageProps {
   params: Promise<{ ghostId: string; slug: string }>;
@@ -35,14 +38,14 @@ type WallPost = {
 // summary and wall post. Deduped via React cache() so it's the same pair of
 // DB round trips instead of a duplicate per function.
 const getProfileSummary = cache(async (ghostId: string) => {
-  const supabase = await createServerClient();
+  const supabase = await createPublicClient();
   return isUuid(ghostId)
     ? getSEOProfileSummary(supabase, ghostId)
     : getSEOProfileSummaryBySlug(supabase, ghostId);
 });
 
 const getWallPost = cache(async (ghostId: string, slug: string) => {
-  const supabase = await createServerClient();
+  const supabase = await createPublicClient();
   const { owner } = await getProfileSummary(ghostId);
   const { data } = await getWallPostBySlugOrId(supabase, owner?.current_ghost_id || ghostId, slug);
   return data as WallPost | null;
@@ -127,7 +130,7 @@ export async function generateMetadata({
 
 export default async function WallSlugPage({ params }: WallSlugPageProps) {
   const { ghostId, slug } = await params;
-  const supabase = await createServerClient();
+  const supabase = await createPublicClient();
 
   const { owner, activeCandidacy, partyName, rating } = await getProfileSummary(ghostId);
   const wallSlug = (owner?.politician_profiles as { wall_slug?: string | null } | null)?.wall_slug;

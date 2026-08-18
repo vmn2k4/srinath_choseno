@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/publicServer";
 import {
   getNewsArticleBySlug,
   getPublishedNewsArticles,
@@ -19,11 +19,21 @@ interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Published articles are public regardless of who's asking -- the RLS
+// policy ("status = 'published' AND published_at <= now()") never branches
+// on auth.uid(), so this page uses the cookie-free client and can actually
+// benefit from `revalidate` below. See src/lib/supabase/publicServer.ts.
+//
+// 5 minutes: long enough to spare the DB on a viral article's traffic
+// spike, short enough that a published correction (see /corrections-policy)
+// shows up promptly instead of sitting stale for hours.
+export const revalidate = 300;
+
 // generateMetadata and the page component below both look up the same
 // article. Deduped via React cache() so it's one DB round trip per request
 // instead of two.
 const getArticle = cache(async (slug: string) => {
-  const supabase = await createClient();
+  const supabase = await createPublicClient();
   return getNewsArticleBySlug(supabase, slug);
 });
 
@@ -115,7 +125,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
   // "Related Coverage" grid at the bottom of the article -- same category,
   // excluding this article, most recent first. Purely data-driven off
   // article.category so it needs no manual curation as new stories publish.
-  const supabaseForRelated = await createClient();
+  const supabaseForRelated = await createPublicClient();
   const { data: relatedArticles } = await getPublishedNewsArticles(supabaseForRelated, {
     category: article.category,
     excludeSlug: slug,
