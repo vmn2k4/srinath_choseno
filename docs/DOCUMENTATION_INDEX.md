@@ -2,17 +2,31 @@
 
 Complete guide to all Choseno documentation — architecture, features, data pipelines, and developer guides.
 
+**Last Updated**: August 17, 2026 | **Status**: Current & Comprehensive
+
+---
+
+## 🆕 Recent Updates (August 2026)
+
+**See [RECENT_UPDATES_2026_08_17.md](RECENT_UPDATES_2026_08_17.md)** for comprehensive documentation of:
+- ✅ Site-wide search bar with full-text indexing
+- ✅ Enhanced content reporting system
+- ✅ Multi-platform social sharing with dynamic OG images
+- ✅ 4x faster image generation pipeline
+- ✅ News master ingestion cycle (50+ stories/batch)
+- ✅ Office holder syncs (6 Canadian jurisdictions, 2,000+ officials)
+- ✅ SEO infrastructure (Vercel Analytics, IndexNow, sitemap)
+
 ---
 
 ## Getting Started
 
 **New to the project?** Start here:
 
-1. **[CHOSENO_ARCHITECTURE_GUIDE.md](CHOSENO_ARCHITECTURE_GUIDE.md)** — Complete system overview (44 tables, 7 layers, data flows, service patterns)
-2. **[PLATFORM_SPEC.md](PLATFORM_SPEC.md)** — Project overview, vision, feature summary
+1. **[README.md](../README.md)** — Project overview, quick start, key links (START HERE)
+2. **[CHOSENO_ARCHITECTURE_GUIDE.md](CHOSENO_ARCHITECTURE_GUIDE.md)** — Complete system overview (44 tables, services, data flows) [UPDATED 2026-08-17]
 3. **[CODE_LAYERS.md](CODE_LAYERS.md)** — How the codebase is organized (routing → pages → components → services → utils)
-4. **[SCREENS_AND_FEATURES.md](SCREENS_AND_FEATURES.md)** — Walkthrough of every screen in the app
-5. **[SUPABASE_SCHEMA.md](SUPABASE_SCHEMA.md)** — Database schema (tables, relationships, constraints)
+4. **[RECENT_UPDATES_2026_08_17.md](RECENT_UPDATES_2026_08_17.md)** — All latest features with architecture details [NEW 2026-08-17]
 
 ---
 

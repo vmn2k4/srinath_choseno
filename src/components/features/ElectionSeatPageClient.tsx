@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import CandidacyWall from "./CandidacyWall";
+import ElectionResultsPanel from "./ElectionResultsPanel";
 import {
   getSeatById,
   getCandidatesBySeatIds,
@@ -21,6 +22,7 @@ import {
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { getProfileRole, uploadAvatarImage } from "@/lib/services/profile";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
+import { getSupportStatus, addSupport, withdrawSupport } from "@/lib/services/politicianWall";
 import {
   Vote,
   MapPin,
@@ -90,10 +92,32 @@ export default function ElectionSeatPageClient({
     return (initialCandidates as any[])[0]?.id || null;
   });
   const [copiedShareLink, setCopiedShareLink] = useState(false);
+  // "results" (the poll/community-support pill, always first) or a
+  // candidate's id (their own tab, rendered to the right of it in the same
+  // strip). Kept in sync with selectedCandidateId by handleSelectCandidate.
+  // Deep links to /candidate/[slug] (or ?candidate=) land straight on that
+  // candidate's tab instead of Results — mirrors selectedCandidateId's
+  // own initializer just above.
+  const [activeMainTab, setActiveMainTab] = useState<string>(() => {
+    if (initialCandidateId) return initialCandidateId;
+    if (typeof window !== "undefined") {
+      const pathname = window.location.pathname;
+      const matchCandidateInPath = pathname.match(/\/candidate\/([^\/]+)/);
+      const candParam = matchCandidateInPath ? matchCandidateInPath[1] : new URLSearchParams(window.location.search).get("candidate");
+      if (candParam) {
+        const match = (initialCandidates as any[]).find(
+          (c) => c.id === candParam || extractIdFromSlug(candParam) === c.id || buildCandidateSlug(c) === candParam
+        );
+        if (match) return match.id;
+      }
+    }
+    return "results";
+  });
 
   const handleSelectCandidate = (candidate: any) => {
     const candidateId = candidate.id;
     setSelectedCandidateId(candidateId);
+    setActiveMainTab(candidateId);
     if (typeof window !== "undefined") {
       const candSlug = buildCandidateSlug(candidate);
       const seatSlug = seat ? buildSeatSlug(seat) : seatId;
@@ -152,6 +176,10 @@ export default function ElectionSeatPageClient({
   const [engagementSummaries, setEngagementSummaries] = useState<
     Map<string, { supporterCount: number; avgRating: number; ratingCount: number; commentCount: number }>
   >(new Map());
+  // politician_profile ids the signed-in viewer already supports — powers the
+  // Heart button in the Results poll (same politician_supporters table the
+  // "Support" button on the candidate wall already writes to).
+  const [mySupportedPoliticianIds, setMySupportedPoliticianIds] = useState<Set<string>>(new Set());
 
   const fetchAll = async () => {
     if (!seatId) return;
@@ -261,6 +289,64 @@ export default function ElectionSeatPageClient({
       isMounted = false;
     };
   }, [candidates, supabase]);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (!user) {
+      setMySupportedPoliticianIds(new Set());
+      return;
+    }
+    const ids = candidates.map((c) => c.profiles?.id).filter((id): id is string => Boolean(id));
+    if (ids.length === 0) return;
+
+    Promise.all(ids.map((id) => getSupportStatus(supabase, id, user.id).then(({ data }) => (data ? id : null)))).then(
+      (results) => {
+        if (!isMounted) return;
+        setMySupportedPoliticianIds(new Set(results.filter((id): id is string => Boolean(id))));
+      }
+    );
+
+    return () => {
+      isMounted = false;
+    };
+  }, [candidates, user, supabase]);
+
+  // Heart button in the Results poll — same politician_supporters
+  // insert/delete the "Support" button on the candidate wall already does,
+  // just reachable without leaving the poll. Optimistically updates both
+  // the viewer's own supported-set and the vote-share numbers so the bar
+  // moves immediately instead of waiting on a refetch.
+  const handleToggleSupport = async (candidate: any) => {
+    const politicianId = candidate?.profiles?.id;
+    if (!politicianId) return;
+    if (!user) {
+      router.push("/auth");
+      return;
+    }
+    const isSupporting = mySupportedPoliticianIds.has(politicianId);
+
+    setMySupportedPoliticianIds((prev) => {
+      const next = new Set(prev);
+      if (isSupporting) next.delete(politicianId);
+      else next.add(politicianId);
+      return next;
+    });
+    setEngagementSummaries((prev) => {
+      const next = new Map(prev);
+      const current = next.get(politicianId) || { supporterCount: 0, avgRating: 0, ratingCount: 0, commentCount: 0 };
+      next.set(politicianId, {
+        ...current,
+        supporterCount: Math.max(0, current.supporterCount + (isSupporting ? -1 : 1)),
+      });
+      return next;
+    });
+
+    if (isSupporting) {
+      await withdrawSupport(supabase, politicianId, user.id);
+    } else {
+      await addSupport(supabase, politicianId, user.id);
+    }
+  };
 
   const trackedSeatViewRef = React.useRef<string | null>(null);
   useEffect(() => {
@@ -435,16 +521,46 @@ export default function ElectionSeatPageClient({
             />
           ) : (
             <div className="space-y-6">
+              {/* Tab strip: "Results" poll pill first, then one pill per
+                  candidate — same row, same pill styling, so the poll reads
+                  as a tab among the candidate tabs rather than a separate
+                  control above them. */}
               <div
                 className="flex gap-3 overflow-x-auto pb-2 mb-6"
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
               >
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setActiveMainTab("results")}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setActiveMainTab("results");
+                    }
+                  }}
+                  className={`flex items-center gap-2 shrink-0 px-4 py-2 rounded-2xl border-2 transition-all cursor-pointer ${
+                    activeMainTab === "results"
+                      ? "border-primary bg-primary/10 shadow-[0_0_0_3px_rgba(233,235,158,0.12)]"
+                      : "border-border-light bg-surface-hover/40 hover:border-primary/40 hover:bg-surface-hover"
+                  }`}
+                >
+                  <span className="text-base leading-none">📊</span>
+                  <span
+                    className={`text-sm font-semibold whitespace-nowrap ${
+                      activeMainTab === "results" ? "text-primary-light" : "text-text-secondary"
+                    }`}
+                  >
+                    Results
+                  </span>
+                </div>
+
                 {candidates.map((c) => {
                   const name =
                     c.display_name ||
                     c.profiles?.full_name ||
                     "Candidate";
-                  const isSelected = c.id === selectedCandidateId;
+                  const isSelected = c.id === activeMainTab;
                   const pol = c.profiles?.politician_profiles;
                   const avatarUrl = Array.isArray(pol) ? pol[0]?.avatar_url : pol?.avatar_url;
                   const hasPhoto = Boolean(avatarUrl);
@@ -523,7 +639,18 @@ export default function ElectionSeatPageClient({
                 })}
               </div>
 
-              {selectedCandidateId && (
+              {activeMainTab === "results" && (
+                <ElectionResultsPanel
+                  seat={seat}
+                  candidates={candidates}
+                  engagementSummaries={engagementSummaries}
+                  onSelectCandidate={(c) => handleSelectCandidate(c)}
+                  mySupportedPoliticianIds={mySupportedPoliticianIds}
+                  onToggleSupport={handleToggleSupport}
+                />
+              )}
+
+              {activeMainTab !== "results" && selectedCandidateId && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between gap-3 px-1 flex-wrap">
                     <span className="text-xs font-semibold text-text-muted">

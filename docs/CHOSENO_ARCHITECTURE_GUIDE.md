@@ -540,6 +540,22 @@ Applied to `qrcode.react` and `VideoRecorder` in `PoliticianWallClient`, `FeedPa
 
 ---
 
-**Generated**: 2026-08-11  
-**Status**: Active Development (Office Holders + News Platform + Ratings system maturing; Elections infrastructure stable)
-**Last performance pass**: 2026-08-11 — see [§13](#13-performance-architecture--conventions)
+**Generated**: 2026-08-17 (Updated from 2026-08-11)  
+**Status**: Active Development (Search + Reporting + Social Sharing + News Master Cycle + Office Holders Phase 2; Elections stable)
+**Last performance pass**: 2026-08-11 — see [§13](#13-performance-architecture--conventions)  
+**Latest features**: 2026-08-17 — Search, Reporting, Sharing, News Ingestion, Office Holders (6 provinces/territories), SEO infrastructure
+
+---
+
+## 📋 Recent Major Features (August 11–17, 2026)
+
+### Completed Features
+✅ **Site-Wide Search** - Politicians, articles, boundaries with full-text indexing  
+✅ **Content Reporting System** - Enhanced moderation with audit trails  
+✅ **Multi-Platform Sharing** - X/Twitter, LinkedIn, WhatsApp with dynamic OG images  
+✅ **Image Generation Pipeline** - 4x faster rendering, edge caching, ISR  
+✅ **News Master Cycle** - Multi-batch ingestion with anti-templated headlines  
+✅ **Office Holder Database** - 6 Canadian jurisdictions synced (2,000+ officials)  
+✅ **SEO Infrastructure** - Vercel Analytics, IndexNow, News Sitemap, middleware fixes  
+
+**📖 See**: [RECENT_UPDATES_2026_08_17.md](RECENT_UPDATES_2026_08_17.md) for comprehensive feature documentation with architecture details and implementation patterns.

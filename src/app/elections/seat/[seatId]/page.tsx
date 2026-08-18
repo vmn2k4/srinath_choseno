@@ -4,6 +4,7 @@ import { cache } from "react";
 import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
+import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import {
   buildSeatSlug,
   buildCandidateSlug,
@@ -29,8 +30,39 @@ const getSeatWithCandidates = cache(async (seatId: string) => {
     supabase,
     seat?.id ? [seat.id] : []
   );
-  return { seat, candidates };
+
+  // Community-support numbers for the Results tab / SEO & AI-crawler text
+  // below. Reuses the same politician_supporters-backed RPC the client
+  // already calls for the heart-icon counts — no new field, no new table.
+  const politicianIds = ((candidates as any[]) || [])
+    .map((c) => c.profiles?.id)
+    .filter((id): id is string => Boolean(id));
+  const { data: engagementRows } =
+    politicianIds.length > 0
+      ? await getPoliticianEngagementSummaries(supabase, politicianIds)
+      : { data: [] as any[] };
+  const supporterCountByPolitician = new Map<string, number>(
+    ((engagementRows as any[]) || []).map((r) => [r.politician_id, r.supporter_count || 0])
+  );
+
+  return { seat, candidates, supporterCountByPolitician };
 });
+
+// Sorts candidates by community-support count and returns the derived
+// numbers used in metadata, JSON-LD, and the AI-crawler text snapshot.
+function summarizeSupport(candidates: any[], supporterCountByPolitician: Map<string, number>) {
+  const ranked = candidates
+    .map((c) => ({
+      candidate: c,
+      name: c.display_name || c.profiles?.full_name || "Candidate",
+      supporterCount: (c.profiles?.id && supporterCountByPolitician.get(c.profiles.id)) || 0,
+    }))
+    .sort((a, b) => b.supporterCount - a.supporterCount);
+  const totalSupport = ranked.reduce((sum, r) => sum + r.supporterCount, 0);
+  const leader = totalSupport > 0 ? ranked[0] : null;
+  const leaderPct = leader ? Math.round((leader.supporterCount / totalSupport) * 1000) / 10 : null;
+  return { ranked, totalSupport, leader, leaderPct };
+}
 
 export async function generateMetadata({
   params,
@@ -39,7 +71,7 @@ export async function generateMetadata({
   const { seatId } = await params;
   const { candidate: candidateId } = await searchParams;
 
-  const { seat, candidates } = await getSeatWithCandidates(seatId);
+  const { seat, candidates, supporterCountByPolitician } = await getSeatWithCandidates(seatId);
 
   if (!seat) {
     return {
@@ -47,6 +79,8 @@ export async function generateMetadata({
       description: "The requested election seat could not be found.",
     };
   }
+
+  const { leader, leaderPct } = summarizeSupport((candidates as any[]) || [], supporterCountByPolitician);
 
   const selectedCandidate = candidateId
     ? (candidates as any[])?.find(
@@ -85,10 +119,18 @@ export async function generateMetadata({
       ? ` Candidates include ${candidateListNames.join(", ")}${candCount > 3 ? ` & ${candCount - 3} others` : ""}.`
       : "";
 
+  const electionDateLabel = seat.elections?.election_date
+    ? new Date(seat.elections.election_date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+    : null;
+  const supportFact =
+    leader && leaderPct !== null
+      ? ` ${leader.name} currently leads in community support (${leaderPct}%) on Choseno.`
+      : "";
+
   const rawDesc = selectedCandidate?.statement
     ? selectedCandidate.statement
     : candidateListNames && candidateListNames.length > 0
-    ? `${roleTitle} candidates in ${boundaryName}: ${candidateListNames.join(", ")}. Read policy stances & voter ratings on Choseno.`
+    ? `${roleTitle} candidates in ${boundaryName}: ${candidateListNames.join(", ")}.${supportFact} Election Day: ${electionDateLabel || "TBD"}.`
     : `Who is running for ${roleTitle} in ${boundaryName}? Compare candidates, policy stances & voter ratings on Choseno.`;
 
   const description = rawDesc.length > 155 ? `${rawDesc.slice(0, 152)}...` : rawDesc;
@@ -135,11 +177,16 @@ export async function generateMetadata({
 export default async function ElectionSeatPage({ params }: SeatPageProps) {
   const { seatId } = await params;
 
-  const { seat, candidates } = await getSeatWithCandidates(seatId);
+  const { seat, candidates, supporterCountByPolitician } = await getSeatWithCandidates(seatId);
 
   const roleTitle = seat?.role_title || "Electoral Seat";
   const boundaryName = seat?.map_shapes?.name || "District";
-  const electionYear = seat?.elections?.election_date?.slice(0, 4) || "2026";
+  const electionDateRaw = seat?.elections?.election_date;
+  const electionYear = electionDateRaw?.slice(0, 4) || "2026";
+  const electionDateLabel = electionDateRaw
+    ? new Date(electionDateRaw).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+    : null;
+  const { ranked, leader, leaderPct, totalSupport } = summarizeSupport((candidates as any[]) || [], supporterCountByPolitician);
   const seatSlug = seat ? buildSeatSlug(seat) : seatId;
   const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(seatId);
   if (seat && isUuid && seatSlug !== seatId) {
@@ -183,6 +230,20 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
             };
           }),
         },
+        ...(electionDateRaw
+          ? [
+              {
+                "@context": "https://schema.org",
+                "@type": "Event",
+                name: `${electionYear} ${roleTitle} Election — ${boundaryName}`,
+                startDate: electionDateRaw,
+                eventStatus: "https://schema.org/EventScheduled",
+                eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
+                location: { "@type": "Place", name: boundaryName },
+                description: `${roleTitle} election for ${boundaryName} takes place on ${electionDateLabel}.`,
+              },
+            ]
+          : []),
         {
           "@context": "https://schema.org",
           "@type": "FAQPage",
@@ -196,6 +257,27 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
                   candidateNames.length > 0
                     ? `Official candidates running for ${roleTitle} in ${boundaryName} (${electionYear} Elections) on Choseno include: ${candidateNames.join(", ")}.`
                     : `Candidates for ${roleTitle} in ${boundaryName} are being updated on Choseno as nominations are filed.`,
+              },
+            },
+            {
+              "@type": "Question",
+              name: `When is the ${roleTitle} election in ${boundaryName}?`,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: electionDateLabel
+                  ? `The ${roleTitle} election for ${boundaryName} is scheduled for ${electionDateLabel}.`
+                  : `The election date for ${roleTitle} in ${boundaryName} has not yet been confirmed on Choseno.`,
+              },
+            },
+            {
+              "@type": "Question",
+              name: `Who is leading in community support for ${roleTitle} in ${boundaryName}?`,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text:
+                  leader && leaderPct !== null
+                    ? `As of ${electionDateLabel ? "the latest update" : "now"}, ${leader.name} leads with ${leaderPct}% community support (${leader.supporterCount} of ${totalSupport} total supporters) among ${roleTitle} candidates in ${boundaryName} on Choseno. This reflects Choseno user activity, not a scientific poll, certified vote count, or official election result.`
+                    : `Community support data for ${roleTitle} candidates in ${boundaryName} is not yet available on Choseno — support totals appear once constituents start following candidates.`,
               },
             },
           ],
@@ -257,13 +339,24 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
             Nominations for {roleTitle} in {boundaryName} are currently active on Choseno.
           </p>
         )}
+        {electionDateLabel && (
+          <p>
+            Election Day for {roleTitle} in {boundaryName} is {electionDateLabel}.
+          </p>
+        )}
+        <p>
+          {leader && leaderPct !== null
+            ? `Community support on Choseno as of now: ${leader.name} leads with ${leaderPct}% (${leader.supporterCount} of ${totalSupport} total supporters) among ${roleTitle} candidates in ${boundaryName}. This is Choseno user activity, not a scientific poll, certified vote count, or official election result.`
+            : `No community support data is recorded yet for ${roleTitle} candidates in ${boundaryName} on Choseno.`}
+        </p>
         {candList.length > 0 && (
           <ul>
-            {candList.map((c: any) => {
-              const candName = c.display_name || c.profiles?.full_name || "Candidate";
+            {ranked.map(({ candidate: c, name: candName, supporterCount }) => {
+              const pct = totalSupport > 0 ? Math.round((supporterCount / totalSupport) * 1000) / 10 : 0;
               return (
                 <li key={c.id}>
-                  {candName} — Candidate for {roleTitle} ({boundaryName})
+                  {candName} — Candidate for {roleTitle} ({boundaryName}), {supporterCount} supporter
+                  {supporterCount === 1 ? "" : "s"} on Choseno ({pct}% community support)
                 </li>
               );
             })}
