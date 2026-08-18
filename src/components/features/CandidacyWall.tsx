@@ -22,7 +22,7 @@ import {
 } from "@/lib/services/elections";
 import { getOwnProfile, getPoliticianProfile, getUserBoundaryShapeIds } from "@/lib/services/profile";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
-import PoliticianRatingModal from "./PoliticianRatingModal";
+import PoliticianInlineRating from "./PoliticianInlineRating";
 import { uploadPostImage, createComment, hydratePoliticianAuthors, hydratePostMentions, voteOnPost } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import {
@@ -189,7 +189,10 @@ export default function CandidacyWall({
   const [supportCount, setSupportCount] = useState(initialSupportCount);
   const [isSupporting, setIsSupporting] = useState(false);
   const [ratingSummary, setRatingSummary] = useState<{ avg: number; count: number } | null>(null);
-  const [showRatingModal, setShowRatingModal] = useState(false);
+  // Inline "leave a review" panel that expands in place — same non-modal
+  // pattern PoliticianWallClient and NewsArticleLinkedPoliticians already
+  // use, replacing the old PoliticianRatingModal popup here too.
+  const [showInlineRating, setShowInlineRating] = useState(false);
 
   // Claim request state
   const [showClaimForm, setShowClaimForm] = useState(false);
@@ -249,9 +252,19 @@ export default function CandidacyWall({
       if (authLoading || !candidateId) return;
       if (!candidate) setLoading(true);
 
+      // The viewer's own profile (for the boundary/claim checks below) and
+      // the candidate row itself don't depend on each other — they used to
+      // run as two sequential round trips before anything else could start;
+      // now they run together.
+      const [profileResult, candidateResult] = await Promise.all([
+        user ? getOwnProfile(supabase, user.id) : Promise.resolve({ data: null }),
+        getPublicCandidateById(supabase, candidateId),
+      ]);
+
       if (user) {
-        const { data: myProfile } = await getOwnProfile(supabase, user.id);
-        const myProfileTyped = myProfile as { id: string; current_ghost_id: string; country?: string | null } | null;
+        const myProfileTyped = profileResult.data as
+          | { id: string; current_ghost_id: string; country?: string | null }
+          | null;
         if (isMounted) setProfile(myProfileTyped);
         if (myProfileTyped?.id) {
           const { data: shapeRows } = await getUserBoundaryShapeIds(supabase, myProfileTyped.id);
@@ -261,35 +274,34 @@ export default function CandidacyWall({
         if (isMounted) setProfile(null);
       }
 
-      const { data: candidateRow } = await getPublicCandidateById(supabase, candidateId);
-      const cand = candidateRow as CandidateRecord | null;
+      const cand = candidateResult.data as CandidateRecord | null;
 
       if (cand) {
         if (isMounted) setCandidate(cand);
-        if (cand.politician_id) {
-          const { data: polProfile } = await getPoliticianProfile(supabase, cand.politician_id);
-          if (isMounted) setCandidateProfile(polProfile);
 
-          if (user) {
-            const { data: mySupport } = await getSupportStatus(
-              supabase,
-              cand.politician_id,
-              user.id
-            );
-            if (isMounted) setIsSupporting(!!mySupport);
-          } else {
-            if (isMounted) setIsSupporting(false);
-          }
-          const { count } = await getSupporterCount(supabase, cand.politician_id);
-          if (isMounted) setSupportCount(count || 0);
+        // Everything below only reads cand.politician_id/candidateId — none
+        // of these five calls depend on each other's result, so they used
+        // to serialize for no reason (the rating box, in particular, was
+        // the 3rd of 4 chained awaits here before anything rendered).
+        const politicianId = cand.politician_id;
+        const [polProfileResult, supportResult, supporterCountResult, summariesResult, answersResult] =
+          await Promise.all([
+            politicianId ? getPoliticianProfile(supabase, politicianId) : Promise.resolve({ data: null }),
+            politicianId && user ? getSupportStatus(supabase, politicianId, user.id) : Promise.resolve({ data: null }),
+            politicianId ? getSupporterCount(supabase, politicianId) : Promise.resolve({ count: 0 }),
+            politicianId ? getPoliticianEngagementSummaries(supabase, [politicianId]) : Promise.resolve({ data: [] }),
+            getPublicCandidateAnswers(supabase, candidateId),
+          ]);
 
-          const { data: summaries } = await getPoliticianEngagementSummaries(supabase, [cand.politician_id]);
-          const summary = (summaries || [])[0] as { avg_rating: number; rating_count: number } | undefined;
-          if (isMounted) setRatingSummary(summary ? { avg: summary.avg_rating, count: summary.rating_count } : null);
+        if (politicianId && isMounted) {
+          setCandidateProfile(polProfileResult.data);
+          setIsSupporting(!!supportResult.data);
+          setSupportCount(supporterCountResult.count || 0);
+          const summary = (summariesResult.data || [])[0] as { avg_rating: number; rating_count: number } | undefined;
+          setRatingSummary(summary ? { avg: summary.avg_rating, count: summary.rating_count } : null);
         }
 
-        const { data: answerRows } = await getPublicCandidateAnswers(supabase, candidateId);
-        const visible = ((answerRows as unknown as QuestionnaireAnswer[]) || [])
+        const visible = ((answersResult.data as unknown as QuestionnaireAnswer[]) || [])
           .filter((a) => a.election_questions?.visible_to_public)
           .sort(
             (a, b) =>
@@ -314,6 +326,16 @@ export default function CandidacyWall({
       isMounted = false;
     };
   }, [user, authLoading, candidateId, supabase]);
+
+  // Re-fetches the true aggregate after a submit — the inline panel only
+  // knows the viewer's own vote, not the new average, same as
+  // PoliticianWallClient's refreshRatingSummary.
+  const refreshRatingSummary = async () => {
+    if (!candidate?.politician_id) return;
+    const { data: summaries } = await getPoliticianEngagementSummaries(supabase, [candidate.politician_id]);
+    const summary = (summaries || [])[0] as { avg_rating: number; rating_count: number } | undefined;
+    setRatingSummary({ avg: summary?.avg_rating || 0, count: summary?.rating_count || 0 });
+  };
 
   const toggleNominationFiled = async () => {
     if (!candidate) return;
@@ -749,9 +771,9 @@ export default function CandidacyWall({
                   {ratingSummary && candidate?.politician_id && (
                     <button
                       type="button"
-                      onClick={() => setShowRatingModal(true)}
+                      onClick={() => setShowInlineRating((v) => !v)}
                       className="mt-1 cursor-pointer hover:opacity-80 transition-opacity"
-                      title="View ratings and reviews"
+                      title="Rate this candidate"
                     >
                       <StarRating value={ratingSummary.avg} count={ratingSummary.count} size="sm" />
                     </button>
@@ -799,6 +821,18 @@ export default function CandidacyWall({
                 </Button>
               </div>
             </div>
+
+            {/* Inline "leave a review" panel — expands in place instead of
+                a popup, so rating never navigates away from the candidate's
+                tab (see PoliticianWallClient for the same pattern). */}
+            {showInlineRating && candidate?.politician_id && (
+              <PoliticianInlineRating
+                politicianId={candidate.politician_id}
+                politicianName={displayName}
+                onSubmitted={refreshRatingSummary}
+                onCancel={() => setShowInlineRating(false)}
+              />
+            )}
 
             {/* Nomination Status */}
             <div className="pt-3 border-t border-border-light/20 flex items-center justify-between">
@@ -1092,14 +1126,6 @@ export default function CandidacyWall({
         />
       )}
 
-      {showRatingModal && candidate?.politician_id && (
-        <PoliticianRatingModal
-          politicianId={candidate.politician_id}
-          politicianName={displayName}
-          onClose={() => setShowRatingModal(false)}
-          onChange={(summary) => setRatingSummary({ avg: summary.avgRating, count: summary.ratingCount })}
-        />
-      )}
     </div>
   );
 }

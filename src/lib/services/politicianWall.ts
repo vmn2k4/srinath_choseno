@@ -220,6 +220,21 @@ export async function getSupportStatus(supabase: Client, politicianId: string, s
     .maybeSingle();
 }
 
+// Batched form of getSupportStatus for "which of these politicians does the
+// viewer already support" (a seat's whole candidate roster at once) — one
+// round trip instead of N individual getSupportStatus calls in a
+// Promise.all. Returns just the politician_ids the viewer supports; the
+// caller turns that into a Set.
+export async function getMySupportedPoliticianIds(supabase: Client, politicianIds: string[], supporterId: string) {
+  if (politicianIds.length === 0) return { data: [] as string[], error: null };
+  const { data, error } = await supabase
+    .from("politician_supporters")
+    .select("politician_id")
+    .eq("supporter_id", supporterId)
+    .in("politician_id", politicianIds);
+  return { data: (data || []).map((r) => r.politician_id), error };
+}
+
 export async function getSupporterCount(supabase: Client, politicianId: string) {
   let query = supabase
     .from("politician_supporters")

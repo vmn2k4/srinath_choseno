@@ -23,6 +23,7 @@ export default function PoliticianEngagementStats({
   size = "xs",
   className = "",
   onRateClick,
+  disableRating = false,
 }: {
   politicianId: string;
   politicianName: string;
@@ -37,6 +38,12 @@ export default function PoliticianEngagementStats({
   // inline, on-page rating panel (see PoliticianInlineRating) without
   // touching every other place this widget is already used.
   onRateClick?: () => void;
+  // Opt-out: when this widget sits inside something whose own click should
+  // win (e.g. a candidate-switcher tab whose job is to switch tabs, not
+  // pop a rating dialog), render the stats as plain non-interactive text
+  // instead of a stopPropagation()-ing button, so the click passes through
+  // to the parent instead of being swallowed here.
+  disableRating?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   // Set only after a submit inside the modal, so the widget can reflect
@@ -54,6 +61,24 @@ export default function PoliticianEngagementStats({
   } | null>(null);
   const display = override ?? { avgRating, ratingCount, commentCount };
   const iconSize = ICON_SIZE[size];
+
+  const content = (
+    <>
+      <span className="inline-flex items-center gap-1 text-text-muted">
+        <Heart size={iconSize} aria-hidden="true" />
+        {supporterCount}
+      </span>
+      <StarRating value={display.avgRating} count={display.ratingCount} size={size} />
+      <span className="inline-flex items-center gap-1 text-text-muted">
+        <MessageSquare size={iconSize} aria-hidden="true" />
+        {display.commentCount}
+      </span>
+    </>
+  );
+
+  if (disableRating) {
+    return <span className={`inline-flex items-center gap-2.5 flex-wrap ${className}`}>{content}</span>;
+  }
 
   return (
     <>
@@ -74,15 +99,7 @@ export default function PoliticianEngagementStats({
         className={`inline-flex items-center gap-2.5 flex-wrap cursor-pointer hover:opacity-80 transition-opacity text-left ${className}`}
         title="View ratings and reviews"
       >
-        <span className="inline-flex items-center gap-1 text-text-muted">
-          <Heart size={iconSize} aria-hidden="true" />
-          {supporterCount}
-        </span>
-        <StarRating value={display.avgRating} count={display.ratingCount} size={size} />
-        <span className="inline-flex items-center gap-1 text-text-muted">
-          <MessageSquare size={iconSize} aria-hidden="true" />
-          {display.commentCount}
-        </span>
+        {content}
       </button>
 
       {open && (

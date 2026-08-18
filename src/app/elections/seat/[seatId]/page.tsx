@@ -59,9 +59,16 @@ function summarizeSupport(candidates: any[], supporterCountByPolitician: Map<str
     }))
     .sort((a, b) => b.supporterCount - a.supporterCount);
   const totalSupport = ranked.reduce((sum, r) => sum + r.supporterCount, 0);
-  const leader = totalSupport > 0 ? ranked[0] : null;
-  const leaderPct = leader ? Math.round((leader.supporterCount / totalSupport) * 1000) / 10 : null;
-  return { ranked, totalSupport, leader, leaderPct };
+  // A stable sort still picks an arbitrary "first" out of a tie — only call
+  // it a leader when exactly one candidate holds the top count, otherwise
+  // every fact-generating site below (meta description, FAQ answer,
+  // AI-crawler text) would wrongly assert someone is "leading" at 1-1.
+  const topSupportCount = ranked[0]?.supporterCount ?? 0;
+  const topRanked = totalSupport > 0 ? ranked.filter((r) => r.supporterCount === topSupportCount) : [];
+  const isTie = topRanked.length > 1;
+  const leader = topRanked.length === 1 ? topRanked[0] : null;
+  const leaderPct = totalSupport > 0 ? Math.round((topSupportCount / totalSupport) * 1000) / 10 : null;
+  return { ranked, totalSupport, leader, leaderPct, isTie, tiedNames: topRanked.map((r) => r.name) };
 }
 
 export async function generateMetadata({
@@ -80,7 +87,7 @@ export async function generateMetadata({
     };
   }
 
-  const { leader, leaderPct } = summarizeSupport((candidates as any[]) || [], supporterCountByPolitician);
+  const { leader, leaderPct, isTie, tiedNames } = summarizeSupport((candidates as any[]) || [], supporterCountByPolitician);
 
   const selectedCandidate = candidateId
     ? (candidates as any[])?.find(
@@ -125,6 +132,8 @@ export async function generateMetadata({
   const supportFact =
     leader && leaderPct !== null
       ? ` ${leader.name} currently leads in community support (${leaderPct}%) on Choseno.`
+      : isTie && leaderPct !== null
+      ? ` ${tiedNames.join(" and ")} are tied in community support (${leaderPct}% each) on Choseno.`
       : "";
 
   const rawDesc = selectedCandidate?.statement
@@ -186,7 +195,10 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
   const electionDateLabel = electionDateRaw
     ? new Date(electionDateRaw).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
     : null;
-  const { ranked, leader, leaderPct, totalSupport } = summarizeSupport((candidates as any[]) || [], supporterCountByPolitician);
+  const { ranked, leader, leaderPct, totalSupport, isTie, tiedNames } = summarizeSupport(
+    (candidates as any[]) || [],
+    supporterCountByPolitician
+  );
   const seatSlug = seat ? buildSeatSlug(seat) : seatId;
   const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(seatId);
   if (seat && isUuid && seatSlug !== seatId) {
@@ -277,6 +289,8 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
                 text:
                   leader && leaderPct !== null
                     ? `As of ${electionDateLabel ? "the latest update" : "now"}, ${leader.name} leads with ${leaderPct}% community support (${leader.supporterCount} of ${totalSupport} total supporters) among ${roleTitle} candidates in ${boundaryName} on Choseno. This reflects Choseno user activity, not a scientific poll, certified vote count, or official election result.`
+                    : isTie && leaderPct !== null
+                    ? `As of ${electionDateLabel ? "the latest update" : "now"}, ${tiedNames.join(" and ")} are tied at ${leaderPct}% community support each among ${roleTitle} candidates in ${boundaryName} on Choseno. This reflects Choseno user activity, not a scientific poll, certified vote count, or official election result.`
                     : `Community support data for ${roleTitle} candidates in ${boundaryName} is not yet available on Choseno — support totals appear once constituents start following candidates.`,
               },
             },
@@ -347,6 +361,8 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
         <p>
           {leader && leaderPct !== null
             ? `Community support on Choseno as of now: ${leader.name} leads with ${leaderPct}% (${leader.supporterCount} of ${totalSupport} total supporters) among ${roleTitle} candidates in ${boundaryName}. This is Choseno user activity, not a scientific poll, certified vote count, or official election result.`
+            : isTie && leaderPct !== null
+            ? `Community support on Choseno as of now: ${tiedNames.join(" and ")} are tied at ${leaderPct}% each among ${roleTitle} candidates in ${boundaryName}. This is Choseno user activity, not a scientific poll, certified vote count, or official election result.`
             : `No community support data is recorded yet for ${roleTitle} candidates in ${boundaryName} on Choseno.`}
         </p>
         {candList.length > 0 && (

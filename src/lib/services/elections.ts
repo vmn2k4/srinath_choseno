@@ -594,8 +594,11 @@ export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]
   // entirely in production, instead of surviving with a null-embedded
   // profile (the default to-one embed behavior when an .eq() filter on the
   // embed doesn't match).
+  // political_parties(name) reuses the same embed getPoliticianProfile()
+  // already does for the candidate-wall party badge — widened here so the
+  // seat page's roster/results view can show it without a second query.
   const columns =
-    "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url, contact_email, contact_phone))";
+    "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url, contact_email, contact_phone, political_parties(name)))";
 
   let query = supabase.from("election_candidates").select(columns).in("seat_id", resolvedIds);
   if (!isDevEnvironment()) query = query.eq("profiles.is_test", false);

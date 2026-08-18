@@ -22,7 +22,7 @@ import {
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { getProfileRole, uploadAvatarImage } from "@/lib/services/profile";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
-import { getSupportStatus, addSupport, withdrawSupport } from "@/lib/services/politicianWall";
+import { getMySupportedPoliticianIds, addSupport, withdrawSupport } from "@/lib/services/politicianWall";
 import {
   Vote,
   MapPin,
@@ -299,12 +299,10 @@ export default function ElectionSeatPageClient({
     const ids = candidates.map((c) => c.profiles?.id).filter((id): id is string => Boolean(id));
     if (ids.length === 0) return;
 
-    Promise.all(ids.map((id) => getSupportStatus(supabase, id, user.id).then(({ data }) => (data ? id : null)))).then(
-      (results) => {
-        if (!isMounted) return;
-        setMySupportedPoliticianIds(new Set(results.filter((id): id is string => Boolean(id))));
-      }
-    );
+    getMySupportedPoliticianIds(supabase, ids, user.id).then(({ data }) => {
+      if (!isMounted) return;
+      setMySupportedPoliticianIds(new Set(data || []));
+    });
 
     return () => {
       isMounted = false;
@@ -617,6 +615,12 @@ export default function ElectionSeatPageClient({
                             ratingCount={engagement?.ratingCount ?? 0}
                             commentCount={engagement?.commentCount ?? 0}
                             size="xs"
+                            // This pill's job is to switch to the candidate's
+                            // tab — rating happens after landing there, not
+                            // from the tab itself. Without this, clicking the
+                            // stats opened the old rating popup and swallowed
+                            // the tab-switch click.
+                            disableRating
                           />
                         )}
                       </span>
