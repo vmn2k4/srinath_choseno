@@ -181,28 +181,64 @@ export default function ElectionSeatPageClient({
   // "Support" button on the candidate wall already writes to).
   const [mySupportedPoliticianIds, setMySupportedPoliticianIds] = useState<Set<string>>(new Set());
 
+  // True only for the very first fetchAll() call, and only when the server
+  // already handed us seat+candidates via initialSeat/initialCandidates --
+  // page.tsx already did that fetch (cached 5min), so redoing it here on
+  // mount was pure duplicate work. Every later fetchAll() call (after
+  // applying for a seat, adding a candidate, reviewing a claim, ...) still
+  // does a full refetch, since those mutations actually change the data.
+  const skipInitialSeatRefetchRef = React.useRef(Boolean(initialSeat));
+
   const fetchAll = async () => {
     if (!seatId) return;
     if (!seat) setLoading(true);
 
-    const { data: seatRow } = await getSeatById(supabase, seatId);
-    setSeat(seatRow || null);
+    const skipSeatRefetch = skipInitialSeatRefetchRef.current;
+    skipInitialSeatRefetchRef.current = false;
 
-    // Fetch office holders
-    if (seatRow?.map_shape_id) {
-      setLoadingHolders(true);
-      const { data: holdersData } = await getOfficeHoldersByShapeAndRole(
-        supabase,
-        seatRow.map_shape_id,
-        seatRow.role_title
-      );
-      setOfficeHolders((holdersData as any[]) || []);
-      setLoadingHolders(false);
+    // Independent reads -- none of these need each other's result, so they
+    // go out together instead of one-at-a-time. seatPromise is skipped
+    // entirely on the first render when the server already provided it.
+    const seatPromise = skipSeatRefetch ? Promise.resolve({ data: seat }) : getSeatById(supabase, seatId);
+    const profileRolePromise = user ? getProfileRole(supabase, user.id) : Promise.resolve({ data: null });
+    const candidaciesPromise = user ? getMyCandidacies(supabase, user.id) : Promise.resolve({ data: [] });
+    const seatAdminStatusPromise = user ? getSeatAdminStatus(supabase, seatId) : Promise.resolve({ data: null });
+
+    const [{ data: seatRow }, { data: myProfile }, { data: candidacies }, { data: seatAdminStatus }] =
+      await Promise.all([seatPromise, profileRolePromise, candidaciesPromise, seatAdminStatusPromise]);
+
+    setSeat(seatRow || null);
+    if (user) {
+      setRole(myProfile?.role || null);
+      setMyCandidacies(candidacies || []);
+      setAdminStatus(seatAdminStatus);
+    } else {
+      setRole(null);
+      setMyCandidacies([]);
+      setAdminStatus(null);
     }
 
+    // These three all depend on seatRow but not on each other -- also fired
+    // together rather than chained.
+    if (seatRow?.map_shape_id) setLoadingHolders(true);
     const targetSeatId = seatRow?.id || seatId;
-    const { data: candidateRows } = await getCandidatesBySeatIds(supabase, [targetSeatId]);
-    const candItems = (candidateRows as any[]) || [];
+    const [holdersResult, candidatesResult, partiesResult] = await Promise.all([
+      seatRow?.map_shape_id
+        ? getOfficeHoldersByShapeAndRole(supabase, seatRow.map_shape_id, seatRow.role_title)
+        : Promise.resolve({ data: null }),
+      skipSeatRefetch ? Promise.resolve({ data: initialCandidates }) : getCandidatesBySeatIds(supabase, [targetSeatId]),
+      seatRow?.map_shapes?.country
+        ? getPoliticalParties(supabase, { country: seatRow.map_shapes.country })
+        : Promise.resolve({ data: [] }),
+    ]);
+
+    if (seatRow?.map_shape_id) {
+      setOfficeHolders((holdersResult.data as any[]) || []);
+      setLoadingHolders(false);
+    }
+    setParties(partiesResult.data || []);
+
+    const candItems = (candidatesResult.data as any[]) || [];
     setCandidates(candItems);
 
     const candParam = typeof window !== "undefined"
@@ -222,16 +258,9 @@ export default function ElectionSeatPageClient({
       setSelectedCandidateId(candItems[0].id);
     }
 
+    // Depends on myProfile/seatAdminStatus above, so it can't join the first
+    // batch -- still only fires for signed-in users, same as before.
     if (user) {
-      const { data: myProfile } = await getProfileRole(supabase, user.id);
-      setRole(myProfile?.role || null);
-
-      const { data: candidacies } = await getMyCandidacies(supabase, user.id);
-      setMyCandidacies(candidacies || []);
-
-      const { data: seatAdminStatus } = await getSeatAdminStatus(supabase, seatId);
-      setAdminStatus(seatAdminStatus);
-
       if (myProfile?.role === "admin" || seatAdminStatus?.my_application_status === "approved") {
         const { data: requests } = await getClaimRequestsForSeat(supabase, seatId);
         setClaimRequests(requests || []);
@@ -239,15 +268,7 @@ export default function ElectionSeatPageClient({
         setClaimRequests([]);
       }
     } else {
-      setRole(null);
-      setMyCandidacies([]);
-      setAdminStatus(null);
       setClaimRequests([]);
-    }
-
-    if (seatRow?.map_shapes?.country) {
-      const { data: partyRows } = await getPoliticalParties(supabase, { country: seatRow.map_shapes.country });
-      setParties(partyRows || []);
     }
 
     setLoading(false);
@@ -755,6 +776,7 @@ export default function ElectionSeatPageClient({
                               commentCount={engagement?.commentCount ?? 0}
                               size="xs"
                               className="mt-0.5"
+                              disableRating
                             />
                           )}
                           <p className="text-text-muted text-[11px] truncate mt-0.5">
