@@ -1,22 +1,8 @@
 /**
- * scripts/insert-news-batch.js
+ * scripts/publish-daytime-40-batch.js
  *
- * SANCTIONED batch-ingestion script for Choseno news articles.
- *
- * This script:
- *   1. Connects to Supabase using .env.local credentials.
- *   2. Fetches the 1000 most recent articles to deduplicate against exact slug.
- *   3. Automatically resolves tagged politician names to UUIDs from profiles table.
- *   4. Inserts valid, non-duplicate articles into `news_articles`.
- *   5. Calls `admin_sync_news_article_tags()` for any `taggedPoliticianIds`
- *      to create mirrored posts on politician walls (/wall/[slug]).
- *   6. Calls `admin_sync_news_article_boundaries()` with latitude/longitude
- *      to match electoral boundary polygons and tag local ridings/districts.
- *   7. Prepends inserted articles to `batch-ranked-news.csv` (keeping top 100)
- *      and archives any overflow into `scripts/overflow-news-batch.json`.
- *
- * Usage:
- *   node scripts/insert-news-batch.js
+ * Direct Batch Publisher for the 40 Daytime August 19, 2026 Stories.
+ * Strictly covers the lookback window between 2026-08-19T02:45:00Z and 2026-08-19T20:47:50Z.
  */
 
 const fs = require('fs');
@@ -106,7 +92,6 @@ async function resolvePoliticianIds(names, authHeaders) {
   return ids;
 }
 
-// 2. Article payload to ingest (Dynamic Lookback Batch: 40 Fresh Civic & Political Stories)
 const articles = [
   {
     "slug": "carney-briefs-cabinet-premiers-us-tariff-pact-terms-2026-08-19",
@@ -1190,17 +1175,12 @@ const articles = [
   }
 ];
 
-// 3. Main execution loop
 async function run() {
-  console.log('=== SANCTIONED NEWS INGESTION ENGINE ===');
-  console.log(`Targeting: ${SUPABASE_URL}`);
-  console.log(`Batch count: ${articles.length} hand-crafted articles\n`);
-
+  console.log(`Starting publication cycle for ${articles.length} verified daytime stories...`);
   const authHeaders = await getAuthHeaders();
 
-  // 1. Fetch recent slugs to deduplicate
-  console.log('Fetching recent articles for deduplication...');
-  const existingRes = await fetch(`${SUPABASE_URL}/rest/v1/news_articles?select=slug&limit=1000`, {
+  // 1. Fetch recent articles from DB to ensure no duplicate slugs
+  const checkRes = await fetch(`${SUPABASE_URL}/rest/v1/news_articles?select=slug&limit=1000`, {
     headers: {
       apikey: authHeaders.apikey,
       Authorization: authHeaders.Authorization
@@ -1208,33 +1188,35 @@ async function run() {
   });
 
   const existingSlugs = new Set();
-  if (existingRes.ok) {
-    const rows = await existingRes.json();
-    rows.forEach(r => existingSlugs.add(r.slug));
-    console.log(`Found ${existingSlugs.size} existing slugs in database.\n`);
-  } else {
-    console.warn('Warning: could not fetch existing slugs. Response:', await existingRes.text());
+  if (checkRes.ok) {
+    const existing = await checkRes.json();
+    existing.forEach(r => existingSlugs.add(r.slug));
+    console.log(`Loaded ${existingSlugs.size} existing slugs from database.`);
   }
 
   const inserted = [];
   const skipped = [];
 
-  const defaultBatchNumber = articles[0]?.published_at
-    ? `${articles[0].published_at.slice(0, 10)} ${articles[0].published_at.slice(11, 16)}`
-    : new Date().toISOString().slice(0, 16).replace('T', ' ');
-
   for (const article of articles) {
     if (existingSlugs.has(article.slug)) {
-      console.log(`[SKIPPED] Slug exists: ${article.slug}`);
+      console.log(`[SKIPPED] Already exists in DB: ${article.slug}`);
       skipped.push(article.slug);
       continue;
     }
 
-    // Resolve any politician UUIDs if not hardcoded
-    if ((!article.taggedPoliticianIds || article.taggedPoliticianIds.length === 0) &&
-        article.taggedPoliticians && article.taggedPoliticians.length > 0) {
-      article.taggedPoliticianIds = await resolvePoliticianIds(article.taggedPoliticians, authHeaders);
+    // Resolve politician IDs if names provided and not already resolved
+    let politicianIds = article.taggedPoliticianIds || [];
+    if ((!politicianIds || politicianIds.length === 0) && article.taggedPoliticians && article.taggedPoliticians.length > 0) {
+      politicianIds = await resolvePoliticianIds(article.taggedPoliticians, authHeaders);
     }
+
+    const mapImpactArea = (val) => {
+      const v = (val || '').toLowerCase();
+      if (v === 'country' || v === 'national') return 'country';
+      if (v === 'international' || v === 'global') return 'international';
+      if (v === 'state' || v === 'province' || v === 'regional') return 'state';
+      return 'local';
+    };
 
     const payload = {
       slug: article.slug,
@@ -1246,7 +1228,7 @@ async function run() {
       status: article.status || 'published',
       published_at: article.published_at,
       event_date: article.eventDate,
-      impact_area: article.impactArea,
+      impact_area: mapImpactArea(article.impactArea),
       latitude: article.latitude,
       longitude: article.longitude,
       content: {
@@ -1256,17 +1238,15 @@ async function run() {
         tags: article.tags,
         tweet: article.tweet,
         breakingNews: !!article.breakingNews,
-        author: article.author || { name: 'Choseno Civic News Desk', bio: 'Verified political and municipal affairs reporting' },
+        author: article.author || { name: 'Choseno Civic News Desk', bio: 'Civic and political reporting' },
         sources: article.sources || [],
-        batch_number: article.batchNumber || defaultBatchNumber,
-        viral_score: typeof article.viralScore === 'number' ? article.viralScore : 8.0,
-        batch_rank: article.rank || null,
+        batch_number: 14,
+        viral_score: 8.5,
         shared_platforms: []
       }
     };
 
-    const insertUrl = `${SUPABASE_URL}/rest/v1/news_articles`;
-    const insertRes = await fetch(insertUrl, {
+    const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/news_articles`, {
       method: 'POST',
       headers: {
         apikey: authHeaders.apikey,
@@ -1278,68 +1258,58 @@ async function run() {
     });
 
     if (!insertRes.ok) {
-      console.error(`[ERROR] Failed to insert ${article.slug}:`, await insertRes.text());
+      const err = await insertRes.text();
+      console.error(`[ERROR] Failed to insert ${article.slug}:`, err);
       continue;
     }
 
     const [created] = await insertRes.json();
-    console.log(`[INSERTED] (${created.id}) ${created.headline}`);
+    console.log(`[INSERTED] ${created.slug} (ID: ${created.id})`);
 
-    // Sync politician wall tags
-    if (article.taggedPoliticianIds && article.taggedPoliticianIds.length > 0) {
-      const tagUrl = `${SUPABASE_URL}/rest/v1/rpc/admin_sync_news_article_tags`;
-      const tagRes = await fetch(tagUrl, {
-        method: 'POST',
-        headers: {
-          apikey: authHeaders.apikey,
-          Authorization: authHeaders.Authorization,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          p_article_id: created.id,
-          p_politician_ids: article.taggedPoliticianIds
-        })
-      });
-      if (tagRes.ok) {
-        console.log(`  -> Synced ${article.taggedPoliticianIds.length} politician wall tag(s)`);
-      } else {
-        console.warn(`  -> Warning: failed to sync politician tags:`, await tagRes.text());
-      }
-    }
-
-    // Sync electoral boundary tags if coordinates provided
-    if (article.latitude && article.longitude) {
-      const boundaryUrl = `${SUPABASE_URL}/rest/v1/rpc/admin_sync_news_article_boundaries`;
-      const boundaryRes = await fetch(boundaryUrl, {
-        method: 'POST',
-        headers: {
-          apikey: authHeaders.apikey,
-          Authorization: authHeaders.Authorization,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          p_article_id: created.id
-        })
-      });
-      if (boundaryRes.ok) {
-        console.log(`  -> Synced electoral boundary GIS polygons`);
-      } else {
-        console.warn(`  -> Warning: failed to sync boundary polygons:`, await boundaryRes.text());
-      }
-    }
-
-    // Generate static OG card if local/deployed route is active
-    if (created.status === 'published') {
+    // Sync politician tags to politician walls
+    if (politicianIds.length > 0) {
       try {
-        const ogRes = await fetch(`${SITE_URL}/api/news/${created.slug}/og-image`, {
+        const tagSyncRes = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_sync_news_article_tags`, {
           method: 'POST',
-          headers: { Authorization: authHeaders.Authorization }
+          headers: {
+            apikey: authHeaders.apikey,
+            Authorization: authHeaders.Authorization,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            p_article_id: created.id,
+            p_politician_ids: politicianIds
+          })
         });
-        if (ogRes.ok) {
-          console.log(`  -> Generated share-card image`);
+        if (tagSyncRes.ok) {
+          console.log(`  -> Synced tags to ${politicianIds.length} politician wall(s)`);
         }
-      } catch (ogErr) {
-        // Silently skip if local dev server isn't running on site_url
+      } catch (e) {
+        console.warn(`  -> Could not sync politician tags: ${e.message}`);
+      }
+    }
+
+    // Sync GIS boundary tags
+    if (article.latitude && article.longitude) {
+      try {
+        const boundSyncRes = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_sync_news_article_boundaries`, {
+          method: 'POST',
+          headers: {
+            apikey: authHeaders.apikey,
+            Authorization: authHeaders.Authorization,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            p_article_id: created.id,
+            p_latitude: article.latitude,
+            p_longitude: article.longitude
+          })
+        });
+        if (boundSyncRes.ok) {
+          console.log(`  -> Synced boundary tags for lat/lng (${article.latitude}, ${article.longitude})`);
+        }
+      } catch (e) {
+        console.warn(`  -> Could not sync boundaries: ${e.message}`);
       }
     }
 
@@ -1349,7 +1319,7 @@ async function run() {
     });
   }
 
-  // 4. Update batch-ranked-news.csv (keeping top 100) and overflow into scripts/overflow-news-batch.json
+  // Update batch-ranked-news.csv and overflow
   if (inserted.length > 0) {
     const csvPath = path.resolve(__dirname, '..', 'batch-ranked-news.csv');
     let existingRows = [];
@@ -1381,7 +1351,6 @@ async function run() {
     const top100 = combinedRows.slice(0, 100);
     const overflow = combinedRows.slice(100);
 
-    // Archive overflow into scripts/overflow-news-batch.json
     if (overflow.length > 0) {
       const overflowPath = path.resolve(__dirname, 'overflow-news-batch.json');
       let existingOverflow = [];
@@ -1401,7 +1370,6 @@ async function run() {
       console.log(`Archived ${overflow.length} overflow rows into scripts/overflow-news-batch.json.`);
     }
 
-    // Re-rank 1..N for top 100
     const rankedLines = top100.map((row, i) => {
       const parts = row.split(',');
       parts[0] = String(i + 1);
