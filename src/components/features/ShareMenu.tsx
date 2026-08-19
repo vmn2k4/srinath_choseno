@@ -256,10 +256,10 @@ export default function ShareMenu({
           e.preventDefault();
           e.stopPropagation();
           if (typeof navigator !== "undefined" && navigator.clipboard) {
-            navigator.clipboard.writeText(shareData.basePostText).catch(() => {});
+            navigator.clipboard.writeText(shareData.shareText).catch(() => {});
           }
           window.open(
-            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}&quote=${encodeURIComponent(shareData.basePostText)}`,
+            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}&quote=${encodeURIComponent(shareData.shareText)}`,
             "_blank",
             "noopener,noreferrer"
           );
