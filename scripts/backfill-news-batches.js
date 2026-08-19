@@ -136,55 +136,84 @@ async function backfill() {
 
   console.log(`Found ${articles.length} articles to inspect/update.`);
 
-  let updated = 0;
+  // Sort articles by created_at descending to cluster by ingestion run
+  articles.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+  // 15-minute clustering threshold
+  const GAP_MS = 15 * 60 * 1000;
+  const clusters = [];
+  let currentCluster = null;
+
   for (const art of articles) {
-    const content = art.content || {};
-    let needsUpdate = false;
+    const cTime = new Date(art.created_at).getTime();
+    if (!currentCluster || (currentCluster.lastTime - cTime > GAP_MS)) {
+      // Start a new cluster
+      // Anchor name is based on the first article's published_at or created_at (e.g. YYYY-MM-DD HH:mm)
+      const anchorDate = art.published_at || art.created_at;
+      const batchName = `${anchorDate.slice(0, 10)} ${anchorDate.slice(11, 16)}`;
+      currentCluster = {
+        batchName,
+        lastTime: cTime,
+        articles: [art]
+      };
+      clusters.push(currentCluster);
+    } else {
+      currentCluster.articles.push(art);
+      currentCluster.lastTime = cTime;
+    }
+  }
 
-    // 1. Check batch_number
-    if (!content.batch_number) {
-      const pubDate = art.published_at || art.created_at;
-      if (pubDate) {
-        content.batch_number = `${pubDate.slice(0, 10)} ${pubDate.slice(11, 16)}`;
-      } else {
-        content.batch_number = '2026-08-18 23:25';
+  console.log(`Grouped into ${clusters.length} distinct batches:`);
+  clusters.forEach((c, idx) => {
+    console.log(`  Batch ${idx + 1}: "${c.batchName}" (${c.articles.length} stories)`);
+  });
+
+  let updated = 0;
+  for (const cluster of clusters) {
+    for (const art of cluster.articles) {
+      const content = art.content || {};
+      let needsUpdate = false;
+
+      // Assign the clustered batch name to all articles in the cluster!
+      if (content.batch_number !== cluster.batchName) {
+        content.batch_number = cluster.batchName;
+        needsUpdate = true;
       }
-      needsUpdate = true;
-    }
 
-    // 2. Check viral_score
-    if (typeof content.viral_score !== 'number') {
-      if (KNOWN_SCORES[art.slug]) {
-        content.viral_score = KNOWN_SCORES[art.slug];
-      } else if (content.breakingNews) {
-        content.viral_score = 9.5;
-      } else {
-        content.viral_score = 8.0;
+      // Check viral_score
+      if (typeof content.viral_score !== 'number') {
+        if (KNOWN_SCORES[art.slug]) {
+          content.viral_score = KNOWN_SCORES[art.slug];
+        } else if (content.breakingNews) {
+          content.viral_score = 9.5;
+        } else {
+          content.viral_score = 8.0;
+        }
+        needsUpdate = true;
       }
-      needsUpdate = true;
-    }
 
-    // 3. Check shared_platforms
-    if (!Array.isArray(content.shared_platforms)) {
-      content.shared_platforms = [];
-      needsUpdate = true;
-    }
+      // Check shared_platforms
+      if (!Array.isArray(content.shared_platforms)) {
+        content.shared_platforms = [];
+        needsUpdate = true;
+      }
 
-    if (needsUpdate) {
-      const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/news_articles?id=eq.${art.id}`, {
-        method: 'PATCH',
-        headers,
-        body: JSON.stringify({ content }),
-      });
-      if (patchRes.ok) {
-        updated++;
-      } else {
-        console.error(`Failed to update ${art.slug}:`, await patchRes.text());
+      if (needsUpdate) {
+        const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/news_articles?id=eq.${art.id}`, {
+          method: 'PATCH',
+          headers,
+          body: JSON.stringify({ content }),
+        });
+        if (patchRes.ok) {
+          updated++;
+        } else {
+          console.error(`Failed to update ${art.slug}:`, await patchRes.text());
+        }
       }
     }
   }
 
-  console.log(`✅ Backfill complete. Updated ${updated} articles with batch numbers, viral scores, and social platform tracking.`);
+  console.log(`✅ Cluster backfill complete. Updated ${updated} articles across ${clusters.length} batches.`);
 }
 
 backfill().catch(console.error);
