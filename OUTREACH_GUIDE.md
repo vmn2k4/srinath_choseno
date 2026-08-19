@@ -18,6 +18,8 @@ This document contains the complete outreach strategy, pitch templates, social m
 
 **Before generating outreach emails, you must get the accurate wall slug for each person.**
 
+The `/admin/campaign` tool (section 4 below) has a **Wall slug** field on every recipient row — pre-filled automatically when you add someone via **Search politicians & office holders**, or type it in by hand otherwise. It's never guessed for you: a slug that doesn't match a real profile 404s, so this stays a manual/verified field rather than something the send flow invents.
+
 See [`docs/WALL_SLUG_GENERATION.md`](docs/WALL_SLUG_GENERATION.md) for complete details on:
 - How wall slugs are generated (`buildPoliticianWallSlug()` function)
 - How to query them from the database
@@ -104,11 +106,21 @@ Same professional design as Mayor template with role-specific adjustments:
 - Tailored benefits for councillor role
 - Identical visual structure for consistency
 
-**Placeholders**: `[Name]` → `{{name}}`, `[City]` → `{{city}}`, `[wall_slug]` → `{{wall_slug}}` (also available as the full link, `{{wall_url}}`). The HTML renders well in Gmail, Outlook, and most email clients.
+**Placeholders**: `[Name]` → `{{name}}`, `[City]` → `{{city}}`, `[wall_slug]` → `{{wall_slug}}` (also available as the full link, `{{wall_url}}`).
+
+### 4c. Layout — wide, responsive card
+
+The email body is a 680px white card centered on a light gray page background, with a `@media (max-width: 700px)` rule that strips the border/radius/outer padding so it goes edge-to-edge on phones instead of leaving cramped margins. Nothing in the layout uses a fixed pixel width (only `max-width`), so even in clients that ignore the media query (older Outlook desktop, mainly) the content still reflows to fit — the only loss there is the rounded-corner "card" polish, not readability.
+
+### 4d. Delivery — why HTML sends used to silently fail
+
+Before 2026-08-19, `supabase/functions/send-email` sent the HTML body with no declared `Content-Transfer-Encoding` (MIME defaults that to `7bit`, i.e. "this is pure ASCII") while the templates contain real UTF-8 characters (the em dash `—`, the checkmark `✓`). That MIME violation, plus the body going out as one unbroken multi-KB line instead of proper CRLF-terminated lines, is the kind of malformed message many receiving/relay servers accept at the SMTP level — still a `250 OK`, which is why the admin panel showed "sent" — and then silently drop rather than deliver. Plain-text sends never hit this because they contain no non-ASCII bytes.
+
+Fixed by base64-encoding the body (sidesteps both the encoding and line-length problems at once) and by actually checking SMTP response codes after AUTH/MAIL FROM/RCPT TO/DATA instead of trusting "the connection didn't throw." A rejected send now surfaces as a real error in the admin panel.
 
 ---
 
-## 4c. Plain Text Email Template (Legacy - for reference only)
+## 4e. Plain Text Email Template (Legacy - for reference only)
 
 Use this only if recipients require plain text or for historical reference.
 

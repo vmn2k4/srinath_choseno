@@ -1,5 +1,7 @@
 # Politician Claim Wall Campaign Automation
 
+> **For Mayor/Councillor outreach with the professional HTML templates, use `/admin/campaign` in the admin panel instead — see [OUTREACH_GUIDE.md](../OUTREACH_GUIDE.md) §4.** That's the actively-maintained path: it has the real Mayor/Councillor HTML designs, a search-to-add flow, per-recipient wall-slug editing, and send previews. The CLI script documented below (`scripts/send-politician-invites.ts`) still works and posts to the same `politician_claim_campaigns` table, but its `generateEmailHtml()` is a separate, generic template — it does **not** send the Mayor/Councillor HTML designs described in OUTREACH_GUIDE.md unless you edit it to match. Keep reading if you specifically need a CLI/CI-driven bulk send outside the admin UI.
+
 ## Overview
 
 Campaign automation is **ready to use** with zero new dependencies! The system integrates with your existing Supabase email infrastructure.

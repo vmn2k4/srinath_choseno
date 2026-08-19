@@ -1,5 +1,7 @@
 # Send Politician Invites - Quick Reference
 
+> **For Mayor/Councillor outreach with the professional HTML templates, use `/admin/campaign` in the admin panel instead — see [OUTREACH_GUIDE.md](OUTREACH_GUIDE.md) §4.** This CLI script sends a different, generic email template, not the Mayor/Councillor HTML designs.
+
 ## TL;DR
 
 ```bash

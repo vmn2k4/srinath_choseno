@@ -1,4 +1,6 @@
-import { renderOgCard, OG_IMAGE_SIZE, OG_IMAGE_CONTENT_TYPE } from "@/lib/utils/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { OG_IMAGE_SIZE, OG_IMAGE_CONTENT_TYPE } from "@/lib/utils/ogCard";
 import { createPublicClient } from "@/lib/supabase/public";
 import { getWallOwnerProfile, getWallPostBySlugOrId, getWallOwnerProfileBySlug } from "@/lib/services/politicianWall";
 
@@ -15,10 +17,17 @@ interface Props {
 }
 
 type WallOwner = {
+  id?: string;
   full_name?: string;
   politician_profiles?: { bio?: string; avatar_url?: string } | null;
 };
 
+// All rendering lives in the generate-profile-og-image Supabase Edge
+// Function, same move as the sibling wall/[ghostId]/opengraph-image.tsx
+// route -- see the comment there for why the owner+post lookup (real
+// business logic, including the slug-matching fallback in
+// getWallPostBySlugOrId) stays on the Next.js side rather than being
+// re-derived in Deno. This route does no image generation of any kind.
 export default async function Image({ params }: Props) {
   const { ghostId, slug } = await params;
   const supabase = createPublicClient();
@@ -33,16 +42,41 @@ export default async function Image({ params }: Props) {
   const owner = ownerData as unknown as WallOwner | null;
   const name = owner?.full_name || "Politician";
   const avatarUrl = owner?.politician_profiles?.avatar_url;
-  const post = postData as { content?: string; image_url?: string } | null;
+  const post = postData as { id?: string; content?: string; image_url?: string } | null;
 
   const postExcerpt = post?.content
     ? post.content.replace(/\s+/g, " ").trim().slice(0, 100)
     : `Public statement & constituent discussion thread`;
+  const cacheKey = `wall-post/${owner?.id || ghostId}/${post?.id || slug}`;
 
-  return renderOgCard({
-    eyebrow: `${name}'s Wall Thread`,
-    title: postExcerpt,
-    subtitle: `Join the discussion on Choseno — scoped civic social platform`,
-    photoUrl: avatarUrl,
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (supabaseUrl) {
+    try {
+      const functionUrl = `${supabaseUrl}/functions/v1/generate-profile-og-image?cacheKey=${encodeURIComponent(cacheKey)}`;
+      const res = await fetch(functionUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          eyebrow: `${name}'s Wall Thread`,
+          title: postExcerpt,
+          subtitle: `Join the discussion on Choseno — scoped civic social platform`,
+          photoUrl: avatarUrl || null,
+        }),
+        next: { revalidate: 3600 },
+      });
+      if (res.ok) {
+        const buffer = await res.arrayBuffer();
+        return new Response(buffer, {
+          headers: { "Content-Type": "image/png", "Cache-Control": "public, max-age=3600" },
+        });
+      }
+    } catch {
+      // Fall through to the static fallback below.
+    }
+  }
+
+  const fallback = await readFile(join(process.cwd(), "public", "og-fallback.png"));
+  return new Response(new Uint8Array(fallback), {
+    headers: { "Content-Type": "image/png", "Cache-Control": "public, max-age=300" },
   });
 }

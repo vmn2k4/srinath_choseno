@@ -2,6 +2,8 @@
 
 This directory contains professional HTML email templates for outreach to BC municipal officials.
 
+These files are the **source of truth for the design**. They're also embedded verbatim (bracket placeholders swapped for `{{merge_tags}}`) in [`src/lib/utils/campaignTemplates.ts`](../src/lib/utils/campaignTemplates.ts), which is what actually gets sent from the admin panel — if you change the design or copy, edit the `.html` files here first, then copy the same change into `campaignTemplates.ts` so the two don't drift apart.
+
 ## Templates
 
 ### `mayor-professional.html`
@@ -22,52 +24,41 @@ Professional email template for councillors with:
 - Emphasis on voting record and council representation
 - Same customization placeholders
 
-## Sending Emails
+## Sending emails
 
-### Quick Start (Recommended)
+### The actual send tool: `/admin/campaign`
 
-Run the included Node.js script from the project root:
+This is the only supported way to send these — not a script, not copy-paste into Gmail. In the admin panel:
 
-```bash
-node scripts/send-professional-emails.js
+1. Under **"1. Import recipients"**, either paste CSV/JSON, upload a file, or click **Search politicians & office holders** to find someone already on Choseno (reuses the nav-bar search) and add them with one click — this also pre-fills their wall slug and looks up their contact email.
+2. Under **"2. Compose the email"**, click the **Mayor — Choseno wall** or **Councillor — Choseno wall** template button to load the matching subject/body.
+3. Each recipient row has editable **Email** and **Wall slug** fields — fix a missing email, or type in a wall slug if the search didn't find one. A guessed slug that doesn't match a real profile 404s, so this is never auto-filled with a guess.
+4. Click **Preview** on a row to see the rendered email before sending, then **Send** (or **Send all**).
+
+Every send is logged to the `politician_claim_campaigns` table and shows up in the campaign history at the bottom of the page.
+
+### If you need to send outside the admin panel
+
+The templates are plain HTML — read the file and pass it as the `html` field to the `send-email` Supabase function (see [`src/lib/services/email.ts`](../src/lib/services/email.ts) for the client-side wrapper, which is preferable to a raw `curl` since it goes through your authenticated Supabase session instead of a hand-copied token):
+
+```ts
+import { sendEmail } from "@/lib/services/email";
+
+await sendEmail(supabase, {
+  to: "mayor@example.com",
+  subject: "Your Mayor Wall is Ready on Choseno — Connect with Example City Voters This Election",
+  html: htmlFileContents, // with [Name]/[City]/[wall_slug] already replaced
+  replyTo: "vijay@choseno.com",
+});
 ```
 
-This will send both templates as test emails to `vmn2k4@gmail.com` to verify rendering.
-
-### Manual Approach
-
-If you prefer to send individually or customize further:
-
-1. **Copy the HTML** from the template file
-2. **Replace placeholders:**
-   - `[Name]` → Mayor/Councillor's name
-   - `[City]` → Municipality
-   - `[wall_slug]` → Their wall URL slug
-3. **Send via your email client** or Supabase function
-
-### Via Supabase (Advanced)
-
-To send directly via Supabase without the script:
-
-```bash
-curl -X POST https://xqwvqrwovvpnbxfdwgpq.supabase.co/functions/v1/send-email \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "to": "recipient@example.com",
-    "subject": "Your Wall is Ready on Choseno",
-    "html": "<paste-html-here>",
-    "replyTo": "vijay@choseno.com"
-  }'
-```
-
-## Design Features
+## Design features
 
 - **Typography**: System fonts for maximum compatibility
-- **Color Scheme**: Professional blue (#3b82f6) accents with dark text
-- **Visual Hierarchy**: Clear sections with generous whitespace
-- **Email Client Support**: Renders well in Gmail, Outlook, Apple Mail, and most clients
-- **Mobile Friendly**: Responsive design for all screen sizes
+- **Color scheme**: Professional blue (#3b82f6) accents with dark text
+- **Layout**: 680px white card on a light gray page background, with a `@media (max-width: 700px)` rule that goes edge-to-edge on phones — see [OUTREACH_GUIDE.md §4c](../OUTREACH_GUIDE.md) for the reasoning
+- **Visual hierarchy**: Clear sections with generous whitespace
+- **Email client support**: Renders well in Gmail, Apple Mail, and mobile clients with full CSS support; degrades gracefully (loses the rounded-corner card look, keeps all content readable) in clients with weaker CSS support like Outlook desktop
 
 ## Customization
 
@@ -78,30 +69,17 @@ All templates are fully customizable HTML. Common edits:
 - **Change fonts**: Update the `font-family` in the `<style>` section
 - **Add logo**: Insert an image tag in the header section
 
-## Testing
+After editing a `.html` file here, copy the same change into `campaignTemplates.ts` (see the note at the top of this file) — otherwise the admin panel keeps sending the old version.
 
-Before sending to actual candidates:
+## Testing before a real campaign
 
-1. Run `node scripts/send-professional-emails.js`
-2. Check emails in your test inbox (`vmn2k4@gmail.com`)
-3. Open in multiple email clients (Gmail, Outlook, Apple Mail)
-4. Verify all links work (especially `[wall_slug]` links)
-5. Check mobile rendering
+1. In `/admin/campaign`, add yourself as a test recipient (paste a one-row CSV, or search for your own name if you have a profile) with your own email
+2. Load the Mayor or Councillor template and hit **Preview**
+3. Send it to yourself and open it in Gmail and, if possible, Outlook/Apple Mail
+4. Verify the wall link actually resolves (not a 404) and mobile rendering looks right
 
-## Email Client Compatibility
+## Delivery notes
 
-These templates are tested and work well in:
-- Gmail (web and app)
-- Outlook (web and desktop)
-- Apple Mail
-- Thunderbird
-- Mobile clients (iOS Mail, Gmail App)
+HTML sends silently failed to arrive before 2026-08-19 — the underlying `send-email` function had a MIME encoding bug (declared the body as 7-bit ASCII while the templates contain real UTF-8 characters like `—` and `✓`), which many mail servers accept at the SMTP level and then quarantine rather than deliver. That's fixed now (base64 body encoding + real SMTP response-code checks). See [OUTREACH_GUIDE.md §4d](../OUTREACH_GUIDE.md) for the full writeup if HTML delivery ever silently breaks again.
 
-## Next Steps
-
-1. **Test**: Run the script and preview emails
-2. **Customize**: Add recipient names and wall slugs
-3. **Batch Send**: Use Supabase function or your email client to send at scale
-4. **Track**: Monitor open rates and replies
-
-See `OUTREACH_GUIDE.md` for full outreach strategy and contact lists.
+See [`OUTREACH_GUIDE.md`](../OUTREACH_GUIDE.md) for full outreach strategy and contact lists.

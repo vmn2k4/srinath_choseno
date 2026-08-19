@@ -302,23 +302,23 @@ export async function uploadNewsHeroImage(supabase: Client, file: File, slug: st
   return { publicUrl, error: null };
 }
 
-// generateNewsArticleOgImage (the next/og-based renderer) lives in
-// ./newsOgImage.ts, not here, even though it's the same "services call
-// Supabase" pattern as everything else in this file. Reason: it imports
-// src/lib/utils/og.tsx, which pulls in next/og -> sharp -> Node builtins
-// (fs, child_process). This file (services/news.ts) is imported by client
-// components (AdminNewsPageClient, NewsArticleDetailClient per the layered
-// architecture), so anything it imports ends up in the client bundle --
-// next/og's Node-only code doesn't resolve there and breaks the build.
-// newsOgImage.ts is only ever imported by the server-only API route that
-// needs it, so it never crosses that boundary.
+// generateNewsArticleOgImage lives in ./newsOgImage.ts, not here, even
+// though it's the same "services call Supabase" pattern as everything else
+// in this file. As of 2026-08-19 it's just a fetch() proxy to the
+// generate-news-og-image Supabase Edge Function (no next/og import any
+// more -- that rendering moved off Vercel entirely, see the Edge Function's
+// own comment for why). Kept in its own file regardless: this file
+// (services/news.ts) is imported by client components (AdminNewsPageClient,
+// NewsArticleDetailClient per the layered architecture), and keeping the
+// split means nobody has to re-verify that boundary if newsOgImage.ts ever
+// grows a server-only import again.
 //
-// uploadNewsOgImage below is safe here, though: it's just a Storage call
-// with no next/og import. It's the upload half of the *browser* render path
+// uploadNewsOgImage below is the upload half of the *browser* render path
 // (renderNewsArticleOgCardToPngBlob in ogCardBrowser.ts, which uses Satori
-// instead of next/og), called from AdminNewsPageClient's generateOgImages()
-// right at publish time -- same og-cards/{slug}.png path as
-// generateNewsArticleOgImage so both paths produce interchangeable output.
+// directly in the admin's own browser -- no Vercel Function involved at
+// all), called from AdminNewsPageClient's generateOgImages() right at
+// publish time -- same og-cards/{slug}.png path the Edge Function uses, so
+// both paths produce interchangeable output and whichever runs first wins.
 
 export async function uploadNewsOgImage(supabase: Client, image: Blob, slug: string) {
   const filePath = `og-cards/${slug}.png`;

@@ -1,4 +1,6 @@
-import { renderOgCard, OG_IMAGE_SIZE, OG_IMAGE_CONTENT_TYPE } from "@/lib/utils/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { OG_IMAGE_SIZE, OG_IMAGE_CONTENT_TYPE } from "@/lib/utils/ogCard";
 import { createPublicClient } from "@/lib/supabase/public";
 import { getSeatById } from "@/lib/services/elections";
 
@@ -15,20 +17,20 @@ interface Props {
 }
 
 // Generation lives in the generate-election-og-image Supabase Edge Function
-// now (supabase/functions/generate-election-og-image): it renders ALL
+// (supabase/functions/generate-election-og-image): it renders ALL
 // candidates with photo/party/community-support share, caches the PNG in
 // the election-og-images Storage bucket for 24h, and regenerates on the
 // first request after that. This route just proxies those bytes through so
 // the public og:image URL stays same-origin
-// (choseno.com/elections/seat/[seatId]/opengraph-image) -- Vercel does no
-// PNG rendering here any more, Supabase does.
+// (choseno.com/elections/seat/[seatId]/opengraph-image) -- this route does
+// no image generation of any kind.
 //
-// Falls back to the site's own homepage card (same content as
-// src/app/opengraph-image.tsx) if the Edge Function is ever unreachable or
-// errors, rather than a seat-specific-but-sparse generic card -- a
-// half-empty "Election Seat / {role title}" card with no candidate content
-// reads as broken to anyone who sees it shared, whereas the homepage card
-// is a complete, intentional design that never looks like a failure.
+// If the Edge Function is ever unreachable, this serves the static
+// public/og-fallback.png file (a plain disk read, not a render) rather than
+// a seat-specific-but-sparse generic card -- a half-empty "Election Seat /
+// {role title}" card with no candidate content reads as broken to anyone
+// who sees it shared, whereas the shared site fallback is a complete,
+// intentional design that never looks like a failure.
 //
 // CARD_VERSION mirrors the same-named constant in the Edge Function's
 // index.ts -- bump both together whenever card.tsx's layout/copy changes.
@@ -55,13 +57,12 @@ export default async function Image({ params }: Props) {
         });
       }
     } catch {
-      // Fall through to the homepage card below.
+      // Fall through to the static fallback below.
     }
   }
 
-  return renderOgCard({
-    eyebrow: "Civic Platform",
-    title: "Your voice, heard where you live",
-    subtitle: "Choseno connects citizens and politicians inside real electoral boundaries.",
+  const fallback = await readFile(join(process.cwd(), "public", "og-fallback.png"));
+  return new Response(new Uint8Array(fallback), {
+    headers: { "Content-Type": "image/png", "Cache-Control": "public, max-age=300" },
   });
 }

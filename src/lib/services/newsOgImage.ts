@@ -1,103 +1,50 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Database } from "@/lib/supabase/types";
-import type { NewsStatus, NewsArticleContent } from "./news";
-import { renderNewsArticleOgCard } from "@/lib/utils/og";
-
-type Client = SupabaseClient<Database>;
-
 // ── Auto-generated share-card image ─────────────────────────────────────
 //
-// Renders the same branded card as the live opengraph-image.tsx route, but
-// bakes it into a static PNG in the news-images bucket once and saves the
-// URL to hero_image_url -- every consumer of that column (article metadata,
+// Generation itself lives in the generate-news-og-image Supabase Edge
+// Function now (supabase/functions/generate-news-og-image): it renders the
+// branded card with next/og's engine (via npm:@vercel/og in Deno), bakes it
+// into a static PNG in the news-images bucket, and saves the URL to
+// hero_image_url -- every consumer of that column (article metadata,
 // sitemap.ts, news-sitemap.xml, JSON-LD, news list cards) then serves the
-// static file instead of live-rendering next/og on every request/crawl,
-// which is what made the X/Twitter card unreliable (a slow first render —
-// e.g. fetching a tagged politician's photo — could blow past X's crawl
-// timeout and get cached there as "no image" for the URL).
+// static file instead of live-rendering on every request/crawl, which is
+// what made the X/Twitter card unreliable (a slow first render -- e.g.
+// fetching a tagged politician's photo -- could blow past X's crawl timeout
+// and get cached there as "no image" for the URL).
+//
+// This function is a thin proxy to that Edge Function, not a renderer --
+// moved off Vercel entirely on 2026-08-19 because this used to run next/og's
+// ImageResponse (Satori text-layout + PNG-encode) directly inside a Vercel
+// Function, fired synchronously once per article from the automated news
+// ingestion pipeline (scripts/insert-news-batch.js). That's real CPU Vercel
+// doesn't need to pay for any more; Supabase (already the DB/Storage owner
+// of this data) does the rendering now.
 //
 // Called from api/news/[slug]/og-image/route.ts right after an article is
 // published, both from AdminNewsPageClient's publish action and from the
-// scripts/*.js ingestion scripts -- never a manual step. Idempotent: a
-// second call is a no-op once hero_image_url is set, and never overwrites a
-// real source photo an article already carries.
+// scripts/*.js ingestion scripts -- never a manual step. Idempotent on the
+// Edge Function's side: a second call is a no-op once hero_image_url is
+// set, and never overwrites a real source photo an article already carries.
 //
-// Deliberately kept out of services/news.ts -- see the comment there. Only
-// ever import this file from server-only code (route handlers); importing
-// it from a client component would break the client bundle the same way
-// news.ts briefly did.
+// Only ever import this file from server-only code (route handlers) --
+// matches the constraint this file always had, even back when it rendered
+// locally; importing it from a client component would still pull in
+// Next.js server-only module resolution.
 export async function generateNewsArticleOgImage(
-  supabase: Client,
+  _supabase: unknown,
   slug: string
 ): Promise<{ url: string | null; error: string | null }> {
-  const { data, error } = await supabase
-    .from("news_articles")
-    .select(
-      "headline, summary, category, country, province, status, event_date, published_at, hero_image_url, content, news_article_politicians(politician_id, profiles(full_name, designation, constituency, politician_profiles(photo_url, avatar_url)))"
-    )
-    .eq("slug", slug)
-    .single();
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  if (!supabaseUrl) return { url: null, error: "Supabase URL not configured" };
 
-  if (error || !data) return { url: null, error: error?.message || "Article not found" };
-
-  const article = data as unknown as {
-    headline: string;
-    summary: string | null;
-    category: string;
-    country: string | null;
-    province: string | null;
-    status: NewsStatus;
-    event_date: string | null;
-    published_at: string | null;
-    hero_image_url: string | null;
-    content: NewsArticleContent | null;
-    news_article_politicians?: Array<{
-      profiles?: {
-        full_name: string;
-        designation?: string | null;
-        constituency?: string | null;
-        politician_profiles?: { photo_url?: string | null; avatar_url?: string | null } | null;
-      } | null;
-    }> | null;
-  };
-
-  if (article.hero_image_url) return { url: article.hero_image_url, error: null };
-  if (article.status !== "published") return { url: null, error: `Article status is "${article.status}", not "published"` };
-
-  const primaryPolitician = article.news_article_politicians?.map((p) => p.profiles).filter(Boolean)[0];
-
-  const image = renderNewsArticleOgCard({
-    headline: article.headline,
-    summary: article.summary,
-    category: article.category,
-    country: article.country,
-    province: article.province,
-    eventDate: article.event_date,
-    publishedAt: article.published_at,
-    bodyMarkdown: article.content?.body,
-    politicianName: primaryPolitician?.full_name,
-    politicianDesignation: primaryPolitician?.designation,
-    politicianConstituency: primaryPolitician?.constituency,
-    politicianPhotoUrl:
-      primaryPolitician?.politician_profiles?.photo_url || primaryPolitician?.politician_profiles?.avatar_url,
-  });
-
-  const buffer = await image.arrayBuffer();
-  const filePath = `og-cards/${slug}.png`;
-  const { error: uploadError } = await supabase.storage
-    .from("news-images")
-    .upload(filePath, buffer, { contentType: "image/png", upsert: true });
-  if (uploadError) return { url: null, error: uploadError.message };
-
-  const {
-    data: { publicUrl },
-  } = supabase.storage.from("news-images").getPublicUrl(filePath);
-
-  const { error: updateError } = await supabase
-    .from("news_articles")
-    .update({ hero_image_url: publicUrl })
-    .eq("slug", slug);
-  if (updateError) return { url: null, error: updateError.message };
-
-  return { url: publicUrl, error: null };
+  try {
+    const res = await fetch(
+      `${supabaseUrl}/functions/v1/generate-news-og-image?slug=${encodeURIComponent(slug)}&format=json`,
+      { method: "POST" }
+    );
+    const body = (await res.json().catch(() => null)) as { url: string | null; error: string | null } | null;
+    if (!res.ok) return { url: null, error: body?.error || `generate-news-og-image returned ${res.status}` };
+    return { url: body?.url ?? null, error: body?.error ?? null };
+  } catch (e) {
+    return { url: null, error: e instanceof Error ? e.message : "Failed to reach generate-news-og-image" };
+  }
 }
