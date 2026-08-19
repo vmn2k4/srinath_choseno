@@ -77,6 +77,14 @@ export interface NewsArticleContent {
    * generated text when unset (see docs/NEWS_JSON_SCHEMA.md).
    */
   tweet?: string;
+  /** Human-readable publishing batch timestamp/tag (e.g. "2026-08-18 23:25" or "BATCH-2026-08-18-2325") */
+  batch_number?: string;
+  /** Calculated or assigned viral potential score (e.g. 9.8) */
+  viral_score?: number;
+  /** Numerical ranking within the ingestion batch */
+  batch_rank?: number;
+  /** List of social platforms where this story has been published/shared (e.g. ["X", "Facebook", "LinkedIn"]) */
+  shared_platforms?: string[];
 }
 
 export interface NewsArticle {
@@ -666,3 +674,211 @@ export function extractBodySummary(body?: string, maxChars = 200): string {
   const plain = body.replace(/[#*`\[\]]/g, "").trim();
   return plain.length > maxChars ? plain.slice(0, maxChars) + "…" : plain;
 }
+
+/**
+ * Format a human-readable, sortable batch number from an ISO timestamp.
+ * e.g. "2026-08-18T23:25:00.000Z" -> "2026-08-18 23:25"
+ */
+export function formatBatchNumberFromDate(isoDate?: string | null): string {
+  if (!isoDate) {
+    const now = new Date();
+    return `${now.toISOString().slice(0, 10)} ${now.toISOString().slice(11, 16)}`;
+  }
+  try {
+    const d = new Date(isoDate);
+    if (isNaN(d.getTime())) return "Unknown Batch";
+    const datePart = d.toISOString().slice(0, 10);
+    const timePart = d.toISOString().slice(11, 16);
+    return `${datePart} ${timePart}`;
+  } catch {
+    return "Unknown Batch";
+  }
+}
+
+// ── Distribution & Social Sharing Functions ───────────────────────────────
+
+export interface DistributionArticle extends NewsArticle {
+  batchNumber: string;
+  viralScore: number;
+  batchRank: number;
+  sharedPlatforms: string[];
+  primaryPoliticianName?: string | null;
+  primaryWallSlug?: string | null;
+  allPoliticianNames?: string[];
+}
+
+/**
+ * Lists articles with politician details formatted for the Admin News Distribution table.
+ */
+export async function listNewsArticlesForDistribution(
+  supabase: Client,
+  options: {
+    status?: string;
+    limit?: number;
+  } = {}
+): Promise<{ data: DistributionArticle[] | null; error: PostgrestError | null }> {
+  let query = supabase
+    .from("news_articles")
+    .select(`
+      id,
+      slug,
+      headline,
+      summary,
+      category,
+      country,
+      province,
+      status,
+      published_at,
+      event_date,
+      latitude,
+      longitude,
+      impact_area,
+      hero_image_url,
+      content,
+      political_party_id,
+      created_by,
+      created_at,
+      updated_at,
+      news_article_politicians (
+        politician_id,
+        profiles (
+          id,
+          full_name,
+          current_ghost_id,
+          politician_profiles (
+            wall_slug
+          )
+        )
+      )
+    `)
+    .order("published_at", { ascending: false, nullsFirst: false });
+
+  if (options.status) {
+    query = query.eq("status", options.status);
+  }
+
+  if (options.limit) {
+    query = query.limit(options.limit);
+  }
+
+  const { data, error } = await query;
+
+  if (error || !data) {
+    return { data: null, error };
+  }
+
+  const formatted: DistributionArticle[] = (data as any[]).map((row, index) => {
+    const content = (row.content || {}) as NewsArticleContent;
+    const politicians = (row.news_article_politicians || [])
+      .map((p: any) => p.profiles)
+      .filter(Boolean);
+
+    const primaryProf = politicians[0];
+    const primaryWallSlug = primaryProf?.politician_profiles?.wall_slug || primaryProf?.current_ghost_id || null;
+    const primaryPoliticianName = primaryProf?.full_name || null;
+    const allPoliticianNames = politicians.map((p: any) => p.full_name).filter(Boolean);
+
+    // Fallback batch number based on publication timestamp
+    const batchNumber = content.batch_number || formatBatchNumberFromDate(row.published_at || row.created_at);
+    // Fallback viral score
+    const viralScore = typeof content.viral_score === "number" ? content.viral_score : (content.breakingNews ? 9.5 : 8.0);
+    const batchRank = typeof content.batch_rank === "number" ? content.batch_rank : index + 1;
+    const sharedPlatforms = Array.isArray(content.shared_platforms) ? content.shared_platforms : [];
+
+    return {
+      ...row,
+      batchNumber,
+      viralScore,
+      batchRank,
+      sharedPlatforms,
+      primaryPoliticianName,
+      primaryWallSlug,
+      allPoliticianNames,
+    };
+  });
+
+  return { data: formatted, error: null };
+}
+
+/**
+ * Updates the shared_platforms array stored inside an article's JSON content.
+ */
+export async function updateNewsArticleSharedPlatforms(
+  supabase: Client,
+  articleId: string,
+  platforms: string[]
+): Promise<{ success: boolean; error: any }> {
+  // First fetch current content
+  const { data: article, error: fetchError } = await supabase
+    .from("news_articles")
+    .select("content")
+    .eq("id", articleId)
+    .single();
+
+  if (fetchError || !article) {
+    return { success: false, error: fetchError };
+  }
+
+  const currentContent = (article.content || {}) as NewsArticleContent;
+  const updatedContent: NewsArticleContent = {
+    ...currentContent,
+    shared_platforms: Array.from(new Set(platforms.filter(Boolean))),
+  };
+
+  const { error: updateError } = await supabase
+    .from("news_articles")
+    .update({ content: updatedContent as any })
+    .eq("id", articleId);
+
+  if (updateError) {
+    return { success: false, error: updateError };
+  }
+
+  return { success: true, error: null };
+}
+
+/**
+ * Records a single platform share action on an article.
+ */
+export async function recordNewsArticleShare(
+  supabase: Client,
+  articleId: string,
+  platform: string
+): Promise<{ success: boolean; error: any }> {
+  const { data: article, error: fetchError } = await supabase
+    .from("news_articles")
+    .select("content")
+    .eq("id", articleId)
+    .single();
+
+  if (fetchError || !article) {
+    return { success: false, error: fetchError };
+  }
+
+  const currentContent = (article.content || {}) as NewsArticleContent;
+  const existingPlatforms = Array.isArray(currentContent.shared_platforms)
+    ? currentContent.shared_platforms
+    : [];
+
+  if (existingPlatforms.includes(platform)) {
+    return { success: true, error: null }; // Already recorded
+  }
+
+  const updatedPlatforms = [...existingPlatforms, platform];
+  const updatedContent: NewsArticleContent = {
+    ...currentContent,
+    shared_platforms: updatedPlatforms,
+  };
+
+  const { error: updateError } = await supabase
+    .from("news_articles")
+    .update({ content: updatedContent as any })
+    .eq("id", articleId);
+
+  if (updateError) {
+    return { success: false, error: updateError };
+  }
+
+  return { success: true, error: null };
+}
+

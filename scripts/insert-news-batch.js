@@ -1658,7 +1658,11 @@ async function run() {
         tweet: article.tweet,
         breakingNews: !!article.breakingNews,
         author: article.author || { name: 'Choseno Civic News Desk', bio: 'Verified political and municipal affairs reporting' },
-        sources: article.sources || []
+        sources: article.sources || [],
+        batch_number: article.batchNumber || (article.published_at ? `${article.published_at.slice(0, 10)} ${article.published_at.slice(11, 16)}` : '2026-08-18 23:25'),
+        viral_score: typeof article.viralScore === 'number' ? article.viralScore : 8.0,
+        batch_rank: article.rank || null,
+        shared_platforms: []
       }
     };
 

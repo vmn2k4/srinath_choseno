@@ -22,7 +22,7 @@ export interface ShareData {
 interface ShareMenuProps {
   articleId: string;
   shareData: ShareData;
-  onShare?: () => void;
+  onShare?: (platform?: string) => void;
   className?: string;
   iconSize?: number;
   // Optional text next to the icon -- omitted for the compact icon-only
@@ -81,6 +81,7 @@ export default function ShareMenu({
       navigator.clipboard.writeText(shareData.url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
+      onShare?.("Copy Link");
     }
   };
 
@@ -93,7 +94,7 @@ export default function ShareMenu({
           url: shareData.url,
         });
         setIsOpen(false);
-        onShare?.();
+        onShare?.("Native Share");
         return;
       } catch {
         // Fallback to copy if share dialog dismissed
@@ -102,9 +103,13 @@ export default function ShareMenu({
     handleCopyLink();
   };
 
-  const closeMenu = () => {
+  const closeMenu = (platform?: string) => {
     setIsOpen(false);
-    onShare?.();
+    if (platform) {
+      onShare?.(platform);
+    } else {
+      onShare?.();
+    }
   };
 
   return (
@@ -153,7 +158,7 @@ export default function ShareMenu({
               e.preventDefault();
               e.stopPropagation();
               handleNativeShareOrCopy();
-              closeMenu();
+              closeMenu("Native Share");
             }}
             onMouseDown={(e) => {
               e.preventDefault();
@@ -179,7 +184,7 @@ export default function ShareMenu({
               e.preventDefault();
               e.stopPropagation();
               window.open(shareData.twitterUrl, "_blank", "noopener,noreferrer");
-              closeMenu();
+              closeMenu("X");
             }}
             onMouseDown={(e) => {
               e.preventDefault();
@@ -198,7 +203,7 @@ export default function ShareMenu({
               e.preventDefault();
               e.stopPropagation();
               window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareData.shareText)}`, "_blank", "noopener,noreferrer");
-              closeMenu();
+              closeMenu("WhatsApp");
             }}
             onMouseDown={(e) => {
               e.preventDefault();
@@ -215,7 +220,7 @@ export default function ShareMenu({
               e.preventDefault();
               e.stopPropagation();
               window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareData.url)}`, "_blank", "noopener,noreferrer");
-              closeMenu();
+              closeMenu("LinkedIn");
             }}
             onMouseDown={(e) => {
               e.preventDefault();
@@ -234,7 +239,7 @@ export default function ShareMenu({
               e.preventDefault();
               e.stopPropagation();
               window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}`, "_blank", "noopener,noreferrer");
-              closeMenu();
+              closeMenu("Facebook");
             }}
             onMouseDown={(e) => {
               e.preventDefault();
@@ -253,7 +258,7 @@ export default function ShareMenu({
               e.preventDefault();
               e.stopPropagation();
               window.open(`https://t.me/share/url?url=${encodeURIComponent(shareData.url)}&text=${encodeURIComponent(shareData.basePostText)}`, "_blank", "noopener,noreferrer");
-              closeMenu();
+              closeMenu("Telegram");
             }}
             onMouseDown={(e) => {
               e.preventDefault();
@@ -272,7 +277,7 @@ export default function ShareMenu({
               e.preventDefault();
               e.stopPropagation();
               window.open(`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(shareData.url)}&description=${encodeURIComponent(shareData.basePostText)}`, "_blank", "noopener,noreferrer");
-              closeMenu();
+              closeMenu("Pinterest");
             }}
             onMouseDown={(e) => {
               e.preventDefault();
@@ -292,7 +297,7 @@ export default function ShareMenu({
               e.stopPropagation();
               const mailtoLink = `mailto:?subject=${encodeURIComponent(shareData.basePostText.split("\n")[0])}&body=${encodeURIComponent(shareData.shareText)}`;
               window.location.href = mailtoLink;
-              closeMenu();
+              closeMenu("Email");
             }}
             onMouseDown={(e) => {
               e.preventDefault();
