@@ -14,7 +14,7 @@ import {
   ConfirmDialog,
 } from "@/components/primitives";
 import {
-  Newspaper, Plus, Trash2, Edit3, Eye, Save,
+  Newspaper, Plus, Trash2, Edit3, Eye, EyeOff, Save,
   X, ImagePlus, FileJson, ChevronDown, ChevronUp, Calendar,
   Globe, AlignLeft, User, RefreshCw, Upload, ClipboardPaste, Zap, Copy, List,
   Users, Flag, MapPin, AlertTriangle,
@@ -979,16 +979,17 @@ export default function AdminNewsPageClient() {
       )}
 
       {/* Top bar */}
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex items-center justify-between gap-3 flex-wrap">
         <p className="text-sm text-text-muted">
           {articles.length} article{articles.length !== 1 ? "s" : ""}
         </p>
         <div className="flex items-center gap-2">
-          <Button size="sm" variant="ghost" onClick={loadArticles} disabled={loading}>
+          <Button size="sm" variant="ghost" onClick={loadArticles} disabled={loading} className="flex items-center gap-1.5 cursor-pointer">
             <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
+            <span>Refresh</span>
           </Button>
-          <Button size="sm" onClick={openNewForm}>
-            <Plus size={14} /> New Article
+          <Button size="sm" onClick={openNewForm} className="flex items-center gap-1.5 cursor-pointer">
+            <Plus size={14} /> <span>New Article</span>
           </Button>
         </div>
       </div>
@@ -1005,8 +1006,8 @@ export default function AdminNewsPageClient() {
           {articles.map((a) => {
             const s = STATUS_CONFIG[a.status] ?? STATUS_CONFIG.draft;
             return (
-              <Card key={a.id} padding="sm" className="flex items-start justify-between gap-4">
-                <div className="flex-1 min-w-0 space-y-1">
+              <Card key={a.id} padding="sm" className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex-1 min-w-0 space-y-1.5">
                   <div className="flex items-center gap-2 flex-wrap">
                     <Badge tone={s.tone}>{s.label}</Badge>
                     <Badge tone="primary">{a.category}</Badge>
@@ -1042,41 +1043,65 @@ export default function AdminNewsPageClient() {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-2 shrink-0">
+
+                {/* Clear, labeled action buttons */}
+                <div className="flex items-center gap-1.5 shrink-0 flex-wrap">
                   {a.status !== "published" && (
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="text-emerald hover:text-emerald-light"
+                      className="text-emerald-500 hover:bg-emerald-500/10 flex items-center gap-1 cursor-pointer font-medium text-xs px-2.5 py-1"
                       onClick={() => handleQuickPublish(a.id)}
-                      title="Publish this article"
+                      title="Publish this article immediately"
                     >
                       <Zap size={13} />
+                      <span>Publish</span>
                     </Button>
                   )}
                   {a.status === "published" && (
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="text-amber hover:text-amber-light"
+                      className="text-amber-500 hover:bg-amber-500/10 flex items-center gap-1 cursor-pointer font-medium text-xs px-2.5 py-1"
                       onClick={() => handleQuickUnpublish(a.id)}
-                      title="Unpublish this article"
+                      title="Unpublish this article and revert to draft"
                     >
-                      <Eye size={13} className="line-through" />
+                      <EyeOff size={13} />
+                      <span>Unpublish</span>
                     </Button>
                   )}
-                  <Button size="sm" variant="ghost" as="a" href={`/news/${a.slug}`} target="_blank" rel="noopener noreferrer">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    as="a"
+                    href={`/news/${a.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-muted hover:text-text-main hover:bg-surface-hover flex items-center gap-1 cursor-pointer font-medium text-xs px-2.5 py-1"
+                    title="View live article"
+                  >
                     <Eye size={13} />
-                  </Button>
-                  <Button size="sm" variant="ghost" onClick={() => openEditForm(a.id)}>
-                    <Edit3 size={13} />
+                    <span>View</span>
                   </Button>
                   <Button
-                    size="sm" variant="ghost"
-                    className="text-danger hover:text-danger-light"
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => openEditForm(a.id)}
+                    className="text-text-muted hover:text-primary hover:bg-primary/10 flex items-center gap-1 cursor-pointer font-medium text-xs px-2.5 py-1"
+                    title="Edit article"
+                  >
+                    <Edit3 size={13} />
+                    <span>Edit</span>
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="text-rose-500 hover:bg-rose-500/10 flex items-center gap-1 cursor-pointer font-medium text-xs px-2.5 py-1"
                     onClick={() => setDeleteTarget({ id: a.id, headline: a.headline })}
+                    title="Delete article permanently"
                   >
                     <Trash2 size={13} />
+                    <span>Delete</span>
                   </Button>
                 </div>
               </Card>
