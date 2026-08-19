@@ -151,8 +151,8 @@ export default function AdminNewsDistributionClient() {
       })
     );
 
-    if (platform === "Facebook" || platform === "LinkedIn") {
-      showToast(`Marked shared on ${platform}! Post text copied to clipboard — press Paste (Cmd+V) in your post`, "success");
+    if (platform === "Facebook" || platform === "LinkedIn" || platform === "Instagram") {
+      showToast(`Marked shared on ${platform}! Caption copied to clipboard — press Paste (Cmd+V) into your post`, "success");
     } else {
       showToast(`Marked shared on ${platform}`, "success");
     }
