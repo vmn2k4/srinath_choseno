@@ -222,7 +222,7 @@ function EngagementScoreBadge({ send }: { send: CampaignSendRow }) {
 
   return (
     <div
-      className="relative group inline-flex items-center cursor-help"
+      className="relative group z-10 hover:z-50 inline-flex items-center cursor-help"
       title={`Engagement Score: ${total}/100\n\n${textSummary}`}
     >
       <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg border border-border-light/40 bg-surface/50 hover:bg-surface transition-colors">
@@ -243,8 +243,8 @@ function EngagementScoreBadge({ send }: { send: CampaignSendRow }) {
         </span>
       </div>
 
-      {/* Hover Popup Tooltip Card */}
-      <div className="absolute right-0 bottom-full mb-2 hidden group-hover:block z-50 w-72 p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md animate-fade-in pointer-events-none">
+      {/* Hover Popup Tooltip Card (Opens Downward) */}
+      <div className="absolute right-0 top-full mt-1.5 hidden group-hover:block z-50 w-72 p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md animate-fade-in pointer-events-none">
         <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
           <div className="flex items-center gap-1.5">
             <span className="text-sm">🎯</span>
@@ -325,15 +325,15 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
 
   return (
     <div
-      className="relative group inline-flex items-center cursor-help"
+      className="relative group z-10 hover:z-50 inline-flex items-center cursor-help"
       title={tooltipText}
     >
       <Badge tone="emerald" className="cursor-pointer">
         ✓ Opened {count}x {lastOpenedRel ? `(${lastOpenedRel})` : ""}
       </Badge>
 
-      {/* Hover Popup Tooltip Card */}
-      <div className="absolute left-0 sm:left-auto sm:right-0 bottom-full mb-2 hidden group-hover:block z-50 w-72 p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md animate-fade-in pointer-events-none">
+      {/* Hover Popup Tooltip Card (Opens Downward) */}
+      <div className="absolute right-0 top-full mt-1.5 hidden group-hover:block z-50 w-72 p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md animate-fade-in pointer-events-none">
         <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
           <div className="flex items-center gap-1.5">
             <span className="text-sm">✉️</span>
@@ -394,7 +394,7 @@ function ClickStatusBadge({ send }: { send: CampaignSendRow }) {
 
   return (
     <div
-      className="relative group inline-flex items-center cursor-help"
+      className="relative group z-10 hover:z-50 inline-flex items-center cursor-help"
       title={`${clicks} click${clicks === 1 ? "" : "s"}`}
     >
       <Badge tone="accent">
@@ -402,7 +402,7 @@ function ClickStatusBadge({ send }: { send: CampaignSendRow }) {
       </Badge>
 
       {links.length > 0 && (
-        <div className="absolute left-0 sm:left-auto sm:right-0 bottom-full mb-2 hidden group-hover:block z-50 w-72 p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md animate-fade-in pointer-events-none">
+        <div className="absolute right-0 top-full mt-1.5 hidden group-hover:block z-50 w-72 p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md animate-fade-in pointer-events-none">
           <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
             <div className="flex items-center gap-1.5">
               <span className="text-sm">🔗</span>
@@ -1004,12 +1004,12 @@ export default function CampaignAdminClient() {
         ) : history.length === 0 ? (
           <p className="text-sm text-text-muted">No campaign sends yet.</p>
         ) : (
-          <div className="border border-border-light/40 rounded-xl divide-y divide-border-light/30 overflow-hidden max-h-96 overflow-y-auto">
+          <div className="border border-border-light/40 rounded-xl divide-y divide-border-light/30 max-h-[500px] overflow-y-auto">
             {history.map((h) => {
               const engScore = calculateEngagementScore(h);
               const lastOpenedText = formatLastOpened(h.last_opened_at || h.opened_at);
               return (
-                <div key={h.id} className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm flex-wrap">
+                <div key={h.id} className="relative flex items-center justify-between gap-3 px-4 py-2.5 text-sm flex-wrap hover:bg-surface/50 transition-colors">
                   <div className="min-w-0 flex-1">
                     <p className="font-semibold text-text-main truncate">{h.politician_name}</p>
                     <p className="text-xs text-text-muted truncate">
