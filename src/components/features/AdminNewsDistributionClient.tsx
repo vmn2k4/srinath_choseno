@@ -198,16 +198,16 @@ export default function AdminNewsDistributionClient() {
       }
 
       const headers = [
-        "batch_rank",
-        "viral_score",
-        "batch_number",
+        "id",
+        "score",
+        "published_at",
         "headline",
+        "shared_in",
+        "batch_number",
         "category",
         "jurisdiction",
         "primary_official",
-        "published_at",
         "tweet_copy",
-        "shared_in",
         "live_news_url",
         "politician_wall_url",
       ];
@@ -228,14 +228,14 @@ export default function AdminNewsDistributionClient() {
         return [
           idx + 1,
           art.viralScore || 8.0,
-          sanitize(art.batchNumber),
+          sanitize(art.published_at || art.created_at),
           sanitize(art.headline),
+          sanitize(sharedStr),
+          sanitize(art.batchNumber),
           sanitize(art.category),
           sanitize(jurisdiction),
           sanitize(art.primaryPoliticianName || "Civic Authority"),
-          sanitize(art.published_at || art.created_at),
           sanitize(tweetCopy),
-          sanitize(sharedStr),
           sanitize(liveUrl),
           sanitize(wallUrl),
         ].join(",");
@@ -427,15 +427,15 @@ export default function AdminNewsDistributionClient() {
                   <tr className="border-b border-border bg-surface-hover/60 text-text-muted font-mono font-semibold uppercase text-[11px]">
                     <th className="py-2.5 px-3 w-12 text-center border-r border-border/40">#</th>
                     <th className="py-2.5 px-3 w-16 text-center border-r border-border/40">Score</th>
-                    <th className="py-2.5 px-3 min-w-[130px] border-r border-border/40">Batch</th>
+                    <th className="py-2.5 px-3 min-w-[125px] border-r border-border/40">Published</th>
                     <th className="py-2.5 px-3 min-w-[280px] border-r border-border/40">Headline</th>
+                    <th className="py-2.5 px-3 w-28 text-center border-r border-border/40">Share</th>
+                    <th className="py-2.5 px-3 min-w-[140px] border-r border-border/40">Shared In</th>
+                    <th className="py-2.5 px-3 min-w-[130px] border-r border-border/40">Batch</th>
                     <th className="py-2.5 px-3 min-w-[100px] border-r border-border/40">Category</th>
                     <th className="py-2.5 px-3 min-w-[90px] border-r border-border/40">Jurisdiction</th>
                     <th className="py-2.5 px-3 min-w-[140px] border-r border-border/40">Primary Official</th>
-                    <th className="py-2.5 px-3 min-w-[125px] border-r border-border/40">Published</th>
-                    <th className="py-2.5 px-3 min-w-[240px] border-r border-border/40">Tweet Copy</th>
-                    <th className="py-2.5 px-2 w-12 text-center border-r border-border/40">Share</th>
-                    <th className="py-2.5 px-3 min-w-[150px]">Shared In</th>
+                    <th className="py-2.5 px-3 min-w-[240px]">Tweet Copy</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/50 text-[12px]">
@@ -453,12 +453,12 @@ export default function AdminNewsDistributionClient() {
                         key={article.id}
                         className="hover:bg-surface-hover/50 transition-colors group"
                       >
-                        {/* 1. Rank */}
+                        {/* 1. ID / Rank */}
                         <td className="py-2 px-3 text-center font-mono text-text-muted border-r border-border/40">
                           {rowNumber}
                         </td>
 
-                        {/* 2. Viral Score */}
+                        {/* 2. Score */}
                         <td className="py-2 px-3 text-center font-mono font-bold border-r border-border/40">
                           <span
                             className={
@@ -473,18 +473,14 @@ export default function AdminNewsDistributionClient() {
                           </span>
                         </td>
 
-                        {/* 3. Batch Number */}
+                        {/* 3. Published Time */}
                         <td className="py-2 px-3 font-mono text-[11px] text-text-muted border-r border-border/40 whitespace-nowrap">
-                          <button
-                            onClick={() => handleBatchChange(article.batchNumber)}
-                            title={`Click to filter: ${article.batchNumber}`}
-                            className="hover:text-primary transition-colors cursor-pointer text-left"
-                          >
-                            {article.batchNumber}
-                          </button>
+                          {article.published_at
+                            ? article.published_at.replace("T", " ").slice(0, 16)
+                            : "—"}
                         </td>
 
-                        {/* 4. Headline */}
+                        {/* 4. Title / Headline */}
                         <td className="py-2 px-3 border-r border-border/40">
                           <a
                             href={`/news/${article.slug}`}
@@ -497,17 +493,54 @@ export default function AdminNewsDistributionClient() {
                           </a>
                         </td>
 
-                        {/* 5. Category */}
+                        {/* 5. Share Button */}
+                        <td className="py-2 px-3 text-center border-r border-border/40 whitespace-nowrap">
+                          <div className="inline-flex items-center justify-center">
+                            <ShareMenu
+                              articleId={article.id}
+                              shareData={shareData}
+                              onShare={(platform) => handlePlatformShared(article.id, platform)}
+                              label="Share"
+                              menuAlign="below"
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-orange-500/40 bg-orange-500/10 hover:bg-orange-500/20 text-xs font-bold text-orange-600 transition-all cursor-pointer shadow-sm shrink-0 whitespace-nowrap"
+                              iconSize={13}
+                            />
+                          </div>
+                        </td>
+
+                        {/* 6. Shared In */}
+                        <td className="py-2 px-3 font-medium border-r border-border/40 whitespace-nowrap">
+                          {sharedList.length > 0 ? (
+                            <span className="text-emerald-400 font-mono text-[11px]">
+                              {sharedList.join(", ")}
+                            </span>
+                          ) : (
+                            <span className="text-text-muted font-mono text-[11px]">—</span>
+                          )}
+                        </td>
+
+                        {/* 7. Batch */}
+                        <td className="py-2 px-3 font-mono text-[11px] text-text-muted border-r border-border/40 whitespace-nowrap">
+                          <button
+                            onClick={() => handleBatchChange(article.batchNumber)}
+                            title={`Click to filter: ${article.batchNumber}`}
+                            className="hover:text-primary transition-colors cursor-pointer text-left"
+                          >
+                            {article.batchNumber}
+                          </button>
+                        </td>
+
+                        {/* 8. Category */}
                         <td className="py-2 px-3 text-text-muted border-r border-border/40 whitespace-nowrap">
                           {article.category}
                         </td>
 
-                        {/* 6. Jurisdiction */}
+                        {/* 9. Jurisdiction */}
                         <td className="py-2 px-3 text-text-muted border-r border-border/40 font-mono text-[11px] whitespace-nowrap">
                           {jurisdiction || "—"}
                         </td>
 
-                        {/* 7. Primary Official */}
+                        {/* 10. Primary Official */}
                         <td className="py-2 px-3 border-r border-border/40 whitespace-nowrap">
                           {article.primaryPoliticianName ? (
                             article.primaryWallSlug ? (
@@ -528,15 +561,8 @@ export default function AdminNewsDistributionClient() {
                           )}
                         </td>
 
-                        {/* 8. Published Time */}
-                        <td className="py-2 px-3 font-mono text-[11px] text-text-muted border-r border-border/40 whitespace-nowrap">
-                          {article.published_at
-                            ? article.published_at.replace("T", " ").slice(0, 16)
-                            : "—"}
-                        </td>
-
-                        {/* 9. Tweet Copy + Copy Button */}
-                        <td className="py-2 px-3 border-r border-border/40">
+                        {/* 11. Tweet Copy + Copy Button */}
+                        <td className="py-2 px-3">
                           <div className="flex items-center justify-between gap-2 max-w-md">
                             <span className="truncate text-text-muted text-[11px]" title={tweetCopy}>
                               {tweetCopy}
@@ -549,32 +575,6 @@ export default function AdminNewsDistributionClient() {
                               {isCopied ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
                             </button>
                           </div>
-                        </td>
-
-                        {/* 10. Share Button */}
-                        <td className="py-2 px-3 text-center border-r border-border/40 whitespace-nowrap">
-                          <div className="inline-flex items-center justify-center">
-                            <ShareMenu
-                              articleId={article.id}
-                              shareData={shareData}
-                              onShare={(platform) => handlePlatformShared(article.id, platform)}
-                              label="Share"
-                              menuAlign="below"
-                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-orange-500/40 bg-orange-500/10 hover:bg-orange-500/20 text-xs font-bold text-orange-600 transition-all cursor-pointer shadow-sm shrink-0 whitespace-nowrap"
-                              iconSize={13}
-                            />
-                          </div>
-                        </td>
-
-                        {/* 11. Shared In Status */}
-                        <td className="py-2 px-3 font-medium">
-                          {sharedList.length > 0 ? (
-                            <span className="text-emerald-400 font-mono text-[11px]">
-                              {sharedList.join(", ")}
-                            </span>
-                          ) : (
-                            <span className="text-text-muted font-mono text-[11px]">—</span>
-                          )}
                         </td>
                       </tr>
                     );
