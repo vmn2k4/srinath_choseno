@@ -245,6 +245,11 @@ export default function PostCard({
                 url={post.image_url}
                 type="image"
                 alt="Post Attachment"
+                // News posts carry the article's auto-generated OG card
+                // (1200x630, ~1.91:1) as their image_url -- the landscape
+                // variant matches that ratio instead of cropping it down
+                // through the portrait box every regular photo post uses.
+                variant={newsAuthor ? "landscape" : "portrait"}
                 onClick={() => onMediaClick?.(normalizeMediaUrl(post.image_url), "image")}
               />
             )}
