@@ -110,42 +110,189 @@ function historyBadge(status: CampaignSendRow["status"]) {
   return <Badge tone={tones[status] || "neutral"}>{status}</Badge>;
 }
 
-function calculateEngagementScore(send: CampaignSendRow): number {
-  if (typeof send.engagement_score === "number" && send.engagement_score > 0) {
-    return send.engagement_score;
-  }
-  let score = 0;
-
-  // Opened (40 points + bonus for multiple opens)
-  if (send.opened_at || (send.opened_count && send.opened_count > 0)) {
-    score += 40;
-    const count = send.opened_count || 1;
-    if (count > 1) {
-      score += Math.min((count - 1) * 5, 10);
-    }
-  }
-
-  // Time to open (10 points) - faster is better
-  if (send.first_open_time_seconds) {
-    if (send.first_open_time_seconds < 3600) score += 10;
-    else if (send.first_open_time_seconds < 86400) score += 5;
-  }
-
-  // Link clicks (30 points)
-  if (send.link_clicks && send.link_clicks > 0) {
-    score += Math.min(send.link_clicks * 10, 30);
-  }
-
-  // Wall visit (20 points + bonus for 30s+)
-  if (send.wall_visited) {
-    score += 20;
-    if (send.wall_visit_duration_seconds && send.wall_visit_duration_seconds >= 30) {
-      score += 10;
-    }
-  }
-
-  return Math.min(score, 100);
+interface ScoreBreakdownItem {
+  icon: string;
+  label: string;
+  points: number;
+  max: number;
+  detail: string;
+  active: boolean;
 }
+
+function getEngagementBreakdown(send: CampaignSendRow): { total: number; items: ScoreBreakdownItem[]; textSummary: string } {
+  const items: ScoreBreakdownItem[] = [];
+
+  // 1. Open (up to 50 pts)
+  let openPoints = 0;
+  let openDetail = "Not opened yet";
+  const hasOpened = Boolean(send.opened_at || (send.opened_count && send.opened_count > 0));
+  if (hasOpened) {
+    const count = send.opened_count || 1;
+    openPoints = 40;
+    if (count > 1) {
+      const bonus = Math.min((count - 1) * 5, 10);
+      openPoints += bonus;
+      openDetail = `Opened ${count}x (40 base + ${bonus} repeat bonus)`;
+    } else {
+      openDetail = `Opened 1 time (+40 pts)`;
+    }
+  }
+  items.push({
+    icon: "✉️",
+    label: "Email Open",
+    points: openPoints,
+    max: 50,
+    detail: openDetail,
+    active: hasOpened,
+  });
+
+  // 2. Speed / Time to open (up to 10 pts)
+  let speedPoints = 0;
+  let speedDetail = "No open recorded";
+  if (send.first_open_time_seconds) {
+    if (send.first_open_time_seconds < 3600) {
+      speedPoints = 10;
+      speedDetail = `Fast open in ${formatTimeToOpen(send.first_open_time_seconds)} (<1h)`;
+    } else if (send.first_open_time_seconds < 86400) {
+      speedPoints = 5;
+      speedDetail = `Opened in ${formatTimeToOpen(send.first_open_time_seconds)} (<24h)`;
+    } else {
+      speedDetail = `Opened after ${formatTimeToOpen(send.first_open_time_seconds)}`;
+    }
+  }
+  items.push({
+    icon: "⏱️",
+    label: "Open Speed",
+    points: speedPoints,
+    max: 10,
+    detail: speedDetail,
+    active: speedPoints > 0,
+  });
+
+  // 3. Link clicks (up to 30 pts)
+  let clickPoints = 0;
+  const clickCount = send.link_clicks || 0;
+  if (clickCount > 0) {
+    clickPoints = Math.min(clickCount * 10, 30);
+  }
+  items.push({
+    icon: "🔗",
+    label: "Link Clicks",
+    points: clickPoints,
+    max: 30,
+    detail: clickCount > 0 ? `${clickCount} click${clickCount === 1 ? "" : "s"} (+10 each)` : "No links clicked yet",
+    active: clickCount > 0,
+  });
+
+  // 4. Wall visit & duration (up to 30 pts)
+  let wallPoints = 0;
+  let wallDetail = "Wall not visited yet";
+  if (send.wall_visited) {
+    wallPoints = 20;
+    const dur = send.wall_visit_duration_seconds;
+    if (dur && dur >= 30) {
+      wallPoints += 10;
+      wallDetail = `Visited wall for ${dur}s (20 visit + 10 time bonus)`;
+    } else if (dur) {
+      wallDetail = `Visited wall for ${dur}s (+20 pts)`;
+    } else {
+      wallDetail = `Visited candidate wall (+20 pts)`;
+    }
+  }
+  items.push({
+    icon: "🏛️",
+    label: "Wall Visit",
+    points: wallPoints,
+    max: 30,
+    detail: wallDetail,
+    active: Boolean(send.wall_visited),
+  });
+
+  const total = Math.min(items.reduce((sum, it) => sum + it.points, 0), 100);
+
+  const textSummary = items
+    .map((it) => `${it.icon} ${it.label}: +${it.points}/${it.max} pts (${it.detail})`)
+    .join("\n");
+
+  return { total, items, textSummary };
+}
+
+function EngagementScoreBadge({ send }: { send: CampaignSendRow }) {
+  const { total, items, textSummary } = getEngagementBreakdown(send);
+
+  return (
+    <div
+      className="relative group inline-flex items-center cursor-help"
+      title={`Engagement Score: ${total}/100\n\n${textSummary}`}
+    >
+      <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg border border-border-light/40 bg-surface/50 hover:bg-surface transition-colors">
+        <div className="w-12 h-1.5 bg-border-light/60 rounded-full overflow-hidden">
+          <div
+            className={`h-full transition-all duration-300 ${
+              total >= 70
+                ? "bg-emerald-500"
+                : total >= 40
+                ? "bg-primary"
+                : "bg-amber-500"
+            }`}
+            style={{ width: `${total}%` }}
+          />
+        </div>
+        <span className="text-[11px] font-semibold text-text-main tabular-nums">
+          {total}/100
+        </span>
+      </div>
+
+      {/* Hover Popup Tooltip Card */}
+      <div className="absolute right-0 bottom-full mb-2 hidden group-hover:block z-50 w-72 p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md animate-fade-in pointer-events-none">
+        <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
+          <div className="flex items-center gap-1.5">
+            <span className="text-sm">🎯</span>
+            <p className="text-xs font-bold text-text-main">Engagement Breakdown</p>
+          </div>
+          <span className="text-xs font-extrabold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+            {total}/100
+          </span>
+        </div>
+
+        <div className="space-y-1.5 text-xs">
+          {items.map((it) => (
+            <div
+              key={it.label}
+              className={`flex items-start justify-between gap-2 p-1.5 rounded-lg transition-colors ${
+                it.active ? "bg-surface-hover/70" : "opacity-60"
+              }`}
+            >
+              <div className="min-w-0 flex-1">
+                <p className="font-semibold text-[11px] text-text-main flex items-center gap-1">
+                  <span>{it.icon}</span> {it.label}
+                </p>
+                <p className="text-[10px] text-text-muted truncate">{it.detail}</p>
+              </div>
+              <span
+                className={`font-bold text-[11px] shrink-0 tabular-nums ${
+                  it.points > 0 ? "text-emerald-500" : "text-text-muted"
+                }`}
+              >
+                +{it.points}
+                <span className="text-[9px] font-normal text-text-muted">/{it.max}</span>
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-2 pt-1.5 border-t border-border-light/30 text-[10px] text-text-muted leading-tight">
+          Points increase automatically when recipient opens email, clicks links, or visits their wall.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function calculateEngagementScore(send: CampaignSendRow): number {
+  return getEngagementBreakdown(send).total;
+}
+
 
 function formatTimeToOpen(seconds: number | null | undefined): string {
   if (!seconds || seconds <= 0) return "-";
@@ -759,16 +906,8 @@ export default function CampaignAdminClient() {
                       </Badge>
                     ) : null}
 
-                    {/* Engagement Score */}
-                    <div className="flex items-center gap-1.5" title={`Engagement Score: ${engScore}/100`}>
-                      <div className="w-12 h-1.5 bg-border-light/50 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-primary transition-all duration-300"
-                          style={{ width: `${engScore}%` }}
-                        />
-                      </div>
-                      <span className="text-[11px] font-medium text-text-muted">{engScore}/100</span>
-                    </div>
+                    {/* Engagement Score with hover popup */}
+                    <EngagementScoreBadge send={h} />
 
                     {historyBadge(h.status)}
                   </div>
