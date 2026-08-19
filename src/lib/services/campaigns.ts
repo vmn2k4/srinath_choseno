@@ -138,6 +138,46 @@ export async function sendCampaignInvite(supabase: Client, input: CampaignSendIn
   return { data: data as unknown as CampaignSendRow, error: null };
 }
 
+export async function resendCampaignInvite(
+  supabase: Client,
+  sendRow: CampaignSendRow,
+  input: {
+    redirectOrigin: string;
+    htmlTemplate: string;
+    subject: string;
+  }
+) {
+  const token = sendRow.claim_token || crypto.randomUUID();
+  const trackingToken = sendRow.tracking_token || token;
+  const claimLink = sendRow.claim_link || buildCampaignClaimLink(input.redirectOrigin, token);
+  const html = input.htmlTemplate.replace(/\{\{\s*claim_link\s*\}\}/gi, claimLink);
+
+  const { error: sendError } = await sendEmail(supabase, {
+    to: sendRow.politician_email,
+    subject: input.subject,
+    html,
+  });
+
+  const { data, error: dbError } = await supabase
+    .from("politician_claim_campaigns" as never)
+    .update({
+      status: sendError ? "failed" : "sent",
+      error_message: sendError ? sendError.message : null,
+      sent_at: sendError ? null : new Date().toISOString(),
+    } as never)
+    .eq("id" as never, sendRow.id as never)
+    .select()
+    .single();
+
+  if (sendError) {
+    return { data: (data as unknown as CampaignSendRow) ?? null, error: sendError };
+  }
+  if (dbError) {
+    return { data: null, error: dbError };
+  }
+  return { data: data as unknown as CampaignSendRow, error: null };
+}
+
 export async function listCampaignSends(
   supabase: Client,
   opts?: { campaignName?: string; limit?: number }

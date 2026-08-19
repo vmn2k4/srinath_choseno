@@ -16,6 +16,7 @@ import {
   X,
   UserPlus,
   ExternalLink,
+  RefreshCw,
 } from "lucide-react";
 import { Card, Button, Input, Textarea, Spinner, PageHeader, Badge, ConfirmDialog, Avatar } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
@@ -28,6 +29,7 @@ import {
 } from "@/lib/utils/campaignImport";
 import {
   sendCampaignInvite,
+  resendCampaignInvite,
   listCampaignSends,
   getCampaignStats,
   type CampaignSendRow,
@@ -984,17 +986,107 @@ export default function CampaignAdminClient() {
     loadHistory();
   };
 
+  const [resendingHistoryId, setResendingHistoryId] = useState<string | null>(null);
+  const [sendProgress, setSendProgress] = useState<{ current: number; total: number; name: string } | null>(null);
+
   const runSendAll = async () => {
     setConfirmSendAll(false);
     setSendingAll(true);
-    for (let i = 0; i < rows.length; i++) {
-      if (rows[i].error || rows[i].status === "sent") continue;
-      await sendOne(i);
-      await new Promise((resolve) => setTimeout(resolve, 400));
+    const eligibleIndices = rows
+      .map((r, idx) => ({ r, idx }))
+      .filter(({ r }) => !r.error && r.status !== "sent");
+
+    for (let count = 0; count < eligibleIndices.length; count++) {
+      const { r, idx } = eligibleIndices[count];
+      setSendProgress({
+        current: count + 1,
+        total: eligibleIndices.length,
+        name: r.data.name || r.data.email,
+      });
+      await sendOne(idx);
+      // Throttle 1800ms between sends to prevent SMTP relay rate limiting / connection drops
+      if (count < eligibleIndices.length - 1) {
+        await new Promise((resolve) => setTimeout(resolve, 1800));
+      }
     }
+    setSendProgress(null);
     setSendingAll(false);
   };
 
+  const runResendFailed = async () => {
+    setSendingAll(true);
+    const failedIndices = rows
+      .map((r, idx) => ({ r, idx }))
+      .filter(({ r }) => r.status === "failed");
+
+    for (let count = 0; count < failedIndices.length; count++) {
+      const { r, idx } = failedIndices[count];
+      setSendProgress({
+        current: count + 1,
+        total: failedIndices.length,
+        name: r.data.name || r.data.email,
+      });
+      await sendOne(idx);
+      if (count < failedIndices.length - 1) {
+        await new Promise((resolve) => setTimeout(resolve, 1800));
+      }
+    }
+    setSendProgress(null);
+    setSendingAll(false);
+  };
+
+  const handleResendHistory = async (h: CampaignSendRow) => {
+    setResendingHistoryId(h.id);
+    try {
+      const trackingToken = h.tracking_token || crypto.randomUUID();
+      const filledBody = fillCampaignTemplate(body, {
+        name: h.politician_name,
+        email: h.politician_email,
+        role: h.role_title || "",
+        city: h.city || "",
+        wallSlug: "",
+      });
+
+      let trackedHtml = addTrackingPixelToTemplate(filledBody, trackingToken);
+      const linkRegex = /href="(https?:\/\/[^"]+)"/g;
+      trackedHtml = trackedHtml.replace(linkRegex, (_match, url) => {
+        let targetUrl = url;
+        if (url.includes("/wall/")) {
+          const sep = url.includes("?") ? "&" : "?";
+          targetUrl = `${url}${sep}t=${trackingToken}`;
+        }
+        return `href="${createTrackedLink(targetUrl, trackingToken)}"`;
+      });
+
+      const { data: updatedRow, error } = await resendCampaignInvite(supabase, h, {
+        redirectOrigin: window.location.origin,
+        htmlTemplate: trackedHtml,
+        subject: fillCampaignTemplate(subject, {
+          name: h.politician_name,
+          email: h.politician_email,
+          role: h.role_title || "",
+          city: h.city || "",
+        }),
+      });
+
+      if (error) {
+        setHistory((prev) =>
+          prev.map((item) =>
+            item.id === h.id ? { ...item, status: "failed", error_message: error.message } : item
+          )
+        );
+      } else if (updatedRow) {
+        setHistory((prev) =>
+          prev.map((item) => (item.id === h.id ? updatedRow : item))
+        );
+      }
+      await loadHistory();
+    } finally {
+      setResendingHistoryId(null);
+    }
+  };
+
+  const failedCount = useMemo(() => rows.filter((r) => r.status === "failed").length, [rows]);
   const canSendAll = validCount > 0 && campaignName.trim().length > 0 && !sendingAll;
 
   return (
@@ -1308,15 +1400,38 @@ export default function CampaignAdminClient() {
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">4</span>
               Review & send ({validCount} recipients)
             </h2>
-            <Button
-              size="sm"
-              onClick={() => setConfirmSendAll(true)}
-              disabled={!canSendAll}
-              className="gap-1.5"
-            >
-              <Send size={14} /> {sendingAll ? "Sending…" : `Send all (${validCount})`}
-            </Button>
+            <div className="flex items-center gap-2 flex-wrap">
+              {failedCount > 0 && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={runResendFailed}
+                  disabled={sendingAll}
+                  className="gap-1.5 border-rose-500/40 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10"
+                >
+                  <RefreshCw size={13} className={sendingAll ? "animate-spin" : ""} />
+                  Resend failed ({failedCount})
+                </Button>
+              )}
+              <Button
+                size="sm"
+                onClick={() => setConfirmSendAll(true)}
+                disabled={!canSendAll}
+                className="gap-1.5"
+              >
+                <Send size={14} /> {sendingAll ? "Sending…" : `Send all (${validCount})`}
+              </Button>
+            </div>
           </div>
+
+          {sendProgress && (
+            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/10 border border-primary/20 text-xs text-text-main animate-fade-in">
+              <Loader2 size={13} className="animate-spin text-primary shrink-0" />
+              <span>
+                Sending <strong>{sendProgress.current}</strong> of <strong>{sendProgress.total}</strong>: {sendProgress.name} (1.8s throttle applied to respect SMTP limits)…
+              </span>
+            </div>
+          )}
 
           {!campaignName.trim() && (
             <p className="text-xs text-warning">Set a campaign name above before sending.</p>
@@ -1344,27 +1459,31 @@ export default function CampaignAdminClient() {
                       disabled={r.status === "sending" || r.status === "sent"}
                       className="!w-52 !py-1 text-xs"
                     />
-                    <Input
-                      size="sm"
-                      value={r.data.wallSlug || ""}
-                      onChange={(e) => updateRowField(i, "wallSlug", e.target.value)}
-                      placeholder="wall slug, e.g. brenda-locke-mayor"
-                      disabled={r.status === "sending" || r.status === "sent"}
-                      className="!w-56 !py-1 text-xs"
-                    />
+                    {selectedPreset.requiredFields.includes("wall_slug") && (
+                      <Input
+                        size="sm"
+                        value={r.data.wallSlug || ""}
+                        onChange={(e) => updateRowField(i, "wallSlug", e.target.value)}
+                        placeholder="wall slug, e.g. brenda-locke-mayor"
+                        disabled={r.status === "sending" || r.status === "sent"}
+                        className="!w-56 !py-1 text-xs"
+                      />
+                    )}
                   </div>
-                  {r.data.wallSlug?.trim() ? (
-                    <a
-                      href={`https://www.choseno.com/wall/${r.data.wallSlug.trim()}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
-                    >
-                      <ExternalLink size={11} />
-                      choseno.com/wall/{r.data.wallSlug.trim()}
-                    </a>
-                  ) : (
-                    <p className="text-xs text-warning">No wall slug — the {"{{wall_url}}"} link will be blank in the email.</p>
+                  {selectedPreset.requiredFields.includes("wall_slug") && (
+                    r.data.wallSlug?.trim() ? (
+                      <a
+                        href={`https://www.choseno.com/wall/${r.data.wallSlug.trim()}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                      >
+                        <ExternalLink size={11} />
+                        choseno.com/wall/{r.data.wallSlug.trim()}
+                      </a>
+                    ) : (
+                      <p className="text-xs text-warning">No wall slug — the {"{{wall_url}}"} link will be blank in the email.</p>
+                    )
                   )}
                   {r.error && <p className="text-xs text-danger">{r.error}</p>}
                   {r.status === "failed" && r.errorMessage && (
@@ -1387,9 +1506,17 @@ export default function CampaignAdminClient() {
                     variant="outline"
                     onClick={() => sendOne(i)}
                     disabled={!!r.error || r.status === "sending" || r.status === "sent" || !campaignName.trim() || sendingAll}
-                    className="gap-1"
+                    className={`gap-1 ${r.status === "failed" ? "border-rose-500/40 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10" : ""}`}
                   >
-                    <Send size={13} /> {r.status === "sent" ? "Sent" : "Send"}
+                    {r.status === "failed" ? (
+                      <>
+                        <RefreshCw size={13} /> Resend
+                      </>
+                    ) : (
+                      <>
+                        <Send size={13} /> {r.status === "sent" ? "Sent" : "Send"}
+                      </>
+                    )}
                   </Button>
                 </div>
               </div>
@@ -1473,6 +1600,21 @@ export default function CampaignAdminClient() {
                     <EngagementScoreBadge send={h} />
 
                     {historyBadge(h.status)}
+
+                    {/* Resend button for failed sends */}
+                    {h.status === "failed" && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        disabled={resendingHistoryId === h.id || sendingAll}
+                        onClick={() => handleResendHistory(h)}
+                        className="gap-1 text-xs h-7 px-2.5 border-rose-500/40 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10"
+                        title="Resend this email"
+                      >
+                        <RefreshCw size={11} className={resendingHistoryId === h.id ? "animate-spin" : ""} />
+                        {resendingHistoryId === h.id ? "Resending…" : "Resend"}
+                      </Button>
+                    )}
                   </div>
                 </div>
               );

@@ -866,6 +866,7 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
                 <li>Direct Networking: Build professional relationships with municipal candidates</li>
                 <li>Website Recognition: Be featured as part of our inaugural Election Researcher cohort</li>
                 <li>Real-World Application: Apply political theory to actual election research</li>
+                <li>Volunteer Role: This is an unpaid volunteer position — 5 hours/week for 8 weeks, fully remote</li>
             </ul>
         </div>
 
@@ -980,17 +981,17 @@ export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
     icon: "🎓",
     subject: "Opportunity for Students: Choseno is Recruiting Election Researchers for 2026",
     body: PSSA_BODY,
-    requiredFields: ["name", "email", "city"],
+    requiredFields: ["name", "email"],
     optionalFields: ["role"],
-    csvHeader: "name,email,role,city",
-    sampleData: "name,email,role,city\nUBC Political Science Association,exec@pssa.ubc.ca,Executive Team,Vancouver\nSFU Political Science Union,psu@sfu.ca,Student Union,Burnaby",
+    csvHeader: "name,email,role",
+    sampleData: "name,email,role\nUBC Political Science Association,exec@pssa.ubc.ca,Executive Team\nSFU Political Science Union,psu@sfu.ca,Student Union",
     defaultCampaignName: "Student Association Election Researchers 2026",
     description: "Recruits student researchers and partners with Political Science student unions.",
     sampleRecipient: {
       name: "UBC Political Science Association",
       email: "exec@pssa.ubc.ca",
       role: "Executive Team",
-      city: "Vancouver",
+      city: "",
       wallSlug: "",
     },
   },
@@ -1001,17 +1002,17 @@ export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
     icon: "👨‍🏫",
     subject: "Collaboration Inquiry: Civic Tech & Election Research",
     body: PROFESSOR_BODY,
-    requiredFields: ["name", "email", "role", "city"],
+    requiredFields: ["name", "email", "role"],
     optionalFields: [],
-    csvHeader: "name,email,role,city",
-    sampleData: "name,email,role,city\nDr. Paul Quirk,pquirk@ubc.ca,Professor of Political Science,Vancouver\nDr. Stewart Prest,sprest@sfu.ca,Lecturer in Political Science,Burnaby",
+    csvHeader: "name,email,role",
+    sampleData: "name,email,role\nDr. Paul Quirk,pquirk@ubc.ca,Professor of Political Science\nDr. Stewart Prest,sprest@sfu.ca,Lecturer in Political Science",
     defaultCampaignName: "Academic Collaboration 2026",
     description: "Inquires about academic collaboration and civic tech research with university faculty.",
     sampleRecipient: {
       name: "Dr. Paul Quirk",
       email: "pquirk@ubc.ca",
       role: "Professor of Political Science",
-      city: "Vancouver",
+      city: "",
       wallSlug: "",
     },
   },

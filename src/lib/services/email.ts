@@ -17,18 +17,33 @@ interface EmailResponse {
   error?: string;
 }
 
-function unwrapError(error: unknown): string {
+async function unwrapError(error: unknown): Promise<string> {
   if (!error || typeof error !== "object") return "Unknown error";
 
-  // Handle Supabase FunctionsHttpError
+  // Handle Supabase FunctionsHttpError where context is a Fetch Response
   if ("context" in error && error.context) {
-    const context = error.context as { json?: () => Promise<{ error?: string }> };
-    if (context.json) {
-      return "Check error context for details";
+    const context = error.context as {
+      json?: () => Promise<{ error?: string }>;
+      text?: () => Promise<string>;
+    };
+    if (typeof context.json === "function") {
+      try {
+        const body = await context.json();
+        if (body && typeof body === "object" && body.error) {
+          return String(body.error);
+        }
+      } catch {
+        if (typeof context.text === "function") {
+          try {
+            const txt = await context.text();
+            if (txt) return txt;
+          } catch {}
+        }
+      }
     }
   }
 
-  if ("message" in error) {
+  if ("message" in error && error.message) {
     return String(error.message);
   }
 
@@ -41,8 +56,12 @@ export async function sendEmail(supabase: Client, request: EmailRequest) {
   });
 
   if (error) {
-    const message = unwrapError(error);
+    const message = await unwrapError(error);
     return { data: null, error: { message } };
+  }
+
+  if (data && !data.ok && data.error) {
+    return { data: null, error: { message: data.error } };
   }
 
   return { data, error: null };

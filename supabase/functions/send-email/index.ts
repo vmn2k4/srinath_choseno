@@ -219,14 +219,23 @@ async function sendViaSMTP(
     assertSmtpOk("message acceptance", response, ["250"]);
 
     // Send QUIT
-    await writeLine(smtpConn, "QUIT");
-    response = await readLine(smtpConn);
-    console.log("QUIT response:", response);
+    try {
+      await writeLine(smtpConn, "QUIT");
+      response = await readLine(smtpConn);
+      console.log("QUIT response:", response);
+    } catch {}
 
-    smtpConn.close();
+    try {
+      smtpConn.close();
+    } catch {}
     console.log("Email sent successfully");
   } catch (error) {
-    conn.close();
+    try {
+      smtpConn?.close();
+    } catch {}
+    try {
+      conn?.close();
+    } catch {}
     throw error;
   }
 }
