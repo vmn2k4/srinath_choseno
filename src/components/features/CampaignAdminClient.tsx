@@ -416,12 +416,16 @@ function parseDeviceAndBrowser(userAgent?: string): { device: string; client: st
 }
 
 function formatIpDisplay(ipStr?: string): string {
-  if (!ipStr || ipStr === "unknown") return "Direct";
-  const firstIp = ipStr.split(",")[0]?.trim() || ipStr;
+  if (!ipStr || ipStr === "unknown") return "Direct connection";
+  const ips = ipStr.split(",").map((s) => s.trim()).filter(Boolean);
+  const firstIp = ips[0] || ipStr;
   if (firstIp.startsWith("66.249.") || firstIp.startsWith("74.125.")) {
-    return `Google Proxy (${firstIp})`;
+    return `Google Proxy: ${firstIp}`;
   }
-  return firstIp;
+  if (ips.length > 1) {
+    return `IP: ${firstIp} (via proxy)`;
+  }
+  return `IP: ${firstIp}`;
 }
 
 function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
@@ -466,10 +470,10 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
         ✓ Opened {count}x {lastOpenedRel ? `(${lastOpenedRel})` : ""}
       </Badge>
 
-      {/* Hover Popup Tooltip Card (Interactive & Scrollable) */}
-      <div className="absolute right-0 top-full pt-1.5 hidden group-hover:block z-50 w-80 animate-fade-in">
-        <div className="p-3.5 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md max-h-96 overflow-y-auto">
-          <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
+      {/* Hover Popup Tooltip Card (Single Clean Scrollbar & Wide Layout) */}
+      <div className="absolute right-0 top-full pt-1.5 hidden group-hover:block z-50 w-[340px] animate-fade-in">
+        <div className="p-3.5 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md max-h-[440px] overflow-y-auto">
+          <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2.5">
             <div className="flex items-center gap-1.5">
               <span className="text-sm">✉️</span>
               <p className="text-xs font-bold text-text-main">Open Timestamps & Devices</p>
@@ -479,13 +483,13 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
             </span>
           </div>
 
-          {/* Granular Open-by-Open Log (when tracking_events available) */}
+          {/* Granular Open-by-Open Log (Single scrollbar, no nested overflow) */}
           {openEvents.length > 0 ? (
-            <div className="space-y-1.5 mb-2.5">
+            <div className="space-y-2 mb-2.5">
               <p className="text-[10px] font-bold text-text-muted uppercase tracking-wider">
                 All Recorded Opens ({openEvents.length})
               </p>
-              <div className="space-y-1.5 max-h-48 overflow-y-auto pr-0.5">
+              <div className="space-y-1.5">
                 {openEvents.map((ev, idx) => {
                   const uaInfo = parseDeviceAndBrowser(ev.event_data?.user_agent);
                   const ipDisplay = formatIpDisplay(ev.event_data?.ip);
@@ -496,20 +500,27 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
                   return (
                     <div
                       key={ev.id || idx}
-                      className="p-2 rounded-lg bg-surface-hover/80 border border-border-light/30 text-xs"
+                      className="p-2.5 rounded-lg bg-surface-hover/80 border border-border-light/30 text-xs space-y-1"
                     >
-                      <div className="flex items-center justify-between gap-1 mb-0.5">
+                      <div className="flex items-center justify-between gap-1">
                         <span className="font-bold text-[11px] text-text-main flex items-center gap-1">
                           <span>{uaInfo.icon}</span> Open #{openNum}
                         </span>
                         <span className="text-[10px] font-semibold text-emerald-500">{timeRel}</span>
                       </div>
-                      <p className="text-[10px] text-text-main font-medium">{timeFormatted}</p>
-                      <div className="flex items-center justify-between text-[9px] text-text-muted mt-1 pt-1 border-t border-border-light/20">
-                        <span>{uaInfo.device} · {uaInfo.client}</span>
-                        <span className="font-mono text-[9px] truncate max-w-[120px]" title={ev.event_data?.ip}>
-                          {ipDisplay}
-                        </span>
+
+                      <p className="text-[10px] text-text-muted">{timeFormatted}</p>
+
+                      {/* Device and Proxy/IP details stacked cleanly below */}
+                      <div className="pt-1.5 border-t border-border-light/20 space-y-0.5 text-[9.5px]">
+                        <div className="flex items-center justify-between text-text-main/80 font-medium">
+                          <span>📱 {uaInfo.device}</span>
+                          <span className="text-text-muted text-[9px]">{uaInfo.client}</span>
+                        </div>
+                        <div className="flex items-center gap-1 font-mono text-[9px] text-text-muted">
+                          <span>🌐</span>
+                          <span className="break-all">{ipDisplay}</span>
+                        </div>
                       </div>
                     </div>
                   );
