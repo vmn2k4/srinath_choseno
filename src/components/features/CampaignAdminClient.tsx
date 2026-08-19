@@ -1193,7 +1193,7 @@ export default function CampaignAdminClient() {
         onCancel={() => setConfirmSendAll(false)}
       />
 
-      <Card padding="md" className="space-y-4">
+      <Card padding="md" className="space-y-4 overflow-visible">
         <h2 className="font-bold text-text-main">Campaign history</h2>
 
         {stats.length > 0 && (
@@ -1215,7 +1215,7 @@ export default function CampaignAdminClient() {
         ) : history.length === 0 ? (
           <p className="text-sm text-text-muted">No campaign sends yet.</p>
         ) : (
-          <div className="border border-border-light/40 rounded-xl divide-y divide-border-light/30 max-h-[500px] overflow-y-auto">
+          <div className="border border-border-light/40 rounded-xl divide-y divide-border-light/30 overflow-visible">
             {history.map((h) => {
               const engScore = calculateEngagementScore(h);
               const lastOpenedText = formatLastOpened(h.last_opened_at || h.opened_at);
