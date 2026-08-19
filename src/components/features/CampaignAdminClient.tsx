@@ -289,10 +289,152 @@ function EngagementScoreBadge({ send }: { send: CampaignSendRow }) {
   );
 }
 
+function formatDateTime(dateStr: string | null | undefined): string {
+  if (!dateStr) return "-";
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    });
+  } catch {
+    return dateStr;
+  }
+}
+
+function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
+  const hasOpened = Boolean(send.opened_at || (send.opened_count && send.opened_count > 0));
+  if (!hasOpened) {
+    return <Badge tone="neutral">Unopened</Badge>;
+  }
+
+  const count = send.opened_count || 1;
+  const firstOpened = send.opened_at;
+  const lastOpened = send.last_opened_at || send.opened_at;
+  const lastOpenedRel = formatLastOpened(lastOpened);
+  const firstOpenedRel = formatLastOpened(firstOpened);
+  const isMultiple = count > 1;
+
+  const tooltipText = `Opened ${count} time${count === 1 ? "" : "s"}\nFirst opened: ${formatDateTime(firstOpened)} (${firstOpenedRel})\nLast opened: ${formatDateTime(lastOpened)} (${lastOpenedRel})${
+    isMultiple ? "\n\n💡 Multiple opens indicate the email was re-opened or forwarded to colleagues." : ""
+  }`;
+
+  return (
+    <div
+      className="relative group inline-flex items-center cursor-help"
+      title={tooltipText}
+    >
+      <Badge tone="emerald" className="cursor-pointer">
+        ✓ Opened {count}x {lastOpenedRel ? `(${lastOpenedRel})` : ""}
+      </Badge>
+
+      {/* Hover Popup Tooltip Card */}
+      <div className="absolute left-0 sm:left-auto sm:right-0 bottom-full mb-2 hidden group-hover:block z-50 w-72 p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md animate-fade-in pointer-events-none">
+        <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
+          <div className="flex items-center gap-1.5">
+            <span className="text-sm">✉️</span>
+            <p className="text-xs font-bold text-text-main">Open Timestamps</p>
+          </div>
+          <span className="text-xs font-extrabold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+            {count}x {count === 1 ? "Open" : "Opens"}
+          </span>
+        </div>
+
+        <div className="space-y-1.5 text-xs">
+          <div className="flex items-start justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
+            <span className="text-[11px] font-semibold text-text-muted">First Open:</span>
+            <span className="text-[11px] font-medium text-text-main text-right">
+              {formatDateTime(firstOpened)}
+              <span className="block text-[10px] text-text-muted">({firstOpenedRel})</span>
+            </span>
+          </div>
+
+          {isMultiple && (
+            <div className="flex items-start justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
+              <span className="text-[11px] font-semibold text-text-muted">Latest Open:</span>
+              <span className="text-[11px] font-medium text-text-main text-right">
+                {formatDateTime(lastOpened)}
+                <span className="block text-[10px] text-text-muted">({lastOpenedRel})</span>
+              </span>
+            </div>
+          )}
+
+          {send.first_open_time_seconds ? (
+            <div className="flex items-center justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
+              <span className="text-[11px] font-semibold text-text-muted">Time to Open:</span>
+              <span className="text-[11px] font-bold text-emerald-500">
+                {formatTimeToOpen(send.first_open_time_seconds)} after send
+              </span>
+            </div>
+          ) : null}
+        </div>
+
+        {isMultiple && (
+          <div className="mt-2 pt-1.5 border-t border-border-light/30 text-[10px] text-primary leading-tight flex items-start gap-1">
+            <span>🔄</span>
+            <span>
+              <strong>Forward Signal:</strong> {count} opens detected. Spaced opens indicate the email was forwarded to staff, advisors, or re-read.
+            </span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ClickStatusBadge({ send }: { send: CampaignSendRow }) {
+  const clicks = send.link_clicks || 0;
+  if (clicks === 0) return null;
+
+  const links = (send.links_clicked || []) as Array<{ link: string; count?: number; clicked_at?: string }>;
+
+  return (
+    <div
+      className="relative group inline-flex items-center cursor-help"
+      title={`${clicks} click${clicks === 1 ? "" : "s"}`}
+    >
+      <Badge tone="accent">
+        {clicks} {clicks === 1 ? "click" : "clicks"}
+      </Badge>
+
+      {links.length > 0 && (
+        <div className="absolute left-0 sm:left-auto sm:right-0 bottom-full mb-2 hidden group-hover:block z-50 w-72 p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md animate-fade-in pointer-events-none">
+          <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm">🔗</span>
+              <p className="text-xs font-bold text-text-main">Clicked Links</p>
+            </div>
+            <span className="text-xs font-extrabold text-accent bg-accent/10 px-2 py-0.5 rounded-full">
+              {clicks} total
+            </span>
+          </div>
+
+          <div className="space-y-1.5 text-xs max-h-40 overflow-y-auto">
+            {links.map((l, i) => (
+              <div key={i} className="p-1.5 rounded-lg bg-surface-hover/70 text-[11px]">
+                <p className="font-semibold text-text-main truncate" title={l.link}>
+                  {l.link.replace(/^https?:\/\/(www\.)?/, "")}
+                </p>
+                <div className="flex items-center justify-between text-[10px] text-text-muted mt-0.5">
+                  <span>{l.count || 1}x clicked</span>
+                  <span>{formatDateTime(l.clicked_at)}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function calculateEngagementScore(send: CampaignSendRow): number {
   return getEngagementBreakdown(send).total;
 }
-
 
 function formatTimeToOpen(seconds: number | null | undefined): string {
   if (!seconds || seconds <= 0) return "-";
@@ -876,16 +1018,8 @@ export default function CampaignAdminClient() {
                     </p>
                   </div>
                   <div className="flex items-center gap-2.5 flex-wrap text-xs">
-                    {/* Open status */}
-                    {h.opened_at || (h.opened_count && h.opened_count > 0) ? (
-                      <span title={h.last_opened_at || h.opened_at || ""}>
-                        <Badge tone="emerald">
-                          ✓ Opened {h.opened_count || 1}x {lastOpenedText ? `(${lastOpenedText})` : ""}
-                        </Badge>
-                      </span>
-                    ) : (
-                      <Badge tone="neutral">Unopened</Badge>
-                    )}
+                    {/* Open status with hover timestamps & forward detection */}
+                    <OpenedStatusBadge send={h} />
 
                     {/* Time to Open */}
                     {h.first_open_time_seconds ? (
@@ -894,10 +1028,8 @@ export default function CampaignAdminClient() {
                       </span>
                     ) : null}
 
-                    {/* Link Clicks */}
-                    {h.link_clicks && h.link_clicks > 0 ? (
-                      <Badge tone="accent">{h.link_clicks} {h.link_clicks === 1 ? "click" : "clicks"}</Badge>
-                    ) : null}
+                    {/* Link Clicks with hover link details */}
+                    <ClickStatusBadge send={h} />
 
                     {/* Wall visit */}
                     {h.wall_visited ? (
