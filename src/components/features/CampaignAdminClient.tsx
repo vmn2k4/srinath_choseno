@@ -240,46 +240,48 @@ function EngagementScoreBadge({ send }: { send: CampaignSendRow }) {
         </span>
       </div>
 
-      {/* Hover Popup Tooltip Card (Opens Downward) */}
-      <div className="absolute right-0 top-full mt-1.5 hidden group-hover:block z-50 w-72 p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md animate-fade-in pointer-events-none">
-        <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
-          <div className="flex items-center gap-1.5">
-            <span className="text-sm">🎯</span>
-            <p className="text-xs font-bold text-text-main">Engagement Breakdown</p>
+      {/* Hover Popup Tooltip Card (Interactive & Hoverable) */}
+      <div className="absolute right-0 top-full pt-1.5 hidden group-hover:block z-50 w-72 animate-fade-in">
+        <div className="p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md">
+          <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm">🎯</span>
+              <p className="text-xs font-bold text-text-main">Engagement Breakdown</p>
+            </div>
+            <span className="text-xs font-extrabold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+              {total}/100
+            </span>
           </div>
-          <span className="text-xs font-extrabold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-            {total}/100
-          </span>
-        </div>
 
-        <div className="space-y-1.5 text-xs">
-          {items.map((it) => (
-            <div
-              key={it.label}
-              className={`flex items-start justify-between gap-2 p-1.5 rounded-lg transition-colors ${
-                it.active ? "bg-surface-hover/70" : "opacity-60"
-              }`}
-            >
-              <div className="min-w-0 flex-1">
-                <p className="font-semibold text-[11px] text-text-main flex items-center gap-1">
-                  <span>{it.icon}</span> {it.label}
-                </p>
-                <p className="text-[10px] text-text-muted truncate">{it.detail}</p>
-              </div>
-              <span
-                className={`font-bold text-[11px] shrink-0 tabular-nums ${
-                  it.points > 0 ? "text-emerald-500" : "text-text-muted"
+          <div className="space-y-1.5 text-xs">
+            {items.map((it) => (
+              <div
+                key={it.label}
+                className={`flex items-start justify-between gap-2 p-1.5 rounded-lg transition-colors ${
+                  it.active ? "bg-surface-hover/70" : "opacity-60"
                 }`}
               >
-                +{it.points}
-                <span className="text-[9px] font-normal text-text-muted">/{it.max}</span>
-              </span>
-            </div>
-          ))}
-        </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-semibold text-[11px] text-text-main flex items-center gap-1">
+                    <span>{it.icon}</span> {it.label}
+                  </p>
+                  <p className="text-[10px] text-text-muted truncate">{it.detail}</p>
+                </div>
+                <span
+                  className={`font-bold text-[11px] shrink-0 tabular-nums ${
+                    it.points > 0 ? "text-emerald-500" : "text-text-muted"
+                  }`}
+                >
+                  +{it.points}
+                  <span className="text-[9px] font-normal text-text-muted">/{it.max}</span>
+                </span>
+              </div>
+            ))}
+          </div>
 
-        <div className="mt-2 pt-1.5 border-t border-border-light/30 text-[10px] text-text-muted leading-tight">
-          Points increase automatically when recipient opens email, clicks links, or visits their wall.
+          <div className="mt-2 pt-1.5 border-t border-border-light/30 text-[10px] text-text-muted leading-tight">
+            Points increase automatically when recipient opens email, clicks links, or visits their wall.
+          </div>
         </div>
       </div>
     </div>
@@ -322,55 +324,57 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
         ✓ Opened {count}x {lastOpenedRel ? `(${lastOpenedRel})` : ""}
       </Badge>
 
-      {/* Hover Popup Tooltip Card (Opens Downward) */}
-      <div className="absolute right-0 top-full mt-1.5 hidden group-hover:block z-50 w-72 p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md animate-fade-in pointer-events-none">
-        <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
-          <div className="flex items-center gap-1.5">
-            <span className="text-sm">✉️</span>
-            <p className="text-xs font-bold text-text-main">Open Timestamps</p>
-          </div>
-          <span className="text-xs font-extrabold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full">
-            {count}x {count === 1 ? "Open" : "Opens"}
-          </span>
-        </div>
-
-        <div className="space-y-1.5 text-xs">
-          <div className="flex items-start justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
-            <span className="text-[11px] font-semibold text-text-muted">First Open:</span>
-            <span className="text-[11px] font-medium text-text-main text-right">
-              {formatDateTime(firstOpened)}
-              <span className="block text-[10px] text-text-muted">({firstOpenedRel})</span>
+      {/* Hover Popup Tooltip Card (Interactive & Hoverable) */}
+      <div className="absolute right-0 top-full pt-1.5 hidden group-hover:block z-50 w-72 animate-fade-in">
+        <div className="p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md">
+          <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm">✉️</span>
+              <p className="text-xs font-bold text-text-main">Open Timestamps</p>
+            </div>
+            <span className="text-xs font-extrabold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+              {count}x {count === 1 ? "Open" : "Opens"}
             </span>
+          </div>
+
+          <div className="space-y-1.5 text-xs">
+            <div className="flex items-start justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
+              <span className="text-[11px] font-semibold text-text-muted">First Open:</span>
+              <span className="text-[11px] font-medium text-text-main text-right">
+                {formatDateTime(firstOpened)}
+                <span className="block text-[10px] text-text-muted">({firstOpenedRel})</span>
+              </span>
+            </div>
+
+            {isMultiple && (
+              <div className="flex items-start justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
+                <span className="text-[11px] font-semibold text-text-muted">Latest Open:</span>
+                <span className="text-[11px] font-medium text-text-main text-right">
+                  {formatDateTime(lastOpened)}
+                  <span className="block text-[10px] text-text-muted">({lastOpenedRel})</span>
+                </span>
+              </div>
+            )}
+
+            {send.first_open_time_seconds ? (
+              <div className="flex items-center justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
+                <span className="text-[11px] font-semibold text-text-muted">Time to Open:</span>
+                <span className="text-[11px] font-bold text-emerald-500">
+                  {formatTimeToOpen(send.first_open_time_seconds)} after send
+                </span>
+              </div>
+            ) : null}
           </div>
 
           {isMultiple && (
-            <div className="flex items-start justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
-              <span className="text-[11px] font-semibold text-text-muted">Latest Open:</span>
-              <span className="text-[11px] font-medium text-text-main text-right">
-                {formatDateTime(lastOpened)}
-                <span className="block text-[10px] text-text-muted">({lastOpenedRel})</span>
+            <div className="mt-2 pt-1.5 border-t border-border-light/30 text-[10px] text-primary leading-tight flex items-start gap-1">
+              <span>🔄</span>
+              <span>
+                <strong>Forward Signal:</strong> {count} opens detected. Spaced opens indicate the email was forwarded to staff, advisors, or re-read.
               </span>
             </div>
           )}
-
-          {send.first_open_time_seconds ? (
-            <div className="flex items-center justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
-              <span className="text-[11px] font-semibold text-text-muted">Time to Open:</span>
-              <span className="text-[11px] font-bold text-emerald-500">
-                {formatTimeToOpen(send.first_open_time_seconds)} after send
-              </span>
-            </div>
-          ) : null}
         </div>
-
-        {isMultiple && (
-          <div className="mt-2 pt-1.5 border-t border-border-light/30 text-[10px] text-primary leading-tight flex items-start gap-1">
-            <span>🔄</span>
-            <span>
-              <strong>Forward Signal:</strong> {count} opens detected. Spaced opens indicate the email was forwarded to staff, advisors, or re-read.
-            </span>
-          </div>
-        )}
       </div>
     </div>
   );
@@ -389,29 +393,31 @@ function ClickStatusBadge({ send }: { send: CampaignSendRow }) {
       </Badge>
 
       {links.length > 0 && (
-        <div className="absolute right-0 top-full mt-1.5 hidden group-hover:block z-50 w-72 p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md animate-fade-in pointer-events-none">
-          <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
-            <div className="flex items-center gap-1.5">
-              <span className="text-sm">🔗</span>
-              <p className="text-xs font-bold text-text-main">Clicked Links</p>
-            </div>
-            <span className="text-xs font-extrabold text-accent bg-accent/10 px-2 py-0.5 rounded-full">
-              {clicks} total
-            </span>
-          </div>
-
-          <div className="space-y-1.5 text-xs max-h-40 overflow-y-auto">
-            {links.map((l, i) => (
-              <div key={i} className="p-1.5 rounded-lg bg-surface-hover/70 text-[11px]">
-                <p className="font-semibold text-text-main truncate">
-                  {l.link.replace(/^https?:\/\/(www\.)?/, "")}
-                </p>
-                <div className="flex items-center justify-between text-[10px] text-text-muted mt-0.5">
-                  <span>{l.count || 1}x clicked</span>
-                  <span>{formatDateTime(l.clicked_at)}</span>
-                </div>
+        <div className="absolute right-0 top-full pt-1.5 hidden group-hover:block z-50 w-72 animate-fade-in">
+          <div className="p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md">
+            <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm">🔗</span>
+                <p className="text-xs font-bold text-text-main">Clicked Links</p>
               </div>
-            ))}
+              <span className="text-xs font-extrabold text-accent bg-accent/10 px-2 py-0.5 rounded-full">
+                {clicks} total
+              </span>
+            </div>
+
+            <div className="space-y-1.5 text-xs max-h-40 overflow-y-auto">
+              {links.map((l, i) => (
+                <div key={i} className="p-1.5 rounded-lg bg-surface-hover/70 text-[11px]">
+                  <p className="font-semibold text-text-main truncate">
+                    {l.link.replace(/^https?:\/\/(www\.)?/, "")}
+                  </p>
+                  <div className="flex items-center justify-between text-[10px] text-text-muted mt-0.5">
+                    <span>{l.count || 1}x clicked</span>
+                    <span>{formatDateTime(l.clicked_at)}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
