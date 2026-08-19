@@ -555,7 +555,7 @@ export default function AdminNewsDistributionClient() {
                               shareData={shareData}
                               onShare={(platform) => handlePlatformShared(article.id, platform)}
                               label="Share"
-                              menuAlign="above"
+                              menuAlign="below"
                               className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-orange-500/40 bg-orange-500/10 hover:bg-orange-500/20 text-xs font-bold text-orange-600 transition-all cursor-pointer shadow-sm shrink-0 whitespace-nowrap"
                               iconSize={13}
                             />
