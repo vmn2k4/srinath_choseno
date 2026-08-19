@@ -218,13 +218,10 @@ function getEngagementBreakdown(send: CampaignSendRow): { total: number; items: 
 }
 
 function EngagementScoreBadge({ send }: { send: CampaignSendRow }) {
-  const { total, items, textSummary } = getEngagementBreakdown(send);
+  const { total, items } = getEngagementBreakdown(send);
 
   return (
-    <div
-      className="relative group z-10 hover:z-50 inline-flex items-center cursor-help"
-      title={`Engagement Score: ${total}/100\n\n${textSummary}`}
-    >
+    <div className="relative group z-10 hover:z-50 inline-flex items-center cursor-help">
       <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg border border-border-light/40 bg-surface/50 hover:bg-surface transition-colors">
         <div className="w-12 h-1.5 bg-border-light/60 rounded-full overflow-hidden">
           <div
@@ -319,15 +316,8 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
   const firstOpenedRel = formatLastOpened(firstOpened);
   const isMultiple = count > 1;
 
-  const tooltipText = `Opened ${count} time${count === 1 ? "" : "s"}\nFirst opened: ${formatDateTime(firstOpened)} (${firstOpenedRel})\nLast opened: ${formatDateTime(lastOpened)} (${lastOpenedRel})${
-    isMultiple ? "\n\n💡 Multiple opens indicate the email was re-opened or forwarded to colleagues." : ""
-  }`;
-
   return (
-    <div
-      className="relative group z-10 hover:z-50 inline-flex items-center cursor-help"
-      title={tooltipText}
-    >
+    <div className="relative group z-10 hover:z-50 inline-flex items-center cursor-help">
       <Badge tone="emerald" className="cursor-pointer">
         ✓ Opened {count}x {lastOpenedRel ? `(${lastOpenedRel})` : ""}
       </Badge>
@@ -393,10 +383,7 @@ function ClickStatusBadge({ send }: { send: CampaignSendRow }) {
   const links = (send.links_clicked || []) as Array<{ link: string; count?: number; clicked_at?: string }>;
 
   return (
-    <div
-      className="relative group z-10 hover:z-50 inline-flex items-center cursor-help"
-      title={`${clicks} click${clicks === 1 ? "" : "s"}`}
-    >
+    <div className="relative group z-10 hover:z-50 inline-flex items-center cursor-help">
       <Badge tone="accent">
         {clicks} {clicks === 1 ? "click" : "clicks"}
       </Badge>
@@ -416,7 +403,7 @@ function ClickStatusBadge({ send }: { send: CampaignSendRow }) {
           <div className="space-y-1.5 text-xs max-h-40 overflow-y-auto">
             {links.map((l, i) => (
               <div key={i} className="p-1.5 rounded-lg bg-surface-hover/70 text-[11px]">
-                <p className="font-semibold text-text-main truncate" title={l.link}>
+                <p className="font-semibold text-text-main truncate">
                   {l.link.replace(/^https?:\/\/(www\.)?/, "")}
                 </p>
                 <div className="flex items-center justify-between text-[10px] text-text-muted mt-0.5">
