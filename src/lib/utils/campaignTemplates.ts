@@ -663,7 +663,7 @@ const PSSA_BODY = `<!DOCTYPE html>
                 <strong>The Election Researcher Role:</strong> This is a volunteer position where you'll conduct structured interviews with local candidates running in the 2026 municipal elections. Your research helps constituents make informed decisions.
             </p>
             <p class="section-content" style="font-size: 13px; color: #666;">
-                <strong>Commitment:</strong> 5 hours per week for 8 weeks (fully remote) • <strong>Deadline to apply:</strong> [Application closes DATE]
+                <strong>Commitment:</strong> 5 hours per week for 8 weeks (fully remote)
             </p>
         </div>
 
