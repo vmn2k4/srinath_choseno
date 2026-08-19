@@ -94,16 +94,23 @@
             font-weight: bold;
         }
         .ways-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
             margin: 16px 0;
+            width: 100%;
+            display: block;
         }
         .way-box {
+            display: block !important;
+            width: 100% !important;
             border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            padding: 16px;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 0 0 12px 0;
             background-color: #fafbfc;
+            box-sizing: border-box;
+            clear: both;
+        }
+        .way-box:last-child {
+            margin-bottom: 0;
         }
         .way-title {
             font-weight: 600;
@@ -174,16 +181,16 @@
 
         <div class="section">
             <p class="section-title">How to Get Involved</p>
-            <div class="ways-grid">
-                <div class="way-box">
+            <div class="ways-grid" style="display: block; width: 100%; margin: 16px 0;">
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Quick Google Meet (15-30 minutes)</p>
                     <p class="way-desc">Schedule a call to discuss how we can coordinate with your members. <a href="https://calendly.com/vmn2k4/30min" class="cta-link">Pick a time</a></p>
                 </div>
-                <div class="way-box">
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Information Session</p>
                     <p class="way-desc">If you have an upcoming general meeting, I'd be happy to drop by or join remotely via Google Meet to give a live demo to the team.</p>
                 </div>
-                <div class="way-box">
+                <div class="way-box" style="display: block; width: 100%; margin: 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Direct Student Outreach</p>
                     <p class="way-desc">Interested students can reach out to me directly at vijay@choseno.com with their background and research interests.</p>
                 </div>

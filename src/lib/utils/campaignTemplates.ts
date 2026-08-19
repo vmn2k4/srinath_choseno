@@ -111,16 +111,23 @@ const MAYOR_BODY = `<!DOCTYPE html>
             font-weight: bold;
         }
         .ways-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
             margin: 16px 0;
+            width: 100%;
+            display: block;
         }
         .way-box {
+            display: block !important;
+            width: 100% !important;
             border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            padding: 16px;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 0 0 12px 0;
             background-color: #fafbfc;
+            box-sizing: border-box;
+            clear: both;
+        }
+        .way-box:last-child {
+            margin-bottom: 0;
         }
         .way-title {
             font-weight: 600;
@@ -190,16 +197,16 @@ const MAYOR_BODY = `<!DOCTYPE html>
 
         <div class="section">
             <p class="section-title">How to Get Started</p>
-            <div class="ways-grid">
-                <div class="way-box">
+            <div class="ways-grid" style="display: block; width: 100%; margin: 16px 0;">
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Quickest (30 seconds)</p>
                     <p class="way-desc">Reply with your preferred email. We'll confirm your identity and activate your wall — then you can own it, post your campaign platform, share promises, and pin your key announcements.</p>
                 </div>
-                <div class="way-box">
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Live Demo (15 minutes)</p>
                     <p class="way-desc">Schedule a quick call to see the platform in action. <a href="https://calendly.com/vmn2k4/30min" class="cta-link">Pick a time</a></p>
                 </div>
-                <div class="way-box">
+                <div class="way-box" style="display: block; width: 100%; margin: 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">In-Person Meeting</p>
                     <p class="way-desc">Let me know if you'd prefer to meet in Surrey or the Lower Mainland to discuss strategy.</p>
                 </div>
@@ -326,16 +333,23 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
             font-weight: bold;
         }
         .ways-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
             margin: 16px 0;
+            width: 100%;
+            display: block;
         }
         .way-box {
+            display: block !important;
+            width: 100% !important;
             border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            padding: 16px;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 0 0 12px 0;
             background-color: #fafbfc;
+            box-sizing: border-box;
+            clear: both;
+        }
+        .way-box:last-child {
+            margin-bottom: 0;
         }
         .way-title {
             font-weight: 600;
@@ -405,16 +419,16 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
 
         <div class="section">
             <p class="section-title">How to Get Started</p>
-            <div class="ways-grid">
-                <div class="way-box">
+            <div class="ways-grid" style="display: block; width: 100%; margin: 16px 0;">
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Quickest (30 seconds)</p>
                     <p class="way-desc">Reply with your preferred email. We'll confirm your identity and activate your wall — then you can own it, post your campaign platform, share promises, and pin your key announcements.</p>
                 </div>
-                <div class="way-box">
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Live Demo (15 minutes)</p>
                     <p class="way-desc">Schedule a quick call to see the platform in action. <a href="https://calendly.com/vmn2k4/30min" class="cta-link">Pick a time</a></p>
                 </div>
-                <div class="way-box">
+                <div class="way-box" style="display: block; width: 100%; margin: 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">In-Person Meeting</p>
                     <p class="way-desc">Let me know if you'd prefer to meet in Surrey or the Lower Mainland to discuss strategy.</p>
                 </div>
@@ -541,16 +555,23 @@ const PSSA_BODY = `<!DOCTYPE html>
             font-weight: bold;
         }
         .ways-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
             margin: 16px 0;
+            width: 100%;
+            display: block;
         }
         .way-box {
+            display: block !important;
+            width: 100% !important;
             border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            padding: 16px;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 0 0 12px 0;
             background-color: #fafbfc;
+            box-sizing: border-box;
+            clear: both;
+        }
+        .way-box:last-child {
+            margin-bottom: 0;
         }
         .way-title {
             font-weight: 600;
@@ -621,16 +642,16 @@ const PSSA_BODY = `<!DOCTYPE html>
 
         <div class="section">
             <p class="section-title">How to Get Involved</p>
-            <div class="ways-grid">
-                <div class="way-box">
+            <div class="ways-grid" style="display: block; width: 100%; margin: 16px 0;">
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Quick Google Meet (15-30 minutes)</p>
                     <p class="way-desc">Schedule a call to discuss how we can coordinate with your members. <a href="https://calendly.com/vmn2k4/30min" class="cta-link">Pick a time</a></p>
                 </div>
-                <div class="way-box">
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Information Session</p>
                     <p class="way-desc">If you have an upcoming general meeting, I'd be happy to drop by or join remotely via Google Meet to give a live demo to the team.</p>
                 </div>
-                <div class="way-box">
+                <div class="way-box" style="display: block; width: 100%; margin: 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Direct Student Outreach</p>
                     <p class="way-desc">Interested students can reach out to me directly at vijay@choseno.com with their background and research interests.</p>
                 </div>
@@ -760,16 +781,23 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
             font-weight: bold;
         }
         .ways-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
             margin: 16px 0;
+            width: 100%;
+            display: block;
         }
         .way-box {
+            display: block !important;
+            width: 100% !important;
             border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            padding: 16px;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 0 0 12px 0;
             background-color: #fafbfc;
+            box-sizing: border-box;
+            clear: both;
+        }
+        .way-box:last-child {
+            margin-bottom: 0;
         }
         .way-title {
             font-weight: 600;
@@ -843,16 +871,16 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
 
         <div class="section">
             <p class="section-title">How to Proceed</p>
-            <div class="ways-grid">
-                <div class="way-box">
+            <div class="ways-grid" style="display: block; width: 100%; margin: 16px 0;">
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Quick Google Meet (15-30 minutes)</p>
                     <p class="way-desc">Schedule a call to discuss recruitment, data access, and how this benefits your research. <a href="https://calendly.com/vmn2k4/30min" class="cta-link">Pick a time</a></p>
                 </div>
-                <div class="way-box">
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Classroom Introduction</p>
                     <p class="way-desc">I'll join your class or seminar to pitch the program directly to students and answer questions.</p>
                 </div>
-                <div class="way-box">
+                <div class="way-box" style="display: block; width: 100%; margin: 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
                     <p class="way-title">Student Recruitment</p>
                     <p class="way-desc">Forward this to interested students, or I can provide a formal program description to share. Students apply directly at vijay@choseno.com.</p>
                 </div>
