@@ -257,24 +257,39 @@ export default function AdminNewsDistributionClient() {
 
   const getShareDataForArticle = (article: DistributionArticle): ShareData => {
     const shareUrl = `${SITE_URL}/news/${article.slug}`;
-    const customTweet = article.content?.tweet?.trim();
-    const tags = article.content?.tags || [article.category, article.country || "News"].filter(Boolean);
-    const formattedHashtagString = tags.map((t) => `#${t.replace(/[^a-zA-Z0-9]/g, "")}`).join(" ");
+    const politicianTags = (article.allPoliticianNames || [])
+      .map((name) => name.replace(/[^a-zA-Z0-9]/g, ""))
+      .filter(Boolean);
+    const categoryTag = article.category ? article.category.replace(/[^a-zA-Z0-9]/g, "") : "News";
+    const locationTag = article.province ? article.province.replace(/[^a-zA-Z0-9]/g, "") : (article.country || "");
+    const topicTags = (article.content?.tags || []).map((t) => t.replace(/[^a-zA-Z0-9]/g, "")).filter(Boolean);
 
-    const basePostText = stripEmoji(
-      customTweet || `${article.headline}\n\nTrack local democracy on @choseno!`
+    const combinedTagList = Array.from(
+      new Set([...politicianTags, ...topicTags, categoryTag, locationTag, "Choseno"].filter(Boolean))
     );
+
+    const formattedHashtagString = combinedTagList.map((t) => `#${t}`).join(" ");
+
+    const customTweet = article.content?.tweet?.trim();
+    const taggedReps = article.allPoliticianNames || [];
+    const basePostText = stripEmoji(
+      customTweet ||
+        (taggedReps.length > 0
+          ? `${article.headline}\n\nRate ${taggedReps.join(", ")} and track local democracy on @choseno!`
+          : `${article.headline}\n\nTrack local democracy and rate your representatives on @choseno!`)
+    );
+
     const shareText = `${basePostText}\n\n${formattedHashtagString}\n${shareUrl}`;
     const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       basePostText
-    )}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(tags.join(","))}`;
+    )}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(combinedTagList.join(","))}`;
 
     return {
       url: shareUrl,
       basePostText,
       hashtagList: formattedHashtagString,
       shareText,
-      hashtags: tags,
+      hashtags: combinedTagList,
       twitterUrl: twitterShareUrl,
     };
   };
@@ -533,14 +548,15 @@ export default function AdminNewsDistributionClient() {
                         </td>
 
                         {/* 10. Share Button */}
-                        <td className="py-2 px-2 text-center border-r border-border/40">
+                        <td className="py-2 px-3 text-center border-r border-border/40 whitespace-nowrap">
                           <div className="inline-flex items-center justify-center">
                             <ShareMenu
                               articleId={article.id}
                               shareData={shareData}
                               onShare={(platform) => handlePlatformShared(article.id, platform)}
+                              label="Share"
                               menuAlign="above"
-                              className="p-1 rounded text-text-muted hover:text-primary transition-colors cursor-pointer"
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-orange-500/40 bg-orange-500/10 hover:bg-orange-500/20 text-xs font-bold text-orange-600 transition-all cursor-pointer shadow-sm shrink-0 whitespace-nowrap"
                               iconSize={13}
                             />
                           </div>
