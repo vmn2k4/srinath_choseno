@@ -27,26 +27,17 @@ const MAYOR_BODY = `<!DOCTYPE html>
             color: #2c3e50;
             background-color: #eef1f5;
             margin: 0;
-            padding: 16px 8px;
+            padding: 0;
+            width: 100%;
+            -webkit-text-size-adjust: 100%;
         }
         .container {
-            max-width: 860px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
             background-color: #ffffff;
-            padding: 28px 32px;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-        }
-        @media (max-width: 700px) {
-            body {
-                padding: 0;
-            }
-            .container {
-                max-width: 100%;
-                border: none;
-                border-radius: 0;
-                padding: 18px 14px;
-            }
+            padding: 16px 20px;
+            box-sizing: border-box;
         }
         .header {
             margin-bottom: 32px;
@@ -251,26 +242,17 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
             color: #2c3e50;
             background-color: #eef1f5;
             margin: 0;
-            padding: 16px 8px;
+            padding: 0;
+            width: 100%;
+            -webkit-text-size-adjust: 100%;
         }
         .container {
-            max-width: 860px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
             background-color: #ffffff;
-            padding: 28px 32px;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-        }
-        @media (max-width: 700px) {
-            body {
-                padding: 0;
-            }
-            .container {
-                max-width: 100%;
-                border: none;
-                border-radius: 0;
-                padding: 18px 14px;
-            }
+            padding: 16px 20px;
+            box-sizing: border-box;
         }
         .header {
             margin-bottom: 32px;
@@ -475,26 +457,17 @@ const PSSA_BODY = `<!DOCTYPE html>
             color: #2c3e50;
             background-color: #eef1f5;
             margin: 0;
-            padding: 16px 8px;
+            padding: 0;
+            width: 100%;
+            -webkit-text-size-adjust: 100%;
         }
         .container {
-            max-width: 860px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
             background-color: #ffffff;
-            padding: 28px 32px;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-        }
-        @media (max-width: 700px) {
-            body {
-                padding: 0;
-            }
-            .container {
-                max-width: 100%;
-                border: none;
-                border-radius: 0;
-                padding: 18px 14px;
-            }
+            padding: 16px 20px;
+            box-sizing: border-box;
         }
         .header {
             margin-bottom: 32px;
@@ -703,26 +676,17 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
             color: #2c3e50;
             background-color: #eef1f5;
             margin: 0;
-            padding: 16px 8px;
+            padding: 0;
+            width: 100%;
+            -webkit-text-size-adjust: 100%;
         }
         .container {
-            max-width: 860px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
             background-color: #ffffff;
-            padding: 28px 32px;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-        }
-        @media (max-width: 700px) {
-            body {
-                padding: 0;
-            }
-            .container {
-                max-width: 100%;
-                border: none;
-                border-radius: 0;
-                padding: 18px 14px;
-            }
+            padding: 16px 20px;
+            box-sizing: border-box;
         }
         .header {
             margin-bottom: 32px;

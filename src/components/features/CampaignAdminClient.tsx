@@ -1517,7 +1517,7 @@ function PreviewModal({
         </div>
 
         <div
-          className="border border-border-light/40 rounded-xl overflow-hidden shadow-sm bg-[#eef1f5] p-2 sm:p-4 text-black text-sm w-full"
+          className="border border-border-light/40 rounded-xl overflow-hidden shadow-sm bg-white p-3 sm:p-6 text-black text-sm w-full"
           dangerouslySetInnerHTML={{ __html: data.html }}
         />
 
