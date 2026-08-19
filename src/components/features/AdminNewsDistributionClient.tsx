@@ -151,7 +151,11 @@ export default function AdminNewsDistributionClient() {
       })
     );
 
-    showToast(`Marked shared on ${platform}`, "success");
+    if (platform === "Facebook" || platform === "LinkedIn") {
+      showToast(`Marked shared on ${platform}! Post text copied to clipboard — press Paste (Cmd+V) in your post`, "success");
+    } else {
+      showToast(`Marked shared on ${platform}`, "success");
+    }
 
     try {
       await recordNewsArticleShare(supabase, articleId, platform);

@@ -232,6 +232,9 @@ export default function ShareMenu({
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
+          if (typeof navigator !== "undefined" && navigator.clipboard) {
+            navigator.clipboard.writeText(shareData.shareText).catch(() => {});
+          }
           window.open(
             `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareData.url)}`,
             "_blank",
@@ -252,8 +255,11 @@ export default function ShareMenu({
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
+          if (typeof navigator !== "undefined" && navigator.clipboard) {
+            navigator.clipboard.writeText(shareData.basePostText).catch(() => {});
+          }
           window.open(
-            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}`,
+            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}&quote=${encodeURIComponent(shareData.basePostText)}`,
             "_blank",
             "noopener,noreferrer"
           );
