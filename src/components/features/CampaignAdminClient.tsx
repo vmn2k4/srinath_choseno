@@ -823,6 +823,16 @@ export default function CampaignAdminClient() {
     }
   };
 
+  const previewPresetSample = (preset: CampaignTemplatePreset) => {
+    const sampleRow: CampaignRow = {
+      row: 1,
+      data: preset.sampleRecipient,
+      error: null,
+      status: "idle",
+    };
+    setPreviewRow(sampleRow);
+  };
+
   const handleLoadSampleData = () => {
     setImportText(selectedPreset.sampleData);
     setImportError("");
@@ -952,23 +962,34 @@ export default function CampaignAdminClient() {
 
       {/* Step 1: Choose Email Type & Target Audience */}
       <Card padding="md" className="space-y-4">
-        <div>
-          <h2 className="font-bold text-text-main flex items-center gap-2">
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">1</span>
-            Choose Email Type & Target Audience
-          </h2>
-          <p className="text-xs text-text-muted mt-1 max-w-2xl">
-            Select who you are emailing. Each template automatically configures the required merge tags, subject lines, and recipient fields.
-          </p>
+        <div className="flex items-start justify-between flex-wrap gap-2">
+          <div>
+            <h2 className="font-bold text-text-main flex items-center gap-2">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">1</span>
+              Choose Email Type & Target Audience
+            </h2>
+            <p className="text-xs text-text-muted mt-1 max-w-2xl">
+              Select who you are emailing. Each template automatically configures the required merge tags, subject lines, and recipient fields.
+            </p>
+          </div>
+
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => previewPresetSample(selectedPreset)}
+            className="text-xs gap-1.5 border-border-light/60 hover:bg-surface-hover"
+          >
+            <Eye size={13} className="text-primary" />
+            Preview Active Template ({selectedPreset.label})
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {CAMPAIGN_TEMPLATE_PRESETS.map((preset) => {
             const isSelected = selectedPreset.key === preset.key;
             return (
-              <button
+              <div
                 key={preset.key}
-                type="button"
                 onClick={() => applyPreset(preset)}
                 className={`relative flex flex-col justify-between p-4 rounded-xl text-left border transition-all duration-200 cursor-pointer ${
                   isSelected
@@ -979,15 +1000,17 @@ export default function CampaignAdminClient() {
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <span className="text-2xl">{preset.icon}</span>
-                    {preset.badge && (
-                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
-                        isSelected
-                          ? "bg-primary/20 text-primary"
-                          : "bg-surface-active text-text-muted"
-                      }`}>
-                        {preset.badge}
-                      </span>
-                    )}
+                    <div className="flex items-center gap-1.5">
+                      {preset.badge && (
+                        <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                          isSelected
+                            ? "bg-primary/20 text-primary"
+                            : "bg-surface-active text-text-muted"
+                        }`}>
+                          {preset.badge}
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <h3 className="font-bold text-sm text-text-main mb-1">{preset.label}</h3>
                   <p className="text-[11px] text-text-muted leading-relaxed line-clamp-2">
@@ -995,15 +1018,29 @@ export default function CampaignAdminClient() {
                   </p>
                 </div>
 
-                <div className="mt-3 pt-2.5 border-t border-border-light/20 flex items-center justify-between text-[10px]">
-                  <span className="text-text-muted font-medium">
-                    Needs: <code className="text-primary font-bold">{preset.requiredFields.join(", ")}</code>
-                  </span>
-                  {isSelected && (
-                    <span className="text-primary font-bold text-xs">✓ Active</span>
-                  )}
+                <div className="mt-3 pt-2.5 border-t border-border-light/20 space-y-2 text-[10px]">
+                  <div className="flex items-center justify-between">
+                    <span className="text-text-muted font-medium">
+                      Needs: <code className="text-primary font-bold">{preset.requiredFields.join(", ")}</code>
+                    </span>
+                    {isSelected && (
+                      <span className="text-primary font-bold text-xs">✓ Active</span>
+                    )}
+                  </div>
+                  <div className="flex justify-end pt-1">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        previewPresetSample(preset);
+                      }}
+                      className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary hover:underline"
+                    >
+                      <Eye size={12} /> Preview email
+                    </button>
+                  </div>
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>
@@ -1031,6 +1068,15 @@ export default function CampaignAdminClient() {
               className="text-xs gap-1.5 border-primary/30 text-primary hover:bg-primary/10"
             >
               📋 Load Sample Format
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => previewPresetSample(selectedPreset)}
+              className="text-xs gap-1.5 border-border-light/60 hover:bg-surface-hover"
+            >
+              <Eye size={13} className="text-primary" />
+              Preview Email
             </Button>
           </div>
         </div>
@@ -1163,10 +1209,21 @@ export default function CampaignAdminClient() {
       {/* Step 3: Compose Email */}
       {rows.length > 0 && (
         <Card padding="md" className="space-y-4">
-          <h2 className="font-bold text-text-main flex items-center gap-2">
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">3</span>
-            Compose the email ({selectedPreset.label})
-          </h2>
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <h2 className="font-bold text-text-main flex items-center gap-2">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">3</span>
+              Compose the email ({selectedPreset.label})
+            </h2>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => previewPresetSample(selectedPreset)}
+              className="text-xs gap-1.5 border-border-light/60 hover:bg-surface-hover"
+            >
+              <Eye size={13} className="text-primary" />
+              Preview Rendered Email
+            </Button>
+          </div>
 
           <label className="text-xs font-semibold text-text-muted block">
             Campaign name

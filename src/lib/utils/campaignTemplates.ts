@@ -929,6 +929,13 @@ export interface CampaignTemplatePreset {
   sampleData: string;
   defaultCampaignName: string;
   description: string;
+  sampleRecipient: {
+    name: string;
+    email: string;
+    role: string;
+    city: string;
+    wallSlug: string;
+  };
 }
 
 export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
@@ -939,12 +946,19 @@ export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
     icon: "🏛️",
     subject: "Your Mayor Wall is Ready on Choseno — Connect with {{city}} Voters This Election",
     body: MAYOR_BODY,
-    requiredFields: ["name", "email", "city"],
-    optionalFields: ["role", "wall_slug"],
+    requiredFields: ["name", "email", "city", "wall_slug"],
+    optionalFields: ["role"],
     csvHeader: "name,email,role,city,wall_slug",
     sampleData: "name,email,role,city,wall_slug\nBrenda Locke,brenda@surrey.ca,Mayor,Surrey,brenda-locke-mayor\nKen Sim,ken@vancouver.ca,Mayor,Vancouver,ken-sim-mayor",
     defaultCampaignName: "BC Mayors 2026",
     description: "Connect with Mayors and candidates to claim their Candidate Wall and engage local voters.",
+    sampleRecipient: {
+      name: "Brenda Locke",
+      email: "brenda@surrey.ca",
+      role: "Mayor",
+      city: "Surrey",
+      wallSlug: "brenda-locke-mayor",
+    },
   },
   {
     key: "councillor",
@@ -953,12 +967,19 @@ export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
     icon: "🏛️",
     subject: "Your Councillor Wall is Ready on Choseno — Connect with {{city}} Voters This Election",
     body: COUNCILLOR_BODY,
-    requiredFields: ["name", "email", "city"],
-    optionalFields: ["role", "wall_slug"],
+    requiredFields: ["name", "email", "city", "wall_slug"],
+    optionalFields: ["role"],
     csvHeader: "name,email,role,city,wall_slug",
     sampleData: "name,email,role,city,wall_slug\nSarah Kirby-Yung,sarah@vancouver.ca,Councillor,Vancouver,sarah-kirby-yung-councillor\nLinda Annis,linda@surrey.ca,Councillor,Surrey,linda-annis-councillor",
     defaultCampaignName: "BC Councillors 2026",
     description: "Invites municipal Councillors to claim their Candidate Wall on Choseno.",
+    sampleRecipient: {
+      name: "Sarah Kirby-Yung",
+      email: "sarah@vancouver.ca",
+      role: "Councillor",
+      city: "Vancouver",
+      wallSlug: "sarah-kirby-yung-councillor",
+    },
   },
   {
     key: "pssa",
@@ -967,12 +988,19 @@ export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
     icon: "🎓",
     subject: "Opportunity for Students: Choseno is Recruiting Election Researchers for 2026",
     body: PSSA_BODY,
-    requiredFields: ["name", "email"],
-    optionalFields: ["role", "city"],
+    requiredFields: ["name", "email", "city"],
+    optionalFields: ["role"],
     csvHeader: "name,email,role,city",
     sampleData: "name,email,role,city\nUBC Political Science Association,exec@pssa.ubc.ca,Executive Team,Vancouver\nSFU Political Science Union,psu@sfu.ca,Student Union,Burnaby",
     defaultCampaignName: "Student Association Election Researchers 2026",
     description: "Recruits student researchers and partners with Political Science student unions.",
+    sampleRecipient: {
+      name: "UBC Political Science Association",
+      email: "exec@pssa.ubc.ca",
+      role: "Executive Team",
+      city: "Vancouver",
+      wallSlug: "",
+    },
   },
   {
     key: "professor",
@@ -981,12 +1009,19 @@ export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
     icon: "👨‍🏫",
     subject: "Collaboration Inquiry: Civic Tech & Election Research",
     body: PROFESSOR_BODY,
-    requiredFields: ["name", "email"],
-    optionalFields: ["role", "city"],
+    requiredFields: ["name", "email", "role", "city"],
+    optionalFields: [],
     csvHeader: "name,email,role,city",
     sampleData: "name,email,role,city\nDr. Paul Quirk,pquirk@ubc.ca,Professor of Political Science,Vancouver\nDr. Stewart Prest,sprest@sfu.ca,Lecturer in Political Science,Burnaby",
     defaultCampaignName: "Academic Collaboration 2026",
     description: "Inquires about academic collaboration and civic tech research with university faculty.",
+    sampleRecipient: {
+      name: "Dr. Paul Quirk",
+      email: "pquirk@ubc.ca",
+      role: "Professor of Political Science",
+      city: "Vancouver",
+      wallSlug: "",
+    },
   },
 ];
 
