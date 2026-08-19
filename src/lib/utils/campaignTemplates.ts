@@ -193,7 +193,7 @@ const MAYOR_BODY = `<!DOCTYPE html>
             <ul class="features">
                 <li>Highlight your mayoral record and vision for the future</li>
                 <li>Let constituents post authentic testimonials</li>
-                <li>Connect directly with voters seeking verified information</li>
+                <li>Connect directly with voters</li>
             </ul>
         </div>
 
@@ -202,7 +202,7 @@ const MAYOR_BODY = `<!DOCTYPE html>
             <div class="ways-grid">
                 <div class="way-box">
                     <p class="way-title">Quickest (30 seconds)</p>
-                    <p class="way-desc">Reply to this email with your preferred email, and we'll verify and activate your wall within 24 hours.</p>
+                    <p class="way-desc">Reply with your preferred email. We'll confirm your identity and activate your wall — then you can own it, post your campaign platform, share promises, and pin your key announcements.</p>
                 </div>
                 <div class="way-box">
                     <p class="way-title">Live Demo (15 minutes)</p>
@@ -417,7 +417,7 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
             <ul class="features">
                 <li>Share your voting record and policy positions on council issues</li>
                 <li>Let constituents post authentic testimonials about your representation</li>
-                <li>Connect directly with voters seeking verified council information</li>
+                <li>Connect directly with voters</li>
             </ul>
         </div>
 
@@ -426,7 +426,7 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
             <div class="ways-grid">
                 <div class="way-box">
                     <p class="way-title">Quickest (30 seconds)</p>
-                    <p class="way-desc">Reply to this email with your preferred email, and we'll verify and activate your wall within 24 hours.</p>
+                    <p class="way-desc">Reply with your preferred email. We'll confirm your identity and activate your wall — then you can own it, post your campaign platform, share promises, and pin your key announcements.</p>
                 </div>
                 <div class="way-box">
                     <p class="way-title">Live Demo (15 minutes)</p>
@@ -641,8 +641,8 @@ const PSSA_BODY = `<!DOCTYPE html>
             <ul class="features">
                 <li>Build Connections: Get direct access and networking with local municipal candidates</li>
                 <li>Gain Experience: Apply political theory to real-world journalism, civic tech, and campaign strategy</li>
-                <li>Inaugural Cohort: Be part of the first batch launching the platform for 2026</li>
-                <li>Official Certification: Receive volunteer certification for your CV and portfolios</li>
+                <li>Inaugural Cohort: Be featured on our website as part of the first cohort launching Choseno</li>
+                <li>Volunteer Role: 5 hours/week for 8 weeks, fully remote with structured interviews</li>
             </ul>
         </div>
 
@@ -666,7 +666,10 @@ const PSSA_BODY = `<!DOCTYPE html>
 
         <div class="section">
             <p class="section-content">
-                <strong>The Election Researcher Role:</strong> We want students to provide unbiased views and interview candidates who are participating in upcoming municipal elections. Your research helps constituents make informed decisions.
+                <strong>The Election Researcher Role:</strong> This is a volunteer position where you'll conduct structured interviews with local candidates running in the 2026 municipal elections. Your research helps constituents make informed decisions.
+            </p>
+            <p class="section-content" style="font-size: 13px; color: #666;">
+                <strong>Commitment:</strong> 5 hours per week for 8 weeks (fully remote) • <strong>Deadline to apply:</strong> [Application closes DATE]
             </p>
         </div>
 
@@ -847,61 +850,58 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
         <p style="font-size: 15px; margin: 0 0 24px 0;">Dear Professor {{name}},</p>
 
         <div class="highlight">
-            <p class="highlight-title">Research and Learning Opportunity</p>
-            <p>I'm reaching out to explore collaboration opportunities around Choseno, a non-partisan civic media platform designed to map users to their electoral boundaries and provide verified data on local municipal candidates.</p>
+            <p class="highlight-title">Specific Ask: 10 Student Researchers for 2026 Municipal Elections</p>
+            <p>Choseno is live and recruiting students to conduct structured interviews with candidates running in the 2026 municipal elections. I'd like to invite 10 students from your program to participate in this hands-on research project — and explore how the data collected can benefit your research agenda.</p>
             <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
         </div>
 
         <div class="section">
             <p class="section-content">
-                Choseno is Canada's social network for politics — think of it as business reviews, but for politicians. Just like people research restaurants before dining, voters deserve to research candidates before elections. It gives voters a simple way to find their district, see who represents them at every level, and compare candidates side-by-side. We're launching for the 2026 municipal election cycle.
+                Choseno is Canada's social network for politics — think of it as business reviews, but for politicians. Just like people research restaurants before dining, voters deserve to research candidates before elections. It gives voters a simple way to find their district, see who represents them at every level, and compare candidates side-by-side.
             </p>
             <p class="section-content">
-                After speaking with a few political science majors who were excited about the platform, I wanted to connect with faculty like yourself. Given your focus on [mention their specific field], I believe this could align with student research, civic engagement, or experiential learning initiatives.
+                We're already live for the 2026 municipal election cycle. After speaking with political science majors who were excited about the platform, I wanted to reach out directly to faculty like yourself to recruit students who can start conducting candidate interviews immediately.
             </p>
         </div>
 
         <div class="section">
-            <p class="section-title">Opportunity for Students: Election Researchers</p>
+            <p class="section-title">What Students Will Do (5 hours/week for 8 weeks)</p>
             <p class="section-content">
-                We're recruiting an inaugural cohort of Election Researchers. These students will gain hands-on experience by interviewing local candidates, gathering verified policy data, and helping constituents connect with their future leaders.
+                Students will conduct structured interviews with local candidates running in the 2026 municipal elections. This is hands-on research that directly informs voter decision-making.
             </p>
             <ul class="features">
-                <li>Practical Fieldwork: Applying political theory to real-world data collection and campaign strategy</li>
-                <li>Direct Networking: Establishing professional connections with municipal candidates</li>
-                <li>CV Recognition: Official certification of volunteering for portfolios and academic records</li>
-                <li>First Cohort: Be part of the inaugural group launching this platform for 2026</li>
+                <li>Structured Interviews: Conduct 4-6 candidate interviews over 8 weeks (fully remote)</li>
+                <li>Direct Networking: Build professional relationships with municipal candidates</li>
+                <li>Website Recognition: Be featured as part of our inaugural Election Researcher cohort</li>
+                <li>Real-World Application: Apply political theory to actual election research</li>
             </ul>
         </div>
 
         <div class="section">
-            <p class="section-title">Next Steps</p>
+            <p class="section-title">How to Proceed</p>
             <div class="ways-grid">
                 <div class="way-box">
                     <p class="way-title">Quick Google Meet (15-30 minutes)</p>
-                    <p class="way-desc">Schedule a call to discuss the project and potential collaboration. <a href="https://calendly.com/vmn2k4/30min" class="cta-link">Pick a time</a></p>
+                    <p class="way-desc">Schedule a call to discuss recruitment, data access, and how this benefits your research. <a href="https://calendly.com/vmn2k4/30min" class="cta-link">Pick a time</a></p>
                 </div>
                 <div class="way-box">
-                    <p class="way-title">Class or Seminar Demo</p>
-                    <p class="way-desc">I'd be happy to join an upcoming class or seminar remotely via Google Meet to give a live demo to your students.</p>
+                    <p class="way-title">Classroom Introduction</p>
+                    <p class="way-desc">I'll join your class or seminar to pitch the program directly to students and answer questions.</p>
                 </div>
                 <div class="way-box">
-                    <p class="way-title">Student Participation</p>
-                    <p class="way-desc">Interested students can reach out directly with their research interests and background at vijay@choseno.com.</p>
+                    <p class="way-title">Student Recruitment</p>
+                    <p class="way-desc">Forward this to interested students, or I can provide a formal program description to share. Students apply directly at vijay@choseno.com.</p>
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <p class="section-content">
-                <strong>The Election Researcher Role:</strong> We want students to provide unbiased views and interview candidates who are participating in upcoming municipal elections. This hands-on research helps constituents make informed decisions and gives students real-world fieldwork experience.
-            </p>
-        </div>
-
-        <div class="section">
             <p class="section-title">Why I Built This</p>
             <p class="section-content">
-                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to BC to build a life and start my own company. Choseno is the result—a bridge between technology and local democracy.
+                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to BC to build a life and start my own company. As a new Canadian citizen, I realized I couldn't easily find out who was participating in local elections or what they actually stood for — a challenge I faced as an immigrant in India too.
+            </p>
+            <p class="section-content">
+                Most people choose based on party affiliation, not the actual person representing them. My hope is that Choseno helps voters see the candidate, not just the party. True democracy means informed choice at the individual level. That's what this research project enables — authentic candidate data directly from student researchers.
             </p>
         </div>
 
