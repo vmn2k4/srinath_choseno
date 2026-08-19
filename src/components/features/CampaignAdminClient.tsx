@@ -696,7 +696,14 @@ export default function CampaignAdminClient() {
   const [importText, setImportText] = useState("");
   const [importError, setImportError] = useState("");
   const [rows, setRows] = useState<CampaignRow[]>([]);
-  const [previewRow, setPreviewRow] = useState<CampaignRow | null>(null);
+  interface EmailPreviewData {
+    title: string;
+    recipientEmail: string;
+    subject: string;
+    html: string;
+  }
+
+  const [previewEmail, setPreviewEmail] = useState<EmailPreviewData | null>(null);
   const [sendingAll, setSendingAll] = useState(false);
   const [confirmSendAll, setConfirmSendAll] = useState(false);
 
@@ -824,13 +831,49 @@ export default function CampaignAdminClient() {
   };
 
   const previewPresetSample = (preset: CampaignTemplatePreset) => {
-    const sampleRow: CampaignRow = {
-      row: 1,
-      data: preset.sampleRecipient,
-      error: null,
-      status: "idle",
-    };
-    setPreviewRow(sampleRow);
+    const origin = typeof window !== "undefined" ? window.location.origin : "https://www.choseno.com";
+    const filledSubject = fillCampaignTemplate(preset.subject, preset.sampleRecipient);
+    const filledBody = fillCampaignTemplate(preset.body, preset.sampleRecipient).replace(
+      /\{\{\s*claim_link\s*\}\}/gi,
+      `${origin}/auth?role=politician&campaign=PREVIEW`
+    );
+    setPreviewEmail({
+      title: `Preview Template (${preset.label}): ${preset.sampleRecipient.name}`,
+      recipientEmail: preset.sampleRecipient.email,
+      subject: filledSubject,
+      html: filledBody,
+    });
+  };
+
+  const previewCurrentActive = () => {
+    const origin = typeof window !== "undefined" ? window.location.origin : "https://www.choseno.com";
+    const sampleRecipient = selectedPreset.sampleRecipient;
+    const filledSubject = fillCampaignTemplate(subject, sampleRecipient);
+    const filledBody = fillCampaignTemplate(body, sampleRecipient).replace(
+      /\{\{\s*claim_link\s*\}\}/gi,
+      `${origin}/auth?role=politician&campaign=PREVIEW`
+    );
+    setPreviewEmail({
+      title: `Preview Active Email (${selectedPreset.label}): ${sampleRecipient.name}`,
+      recipientEmail: sampleRecipient.email,
+      subject: filledSubject,
+      html: filledBody,
+    });
+  };
+
+  const previewRecipientRow = (record: CampaignRow) => {
+    const origin = typeof window !== "undefined" ? window.location.origin : "https://www.choseno.com";
+    const filledSubject = fillCampaignTemplate(subject, record.data);
+    const filledBody = fillCampaignTemplate(body, record.data).replace(
+      /\{\{\s*claim_link\s*\}\}/gi,
+      `${origin}/auth?role=politician&campaign=PREVIEW`
+    );
+    setPreviewEmail({
+      title: `Preview: ${record.data.name}`,
+      recipientEmail: record.data.email,
+      subject: filledSubject,
+      html: filledBody,
+    });
   };
 
   const handleLoadSampleData = () => {
@@ -976,7 +1019,7 @@ export default function CampaignAdminClient() {
           <Button
             size="sm"
             variant="outline"
-            onClick={() => previewPresetSample(selectedPreset)}
+            onClick={previewCurrentActive}
             className="text-xs gap-1.5 border-border-light/60 hover:bg-surface-hover"
           >
             <Eye size={13} className="text-primary" />
@@ -1072,7 +1115,7 @@ export default function CampaignAdminClient() {
             <Button
               size="sm"
               variant="outline"
-              onClick={() => previewPresetSample(selectedPreset)}
+              onClick={previewCurrentActive}
               className="text-xs gap-1.5 border-border-light/60 hover:bg-surface-hover"
             >
               <Eye size={13} className="text-primary" />
@@ -1217,7 +1260,7 @@ export default function CampaignAdminClient() {
             <Button
               size="sm"
               variant="outline"
-              onClick={() => previewPresetSample(selectedPreset)}
+              onClick={previewCurrentActive}
               className="text-xs gap-1.5 border-border-light/60 hover:bg-surface-hover"
             >
               <Eye size={13} className="text-primary" />
@@ -1307,11 +1350,6 @@ export default function CampaignAdminClient() {
                     />
                   </div>
                   {r.data.wallSlug?.trim() ? (
-                    // The exact link fillCampaignTemplate substitutes for
-                    // {{wall_url}} — shown here, clickable, so an admin can
-                    // eyeball (or click through and confirm the page isn't a
-                    // 404) that this row's wall_slug is right *before*
-                    // sending, not after a recipient reports a broken link.
                     <a
                       href={`https://www.choseno.com/wall/${r.data.wallSlug.trim()}`}
                       target="_blank"
@@ -1334,7 +1372,7 @@ export default function CampaignAdminClient() {
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => setPreviewRow(r)}
+                    onClick={() => previewRecipientRow(r)}
                     disabled={!!r.error}
                     className="gap-1"
                   >
@@ -1356,8 +1394,8 @@ export default function CampaignAdminClient() {
         </Card>
       )}
 
-      {previewRow && (
-        <PreviewModal record={previewRow} buildEmail={buildEmail} onClose={() => setPreviewRow(null)} />
+      {previewEmail && (
+        <PreviewModal data={previewEmail} onClose={() => setPreviewEmail(null)} />
       )}
 
       <ConfirmDialog
@@ -1443,15 +1481,17 @@ export default function CampaignAdminClient() {
 }
 
 function PreviewModal({
-  record,
-  buildEmail,
+  data,
   onClose,
 }: {
-  record: CampaignRow;
-  buildEmail: (record: CampaignRow) => { subject: string; html: string };
+  data: {
+    title: string;
+    recipientEmail: string;
+    subject: string;
+    html: string;
+  };
   onClose: () => void;
 }) {
-  const { subject, html } = buildEmail(record);
   return (
     <div className="fixed inset-0 z-50 bg-overlay backdrop-blur-sm flex items-center justify-center p-3 sm:p-6" onClick={onClose}>
       <Card
@@ -1462,9 +1502,9 @@ function PreviewModal({
       >
         <div className="flex items-center justify-between border-b border-border-light/30 pb-2.5">
           <div className="min-w-0 flex-1 pr-3">
-            <h3 className="font-bold text-text-main text-base truncate">Preview: {record.data.name}</h3>
+            <h3 className="font-bold text-text-main text-base truncate">{data.title}</h3>
             <p className="text-xs text-text-muted mt-0.5 truncate">
-              <span className="font-semibold text-text-main/80">To:</span> {record.data.email} · <span className="font-semibold text-text-main/80">Subject:</span> {subject}
+              <span className="font-semibold text-text-main/80">To:</span> {data.recipientEmail} · <span className="font-semibold text-text-main/80">Subject:</span> {data.subject}
             </p>
           </div>
           <Button size="sm" variant="ghost" onClick={onClose} className="text-xs shrink-0">
@@ -1474,7 +1514,7 @@ function PreviewModal({
 
         <div
           className="border border-border-light/40 rounded-xl overflow-hidden shadow-sm bg-[#eef1f5] p-2 sm:p-4 text-black text-sm w-full"
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: data.html }}
         />
 
         <div className="flex justify-end pt-1">

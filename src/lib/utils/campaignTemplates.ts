@@ -619,7 +619,7 @@ const PSSA_BODY = `<!DOCTYPE html>
             <p class="intro">Join us for the inaugural cohort launching the 2026 municipal election cycle</p>
         </div>
 
-        <p style="font-size: 15px; margin: 0 0 24px 0;">Hi PSSA Executive Team,</p>
+        <p style="font-size: 15px; margin: 0 0 24px 0;">Hi {{name}},</p>
 
         <div class="highlight">
             <p class="highlight-title">Inaugural Opportunity for Students</p>
