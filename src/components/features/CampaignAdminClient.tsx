@@ -363,12 +363,23 @@ function calculateReadEngagement(send: CampaignSendRow): {
   };
 }
 
-function parseDeviceAndBrowser(userAgent?: string): { device: string; client: string; icon: string } {
+function parseDeviceAndBrowser(userAgent?: string): { device: string; client: string; icon: string; isProxy?: boolean } {
   if (!userAgent || userAgent === "unknown") {
-    return { device: "Device", client: "Email App", icon: "📱" };
+    return { device: "Email App", client: "Mail Client", icon: "✉️" };
   }
   const ua = userAgent.toLowerCase();
 
+  // 1. Google Image Proxy (Gmail web/app caches images on Google servers)
+  if (ua.includes("googleimageproxy") || ua.includes("ggpht.com")) {
+    return {
+      device: "Gmail App / Web",
+      client: "Google Image Proxy",
+      icon: "🔴",
+      isProxy: true,
+    };
+  }
+
+  // 2. Real OS detection
   let device = "Desktop";
   let icon = "💻";
   if (ua.includes("iphone")) {
@@ -380,26 +391,37 @@ function parseDeviceAndBrowser(userAgent?: string): { device: string; client: st
   } else if (ua.includes("android")) {
     device = "Android";
     icon = "📱";
-  } else if (ua.includes("macintosh") || ua.includes("mac os")) {
+  } else if (ua.includes("macintosh") || ua.includes("mac os") || ua.includes("darwin")) {
     device = "Mac";
     icon = "💻";
-  } else if (ua.includes("windows")) {
+  } else if (ua.includes("windows nt") || ua.includes("win64") || ua.includes("win32")) {
     device = "Windows PC";
     icon = "💻";
-  } else if (ua.includes("linux")) {
+  } else if (ua.includes("linux") || ua.includes("x11")) {
     device = "Linux PC";
     icon = "💻";
   }
 
+  // 3. Email client & Browser detection
   let client = "Browser";
-  if (ua.includes("outlook")) client = "Outlook";
+  if (ua.includes("outlook") || ua.includes("microsoft office")) client = "Outlook";
   else if (ua.includes("applewebkit") && ua.includes("mobile") && !ua.includes("chrome")) client = "Apple Mail";
-  else if (ua.includes("googleimageproxy") || ua.includes("gmail")) client = "Gmail";
-  else if (ua.includes("chrome")) client = "Chrome";
-  else if (ua.includes("safari")) client = "Safari";
+  else if (ua.includes("thunderbird")) client = "Thunderbird";
+  else if (ua.includes("chrome") && !ua.includes("edg/")) client = "Chrome";
+  else if (ua.includes("safari") && !ua.includes("chrome")) client = "Safari";
+  else if (ua.includes("edg/")) client = "Edge";
   else if (ua.includes("firefox")) client = "Firefox";
 
   return { device, client, icon };
+}
+
+function formatIpDisplay(ipStr?: string): string {
+  if (!ipStr || ipStr === "unknown") return "Direct";
+  const firstIp = ipStr.split(",")[0]?.trim() || ipStr;
+  if (firstIp.startsWith("66.249.") || firstIp.startsWith("74.125.")) {
+    return `Google Proxy (${firstIp})`;
+  }
+  return firstIp;
 }
 
 function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
@@ -419,13 +441,19 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
   // Filter open events from send.events
   const openEvents = (send.events || []).filter((e) => e.event_type === "open");
 
-  // Analyze IP and Device diversity across all opens
-  const ips = openEvents.map((e) => e.event_data?.ip).filter(Boolean) as string[];
-  const uniqueIps = Array.from(new Set(ips));
+  // Normalize Google Proxy IPs into a single network bucket (66.249.x.x) so Google's multi-server pool isn't mistaken for distinct users
+  const normalizedIps = openEvents
+    .map((e) => {
+      const ip = (e.event_data?.ip || "").split(",")[0]?.trim();
+      if (ip.startsWith("66.249.") || ip.startsWith("74.125.")) return "Google-Image-Proxy";
+      return ip;
+    })
+    .filter(Boolean);
+  const uniqueIps = Array.from(new Set(normalizedIps));
 
   const devices = openEvents.map((e) => {
     const { device, client } = parseDeviceAndBrowser(e.event_data?.user_agent);
-    return `${device} (${client})`;
+    return `${device} · ${client}`;
   });
   const uniqueDevices = Array.from(new Set(devices));
 
@@ -460,7 +488,7 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
               <div className="space-y-1.5 max-h-48 overflow-y-auto pr-0.5">
                 {openEvents.map((ev, idx) => {
                   const uaInfo = parseDeviceAndBrowser(ev.event_data?.user_agent);
-                  const ipStr = ev.event_data?.ip || "Unknown IP";
+                  const ipDisplay = formatIpDisplay(ev.event_data?.ip);
                   const openNum = ev.event_data?.open_number || idx + 1;
                   const timeRel = formatLastOpened(ev.occurred_at || ev.event_data?.timestamp);
                   const timeFormatted = formatDateTime(ev.occurred_at || ev.event_data?.timestamp);
@@ -479,7 +507,9 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
                       <p className="text-[10px] text-text-main font-medium">{timeFormatted}</p>
                       <div className="flex items-center justify-between text-[9px] text-text-muted mt-1 pt-1 border-t border-border-light/20">
                         <span>{uaInfo.device} · {uaInfo.client}</span>
-                        <span className="font-mono">{ipStr}</span>
+                        <span className="font-mono text-[9px] truncate max-w-[120px]" title={ev.event_data?.ip}>
+                          {ipDisplay}
+                        </span>
                       </div>
                     </div>
                   );
@@ -543,15 +573,15 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
             >
               <span className="text-xs shrink-0">{isMultiDeviceOrIp ? "👥" : "🔄"}</span>
               <div>
-                <strong>{isMultiDeviceOrIp ? "Likely Forwarded" : "Re-read by Same Recipient"}:</strong>{" "}
+                <strong>{isMultiDeviceOrIp ? "Multi-Device / Forwarded" : "Re-read by Same Recipient"}:</strong>{" "}
                 {openEvents.length > 0 ? (
                   isMultiDeviceOrIp ? (
                     <span>
-                      Opened across {uniqueDevices.length} different devices ({uniqueDevices.join(", ")}) and {uniqueIps.length} IP networks.
+                      Opened across {uniqueDevices.length} different clients ({uniqueDevices.join(", ")}).
                     </span>
                   ) : (
                     <span>
-                      All {count} opens originated from the same IP network ({uniqueIps[0] || "matched IP"}) on the same device ({uniqueDevices[0] || "matched device"}).
+                      All {count} opens originated through the same client ({devices[0] || "Gmail Proxy"}).
                     </span>
                   )
                 ) : (
