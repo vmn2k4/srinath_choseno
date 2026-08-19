@@ -15,6 +15,7 @@ import {
   Search,
   X,
   UserPlus,
+  ExternalLink,
 } from "lucide-react";
 import { Card, Button, Input, Textarea, Spinner, PageHeader, Badge, ConfirmDialog, Avatar } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
@@ -550,6 +551,24 @@ export default function CampaignAdminClient() {
                       className="!w-56 !py-1 text-xs"
                     />
                   </div>
+                  {r.data.wallSlug?.trim() ? (
+                    // The exact link fillCampaignTemplate substitutes for
+                    // {{wall_url}} — shown here, clickable, so an admin can
+                    // eyeball (or click through and confirm the page isn't a
+                    // 404) that this row's wall_slug is right *before*
+                    // sending, not after a recipient reports a broken link.
+                    <a
+                      href={`https://www.choseno.com/wall/${r.data.wallSlug.trim()}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                    >
+                      <ExternalLink size={11} />
+                      choseno.com/wall/{r.data.wallSlug.trim()}
+                    </a>
+                  ) : (
+                    <p className="text-xs text-warning">No wall slug — the {"{{wall_url}}"} link will be blank in the email.</p>
+                  )}
                   {r.error && <p className="text-xs text-danger">{r.error}</p>}
                   {r.status === "failed" && r.errorMessage && (
                     <p className="text-xs text-danger">Send error: {r.errorMessage}</p>

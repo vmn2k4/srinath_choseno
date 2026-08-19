@@ -95,7 +95,6 @@ export function ElectionOgCard({
               justifyContent: 'center',
               fontSize: 20,
               fontWeight: 900,
-              boxShadow: '0 6px 16px rgba(249, 115, 22, 0.35)',
             }}
           >
             C
@@ -116,7 +115,6 @@ export function ElectionOgCard({
             fontWeight: 900,
             textTransform: 'uppercase',
             letterSpacing: 1.2,
-            boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
           }}
         >
           Community Support
@@ -148,7 +146,6 @@ export function ElectionOgCard({
           borderRadius: 18,
           border: '1.5px solid #e2e8f0',
           padding: '14px 20px',
-          boxShadow: '0 12px 28px -5px rgba(15, 23, 42, 0.09)',
         }}
       >
         {n === 0 ? (
@@ -311,7 +308,6 @@ export function ElectionOgCard({
             padding: '12px 20px',
             borderRadius: 14,
             background: 'linear-gradient(135deg, #090d16 0%, #0f172a 50%, #1e1b4b 100%)',
-            boxShadow: '0 12px 30px -4px rgba(16, 185, 129, 0.35), 0 4px 16px rgba(0,0,0,0.3)',
             border: '2px solid #10b981',
           }}
         >
@@ -334,7 +330,6 @@ export function ElectionOgCard({
               color: '#ffffff',
               fontSize: 14,
               fontWeight: 900,
-              boxShadow: '0 6px 18px rgba(16, 185, 129, 0.45)',
             }}
           >
             <span>Vote Now</span>

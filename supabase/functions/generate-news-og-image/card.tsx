@@ -179,7 +179,6 @@ export function NewsArticleOgCard(input: NewsArticleOgCardInput) {
               fontWeight: 900,
               textTransform: 'uppercase',
               letterSpacing: 1,
-              boxShadow: '0 4px 10px rgba(37, 99, 235, 0.3)',
             }}
           >
             {input.category || 'Policy'}
@@ -194,7 +193,6 @@ export function NewsArticleOgCard(input: NewsArticleOgCardInput) {
               fontSize: 13,
               fontWeight: 800,
               color: '#334155',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.04)',
             }}
           >
             {formattedDate} · {input.province ? `${input.province}, ` : ''}{input.country?.toUpperCase() || 'CA'}
@@ -224,7 +222,6 @@ export function NewsArticleOgCard(input: NewsArticleOgCardInput) {
             borderRadius: 22,
             background: '#ffffff',
             border: '1.5px solid #e2e8f0',
-            boxShadow: '0 12px 28px -5px rgba(15, 23, 42, 0.09)',
           }}
         >
           {/* High-Impact Dominant Headline */}
@@ -297,7 +294,6 @@ export function NewsArticleOgCard(input: NewsArticleOgCardInput) {
             borderRadius: 22,
             background: 'linear-gradient(180deg, #ffffff 0%, #fff7ed 100%)',
             border: '2px solid #fdba74',
-            boxShadow: '0 12px 28px -5px rgba(249, 115, 22, 0.25)',
             position: 'relative',
           }}
         >
@@ -333,7 +329,6 @@ export function NewsArticleOgCard(input: NewsArticleOgCardInput) {
                 borderRadius: 52,
                 objectFit: 'cover',
                 border: '4px solid #f97316',
-                boxShadow: '0 8px 20px rgba(249, 115, 22, 0.4)',
               }}
             />
           ) : (
@@ -350,7 +345,6 @@ export function NewsArticleOgCard(input: NewsArticleOgCardInput) {
                 fontSize: 48,
                 fontWeight: 900,
                 border: '3.5px solid #ffffff',
-                boxShadow: '0 8px 20px rgba(249, 115, 22, 0.35)',
               }}
             >
               <span>{initialLetter}</span>
@@ -402,7 +396,6 @@ export function NewsArticleOgCard(input: NewsArticleOgCardInput) {
               color: '#ffffff',
               fontSize: 12,
               fontWeight: 900,
-              boxShadow: '0 4px 12px rgba(249, 115, 22, 0.4)',
             }}
           >
             <span>Rate Profile</span>
@@ -420,7 +413,6 @@ export function NewsArticleOgCard(input: NewsArticleOgCardInput) {
           padding: '14px 24px',
           borderRadius: 18,
           background: 'linear-gradient(135deg, #090d16 0%, #0f172a 50%, #1e1b4b 100%)',
-          boxShadow: '0 12px 30px -4px rgba(249, 115, 22, 0.35), 0 4px 16px rgba(0,0,0,0.3)',
           border: '2px solid #f97316',
           zIndex: 10,
         }}
@@ -436,7 +428,6 @@ export function NewsArticleOgCard(input: NewsArticleOgCardInput) {
               background: 'linear-gradient(135deg, #f97316, #ea580c)',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 0 16px rgba(249, 115, 22, 0.7)',
               flexShrink: 0,
             }}
           >
@@ -476,7 +467,6 @@ export function NewsArticleOgCard(input: NewsArticleOgCardInput) {
             color: '#ffffff',
             fontSize: 16,
             fontWeight: 900,
-            boxShadow: '0 6px 18px rgba(249, 115, 22, 0.45)',
           }}
         >
           <span>Rate Now</span>
