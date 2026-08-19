@@ -707,16 +707,70 @@ export interface DistributionArticle extends NewsArticle {
   allPoliticianNames?: string[];
 }
 
+export interface ListDistributionArticlesOptions {
+  status?: string;
+  page?: number;
+  pageSize?: number;
+  batchNumber?: string;
+  search?: string;
+  sortBy?: string;
+}
+
+export interface ListDistributionArticlesResult {
+  data: DistributionArticle[] | null;
+  totalCount: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  error: PostgrestError | null;
+}
+
+export interface BatchSummary {
+  batch: string;
+  count: number;
+}
+
 /**
- * Lists articles with politician details formatted for the Admin News Distribution table.
+ * Lightweight query to fetch distinct batch names and story counts without pulling heavy relations.
+ */
+export async function listDistinctBatches(
+  supabase: Client
+): Promise<{ data: BatchSummary[]; error: PostgrestError | null }> {
+  const { data, error } = await supabase
+    .from("news_articles")
+    .select("content, published_at, created_at")
+    .eq("status", "published");
+
+  if (error || !data) {
+    return { data: [], error };
+  }
+
+  const map = new Map<string, number>();
+  data.forEach((row: any) => {
+    const content = row.content || {};
+    const b = content.batch_number || formatBatchNumberFromDate(row.published_at || row.created_at);
+    map.set(b, (map.get(b) || 0) + 1);
+  });
+
+  const batches = Array.from(map.entries())
+    .map(([batch, count]) => ({ batch, count }))
+    .sort((a, b) => b.batch.localeCompare(a.batch));
+
+  return { data: batches, error: null };
+}
+
+/**
+ * Lists articles with politician details formatted for the Admin News Distribution table with pagination.
  */
 export async function listNewsArticlesForDistribution(
   supabase: Client,
-  options: {
-    status?: string;
-    limit?: number;
-  } = {}
-): Promise<{ data: DistributionArticle[] | null; error: PostgrestError | null }> {
+  options: ListDistributionArticlesOptions = {}
+): Promise<ListDistributionArticlesResult> {
+  const page = Math.max(1, options.page || 1);
+  const pageSize = Math.max(1, Math.min(100, options.pageSize || 50));
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
   let query = supabase
     .from("news_articles")
     .select(`
@@ -750,22 +804,53 @@ export async function listNewsArticlesForDistribution(
           )
         )
       )
-    `)
-    .order("published_at", { ascending: false, nullsFirst: false });
+    `, { count: "exact" });
 
   if (options.status) {
     query = query.eq("status", options.status);
+  } else {
+    query = query.eq("status", "published");
   }
 
-  if (options.limit) {
-    query = query.limit(options.limit);
+  // Filter by batch_number inside content JSONB if provided
+  if (options.batchNumber && options.batchNumber !== "all") {
+    query = query.eq("content->>batch_number", options.batchNumber);
   }
 
-  const { data, error } = await query;
+  // Filter by search query if provided
+  if (options.search && options.search.trim()) {
+    const term = options.search.trim();
+    query = query.ilike("headline", `%${term}%`);
+  }
+
+  // Order query
+  if (options.sortBy === "date_asc") {
+    query = query.order("published_at", { ascending: true, nullsFirst: false });
+  } else if (options.sortBy === "headline_asc") {
+    query = query.order("headline", { ascending: true });
+  } else {
+    // Default newest publication first
+    query = query.order("published_at", { ascending: false, nullsFirst: false });
+  }
+
+  // Pagination range
+  query = query.range(from, to);
+
+  const { data, count, error } = await query;
 
   if (error || !data) {
-    return { data: null, error };
+    return {
+      data: null,
+      totalCount: 0,
+      page,
+      pageSize,
+      totalPages: 0,
+      error,
+    };
   }
+
+  const totalCount = count || data.length;
+  const totalPages = Math.ceil(totalCount / pageSize);
 
   const formatted: DistributionArticle[] = (data as any[]).map((row, index) => {
     const content = (row.content || {}) as NewsArticleContent;
@@ -782,7 +867,7 @@ export async function listNewsArticlesForDistribution(
     const batchNumber = content.batch_number || formatBatchNumberFromDate(row.published_at || row.created_at);
     // Fallback viral score
     const viralScore = typeof content.viral_score === "number" ? content.viral_score : (content.breakingNews ? 9.5 : 8.0);
-    const batchRank = typeof content.batch_rank === "number" ? content.batch_rank : index + 1;
+    const batchRank = typeof content.batch_rank === "number" ? content.batch_rank : from + index + 1;
     const sharedPlatforms = Array.isArray(content.shared_platforms) ? content.shared_platforms : [];
 
     return {
@@ -797,7 +882,21 @@ export async function listNewsArticlesForDistribution(
     };
   });
 
-  return { data: formatted, error: null };
+  // If sorting by viral score, sort the retrieved page
+  if (options.sortBy === "viral_desc") {
+    formatted.sort((a, b) => (b.viralScore || 0) - (a.viralScore || 0));
+  } else if (options.sortBy === "viral_asc") {
+    formatted.sort((a, b) => (a.viralScore || 0) - (b.viralScore || 0));
+  }
+
+  return {
+    data: formatted,
+    totalCount,
+    page,
+    pageSize,
+    totalPages,
+    error: null,
+  };
 }
 
 /**
