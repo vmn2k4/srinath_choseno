@@ -12,6 +12,7 @@ import {
   getPoliticianEngagementSummaries,
 } from "@/lib/services/ratings";
 import { createClient } from "@/lib/supabase/client";
+import { getGhostDisplayName } from "@/lib/utils/ghostName";
 
 interface RatingRecord {
   id: string;
@@ -210,11 +211,14 @@ export default function PoliticianRatingModal({
                       className="p-4 bg-surface/40 rounded-2xl border border-border-light/30 hover:border-border-light/50 transition-colors space-y-2"
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <StarRating value={review.rating} size="xs" />
+                        <span className="text-xs font-bold text-text-main">
+                          {getGhostDisplayName(review.ghost_id)}
+                        </span>
                         <span className="text-[11px] font-medium text-text-muted">
                           {new Date(review.updated_at).toLocaleDateString()}
                         </span>
                       </div>
+                      <StarRating value={review.rating} size="xs" />
                       {review.comment && (
                         <p className="text-sm text-text-secondary leading-relaxed">{review.comment}</p>
                       )}

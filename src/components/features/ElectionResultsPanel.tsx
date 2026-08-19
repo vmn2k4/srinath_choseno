@@ -1,8 +1,10 @@
 "use client";
 
+import { Fragment, useState } from "react";
 import { TrendingUp, Calendar, MapPin, Heart, Users, Share2, ExternalLink, ChevronRight } from "lucide-react";
-import { Card, Avatar, Badge, Button } from "@/components/primitives";
+import { Card, Avatar, Badge, Button, StarRating } from "@/components/primitives";
 import ShareMenu, { type ShareData } from "./ShareMenu";
+import PoliticianInlineRating from "./PoliticianInlineRating";
 import { SITE_URL } from "@/lib/constants/site";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 
@@ -42,6 +44,7 @@ export default function ElectionResultsPanel({
   onSelectCandidate,
   mySupportedPoliticianIds,
   onToggleSupport,
+  onRatingSubmitted,
 }: {
   seat: any;
   candidates: CandidateRow[];
@@ -49,7 +52,15 @@ export default function ElectionResultsPanel({
   onSelectCandidate?: (candidate: CandidateRow) => void;
   mySupportedPoliticianIds?: Set<string>;
   onToggleSupport?: (candidate: CandidateRow) => void;
+  // Fires after a rating posts from the compact star trigger below, so the
+  // caller can re-fetch that one politician's fresh avg/count (same pattern
+  // as NewsArticleLinkedPoliticians' loadEngagementFor).
+  onRatingSubmitted?: (politicianId: string) => void;
 }) {
+  // Which candidate's inline "rate their performance" panel is expanded --
+  // at most one at a time, same as every other PoliticianInlineRating
+  // integration in the app (NewsArticleLinkedPoliticians, CandidacyWall).
+  const [expandedRatingId, setExpandedRatingId] = useState<string | null>(null);
   const roleTitle = seat?.role_title || "this seat";
   const boundaryName = seat?.map_shapes?.name || "this district";
   const electionDateRaw = seat?.elections?.election_date;
@@ -72,7 +83,10 @@ export default function ElectionResultsPanel({
   const rows = candidates
     .map((c) => {
       const politicianId = c.profiles?.id;
-      const supporterCount = (politicianId && engagementSummaries.get(politicianId)?.supporterCount) || 0;
+      const engagement = politicianId ? engagementSummaries.get(politicianId) : undefined;
+      const supporterCount = engagement?.supporterCount || 0;
+      const avgRating = engagement?.avgRating || 0;
+      const ratingCount = engagement?.ratingCount || 0;
       const name = c.display_name || c.profiles?.full_name || "Candidate";
       const pol = c.profiles?.politician_profiles;
       const polEntry = Array.isArray(pol) ? pol[0] : pol;
@@ -81,7 +95,7 @@ export default function ElectionResultsPanel({
         ? polEntry.political_parties[0]
         : polEntry?.political_parties;
       const partyName = c.party_name || partyEntry?.name || null;
-      return { candidate: c, name, avatarUrl, partyName, supporterCount };
+      return { candidate: c, name, avatarUrl, partyName, supporterCount, avgRating, ratingCount };
     })
     .sort((a, b) => b.supporterCount - a.supporterCount);
 
@@ -242,15 +256,16 @@ export default function ElectionResultsPanel({
       </div>
 
       <div className="space-y-1.5">
-        {rows.map(({ candidate, name, avatarUrl, partyName, supporterCount }) => {
+        {rows.map(({ candidate, name, avatarUrl, partyName, supporterCount, avgRating, ratingCount }) => {
           const pct = totalSupport > 0 ? Math.round((supporterCount / totalSupport) * 1000) / 10 : 0;
           const isTopRow = totalSupport > 0 && supporterCount === topSupportCount;
           const isLeader = leader?.candidate.id === candidate.id;
           const politicianId = candidate.profiles?.id;
           const isSupporting = Boolean(politicianId && mySupportedPoliticianIds?.has(politicianId));
+          const isRatingExpanded = expandedRatingId === candidate.id;
           return (
+            <Fragment key={candidate.id}>
             <div
-              key={candidate.id}
               role="button"
               tabIndex={0}
               onClick={() => onSelectCandidate?.(candidate)}
@@ -354,6 +369,26 @@ export default function ElectionResultsPanel({
                   <Heart size={10} /> {supporterCount}
                 </span>
 
+                {/* Compact star rating trigger: StarRating (read-only
+                    display mode) as the compact icon, PoliticianInlineRating
+                    — the same centralized expand-down rating panel used on
+                    news articles and the wall page — as what it expands
+                    into. Stops propagation so it doesn't also fire the
+                    row's own onSelectCandidate. */}
+                {politicianId && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setExpandedRatingId(isRatingExpanded ? null : candidate.id);
+                    }}
+                    className="shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+                    title={isRatingExpanded ? "Close rating" : `Rate ${name}`}
+                  >
+                    <StarRating value={avgRating} count={ratingCount} size="xs" />
+                  </button>
+                )}
+
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -367,6 +402,16 @@ export default function ElectionResultsPanel({
                 </button>
               </div>
             </div>
+
+            {isRatingExpanded && politicianId && (
+              <PoliticianInlineRating
+                politicianId={politicianId}
+                politicianName={name}
+                onSubmitted={() => onRatingSubmitted?.(politicianId)}
+                onCancel={() => setExpandedRatingId(null)}
+              />
+            )}
+            </Fragment>
           );
         })}
       </div>

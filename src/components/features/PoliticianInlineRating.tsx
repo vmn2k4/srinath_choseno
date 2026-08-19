@@ -4,16 +4,30 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button, Textarea, StarRating, Spinner } from "@/components/primitives";
-import { getMyRatingTimestamp, upsertPoliticianRating } from "@/lib/services/ratings";
+import { getMyRatingTimestamp, upsertPoliticianRating, getPoliticianRatingsList } from "@/lib/services/ratings";
 import { createClient } from "@/lib/supabase/client";
+import { getGhostDisplayName } from "@/lib/utils/ghostName";
+
+interface RatingRecord {
+  id: string;
+  rating: number;
+  comment: string | null;
+  ghost_id: string;
+  created_at: string;
+  updated_at: string;
+}
 
 // Inline "leave a review" panel — the non-modal alternative to
 // PoliticianRatingModal. Expands in place under whatever trigger renders it
-// (a news article's rate row, the wall page header) instead of opening a
-// popup or navigating away, so the reader never loses their spot on the
-// page. Posts through the exact same upsert_politician_rating RPC as the
-// modal, so a rating cast here is the same row the wall page and every
-// other widget read back — just a different entry point onto identical data.
+// (a news article's rate row, the wall page header, the election results
+// poll) instead of opening a popup or navigating away, so the reader never
+// loses their spot on the page. Posts through the exact same
+// upsert_politician_rating RPC as the modal, so a rating cast here is the
+// same row the wall page and every other widget read back — just a
+// different entry point onto identical data. Also shows past reviews (same
+// getPoliticianRatingsList query the modal uses) in a capped, scrollable
+// list — every call site of this component gets that for free rather than
+// each one needing its own copy.
 export default function PoliticianInlineRating({
   politicianId,
   politicianName,
@@ -41,20 +55,28 @@ export default function PoliticianInlineRating({
   // compute the 6-month re-rate cooldown below (mirrors the modal).
   const [myRatedAt, setMyRatedAt] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [reviews, setReviews] = useState<RatingRecord[]>([]);
 
   const isOwner = !!user && user.id === politicianId;
+
+  const loadReviews = async () => {
+    const { data } = await getPoliticianRatingsList(supabase, politicianId);
+    setReviews((data || []) as RatingRecord[]);
+  };
 
   useEffect(() => {
     let isMounted = true;
     async function load() {
-      if (!user) {
-        setLoading(false);
-        return;
-      }
       setLoading(true);
-      const { data: myRating } = await getMyRatingTimestamp(supabase, politicianId, user.id);
+      // Reviews are public — fetched regardless of sign-in state, so a
+      // signed-out visitor can still see what others said before deciding
+      // whether to sign in and rate themselves.
+      const reviewsPromise = getPoliticianRatingsList(supabase, politicianId);
+      const myRatingPromise = user ? getMyRatingTimestamp(supabase, politicianId, user.id) : null;
+      const [{ data: reviewsData }, myRatingResult] = await Promise.all([reviewsPromise, myRatingPromise]);
       if (isMounted) {
-        setMyRatedAt(myRating?.updated_at ?? null);
+        setReviews((reviewsData || []) as RatingRecord[]);
+        setMyRatedAt(myRatingResult?.data?.updated_at ?? null);
         setLoading(false);
       }
     }
@@ -90,6 +112,7 @@ export default function PoliticianInlineRating({
       onSubmitted?.();
       setMyRatedAt(new Date().toISOString());
       setSubmitted(true);
+      loadReviews();
     } catch (err) {
       const msg = (err as { message?: string })?.message || "Failed to submit rating.";
       setError(msg);
@@ -100,74 +123,116 @@ export default function PoliticianInlineRating({
 
   return (
     <div className="mt-2 p-4 bg-surface/40 rounded-xl border border-border-light/30 space-y-4">
-      {submitted ? (
-        <div className="flex items-center justify-between gap-3">
-          <p className="text-sm font-semibold text-success">Thanks — your rating for {politicianName} was posted.</p>
-          <Button size="sm" variant="ghost" onClick={onCancel}>
-            Close
-          </Button>
-        </div>
-      ) : loading ? (
+      {loading ? (
         <div className="flex justify-center py-4">
           <Spinner size="sm" />
         </div>
-      ) : isOwner ? (
-        <div className="flex items-center justify-between gap-3">
-          <p className="text-sm text-text-muted italic">You can&apos;t rate your own profile.</p>
-          <Button size="sm" variant="ghost" onClick={onCancel}>
-            Close
-          </Button>
-        </div>
-      ) : !user ? (
-        <div className="flex items-center justify-between gap-3 flex-wrap">
-          <p className="text-sm text-text-muted">Sign in to rate {politicianName}.</p>
-          <div className="flex items-center gap-2">
-            <Button size="sm" variant="ghost" onClick={onCancel}>
-              Cancel
-            </Button>
-            <Button size="sm" onClick={() => router.push("/auth")}>
-              Sign in
-            </Button>
-          </div>
-        </div>
-      ) : isLocked ? (
-        <div className="flex items-center justify-between gap-3 flex-wrap">
-          <p className="text-sm text-text-secondary">
-            You already rated {politicianName}. Come back on{" "}
-            <span className="font-semibold text-text-main">{cooldownEnd?.toLocaleDateString()}</span> to rate again.
-          </p>
-          <Button size="sm" variant="ghost" onClick={onCancel}>
-            Close
-          </Button>
-        </div>
       ) : (
         <>
-          <div className="flex items-center justify-between gap-3">
-            <p className="text-xs font-semibold text-label-text uppercase tracking-wide">Rate their performance</p>
-            <Button size="sm" variant="ghost" onClick={onCancel}>
-              Cancel
-            </Button>
+          {submitted ? (
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-sm font-semibold text-success">Thanks — your rating for {politicianName} was posted.</p>
+              <Button size="sm" variant="ghost" onClick={onCancel}>
+                Close
+              </Button>
+            </div>
+          ) : isOwner ? (
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-sm text-text-muted italic">You can&apos;t rate your own profile.</p>
+              <Button size="sm" variant="ghost" onClick={onCancel}>
+                Close
+              </Button>
+            </div>
+          ) : !user ? (
+            <div className="flex items-center justify-between gap-3 flex-wrap">
+              <p className="text-sm text-text-muted">Sign in to rate {politicianName}.</p>
+              <div className="flex items-center gap-2">
+                <Button size="sm" variant="ghost" onClick={onCancel}>
+                  Cancel
+                </Button>
+                <Button size="sm" onClick={() => router.push("/auth")}>
+                  Sign in
+                </Button>
+              </div>
+            </div>
+          ) : isLocked ? (
+            <div className="flex items-center justify-between gap-3 flex-wrap">
+              <p className="text-sm text-text-secondary">
+                You already rated {politicianName}. Come back on{" "}
+                <span className="font-semibold text-text-main">{cooldownEnd?.toLocaleDateString()}</span> to rate again.
+              </p>
+              <Button size="sm" variant="ghost" onClick={onCancel}>
+                Close
+              </Button>
+            </div>
+          ) : (
+            <>
+              {/* Star picker sits right next to the label instead of its own
+                  centered row below — that used to add a whole extra row
+                  of vertical space just to show 5 stars. */}
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <p className="text-xs font-semibold text-label-text uppercase tracking-wide shrink-0">Rate their performance</p>
+                  <StarRating value={rateValue} size="md" onChange={setRateValue} />
+                </div>
+                <Button size="sm" variant="ghost" onClick={onCancel}>
+                  Cancel
+                </Button>
+              </div>
+              <Textarea
+                placeholder="Share your thoughts (optional)…"
+                value={rateComment}
+                onChange={(e) => setRateComment(e.target.value)}
+                rows={2}
+                className="resize-none text-sm"
+              />
+              {error && <p className="text-danger text-xs font-semibold">{error}</p>}
+              <Button
+                type="button"
+                className="w-full font-semibold"
+                disabled={submitting}
+                onClick={handleSubmit}
+                size="md"
+              >
+                {submitting ? "Submitting…" : "Submit Rating"}
+              </Button>
+            </>
+          )}
+
+          {/* Past reviews — same getPoliticianRatingsList data the modal
+              shows, capped to a scrollable panel so a well-reviewed
+              politician doesn't blow up the height of whatever page
+              embeds this (news article, wall header, election poll row). */}
+          <div className="pt-3 border-t border-border-light/20">
+            <p className="text-xs font-semibold text-label-text uppercase tracking-wide mb-2">
+              Community feedback{reviews.length > 0 ? ` (${reviews.length})` : ""}
+            </p>
+            {reviews.length === 0 ? (
+              <p className="text-xs text-text-muted italic py-1">No feedback yet — be the first to share what you think.</p>
+            ) : (
+              <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                {reviews.map((review) => (
+                  <div
+                    key={review.id}
+                    className="p-3 bg-surface/60 rounded-lg border border-border-light/20 space-y-1"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-bold text-text-main">
+                        {getGhostDisplayName(review.ghost_id)}
+                      </span>
+                      <span className="text-[10px] font-medium text-text-muted">
+                        {new Date(review.updated_at).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <StarRating value={review.rating} size="xs" />
+                    {review.comment && (
+                      <p className="text-xs text-text-secondary leading-relaxed">{review.comment}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-          <div className="flex justify-center py-2">
-            <StarRating value={rateValue} size="lg" onChange={setRateValue} />
-          </div>
-          <Textarea
-            placeholder="Share your thoughts (optional)…"
-            value={rateComment}
-            onChange={(e) => setRateComment(e.target.value)}
-            rows={3}
-            className="resize-none text-sm"
-          />
-          {error && <p className="text-danger text-xs font-semibold">{error}</p>}
-          <Button
-            type="button"
-            className="w-full font-semibold"
-            disabled={submitting}
-            onClick={handleSubmit}
-            size="md"
-          >
-            {submitting ? "Submitting…" : "Submit Rating"}
-          </Button>
         </>
       )}
     </div>

@@ -367,6 +367,29 @@ export default function ElectionSeatPageClient({
     }
   };
 
+  // Re-fetches just one politician's engagement row after their inline
+  // rating panel (ElectionResultsPanel's compact star trigger) submits --
+  // same batched RPC the initial load uses, just called with a 1-item id
+  // list so the results poll's star display reflects the new average
+  // without waiting on a full page refresh.
+  const handleRatingSubmitted = async (politicianId: string) => {
+    const { data } = await getPoliticianEngagementSummaries(supabase, [politicianId]);
+    const row = data?.[0] as
+      | { politician_id: string; supporter_count: number; avg_rating: number; rating_count: number; comment_count: number }
+      | undefined;
+    if (!row) return;
+    setEngagementSummaries((prev) => {
+      const next = new Map(prev);
+      next.set(politicianId, {
+        supporterCount: row.supporter_count,
+        avgRating: row.avg_rating,
+        ratingCount: row.rating_count,
+        commentCount: row.comment_count,
+      });
+      return next;
+    });
+  };
+
   const trackedSeatViewRef = React.useRef<string | null>(null);
   useEffect(() => {
     if (!seat || trackedSeatViewRef.current === seatId) return;
@@ -684,6 +707,7 @@ export default function ElectionSeatPageClient({
                   onSelectCandidate={(c) => handleSelectCandidate(c)}
                   mySupportedPoliticianIds={mySupportedPoliticianIds}
                   onToggleSupport={handleToggleSupport}
+                  onRatingSubmitted={handleRatingSubmitted}
                 />
               )}
 
