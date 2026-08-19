@@ -40,6 +40,7 @@ import {
   CAMPAIGN_TEMPLATE_PRESETS,
   addTrackingPixelToTemplate,
   createTrackedLink,
+  type CampaignTemplatePreset,
 } from "@/lib/utils/campaignTemplates";
 
 // Same shape search_politicians_and_officeholders returns for the nav-bar
@@ -684,9 +685,14 @@ function formatLastOpened(dateStr: string | null | undefined): string {
 export default function CampaignAdminClient() {
   const supabase = createClient();
 
-  const [campaignName, setCampaignName] = useState("");
-  const [subject, setSubject] = useState(DEFAULT_SUBJECT);
-  const [body, setBody] = useState(DEFAULT_BODY);
+  const [selectedPreset, setSelectedPreset] = useState<CampaignTemplatePreset>(
+    CAMPAIGN_TEMPLATE_PRESETS[0]
+  );
+  const [campaignName, setCampaignName] = useState(
+    CAMPAIGN_TEMPLATE_PRESETS[0].defaultCampaignName
+  );
+  const [subject, setSubject] = useState(CAMPAIGN_TEMPLATE_PRESETS[0].subject);
+  const [body, setBody] = useState(CAMPAIGN_TEMPLATE_PRESETS[0].body);
   const [importText, setImportText] = useState("");
   const [importError, setImportError] = useState("");
   const [rows, setRows] = useState<CampaignRow[]>([]);
@@ -698,11 +704,6 @@ export default function CampaignAdminClient() {
   const [stats, setStats] = useState<CampaignStatsRow[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
 
-  // Search-to-add — an alternative to pasting CSV/JSON, reusing the same
-  // search_politicians_and_officeholders RPC the nav-bar search
-  // (GlobalPoliticianSearch) uses. The RPC itself doesn't return contact
-  // info (it also serves the public nav search), so picking a result does a
-  // second, admin-only lookup for the email before it's added as a row.
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<PoliticianSearchResult[]>([]);
@@ -744,7 +745,7 @@ export default function CampaignAdminClient() {
     searchDebounceRef.current = setTimeout(async () => {
       const myRequestId = ++searchRequestIdRef.current;
       const { data, error } = await searchPoliticians(supabase, trimmed, { limit: 15 });
-      if (myRequestId !== searchRequestIdRef.current) return; // stale — a newer keystroke fired since
+      if (myRequestId !== searchRequestIdRef.current) return;
       setSearchResults(error ? [] : ((data as PoliticianSearchResult[] | null) || []));
       setSearchLoading(false);
     }, 250);
@@ -753,50 +754,43 @@ export default function CampaignAdminClient() {
     };
   }, [searchQuery, supabase]);
 
-  // Adds a search result as a new recipient row. Contact email isn't in the
-  // search payload, so this does one more lookup — office_holders for a
-  // currently-serving official, politician_profiles for a registered
-  // candidate — and pre-fills the wall slug from the result (or a best-guess
-  // via buildPoliticianWallSlug when the wall doesn't exist yet).
   const addRecipientFromSearch = async (result: PoliticianSearchResult) => {
     setAddingKey(result.result_key);
+    try {
+      let email = "";
+      if (result.office_holder_id) {
+        const { data } = await getOfficeHolderContact(supabase, result.office_holder_id);
+        email = data?.contact_email || "";
+      } else if (result.politician_profile_id) {
+        const { data } = await getPoliticianProfile(supabase, result.politician_profile_id);
+        email = (data as { contact_email?: string | null } | null)?.contact_email || "";
+      }
 
-    let email = "";
-    if (result.office_holder_id) {
-      const { data } = await getOfficeHolderContact(supabase, result.office_holder_id);
-      email = data?.contact_email || "";
-    } else if (result.politician_profile_id) {
-      const { data } = await getPoliticianProfile(supabase, result.politician_profile_id);
-      email = (data as { contact_email?: string | null } | null)?.contact_email || "";
-    }
+      const name = result.full_name;
+      const role = result.role_title || "";
+      const city = result.jurisdiction_name || "";
+      const wallSlug = result.wall_slug || buildPoliticianWallSlug(name, role);
 
-    const wallSlug = result.wall_slug || buildPoliticianWallSlug(result.full_name, result.role_title);
-
-    setRows((prev) => [
-      ...prev,
-      {
-        row: prev.length + 1,
-        data: {
-          name: result.full_name,
-          email,
-          role: result.role_title || "",
-          city: result.jurisdiction_name || "",
-          wallSlug,
-        },
-        error: email ? null : "No email on file — add one below before sending.",
+      const newRow: CampaignRow = {
+        row: rows.length + 1,
+        data: { name, email: email || "", role, city, wallSlug },
+        error: !email
+          ? "No contact email on file — fill in manually"
+          : !isValidCampaignEmail(email)
+          ? `Invalid email on file: ${email}`
+          : null,
         status: "idle",
-      },
-    ]);
+      };
 
-    setAddingKey(null);
-    setSearchQuery("");
-    setSearchResults([]);
-    setSearchOpen(false);
+      setRows((prev) => [newRow, ...prev]);
+      setSearchQuery("");
+      setSearchResults([]);
+      setSearchOpen(false);
+    } finally {
+      setAddingKey(null);
+    }
   };
 
-  // Inline edits from the review table — mainly for filling in an email the
-  // search lookup couldn't find, or correcting/typing the wall slug, which
-  // is never auto-trusted (see CampaignRecordInput.wallSlug).
   const updateRowField = (index: number, field: "email" | "wallSlug", value: string) => {
     setRows((prev) =>
       prev.map((r, i) => {
@@ -817,14 +811,22 @@ export default function CampaignAdminClient() {
     );
   };
 
-  const applyTemplate = (preset: (typeof CAMPAIGN_TEMPLATE_PRESETS)[number] | null) => {
-    if (!preset) {
-      setSubject(DEFAULT_SUBJECT);
-      setBody(DEFAULT_BODY);
-      return;
-    }
+  const applyPreset = (preset: CampaignTemplatePreset) => {
+    setSelectedPreset(preset);
     setSubject(preset.subject);
     setBody(preset.body);
+    if (
+      !campaignName ||
+      CAMPAIGN_TEMPLATE_PRESETS.some((p) => p.defaultCampaignName === campaignName)
+    ) {
+      setCampaignName(preset.defaultCampaignName);
+    }
+  };
+
+  const handleLoadSampleData = () => {
+    setImportText(selectedPreset.sampleData);
+    setImportError("");
+    setRows([]);
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -846,7 +848,7 @@ export default function CampaignAdminClient() {
         setRows([]);
         return;
       }
-      setRows(parsed.map((r) => ({ ...r, status: "idle" as RowStatus })));
+      setRows(parsed.map((r, idx) => ({ ...r, row: idx + 1, status: "idle" as RowStatus })));
     } catch (err) {
       setImportError(err instanceof Error ? err.message : "Couldn't parse that input.");
       setRows([]);
@@ -856,9 +858,6 @@ export default function CampaignAdminClient() {
   const buildEmail = useCallback(
     (record: CampaignRow) => {
       const filledSubject = fillCampaignTemplate(subject, record.data);
-      // {{claim_link}} needs the real per-recipient link, which only exists
-      // once sendCampaignInvite mints a token — for preview we show a
-      // placeholder so admins can see the layout before anything is sent.
       const filledBody = fillCampaignTemplate(body, record.data).replace(
         /\{\{\s*claim_link\s*\}\}/gi,
         `${window.location.origin}/auth?role=politician&campaign=PREVIEW`
@@ -873,13 +872,9 @@ export default function CampaignAdminClient() {
     if (!record || record.error) return;
     setRows((prev) => prev.map((r, i) => (i === index ? { ...r, status: "sending" } : r)));
 
-    // Generate unique tracking token
     const trackingToken = crypto.randomUUID();
-
-    // Add tracking pixel to email body
     let trackedHtml = addTrackingPixelToTemplate(body, trackingToken);
 
-    // Rewrite all links with tracking (attaching ?t=trackingToken to wall links)
     const linkRegex = /href="(https?:\/\/[^"]+)"/g;
     trackedHtml = trackedHtml.replace(linkRegex, (_match, url) => {
       let targetUrl = url;
@@ -890,29 +885,45 @@ export default function CampaignAdminClient() {
       return `href="${createTrackedLink(targetUrl, trackingToken)}"`;
     });
 
-    const filledSubject = fillCampaignTemplate(subject, record.data);
-    // Fill template variables into the tracked HTML
-    const htmlTemplate = fillCampaignTemplate(trackedHtml, record.data);
-
-    const { error } = await sendCampaignInvite(supabase, {
+    const { data: sentRow, error } = await sendCampaignInvite(supabase, {
       name: record.data.name,
       email: record.data.email,
       role: record.data.role,
       city: record.data.city,
-      subject: filledSubject,
-      htmlTemplate,
-      campaignName: campaignName.trim() || "Untitled Campaign",
+      campaignName: campaignName.trim(),
       redirectOrigin: window.location.origin,
+      htmlTemplate: trackedHtml,
+      subject: fillCampaignTemplate(subject, record.data),
       trackingToken,
     });
+
+    if (error) {
+      setRows((prev) =>
+        prev.map((r, i) =>
+          i === index
+            ? {
+                ...r,
+                status: "failed",
+                errorMessage: error.message,
+              }
+            : r
+        )
+      );
+      return;
+    }
 
     setRows((prev) =>
       prev.map((r, i) =>
         i === index
-          ? { ...r, status: error ? "failed" : "sent", errorMessage: error?.message }
+          ? {
+              ...r,
+              status: "sent",
+              sentRow: sentRow || undefined,
+            }
           : r
       )
     );
+
     loadHistory();
   };
 
@@ -922,8 +933,6 @@ export default function CampaignAdminClient() {
     for (let i = 0; i < rows.length; i++) {
       if (rows[i].error || rows[i].status === "sent") continue;
       await sendOne(i);
-      // Small stagger so we don't hammer the send-email function with a
-      // burst of concurrent SMTP connections.
       await new Promise((resolve) => setTimeout(resolve, 400));
     }
     setSendingAll(false);
@@ -941,17 +950,121 @@ export default function CampaignAdminClient() {
 
       <AdminSubNav active="campaign" />
 
+      {/* Step 1: Choose Email Type & Target Audience */}
       <Card padding="md" className="space-y-4">
         <div>
           <h2 className="font-bold text-text-main flex items-center gap-2">
-            <Upload size={17} className="text-primary" />
-            1. Import recipients
+            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">1</span>
+            Choose Email Type & Target Audience
           </h2>
           <p className="text-xs text-text-muted mt-1 max-w-2xl">
-            Paste CSV (<code className="text-[11px]">name,email,role,city,wall_slug</code>) or JSON
-            (<code className="text-[11px]">{"[{ \"name\": ..., \"email\": ... }]"}</code>), search for someone
-            already on Choseno, or upload a file.
+            Select who you are emailing. Each template automatically configures the required merge tags, subject lines, and recipient fields.
           </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {CAMPAIGN_TEMPLATE_PRESETS.map((preset) => {
+            const isSelected = selectedPreset.key === preset.key;
+            return (
+              <button
+                key={preset.key}
+                type="button"
+                onClick={() => applyPreset(preset)}
+                className={`relative flex flex-col justify-between p-4 rounded-xl text-left border transition-all duration-200 cursor-pointer ${
+                  isSelected
+                    ? "border-primary bg-primary/5 ring-2 ring-primary/20 shadow-md"
+                    : "border-border-light/40 hover:border-primary/40 bg-surface/50 hover:bg-surface/80"
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="text-2xl">{preset.icon}</span>
+                    {preset.badge && (
+                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                        isSelected
+                          ? "bg-primary/20 text-primary"
+                          : "bg-surface-active text-text-muted"
+                      }`}>
+                        {preset.badge}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="font-bold text-sm text-text-main mb-1">{preset.label}</h3>
+                  <p className="text-[11px] text-text-muted leading-relaxed line-clamp-2">
+                    {preset.description}
+                  </p>
+                </div>
+
+                <div className="mt-3 pt-2.5 border-t border-border-light/20 flex items-center justify-between text-[10px]">
+                  <span className="text-text-muted font-medium">
+                    Needs: <code className="text-primary font-bold">{preset.requiredFields.join(", ")}</code>
+                  </span>
+                  {isSelected && (
+                    <span className="text-primary font-bold text-xs">✓ Active</span>
+                  )}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </Card>
+
+      {/* Step 2: Import Recipients */}
+      <Card padding="md" className="space-y-4">
+        <div className="flex items-start justify-between flex-wrap gap-2">
+          <div>
+            <h2 className="font-bold text-text-main flex items-center gap-2">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">2</span>
+              <Upload size={16} className="text-primary" />
+              Import Recipients for {selectedPreset.label}
+            </h2>
+            <p className="text-xs text-text-muted mt-1 max-w-2xl">
+              Paste CSV or JSON records, search existing politicians, or upload a spreadsheet file.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={handleLoadSampleData}
+              className="text-xs gap-1.5 border-primary/30 text-primary hover:bg-primary/10"
+            >
+              📋 Load Sample Format
+            </Button>
+          </div>
+        </div>
+
+        {/* Dynamic Template Format Help Banner */}
+        <div className="p-3 rounded-xl bg-surface-hover/80 border border-border-light/40 text-xs space-y-2">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-1.5 font-semibold text-text-main">
+              <span>{selectedPreset.icon}</span>
+              <span>Expected Columns for {selectedPreset.label}:</span>
+            </div>
+            <span className="text-[10px] text-text-muted">
+              Header row is required (e.g. <code className="text-primary font-mono">{selectedPreset.csvHeader}</code>)
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
+            <span className="text-text-muted font-medium mr-1">Required:</span>
+            {selectedPreset.requiredFields.map((f: string) => (
+              <span key={f} className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono font-bold text-[10px]">
+                {f} *
+              </span>
+            ))}
+            {selectedPreset.optionalFields.length > 0 && (
+              <>
+                <span className="text-text-muted font-medium ml-2 mr-1">Optional:</span>
+                {selectedPreset.optionalFields.map((f: string) => (
+                  <span key={f} className="px-2 py-0.5 rounded-md bg-surface-active text-text-muted font-mono text-[10px]">
+                    {f}
+                  </span>
+                ))}
+              </>
+            )}
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
@@ -1027,7 +1140,7 @@ export default function CampaignAdminClient() {
 
         <Textarea
           rows={8}
-          placeholder={"name,email,role,city\nJohn Smith,john@example.com,Mayor,Vancouver\nJane Doe,jane@example.com,Councillor,Burnaby"}
+          placeholder={selectedPreset.sampleData}
           value={importText}
           onChange={(e) => setImportText(e.target.value)}
           className="font-mono text-xs"
@@ -1036,7 +1149,7 @@ export default function CampaignAdminClient() {
         {importError && <p className="text-xs text-danger">{importError}</p>}
 
         <Button size="sm" onClick={handleParse} disabled={!importText.trim()}>
-          Parse recipients
+          Parse recipients ({selectedPreset.label})
         </Button>
 
         {rows.length > 0 && (
@@ -1047,20 +1160,13 @@ export default function CampaignAdminClient() {
         )}
       </Card>
 
+      {/* Step 3: Compose Email */}
       {rows.length > 0 && (
         <Card padding="md" className="space-y-4">
-          <h2 className="font-bold text-text-main">2. Compose the email</h2>
-
-          <div>
-            <p className="text-xs font-semibold text-text-muted mb-1.5">Template</p>
-            <div className="flex flex-wrap gap-2">
-              {CAMPAIGN_TEMPLATE_PRESETS.map((preset) => (
-                <Button key={preset.key} size="sm" variant="outline" onClick={() => applyTemplate(preset)}>
-                  {preset.label}
-                </Button>
-              ))}
-            </div>
-          </div>
+          <h2 className="font-bold text-text-main flex items-center gap-2">
+            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">3</span>
+            Compose the email ({selectedPreset.label})
+          </h2>
 
           <label className="text-xs font-semibold text-text-muted block">
             Campaign name
@@ -1090,10 +1196,14 @@ export default function CampaignAdminClient() {
         </Card>
       )}
 
+      {/* Step 4: Review & Send */}
       {rows.length > 0 && (
         <Card padding="md" className="space-y-3">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <h2 className="font-bold text-text-main">3. Review & send</h2>
+            <h2 className="font-bold text-text-main flex items-center gap-2">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">4</span>
+              Review & send ({validCount} recipients)
+            </h2>
             <Button
               size="sm"
               onClick={() => setConfirmSendAll(true)}

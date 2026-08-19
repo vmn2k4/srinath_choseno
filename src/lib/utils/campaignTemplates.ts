@@ -916,30 +916,77 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
 </body>
 </html>`;
 
+export interface CampaignTemplatePreset {
+  key: string;
+  label: string;
+  badge?: string;
+  icon?: string;
+  subject: string;
+  body: string;
+  requiredFields: string[];
+  optionalFields: string[];
+  csvHeader: string;
+  sampleData: string;
+  defaultCampaignName: string;
+  description: string;
+}
+
 export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
   {
     key: "mayor",
-    label: "Mayor — Choseno wall",
+    label: "Mayor",
+    badge: "Candidate Wall",
+    icon: "🏛️",
     subject: "Your Mayor Wall is Ready on Choseno — Connect with {{city}} Voters This Election",
     body: MAYOR_BODY,
+    requiredFields: ["name", "email", "city"],
+    optionalFields: ["role", "wall_slug"],
+    csvHeader: "name,email,role,city,wall_slug",
+    sampleData: "name,email,role,city,wall_slug\nBrenda Locke,brenda@surrey.ca,Mayor,Surrey,brenda-locke-mayor\nKen Sim,ken@vancouver.ca,Mayor,Vancouver,ken-sim-mayor",
+    defaultCampaignName: "BC Mayors 2026",
+    description: "Connect with Mayors and candidates to claim their Candidate Wall and engage local voters.",
   },
   {
     key: "councillor",
-    label: "Councillor — Choseno wall",
+    label: "Councillor",
+    badge: "Candidate Wall",
+    icon: "🏛️",
     subject: "Your Councillor Wall is Ready on Choseno — Connect with {{city}} Voters This Election",
     body: COUNCILLOR_BODY,
+    requiredFields: ["name", "email", "city"],
+    optionalFields: ["role", "wall_slug"],
+    csvHeader: "name,email,role,city,wall_slug",
+    sampleData: "name,email,role,city,wall_slug\nSarah Kirby-Yung,sarah@vancouver.ca,Councillor,Vancouver,sarah-kirby-yung-councillor\nLinda Annis,linda@surrey.ca,Councillor,Surrey,linda-annis-councillor",
+    defaultCampaignName: "BC Councillors 2026",
+    description: "Invites municipal Councillors to claim their Candidate Wall on Choseno.",
   },
   {
     key: "pssa",
-    label: "Students Association — Election Researchers",
+    label: "Students Association",
+    badge: "Researcher Outreach",
+    icon: "🎓",
     subject: "Opportunity for Students: Choseno is Recruiting Election Researchers for 2026",
     body: PSSA_BODY,
+    requiredFields: ["name", "email"],
+    optionalFields: ["role", "city"],
+    csvHeader: "name,email,role,city",
+    sampleData: "name,email,role,city\nUBC Political Science Association,exec@pssa.ubc.ca,Executive Team,Vancouver\nSFU Political Science Union,psu@sfu.ca,Student Union,Burnaby",
+    defaultCampaignName: "Student Association Election Researchers 2026",
+    description: "Recruits student researchers and partners with Political Science student unions.",
   },
   {
     key: "professor",
-    label: "Professor — Collaboration & Research",
+    label: "Professor / Academic",
+    badge: "Research Collaboration",
+    icon: "👨‍🏫",
     subject: "Collaboration Inquiry: Civic Tech & Election Research",
     body: PROFESSOR_BODY,
+    requiredFields: ["name", "email"],
+    optionalFields: ["role", "city"],
+    csvHeader: "name,email,role,city",
+    sampleData: "name,email,role,city\nDr. Paul Quirk,pquirk@ubc.ca,Professor of Political Science,Vancouver\nDr. Stewart Prest,sprest@sfu.ca,Lecturer in Political Science,Burnaby",
+    defaultCampaignName: "Academic Collaboration 2026",
+    description: "Inquires about academic collaboration and civic tech research with university faculty.",
   },
 ];
 
