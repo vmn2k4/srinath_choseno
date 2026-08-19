@@ -1453,27 +1453,33 @@ function PreviewModal({
 }) {
   const { subject, html } = buildEmail(record);
   return (
-    <div className="fixed inset-0 z-50 bg-overlay backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
+    <div className="fixed inset-0 z-50 bg-overlay backdrop-blur-sm flex items-center justify-center p-3 sm:p-6" onClick={onClose}>
       <Card
         variant="hero"
-        padding="lg"
-        className="max-w-lg w-full max-h-[80vh] overflow-y-auto space-y-3"
+        padding="md"
+        className="max-w-4xl w-full max-h-[92vh] overflow-y-auto space-y-3.5"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="font-bold text-text-main">Preview: {record.data.name}</h3>
-        <p className="text-xs text-text-muted">
-          <span className="font-semibold">To:</span> {record.data.email}
-        </p>
-        <p className="text-xs text-text-muted">
-          <span className="font-semibold">Subject:</span> {subject}
-        </p>
+        <div className="flex items-center justify-between border-b border-border-light/30 pb-2.5">
+          <div className="min-w-0 flex-1 pr-3">
+            <h3 className="font-bold text-text-main text-base truncate">Preview: {record.data.name}</h3>
+            <p className="text-xs text-text-muted mt-0.5 truncate">
+              <span className="font-semibold text-text-main/80">To:</span> {record.data.email} · <span className="font-semibold text-text-main/80">Subject:</span> {subject}
+            </p>
+          </div>
+          <Button size="sm" variant="ghost" onClick={onClose} className="text-xs shrink-0">
+            Close
+          </Button>
+        </div>
+
         <div
-          className="border border-border-light/30 rounded-lg p-4 bg-white text-black text-sm"
+          className="border border-border-light/40 rounded-xl overflow-hidden shadow-sm bg-[#eef1f5] p-2 sm:p-4 text-black text-sm w-full"
           dangerouslySetInnerHTML={{ __html: html }}
         />
-        <div className="flex justify-end">
+
+        <div className="flex justify-end pt-1">
           <Button size="sm" variant="ghost" onClick={onClose}>
-            Close
+            Close Preview
           </Button>
         </div>
       </Card>
