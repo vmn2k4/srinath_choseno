@@ -47,13 +47,13 @@ function applyTheme(key: string) {
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [supabase] = useState(() => createClient());
-  // DEFAULT THEME MUST MATCH site_settings.theme DEFAULT IN DATABASE
-  // (supabase/migrations/20260731000001_site_theme_settings.sql, line 5).
+  // DEFAULT THEME MUST MATCH the CURRENT admin-selected theme in site_settings.
   // Hardcoded here so the page renders with the correct theme immediately on
-  // mount instead of flashing the :root colors first, then switching after the
-  // DB fetch completes. If this ever diverges from the DB default, users will
-  // see an initial flash of the wrong theme on every page load.
-  const DEFAULT_THEME: ThemeKey = "peach-amber";
+  // mount instead of flashing the wrong theme first, then switching after the
+  // DB fetch completes. IMPORTANT: When the admin changes the site theme via
+  // Admin > Theme, this constant MUST also be updated to match, otherwise
+  // users will see an initial flash of the old theme on every page load.
+  const DEFAULT_THEME: ThemeKey = "sky-cyan";
   const [theme, setThemeState] = useState<ThemeKey>(DEFAULT_THEME);
   const [loading, setLoading] = useState(true);
 
