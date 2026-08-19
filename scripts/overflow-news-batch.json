@@ -1,6 +1,281 @@
 [
   {
     "rank": 101,
+    "raw": "46,9.7,\"OpenAI Launches 'ChatGPT for Teens' with Built-In Parental Controls and Safety Guardrails\",Technology,\"CA, US\",Civic Authority,2026-08-18T14:11:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"OpenAI launches ChatGPT for Teens equipped with parental controls, Socratic learning modes, and enhanced safety guardrails.\",\"OpenAI releases a specialized teen version of ChatGPT equipped with mandatory age-assurance verification, default parental oversight dashboards, and content safety filters designed to prevent academic evasion and mental health harms.\",https://www.choseno.com/news/openai-launches-chatgpt-for-teens-parental-controls-safety-2026-08-18,https://www.choseno.com/news/openai-launches-chatgpt-for-teens-parental-controls-safety-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.449Z"
+  },
+  {
+    "rank": 102,
+    "raw": "47,9.6,\"Parti Québécois Leader Rejects Immediate Independence Referendum Citing Continental Trade Volatility\",Policy,\"QC, CA\",François Legault,2026-08-18T14:24:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Parti Québécois Leader Paul St-Pierre Plamondon states a future sovereignty referendum will not proceed during continental trade volatility.\",\"Parti Québécois Leader Paul St-Pierre Plamondon clarifies that an independent Quebec government would not initiate a sovereignty referendum during periods of acute North American trade and geopolitical instability.\",https://www.choseno.com/news/quebec-separatist-pq-leader-delays-referendum-us-instability-2026-08-18,https://www.choseno.com/wall/fran-ois-legault",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 103,
+    "raw": "48,9.6,\"Stellantis Recalls 850,000 Vehicles Across U.S. Over Rearview Camera Software Glitch\",Consumer Protection,\"MI, US\",Civic Authority,2026-08-18T18:00:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Stellantis recalls 850000 Jeep, Chrysler, and Ram vehicles across the U.S. due to a software glitch disabling rearview camera displays.\",\"Automotive manufacturer Stellantis issues a safety recall covering nearly 850,000 Jeep Grand Cherokee, Chrysler, and Ram vehicles in the United States to repair radio software malfunctions that disable backup camera displays.\",https://www.choseno.com/news/stellantis-recalls-850000-jeep-ram-vehicles-rearview-camera-nhtsa-2026-08-18,https://www.choseno.com/news/stellantis-recalls-850000-jeep-ram-vehicles-rearview-camera-nhtsa-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 104,
+    "raw": "49,9.5,\"U.S. Treasury Yields Surge as Middle East Energy Stalemate Unsettles Financial Markets\",Economy,\"NY, US\",Civic Authority,2026-08-18T17:34:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"U.S. 10-year Treasury yields jump to 4.35 percent as energy market friction in the Strait of Hormuz complicates Federal Reserve rate cut expectations.\",\"Benchmark 10-year Treasury yields rise to 4.35 percent and major equity indices pull back as escalating tensions in the Strait of Hormuz push global oil prices higher, complicating Federal Reserve interest rate cut expectations.\",https://www.choseno.com/news/treasury-bond-yields-jump-iran-energy-stalemate-wall-street-2026-08-18,https://www.choseno.com/news/treasury-bond-yields-jump-iran-energy-stalemate-wall-street-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 105,
+    "raw": "50,9.5,\"Senator Jon Ossoff Introduces Bipartisan Rural Hospital Emergency Stabilization Act\",Health,\"GA, US\",Jon Ossoff,2026-08-18T13:17:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Senator Jon Ossoff introduces a 2.5 billion dollar bipartisan bill to save rural hospitals from closure and expand emergency healthcare access.\",\"Georgia U.S. Senator Jon Ossoff introduces legislation providing $2.5 billion in emergency Medicare bridge financing and expanded reimbursement formulas to halt rural hospital closures across underserved agricultural counties.\",https://www.choseno.com/news/jon-ossoff-rural-hospital-stabilization-emergency-funding-act-2026-08-18,https://www.choseno.com/wall/jon-ossoff",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 106,
+    "raw": "51,9.4,\"Calgary City Council Advances $210M Bow River Water Infrastructure and Flood Defense Agreement\",Infrastructure,\"AB, CA\",Danielle Smith,2026-08-18T17:30:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Calgary City Council approves a 210 million dollar partnership with Alberta to build upstream Bow River reservoir flood and drought defenses.\",\"Calgary City Council votes to approve a $210 million joint infrastructure accord with the Alberta government, advancing engineering designs for upstream reservoir storage along the Bow River to protect against severe flooding and seasonal drought.\",https://www.choseno.com/news/calgary-city-council-bow-river-water-infrastructure-flood-mitigation-2026-08-18,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 107,
+    "raw": "52,9.3,\"Seattle City Council Passes Tax Incentive Package to Revitalize Vacant Downtown Commercial Spaces\",Economy,\"WA, US\",Civic Authority,2026-08-18T17:00:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Seattle City Council approves B&O tax incentives and 12 million dollars in grants to fill vacant downtown commercial storefronts.\",\"Seattle City Council approves sweeping tax credits and streamlined permitting for small retailers, local artists, and food entrepreneurs to convert chronically vacant downtown commercial storefronts into active community enterprises.\",https://www.choseno.com/news/seattle-city-council-commercial-vacancy-small-business-tax-incentive-2026-08-18,https://www.choseno.com/news/seattle-city-council-commercial-vacancy-small-business-tax-incentive-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 108,
+    "raw": "53,9.3,\"Boston City Council Enacts Mandatory Landlord Registry and Housing Code Enforcement Law\",Housing,\"MA, US\",Michelle Wu,2026-08-18T16:45:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Boston City Council passes a mandatory landlord registry law requiring inspections for chronic housing code violations.\",\"Boston City Council passes a comprehensive rental housing ordinance requiring all private residential landlords to register properties in a public database and undergo mandatory biannual safety inspections to protect tenant wellness.\",https://www.choseno.com/news/boston-city-council-landlord-registration-code-enforcement-ordinance-2026-08-18,https://www.choseno.com/wall/michelle-wu",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 109,
+    "raw": "54,9.3,\"Austin City Council Authorizes $95M Watershed Protection Plan for Barton Springs Aquifer\",Climate,\"TX, US\",Greg Abbott,2026-08-18T16:30:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Austin City Council approves 95 million dollars to protect 1800 acres of sensitive recharge land feeding the Barton Springs Aquifer.\",\"Austin City Council approves $95 million in conservation easements and green stormwater infrastructure to preserve 1,800 acres of sensitive recharge zone land protecting the Barton Springs Edwards Aquifer.\",https://www.choseno.com/news/austin-city-council-watershed-protection-barton-springs-aquifer-2026-08-18,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 110,
+    "raw": "55,9.2,\"Dallas City Council Approves $180M Modernization of Municipal AI Traffic Signal Grid\",Infrastructure,\"TX, US\",Civic Authority,2026-08-18T16:15:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Dallas City Council approves 180 million dollars to deploy AI-synchronized traffic signals across 1500 intersections to cut congestion.\",\"Dallas City Council awards a $180 million infrastructure contract to upgrade 1,500 municipal traffic intersections with artificial intelligence-synchronized signal controllers and emergency vehicle preemption systems.\",https://www.choseno.com/news/dallas-city-council-smart-traffic-signal-modernization-ai-grid-2026-08-18,https://www.choseno.com/news/dallas-city-council-smart-traffic-signal-modernization-ai-grid-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 111,
+    "raw": "56,9.2,\"Crude Oil Prices Climb to Highest Level Since July as Strait of Hormuz Standoff Intensifies\",Economy,\"DC, US\",Donald Trump,2026-08-18T17:14:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Global crude oil prices surge past 88 dollars per barrel as maritime transit restrictions in the Strait of Hormuz trigger shipping delays.\",\"Global energy markets react as Iranian military authorities affirm restricted transit conditions in the Strait of Hormuz, pushing Brent crude past $88 per barrel amid heightened commercial shipping risks.\",https://www.choseno.com/news/strait-of-hormuz-blockade-iran-us-oil-price-spike-wti-2026-08-18,https://www.choseno.com/wall/donald-trump",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 112,
+    "raw": "57,9.1,\"United Arab Emirates Air Defenses Intercept Ballistic Threat Over Gulf Waters\",Policy,\"DC, US\",Civic Authority,2026-08-18T17:11:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"UAE air defense systems successfully intercept ballistic projectiles over Gulf waters as regional security leadership convenes.\",\"UAE military authorities confirm successful air defense interceptions of inbound projectile threats over territorial waters, convening the Supreme National Security Council to coordinate regional defense readiness.\",https://www.choseno.com/news/uae-missile-interception-iran-regional-security-alert-2026-08-18,https://www.choseno.com/news/uae-missile-interception-iran-regional-security-alert-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 113,
+    "raw": "58,9.1,\"Pakistan Supreme Court Orders Imran Khan Transferred to Hospital for Comprehensive Medical Care\",Justice,\"DC, US\",Civic Authority,2026-08-18T16:00:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Pakistan Supreme Court orders former Prime Minister Imran Khan transferred from prison to hospital for specialized medical care.\",\"Pakistan's Supreme Court directs federal prison authorities to immediately transfer former Prime Minister Imran Khan from Adiala Jail to the Pakistan Institute of Medical Sciences for specialized cardiovascular evaluation.\",https://www.choseno.com/news/pakistan-supreme-court-imran-khan-hospital-transfer-order-2026-08-18,https://www.choseno.com/news/pakistan-supreme-court-imran-khan-hospital-transfer-order-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 114,
+    "raw": "59,9.0,\"Florida State Board Appointee Arrested in Tallahassee on Federal Child Exploitation Charges\",Justice,\"FL, US\",Ron DeSantis,2026-08-18T15:40:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Federal and state law enforcement arrest a Florida state board appointee in Tallahassee following an unsealed child exploitation indictment.\",\"Federal and state law enforcement agents arrest a high-profile Florida gubernatorial appointee following a multi-jurisdictional cyber-crimes indictment alleging production and possession of child sexual abuse material.\",https://www.choseno.com/news/florida-political-appointee-arrest-child-exploitation-charges-2026-08-18,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 115,
+    "raw": "60,9.0,\"Internal Meta Research Unsealed in Federal Court Revealing Algorithmic Engagement Priorities Over Youth Safety\",Technology,\"CA, US\",Gavin Newsom,2026-08-18T17:24:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Unsealed internal documents presented in California federal court show Meta executives deprioritized youth safety tools to protect platform engagement.\",\"State attorneys general present unsealed internal corporate presentations in Oakland federal court, showing Meta executives repeatedly deprioritized youth mental health safety features to maximize adolescent platform engagement.\",https://www.choseno.com/news/meta-child-safety-internal-research-concealment-california-trial-2026-08-18,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 116,
+    "raw": "61,8.9,\"Russian Depositors Accelerate Banking Withdrawals Over Fears of State War Asset Levies\",Economy,\"DC, US\",Civic Authority,2026-08-18T16:00:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Russian bank depositors accelerate cash withdrawals following legislative proposals regarding state defense bond conversions.\",\"Central Bank of Russia liquidity data reveals significant retail savings withdrawals following legislative proposals in the State Duma to tap private bank deposits for long-term military defense bonds.\",https://www.choseno.com/news/russian-bank-deposit-outflows-war-seizure-concerns-moscow-2026-08-18,https://www.choseno.com/news/russian-bank-deposit-outflows-war-seizure-concerns-moscow-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 117,
+    "raw": "62,8.8,\"Ukrainian Long-Range Drone Strike Targets Energy Infrastructure Near Moscow Suburbs\",Policy,\"DC, US\",Civic Authority,2026-08-18T15:55:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Ukrainian long-range drones strike fuel and energy facilities near Moscow suburbs, causing temporary international airport closures.\",\"Ukrainian deep-strike unmanned aerial vehicles target oil storage facilities and power distribution substations in the Moscow region, triggering temporary airspace closures at international airports.\",https://www.choseno.com/news/ukraine-drone-strike-moscow-energy-refineries-retaliation-2026-08-18,https://www.choseno.com/news/ukraine-drone-strike-moscow-energy-refineries-retaliation-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 118,
+    "raw": "63,8.8,\"Home Depot Reports Cautious Consumer Spending as High Mortgage Rates Constrain Major Renovations\",Economy,\"GA, US\",Civic Authority,2026-08-18T15:01:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Home Depot quarterly earnings show homeowners opting for smaller repairs while deferring major renovations amid high mortgage rates.\",\"The Home Depot reports quarterly financial results showing homeowners shifting toward smaller repair projects while delaying high-dollar kitchen and bath remodels due to sustained 7 percent mortgage interest rates.\",https://www.choseno.com/news/home-depot-q2-earnings-home-renovation-slowdown-mortgage-rates-2026-08-18,https://www.choseno.com/news/home-depot-q2-earnings-home-renovation-slowdown-mortgage-rates-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 119,
+    "raw": "64,8.8,\"Canadian Housing Market Moves Toward Balanced Conditions as July Sales Drop 5.3%\",Housing,\"ON, CA\",Civic Authority,2026-08-18T16:00:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Canadian Real Estate Association reports July home sales dropped 5.3 percent as rising inventory brings markets toward balanced territory.\",\"The Canadian Real Estate Association reports national home sales dipped 5.3 percent in July compared to last year, with rising inventory levels in Ontario and British Columbia providing buyers with improved negotiating leverage.\",https://www.choseno.com/news/crea-canadian-housing-market-july-sales-drop-balanced-inventory-2026-08-18,https://www.choseno.com/news/crea-canadian-housing-market-july-sales-drop-balanced-inventory-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 120,
+    "raw": "65,8.7,\"Ontario Opposition MPPs Demand Universal Criminal Background Screening for Summer Camp Staff\",Public Safety,\"ON, CA\",Doug Ford,2026-08-18T17:20:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Ontario opposition MPPs and parent advocates demand mandatory criminal background screening for all private youth summer camp staff.\",\"Child protection advocates and Ontario legislative opposition members urge the provincial government to close legal loopholes by mandating universal vulnerable sector criminal background checks for all private youth camp instructors.\",https://www.choseno.com/news/ontario-summer-camp-instructor-background-check-loophole-reform-2026-08-18,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 121,
+    "raw": "66,8.7,\"Ninth Circuit Upholds Disqualification of Nominated U.S. Attorney in Nevada\",Justice,\"NV, US\",Civic Authority,2026-08-18T15:30:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Ninth Circuit federal appeals court upholds the disqualification of a nominated U.S. Attorney in Nevada citing ethics conflict standards.\",\"A federal appeals court upholds the disqualification of Sigal Chattah from serving as a nominated U.S. Attorney in Nevada, citing mandatory ethics conflict rules arising from past partisan litigation against federal agencies.\",https://www.choseno.com/news/ninth-circuit-upholds-disqualification-nevada-us-attorney-2026-08-18,https://www.choseno.com/news/ninth-circuit-upholds-disqualification-nevada-us-attorney-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 122,
+    "raw": "67,8.6,\"House Oversight Committee Inquires into White House Communications Protocols and Social Coordination\",Policy,\"DC, US\",Donald Trump,2026-08-18T15:39:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"House Oversight Committee sends formal inquiry requesting records on White House communications protocols and record-keeping compliance.\",\"House Oversight Committee leadership sends formal inquiry letters requesting internal communications protocols and ethics compliance records regarding executive social media dissemination and outside advisory coordination.\",https://www.choseno.com/news/white-house-communications-aide-natalie-harp-ethics-review-2026-08-18,https://www.choseno.com/wall/donald-trump",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 123,
+    "raw": "68,8.6,\"Southern Alberta Agricultural Producers Urge Urgent Sectoral Exemption from U.S. Border Tariffs\",Economy,\"AB, CA\",Danielle Smith,2026-08-18T16:00:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Southern Alberta cattle and grain exporters demand urgent tariff exemptions as cross-border trade deadlines threaten meat supply chains.\",\"Alberta cattle associations, grain growers, and regional MPs call on federal trade negotiators to secure immediate tariff exemptions for integrated agricultural supply chains ahead of impending cross-border trade deadlines.\",https://www.choseno.com/news/southern-alberta-beef-grain-exporters-demand-us-tariff-waivers-2026-08-18,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 124,
+    "raw": "69,8.5,\"Philadelphia Police Deploy Tactical Patrols Following Assault Pattern Along Fairmount Park Trails\",Public Safety,\"PA, US\",Civic Authority,2026-08-18T17:32:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Philadelphia Police deploy tactical patrols and surveillance drones along Fairmount Park trails following a pattern of masked assaults.\",\"Philadelphia Police Department detectives and park rangers establish coordinated surveillance details and bicycle patrols along Schuylkill River and Fairmount Park recreation trails after a series of masked physical assaults.\",https://www.choseno.com/news/philadelphia-police-fairmount-park-assault-investigation-taskforce-2026-08-18,https://www.choseno.com/news/philadelphia-police-fairmount-park-assault-investigation-taskforce-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 125,
+    "raw": "70,8.4,\"Governor Brian Kemp Welcomes $120M Film Studio Expansion in Metro Atlanta\",Economy,\"GA, US\",Brian Kemp,2026-08-18T15:30:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Governor Brian Kemp celebrates a 120 million dollar film studio expansion in Georgia, reaffirming the states competitive film tax credits.\",\"Georgia Governor Brian Kemp participates in ground-breaking ceremonies for a major soundstage expansion in Fayette County, reaffirming the state's long-term commitment to competitive film and television production tax credits.\",https://www.choseno.com/news/brian-kemp-georgia-film-tax-credit-production-facility-expansion-2026-08-18,https://www.choseno.com/wall/brian-kemp",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 126,
+    "raw": "71,8.4,\"Rep. Ashley Hinson Backs Multi-Year Defense Procurement for Domestic Munitions Manufacturing\",Policy,\"IA, US\",Pete Hegseth,2026-08-18T16:00:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Rep. Ashley Hinson advocates for multi-year defense procurement in the NDAA to boost domestic munitions manufacturing in the Midwest.\",\"Iowa U.S. Representative Ashley Hinson advocates for long-term multi-year defense procurement contracts in the National Defense Authorization Act to expand domestic industrial manufacturing of critical ammunition and propulsion systems.\",https://www.choseno.com/news/ashley-hinson-backs-defense-procurement-ndaa-ammunition-modernization-2026-08-18,https://www.choseno.com/wall/pete-hegseth",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 127,
+    "raw": "72,8.3,\"Edmonton City Council Evaluates $45M Automated Fare Gate System for LRT Network\",Infrastructure,\"AB, CA\",Civic Authority,2026-08-18T16:30:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Edmonton City Council evaluates a 45 million dollar plan to install automated fare gates across the LRT network to boost transit safety.\",\"Edmonton City Council reviews a comprehensive $45 million capital proposal to install automated, physical fare gates across all underground and surface LRT stations to enhance system safety and reduce transit fare evasion.\",https://www.choseno.com/news/edmonton-city-council-transit-fare-gates-arc-card-integration-2026-08-18,https://www.choseno.com/news/edmonton-city-council-transit-fare-gates-arc-card-integration-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 128,
+    "raw": "73,8.3,\"Halifax Regional Council Authorizes $38M Protected Active Transportation Corridor Network\",Infrastructure,\"NS, CA\",Civic Authority,2026-08-18T17:00:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Halifax Regional Council approves 38 million dollars to complete protected cycling and active transit corridors across the regional core.\",\"Halifax Regional Council approves the completion of an all-ages, all-abilities protected cycling and active transit network across the regional urban core, linking Dartmouth and downtown Halifax with multimodal connections.\",https://www.choseno.com/news/halifax-regional-council-active-transit-bikeway-network-approval-2026-08-18,https://www.choseno.com/news/halifax-regional-council-active-transit-bikeway-network-approval-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 129,
+    "raw": "74,8.3,\"Winnipeg City Council Allocates $50M Emergency Road and Bridge Rehabilitation Fund\",Infrastructure,\"MB, CA\",Civic Authority,2026-08-18T16:45:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Winnipeg City Council approves an emergency 50 million dollar fund to rebuild damaged arterial roads and rehabilitate bridge decks.\",\"Winnipeg City Council passes an accelerated $50 million infrastructure allocation to repair freeze-thaw asphalt deterioration, rehabilitate regional bridge decks, and modernize concrete arterial corridors.\",https://www.choseno.com/news/winnipeg-city-council-road-reconstruction-bridge-infrastructure-funding-2026-08-18,https://www.choseno.com/news/winnipeg-city-council-road-reconstruction-bridge-infrastructure-funding-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 130,
+    "raw": "75,8.2,\"San Diego City Council Approves 25 MW Solar and Microgrid Battery Program for Civic Facilities\",Climate,\"CA, US\",Gavin Newsom,2026-08-18T17:15:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"San Diego City Council approves 70 million dollars to install 25 MW of solar and battery microgrids across public civic facilities.\",\"San Diego City Council authorizes a $70 million clean energy resilience initiative, installing 25 megawatts of rooftop solar arrays and localized microgrid battery storage across municipal recreation centers, libraries, and emergency stations.\",https://www.choseno.com/news/san-diego-city-council-municipal-solar-battery-storage-resilience-2026-08-18,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 131,
+    "raw": "76,8.2,\"Denver City Council Establishes $65M Affordable Housing Land Acquisition Trust\",Housing,\"CO, US\",Civic Authority,2026-08-18T17:00:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Denver City Council establishes a 65 million dollar land acquisition trust to secure affordable housing along transit corridors.\",\"Denver City Council votes to create a dedicated $65 million revolving land acquisition fund, purchasing strategic real estate along high-frequency transit corridors to ensure long-term affordable rental and homeownership development.\",https://www.choseno.com/news/denver-city-council-affordable-housing-land-acquisition-trust-2026-08-18,https://www.choseno.com/news/denver-city-council-affordable-housing-land-acquisition-trust-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 132,
+    "raw": "77,8.1,\"Ottawa Transit Commission Approves $75M Fleet Safety Upgrades for O-Train LRT System\",Infrastructure,\"ON, CA\",Civic Authority,2026-08-18T16:30:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Ottawa Transit Commission approves 75 million dollars in engineering upgrades to permanently resolve O-Train LRT axle bearing issues.\",\"The Ottawa Transit Commission authorizes a $75 million technical retrofit package for the Confederation Line light rail transit fleet, implementing permanent axle-bearing redesigns and cold-weather track switch heaters.\",https://www.choseno.com/news/ottawa-city-council-o-train-lrt-safety-infrastructure-modernization-2026-08-18,https://www.choseno.com/news/ottawa-city-council-o-train-lrt-safety-infrastructure-modernization-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 133,
+    "raw": "78,8.1,\"Atlanta City Council Enacts Comprehensive Tree Canopy Protection and Reforestation Law\",Climate,\"GA, US\",Civic Authority,2026-08-18T17:00:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Atlanta City Council passes a strict tree canopy protection ordinance to preserve mature legacy trees and expand urban forests.\",\"Atlanta City Council passes an updated Urban Forest Protection Ordinance, establishing strict developer tree-removal mitigation fees, protecting historic legacy hardwood trees, and funding 100,000 native tree plantings by 2030.\",https://www.choseno.com/news/atlanta-city-council-tree-canopy-protection-urban-forestry-ordinance-2026-08-18,https://www.choseno.com/news/atlanta-city-council-tree-canopy-protection-urban-forestry-ordinance-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 134,
+    "raw": "79,8.0,\"Delhi Municipal Corporation Deploys Wildlife Control Teams Ahead of BWF World Championships\",Public Safety,\"DC, US\",Civic Authority,2026-08-18T18:20:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"Delhi municipal authorities deploy specialized wildlife teams and acoustic deterrents to secure the BWF World Badminton Championships venue.\",\"Municipal authorities in New Delhi deploy specialized urban wildlife management teams and acoustic deterrents around the Indira Gandhi Arena to prevent macaque monkeys and birds from disrupting international badminton matches.\",https://www.choseno.com/news/delhi-municipal-corporation-wildlife-controls-badminton-world-championships-2026-08-18,https://www.choseno.com/news/delhi-municipal-corporation-wildlife-controls-badminton-world-championships-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 135,
+    "raw": "80,8.0,\"U.K. Health and Safety Executive Implements Restrictions on Sensitizing Gel Nail Monomers\",Consumer Protection,\"DC, US\",Civic Authority,2026-08-18T18:10:00Z,Afternoon Peak (1:00 PM - 3:00 PM EST),\"UK cosmetic regulators ban over-the-counter gel nail kits with high HEMA concentrations to prevent severe contact allergies.\",\"The U.K. cosmetic safety regulator enacts binding restrictions prohibiting high-concentration HEMA and Di-HEMA chemicals in consumer nail products following rising clinical rates of permanent contact allergies.\",https://www.choseno.com/news/uk-cosmetics-safety-agency-bans-gel-nail-sensitizing-monomers-2026-08-18,https://www.choseno.com/news/uk-cosmetics-safety-agency-bans-gel-nail-sensitizing-monomers-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 136,
+    "raw": "81,9.9,\"Delaware Becomes First State to Enact Its Own John Lewis Voting Rights Act\",Elections,\"DE, US\",Matt Meyer,2026-08-18T07:35:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Delaware becomes the first state to enact its own John Lewis Voting Rights Act, adding language-access rules and a private right of action against voter suppression.\",\"Governor Matt Meyer signs House Bill 444, creating state-level voter discrimination protections, language-assistance requirements, and a private right of action, effective July 1, 2027.\",https://www.choseno.com/news/delaware-voting-rights-act-signed-2026-08-06,https://www.choseno.com/wall/matt-meyer",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 137,
+    "raw": "82,9.8,\"New York Creates Cannabis Showcase Events for Microbusinesses and Small Dispensaries\",Policy,\"NY, US\",Kathy Hochul,2026-08-18T07:36:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"New York now lets licensed cannabis microbusinesses and dispensaries sell at farmers' markets and street fairs through new state-approved Showcase Events.\",\"Governor Hochul signs S.10113/A.11217, letting licensed cannabis microbusinesses and dispensaries sell at farmers' markets and community pop-ups through new state-approved showcase events.\",https://www.choseno.com/news/new-york-cannabis-showcase-events-signed-2026-08-06,https://www.choseno.com/wall/kathy-hochul",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 138,
+    "raw": "83,9.9,\"Surrey City Council Adopts $284.5M Policing Budget as Municipal Service Assumes Full Cloverdale Operations\",Public Safety,\"BC, CA\",Brenda Locke,2026-08-17T22:30:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Surrey City Council approves a 284.5 million dollar policing budget as the Surrey Police Service expands jurisdiction across Cloverdale.\",\"Surrey City Council and the Surrey Police Board reach a milestone $284.5 million operating agreement for 2026 as the Surrey Police Service expands front-line operations across Cloverdale and prepares for complete RCMP demobilization.\",https://www.choseno.com/news/surrey-police-service-transition-budget-284-million-city-council-2026-08-17,https://www.choseno.com/wall/brenda-locke",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 139,
+    "raw": "84,9.8,\"Phoenix City Council Implements Landmark Heat Safety Mandates for Outdoor Municipal and Contract Workers\",Health,\"AZ, US\",Civic Authority,2026-08-17T21:45:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Phoenix City Council enacts strict heat safety protections mandating shaded breaks and hydration for thousands of outdoor municipal workers.\",\"Phoenix City Council enacts strict municipal heat safety standards, mandating shaded rest breaks, hydration monitoring, and heat illness training for thousands of outdoor workers as summer temperatures repeatedly exceed 115 degrees.\",https://www.choseno.com/news/phoenix-extreme-heat-worker-protection-ordinance-enacted-2026-08-17,https://www.choseno.com/news/phoenix-extreme-heat-worker-protection-ordinance-enacted-2026-08-17",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 140,
+    "raw": "85,9.8,\"Detroit City Council Authorizes $85M Federal Infrastructure Allocation to Electrify Municipal Bus Network\",Infrastructure,\"MI, US\",Civic Authority,2026-08-17T21:30:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Detroit City Council approves 85 million dollars in federal infrastructure funding to acquire 60 electric buses and build transit charging depots.\",\"Detroit City Council approves an $85 million grant deployment to transition the Detroit Department of Transportation fleet to zero-emission electric buses and construct heavy charging depots across municipal transit hubs.\",https://www.choseno.com/news/detroit-city-council-85m-zero-emission-transit-fleet-mandate-2026-08-17,https://www.choseno.com/news/detroit-city-council-85m-zero-emission-transit-fleet-mandate-2026-08-17",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 141,
+    "raw": "86,9.8,\"Chicago City Council Passes Landmark Ordinance Expanding Community Police Oversight Board Powers\",Public Safety,\"IL, US\",Brandon Johnson,2026-08-17T21:45:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Chicago City Council votes to grant the civilian Community Commission for Public Safety binding authority on police department policies.\",\"Chicago City Council votes to expand the authority of the Community Commission for Public Safety and Accountability, granting the civilian oversight panel binding authority on police department departmental policy and disciplinary referrals.\",https://www.choseno.com/news/chicago-city-council-ordinance-police-oversight-board-powers-2026-08-17,https://www.choseno.com/wall/brandon-johnson",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 142,
+    "raw": "87,9.7,\"Vancouver City Council Approves Accelerated High-Density Housing Along Broadway Subway Corridor\",Economy,\"BC, CA\",Ken Sim,2026-08-17T21:30:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Vancouver City Council approves streamlined approvals for 30000 rental homes along the Broadway Subway corridor with tenant protections.\",\"Vancouver City Council approves key updates to the Broadway Plan, streamlining approvals for purpose-built rental towers and securing enhanced tenant protection protections across major rapid transit stations.\",https://www.choseno.com/news/vancouver-city-council-density-transit-corridors-broadway-plan-2026-08-17,https://www.choseno.com/wall/ken-sim",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 143,
+    "raw": "88,9.7,\"Miami-Dade County Commission Approves $350M Resilience Bond Package for Coastal Flood Barriers\",Climate,\"FL, US\",Daniella Levine Cava,2026-08-17T21:15:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Miami-Dade County Commissioners approve 350 million dollars in green resilience bonds to construct storm surge pumps and elevate seawalls.\",\"Miami-Dade County Commissioners vote to authorize $350 million in municipal green resilience bonds to finance massive storm surge pumps, seawall elevation, and mangrove wetland restoration across vulnerable coastal neighborhoods.\",https://www.choseno.com/news/miami-dade-commission-authorizes-flood-mitigation-resilience-bonds-2026-08-17,https://www.choseno.com/wall/daniella-levine-cava",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 144,
+    "raw": "89,9.9,\"New York State Justice Postpones Luigi Mangione Murder Trial Pending Double Jeopardy Ruling\",Justice,\"NY, US\",Alvin Bragg,2026-08-18T04:22:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Manhattan Supreme Court Justice Gregory Carro postpones Luigi Mangiones state murder trial pending constitutional double jeopardy review.\",\"Manhattan Supreme Court Justice Gregory Carro adjourns Luigi Mangione's state murder trial scheduled for September after the defense files a dismissal motion citing constitutional double jeopardy following his federal guilty plea.\",https://www.choseno.com/news/judge-delays-mangione-state-trial-double-jeopardy-motion-2026-08-17,https://www.choseno.com/wall/alvin-bragg",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 145,
+    "raw": "90,9.8,\"President Lee Directs South Korean Defense Overhaul as U.S. Joint Military Exercises Scale Back\",Policy,\"DC, US\",Donald Trump,2026-08-18T04:49:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"South Korean President Lee orders defense overhaul and accelerates nuclear sub development as U.S. joint military drills are scaled back.\",\"South Korean President Lee Jae-myung directs his cabinet to prepare for worst-case security contingencies as joint Ulchi Freedom Shield exercises launch with reduced U.S. participation, reiterating plans for nuclear submarine acquisition and wartime operational autonomy.\",https://www.choseno.com/news/south-korea-president-lee-worst-case-scenario-us-military-drills-reduction-2026-08-18,https://www.choseno.com/wall/donald-trump",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 146,
+    "raw": "91,9.8,\"Hawaii Mobilizes Emergency Infrastructure Teams as Tropical Storm Lala Leaves 100,000 Without Power\",Climate,\"HI, US\",Civic Authority,2026-08-18T02:32:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Hawaii emergency crews mobilize as Tropical Storm Lala leaves over 100000 without power and damages key bridges on the Big Island.\",\"State and county emergency officials deploy disaster response teams across Hawaii as Tropical Storm Lala causes widespread flash flooding, structural damage in Naalehu, and knocks out electrical service to over 100,000 residents.\",https://www.choseno.com/news/tropical-storm-lala-hawaii-power-outage-flash-floods-naalehu-2026-08-18,https://www.choseno.com/news/tropical-storm-lala-hawaii-power-outage-flash-floods-naalehu-2026-08-18",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 147,
+    "raw": "92,9.8,\"House Public Safety Committee Votes to Investigate Federal Security Vetting of Accused NATO Intern\",Justice,\"ON, CA\",Dominic LeBlanc,2026-08-18T00:16:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"House Public Safety Committee votes to investigate federal background vetting after a Canadian NATO intern was arrested on espionage charges.\",\"The House of Commons Standing Committee on Public Safety votes in an emergency session to launch a formal parliamentary inquiry into federal security clearance procedures following the arrest of a Canadian intern in Belgium for alleged espionage.\",https://www.choseno.com/news/house-public-safety-committee-nato-spy-vetting-investigation-vote-2026-08-18,https://www.choseno.com/wall/dominic-leblanc",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 148,
+    "raw": "93,9.7,\"Defense Secretary Pete Hegseth and Rep. Zach Nunn Address Rural Veterans and Defense Logistics at Iowa Civic Forum\",Policy,\"IA, US\",Pete Hegseth,2026-08-18T02:53:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Defense Secretary Pete Hegseth and Rep. Zach Nunn meet with rural constituents and veterans at Iowa State Fair to discuss defense manufacturing.\",\"U.S. Defense Secretary Pete Hegseth joins Representative Zach Nunn at the Iowa State Fairgrounds, engaging with rural constituents on veterans' healthcare access, defense industrial manufacturing, and agricultural supply chain resilience.\",https://www.choseno.com/news/defense-secretary-pete-hegseth-rep-zach-nunn-iowa-state-fair-2026-08-18,https://www.choseno.com/wall/pete-hegseth",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 149,
+    "raw": "94,9.7,\"Civil Liberties Groups Launch Constitutional Challenge Against Ontario's New Mandatory Cash Bail Rules\",Justice,\"ON, CA\",Doug Ford,2026-08-17T21:30:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Civil liberties groups file a constitutional challenge in Superior Court against Ontarios mandatory cash bail deposit regulations.\",\"The Canadian Civil Liberties Association and the Criminal Lawyers' Association file a legal challenge in the Ontario Superior Court of Justice, alleging that the province's new mandatory upfront cash bail deposit regulations violate the Charter of Rights.\",https://www.choseno.com/news/ontario-mandatory-cash-bail-ccla-constitutional-challenge-superior-court-2026-08-17,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 150,
+    "raw": "95,9.6,\"B.C. Emergency Management Ministry Issues Directives Curbing Wildfire Evacuation Disinformation\",Climate,\"BC, CA\",David Eby,2026-08-18T01:15:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"BC government issues strict emergency enforcement directives to combat wildfire disinformation and predatory contractors in evacuation zones.\",\"British Columbia Premier David Eby and Emergency Management Minister Kelly Greene issue strict directives to combat coordinated online disinformation and fraudulent contractors targeting evacuated interior communities.\",https://www.choseno.com/news/bc-wildfires-disinformation-enforcement-emergency-management-orders-2026-08-18,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 151,
+    "raw": "96,9.6,\"Centre County Prosecutors Indict 14 Individuals in Major University Campus Narcotics Ring Bust\",Justice,\"PA, US\",Civic Authority,2026-08-17T23:36:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Centre County prosecutors indict 14 individuals in a major narcotics ring and pledge hazing bust at Penn State University fraternity houses.\",\"Pennsylvania state prosecutors and local police unseal indictments against 14 individuals involved in a large-scale cocaine distribution ring operating across fraternity chapters at Penn State University.\",https://www.choseno.com/news/penn-state-fraternity-cocaine-ring-indictment-14-arrests-2026-08-17,https://www.choseno.com/news/penn-state-fraternity-cocaine-ring-indictment-14-arrests-2026-08-17",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 152,
+    "raw": "97,9.5,\"Federal Court Convenes Landmark Multistate Trial Over Meta's Youth Algorithmic Architecture\",Technology,\"CA, US\",Gavin Newsom,2026-08-17T21:43:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"A coalition of 40 state attorneys general begins trial in federal court against Meta over youth algorithmic addiction and mental health impacts.\",\"A coalition of 40 state attorneys general begins trial against Meta Platforms in California federal court, alleging deceptive practices and deliberate algorithmic engineering that fostered youth mental health crises.\",https://www.choseno.com/news/meta-states-landmark-social-media-youth-addiction-trial-bloomberg-2026-08-17,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 153,
+    "raw": "98,9.5,\"Federal Authorities Pause Border Barrier Construction Along Environmentally Sensitive Big Bend Corridor\",Climate,\"TX, US\",Greg Abbott,2026-08-17T23:09:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Federal authorities pause border wall construction near Big Bend National Park following environmental petitions and terrain challenges.\",\"Federal authorities temporarily halt border barrier construction in West Texas near Big Bend National Park following environmental impact petitions and logistical challenges across rugged desert canyon terrain.\",https://www.choseno.com/news/big-bend-national-park-border-wall-construction-pause-environmental-2026-08-17,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 154,
+    "raw": "99,9.4,\"Alberta First Nations Leadership Issues Stern Rebukes Over Provincial Absence at Historic Treaty Anniversary\",Policy,\"AB, CA\",Danielle Smith,2026-08-17T21:19:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Treaty 6 First Nations leadership issues a stern rebuke to the Alberta government after senior provincial ministers missed treaty anniversary event.\",\"First Nations Chiefs representing Treaty 6, 7, and 8 publicly condemn the Alberta government's decision to miss the official 150th treaty commemoration event, demanding formal recognition and meaningful resource revenue dialogue.\",https://www.choseno.com/news/alberta-first-nations-chiefs-treaty-anniversary-government-boycott-rebuke-2026-08-17,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 155,
+    "raw": "100,9.3,\"Innu Nation Grand Chief Demands Binding Revenue Protections in Expanded Churchill Falls Energy Framework\",Economy,\"NL, CA\",Mark Carney,2026-08-17T22:08:00Z,Early Morning News (6:00 AM - 8:00 AM EST),\"Innu Nation Grand Chief Simon Pokue demands binding equity and environmental protections in the multi-billion Churchill Falls clean hydro deal.\",\"Innu Nation Grand Chief Simon Pokue and Newfoundland opposition parties voice reservations over the newly signed Eastern Clean Power Corridor, demanding full disclosure of revenue-sharing formulas and environmental commitments.\",https://www.choseno.com/news/churchill-falls-hydro-pact-innu-nation-opposition-scrutiny-2026-08-17,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-19T03:22:17.450Z"
+  },
+  {
+    "rank": 101,
     "raw": "101,7.0,\"Kate Gallego Advances Emergency Care Expansion for Phoenix\",Healthcare,\"AZ, US\",\"Kate Gallego\",2026-08-13T17:00:00+00:00,\"Evening News (5:00 PM - 7:00 PM EST)\",\"Kate Gallego Advances Emergency Care Expansion for Phoenix. Read more on Choseno.\",\"High-stakes healthcare policy in AZ with significant civic impact.\",https://www.choseno.com/news/kate-gallego-public-health-13-2026,https://www.choseno.com/wall/kate-gallego"
   },
   {
