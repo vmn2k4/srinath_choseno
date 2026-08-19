@@ -151,6 +151,19 @@ export default function PostCard({
     ? { articleHref: post.news_articles?.slug ? `/news/${post.news_articles.slug}` : undefined }
     : null;
 
+  // ~78% of published articles never got a hero_image_url written back
+  // (generateNewsArticleOgImage failed/wasn't run at publish time for
+  // them) -- post.image_url mirrors that same column, so it's null too and
+  // the post would render with no image at all. NewsArticleDetailClient.tsx
+  // already solves this exact gap on the article page itself by falling
+  // back to the live /news/[slug]/opengraph-image route (cached via
+  // revalidate=3600, so this doesn't mean a fresh render per feed view) --
+  // reuse that identical fallback here so a post never goes imageless just
+  // because its article's static card was never generated.
+  const newsFallbackImageUrl =
+    !post.image_url && newsAuthor?.articleHref ? `${newsAuthor.articleHref}/opengraph-image` : null;
+  const effectiveImageUrl = post.image_url || newsFallbackImageUrl;
+
   const isOwnerPost = ownerGhostId != null && post.ghost_id === ownerGhostId;
   const comments = post.comments || [];
   const byDate = (a: CommentRow, b: CommentRow) =>
@@ -238,11 +251,11 @@ export default function PostCard({
           </div>
         )}
 
-        {(post.image_url || post.video_url) && (
+        {(effectiveImageUrl || post.video_url) && (
           <div className="mb-4 flex gap-3 items-start flex-wrap">
-            {post.image_url && (
+            {effectiveImageUrl && (
               <MediaThumbnail
-                url={post.image_url}
+                url={effectiveImageUrl}
                 type="image"
                 alt="Post Attachment"
                 // News posts carry the article's auto-generated OG card
@@ -250,7 +263,7 @@ export default function PostCard({
                 // variant matches that ratio instead of cropping it down
                 // through the portrait box every regular photo post uses.
                 variant={newsAuthor ? "landscape" : "portrait"}
-                onClick={() => onMediaClick?.(normalizeMediaUrl(post.image_url), "image")}
+                onClick={() => onMediaClick?.(normalizeMediaUrl(effectiveImageUrl), "image")}
               />
             )}
 
