@@ -363,6 +363,45 @@ function calculateReadEngagement(send: CampaignSendRow): {
   };
 }
 
+function parseDeviceAndBrowser(userAgent?: string): { device: string; client: string; icon: string } {
+  if (!userAgent || userAgent === "unknown") {
+    return { device: "Device", client: "Email App", icon: "📱" };
+  }
+  const ua = userAgent.toLowerCase();
+
+  let device = "Desktop";
+  let icon = "💻";
+  if (ua.includes("iphone")) {
+    device = "iPhone";
+    icon = "📱";
+  } else if (ua.includes("ipad")) {
+    device = "iPad";
+    icon = "📱";
+  } else if (ua.includes("android")) {
+    device = "Android";
+    icon = "📱";
+  } else if (ua.includes("macintosh") || ua.includes("mac os")) {
+    device = "Mac";
+    icon = "💻";
+  } else if (ua.includes("windows")) {
+    device = "Windows PC";
+    icon = "💻";
+  } else if (ua.includes("linux")) {
+    device = "Linux PC";
+    icon = "💻";
+  }
+
+  let client = "Browser";
+  if (ua.includes("outlook")) client = "Outlook";
+  else if (ua.includes("applewebkit") && ua.includes("mobile") && !ua.includes("chrome")) client = "Apple Mail";
+  else if (ua.includes("googleimageproxy") || ua.includes("gmail")) client = "Gmail";
+  else if (ua.includes("chrome")) client = "Chrome";
+  else if (ua.includes("safari")) client = "Safari";
+  else if (ua.includes("firefox")) client = "Firefox";
+
+  return { device, client, icon };
+}
+
 function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
   const hasOpened = Boolean(send.opened_at || (send.opened_count && send.opened_count > 0));
   if (!hasOpened) {
@@ -377,47 +416,104 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
   const isMultiple = count > 1;
   const readEngagement = calculateReadEngagement(send);
 
+  // Filter open events from send.events
+  const openEvents = (send.events || []).filter((e) => e.event_type === "open");
+
+  // Analyze IP and Device diversity across all opens
+  const ips = openEvents.map((e) => e.event_data?.ip).filter(Boolean) as string[];
+  const uniqueIps = Array.from(new Set(ips));
+
+  const devices = openEvents.map((e) => {
+    const { device, client } = parseDeviceAndBrowser(e.event_data?.user_agent);
+    return `${device} (${client})`;
+  });
+  const uniqueDevices = Array.from(new Set(devices));
+
+  // Determine if it was truly forwarded or re-read by the same person
+  const isMultiDeviceOrIp = uniqueIps.length > 1 || uniqueDevices.length > 1;
+
   return (
     <div className="relative group z-10 hover:z-50 inline-flex items-center cursor-help">
       <Badge tone="emerald" className="cursor-pointer">
         ✓ Opened {count}x {lastOpenedRel ? `(${lastOpenedRel})` : ""}
       </Badge>
 
-      {/* Hover Popup Tooltip Card (Interactive & Hoverable) */}
-      <div className="absolute right-0 top-full pt-1.5 hidden group-hover:block z-50 w-72 animate-fade-in">
-        <div className="p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md">
+      {/* Hover Popup Tooltip Card (Interactive & Scrollable) */}
+      <div className="absolute right-0 top-full pt-1.5 hidden group-hover:block z-50 w-80 animate-fade-in">
+        <div className="p-3.5 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md max-h-96 overflow-y-auto">
           <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
             <div className="flex items-center gap-1.5">
               <span className="text-sm">✉️</span>
-              <p className="text-xs font-bold text-text-main">Open Timestamps</p>
+              <p className="text-xs font-bold text-text-main">Open Timestamps & Devices</p>
             </div>
             <span className="text-xs font-extrabold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full">
               {count}x {count === 1 ? "Open" : "Opens"}
             </span>
           </div>
 
-          <div className="space-y-1.5 text-xs">
-            <div className="flex items-start justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
-              <span className="text-[11px] font-semibold text-text-muted">First Open:</span>
-              <span className="text-[11px] font-medium text-text-main text-right">
-                {formatDateTime(firstOpened)}
-                <span className="block text-[10px] text-text-muted">({firstOpenedRel})</span>
-              </span>
-            </div>
+          {/* Granular Open-by-Open Log (when tracking_events available) */}
+          {openEvents.length > 0 ? (
+            <div className="space-y-1.5 mb-2.5">
+              <p className="text-[10px] font-bold text-text-muted uppercase tracking-wider">
+                All Recorded Opens ({openEvents.length})
+              </p>
+              <div className="space-y-1.5 max-h-48 overflow-y-auto pr-0.5">
+                {openEvents.map((ev, idx) => {
+                  const uaInfo = parseDeviceAndBrowser(ev.event_data?.user_agent);
+                  const ipStr = ev.event_data?.ip || "Unknown IP";
+                  const openNum = ev.event_data?.open_number || idx + 1;
+                  const timeRel = formatLastOpened(ev.occurred_at || ev.event_data?.timestamp);
+                  const timeFormatted = formatDateTime(ev.occurred_at || ev.event_data?.timestamp);
 
-            {isMultiple && (
+                  return (
+                    <div
+                      key={ev.id || idx}
+                      className="p-2 rounded-lg bg-surface-hover/80 border border-border-light/30 text-xs"
+                    >
+                      <div className="flex items-center justify-between gap-1 mb-0.5">
+                        <span className="font-bold text-[11px] text-text-main flex items-center gap-1">
+                          <span>{uaInfo.icon}</span> Open #{openNum}
+                        </span>
+                        <span className="text-[10px] font-semibold text-emerald-500">{timeRel}</span>
+                      </div>
+                      <p className="text-[10px] text-text-main font-medium">{timeFormatted}</p>
+                      <div className="flex items-center justify-between text-[9px] text-text-muted mt-1 pt-1 border-t border-border-light/20">
+                        <span>{uaInfo.device} · {uaInfo.client}</span>
+                        <span className="font-mono">{ipStr}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            /* Fallback summary for rows before granular logs */
+            <div className="space-y-1.5 text-xs mb-2">
               <div className="flex items-start justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
-                <span className="text-[11px] font-semibold text-text-muted">Latest Open:</span>
+                <span className="text-[11px] font-semibold text-text-muted">First Open:</span>
                 <span className="text-[11px] font-medium text-text-main text-right">
-                  {formatDateTime(lastOpened)}
-                  <span className="block text-[10px] text-text-muted">({lastOpenedRel})</span>
+                  {formatDateTime(firstOpened)}
+                  <span className="block text-[10px] text-text-muted">({firstOpenedRel})</span>
                 </span>
               </div>
-            )}
 
+              {isMultiple && (
+                <div className="flex items-start justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
+                  <span className="text-[11px] font-semibold text-text-muted">Latest Open:</span>
+                  <span className="text-[11px] font-medium text-text-main text-right">
+                    {formatDateTime(lastOpened)}
+                    <span className="block text-[10px] text-text-muted">({lastOpenedRel})</span>
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Quick Metrics */}
+          <div className="space-y-1.5 text-xs mb-2 pt-1 border-t border-border-light/30">
             {send.first_open_time_seconds ? (
-              <div className="flex items-center justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/70">
-                <span className="text-[11px] font-semibold text-text-muted">Time to Open:</span>
+              <div className="flex items-center justify-between gap-2 p-1.5 rounded-lg bg-surface-hover/50">
+                <span className="text-[11px] font-semibold text-text-muted">Time to First Open:</span>
                 <span className="text-[11px] font-bold text-emerald-500">
                   {formatTimeToOpen(send.first_open_time_seconds)} after send
                 </span>
@@ -436,12 +532,34 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
             </div>
           </div>
 
+          {/* Accurate IP & Device Verification Verdict */}
           {isMultiple && (
-            <div className="mt-2 pt-1.5 border-t border-border-light/30 text-[10px] text-primary leading-tight flex items-start gap-1">
-              <span>🔄</span>
-              <span>
-                <strong>Forward Signal:</strong> {count} opens detected. Spaced opens indicate the email was forwarded to staff, advisors, or re-read.
-              </span>
+            <div
+              className={`mt-2 pt-2 border-t border-border-light/30 text-[10px] leading-snug flex items-start gap-1.5 p-2 rounded-lg ${
+                isMultiDeviceOrIp
+                  ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
+                  : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
+              }`}
+            >
+              <span className="text-xs shrink-0">{isMultiDeviceOrIp ? "👥" : "🔄"}</span>
+              <div>
+                <strong>{isMultiDeviceOrIp ? "Likely Forwarded" : "Re-read by Same Recipient"}:</strong>{" "}
+                {openEvents.length > 0 ? (
+                  isMultiDeviceOrIp ? (
+                    <span>
+                      Opened across {uniqueDevices.length} different devices ({uniqueDevices.join(", ")}) and {uniqueIps.length} IP networks.
+                    </span>
+                  ) : (
+                    <span>
+                      All {count} opens originated from the same IP network ({uniqueIps[0] || "matched IP"}) on the same device ({uniqueDevices[0] || "matched device"}).
+                    </span>
+                  )
+                ) : (
+                  <span>
+                    {count} opens recorded over time.
+                  </span>
+                )}
+              </div>
             </div>
           )}
         </div>

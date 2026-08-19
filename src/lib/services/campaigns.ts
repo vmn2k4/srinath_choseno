@@ -24,6 +24,23 @@ export interface CampaignSendInput {
 // (supabase/migrations/20260811_politician_claim_campaigns.sql — apply via
 // psql, then `supabase gen types` to fill this in properly). Shape it by
 // hand in the meantime rather than blocking the feature on a regen.
+export interface TrackingEventRow {
+  id: number;
+  send_id: string;
+  event_type: "open" | "click" | "wall_view" | "wall_exit";
+  event_data: {
+    ip?: string;
+    user_agent?: string;
+    timestamp?: string;
+    open_number?: number;
+    link?: string;
+    wall_slug?: string;
+    duration_seconds?: number;
+  };
+  occurred_at: string;
+  created_at: string;
+}
+
 export interface CampaignSendRow {
   id: string;
   politician_name: string;
@@ -50,6 +67,7 @@ export interface CampaignSendRow {
   wall_visit_duration_seconds?: number | null;
   estimated_read_time_seconds?: number | null;
   engagement_score?: number;
+  events?: TrackingEventRow[];
 }
 
 export interface CampaignStatsRow {
@@ -133,7 +151,30 @@ export async function listCampaignSends(
     query = query.eq("campaign_name" as never, opts.campaignName as never);
   }
   const { data, error } = await query;
-  return { data: (data as unknown as CampaignSendRow[] | null) || [], error };
+  const rows = (data as unknown as CampaignSendRow[] | null) || [];
+
+  if (rows.length > 0) {
+    const sendIds = rows.map((r) => r.id);
+    const { data: eventsData } = await supabase
+      .from("tracking_events" as never)
+      .select("*")
+      .in("send_id" as never, sendIds as never)
+      .order("occurred_at", { ascending: true });
+
+    if (eventsData && Array.isArray(eventsData)) {
+      const eventsBySendId = new Map<string, TrackingEventRow[]>();
+      for (const ev of eventsData as unknown as TrackingEventRow[]) {
+        const list = eventsBySendId.get(ev.send_id) || [];
+        list.push(ev);
+        eventsBySendId.set(ev.send_id, list);
+      }
+      for (const row of rows) {
+        row.events = eventsBySendId.get(row.id) || [];
+      }
+    }
+  }
+
+  return { data: rows, error };
 }
 
 export async function getCampaignStats(supabase: Client) {
