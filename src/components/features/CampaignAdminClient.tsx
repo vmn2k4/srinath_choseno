@@ -463,9 +463,6 @@ export default function CampaignAdminClient() {
           <div>
             <p className="text-xs font-semibold text-text-muted mb-1.5">Template</p>
             <div className="flex flex-wrap gap-2">
-              <Button size="sm" variant="outline" onClick={() => applyTemplate(null)}>
-                Blank invite
-              </Button>
               {CAMPAIGN_TEMPLATE_PRESETS.map((preset) => (
                 <Button key={preset.key} size="sm" variant="outline" onClick={() => applyTemplate(preset)}>
                   {preset.label}
