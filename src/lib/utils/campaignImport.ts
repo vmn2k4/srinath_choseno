@@ -152,17 +152,34 @@ export function parseCampaignInput(text: string): ParsedCampaignRecord[] {
   return parseCampaignCsv(trimmed);
 }
 
+import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
+
 // Simple {{name}}/{{role}}/{{city}}/{{wall_slug}} substitution for subject/body
 // templates. {{claim_link}} is deliberately left untouched — sendCampaignInvite
 // (src/lib/services/campaigns.ts) fills that one in once it mints the token, so
 // the link actually emailed and the link logged to the database never drift.
 export function fillCampaignTemplate(template: string, data: CampaignRecordInput): string {
-  const firstName = (data.name || "").trim().split(/\s+/)[0] || data.name || "";
+  const name = (data.name || "").trim();
+  const firstName = name.split(/\s+/)[0] || name;
+  const role = (data.role || "").trim();
+  const city = (data.city || "").trim();
+  const rawWallSlug = (data.wallSlug || "").trim();
+  const wallSlug = rawWallSlug || (name ? buildPoliticianWallSlug(name, role) : "");
+  const wallUrl = wallSlug ? `https://www.choseno.com/wall/${wallSlug}` : "https://www.choseno.com";
+
   return template
+    // Double-curly merge tags
     .replace(/\{\{\s*first_name\s*\}\}/gi, firstName)
-    .replace(/\{\{\s*name\s*\}\}/gi, data.name || "")
-    .replace(/\{\{\s*role\s*\}\}/gi, data.role || "")
-    .replace(/\{\{\s*city\s*\}\}/gi, data.city || "")
-    .replace(/\{\{\s*wall_slug\s*\}\}/gi, (data.wallSlug || "").trim())
-    .replace(/\{\{\s*wall_url\s*\}\}/gi, (data.wallSlug || "").trim() ? `https://www.choseno.com/wall/${(data.wallSlug || "").trim()}` : "");
+    .replace(/\{\{\s*name\s*\}\}/gi, name)
+    .replace(/\{\{\s*role\s*\}\}/gi, role)
+    .replace(/\{\{\s*city\s*\}\}/gi, city)
+    .replace(/\{\{\s*wall_slug\s*\}\}/gi, wallSlug)
+    .replace(/\{\{\s*wall_url\s*\}\}/gi, wallUrl)
+    // Single square bracket fallback tags ([Name], [wall_slug], [City], [Role], [first_name])
+    .replace(/\[\s*first_name\s*\]/gi, firstName)
+    .replace(/\[\s*name\s*\]/gi, name)
+    .replace(/\[\s*role\s*\]/gi, role)
+    .replace(/\[\s*city\s*\]/gi, city)
+    .replace(/\[\s*wall_slug\s*\]/gi, wallSlug)
+    .replace(/\[\s*wall_url\s*\]/gi, wallUrl);
 }

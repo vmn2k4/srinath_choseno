@@ -24,6 +24,7 @@ import {
   fillCampaignTemplate,
   isValidCampaignEmail,
   type ParsedCampaignRecord,
+  type CampaignRecordInput,
 } from "@/lib/utils/campaignImport";
 import {
   sendCampaignInvite,
@@ -798,21 +799,19 @@ export default function CampaignAdminClient() {
     }
   };
 
-  const updateRowField = (index: number, field: "email" | "wallSlug", value: string) => {
+  const updateRowField = (index: number, field: keyof CampaignRecordInput, value: string) => {
     setRows((prev) =>
       prev.map((r, i) => {
         if (i !== index) return r;
         const data = { ...r.data, [field]: value };
         const error =
-          field === "email"
-            ? !data.name.trim()
-              ? "Missing name"
-              : !data.email.trim()
-              ? "Missing email"
-              : !isValidCampaignEmail(data.email)
-              ? `Invalid email: ${data.email}`
-              : null
-            : r.error;
+          !data.name.trim()
+            ? "Missing name"
+            : !data.email.trim()
+            ? "Missing email"
+            : !isValidCampaignEmail(data.email)
+            ? `Invalid email: ${data.email}`
+            : null;
         return { ...r, data, error };
       })
     );
@@ -926,8 +925,13 @@ export default function CampaignAdminClient() {
     setRows((prev) => prev.map((r, i) => (i === index ? { ...r, status: "sending" } : r)));
 
     const trackingToken = crypto.randomUUID();
-    let trackedHtml = addTrackingPixelToTemplate(body, trackingToken);
+    // 1. Substitute all recipient merge tags (name, city, role, wall_slug, wall_url, first_name)
+    const filledBody = fillCampaignTemplate(body, record.data);
 
+    // 2. Add email open tracking pixel
+    let trackedHtml = addTrackingPixelToTemplate(filledBody, trackingToken);
+
+    // 3. Wrap links for click tracking and append tracking token to wall links
     const linkRegex = /href="(https?:\/\/[^"]+)"/g;
     trackedHtml = trackedHtml.replace(linkRegex, (_match, url) => {
       let targetUrl = url;
