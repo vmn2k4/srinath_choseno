@@ -417,6 +417,18 @@ export async function getOfficeHolder(
     .maybeSingle();
 }
 
+// Looks up just the contact fields for a single office holder by id — used by
+// the admin Campaign tab's "search to add recipient" flow (search_politicians
+// _and_officeholders doesn't return contact_email/contact_phone since that
+// RPC also serves the public nav-bar search).
+export async function getOfficeHolderContact(supabase: Client, officeHolderId: string) {
+  return supabase
+    .from("office_holders")
+    .select("contact_email, contact_phone")
+    .eq("id", officeHolderId)
+    .maybeSingle();
+}
+
 export async function upsertOfficeHolder(
   supabase: Client,
   fields: {

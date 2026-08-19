@@ -1,5 +1,9 @@
 # Find My District - SEO Improvements
 
+> This doc covers on-page metadata/schema.org work for one page. For the
+> site-wide crawl pipeline — sitemaps, IndexNow, Google indexing, Search
+> Console — see [SEARCH_INDEXING.md](SEARCH_INDEXING.md).
+
 ## Overview
 Comprehensive SEO enhancements made to improve search engine visibility, rankings, and user experience on the Find My District page.
 

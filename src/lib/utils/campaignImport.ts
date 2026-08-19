@@ -7,6 +7,10 @@ export interface CampaignRecordInput {
   email: string;
   role?: string;
   city?: string;
+  // The Choseno wall slug (e.g. "brenda-locke-mayor") — never auto-inferred
+  // from a template, always either supplied in the import or typed in by an
+  // admin, since a guessed slug that doesn't match a real profile 404s.
+  wallSlug?: string;
 }
 
 export interface ParsedCampaignRecord {
@@ -73,6 +77,11 @@ const HEADER_ALIASES: Record<string, keyof CampaignRecordInput> = {
   position: "role",
   city: "city",
   municipality: "city",
+  wall_slug: "wallSlug",
+  wallslug: "wallSlug",
+  wall: "wallSlug",
+  wall_url: "wallSlug",
+  wallurl: "wallSlug",
 };
 
 export function parseCampaignCsv(text: string): ParsedCampaignRecord[] {
@@ -91,7 +100,13 @@ export function parseCampaignCsv(text: string): ParsedCampaignRecord[] {
     });
     results.push({
       row: i + 1,
-      data: { name: data.name || "", email: data.email || "", role: data.role || "", city: data.city || "" },
+      data: {
+        name: data.name || "",
+        email: data.email || "",
+        role: data.role || "",
+        city: data.city || "",
+        wallSlug: data.wallSlug || "",
+      },
       error: validate(data),
     });
   }
@@ -121,6 +136,7 @@ export function parseCampaignJson(text: string): ParsedCampaignRecord[] {
       email: get("email", "politician_email"),
       role: get("role", "role_title", "title", "position"),
       city: get("city", "municipality"),
+      wallSlug: get("wallSlug", "wall_slug", "wall", "wall_url", "wallUrl"),
     };
     return { row: i + 1, data, error: validate(data) };
   });
@@ -136,12 +152,17 @@ export function parseCampaignInput(text: string): ParsedCampaignRecord[] {
   return parseCampaignCsv(trimmed);
 }
 
-// Simple {{name}}/{{role}}/{{city}} substitution for subject/body templates.
+// Simple {{name}}/{{role}}/{{city}}/{{wall_slug}} substitution for subject/body
+// templates. {{claim_link}} is deliberately left untouched — sendCampaignInvite
+// (src/lib/services/campaigns.ts) fills that one in once it mints the token, so
+// the link actually emailed and the link logged to the database never drift.
 export function fillCampaignTemplate(template: string, data: CampaignRecordInput): string {
   const firstName = (data.name || "").trim().split(/\s+/)[0] || data.name || "";
   return template
     .replace(/\{\{\s*first_name\s*\}\}/gi, firstName)
     .replace(/\{\{\s*name\s*\}\}/gi, data.name || "")
     .replace(/\{\{\s*role\s*\}\}/gi, data.role || "")
-    .replace(/\{\{\s*city\s*\}\}/gi, data.city || "");
+    .replace(/\{\{\s*city\s*\}\}/gi, data.city || "")
+    .replace(/\{\{\s*wall_slug\s*\}\}/gi, (data.wallSlug || "").trim())
+    .replace(/\{\{\s*wall_url\s*\}\}/gi, (data.wallSlug || "").trim() ? `https://www.choseno.com/wall/${(data.wallSlug || "").trim()}` : "");
 }

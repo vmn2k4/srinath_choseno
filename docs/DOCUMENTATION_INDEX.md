@@ -87,6 +87,7 @@ Complete guide to all Choseno documentation — architecture, features, data pip
 
 - **[API_CACHING_STRATEGY.md](API_CACHING_STRATEGY.md)** — Client-side + database caching, TTL strategies, invalidation patterns
 - **[GA4_DASHBOARD_SETUP.md](GA4_DASHBOARD_SETUP.md)** — Google Analytics 4 integration, traffic metrics, user signup tracking
+- **[SEARCH_INDEXING.md](SEARCH_INDEXING.md)** — Sitemaps, IndexNow auto-push on publish, Search Console monitoring, and what Google actually offers (no bulk indexing API) [NEW 2026-08-19]
 
 ### Media
 

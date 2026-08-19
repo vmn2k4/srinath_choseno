@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import AdminSubNav from "./AdminSubNav";
 import {
   Megaphone,
@@ -12,12 +12,16 @@ import {
   CheckCircle2,
   XCircle,
   Clock,
+  Search,
+  X,
+  UserPlus,
 } from "lucide-react";
-import { Card, Button, Input, Textarea, Spinner, PageHeader, Badge, ConfirmDialog } from "@/components/primitives";
+import { Card, Button, Input, Textarea, Spinner, PageHeader, Badge, ConfirmDialog, Avatar } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import {
   parseCampaignInput,
   fillCampaignTemplate,
+  isValidCampaignEmail,
   type ParsedCampaignRecord,
 } from "@/lib/utils/campaignImport";
 import {
@@ -27,6 +31,32 @@ import {
   type CampaignSendRow,
   type CampaignStatsRow,
 } from "@/lib/services/campaigns";
+import { searchPoliticians } from "@/lib/services/politicians";
+import { getOfficeHolderContact } from "@/lib/services/elections";
+import { getPoliticianProfile } from "@/lib/services/profile";
+import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
+import { CAMPAIGN_TEMPLATE_PRESETS } from "@/lib/utils/campaignTemplates";
+
+// Same shape search_politicians_and_officeholders returns for the nav-bar
+// search (GlobalPoliticianSearch) — reused here so admins can add a
+// recipient by typing a name instead of hand-building a CSV row.
+type PoliticianSearchResult = {
+  result_key: string;
+  source: string;
+  full_name: string;
+  role_title: string | null;
+  jurisdiction_name: string | null;
+  country: string | null;
+  boundary_type: string | null;
+  map_shape_id: number | null;
+  party_name: string | null;
+  photo_url: string | null;
+  wall_slug: string | null;
+  politician_profile_id: string | null;
+  office_holder_id: string | null;
+  is_key_leader: boolean;
+  key_priority: number | null;
+};
 
 const DEFAULT_SUBJECT = "Your Political Wall is Ready on Choseno";
 
@@ -92,6 +122,19 @@ export default function CampaignAdminClient() {
   const [stats, setStats] = useState<CampaignStatsRow[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
 
+  // Search-to-add — an alternative to pasting CSV/JSON, reusing the same
+  // search_politicians_and_officeholders RPC the nav-bar search
+  // (GlobalPoliticianSearch) uses. The RPC itself doesn't return contact
+  // info (it also serves the public nav search), so picking a result does a
+  // second, admin-only lookup for the email before it's added as a row.
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<PoliticianSearchResult[]>([]);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [addingKey, setAddingKey] = useState<string | null>(null);
+  const searchDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchRequestIdRef = useRef(0);
+
   const loadHistory = useCallback(async () => {
     setLoadingHistory(true);
     const [{ data: sends }, { data: statRows }] = await Promise.all([
@@ -112,6 +155,101 @@ export default function CampaignAdminClient() {
 
   const validCount = useMemo(() => rows.filter((r) => !r.error).length, [rows]);
   const errorCount = rows.length - validCount;
+
+  useEffect(() => {
+    if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
+    const trimmed = searchQuery.trim();
+    if (trimmed.length < 2) {
+      setSearchResults([]);
+      setSearchLoading(false);
+      return;
+    }
+    setSearchLoading(true);
+    searchDebounceRef.current = setTimeout(async () => {
+      const myRequestId = ++searchRequestIdRef.current;
+      const { data, error } = await searchPoliticians(supabase, trimmed, { limit: 15 });
+      if (myRequestId !== searchRequestIdRef.current) return; // stale — a newer keystroke fired since
+      setSearchResults(error ? [] : ((data as PoliticianSearchResult[] | null) || []));
+      setSearchLoading(false);
+    }, 250);
+    return () => {
+      if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
+    };
+  }, [searchQuery, supabase]);
+
+  // Adds a search result as a new recipient row. Contact email isn't in the
+  // search payload, so this does one more lookup — office_holders for a
+  // currently-serving official, politician_profiles for a registered
+  // candidate — and pre-fills the wall slug from the result (or a best-guess
+  // via buildPoliticianWallSlug when the wall doesn't exist yet).
+  const addRecipientFromSearch = async (result: PoliticianSearchResult) => {
+    setAddingKey(result.result_key);
+
+    let email = "";
+    if (result.office_holder_id) {
+      const { data } = await getOfficeHolderContact(supabase, result.office_holder_id);
+      email = data?.contact_email || "";
+    } else if (result.politician_profile_id) {
+      const { data } = await getPoliticianProfile(supabase, result.politician_profile_id);
+      email = (data as { contact_email?: string | null } | null)?.contact_email || "";
+    }
+
+    const wallSlug = result.wall_slug || buildPoliticianWallSlug(result.full_name, result.role_title);
+
+    setRows((prev) => [
+      ...prev,
+      {
+        row: prev.length + 1,
+        data: {
+          name: result.full_name,
+          email,
+          role: result.role_title || "",
+          city: result.jurisdiction_name || "",
+          wallSlug,
+        },
+        error: email ? null : "No email on file — add one below before sending.",
+        status: "idle",
+      },
+    ]);
+
+    setAddingKey(null);
+    setSearchQuery("");
+    setSearchResults([]);
+    setSearchOpen(false);
+  };
+
+  // Inline edits from the review table — mainly for filling in an email the
+  // search lookup couldn't find, or correcting/typing the wall slug, which
+  // is never auto-trusted (see CampaignRecordInput.wallSlug).
+  const updateRowField = (index: number, field: "email" | "wallSlug", value: string) => {
+    setRows((prev) =>
+      prev.map((r, i) => {
+        if (i !== index) return r;
+        const data = { ...r.data, [field]: value };
+        const error =
+          field === "email"
+            ? !data.name.trim()
+              ? "Missing name"
+              : !data.email.trim()
+              ? "Missing email"
+              : !isValidCampaignEmail(data.email)
+              ? `Invalid email: ${data.email}`
+              : null
+            : r.error;
+        return { ...r, data, error };
+      })
+    );
+  };
+
+  const applyTemplate = (preset: (typeof CAMPAIGN_TEMPLATE_PRESETS)[number] | null) => {
+    if (!preset) {
+      setSubject(DEFAULT_SUBJECT);
+      setBody(DEFAULT_BODY);
+      return;
+    }
+    setSubject(preset.subject);
+    setBody(preset.body);
+  };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -218,8 +356,9 @@ export default function CampaignAdminClient() {
             1. Import recipients
           </h2>
           <p className="text-xs text-text-muted mt-1 max-w-2xl">
-            Paste CSV (<code className="text-[11px]">name,email,role,city</code>) or JSON
-            (<code className="text-[11px]">{"[{ \"name\": ..., \"email\": ... }]"}</code>), or upload a file.
+            Paste CSV (<code className="text-[11px]">name,email,role,city,wall_slug</code>) or JSON
+            (<code className="text-[11px]">{"[{ \"name\": ..., \"email\": ... }]"}</code>), search for someone
+            already on Choseno, or upload a file.
           </p>
         </div>
 
@@ -229,7 +368,70 @@ export default function CampaignAdminClient() {
             Upload .csv or .json
             <input type="file" accept=".csv,.json,text/csv,application/json" onChange={handleFileChange} className="hidden" />
           </label>
+          <Button size="sm" variant="outline" onClick={() => setSearchOpen((v) => !v)} className="gap-1.5">
+            <Search size={13} /> Search politicians & office holders
+          </Button>
         </div>
+
+        {searchOpen && (
+          <div className="relative max-w-md">
+            <div className="flex items-center gap-2 w-full bg-surface-hover border border-border-light rounded-full pl-3.5 pr-2 py-1.5 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10 transition-all">
+              <Search size={16} className="text-text-muted shrink-0" />
+              <input
+                autoFocus
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by name, city, or role…"
+                className="flex-1 min-w-0 bg-transparent outline-none text-sm text-text-main placeholder:text-text-muted"
+              />
+              {searchLoading && <Spinner size="sm" />}
+              <button
+                onClick={() => {
+                  setSearchOpen(false);
+                  setSearchQuery("");
+                  setSearchResults([]);
+                }}
+                className="p-1 rounded-full text-text-muted hover:text-text-main hover:bg-surface-active transition-colors shrink-0"
+                aria-label="Close search"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            {searchQuery.trim().length >= 2 && (
+              <div className="absolute left-0 right-0 top-full mt-2 bg-surface border border-border-light/40 rounded-xl shadow-2xl z-50 overflow-hidden">
+                <div className="max-h-80 overflow-y-auto">
+                  {!searchLoading && searchResults.length === 0 && (
+                    <div className="px-4 py-6 text-center text-xs text-text-muted">
+                      No politicians or office holders found for &ldquo;{searchQuery.trim()}&rdquo;.
+                    </div>
+                  )}
+                  {searchResults.map((r) => (
+                    <button
+                      key={r.result_key}
+                      onClick={() => addRecipientFromSearch(r)}
+                      disabled={addingKey === r.result_key}
+                      className="flex items-center gap-2.5 px-3 py-2.5 w-full text-left hover:bg-surface-hover transition-colors border-b border-border-light/10 last:border-b-0 disabled:opacity-50"
+                    >
+                      <Avatar src={r.photo_url} name={r.full_name} size="sm" />
+                      <div className="min-w-0 flex-1">
+                        <p className="font-semibold text-xs text-text-main truncate">{r.full_name}</p>
+                        <p className="text-[11px] text-text-muted truncate">
+                          {[r.role_title, r.jurisdiction_name].filter(Boolean).join(" · ") || r.country}
+                        </p>
+                      </div>
+                      {addingKey === r.result_key ? (
+                        <Spinner size="sm" />
+                      ) : (
+                        <UserPlus size={14} className="text-text-muted shrink-0" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         <Textarea
           rows={8}
@@ -257,6 +459,20 @@ export default function CampaignAdminClient() {
         <Card padding="md" className="space-y-4">
           <h2 className="font-bold text-text-main">2. Compose the email</h2>
 
+          <div>
+            <p className="text-xs font-semibold text-text-muted mb-1.5">Template</p>
+            <div className="flex flex-wrap gap-2">
+              <Button size="sm" variant="outline" onClick={() => applyTemplate(null)}>
+                Blank invite
+              </Button>
+              {CAMPAIGN_TEMPLATE_PRESETS.map((preset) => (
+                <Button key={preset.key} size="sm" variant="outline" onClick={() => applyTemplate(preset)}>
+                  {preset.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+
           <label className="text-xs font-semibold text-text-muted block">
             Campaign name
             <Input
@@ -273,7 +489,8 @@ export default function CampaignAdminClient() {
           </label>
 
           <label className="text-xs font-semibold text-text-muted block">
-            Body (HTML) — use {"{{first_name}}"}, {"{{name}}"}, {"{{role}}"}, {"{{city}}"}, {"{{claim_link}}"}
+            Body (HTML) — use {"{{first_name}}"}, {"{{name}}"}, {"{{role}}"}, {"{{city}}"}, {"{{wall_slug}}"},{" "}
+            {"{{wall_url}}"}, {"{{claim_link}}"}
             <Textarea
               rows={10}
               className="mt-1 font-mono text-xs"
@@ -308,18 +525,34 @@ export default function CampaignAdminClient() {
                 key={i}
                 className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm flex-wrap"
               >
-                <div className="min-w-0 flex-1">
+                <div className="min-w-0 flex-1 space-y-1.5">
                   <p className="font-semibold text-text-main truncate">
                     {r.data.name || <span className="text-text-muted italic">No name</span>}
                     {r.data.role && <span className="text-text-muted font-normal"> — {r.data.role}</span>}
+                    {r.data.city && <span className="text-text-muted font-normal"> · {r.data.city}</span>}
                   </p>
-                  <p className="text-xs text-text-muted truncate">
-                    {r.data.email || <span className="italic">No email</span>}
-                    {r.data.city && ` · ${r.data.city}`}
-                  </p>
-                  {r.error && <p className="text-xs text-danger mt-0.5">{r.error}</p>}
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <Input
+                      size="sm"
+                      type="email"
+                      value={r.data.email}
+                      onChange={(e) => updateRowField(i, "email", e.target.value)}
+                      placeholder="email@example.com"
+                      disabled={r.status === "sending" || r.status === "sent"}
+                      className="!w-52 !py-1 text-xs"
+                    />
+                    <Input
+                      size="sm"
+                      value={r.data.wallSlug || ""}
+                      onChange={(e) => updateRowField(i, "wallSlug", e.target.value)}
+                      placeholder="wall slug, e.g. brenda-locke-mayor"
+                      disabled={r.status === "sending" || r.status === "sent"}
+                      className="!w-56 !py-1 text-xs"
+                    />
+                  </div>
+                  {r.error && <p className="text-xs text-danger">{r.error}</p>}
                   {r.status === "failed" && r.errorMessage && (
-                    <p className="text-xs text-danger mt-0.5">Send error: {r.errorMessage}</p>
+                    <p className="text-xs text-danger">Send error: {r.errorMessage}</p>
                   )}
                 </div>
                 <div className="flex items-center gap-2 shrink-0">

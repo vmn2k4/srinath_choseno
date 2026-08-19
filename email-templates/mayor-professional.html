@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #eef1f5;
+            margin: 0;
+            padding: 32px 16px;
+        }
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 48px;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+        }
+        @media (max-width: 700px) {
+            body {
+                padding: 0;
+            }
+            .container {
+                max-width: 100%;
+                border: none;
+                border-radius: 0;
+                padding: 28px 20px;
+            }
+        }
+        .header {
+            margin-bottom: 32px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: #1a2332;
+        }
+        .intro {
+            font-size: 15px;
+            color: #666;
+            margin: 0 0 24px 0;
+        }
+        .highlight {
+            background-color: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+        .highlight-title {
+            font-weight: 600;
+            color: #1a2332;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+        .highlight p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .cta-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .cta-link:hover {
+            text-decoration: underline;
+        }
+        .section {
+            margin: 32px 0;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2332;
+            margin: 0 0 16px 0;
+        }
+        .section-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .features li {
+            padding: 8px 0 8px 24px;
+            position: relative;
+            font-size: 14px;
+        }
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        .ways-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 16px 0;
+        }
+        .way-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 16px;
+            background-color: #fafbfc;
+        }
+        .way-title {
+            font-weight: 600;
+            color: #1a2332;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+        .way-desc {
+            font-size: 13px;
+            color: #666;
+            margin: 0;
+        }
+        .signature {
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+        }
+        .founder-name {
+            font-weight: 600;
+            color: #1a2332;
+        }
+        .contact-links {
+            margin-top: 16px;
+            font-size: 13px;
+        }
+        .contact-links a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Your Mayor Wall is Ready</h1>
+            <p class="intro">Join Choseno for the 2026 municipal election cycle</p>
+        </div>
+
+        <p style="font-size: 15px; margin: 0 0 24px 0;">Hi Mayor [Name],</p>
+
+        <div class="highlight">
+            <p class="highlight-title">Your wall is now live</p>
+            <p>Voters will see your leadership record, vision, and endorsements — all in one verified space:</p>
+            <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/wall/[wall_slug]" class="cta-link">View Your Wall</a></strong></p>
+        </div>
+
+        <div class="section">
+            <p class="section-content">
+                Choseno is a Canadian civic platform giving local voters a simple way to find their district, see who represents them at every level, and compare candidates side-by-side.
+            </p>
+            <p class="section-content">
+                <strong>The advantage of joining now:</strong> Early candidates gain visibility when residents search. You can start building momentum while others are still deciding.
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="section-title">What You Can Do</p>
+            <ul class="features">
+                <li>Highlight your mayoral record and vision for the future</li>
+                <li>Let constituents post authentic testimonials</li>
+                <li>Connect directly with voters seeking verified information</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <p class="section-title">How to Get Started</p>
+            <div class="ways-grid">
+                <div class="way-box">
+                    <p class="way-title">Quickest (30 seconds)</p>
+                    <p class="way-desc">Reply to this email with your preferred contact, and we'll verify and activate your wall within 24 hours.</p>
+                </div>
+                <div class="way-box">
+                    <p class="way-title">Live Demo (15 minutes)</p>
+                    <p class="way-desc">Schedule a quick call to see the platform in action. <a href="https://calendly.com/vmn2k4/30min" class="cta-link">Pick a time</a></p>
+                </div>
+                <div class="way-box">
+                    <p class="way-title">In-Person Meeting</p>
+                    <p class="way-desc">Let me know if you'd prefer to meet in [City] or the Lower Mainland to discuss strategy.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <p class="section-content">
+                <strong>Live example:</strong> <a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">See how it works</a>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="section-title">Why I Built This</p>
+            <p class="section-content">
+                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to BC to strengthen local democracy with 100% Canadian-owned civic tech—independent of foreign platforms.
+            </p>
+        </div>
+
+        <div class="signature">
+            <p style="margin: 0 0 16px 0;"><span class="founder-name">Murugappan Valliyappan</span><br>Founder, Choseno<br>Lower Mainland, BC</p>
+            <div class="contact-links">
+                672-355-2636 | <a href="mailto:vijay@choseno.com">vijay@choseno.com</a><br>
+                <a href="https://www.linkedin.com/in/muruvalliyappan/">LinkedIn</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
