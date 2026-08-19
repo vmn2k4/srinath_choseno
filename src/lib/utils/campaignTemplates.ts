@@ -942,3 +942,28 @@ export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
     body: PROFESSOR_BODY,
   },
 ];
+
+export const TRACKING_BASE_URL =
+  process.env.NEXT_PUBLIC_TRACKING_BASE_URL ||
+  `${process.env.NEXT_PUBLIC_SUPABASE_URL || "https://qlzyfdwrkcxyqapewxwg.supabase.co"}/functions/v1`;
+
+export function addTrackingPixelToTemplate(
+  htmlBody: string,
+  trackingToken: string
+): string {
+  const trackingPixelUrl = `${TRACKING_BASE_URL}/track-email-open?token=${encodeURIComponent(trackingToken)}`;
+  const trackingPixel = `<img src="${trackingPixelUrl}" width="1" height="1" style="display:none;" alt="" />`;
+  if (htmlBody.includes("</body>")) {
+    return htmlBody.replace("</body>", `${trackingPixel}</body>`);
+  }
+  return `${htmlBody}${trackingPixel}`;
+}
+
+export function createTrackedLink(
+  originalUrl: string,
+  trackingToken: string
+): string {
+  const encoded = encodeURIComponent(originalUrl);
+  return `${TRACKING_BASE_URL}/track-link-click?token=${encodeURIComponent(trackingToken)}&link=${encoded}&redirect=${encoded}`;
+}
+

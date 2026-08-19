@@ -36,7 +36,11 @@ import { searchPoliticians } from "@/lib/services/politicians";
 import { getOfficeHolderContact } from "@/lib/services/elections";
 import { getPoliticianProfile } from "@/lib/services/profile";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
-import { CAMPAIGN_TEMPLATE_PRESETS } from "@/lib/utils/campaignTemplates";
+import {
+  CAMPAIGN_TEMPLATE_PRESETS,
+  addTrackingPixelToTemplate,
+  createTrackedLink,
+} from "@/lib/utils/campaignTemplates";
 
 // Same shape search_politicians_and_officeholders returns for the nav-bar
 // search (GlobalPoliticianSearch) — reused here so admins can add a
@@ -105,6 +109,66 @@ function historyBadge(status: CampaignSendRow["status"]) {
   };
   return <Badge tone={tones[status] || "neutral"}>{status}</Badge>;
 }
+
+function calculateEngagementScore(send: CampaignSendRow): number {
+  if (typeof send.engagement_score === "number" && send.engagement_score > 0) {
+    return send.engagement_score;
+  }
+  let score = 0;
+
+  // Opened (40 points + bonus for multiple opens)
+  if (send.opened_at || (send.opened_count && send.opened_count > 0)) {
+    score += 40;
+    const count = send.opened_count || 1;
+    if (count > 1) {
+      score += Math.min((count - 1) * 5, 10);
+    }
+  }
+
+  // Time to open (10 points) - faster is better
+  if (send.first_open_time_seconds) {
+    if (send.first_open_time_seconds < 3600) score += 10;
+    else if (send.first_open_time_seconds < 86400) score += 5;
+  }
+
+  // Link clicks (30 points)
+  if (send.link_clicks && send.link_clicks > 0) {
+    score += Math.min(send.link_clicks * 10, 30);
+  }
+
+  // Wall visit (20 points + bonus for 30s+)
+  if (send.wall_visited) {
+    score += 20;
+    if (send.wall_visit_duration_seconds && send.wall_visit_duration_seconds >= 30) {
+      score += 10;
+    }
+  }
+
+  return Math.min(score, 100);
+}
+
+function formatTimeToOpen(seconds: number | null | undefined): string {
+  if (!seconds || seconds <= 0) return "-";
+  if (seconds < 60) return `${seconds}s`;
+  if (seconds < 3600) return `${Math.round(seconds / 60)}m`;
+  if (seconds < 86400) return `${Math.round(seconds / 3600)}h`;
+  return `${Math.round(seconds / 86400)}d`;
+}
+
+function formatLastOpened(dateStr: string | null | undefined): string {
+  if (!dateStr) return "";
+  try {
+    const d = new Date(dateStr);
+    const diffSeconds = Math.floor((Date.now() - d.getTime()) / 1000);
+    if (diffSeconds < 60) return "just now";
+    if (diffSeconds < 3600) return `${Math.floor(diffSeconds / 60)}m ago`;
+    if (diffSeconds < 86400) return `${Math.floor(diffSeconds / 3600)}h ago`;
+    return `${Math.floor(diffSeconds / 86400)}d ago`;
+  } catch {
+    return "";
+  }
+}
+
 
 export default function CampaignAdminClient() {
   const supabase = createClient();
@@ -298,11 +362,26 @@ export default function CampaignAdminClient() {
     if (!record || record.error) return;
     setRows((prev) => prev.map((r, i) => (i === index ? { ...r, status: "sending" } : r)));
 
+    // Generate unique tracking token
+    const trackingToken = crypto.randomUUID();
+
+    // Add tracking pixel to email body
+    let trackedHtml = addTrackingPixelToTemplate(body, trackingToken);
+
+    // Rewrite all links with tracking (attaching ?t=trackingToken to wall links)
+    const linkRegex = /href="(https?:\/\/[^"]+)"/g;
+    trackedHtml = trackedHtml.replace(linkRegex, (_match, url) => {
+      let targetUrl = url;
+      if (url.includes("/wall/")) {
+        const sep = url.includes("?") ? "&" : "?";
+        targetUrl = `${url}${sep}t=${trackingToken}`;
+      }
+      return `href="${createTrackedLink(targetUrl, trackingToken)}"`;
+    });
+
     const filledSubject = fillCampaignTemplate(subject, record.data);
-    // Leave {{claim_link}} unresolved here — sendCampaignInvite mints the
-    // token and substitutes it in one place, so the link actually emailed
-    // always matches the claim_link logged to the database.
-    const htmlTemplate = fillCampaignTemplate(body, record.data);
+    // Fill template variables into the tracked HTML
+    const htmlTemplate = fillCampaignTemplate(trackedHtml, record.data);
 
     const { error } = await sendCampaignInvite(supabase, {
       name: record.data.name,
@@ -313,6 +392,7 @@ export default function CampaignAdminClient() {
       htmlTemplate,
       campaignName: campaignName.trim() || "Untitled Campaign",
       redirectOrigin: window.location.origin,
+      trackingToken,
     });
 
     setRows((prev) =>
@@ -636,18 +716,65 @@ export default function CampaignAdminClient() {
           <p className="text-sm text-text-muted">No campaign sends yet.</p>
         ) : (
           <div className="border border-border-light/40 rounded-xl divide-y divide-border-light/30 overflow-hidden max-h-96 overflow-y-auto">
-            {history.map((h) => (
-              <div key={h.id} className="flex items-center justify-between gap-3 px-4 py-2 text-sm flex-wrap">
-                <div className="min-w-0">
-                  <p className="font-semibold text-text-main truncate">{h.politician_name}</p>
-                  <p className="text-xs text-text-muted truncate">
-                    {h.politician_email} · {h.campaign_name}
-                    {h.error_message && ` · ${h.error_message}`}
-                  </p>
+            {history.map((h) => {
+              const engScore = calculateEngagementScore(h);
+              const lastOpenedText = formatLastOpened(h.last_opened_at || h.opened_at);
+              return (
+                <div key={h.id} className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm flex-wrap">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-text-main truncate">{h.politician_name}</p>
+                    <p className="text-xs text-text-muted truncate">
+                      {h.politician_email} · {h.campaign_name}
+                      {h.error_message && ` · ${h.error_message}`}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2.5 flex-wrap text-xs">
+                    {/* Open status */}
+                    {h.opened_at || (h.opened_count && h.opened_count > 0) ? (
+                      <span title={h.last_opened_at || h.opened_at || ""}>
+                        <Badge tone="emerald">
+                          ✓ Opened {h.opened_count || 1}x {lastOpenedText ? `(${lastOpenedText})` : ""}
+                        </Badge>
+                      </span>
+                    ) : (
+                      <Badge tone="neutral">Unopened</Badge>
+                    )}
+
+                    {/* Time to Open */}
+                    {h.first_open_time_seconds ? (
+                      <span className="text-text-muted" title="Time to first open">
+                        ⏱ {formatTimeToOpen(h.first_open_time_seconds)}
+                      </span>
+                    ) : null}
+
+                    {/* Link Clicks */}
+                    {h.link_clicks && h.link_clicks > 0 ? (
+                      <Badge tone="accent">{h.link_clicks} {h.link_clicks === 1 ? "click" : "clicks"}</Badge>
+                    ) : null}
+
+                    {/* Wall visit */}
+                    {h.wall_visited ? (
+                      <Badge tone="primary">
+                        Wall: {h.wall_visit_duration_seconds ? `${h.wall_visit_duration_seconds}s` : "visited"}
+                      </Badge>
+                    ) : null}
+
+                    {/* Engagement Score */}
+                    <div className="flex items-center gap-1.5" title={`Engagement Score: ${engScore}/100`}>
+                      <div className="w-12 h-1.5 bg-border-light/50 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-primary transition-all duration-300"
+                          style={{ width: `${engScore}%` }}
+                        />
+                      </div>
+                      <span className="text-[11px] font-medium text-text-muted">{engScore}/100</span>
+                    </div>
+
+                    {historyBadge(h.status)}
+                  </div>
                 </div>
-                {historyBadge(h.status)}
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </Card>

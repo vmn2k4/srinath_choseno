@@ -35,10 +35,11 @@ serve(async (req) => {
 
     // Get the send record
     const { data: send, error: fetchError } = await supabase
-      .from("campaign_sends")
+      .from("politician_claim_campaigns")
       .select("id, sent_at, opened_at, opened_count, first_open_time_seconds")
-      .eq("tracking_token", token)
-      .single()
+      .or(`tracking_token.eq.${token},claim_token.eq.${token}`)
+      .limit(1)
+      .maybeSingle()
 
     if (fetchError || !send) {
       console.error("Send not found:", fetchError)
@@ -47,12 +48,12 @@ serve(async (req) => {
     }
 
     const now = new Date()
-    const sentTime = new Date(send.sent_at)
+    const sentTime = send.sent_at ? new Date(send.sent_at) : now
     const openedCount = (send.opened_count || 0) + 1
 
     // Calculate time to first open (only if this is the first open)
     let firstOpenTime = send.first_open_time_seconds
-    if (!send.opened_at) {
+    if (!send.opened_at && send.sent_at) {
       firstOpenTime = Math.floor((now.getTime() - sentTime.getTime()) / 1000)
     }
 
@@ -76,7 +77,7 @@ serve(async (req) => {
 
     // Update send record
     const { error: updateError } = await supabase
-      .from("campaign_sends")
+      .from("politician_claim_campaigns")
       .update({
         opened_at: send.opened_at || now,
         last_opened_at: now,

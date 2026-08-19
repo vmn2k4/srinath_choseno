@@ -227,6 +227,45 @@ export default function PoliticianWallClient({
     };
   }, [supabase, wallOwner?.id]);
 
+  // Campaign outreach wall view & duration tracking
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const trackingToken = new URLSearchParams(window.location.search).get("t");
+    if (!trackingToken) return;
+
+    const startTime = Date.now();
+    const trackingBaseUrl =
+      process.env.NEXT_PUBLIC_TRACKING_BASE_URL ||
+      `${process.env.NEXT_PUBLIC_SUPABASE_URL || "https://qlzyfdwrkcxyqapewxwg.supabase.co"}/functions/v1`;
+
+    const sendDurationBeacon = () => {
+      const durationSeconds = Math.max(1, Math.floor((Date.now() - startTime) / 1000));
+      const payload = JSON.stringify({
+        token: trackingToken,
+        wall_slug: ghostId,
+        duration_seconds: durationSeconds,
+      });
+
+      if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
+        const blob = new Blob([payload], { type: "application/json" });
+        navigator.sendBeacon(`${trackingBaseUrl}/track-wall-view`, blob);
+      } else {
+        fetch(`${trackingBaseUrl}/track-wall-view`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: payload,
+          keepalive: true,
+        }).catch(() => {});
+      }
+    };
+
+    window.addEventListener("beforeunload", sendDurationBeacon);
+    return () => {
+      window.removeEventListener("beforeunload", sendDurationBeacon);
+      sendDurationBeacon();
+    };
+  }, [ghostId]);
+
   const openClaimModal = () => {
     if (!user) {
       router.push(`/auth?role=politician&next=${encodeURIComponent(window.location.pathname)}`);

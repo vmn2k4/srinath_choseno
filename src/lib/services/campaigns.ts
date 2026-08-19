@@ -17,6 +17,7 @@ export interface CampaignSendInput {
   htmlTemplate: string;
   campaignName: string;
   redirectOrigin: string;
+  trackingToken?: string;
 }
 
 // politician_claim_campaigns isn't in the generated Database type yet
@@ -38,6 +39,17 @@ export interface CampaignSendRow {
   opened_at: string | null;
   claimed_at: string | null;
   created_at: string;
+  tracking_token?: string | null;
+  opened_count?: number;
+  last_opened_at?: string | null;
+  first_open_time_seconds?: number | null;
+  link_clicks?: number;
+  links_clicked?: Array<{ link: string; clicked_at: string; count: number }>;
+  wall_visited?: boolean;
+  wall_visited_at?: string | null;
+  wall_visit_duration_seconds?: number | null;
+  estimated_read_time_seconds?: number | null;
+  engagement_score?: number;
 }
 
 export interface CampaignStatsRow {
@@ -66,6 +78,7 @@ export function buildCampaignClaimLink(redirectOrigin: string, token: string): s
 // keep going through the rest of the list.
 export async function sendCampaignInvite(supabase: Client, input: CampaignSendInput) {
   const token = crypto.randomUUID();
+  const trackingToken = input.trackingToken || token;
   const claimLink = buildCampaignClaimLink(input.redirectOrigin, token);
   const html = input.htmlTemplate.replace(/\{\{\s*claim_link\s*\}\}/gi, claimLink);
 
@@ -85,6 +98,7 @@ export async function sendCampaignInvite(supabase: Client, input: CampaignSendIn
       role_title: input.role || null,
       city: input.city || null,
       claim_token: token,
+      tracking_token: trackingToken,
       claim_link: claimLink,
       campaign_name: input.campaignName,
       status: sendError ? "failed" : "sent",

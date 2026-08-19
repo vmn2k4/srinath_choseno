@@ -37,10 +37,11 @@ serve(async (req) => {
 
     // Get the send record
     const { data: send, error: fetchError } = await supabase
-      .from("campaign_sends")
+      .from("politician_claim_campaigns")
       .select("id, links_clicked, link_clicks")
-      .eq("tracking_token", token)
-      .single()
+      .or(`tracking_token.eq.${token},claim_token.eq.${token}`)
+      .limit(1)
+      .maybeSingle()
 
     if (fetchError || !send) {
       console.error("Send not found:", fetchError)
@@ -87,7 +88,7 @@ serve(async (req) => {
 
     // Update send record
     const { error: updateError } = await supabase
-      .from("campaign_sends")
+      .from("politician_claim_campaigns")
       .update({
         link_clicks: (send.link_clicks || 0) + 1,
         links_clicked: updatedLinks,
