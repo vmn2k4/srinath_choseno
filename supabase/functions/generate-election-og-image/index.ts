@@ -38,7 +38,7 @@ const SIZE = { width: 1200, height: 630 };
 // after the fix ships, which reads as "the image generation is broken"
 // even though the function itself is fine. Old-version objects just become
 // orphaned in the bucket; harmless, and cheap enough not to bother pruning.
-const CARD_VERSION = 'v2';
+const CARD_VERSION = 'v3';
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',

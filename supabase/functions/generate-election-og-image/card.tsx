@@ -41,10 +41,18 @@ export function ElectionOgCard({
   // bottom -- a 2-candidate race and a 10-candidate primary both need to
   // read cleanly at a glance. Tightened to leave room for CTA bar (Twitter
   // overlays text at the very bottom when sharing, so CTA must sit higher).
-  const rowGap = n > 8 ? 4 : n > 5 ? 7 : 12;
+  const rowGap = n > 8 ? 4 : n > 5 ? 7 : n <= 3 ? 16 : 12;
   const avatarSize = n > 8 ? 26 : n > 5 ? 36 : 50;
   const nameFontSize = n > 8 ? 14 : n > 5 ? 17 : 21;
   const showParty = n <= 8;
+  // A 1-2 candidate race used to stretch its rows across the whole card
+  // (via justifyContent: space-around on a flex:1 box) -- most of the card
+  // ended up as dead white space between two rows, which is what actually
+  // gets shared. Below this size the candidate box now sizes to its own
+  // content and a compact "What is Choseno" panel fills the space that
+  // used to be blank -- verified by hand against the fixed 630px canvas
+  // budget so it never pushes the CTA bar off-canvas (unsafe past n=3).
+  const showAboutPanel = n <= 3;
   // Show the raw supporter count next to the percentage (social proof: a
   // stranger seeing "1 supporter" versus "50%" alone has an actual number
   // to feel is winnable to move) -- only once the roster is small enough
@@ -125,18 +133,17 @@ export function ElectionOgCard({
         </div>
       </div>
 
-      {/* Candidate list */}
+      {/* Candidate list. Sized to its own content now (not flex:1 +
+          space-around) -- a 2-candidate box used to stretch to fill
+          whatever vertical room was left, which just meant one huge gap
+          between the two rows instead of anything useful. The "What is
+          Choseno" panel below picks up that reclaimed space instead. */}
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
-          flex: 1,
           gap: rowGap,
-          // Satori only understands a subset of CSS values -- "space-evenly"
-          // isn't one of them (confirmed live: throws "Invalid value for CSS
-          // property justifyContent"), "space-around" is the closest
-          // supported equivalent for spreading rows across the box.
-          justifyContent: n > 0 ? 'space-around' : 'center',
+          justifyContent: n > 0 ? 'flex-start' : 'center',
           background: '#ffffff',
           borderRadius: 18,
           border: '1.5px solid #e2e8f0',
@@ -236,6 +243,52 @@ export function ElectionOgCard({
           ))
         )}
       </div>
+
+      {/* "What is Choseno" panel -- fills the space a short roster used to
+          leave blank. Fixed/intrinsic size (not flex:1) so it renders the
+          same regardless of how much room is actually free; only shown
+          for small rosters where the 630px budget has room for it (see
+          showAboutPanel above). */}
+      {showAboutPanel && (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: 12,
+            padding: '16px 24px',
+            borderRadius: 16,
+            background: 'linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%)',
+            border: '1.5px solid #dbeafe',
+            gap: 8,
+          }}
+        >
+          <div style={{ display: 'flex', fontSize: 20, fontWeight: 900, color: '#1e3a8a' }}>
+            What is Choseno?
+          </div>
+          <div style={{ display: 'flex', fontSize: 16, fontWeight: 600, color: '#334155', lineHeight: 1.4 }}>
+            The civic platform where citizens rate politicians, compare every candidate on the ballot, and see how their community is leaning — before they vote.
+          </div>
+          <div style={{ display: 'flex', gap: 10, marginTop: 4 }}>
+            {['Rate Politicians', 'Compare Candidates', 'Community Support'].map((label) => (
+              <div
+                key={label}
+                style={{
+                  display: 'flex',
+                  fontSize: 12,
+                  fontWeight: 800,
+                  color: '#1d4ed8',
+                  background: '#ffffff',
+                  padding: '5px 12px',
+                  borderRadius: 999,
+                  border: '1px solid #bfdbfe',
+                }}
+              >
+                {label}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Footer: call-to-action bar. Emerald instead of the old
           orange/"Join" framing -- matches the exact Support button color

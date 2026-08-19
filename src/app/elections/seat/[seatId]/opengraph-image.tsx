@@ -29,6 +29,15 @@ interface Props {
 // half-empty "Election Seat / {role title}" card with no candidate content
 // reads as broken to anyone who sees it shared, whereas the homepage card
 // is a complete, intentional design that never looks like a failure.
+//
+// CARD_VERSION mirrors the same-named constant in the Edge Function's
+// index.ts -- bump both together whenever card.tsx's layout/copy changes.
+// It's folded into the fetch URL below purely to change Next's Data Cache
+// key, since that cache persists across deployments and otherwise keeps
+// serving pre-redesign bytes for up to an hour after a fix ships (the
+// Storage-bucket-side version bust alone isn't visible to this cache).
+const CARD_VERSION = 'v3';
+
 export default async function Image({ params }: Props) {
   const { seatId } = await params;
   const supabase = createPublicClient();
@@ -37,7 +46,7 @@ export default async function Image({ params }: Props) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   if (seat?.id && supabaseUrl) {
     try {
-      const functionUrl = `${supabaseUrl}/functions/v1/generate-election-og-image?seatId=${seat.id}`;
+      const functionUrl = `${supabaseUrl}/functions/v1/generate-election-og-image?seatId=${seat.id}&v=${CARD_VERSION}`;
       const res = await fetch(functionUrl, { next: { revalidate: 3600 } });
       if (res.ok) {
         const buffer = await res.arrayBuffer();
