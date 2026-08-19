@@ -305,6 +305,64 @@ function formatDateTime(dateStr: string | null | undefined): string {
   }
 }
 
+function calculateReadEngagement(send: CampaignSendRow): {
+  durationText: string;
+  readCategory: string;
+  detail: string;
+} {
+  const openTime = send.opened_at ? new Date(send.opened_at).getTime() : null;
+  const links = (send.links_clicked || []) as Array<{ link: string; count?: number; clicked_at?: string }>;
+  const firstClickTime = links[0]?.clicked_at ? new Date(links[0].clicked_at).getTime() : null;
+
+  // Case 1: Active Read time before clicking a link in email
+  if (openTime && firstClickTime && firstClickTime > openTime) {
+    const diffSec = Math.floor((firstClickTime - openTime) / 1000);
+    if (diffSec < 3600) {
+      return {
+        durationText: formatTimeToOpen(diffSec),
+        readCategory: diffSec >= 10 ? "Thoroughly Read" : "Quick Click",
+        detail: `Read email for ${formatTimeToOpen(diffSec)} before clicking link`,
+      };
+    }
+  }
+
+  // Case 2: Wall reading duration
+  if (send.wall_visited && send.wall_visit_duration_seconds) {
+    return {
+      durationText: `${send.wall_visit_duration_seconds}s`,
+      readCategory: send.wall_visit_duration_seconds >= 30 ? "Deep Read" : "Read Wall",
+      detail: `Spent ${send.wall_visit_duration_seconds}s on candidate wall`,
+    };
+  }
+
+  // Case 3: Re-read span across multiple opens
+  if (send.opened_at && send.last_opened_at && send.opened_count && send.opened_count > 1) {
+    const lastOpenTime = new Date(send.last_opened_at).getTime();
+    const diffSec = Math.floor((lastOpenTime - openTime!) / 1000);
+    if (diffSec > 0 && diffSec < 7200) {
+      return {
+        durationText: formatTimeToOpen(diffSec),
+        readCategory: "Re-read Session",
+        detail: `Re-opened across ${formatTimeToOpen(diffSec)} span (${send.opened_count}x)`,
+      };
+    }
+  }
+
+  if (send.opened_at) {
+    return {
+      durationText: "Active",
+      readCategory: "Opened & Viewed",
+      detail: "Recipient opened and viewed email",
+    };
+  }
+
+  return {
+    durationText: "-",
+    readCategory: "Unopened",
+    detail: "Not opened yet",
+  };
+}
+
 function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
   const hasOpened = Boolean(send.opened_at || (send.opened_count && send.opened_count > 0));
   if (!hasOpened) {
@@ -317,6 +375,7 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
   const lastOpenedRel = formatLastOpened(lastOpened);
   const firstOpenedRel = formatLastOpened(firstOpened);
   const isMultiple = count > 1;
+  const readEngagement = calculateReadEngagement(send);
 
   return (
     <div className="relative group z-10 hover:z-50 inline-flex items-center cursor-help">
@@ -364,6 +423,17 @@ function OpenedStatusBadge({ send }: { send: CampaignSendRow }) {
                 </span>
               </div>
             ) : null}
+
+            {/* Read Time / Duration */}
+            <div className="flex items-start justify-between gap-2 p-1.5 rounded-lg bg-primary/5 border border-primary/10">
+              <span className="text-[11px] font-semibold text-primary flex items-center gap-1">
+                <span>📖</span> Read Engagement:
+              </span>
+              <span className="text-[11px] font-medium text-text-main text-right">
+                <span className="font-bold text-primary">{readEngagement.readCategory}</span>
+                <span className="block text-[10px] text-text-muted">{readEngagement.detail}</span>
+              </span>
+            </div>
           </div>
 
           {isMultiple && (
