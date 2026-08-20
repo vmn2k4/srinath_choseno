@@ -1,6 +1,106 @@
 [
   {
     "rank": 101,
+    "raw": "88,7.9,\"SFMTA Board Authorizes $42M Powell Street Transit and Pedestrian Modernization\",Infrastructure,\"CA, US\",Gavin Newsom,2026-08-18T23:25:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The SFMTA Board approves 42.3 million dollars to modernize Powell Street sidewalks, cable car tracks, and transit islands in Union Square.\",\"The San Francisco Municipal Transportation Agency approves $42 million in capital contracts to rebuild Powell Street sidewalks, cable car tracks, and transit boarding islands.\",https://www.choseno.com/news/sfmta-authorizes-42m-powell-street-transit-pedestrian-modernization-2026-08-19,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-20T01:15:24.379Z"
+  },
+  {
+    "rank": 102,
+    "raw": "89,7.8,\"Los Angeles County Supervisors Approve $16M Emergency Flood Channel Hardening in Antelope Valley\",Infrastructure,\"CA, US\",Gavin Newsom,2026-08-18T23:20:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Los Angeles County Supervisors approve 16.2 million dollars to reinforce flood channels and protect Antelope Valley communities from storm runoff.\",\"The Los Angeles County Board of Supervisors awards $16 million to reinforce regional storm channels and protect Palmdale and Lancaster neighborhoods from flash flooding.\",https://www.choseno.com/news/la-county-supervisors-approve-16m-antelope-valley-flood-channel-hardening-2026-08-19,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-20T01:15:24.380Z"
+  },
+  {
+    "rank": 103,
+    "raw": "90,7.8,\"Orange County Supervisors Fund $18M Juvenile Mental Health Crisis Diversion Facility\",Health,\"CA, US\",Gavin Newsom,2026-08-18T23:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Orange County Supervisors approve 18.5 million dollars to establish a dedicated 24/7 youth mental health crisis stabilization facility.\",\"Orange County Board of Supervisors allocates $18 million to establish a 24/7 dedicated youth mental health crisis stabilization center in Orange.\",https://www.choseno.com/news/orange-county-supervisors-fund-18m-juvenile-mental-health-facility-2026-08-19,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-20T01:15:24.380Z"
+  },
+  {
+    "rank": 104,
+    "raw": "91,7.8,\"Phoenix City Council Mandates Heat Safety Standards for Commercial Construction Workplaces\",Public Safety,\"AZ, US\",Civic Authority,2026-08-19T23:10:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Phoenix City Council passes mandatory heat safety rules for commercial construction sites, requiring shade, water, and rest breaks over 105 degrees.\",\"Phoenix City Council passes an ordinance requiring mandatory hydration, shaded rest periods, and biometric monitoring on outdoor commercial construction sites during extreme heat alerts.\",https://www.choseno.com/news/phoenix-city-council-mandates-heat-safety-standards-construction-2026-08-19,https://www.choseno.com/news/phoenix-city-council-mandates-heat-safety-standards-construction-2026-08-19",
+    "archivedAt": "2026-08-20T01:15:24.380Z"
+  },
+  {
+    "rank": 105,
+    "raw": "92,7.7,\"Clark County Commissioners Grant $35M Infrastructure Bond for South Las Vegas Medical Corridor\",Infrastructure,\"NV, US\",Civic Authority,2026-08-19T23:05:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Clark County Commissioners approve 35 million dollars in bond financing to construct roadway and utility infrastructure for South Las Vegas Medical District.\",\"Clark County Commission approves $35 million in revenue bond financing to expand roadway widening, utility conduits, and emergency access for the South Las Vegas Medical District.\",https://www.choseno.com/news/clark-county-commissioners-grant-35m-las-vegas-medical-corridor-2026-08-19,https://www.choseno.com/news/clark-county-commissioners-grant-35m-las-vegas-medical-corridor-2026-08-19",
+    "archivedAt": "2026-08-20T01:15:24.380Z"
+  },
+  {
+    "rank": 106,
+    "raw": "93,7.7,\"King County Council Allocates $24M to Acquire Transit-Oriented Affordable Housing Parcels Along RapidRide Lines\",Housing,\"WA, US\",Civic Authority,2026-08-19T23:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"King County Council approves 24.5 million dollars to acquire land along RapidRide transit lines for 420 affordable homes in Seattle and Renton.\",\"King County Council authorizes $24 million from the transit revenue bond fund to purchase five strategic properties adjacent to RapidRide bus lines for permanently affordable housing.\",https://www.choseno.com/news/king-county-council-allocates-24m-rapidride-affordable-housing-2026-08-19,https://www.choseno.com/news/king-county-council-allocates-24m-rapidride-affordable-housing-2026-08-19",
+    "archivedAt": "2026-08-20T01:15:24.380Z"
+  },
+  {
+    "rank": 107,
+    "raw": "94,7.6,\"Chicago City Council Housing Committee Clears $45M Affordable Co-Op Conversion Fund\",Housing,\"IL, US\",JB Pritzker,2026-08-19T22:55:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Chicago City Council Housing Committee advances a 45 million dollar fund to help South and West Side tenants convert rental buildings into co-ops.\",\"Chicago City Council Committee on Housing and Real Estate approves a $45 million revolving loan fund to assist South and West Side tenants in purchasing multi-family rental buildings.\",https://www.choseno.com/news/chicago-city-council-clears-45m-affordable-coop-conversion-fund-2026-08-19,https://www.choseno.com/wall/jb-pritzker",
+    "archivedAt": "2026-08-20T01:15:24.380Z"
+  },
+  {
+    "rank": 108,
+    "raw": "95,7.6,\"Harris County Commissioners Court Approves $52M Storm Surge Levee and Drainage Reconstruction in Baytown\",Infrastructure,\"TX, US\",Greg Abbott,2026-08-19T22:50:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Harris County Commissioners Court approves 52.4 million dollars to reconstruct and elevate storm surge levees protecting Baytown neighborhoods.\",\"Harris County Commissioners Court awards a $52 million contract to rebuild and elevate 4.5 miles of storm surge levees and drainage pump stations along Cedar Bayou.\",https://www.choseno.com/news/harris-county-approves-52m-baytown-storm-surge-levee-reconstruction-2026-08-19,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-20T01:15:24.380Z"
+  },
+  {
+    "rank": 109,
+    "raw": "96,7.5,\"Dallas County Commissioners Court Institutes Commercial Tax Abatement Framework for Clean Tech\",Economy,\"TX, US\",Greg Abbott,2026-08-19T22:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Dallas County Commissioners Court adopts a 10-year tax abatement policy to attract clean tech and semiconductor manufacturing to Southern Dallas.\",\"Dallas County Commissioners Court adopts a structured 10-year property tax abatement policy to attract advanced solar, battery storage, and semiconductor manufacturing facilities.\",https://www.choseno.com/news/dallas-county-institutes-commercial-tax-abatement-clean-tech-2026-08-19,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-20T01:15:24.380Z"
+  },
+  {
+    "rank": 110,
+    "raw": "97,7.5,\"Miami-Dade County Commission Adopts Biscayne Bay Shoreline Stormwater Runoff Buffer Protections\",Environment,\"FL, US\",Ron DeSantis,2026-08-19T22:40:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Miami-Dade County Commission adopts a mandatory 100-foot living shoreline buffer rule for new developments along Biscayne Bay to cut runoff.\",\"Miami-Dade County Commission enacts a strict 100-foot green stormwater setback ordinance for new waterfront commercial developments along Biscayne Bay.\",https://www.choseno.com/news/miami-dade-commission-adopts-biscayne-bay-stormwater-buffer-protections-2026-08-19,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-20T01:15:24.380Z"
+  },
+  {
+    "rank": 111,
+    "raw": "98,7.4,\"Toronto Infrastructure Committee Endorses $65M Watermain Upgrades Along Eglinton East\",Infrastructure,\"ON, CA\",Doug Ford,2026-08-19T22:35:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Toronto Infrastructure Committee endorses a 65.4 million dollar contract to replace aging watermains and separate storm sewers in Scarborough.\",\"Toronto Infrastructure and Environment Committee approves a $65 million capital contract to replace aging trunk watermains and storm sewers in Scarborough.\",https://www.choseno.com/news/toronto-infrastructure-committee-endorses-65m-eglinton-east-watermain-2026-08-19,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-20T01:15:24.380Z"
+  },
+  {
+    "rank": 112,
+    "raw": "99,7.3,\"Metro Vancouver Regional Board Ratifies $110M Water Filtration Expansion for Coquitlam Watershed\",Infrastructure,\"BC, CA\",David Eby,2026-08-19T22:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Metro Vancouver Board ratifies 110.5 million dollars to expand the Coquitlam Lake water filtration plant, securing regional drinking water.\",\"Metro Vancouver Regional District approves $110 million in capital expenditures to expand the Coquitlam Lake Water Treatment Plant, securing regional drinking water capacity.\",https://www.choseno.com/news/metro-vancouver-board-ratifies-110m-coquitlam-water-filtration-expansion-2026-08-19,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-20T01:15:24.380Z"
+  },
+  {
+    "rank": 113,
+    "raw": "100,7.3,\"Montreal Executive Committee Designates $22M Green Corridor and Pedestrian Promenade Across Ville-Marie\",Urban Planning,\"QC, CA\",François Legault,2026-08-19T22:25:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Montreal Executive Committee approves 22.4 million dollars to create a 1.8-km green promenade and sponge street connecting downtown to Old Montreal.\",\"City of Montreal Executive Committee authorizes a $22 million urban redesign project to create a 1.8-kilometer biophilic green corridor connecting downtown to Old Montreal.\",https://www.choseno.com/news/montreal-executive-committee-designates-22m-ville-marie-green-promenade-2026-08-19,https://www.choseno.com/wall/fran-ois-legault",
+    "archivedAt": "2026-08-20T01:15:24.380Z"
+  },
+  {
+    "rank": 101,
+    "raw": "94,7.3,\"Ottawa Transportation Committee Approves $15M RapidBus Priority Lanes on Baseline Road\",Transit,\"ON, CA\",Doug Ford,2026-08-19T22:20:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Ottawa Transportation Committee approves 15.2 million dollars for dedicated RapidBus priority lanes on Baseline Road to speed up commutes.\",\"Ottawa Transportation Committee approves $15.2 million to design and construct dedicated center-running bus priority lanes along the Baseline Road corridor.\",https://www.choseno.com/news/ottawa-transportation-committee-approves-15m-baseline-road-rapidbus-lanes-2026-08-19,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-20T01:14:26.667Z"
+  },
+  {
+    "rank": 102,
+    "raw": "95,7.2,\"B.C. Ministry of Transportation Awards $85M Contract to Replace Fraser River Railway Bridge Span\",Infrastructure,\"BC, CA\",David Eby,2026-08-19T22:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"B.C. Ministry of Transportation awards an 85.4 million dollar contract to replace the Fraser River Rail Bridge span in New Westminster.\",\"British Columbia Ministry of Transportation awards an $85 million contract to replace the aging swing span of the New Westminster Fraser River Railway Bridge to secure regional freight rail capacity.\",https://www.choseno.com/news/bc-transportation-ministry-awards-85m-fraser-river-rail-bridge-contract-2026-08-19,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-20T01:14:26.668Z"
+  },
+  {
+    "rank": 103,
+    "raw": "96,9.9,\"Debbie Wasserman Schultz Clinches Florida Congressional Primary Victory\",Elections,\"FL, US\",Civic Authority,2026-08-18T23:25:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Rep. Debbie Wasserman Schultz secures the Democratic primary victory in Florida's 25th Congressional District, advancing to November.\",\"U.S. Representative Debbie Wasserman Schultz wins the Democratic nomination in Florida's 25th Congressional District, withstanding primary challengers in a high-turnout contest centered on national policy and coastal protection.\",https://www.choseno.com/news/debbie-wasserman-schultz-clinches-florida-house-primary-2026-08-18,https://www.choseno.com/news/debbie-wasserman-schultz-clinches-florida-house-primary-2026-08-18",
+    "archivedAt": "2026-08-20T01:14:26.668Z"
+  },
+  {
+    "rank": 104,
+    "raw": "97,9.8,\"OPP Major Case Taskforce Recovers Third Set of Human Remains on Rural Smiths Falls Property\",Justice,\"ON, CA\",Doug Ford,2026-08-18T23:10:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"OPP forensic teams discover a third set of human remains on a rural property near Smiths Falls, expanding a major Eastern Ontario homicide probe.\",\"Ontario Provincial Police forensic investigators identify a third set of human remains on a rural property in Lanark County, expanding a major multi-jurisdictional homicide and missing persons investigation.\",https://www.choseno.com/news/smiths-falls-rural-property-third-human-remains-opp-investigation-2026-08-18,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-20T01:14:26.668Z"
+  },
+  {
+    "rank": 105,
+    "raw": "98,9.8,\"Former Senior NIH Adviser Pleads Guilty to Federal Public Records Law Evasion\",Justice,\"DC, US\",Civic Authority,2026-08-18T21:20:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Former senior NIH adviser David Morens pleads guilty in federal court to intentionally evading FOIA public records disclosure laws.\",\"Former senior National Institutes of Health adviser David Morens enters a formal guilty plea in Washington federal court, admitting to intentional deletion of emails and using private accounts to evade federal FOIA disclosure mandates.\",https://www.choseno.com/news/nih-fauci-aide-pleads-guilty-foia-public-records-obstruction-2026-08-18,https://www.choseno.com/news/nih-fauci-aide-pleads-guilty-foia-public-records-obstruction-2026-08-18",
+    "archivedAt": "2026-08-20T01:14:26.668Z"
+  },
+  {
+    "rank": 106,
+    "raw": "99,9.8,\"White House Senior Legislative Liaison Emily Underwood Announces Departure Ahead of Fall Session\",Policy,\"DC, US\",Donald Trump,2026-08-18T19:01:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Senior White House legislative strategist Emily Underwood announces her departure ahead of high-stakes fall congressional budget battles.\",\"Senior White House legislative strategist Emily Underwood announces her transition from the executive branch following the passage of major bipartisan infrastructure and domestic supply chain compacts.\",https://www.choseno.com/news/white-house-senior-legislative-liaison-emily-underwood-transition-2026-08-18,https://www.choseno.com/wall/donald-trump",
+    "archivedAt": "2026-08-20T01:14:26.669Z"
+  },
+  {
+    "rank": 107,
+    "raw": "100,9.7,\"Northern Ireland Health Minister Mike Nesbitt Resigns Amid Coalition Budget Dispute\",Health,\"DC, US\",Civic Authority,2026-08-18T20:46:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Northern Ireland Health Minister Mike Nesbitt resigns from the Stormont Executive following acute healthcare budget disputes.\",\"Ulster Unionist Party Health Minister Mike Nesbitt tenders his resignation from the Northern Ireland Executive at Stormont following intense disputes over acute hospital funding and healthcare waiting list allocations.\",https://www.choseno.com/news/northern-ireland-health-minister-mike-nesbitt-resigns-stormont-coalition-2026-08-18,https://www.choseno.com/news/northern-ireland-health-minister-mike-nesbitt-resigns-stormont-coalition-2026-08-18",
+    "archivedAt": "2026-08-20T01:14:26.669Z"
+  },
+  {
+    "rank": 101,
     "raw": "89,9.7,\"Newfoundland PC Leader Wakeham Debates Commercial Terms in Updated Churchill Falls Hydro Pact\",Economy,\"NL, CA\",Mark Carney,2026-08-18T19:13:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Newfoundland PC Leader Tony Wakeham debates commercial terms and inflation protections in the newly signed Churchill Falls clean hydro pact.\",\"Newfoundland and Labrador Progressive Conservative Leader Tony Wakeham challenges the provincial government on commercial equity terms and the removal of the 2 percent annual escalation clause in the preliminary Churchill Falls agreement.\",https://www.choseno.com/news/tony-wakeham-churchill-falls-pact-escalation-clause-debate-2026-08-18,https://www.choseno.com/wall/mark-carney",
     "archivedAt": "2026-08-19T20:51:42.711Z"
   },
