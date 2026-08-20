@@ -748,13 +748,19 @@ export async function listDistinctBatches(
   const map = new Map<string, number>();
   data.forEach((row: any) => {
     const content = row.content || {};
-    const b = content.batch_number || formatBatchNumberFromDate(row.published_at || row.created_at);
-    map.set(b, (map.get(b) || 0) + 1);
+    const rawBatch = content.batch_number;
+    const b =
+      rawBatch !== undefined && rawBatch !== null && String(rawBatch).trim() !== ""
+        ? String(rawBatch).trim()
+        : formatBatchNumberFromDate(row.published_at || row.created_at);
+    if (b) {
+      map.set(b, (map.get(b) || 0) + 1);
+    }
   });
 
   const batches = Array.from(map.entries())
-    .map(([batch, count]) => ({ batch, count }))
-    .sort((a, b) => b.batch.localeCompare(a.batch));
+    .map(([batch, count]) => ({ batch: String(batch), count }))
+    .sort((a, b) => String(b.batch).localeCompare(String(a.batch), undefined, { numeric: true, sensitivity: "base" }));
 
   return { data: batches, error: null };
 }
@@ -864,7 +870,11 @@ export async function listNewsArticlesForDistribution(
     const allPoliticianNames = politicians.map((p: any) => p.full_name).filter(Boolean);
 
     // Fallback batch number based on publication timestamp
-    const batchNumber = content.batch_number || formatBatchNumberFromDate(row.published_at || row.created_at);
+    const rawBatch = content.batch_number;
+    const batchNumber =
+      rawBatch !== undefined && rawBatch !== null && String(rawBatch).trim() !== ""
+        ? String(rawBatch).trim()
+        : formatBatchNumberFromDate(row.published_at || row.created_at);
     // Fallback viral score
     const viralScore = typeof content.viral_score === "number" ? content.viral_score : (content.breakingNews ? 9.5 : 8.0);
     const batchRank = typeof content.batch_rank === "number" ? content.batch_rank : from + index + 1;
