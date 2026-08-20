@@ -926,7 +926,7 @@ export interface CampaignTemplatePreset {
     name: string;
     email: string;
     role: string;
-    city: string;
+    city?: string;
     wallSlug: string;
   };
 }
