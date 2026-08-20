@@ -180,6 +180,29 @@ const MAYOR_BODY = `<!DOCTYPE html>
             <p style="margin: 10px 0 0 0; font-size: 13px; color: #555;">You can quickly try our easiest way to find the polling district you belong to and see how an election wall appears once candidates are nominated: <strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
         </div>
 
+        <!-- Video Demo Section with Thumbnail & Play Button -->
+        <div class="section" style="margin: 28px 0;">
+            <p class="section-title">See Choseno in Action (2-Min Demo)</p>
+            <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 12px; padding: 18px; text-align: center; border: 1px solid #334155; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; position: relative;" title="Click to watch Choseno complete product demo">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; max-width: 520px; margin: 0 auto;">
+                        <tr>
+                            <td align="center" style="position: relative; background: #000000; border-radius: 10px; overflow: hidden;">
+                                <div style="position: relative; display: inline-block; width: 100%; max-width: 520px;">
+                                    <img src="https://img.youtube.com/vi/WJIpU9Cyoho/hqdefault.jpg" alt="Choseno Product Demo Video" width="520" style="width: 100%; max-width: 520px; height: auto; display: block; border-radius: 8px; opacity: 0.88; margin: 0 auto;" />
+                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 68px; height: 68px; background: rgba(59, 130, 246, 0.95); border-radius: 50%; box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.35), 0 8px 24px rgba(0,0,0,0.5); line-height: 68px; text-align: center;">
+                                        <span style="color: #ffffff; font-size: 28px; display: inline-block; margin-left: 4px; vertical-align: middle;">▶</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <p style="margin: 12px 0 2px 0; color: #f8fafc; font-size: 15px; font-weight: 700; letter-spacing: -0.2px;">Complete Product Demo: Why Choseno?</p>
+                    <p style="margin: 0; color: #94a3b8; font-size: 12px;">Watch our full walkthrough to see candidate walls, district maps, and voter tools in action (Click to play)</p>
+                </a>
+            </div>
+        </div>
+
         <div class="section">
             <p class="section-content">
                 Choseno is Canada's social network for politics. It gives local voters a simple way to find their district, see who represents them at every level, and compare candidates side-by-side. We're launching for the 2026 municipal election cycle.
@@ -403,6 +426,29 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
             <p>Constituents will see your voting record, policy positions, and community testimonials — all in one space:</p>
             <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/wall/{{wall_slug}}" class="cta-link">View Your Wall</a></strong></p>
             <p style="margin: 10px 0 0 0; font-size: 13px; color: #555;">You can quickly try our easiest way to find the polling district you belong to and see how an election wall appears once candidates are nominated: <strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
+        </div>
+
+        <!-- Video Demo Section with Thumbnail & Play Button -->
+        <div class="section" style="margin: 28px 0;">
+            <p class="section-title">See Choseno in Action (2-Min Demo)</p>
+            <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 12px; padding: 18px; text-align: center; border: 1px solid #334155; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; position: relative;" title="Click to watch Choseno complete product demo">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; max-width: 520px; margin: 0 auto;">
+                        <tr>
+                            <td align="center" style="position: relative; background: #000000; border-radius: 10px; overflow: hidden;">
+                                <div style="position: relative; display: inline-block; width: 100%; max-width: 520px;">
+                                    <img src="https://img.youtube.com/vi/WJIpU9Cyoho/hqdefault.jpg" alt="Choseno Product Demo Video" width="520" style="width: 100%; max-width: 520px; height: auto; display: block; border-radius: 8px; opacity: 0.88; margin: 0 auto;" />
+                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 68px; height: 68px; background: rgba(59, 130, 246, 0.95); border-radius: 50%; box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.35), 0 8px 24px rgba(0,0,0,0.5); line-height: 68px; text-align: center;">
+                                        <span style="color: #ffffff; font-size: 28px; display: inline-block; margin-left: 4px; vertical-align: middle;">▶</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <p style="margin: 12px 0 2px 0; color: #f8fafc; font-size: 15px; font-weight: 700; letter-spacing: -0.2px;">Complete Product Demo: Why Choseno?</p>
+                    <p style="margin: 0; color: #94a3b8; font-size: 12px;">Watch our full walkthrough to see candidate walls, district maps, and voter tools in action (Click to play)</p>
+                </a>
+            </div>
         </div>
 
         <div class="section">
@@ -1123,6 +1169,29 @@ const PSSA_BODY = `<!DOCTYPE html>
             <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
         </div>
 
+        <!-- Video Demo Section with Thumbnail & Play Button -->
+        <div class="section" style="margin: 28px 0;">
+            <p class="section-title">See Choseno in Action (2-Min Demo)</p>
+            <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 12px; padding: 18px; text-align: center; border: 1px solid #334155; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; position: relative;" title="Click to watch Choseno complete product demo">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; max-width: 520px; margin: 0 auto;">
+                        <tr>
+                            <td align="center" style="position: relative; background: #000000; border-radius: 10px; overflow: hidden;">
+                                <div style="position: relative; display: inline-block; width: 100%; max-width: 520px;">
+                                    <img src="https://img.youtube.com/vi/WJIpU9Cyoho/hqdefault.jpg" alt="Choseno Product Demo Video" width="520" style="width: 100%; max-width: 520px; height: auto; display: block; border-radius: 8px; opacity: 0.88; margin: 0 auto;" />
+                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 68px; height: 68px; background: rgba(59, 130, 246, 0.95); border-radius: 50%; box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.35), 0 8px 24px rgba(0,0,0,0.5); line-height: 68px; text-align: center;">
+                                        <span style="color: #ffffff; font-size: 28px; display: inline-block; margin-left: 4px; vertical-align: middle;">▶</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <p style="margin: 12px 0 2px 0; color: #f8fafc; font-size: 15px; font-weight: 700; letter-spacing: -0.2px;">Complete Product Demo: Why Choseno?</p>
+                    <p style="margin: 0; color: #94a3b8; font-size: 12px;">Watch our full walkthrough to see candidate walls, district maps, and voter tools in action (Click to play)</p>
+                </a>
+            </div>
+        </div>
+
         <div class="section">
             <p class="section-content">
                 Choseno is Canada's social network for politics — think of it as business reviews, but for politicians. Just like you research restaurants before dining, voters deserve to research candidates before elections. It gives voters a simple way to find their district, see who represents them at every level, and compare candidates side-by-side. We're launching for the 2026 municipal election cycle.
@@ -1349,6 +1418,29 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
             <p class="highlight-title">Specific Ask: 10 Student Researchers for 2026 Municipal Elections</p>
             <p>Choseno is live and recruiting students to conduct structured interviews with candidates running in the 2026 municipal elections. I'd like to invite 10 students from your program to participate in this hands-on research project — and explore how the data collected can benefit your research agenda.</p>
             <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
+        </div>
+
+        <!-- Video Demo Section with Thumbnail & Play Button -->
+        <div class="section" style="margin: 28px 0;">
+            <p class="section-title">See Choseno in Action (2-Min Demo)</p>
+            <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 12px; padding: 18px; text-align: center; border: 1px solid #334155; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; position: relative;" title="Click to watch Choseno complete product demo">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; max-width: 520px; margin: 0 auto;">
+                        <tr>
+                            <td align="center" style="position: relative; background: #000000; border-radius: 10px; overflow: hidden;">
+                                <div style="position: relative; display: inline-block; width: 100%; max-width: 520px;">
+                                    <img src="https://img.youtube.com/vi/WJIpU9Cyoho/hqdefault.jpg" alt="Choseno Product Demo Video" width="520" style="width: 100%; max-width: 520px; height: auto; display: block; border-radius: 8px; opacity: 0.88; margin: 0 auto;" />
+                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 68px; height: 68px; background: rgba(59, 130, 246, 0.95); border-radius: 50%; box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.35), 0 8px 24px rgba(0,0,0,0.5); line-height: 68px; text-align: center;">
+                                        <span style="color: #ffffff; font-size: 28px; display: inline-block; margin-left: 4px; vertical-align: middle;">▶</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <p style="margin: 12px 0 2px 0; color: #f8fafc; font-size: 15px; font-weight: 700; letter-spacing: -0.2px;">Complete Product Demo: Why Choseno?</p>
+                    <p style="margin: 0; color: #94a3b8; font-size: 12px;">Watch our full walkthrough to see candidate walls, district maps, and voter tools in action (Click to play)</p>
+                </a>
+            </div>
         </div>
 
         <div class="section">
