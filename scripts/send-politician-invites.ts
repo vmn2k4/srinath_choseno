@@ -12,10 +12,34 @@ import * as path from "path";
 import * as readline from "readline";
 import { createClient } from "@supabase/supabase-js";
 import { randomUUID } from "crypto";
+import nodemailer from "nodemailer";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.choseno.com";
+
+// Mode toggle: 'local' (direct SMTP via your IP) vs 'supabase' (Edge Function)
+const EMAIL_PROVIDER = (process.env.EMAIL_PROVIDER || (process.env.TITAN_SMTP_USER ? "local" : "supabase")).toLowerCase();
+
+// Local SMTP Transporter (Titan Mail / Custom SMTP)
+let localTransporter: nodemailer.Transporter | null = null;
+if (EMAIL_PROVIDER === "local" || process.env.TITAN_SMTP_USER) {
+  const host = process.env.TITAN_SMTP_HOST || "smtp.titan.email";
+  const port = Number(process.env.TITAN_SMTP_PORT) || 465;
+  const user = process.env.TITAN_SMTP_USER;
+  const pass = process.env.TITAN_SMTP_PASS;
+
+  if (user && pass) {
+    localTransporter = nodemailer.createTransport({
+      host,
+      port,
+      secure: port === 465,
+      pool: true, // Reuse persistent SMTP socket to prevent continuous re-auth flags
+      maxConnections: 1,
+      auth: { user, pass },
+    });
+  }
+}
 
 if (!SUPABASE_URL || !SUPABASE_KEY) {
   console.error("❌ Missing environment variables:");
@@ -132,29 +156,49 @@ async function sendClaimEmail(
   record: PoliticianRecord,
   claimLink: string
 ): Promise<boolean> {
+  const subject = `Your Political Wall is Ready on Choseno`;
+  const htmlContent = generateEmailHtml(record.name, claimLink);
+
+  // --- 1. LOCAL SMTP MODE (Localhost dev / single fixed IP) ---
+  if (EMAIL_PROVIDER === "local" && localTransporter) {
+    try {
+      const senderEmail = process.env.TITAN_SMTP_USER;
+      await localTransporter.sendMail({
+        from: `"Choseno" <${senderEmail}>`,
+        to: record.email,
+        subject,
+        html: htmlContent,
+      });
+      return true;
+    } catch (err: any) {
+      console.error(`  ❌ Local SMTP Error: ${err?.message || err}`);
+      return false;
+    }
+  }
+
+  // --- 2. PRODUCTION MODE (Supabase Edge Function) ---
   try {
-    // Use Supabase Edge Function to send email
     const { data, error } = await supabase.functions.invoke("send-email", {
       body: {
         to: record.email,
-        subject: `Your Political Wall is Ready on Choseno`,
-        html: generateEmailHtml(record.name, claimLink),
+        subject,
+        html: htmlContent,
       },
     });
 
     if (error) {
-      console.error(`  ❌ Email send error: ${error.message}`);
+      console.error(`  ❌ Supabase Edge Function error: ${error.message}`);
       return false;
     }
 
     if (!data?.ok) {
-      console.error(`  ❌ Email service returned error`);
+      console.error(`  ❌ Supabase email service returned non-ok status`);
       return false;
     }
 
     return true;
   } catch (err) {
-    console.error(`  ❌ Failed to send email: ${err}`);
+    console.error(`  ❌ Failed to invoke Supabase send-email: ${err}`);
     return false;
   }
 }
