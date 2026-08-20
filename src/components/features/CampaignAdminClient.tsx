@@ -17,6 +17,8 @@ import {
   UserPlus,
   ExternalLink,
   RefreshCw,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 import { Card, Button, Input, Textarea, Spinner, PageHeader, Badge, ConfirmDialog, Avatar } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
@@ -715,6 +717,60 @@ export default function CampaignAdminClient() {
   const [history, setHistory] = useState<CampaignSendRow[]>([]);
   const [stats, setStats] = useState<CampaignStatsRow[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
+  const [collapsedCampaigns, setCollapsedCampaigns] = useState<Record<string, boolean>>({});
+
+  const toggleCampaignCollapse = (campaignName: string) => {
+    setCollapsedCampaigns((prev) => ({
+      ...prev,
+      [campaignName]: !prev[campaignName],
+    }));
+  };
+
+  const groupedHistory = useMemo(() => {
+    const groups: {
+      campaignName: string;
+      sends: CampaignSendRow[];
+      sentCount: number;
+      failedCount: number;
+      openedCount: number;
+      clickedCount: number;
+    }[] = [];
+
+    const map = new Map<string, CampaignSendRow[]>();
+    for (const h of history) {
+      const name = h.campaign_name || "Uncategorized Campaign";
+      if (!map.has(name)) {
+        map.set(name, []);
+      }
+      map.get(name)!.push(h);
+    }
+
+    map.forEach((sends, campaignName) => {
+      let sentCount = 0;
+      let failedCount = 0;
+      let openedCount = 0;
+      let clickedCount = 0;
+
+      for (const s of sends) {
+        if (s.status === "failed") failedCount++;
+        else sentCount++;
+
+        if (s.opened_at || (s.opened_count && s.opened_count > 0)) openedCount++;
+        if (s.link_clicks && s.link_clicks > 0) clickedCount++;
+      }
+
+      groups.push({
+        campaignName,
+        sends,
+        sentCount,
+        failedCount,
+        openedCount,
+        clickedCount,
+      });
+    });
+
+    return groups;
+  }, [history]);
 
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -1564,60 +1620,114 @@ export default function CampaignAdminClient() {
         ) : history.length === 0 ? (
           <p className="text-sm text-text-muted">No campaign sends yet.</p>
         ) : (
-          <div className="border border-border-light/40 rounded-xl divide-y divide-border-light/30 overflow-visible">
-            {history.map((h) => {
-              const engScore = calculateEngagementScore(h);
-              const lastOpenedText = formatLastOpened(h.last_opened_at || h.opened_at);
+          <div className="space-y-3.5">
+            {groupedHistory.map((group) => {
+              const isCollapsed = Boolean(collapsedCampaigns[group.campaignName]);
               return (
-                <div key={h.id} className="relative flex items-center justify-between gap-3 px-4 py-2.5 text-sm flex-wrap hover:bg-surface/50 transition-colors">
-                  <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-text-main truncate">{h.politician_name}</p>
-                    <p className="text-xs text-text-muted truncate">
-                      {h.politician_email} · {h.campaign_name}
-                      {h.error_message && ` · ${h.error_message}`}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2.5 flex-wrap text-xs">
-                    {/* Open status with hover timestamps & forward detection */}
-                    <OpenedStatusBadge send={h} />
-
-                    {/* Time to Open */}
-                    {h.first_open_time_seconds ? (
-                      <span className="text-text-muted" title="Time to first open">
-                        ⏱ {formatTimeToOpen(h.first_open_time_seconds)}
-                      </span>
-                    ) : null}
-
-                    {/* Link Clicks with hover link details */}
-                    <ClickStatusBadge send={h} />
-
-                    {/* Wall visit */}
-                    {h.wall_visited ? (
-                      <Badge tone="primary">
-                        Wall: {h.wall_visit_duration_seconds ? `${h.wall_visit_duration_seconds}s` : "visited"}
+                <div
+                  key={group.campaignName}
+                  className="border border-border-light/40 rounded-xl overflow-hidden bg-surface/30 shadow-xs"
+                >
+                  {/* Collapsible Campaign Header */}
+                  <button
+                    onClick={() => toggleCampaignCollapse(group.campaignName)}
+                    className="w-full flex items-center justify-between px-4 py-3 bg-surface hover:bg-surface-hover transition-colors text-left select-none border-b border-border-light/20"
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      {isCollapsed ? (
+                        <ChevronRight size={16} className="text-text-muted shrink-0 transition-transform" />
+                      ) : (
+                        <ChevronDown size={16} className="text-primary shrink-0 transition-transform" />
+                      )}
+                      <h3 className="font-bold text-sm text-text-main truncate">
+                        {group.campaignName}
+                      </h3>
+                      <Badge tone="neutral" className="text-[11px] font-medium shrink-0">
+                        {group.sends.length} recipient{group.sends.length === 1 ? "" : "s"}
                       </Badge>
-                    ) : null}
+                    </div>
 
-                    {/* Engagement Score with hover popup */}
-                    <EngagementScoreBadge send={h} />
+                    <div className="flex items-center gap-2 text-xs shrink-0">
+                      <span className="text-text-muted hidden sm:inline">
+                        <strong className="text-emerald-600 dark:text-emerald-400">{group.sentCount}</strong> sent
+                        {group.failedCount > 0 && (
+                          <> · <strong className="text-rose-600 dark:text-rose-400">{group.failedCount}</strong> failed</>
+                        )}
+                        {group.openedCount > 0 && (
+                          <> · <strong className="text-indigo-600 dark:text-indigo-400">{group.openedCount}</strong> opened</>
+                        )}
+                        {group.clickedCount > 0 && (
+                          <> · <strong className="text-amber-600 dark:text-amber-400">{group.clickedCount}</strong> clicked</>
+                        )}
+                      </span>
+                      <span className="text-xs text-primary font-medium ml-1">
+                        {isCollapsed ? "Expand" : "Collapse"}
+                      </span>
+                    </div>
+                  </button>
 
-                    {historyBadge(h.status)}
+                  {/* Recipient Rows */}
+                  {!isCollapsed && (
+                    <div className="divide-y divide-border-light/30 bg-surface/10 overflow-visible">
+                      {group.sends.map((h) => {
+                        return (
+                          <div
+                            key={h.id}
+                            className="relative flex items-center justify-between gap-3 px-4 py-2.5 text-sm flex-wrap hover:bg-surface/60 transition-colors"
+                          >
+                            <div className="min-w-0 flex-1">
+                              <p className="font-semibold text-text-main truncate">{h.politician_name}</p>
+                              <p className="text-xs text-text-muted truncate">
+                                {h.politician_email}
+                                {h.error_message && ` · ${h.error_message}`}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-2.5 flex-wrap text-xs">
+                              {/* Open status with hover timestamps & forward detection */}
+                              <OpenedStatusBadge send={h} />
 
-                    {/* Resend button for failed sends */}
-                    {h.status === "failed" && (
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        disabled={resendingHistoryId === h.id || sendingAll}
-                        onClick={() => handleResendHistory(h)}
-                        className="gap-1 text-xs h-7 px-2.5 border-rose-500/40 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10"
-                        title="Resend this email"
-                      >
-                        <RefreshCw size={11} className={resendingHistoryId === h.id ? "animate-spin" : ""} />
-                        {resendingHistoryId === h.id ? "Resending…" : "Resend"}
-                      </Button>
-                    )}
-                  </div>
+                              {/* Time to Open */}
+                              {h.first_open_time_seconds ? (
+                                <span className="text-text-muted" title="Time to first open">
+                                  ⏱ {formatTimeToOpen(h.first_open_time_seconds)}
+                                </span>
+                              ) : null}
+
+                              {/* Link Clicks with hover link details */}
+                              <ClickStatusBadge send={h} />
+
+                              {/* Wall visit */}
+                              {h.wall_visited ? (
+                                <Badge tone="primary">
+                                  Wall: {h.wall_visit_duration_seconds ? `${h.wall_visit_duration_seconds}s` : "visited"}
+                                </Badge>
+                              ) : null}
+
+                              {/* Engagement Score with hover popup */}
+                              <EngagementScoreBadge send={h} />
+
+                              {historyBadge(h.status)}
+
+                              {/* Resend button for failed sends */}
+                              {h.status === "failed" && (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  disabled={resendingHistoryId === h.id || sendingAll}
+                                  onClick={() => handleResendHistory(h)}
+                                  className="gap-1 text-xs h-7 px-2.5 border-rose-500/40 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10"
+                                  title="Resend this email"
+                                >
+                                  <RefreshCw size={11} className={resendingHistoryId === h.id ? "animate-spin" : ""} />
+                                  {resendingHistoryId === h.id ? "Resending…" : "Resend"}
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               );
             })}
