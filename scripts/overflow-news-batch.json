@@ -1,6 +1,206 @@
 [
   {
     "rank": 101,
+    "raw": "81,8.9,\"Aviation Authorities Mandate 48-Hour Inspection Regimes for 340 Regional Turboprop Aircraft\",Transportation,\"DC, US\",Civic Authority,2026-08-19T16:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The FAA and Transport Canada issue emergency directives requiring 48-hour structural inspections across 340 regional commercial turboprop aircraft.\",\"The FAA and Transport Canada issue joint airworthiness directives requiring ultrasonic structural scans on regional passenger propeller hubs.\",https://www.choseno.com/news/faa-transport-canada-issue-airworthiness-directive-regional-turboprops-2026-08-19,https://www.choseno.com/news/faa-transport-canada-issue-airworthiness-directive-regional-turboprops-2026-08-19",
+    "archivedAt": "2026-08-20T15:00:03.131Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,8.8,\"Premier François Legault Enacts Stricter Energy Allocation Rules for High-Load Industrial Applicants\",Energy,\"QC, CA\",François Legault,2026-08-19T15:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Quebec Premier François Legault enacts energy allocation rules prioritizing domestic battery and green metals manufacturing over foreign data centers.\",\"The Quebec National Assembly ratifies energy reservation frameworks prioritizing domestic battery manufacturing and green metallurgy over foreign server clusters.\",https://www.choseno.com/news/quebec-premier-francois-legault-prioritizes-industrial-hydro-allocation-2026-08-19,https://www.choseno.com/wall/fran-ois-legault",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,8.8,\"Housing Minister Ravi Kahlon Disburses $120M in Civic Grants for Rapid Transit Density Corridors\",Housing,\"BC, CA\",Ravi Kahlon,2026-08-19T16:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"B.C. Housing Minister Ravi Kahlon distributes 120 million dollars in infrastructure grants to 28 cities enacting transit-oriented housing density.\",\"British Columbia allocates infrastructure funding to 28 municipalities achieving expedited multifamily zoning approvals around SkyTrain and transit exchanges.\",https://www.choseno.com/news/bc-housing-minister-ravi-kahlon-distributes-120m-transit-oriented-density-fund-2026-08-19,https://www.choseno.com/wall/ravi-kahlon",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,8.8,\"Texas Regulators Require 40% Produced Water Recycling Across Permian Basin Energy Operations\",Environment,\"TX, US\",Greg Abbott,2026-08-19T16:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Railroad Commission of Texas mandates that Permian Basin energy operators recycle 40 percent of produced water to conserve freshwater aquifers.\",\"The Railroad Commission of Texas adopts mandatory closed-loop recycling mandates to conserve freshwater aquifers across West Texas extraction basins.\",https://www.choseno.com/news/texas-railroad-commission-adopts-permian-basin-water-recycling-standards-2026-08-19,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,8.7,\"California Energy Regulators Authorize $450M Battery Storage Installation Across Central Valley\",Energy,\"CA, US\",Gavin Newsom,2026-08-19T17:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The California Energy Commission authorizes 450 million dollars for 1,200 megawatts of grid battery storage installations across the Central Valley.\",\"The California Energy Commission approves 1,200 megawatts of four-hour battery storage to fortify state grid resilience against late-summer thermal spikes.\",https://www.choseno.com/news/california-energy-commission-approves-450m-grid-storage-package-2026-08-19,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,8.7,\"Springfield Approves $380M Infrastructure Package for 110-MPH Higher-Speed Rail Modernization\",Infrastructure,\"IL, US\",JB Pritzker,2026-08-19T16:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Governor JB Pritzker approves 380 million dollars in state and federal funds to upgrade 110-mph higher-speed passenger rail between Chicago and St. Louis.\",\"Governor JB Pritzker and transportation leaders authorize matching capital to eliminate highway-rail crossings and upgrade dual-track signaling corridors.\",https://www.choseno.com/news/illinois-general-assembly-approves-380m-chicago-st-louis-rail-upgrades-2026-08-19,https://www.choseno.com/wall/jb-pritzker",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,8.6,\"Pennsylvania Regulators Levy $12.4M Civil Penalty on Natural Gas Operators for Watershed Violations\",Environment,\"PA, US\",Josh Shapiro,2026-08-19T16:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Pennsylvania regulators levy 12.4 million dollars in fines against natural gas pipeline operators for watershed and sediment runoff violations.\",\"The Pennsylvania Department of Environmental Protection penalizes three midstream energy firms for unpermitted wetland discharges across Susquehanna County.\",https://www.choseno.com/news/pennsylvania-dep-fines-pipeline-operators-12m-marcellus-shale-violations-2026-08-19,https://www.choseno.com/wall/josh-shapiro",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,8.6,\"Florida Water Officials Finalize $210M Construction Contracts for Everglades Stormwater Treatment Basin\",Environment,\"FL, US\",Ron DeSantis,2026-08-19T17:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Florida water officials approve 210 million dollars in construction contracts for a 6,500-acre Everglades stormwater filtration treatment wetland.\",\"The South Florida Water Management District awards engineering bids for a 6,500-acre stormwater treatment wetland south of Lake Okeechobee.\",https://www.choseno.com/news/florida-dep-finalizes-210m-everglades-water-reservoir-contracts-2026-08-19,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,8.5,\"Senate Floor Calendar Sets September Vote on $895B National Defense Authorization Conference Bill\",Defense,\"DC, US\",John Thune,2026-08-19T17:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Senate Majority Leader John Thune schedules final floor debate on the 895 billion dollar National Defense Authorization Act for early September.\",\"Majority Leader John Thune finalizes procedural rules to reconcile House and Senate defense authorizations, prioritizing Pacific deterrence funding.\",https://www.choseno.com/news/senate-majority-leader-john-thune-schedules-ndaa-conference-debate-2026-08-19,https://www.choseno.com/wall/john-thune",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,8.4,\"House Leadership Prepares Floor Vote on $14B Rural Telecommunications Tax Credit Framework\",Technology,\"DC, US\",Mike Johnson,2026-08-19T17:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Speaker Mike Johnson outlines a bipartisan 14 billion dollar legislative package to accelerate rural fiber broadband deployment and streamline permitting.\",\"Speaker Mike Johnson outlines statutory provisions to accelerate fiber optic deployment and eliminate permitting bottlenecks on federal lands.\",https://www.choseno.com/news/speaker-mike-johnson-previews-rural-broadband-tax-package-2026-08-19,https://www.choseno.com/wall/mike-johnson",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,8.4,\"House Democratic Caucus Files Expansion for Child Tax Credit and Working Family Rebates\",Economy,\"DC, US\",Hakeem Jeffries,2026-08-19T18:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"House Democratic Leader Hakeem Jeffries files legislation to permanently expand the federal Child Tax Credit to 3,600 dollars per child.\",\"Democratic Leader Hakeem Jeffries introduces the Working Families Relief Act of 2026, seeking to expand monthly child tax benefit disbursements.\",https://www.choseno.com/news/hakeem-jeffries-outlines-fall-economic-legislative-priorities-2026-08-19,https://www.choseno.com/wall/hakeem-jeffries",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,8.3,\"Senate Resolution Seeks Statutory Firewall for Federal Regulatory Commission Chairs\",Governance,\"DC, US\",Chuck Schumer,2026-08-19T16:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Senate Democratic Leader Chuck Schumer files legislation to protect the Federal Reserve and regulatory agency leaders from political removal without cause.\",\"Senate Democratic Leader Chuck Schumer files legislation to protect independent board governors from summary removal without cause.\",https://www.choseno.com/news/senator-chuck-schumer-sponsors-independent-agency-protection-resolution-2026-08-19,https://www.choseno.com/wall/chuck-schumer",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,8.3,\"Victoria Allocates $65M to Enhance Wildfire Defense Buffers Across Interior Municipalities\",Public Safety,\"BC, CA\",David Eby,2026-08-19T18:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"B.C. Premier David Eby deploys 65 million dollars to fortify wildfire defense buffers and expand night-vision aerial suppression across interior cities.\",\"Premier David Eby announces dedicated capital for perimeter fuel management and night-vision aerial suppression units across central British Columbia.\",https://www.choseno.com/news/bc-premier-david-eby-deploys-65m-wildfire-community-hardening-fund-2026-08-19,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,8.3,\"Edmonton Tables Proposal for 2% Grid Contribution Fee on Hyperscale Data Centers\",Energy,\"AB, CA\",Danielle Smith,2026-08-19T16:50:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Alberta Premier Danielle Smith proposes a 2 percent grid levy and on-site generation mandate for hyperscale data centers consuming over 75 megawatts.\",\"Premier Danielle Smith outlines statutory conditions for commercial computing campuses consuming over 75 megawatts to construct dedicated on-site generation.\",https://www.choseno.com/news/alberta-danielle-smith-proposes-data-center-grid-levy-framework-2026-08-19,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,8.2,\"Manitoba Commits $45M in Retention Bonuses for Remote and Northern Clinical Practitioners\",Healthcare,\"MB, CA\",Wab Kinew,2026-08-19T16:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Manitoba Premier Wab Kinew commits 45 million dollars in retention bonuses for doctors and nurse practitioners serving remote northern clinics.\",\"Premier Wab Kinew and health leaders finalize incentive packages to staff emergency departments in Thompson, Flin Flon, and Churchill.\",https://www.choseno.com/news/manitoba-premier-wab-kinew-expands-northern-doctor-retention-grants-2026-08-19,https://www.choseno.com/wall/wab-kinew",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,8.2,\"Nova Scotia Establishes Five-Gigawatt Offshore Wind Competitive Lease Auction Rules\",Energy,\"NS, CA\",Tim Houston,2026-08-19T16:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Nova Scotia Premier Tim Houston establishes auction rules for 5 gigawatts of commercial offshore wind seabed leases along the Scotian Shelf.\",\"Premier Tim Houston announces provincial regulatory terms for commercial wind seabed leases along the Scotian Shelf to supply green hydrogen exports.\",https://www.choseno.com/news/nova-scotia-tim-houston-opens-offshore-wind-licensing-rounds-2026-08-19,https://www.choseno.com/wall/tim-houston",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,8.1,\"Green Party Petitions Parliament for Ten-Year Moratorium on Extractive Seabed Exploration\",Environment,\"ON, CA\",Elizabeth May,2026-08-19T15:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Green Party Leader Elizabeth May introduces private member legislation for a ten-year moratorium on deep seabed mineral exploration in Canadian waters.\",\"Leader Elizabeth May introduces private member legislation to prohibit underwater mineral extraction permits within Canada's 200-nautical-mile Exclusive Economic Zone.\",https://www.choseno.com/news/green-party-elizabeth-may-demands-moratorium-seabed-mining-permits-2026-08-19,https://www.choseno.com/wall/elizabeth-may",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,8.1,\"Bloc Québécois Demands Unconditional Cultural Exemption in Ongoing Washington Trade Dialogues\",Culture,\"QC, CA\",Yves-François Blanchet,2026-08-19T17:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Bloc Québécois Leader Yves-François Blanchet demands strict cultural exemption protections in ongoing bilateral trade negotiations with the U.S.\",\"Party Leader Yves-François Blanchet cautions the federal government against altering digital media broadcast standards during bilateral tariff talks.\",https://www.choseno.com/news/bloc-quebecois-blanchet-insists-cultural-exemption-protections-trade-talks-2026-08-19,https://www.choseno.com/wall/yves-fran-ois-blanchet",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,8.0,\"Canadian Negotiating Team Presents Strategic Mineral Supply Guarantees in U.S. Trade Session\",Trade,\"ON, CA\",Dominic LeBlanc,2026-08-19T18:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Canadian Trade Minister Dominic LeBlanc finalizes critical mineral supply pact terms in Washington, securing tariff exemptions for primary metals.\",\"Trade Minister Dominic LeBlanc coordinates tariff carve-outs for nickel, lithium, and aluminum processing facilities during meetings in Washington.\",https://www.choseno.com/news/dominic-leblanc-janice-charette-refine-critical-mineral-exemption-clauses-2026-08-19,https://www.choseno.com/wall/dominic-leblanc",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,8.0,\"Foreign Affairs Ministry Finalizes $3.8B Northern Radar Modernization Framework with Allied Partners\",Foreign Affairs,\"ON, CA\",Mélanie Joly,2026-08-19T17:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Foreign Minister Mélanie Joly finalizes a 3.8 billion dollar agreement with allied partners to deploy over-the-horizon early warning radar across the Arctic.\",\"Minister Mélanie Joly concludes multilateral agreements to deploy over-the-horizon early warning sensors across Canada's Arctic archipelago.\",https://www.choseno.com/news/foreign-minister-melanie-joly-finalizes-arctic-air-defense-modernization-pact-2026-08-19,https://www.choseno.com/wall/m-lanie-joly",
+    "archivedAt": "2026-08-20T15:00:03.132Z"
+  },
+  {
+    "rank": 101,
+    "raw": "81,9.9,\"White House Pauses 50% Canadian Tariffs for 72 Hours Amid Washington Bilateral Talks\",Economy,\"ON, CA\",Mark Carney,2026-08-19T02:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The White House pauses 50 percent tariffs on 20 billion dollars in Canadian goods for 72 hours as bilateral teams finalize trade pact terms in Washington.\",\"U.S. President Donald Trump institutes a 72-hour delay on proposed 50 percent duties on US$20 billion in Canadian imports following direct diplomacy with Prime Minister Mark Carney.\",https://www.choseno.com/news/white-house-pauses-canadian-tariffs-72-hours-bilateral-talks-2026-08-19,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-20T14:57:28.019Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,9.8,\"Byron Donalds Captures Florida Republican Gubernatorial Primary Nomination\",Elections,\"FL, US\",Ron DeSantis,2026-08-19T02:40:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Rep. Byron Donalds captures the Florida Republican gubernatorial nomination, defeating Lt. Gov. Jay Collins to advance to November.\",\"U.S. Representative Byron Donalds defeats Lieutenant Governor Jay Collins in Florida's Republican gubernatorial primary, advancing to the general election.\",https://www.choseno.com/news/byron-donalds-captures-florida-republican-gubernatorial-primary-2026-08-19,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,9.8,\"David Jolly Claims Florida Democratic Gubernatorial Nomination in Multi-Candidate Primary\",Elections,\"FL, US\",Ron DeSantis,2026-08-19T02:35:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Former Congressman David Jolly secures the Florida Democratic gubernatorial nomination, setting up a high-stakes clash against Byron Donalds.\",\"Former U.S. Representative David Jolly wins the Florida Democratic primary for governor, defeating Dayna Foster and establishing a bipartisan-appeal platform for November.\",https://www.choseno.com/news/david-jolly-claims-florida-democratic-gubernatorial-nomination-2026-08-19,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,9.8,\"Angie Nixon Pulls Off Primary Upset in Florida Democratic U.S. Senate Contest\",Elections,\"FL, US\",Ron DeSantis,2026-08-19T02:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"State Rep. Angie Nixon pulls off a dramatic upset in Florida's Democratic U.S. Senate primary, defeating Alex Vindman to face Ashley Moody.\",\"State Representative Angie Nixon secures a dramatic victory over establishment-backed Alex Vindman in Florida's Democratic U.S. Senate special election primary.\",https://www.choseno.com/news/angie-nixon-pulls-off-primary-upset-florida-senate-contest-2026-08-19,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,9.7,\"Ashley Moody Clinches Florida Republican Nomination for U.S. Senate Special Election\",Elections,\"FL, US\",Ron DeSantis,2026-08-19T02:25:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Senator Ashley Moody clinches the Florida Republican nomination for U.S. Senate in a primary landslide, preparing to face Angie Nixon in November.\",\"Incumbent Senator Ashley Moody wins the Florida Republican primary in a landslide, advancing to defend her seat in the November special election.\",https://www.choseno.com/news/ashley-moody-clinches-florida-republican-senate-special-primary-2026-08-19,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,9.7,\"Ryan Elijah Unseats Incumbent Cory Mills in Florida 7th Congressional District Republican Primary\",Elections,\"FL, US\",Ron DeSantis,2026-08-19T02:20:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Ryan Elijah unseats incumbent Rep. Cory Mills in Florida's 7th Congressional District Republican primary following months of House Ethics scrutiny.\",\"Former television journalist Ryan Elijah defeats incumbent U.S. Representative Cory Mills in Florida's 7th Congressional District following House Ethics Committee investigations.\",https://www.choseno.com/news/ryan-elijah-unseats-cory-mills-florida-7th-district-gop-primary-2026-08-19,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,9.6,\"Northwest Florida Republican Primary Selects Jimmy Patronis in 1st Congressional District\",Elections,\"FL, US\",Ron DeSantis,2026-08-19T02:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Jimmy Patronis secures the Republican nomination in Florida's 1st Congressional District, winning a decisive primary victory in Pensacola.\",\"Former Florida Chief Financial Officer Jimmy Patronis secures the Republican nomination for Florida's 1st Congressional District in Pensacola, defeating John Frankman.\",https://www.choseno.com/news/northwest-florida-primary-selects-jimmy-patronis-1st-district-2026-08-19,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,9.6,\"Leela Gray Wins Democratic Primary in Florida 13th Congressional District\",Elections,\"FL, US\",Ron DeSantis,2026-08-19T02:10:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Leela Gray secures the Democratic nomination in Florida's 13th Congressional District, setting up a November race against Rep. Anna Paulina Luna.\",\"Leela Gray secures the Democratic nomination in Pinellas County's 13th Congressional District, earning the right to challenge incumbent Republican Representative Anna Paulina Luna.\",https://www.choseno.com/news/leela-gray-wins-florida-13th-district-democratic-primary-2026-08-19,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,9.5,\"Maria Elvira Salazar Defeats Challenger to Finalize Florida 27th District General Lineup\",Elections,\"FL, US\",Ron DeSantis,2026-08-19T02:05:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Rep. Maria Elvira Salazar defeats primary challenger in Florida's 27th Congressional District, advancing to face Democrat Eliott Rodriguez.\",\"Incumbent Representative Maria Elvira Salazar wins the Republican primary in Miami-Dade's 27th District, advancing to face Democratic nominee Eliott Rodriguez.\",https://www.choseno.com/news/maria-elvira-salazar-defeats-primary-challenger-florida-27th-district-2026-08-19,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.5,\"Kissimmee Republican Primary Selects Dan Green to Contest Florida 9th Congressional District\",Elections,\"FL, US\",Ron DeSantis,2026-08-19T02:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Dan Green wins a seven-candidate Republican primary in Florida's 9th Congressional District to challenge Democratic Rep. Darren Soto.\",\"Dan Green emerges victorious from a seven-candidate Republican primary in Osceola and Orange counties to challenge incumbent Representative Darren Soto.\",https://www.choseno.com/news/kissimmee-republican-primary-selects-dan-green-9th-district-2026-08-19,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.4,\"Florida State Representative Mike Caruso Arrested on Multiple Child Sexual Abuse Charges\",Justice,\"FL, US\",Ron DeSantis,2026-08-19T01:55:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Florida State Rep. Mike Caruso is arrested by law enforcement in Palm Beach County on multiple felony child sexual abuse charges.\",\"Republican State Representative Mike Caruso of Delray Beach is taken into custody by Palm Beach County authorities following a joint cyber-crimes task force investigation.\",https://www.choseno.com/news/florida-state-rep-mike-caruso-arrested-child-exploitation-charges-2026-08-19,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.3,\"USDA Proposes Repealing 2001 Roadless Rule Across 45 Million Acres of National Forests\",Environment,\"DC, US\",Donald Trump,2026-08-19T01:50:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"USDA formally proposes rescinding the 2001 Roadless Rule, opening 45 million acres of national forests across 37 states to roads and logging.\",\"The Trump administration formally moves to rescind the 25-year-old Roadless Area Conservation Rule, opening 45 million acres across 37 states to road construction and timber harvesting.\",https://www.choseno.com/news/usda-proposes-repealing-2001-roadless-rule-45m-acres-national-forests-2026-08-19,https://www.choseno.com/wall/donald-trump",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.3,\"U.S. Treasury Sanctions International Criminal Court President Under Executive Order 14203\",Policy,\"DC, US\",Donald Trump,2026-08-19T01:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The U.S. imposes financial sanctions and visa bans on ICC President Tomoko Akane and senior prosecutors over jurisdiction disputes.\",\"The United States imposes financial sanctions and visa bans on ICC President Tomoko Akane and trial prosecutor Abdoulaye Seye over jurisdictional disputes.\",https://www.choseno.com/news/us-treasury-sanctions-icc-president-tomoko-akane-executive-order-14203-2026-08-19,https://www.choseno.com/wall/donald-trump",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.3,\"Senate Finance Chairman Wyden Demands Disclosure on $2M Foreign Payment to Executive Entity\",Policy,\"DC, US\",Civic Authority,2026-08-19T01:40:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Senate Finance Chair Ron Wyden demands Commerce records over a 2 million dollar payment from Korean firm Base Group to a Trump holding company.\",\"Senate Finance Committee Chairman Ron Wyden demands Commerce Secretary Howard Lutnick release records regarding a $2 million payment from Korean conglomerate Base Group to a Trump entity.\",https://www.choseno.com/news/senate-finance-wyden-demands-records-base-group-payment-2026-08-19,https://www.choseno.com/news/senate-finance-wyden-demands-records-base-group-payment-2026-08-19",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.2,\"Pentagon and Seoul Halve Scope of Joint Military Exercises in Diplomatic Overture\",Policy,\"DC, US\",Donald Trump,2026-08-19T01:35:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Pentagon and South Korea agree to halve the scope of joint military exercises as diplomatic communications open regarding North Korea talks.\",\"The United States and South Korea agree to reduce joint military training drills by 50 percent as diplomatic channels open regarding potential direct talks with Pyongyang.\",https://www.choseno.com/news/pentagon-seoul-halve-joint-military-drills-diplomatic-talks-2026-08-19,https://www.choseno.com/wall/donald-trump",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.2,\"Global Sovereign Bond Sell-Off Lifts Canadian 10-Year Borrowing Yields to 17-Year Peak\",Economy,\"ON, CA\",Mark Carney,2026-08-19T01:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"A global sovereign bond sell-off pushes Canadian 10-year yields to 4.48 percent, lifting government borrowing costs to 17-year highs.\",\"Canadian benchmark government bond yields surge past 4.45 percent amid global sovereign debt market pressure and persistent fiscal deficit concerns.\",https://www.choseno.com/news/global-bond-selloff-lifts-canadian-borrowing-costs-17-year-peak-2026-08-19,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.1,\"Trade Minister LeBlanc Concludes Washington Engagements Over CUSMA Sectoral Exemptions\",Economy,\"ON, CA\",Dominic LeBlanc,2026-08-19T01:25:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Minister Dominic LeBlanc concludes high-level trade talks in Washington with Jamieson Greer and Howard Lutnick on CUSMA tariff exemptions.\",\"Canadian Trade Minister Dominic LeBlanc wraps up intensive talks with U.S. Trade Representative Jamieson Greer and Commerce Secretary Howard Lutnick on auto rules and resource duties.\",https://www.choseno.com/news/leblanc-concludes-washington-engagements-cusma-tariff-exemptions-2026-08-19,https://www.choseno.com/wall/dominic-leblanc",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,9.1,\"Federal District Court Vacates Injunction on Ethiopian Temporary Protected Status Rescission\",Justice,\"DC, US\",Civic Authority,2026-08-19T01:20:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"A federal judge vacates the injunction blocking the termination of Ethiopian Temporary Protected Status, clearing DHS to proceed with rescission.\",\"U.S. District Judge Brian Murphy lifts the final judicial hold on the termination of Temporary Protected Status for Ethiopia, enabling DHS to proceed with cancellation.\",https://www.choseno.com/news/federal-court-vacates-injunction-ethiopian-tps-rescission-2026-08-19,https://www.choseno.com/news/federal-court-vacates-injunction-ethiopian-tps-rescission-2026-08-19",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,9.0,\"Federal Judge Overturns 19-Mile Izembek Refuge Road Swap Under Conservation Statutes\",Environment,\"AK, US\",Civic Authority,2026-08-19T01:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"A federal judge overturns a land swap for a 19-mile road through Alaska's Izembek Wildlife Refuge, citing Endangered Species Act violations.\",\"U.S. District Court strikes down a federal land exchange intended to construct a 19-mile road through Alaska's Izembek National Wildlife Refuge, citing Endangered Species Act violations.\",https://www.choseno.com/news/federal-court-overturns-19-mile-izembek-refuge-road-swap-2026-08-19,https://www.choseno.com/news/federal-court-overturns-19-mile-izembek-refuge-road-swap-2026-08-19",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,9.0,\"Maryland Federal Court Permits Class Action Against Birthright Citizenship Executive Order\",Justice,\"MD, US\",Donald Trump,2026-08-19T01:10:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"A Maryland federal judge permits a nationwide class action challenging executive restrictions on 14th Amendment birthright citizenship to proceed.\",\"U.S. District Judge in Baltimore denies federal motion to dismiss, allowing a nationwide class-action constitutional challenge to birthright citizenship restrictions to proceed.\",https://www.choseno.com/news/maryland-federal-court-permits-birthright-citizenship-class-action-2026-08-19,https://www.choseno.com/wall/donald-trump",
+    "archivedAt": "2026-08-20T14:57:28.020Z"
+  },
+  {
+    "rank": 101,
     "raw": "81,8.9,\"Federal Court of Canada Rejects Volga-Dnepr Appeal, Grounding Cargo Jet at Pearson\",Justice,\"ON, CA\",Dominic LeBlanc,2026-08-19T01:05:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Federal Court of Canada rejects Volga-Dnepr's appeal, upholding federal sanctions and the seizure of an Antonov An-124 jet in Toronto.\",\"The Federal Court of Canada dismisses Volga-Dnepr Airlines' legal challenge against federal sanctions, maintaining the seizure of a Russian Antonov An-124 aircraft in Toronto.\",https://www.choseno.com/news/federal-court-canada-rejects-volga-dnepr-appeal-grounding-cargo-jet-2026-08-19,https://www.choseno.com/wall/dominic-leblanc",
     "archivedAt": "2026-08-20T04:51:17.306Z"
   },

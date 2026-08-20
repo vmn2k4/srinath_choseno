@@ -1,280 +1,5 @@
 {
   "topics": {
-    "dr congo ebola outbreak": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "dr congo ebola outbreak"
-    },
-    "days of our lives": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "days of our lives"
-    },
-    "jake gyllenhaal": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "jake gyllenhaal"
-    },
-    "rosie odonnell": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "rosie odonnell"
-    },
-    "hannah waddingham": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "hannah waddingham"
-    },
-    "keenan allen": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "keenan allen"
-    },
-    "jiri lehecka": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "jiri lehecka"
-    },
-    "outshine": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "outshine"
-    },
-    "kyrie irving": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "kyrie irving"
-    },
-    "amanda anisimova": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "amanda anisimova"
-    },
-    "naalehu": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "naalehu"
-    },
-    "tires season 4": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "tires season 4"
-    },
-    "valkyries game": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "valkyries game"
-    },
-    "ariana madix": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "ariana madix"
-    },
-    "octavia spencer": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "octavia spencer"
-    },
-    "jessica shepard": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "jessica shepard"
-    },
-    "ben rortvedt": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "ben rortvedt"
-    },
-    "ride or die show": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_trends",
-      "title": "ride or die show"
-    },
-    "without the full details n l s opposition innu grand chief not entirely sold on new churchill agreement cbc": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Without the full details, N.L.’s opposition, Innu Grand Chief not entirely sold on new Churchill agreement - CBC"
-    },
-    "chief calls for respect from alberta after government misses treaty anniversary event global news": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Chief calls for respect from Alberta after government misses Treaty anniversary event - Global News"
-    },
-    "zambia arrests top opposition members alleging armed insurrection the globe and mail": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Zambia arrests top opposition members, alleging armed insurrection - The Globe and Mail"
-    },
-    "xi leads event marking late leader jiang zemin s 100th birth anniversary reuters com": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Xi leads event marking late leader Jiang Zemin's 100th birth anniversary - reuters.com"
-    },
-    "india pm modi s bjp replaces social media head weeks after youth protests reuters com": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "India PM Modi's BJP replaces social media head weeks after youth protests - reuters.com"
-    },
-    "trump i like the idea of declaring strait of hormuz a us territory komo": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Trump: 'I like the idea of declaring' Strait of Hormuz a US territory - KOMO"
-    },
-    "zhu rongji china censors public mourning as it holds former premier s funeral bbc": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Zhu Rongji: China censors public mourning as it holds former premier's funeral - BBC"
-    },
-    "us defense secretary pete hegseth joins rep zach nunn at iowa state fair iowa capital dispatch": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "US Defense Secretary Pete Hegseth joins Rep. Zach Nunn at Iowa State Fair - Iowa Capital Dispatch"
-    },
-    "a new generation of catalans tries to rekindle the independence movement france 24": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "A new generation of Catalans tries to rekindle the independence movement - France 24"
-    },
-    "us canada trade talks intense as new tariff deadline looms bbc": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "US-Canada trade talks 'intense' as new tariff deadline looms - BBC"
-    },
-    "russia warns uk over supplying drones to ukraine bbc": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Russia warns UK over supplying drones to Ukraine - BBC"
-    },
-    "trump s approval rating sinks to new low at 33 percent al jazeera": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Trump’s approval rating sinks to new low at 33 percent - Al Jazeera"
-    },
-    "who is natalie harp the trump aide dominating the headlines right now zeteo substack": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Who is Natalie Harp? The Trump Aide Dominating the Headlines Right Now - Zeteo | Substack"
-    },
-    "there has been yet another suspected femicide in montreal as calls for better prevention continue montreal gazette": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "There has been yet another suspected femicide in Montreal, as calls for better prevention continue - Montreal Gazette"
-    },
-    "house public safety committee votes to investigate vetting of accused nato spy national post": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "House public safety committee votes to investigate vetting of accused NATO spy - National Post"
-    },
-    "b c wildfires being exploited by bad actors russian operatives profiteers ctv news": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "B.C. wildfires being exploited by bad actors, Russian operatives, profiteers - CTV News"
-    },
-    "alberta government misses treaty anniversary event global news": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Alberta government misses treaty anniversary event - Global News"
-    },
-    "if you have money you can get out of jail ontario s new cash bail rules face constitutional challenge ctv news": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "‘If you have money, you can get out of jail’: Ontario’s new cash bail rules face constitutional challenge - CTV News"
-    },
-    "south korea must brace for worst case scenario president lee says as trump cuts military drills cnbc": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "South Korea must brace for ‘worst-case scenario,’ President Lee says, as Trump cuts military drills - CNBC"
-    },
-    "trump calls on iran to surrender threatens oman over strait of hormuz al jazeera": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Trump calls on Iran to surrender, threatens Oman over Strait of Hormuz - Al Jazeera"
-    },
-    "opinion newfoundland energy deal with quebec strengthens carney s hand in trade talks the globe and mail": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Opinion: Newfoundland energy deal with Quebec strengthens Carney’s hand in trade talks - The Globe and Mail"
-    },
-    "gas is going to get more expensive for canadians next month daily hive": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Gas is going to get more expensive for Canadians next month - Daily Hive"
-    },
-    "trump lashes out at south korea over its refusal to join iran war pbs": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Trump lashes out at South Korea over its refusal to join Iran war - PBS"
-    },
-    "penn state cocaine bust nets 14 arrests over alleged pledge coke cutting indoctrination rituals foxnews com": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Penn State cocaine bust nets 14 arrests over alleged pledge coke-cutting ‘indoctrination' rituals - foxnews.com"
-    },
-    "middle east demands are testing america s pacific presence axios": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Middle East demands are testing America's Pacific presence - Axios"
-    },
-    "prosecution rests in the murder trial of lindsay clancy defense begins calling witnesses wbur": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Prosecution rests in the murder trial of Lindsay Clancy. Defense begins calling witnesses - WBUR"
-    },
-    "1 death linked to tropical storm lala as more than 100 000 remain without power in hawaii ap news": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "1 death linked to Tropical Storm Lala as more than 100,000 remain without power in Hawaii - AP News"
-    },
-    "big bend border wall construction paused by trump administration axios": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Big Bend border wall construction paused by Trump administration - Axios"
-    },
-    "judge delays mangione s state trial after lawyers sought dismissal the washington post": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Judge delays Mangione’s state trial after lawyers sought dismissal - The Washington Post"
-    },
-    "family presses for information about fatal ice shooting in maine the new york times": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Family Presses for Information About Fatal ICE Shooting in Maine - The New York Times"
-    },
-    "we will not allow gaza to be rebuilt until hamas disarms kushner says al jazeera": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "‘We will not allow Gaza to be rebuilt’ until Hamas disarms, Kushner says - Al Jazeera"
-    },
-    "senior israeli official calls for killing of 30 to 40 people in gaza every night they re not even people cbs news": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Senior Israeli official calls for killing of \"30 to 40\" people in Gaza every night: \"They're not even people\" - CBS News"
-    },
-    "meta stares down trillion dollar threat as landmark social media trial begins bloomberg com": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Meta Stares Down Trillion-Dollar Threat as Landmark Social Media Trial Begins - Bloomberg.com"
-    },
-    "mark walter probe raises fears of ripple effects across wall street s 1t insurance bet nypost com": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Mark Walter probe raises fears of ripple effects across Wall Street’s $1T insurance bet - nypost.com"
-    },
-    "anthropic s revenue run rate reportedly surpasses 65 billion pre ipo axios": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Anthropic's revenue run rate reportedly surpasses $65 billion pre-IPO - Axios"
-    },
-    "apple s camera equipped airpods confirmed see them in action macrumors": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "Apple's Camera-Equipped AirPods Confirmed: See Them in Action - MacRumors"
-    },
-    "5 anker gadgets under 25 worth adding to your kit bgr com": {
-      "firstSeen": "2026-08-18T05:30:14.691Z",
-      "source": "google_news",
-      "title": "5 Anker Gadgets Under $25 Worth Adding To Your Kit - bgr.com"
-    },
     "salmonella eggs": {
       "firstSeen": "2026-08-18T18:37:51.004Z",
       "source": "google_trends",
@@ -2459,7 +2184,357 @@
       "firstSeen": "2026-08-20T04:46:56.439Z",
       "source": "cbc_politics",
       "title": "Ottawa will look into screening processes amid NATO intern spying allegations"
+    },
+    "rory mcilroy": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "rory mcilroy"
+    },
+    "does jj come back in season 5": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "does jj come back in season 5"
+    },
+    "bmo stock": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "bmo stock"
+    },
+    "td stock": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "td stock"
+    },
+    "rbc stock": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "rbc stock"
+    },
+    "ticketmaster": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "ticketmaster"
+    },
+    "stephenville liquor store theft": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "stephenville liquor store theft"
+    },
+    "face": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "face"
+    },
+    "larry david": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "larry david"
+    },
+    "melania trump": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "melania trump"
+    },
+    "liberia": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "liberia"
+    },
+    "costco stock": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "costco stock"
+    },
+    "matt fitzpatrick": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "matt fitzpatrick"
+    },
+    "delta reign": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "delta reign"
+    },
+    "tommy fleetwood": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "tommy fleetwood"
+    },
+    "savinho": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "savinho"
+    },
+    "egypt": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "egypt"
+    },
+    "price of gold today": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "price of gold today"
+    },
+    "joao cancelo": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "joao cancelo"
+    },
+    "skhy stock": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_trends",
+      "title": "skhy stock"
+    },
+    "carney asks for end to us alcohol ban province leader says as trade deal nears bbc": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Carney asks for end to US alcohol ban, province leader says, as trade deal nears - BBC"
+    },
+    "andrea barbour now environment minister joedy wall gets health portfolio as wakeham s cabinet gets shakeup cbc": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Andrea Barbour now environment minister, Joedy Wall gets health portfolio as Wakeham's cabinet gets shakeup - CBC"
+    },
+    "pm carney asks provinces to return u s booze to shelves nova scotia premier says live trade updates here cp24": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "PM Carney asks provinces to return U.S. booze to shelves, Nova Scotia premier says. Live trade updates here. - CP24"
+    },
+    "carney s summit for ceos has a guest list problem the hill times": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Carney’s summit for CEOs has a guest list problem - The Hill Times"
+    },
+    "john swinney defends 45 000 business class flights to world cup bbc": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "John Swinney defends £45,000 business-class flights to World Cup - BBC"
+    },
+    "exclusive former pm imran khan would not confront pakistan army chief if freed close aide says reuters": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "EXCLUSIVE: Former PM Imran Khan would not confront Pakistan army chief if freed, close aide says - Reuters"
+    },
+    "russian linked actors stoking division in alberta separation debate research says ctv news": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Russian-linked actors stoking division in Alberta separation debate, research says - CTV News"
+    },
+    "india news us envoy s kashmir remarks reignite pakistan row dw com": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "India news: US envoy's Kashmir remarks reignite Pakistan row - dw.com"
+    },
+    "rbc names former ontario cabinet minister caroline mulroney as vice chair ctv news": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "RBC names former Ontario cabinet minister Caroline Mulroney as vice-chair - CTV News"
+    },
+    "china s top diplomat calls on us to change hostile policy on north korea south china morning post": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "China’s top diplomat calls on US to change ‘hostile policy’ on North Korea - South China Morning Post"
+    },
+    "governor newsom announces appointments 8 19 26 california state portal ca gov": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Governor Newsom announces appointments 8.19.26 - California State Portal | CA.gov"
+    },
+    "ontario judge discounts violent sex assault sentence for permanent resident facing deportation national post": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Ontario judge discounts violent sex assault sentence for permanent resident facing deportation - National Post"
+    },
+    "calgary officer to stand trial for murder charges after 2 dead in police chase global news": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Calgary officer to stand trial for murder charges after 2 dead in police chase - Global News"
+    },
+    "update government undergoes major cabinet shuffle vocm": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "UPDATE: Government Undergoes Major Cabinet Shuffle - VOCM"
+    },
+    "4 people in hospital following highway 401 crash that resulted in lengthy closure ctv news": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "4 people in hospital following Highway 401 crash that resulted in lengthy closure - CTV News"
+    },
+    "expectant ontario moms are travelling hours for routine ultrasounds amid sonographer shortage cbc": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Expectant Ontario moms are travelling hours for routine ultrasounds amid sonographer shortage - CBC"
+    },
+    "summerland residents return to neighbourhoods forever changed by the bald range wildfire global news": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Summerland residents return to neighbourhoods forever changed by the Bald Range wildfire - Global News"
+    },
+    "search for b c s best roadside attraction interior finals cbc": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Search for B.C.'s best roadside attraction: Interior finals - CBC"
+    },
+    "oshawa pilot found dead after search in kawartha lakes police say the globe and mail": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Oshawa pilot found dead after search in Kawartha Lakes, police say - The Globe and Mail"
+    },
+    "venezuelans and cubans among deportees to liberia under trump deal official says reuters": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Venezuelans and Cubans among deportees to Liberia under Trump deal, official says - Reuters"
+    },
+    "russian missile barrage kills at least 13 people in ukraine s kyiv al jazeera": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Russian missile barrage kills at least 13 people in Ukraine’s Kyiv - Al Jazeera"
+    },
+    "what to know about prince harry s move back to britain with meghan and the kids citynews toronto": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "What to know about Prince Harry’s move back to Britain with Meghan and the kids - CityNews Toronto"
+    },
+    "who is mohammad ghamira and why has his death alleged abuse ignited outcry in syria cbc": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Who is Mohammad Ghamira and why has his death, alleged abuse ignited outcry in Syria? - CBC"
+    },
+    "trump teases a keystone xl revival but canadian energy experts say a similar pipeline is already underway toronto star": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Trump teases a 'Keystone XL' revival, but Canadian energy experts say a similar pipeline is already underway - Toronto Star"
+    },
+    "electricity bill rebate to kick in once churchill falls agreement is finalized says premier vocm": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Electricity Bill Rebate to Kick in Once Churchill Falls Agreement is Finalized, says Premier - VOCM"
+    },
+    "ubc researchers create wood substitute for plastic foam cbc": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "UBC researchers create wood substitute for plastic foam - CBC"
+    },
+    "microsoft releases aspire 13 5 with a refreshed dashboard and workflow improvements infoq com": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Microsoft Releases Aspire 13.5 With a Refreshed Dashboard and Workflow Improvements - infoq.com"
+    },
+    "gta vi leaker shows they may have an actual game build forbes": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "‘GTA VI’ Leaker Shows They May Have An Actual Game Build - Forbes"
+    },
+    "trump s order to cut military exercises with south korea carries risks experts say the new york times": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Trump’s Order to Cut Military Exercises With South Korea Carries Risks, Experts Say - The New York Times"
+    },
+    "a russian missile and drone barrage kills at least 16 in ukraine s kyiv region ap news": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "A Russian missile and drone barrage kills at least 16 in Ukraine’s Kyiv region - AP News"
+    },
+    "white house faces scrutiny over top trump aide natalie harp live the guardian": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "White House faces scrutiny over top Trump aide Natalie Harp – live - The Guardian"
+    },
+    "el ni o will upend winter weather in the us here s who will feel it the most cnn": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "El Niño will upend winter weather in the US. Here’s who will feel it the most - CNN"
+    },
+    "democrats narrow their list of 2028 presidential convention sites to boston denver and philadelphia ap news": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Democrats narrow their list of 2028 presidential convention sites to Boston, Denver and Philadelphia - AP News"
+    },
+    "california long a climate leader is in trump s crosshairs the new york times": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "California, Long a Climate Leader, Is in Trump’s Crosshairs - The New York Times"
+    },
+    "resistance democrats are flopping in primaries politico": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "#Resistance Democrats are flopping in primaries - Politico"
+    },
+    "north korea fires 10 missiles day after trump curtails south korea joint drills the guardian": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "North Korea fires 10 missiles day after Trump curtails South Korea joint drills - The Guardian"
+    },
+    "harry and meghan s security arrangements a private matter pm says bbc": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Harry and Meghan's security arrangements a private matter, PM says - BBC"
+    },
+    "what we know about deadly plane crash involving pennsylvania state police helicopter at carlisle regional airport 6abc philadelphia": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "What we know about deadly plane crash involving Pennsylvania State Police helicopter at Carlisle Regional Airport - 6abc Philadelphia"
+    },
+    "the nazi shipwrecks emerging from the danube bbc": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "The Nazi shipwrecks emerging from the Danube - BBC"
+    },
+    "fishermen found alive floating on cooler 150 miles off mexico 5 days after going missing cbs news": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Fishermen found alive floating on cooler 150 miles off Mexico 5 days after going missing - CBS News"
+    },
+    "russia runs out of petrol at seven in 10 stations as fuel crisis worsens euronews com": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Russia runs out of petrol at seven in 10 stations as fuel crisis worsens - Euronews.com"
+    },
+    "stock market today bond yields jump largely wiping out effect of bessent intervention wsj": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Stock Market Today: Bond Yields Jump, Largely Wiping Out Effect of Bessent Intervention - WSJ"
+    },
+    "bond markets rattle economy forcing controversial buyback band aid the hill": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Bond markets rattle economy, forcing controversial buyback ‘Band-Aid’ - The Hill"
+    },
+    "mark zuckerberg encouraged growth over child safety ex meta executive testifies at trial nbc news": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Mark Zuckerberg encouraged growth over child safety, ex-Meta executive testifies at trial - NBC News"
+    },
+    "walmart reports rare sales miss as consumers cut spending shares fall reuters": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Walmart reports rare sales miss as consumers cut spending, shares fall - Reuters"
+    },
+    "the google pixel 11 series is now on sale gsmarena com news gsmarena com": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "The Google Pixel 11 series is now on sale - GSMArena.com news - GSMArena.com"
+    },
+    "sennheiser s new momentum 5 earbuds feature easily replaceable batteries the verge": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "google_news",
+      "title": "Sennheiser’s new Momentum 5 earbuds feature easily replaceable batteries - The Verge"
+    },
+    "canada u s negotiators meeting again to finalize trade deal ahead of new tariff deadline": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "cbc_politics",
+      "title": "Canada, U.S. negotiators meeting again to finalize trade deal ahead of new tariff deadline"
+    },
+    "proposed changes to endangered species law would stab it to death says scientist": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "cbc_politics",
+      "title": "Proposed changes to endangered species law would 'stab it to death,' says scientist"
+    },
+    "with 60 days left until alberta s referendum stay and leave sides plot their course": {
+      "firstSeen": "2026-08-20T14:54:00.666Z",
+      "source": "cbc_politics",
+      "title": "With 60 days left until Alberta’s referendum, stay and leave sides plot their course"
     }
   },
-  "lastRun": "2026-08-20T04:46:56.439Z"
+  "lastRun": "2026-08-20T14:54:00.666Z"
 }
