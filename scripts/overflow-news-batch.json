@@ -1,6 +1,106 @@
 [
   {
     "rank": 101,
+    "raw": "81,8.9,\"Federal Court of Canada Rejects Volga-Dnepr Appeal, Grounding Cargo Jet at Pearson\",Justice,\"ON, CA\",Dominic LeBlanc,2026-08-19T01:05:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Federal Court of Canada rejects Volga-Dnepr's appeal, upholding federal sanctions and the seizure of an Antonov An-124 jet in Toronto.\",\"The Federal Court of Canada dismisses Volga-Dnepr Airlines' legal challenge against federal sanctions, maintaining the seizure of a Russian Antonov An-124 aircraft in Toronto.\",https://www.choseno.com/news/federal-court-canada-rejects-volga-dnepr-appeal-grounding-cargo-jet-2026-08-19,https://www.choseno.com/wall/dominic-leblanc",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,8.8,\"CRTC Temporarily Suspends Immediate Mobile Handset Unlock Mandate for Wireless Carriers\",Consumer Protection,\"ON, CA\",Mark Carney,2026-08-19T01:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The CRTC temporarily amends Wireless Code rules, allowing mobile carriers to lock new handsets for up to 48 hours to prevent retail fraud.\",\"The Canadian Radio-television and Telecommunications Commission temporarily amends the Wireless Code, allowing telecom providers to sell locked devices with a 48-hour unlock requirement.\",https://www.choseno.com/news/crtc-temporarily-suspends-wireless-handset-unlock-mandate-2026-08-19,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,8.8,\"Ontario Civil Liberties Groups Mount Constitutional Charter Challenge Over Mandatory Cash Bail Rules\",Justice,\"ON, CA\",Doug Ford,2026-08-19T00:55:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Civil liberties groups file a constitutional Charter challenge in Ontario Superior Court to strike down mandatory cash bail policies.\",\"The Canadian Civil Liberties Association and Criminal Lawyers' Association file a constitutional court challenge against Ontario's newly enacted mandatory cash bail policies.\",https://www.choseno.com/news/ontario-civil-liberties-groups-mount-charter-challenge-cash-bail-2026-08-19,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,8.8,\"Saskatchewan Opposition MLAs Press Ministers on 20th Street Community Social Crisis\",Healthcare,\"SK, CA\",Civic Authority,2026-08-19T00:50:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Saskatchewan opposition MLAs press provincial cabinet ministers to inspect Saskatoon's 20th Street corridor amid rising social crisis.\",\"Saskatchewan NDP calls on Social Services Minister Terry Jenson and Mental Health Minister Lori Carr to tour Saskatoon's 20th Street following harm reduction closures.\",https://www.choseno.com/news/saskatchewan-opposition-presses-ministers-20th-street-crisis-2026-08-19,https://www.choseno.com/news/saskatchewan-opposition-presses-ministers-20th-street-crisis-2026-08-19",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,8.7,\"Federal Court Dissolves Injunction on Rhode Island Retail Cannabis Licensing Program\",Commerce,\"RI, US\",Civic Authority,2026-08-19T00:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"A federal judge dissolves an injunction halting Rhode Island retail cannabis dispensary licensing, clearing the way for 24 new store permits.\",\"U.S. District Court dissolves a preliminary injunction that halted the issuance of 24 retail cannabis licenses in Rhode Island, enabling regulators to proceed with lottery awards.\",https://www.choseno.com/news/federal-court-dissolves-injunction-rhode-island-cannabis-licensing-2026-08-19,https://www.choseno.com/news/federal-court-dissolves-injunction-rhode-island-cannabis-licensing-2026-08-19",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,8.7,\"Federal Judge Authorizes Exterior Paint Testing for Historic Eisenhower Building Restoration\",Infrastructure,\"DC, US\",Donald Trump,2026-08-19T00:40:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"A federal judge permits limited paint tests on the historic Eisenhower Executive Office Building while pausing full-scale exterior coating.\",\"U.S. District Judge denies historic preservationists' emergency injunction, allowing the White House to conduct limited paint testing on the granite exterior of the Eisenhower Executive Office Building.\",https://www.choseno.com/news/federal-judge-authorizes-exterior-paint-testing-eisenhower-building-2026-08-19,https://www.choseno.com/wall/donald-trump",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,8.6,\"Oakland Federal Court Opens Landmark Youth Social Media Addiction Trial Against Meta\",Technology,\"CA, US\",Gavin Newsom,2026-08-19T00:35:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"State attorneys general present unsealed internal memos as landmark youth social media addiction trial against Meta begins in Oakland federal court.\",\"A coalition of 29 state attorneys general begins trial in California federal court against Meta, presenting unsealed internal research alleging algorithmic exploitation of children and teens.\",https://www.choseno.com/news/oakland-federal-court-opens-landmark-youth-social-media-trial-meta-2026-08-19,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,8.6,\"San Diego County Supervisors Prohibit Federal Immigration Agencies from Facility Gun Ranges\",Public Safety,\"CA, US\",Gavin Newsom,2026-08-19T00:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"San Diego County Supervisors vote 3-2 to ban federal immigration enforcement agencies from using county-owned firearms training facilities.\",\"San Diego County Board of Supervisors votes 3-2 to ban federal immigration enforcement agencies from utilizing county-owned law enforcement facilities and shooting ranges.\",https://www.choseno.com/news/san-diego-county-supervisors-prohibit-ice-firearms-training-facilities-2026-08-19,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,8.5,\"Palo Alto City Council Endorses 8-Story Multi-Family Housing Under Density Framework\",Housing,\"CA, US\",Gavin Newsom,2026-08-19T00:25:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Palo Alto City Council approves an 8-story, 180-unit multi-family housing development on San Antonio Road under California state density rules.\",\"Palo Alto City Council approves an 8-story residential complex containing 180 units at 762 San Antonio Road under California state housing element guidelines.\",https://www.choseno.com/news/palo-alto-city-council-endorses-8-story-housing-san-antonio-road-2026-08-19,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,8.4,\"San Antonio City Council Rebuffs Ballot Referendum Petition for $489M Sports Arena Subsidy\",Economy,\"TX, US\",Greg Abbott,2026-08-19T00:20:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"San Antonio City Council votes 6-5 against putting a 489 million dollar public financing package for a new Spurs arena on the November ballot.\",\"San Antonio City Council votes 6-5 to reject putting a public vote on a proposed $489 million municipal financing contribution toward a downtown NBA arena.\",https://www.choseno.com/news/san-antonio-city-council-rebuffs-ballot-referendum-489m-spurs-arena-2026-08-19,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,8.4,\"Memphis City Council Enacts Initial Moratorium on Industrial High-Capacity Data Centers\",Energy,\"TN, US\",Civic Authority,2026-08-19T00:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Memphis City Council approves the first reading of a moratorium on mega data centers to assess impact on the power grid and municipal water.\",\"Memphis City Council passes the first reading of an ordinance instituting a temporary pause on new mega-scale data center developments to review electrical grid and water consumption.\",https://www.choseno.com/news/memphis-city-council-enacts-moratorium-industrial-data-centers-2026-08-19,https://www.choseno.com/news/memphis-city-council-enacts-moratorium-industrial-data-centers-2026-08-19",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,8.3,\"Oklahoma City Council Formalizes $28M MAPS 4 Park Modernization Contracts\",Infrastructure,\"OK, US\",Civic Authority,2026-08-19T00:10:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Oklahoma City Council approves 28.4 million dollars in MAPS 4 construction contracts to revitalize 20 neighborhood parks across the city.\",\"Oklahoma City Council approves final engineering plans and construction bids for the first phase of MAPS 4 neighborhood park renovations across 20 municipal sites.\",https://www.choseno.com/news/oklahoma-city-council-formalizes-28m-maps4-park-modernizations-2026-08-19,https://www.choseno.com/news/oklahoma-city-council-formalizes-28m-maps4-park-modernizations-2026-08-19",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,8.3,\"Santa Barbara County Supervisors Greenlight Commercial Rezoning in Santa Ynez Valley Corridor\",Economy,\"CA, US\",Gavin Newsom,2026-08-19T00:05:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Santa Barbara County Supervisors vote 5-0 to approve commercial rezoning in the Santa Ynez Valley corridor to support local business growth.\",\"Santa Barbara County Board of Supervisors votes 5-0 to approve a key commercial rezoning in the Santa Ynez Valley, enabling mixed-use local development.\",https://www.choseno.com/news/santa-barbara-supervisors-greenlight-commercial-rezoning-santa-ynez-2026-08-19,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,8.3,\"Mills County Supervisors Submit Five-Member Governance Expansion to November Ballot\",Elections,\"IA, US\",Civic Authority,2026-08-19T00:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Mills County Iowa Supervisors vote to place a citizen-initiated measure on the November ballot to expand the county board from 3 to 5 members.\",\"Following a successful citizen petition, Mills County Iowa Board of Supervisors places a measure on the November general election ballot to expand the board from 3 to 5 supervisors.\",https://www.choseno.com/news/mills-county-supervisors-submit-five-member-board-expansion-ballot-2026-08-19,https://www.choseno.com/news/mills-county-supervisors-submit-five-member-board-expansion-ballot-2026-08-19",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,8.2,\"Timmins City Council Institutes Passenger Rail Transit Link for Ontario Northland Corridor\",Infrastructure,\"ON, CA\",Doug Ford,2026-08-18T23:55:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Timmins City Council approves a municipal transit pilot linking local bus routes with Ontario Northland passenger rail service.\",\"Timmins City Council authorizes a six-month municipal transit connection pilot to coordinate local bus service with the returning Northlander passenger rail line.\",https://www.choseno.com/news/timmins-city-council-institutes-transit-pilot-ontario-northland-rail-2026-08-19,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,8.2,\"Edmonton City Council Commissions Municipal Property Impact Study on Infill Developments\",Housing,\"AB, CA\",Danielle Smith,2026-08-18T23:50:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Edmonton City Council votes 9-4 to commission a comprehensive study analyzing the impact of small-scale infill housing on property values.\",\"Edmonton City Council votes 9-4 to direct administration to conduct an independent study analyzing the market value impact of small-scale infill housing on adjacent single-family properties.\",https://www.choseno.com/news/edmonton-city-council-commissions-infill-housing-property-value-study-2026-08-19,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,8.1,\"Calgary Police Service Clears 91 Outstanding Warrants in Citywide Targeted Blitz\",Public Safety,\"AB, CA\",Danielle Smith,2026-08-18T23:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Calgary Police execute a coordinated public safety blitz, arresting 18 individuals and clearing 91 outstanding criminal warrants.\",\"Calgary Police Service arrests 18 individuals and clears 91 outstanding criminal warrants during a coordinated multi-division public safety enforcement operation.\",https://www.choseno.com/news/calgary-police-clears-91-warrants-citywide-targeted-enforcement-2026-08-19,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,8.1,\"Alaska Certified Top-Four Blanket Primary Advances Contenders for Statewide U.S. House Seat\",Elections,\"AK, US\",Civic Authority,2026-08-18T23:40:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Alaska nonpartisan primary advances Rep. Mary Peltola and three challengers to the November ranked-choice U.S. House election.\",\"Alaska's nonpartisan blanket primary advances incumbent Representative Mary Peltola, Nick Begich III, Nancy Dahlstrom, and Matthew Salisbury to the ranked-choice general election.\",https://www.choseno.com/news/alaska-nonpartisan-primary-advances-top-four-us-house-candidates-2026-08-19,https://www.choseno.com/news/alaska-nonpartisan-primary-advances-top-four-us-house-candidates-2026-08-19",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,8.0,\"Wyoming Republican Primary Voters Nominate Harriet Hageman and John Barrasso in Cheyenne\",Elections,\"WY, US\",John Thune,2026-08-18T23:35:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Rep. Harriet Hageman and Senator John Barrasso secure landslide primary victories in Wyoming's Republican federal elections.\",\"Incumbent Representative Harriet Hageman and Senator John Barrasso secure commanding victories in Wyoming's Republican federal primary elections.\",https://www.choseno.com/news/wyoming-gop-primary-nominates-hageman-barrasso-cheyenne-2026-08-19,https://www.choseno.com/wall/john-thune",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,8.0,\"Chinese Humanoid Robotics Developer Unitree Surges in Multi-Billion Public Trading Debut\",Technology,\"NY, US\",Civic Authority,2026-08-18T23:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Robotics developer Unitree surges 45 percent in its market debut, pushing its valuation past 6.8 billion dollars on humanoid demand.\",\"Robotics pioneer Unitree sees shares jump 45 percent during its initial public trading debut, driven by surging global demand for industrial automation and general-purpose robotics.\",https://www.choseno.com/news/chinese-humanoid-robotics-maker-unitree-surges-market-debut-2026-08-19,https://www.choseno.com/news/chinese-humanoid-robotics-maker-unitree-surges-market-debut-2026-08-19",
+    "archivedAt": "2026-08-20T04:51:17.306Z"
+  },
+  {
+    "rank": 101,
     "raw": "88,7.9,\"SFMTA Board Authorizes $42M Powell Street Transit and Pedestrian Modernization\",Infrastructure,\"CA, US\",Gavin Newsom,2026-08-18T23:25:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The SFMTA Board approves 42.3 million dollars to modernize Powell Street sidewalks, cable car tracks, and transit islands in Union Square.\",\"The San Francisco Municipal Transportation Agency approves $42 million in capital contracts to rebuild Powell Street sidewalks, cable car tracks, and transit boarding islands.\",https://www.choseno.com/news/sfmta-authorizes-42m-powell-street-transit-pedestrian-modernization-2026-08-19,https://www.choseno.com/wall/gavin-newsom",
     "archivedAt": "2026-08-20T01:15:24.379Z"
   },
