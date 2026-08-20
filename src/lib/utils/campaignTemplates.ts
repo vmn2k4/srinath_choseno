@@ -173,44 +173,49 @@ const MAYOR_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
 
-        <div class="highlight">
-            <p class="highlight-title">Your wall is now live</p>
-            <p>Voters will see your leadership record, vision, and endorsements — all in one space:</p>
-            <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/wall/{{wall_slug}}" class="cta-link">View Your Wall</a></strong></p>
-            <p style="margin: 10px 0 0 0; font-size: 13px; color: #555;">You can quickly try our easiest way to find the polling district you belong to and see how an election wall appears once candidates are nominated: <strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
+        <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
+            <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">Your wall is now live</p>
+            <p style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0 0 14px 0;">Voters will see your leadership record, vision, and endorsements — all in one dedicated space:</p>
+            <div style="margin: 12px 0 16px 0;">
+                <a href="https://www.choseno.com/wall/{{wall_slug}}" class="cta-link" style="display: inline-block; background: #0284c7; color: #ffffff !important; font-weight: 700; font-size: 13.5px; padding: 9px 20px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);">👉 View Your Mayor Wall & Platform</a>
+            </div>
+            <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #475569; border-top: 1px dashed #bae6fd; padding-top: 12px;">
+                <strong>Test voter discovery:</strong> Check how local voters explore your polling district and browse candidate walls:
+                <br>• <strong><a href="https://www.choseno.com/find-my-district" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Find My District (Interactive Map) →</a></strong>
+                <br>• <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Sample Live Election Wall →</a></strong>
+            </p>
         </div>
 
         <!-- Video Demo Section with Centered Play Button & Call to Action -->
         <div class="section" style="margin: 28px 0;">
-            <p class="section-title">See Choseno in Action (2-Min Product Tour)</p>
-            <div style="background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 16px; border: 1px solid #cbd5e1; box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.06); overflow: hidden; max-width: 560px; margin: 0 auto; text-align: center;">
-                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 36px 24px 32px 24px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
+            <div style="background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 520px; margin: 0 auto; text-align: center;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 28px 20px 24px 20px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
                     
-                    <!-- Centered Brand Badge -->
-                    <div style="margin-bottom: 22px;">
-                        <span style="display: inline-block; padding: 4px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                            <span style="display: inline-block; width: 16px; height: 16px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 10px; line-height: 16px; text-align: center; border-radius: 4px; margin-right: 5px; vertical-align: middle;">C</span>
-                            <span style="font-size: 12px; font-weight: 700; color: #0f172a; vertical-align: middle;">Choseno Product Demo</span>
+                    <!-- Centered Small Brand Badge -->
+                    <div style="margin-bottom: 16px;">
+                        <span style="display: inline-block; padding: 3px 10px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 9999px;">
+                            <span style="display: inline-block; width: 14px; height: 14px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 9px; line-height: 14px; text-align: center; border-radius: 3px; margin-right: 4px; vertical-align: middle;">C</span>
+                            <span style="font-size: 11px; font-weight: 600; color: #64748b; vertical-align: middle;">Platform Tour</span>
                         </span>
                     </div>
 
-                    <!-- Centered Large Interactive Play Button -->
-                    <div style="margin: 0 auto 20px auto; width: 80px; height: 80px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.45), 0 0 0 10px rgba(2, 132, 199, 0.12); text-align: center; line-height: 80px;">
-                        <span style="color: #ffffff; font-size: 30px; display: inline-block; margin-left: 6px; vertical-align: middle;">▶</span>
+                    <!-- Centered Interactive Play Button -->
+                    <div style="margin: 0 auto 16px auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 6px 20px -3px rgba(2, 132, 199, 0.4), 0 0 0 8px rgba(2, 132, 199, 0.1); text-align: center; line-height: 68px;">
+                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
                     </div>
 
-                    <!-- Clean Header & Vision Statement -->
-                    <div style="color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 6px;">
-                        Watch the 2-Minute Platform Walkthrough
+                    <!-- Subdued Header & Vision Statement -->
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700; letter-spacing: -0.2px; margin-bottom: 4px;">
+                        Watch 2-Minute Demo
                     </div>
-                    <div style="color: #475569; font-size: 13.5px; line-height: 1.5; max-width: 440px; margin: 0 auto 22px auto;">
-                        See how district mapping, verified promises, and candidate walls empower voters and candidates for the 2026 elections.
+                    <div style="color: #64748b; font-size: 12.5px; line-height: 1.4; max-width: 360px; margin: 0 auto 18px auto;">
+                        See how district mapping & candidate walls work for voters.
                     </div>
 
                     <!-- Prominent Blue Call To Action Button -->
                     <div>
-                        <span style="display: inline-block; padding: 10px 24px; background: #0284c7; color: #ffffff; border-radius: 8px; font-size: 13.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);">
-                            ▶ Watch Demo Video Now
+                        <span style="display: inline-block; padding: 8px 20px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);">
+                            ▶ Play Video Tour
                         </span>
                     </div>
                 </a>
@@ -435,44 +440,49 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
 
-        <div class="highlight">
-            <p class="highlight-title">Your wall is now live</p>
-            <p>Constituents will see your voting record, policy positions, and community testimonials — all in one space:</p>
-            <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/wall/{{wall_slug}}" class="cta-link">View Your Wall</a></strong></p>
-            <p style="margin: 10px 0 0 0; font-size: 13px; color: #555;">You can quickly try our easiest way to find the polling district you belong to and see how an election wall appears once candidates are nominated: <strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
+        <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
+            <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">Your wall is now live</p>
+            <p style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0 0 14px 0;">Voters will see your leadership record, vision, and endorsements — all in one dedicated space:</p>
+            <div style="margin: 12px 0 16px 0;">
+                <a href="https://www.choseno.com/wall/{{wall_slug}}" class="cta-link" style="display: inline-block; background: #0284c7; color: #ffffff !important; font-weight: 700; font-size: 13.5px; padding: 9px 20px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);">👉 View Your Councillor Wall & Platform</a>
+            </div>
+            <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #475569; border-top: 1px dashed #bae6fd; padding-top: 12px;">
+                <strong>Test voter discovery:</strong> Check how local voters explore your polling district and browse candidate walls:
+                <br>• <strong><a href="https://www.choseno.com/find-my-district" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Find My District (Interactive Map) →</a></strong>
+                <br>• <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Sample Live Election Wall →</a></strong>
+            </p>
         </div>
 
         <!-- Video Demo Section with Centered Play Button & Call to Action -->
         <div class="section" style="margin: 28px 0;">
-            <p class="section-title">See Choseno in Action (2-Min Product Tour)</p>
-            <div style="background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 16px; border: 1px solid #cbd5e1; box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.06); overflow: hidden; max-width: 560px; margin: 0 auto; text-align: center;">
-                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 36px 24px 32px 24px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
+            <div style="background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 520px; margin: 0 auto; text-align: center;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 28px 20px 24px 20px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
                     
-                    <!-- Centered Brand Badge -->
-                    <div style="margin-bottom: 22px;">
-                        <span style="display: inline-block; padding: 4px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                            <span style="display: inline-block; width: 16px; height: 16px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 10px; line-height: 16px; text-align: center; border-radius: 4px; margin-right: 5px; vertical-align: middle;">C</span>
-                            <span style="font-size: 12px; font-weight: 700; color: #0f172a; vertical-align: middle;">Choseno Product Demo</span>
+                    <!-- Centered Small Brand Badge -->
+                    <div style="margin-bottom: 16px;">
+                        <span style="display: inline-block; padding: 3px 10px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 9999px;">
+                            <span style="display: inline-block; width: 14px; height: 14px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 9px; line-height: 14px; text-align: center; border-radius: 3px; margin-right: 4px; vertical-align: middle;">C</span>
+                            <span style="font-size: 11px; font-weight: 600; color: #64748b; vertical-align: middle;">Platform Tour</span>
                         </span>
                     </div>
 
-                    <!-- Centered Large Interactive Play Button -->
-                    <div style="margin: 0 auto 20px auto; width: 80px; height: 80px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.45), 0 0 0 10px rgba(2, 132, 199, 0.12); text-align: center; line-height: 80px;">
-                        <span style="color: #ffffff; font-size: 30px; display: inline-block; margin-left: 6px; vertical-align: middle;">▶</span>
+                    <!-- Centered Interactive Play Button -->
+                    <div style="margin: 0 auto 16px auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 6px 20px -3px rgba(2, 132, 199, 0.4), 0 0 0 8px rgba(2, 132, 199, 0.1); text-align: center; line-height: 68px;">
+                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
                     </div>
 
-                    <!-- Clean Header & Vision Statement -->
-                    <div style="color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 6px;">
-                        Watch the 2-Minute Platform Walkthrough
+                    <!-- Subdued Header & Vision Statement -->
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700; letter-spacing: -0.2px; margin-bottom: 4px;">
+                        Watch 2-Minute Demo
                     </div>
-                    <div style="color: #475569; font-size: 13.5px; line-height: 1.5; max-width: 440px; margin: 0 auto 22px auto;">
-                        See how district mapping, verified promises, and candidate walls empower voters and candidates for the 2026 elections.
+                    <div style="color: #64748b; font-size: 12.5px; line-height: 1.4; max-width: 360px; margin: 0 auto 18px auto;">
+                        See how district mapping & candidate walls work for voters.
                     </div>
 
                     <!-- Prominent Blue Call To Action Button -->
                     <div>
-                        <span style="display: inline-block; padding: 10px 24px; background: #0284c7; color: #ffffff; border-radius: 8px; font-size: 13.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);">
-                            ▶ Watch Demo Video Now
+                        <span style="display: inline-block; padding: 8px 20px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);">
+                            ▶ Play Video Tour
                         </span>
                     </div>
                 </a>
@@ -697,48 +707,49 @@ const PARTY_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
 
-        <div class="highlight">
-            <p class="highlight-title">100% Free Civic Platform — We Work With Your Candidates</p>
-            <p>Choseno provides dedicated Candidate and Election walls so voters in {{city}} can research your platform, compare nominees, and connect directly with your slate. <strong>This is a 100% free service for all parties and candidates — we do not charge for candidate onboarding or strategy meetings.</strong></p>
-            <p style="margin: 12px 0 0 0; font-size: 13px;">
-                Explore how the platform looks in action:
-                <br>• <strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find your municipal district / polling area</a></strong>
-                <br>• <strong><a href="https://www.choseno.com/wall/brenda-locke-mayor" class="cta-link">Sample Candidate Wall</a></strong>
-                <br>• <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Live Election Wall</a></strong>
+        <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
+            <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">100% Free Civic Platform — We Work With Your Candidates</p>
+            <p style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0 0 14px 0;">Choseno provides dedicated Candidate and Election walls so voters in {{city}} can research your platform, compare nominees, and connect directly with your slate. <strong>This is a 100% free service for all parties and candidates — we do not charge for candidate onboarding or strategy meetings.</strong></p>
+            <div style="margin: 12px 0 16px 0;">
+                <a href="https://www.choseno.com/wall/brenda-locke-mayor" class="cta-link" style="display: inline-block; background: #0284c7; color: #ffffff !important; font-weight: 700; font-size: 13.5px; padding: 9px 20px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);">👉 Explore Sample Candidate Wall</a>
+            </div>
+            <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #475569; border-top: 1px dashed #bae6fd; padding-top: 12px;">
+                <strong>Test voter discovery in {{city}}:</strong>
+                <br>• <strong><a href="https://www.choseno.com/find-my-district" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Find Your Municipal District (Interactive Map) →</a></strong>
+                <br>• <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Sample Live Election Wall →</a></strong>
             </p>
         </div>
 
         <!-- Video Demo Section with Centered Play Button & Call to Action -->
         <div class="section" style="margin: 28px 0;">
-            <p class="section-title">See Choseno in Action (2-Min Product Tour)</p>
-            <div style="background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 16px; border: 1px solid #cbd5e1; box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.06); overflow: hidden; max-width: 560px; margin: 0 auto; text-align: center;">
-                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 36px 24px 32px 24px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
+            <div style="background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 520px; margin: 0 auto; text-align: center;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 28px 20px 24px 20px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
                     
-                    <!-- Centered Brand Badge -->
-                    <div style="margin-bottom: 22px;">
-                        <span style="display: inline-block; padding: 4px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                            <span style="display: inline-block; width: 16px; height: 16px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 10px; line-height: 16px; text-align: center; border-radius: 4px; margin-right: 5px; vertical-align: middle;">C</span>
-                            <span style="font-size: 12px; font-weight: 700; color: #0f172a; vertical-align: middle;">Choseno Product Demo</span>
+                    <!-- Centered Small Brand Badge -->
+                    <div style="margin-bottom: 16px;">
+                        <span style="display: inline-block; padding: 3px 10px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 9999px;">
+                            <span style="display: inline-block; width: 14px; height: 14px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 9px; line-height: 14px; text-align: center; border-radius: 3px; margin-right: 4px; vertical-align: middle;">C</span>
+                            <span style="font-size: 11px; font-weight: 600; color: #64748b; vertical-align: middle;">Platform Tour</span>
                         </span>
                     </div>
 
-                    <!-- Centered Large Interactive Play Button -->
-                    <div style="margin: 0 auto 20px auto; width: 80px; height: 80px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.45), 0 0 0 10px rgba(2, 132, 199, 0.12); text-align: center; line-height: 80px;">
-                        <span style="color: #ffffff; font-size: 30px; display: inline-block; margin-left: 6px; vertical-align: middle;">▶</span>
+                    <!-- Centered Interactive Play Button -->
+                    <div style="margin: 0 auto 16px auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 6px 20px -3px rgba(2, 132, 199, 0.4), 0 0 0 8px rgba(2, 132, 199, 0.1); text-align: center; line-height: 68px;">
+                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
                     </div>
 
-                    <!-- Clean Header & Vision Statement -->
-                    <div style="color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 6px;">
-                        Watch the 2-Minute Platform Walkthrough
+                    <!-- Subdued Header & Vision Statement -->
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700; letter-spacing: -0.2px; margin-bottom: 4px;">
+                        Watch 2-Minute Demo
                     </div>
-                    <div style="color: #475569; font-size: 13.5px; line-height: 1.5; max-width: 440px; margin: 0 auto 22px auto;">
-                        See how district mapping, verified promises, and candidate walls empower voters and candidates for the 2026 elections.
+                    <div style="color: #64748b; font-size: 12.5px; line-height: 1.4; max-width: 360px; margin: 0 auto 18px auto;">
+                        See how district mapping & candidate walls work for voters.
                     </div>
 
                     <!-- Prominent Blue Call To Action Button -->
                     <div>
-                        <span style="display: inline-block; padding: 10px 24px; background: #0284c7; color: #ffffff; border-radius: 8px; font-size: 13.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);">
-                            ▶ Watch Demo Video Now
+                        <span style="display: inline-block; padding: 8px 20px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);">
+                            ▶ Play Video Tour
                         </span>
                     </div>
                 </a>
@@ -958,48 +969,49 @@ const CANDIDATE_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
 
-        <div class="highlight">
-            <p class="highlight-title">Your 2026 Campaign Wall on Choseno — 100% Free Service</p>
-            <p>We saw that you've stepped up to run for <strong>{{role}}</strong> in {{city}}! To help you connect with voters from day one, your official Candidate Wall is ready to claim. <strong>Choseno is 100% free for all candidates — we never charge for onboarding, wall features, or campaign support calls.</strong></p>
-            <p style="margin: 12px 0 0 0; font-size: 13px;">
-                See how local voters discover and compare candidates:
-                <br>• <strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find your municipal district / polling area</a></strong>
-                <br>• <strong><a href="https://www.choseno.com/wall/brenda-locke-mayor" class="cta-link">Sample Candidate Wall</a></strong>
-                <br>• <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Live Election Wall</a></strong>
+        <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
+            <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">Your 2026 Campaign Wall on Choseno — 100% Free Service</p>
+            <p style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0 0 14px 0;">We saw that you've stepped up to run for <strong>{{role}}</strong> in {{city}}! To help you connect with voters from day one, your official Candidate Wall is ready to claim. <strong>Choseno is 100% free for all candidates — we never charge for onboarding, wall features, or campaign support calls.</strong></p>
+            <div style="margin: 12px 0 16px 0;">
+                <a href="https://www.choseno.com/wall/brenda-locke-mayor" class="cta-link" style="display: inline-block; background: #0284c7; color: #ffffff !important; font-weight: 700; font-size: 13.5px; padding: 9px 20px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);">👉 Explore Sample Candidate Wall</a>
+            </div>
+            <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #475569; border-top: 1px dashed #bae6fd; padding-top: 12px;">
+                <strong>Test voter discovery in {{city}}:</strong>
+                <br>• <strong><a href="https://www.choseno.com/find-my-district" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Find Your Municipal District (Interactive Map) →</a></strong>
+                <br>• <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Sample Live Election Wall →</a></strong>
             </p>
         </div>
 
         <!-- Video Demo Section with Centered Play Button & Call to Action -->
         <div class="section" style="margin: 28px 0;">
-            <p class="section-title">See Choseno in Action (2-Min Product Tour)</p>
-            <div style="background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 16px; border: 1px solid #cbd5e1; box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.06); overflow: hidden; max-width: 560px; margin: 0 auto; text-align: center;">
-                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 36px 24px 32px 24px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
+            <div style="background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 520px; margin: 0 auto; text-align: center;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 28px 20px 24px 20px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
                     
-                    <!-- Centered Brand Badge -->
-                    <div style="margin-bottom: 22px;">
-                        <span style="display: inline-block; padding: 4px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                            <span style="display: inline-block; width: 16px; height: 16px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 10px; line-height: 16px; text-align: center; border-radius: 4px; margin-right: 5px; vertical-align: middle;">C</span>
-                            <span style="font-size: 12px; font-weight: 700; color: #0f172a; vertical-align: middle;">Choseno Product Demo</span>
+                    <!-- Centered Small Brand Badge -->
+                    <div style="margin-bottom: 16px;">
+                        <span style="display: inline-block; padding: 3px 10px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 9999px;">
+                            <span style="display: inline-block; width: 14px; height: 14px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 9px; line-height: 14px; text-align: center; border-radius: 3px; margin-right: 4px; vertical-align: middle;">C</span>
+                            <span style="font-size: 11px; font-weight: 600; color: #64748b; vertical-align: middle;">Platform Tour</span>
                         </span>
                     </div>
 
-                    <!-- Centered Large Interactive Play Button -->
-                    <div style="margin: 0 auto 20px auto; width: 80px; height: 80px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.45), 0 0 0 10px rgba(2, 132, 199, 0.12); text-align: center; line-height: 80px;">
-                        <span style="color: #ffffff; font-size: 30px; display: inline-block; margin-left: 6px; vertical-align: middle;">▶</span>
+                    <!-- Centered Interactive Play Button -->
+                    <div style="margin: 0 auto 16px auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 6px 20px -3px rgba(2, 132, 199, 0.4), 0 0 0 8px rgba(2, 132, 199, 0.1); text-align: center; line-height: 68px;">
+                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
                     </div>
 
-                    <!-- Clean Header & Vision Statement -->
-                    <div style="color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 6px;">
-                        Watch the 2-Minute Platform Walkthrough
+                    <!-- Subdued Header & Vision Statement -->
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700; letter-spacing: -0.2px; margin-bottom: 4px;">
+                        Watch 2-Minute Demo
                     </div>
-                    <div style="color: #475569; font-size: 13.5px; line-height: 1.5; max-width: 440px; margin: 0 auto 22px auto;">
-                        See how district mapping, verified promises, and candidate walls empower voters and candidates for the 2026 elections.
+                    <div style="color: #64748b; font-size: 12.5px; line-height: 1.4; max-width: 360px; margin: 0 auto 18px auto;">
+                        See how district mapping & candidate walls work for voters.
                     </div>
 
                     <!-- Prominent Blue Call To Action Button -->
                     <div>
-                        <span style="display: inline-block; padding: 10px 24px; background: #0284c7; color: #ffffff; border-radius: 8px; font-size: 13.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);">
-                            ▶ Watch Demo Video Now
+                        <span style="display: inline-block; padding: 8px 20px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);">
+                            ▶ Play Video Tour
                         </span>
                     </div>
                 </a>
@@ -1219,43 +1231,49 @@ const PSSA_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
 
-        <div class="highlight">
-            <p class="highlight-title">Inaugural Opportunity for Students</p>
-            <p>Choseno is launching for the 2026 municipal election cycle, and we're recruiting the first cohort of Election Researchers. This is a hands-on opportunity to apply political theory to real-world civic engagement.</p>
-            <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
+        <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
+            <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">Inaugural Opportunity for Students</p>
+            <p style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0 0 14px 0;">Choseno is launching for the 2026 municipal election cycle, and we're recruiting the first cohort of Election Researchers. This is a hands-on opportunity to apply political theory to real-world civic engagement.</p>
+            <div style="margin: 12px 0 16px 0;">
+                <a href="https://calendly.com/vmn2k4/30min" class="cta-link" style="display: inline-block; background: #0284c7; color: #ffffff !important; font-weight: 700; font-size: 13.5px; padding: 9px 20px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);">👉 Schedule Quick Call (15 Mins)</a>
+            </div>
+            <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #475569; border-top: 1px dashed #bae6fd; padding-top: 12px;">
+                <strong>Explore live platform research tools:</strong>
+                <br>• <strong><a href="https://www.choseno.com/find-my-district" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Find My District (Interactive Map) →</a></strong>
+                <br>• <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Sample Live Election Wall →</a></strong>
+            </p>
         </div>
 
         <!-- Video Demo Section with Centered Play Button & Call to Action -->
         <div class="section" style="margin: 28px 0;">
-            <p class="section-title">See Choseno in Action (2-Min Product Tour)</p>
-            <div style="background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 16px; border: 1px solid #cbd5e1; box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.06); overflow: hidden; max-width: 560px; margin: 0 auto; text-align: center;">
-                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 36px 24px 32px 24px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
+            <div style="background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 520px; margin: 0 auto; text-align: center;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 28px 20px 24px 20px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
                     
-                    <!-- Centered Brand Badge -->
-                    <div style="margin-bottom: 22px;">
-                        <span style="display: inline-block; padding: 4px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                            <span style="display: inline-block; width: 16px; height: 16px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 10px; line-height: 16px; text-align: center; border-radius: 4px; margin-right: 5px; vertical-align: middle;">C</span>
-                            <span style="font-size: 12px; font-weight: 700; color: #0f172a; vertical-align: middle;">Choseno Product Demo</span>
+                    <!-- Centered Small Brand Badge -->
+                    <div style="margin-bottom: 16px;">
+                        <span style="display: inline-block; padding: 3px 10px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 9999px;">
+                            <span style="display: inline-block; width: 14px; height: 14px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 9px; line-height: 14px; text-align: center; border-radius: 3px; margin-right: 4px; vertical-align: middle;">C</span>
+                            <span style="font-size: 11px; font-weight: 600; color: #64748b; vertical-align: middle;">Platform Tour</span>
                         </span>
                     </div>
 
-                    <!-- Centered Large Interactive Play Button -->
-                    <div style="margin: 0 auto 20px auto; width: 80px; height: 80px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.45), 0 0 0 10px rgba(2, 132, 199, 0.12); text-align: center; line-height: 80px;">
-                        <span style="color: #ffffff; font-size: 30px; display: inline-block; margin-left: 6px; vertical-align: middle;">▶</span>
+                    <!-- Centered Interactive Play Button -->
+                    <div style="margin: 0 auto 16px auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 6px 20px -3px rgba(2, 132, 199, 0.4), 0 0 0 8px rgba(2, 132, 199, 0.1); text-align: center; line-height: 68px;">
+                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
                     </div>
 
-                    <!-- Clean Header & Vision Statement -->
-                    <div style="color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 6px;">
-                        Watch the 2-Minute Platform Walkthrough
+                    <!-- Subdued Header & Vision Statement -->
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700; letter-spacing: -0.2px; margin-bottom: 4px;">
+                        Watch 2-Minute Demo
                     </div>
-                    <div style="color: #475569; font-size: 13.5px; line-height: 1.5; max-width: 440px; margin: 0 auto 22px auto;">
-                        See how district mapping, verified promises, and candidate walls empower voters and candidates for the 2026 elections.
+                    <div style="color: #64748b; font-size: 12.5px; line-height: 1.4; max-width: 360px; margin: 0 auto 18px auto;">
+                        See how district mapping & candidate walls work for voters.
                     </div>
 
                     <!-- Prominent Blue Call To Action Button -->
                     <div>
-                        <span style="display: inline-block; padding: 10px 24px; background: #0284c7; color: #ffffff; border-radius: 8px; font-size: 13.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);">
-                            ▶ Watch Demo Video Now
+                        <span style="display: inline-block; padding: 8px 20px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);">
+                            ▶ Play Video Tour
                         </span>
                     </div>
                 </a>
@@ -1484,43 +1502,49 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
 
-        <div class="highlight">
-            <p class="highlight-title">Specific Ask: 10 Student Researchers for 2026 Municipal Elections</p>
-            <p>Choseno is live and recruiting students to conduct structured interviews with candidates running in the 2026 municipal elections. I'd like to invite 10 students from your program to participate in this hands-on research project — and explore how the data collected can benefit your research agenda.</p>
-            <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
+        <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
+            <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">Specific Ask: 10 Student Researchers for 2026 Municipal Elections</p>
+            <p style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0 0 14px 0;">Choseno is live and recruiting students to conduct structured interviews with candidates running in the 2026 municipal elections. I'd like to invite 10 students from your program to participate in this hands-on research project — and explore how the data collected can benefit your research agenda.</p>
+            <div style="margin: 12px 0 16px 0;">
+                <a href="https://calendly.com/vmn2k4/30min" class="cta-link" style="display: inline-block; background: #0284c7; color: #ffffff !important; font-weight: 700; font-size: 13.5px; padding: 9px 20px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);">👉 Schedule Quick Call (15 Mins)</a>
+            </div>
+            <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #475569; border-top: 1px dashed #bae6fd; padding-top: 12px;">
+                <strong>Explore live election research tools:</strong>
+                <br>• <strong><a href="https://www.choseno.com/find-my-district" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Find My District (Interactive Map) →</a></strong>
+                <br>• <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Sample Live Election Wall →</a></strong>
+            </p>
         </div>
 
         <!-- Video Demo Section with Centered Play Button & Call to Action -->
         <div class="section" style="margin: 28px 0;">
-            <p class="section-title">See Choseno in Action (2-Min Product Tour)</p>
-            <div style="background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 16px; border: 1px solid #cbd5e1; box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.06); overflow: hidden; max-width: 560px; margin: 0 auto; text-align: center;">
-                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 36px 24px 32px 24px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
+            <div style="background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 520px; margin: 0 auto; text-align: center;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 28px 20px 24px 20px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
                     
-                    <!-- Centered Brand Badge -->
-                    <div style="margin-bottom: 22px;">
-                        <span style="display: inline-block; padding: 4px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                            <span style="display: inline-block; width: 16px; height: 16px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 10px; line-height: 16px; text-align: center; border-radius: 4px; margin-right: 5px; vertical-align: middle;">C</span>
-                            <span style="font-size: 12px; font-weight: 700; color: #0f172a; vertical-align: middle;">Choseno Product Demo</span>
+                    <!-- Centered Small Brand Badge -->
+                    <div style="margin-bottom: 16px;">
+                        <span style="display: inline-block; padding: 3px 10px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 9999px;">
+                            <span style="display: inline-block; width: 14px; height: 14px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 9px; line-height: 14px; text-align: center; border-radius: 3px; margin-right: 4px; vertical-align: middle;">C</span>
+                            <span style="font-size: 11px; font-weight: 600; color: #64748b; vertical-align: middle;">Platform Tour</span>
                         </span>
                     </div>
 
-                    <!-- Centered Large Interactive Play Button -->
-                    <div style="margin: 0 auto 20px auto; width: 80px; height: 80px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.45), 0 0 0 10px rgba(2, 132, 199, 0.12); text-align: center; line-height: 80px;">
-                        <span style="color: #ffffff; font-size: 30px; display: inline-block; margin-left: 6px; vertical-align: middle;">▶</span>
+                    <!-- Centered Interactive Play Button -->
+                    <div style="margin: 0 auto 16px auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 6px 20px -3px rgba(2, 132, 199, 0.4), 0 0 0 8px rgba(2, 132, 199, 0.1); text-align: center; line-height: 68px;">
+                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
                     </div>
 
-                    <!-- Clean Header & Vision Statement -->
-                    <div style="color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 6px;">
-                        Watch the 2-Minute Platform Walkthrough
+                    <!-- Subdued Header & Vision Statement -->
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700; letter-spacing: -0.2px; margin-bottom: 4px;">
+                        Watch 2-Minute Demo
                     </div>
-                    <div style="color: #475569; font-size: 13.5px; line-height: 1.5; max-width: 440px; margin: 0 auto 22px auto;">
-                        See how district mapping, verified promises, and candidate walls empower voters and candidates for the 2026 elections.
+                    <div style="color: #64748b; font-size: 12.5px; line-height: 1.4; max-width: 360px; margin: 0 auto 18px auto;">
+                        See how district mapping & candidate walls work for voters.
                     </div>
 
                     <!-- Prominent Blue Call To Action Button -->
                     <div>
-                        <span style="display: inline-block; padding: 10px 24px; background: #0284c7; color: #ffffff; border-radius: 8px; font-size: 13.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);">
-                            ▶ Watch Demo Video Now
+                        <span style="display: inline-block; padding: 8px 20px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);">
+                            ▶ Play Video Tour
                         </span>
                     </div>
                 </a>
