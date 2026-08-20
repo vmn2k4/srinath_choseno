@@ -180,28 +180,69 @@ const MAYOR_BODY = `<!DOCTYPE html>
             <p style="margin: 10px 0 0 0; font-size: 13px; color: #555;">You can quickly try our easiest way to find the polling district you belong to and see how an election wall appears once candidates are nominated: <strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
         </div>
 
-        <!-- Video Demo Section with Homepage Card Design -->
+        <!-- Rich Vision & Demo Showcase Card -->
         <div class="section" style="margin: 28px 0;">
-            <p class="section-title">See Choseno in Action (2-Min Demo)</p>
-            <div style="background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 560px; margin: 0 auto;">
-                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; position: relative; padding: 42px 20px 38px 20px; text-align: center; background: radial-gradient(ellipse at 85% 20%, #f0f7ff 0%, #f8fafc 40%, #ffffff 80%);" title="Click to watch Choseno complete product demo">
-                    <!-- Brand Pill -->
-                    <div style="display: inline-block; padding: 5px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 20px;">
-                        <span style="display: inline-block; width: 18px; height: 18px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 11px; line-height: 18px; text-align: center; border-radius: 5px; margin-right: 6px; vertical-align: middle;">C</span>
-                        <span style="font-size: 13px; font-weight: 700; color: #0f172a; vertical-align: middle; letter-spacing: 0.2px;">Choseno</span>
-                    </div>
+            <div style="background: linear-gradient(145deg, #090e17 0%, #101c2e 50%, #0d1522 100%); border-radius: 16px; border: 1px solid #1e293b; box-shadow: 0 10px 30px -5px rgba(2, 6, 23, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05); overflow: hidden; padding: 28px 24px;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; color: inherit;" title="Click to watch Choseno complete walkthrough & vision">
+                    <!-- Top Bar: Brand Badge + Duration Pill -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 20px;">
+                        <tr>
+                            <td align="left">
+                                <div style="display: inline-block; padding: 4px 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 9999px;">
+                                    <span style="display: inline-block; width: 16px; height: 16px; background: #38bdf8; color: #030712; font-weight: 900; font-size: 11px; line-height: 16px; text-align: center; border-radius: 4px; margin-right: 6px; vertical-align: middle;">C</span>
+                                    <span style="font-size: 12px; font-weight: 700; color: #f8fafc; vertical-align: middle; letter-spacing: 0.3px;">Choseno Vision & Product Tour</span>
+                                </div>
+                            </td>
+                            <td align="right">
+                                <span style="font-size: 11px; font-weight: 600; color: #94a3b8; background: rgba(0, 0, 0, 0.4); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.06);">⏱ 2:15 Watch</span>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <!-- Play Disc -->
-                    <div style="margin: 0 auto 20px auto; width: 72px; height: 72px; background: #0284c7; border-radius: 50%; box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.4), 0 0 0 10px rgba(2, 132, 199, 0.12); text-align: center; line-height: 72px;">
-                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
-                    </div>
+                    <!-- Main Showcase: Play Button & Vision Statement -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 22px;">
+                        <tr>
+                            <td align="center" style="padding: 10px 0 16px 0;">
+                                <!-- Glowing Animated Play Trigger -->
+                                <div style="margin: 0 auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.18), 0 12px 28px -4px rgba(2, 132, 199, 0.6); text-align: center; line-height: 68px;">
+                                    <span style="color: #ffffff; font-size: 24px; display: inline-block; margin-left: 4px; vertical-align: middle;">▶</span>
+                                </div>
+                                <div style="color: #f8fafc; font-size: 21px; font-weight: 800; letter-spacing: -0.4px; margin-top: 18px; line-height: 1.3;">
+                                    "Built for Everyday Citizens — Powered for Real Democracy"
+                                </div>
+                                <div style="color: #94a3b8; font-size: 13.5px; line-height: 1.6; max-width: 480px; margin: 8px auto 0 auto;">
+                                    See how voters navigate multi-tier municipal ballots, explore district boundaries, verify policy promises, and engage directly with candidate walls without algorithmic bias or paywalls.
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <!-- Card Title & Subtitle -->
-                    <div style="color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                        Complete Product Demo
-                    </div>
-                    <div style="color: #64748b; font-size: 13.5px; font-weight: 500; max-width: 360px; margin: 0 auto; line-height: 1.5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                        Watch our full demo to see all Choseno features in action
+                    <!-- Vision Highlights Grid (3 Core Pillars) -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">
+                        <tr>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top;">
+                                <div style="font-size: 18px; margin-bottom: 4px;">🗺️</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Zero-Friction Districts</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">Instant postal code mapping to local council races</div>
+                            </td>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top; border-left: 1px solid rgba(255, 255, 255, 0.06); border-right: 1px solid rgba(255, 255, 255, 0.06);">
+                                <div style="font-size: 18px; margin-bottom: 4px;">⚖️</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Level Playing Field</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">100% free visibility for independents & major slates</div>
+                            </td>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top;">
+                                <div style="font-size: 18px; margin-bottom: 4px;">💬</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Direct Voter Trust</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">Constituent testimonials & verified promise tracking</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Click CTA Footer -->
+                    <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.08); text-align: center;">
+                        <span style="display: inline-block; padding: 7px 18px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px;">
+                            ▶ Click to Play Full Video Walkthrough (2 Mins)
+                        </span>
                     </div>
                 </a>
             </div>
@@ -432,28 +473,69 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
             <p style="margin: 10px 0 0 0; font-size: 13px; color: #555;">You can quickly try our easiest way to find the polling district you belong to and see how an election wall appears once candidates are nominated: <strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
         </div>
 
-        <!-- Video Demo Section with Homepage Card Design -->
+        <!-- Rich Vision & Demo Showcase Card -->
         <div class="section" style="margin: 28px 0;">
-            <p class="section-title">See Choseno in Action (2-Min Demo)</p>
-            <div style="background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 560px; margin: 0 auto;">
-                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; position: relative; padding: 42px 20px 38px 20px; text-align: center; background: radial-gradient(ellipse at 85% 20%, #f0f7ff 0%, #f8fafc 40%, #ffffff 80%);" title="Click to watch Choseno complete product demo">
-                    <!-- Brand Pill -->
-                    <div style="display: inline-block; padding: 5px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 20px;">
-                        <span style="display: inline-block; width: 18px; height: 18px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 11px; line-height: 18px; text-align: center; border-radius: 5px; margin-right: 6px; vertical-align: middle;">C</span>
-                        <span style="font-size: 13px; font-weight: 700; color: #0f172a; vertical-align: middle; letter-spacing: 0.2px;">Choseno</span>
-                    </div>
+            <div style="background: linear-gradient(145deg, #090e17 0%, #101c2e 50%, #0d1522 100%); border-radius: 16px; border: 1px solid #1e293b; box-shadow: 0 10px 30px -5px rgba(2, 6, 23, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05); overflow: hidden; padding: 28px 24px;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; color: inherit;" title="Click to watch Choseno complete walkthrough & vision">
+                    <!-- Top Bar: Brand Badge + Duration Pill -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 20px;">
+                        <tr>
+                            <td align="left">
+                                <div style="display: inline-block; padding: 4px 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 9999px;">
+                                    <span style="display: inline-block; width: 16px; height: 16px; background: #38bdf8; color: #030712; font-weight: 900; font-size: 11px; line-height: 16px; text-align: center; border-radius: 4px; margin-right: 6px; vertical-align: middle;">C</span>
+                                    <span style="font-size: 12px; font-weight: 700; color: #f8fafc; vertical-align: middle; letter-spacing: 0.3px;">Choseno Vision & Product Tour</span>
+                                </div>
+                            </td>
+                            <td align="right">
+                                <span style="font-size: 11px; font-weight: 600; color: #94a3b8; background: rgba(0, 0, 0, 0.4); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.06);">⏱ 2:15 Watch</span>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <!-- Play Disc -->
-                    <div style="margin: 0 auto 20px auto; width: 72px; height: 72px; background: #0284c7; border-radius: 50%; box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.4), 0 0 0 10px rgba(2, 132, 199, 0.12); text-align: center; line-height: 72px;">
-                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
-                    </div>
+                    <!-- Main Showcase: Play Button & Vision Statement -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 22px;">
+                        <tr>
+                            <td align="center" style="padding: 10px 0 16px 0;">
+                                <!-- Glowing Animated Play Trigger -->
+                                <div style="margin: 0 auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.18), 0 12px 28px -4px rgba(2, 132, 199, 0.6); text-align: center; line-height: 68px;">
+                                    <span style="color: #ffffff; font-size: 24px; display: inline-block; margin-left: 4px; vertical-align: middle;">▶</span>
+                                </div>
+                                <div style="color: #f8fafc; font-size: 21px; font-weight: 800; letter-spacing: -0.4px; margin-top: 18px; line-height: 1.3;">
+                                    "Built for Everyday Citizens — Powered for Real Democracy"
+                                </div>
+                                <div style="color: #94a3b8; font-size: 13.5px; line-height: 1.6; max-width: 480px; margin: 8px auto 0 auto;">
+                                    See how voters navigate multi-tier municipal ballots, explore district boundaries, verify policy promises, and engage directly with candidate walls without algorithmic bias or paywalls.
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <!-- Card Title & Subtitle -->
-                    <div style="color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                        Complete Product Demo
-                    </div>
-                    <div style="color: #64748b; font-size: 13.5px; font-weight: 500; max-width: 360px; margin: 0 auto; line-height: 1.5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                        Watch our full demo to see all Choseno features in action
+                    <!-- Vision Highlights Grid (3 Core Pillars) -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">
+                        <tr>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top;">
+                                <div style="font-size: 18px; margin-bottom: 4px;">🗺️</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Zero-Friction Districts</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">Instant postal code mapping to local council races</div>
+                            </td>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top; border-left: 1px solid rgba(255, 255, 255, 0.06); border-right: 1px solid rgba(255, 255, 255, 0.06);">
+                                <div style="font-size: 18px; margin-bottom: 4px;">⚖️</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Level Playing Field</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">100% free visibility for independents & major slates</div>
+                            </td>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top;">
+                                <div style="font-size: 18px; margin-bottom: 4px;">💬</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Direct Voter Trust</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">Constituent testimonials & verified promise tracking</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Click CTA Footer -->
+                    <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.08); text-align: center;">
+                        <span style="display: inline-block; padding: 7px 18px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px;">
+                            ▶ Click to Play Full Video Walkthrough (2 Mins)
+                        </span>
                     </div>
                 </a>
             </div>
@@ -688,28 +770,69 @@ const PARTY_BODY = `<!DOCTYPE html>
             </p>
         </div>
 
-        <!-- Video Demo Section with Homepage Card Design -->
+        <!-- Rich Vision & Demo Showcase Card -->
         <div class="section" style="margin: 28px 0;">
-            <p class="section-title">See Choseno in Action (2-Min Demo)</p>
-            <div style="background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 560px; margin: 0 auto;">
-                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; position: relative; padding: 42px 20px 38px 20px; text-align: center; background: radial-gradient(ellipse at 85% 20%, #f0f7ff 0%, #f8fafc 40%, #ffffff 80%);" title="Click to watch Choseno complete product demo">
-                    <!-- Brand Pill -->
-                    <div style="display: inline-block; padding: 5px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 20px;">
-                        <span style="display: inline-block; width: 18px; height: 18px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 11px; line-height: 18px; text-align: center; border-radius: 5px; margin-right: 6px; vertical-align: middle;">C</span>
-                        <span style="font-size: 13px; font-weight: 700; color: #0f172a; vertical-align: middle; letter-spacing: 0.2px;">Choseno</span>
-                    </div>
+            <div style="background: linear-gradient(145deg, #090e17 0%, #101c2e 50%, #0d1522 100%); border-radius: 16px; border: 1px solid #1e293b; box-shadow: 0 10px 30px -5px rgba(2, 6, 23, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05); overflow: hidden; padding: 28px 24px;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; color: inherit;" title="Click to watch Choseno complete walkthrough & vision">
+                    <!-- Top Bar: Brand Badge + Duration Pill -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 20px;">
+                        <tr>
+                            <td align="left">
+                                <div style="display: inline-block; padding: 4px 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 9999px;">
+                                    <span style="display: inline-block; width: 16px; height: 16px; background: #38bdf8; color: #030712; font-weight: 900; font-size: 11px; line-height: 16px; text-align: center; border-radius: 4px; margin-right: 6px; vertical-align: middle;">C</span>
+                                    <span style="font-size: 12px; font-weight: 700; color: #f8fafc; vertical-align: middle; letter-spacing: 0.3px;">Choseno Vision & Product Tour</span>
+                                </div>
+                            </td>
+                            <td align="right">
+                                <span style="font-size: 11px; font-weight: 600; color: #94a3b8; background: rgba(0, 0, 0, 0.4); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.06);">⏱ 2:15 Watch</span>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <!-- Play Disc -->
-                    <div style="margin: 0 auto 20px auto; width: 72px; height: 72px; background: #0284c7; border-radius: 50%; box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.4), 0 0 0 10px rgba(2, 132, 199, 0.12); text-align: center; line-height: 72px;">
-                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
-                    </div>
+                    <!-- Main Showcase: Play Button & Vision Statement -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 22px;">
+                        <tr>
+                            <td align="center" style="padding: 10px 0 16px 0;">
+                                <!-- Glowing Animated Play Trigger -->
+                                <div style="margin: 0 auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.18), 0 12px 28px -4px rgba(2, 132, 199, 0.6); text-align: center; line-height: 68px;">
+                                    <span style="color: #ffffff; font-size: 24px; display: inline-block; margin-left: 4px; vertical-align: middle;">▶</span>
+                                </div>
+                                <div style="color: #f8fafc; font-size: 21px; font-weight: 800; letter-spacing: -0.4px; margin-top: 18px; line-height: 1.3;">
+                                    "Built for Everyday Citizens — Powered for Real Democracy"
+                                </div>
+                                <div style="color: #94a3b8; font-size: 13.5px; line-height: 1.6; max-width: 480px; margin: 8px auto 0 auto;">
+                                    See how voters navigate multi-tier municipal ballots, explore district boundaries, verify policy promises, and engage directly with candidate walls without algorithmic bias or paywalls.
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <!-- Card Title & Subtitle -->
-                    <div style="color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                        Complete Product Demo
-                    </div>
-                    <div style="color: #64748b; font-size: 13.5px; font-weight: 500; max-width: 360px; margin: 0 auto; line-height: 1.5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                        Watch our full demo to see all Choseno features in action
+                    <!-- Vision Highlights Grid (3 Core Pillars) -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">
+                        <tr>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top;">
+                                <div style="font-size: 18px; margin-bottom: 4px;">🗺️</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Zero-Friction Districts</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">Instant postal code mapping to local council races</div>
+                            </td>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top; border-left: 1px solid rgba(255, 255, 255, 0.06); border-right: 1px solid rgba(255, 255, 255, 0.06);">
+                                <div style="font-size: 18px; margin-bottom: 4px;">⚖️</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Level Playing Field</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">100% free visibility for independents & major slates</div>
+                            </td>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top;">
+                                <div style="font-size: 18px; margin-bottom: 4px;">💬</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Direct Voter Trust</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">Constituent testimonials & verified promise tracking</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Click CTA Footer -->
+                    <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.08); text-align: center;">
+                        <span style="display: inline-block; padding: 7px 18px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px;">
+                            ▶ Click to Play Full Video Walkthrough (2 Mins)
+                        </span>
                     </div>
                 </a>
             </div>
@@ -939,28 +1062,69 @@ const CANDIDATE_BODY = `<!DOCTYPE html>
             </p>
         </div>
 
-        <!-- Video Demo Section with Homepage Card Design -->
+        <!-- Rich Vision & Demo Showcase Card -->
         <div class="section" style="margin: 28px 0;">
-            <p class="section-title">See Choseno in Action (2-Min Demo)</p>
-            <div style="background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 560px; margin: 0 auto;">
-                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; position: relative; padding: 42px 20px 38px 20px; text-align: center; background: radial-gradient(ellipse at 85% 20%, #f0f7ff 0%, #f8fafc 40%, #ffffff 80%);" title="Click to watch Choseno complete product demo">
-                    <!-- Brand Pill -->
-                    <div style="display: inline-block; padding: 5px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 20px;">
-                        <span style="display: inline-block; width: 18px; height: 18px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 11px; line-height: 18px; text-align: center; border-radius: 5px; margin-right: 6px; vertical-align: middle;">C</span>
-                        <span style="font-size: 13px; font-weight: 700; color: #0f172a; vertical-align: middle; letter-spacing: 0.2px;">Choseno</span>
-                    </div>
+            <div style="background: linear-gradient(145deg, #090e17 0%, #101c2e 50%, #0d1522 100%); border-radius: 16px; border: 1px solid #1e293b; box-shadow: 0 10px 30px -5px rgba(2, 6, 23, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05); overflow: hidden; padding: 28px 24px;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; color: inherit;" title="Click to watch Choseno complete walkthrough & vision">
+                    <!-- Top Bar: Brand Badge + Duration Pill -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 20px;">
+                        <tr>
+                            <td align="left">
+                                <div style="display: inline-block; padding: 4px 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 9999px;">
+                                    <span style="display: inline-block; width: 16px; height: 16px; background: #38bdf8; color: #030712; font-weight: 900; font-size: 11px; line-height: 16px; text-align: center; border-radius: 4px; margin-right: 6px; vertical-align: middle;">C</span>
+                                    <span style="font-size: 12px; font-weight: 700; color: #f8fafc; vertical-align: middle; letter-spacing: 0.3px;">Choseno Vision & Product Tour</span>
+                                </div>
+                            </td>
+                            <td align="right">
+                                <span style="font-size: 11px; font-weight: 600; color: #94a3b8; background: rgba(0, 0, 0, 0.4); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.06);">⏱ 2:15 Watch</span>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <!-- Play Disc -->
-                    <div style="margin: 0 auto 20px auto; width: 72px; height: 72px; background: #0284c7; border-radius: 50%; box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.4), 0 0 0 10px rgba(2, 132, 199, 0.12); text-align: center; line-height: 72px;">
-                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
-                    </div>
+                    <!-- Main Showcase: Play Button & Vision Statement -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 22px;">
+                        <tr>
+                            <td align="center" style="padding: 10px 0 16px 0;">
+                                <!-- Glowing Animated Play Trigger -->
+                                <div style="margin: 0 auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.18), 0 12px 28px -4px rgba(2, 132, 199, 0.6); text-align: center; line-height: 68px;">
+                                    <span style="color: #ffffff; font-size: 24px; display: inline-block; margin-left: 4px; vertical-align: middle;">▶</span>
+                                </div>
+                                <div style="color: #f8fafc; font-size: 21px; font-weight: 800; letter-spacing: -0.4px; margin-top: 18px; line-height: 1.3;">
+                                    "Built for Everyday Citizens — Powered for Real Democracy"
+                                </div>
+                                <div style="color: #94a3b8; font-size: 13.5px; line-height: 1.6; max-width: 480px; margin: 8px auto 0 auto;">
+                                    See how voters navigate multi-tier municipal ballots, explore district boundaries, verify policy promises, and engage directly with candidate walls without algorithmic bias or paywalls.
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <!-- Card Title & Subtitle -->
-                    <div style="color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                        Complete Product Demo
-                    </div>
-                    <div style="color: #64748b; font-size: 13.5px; font-weight: 500; max-width: 360px; margin: 0 auto; line-height: 1.5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                        Watch our full demo to see all Choseno features in action
+                    <!-- Vision Highlights Grid (3 Core Pillars) -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">
+                        <tr>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top;">
+                                <div style="font-size: 18px; margin-bottom: 4px;">🗺️</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Zero-Friction Districts</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">Instant postal code mapping to local council races</div>
+                            </td>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top; border-left: 1px solid rgba(255, 255, 255, 0.06); border-right: 1px solid rgba(255, 255, 255, 0.06);">
+                                <div style="font-size: 18px; margin-bottom: 4px;">⚖️</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Level Playing Field</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">100% free visibility for independents & major slates</div>
+                            </td>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top;">
+                                <div style="font-size: 18px; margin-bottom: 4px;">💬</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Direct Voter Trust</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">Constituent testimonials & verified promise tracking</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Click CTA Footer -->
+                    <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.08); text-align: center;">
+                        <span style="display: inline-block; padding: 7px 18px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px;">
+                            ▶ Click to Play Full Video Walkthrough (2 Mins)
+                        </span>
                     </div>
                 </a>
             </div>
@@ -1185,28 +1349,69 @@ const PSSA_BODY = `<!DOCTYPE html>
             <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
         </div>
 
-        <!-- Video Demo Section with Homepage Card Design -->
+        <!-- Rich Vision & Demo Showcase Card -->
         <div class="section" style="margin: 28px 0;">
-            <p class="section-title">See Choseno in Action (2-Min Demo)</p>
-            <div style="background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 560px; margin: 0 auto;">
-                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; position: relative; padding: 42px 20px 38px 20px; text-align: center; background: radial-gradient(ellipse at 85% 20%, #f0f7ff 0%, #f8fafc 40%, #ffffff 80%);" title="Click to watch Choseno complete product demo">
-                    <!-- Brand Pill -->
-                    <div style="display: inline-block; padding: 5px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 20px;">
-                        <span style="display: inline-block; width: 18px; height: 18px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 11px; line-height: 18px; text-align: center; border-radius: 5px; margin-right: 6px; vertical-align: middle;">C</span>
-                        <span style="font-size: 13px; font-weight: 700; color: #0f172a; vertical-align: middle; letter-spacing: 0.2px;">Choseno</span>
-                    </div>
+            <div style="background: linear-gradient(145deg, #090e17 0%, #101c2e 50%, #0d1522 100%); border-radius: 16px; border: 1px solid #1e293b; box-shadow: 0 10px 30px -5px rgba(2, 6, 23, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05); overflow: hidden; padding: 28px 24px;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; color: inherit;" title="Click to watch Choseno complete walkthrough & vision">
+                    <!-- Top Bar: Brand Badge + Duration Pill -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 20px;">
+                        <tr>
+                            <td align="left">
+                                <div style="display: inline-block; padding: 4px 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 9999px;">
+                                    <span style="display: inline-block; width: 16px; height: 16px; background: #38bdf8; color: #030712; font-weight: 900; font-size: 11px; line-height: 16px; text-align: center; border-radius: 4px; margin-right: 6px; vertical-align: middle;">C</span>
+                                    <span style="font-size: 12px; font-weight: 700; color: #f8fafc; vertical-align: middle; letter-spacing: 0.3px;">Choseno Vision & Product Tour</span>
+                                </div>
+                            </td>
+                            <td align="right">
+                                <span style="font-size: 11px; font-weight: 600; color: #94a3b8; background: rgba(0, 0, 0, 0.4); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.06);">⏱ 2:15 Watch</span>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <!-- Play Disc -->
-                    <div style="margin: 0 auto 20px auto; width: 72px; height: 72px; background: #0284c7; border-radius: 50%; box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.4), 0 0 0 10px rgba(2, 132, 199, 0.12); text-align: center; line-height: 72px;">
-                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
-                    </div>
+                    <!-- Main Showcase: Play Button & Vision Statement -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 22px;">
+                        <tr>
+                            <td align="center" style="padding: 10px 0 16px 0;">
+                                <!-- Glowing Animated Play Trigger -->
+                                <div style="margin: 0 auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.18), 0 12px 28px -4px rgba(2, 132, 199, 0.6); text-align: center; line-height: 68px;">
+                                    <span style="color: #ffffff; font-size: 24px; display: inline-block; margin-left: 4px; vertical-align: middle;">▶</span>
+                                </div>
+                                <div style="color: #f8fafc; font-size: 21px; font-weight: 800; letter-spacing: -0.4px; margin-top: 18px; line-height: 1.3;">
+                                    "Built for Everyday Citizens — Powered for Real Democracy"
+                                </div>
+                                <div style="color: #94a3b8; font-size: 13.5px; line-height: 1.6; max-width: 480px; margin: 8px auto 0 auto;">
+                                    See how voters navigate multi-tier municipal ballots, explore district boundaries, verify policy promises, and engage directly with candidate walls without algorithmic bias or paywalls.
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <!-- Card Title & Subtitle -->
-                    <div style="color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                        Complete Product Demo
-                    </div>
-                    <div style="color: #64748b; font-size: 13.5px; font-weight: 500; max-width: 360px; margin: 0 auto; line-height: 1.5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                        Watch our full demo to see all Choseno features in action
+                    <!-- Vision Highlights Grid (3 Core Pillars) -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">
+                        <tr>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top;">
+                                <div style="font-size: 18px; margin-bottom: 4px;">🗺️</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Zero-Friction Districts</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">Instant postal code mapping to local council races</div>
+                            </td>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top; border-left: 1px solid rgba(255, 255, 255, 0.06); border-right: 1px solid rgba(255, 255, 255, 0.06);">
+                                <div style="font-size: 18px; margin-bottom: 4px;">⚖️</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Level Playing Field</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">100% free visibility for independents & major slates</div>
+                            </td>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top;">
+                                <div style="font-size: 18px; margin-bottom: 4px;">💬</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Direct Voter Trust</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">Constituent testimonials & verified promise tracking</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Click CTA Footer -->
+                    <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.08); text-align: center;">
+                        <span style="display: inline-block; padding: 7px 18px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px;">
+                            ▶ Click to Play Full Video Walkthrough (2 Mins)
+                        </span>
                     </div>
                 </a>
             </div>
@@ -1440,28 +1645,69 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
             <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
         </div>
 
-        <!-- Video Demo Section with Homepage Card Design -->
+        <!-- Rich Vision & Demo Showcase Card -->
         <div class="section" style="margin: 28px 0;">
-            <p class="section-title">See Choseno in Action (2-Min Demo)</p>
-            <div style="background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 560px; margin: 0 auto;">
-                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; position: relative; padding: 42px 20px 38px 20px; text-align: center; background: radial-gradient(ellipse at 85% 20%, #f0f7ff 0%, #f8fafc 40%, #ffffff 80%);" title="Click to watch Choseno complete product demo">
-                    <!-- Brand Pill -->
-                    <div style="display: inline-block; padding: 5px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 20px;">
-                        <span style="display: inline-block; width: 18px; height: 18px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 11px; line-height: 18px; text-align: center; border-radius: 5px; margin-right: 6px; vertical-align: middle;">C</span>
-                        <span style="font-size: 13px; font-weight: 700; color: #0f172a; vertical-align: middle; letter-spacing: 0.2px;">Choseno</span>
-                    </div>
+            <div style="background: linear-gradient(145deg, #090e17 0%, #101c2e 50%, #0d1522 100%); border-radius: 16px; border: 1px solid #1e293b; box-shadow: 0 10px 30px -5px rgba(2, 6, 23, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05); overflow: hidden; padding: 28px 24px;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; color: inherit;" title="Click to watch Choseno complete walkthrough & vision">
+                    <!-- Top Bar: Brand Badge + Duration Pill -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 20px;">
+                        <tr>
+                            <td align="left">
+                                <div style="display: inline-block; padding: 4px 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 9999px;">
+                                    <span style="display: inline-block; width: 16px; height: 16px; background: #38bdf8; color: #030712; font-weight: 900; font-size: 11px; line-height: 16px; text-align: center; border-radius: 4px; margin-right: 6px; vertical-align: middle;">C</span>
+                                    <span style="font-size: 12px; font-weight: 700; color: #f8fafc; vertical-align: middle; letter-spacing: 0.3px;">Choseno Vision & Product Tour</span>
+                                </div>
+                            </td>
+                            <td align="right">
+                                <span style="font-size: 11px; font-weight: 600; color: #94a3b8; background: rgba(0, 0, 0, 0.4); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.06);">⏱ 2:15 Watch</span>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <!-- Play Disc -->
-                    <div style="margin: 0 auto 20px auto; width: 72px; height: 72px; background: #0284c7; border-radius: 50%; box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.4), 0 0 0 10px rgba(2, 132, 199, 0.12); text-align: center; line-height: 72px;">
-                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
-                    </div>
+                    <!-- Main Showcase: Play Button & Vision Statement -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 22px;">
+                        <tr>
+                            <td align="center" style="padding: 10px 0 16px 0;">
+                                <!-- Glowing Animated Play Trigger -->
+                                <div style="margin: 0 auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.18), 0 12px 28px -4px rgba(2, 132, 199, 0.6); text-align: center; line-height: 68px;">
+                                    <span style="color: #ffffff; font-size: 24px; display: inline-block; margin-left: 4px; vertical-align: middle;">▶</span>
+                                </div>
+                                <div style="color: #f8fafc; font-size: 21px; font-weight: 800; letter-spacing: -0.4px; margin-top: 18px; line-height: 1.3;">
+                                    "Built for Everyday Citizens — Powered for Real Democracy"
+                                </div>
+                                <div style="color: #94a3b8; font-size: 13.5px; line-height: 1.6; max-width: 480px; margin: 8px auto 0 auto;">
+                                    See how voters navigate multi-tier municipal ballots, explore district boundaries, verify policy promises, and engage directly with candidate walls without algorithmic bias or paywalls.
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <!-- Card Title & Subtitle -->
-                    <div style="color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                        Complete Product Demo
-                    </div>
-                    <div style="color: #64748b; font-size: 13.5px; font-weight: 500; max-width: 360px; margin: 0 auto; line-height: 1.5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                        Watch our full demo to see all Choseno features in action
+                    <!-- Vision Highlights Grid (3 Core Pillars) -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">
+                        <tr>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top;">
+                                <div style="font-size: 18px; margin-bottom: 4px;">🗺️</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Zero-Friction Districts</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">Instant postal code mapping to local council races</div>
+                            </td>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top; border-left: 1px solid rgba(255, 255, 255, 0.06); border-right: 1px solid rgba(255, 255, 255, 0.06);">
+                                <div style="font-size: 18px; margin-bottom: 4px;">⚖️</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Level Playing Field</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">100% free visibility for independents & major slates</div>
+                            </td>
+                            <td width="33%" align="center" style="padding: 14px 6px 6px 6px; vertical-align: top;">
+                                <div style="font-size: 18px; margin-bottom: 4px;">💬</div>
+                                <div style="color: #f1f5f9; font-size: 12px; font-weight: 700;">Direct Voter Trust</div>
+                                <div style="color: #64748b; font-size: 11px; line-height: 1.4; margin-top: 2px;">Constituent testimonials & verified promise tracking</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Click CTA Footer -->
+                    <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.08); text-align: center;">
+                        <span style="display: inline-block; padding: 7px 18px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px;">
+                            ▶ Click to Play Full Video Walkthrough (2 Mins)
+                        </span>
                     </div>
                 </a>
             </div>
