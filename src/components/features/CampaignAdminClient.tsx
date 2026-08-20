@@ -1898,6 +1898,20 @@ function PreviewModal({
   };
   onClose: () => void;
 }) {
+  const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
+
+  const handleContainerClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    const videoLink = target.closest('a[href*="youtube.com"], a[href*="youtu.be"], [data-video-id]');
+    if (videoLink) {
+      e.preventDefault();
+      const href = videoLink.getAttribute("href") || "";
+      const match = href.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+      const videoId = match ? match[1] : "WJIpU9Cyoho";
+      setPlayingVideoId(videoId);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 bg-overlay backdrop-blur-sm flex items-center justify-center p-3 sm:p-6" onClick={onClose}>
       <Card
@@ -1918,7 +1932,28 @@ function PreviewModal({
           </Button>
         </div>
 
+        {/* Video Player Modal overlay if a video is triggered */}
+        {playingVideoId && (
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-2xl border border-border-light/40 animate-fade-in">
+            <iframe
+              className="w-full h-full border-0"
+              src={`https://www.youtube-nocookie.com/embed/${playingVideoId}?autoplay=1&rel=0&modestbranding=1`}
+              title="Choseno Demo Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+            <button
+              onClick={() => setPlayingVideoId(null)}
+              className="absolute top-3 right-3 z-20 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-elevated/90 hover:bg-surface-active text-text-main text-xs font-semibold backdrop-blur-md border border-border-light transition-colors shadow-lg cursor-pointer"
+            >
+              <X size={14} />
+              <span>Close Video</span>
+            </button>
+          </div>
+        )}
+
         <div
+          onClick={handleContainerClick}
           className="border border-border-light/40 rounded-xl overflow-hidden shadow-sm bg-white p-3 sm:p-6 text-black text-sm w-full"
           dangerouslySetInnerHTML={{ __html: data.html }}
         />
