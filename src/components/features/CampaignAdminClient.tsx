@@ -1735,7 +1735,7 @@ export default function CampaignAdminClient() {
               return (
                 <div
                   key={group.campaignName}
-                  className="border border-border-light/40 rounded-xl overflow-hidden bg-surface/30 shadow-xs"
+                  className="border border-border-light/40 rounded-xl overflow-visible bg-surface/30 shadow-xs"
                 >
                   {/* Collapsible Campaign Header */}
                   <div className="flex items-center justify-between px-4 py-3 bg-surface hover:bg-surface-hover transition-colors select-none border-b border-border-light/20">
