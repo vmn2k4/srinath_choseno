@@ -51,6 +51,32 @@ async function unwrapError(error: unknown): Promise<string> {
 }
 
 export async function sendEmail(supabase: Client, request: EmailRequest) {
+  // If running in browser on localhost/127.0.0.1, route through local Next.js API (Titan SMTP on local IP)
+  if (typeof window !== "undefined") {
+    const isLocalhost =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+
+    if (isLocalhost) {
+      try {
+        const res = await fetch("/api/admin/send-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(request),
+        });
+
+        const json = await res.json();
+        if (!res.ok || !json.ok) {
+          return { data: null, error: { message: json.error || "Failed to send via local SMTP" } };
+        }
+        return { data: json, error: null };
+      } catch (err: any) {
+        return { data: null, error: { message: err?.message || "Local SMTP route unreachable" } };
+      }
+    }
+  }
+
+  // Otherwise (production or server-side without local override), invoke Supabase Edge Function
   const { data, error } = await supabase.functions.invoke<EmailResponse>("send-email", {
     body: request,
   });
