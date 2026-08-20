@@ -71,6 +71,8 @@ const DEFAULT_SUBJECT = "Your Political Wall is Ready on Choseno";
 
 const DEFAULT_BODY = `<p>Hi {{first_name}},</p>
 
+<p>This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
+
 <p>You're invited to claim your official wall on Choseno — a place where voters can see your positions, your record, and connect with you directly.</p>
 
 <p style="text-align:center;margin:24px 0;">
@@ -81,7 +83,7 @@ const DEFAULT_BODY = `<p>Hi {{first_name}},</p>
 
 <p>Questions? Just reply to this email.</p>
 
-<p>Best,<br>The Choseno Team</p>`;
+<p>Best,<br>Murugappan Valliyappan<br>Founder, Choseno</p>`;
 
 type RowStatus = "idle" | "sending" | "sent" | "failed";
 

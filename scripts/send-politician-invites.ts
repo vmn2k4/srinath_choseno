@@ -230,7 +230,9 @@ function generateEmailHtml(name: string, claimLink: string): string {
           <div class="content">
             <p>Hi ${cleanName},</p>
 
-            <p>Your political wall on Choseno is ready to claim!</p>
+            <p>This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
+
+            <p>Your official political wall on Choseno is ready to claim!</p>
 
             <p>Claim your wall using this link:</p>
             <p style="text-align: center;">
@@ -247,7 +249,7 @@ function generateEmailHtml(name: string, claimLink: string): string {
 
             <p>Questions? Reply to this email or visit <a href="${SITE_URL}">Choseno</a>.</p>
 
-            <p>Best regards,<br>The Choseno Team</p>
+            <p>Best regards,<br>Murugappan Valliyappan<br>Founder, Choseno</p>
           </div>
 
           <div class="footer">

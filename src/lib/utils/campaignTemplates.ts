@@ -171,6 +171,8 @@ const MAYOR_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 15px; margin: 0 0 24px 0;">Hi Mayor {{name}},</p>
 
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
+
         <div class="highlight">
             <p class="highlight-title">Your wall is now live</p>
             <p>Voters will see your leadership record, vision, and endorsements — all in one space:</p>
@@ -393,6 +395,8 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 15px; margin: 0 0 24px 0;">Hi Councillor {{name}},</p>
 
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
+
         <div class="highlight">
             <p class="highlight-title">Your wall is now live</p>
             <p>Constituents will see your voting record, policy positions, and community testimonials — all in one space:</p>
@@ -614,6 +618,8 @@ const PSSA_BODY = `<!DOCTYPE html>
         </div>
 
         <p style="font-size: 15px; margin: 0 0 24px 0;">Hi {{name}},</p>
+
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
 
         <div class="highlight">
             <p class="highlight-title">Inaugural Opportunity for Students</p>
@@ -840,6 +846,8 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
         </div>
 
         <p style="font-size: 15px; margin: 0 0 24px 0;">Dear Professor {{name}},</p>
+
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
 
         <div class="highlight">
             <p class="highlight-title">Specific Ask: 10 Student Researchers for 2026 Municipal Elections</p>
