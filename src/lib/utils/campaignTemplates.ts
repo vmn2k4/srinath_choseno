@@ -465,6 +465,230 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
 </body>
 </html>`;
 
+const PARTY_BODY = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #eef1f5;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            background-color: #ffffff;
+            padding: 16px 20px;
+            box-sizing: border-box;
+        }
+        .header {
+            margin-bottom: 32px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: #1a2332;
+        }
+        .intro {
+            font-size: 15px;
+            color: #666;
+            margin: 0 0 24px 0;
+        }
+        .highlight {
+            background-color: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+        .highlight-title {
+            font-weight: 600;
+            color: #1a2332;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+        .highlight p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .cta-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .cta-link:hover {
+            text-decoration: underline;
+        }
+        .section {
+            margin: 32px 0;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2332;
+            margin: 0 0 16px 0;
+        }
+        .section-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .features li {
+            padding: 8px 0 8px 24px;
+            position: relative;
+            font-size: 14px;
+        }
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        .ways-grid {
+            margin: 16px 0;
+            width: 100%;
+            display: block;
+        }
+        .way-box {
+            display: block !important;
+            width: 100% !important;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 0 0 12px 0;
+            background-color: #fafbfc;
+            box-sizing: border-box;
+            clear: both;
+        }
+        .way-box:last-child {
+            margin-bottom: 0;
+        }
+        .way-title {
+            font-weight: 600;
+            color: #1a2332;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+        .way-desc {
+            font-size: 13px;
+            color: #666;
+            margin: 0;
+        }
+        .signature {
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+        }
+        .founder-name {
+            font-weight: 600;
+            color: #1a2332;
+        }
+        .contact-links {
+            margin-top: 16px;
+            font-size: 13px;
+        }
+        .contact-links a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Candidate & Party Outreach on Choseno</h1>
+            <p class="intro">Empowering your candidates for the 2026 municipal election cycle</p>
+        </div>
+
+        <p style="font-size: 15px; margin: 0 0 24px 0;">Hi {{name}} Team,</p>
+
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
+
+        <div class="highlight">
+            <p class="highlight-title">100% Free Civic Platform — We Work With Your Candidates</p>
+            <p>Choseno provides dedicated Candidate and Election walls so voters in {{city}} can research your platform, compare nominees, and connect directly with your slate. <strong>This is a 100% free service for all parties and candidates — we do not charge for candidate onboarding or strategy meetings.</strong></p>
+            <p style="margin: 12px 0 0 0; font-size: 13px;">
+                Explore how the platform looks in action:
+                <br>• <strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find your municipal district / polling area</a></strong>
+                <br>• <strong><a href="https://www.choseno.com/wall/brenda-locke-mayor" class="cta-link">Sample Candidate Wall</a></strong>
+                <br>• <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Live Election Wall</a></strong>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="section-content">
+                Choseno is Canada's social network for politics. It gives local voters a simple way to find their district, see who represents them at every level, and compare candidates side-by-side. We are actively working with parties and candidates across {{city}} to ensure all candidates get equal visibility during the 2026 election cycle.
+            </p>
+            <p class="section-content">
+                <strong>Why onboarding early matters:</strong> Early candidates gain immediate visibility when residents search their districts. Your candidates can start establishing their policy positions, sharing announcements, and gathering voter endorsements now.
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="section-title">How Choseno Supports Your Slate</p>
+            <ul class="features">
+                <li><strong>Dedicated Candidate Walls:</strong> Individual profile walls for every candidate running on your slate.</li>
+                <li><strong>Election Race Hub:</strong> Side-by-side comparison with all competing candidates in their district.</li>
+                <li><strong>Direct Voter Engagement:</strong> Constituents can post endorsements, questions, and view verified platform promises.</li>
+                <li><strong>100% Free Civic Tech:</strong> No paid paywalls, no ads, and zero charge for meetings or profile verification.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <p class="section-title">How We Can Work Together</p>
+            <div class="ways-grid" style="display: block; width: 100%; margin: 16px 0;">
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
+                    <p class="way-title">Onboard Candidate Slate (Quickest)</p>
+                    <p class="way-desc">Send us your list of declared candidates. We will verify their profiles and send direct activation links so each candidate can immediately manage their wall.</p>
+                </div>
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
+                    <p class="way-title">Virtual Meeting / Live Demo (15–30 mins - Free)</p>
+                    <p class="way-desc">Schedule a quick call with your campaign team to see how the district lookup and candidate comparison tools work. <a href="https://calendly.com/vmn2k4/30min" class="cta-link">Pick a time</a></p>
+                </div>
+                <div class="way-box" style="display: block; width: 100%; margin: 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
+                    <p class="way-title">In-Person Discussion</p>
+                    <p class="way-desc">Let me know if you would like to meet in person in {{city}} or across the Lower Mainland to discuss how Choseno can assist your campaign communication.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <p class="section-title">Why I Built This</p>
+            <p class="section-content">
+                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to BC to build a life and start my own company. Choseno was born to strengthen local democracy by helping voters see and evaluate the actual individuals running, making informed choice accessible to all.
+            </p>
+        </div>
+
+        <div class="signature">
+            <p style="margin: 0 0 16px 0;"><span class="founder-name">Murugappan Valliyappan</span><br>Founder, Choseno<br>Lower Mainland, BC</p>
+            <div class="contact-links">
+                672-355-2636 | <a href="mailto:vijay@choseno.com">vijay@choseno.com</a><br>
+                <a href="https://www.linkedin.com/in/muruvalliyappan/">LinkedIn</a> | <a href="https://www.choseno.com">choseno.com</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+
 const PSSA_BODY = `<!DOCTYPE html>
 <html>
 <head>
@@ -942,6 +1166,27 @@ export interface CampaignTemplatePreset {
 }
 
 export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
+  {
+    key: "parties",
+    label: "Civic Parties",
+    badge: "Party Slate",
+    icon: "🤝",
+    subject: "Candidate & Slate Outreach on Choseno — Free Civic Platform for {{city}} Elections",
+    body: PARTY_BODY,
+    requiredFields: ["name", "email", "city"],
+    optionalFields: ["role", "wall_slug"],
+    csvHeader: "name,email,city,role,wall_slug",
+    sampleData: "name,email,city,role,wall_slug\nABC Vancouver,info@abcvancouver.ca,Vancouver,Party Executive,abcvancouver\nSurrey Connect,info@surreyconnect.ca,Surrey,Party Executive,surreyconnect",
+    defaultCampaignName: "BC Civic Parties 2026",
+    description: "Connects with political and civic party executives to onboard candidate slates and share campaign platforms for free.",
+    sampleRecipient: {
+      name: "ABC Vancouver",
+      email: "info@abcvancouver.ca",
+      role: "Party Executive",
+      city: "Vancouver",
+      wallSlug: "abcvancouver",
+    },
+  },
   {
     key: "mayor",
     label: "Mayor",
