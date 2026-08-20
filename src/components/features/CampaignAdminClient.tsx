@@ -19,6 +19,7 @@ import {
   RefreshCw,
   ChevronDown,
   ChevronRight,
+  Trash2,
 } from "lucide-react";
 import { Card, Button, Input, Textarea, Spinner, PageHeader, Badge, ConfirmDialog, Avatar } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
@@ -34,6 +35,8 @@ import {
   resendCampaignInvite,
   listCampaignSends,
   getCampaignStats,
+  deleteCampaignSend,
+  deleteCampaignGroup,
   type CampaignSendRow,
   type CampaignStatsRow,
 } from "@/lib/services/campaigns";
@@ -1144,6 +1147,33 @@ export default function CampaignAdminClient() {
     }
   };
 
+  // Delete item/campaign state
+  const [deleteTarget, setDeleteTarget] = useState<{
+    type: "single" | "group";
+    id?: string;
+    name?: string;
+    title: string;
+  } | null>(null);
+  const [deleting, setDeleting] = useState(false);
+
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
+    setDeleting(true);
+    try {
+      if (deleteTarget.type === "single" && deleteTarget.id) {
+        await deleteCampaignSend(supabase, deleteTarget.id);
+      } else if (deleteTarget.type === "group" && deleteTarget.name) {
+        await deleteCampaignGroup(supabase, deleteTarget.name);
+      }
+      await loadHistory();
+      setDeleteTarget(null);
+    } catch (err) {
+      console.error("Failed to delete campaign record:", err);
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   const failedCount = useMemo(() => rows.filter((r) => r.status === "failed").length, [rows]);
   const canSendAll = validCount > 0 && campaignName.trim().length > 0 && !sendingAll;
 
@@ -1598,6 +1628,17 @@ export default function CampaignAdminClient() {
         onCancel={() => setConfirmSendAll(false)}
       />
 
+      <ConfirmDialog
+        open={Boolean(deleteTarget)}
+        title={deleteTarget?.title || "Delete campaign record?"}
+        message="This removes the email send and tracking history from the database. This action cannot be undone."
+        tone="danger"
+        confirmLabel="Delete"
+        loading={deleting}
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleteTarget(null)}
+      />
+
       <Card padding="md" className="space-y-4 overflow-visible">
         <h2 className="font-bold text-text-main">Campaign history</h2>
 
@@ -1629,11 +1670,11 @@ export default function CampaignAdminClient() {
                   className="border border-border-light/40 rounded-xl overflow-hidden bg-surface/30 shadow-xs"
                 >
                   {/* Collapsible Campaign Header */}
-                  <button
-                    onClick={() => toggleCampaignCollapse(group.campaignName)}
-                    className="w-full flex items-center justify-between px-4 py-3 bg-surface hover:bg-surface-hover transition-colors text-left select-none border-b border-border-light/20"
-                  >
-                    <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="flex items-center justify-between px-4 py-3 bg-surface hover:bg-surface-hover transition-colors select-none border-b border-border-light/20">
+                    <button
+                      onClick={() => toggleCampaignCollapse(group.campaignName)}
+                      className="flex items-center gap-2.5 min-w-0 flex-1 text-left"
+                    >
                       {isCollapsed ? (
                         <ChevronRight size={16} className="text-text-muted shrink-0 transition-transform" />
                       ) : (
@@ -1645,9 +1686,9 @@ export default function CampaignAdminClient() {
                       <Badge tone="neutral" className="text-[11px] font-medium shrink-0">
                         {group.sends.length} recipient{group.sends.length === 1 ? "" : "s"}
                       </Badge>
-                    </div>
+                    </button>
 
-                    <div className="flex items-center gap-2 text-xs shrink-0">
+                    <div className="flex items-center gap-2.5 text-xs shrink-0">
                       <span className="text-text-muted hidden sm:inline">
                         <strong className="text-emerald-600 dark:text-emerald-400">{group.sentCount}</strong> sent
                         {group.failedCount > 0 && (
@@ -1660,11 +1701,31 @@ export default function CampaignAdminClient() {
                           <> · <strong className="text-amber-600 dark:text-amber-400">{group.clickedCount}</strong> clicked</>
                         )}
                       </span>
-                      <span className="text-xs text-primary font-medium ml-1">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => toggleCampaignCollapse(group.campaignName)}
+                        className="text-xs text-primary font-medium px-2 h-7"
+                      >
                         {isCollapsed ? "Expand" : "Collapse"}
-                      </span>
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() =>
+                          setDeleteTarget({
+                            type: "group",
+                            name: group.campaignName,
+                            title: `Delete entire campaign "${group.campaignName}" (${group.sends.length} sends)?`,
+                          })
+                        }
+                        className="text-rose-500 hover:text-rose-600 hover:bg-rose-500/10 h-7 w-7 p-0 flex items-center justify-center rounded-lg"
+                        title="Delete entire campaign"
+                      >
+                        <Trash2 size={13} />
+                      </Button>
                     </div>
-                  </button>
+                  </div>
 
                   {/* Recipient Rows */}
                   {!isCollapsed && (
@@ -1722,6 +1783,23 @@ export default function CampaignAdminClient() {
                                   {resendingHistoryId === h.id ? "Resending…" : "Resend"}
                                 </Button>
                               )}
+
+                              {/* Individual Delete Button */}
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() =>
+                                  setDeleteTarget({
+                                    type: "single",
+                                    id: h.id,
+                                    title: `Delete record for ${h.politician_name} (${h.politician_email})?`,
+                                  })
+                                }
+                                className="text-text-muted hover:text-rose-500 hover:bg-rose-500/10 h-7 w-7 p-0 flex items-center justify-center rounded-lg"
+                                title="Delete this recipient record"
+                              >
+                                <Trash2 size={12} />
+                              </Button>
                             </div>
                           </div>
                         );

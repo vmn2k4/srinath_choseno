@@ -217,9 +217,48 @@ export async function listCampaignSends(
   return { data: rows, error };
 }
 
+export async function deleteCampaignSend(supabase: Client, sendId: string) {
+  // First delete any tracking events associated with this send
+  await supabase
+    .from("tracking_events" as never)
+    .delete()
+    .eq("send_id" as never, sendId as never);
+
+  const { error } = await supabase
+    .from("politician_claim_campaigns" as never)
+    .delete()
+    .eq("id" as never, sendId as never);
+
+  return { error };
+}
+
+export async function deleteCampaignGroup(supabase: Client, campaignName: string) {
+  // Get all send IDs for this campaign name first
+  const { data: sends } = await supabase
+    .from("politician_claim_campaigns" as never)
+    .select("id" as never)
+    .eq("campaign_name" as never, campaignName as never);
+
+  if (sends && Array.isArray(sends) && sends.length > 0) {
+    const sendIds = (sends as any[]).map((s) => s.id);
+    await supabase
+      .from("tracking_events" as never)
+      .delete()
+      .in("send_id" as never, sendIds as never);
+  }
+
+  const { error } = await supabase
+    .from("politician_claim_campaigns" as never)
+    .delete()
+    .eq("campaign_name" as never, campaignName as never);
+
+  return { error };
+}
+
 export async function getCampaignStats(supabase: Client) {
   const { data, error } = await supabase
     .from("politician_campaign_stats" as never)
     .select("*");
   return { data: (data as unknown as CampaignStatsRow[] | null) || [], error };
 }
+
