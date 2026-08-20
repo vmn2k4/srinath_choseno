@@ -1705,13 +1705,14 @@ export default function CampaignAdminClient() {
                         size="sm"
                         variant="ghost"
                         onClick={() => toggleCampaignCollapse(group.campaignName)}
-                        className="text-xs text-primary font-medium px-2 h-7"
+                        className="text-xs text-primary font-medium px-2.5 h-7"
                       >
                         {isCollapsed ? "Expand" : "Collapse"}
                       </Button>
                       <Button
+                        variant="icon"
                         size="sm"
-                        variant="ghost"
+                        tone="danger"
                         onClick={() =>
                           setDeleteTarget({
                             type: "group",
@@ -1719,10 +1720,10 @@ export default function CampaignAdminClient() {
                             title: `Delete entire campaign "${group.campaignName}" (${group.sends.length} sends)?`,
                           })
                         }
-                        className="text-rose-500 hover:text-rose-600 hover:bg-rose-500/10 h-7 w-7 p-0 flex items-center justify-center rounded-lg"
+                        className="h-7 w-7 text-rose-500 hover:text-rose-600 hover:bg-rose-500/10 flex items-center justify-center shrink-0"
                         title="Delete entire campaign"
                       >
-                        <Trash2 size={13} />
+                        <Trash2 size={15} className="text-rose-500" />
                       </Button>
                     </div>
                   </div>
@@ -1786,8 +1787,9 @@ export default function CampaignAdminClient() {
 
                               {/* Individual Delete Button */}
                               <Button
+                                variant="icon"
                                 size="sm"
-                                variant="ghost"
+                                tone="danger"
                                 onClick={() =>
                                   setDeleteTarget({
                                     type: "single",
@@ -1795,10 +1797,10 @@ export default function CampaignAdminClient() {
                                     title: `Delete record for ${h.politician_name} (${h.politician_email})?`,
                                   })
                                 }
-                                className="text-text-muted hover:text-rose-500 hover:bg-rose-500/10 h-7 w-7 p-0 flex items-center justify-center rounded-lg"
+                                className="h-7 w-7 text-text-muted hover:text-rose-500 hover:bg-rose-500/10 flex items-center justify-center shrink-0"
                                 title="Delete this recipient record"
                               >
-                                <Trash2 size={12} />
+                                <Trash2 size={14} />
                               </Button>
                             </div>
                           </div>
