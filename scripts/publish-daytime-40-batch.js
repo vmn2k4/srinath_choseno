@@ -1240,7 +1240,7 @@ async function run() {
         breakingNews: !!article.breakingNews,
         author: article.author || { name: 'Choseno Civic News Desk', bio: 'Civic and political reporting' },
         sources: article.sources || [],
-        batch_number: 14,
+        batch_number: '2026-08-19 22:50',
         viral_score: 8.5,
         shared_platforms: []
       }
