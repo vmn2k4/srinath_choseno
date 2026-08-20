@@ -1154,6 +1154,7 @@ export default function CampaignAdminClient() {
     name?: string;
     title: string;
   } | null>(null);
+  const [deleteTypedConfirm, setDeleteTypedConfirm] = useState("");
   const [deleting, setDeleting] = useState(false);
 
   const confirmDelete = async () => {
@@ -1167,6 +1168,7 @@ export default function CampaignAdminClient() {
       }
       await loadHistory();
       setDeleteTarget(null);
+      setDeleteTypedConfirm("");
     } catch (err) {
       console.error("Failed to delete campaign record:", err);
     } finally {
@@ -1628,16 +1630,82 @@ export default function CampaignAdminClient() {
         onCancel={() => setConfirmSendAll(false)}
       />
 
-      <ConfirmDialog
-        open={Boolean(deleteTarget)}
-        title={deleteTarget?.title || "Delete campaign record?"}
-        message="This removes the email send and tracking history from the database. This action cannot be undone."
-        tone="danger"
-        confirmLabel="Delete"
-        loading={deleting}
-        onConfirm={confirmDelete}
-        onCancel={() => setDeleteTarget(null)}
-      />
+      {deleteTarget && deleteTarget.type === "group" ? (
+        <div
+          className="fixed inset-0 z-50 bg-overlay backdrop-blur-sm flex items-center justify-center p-3 sm:p-6"
+          onClick={() => {
+            setDeleteTarget(null);
+            setDeleteTypedConfirm("");
+          }}
+        >
+          <Card
+            variant="hero"
+            padding="lg"
+            className="max-w-md w-full space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="space-y-1.5">
+              <h2 className="text-lg font-bold text-rose-600 dark:text-rose-400">
+                Delete entire campaign?
+              </h2>
+              <p className="text-sm text-text-secondary">
+                This will permanently delete the campaign{" "}
+                <strong className="text-text-main font-semibold">
+                  "{deleteTarget.name}"
+                </strong>{" "}
+                along with all its associated email sends and tracking analytics.
+              </p>
+            </div>
+
+            <div className="space-y-2 pt-1">
+              <label className="text-xs font-semibold text-text-main block">
+                Type <span className="text-rose-600 dark:text-rose-400 select-all font-mono font-bold">{deleteTarget.name}</span> to confirm:
+              </label>
+              <Input
+                value={deleteTypedConfirm}
+                onChange={(e) => setDeleteTypedConfirm(e.target.value)}
+                placeholder={`Type "${deleteTarget.name}"`}
+                className="font-mono text-sm"
+                autoFocus
+              />
+            </div>
+
+            <div className="flex gap-3 justify-end pt-2">
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setDeleteTarget(null);
+                  setDeleteTypedConfirm("");
+                }}
+                disabled={deleting}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="danger"
+                onClick={confirmDelete}
+                disabled={deleting || deleteTypedConfirm.trim() !== (deleteTarget.name || "").trim()}
+              >
+                {deleting ? "Deleting..." : "Permanently delete campaign"}
+              </Button>
+            </div>
+          </Card>
+        </div>
+      ) : (
+        <ConfirmDialog
+          open={Boolean(deleteTarget && deleteTarget.type === "single")}
+          title={deleteTarget?.title || "Delete recipient record?"}
+          message="This removes the email send and tracking history from the database. This action cannot be undone."
+          tone="danger"
+          confirmLabel="Delete"
+          loading={deleting}
+          onConfirm={confirmDelete}
+          onCancel={() => {
+            setDeleteTarget(null);
+            setDeleteTypedConfirm("");
+          }}
+        />
+      )}
 
       <Card padding="md" className="space-y-4 overflow-visible">
         <h2 className="font-bold text-text-main">Campaign history</h2>
