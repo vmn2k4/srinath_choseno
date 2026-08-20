@@ -177,6 +177,7 @@ const MAYOR_BODY = `<!DOCTYPE html>
             <p class="highlight-title">Your wall is now live</p>
             <p>Voters will see your leadership record, vision, and endorsements — all in one space:</p>
             <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/wall/{{wall_slug}}" class="cta-link">View Your Wall</a></strong></p>
+            <p style="margin: 10px 0 0 0; font-size: 13px; color: #555;">You can quickly try our easiest way to find the polling district you belong to and see how an election wall appears once candidates are nominated: <strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
         </div>
 
         <div class="section">
@@ -401,6 +402,7 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
             <p class="highlight-title">Your wall is now live</p>
             <p>Constituents will see your voting record, policy positions, and community testimonials — all in one space:</p>
             <p style="margin: 12px 0 0 0;"><strong><a href="https://www.choseno.com/wall/{{wall_slug}}" class="cta-link">View Your Wall</a></strong></p>
+            <p style="margin: 10px 0 0 0; font-size: 13px; color: #555;">You can quickly try our easiest way to find the polling district you belong to and see how an election wall appears once candidates are nominated: <strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find my district</a></strong> or <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Election wall</a></strong></p>
         </div>
 
         <div class="section">
