@@ -195,7 +195,25 @@ function getEngagementBreakdown(send: CampaignSendRow): { total: number; items: 
     active: clickCount > 0,
   });
 
-  // 4. Wall visit & duration (up to 30 pts)
+  // 4. Video Demo Play (up to 25 pts)
+  const videoLinks = ((send.links_clicked || []) as Array<{ link: string; count?: number }>).filter(
+    (l) => l.link && (l.link.includes("youtube.com") || l.link.includes("youtu.be"))
+  );
+  const videoPlayCount = videoLinks.reduce((sum, l) => sum + (l.count || 1), 0);
+  const hasPlayedVideo = videoPlayCount > 0;
+  const videoPoints = hasPlayedVideo ? Math.min(20 + (videoPlayCount > 1 ? 5 : 0), 25) : 0;
+  items.push({
+    icon: "▶️",
+    label: "Video Demo Played",
+    points: videoPoints,
+    max: 25,
+    detail: hasPlayedVideo
+      ? `Played video demo ${videoPlayCount}x (+${videoPoints} pts)`
+      : "Video demo not played yet",
+    active: hasPlayedVideo,
+  });
+
+  // 5. Wall visit & duration (up to 30 pts)
   let wallPoints = 0;
   let wallDetail = "Wall not visited yet";
   if (send.wall_visited) {
@@ -665,6 +683,56 @@ function ClickStatusBadge({ send }: { send: CampaignSendRow }) {
   );
 }
 
+function VideoPlayedBadge({ send }: { send: CampaignSendRow }) {
+  const videoLinks = ((send.links_clicked || []) as Array<{ link: string; count?: number; clicked_at?: string }>).filter(
+    (l) => l.link && (l.link.includes("youtube.com") || l.link.includes("youtu.be"))
+  );
+  if (videoLinks.length === 0) return null;
+
+  const totalPlays = videoLinks.reduce((sum, l) => sum + (l.count || 1), 0);
+  const lastPlayTime = videoLinks[0]?.clicked_at;
+
+  return (
+    <div className="relative group z-10 hover:z-50 inline-flex items-center cursor-help">
+      <Badge tone="rose" className="gap-1 font-semibold">
+        <span>▶</span> Video Played {totalPlays > 1 ? `(${totalPlays}x)` : ""}
+      </Badge>
+
+      <div className="absolute right-0 top-full pt-1.5 hidden group-hover:block z-50 w-72 animate-fade-in">
+        <div className="p-3 bg-surface border border-border-light/60 rounded-xl shadow-2xl backdrop-blur-md">
+          <div className="flex items-center justify-between border-b border-border-light/30 pb-2 mb-2">
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm">🎬</span>
+              <p className="text-xs font-bold text-text-main">Video Demo Engagement</p>
+            </div>
+            <span className="text-xs font-extrabold text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded-full">
+              {totalPlays} {totalPlays === 1 ? "view" : "views"}
+            </span>
+          </div>
+
+          <div className="space-y-1.5 text-xs">
+            {videoLinks.map((l, i) => (
+              <div key={i} className="p-2 rounded-lg bg-surface-hover/80 border border-border-light/30 text-[11px] space-y-1">
+                <p className="font-semibold text-text-main flex items-center gap-1">
+                  <span>🎥</span> Choseno 2-Minute Demo
+                </p>
+                <div className="flex items-center justify-between text-[10px] text-text-muted pt-1 border-t border-border-light/20">
+                  <span className="text-rose-500 font-semibold">{l.count || 1}x played</span>
+                  <span>{formatDateTime(l.clicked_at || lastPlayTime)}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-2 pt-1.5 border-t border-border-light/30 text-[10px] text-text-muted leading-tight">
+            Recipient clicked the video play button in the email to watch the demo tour.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function calculateEngagementScore(send: CampaignSendRow): number {
   return getEngagementBreakdown(send).total;
 }
@@ -737,6 +805,7 @@ export default function CampaignAdminClient() {
       failedCount: number;
       openedCount: number;
       clickedCount: number;
+      videoPlayedCount: number;
     }[] = [];
 
     const map = new Map<string, CampaignSendRow[]>();
@@ -753,6 +822,7 @@ export default function CampaignAdminClient() {
       let failedCount = 0;
       let openedCount = 0;
       let clickedCount = 0;
+      let videoPlayedCount = 0;
 
       for (const s of sends) {
         if (s.status === "failed") failedCount++;
@@ -760,6 +830,11 @@ export default function CampaignAdminClient() {
 
         if (s.opened_at || (s.opened_count && s.opened_count > 0)) openedCount++;
         if (s.link_clicks && s.link_clicks > 0) clickedCount++;
+
+        const hasVideo = (s.links_clicked || []).some(
+          (l) => l.link && (l.link.includes("youtube.com") || l.link.includes("youtu.be"))
+        );
+        if (hasVideo) videoPlayedCount++;
       }
 
       groups.push({
@@ -769,6 +844,7 @@ export default function CampaignAdminClient() {
         failedCount,
         openedCount,
         clickedCount,
+        videoPlayedCount,
       });
     });
 
@@ -1768,6 +1844,9 @@ export default function CampaignAdminClient() {
                         {group.clickedCount > 0 && (
                           <> · <strong className="text-amber-600 dark:text-amber-400">{group.clickedCount}</strong> clicked</>
                         )}
+                        {group.videoPlayedCount > 0 && (
+                          <> · <strong className="text-rose-600 dark:text-rose-400">🎬 {group.videoPlayedCount}</strong> played video</>
+                        )}
                       </span>
                       <Button
                         size="sm"
@@ -1822,6 +1901,9 @@ export default function CampaignAdminClient() {
                                   ⏱ {formatTimeToOpen(h.first_open_time_seconds)}
                                 </span>
                               ) : null}
+
+                              {/* Video Played Badge */}
+                              <VideoPlayedBadge send={h} />
 
                               {/* Link Clicks with hover link details */}
                               <ClickStatusBadge send={h} />
