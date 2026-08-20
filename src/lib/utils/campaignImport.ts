@@ -164,7 +164,10 @@ export function fillCampaignTemplate(template: string, data: CampaignRecordInput
   const role = (data.role || "").trim();
   const city = (data.city || "").trim();
   const rawWallSlug = (data.wallSlug || "").trim();
-  const wallSlug = rawWallSlug || (name ? buildPoliticianWallSlug(name, role) : "");
+  
+  // Strictly enforce: only generate a self-wall slug if explicitly provided, or for Mayor / Councillor officeholders
+  const isMayorOrCouncillor = /mayor|councillor|councilor/i.test(role);
+  const wallSlug = rawWallSlug || (isMayorOrCouncillor && name ? buildPoliticianWallSlug(name, role) : "");
   const wallUrl = wallSlug ? `https://www.choseno.com/wall/${wallSlug}` : "https://www.choseno.com";
 
   return template

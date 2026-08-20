@@ -848,12 +848,12 @@ const CANDIDATE_BODY = `<!DOCTYPE html>
         <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
 
         <div class="highlight">
-            <p class="highlight-title">Your 2026 Campaign Wall is Ready — 100% Free Service</p>
+            <p class="highlight-title">Your 2026 Campaign Wall on Choseno — 100% Free Service</p>
             <p>We saw that you've stepped up to run for <strong>{{role}}</strong> in {{city}}! To help you connect with voters from day one, your official Candidate Wall is ready to claim. <strong>Choseno is 100% free for all candidates — we never charge for onboarding, wall features, or campaign support calls.</strong></p>
             <p style="margin: 12px 0 0 0; font-size: 13px;">
                 See how local voters discover and compare candidates:
                 <br>• <strong><a href="https://www.choseno.com/find-my-district" class="cta-link">Find your municipal district / polling area</a></strong>
-                <br>• <strong><a href="https://www.choseno.com/wall/{{wall_slug}}" class="cta-link">View Your Candidate Wall</a></strong>
+                <br>• <strong><a href="https://www.choseno.com/wall/brenda-locke-mayor" class="cta-link">Sample Candidate Wall</a></strong>
                 <br>• <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link">Sample Live Election Wall</a></strong>
             </p>
         </div>
@@ -1397,12 +1397,12 @@ export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
     icon: "🌟",
     subject: "Congratulations on Your {{role}} Nomination in {{city}} — Your Campaign Wall is Ready",
     body: CANDIDATE_BODY,
-    requiredFields: ["name", "email", "role", "city", "wall_slug"],
-    optionalFields: [],
+    requiredFields: ["name", "email", "role", "city"],
+    optionalFields: ["wall_slug"],
     csvHeader: "name,email,role,city,wall_slug",
     sampleData: "name,email,role,city,wall_slug\nSimran Sandhu,simran@surreycandidate.ca,Councillor,Surrey,simran-sandhu-councillor\nAlex Chen,alex@vancouverforward.ca,Mayor,Vancouver,alex-chen-mayor",
     defaultCampaignName: "2026 Candidate Nominees Outreach",
-    description: "Connects with new candidate nominees running for Mayor or Councillor to claim their Candidate Wall for free.",
+    description: "Connects with new candidate nominees running for Mayor or Councillor to onboard and claim their Candidate Wall for free.",
     sampleRecipient: {
       name: "Simran Sandhu",
       email: "simran@surreycandidate.ca",
