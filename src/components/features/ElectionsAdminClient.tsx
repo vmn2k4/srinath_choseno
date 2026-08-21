@@ -25,13 +25,14 @@ import {
   getElections,
   createElection,
   advanceElectionStatus,
+  updateElectionDates,
   deleteElection,
   getElectionRoleTypes,
   getElectionSeatsByElectionId,
   getElectionCandidatesBySeatIds,
   createElectionSeats,
   deleteElectionSeat,
-  deleteCandidacy,
+  removeCandidate,
   reviewCandidateApplication,
   getElectionQuestions,
   createElectionQuestion,
@@ -96,15 +97,23 @@ import {
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 
+// draft -> nominations_open is the only manual "publish" step left; from
+// there, nominations_open -> nominations_closed -> active happen on their
+// own once nomination_close_date / election_date pass (see
+// sync_election_status() in 20260821000004_election_nomination_windows.sql).
+// closed is the other manual bookend — an admin archives the election
+// whenever they're done with it, from any of the three date-driven stages.
 const STATUS_FLOW: Record<string, string> = {
   draft: "nominations_open",
-  nominations_open: "active",
+  nominations_open: "closed",
+  nominations_closed: "closed",
   active: "closed",
 };
 
 const STATUS_LABEL: Record<string, string> = {
   draft: "Open Nominations",
-  nominations_open: "Activate Election",
+  nominations_open: "Close Election",
+  nominations_closed: "Close Election",
   active: "Close Election",
 };
 
@@ -114,9 +123,10 @@ const CANDIDATE_STATUS_TONE: Record<string, "amber" | "emerald" | "rose"> = {
   rejected: "rose",
 };
 
-const ELECTION_STATUS_TONE: Record<string, "neutral" | "amber" | "emerald"> = {
+const ELECTION_STATUS_TONE: Record<string, "neutral" | "amber" | "emerald" | "rose"> = {
   draft: "neutral",
   nominations_open: "amber",
+  nominations_closed: "rose",
   active: "emerald",
   closed: "neutral",
 };
@@ -243,8 +253,16 @@ export default function ElectionsAdminClient() {
   const [selectedElection, setSelectedElection] = useState<any>(null);
 
   const [newName, setNewName] = useState("");
+  const [newNominationOpenDate, setNewNominationOpenDate] = useState("");
+  const [newNominationCloseDate, setNewNominationCloseDate] = useState("");
   const [newDate, setNewDate] = useState("");
   const [createStatus, setCreateStatus] = useState("");
+  const [editingDates, setEditingDates] = useState(false);
+  const [editNominationOpenDate, setEditNominationOpenDate] = useState("");
+  const [editNominationCloseDate, setEditNominationCloseDate] = useState("");
+  const [editElectionDate, setEditElectionDate] = useState("");
+  const [editDatesStatus, setEditDatesStatus] = useState("");
+  const [savingDates, setSavingDates] = useState(false);
 
   const [seats, setSeats] = useState<any[]>([]);
   const [loadingSeats, setLoadingSeats] = useState(false);
@@ -593,11 +611,17 @@ export default function ElectionsAdminClient() {
 
   const handleCreateElection = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newName.trim() || !newDate) return;
+    if (!newName.trim() || !newNominationOpenDate || !newNominationCloseDate || !newDate) return;
+    if (newNominationOpenDate > newNominationCloseDate || newNominationCloseDate > newDate) {
+      setCreateStatus("Error: dates must run nomination open ≤ nomination close ≤ election day.");
+      return;
+    }
     setCreateStatus("");
 
     const { data, error } = await createElection(supabase, {
       name: newName.trim(),
+      nominationOpenDate: newNominationOpenDate,
+      nominationCloseDate: newNominationCloseDate,
       electionDate: newDate,
     });
 
@@ -607,6 +631,8 @@ export default function ElectionsAdminClient() {
     }
 
     setNewName("");
+    setNewNominationOpenDate("");
+    setNewNominationCloseDate("");
     setNewDate("");
     await fetchElections();
     if (data) {
@@ -626,6 +652,37 @@ export default function ElectionsAdminClient() {
     if (selectedElection?.id === electionId) {
       setSelectedElection({ ...selectedElection, status: nextStatus });
     }
+    await fetchElections();
+  };
+
+  const handleStartEditDates = (elec: any) => {
+    setEditNominationOpenDate(elec.nomination_open_date || "");
+    setEditNominationCloseDate(elec.nomination_close_date || "");
+    setEditElectionDate(elec.election_date || "");
+    setEditDatesStatus("");
+    setEditingDates(true);
+  };
+
+  const handleSaveDates = async () => {
+    if (!selectedElection) return;
+    if (!editNominationOpenDate || !editNominationCloseDate || !editElectionDate) return;
+    if (editNominationOpenDate > editNominationCloseDate || editNominationCloseDate > editElectionDate) {
+      setEditDatesStatus("Error: dates must run nomination open ≤ nomination close ≤ election day.");
+      return;
+    }
+    setSavingDates(true);
+    const { data, error } = await updateElectionDates(supabase, selectedElection.id, {
+      nominationOpenDate: editNominationOpenDate,
+      nominationCloseDate: editNominationCloseDate,
+      electionDate: editElectionDate,
+    });
+    setSavingDates(false);
+    if (error) {
+      setEditDatesStatus("Error: " + error.message);
+      return;
+    }
+    if (data) setSelectedElection(data);
+    setEditingDates(false);
     await fetchElections();
   };
 
@@ -1033,7 +1090,7 @@ export default function ElectionsAdminClient() {
       await deleteElectionSeat(supabase, confirmTarget.id);
       if (selectedElection) await fetchSeats(selectedElection.id);
     } else if (confirmTarget.kind === "candidate") {
-      await deleteCandidacy(supabase, confirmTarget.id);
+      await removeCandidate(supabase, confirmTarget.id);
       if (selectedElection) await fetchSeats(selectedElection.id);
     } else if (confirmTarget.kind === "question") {
       await deleteElectionQuestion(supabase, confirmTarget.id);
@@ -1065,7 +1122,7 @@ export default function ElectionsAdminClient() {
           <Plus size={18} className="text-primary" /> Create New Election Event
         </h2>
 
-        <form onSubmit={handleCreateElection} className="flex flex-wrap gap-3 items-center">
+        <form onSubmit={handleCreateElection} className="flex flex-wrap gap-3 items-end">
           <Input
             placeholder="Election Name (e.g. 2026 Vancouver Municipal)"
             value={newName}
@@ -1073,13 +1130,36 @@ export default function ElectionsAdminClient() {
             className="text-xs w-72"
             required
           />
-          <Input
-            type="date"
-            value={newDate}
-            onChange={(e) => setNewDate(e.target.value)}
-            className="text-xs w-44"
-            required
-          />
+          <label className="flex flex-col gap-1 text-[11px] text-text-muted font-semibold">
+            Nominations open
+            <Input
+              type="date"
+              value={newNominationOpenDate}
+              onChange={(e) => setNewNominationOpenDate(e.target.value)}
+              className="text-xs w-40"
+              required
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-[11px] text-text-muted font-semibold">
+            Nominations close
+            <Input
+              type="date"
+              value={newNominationCloseDate}
+              onChange={(e) => setNewNominationCloseDate(e.target.value)}
+              className="text-xs w-40"
+              required
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-[11px] text-text-muted font-semibold">
+            Election day
+            <Input
+              type="date"
+              value={newDate}
+              onChange={(e) => setNewDate(e.target.value)}
+              className="text-xs w-40"
+              required
+            />
+          </label>
           <Button type="submit" size="sm" className="text-xs">
             Create Election
           </Button>
@@ -1119,7 +1199,8 @@ export default function ElectionsAdminClient() {
                       {elec.name}
                     </h3>
                     <p className="text-xs text-text-muted mt-0.5">
-                      Date: {elec.election_date}
+                      Nominations {elec.nomination_open_date} → {elec.nomination_close_date} · Election day:{" "}
+                      {elec.election_date}
                     </p>
                   </div>
                   <Badge tone={tone}>{elec.status}</Badge>
@@ -1159,36 +1240,87 @@ export default function ElectionsAdminClient() {
       {/* Selected Election Detail & Seats List */}
       {selectedElection && (
         <>
-          <Card padding="md" className="flex items-center justify-between flex-wrap gap-4">
-            <div>
-              <h2 className="text-xl font-bold text-text-main">{selectedElection.name}</h2>
-              <p className="text-xs text-text-muted mt-1">
-                {selectedElection.election_date} · Status:{" "}
-                <span className="font-semibold text-text-secondary">
-                  {selectedElection.status.replace("_", " ")}
-                </span>
-              </p>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              {STATUS_FLOW[selectedElection.status] && (
+          <Card padding="md" className="space-y-3">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <h2 className="text-xl font-bold text-text-main">{selectedElection.name}</h2>
+                <p className="text-xs text-text-muted mt-1">
+                  Nominations {selectedElection.nomination_open_date} → {selectedElection.nomination_close_date} ·
+                  Election day: {selectedElection.election_date} · Status:{" "}
+                  <span className="font-semibold text-text-secondary">
+                    {selectedElection.status.replace("_", " ")}
+                  </span>
+                </p>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                {!editingDates && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleStartEditDates(selectedElection)}
+                  >
+                    <Pencil size={14} /> Edit Dates
+                  </Button>
+                )}
+                {STATUS_FLOW[selectedElection.status] && (
+                  <Button
+                    onClick={() => handleAdvanceStatus(selectedElection.id, selectedElection.status)}
+                    size="sm"
+                  >
+                    {STATUS_LABEL[selectedElection.status]}
+                  </Button>
+                )}
                 <Button
-                  onClick={() => handleAdvanceStatus(selectedElection.id, selectedElection.status)}
+                  variant="outline"
                   size="sm"
+                  className="text-danger border-danger/40"
+                  onClick={() =>
+                    setConfirmTarget({ kind: "election", id: selectedElection.id, label: selectedElection.name })
+                  }
                 >
-                  {STATUS_LABEL[selectedElection.status]}
+                  <Trash2 size={14} /> Delete Election
                 </Button>
-              )}
-              <Button
-                variant="outline"
-                size="sm"
-                className="text-danger border-danger/40"
-                onClick={() =>
-                  setConfirmTarget({ kind: "election", id: selectedElection.id, label: selectedElection.name })
-                }
-              >
-                <Trash2 size={14} /> Delete Election
-              </Button>
+              </div>
             </div>
+
+            {editingDates && (
+              <div className="flex flex-wrap items-end gap-3 pt-3 border-t border-border-light/20">
+                <label className="flex flex-col gap-1 text-[11px] text-text-muted font-semibold">
+                  Nominations open
+                  <Input
+                    type="date"
+                    value={editNominationOpenDate}
+                    onChange={(e) => setEditNominationOpenDate(e.target.value)}
+                    className="text-xs w-40"
+                  />
+                </label>
+                <label className="flex flex-col gap-1 text-[11px] text-text-muted font-semibold">
+                  Nominations close
+                  <Input
+                    type="date"
+                    value={editNominationCloseDate}
+                    onChange={(e) => setEditNominationCloseDate(e.target.value)}
+                    className="text-xs w-40"
+                  />
+                </label>
+                <label className="flex flex-col gap-1 text-[11px] text-text-muted font-semibold">
+                  Election day
+                  <Input
+                    type="date"
+                    value={editElectionDate}
+                    onChange={(e) => setEditElectionDate(e.target.value)}
+                    className="text-xs w-40"
+                  />
+                </label>
+                <Button size="sm" onClick={handleSaveDates} disabled={savingDates}>
+                  {savingDates ? "Saving..." : "Save"}
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => setEditingDates(false)}>
+                  Cancel
+                </Button>
+                {editDatesStatus && <p className="text-xs text-danger w-full">{editDatesStatus}</p>}
+              </div>
+            )}
           </Card>
 
           {/* CANDIDATE QUESTIONNAIRE */}

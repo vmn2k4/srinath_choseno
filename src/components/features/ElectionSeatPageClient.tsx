@@ -22,6 +22,7 @@ import {
   reviewCandidacyClaim,
   getOfficeHoldersByShapeAndRole,
   getCandidateIdsWithVideoAnswers,
+  removeCandidate,
 } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { getProfileRole, uploadAvatarImage } from "@/lib/services/profile";
@@ -46,6 +47,7 @@ import {
   Video,
   PlayCircle,
   Send,
+  Trash2,
 } from "lucide-react";
 import {
   Card,
@@ -172,6 +174,8 @@ export default function ElectionSeatPageClient({
   const [candidateAvatarError, setCandidateAvatarError] = useState("");
   const [addingCandidate, setAddingCandidate] = useState(false);
   const [addCandidateStatus, setAddCandidateStatus] = useState("");
+  const [removingCandidateId, setRemovingCandidateId] = useState<string | null>(null);
+  const [removeCandidateStatus, setRemoveCandidateStatus] = useState("");
 
   // Claim invites & review claim requests
   const [inviteEmails, setInviteEmails] = useState<Record<string, string>>({});
@@ -529,6 +533,19 @@ export default function ElectionSeatPageClient({
       [candidateId]: error ? "Error: " + error.message : "Invite sent.",
     }));
     if (!error) setInviteEmails((prev) => ({ ...prev, [candidateId]: "" }));
+  };
+
+  const handleRemoveCandidate = async (candidateId: string, name: string) => {
+    if (!window.confirm(`Remove ${name} from this seat? This can't be undone.`)) return;
+    setRemovingCandidateId(candidateId);
+    setRemoveCandidateStatus("");
+    const { error } = await removeCandidate(supabase, candidateId);
+    setRemovingCandidateId(null);
+    if (error) {
+      setRemoveCandidateStatus("Error: " + error.message);
+      return;
+    }
+    fetchAll();
   };
 
   const handleReviewClaim = async (requestId: string, approve: boolean) => {
@@ -1152,6 +1169,43 @@ export default function ElectionSeatPageClient({
                               </div>
                             );
                           })}
+                      </div>
+                    )}
+
+                    {/* Remove a candidate — the admin/election-admin power that
+                        stays available once nominations close, when
+                        self-nomination through Apply is no longer possible.
+                        Withdrawing your own application is unaffected and
+                        still handled separately on the politician's own
+                        Elections page. */}
+                    {candidates.length > 0 && (
+                      <div className="pt-3 border-t border-border-light/35 space-y-2">
+                        <p className="text-xs font-bold text-text-secondary uppercase tracking-wide">
+                          Manage Candidates
+                        </p>
+                        {candidates.map((c) => {
+                          const name = c.display_name || c.profiles?.full_name || "Candidate";
+                          return (
+                            <div
+                              key={c.id}
+                              className="flex items-center justify-between gap-2 text-xs bg-surface-elevated rounded-xl border border-border-light/30 px-2.5 py-1.5"
+                            >
+                              <span className="truncate font-semibold text-text-secondary">{name}</span>
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveCandidate(c.id, name)}
+                                disabled={removingCandidateId === c.id}
+                                className="text-text-muted hover:text-danger p-1 shrink-0 cursor-pointer disabled:opacity-50"
+                                title={`Remove ${name}`}
+                              >
+                                <Trash2 size={14} />
+                              </button>
+                            </div>
+                          );
+                        })}
+                        {removeCandidateStatus && (
+                          <p className="text-[11px] text-danger">{removeCandidateStatus}</p>
+                        )}
                       </div>
                     )}
 

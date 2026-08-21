@@ -25,18 +25,65 @@ const ADMIN_CANDIDATE_COLUMNS = `
 
 // ── elections ────────────────────────────────────────────────────────────
 export async function getElections(supabase: Client) {
+  // Bulk-sync first so the dashboard never shows a stale status for an
+  // election that crossed a nomination_close_date/election_date boundary
+  // since the last write — see 20260821000004_election_nomination_windows.sql.
+  await supabase.rpc("sync_election_status");
   return supabase.from("elections").select("*").order("created_at", { ascending: false });
 }
 
 export async function createElection(
   supabase: Client,
-  { name, electionDate }: { name: string; electionDate: string }
+  {
+    name,
+    nominationOpenDate,
+    nominationCloseDate,
+    electionDate,
+  }: { name: string; nominationOpenDate: string; nominationCloseDate: string; electionDate: string }
 ) {
-  return supabase.from("elections").insert({ name, election_date: electionDate }).select().single();
+  return supabase
+    .from("elections")
+    .insert({
+      name,
+      nomination_open_date: nominationOpenDate,
+      nomination_close_date: nominationCloseDate,
+      election_date: electionDate,
+    })
+    .select()
+    .single();
 }
 
 export async function advanceElectionStatus(supabase: Client, electionId: string, nextStatus: string) {
   return supabase.from("elections").update({ status: nextStatus }).eq("id", electionId);
+}
+
+// Lets an admin fix up an already-created election's three dates (e.g. ones
+// created before nomination_open_date/nomination_close_date existed and got
+// a backfilled guess — see 20260821000004_election_nomination_windows.sql).
+// Re-syncs status right after, since moving nomination_close_date/election_date
+// can immediately flip the election into a different auto-computed stage.
+export async function updateElectionDates(
+  supabase: Client,
+  electionId: string,
+  {
+    nominationOpenDate,
+    nominationCloseDate,
+    electionDate,
+  }: { nominationOpenDate: string; nominationCloseDate: string; electionDate: string }
+) {
+  const { data, error } = await supabase
+    .from("elections")
+    .update({
+      nomination_open_date: nominationOpenDate,
+      nomination_close_date: nominationCloseDate,
+      election_date: electionDate,
+    })
+    .eq("id", electionId)
+    .select()
+    .single();
+  if (error) return { data, error };
+  await supabase.rpc("sync_election_status", { p_election_id: electionId });
+  return supabase.from("elections").select("*").eq("id", electionId).single();
 }
 
 export async function deleteElection(supabase: Client, electionId: string) {
@@ -612,23 +659,27 @@ export async function deleteElectionSeat(supabase: Client, seatId: string) {
 // ── election_seats (politician / voter facing) ──────────────────────────
 export async function getOpenSeatsNearShapeIds(supabase: Client, shapeIds: number[]) {
   const today = new Date().toISOString().slice(0, 10);
+  // Keeps elections.status fresh before filtering on it below — see
+  // 20260821000004_election_nomination_windows.sql.
+  await supabase.rpc("sync_election_status");
   return supabase
     .from("election_seats")
     .select(
       "id, role_title, map_shape_id, map_shapes(name, boundary_type, country, properties), elections!inner(id, name, election_date, status)"
     )
     .in("map_shape_id", shapeIds)
-    .in("elections.status", ["nominations_open", "active"])
+    .in("elections.status", ["nominations_open", "nominations_closed", "active"])
     .gte("elections.election_date", today)
     .order("role_title");
 }
 
 export async function getActiveSeatsByShapeIds(supabase: Client, shapeIds: number[]) {
+  await supabase.rpc("sync_election_status");
   return supabase
     .from("election_seats")
     .select("id, role_title, map_shapes(name, boundary_type, properties), elections!inner(id, name, election_date, status)")
     .in("map_shape_id", shapeIds)
-    .in("elections.status", ["nominations_open", "active"]);
+    .in("elections.status", ["nominations_open", "nominations_closed", "active"]);
 }
 
 // Platform-wide active seats, unscoped by boundary membership — used for
@@ -640,13 +691,14 @@ export async function getActiveSeats(
   supabase: Client,
   opts: { limit?: number; offset?: number; withCount?: boolean } = {}
 ) {
+  await supabase.rpc("sync_election_status");
   let q = supabase
     .from("election_seats")
     .select(
       "id, role_title, map_shape_id, map_shapes(id, name, boundary_type, properties), elections!inner(id, name, election_date, status)",
       opts.withCount ? { count: "exact" } : undefined
     )
-    .in("elections.status", ["nominations_open", "active"])
+    .in("elections.status", ["nominations_open", "nominations_closed", "active"])
     .order("role_title");
 
   if (opts.limit) q = q.limit(opts.limit);
@@ -873,6 +925,14 @@ export async function applyForSeat(supabase: Client, seatId: string) {
 
 export async function deleteCandidacy(supabase: Client, candidateId: string) {
   return supabase.from("election_candidates").delete().eq("id", candidateId);
+}
+
+// Admin/election-admin removal of ANY candidate on a seat (registered or
+// stub, self-added or not) — distinct from deleteCandidacy, which a
+// candidate uses to withdraw their own application and relies on RLS alone.
+// See remove_candidate() in 20260821000004_election_nomination_windows.sql.
+export async function removeCandidate(supabase: Client, candidateId: string) {
+  return supabase.rpc("remove_candidate", { p_candidate_id: candidateId });
 }
 
 export async function updateCandidateStatement(supabase: Client, candidateId: string, statement: string) {

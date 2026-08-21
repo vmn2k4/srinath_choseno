@@ -852,6 +852,8 @@ export type Database = {
           election_date: string
           id: string
           name: string
+          nomination_close_date: string
+          nomination_open_date: string
           status: string
         }
         Insert: {
@@ -860,6 +862,8 @@ export type Database = {
           election_date: string
           id?: string
           name: string
+          nomination_close_date: string
+          nomination_open_date: string
           status?: string
         }
         Update: {
@@ -868,6 +872,8 @@ export type Database = {
           election_date?: string
           id?: string
           name?: string
+          nomination_close_date?: string
+          nomination_open_date?: string
           status?: string
         }
         Relationships: [
@@ -3088,6 +3094,14 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      compute_election_status: {
+        Args: {
+          p_election_date: string
+          p_nomination_close_date: string
+          p_status: string
+        }
+        Returns: string
+      }
       create_answer_comment:
         | {
             Args: { p_answer_id: string; p_content: string; p_ghost_id: string }
@@ -3660,6 +3674,7 @@ export type Database = {
         Args: { p_claim_id: string; p_reason: string }
         Returns: Json
       }
+      remove_candidate: { Args: { p_candidate_id: string }; Returns: undefined }
       remove_unregistered_candidate: {
         Args: { p_candidate_id: string }
         Returns: undefined
@@ -4430,6 +4445,10 @@ export type Database = {
           isOneToOne: false
           isSetofReturn: true
         }
+      }
+      sync_election_status: {
+        Args: { p_election_id?: string }
+        Returns: undefined
       }
       sync_user_boundary_memberships: {
         Args: { p_lat: number; p_lng: number }
