@@ -96,10 +96,34 @@ export default function VideoRecorder({
       }, 1000);
     } catch (err: any) {
       console.warn("Camera access failed:", err);
-      setCameraError(
-        err?.message ||
-          "Camera access blocked on non-HTTPS network IP. Access via http://localhost:3000 or use file upload below."
-      );
+      // getUserMedia rejects for several distinct reasons that all deserve
+      // different guidance -- a single generic "use HTTPS/localhost" message
+      // was being shown for all of them, including permission denials on a
+      // page that was already on http://localhost:3000, which just pointed
+      // the user back at what they were already doing instead of the actual
+      // fix.
+      if (err?.name === "NotAllowedError" || err?.name === "SecurityError") {
+        setCameraError(
+          "Camera/microphone access was denied. Check your browser's site permissions for this page (and, if that's already set to Allow, your OS's camera privacy settings for this browser) then reload the page — or use Select File below to upload a video instead."
+        );
+      } else if (err?.name === "NotFoundError" || err?.name === "OverconstrainedError") {
+        setCameraError(
+          "No camera was found on this device. Use Select File below to upload a video instead."
+        );
+      } else if (
+        typeof navigator !== "undefined" &&
+        typeof window !== "undefined" &&
+        !window.isSecureContext
+      ) {
+        setCameraError(
+          "Camera recording requires HTTPS or http://localhost. Use Select File below to upload a video instead."
+        );
+      } else {
+        setCameraError(
+          (err?.message ? `Camera access failed: ${err.message}` : "Camera access failed.") +
+            " Use Select File below to upload a video instead."
+        );
+      }
     }
   };
 
@@ -222,9 +246,7 @@ export default function VideoRecorder({
       {cameraError && (
         <div className="p-2.5 bg-warning/10 border border-warning/30 rounded-xl text-[11px] text-warning-light flex items-start gap-2 max-w-xs">
           <ShieldAlert size={15} className="shrink-0 mt-0.5 text-warning" />
-          <span>
-            Camera requires HTTPS or <strong>http://localhost:3000</strong>. Use <strong>Select Video File</strong> below instead!
-          </span>
+          <span>{cameraError}</span>
         </div>
       )}
 
