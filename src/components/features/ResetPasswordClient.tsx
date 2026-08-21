@@ -48,7 +48,15 @@ export default function ResetPasswordClient({ nextPath }: { nextPath?: string })
     <div className="w-full max-w-md mx-auto mt-10 sm:mt-14 px-4 pb-16">
       <Card padding="lg" className="shadow-2xl animate-fade-in border border-border-light/40">
         <h1 className="text-2xl font-extrabold text-text-main text-center">{t("auth.resetPasswordTitle")}</h1>
-        <p className="text-center text-sm text-text-muted mt-1.5 mb-6">{t("auth.resetPasswordSubtitle")}</p>
+        <p className="text-center text-sm text-text-muted mt-1.5">{t("auth.resetPasswordSubtitle")}</p>
+        {/* Confirms which account this actually applies to -- useful for
+            the ordinary "forgot password" case, and especially so for the
+            invite-claim flow (/auth/confirm), which lands here via a link
+            the person never typed an email into themselves. */}
+        {session?.user?.email && (
+          <p className="text-center text-sm font-semibold text-text-main mt-1 mb-6">{session.user.email}</p>
+        )}
+        {!session?.user?.email && <div className="mb-6" />}
 
         {authLoading ? (
           <Spinner fullPage />

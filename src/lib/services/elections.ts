@@ -903,7 +903,7 @@ export async function getElectionQuestions(supabase: Client, electionId: string)
   return supabase
     .from("election_questions")
     .select(
-      "id, question_text, question_type, required, allow_context, allow_video, visible_to_public, rank, question_video_url, max_answer_seconds, election_question_options(id, option_text, rank)"
+      "id, question_text, question_type, required, allow_context, allow_video, visible_to_public, rank, question_video_url, max_answer_seconds, narration_text, election_question_options(id, option_text, rank)"
     )
     .eq("election_id", electionId)
     .order("rank");
@@ -1114,6 +1114,14 @@ export async function updateElectionQuestionVideo(
 
 export async function updateElectionQuestionMaxAnswerSeconds(supabase: Client, questionId: string, seconds: number) {
   return supabase.from("election_questions").update({ max_answer_seconds: seconds }).eq("id", questionId);
+}
+
+// The spoken script for a question's generated video (see
+// 20260821000002_election_question_narration_text.sql) -- independent of
+// question_text, since a ranking/choice question's raw text often isn't
+// speakable on its own.
+export async function updateElectionQuestionNarrationText(supabase: Client, questionId: string, narrationText: string | null) {
+  return supabase.from("election_questions").update({ narration_text: narrationText }).eq("id", questionId);
 }
 
 // Which of these candidates have at least one video answer — powers the
@@ -1327,6 +1335,15 @@ export async function inviteCandidateToClaim(supabase: Client, candidateId: stri
 
 export async function claimCandidacyViaToken(supabase: Client, token: string) {
   return supabase.rpc("claim_candidacy_via_token", { p_token: token });
+}
+
+// Fallback for when the raw invite token never reached the browser -- see
+// 20260821000003_claim_candidacy_via_own_email.sql. Matches a pending
+// candidate_claim_invites row by the just-authenticated caller's own email
+// instead of a token, called from /auth/confirm right after verifyOtp
+// succeeds for an "invite" link.
+export async function claimCandidacyViaOwnEmail(supabase: Client) {
+  return supabase.rpc("claim_candidacy_via_own_email");
 }
 
 // Flow B: a citizen/politician says "this is me" and an election admin (or

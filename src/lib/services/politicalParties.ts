@@ -41,6 +41,16 @@ export async function createPoliticalParty(
   return supabase.from("political_parties").insert({ country, name, rank: rank ?? 999 });
 }
 
+// Resolves a party name to its id, creating the row if this country doesn't
+// have one under that name yet -- e.g. for pre-filling a stub candidate's
+// party from a search result's plain-text party_name (search_politicians_and_officeholders
+// returns text, not an id, since it also matches office_holders rows that
+// were never normalized against political_parties). Admin-only (the RPC
+// itself enforces this), matching create_claim_invite's own posture.
+export async function getOrCreatePoliticalParty(supabase: Client, country: string, name: string) {
+  return supabase.rpc("get_or_create_political_party", { p_country: country, p_name: name });
+}
+
 export async function deletePoliticalParty(supabase: Client, partyId: number) {
   invalidateCache("political_parties");
   return supabase.from("political_parties").delete().eq("id", partyId);

@@ -8,6 +8,7 @@ import CandidacyWall from "./CandidacyWall";
 import ElectionResultsPanel from "./ElectionResultsPanel";
 import ElectionInterviewTab from "./ElectionInterviewTab";
 import PlayInterviewReel from "./PlayInterviewReel";
+import SendInterviewInviteFlow from "./SendInterviewInviteFlow";
 import {
   getSeatById,
   getCandidatesBySeatIds,
@@ -44,6 +45,7 @@ import {
   ExternalLink,
   Video,
   PlayCircle,
+  Send,
 } from "lucide-react";
 import {
   Card,
@@ -158,6 +160,7 @@ export default function ElectionSeatPageClient({
 
   // Add unregistered candidate (approved seat admins / superadmins)
   const [showAddCandidateForm, setShowAddCandidateForm] = useState(false);
+  const [showSendInviteFlow, setShowSendInviteFlow] = useState(false);
   const [parties, setParties] = useState<any[]>([]);
   const [newCandidateName, setNewCandidateName] = useState("");
   const [newCandidateParty, setNewCandidateParty] = useState("");
@@ -214,27 +217,32 @@ export default function ElectionSeatPageClient({
     const seatPromise = skipSeatRefetch ? Promise.resolve({ data: seat }) : getSeatById(supabase, seatId);
     const profileRolePromise = user ? getProfileRole(supabase, user.id) : Promise.resolve({ data: null });
     const candidaciesPromise = user ? getMyCandidacies(supabase, user.id) : Promise.resolve({ data: [] });
-    const seatAdminStatusPromise = user ? getSeatAdminStatus(supabase, seatId) : Promise.resolve({ data: null });
 
-    const [{ data: seatRow }, { data: myProfile }, { data: candidacies }, { data: seatAdminStatus }] =
-      await Promise.all([seatPromise, profileRolePromise, candidaciesPromise, seatAdminStatusPromise]);
+    const [{ data: seatRow }, { data: myProfile }, { data: candidacies }] =
+      await Promise.all([seatPromise, profileRolePromise, candidaciesPromise]);
 
     setSeat(seatRow || null);
     if (user) {
       setRole(myProfile?.role || null);
       setMyCandidacies(candidacies || []);
-      setAdminStatus(seatAdminStatus);
     } else {
       setRole(null);
       setMyCandidacies([]);
       setAdminStatus(null);
     }
 
-    // These three all depend on seatRow but not on each other -- also fired
-    // together rather than chained.
+    // These all depend on seatRow but not on each other -- fired together
+    // rather than chained. get_seat_admin_status takes a real seat uuid
+    // (targetSeatId), not the raw seatId prop -- that's the URL's SEO slug
+    // after the canonical redirect, and a uuid-typed RPC param 400s on a
+    // non-uuid string. Same bug class as getClaimRequestsForSeat above;
+    // this one couldn't be fixed at the same time since targetSeatId isn't
+    // known until seatRow resolves, so the call had to move down here
+    // rather than staying in the first batch.
     if (seatRow?.map_shape_id) setLoadingHolders(true);
     const targetSeatId = seatRow?.id || seatId;
-    const [holdersResult, candidatesResult, partiesResult] = await Promise.all([
+    const seatAdminStatusPromise = user ? getSeatAdminStatus(supabase, targetSeatId) : Promise.resolve({ data: null });
+    const [holdersResult, candidatesResult, partiesResult, { data: seatAdminStatus }] = await Promise.all([
       seatRow?.map_shape_id
         ? getOfficeHoldersByShapeAndRole(supabase, seatRow.map_shape_id, seatRow.role_title)
         : Promise.resolve({ data: null }),
@@ -242,6 +250,7 @@ export default function ElectionSeatPageClient({
       seatRow?.map_shapes?.country
         ? getPoliticalParties(supabase, { country: seatRow.map_shapes.country })
         : Promise.resolve({ data: [] }),
+      seatAdminStatusPromise,
     ]);
 
     if (seatRow?.map_shape_id) {
@@ -249,6 +258,7 @@ export default function ElectionSeatPageClient({
       setLoadingHolders(false);
     }
     setParties(partiesResult.data || []);
+    if (user) setAdminStatus(seatAdminStatus);
 
     const candItems = (candidatesResult.data as any[]) || [];
     setCandidates(candItems);
@@ -981,6 +991,18 @@ export default function ElectionSeatPageClient({
                       <CheckCircle2 size={13} /> You are the approved Administrator for this seat.
                     </p>
 
+                    {/* Search-and-invite: faster on-ramp than Add Candidate
+                        Directly + separately Invite to Claim -- searches
+                        anyone on Choseno and sends the interview invite in
+                        one step. Both older flows stay below, unchanged. */}
+                    <Button
+                      size="sm"
+                      onClick={() => setShowSendInviteFlow(true)}
+                      className="w-full gap-1.5"
+                    >
+                      <Send size={14} /> Search & Send Interview Invite
+                    </Button>
+
                     {/* Add Candidate Directly */}
                     {!showAddCandidateForm ? (
                       <Button
@@ -1260,6 +1282,15 @@ export default function ElectionSeatPageClient({
           candidateId={reelForCandidate.id}
           candidateName={reelForCandidate.name}
           onClose={() => setReelForCandidate(null)}
+        />
+      )}
+
+      {showSendInviteFlow && (
+        <SendInterviewInviteFlow
+          seatId={seat?.id || seatId}
+          existingCandidates={candidates}
+          onClose={() => setShowSendInviteFlow(false)}
+          onSent={fetchAll}
         />
       )}
     </div>

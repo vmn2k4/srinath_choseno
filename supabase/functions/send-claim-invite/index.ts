@@ -57,6 +57,27 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
 
+    // redirectTo below is close to decorative: this project's auth emails go
+    // through the auth-send-email "Send Email" hook (bypasses GoTrue's own
+    // mailer entirely -- see that function's header), which always points
+    // the actual link at our own /auth/confirm?token_hash=...&type=invite,
+    // never at redirectTo directly. redirectTo only matters as the source
+    // auth-send-email's extractNextPath reads a `next` param from -- and
+    // GoTrue validates redirectTo against the project's Redirect URLs
+    // allow-list *before* the hook even runs, silently substituting the
+    // bare Site URL (dropping any path/query, `next` included) when it
+    // doesn't match. A dynamic path like /claim/{token} predictably doesn't
+    // match a static allow-list entry, so don't rely on it surviving --
+    // confirmed via a real invite link showing up with no &next= at all.
+    // claim_candidacy_via_own_email (called from /auth/confirm for every
+    // "invite" link with no surviving next) is the actual fix: it looks up
+    // the pending invite by the email verifyOtp just proved the caller
+    // controls, no token round-trip required. This redirectTo is left
+    // pointed at /claim/{token} purely as a courtesy for the rare case the
+    // allow-list *does* happen to include it -- never point it at
+    // /auth/callback, which expects a PKCE `code` param that won't exist
+    // here (verifyOtp consumes token_hash, not a code) and would dead-end
+    // on /auth?error=no_code instead.
     const { error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
       redirectTo: `${redirectOrigin}/claim/${token}`,
     });

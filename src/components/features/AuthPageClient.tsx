@@ -6,10 +6,11 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { signUp, signInWithPassword, signInWithGoogle } from "@/lib/services/auth";
+import { getFounderCount } from "@/lib/services/profile";
 import { Card, Input, Button, Alert } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { trackSignUp, trackLogin } from "@/lib/analytics/events";
-import { Mail } from "lucide-react";
+import { Mail, Flag } from "lucide-react";
 
 export default function AuthPageClient({
   initialRole,
@@ -48,6 +49,29 @@ export default function AuthPageClient({
       router.replace(nextPath || (profile.role === "admin" ? "/admin" : "/feed"));
     }
   }, [session, profile, authLoading, nextPath, router]);
+
+  // Live "first 1,000 founders" nudge, same public RPC MissionRegisterCTA
+  // uses. Fetched once on mount regardless of isSignUp so it's ready the
+  // moment someone toggles into the sign-up form.
+  const [founderCount, setFounderCount] = useState<number | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    getFounderCount(supabase).then(({ data }) => {
+      if (!cancelled && typeof data === "number") setFounderCount(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const founderLine =
+    founderCount == null
+      ? null
+      : founderCount < 1000
+      ? `${founderCount} founders have joined so far — be one of the first 1,000 shaping this movement.`
+      : founderCount < 10000
+      ? `${founderCount.toLocaleString()} founders and counting — join the first 10,000.`
+      : `Join ${founderCount.toLocaleString()}+ others already building this movement.`;
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -156,6 +180,13 @@ export default function AuthPageClient({
           </p>
         )}
         {!(isSignUp && initialRole) && <div className="mb-6" />}
+
+        {isSignUp && founderLine && (
+          <p className="flex items-start gap-1.5 text-[11px] font-semibold text-primary bg-primary/10 rounded-lg px-2.5 py-2 leading-snug mb-4">
+            <Flag size={13} className="shrink-0 mt-0.5" />
+            {founderLine}
+          </p>
+        )}
 
         <form onSubmit={handleAuth} className="flex flex-col gap-4">
           <div>

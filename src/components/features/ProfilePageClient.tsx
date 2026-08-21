@@ -3,13 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { MapPin, Pencil, Flame, RefreshCw, Award } from "lucide-react";
+import { MapPin, Pencil, Flame, RefreshCw, Award, Flag } from "lucide-react";
 import {
   getOwnProfile,
   getPoliticianProfileFull,
   getLatestUserLocation,
   getUserBoundaryMemberships,
   calculateMyScore,
+  getFounderTier,
 } from "@/lib/services/profile";
 import { burnGhostIdentityViaRpc } from "@/lib/services/feed";
 import {
@@ -68,6 +69,7 @@ export default function ProfilePageClient() {
       ghostId: profRecord?.current_ghost_id || "",
       lastBurnedAt: profRecord?.last_burned_at || null,
       burnCount: profRecord?.burn_count || 0,
+      signupOrder: profRecord?.signup_order ?? null,
       politicalPartyId: polData?.political_party_id || "",
       politicalParty: polData?.political_parties?.name || "",
       education: polData?.education || "",
@@ -139,6 +141,8 @@ export default function ProfilePageClient() {
     );
   }
 
+  const founderTier = getFounderTier(profile?.signupOrder);
+
   const roleLabel =
     profile?.role === "normal"
       ? t("profile.citizen")
@@ -176,6 +180,31 @@ export default function ProfilePageClient() {
           </Button>
         }
       />
+
+      {/* Founder badge -- private to this profile owner only (this page never
+          renders anyone else's profile, so this never leaks to other users).
+          See profile.ts's getFounderTier for the tier cutoffs. */}
+      {founderTier && (
+        <Card
+          padding="md"
+          className="!bg-gradient-to-r !from-primary/15 !to-accent/10 border border-primary/25 flex items-center gap-3"
+        >
+          <div className="shrink-0 w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+            <Flag size={18} className="text-primary" />
+          </div>
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <p className="font-extrabold text-text-main text-sm">You're founder #{founderTier.order}</p>
+              <Badge tone={founderTier.tone} size="xs">
+                {founderTier.label}
+              </Badge>
+            </div>
+            <p className="text-xs text-text-secondary mt-0.5">
+              You joined Choseno in its earliest days — one of the first people building this movement.
+            </p>
+          </div>
+        </Card>
+      )}
 
       {/* General Info Card */}
       <Card padding="md" className="space-y-4">

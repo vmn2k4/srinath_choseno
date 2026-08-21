@@ -1,10 +1,13 @@
-> **Implementation status (2026-08-20):** Gaps 1, 3, and 4 are built and live —
-> migration `20260821000000_candidate_video_interviews.sql` applied, service layer,
-> `QuestionAnswerCarousel`, `PlayInterviewReel`, the seat-page "Candidate Interview" tab,
-> the CandidacyWall "Play Interview" button, and the admin question-video/duration
-> fields are all in place and typecheck/run clean. **Not built:** Gap 2's email-token
-> (no-account) candidate access path and the live "Generate via Qwen" trigger — both
-> deliberately deferred, see the notes inline below.
+> **Implementation status (2026-08-21):** Gaps 1, 2, 3, and 4 are all built and live,
+> including full video generation. Migration `20260821000000_candidate_video_interviews.sql`
+> + `20260821000001_fix_candidacy_claim_requests_fk.sql` + `20260821000002_election_question_narration_text.sql`
+> applied. Service layer, `QuestionAnswerCarousel`, `PlayInterviewReel`, the seat-page
+> "Candidate Interview" tab, the CandidacyWall "Play Interview" button + owner nudge,
+> the email-claim → `/apply` connection, and full bulk video generation
+> (`GenerateQuestionVideosFlow` + `/api/admin/generate-question-video` +
+> `nvidia_shorts_studio/question_card_engine/generate.py`) are all built, typecheck
+> clean, and verified end-to-end in the live app (real TTS audio, real HyperFrames
+> render, real Supabase Storage upload, real DB persistence on approve).
 
 # Candidate Video Interview System — Plan v2
 

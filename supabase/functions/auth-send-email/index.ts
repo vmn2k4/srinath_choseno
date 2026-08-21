@@ -146,7 +146,16 @@ function paragraph(text: string): string {
 // value here means the reset/confirm flow itself doesn't depend on that
 // allow-list being kept in sync; only the "return to wherever the user
 // was headed" `next` param (extracted below) does.
-const SITE_URL = "https://www.choseno.com";
+//
+// TEMPORARY, FOR LOCAL TESTING ONLY -- pointed at localhost:3000 so a real
+// invite email's link lands on the not-yet-deployed /auth/confirm fix
+// (claimCandidacyViaOwnEmail) running under `next dev` on this machine,
+// instead of production (which doesn't have that fix live yet). This
+// redirects EVERY auth email this project sends — signup, password reset,
+// magic link, email change, not just invites — so revert to
+// "https://www.choseno.com" and redeploy the instant local testing is
+// done. Leaving this in place breaks real users' auth emails in production.
+const SITE_URL = "http://localhost:3000";
 
 // The `next` query param our own client code appends to redirectTo
 // (src/lib/services/auth.ts) — e.g. `/auth/callback?next=%2Fauth%2Freset-password`.

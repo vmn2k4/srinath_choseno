@@ -13,6 +13,10 @@ const VideoRecorder = dynamic(() => import("./VideoRecorder"), {
   ssr: false,
   loading: () => <div className="text-xs text-text-muted">Loading recorder…</div>,
 });
+const GenerateQuestionVideosFlow = dynamic(() => import("./GenerateQuestionVideosFlow"), {
+  ssr: false,
+  loading: () => null,
+});
 import CascadingBoundarySelector from "./CascadingBoundarySelector";
 import AnswerValue from "./AnswerValue";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
@@ -73,6 +77,7 @@ import {
   Copy,
   Check,
   Pencil,
+  Play,
 } from "lucide-react";
 import {
   Card,
@@ -87,6 +92,7 @@ import {
   PageHeader,
   ConfirmDialog,
   Modal,
+  StoryViewerModal,
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 
@@ -273,6 +279,11 @@ export default function ElectionsAdminClient() {
   // question in docs/VIRTUAL_INTERVIEW_SYSTEM.md).
   const [showQuestionVideoUpload, setShowQuestionVideoUpload] = useState<string | null>(null);
   const [questionVideoStatus, setQuestionVideoStatus] = useState<Record<string, string>>({});
+  const [previewVideoUrl, setPreviewVideoUrl] = useState<string | null>(null);
+
+  // Bulk "Generate Question Videos" flow -- separate from the per-question
+  // edit panel's upload button, which stays as the manual alternative.
+  const [showGenerateVideosFlow, setShowGenerateVideosFlow] = useState(false);
 
   // Bulk "Import from JSON" flow for the questionnaire
   const [showImportModal, setShowImportModal] = useState(false);
@@ -1192,18 +1203,36 @@ export default function ElectionsAdminClient() {
                   allow it) before submitting their application.
                 </p>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  setImportStatus("");
-                  setShowImportModal(true);
-                }}
-                className="shrink-0"
-              >
-                <FileJson size={14} /> Import from JSON
-              </Button>
+              <div className="flex items-center gap-2 shrink-0">
+                {questions.length > 0 && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowGenerateVideosFlow(true)}
+                  >
+                    <Video size={14} /> Generate Question Videos
+                  </Button>
+                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setImportStatus("");
+                    setShowImportModal(true);
+                  }}
+                >
+                  <FileJson size={14} /> Import from JSON
+                </Button>
+              </div>
             </div>
+
+            {showGenerateVideosFlow && (
+              <GenerateQuestionVideosFlow
+                questions={questions}
+                onClose={() => setShowGenerateVideosFlow(false)}
+                onApproved={() => selectedElection && fetchQuestions(selectedElection.id)}
+              />
+            )}
 
             {loadingQuestions ? (
               <div className="flex justify-center py-4">
@@ -1291,12 +1320,30 @@ export default function ElectionsAdminClient() {
                       )}
 
                       {/* Question video — played to the candidate before
-                          they answer. Upload only (see
-                          handleUploadQuestionVideo's comment for why
-                          "Generate via Qwen" isn't wired in here yet). */}
+                          they answer. Upload manually here, or generate in
+                          bulk via "Generate Question Videos" above. This
+                          thumbnail is deliberately NOT a native <video
+                          controls> at this cramped size — that clips the
+                          browser's own "..." menu and has no real
+                          full-screen affordance here. Click opens the same
+                          full-screen 9:16 StoryViewerModal used everywhere
+                          else in the app. */}
                       <div className="space-y-1.5">
                         {q.question_video_url && (
-                          <video src={q.question_video_url} controls className="rounded-lg bg-black max-h-32" style={{ aspectRatio: "9 / 16" }} />
+                          <button
+                            type="button"
+                            onClick={() => setPreviewVideoUrl(q.question_video_url)}
+                            className="relative block rounded-lg overflow-hidden bg-black max-h-32 cursor-pointer group"
+                            style={{ aspectRatio: "9 / 16", width: "auto" }}
+                            title="Click to view full-screen"
+                          >
+                            <video src={q.question_video_url} muted playsInline className="h-32 w-auto object-cover" />
+                            <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors">
+                              <span className="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
+                                <Play size={16} className="text-black ml-0.5" fill="currentColor" />
+                              </span>
+                            </span>
+                          </button>
                         )}
                         {showQuestionVideoUpload === q.id ? (
                           <VideoRecorder
@@ -2109,6 +2156,10 @@ export default function ElectionsAdminClient() {
         onConfirm={handleConfirmDelete}
         onCancel={() => setConfirmTarget(null)}
       />
+
+      {previewVideoUrl && (
+        <StoryViewerModal url={previewVideoUrl} type="video" onClose={() => setPreviewVideoUrl(null)} />
+      )}
     </div>
   );
 }

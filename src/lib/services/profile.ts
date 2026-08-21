@@ -453,3 +453,26 @@ export async function adminGetProfileById(supabase: Client, profileId: string) {
   const row = Array.isArray(data) ? data[0] : data;
   return { data: row || null, error };
 }
+
+// get_founder_count RPC — total real (non-test, actually-signed-up) users,
+// for the "founders" signup nudges/badge. Public/anon-safe: the function
+// returns only a count, never rows, so it's fine to call from a
+// not-yet-authenticated visitor viewing MissionRegisterCTA/AuthPageClient.
+export async function getFounderCount(supabase: Client) {
+  return supabase.rpc("get_founder_count");
+}
+
+// Founder tier for a given profiles.signup_order value (null once a user
+// hasn't been assigned one, e.g. bulk-imported politician rows). Mirrors
+// the copy used by ProfilePageClient's own-profile badge and the
+// MissionRegisterCTA/AuthPageClient nudges -- see 20260821000002_founder_signup_order.sql.
+export function getFounderTier(signupOrder: number | null | undefined) {
+  if (!signupOrder) return null;
+  if (signupOrder <= 1000) {
+    return { label: "First 1,000 Founder", tone: "primary" as const, order: signupOrder };
+  }
+  if (signupOrder <= 10000) {
+    return { label: "First 10,000 Founder", tone: "accent" as const, order: signupOrder };
+  }
+  return { label: "Founding Member", tone: "accent" as const, order: signupOrder };
+}

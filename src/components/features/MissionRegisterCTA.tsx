@@ -2,9 +2,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { X, ShieldOff, Ban, MessagesSquare, Sparkles } from "lucide-react";
+import { X, ShieldOff, Ban, MessagesSquare, Sparkles, Flag } from "lucide-react";
 import { Card, Button, Modal } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
+import { createClient } from "@/lib/supabase/client";
+import { getFounderCount } from "@/lib/services/profile";
 
 // Anonymous-visitor conversion CTA, shown on the three pages where a guest
 // is most likely to have an opinion forming (a news story, their own
@@ -82,6 +84,23 @@ export default function MissionRegisterCTA({
   const { user, loading } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [sidebarDismissed, setSidebarDismissed] = useState(true); // starts hidden until localStorage check below, to avoid a flash
+  const [founderCount, setFounderCount] = useState<number | null>(null);
+
+  // Live "you'd be founder #N" count for the first-1,000 push -- fetched
+  // once per mount via the public get_founder_count RPC (anon-safe, see
+  // 20260821000002_founder_signup_order.sql). Silently omitted from the
+  // copy below if this fails or hasn't resolved yet, rather than blocking
+  // the CTA on it.
+  useEffect(() => {
+    if (loading || user) return;
+    let cancelled = false;
+    getFounderCount(createClient()).then(({ data }) => {
+      if (!cancelled && typeof data === "number") setFounderCount(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [loading, user]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -128,6 +147,14 @@ export default function MissionRegisterCTA({
 
   const copy = COPY[variant];
   const href = `/auth?role=citizen&next=${encodeURIComponent(nextPath || "/")}`;
+  const founderLine =
+    founderCount == null
+      ? null
+      : founderCount < 1000
+      ? `${founderCount} founders have joined so far — be one of the first 1,000 shaping this movement.`
+      : founderCount < 10000
+      ? `${founderCount.toLocaleString()} founders and counting — join the first 10,000.`
+      : `Join ${founderCount.toLocaleString()}+ others already building this movement.`;
 
   return (
     <>
@@ -165,6 +192,13 @@ export default function MissionRegisterCTA({
               ))}
             </div>
 
+            {founderLine && (
+              <p className="flex items-start gap-1.5 text-[11px] font-semibold text-primary bg-primary/10 rounded-lg px-2.5 py-2 leading-snug">
+                <Flag size={13} className="shrink-0 mt-0.5" />
+                {founderLine}
+              </p>
+            )}
+
             <div className="flex flex-col items-center gap-2 pt-1">
               <Button as={Link} href={href} onClick={dismissModal} variant="primary" className="w-full justify-center !bg-orange-600 hover:!bg-orange-700 !shadow-lg hover:!shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-orange-500/0 before:via-white/10 before:to-orange-500/0 before:animate-pulse">
                 <span className="relative z-10">{copy.cta}</span>
@@ -194,6 +228,12 @@ export default function MissionRegisterCTA({
             </button>
             <p className="text-sm font-bold text-text-main pr-5 leading-snug">{copy.sidebarHeadline}</p>
             <p className="text-xs text-text-muted leading-snug">{copy.sidebarBody}</p>
+            {founderLine && (
+              <p className="flex items-start gap-1 text-[10.5px] font-semibold text-primary leading-snug">
+                <Flag size={11} className="shrink-0 mt-0.5" />
+                {founderLine}
+              </p>
+            )}
             <Button as={Link} href={href} size="sm" variant="primary" className="w-full justify-center !bg-orange-600 hover:!bg-orange-700 !shadow-lg hover:!shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-orange-500/0 before:via-white/10 before:to-orange-500/0 before:animate-pulse">
               <span className="relative z-10">{copy.cta}</span>
             </Button>

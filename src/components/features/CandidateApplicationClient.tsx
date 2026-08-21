@@ -96,6 +96,14 @@ export default function CandidateApplicationClient({
   const [statusMessage, setStatusMessage] = useState("");
   const [draggedItem, setDraggedItem] = useState<{ questionId: string; optionId: string } | null>(null);
   const [highlightedQuestionId, setHighlightedQuestionId] = useState<string | null>(null);
+  // null = haven't been through the "choose your questions" screen yet this
+  // session. Required questions are always included regardless of what's
+  // toggled here -- selection only affects which OPTIONAL questions show in
+  // the answering flow below, submission still needs every required one
+  // answered (submit_candidate_application enforces that server-side
+  // either way, this is just about what's shown, not a validation bypass).
+  const [selectedQuestionIds, setSelectedQuestionIds] = useState<Set<string> | null>(null);
+  const [pendingSelection, setPendingSelection] = useState<Set<string>>(new Set());
 
   const fetchAll = async () => {
     if (!user || !candidateId) return;
@@ -248,6 +256,18 @@ export default function CandidateApplicationClient({
       initializeRankingAnswers();
     }
   }, [loading]);
+
+  // Seed the question-picker: required questions start checked (and stay
+  // locked -- see the selection screen below), optional ones start
+  // unchecked. A question the candidate already has an answer for also
+  // starts checked, so revisiting mid-application doesn't hide work already
+  // in progress.
+  useEffect(() => {
+    if (questions.length === 0 || selectedQuestionIds !== null) return;
+    setPendingSelection(
+      new Set(questions.filter((q) => q.required || hasStartedAnswering(q, answers[q.id])).map((q) => q.id))
+    );
+  }, [questions, answers, selectedQuestionIds]);
 
   const selectOption = (questionId: string, optionId: string) =>
     persistAnswer(questionId, { optionId });
@@ -424,6 +444,72 @@ export default function CandidateApplicationClient({
 
   const statusCfg = STATUS_COPY[candidate.status] || STATUS_COPY.pending;
 
+  // "Choose your questions" gate -- shown once per session before the
+  // answering flow. Required questions are pre-checked and can't be
+  // unchecked (submission still needs them regardless of what's picked
+  // here); optional ones are the candidate's choice. Skipped entirely once
+  // questions is empty or already past this screen.
+  if (selectedQuestionIds === null && questions.length > 0) {
+    const toggle = (id: string, required: boolean) => {
+      if (required) return;
+      setPendingSelection((prev) => {
+        const next = new Set(prev);
+        if (next.has(id)) next.delete(id);
+        else next.add(id);
+        return next;
+      });
+    };
+    return (
+      <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
+        <Card padding="lg" className="max-w-2xl mx-auto space-y-4">
+          <div>
+            <h1 className="text-lg font-bold text-text-main">Choose Your Interview Questions</h1>
+            <p className="text-sm text-text-muted mt-1">
+              Required questions (marked below) must be answered. Pick which optional ones you'd also like to
+              answer — you can always come back and add more later.
+            </p>
+          </div>
+          <div className="space-y-2">
+            {questions.map((q) => {
+              const checked = q.required || pendingSelection.has(q.id);
+              return (
+                <label
+                  key={q.id}
+                  className={`flex items-start gap-3 p-3 rounded-xl border transition-colors ${
+                    q.required
+                      ? "border-primary/30 bg-primary/5 cursor-default"
+                      : "border-border-light/30 hover:border-primary/30 cursor-pointer"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    disabled={q.required}
+                    onChange={() => toggle(q.id, q.required)}
+                    className="mt-0.5 shrink-0"
+                  />
+                  <span className="flex-1 min-w-0">
+                    <span className="text-sm text-text-main">{q.question_text}</span>
+                    {q.required && (
+                      <Badge tone="amber" className="ml-2 text-[10px]">
+                        Required
+                      </Badge>
+                    )}
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+          <Button onClick={() => setSelectedQuestionIds(new Set(pendingSelection))} className="w-full">
+            Continue to Interview
+          </Button>
+        </Card>
+      </div>
+    );
+  }
+
+  const visibleQuestions = selectedQuestionIds ? questions.filter((q) => selectedQuestionIds.has(q.id)) : questions;
+
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
       <div className="flex items-center justify-between gap-4 flex-wrap">
@@ -494,13 +580,20 @@ export default function CandidateApplicationClient({
       </Card>
 
       {/* Candidate Questionnaire */}
-      {questions.length > 0 && (
+      {visibleQuestions.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-sm font-bold text-text-muted uppercase tracking-wider">
-            Official Election Questionnaire ({questions.length} Questions)
-          </h2>
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <h2 className="text-sm font-bold text-text-muted uppercase tracking-wider">
+              Official Election Questionnaire ({visibleQuestions.length} of {questions.length} Questions)
+            </h2>
+            {questions.length > visibleQuestions.length && (
+              <Button variant="ghost" size="sm" onClick={() => setSelectedQuestionIds(null)} className="text-xs">
+                Add more questions
+              </Button>
+            )}
+          </div>
 
-          {questions.map((q) => {
+          {visibleQuestions.map((q) => {
             const ans = answers[q.id] || {};
             const started = hasStartedAnswering(q, ans);
 

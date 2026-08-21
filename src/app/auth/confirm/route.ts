@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { claimCandidacyViaOwnEmail } from "@/lib/services/elections";
 import { NextRequest, NextResponse } from "next/server";
 
 // Companion to /auth/callback's PKCE `code` exchange, but for the email
@@ -53,6 +54,32 @@ export async function GET(request: NextRequest) {
     const supabase = await createClient();
     const { error } = await supabase.auth.verifyOtp({ type, token_hash });
     if (!error) {
+      // "invite" links from the candidate-interview claim flow never carry
+      // a working `next` (see this file's top comment + the migration
+      // creating claimCandidacyViaOwnEmail) -- try claiming by the email
+      // that was just proven via verifyOtp before falling back to the
+      // generic per-type default. A no-op for a normal, non-candidate
+      // invite (no pending row for that email -> RPC errors, ignored here).
+      if (type === "invite" && !nextPath) {
+        const { data: claimed } = await claimCandidacyViaOwnEmail(supabase);
+        if (claimed) {
+          // The session right now is the short-lived one verifyOtp just
+          // created for an account that has never had a password set --
+          // admin.inviteUserByEmail creates the auth.users row passwordless,
+          // and nothing in this flow ever prompts for one otherwise. Same
+          // gap existed before this fix too (onboarding never asked for a
+          // password either), just masked by landing on the wrong page
+          // entirely. /auth/reset-password already does exactly this
+          // (calls auth.updateUser({password}) against the current session,
+          // same mechanism a password-recovery link uses) and already
+          // supports a `next` to continue on to afterward -- reusing it
+          // outright rather than building a second "set your password" form.
+          const applyPath = `/apply/${claimed.id}`;
+          return NextResponse.redirect(
+            new URL(`/auth/reset-password?next=${encodeURIComponent(applyPath)}`, request.url)
+          );
+        }
+      }
       return NextResponse.redirect(new URL(nextPath || DEFAULT_NEXT_BY_TYPE[type], request.url));
     }
     return NextResponse.redirect(new URL(`/auth?error=${encodeURIComponent(error.message)}`, request.url));

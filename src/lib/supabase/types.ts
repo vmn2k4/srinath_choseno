@@ -122,6 +122,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "candidacy_claim_requests_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "election_candidates"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "candidacy_claim_requests_requester_profile_id_fkey"
             columns: ["requester_profile_id"]
             isOneToOne: false
@@ -707,6 +714,7 @@ export type Database = {
           election_id: string
           id: string
           max_answer_seconds: number
+          narration_text: string | null
           question_text: string
           question_type: string
           question_video_path: string | null
@@ -722,6 +730,7 @@ export type Database = {
           election_id: string
           id?: string
           max_answer_seconds?: number
+          narration_text?: string | null
           question_text: string
           question_type?: string
           question_video_path?: string | null
@@ -737,6 +746,7 @@ export type Database = {
           election_id?: string
           id?: string
           max_answer_seconds?: number
+          narration_text?: string | null
           question_text?: string
           question_type?: string
           question_video_path?: string | null
@@ -2144,6 +2154,7 @@ export type Database = {
           civic_score: number
           constituency: string | null
           country: string | null
+          created_at: string | null
           current_ghost_id: string | null
           designation: string | null
           full_name: string | null
@@ -2152,6 +2163,7 @@ export type Database = {
           last_burned_at: string | null
           onboarding_completed: boolean | null
           role: string | null
+          signup_order: number | null
           updated_at: string | null
         }
         Insert: {
@@ -2160,6 +2172,7 @@ export type Database = {
           civic_score?: number
           constituency?: string | null
           country?: string | null
+          created_at?: string | null
           current_ghost_id?: string | null
           designation?: string | null
           full_name?: string | null
@@ -2168,6 +2181,7 @@ export type Database = {
           last_burned_at?: string | null
           onboarding_completed?: boolean | null
           role?: string | null
+          signup_order?: number | null
           updated_at?: string | null
         }
         Update: {
@@ -2176,6 +2190,7 @@ export type Database = {
           civic_score?: number
           constituency?: string | null
           country?: string | null
+          created_at?: string | null
           current_ghost_id?: string | null
           designation?: string | null
           full_name?: string | null
@@ -2184,6 +2199,7 @@ export type Database = {
           last_burned_at?: string | null
           onboarding_completed?: boolean | null
           role?: string | null
+          signup_order?: number | null
           updated_at?: string | null
         }
         Relationships: []
@@ -3024,6 +3040,30 @@ export type Database = {
         Args: { p_claim_id: string }
         Returns: undefined
       }
+      claim_candidacy_via_own_email: {
+        Args: never
+        Returns: {
+          added_by_election_admin_id: string | null
+          claimed_at: string | null
+          created_at: string | null
+          id: string
+          intro_video_url: string | null
+          nomination_filed: boolean
+          politician_id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          seat_id: string
+          statement: string | null
+          status: string
+          submitted_at: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "election_candidates"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       claim_candidacy_via_token: {
         Args: { p_token: string }
         Returns: {
@@ -3401,6 +3441,7 @@ export type Database = {
           users: Json
         }[]
       }
+      get_founder_count: { Args: never; Returns: number }
       get_geojson_shapes:
         | {
             Args: never
