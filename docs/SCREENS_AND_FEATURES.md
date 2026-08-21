@@ -143,43 +143,88 @@ candidate count. Citizens get a "Become a Politician" nudge card at the top link
 Profile.
 
 ### Seat detail (`/elections/seat/:seatId`)
-Public. Header card (role, boundary, election date, candidate count). Below that, three
-role-conditional panels:
+Public. Header card (role, boundary, election date, candidate count). Two tabs sit below that:
+**Community Support** (the panels below) and **Candidate Interview** (see "Video interviews"
+further down) — sibling views of the same seat, not separate pages. Inside Community Support,
+three role-conditional panels:
 - **Citizens** get the "Become a Politician" nudge again.
-- **Politicians** get "Nominate Yourself" (creates a draft candidacy, hands off to the
-  Application screen) or, if already applied, a shortcut to Manage My Candidacies.
+- **Politicians** get "Nominate Yourself" — only offered while the election is actually in its
+  nominations-open window (see "Nomination windows" below); once nominations have closed, this
+  action is gone and only an election administrator can add or remove candidates — or, if
+  already applied, a shortcut to Manage My Candidacies.
 - **Election Administrator** panel (shown to anyone signed in, state varies): volunteer to
   administer this specific seat (motivation + optional social-media info + contact email,
-  reviewed by a site admin, or auto-approved after 48h with no action); once approved, add a
-  candidate who's running in real life but hasn't registered on the platform
-  (`add_unregistered_candidate` — creates a stub profile). A site admin sees this same panel
-  in its approved state on any seat, without needing to be its approved administrator.
-  For any not-yet-claimed stub candidate on the seat, two more actions appear here: send a
-  one-time **claim-invite email** (candidate signs up and is dropped straight into ownership —
-  no separate onboarding), and a **Pending Claim Requests** list reviewing any "this is me"
-  self-requests submitted from that candidate's own wall (approve hands over ownership the
-  same way; reject leaves the stub as-is and blocks that requester from resubmitting).
+  reviewed by a site admin, or auto-approved after 48h with no action); once approved, three
+  ways to get a candidate onto the seat:
+  - **Search & Send Interview Invite** — search everyone on Choseno (registered politicians and
+    unclaimed office-holder records alike, one unified search) for the person running, pick
+    them, confirm/edit their email, and send in one step. If they're not already a candidate for
+    this seat, a stub is created for them automatically; the invite email drops them straight
+    into claiming ownership and, from there, answering their interview questions.
+  - **Add Candidate Directly** — the original two-step path: create a stub candidate profile by
+    hand (`add_unregistered_candidate`), then separately send a claim-invite or wait for a
+    self-request. Both this and Search & Send Interview Invite stay available — search-and-send
+    is just the faster on-ramp when the candidate is findable.
+  - **Manage Candidates** — a plain list of every candidate on the seat (registered or stub,
+    self-added or admin-added) with a remove button per row. This is the seat's roster-management
+    tool once self-nomination is no longer possible (nominations closed or election day), and
+    works regardless of who originally added the candidate.
+  A site admin sees this whole panel in its approved state on any seat, without needing to be
+  its approved administrator. For any not-yet-claimed stub candidate on the seat, two more
+  actions appear here: send a one-time **claim-invite email** (candidate signs up and is dropped
+  straight into ownership — no separate onboarding, then straight into answering their interview
+  questions), and a **Pending Claim Requests** list reviewing any "this is me" self-requests
+  submitted from that candidate's own wall (approve hands over ownership the same way; reject
+  leaves the stub as-is and blocks that requester from resubmitting).
 - A **candidate switcher** (when more than one candidate exists) with a checkmark for
-  "nomination papers filed", then the selected candidate's full campaign wall embedded inline
+  "nomination papers filed" and a small badge on any candidate who has at least one video
+  interview answer, then the selected candidate's full campaign wall embedded inline
   (`CandidacyWall`, same component used at its own standalone URL).
+
+#### Video interviews — "Candidate Interview" tab
+Every public, video-answerable question on the election's questionnaire, listed in order; tap
+one to open a full-screen, closeable, strictly-9:16 carousel that swipes through every
+candidate's answer to *that specific question* — the "compare candidates side by side on one
+issue" view. Each question can carry its own video (admin-recorded or generated, see Admin →
+Elections below), played before the candidates' answers. Separately, from the candidate strip on
+this page or from a candidate's own campaign wall, **"Play Interview"** opens the same full-screen
+shell playing that one candidate's answers back to back, in question order — the "hear
+everything from this one candidate" view. Both are closeable overlays, never a page navigation.
+
+#### Nomination windows
+An election now runs through four stages instead of three: **draft** (admin still building it,
+invisible to everyone else) → **nominations open** (politicians can self-nominate) →
+**nominations closed** (rosters are locked; only an election administrator or site admin can add
+or remove a candidate, via Manage Candidates above) → **active** (voting day). The two boundary
+dates (when nominations open, when they close) are set once when the election is created and
+drive the stage automatically as real-world dates pass — nobody has to remember to click
+anything to move an election from nominations-open into nominations-closed. Seats stay visible
+for browsing straight through nominations-closed and into voting day, same as before; only the
+ability to self-nominate turns off at the close date.
 
 ### Candidate campaign wall (`/candidacy/:candidateId`, or embedded)
 Public, works both as its own page and embedded inside the seat page. Two-column layout: a
 sticky left profile card (candidate name, party, role/boundary, a self-toggleable
-"Nomination Papers Filed" badge, support button + count, education/hometown,
-"why I'm running" statement, full bio), a campaign video gallery (intro video from the
-application, plus any later video posts), and — if the election has a candidate
-questionnaire — the candidate's public answers, one row per question showing whichever form
-fits its type (selected option, a pill per selected option for a multi-select question, the
-written paragraph for a free-text question, or 1–5 dots for a rating question), plus that
-answer's own optional video if the candidate attached one. Clicking a question expands a
-public comment thread scoped to that specific answer (anonymous, Ghost-ID, sign-in required
-to post) — a separate discussion from the general wall feed below, for voters to
-question/discuss a candidate's stance on that one issue specifically. The right column is a
-composer (post/reply as your own Ghost ID, requires sign-in) and the wall's post feed,
-mirroring the Feed page's composer feature set (image, link preview, video for the
+"Nomination Papers Filed" badge, a **"Play Interview"** button (shown once the candidate has at
+least one video interview answer — opens the same full-screen back-to-back reel as the seat
+page's candidate strip), support button + count, education/hometown, "why I'm running"
+statement, full bio), a campaign video gallery (intro video from the application, plus any
+later video posts), and — if the election has a candidate questionnaire — the candidate's
+public answers, one row per question showing whichever form fits its type (selected option, a
+pill per selected option for a multi-select question, the written paragraph for a free-text
+question, or 1–5 dots for a rating question), plus that answer's own optional video if the
+candidate attached one — a video answer is also a real wall post, so it appears in the feed
+below like any other post (with normal comments/likes) as well as inline on the answer itself.
+Clicking a question expands a public comment thread scoped to that specific answer (anonymous,
+Ghost-ID, sign-in required to post) — a separate discussion from the general wall feed below,
+for voters to question/discuss a candidate's stance on that one issue specifically. The right
+column is a composer (post/reply as your own Ghost ID, requires sign-in) and the wall's post
+feed, mirroring the Feed page's composer feature set (image, link preview, video for the
 candidate/owner) plus threaded comments, with the candidate's own replies always pinned to the
 top of each thread.
+
+If you're viewing your own campaign page and haven't answered your interview questions yet, a
+banner nudges you straight to the Application screen to do so.
 
 If the candidate is still an unclaimed stub (added by an election administrator, not yet
 claimed by a real account), any other signed-in visitor sees **"This is me — claim this
@@ -214,16 +259,24 @@ The politician's control center for running for office. Three sections:
    open seats.
 
 ### Candidate application (`/apply/:candidateId`)
-The step between "Nominate Yourself" and having a public campaign page. A statement
-("why are you running?", autosaved on blur), the election's candidate questionnaire if one
-exists, and a **required** in-browser-recorded introductory video (90s cap). Each question is
-one of four types — single-select (radio), multi-select (checkboxes), free-text (a written
-answer), or a 1–5 rating — rendered with whichever control fits; once answered, an optional
-free-text elaboration (if the admin allowed it for that question) and an optional short video
-specific to that answer can both be attached. Submission is blocked until every required
-question is answered (type-appropriately — a multi-select needs at least one box checked, a
-rating needs a value picked, not just an empty row) and the intro video exists.
-Already-submitted applications stay editable and resubmittable (e.g. after a rejection).
+The step between "Nominate Yourself" and having a public campaign page — also where an
+invited-but-unclaimed candidate lands immediately after claiming, to answer their video
+interview. A statement ("why are you running?", autosaved on blur), the election's candidate
+questionnaire if one exists, and a **required** in-browser-recorded introductory video (90s
+cap). Each question is one of four types — single-select (radio), multi-select (checkboxes),
+free-text (a written answer), or a 1–5 rating — rendered with whichever control fits; a
+question can also carry its own video, played to the candidate before they answer. Once
+answered, an optional free-text elaboration (if the admin allowed it for that question) and an
+optional short video specific to that answer can both be attached — the recording cap is
+per-question and admin-set (defaults to 30s, shown on the button, e.g. "Add 30s Video Stance
+Explanation"), not a fixed platform-wide value. Saving a video answer immediately publishes it
+as a post on the candidate's own wall (with normal comments/likes), not just as a field on the
+questionnaire. Submission is blocked until every required question is answered
+(type-appropriately — a multi-select needs at least one box checked, a rating needs a value
+picked, not just an empty row) and the intro video exists. Already-submitted applications stay
+editable and resubmittable (e.g. after a rejection) — a video answer can be retaken any time,
+which replaces the video in place (the wall post's likes/comments carry over unchanged, only the
+video itself is swapped).
 
 ---
 
@@ -306,8 +359,15 @@ admins) as proportional bars. A manual **Refresh Metrics** button re-fetches eve
 nothing here is editable.
 
 ### Elections (`/admin/elections`)
-Full election lifecycle management: create an election (name + date, starts in `draft`),
-advance its status (`draft → nominations_open → active → closed`), and per election:
+Full election lifecycle management: create an election (name + three dates — nominations open,
+nominations close, election day, in that order — starts in `draft`). From `draft`, the only
+manual step is "Open Nominations"; from there the election advances itself through
+`nominations_open → nominations_closed → active` automatically as those dates pass — no more
+clicking through each stage by hand. `draft` and `closed` stay the two manual, admin-only
+bookends (closed via "Close Election," available from any date-driven stage, since archiving is
+a deliberate call). An existing election's three dates can be edited in place at any time
+("Edit Dates") — re-checked (open ≤ close ≤ election day) and immediately re-evaluates which
+stage the election should be in. Per election:
 - **Seat creation**: pick a country → an optional container to scope by (e.g. one province/
   state — or leave blank for "every {type} in the whole country") → a target boundary type →
   optionally filter by entity-type subtypes (e.g. "Municipality" with checkboxes for City, 
@@ -328,10 +388,19 @@ advance its status (`draft → nominations_open → active → closed`), and per
   candidates become publicly visible immediately.
 - **Candidate questionnaire builder**: add/remove questions, each one single-select,
   multi-select, free-text, or a fixed 1–5 rating (option-text inputs only appear for the two
-  select types), with optional free-text context, required/optional, and public/admin-only
-  visibility — every candidate for that election answers these on their application, each
-  optionally with its own short video per answer, and (once visible to voters) a public
-  comment thread per answer on the candidate's campaign page.
+  select types), with optional free-text context, required/optional, public/admin-only
+  visibility, and a **max answer length** in seconds (default 30) that caps how long a
+  candidate's video answer to that question can be — every candidate for that election answers
+  these on their application, each optionally with its own short video per answer, and (once
+  visible to voters) a public comment thread per answer on the candidate's campaign page. Each
+  question can also carry its own **video**, played to candidates before they answer it —
+  either uploaded directly (record/upload widget, same as a candidate's own video answer) or
+  bulk-generated: "Generate Question Videos" opens an editor for each question's spoken script
+  (defaults to the question text, auto-expanded with its options for choice/ranking questions),
+  generates a narrated video for each one sequentially, and lets the admin review/save each
+  before moving on. Generation is a local-development-only tool (it shells out to a local
+  text-to-speech + video-rendering pipeline on the admin's own machine) — it isn't available
+  once the app is deployed; uploading a video works everywhere.
 
 *(Performance note: selecting a large election used to take up to a minute and lose its
 selection on navigating away — both fixed, see [ARCHITECTURE.md §25](../ARCHITECTURE.md).)*
@@ -369,7 +438,16 @@ These aren't separate screens, but show up across many of the ones above:
   redistricting, and location search. Single or multi-select, lazy-loads geometry only for
   what's actually visible/selected.
 - **`VideoRecorder`** — in-browser webcam recording + upload, used for Feed video pitches,
-  campaign wall posts, required intro videos, and optional per-answer questionnaire videos.
+  campaign wall posts, required intro videos, and optional per-answer questionnaire videos
+  (recording cap is per-question and admin-configurable for questionnaire answers).
+- **`QuestionAnswerCarousel`** / **`PlayInterviewReel`** — the two video-interview viewing
+  shells (full-screen, closeable, 9:16): swipe through every candidate's answer to one question,
+  or play one candidate's answers back to back. Both read a generic "question/person + video
+  post" shape, not hardcoded to elections specifically — see
+  [ARCHITECTURE.md's 2026-08-20/21 entry](../ARCHITECTURE.md).
+- **`SendInterviewInviteFlow`** — the unified search-and-invite action on the Seat Detail page:
+  searches everyone on Choseno (registered or not), stubs a candidate if needed, and sends a
+  claim-invite email in one step.
 - **`AnswerValue`** — renders a single questionnaire answer's value (selected option, pill
   list for multi-select, written paragraph, or 1–5 rating dots), shared by the candidacy wall
   and the admin's candidate review panel so the four-way branch by question type lives in one

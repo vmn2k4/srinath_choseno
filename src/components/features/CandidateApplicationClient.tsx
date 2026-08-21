@@ -34,6 +34,14 @@ const VideoRecorder = dynamic(() => import("@/components/features/VideoRecorder"
   loading: () => <Spinner />,
 });
 
+// The full-screen, one-question-at-a-time reels-style interview flow --
+// pulled out of the initial bundle the same way VideoRecorder is, since
+// it's only needed once the candidate opens the video interview.
+const CandidateVideoInterviewPlayer = dynamic(
+  () => import("@/components/features/CandidateVideoInterviewPlayer"),
+  { ssr: false, loading: () => <Spinner fullPage /> }
+);
+
 const STATUS_COPY: Record<string, { label: string; tone: "amber" | "emerald" | "rose" }> = {
   pending: { label: "Pending Review", tone: "amber" },
   approved: { label: "Approved", tone: "emerald" },
@@ -91,7 +99,6 @@ export default function CandidateApplicationClient({
   const [statement, setStatement] = useState("");
   const [introVideoUrl, setIntroVideoUrl] = useState<string | null>(null);
   const [showIntroRecorder, setShowIntroRecorder] = useState(false);
-  const [recordingQuestionId, setRecordingQuestionId] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
   const [draggedItem, setDraggedItem] = useState<{ questionId: string; optionId: string } | null>(null);
@@ -104,6 +111,15 @@ export default function CandidateApplicationClient({
   // either way, this is just about what's shown, not a validation bypass).
   const [selectedQuestionIds, setSelectedQuestionIds] = useState<Set<string> | null>(null);
   const [pendingSelection, setPendingSelection] = useState<Set<string>>(new Set());
+  // Video Interview (watch the question, answer by recording/uploading) vs
+  // Written Questionnaire (the original text/choice/rating/ranking form,
+  // with no question video and no video-recording UI at all) -- two
+  // distinct modes over the same question set + answers, not two different
+  // question lists. A question only appears in the video tab when the admin
+  // marked it allow_video; the written tab always shows every question,
+  // exactly like the form worked before video answers existed.
+  const [activeQuestionTab, setActiveQuestionTab] = useState<"video" | "written">("video");
+  const [showVideoInterviewPlayer, setShowVideoInterviewPlayer] = useState(false);
 
   const fetchAll = async () => {
     if (!user || !candidateId) return;
@@ -347,7 +363,6 @@ export default function CandidateApplicationClient({
   const saveContext = (questionId: string) => persistAnswer(questionId, {});
 
   const handleQuestionVideoUploaded = async (questionId: string, url: string) => {
-    setRecordingQuestionId(null);
     const answerId = await persistAnswer(questionId, { videoUrl: url });
     // Turns this video answer into a real wall post (create on first submit,
     // in-place video swap on retake) — see upsert_answer_pitch_post. Fire
@@ -509,6 +524,8 @@ export default function CandidateApplicationClient({
   }
 
   const visibleQuestions = selectedQuestionIds ? questions.filter((q) => selectedQuestionIds.has(q.id)) : questions;
+  const videoQuestions = visibleQuestions.filter((q) => q.allow_video);
+  const videoAnsweredCount = videoQuestions.filter((q) => answers[q.id]?.videoUrl).length;
 
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
@@ -593,195 +610,237 @@ export default function CandidateApplicationClient({
             )}
           </div>
 
-          {visibleQuestions.map((q) => {
-            const ans = answers[q.id] || {};
-            const started = hasStartedAnswering(q, ans);
+          {/* Two modes over the same questions/answers, not two question
+              lists -- see activeQuestionTab's own comment above. */}
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setActiveQuestionTab("video")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold border-2 transition-all cursor-pointer ${
+                activeQuestionTab === "video"
+                  ? "border-primary bg-primary/10 text-primary-light"
+                  : "border-border-light bg-surface-hover/40 text-text-secondary hover:border-primary/40"
+              }`}
+            >
+              <Video size={14} /> Video Interview
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveQuestionTab("written")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold border-2 transition-all cursor-pointer ${
+                activeQuestionTab === "written"
+                  ? "border-primary bg-primary/10 text-primary-light"
+                  : "border-border-light bg-surface-hover/40 text-text-secondary hover:border-primary/40"
+              }`}
+            >
+              Written Questionnaire
+            </button>
+          </div>
 
-            return (
-              <Card
-                key={q.id}
-                id={`question-${q.id}`}
-                padding="md"
-                className={`space-y-4 transition-all ${
-                  highlightedQuestionId === q.id
-                    ? "!ring-2 !ring-red-500 !ring-offset-2 animate-pulse !bg-red-50"
-                    : ""
-                }`}
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="font-bold text-text-main text-sm">
-                      {q.question_text}
-                    </h3>
-                    {q.required && <Badge tone="rose">Required</Badge>}
-                  </div>
-                  {q.description && (
-                    <p className="text-xs text-text-muted mt-1">{q.description}</p>
-                  )}
+          {activeQuestionTab === "video" &&
+            (videoQuestions.length === 0 ? (
+              <Card padding="md" className="text-center text-xs text-text-muted">
+                No questions in this interview accept a video answer.
+              </Card>
+            ) : (
+              <Card padding="md" className="space-y-4 text-center">
+                <div className="space-y-1">
+                  <h3 className="font-bold text-text-main text-sm">
+                    {videoAnsweredCount === videoQuestions.length
+                      ? "Video interview complete"
+                      : videoAnsweredCount > 0
+                        ? "Continue your video interview"
+                        : "Start your video interview"}
+                  </h3>
+                  <p className="text-xs text-text-muted">
+                    {videoAnsweredCount} of {videoQuestions.length} questions answered on video
+                    {videoAnsweredCount > 0 && videoAnsweredCount < videoQuestions.length
+                      ? " — pick up right where you left off."
+                      : "."}
+                  </p>
                 </div>
+                <Button size="sm" onClick={() => setShowVideoInterviewPlayer(true)} className="gap-1.5 text-xs">
+                  <Video size={14} />
+                  {videoAnsweredCount === 0
+                    ? "Start Video Interview"
+                    : videoAnsweredCount === videoQuestions.length
+                      ? "Review or Re-record Answers"
+                      : "Continue Video Interview"}
+                </Button>
+              </Card>
+            ))}
 
-                {/* Single Choice / Yes-No */}
-                {(q.question_type === "single_choice" ||
-                  q.question_type === "yes_no") && (
-                  <div className="flex flex-wrap gap-2">
-                    {q.election_question_options.map((opt: any) => (
-                      <button
-                        key={opt.id}
-                        onClick={() => selectOption(q.id, opt.id)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
-                          ans.optionId === opt.id
-                            ? "bg-primary text-text-on-primary border-primary shadow-sm"
-                            : "bg-surface-elevated text-text-secondary border-border-light/40 hover:border-primary/40"
-                        }`}
-                      >
-                        {opt.option_text}
-                      </button>
-                    ))}
+          {showVideoInterviewPlayer && (
+            <CandidateVideoInterviewPlayer
+              questions={videoQuestions}
+              answeredVideoUrls={Object.fromEntries(
+                videoQuestions.map((q) => [q.id, answers[q.id]?.videoUrl])
+              )}
+              onAnswerSaved={handleQuestionVideoUploaded}
+              onClose={() => setShowVideoInterviewPlayer(false)}
+            />
+          )}
+
+          {activeQuestionTab === "written" &&
+            visibleQuestions.map((q) => {
+              const ans = answers[q.id] || {};
+              const started = hasStartedAnswering(q, ans);
+
+              return (
+                <Card
+                  key={q.id}
+                  id={`question-${q.id}`}
+                  padding="md"
+                  className={`space-y-4 transition-all ${
+                    highlightedQuestionId === q.id
+                      ? "!ring-2 !ring-red-500 !ring-offset-2 animate-pulse !bg-red-50"
+                      : ""
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-bold text-text-main text-sm">
+                        {q.question_text}
+                      </h3>
+                      {q.required && <Badge tone="rose">Required</Badge>}
+                    </div>
+                    {q.description && (
+                      <p className="text-xs text-text-muted mt-1">{q.description}</p>
+                    )}
                   </div>
-                )}
 
-                {/* Multiple Choice */}
-                {q.question_type === "multiple_choice" && (
-                  <div className="flex flex-wrap gap-2">
-                    {q.election_question_options.map((opt: any) => {
-                      const selected = (ans.optionIds || []).includes(opt.id);
-                      return (
+                  {/* Single Choice / Yes-No */}
+                  {(q.question_type === "single_choice" ||
+                    q.question_type === "yes_no") && (
+                    <div className="flex flex-wrap gap-2">
+                      {q.election_question_options.map((opt: any) => (
                         <button
                           key={opt.id}
-                          onClick={() => toggleMultiOption(q.id, opt.id)}
+                          onClick={() => selectOption(q.id, opt.id)}
                           className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
-                            selected
+                            ans.optionId === opt.id
                               ? "bg-primary text-text-on-primary border-primary shadow-sm"
                               : "bg-surface-elevated text-text-secondary border-border-light/40 hover:border-primary/40"
                           }`}
                         >
                           {opt.option_text}
                         </button>
-                      );
-                    })}
-                  </div>
-                )}
-
-                {/* Priority Ranking */}
-                {q.question_type === "ranking" && (
-                  <div className="space-y-2">
-                    <div className="space-y-1.5">
-                      {getRankedOptions(q, ans).map((opt, idx, arr) => (
-                        <div
-                          key={opt.id}
-                          draggable
-                          onDragStart={() => handleRankingDragStart(q.id, opt.id)}
-                          onDragOver={handleRankingDragOver}
-                          onDrop={() => handleRankingDrop(q.id, opt.id)}
-                          onDragEnd={() => setDraggedItem(null)}
-                          className={`flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all cursor-move ${
-                            draggedItem?.optionId === opt.id
-                              ? "bg-primary/10 border-2 border-primary/50 opacity-60"
-                              : draggedItem && draggedItem.questionId === q.id
-                              ? "bg-surface-elevated/50 border border-border-light/20"
-                              : "bg-surface-elevated border border-border-light/40 hover:border-primary/30"
-                          }`}
-                        >
-                          <span className="w-6 h-6 shrink-0 rounded-full bg-primary/15 text-primary-light text-xs font-bold flex items-center justify-center">
-                            {idx + 1}
-                          </span>
-                          <span className="flex-1 text-xs font-medium text-text-secondary">{opt.option_text}</span>
-                          <button
-                            type="button"
-                            disabled={idx === 0}
-                            onClick={() => moveRankedOption(q.id, opt.id, -1)}
-                            className="text-text-muted hover:text-primary disabled:opacity-25 disabled:hover:text-text-muted transition-colors p-1"
-                            title="Move up"
-                          >
-                            <ChevronUp size={16} />
-                          </button>
-                          <button
-                            type="button"
-                            disabled={idx === arr.length - 1}
-                            onClick={() => moveRankedOption(q.id, opt.id, 1)}
-                            className="text-text-muted hover:text-primary disabled:opacity-25 disabled:hover:text-text-muted transition-colors p-1"
-                            title="Move down"
-                          >
-                            <ChevronDown size={16} />
-                          </button>
-                        </div>
                       ))}
                     </div>
-                    <p className="text-[10px] text-text-muted">
-                      Ranked 1 (highest) to {q.election_question_options.length} (lowest) — drag items to reorder, or use the arrows.
-                    </p>
-                  </div>
-                )}
+                  )}
 
-                {/* Rating Scale */}
-                {q.question_type === "rating" && (
-                  <RatingScale
-                    value={ans.ratingValue ?? null}
-                    onChange={(val) => selectRating(q.id, val)}
-                  />
-                )}
+                  {/* Multiple Choice */}
+                  {q.question_type === "multiple_choice" && (
+                    <div className="flex flex-wrap gap-2">
+                      {q.election_question_options.map((opt: any) => {
+                        const selected = (ans.optionIds || []).includes(opt.id);
+                        return (
+                          <button
+                            key={opt.id}
+                            onClick={() => toggleMultiOption(q.id, opt.id)}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                              selected
+                                ? "bg-primary text-text-on-primary border-primary shadow-sm"
+                                : "bg-surface-elevated text-text-secondary border-border-light/40 hover:border-primary/40"
+                            }`}
+                          >
+                            {opt.option_text}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
 
-                {/* Free Text */}
-                {q.question_type === "text" && (
-                  <Textarea
-                    placeholder="Type your response..."
-                    value={ans.textAnswer || ""}
-                    onChange={(e) => updateTextAnswer(q.id, e.target.value)}
-                    onBlur={() => saveTextAnswer(q.id)}
-                    rows={3}
-                  />
-                )}
-
-                {/* Elaboration Context */}
-                {started && q.allow_context && (
-                  <div className="pt-3 border-t border-border-light/20 space-y-2">
-                    <label className="block text-xs font-semibold text-text-muted">
-                      Optional Context / Elaboration:
-                    </label>
-                    <Textarea
-                      placeholder="Add specific context to clarify your stance..."
-                      value={ans.context || ""}
-                      onChange={(e) => updateContext(q.id, e.target.value)}
-                      onBlur={() => saveContext(q.id)}
-                      rows={2}
-                    />
-                  </div>
-                )}
-
-                {/* Question video — played before the candidate answers, admin-uploaded or generated */}
-                {q.question_video_url && (
-                  <div className="pt-2">
-                    <video src={q.question_video_url} controls className="w-full max-h-64 rounded-xl bg-black" style={{ aspectRatio: "9 / 16", maxWidth: 220 }} />
-                  </div>
-                )}
-
-                {/* Per-Question Video Pitch — duration cap is admin-configured
-                    per question (max_answer_seconds, defaults to 30s), not a
-                    fixed value. */}
-                {started && q.allow_video && (
-                  <div className="pt-2">
-                    {ans.videoUrl && recordingQuestionId !== q.id ? (
-                      <div className="space-y-2">
-                        <video src={ans.videoUrl} controls className="w-full max-h-48 rounded-xl bg-black" />
-                        <Button variant="outline" size="sm" onClick={() => setRecordingQuestionId(q.id)} className="gap-1.5 text-xs">
-                          <RefreshCw size={13} /> Retake Video Answer
-                        </Button>
+                  {/* Priority Ranking */}
+                  {q.question_type === "ranking" && (
+                    <div className="space-y-2">
+                      <div className="space-y-1.5">
+                        {getRankedOptions(q, ans).map((opt, idx, arr) => (
+                          <div
+                            key={opt.id}
+                            draggable
+                            onDragStart={() => handleRankingDragStart(q.id, opt.id)}
+                            onDragOver={handleRankingDragOver}
+                            onDrop={() => handleRankingDrop(q.id, opt.id)}
+                            onDragEnd={() => setDraggedItem(null)}
+                            className={`flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all cursor-move ${
+                              draggedItem?.optionId === opt.id
+                                ? "bg-primary/10 border-2 border-primary/50 opacity-60"
+                                : draggedItem && draggedItem.questionId === q.id
+                                ? "bg-surface-elevated/50 border border-border-light/20"
+                                : "bg-surface-elevated border border-border-light/40 hover:border-primary/30"
+                            }`}
+                          >
+                            <span className="w-6 h-6 shrink-0 rounded-full bg-primary/15 text-primary-light text-xs font-bold flex items-center justify-center">
+                              {idx + 1}
+                            </span>
+                            <span className="flex-1 text-xs font-medium text-text-secondary">{opt.option_text}</span>
+                            <button
+                              type="button"
+                              disabled={idx === 0}
+                              onClick={() => moveRankedOption(q.id, opt.id, -1)}
+                              className="text-text-muted hover:text-primary disabled:opacity-25 disabled:hover:text-text-muted transition-colors p-1"
+                              title="Move up"
+                            >
+                              <ChevronUp size={16} />
+                            </button>
+                            <button
+                              type="button"
+                              disabled={idx === arr.length - 1}
+                              onClick={() => moveRankedOption(q.id, opt.id, 1)}
+                              className="text-text-muted hover:text-primary disabled:opacity-25 disabled:hover:text-text-muted transition-colors p-1"
+                              title="Move down"
+                            >
+                              <ChevronDown size={16} />
+                            </button>
+                          </div>
+                        ))}
                       </div>
-                    ) : recordingQuestionId === q.id ? (
-                      <VideoRecorder
-                        maxDuration={q.max_answer_seconds || 30}
-                        onVideoUploaded={(url) => handleQuestionVideoUploaded(q.id, url)}
+                      <p className="text-[10px] text-text-muted">
+                        Ranked 1 (highest) to {q.election_question_options.length} (lowest) — drag items to reorder, or use the arrows.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Rating Scale */}
+                  {q.question_type === "rating" && (
+                    <RatingScale
+                      value={ans.ratingValue ?? null}
+                      onChange={(val) => selectRating(q.id, val)}
+                    />
+                  )}
+
+                  {/* Free Text */}
+                  {q.question_type === "text" && (
+                    <Textarea
+                      placeholder="Type your response..."
+                      value={ans.textAnswer || ""}
+                      onChange={(e) => updateTextAnswer(q.id, e.target.value)}
+                      onBlur={() => saveTextAnswer(q.id)}
+                      rows={3}
+                    />
+                  )}
+
+                  {/* Elaboration Context -- no question video, no video
+                      recording UI on this tab at all; that's the video tab's
+                      job. */}
+                  {started && q.allow_context && (
+                    <div className="pt-3 border-t border-border-light/20 space-y-2">
+                      <label className="block text-xs font-semibold text-text-muted">
+                        Optional Context / Elaboration:
+                      </label>
+                      <Textarea
+                        placeholder="Add specific context to clarify your stance..."
+                        value={ans.context || ""}
+                        onChange={(e) => updateContext(q.id, e.target.value)}
+                        onBlur={() => saveContext(q.id)}
+                        rows={2}
                       />
-                    ) : (
-                      <Button variant="ghost" size="sm" onClick={() => setRecordingQuestionId(q.id)} className="gap-1.5 text-xs">
-                        <Video size={14} /> Add {q.max_answer_seconds || 30}s Video Stance Explanation (Optional)
-                      </Button>
-                    )}
-                  </div>
-                )}
-              </Card>
-            );
-          })}
+                    </div>
+                  )}
+                </Card>
+              );
+            })}
         </div>
       )}
 

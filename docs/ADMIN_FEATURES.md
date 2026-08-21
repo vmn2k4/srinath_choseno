@@ -109,34 +109,48 @@ AdminAnalyticsClient renders charts (e.g., line chart of daily users)
 
 ### List Elections
 - **Columns**: Boundary, role, election date, seat count, candidate count, status
-- **Status badge**: Open (accepting nominations), Closed (voting phase), Ended
-- **Actions**: Edit, view seats, close election
+- **Status badge**: `draft` (admin still building it) → `nominations_open` → `nominations_closed`
+  → `active` (voting day) → `closed`. Only `draft → nominations_open` and `→ closed` are manual
+  clicks ("Open Nominations" / "Close Election"); the three date-driven stages between them
+  advance on their own once the election's nomination-close date / election date pass — see
+  [ARCHITECTURE.md's 2026-08-21 entry](../ARCHITECTURE.md).
+- **Actions**: Edit dates, advance status (only shows the one valid next manual step), close
+  election, delete election
 
 ### Create Election
 - **Form**:
-  - Boundary (country → boundary type → specific boundary)
-  - Role (e.g., "House Representative", filtered by boundary type)
-  - Election date
-  - Nomination open/close dates
-  - Questionnaire (optional; multiple choice/free-text/rating questions)
-- **On submit**: Create `elections` row + `election_role_types` entry if needed
+  - Name
+  - Nomination open date, nomination close date, election day (in that order; validated
+    open ≤ close ≤ election day)
+  - Boundary/seats and the questionnaire are configured separately, after creation, from the
+    election's own detail view (see Manage Seats / Seat Detail below)
+- **On submit**: Create `elections` row (`status='draft'`)
 
 ### Edit Election
-- **Editable fields**: Dates, questionnaire
-- **Pre-filled**: Boundary, role (locked after creation)
+- **Editable fields**: all three dates ("Edit Dates" — re-validates and immediately
+  re-evaluates which stage the election should be in)
+- **Pre-filled**: current dates
 
 ### Manage Seats for Election
 - **Table**: Boundary name, seat ID, candidate count, status
-- **Bulk actions**: Close all, archive all
-- **Per-seat actions**: Edit, view candidates, close
+- **Per-seat actions**: create, delete
 
 ### Seat Detail
-- **Info**: Boundary, role, nomination dates, questionnaire
-- **Candidates list**: Name, party, status (nominated/approved/rejected), support count
+- **Info**: Boundary, role, nomination dates, questionnaire (each question can carry its own
+  video, played to candidates before they answer, plus a per-question max video-answer length)
+- **Candidates list**: Name, party, status (nominated/approved/rejected), support count, "has a
+  video interview answer" indicator
 - **Actions per candidate**:
   - Approve/reject nomination
-  - Remove candidate
-  - View campaign page
+  - **Search & Send Interview Invite** — search anyone on Choseno, stub if needed, send a
+    claim-invite email in one step (faster alternative to Add Candidate Directly + Invite to
+    Claim as two separate steps, which both still work too)
+  - **Remove candidate** (Manage Candidates) — available to a site admin or this seat's approved
+    election administrator on *any* candidate, registered or stub, self-added or not; this is
+    the roster-management tool once nominations have closed and self-nomination is no longer
+    possible
+  - View campaign page (includes the candidate's video interview answers and "Play Interview"
+    reel)
 
 ---
 

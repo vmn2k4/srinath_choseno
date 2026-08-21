@@ -2137,3 +2137,174 @@ The sanctioned ingestion engine is `scripts/insert-news-batch.js`. It performs:
 - **Geographic Electoral Boundary Synchronization**: Calls `admin_sync_news_article_boundaries(p_article_id)` to resolve the article's `latitude`/`longitude` against PostGIS boundary polygons (`news_article_boundaries`), automatically populating local riding and state feeds.
 - **Virality Ranking & Archive Tracking**: Prepend new stories to `batch-ranked-news.csv` (12-column format tracking top-100 ranked stories) and saves any overflow (#101+) to `scripts/overflow-news-batch.json`.
 
+---
+
+## 2026-08-20/21: Candidate Video Interview System
+
+Full plan and running implementation log: [`docs/VIRTUAL_INTERVIEW_SYSTEM.md`](docs/VIRTUAL_INTERVIEW_SYSTEM.md)
+— kept as its own doc rather than folded in here because it doubles as the working design doc
+(open questions, superseded drafts, build order) as well as the record of what shipped. This
+entry is the condensed architecture summary.
+
+**Starting point, deliberately not rebuilt from scratch**: the "create questions → candidate
+answers with video → public sees it → people comment" system already existed at ~80%, under
+the name *election questionnaire* (`election_questions`/`election_candidate_answers`/
+`submit_candidate_application`, §16/§21). The entire feature below is additive columns and new
+components on top of that, not a parallel schema.
+
+**Schema** (`20260821000000_candidate_video_interviews.sql`,
+`20260821000002_election_question_narration_text.sql`): `election_questions` gains
+`question_video_url`/`question_video_path` (a video played *to* the candidate before they
+answer) and `max_answer_seconds` (admin-configurable per question, replaces a hardcoded 30/60s
+in `VideoRecorder`'s `maxDuration` prop) and `narration_text` (the spoken script for a
+generated question video — independent of `question_text`, since a ranking/choice question's
+raw text isn't speakable as-is; defaults to `question_text` with its options appended for
+choice/ranking types). `posts` gains `election_answer_id` (nullable FK to
+`election_candidate_answers`, `ON DELETE SET NULL` so a deleted answer doesn't take its
+comments/likes with it) and `post_kind` (`'standard' | 'answer_pitch'`), with a unique partial
+index on `election_answer_id` so retaking an answer updates one post in place rather than
+piling up duplicates.
+
+**Every video answer is also a real wall post (TikTok model)** — the moment a candidate saves
+a video answer, `upsert_answer_pitch_post(answer_id)` (modeled on
+`create_wall_post`, §31, but with `is_country`/`is_international` forced `false` so these stay
+scoped to the candidate's wall and the comparison carousel, not the main feed) creates or
+updates a linked `posts` row, `post_kind='answer_pitch'`. This gets a video answer the
+*standard* treatment for free — `comments`, `likes_count`/`dislikes_count`, moderation, rate
+limiting — instead of a bespoke comment system. Retake (`CandidateApplicationClient.tsx`,
+"Retake Video Answer") replaces the linked post's `video_url` in place; likes and comments on
+it are a deliberate keep, not reset.
+
+**Three viewing modes, mapped to one underlying data shape ("a question + a list of
+`{person, video post}`")**:
+1. **One combined video per candidate** — `PlayInterviewReel.tsx`, a full-screen closeable 9:16
+   sequencer that autoplays a candidate's answers in question-rank order
+   (`getCandidateVideoAnswersForReel`). Two entry points open the same component: the seat
+   page's candidate strip ("has a pitch" badge, via `getCandidateIdsWithVideoAnswers`, one
+   batched query) and a "Play Interview" button on the candidate's own `CandidacyWall.tsx`.
+2. **One video per question, single candidate** — unchanged, already existed on
+   `CandidacyWall` as the per-answer video.
+3. **One question, many candidates' answers, swipeable** — the genuinely new piece.
+   `getCandidateAnswersByQuestion(questionId)` (a deliberately separate service function from
+   the candidate-scoped `getPublicCandidateAnswers`, per `docs/SERVICES.md` — different query
+   shape, not a parameterized variant) feeds `QuestionAnswerCarousel.tsx`: question pinned at
+   top (+ its own video, if set), one candidate's answer, next/prev/swipe to the same question's
+   next candidate. `ElectionInterviewTab.tsx` is the seat-page tab ("Candidate Interview",
+   sibling to "Community Support") listing every public video-answerable question; tapping one
+   opens the carousel inline.
+
+**Candidate access — two paths, no new auth model:**
+- **Already has an account / mid-application**: unchanged, `/apply/[candidateId]`.
+- **No account yet ("invite a politician")**: `SendInterviewInviteFlow.tsx` is the new
+  search-and-invite on-ramp on the seat page ("Search & Send Interview Invite", next to the
+  existing "Add Candidate Directly" / per-stub "Invite to Claim" panels — both of those stay,
+  this is a faster single-step alternative). It searches everyone on Choseno *and* every
+  unclaimed office-holder record via `search_politicians_and_officeholders` (the same RPC the
+  nav-bar global search uses), creates an `add_unregistered_candidate` stub if the selected
+  person isn't already a candidate for the seat, then sends the invite through the existing
+  claim-token infrastructure (`create_claim_invite` → Supabase `admin.inviteUserByEmail` →
+  `claim_candidacy_via_token`, §28) — which already merges onto a real account if the invitee
+  turns out to have one, so "search finds an already-registered politician" and "search finds
+  a total stranger" are the same code path. `ClaimCandidacyClient.tsx` now leads with "Answer
+  Interview Questions" (→ `/apply/[candidateId]`) as the first action after a successful claim,
+  ahead of the campaign-page link — the claim itself already handled auth, so this is the real
+  first step, not a second signup screen.
+- **Invite-link edge case fixed** (`20260821000003_claim_candidacy_via_own_email.sql`,
+  `/auth/confirm`): a Supabase invite email's link doesn't reliably carry the claim token or a
+  working `next` param through to the browser. `claim_candidacy_via_own_email()` matches a
+  pending `candidate_claim_invites` row by the *just-`verifyOtp`'d* caller's own email as a
+  fallback, and `/auth/confirm` routes a successful match through `/auth/reset-password`
+  first — the account `admin.inviteUserByEmail` created has no password yet and nothing else
+  in this flow ever prompts for one — before landing on `/apply/[candidateId]`.
+
+**Admin — question video, two ways** (`ElectionsAdminClient.tsx`, the question editor):
+upload directly (`VideoRecorder` → `updateElectionQuestionVideo`), or generate one from text.
+Generation (`GenerateQuestionVideosFlow.tsx`, "Generate Question Videos", bulk — edit a
+narration script per question, generate sequentially since the generator's shared working
+files make parallel calls unsafe, review, save each) calls
+`/api/admin/generate-question-video`, which shells out to a **local-only** pipeline:
+`nvidia_shorts_studio/question_card_engine/generate.py` (Qwen TTS via MLX for narration audio,
+then HyperFrames — the same 9:16 kinetic-caption video engine used for the news-shorts
+pipeline — over one fixed Choseno-branded background, no per-question AI image generation).
+The route 403s outside `next dev`: the pipeline needs local MLX model weights and ffmpeg that
+don't exist in a deployed environment, and shelling out to an external script is deliberately
+never exposed over the network. Generated (or uploaded) videos upload to the existing
+`politician_videos` storage bucket.
+
+**Playback constraint**: full-screen, closeable, strictly 9:16 everywhere (recording, upload,
+and generated video). Recording already complied (`VideoRecorder`'s `aspectRatio: 9/16`
+capture); upload-time aspect-ratio validation for question/answer videos was flagged as a
+follow-up, not yet built.
+
+**Scope note**: the new UI primitives (`QuestionAnswerCarousel`, `PlayInterviewReel`, the
+`answer_pitch` post rendering) are written against "a question + a list of people's video
+posts," not hardcoded to elections — a future non-election video-reaction case (e.g. "officials
+react to this news story") could reuse them with a different data-fetching function, but
+nothing beyond the election case is built now.
+
+---
+
+## 2026-08-21: Election Nomination Windows & Unified Candidate Removal
+
+**Problem**: `elections.status` was a 3-stage lifecycle (`draft → nominations_open → active →
+closed`) advanced by an admin manually clicking "Activate Election" — but "activating" had
+nothing to do with nominations at all; it was really "voting day has arrived." There was no
+stage representing "nominations have closed but voting hasn't happened yet," so
+`apply_for_seat` had to keep accepting new applications straight through `active` as a
+workaround (§ `20260729000003`), meaning a candidate could self-nominate on election day itself.
+
+**Fix — a real 4th stage, date-driven** (`20260821000004_election_nomination_windows.sql`):
+`elections` gains `nomination_open_date`/`nomination_close_date` (both set once at creation,
+`CHECK (nomination_open_date <= nomination_close_date AND nomination_close_date <=
+election_date)`), and the status enum gains `nominations_closed`, sitting between
+`nominations_open` and `active`. `compute_election_status(status, nomination_close_date,
+election_date)` is a pure function: `draft`/`closed` pass through unchanged (still the two
+manual, admin-only bookends — draft because an election shouldn't go live just because a date
+rolled past while it's still being built, closed because archiving is a deliberate call, not
+automatic); the three date-driven stages are derived fresh from `CURRENT_DATE` every call, so
+there's never a "stale status" to reconcile at read time — there's a stateless function of
+today's date and two stored dates. `sync_election_status(election_id DEFAULT NULL)` writes that
+computed value back to the stored `status` column (same lazy-sync shape as
+`promote_expired_election_admin_applications()`) so every existing query/RLS policy that
+filters on the raw `elections.status` column keeps working unchanged — callers just need to
+sync before reading (`getElections`, `getOpenSeatsNearShapeIds`, `getActiveSeatsByShapeIds`,
+`getActiveSeats` in `elections.ts` all now call `sync_election_status` first) or after writing
+(`updateElectionDates` re-syncs immediately, since moving `nomination_close_date`/
+`election_date` can flip the stage instantly).
+
+**Security-sensitive paths don't trust the cached column at all**: `apply_for_seat` calls
+`sync_election_status(election_id)` then re-derives the effective status via
+`compute_election_status(...)` directly before gating — a stale, not-yet-synced `status` column
+can never wrongly grant or deny a nomination. Two read-facing RPCs
+(`20260821000005_election_status_functions_use_effective_status.sql`) —
+`find_open_seats_in_container` and `get_active_elections_for_user` — were switched from
+filtering on the raw stored column to `compute_election_status(...) IN ('nominations_open',
+'nominations_closed', 'active')` for the same reason: a voter-facing browse shouldn't show
+stale data just because nothing recently wrote to that election row. A seat now stays visible
+for browsing straight through `nominations_closed` and into voting day, same as it already did
+across `nominations_open`/`active`.
+
+**Unified candidate removal** — `remove_candidate(candidate_id)` (same migration): lets a
+platform admin *or* that seat's approved election administrator remove **any** candidate on the
+seat (registered or stub, self-added or not) — distinct from the pre-existing
+`deleteCandidacy`/"Candidates withdraw own application" RLS policy, which only ever let a
+candidate remove their own application and is untouched. This is the power the
+`nominations_closed`/`active` stages need: once self-nomination through Apply is gated off,
+managing a seat's roster (removing a no-show, a duplicate, or someone disqualified) has to be
+possible some other way. `ElectionsAdminClient.tsx`'s existing delete-candidate action now
+calls `removeCandidate` instead of `deleteCandidacy`; `ElectionSeatPageClient.tsx` gained a new
+"Manage Candidates" list (visible whenever the seat has candidates, not just to the approved
+election administrator's other panels) with a per-candidate remove button using the same RPC.
+
+**Admin UI** (`ElectionsAdminClient.tsx`): election creation now takes three dates (nominations
+open / nominations close / election day) instead of one, validated client-side
+(`open ≤ close ≤ election day`) before the request. An existing election's dates are editable
+in place ("Edit Dates" → `updateElectionDates`, same validation, re-syncs status on save) — this
+also covers fixing up the 4 pre-existing elections that got a backfilled guess when the columns
+were added (`nomination_open_date = created_at`, `nomination_close_date = GREATEST(created_at,
+election_date - 14 days)`). `STATUS_FLOW`/`STATUS_LABEL` collapsed to reflect that
+`draft → nominations_open` is the only manual "publish" step left — from there,
+`nominations_open → nominations_closed → active` happen on their own as dates pass; the
+"Advance Status" button on any date-driven stage now only ever means "Close Election," the
+other manual bookend, archivable from any of the three.
+
