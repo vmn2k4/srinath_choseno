@@ -325,7 +325,7 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
             </Reveal>
 
             <Reveal mode="mount" delay={200}>
-              <p className="text-base sm:text-lg md:text-xl text-text-main/90 font-medium max-w-2xl mx-auto lg:mx-0 mt-5 sm:mt-7 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-text-main/90 font-medium max-w-2xs sm:max-w-2xl mx-auto lg:mx-0 mt-5 sm:mt-7 leading-relaxed">
                 {t("home.subtitle")}
               </p>
             </Reveal>

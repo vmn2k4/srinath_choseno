@@ -65,6 +65,9 @@ export default function NewsArticleDetailClient({
   // instead of navigating to their wall, when there's exactly one tagged
   // politician to rate.
   const [showTopInlineRating, setShowTopInlineRating] = useState(false);
+  // Same idea for the multi-politician case: which of the per-person top
+  // buttons has its inline rating panel open (at most one at a time).
+  const [expandedTopPoliticianId, setExpandedTopPoliticianId] = useState<string | null>(null);
 
   const handleToggleTranslate = async () => {
     if (translatedBody || translatedHeadline) {
@@ -380,10 +383,10 @@ export default function NewsArticleDetailClient({
 
             {/* Primary Rate CTA — a real button, not a label: solid fill,
                 full name. One tagged politician -> expands the inline rating
-                panel right here (no navigation). Multiple -> jumps to the
-                rating cards below, where each person already rates inline.
-                Label truncates instead of wrapping so the button stays one
-                tidy line at every viewport. */}
+                panel right here (no navigation). Multiple -> one button per
+                politician, all on a single row, straight to their wall page.
+                Label/name truncates or shortens by breakpoint so the row
+                stays one tidy line at every viewport. */}
             {rateCtaLabel && (
               primaryWallUrl && linkedPoliticians.length === 1 ? (
                 <button
@@ -396,6 +399,31 @@ export default function NewsArticleDetailClient({
                   <span className="truncate">{rateCtaLabel}</span>
                   <ArrowRight size={13} className={`shrink-0 transition-transform ${showTopInlineRating ? "rotate-90" : ""}`} />
                 </button>
+              ) : linkedPoliticians.length > 1 ? (
+                <div className="flex items-center flex-nowrap gap-1.5 sm:gap-2 max-w-full overflow-x-auto">
+                  {linkedPoliticians.map((lp: any) => {
+                    const politician = lp.profiles;
+                    if (!politician?.id) return null;
+                    const fullName: string = politician.full_name || "Politician";
+                    const nameParts = fullName.trim().split(" ");
+                    const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : fullName;
+                    const isExpanded = expandedTopPoliticianId === politician.id;
+                    return (
+                      <button
+                        key={politician.id}
+                        type="button"
+                        onClick={() => setExpandedTopPoliticianId(isExpanded ? null : politician.id)}
+                        aria-expanded={isExpanded}
+                        title={`Review ${fullName}`}
+                        className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-[clamp(0.625rem,0.6rem+0.15vw,0.75rem)] font-bold shadow-sm hover:shadow-md transition-all shrink-0 cursor-pointer"
+                      >
+                        <Star size={12} className="hidden sm:inline-block fill-white shrink-0" />
+                        <span className="md:hidden">{lastName}</span>
+                        <span className="hidden md:inline truncate max-w-[140px]">{fullName}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               ) : (
                 <Link
                   href={rateCtaHref}
@@ -420,6 +448,23 @@ export default function NewsArticleDetailClient({
               onCancel={() => setShowTopInlineRating(false)}
             />
           )}
+
+          {/* Same inline rating panel for the multi-politician case — opens
+              under the metadata row for whichever per-person button was
+              clicked, same centralized widget, no navigation away. */}
+          {expandedTopPoliticianId && (() => {
+            const activePolitician = linkedPoliticians.find(
+              (lp: any) => lp.profiles?.id === expandedTopPoliticianId
+            )?.profiles;
+            if (!activePolitician) return null;
+            return (
+              <PoliticianInlineRating
+                politicianId={activePolitician.id}
+                politicianName={activePolitician.full_name || "This politician"}
+                onCancel={() => setExpandedTopPoliticianId(null)}
+              />
+            );
+          })()}
         </div>
 
         {/* Content Section: Text with Wrapped Visual Card on Right */}

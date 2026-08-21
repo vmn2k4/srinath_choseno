@@ -169,13 +169,19 @@ export default function PoliticianInlineRating({
             <>
               {/* Star picker sits right next to the label instead of its own
                   centered row below — that used to add a whole extra row
-                  of vertical space just to show 5 stars. */}
-              <div className="flex items-center justify-between gap-3 flex-wrap">
-                <div className="flex items-center gap-2">
-                  <p className="text-xs font-semibold text-label-text uppercase tracking-wide shrink-0">Rate their performance</p>
-                  <StarRating value={rateValue} size="md" onChange={setRateValue} />
+                  of vertical space just to show 5 stars. Label shortens and
+                  stars shrink on mobile so the whole row fits on one line
+                  instead of wrapping. */}
+              <div className="flex items-center justify-between gap-2 flex-nowrap">
+                <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                  <p className="text-[0.65rem] sm:text-xs font-semibold text-label-text uppercase tracking-wide shrink-0 truncate">
+                    Rate {politicianName.trim().split(" ").pop()}
+                    <span className="hidden sm:inline">&apos;s Performance</span>
+                  </p>
+                  <StarRating value={rateValue} size="sm" className="sm:hidden" onChange={setRateValue} />
+                  <StarRating value={rateValue} size="md" className="hidden sm:inline-flex" onChange={setRateValue} />
                 </div>
-                <Button size="sm" variant="ghost" onClick={onCancel}>
+                <Button size="sm" variant="ghost" className="shrink-0 px-2" onClick={onCancel}>
                   Cancel
                 </Button>
               </div>
