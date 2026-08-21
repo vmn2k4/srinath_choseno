@@ -120,6 +120,8 @@ export default function VideoRecorder({
     }
   };
 
+  const [aspectWarning, setAspectWarning] = useState<string | null>(null);
+
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -127,6 +129,32 @@ export default function VideoRecorder({
       alert("Video file size must be less than 50MB");
       return;
     }
+    setAspectWarning(null);
+
+    // Recorded answers already come out 9:16 (getUserMedia constraints
+    // above) — this is the one path (a plain file upload) with no built-in
+    // guarantee of that, so it's the only place that needs a check. Reads
+    // the file's real dimensions off a throwaway <video> element rather than
+    // trusting the container/aspect metadata, since that's what actually
+    // renders. Warns rather than hard-blocking — some legitimate footage is
+    // shot slightly off 9:16 and still worth accepting, this is a nudge
+    // toward the shorts format the interview player expects, not a rejection.
+    const probe = document.createElement("video");
+    probe.preload = "metadata";
+    probe.onloadedmetadata = () => {
+      const { videoWidth: w, videoHeight: h } = probe;
+      URL.revokeObjectURL(probe.src);
+      if (w && h) {
+        const ratio = w / h;
+        const target = 9 / 16;
+        if (Math.abs(ratio - target) / target > 0.1) {
+          setAspectWarning(
+            `This video is ${w}×${h} (not vertical 9:16 "shorts" format) — it may be cropped when played back.`
+          );
+        }
+      }
+    };
+    probe.src = URL.createObjectURL(file);
 
     setVideoBlob(file);
     if (videoPreviewRef.current) {
@@ -183,6 +211,13 @@ export default function VideoRecorder({
           </div>
         )}
       </div>
+
+      {aspectWarning && (
+        <div className="p-2.5 bg-warning/10 border border-warning/30 rounded-xl text-[11px] text-warning-light flex items-start gap-2 max-w-xs">
+          <ShieldAlert size={15} className="shrink-0 mt-0.5 text-warning" />
+          <span>{aspectWarning}</span>
+        </div>
+      )}
 
       {cameraError && (
         <div className="p-2.5 bg-warning/10 border border-warning/30 rounded-xl text-[11px] text-warning-light flex items-start gap-2 max-w-xs">

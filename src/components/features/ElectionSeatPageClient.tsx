@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import CandidacyWall from "./CandidacyWall";
 import ElectionResultsPanel from "./ElectionResultsPanel";
+import ElectionInterviewTab from "./ElectionInterviewTab";
+import PlayInterviewReel from "./PlayInterviewReel";
 import {
   getSeatById,
   getCandidatesBySeatIds,
@@ -18,6 +20,7 @@ import {
   getClaimRequestsForSeat,
   reviewCandidacyClaim,
   getOfficeHoldersByShapeAndRole,
+  getCandidateIdsWithVideoAnswers,
 } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { getProfileRole, uploadAvatarImage } from "@/lib/services/profile";
@@ -39,6 +42,8 @@ import {
   Landmark,
   ArrowRight,
   ExternalLink,
+  Video,
+  PlayCircle,
 } from "lucide-react";
 import {
   Card,
@@ -180,6 +185,13 @@ export default function ElectionSeatPageClient({
   // Heart button in the Results poll (same politician_supporters table the
   // "Support" button on the candidate wall already writes to).
   const [mySupportedPoliticianIds, setMySupportedPoliticianIds] = useState<Set<string>>(new Set());
+  // Which candidate ids (election_candidates.id) have at least one video
+  // answer — powers the "has a pitch" badge in the strip below, and
+  // reelForCandidate opens the same PlayInterviewReel CandidacyWall's own
+  // "Play Interview" button opens, just triggered from here too (two entry
+  // points into one feature — see docs/VIRTUAL_INTERVIEW_SYSTEM.md Gap 3 UI).
+  const [candidateIdsWithVideo, setCandidateIdsWithVideo] = useState<Set<string>>(new Set());
+  const [reelForCandidate, setReelForCandidate] = useState<{ id: string; name: string } | null>(null);
 
   // True only for the very first fetchAll() call, and only when the server
   // already handed us seat+candidates via initialSeat/initialCandidates --
@@ -262,7 +274,13 @@ export default function ElectionSeatPageClient({
     // batch -- still only fires for signed-in users, same as before.
     if (user) {
       if (myProfile?.role === "admin" || seatAdminStatus?.my_application_status === "approved") {
-        const { data: requests } = await getClaimRequestsForSeat(supabase, seatId);
+        // targetSeatId (resolved above for getCandidatesBySeatIds) is the
+        // real seat uuid -- getClaimRequestsForSeat needs that, not the raw
+        // seatId prop, which is the URL's SEO slug and would 400 against
+        // election_candidates.seat_id (a uuid column). Pre-existing bug,
+        // unrelated to today's interview work -- found while verifying it
+        // didn't regress anything else.
+        const { data: requests } = await getClaimRequestsForSeat(supabase, targetSeatId);
         setClaimRequests(requests || []);
       } else {
         setClaimRequests([]);
@@ -306,6 +324,22 @@ export default function ElectionSeatPageClient({
       setEngagementSummaries(map);
     });
 
+    return () => {
+      isMounted = false;
+    };
+  }, [candidates, supabase]);
+
+  useEffect(() => {
+    let isMounted = true;
+    const ids = candidates.map((c) => c.id).filter(Boolean);
+    if (ids.length === 0) {
+      setCandidateIdsWithVideo(new Set());
+      return;
+    }
+    getCandidateIdsWithVideoAnswers(supabase, ids).then(({ data }) => {
+      if (!isMounted) return;
+      setCandidateIdsWithVideo(new Set(((data as { candidate_id: string }[]) || []).map((r) => r.candidate_id)));
+    });
     return () => {
       isMounted = false;
     };
@@ -609,6 +643,32 @@ export default function ElectionSeatPageClient({
                   </span>
                 </div>
 
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setActiveMainTab("interview")}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setActiveMainTab("interview");
+                    }
+                  }}
+                  className={`flex items-center gap-2 shrink-0 px-4 py-2 rounded-2xl border-2 transition-all cursor-pointer ${
+                    activeMainTab === "interview"
+                      ? "border-primary bg-primary/10 shadow-[0_0_0_3px_rgba(233,235,158,0.12)]"
+                      : "border-border-light bg-surface-hover/40 hover:border-primary/40 hover:bg-surface-hover"
+                  }`}
+                >
+                  <Video size={15} className={activeMainTab === "interview" ? "text-primary-light" : "text-text-secondary"} />
+                  <span
+                    className={`text-sm font-semibold whitespace-nowrap ${
+                      activeMainTab === "interview" ? "text-primary-light" : "text-text-secondary"
+                    }`}
+                  >
+                    Candidate Interview
+                  </span>
+                </div>
+
                 {candidates.map((c) => {
                   const name =
                     c.display_name ||
@@ -694,10 +754,27 @@ export default function ElectionSeatPageClient({
                           className="text-success shrink-0"
                         />
                       )}
+                      {candidateIdsWithVideo.has(c.id) && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setReelForCandidate({ id: c.id, name });
+                          }}
+                          className="flex items-center gap-1 text-[10px] bg-primary/15 text-primary-light border border-primary/30 px-1.5 py-0.5 rounded-full font-semibold shrink-0 cursor-pointer hover:bg-primary/25"
+                          title={`Play ${name}'s interview`}
+                        >
+                          <PlayCircle size={10} /> Pitch
+                        </button>
+                      )}
                     </div>
                   );
                 })}
               </div>
+
+              {activeMainTab === "interview" && seat?.elections?.id && (
+                <ElectionInterviewTab electionId={seat.elections.id} />
+              )}
 
               {activeMainTab === "results" && (
                 <ElectionResultsPanel
@@ -711,7 +788,7 @@ export default function ElectionSeatPageClient({
                 />
               )}
 
-              {activeMainTab !== "results" && selectedCandidateId && (
+              {activeMainTab !== "results" && activeMainTab !== "interview" && selectedCandidateId && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between gap-3 px-1 flex-wrap">
                     <span className="text-xs font-semibold text-text-muted">
@@ -1177,6 +1254,14 @@ export default function ElectionSeatPageClient({
           </div>
         )}
       </div>
+
+      {reelForCandidate && (
+        <PlayInterviewReel
+          candidateId={reelForCandidate.id}
+          candidateName={reelForCandidate.name}
+          onClose={() => setReelForCandidate(null)}
+        />
+      )}
     </div>
   );
 }

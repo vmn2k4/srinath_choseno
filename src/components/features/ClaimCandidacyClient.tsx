@@ -65,7 +65,19 @@ export default function ClaimCandidacyClient({
               This campaign page is now yours. You can post updates, answer
               questionnaire questions, and manage everything from here.
             </p>
+            {/* Straight into the video interview -- this is the "no account
+                needed, just click the link" path described in
+                docs/VIRTUAL_INTERVIEW_SYSTEM.md Gap 2. The claim itself
+                already handled auth (Supabase's invite-email sign-in), so
+                this is the first real action, not a second signup step. */}
             <Button
+              onClick={() => router.push(`/apply/${candidateId}`)}
+              className="w-full mb-2"
+            >
+              Answer Interview Questions
+            </Button>
+            <Button
+              variant="outline"
               onClick={() =>
                 router.push(`/candidacy/${buildCandidateSlug({ id: candidateId! })}`)
               }

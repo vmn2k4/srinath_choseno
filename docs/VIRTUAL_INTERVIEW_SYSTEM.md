@@ -1,3 +1,11 @@
+> **Implementation status (2026-08-20):** Gaps 1, 3, and 4 are built and live —
+> migration `20260821000000_candidate_video_interviews.sql` applied, service layer,
+> `QuestionAnswerCarousel`, `PlayInterviewReel`, the seat-page "Candidate Interview" tab,
+> the CandidacyWall "Play Interview" button, and the admin question-video/duration
+> fields are all in place and typecheck/run clean. **Not built:** Gap 2's email-token
+> (no-account) candidate access path and the live "Generate via Qwen" trigger — both
+> deliberately deferred, see the notes inline below.
+
 # Candidate Video Interview System — Plan v2
 
 **Status:** Plan only, not implemented. Supersedes the earlier draft in this file, which
@@ -51,6 +59,56 @@ to a column.
 already writes `question_text`/`allow_video`/etc.):
 - "Upload video" — plain file input → existing storage-bucket pattern (see
   `storage_buckets` migration + `video.ts`), sets `question_video_url`.
+### Revised, better design — bypass orchestrate.py's image pipeline entirely
+
+The note below (kept for context) assumed the only entry point was the full
+`orchestrate.py` narrative-shorts pipeline. Digging into the folder further found a
+much better fit for a one-line question card, using the *same underlying pieces*
+`orchestrate.py` itself calls, directly:
+
+- **`tts/read_transcript.py`** is a genuine standalone script — Qwen3-TTS running
+  locally via MLX, invoked with `--text "<question text>"` (or `--file`), writing a
+  `.wav` straight to `repo_upstream/outputs/read_aloud/`. No image generation, no
+  NVIDIA API, no `orchestrate.py` involvement at all. This alone answers "generate
+  audio for the question."
+- **`hyperframes_renderer.py`'s `render_hyperframes_video(scenes, image_paths,
+  audio_path, output_path, ...)`** is the actual video-composition step
+  `orchestrate.py` calls after TTS/image-gen finish — but it's a plain importable
+  Python function, callable directly with **one static background image and one
+  scene spanning the whole narration**, skipping FLUX generation entirely. It
+  already produces the 9:16 vertical frame, kinetic word-by-word captions, and MP4
+  render via the `hyperframes` npm CLI (`hyperframes_engine/` — HeyGen's real
+  HyperFrames engine, confirmed via the `hyperframes`/`hyperframes-audio` skills:
+  an HTML-based, seekable video-composition renderer with its own CLI, not a bespoke
+  script).
+
+**So the actual admin "Generate Video" flow is three steps, no AI image generation
+in the loop at all:**
+1. `python3 tts/read_transcript.py --text "<question_text>"` → narration `.wav`.
+2. One small new Python script (not yet written) calling
+   `render_hyperframes_video(scenes=[{single scene, full duration}], image_paths=[<one
+   fixed Choseno-branded background>], audio_path=<step 1 output>, output_path=...)`.
+3. Upload the resulting MP4 to Supabase Storage, set `question_video_url`.
+
+This resolves the earlier open question about "fresh AI images per question, or one
+fixed background" — **fixed background**, since nothing about a question card needs
+per-question generated photography the way a news short does. It also means this is
+fast (seconds, not minutes) and needs no NVIDIA/FLUX credentials — only the local Qwen
+TTS model weights already present for the existing news-shorts pipeline. Audio-only
+narration (no music bed) also means `hyperframes-audio`'s voiceover-carve system isn't
+needed here — that's for a voice competing with a music track, which a plain question
+read-aloud doesn't have.
+
+**Not yet done:** the actual small Python wrapper script (step 2) doesn't exist yet —
+only analyzed and designed. Still holds the same caution as before: this is local,
+dev-only, and the first real run should be the user's own test, not something
+triggered blind.
+
+---
+
+<details>
+<summary>Earlier note (superseded by the above, kept for context)</summary>
+
 - "Generate video" — button that shells out to the local pipeline at
   `/Users/vmn2k4/Coding/QwneTTS_Feb_19/nvidia_shorts_studio/` (`orchestrate.py`).
   Confirmed shape:
@@ -92,6 +150,8 @@ already writes `question_text`/`allow_video`/etc.):
 **No new "publish interview" step needed** — an `election_questions` row is already
 live the moment it's saved (`visible_to_public` already gates voter visibility exactly
 like you'd want an interview "published" flag to).
+
+</details>
 
 ---
 

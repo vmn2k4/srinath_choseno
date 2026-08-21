@@ -902,7 +902,9 @@ export async function submitCandidateApplication(supabase: Client, candidateId: 
 export async function getElectionQuestions(supabase: Client, electionId: string) {
   return supabase
     .from("election_questions")
-    .select("id, question_text, question_type, required, allow_context, allow_video, visible_to_public, rank, election_question_options(id, option_text, rank)")
+    .select(
+      "id, question_text, question_type, required, allow_context, allow_video, visible_to_public, rank, question_video_url, max_answer_seconds, election_question_options(id, option_text, rank)"
+    )
     .eq("election_id", electionId)
     .order("rank");
 }
@@ -1043,6 +1045,88 @@ export async function createAnswerComment(supabase: Client, answerId: string, gh
     });
   }
   return res;
+}
+
+// ── answer video → wall post (candidate video interviews) ──────────────
+// Call right after a video answer is saved (upsertCandidateAnswer with a
+// non-null videoUrl). Creates the linked posts row on first submission; on
+// retake, updates that same post's video in place and leaves its
+// likes/comments untouched — see
+// 20260821000000_candidate_video_interviews.sql's upsert_answer_pitch_post.
+export async function upsertAnswerPitchPost(supabase: Client, answerId: string) {
+  return supabase.rpc("upsert_answer_pitch_post", { p_answer_id: answerId });
+}
+
+// Cross-candidate, single-question view: every candidate's video answer to
+// ONE question, for the "swipe through every candidate's answer" carousel on
+// the seat page. Distinct query shape from getPublicCandidateAnswers (that
+// one is scoped to one candidate across all questions; this is the inverse —
+// one question across all candidates) — see docs/SERVICES.md's guidance on
+// keeping genuinely different query shapes as separate functions. Scoped to
+// approved candidates only, same posture as getCandidatesBySeatIds.
+export async function getCandidateAnswersByQuestion(supabase: Client, questionId: string) {
+  return supabase
+    .from("election_candidate_answers")
+    .select(
+      `
+      id, video_url, context_text,
+      election_candidates!inner(
+        id, display_name, avatar_url, status, seat_id,
+        profiles(id, full_name, current_ghost_id, politician_profiles(avatar_url, wall_slug))
+      ),
+      posts(id, likes_count, dislikes_count, comments(id, ghost_id, content, created_at))
+    `
+    )
+    .eq("question_id", questionId)
+    .eq("election_candidates.status", "approved")
+    .not("video_url", "is", null);
+}
+
+// Every video answer for one candidate, in question-rank order — powers the
+// "play entire interview" reel (sequenced autoplay through all of one
+// candidate's answers). rank comes from the joined election_questions row.
+export async function getCandidateVideoAnswersForReel(supabase: Client, candidateId: string) {
+  return supabase
+    .from("election_candidate_answers")
+    .select(
+      `
+      id, video_url,
+      election_questions!inner(id, question_text, rank, visible_to_public)
+    `
+    )
+    .eq("candidate_id", candidateId)
+    .eq("election_questions.visible_to_public", true)
+    .not("video_url", "is", null)
+    .order("rank", { referencedTable: "election_questions", ascending: true });
+}
+
+// ── admin: question video (upload or Qwen-generated, see docs/VIRTUAL_INTERVIEW_SYSTEM.md) ──
+export async function updateElectionQuestionVideo(
+  supabase: Client,
+  questionId: string,
+  { videoUrl, videoPath }: { videoUrl: string | null; videoPath?: string | null }
+) {
+  return supabase
+    .from("election_questions")
+    .update({ question_video_url: videoUrl, question_video_path: videoPath ?? null })
+    .eq("id", questionId);
+}
+
+export async function updateElectionQuestionMaxAnswerSeconds(supabase: Client, questionId: string, seconds: number) {
+  return supabase.from("election_questions").update({ max_answer_seconds: seconds }).eq("id", questionId);
+}
+
+// Which of these candidates have at least one video answer — powers the
+// "has a pitch" badge on the seat page's candidate strip (see
+// docs/VIRTUAL_INTERVIEW_SYSTEM.md Gap 3 UI). One batched query rather than
+// one per candidate.
+export async function getCandidateIdsWithVideoAnswers(supabase: Client, candidateIds: string[]) {
+  if (candidateIds.length === 0) return { data: [], error: null };
+  return supabase
+    .from("election_candidate_answers")
+    .select("candidate_id")
+    .in("candidate_id", candidateIds)
+    .not("video_url", "is", null);
 }
 
 // ── resolve_region_names rpc ────────────────────────────────────────────
@@ -1260,6 +1344,13 @@ export async function requestCandidacyClaim(
   } as unknown as { p_candidate_id: string; p_motivation: string; p_contact_email: string; p_social_media_info: string });
 }
 
+// Expects a REAL seat uuid, not a slug -- election_candidates.seat_id is a
+// uuid column. Callers holding only the URL's [seatId] slug param must
+// resolve it first (getSeatById, or the already-resolved seat.id most
+// callers have on hand by the time they'd call this) -- this function
+// doesn't do slug resolution itself, unlike getSeatById, since most call
+// sites already have the resolved id in scope and resolving it again here
+// would be a second, redundant lookup.
 export async function getClaimRequestsForSeat(supabase: Client, seatId: string) {
   return supabase
     .from("candidacy_claim_requests")

@@ -24,6 +24,7 @@ import {
   Spinner,
 } from "@/components/primitives";
 import InteractiveLocationPicker from "./InteractiveLocationPicker";
+import MissionRegisterCTA from "./MissionRegisterCTA";
 import { createClient } from "@/lib/supabase/client";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 import { findBoundariesByPoint } from "@/lib/services/boundaries";
@@ -280,6 +281,7 @@ export default function ElectionsPageClient({
 
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 flex flex-col gap-6 lg:gap-8">
+      <MissionRegisterCTA variant="elections" nextPath="/elections" />
       <PageHeader icon={Vote} title={t("elections.title")} />
 
       {role === "normal" && (

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { MessageSquare, ArrowRight, Mail, Phone } from "lucide-react";
+import { MessageSquare, ArrowRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import PoliticianEngagementStats from "@/components/features/PoliticianEngagementStats";
@@ -166,28 +166,6 @@ export default function NewsArticleLinkedPoliticians({
                       {politician.designation && politician.constituency ? " — " : ""}
                       {politician.constituency}
                     </p>
-                  )}
-                  {(politician.politician_profiles?.contact_email || politician.politician_profiles?.contact_phone) && (
-                    <div className="flex items-center gap-2 mt-0.5">
-                      {politician.politician_profiles?.contact_email && (
-                        <a
-                          href={`mailto:${politician.politician_profiles.contact_email}`}
-                          className="inline-flex items-center gap-1 text-[11px] text-orange-700 hover:underline"
-                        >
-                          <Mail size={11} className="shrink-0" />
-                          <span className="truncate max-w-[140px]">{politician.politician_profiles.contact_email}</span>
-                        </a>
-                      )}
-                      {politician.politician_profiles?.contact_phone && (
-                        <a
-                          href={`tel:${politician.politician_profiles.contact_phone}`}
-                          className="inline-flex items-center gap-1 text-[11px] text-orange-700 hover:underline"
-                        >
-                          <Phone size={11} className="shrink-0" />
-                          {politician.politician_profiles.contact_phone}
-                        </a>
-                      )}
-                    </div>
                   )}
                   {loading || !stats ? (
                     <div className="h-4 w-32 bg-slate-100 rounded animate-pulse mt-1" />

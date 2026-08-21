@@ -18,6 +18,7 @@ import { Card, PageHeader, Badge, Button } from "@/components/primitives";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { isBreakingNewsActive, type NewsArticleContent } from "@/lib/services/news";
 import ShareMenu, { type ShareData } from "@/components/features/ShareMenu";
+import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
 import { SITE_URL } from "@/lib/constants/site";
 
 interface NewsArticleRow {
@@ -155,6 +156,7 @@ export default function NewsPageClient({
 
   return (
     <div className="w-full max-w-none pb-20 px-4 lg:px-8 space-y-6">
+      <MissionRegisterCTA variant="news" nextPath="/news" />
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <PageHeader icon={Newspaper} title={t("newsPage.title")} />
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MapPin, ArrowRight, Layers, Network, ChevronDown, Sparkles } from "lucide-react";
 import InteractiveLocationPicker from "./InteractiveLocationPicker";
 import BoundaryDirectoryClient from "./BoundaryDirectoryClient";
+import MissionRegisterCTA from "./MissionRegisterCTA";
 import { findBoundariesByPoint } from "@/lib/services/boundaries";
 import { getActiveSeatsByShapeIds, getCandidatesBySeatIds, resolveRepresentationBranch } from "@/lib/services/elections";
 import { buildBoundarySlug, buildSeatSlug } from "@/lib/utils/slugs";
@@ -221,6 +222,7 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
 
   return (
     <div className="w-full min-h-screen bg-page-bg">
+      <MissionRegisterCTA variant="district" nextPath="/find-my-district" />
       {/* Header — compact on mobile (title only, description hidden) so the
           functional search widget is reachable without scrolling past a
           marketing block; full hero treatment returns at sm: and up. */}

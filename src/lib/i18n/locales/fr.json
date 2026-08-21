@@ -32,7 +32,7 @@
     "titleSub": "Comme Yelp, mais pour la Démocratie.",
     "subtitle": "Un espace sûr et anonyme pour évaluer vos représentants locaux. Partagez votre vécu, lisez les avis de vos voisins et votez éclairé — sans haine, juste de la transparence.",
     "scopedTo": "Conversations de votre secteur sur",
-    "citizenCta": "Je suis Électeur",
+    "citizenCta": "Rejoindre la Mission",
     "candidateCta": "Je me Présente",
     "openFeed": "Ouvrir mon Fil",
     "trustChips": {
@@ -44,8 +44,8 @@
     "demo": {
       "title": "Pourquoi Choseno ?",
       "quote": "\"Conçu pour les citoyens — propulsé pour une vraie démocratie.\"",
-      "line1": "Oubliez les querelles partisanes et les algorithmes trompeurs. Choseno vous donne des outils indépendants et locaux pour évaluer les candidats et responsabiliser les élus.",
-      "line2": "Tout ce dont vous avez besoin pour vous faire entendre — 100% gratuit et anonyme.",
+      "line1": "Dites ce que vous pensez vraiment. Anonymement. Sans débat, sans trolls, sans que vos amis le voient. Votre vrai nom reste privé, et votre opinion compte autant que celle de chacun.",
+      "line2": "Nous collectons des opinions, pas des conversations. Pas d'influenceurs, pas de bruit — juste des gens qui partagent ce qu'ils pensent vraiment. C'est comme ça que le changement se fait.",
       "cardTitle": "Démonstration Complète du Produit",
       "cardSubtitle": "Regardez notre démonstration complète pour découvrir toutes les fonctionnalités de Choseno en action"
     },

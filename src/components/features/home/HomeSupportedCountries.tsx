@@ -60,8 +60,8 @@ export default function HomeSupportedCountries() {
         t("home.countries.inH2", "State Vidhan Sabhas"),
         t("home.countries.inH3", "Constituent Reviews & Ratings"),
       ],
-      href: "/elections",
-      cta: t("home.countries.viewCandidates", "View candidates"),
+      href: "/find-my-district",
+      cta: t("home.countries.exploreDistrict", "Find your district"),
     },
     {
       flag: "🌍",
@@ -78,8 +78,8 @@ export default function HomeSupportedCountries() {
         t("home.countries.moreH2", "Australia (Commonwealth)"),
         t("home.countries.moreH3", "European Union & More"),
       ],
-      href: "/find-my-district",
-      cta: t("home.countries.requestArea", "Request your region"),
+      href: "/auth?role=citizen",
+      cta: t("home.countries.joinMission", "Join the Mission"),
     },
   ];
 
@@ -173,7 +173,7 @@ export default function HomeSupportedCountries() {
                 <div className="mt-6 pt-3">
                   <Link
                     href={item.href}
-                    className="inline-flex items-center justify-between w-full px-3.5 py-2 rounded-xl bg-surface-elevated/80 hover:bg-primary hover:text-text-on-primary text-text-main text-xs sm:text-sm font-semibold border border-border-light transition-all duration-200 group/link"
+                    className="inline-flex items-center justify-between w-full px-3.5 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs sm:text-sm font-semibold border-0 transition-all duration-200 group/link shadow-md hover:shadow-lg"
                   >
                     <span>{item.cta}</span>
                     <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-1" />

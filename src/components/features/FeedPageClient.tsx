@@ -171,18 +171,8 @@ export default function FeedPageClient() {
     async function initData() {
       if (authLoading) return;
       if (!user) {
-        // Anonymous visitors (incl. crawlers, now that /feed is indexable —
-        // see robots.ts) have no membership data to scope a feed by, so
-        // fall back to the international feed as a public default rather
-        // than leaving the page empty.
-        const { data } = await getInternationalScopedPosts(supabase);
-        const anonPosts = (data || []) as PostWithComments[];
-        const authors = await hydratePoliticianAuthors(supabase, anonPosts);
-        if (isMounted) {
-          setPosts(anonPosts);
-          setPoliticianAuthors(authors);
-          setLoading(false);
-        }
+        // Redirect non-authenticated users to login page
+        router.replace("/auth?next=/feed");
         return;
       }
       setLoading(true);

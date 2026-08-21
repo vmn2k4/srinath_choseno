@@ -463,10 +463,14 @@ export function CyclingBoundaryPill({ levels }: { levels: string[] }) {
 
 // The one piece of the page that genuinely needs client-side auth state:
 // the CTA destination/label depends on whether a session exists. Signed-out
-// visitors get two role-segmented CTAs instead of one generic button, since
-// a citizen and a future candidate want to land in different places -- the
-// `role` query param carries through /auth -> /onboarding so the role step
-// there is pre-selected instead of asked twice. Kept as a small island
+// visitors used to get two role-segmented CTAs here (citizen vs. "I'm
+// Running for Office") -- but most hero traffic is ordinary citizens, and
+// splitting the very first CTA on the page in two just adds a decision
+// point that costs sign-ups. Now a single, unambiguous "join" button; anyone
+// who actually wants to run for office still gets a dedicated CTA further
+// down the page, in the "For People Who Want to Run" audience card. The
+// `role` query param still carries through /auth -> /onboarding so the role
+// step there is pre-selected instead of asked twice. Kept as a small island
 // rather than making the whole page client-side for it.
 export function RoleSplitCta({
   size = "lg",
@@ -504,30 +508,20 @@ export function RoleSplitCta({
   }
 
   return (
-    <div className={`w-full flex flex-col sm:flex-row items-center ${justify} gap-3 sm:gap-4`}>
+    <div className={`w-full flex ${justify}`}>
       <MagneticCta
         href="/auth?role=citizen"
         wrapperClassName="w-full sm:w-auto"
-        className={`group inline-flex items-center gap-3 w-full sm:w-auto justify-center ${pad} rounded-2xl bg-primary text-text-on-primary font-bold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-elevated-md`}
+        className={`group inline-flex items-center gap-3 w-full sm:w-auto justify-center ${pad} rounded-2xl bg-orange-600 text-white font-bold hover:bg-orange-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-orange-500/0 before:via-white/10 before:to-orange-500/0 before:animate-pulse`}
       >
-        {t("home.citizenCta")}
-        <ArrowRight
-          size={iconSize}
-          className="transition-transform duration-300 group-hover:translate-x-1.5"
-          aria-hidden="true"
-        />
-      </MagneticCta>
-      <MagneticCta
-        href="/auth?role=politician"
-        wrapperClassName="w-full sm:w-auto"
-        className={`group inline-flex items-center gap-3 w-full sm:w-auto justify-center ${pad} rounded-2xl border-2 border-primary/50 bg-surface-elevated/70 text-text-main font-bold hover:bg-primary/10 hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 cursor-pointer`}
-      >
-        {t("home.candidateCta")}
-        <ArrowRight
-          size={iconSize}
-          className="transition-transform duration-300 group-hover:translate-x-1.5"
-          aria-hidden="true"
-        />
+        <span className="relative z-10 inline-flex items-center gap-3">
+          {t("home.citizenCta")}
+          <ArrowRight
+            size={iconSize}
+            className="transition-transform duration-300 group-hover:translate-x-1.5"
+            aria-hidden="true"
+          />
+        </span>
       </MagneticCta>
     </div>
   );

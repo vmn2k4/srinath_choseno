@@ -14,6 +14,7 @@ import {
   setCandidateAnswerRanking,
   updateCandidateIntroVideoUrl,
   submitCandidateApplication,
+  upsertAnswerPitchPost,
 } from "@/lib/services/elections";
 import { ArrowLeft, Send, Video, RefreshCw, ChevronUp, ChevronDown } from "lucide-react";
 import {
@@ -229,6 +230,7 @@ export default function CandidateApplicationClient({
     if (question?.question_type === "ranking" && actualAnswerId) {
       await setCandidateAnswerRanking(supabase, actualAnswerId, merged.rankedOptionIds || []);
     }
+    return actualAnswerId;
   };
 
   // Initialize ranking answers on first load: ensure answer row exists with all options ranked
@@ -326,7 +328,17 @@ export default function CandidateApplicationClient({
 
   const handleQuestionVideoUploaded = async (questionId: string, url: string) => {
     setRecordingQuestionId(null);
-    await persistAnswer(questionId, { videoUrl: url });
+    const answerId = await persistAnswer(questionId, { videoUrl: url });
+    // Turns this video answer into a real wall post (create on first submit,
+    // in-place video swap on retake) — see upsert_answer_pitch_post. Fire
+    // after persistAnswer so the answer row's video_url is already saved;
+    // errors here (e.g. transient network) shouldn't block the answer itself
+    // from having saved, so this is best-effort and logged, not surfaced as
+    // a blocking form error.
+    if (answerId) {
+      const { error } = await upsertAnswerPitchPost(supabase, answerId);
+      if (error) console.error("Failed to publish video answer as a wall post:", error);
+    }
   };
 
   const handleSubmit = async () => {
@@ -643,21 +655,33 @@ export default function CandidateApplicationClient({
                   </div>
                 )}
 
-                {/* Per-Question Video Pitch */}
+                {/* Question video — played before the candidate answers, admin-uploaded or generated */}
+                {q.question_video_url && (
+                  <div className="pt-2">
+                    <video src={q.question_video_url} controls className="w-full max-h-64 rounded-xl bg-black" style={{ aspectRatio: "9 / 16", maxWidth: 220 }} />
+                  </div>
+                )}
+
+                {/* Per-Question Video Pitch — duration cap is admin-configured
+                    per question (max_answer_seconds, defaults to 30s), not a
+                    fixed value. */}
                 {started && q.allow_video && (
                   <div className="pt-2">
                     {ans.videoUrl && recordingQuestionId !== q.id ? (
                       <div className="space-y-2">
                         <video src={ans.videoUrl} controls className="w-full max-h-48 rounded-xl bg-black" />
                         <Button variant="outline" size="sm" onClick={() => setRecordingQuestionId(q.id)} className="gap-1.5 text-xs">
-                          <RefreshCw size={13} /> Re-record Video Answer
+                          <RefreshCw size={13} /> Retake Video Answer
                         </Button>
                       </div>
                     ) : recordingQuestionId === q.id ? (
-                      <VideoRecorder maxDuration={60} onVideoUploaded={(url) => handleQuestionVideoUploaded(q.id, url)} />
+                      <VideoRecorder
+                        maxDuration={q.max_answer_seconds || 30}
+                        onVideoUploaded={(url) => handleQuestionVideoUploaded(q.id, url)}
+                      />
                     ) : (
                       <Button variant="ghost" size="sm" onClick={() => setRecordingQuestionId(q.id)} className="gap-1.5 text-xs">
-                        <Video size={14} /> Add 60s Video Stance Explanation (Optional)
+                        <Video size={14} /> Add {q.max_answer_seconds || 30}s Video Stance Explanation (Optional)
                       </Button>
                     )}
                   </div>

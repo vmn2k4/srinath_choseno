@@ -706,8 +706,11 @@ export type Database = {
           created_at: string
           election_id: string
           id: string
+          max_answer_seconds: number
           question_text: string
           question_type: string
+          question_video_path: string | null
+          question_video_url: string | null
           rank: number
           required: boolean
           visible_to_public: boolean
@@ -718,8 +721,11 @@ export type Database = {
           created_at?: string
           election_id: string
           id?: string
+          max_answer_seconds?: number
           question_text: string
           question_type?: string
+          question_video_path?: string | null
+          question_video_url?: string | null
           rank?: number
           required?: boolean
           visible_to_public?: boolean
@@ -730,8 +736,11 @@ export type Database = {
           created_at?: string
           election_id?: string
           id?: string
+          max_answer_seconds?: number
           question_text?: string
           question_type?: string
+          question_video_path?: string | null
+          question_video_url?: string | null
           rank?: number
           required?: boolean
           visible_to_public?: boolean
@@ -971,6 +980,67 @@ export type Database = {
         }
         Relationships: []
       }
+      key_political_leaders: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          full_name: string
+          id: string
+          normalized_name: string
+          notes: string | null
+          office_holder_id: string | null
+          politician_profile_id: string | null
+          priority: number
+          role_title: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          full_name: string
+          id?: string
+          normalized_name?: string
+          notes?: string | null
+          office_holder_id?: string | null
+          politician_profile_id?: string | null
+          priority?: number
+          role_title?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          full_name?: string
+          id?: string
+          normalized_name?: string
+          notes?: string | null
+          office_holder_id?: string | null
+          politician_profile_id?: string | null
+          priority?: number
+          role_title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "key_political_leaders_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "key_political_leaders_office_holder_id_fkey"
+            columns: ["office_holder_id"]
+            isOneToOne: false
+            referencedRelation: "office_holders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "key_political_leaders_politician_profile_id_fkey"
+            columns: ["politician_profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       map_shapes: {
         Row: {
           boundary_type: string
@@ -1188,6 +1258,42 @@ export type Database = {
             columns: ["political_party_id"]
             isOneToOne: false
             referencedRelation: "political_parties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      news_import_source_urls: {
+        Row: {
+          imported_at: string
+          news_article_id: string | null
+          politician_id: string
+          source_url: string
+        }
+        Insert: {
+          imported_at?: string
+          news_article_id?: string | null
+          politician_id: string
+          source_url: string
+        }
+        Update: {
+          imported_at?: string
+          news_article_id?: string | null
+          politician_id?: string
+          source_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "news_import_source_urls_news_article_id_fkey"
+            columns: ["news_article_id"]
+            isOneToOne: false
+            referencedRelation: "news_articles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "news_import_source_urls_politician_id_fkey"
+            columns: ["politician_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -1540,65 +1646,6 @@ export type Database = {
           },
         ]
       }
-      key_political_leaders: {
-        Row: {
-          created_at: string
-          created_by: string | null
-          full_name: string
-          id: string
-          normalized_name: string
-          notes: string | null
-          office_holder_id: string | null
-          politician_profile_id: string | null
-          priority: number
-          role_title: string | null
-        }
-        Insert: {
-          created_at?: string
-          created_by?: string | null
-          full_name: string
-          id?: string
-          notes?: string | null
-          office_holder_id?: string | null
-          politician_profile_id?: string | null
-          priority?: number
-          role_title?: string | null
-        }
-        Update: {
-          created_at?: string
-          created_by?: string | null
-          full_name?: string
-          id?: string
-          notes?: string | null
-          office_holder_id?: string | null
-          politician_profile_id?: string | null
-          priority?: number
-          role_title?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "key_political_leaders_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "key_political_leaders_office_holder_id_fkey"
-            columns: ["office_holder_id"]
-            isOneToOne: false
-            referencedRelation: "office_holders"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "key_political_leaders_politician_profile_id_fkey"
-            columns: ["politician_profile_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       political_parties: {
         Row: {
           country: string
@@ -1640,15 +1687,26 @@ export type Database = {
           claimed_at: string | null
           created_at: string
           created_by: string | null
+          engagement_score: number | null
           error_message: string | null
+          estimated_read_time_seconds: number | null
+          first_open_time_seconds: number | null
           id: string
+          last_opened_at: string | null
+          link_clicks: number | null
+          links_clicked: Json | null
           opened_at: string | null
+          opened_count: number | null
           politician_email: string
           politician_name: string
           role_title: string | null
           sent_at: string | null
           status: string
+          tracking_token: string | null
           updated_at: string
+          wall_visit_duration_seconds: number | null
+          wall_visited: boolean | null
+          wall_visited_at: string | null
         }
         Insert: {
           campaign_name: string
@@ -1658,15 +1716,26 @@ export type Database = {
           claimed_at?: string | null
           created_at?: string
           created_by?: string | null
+          engagement_score?: number | null
           error_message?: string | null
+          estimated_read_time_seconds?: number | null
+          first_open_time_seconds?: number | null
           id?: string
+          last_opened_at?: string | null
+          link_clicks?: number | null
+          links_clicked?: Json | null
           opened_at?: string | null
+          opened_count?: number | null
           politician_email: string
           politician_name: string
           role_title?: string | null
           sent_at?: string | null
           status?: string
+          tracking_token?: string | null
           updated_at?: string
+          wall_visit_duration_seconds?: number | null
+          wall_visited?: boolean | null
+          wall_visited_at?: string | null
         }
         Update: {
           campaign_name?: string
@@ -1676,15 +1745,26 @@ export type Database = {
           claimed_at?: string | null
           created_at?: string
           created_by?: string | null
+          engagement_score?: number | null
           error_message?: string | null
+          estimated_read_time_seconds?: number | null
+          first_open_time_seconds?: number | null
           id?: string
+          last_opened_at?: string | null
+          link_clicks?: number | null
+          links_clicked?: Json | null
           opened_at?: string | null
+          opened_count?: number | null
           politician_email?: string
           politician_name?: string
           role_title?: string | null
           sent_at?: string | null
           status?: string
+          tracking_token?: string | null
           updated_at?: string
+          wall_visit_duration_seconds?: number | null
+          wall_visited?: boolean | null
+          wall_visited_at?: string | null
         }
         Relationships: [
           {
@@ -1960,6 +2040,7 @@ export type Database = {
           country: string | null
           created_at: string | null
           dislikes_count: number | null
+          election_answer_id: string | null
           election_candidate_id: string | null
           ghost_id: string
           id: string
@@ -1970,6 +2051,7 @@ export type Database = {
           likes_count: number | null
           link_metadata: Json | null
           news_article_id: string | null
+          post_kind: string
           removed_at: string | null
           removed_by: string | null
           removed_reason: string | null
@@ -1982,6 +2064,7 @@ export type Database = {
           country?: string | null
           created_at?: string | null
           dislikes_count?: number | null
+          election_answer_id?: string | null
           election_candidate_id?: string | null
           ghost_id: string
           id?: string
@@ -1992,6 +2075,7 @@ export type Database = {
           likes_count?: number | null
           link_metadata?: Json | null
           news_article_id?: string | null
+          post_kind?: string
           removed_at?: string | null
           removed_by?: string | null
           removed_reason?: string | null
@@ -2004,6 +2088,7 @@ export type Database = {
           country?: string | null
           created_at?: string | null
           dislikes_count?: number | null
+          election_answer_id?: string | null
           election_candidate_id?: string | null
           ghost_id?: string
           id?: string
@@ -2014,6 +2099,7 @@ export type Database = {
           likes_count?: number | null
           link_metadata?: Json | null
           news_article_id?: string | null
+          post_kind?: string
           removed_at?: string | null
           removed_by?: string | null
           removed_reason?: string | null
@@ -2021,6 +2107,13 @@ export type Database = {
           wall_ghost_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "posts_election_answer_id_fkey"
+            columns: ["election_answer_id"]
+            isOneToOne: false
+            referencedRelation: "election_candidate_answers"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "posts_election_candidate_id_fkey"
             columns: ["election_candidate_id"]
@@ -2248,191 +2341,47 @@ export type Database = {
         }
         Relationships: []
       }
-      staging_3ca4898a_241b_4fa2_9fc8_e7f6b481ce90: {
+      tracking_events: {
         Row: {
-          districtname: string | null
-          geom: unknown
-          ogc_fid: number
-          state_norm: string | null
-          statename: string | null
-          status: string | null
-          ulbcode: string | null
-          ulbname: string | null
-          ward_full_code: string | null
-          wardcode: string | null
-          wardname: string | null
+          created_at: string | null
+          event_data: Json | null
+          event_type: string
+          id: number
+          occurred_at: string | null
+          send_id: string
         }
         Insert: {
-          districtname?: string | null
-          geom?: unknown
-          ogc_fid?: number
-          state_norm?: string | null
-          statename?: string | null
-          status?: string | null
-          ulbcode?: string | null
-          ulbname?: string | null
-          ward_full_code?: string | null
-          wardcode?: string | null
-          wardname?: string | null
+          created_at?: string | null
+          event_data?: Json | null
+          event_type: string
+          id?: number
+          occurred_at?: string | null
+          send_id: string
         }
         Update: {
-          districtname?: string | null
-          geom?: unknown
-          ogc_fid?: number
-          state_norm?: string | null
-          statename?: string | null
-          status?: string | null
-          ulbcode?: string | null
-          ulbname?: string | null
-          ward_full_code?: string | null
-          wardcode?: string | null
-          wardname?: string | null
+          created_at?: string | null
+          event_data?: Json | null
+          event_type?: string
+          id?: number
+          occurred_at?: string | null
+          send_id?: string
         }
-        Relationships: []
-      }
-      staging_7360e4a2_e1ae_4f1f_87f1_a1cf0ecf0959: {
-        Row: {
-          geom: unknown
-          inpoly_fid: number | null
-          maxsimptol: number | null
-          minsimptol: number | null
-          objectid: number | null
-          ogc_fid: number
-          remarks: string | null
-          shape_area: number | null
-          shape_length: number | null
-          simpgnflag: number | null
-          state_lgd: number | null
-          stcode11: string | null
-          stname: string | null
-          stname_sh: string | null
-        }
-        Insert: {
-          geom?: unknown
-          inpoly_fid?: number | null
-          maxsimptol?: number | null
-          minsimptol?: number | null
-          objectid?: number | null
-          ogc_fid?: number
-          remarks?: string | null
-          shape_area?: number | null
-          shape_length?: number | null
-          simpgnflag?: number | null
-          state_lgd?: number | null
-          stcode11?: string | null
-          stname?: string | null
-          stname_sh?: string | null
-        }
-        Update: {
-          geom?: unknown
-          inpoly_fid?: number | null
-          maxsimptol?: number | null
-          minsimptol?: number | null
-          objectid?: number | null
-          ogc_fid?: number
-          remarks?: string | null
-          shape_area?: number | null
-          shape_length?: number | null
-          simpgnflag?: number | null
-          state_lgd?: number | null
-          stcode11?: string | null
-          stname?: string | null
-          stname_sh?: string | null
-        }
-        Relationships: []
-      }
-      staging_89a7cd27_3e2b_4b47_8ba8_0ba37fc0318b: {
-        Row: {
-          ac_id: string | null
-          ac_name: string | null
-          ac_no: number | null
-          dist_lgd: number | null
-          dist_name: string | null
-          geom: unknown
-          ogc_fid: number
-          pc_name: string | null
-          pc_no: number | null
-          st_name: string | null
-          state_lgd: number | null
-        }
-        Insert: {
-          ac_id?: string | null
-          ac_name?: string | null
-          ac_no?: number | null
-          dist_lgd?: number | null
-          dist_name?: string | null
-          geom?: unknown
-          ogc_fid?: number
-          pc_name?: string | null
-          pc_no?: number | null
-          st_name?: string | null
-          state_lgd?: number | null
-        }
-        Update: {
-          ac_id?: string | null
-          ac_name?: string | null
-          ac_no?: number | null
-          dist_lgd?: number | null
-          dist_name?: string | null
-          geom?: unknown
-          ogc_fid?: number
-          pc_name?: string | null
-          pc_no?: number | null
-          st_name?: string | null
-          state_lgd?: number | null
-        }
-        Relationships: []
-      }
-      staging_db3c53db_8b13_4868_b1a2_11b07da77963: {
-        Row: {
-          geom: unknown
-          objectid: number | null
-          ogc_fid: number
-          pc_id: number | null
-          pc_name: string | null
-          pc_no: number | null
-          shape_area: number | null
-          shape_length: number | null
-          st_area_sh: number | null
-          st_code: string | null
-          st_length_: number | null
-          st_name: string | null
-          state_lgd: number | null
-          status: string | null
-        }
-        Insert: {
-          geom?: unknown
-          objectid?: number | null
-          ogc_fid?: number
-          pc_id?: number | null
-          pc_name?: string | null
-          pc_no?: number | null
-          shape_area?: number | null
-          shape_length?: number | null
-          st_area_sh?: number | null
-          st_code?: string | null
-          st_length_?: number | null
-          st_name?: string | null
-          state_lgd?: number | null
-          status?: string | null
-        }
-        Update: {
-          geom?: unknown
-          objectid?: number | null
-          ogc_fid?: number
-          pc_id?: number | null
-          pc_name?: string | null
-          pc_no?: number | null
-          shape_area?: number | null
-          shape_length?: number | null
-          st_area_sh?: number | null
-          st_code?: string | null
-          st_length_?: number | null
-          st_name?: string | null
-          state_lgd?: number | null
-          status?: string | null
-        }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "tracking_events_send_id_fkey"
+            columns: ["send_id"]
+            isOneToOne: false
+            referencedRelation: "campaign_sends"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tracking_events_send_id_fkey"
+            columns: ["send_id"]
+            isOneToOne: false
+            referencedRelation: "politician_claim_campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       us_federal_election_candidates: {
         Row: {
@@ -2592,6 +2541,107 @@ export type Database = {
       }
     }
     Views: {
+      campaign_sends: {
+        Row: {
+          campaign_name: string | null
+          city: string | null
+          claim_link: string | null
+          claim_token: string | null
+          claimed_at: string | null
+          created_at: string | null
+          created_by: string | null
+          email: string | null
+          engagement_score: number | null
+          error_message: string | null
+          estimated_read_time_seconds: number | null
+          first_open_time_seconds: number | null
+          id: string | null
+          last_opened_at: string | null
+          link_clicks: number | null
+          links_clicked: Json | null
+          opened_at: string | null
+          opened_count: number | null
+          politician_email: string | null
+          politician_name: string | null
+          role_title: string | null
+          sent_at: string | null
+          status: string | null
+          tracking_token: string | null
+          updated_at: string | null
+          wall_visit_duration_seconds: number | null
+          wall_visited: boolean | null
+          wall_visited_at: string | null
+        }
+        Insert: {
+          campaign_name?: string | null
+          city?: string | null
+          claim_link?: string | null
+          claim_token?: string | null
+          claimed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          email?: string | null
+          engagement_score?: number | null
+          error_message?: string | null
+          estimated_read_time_seconds?: number | null
+          first_open_time_seconds?: number | null
+          id?: string | null
+          last_opened_at?: string | null
+          link_clicks?: number | null
+          links_clicked?: Json | null
+          opened_at?: string | null
+          opened_count?: number | null
+          politician_email?: string | null
+          politician_name?: string | null
+          role_title?: string | null
+          sent_at?: string | null
+          status?: string | null
+          tracking_token?: string | null
+          updated_at?: string | null
+          wall_visit_duration_seconds?: number | null
+          wall_visited?: boolean | null
+          wall_visited_at?: string | null
+        }
+        Update: {
+          campaign_name?: string | null
+          city?: string | null
+          claim_link?: string | null
+          claim_token?: string | null
+          claimed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          email?: string | null
+          engagement_score?: number | null
+          error_message?: string | null
+          estimated_read_time_seconds?: number | null
+          first_open_time_seconds?: number | null
+          id?: string | null
+          last_opened_at?: string | null
+          link_clicks?: number | null
+          links_clicked?: Json | null
+          opened_at?: string | null
+          opened_count?: number | null
+          politician_email?: string | null
+          politician_name?: string | null
+          role_title?: string | null
+          sent_at?: string | null
+          status?: string | null
+          tracking_token?: string | null
+          updated_at?: string | null
+          wall_visit_duration_seconds?: number | null
+          wall_visited?: boolean | null
+          wall_visited_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "politician_claim_campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       geography_columns: {
         Row: {
           coord_dimension: number | null
@@ -2953,7 +3003,7 @@ export type Database = {
         }
       }
       attach_post_mentions: {
-        Args: { p_mentioned_ids?: string[]; p_post_id: string }
+        Args: { p_mentioned_ids: string[]; p_post_id: string }
         Returns: undefined
       }
       backfill_politician_profile_from_officeholder: {
@@ -3064,6 +3114,7 @@ export type Database = {
           country: string | null
           created_at: string | null
           dislikes_count: number | null
+          election_answer_id: string | null
           election_candidate_id: string | null
           ghost_id: string
           id: string
@@ -3074,6 +3125,7 @@ export type Database = {
           likes_count: number | null
           link_metadata: Json | null
           news_article_id: string | null
+          post_kind: string
           removed_at: string | null
           removed_by: string | null
           removed_reason: string | null
@@ -3103,6 +3155,7 @@ export type Database = {
           country: string | null
           created_at: string | null
           dislikes_count: number | null
+          election_answer_id: string | null
           election_candidate_id: string | null
           ghost_id: string
           id: string
@@ -3113,6 +3166,7 @@ export type Database = {
           likes_count: number | null
           link_metadata: Json | null
           news_article_id: string | null
+          post_kind: string
           removed_at: string | null
           removed_by: string | null
           removed_reason: string | null
@@ -3434,6 +3488,10 @@ export type Database = {
             Returns: undefined
           }
       insert_map_shapes_batch: { Args: { p_shapes: Json }; Returns: number }
+      insert_post_mentions: {
+        Args: { p_mentioned_ids: string[]; p_post_id: string }
+        Returns: undefined
+      }
       is_claim_reviewer_for_candidate: {
         Args: { p_candidate_id: string }
         Returns: boolean
@@ -3687,23 +3745,25 @@ export type Database = {
           p_query: string
         }
         Returns: {
-          boundary_type: string | null
-          country: string | null
+          boundary_type: string
+          country: string
           full_name: string
           is_key_leader: boolean
-          jurisdiction_name: string | null
-          key_priority: number | null
-          map_shape_id: number | null
-          office_holder_id: string | null
-          party_name: string | null
-          photo_url: string | null
-          politician_profile_id: string | null
+          jurisdiction_name: string
+          key_priority: number
+          map_shape_id: number
+          office_holder_id: string
+          party_name: string
+          photo_url: string
+          politician_profile_id: string
           result_key: string
-          role_title: string | null
+          role_title: string
           source: string
-          wall_slug: string | null
+          wall_slug: string
         }[]
       }
+      show_limit: { Args: never; Returns: number }
+      show_trgm: { Args: { "": string }; Returns: string[] }
       st_3dclosestpoint: {
         Args: { geom1: unknown; geom2: unknown }
         Returns: unknown
@@ -4385,6 +4445,39 @@ export type Database = {
           table_name: string
         }
         Returns: string
+      }
+      upsert_answer_pitch_post: {
+        Args: { p_answer_id: string }
+        Returns: {
+          civic_score_snapshot: number | null
+          content: string
+          country: string | null
+          created_at: string | null
+          dislikes_count: number | null
+          election_answer_id: string | null
+          election_candidate_id: string | null
+          ghost_id: string
+          id: string
+          image_url: string | null
+          is_country: boolean | null
+          is_international: boolean | null
+          is_test: boolean
+          likes_count: number | null
+          link_metadata: Json | null
+          news_article_id: string | null
+          post_kind: string
+          removed_at: string | null
+          removed_by: string | null
+          removed_reason: string | null
+          video_url: string | null
+          wall_ghost_id: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "posts"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
       upsert_politician_rating: {
         Args: {

@@ -22,6 +22,7 @@ import { Card, Badge } from "@/components/primitives";
 import { useTranslation } from "@/contexts/LanguageContext";
 import NewsArticleBody from "@/components/features/NewsArticleBody";
 import NewsComments from "@/components/features/NewsComments";
+import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
 import NewsArticleLinkedPoliticians from "@/components/features/NewsArticleLinkedPoliticians";
 import PoliticianInlineRating from "@/components/features/PoliticianInlineRating";
 import RelatedNewsSection from "@/components/features/RelatedNewsSection";
@@ -264,6 +265,7 @@ export default function NewsArticleDetailClient({
 
   return (
     <div className="w-full max-w-none pb-20 px-4 lg:px-8 space-y-6">
+      <MissionRegisterCTA variant="news" nextPath={`/news/${slug}`} />
       {/* Consolidated Nav + Article Meta Bar — back link, category, breaking
           badge on the left; quick copy, share, translate on the right.
           flex-nowrap keeps this pinned to a single row at every width;

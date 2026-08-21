@@ -1,9 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import AdminSubNav from "./AdminSubNav";
+
+// Same on-demand load as CandidateApplicationClient — only pulled in once an
+// admin actually opens the "upload question video" panel. Spinner is
+// imported further below alongside the rest of this file's primitives.
+const VideoRecorder = dynamic(() => import("./VideoRecorder"), {
+  ssr: false,
+  loading: () => <div className="text-xs text-text-muted">Loading recorder…</div>,
+});
 import CascadingBoundarySelector from "./CascadingBoundarySelector";
 import AnswerValue from "./AnswerValue";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
@@ -28,6 +37,7 @@ import {
   updateElectionQuestionOption,
   deleteElectionQuestionOption,
   resolveRegionNames,
+  updateElectionQuestionVideo,
 } from "@/lib/services/elections";
 import {
   getCountries,
@@ -243,6 +253,7 @@ export default function ElectionsAdminClient() {
   const [newQuestionAllowContext, setNewQuestionAllowContext] = useState(false);
   const [newQuestionAllowVideo, setNewQuestionAllowVideo] = useState(true);
   const [newQuestionVisible, setNewQuestionVisible] = useState(true);
+  const [newQuestionMaxAnswerSeconds, setNewQuestionMaxAnswerSeconds] = useState(30);
   const [questionStatus, setQuestionStatus] = useState("");
 
   // Editing an existing question in place (question_type stays fixed once
@@ -254,8 +265,14 @@ export default function ElectionsAdminClient() {
   const [editAllowContext, setEditAllowContext] = useState(false);
   const [editAllowVideo, setEditAllowVideo] = useState(true);
   const [editVisible, setEditVisible] = useState(true);
+  const [editMaxAnswerSeconds, setEditMaxAnswerSeconds] = useState(30);
   const [editStatus, setEditStatus] = useState("");
   const [editBusy, setEditBusy] = useState(false);
+  // Question video (upload only here — "Generate via Qwen" is a local,
+  // dev-only pipeline, not wired into this admin UI yet; see the Gap 1 open
+  // question in docs/VIRTUAL_INTERVIEW_SYSTEM.md).
+  const [showQuestionVideoUpload, setShowQuestionVideoUpload] = useState<string | null>(null);
+  const [questionVideoStatus, setQuestionVideoStatus] = useState<Record<string, string>>({});
 
   // Bulk "Import from JSON" flow for the questionnaire
   const [showImportModal, setShowImportModal] = useState(false);
@@ -745,6 +762,7 @@ export default function ElectionsAdminClient() {
       allow_context: newQuestionAllowContext,
       allow_video: newQuestionAllowVideo,
       visible_to_public: newQuestionVisible,
+      max_answer_seconds: newQuestionMaxAnswerSeconds || 30,
       rank: questions.length,
     });
     if (error || !q) {
@@ -770,6 +788,7 @@ export default function ElectionsAdminClient() {
     setNewQuestionAllowContext(false);
     setNewQuestionAllowVideo(true);
     setNewQuestionVisible(true);
+    setNewQuestionMaxAnswerSeconds(30);
     setQuestionStatus("");
     fetchQuestions(selectedElection.id);
   };
@@ -781,6 +800,7 @@ export default function ElectionsAdminClient() {
     setEditAllowContext(q.allow_context);
     setEditAllowVideo(q.allow_video !== false);
     setEditVisible(q.visible_to_public);
+    setEditMaxAnswerSeconds(q.max_answer_seconds || 30);
     setEditOptions(
       [...(q.election_question_options || [])]
         .sort((a: any, b: any) => a.rank - b.rank)
@@ -817,6 +837,7 @@ export default function ElectionsAdminClient() {
       allow_context: editAllowContext,
       allow_video: editAllowVideo,
       visible_to_public: editVisible,
+      max_answer_seconds: editMaxAnswerSeconds || 30,
     });
     if (error) {
       setEditBusy(false);
@@ -851,6 +872,20 @@ export default function ElectionsAdminClient() {
     setEditingQuestionId(null);
     setQuestionStatus("Question updated.");
     fetchQuestions(selectedElection.id);
+  };
+
+  // Question video — upload only. "Generate via Qwen" (the local
+  // nvidia_shorts_studio pipeline) is a deliberately separate follow-up, not
+  // wired into this button — see docs/VIRTUAL_INTERVIEW_SYSTEM.md Gap 1.
+  const handleUploadQuestionVideo = async (questionId: string, url: string) => {
+    setQuestionVideoStatus((prev) => ({ ...prev, [questionId]: "" }));
+    const { error } = await updateElectionQuestionVideo(supabase, questionId, { videoUrl: url });
+    if (error) {
+      setQuestionVideoStatus((prev) => ({ ...prev, [questionId]: "Error: " + error.message }));
+      return;
+    }
+    setShowQuestionVideoUpload(null);
+    if (selectedElection) fetchQuestions(selectedElection.id);
   };
 
   const handleImportFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -1239,6 +1274,50 @@ export default function ElectionsAdminClient() {
                         />
                         <Checkbox label="Visible to voters" checked={editVisible} onChange={(e) => setEditVisible(e.target.checked)} />
                       </div>
+                      {editAllowVideo && (
+                        <div className="flex items-center gap-2">
+                          <label className="text-xs font-semibold text-text-muted whitespace-nowrap">
+                            Max answer length (seconds):
+                          </label>
+                          <Input
+                            type="number"
+                            min={5}
+                            max={180}
+                            value={editMaxAnswerSeconds}
+                            onChange={(e) => setEditMaxAnswerSeconds(parseInt(e.target.value, 10) || 30)}
+                            className="w-20"
+                          />
+                        </div>
+                      )}
+
+                      {/* Question video — played to the candidate before
+                          they answer. Upload only (see
+                          handleUploadQuestionVideo's comment for why
+                          "Generate via Qwen" isn't wired in here yet). */}
+                      <div className="space-y-1.5">
+                        {q.question_video_url && (
+                          <video src={q.question_video_url} controls className="rounded-lg bg-black max-h-32" style={{ aspectRatio: "9 / 16" }} />
+                        )}
+                        {showQuestionVideoUpload === q.id ? (
+                          <VideoRecorder
+                            maxDuration={30}
+                            onVideoUploaded={(url) => handleUploadQuestionVideo(q.id, url)}
+                          />
+                        ) : (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setShowQuestionVideoUpload(q.id)}
+                            className="text-xs gap-1.5"
+                          >
+                            <Upload size={13} /> {q.question_video_url ? "Replace" : "Upload"} Question Video
+                          </Button>
+                        )}
+                        {questionVideoStatus[q.id] && (
+                          <p className="text-danger text-xs">{questionVideoStatus[q.id]}</p>
+                        )}
+                      </div>
+
                       <div className="flex items-center gap-2">
                         <Button size="sm" onClick={() => handleSaveQuestionEdit(q)} disabled={editBusy}>
                           {editBusy ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />} Save
@@ -1390,6 +1469,21 @@ export default function ElectionsAdminClient() {
                   onChange={(e) => setNewQuestionVisible(e.target.checked)}
                 />
               </div>
+              {newQuestionAllowVideo && (
+                <div className="flex items-center gap-2">
+                  <label className="text-xs font-semibold text-text-muted whitespace-nowrap">
+                    Max answer length (seconds):
+                  </label>
+                  <Input
+                    type="number"
+                    min={5}
+                    max={180}
+                    value={newQuestionMaxAnswerSeconds}
+                    onChange={(e) => setNewQuestionMaxAnswerSeconds(parseInt(e.target.value, 10) || 30)}
+                    className="w-20"
+                  />
+                </div>
+              )}
               <Button onClick={handleAddQuestion} size="sm">
                 <Plus size={16} /> Add Question
               </Button>

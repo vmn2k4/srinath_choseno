@@ -32,7 +32,7 @@
     "titleSub": "Like Yelp, but for Democracy.",
     "subtitle": "A secure, anonymous space to hold local leaders accountable. Share your experience, read what your neighbors think, and walk into the booth informed — no toxicity, just accountability.",
     "scopedTo": "Conversations scoped to",
-    "citizenCta": "I'm a Citizen",
+    "citizenCta": "Join the Mission",
     "candidateCta": "I'm Running for Office",
     "openFeed": "Open your feed",
     "trustChips": {
@@ -44,8 +44,8 @@
     "demo": {
       "title": "Why Choseno?",
       "quote": "\"Built for everyday citizens — powered for real democracy.\"",
-      "line1": "Forget party loyalty and algorithmic echo chambers. Choseno gives you independent, hyperlocal tools to evaluate candidates and hold elected officials accountable.",
-      "line2": "Everything you need to make your voice heard — 100% free and anonymous.",
+      "line1": "Say what you really think. Anonymously. No arguments, no trolls, no friends seeing it. Your real name stays private, and your opinion counts just as much as anyone else's.",
+      "line2": "We collect opinions, not conversations. No influencers, no noise — just real people sharing what they actually believe. That's how real change happens.",
       "cardTitle": "Complete Product Demo",
       "cardSubtitle": "Watch our full demo to see all Choseno features in action"
     },

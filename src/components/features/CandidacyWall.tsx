@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import LinkPreview from "./LinkPreview";
 import AnswerValue from "./AnswerValue";
+import PlayInterviewReel from "./PlayInterviewReel";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 import PostCard, { type PostWithComments } from "@/components/features/PostCard";
@@ -224,6 +225,7 @@ export default function CandidacyWall({
   const [claimSubmitted, setClaimSubmitted] = useState(false);
   const [mediaPreview, setMediaPreview] = useState<{ url: string; type: "image" | "video" } | null>(null);
   const [showPositionsModal, setShowPositionsModal] = useState(false);
+  const [showReel, setShowReel] = useState(false);
 
   const loadAnswers = async () => {
     const { data: answerRows } = await getPublicCandidateAnswers(supabase, candidateId);
@@ -824,6 +826,23 @@ export default function CandidacyWall({
                   </Link>
                 )}
 
+                {/* Play entire interview — the same reel this candidate's
+                    entry in the seat-page candidate strip also opens
+                    (PlayInterviewReel), only shown once they have at least
+                    one video answer. */}
+                {answers.some((a) => a.video_url) && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowReel(true)}
+                    className="gap-1.5 text-xs border-primary/30 text-primary-light hover:bg-primary/10 shrink-0"
+                    title={`Play ${displayName}'s full interview`}
+                  >
+                    <Video size={13} />
+                    Play Interview
+                  </Button>
+                )}
+
                 {/* Support Button */}
                 <Button
                   variant={isSupporting ? "primary" : "outline"}
@@ -877,6 +896,24 @@ export default function CandidacyWall({
                 </Button>
               )}
             </div>
+
+            {/* Owner nudge -- covers both access paths from
+                docs/VIRTUAL_INTERVIEW_SYSTEM.md Gap 2: a candidate who just
+                claimed via email token lands here from
+                ClaimCandidacyClient's "Answer Interview Questions" button,
+                but anyone revisiting their own page later (the logged-in
+                path) needs the same nudge, since nothing else on this page
+                points at /apply. */}
+            {isOwner && (
+              <Alert tone="info" className="text-xs">
+                <div className="flex items-center justify-between gap-3 flex-wrap">
+                  <span>Answer your interview questions to let voters hear from you directly.</span>
+                  <Button size="sm" onClick={() => router.push(`/apply/${candidateId}`)} className="shrink-0">
+                    Answer Now
+                  </Button>
+                </div>
+              </Alert>
+            )}
 
             {/* Stub candidate invite notice */}
             {isStubCandidate && (
@@ -1152,6 +1189,14 @@ export default function CandidacyWall({
           url={mediaPreview.url}
           type={mediaPreview.type}
           onClose={() => setMediaPreview(null)}
+        />
+      )}
+
+      {showReel && (
+        <PlayInterviewReel
+          candidateId={candidateId}
+          candidateName={displayName}
+          onClose={() => setShowReel(false)}
         />
       )}
 
