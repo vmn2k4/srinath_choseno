@@ -1,670 +1,5 @@
 {
   "topics": {
-    "alejandro kirk": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "alejandro kirk"
-    },
-    "wnba standings": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "wnba standings"
-    },
-    "dwcs": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "dwcs"
-    },
-    "liam hicks": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "liam hicks"
-    },
-    "juan manuel cer ndolo": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "juan manuel cerúndolo"
-    },
-    "wang xinyu": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "wang xinyu"
-    },
-    "smiths falls": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "smiths falls"
-    },
-    "juan manuel cerundolo": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "juan manuel cerundolo"
-    },
-    "sara bejlek": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "sara bejlek"
-    },
-    "atp cincinnati 2026": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "atp cincinnati 2026"
-    },
-    "angels vs astros": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "angels vs astros"
-    },
-    "marina mabrey": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "marina mabrey"
-    },
-    "debbie wasserman schultz": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "debbie wasserman schultz"
-    },
-    "braves twins": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "braves - twins"
-    },
-    "roman puga": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "roman puga"
-    },
-    "nationals vs rangers": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "nationals vs rangers"
-    },
-    "griffin conine": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "griffin conine"
-    },
-    "denver broncos practice altercation": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "denver broncos practice altercation"
-    },
-    "almasa cajic powerball win": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_trends",
-      "title": "almasa cajic powerball win"
-    },
-    "wakeham defends removal of 2 per cent escalation clause from new churchill falls deal vocm": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Wakeham Defends Removal of 2 Per Cent Escalation Clause from New Churchill Falls Deal - VOCM"
-    },
-    "another duty to warn letter casts doubt on carney s rapprochement with india cbc": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Another duty to warn letter casts doubt on Carney's rapprochement with India - CBC"
-    },
-    "b c premier david eby holds firm on u s alcohol ban even under the ire of trump daily hive": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "B.C. Premier David Eby holds firm on U.S. alcohol ban even under the ire of Trump - Daily Hive"
-    },
-    "mike nesbitt resigns as health minister amid row with uup leader bbc": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Mike Nesbitt resigns as health minister amid row with UUP leader - BBC"
-    },
-    "natalie harp trump s gatekeeper is at center of senator jon ossoff clash bloomberg com": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Natalie Harp, Trump’s Gatekeeper, Is at Center of Senator Jon Ossoff Clash - bloomberg.com"
-    },
-    "personal documentary about viktor orb n to premiere in 2027 daily news hungary": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Personal documentary about Viktor Orbán to premiere in 2027 - Daily News Hungary"
-    },
-    "greece brands turkey s new marine parks illegal euractiv com": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Greece brands Turkey's new marine parks 'illegal' - euractiv.com"
-    },
-    "irish convicts were the original boat people politico com": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "‘Irish convicts were the original boat people’ - politico.com"
-    },
-    "sonia gandhi s memoir to revisit love loss and her decision to decline india s top job the hindu": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Sonia Gandhi’s memoir to revisit love, loss and her decision to decline India’s top job - The Hindu"
-    },
-    "former fauci aide pleads guilty to dodging federal public records laws politico com": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Former Fauci aide pleads guilty to dodging federal public records laws - politico.com"
-    },
-    "natalie harp trump s gatekeeper is at center of senator jon ossoff clash bloomberg": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Natalie Harp, Trump’s Gatekeeper, Is at Center of Senator Jon Ossoff Clash - Bloomberg"
-    },
-    "senator alex padilla adam schiff push for answers after uss abraham lincoln health concerns fox5sandiego com": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Senator Alex Padilla, Adam Schiff push for answers after USS Abraham Lincoln health concerns - fox5sandiego.com"
-    },
-    "new uk leader andy burnham exchanged messages with a susie wiles impersonator the hill": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "New UK leader Andy Burnham exchanged messages with a Susie Wiles impersonator - The Hill"
-    },
-    "swalwell hooked up with alleged chinese spy newly declassified documents indicate kron4": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Swalwell ‘hooked up’ with alleged Chinese spy, newly declassified documents indicate - KRON4"
-    },
-    "former fauci aide pleads guilty to dodging federal public records laws politico": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Former Fauci aide pleads guilty to dodging federal public records laws - Politico"
-    },
-    "top aide emily underwood leaving the white house axios": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Top aide Emily Underwood leaving the White House - Axios"
-    },
-    "rhodes to exit as ofpp administrator federal news network": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Rhodes to exit as OFPP administrator - Federal News Network"
-    },
-    "paterson s warning to defense bureaucracy politico": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Paterson's warning to defense bureaucracy - Politico"
-    },
-    "china bids farewell to economic reformer zhu rongji grapples with his legacy reuters": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "China bids farewell to economic reformer Zhu Rongji, grapples with his legacy - Reuters"
-    },
-    "is the trump tinubu collaboration working council on foreign relations": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Is the Trump-Tinubu Collaboration Working? - Council on Foreign Relations"
-    },
-    "appeals court upholds sigal chattah s disqualification as us attorney in nevada the hill": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Appeals court upholds Sigal Chattah’s disqualification as US attorney in Nevada - The Hill"
-    },
-    "trump carney speak ahead of midnight tariff deadline cbc": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Trump, Carney speak ahead of midnight tariff deadline - CBC"
-    },
-    "about 150 structures damaged destroyed by bald range wildfire as most of summerland returns global news": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "About 150 structures damaged, destroyed by Bald Range wildfire, as most of Summerland returns - Global News"
-    },
-    "sentencing hearing underway for calgary man who preyed on sex trade workers global news": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Sentencing hearing underway for Calgary man who preyed on sex trade workers - Global News"
-    },
-    "iranian regime member deported from canada cbsa confirms global news": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Iranian regime member deported from Canada, CBSA confirms - Global News"
-    },
-    "remains of 3rd missing person found at same property near ottawa cbc": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Remains of 3rd missing person found at same property near Ottawa - CBC"
-    },
-    "family of toddler who died in fall from north york highrise sues building owners management cbc": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Family of toddler who died in fall from North York highrise sues building owners, management - CBC"
-    },
-    "alleged downtown ottawa parking scam leaves drivers out thousands ctv news": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Alleged downtown Ottawa parking scam leaves drivers out thousands - CTV News"
-    },
-    "store accused of making staff pay to work for it global news": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Store accused of making staff pay to work for it - Global News"
-    },
-    "no talks or conversations with iran trump says as temporary ceasefire expires cbc": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "'No talks or conversations' with Iran, Trump says, as temporary ceasefire expires - CBC"
-    },
-    "abc is right to stand up to pressure tactics from trump administration say media advocacy organizations us politics live the guardian": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "ABC is ‘right to stand up to pressure tactics’ from Trump administration, say media advocacy organizations – US politics live - The Guardian"
-    },
-    "july home sales down 5 3 from last year but market becoming more balanced crea cbc": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "July home sales down 5.3% from last year, but market becoming more balanced: CREA - CBC"
-    },
-    "major boost for green energy as canada plans 43 billion investment euronews com": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Major boost for green energy as Canada plans €43 billion investment - Euronews.com"
-    },
-    "musician ashley macisaac ends lawsuit over google ai summary falsely labelling him a sex offender cbc": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Musician Ashley MacIsaac ends lawsuit over Google AI summary falsely labelling him a sex offender - CBC"
-    },
-    "gta 6 gameplay leaked ahead of its new trailer and rockstar is taking down the videos engadget": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "GTA 6 Gameplay Leaked Ahead Of Its New Trailer, And Rockstar Is Taking Down The Videos - Engadget"
-    },
-    "iran has lost significant control of the strait of hormuz cnn com": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Iran has lost significant control of the Strait of Hormuz - cnn.com"
-    },
-    "election live updates florida alaska and wyoming primaries will shape november midterms the new york times": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Election Live Updates: Florida, Alaska and Wyoming Primaries Will Shape November Midterms - The New York Times"
-    },
-    "ballroom opponents ask supreme court to keep trump project on hold the washington post": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Ballroom opponents ask Supreme Court to keep Trump project on hold - The Washington Post"
-    },
-    "tps slow bleed leaves thousands in limbo axios": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "TPS' slow bleed leaves thousands in limbo - Axios"
-    },
-    "trump is weighing whether to grant canada a tariff reprieve politico": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Trump is weighing whether to grant Canada a tariff reprieve - Politico"
-    },
-    "trump administration moves to open millions of national forest acres to logging wsj": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Trump Administration Moves to Open Millions of National-Forest Acres to Logging - WSJ"
-    },
-    "penn state fraternity members are charged in cocaine trafficking case the new york times": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Penn State Fraternity Members Are Charged in Cocaine Trafficking Case - The New York Times"
-    },
-    "shock and devastation beloved maui spots suffer major damage after giant storm sfgate": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "'Shock and devastation': Beloved Maui spots suffer major damage after giant storm - SFGATE"
-    },
-    "minnesota attorney general sues texas governor to compel extradition of ice agent for trial ap news": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Minnesota attorney general sues Texas governor to compel extradition of ICE agent for trial - AP News"
-    },
-    "south korea president calls for military independence in wake of trump call to cut joint drills the guardian": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "South Korea president calls for military independence in wake of Trump call to cut joint drills - The Guardian"
-    },
-    "choc colombia faces deeper hardship after an earthquake the new york times": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Chocó, Colombia, Faces Deeper Hardship After an Earthquake - The New York Times"
-    },
-    "israel defends strike on syria as u s frustration with bibi grows axios": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Israel defends strike on Syria as U.S. frustration with Bibi grows - Axios"
-    },
-    "uae says two missiles detected earlier were launched from iran reuters": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "UAE says two missiles detected earlier were launched from Iran - Reuters"
-    },
-    "bond sell off sends borrowing costs to highest level since 2007 the new york times": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Bond Sell-Off Sends Borrowing Costs to Highest Level Since 2007 - The New York Times"
-    },
-    "anthropic pre ipo credit facility set to climb past 10 billion bloomberg": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Anthropic Pre-IPO Credit Facility Set to Climb Past $10 Billion - Bloomberg"
-    },
-    "why apple s camera equipped airpods may not be the pervert pods consumers fear techcrunch": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Why Apple’s camera-equipped AirPods may not be the ‘pervert pods’ consumers fear - TechCrunch"
-    },
-    "gemini in chrome and auto browse roll out on android in the us 9to5google": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "google_news",
-      "title": "Gemini in Chrome and auto browse roll out on Android in the US - 9to5Google"
-    },
-    "trump carney speak about ongoing negotiations ahead of midnight tariff deadline": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "cbc_politics",
-      "title": "Trump, Carney speak about 'ongoing negotiations' ahead of midnight tariff deadline"
-    },
-    "no referendum with trump around says pq ahead of october election": {
-      "firstSeen": "2026-08-18T23:36:10.028Z",
-      "source": "cbc_politics",
-      "title": "No referendum with Trump around, says PQ ahead of October election"
-    },
-    "florida primary election results": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "florida primary election results"
-    },
-    "edward norton": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "edward norton"
-    },
-    "pne 2026": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "pne 2026"
-    },
-    "emmy rossum": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "emmy rossum"
-    },
-    "tien": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "tien"
-    },
-    "mlb standings": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "mlb standings"
-    },
-    "david krumholtz": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "david krumholtz"
-    },
-    "krispy kreme pokemon donuts": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "krispy kreme pokemon donuts"
-    },
-    "blueface": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "blueface"
-    },
-    "wisconsin tornado warnings": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "wisconsin tornado warnings"
-    },
-    "natasha cloud": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "natasha cloud"
-    },
-    "bouzkova": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "bouzkova"
-    },
-    "daycare": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "daycare"
-    },
-    "brandon dukes": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "brandon dukes"
-    },
-    "kc royals": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "kc royals"
-    },
-    "toyota recalls": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "toyota recalls"
-    },
-    "bryce miller": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "bryce miller"
-    },
-    "lincoln memorial reflecting pool": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_trends",
-      "title": "lincoln memorial reflecting pool"
-    },
-    "this is ridiculous ndp calls on cabinet ministers to visit saskatoon s 20th street sask government fires back ctv news": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "‘This is ridiculous’: NDP calls on cabinet ministers to visit Saskatoon’s 20th Street, Sask. government fires back - CTV News"
-    },
-    "russian u s actors are targeting albertans with pro separatist content research shows theglobeandmail com": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Russian, U.S. actors are targeting Albertans with pro-separatist content, research shows - theglobeandmail.com"
-    },
-    "a new generation of catalans tries to rekindle the independence movement france24 com": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "A new generation of Catalans tries to rekindle the independence movement - france24.com"
-    },
-    "leblanc says job not yet done after meeting with greer lutnick castanet net": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "LeBlanc says job 'not yet done' after meeting with Greer, Lutnick - castanet.net"
-    },
-    "how one man gets new laws passed again and again bbc": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "How one man gets new laws passed - again and again - BBC"
-    },
-    "china mourns former premier boss zhu but on the communist party s terms wsj": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "China Mourns Former Premier ‘Boss Zhu’—but on the Communist Party’s Terms - WSJ"
-    },
-    "mpr news group home investigation roils politics in minnesota and liberia mpr news": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "MPR News group home investigation roils politics in Minnesota — and Liberia - MPR News"
-    },
-    "senator wyden demands answers over 2 million payment to company linked to trump ktvz com": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Senator Wyden demands answers over $2 million payment to company linked to Trump - ktvz.com"
-    },
-    "trump pauses 50 tariffs on canada for 3 days nbc news": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Trump pauses 50% tariffs on Canada for 3 days - NBC News"
-    },
-    "sentencing hearing held in calgary tuesday for man who preyed on sex trade workers global news": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Sentencing hearing held in Calgary Tuesday for man who preyed on sex trade workers - Global News"
-    },
-    "donkey left behind after bald ridge wildfire found rolling in ash doing great castanet net": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Donkey left behind after Bald Ridge wildfire found rolling in ash, doing 'great' - castanet.net"
-    },
-    "death cap mushroom killer erin patterson to appeal triple murder conviction global news": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Death cap mushroom killer Erin Patterson to appeal triple murder conviction - Global News"
-    },
-    "trump says n korea s kim has responded to his request for a conversation al jazeera": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Trump says N Korea’s Kim has responded to his request for a conversation - Al Jazeera"
-    },
-    "remains of 3rd missing person found at same lanark county property cbc": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Remains of 3rd missing person found at same Lanark County property - CBC"
-    },
-    "woman who killed 2 in drunk driving crash in saskatoon approved for day parole global news": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Woman who killed 2 in drunk driving crash in Saskatoon approved for day parole - Global News"
-    },
-    "18 arrested 91 warrants executed in calgary police co ordinated enforcement initiative ctv news": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "18 arrested, 91 warrants executed in Calgary police co-ordinated enforcement initiative - CTV News"
-    },
-    "prince albert police confirm missing teenager found deceased panow": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Prince Albert police confirm missing teenager found deceased - paNOW"
-    },
-    "lindsay clancy trial day 15 recap a voice told her to kill her children psychologist testified ct insider": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Lindsay Clancy trial Day 15 recap: A voice told her to 'kill her children,' psychologist testified - CT Insider"
-    },
-    "republican byron donalds and democrat david jolly will face off in florida s governor race cnn projects cnn": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Republican Byron Donalds and Democrat David Jolly will face off in Florida’s governor race, CNN projects - CNN"
-    },
-    "abc sues fcc over challenge to its broadcast licences saying actions present existential threat ctv news": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "ABC sues FCC over challenge to its broadcast licences, saying actions present ‘existential threat’ - CTV News"
-    },
-    "pretty serious claims u s trial against meta could redefine social media apps in canada ctv news": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "‘Pretty serious claims’: U.S. trial against Meta could redefine social media apps in Canada - CTV News"
-    },
-    "john ivison churchill falls deal will outlast any damage trump inflicts national post": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "John Ivison: Churchill Falls deal will outlast any damage Trump inflicts - National Post"
-    },
-    "global bond sell off lifts canadian borrowing costs to highest level since 2009 theglobeandmail com": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Global bond sell-off lifts Canadian borrowing costs to highest level since 2009 - theglobeandmail.com"
-    },
-    "gta 6 leaked gameplay shows off chaos in a knockoff ranchero the drive": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "GTA 6 Leaked Gameplay Shows Off Chaos in a Knockoff Ranchero - The Drive"
-    },
-    "former republican david jolly wins democratic nomination for florida governor the new york times": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Former Republican David Jolly Wins Democratic Nomination for Florida Governor - The New York Times"
-    },
-    "rep cory mills loses florida primary amid ethics probe axios": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Rep. Cory Mills loses Florida primary amid Ethics probe - Axios"
-    },
-    "democratic socialist angie nixon clinches surprise primary win in florida us senate race the guardian": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Democratic socialist Angie Nixon clinches surprise primary win in Florida US Senate race - The Guardian"
-    },
-    "lindsay clancy begged for help before her children s killings mother in law testifies bbc": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Lindsay Clancy begged for help before her children's killings, mother-in-law testifies - BBC"
-    },
-    "mike caruso arrested on child sexual abuse charges florida politics": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Mike Caruso arrested on child sexual abuse charges - Florida Politics"
-    },
-    "trump seeks to open millions of acres of national forests to roads the washington post": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Trump seeks to open millions of acres of national forests to roads - The Washington Post"
-    },
-    "whistleblower alleges political pressure lack of evidence in antisemitism probes targeting schools ap news": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Whistleblower alleges political pressure, lack of evidence in antisemitism probes targeting schools - AP News"
-    },
-    "us sanctions international criminal court president and trial lawyer al jazeera": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "US sanctions International Criminal Court president and trial lawyer - Al Jazeera"
-    },
-    "searching for answers from the man accused of sabotaging alaska s senate race the new york times": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Searching for Answers From the Man Accused of Sabotaging Alaska’s Senate Race - The New York Times"
-    },
-    "seoul washington to halve joint drills as trump reportedly seeks summit with north korea s kim cnbc": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Seoul, Washington to halve joint drills as Trump reportedly seeks summit with North Korea's Kim - CNBC"
-    },
-    "russia s lavrov says britain risks being seen as party to ukraine war reuters": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Russia's Lavrov says Britain risks being seen as party to Ukraine war - Reuters"
-    },
-    "erin patterson australian court to hear mushroom murderer s appeal against murder conviction bbc": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Erin Patterson: Australian court to hear mushroom murderer's appeal against murder conviction - BBC"
-    },
-    "spanish journalist says ceuta residents believe government isn t doing enough to prevent another migrant rush fox news": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Spanish journalist says Ceuta residents believe government isn't doing enough to prevent another migrant rush - Fox News"
-    },
-    "meta social media addiction trial kicks off with major implications for company s future yahoo finance": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Meta social media addiction trial kicks off with major implications for company’s future - Yahoo Finance"
-    },
-    "chinese robotics giant unitree soars in stock market debut bbc": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Chinese robotics giant Unitree soars in stock market debut - BBC"
-    },
-    "global bond markets put governments on notice over fiscal inflation risks reuters": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "Global bond markets put governments on notice over fiscal, inflation risks - Reuters"
-    },
-    "nba 2k27 just rewrote the sports game story mode gamespot": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "google_news",
-      "title": "NBA 2K27 Just Rewrote The Sports Game Story Mode - GameSpot"
-    },
-    "trump pauses 50 per cent tariffs on canadian goods for 3 days": {
-      "firstSeen": "2026-08-19T03:14:32.557Z",
-      "source": "cbc_politics",
-      "title": "Trump pauses 50 per cent tariffs on Canadian goods for 3 days"
-    },
     "steve bourdeau maple syrup lawsuit": {
       "firstSeen": "2026-08-19T20:47:58.457Z",
       "source": "google_trends",
@@ -2504,7 +1839,362 @@
       "firstSeen": "2026-08-20T21:21:19.058Z",
       "source": "cbc_politics",
       "title": "If U.S. booze returns to shelves, 'leave it there,' Manitoba premier says"
+    },
+    "michelle pfeiffer": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "michelle pfeiffer"
+    },
+    "openai": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "openai"
+    },
+    "don diamont": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "don diamont"
+    },
+    "doris miller": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "doris miller"
+    },
+    "dream vs sparks": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "dream vs sparks"
+    },
+    "ind fendable sans trace": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "indéfendable sans trace"
+    },
+    "sun vs aces": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "sun vs aces"
+    },
+    "hilaria baldwin": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "hilaria baldwin"
+    },
+    "mcdonald s canada": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "mcdonald's canada"
+    },
+    "apple martin": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "apple martin"
+    },
+    "shawn hatosy": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "shawn hatosy"
+    },
+    "san andreas fault": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "san andreas fault"
+    },
+    "death by lightning": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "death by lightning"
+    },
+    "david e kelley": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "david e kelley"
+    },
+    "fred warner": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "fred warner"
+    },
+    "dj uiagalelei": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "dj uiagalelei"
+    },
+    "angel reese stats": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "angel reese stats"
+    },
+    "jim cramer": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "jim cramer"
+    },
+    "kyle shanahan": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_trends",
+      "title": "kyle shanahan"
+    },
+    "we re very close leblanc says after meeting with greer on trade deal global news": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "‘We’re very close,’ LeBlanc says after meeting with Greer on trade deal - Global News"
+    },
+    "pakistan s ex pm imran khan moved to hospital from jail after court order al jazeera": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Pakistan’s ex-PM Imran Khan moved to hospital from jail after court order - Al Jazeera"
+    },
+    "tiananmen square vigil organisers found guilty in hong kong of inciting subversion the guardian": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Tiananmen Square vigil organisers found guilty in Hong Kong of ‘inciting subversion’ - The Guardian"
+    },
+    "canadian travel to the u s increases for 3rd month in a row global news": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Canadian travel to the U.S. increases for 3rd month in a row - Global News"
+    },
+    "will imran khan confront pakistan army chief asim munir if released close aide answers world news hindustan times": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Will Imran Khan confront Pakistan Army chief Asim Munir if released? Close aide answers | World News - Hindustan Times"
+    },
+    "cameroon president returns home after 10 week absence reuters": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Cameroon president returns home after 10-week absence - Reuters"
+    },
+    "meghan could return to acting once back in uk bbc": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Meghan could return to acting once back in UK - BBC"
+    },
+    "white house staffer who sent email targeting colorado leaves job colorado public radio": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "White House staffer who sent email targeting Colorado leaves job - Colorado Public Radio"
+    },
+    "exclusive true scale of meghan and harry s us political plans revealed from request for biden oval office meeting to eyeing senate seat new york post": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Exclusive | True scale of Meghan and Harry's US political plans revealed — from request for Biden Oval Office meeting to eyeing Senate seat - New York Post"
+    },
+    "japan lawmakers to visit china in bid to cool row but thaw unlikely experts south china morning post": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Japan lawmakers to visit China in bid to cool row, but thaw unlikely: experts - South China Morning Post"
+    },
+    "energy optimism has taken hold of the doe deseret news": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Energy optimism has taken hold of the DOE - Deseret News"
+    },
+    "exclusive mystery california lobbyist used bogus million dollar boasts to land taxpayer contracts new york post": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Exclusive | Mystery California lobbyist used bogus million-dollar boasts to land taxpayer contracts - New York Post"
+    },
+    "under pakistan s new defence act cdf asim munir can hire fire and retire armed forces personnel theprint": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Under Pakistan’s new defence Act, CDF Asim Munir can hire, fire and retire armed forces personnel - ThePrint"
+    },
+    "canada u s officials inch closer to finalizing trade deal as tariff deadline looms cbc": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Canada, U.S. officials inch closer to finalizing trade deal as tariff deadline looms - CBC"
+    },
+    "even if u s alcohol returns to provincial shelves will canadians buy it global news": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Even if U.S. alcohol returns to provincial shelves, will Canadians buy it? - Global News"
+    },
+    "activity picks up on the bald range wildfire near summerland peachland global news": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Activity picks up on the Bald Range wildfire near Summerland, Peachland - Global News"
+    },
+    "carney tried to out tough trump in trade negotiations vance says the globe and mail": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Carney tried to ‘out-tough’ Trump in trade negotiations, Vance says - The Globe and Mail"
+    },
+    "police investigating if mystery amsterdam man could be canadian reported missing 33 years ago radio canada": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Police investigating if mystery Amsterdam man could be Canadian reported missing 33 years ago - Radio-Canada"
+    },
+    "1 dead after plane makes emergency landing on prince george road crashes into vehicle cbc": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "1 dead after plane makes emergency landing on Prince George road, crashes into vehicle - CBC"
+    },
+    "former alexander first nation chief sexually harassed employee over 9 year period human rights tribunal cbc": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Former Alexander First Nation chief sexually harassed employee over 9-year period: human rights tribunal - CBC"
+    },
+    "watch video shows suspect placing gps tracker man arrested in alleged gtha vehicle theft spree cp24": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "WATCH: Video shows suspect placing GPS tracker, man arrested in alleged GTHA vehicle theft spree - CP24"
+    },
+    "us charges woman for allegedly plotting attack on new york state capitol al jazeera": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "US charges woman for allegedly plotting attack on New York State Capitol - Al Jazeera"
+    },
+    "from predator to conman how michael cohen has described trump the guardian": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "From ‘predator’ to ‘conman’: how Michael Cohen has described Trump - The Guardian"
+    },
+    "israel clears itself in killing of canadian during airstrikes on world central kitchen convoy cbc": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Israel clears itself in killing of Canadian during airstrikes on World Central Kitchen convoy - CBC"
+    },
+    "uss washington arrives in arabian sea after aircraft carrier outcry al jazeera": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "USS Washington arrives in Arabian Sea after aircraft carrier outcry - Al Jazeera"
+    },
+    "ndp seeking information from premier on scheduled churchill falls debate vocm": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "NDP Seeking Information from Premier on Scheduled Churchill Falls Debate - VOCM"
+    },
+    "b c s howe sound pulp and paper announces mill operations stopping indefinitely cbc": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "B.C.'s Howe Sound Pulp and Paper announces mill operations stopping indefinitely - CBC"
+    },
+    "alberta minister hosts second ai data centre town hall in sturgeon county global news": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Alberta minister hosts second AI data centre town hall in Sturgeon County - Global News"
+    },
+    "riot is already killing its 2xko fighting game less than a year after launching kotaku": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Riot Is Already Killing Its 2XKO Fighting Game Less Than A Year After Launching - Kotaku"
+    },
+    "fromsoftware s miyazaki interview the duskbloods is a game i want to see exist ign": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "FromSoftware's Miyazaki Interview – 'The Duskbloods Is a Game I Want to See Exist' - IGN"
+    },
+    "bessent says us to impose toughest ever sanctions on iran urges china to cooperate reuters": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Bessent says US to impose 'toughest' ever sanctions on Iran, urges China to cooperate - Reuters"
+    },
+    "california lawmaker aisha wahab wins special election to succeed eric swalwell in congress ap news": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "California lawmaker Aisha Wahab wins special election to succeed Eric Swalwell in Congress - AP News"
+    },
+    "navy discusses renaming aircraft carrier after trump instead of heroic black sailor nbc news": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Navy discusses renaming aircraft carrier after Trump instead of heroic Black sailor - NBC News"
+    },
+    "sycophancy in stereo as former trump hater michael cohen loses his nerve the guardian": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Sycophancy in stereo as former Trump hater Michael Cohen loses his nerve - The Guardian"
+    },
+    "aircraft carrier arrives in middle east to relieve uss abraham lincoln after lengthy deployment the hill": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Aircraft carrier arrives in Middle East to relieve USS Abraham Lincoln after lengthy deployment - The Hill"
+    },
+    "white house faces questions over security clearance for top trump aide natalie harp the guardian": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "White House faces questions over security clearance for top Trump aide Natalie Harp - The Guardian"
+    },
+    "after six years harry and meghan are coming home what changed the new york times": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "After Six Years, Harry and Meghan Are Coming Home. What Changed? - The New York Times"
+    },
+    "duffy s road rules what we learned from the dot secretary s youtube series politico": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Duffy’s road rules: What we learned from the DOT secretary’s YouTube series - Politico"
+    },
+    "tornado long island nassau county declares state of emergency storm hits atlantic beach sun n surf beach club abc7 new york": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Tornado Long Island: Nassau County declares state of emergency; storm hits Atlantic Beach, Sun n Surf beach club - ABC7 New York"
+    },
+    "paul sokolosk identified as pilot killed in plane crash with pennsylvania state police helicopter at carlisle regional airport 6abc philadelphia": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Paul Sokolosk identified as pilot killed in plane crash with Pennsylvania State Police helicopter at Carlisle Regional Airport - 6abc Philadelphia"
+    },
+    "a magnitude 6 7 earthquake shakes peru s southern andes injuring at least 2 and damaging homes ap news": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "A magnitude 6.7 earthquake shakes Peru’s southern Andes, injuring at least 2 and damaging homes - AP News"
+    },
+    "are ships passing hormuz more willing to defy iran or us what data shows al jazeera": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Are ships passing Hormuz more willing to defy Iran or US? What data shows - Al Jazeera"
+    },
+    "army plans to phase out drone unit championed by sacked generals the hill": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Army plans to phase out drone unit championed by sacked generals - The Hill"
+    },
+    "here s how america s 40 trillion debt can hit your wallet axios": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Here's how America's $40 trillion debt can hit your wallet - Axios"
+    },
+    "what is scott bessent doing with the 32tn treasury market and will it work financial times": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "What is Scott Bessent doing with the $32tn Treasury market — and will it work? - Financial Times"
+    },
+    "walmart stock drops 9 as sales growth slows customers make trade offs amid high fuel costs yahoo finance": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Walmart stock drops 9% as sales growth slows, customers make 'trade-offs' amid high fuel costs - Yahoo Finance"
+    },
+    "why is moderna stock down today forbes": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Why Is Moderna Stock Down Today? - Forbes"
+    },
+    "hacker targets grand theft auto vi in apparent leak nbc news": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "google_news",
+      "title": "Hacker targets ‘Grand Theft Auto VI’ in apparent leak - NBC News"
+    },
+    "canada u s officials inch closer to finalizing trade deal as tariff deadline looms": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "cbc_politics",
+      "title": "Canada, U.S. officials inch closer to finalizing trade deal as tariff deadline looms"
+    },
+    "vance tells audience at private event that carney tried to out tough trump on trade": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "cbc_politics",
+      "title": "Vance tells audience at private event that Carney tried to 'out-tough' Trump on trade"
+    },
+    "another duty to warn letter casts doubt on carney s rapprochement with india": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "cbc_politics",
+      "title": "Another duty to warn letter casts doubt on Carney's rapprochement with India"
+    },
+    "hoekstra s missteps in canada are mild compared to some of trump s ambassadors": {
+      "firstSeen": "2026-08-21T04:19:56.546Z",
+      "source": "cbc_politics",
+      "title": "Hoekstra's missteps in Canada are mild compared to some of Trump's ambassadors"
     }
   },
-  "lastRun": "2026-08-20T21:21:19.058Z"
+  "lastRun": "2026-08-21T04:19:56.546Z"
 }

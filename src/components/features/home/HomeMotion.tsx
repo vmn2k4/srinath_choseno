@@ -393,7 +393,7 @@ export function HeroSection({ children }: { children: ReactNode }) {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-[92vh] flex items-center justify-center px-6 py-16 lg:py-6 overflow-hidden"
+      className="relative min-h-[92vh] flex items-center justify-center px-6 py-10 sm:py-14 lg:py-6 overflow-hidden"
     >
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
         <ParallaxOrb className="orb orb-a" sectionRef={heroRef} range={[0, -180]} driftX={[0, 40, -20, 0]} duration={18} />

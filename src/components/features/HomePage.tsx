@@ -317,7 +317,7 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
             </Reveal>
 
             <Reveal mode="mount" delay={90}>
-              <h1 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.02] mt-6 sm:mt-8 tracking-tight drop-shadow-2xl">
+              <h1 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.02] mt-4 sm:mt-8 tracking-tight drop-shadow-2xl">
                 {t("home.titleMain")}
                 <br />
                 <span className="text-primary">{t("home.titleSub")}</span>
@@ -325,7 +325,7 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
             </Reveal>
 
             <Reveal mode="mount" delay={200}>
-              <p className="text-base sm:text-lg md:text-xl text-text-main/90 font-medium max-w-2xs sm:max-w-2xl mx-auto lg:mx-0 mt-5 sm:mt-7 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-text-main/90 font-medium max-w-2xs sm:max-w-2xl mx-auto lg:mx-0 mt-4 sm:mt-7 leading-relaxed">
                 {t("home.subtitle")}
               </p>
             </Reveal>
@@ -339,13 +339,13 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
               </div>
 
               {/* Mobile: condensed version — just show the pill, no label */}
-              <div className="mt-6 sm:hidden flex justify-center">
+              <div className="mt-4 sm:hidden flex justify-center">
                 <CyclingBoundaryPill levels={BOUNDARY_LEVELS} />
               </div>
             </Reveal>
 
             <Reveal mode="mount" delay={400}>
-              <div className="mt-6 sm:mt-12">
+              <div className="mt-4 sm:mt-12">
                 <RoleSplitCta align="start" />
               </div>
             </Reveal>
