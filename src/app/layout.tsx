@@ -71,7 +71,7 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/og-home.jpg`,
         width: 1200,
         height: 630,
-        alt: "Choseno — Rate Your Politicians' Performance. Like Yelp, but for Democracy.",
+        alt: "Choseno — Rate Your Politicians' Performance. Like Google Reviews, but for Democracy.",
       },
     ],
   },

@@ -305,7 +305,7 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
           {/* Left — pitch + CTAs. On mobile, hide the right-side widget to make room for content.
               Each piece cascades in on its own delay (mode="mount" -- plays immediately, not on
               scroll-into-view) instead of the whole block fading in as one flat unit. */}
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-left min-w-0">
             <Reveal mode="mount">
               <span className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-accent/40 bg-surface-elevated/90 elevation-3 text-xs font-bold tracking-wide text-accent">
                 <span className="relative flex h-2.5 w-2.5">
@@ -317,7 +317,7 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
             </Reveal>
 
             <Reveal mode="mount" delay={90}>
-              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.02] mt-6 sm:mt-8 tracking-tight drop-shadow-2xl">
+              <h1 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.02] mt-6 sm:mt-8 tracking-tight drop-shadow-2xl">
                 {t("home.titleMain")}
                 <br />
                 <span className="text-primary">{t("home.titleSub")}</span>
@@ -354,7 +354,7 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
           {/* Right — compact "find your district" widget. Floats idly, tilts
               toward the cursor on top of that, and cascades in last, once
               the pitch has already landed. */}
-          <Reveal mode="mount" delay={250} className="mt-8 lg:mt-0 flex justify-center lg:justify-end">
+          <Reveal mode="mount" delay={250} className="mt-8 lg:mt-0 flex justify-center lg:justify-end min-w-0">
             <FloatingElement distance={9} duration={5}>
               <TiltCard>
                 <HomeLocateWidget />
@@ -384,7 +384,7 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
       {/* ============ SUPPORTED COUNTRIES SECTION ============ */}
       <HomeSupportedCountries />
 
-      {/* ============ CONCEPT BRIDGE — Yelp analogy ============ */}
+      {/* ============ CONCEPT BRIDGE — Google Reviews analogy ============ */}
       <section className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden">
         <SectionOrbs
           orbs={[

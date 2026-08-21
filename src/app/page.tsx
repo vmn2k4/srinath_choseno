@@ -19,10 +19,10 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Choseno — Rate Your Politician & See 2026 Candidate Reviews",
   description:
-    "Rate your politicians' performance — like Yelp, but for democracy. We research restaurants before eating, why not politicians before voting? Find your district and rate your representatives today.",
+    "Rate your politicians' performance — like Google Reviews, but for democracy. We research restaurants before eating, why not politicians before voting? Find your district and rate your representatives today.",
   alternates: { canonical: BASE_URL },
   openGraph: {
-    title: "Rate Your Politicians' Performance. Like Yelp, but for Democracy.",
+    title: "Rate Your Politicians' Performance. Like Google Reviews, but for Democracy.",
     description:
       "We research restaurants before eating, why not politicians before voting? Locate yourself, find who holds office in your area, and start rating them today.",
     url: BASE_URL,
@@ -33,13 +33,13 @@ export const metadata: Metadata = {
         url: `${BASE_URL}/og-home.jpg`,
         width: 1200,
         height: 630,
-        alt: "Choseno — Rate Your Politicians' Performance. Like Yelp, but for Democracy.",
+        alt: "Choseno — Rate Your Politicians' Performance. Like Google Reviews, but for Democracy.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rate Your Politicians' Performance. Like Yelp, but for Democracy.",
+    title: "Rate Your Politicians' Performance. Like Google Reviews, but for Democracy.",
     description:
       "We research restaurants before eating, why not politicians before voting? Locate yourself, find who holds office in your area, and start rating them today.",
     images: [`${BASE_URL}/og-home.jpg`],
@@ -87,7 +87,7 @@ export default async function Page() {
           name: "What is Choseno?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Choseno is an anonymous civic platform—like Yelp, but for democracy. It lets citizens rate local politicians, compare 2026 midterm election candidates, and leave constituent reviews in real electoral districts.",
+            text: "Choseno is an anonymous civic platform—like Google Reviews, but for democracy. It lets citizens rate local politicians, compare 2026 midterm election candidates, and leave constituent reviews in real electoral districts.",
           },
         },
         {
