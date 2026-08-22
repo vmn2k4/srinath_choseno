@@ -63,7 +63,18 @@ export default function HomeDemoVideo() {
         {/* Video Card Container */}
         <Reveal delay={120} className="mt-10 sm:mt-14">
           <div className="relative mx-auto w-full glass-card elevation-3 p-1.5 sm:p-2.5 transition-all duration-300">
-            <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-surface border border-border-light/40 shadow-2xl">
+            {/* aspect-video only while the iframe is showing -- that content
+                genuinely is 16:9. The poster button's brand pill + play disc
+                + title + subtitle stacked together don't fit a forced 16:9
+                box at phone widths (~193px tall at 375px wide): they were
+                overflowing the box and getting clipped by this wrapper's
+                own overflow-hidden, which is what cut the "Choseno" pill in
+                half. Un-forced, the poster sizes to its own content instead. */}
+            <div
+              className={`relative w-full rounded-2xl overflow-hidden bg-surface border border-border-light/40 shadow-2xl ${
+                isPlaying ? "aspect-video" : ""
+              }`}
+            >
               {isPlaying ? (
                 <div className="relative w-full h-full">
                   <iframe
@@ -86,7 +97,7 @@ export default function HomeDemoVideo() {
                 <button
                   type="button"
                   onClick={() => setIsPlaying(true)}
-                  className="group relative w-full h-full flex flex-col items-center justify-center p-6 text-center cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  className="group relative w-full flex flex-col items-center justify-center py-10 sm:py-14 md:py-16 px-6 text-center cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   aria-label="Play Choseno product demo video"
                 >
                   {/* Theme-derived ambient gradient backdrop */}
