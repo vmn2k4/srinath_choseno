@@ -19,6 +19,8 @@ import type { ShareData } from "@/components/features/ShareMenu";
 import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
 import NewsArticleCard from "@/components/features/NewsArticleCard";
+import NewsInfiniteFeed from "@/components/features/NewsInfiniteFeed";
+import { countryDisplayLabel } from "@/lib/utils/newsTaxonomy";
 import { SITE_URL } from "@/lib/constants/site";
 
 interface NewsArticleRow {
@@ -51,6 +53,11 @@ export interface UserRepresentative {
 
 interface NewsPageClientProps {
   items: NewsArticleRow[];
+  // True only on the unfiltered, page-1 landing (see news/page.tsx's
+  // isDefaultView) -- swaps `items`' flat grid for NewsInfiniteFeed's
+  // Facebook-timeline-style endless scroll. False on every filtered or
+  // paginated view, which keeps the flat, really-paginated grid below.
+  showInfiniteFeed?: boolean;
   error: any;
   userRepresentatives?: UserRepresentative[];
   isLoggedIn?: boolean;
@@ -73,6 +80,7 @@ interface NewsPageClientProps {
 
 export default function NewsPageClient({
   items,
+  showInfiniteFeed = false,
   error,
   userRepresentatives = [],
   isLoggedIn = false,
@@ -164,7 +172,15 @@ export default function NewsPageClient({
         {/* Results counter */}
         {total > 0 && (
           <div className="text-xs text-text-muted font-medium bg-surface/50 px-3 py-1.5 rounded-full border border-border-light/30 w-fit">
-            Showing <span className="text-text-main font-semibold">{startIndex + 1}–{Math.min(startIndex + pageSize, total)}</span> of <span className="text-text-main font-semibold">{total}</span> stories
+            {showInfiniteFeed ? (
+              <>
+                <span className="text-text-main font-semibold">{total}</span> stories — keep scrolling for more
+              </>
+            ) : (
+              <>
+                Showing <span className="text-text-main font-semibold">{startIndex + 1}–{Math.min(startIndex + pageSize, total)}</span> of <span className="text-text-main font-semibold">{total}</span> stories
+              </>
+            )}
           </div>
         )}
       </div>
@@ -263,7 +279,7 @@ export default function NewsPageClient({
             <Globe size={14} className="text-text-muted shrink-0 mr-1 hidden sm:inline-block" />
             {["All", ...countries].map((c) => {
               const isSelected = (country ?? "All") === c;
-              const label = c === "All" ? "All Countries" : c === "CA" ? "Canada 🇨🇦" : c === "US" ? "United States 🇺🇸" : c;
+              const label = c === "All" ? "All Countries" : countryDisplayLabel(c);
               return (
                 <Link
                   key={c}
@@ -310,7 +326,9 @@ export default function NewsPageClient({
         </div>
       )}
 
-      {items.length === 0 && !error ? (
+      {showInfiniteFeed ? (
+        <NewsInfiniteFeed country={country} category={category} />
+      ) : items.length === 0 && !error ? (
         <Card padding="md" className="text-center py-16 text-text-muted text-sm space-y-3">
           <p>{rep ? "No news articles found for the selected representative." : t("newsPage.noArticles")}</p>
           {hasActiveFilters && (

@@ -104,7 +104,13 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
   }
 
   const page = Math.max(1, parseInt(sp.page || "1", 10) || 1);
-  const category = sp.category && (NEWS_CATEGORIES as readonly string[]).includes(sp.category) ? sp.category : null;
+  // Not restricted to NEWS_CATEGORIES -- that's only the fixed admin-form
+  // enum (see its own comment in lib/services/news.ts: "news_articles.
+  // category has no DB constraint today"). Real published articles carry
+  // a much richer set of free-text categories ("Public Safety", "Culture",
+  // "Energy", ...). `.eq()` is parameterized, so accepting any string here
+  // is safe; an unmatched value just yields zero rows.
+  const category = sp.category || null;
   const country = sp.country && sp.country !== "All" ? sp.country : null;
   const rep = sp.rep || null;
   const offset = (page - 1) * PAGE_SIZE;
@@ -115,6 +121,17 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
   // country), so it takes over the fetch entirely rather than composing.
   const repIds = rep === "all_reps" ? userRepresentatives.map((r) => r.id) : rep ? [rep] : null;
 
+  // Country and category pills both stay on NewsInfiniteFeed's own
+  // client-side scroll (see NewsPageClient) -- clicking one is a real
+  // navigation to /news?country=... or ?category=..., and this component
+  // picks the new filter back up from the props passed below, same
+  // Facebook-timeline feed either way. Only the "My Representatives" filter
+  // (a different axis -- who's tagged, not where/what) and paging past 1
+  // (which the feed itself replaces with infinite scroll, but a bookmarked
+  // ?page=N URL should still resolve to something) fall back to the flat,
+  // really-paginated grid below.
+  const useInfiniteFeed = !repIds && page === 1;
+
   const [{ data: articles, error, count }, countries] = await Promise.all([
     repIds
       ? getNewsArticlesByPoliticians(supabase, repIds, { limit: PAGE_SIZE, offset, withCount: true })
@@ -122,14 +139,19 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
     getPublishedNewsCountries(supabase),
   ]);
 
+  // This same first-page fetch backs the JSON-LD ItemList even in the
+  // default view, where it isn't rendered as a visible grid (NewsInfiniteFeed
+  // owns that surface, fetching client-side) -- keeps the schema populated
+  // with real, current articles instead of an empty list.
   const items = (articles ?? []) as any[];
   const total = count ?? items.length;
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
-  // Only the current page's items go into the schema -- previously this
-  // dumped every published article (hundreds) into one ItemList regardless
-  // of what was actually on-screen, ballooning crawl payload for no SEO gain
-  // (Google reads the paginated HTML for the actual page contents anyway).
+  // Only the actually-rendered/schema'd items go into the schema --
+  // previously this dumped every published article (hundreds) into one
+  // ItemList regardless of what was actually on-screen, ballooning crawl
+  // payload for no SEO gain (Google reads the page's own HTML for the
+  // actual page contents anyway).
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -156,6 +178,7 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
       />
       <NewsPageClient
         items={items}
+        showInfiniteFeed={useInfiniteFeed}
         error={error}
         userRepresentatives={userRepresentatives}
         isLoggedIn={Boolean(user)}

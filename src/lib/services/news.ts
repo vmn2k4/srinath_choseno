@@ -103,6 +103,8 @@ export interface NewsArticle {
   impact_area: NewsImpactArea | null;
   hero_image_url: string | null;
   content: NewsArticleContent;
+  /** Generated column (content->>'viral_score' safely cast to numeric) -- see migration 20260822000001_news_feed_sort_and_engagement.sql. Null if content.viral_score is missing/non-numeric. */
+  viral_score?: number | null;
   political_party_id: number | null;
   created_by: string | null;
   created_at: string;
@@ -161,32 +163,142 @@ export async function getPublishedNewsArticles(
     offset?: number;
     /** ISO timestamp -- only articles published at/after this instant. Used by the Google News sitemap's 48-hour window. */
     publishedAfter?: string;
+    /**
+     * ISO timestamp -- only articles whose event_date (falling back to
+     * published_at when event_date is null, same coalesce the default sort
+     * already uses) is at/after this instant. Powers the /news infinite
+     * feed's Last 2 days/week/month filter (NewsInfiniteFeed).
+     */
+    eventDateAfter?: string;
+    /**
+     * "recent" (default) is the existing event_date/published_at descending
+     * order. "interesting" sorts by the viral_score generated column (see
+     * migration 20260822000001_news_feed_sort_and_engagement.sql) instead,
+     * newest-first as a tiebreak for equal/missing scores. There's no
+     * "engagement" here -- that needs a citizen-post count no per-row
+     * column can express; see getPublishedNewsArticlesByEngagement below.
+     */
+    orderBy?: "recent" | "interesting";
     /** Excludes one slug -- used to pull "related coverage" for an article without it linking to itself. */
     excludeSlug?: string;
     /** When true, requests an exact total count alongside the page of rows (see PostgREST `count`), so callers can build page-number UI without a second query. */
     withCount?: boolean;
+    /**
+     * Pulls the same full tagged-politician shape getNewsArticleBySlug does
+     * (designation, constituency, wall_slug, photo, contact info) instead of
+     * just id/full_name -- needed wherever a caller renders
+     * NewsArticleLinkedPoliticians (the "rate the people mentioned" strip)
+     * without the reader having navigated to the article's own page first,
+     * e.g. NewsInfiniteFeed. Off by default since every other caller
+     * (grouped shelves, flat grid, hub pages) only ever shows a tag badge
+     * and doesn't need the extra joined columns.
+     */
+    withPoliticianDetails?: boolean;
   } = {}
 ): Promise<{ data: NewsArticle[] | null; error: PostgrestError | null; count?: number | null }> {
+  const politicianJoin = opts.withPoliticianDetails
+    ? "news_article_politicians(politician_id, profiles(id, full_name, designation, constituency, current_ghost_id, politician_profiles(wall_slug, political_target_role, photo_url, avatar_url, contact_email, contact_phone)))"
+    : "news_article_politicians(politician_id, profiles(id, full_name))";
+
   let q = supabase
     .from("news_articles")
     .select(
-      "id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, created_at, news_article_politicians(politician_id, profiles(id, full_name))",
+      `id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, viral_score, created_at, ${politicianJoin}`,
       opts.withCount ? { count: "exact" } : undefined
     )
     .eq("status", "published")
-    .lte("published_at", new Date().toISOString())
-    .order("event_date", { ascending: false, nullsFirst: false })
-    .order("published_at", { ascending: false });
+    .lte("published_at", new Date().toISOString());
+
+  q =
+    opts.orderBy === "interesting"
+      ? q
+          .order("viral_score", { ascending: false, nullsFirst: false })
+          .order("event_date", { ascending: false, nullsFirst: false })
+          .order("published_at", { ascending: false })
+      : q
+          .order("event_date", { ascending: false, nullsFirst: false })
+          .order("published_at", { ascending: false });
 
   if (opts.country) q = q.eq("country", opts.country);
   if (opts.province) q = q.eq("province", opts.province);
   if (opts.category) q = q.eq("category", opts.category);
   if (opts.publishedAfter) q = q.gte("published_at", opts.publishedAfter);
+  if (opts.eventDateAfter) {
+    // event_date OR (event_date IS NULL AND published_at) at/after the
+    // cutoff -- a plain .gte("event_date", ...) would silently drop every
+    // article whose event_date is null even if it was published recently.
+    q = q.or(`event_date.gte.${opts.eventDateAfter},and(event_date.is.null,published_at.gte.${opts.eventDateAfter})`);
+  }
   if (opts.excludeSlug) q = q.neq("slug", opts.excludeSlug);
   if (opts.limit) q = q.limit(opts.limit);
   if (opts.offset) q = q.range(opts.offset, opts.offset + (opts.limit ?? 20) - 1);
 
   return q as unknown as Promise<{ data: NewsArticle[] | null; error: PostgrestError | null; count?: number | null }>;
+}
+
+/**
+ * Same published-articles feed as getPublishedNewsArticles, but ordered by
+ * how much real citizen discussion each article has (comment count on the
+ * article itself, not on its tagged politicians) instead of recency or
+ * viral_score -- the /news feed's "Engagement" sort. No per-row column can
+ * express that (a COUNT(*) over posts isn't a function of the article row
+ * alone, so it can't be a generated column like viral_score), so this is a
+ * two-step fetch instead of one query with an .order():
+ *   1. get_news_article_engagement_rank() RPC computes the count, applies
+ *      this same filter set, and returns just the winning ids + total count
+ *      for the requested page, already in engagement order.
+ *   2. A normal .in('id', ids) pulls the full rows (with the politician
+ *      join) -- PostgREST can't reliably auto-detect that relationship
+ *      through a view the way it does through the real table, so the
+ *      RPC only ever returns ids, never joined article data itself.
+ * Step 2's result is then reordered in JS to match the RPC's order, since
+ * `.in()` makes no ordering guarantee of its own.
+ */
+export async function getPublishedNewsArticlesByEngagement(
+  supabase: Client,
+  opts: {
+    country?: string | null;
+    category?: string | null;
+    eventDateAfter?: string;
+    limit?: number;
+    offset?: number;
+    withPoliticianDetails?: boolean;
+  } = {}
+): Promise<{ data: NewsArticle[] | null; error: PostgrestError | null; count?: number | null }> {
+  const limit = opts.limit ?? 20;
+  const offset = opts.offset ?? 0;
+
+  const { data: ranked, error: rankError } = await (supabase.rpc as any)("get_news_article_engagement_rank", {
+    p_limit: limit,
+    p_offset: offset,
+    p_event_date_after: opts.eventDateAfter ?? null,
+    p_country: opts.country ?? null,
+    p_category: opts.category ?? null,
+  });
+  if (rankError) return { data: null, error: rankError };
+
+  const rows = (ranked ?? []) as Array<{ id: string; engagement_count: number; total_count: number }>;
+  if (rows.length === 0) return { data: [], error: null, count: 0 };
+
+  const politicianJoin = opts.withPoliticianDetails
+    ? "news_article_politicians(politician_id, profiles(id, full_name, designation, constituency, current_ghost_id, politician_profiles(wall_slug, political_target_role, photo_url, avatar_url, contact_email, contact_phone)))"
+    : "news_article_politicians(politician_id, profiles(id, full_name))";
+
+  const { data: articles, error } = await supabase
+    .from("news_articles")
+    .select(
+      `id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, viral_score, created_at, ${politicianJoin}`
+    )
+    .in(
+      "id",
+      rows.map((r) => r.id)
+    );
+  if (error) return { data: null, error };
+
+  const byId = new Map(((articles ?? []) as unknown as NewsArticle[]).map((a) => [a.id, a]));
+  const ordered = rows.map((r) => byId.get(r.id)).filter((a): a is NewsArticle => Boolean(a));
+
+  return { data: ordered, error: null, count: rows[0]?.total_count ?? ordered.length };
 }
 
 export async function getNewsArticleBySlug(

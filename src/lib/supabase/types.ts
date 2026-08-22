@@ -1880,6 +1880,7 @@ export type Database = {
           politician_id: string
           rater_id: string
           rating: number
+          source_news_article_id: string | null
           updated_at: string
         }
         Insert: {
@@ -1891,6 +1892,7 @@ export type Database = {
           politician_id: string
           rater_id: string
           rating: number
+          source_news_article_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -1902,6 +1904,7 @@ export type Database = {
           politician_id?: string
           rater_id?: string
           rating?: number
+          source_news_article_id?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -1917,6 +1920,13 @@ export type Database = {
             columns: ["rater_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "politician_ratings_source_news_article_id_fkey"
+            columns: ["source_news_article_id"]
+            isOneToOne: false
+            referencedRelation: "news_articles"
             referencedColumns: ["id"]
           },
         ]
@@ -4543,6 +4553,7 @@ export type Database = {
         Args: {
           p_comment?: string
           p_is_test?: boolean
+          p_news_article_id?: string
           p_politician_id: string
           p_rating: number
         }
@@ -4555,6 +4566,7 @@ export type Database = {
           politician_id: string
           rater_id: string
           rating: number
+          source_news_article_id: string | null
           updated_at: string
         }
         SetofOptions: {

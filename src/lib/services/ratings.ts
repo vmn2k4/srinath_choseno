@@ -30,13 +30,23 @@ export async function upsertPoliticianRating(
   supabase: Client,
   politicianId: string,
   rating: number,
-  comment?: string | null
+  comment?: string | null,
+  // The news article the rater was reading when they rated, if any (see
+  // migration 20260822000002_politician_rating_news_article_source.sql) --
+  // shown as a "via <headline>" link wherever this rating is later listed,
+  // so a reader of a politician's past reviews can see what prompted each
+  // one. Omitted entirely for a rating cast directly from the politician's
+  // own profile/wall or any other non-article context, which is exactly
+  // what leaves it with no link. The RPC itself re-verifies this article
+  // actually tags the politician before trusting it, not just this client.
+  newsArticleId?: string | null
 ) {
   return supabase.rpc("upsert_politician_rating", {
     p_politician_id: politicianId,
     p_rating: rating,
     p_comment: comment ?? undefined,
     p_is_test: isDevEnvironment(),
+    p_news_article_id: newsArticleId ?? undefined,
   });
 }
 
@@ -69,7 +79,11 @@ export async function getPoliticianEngagementSummaries(supabase: Client, politic
 export async function getPoliticianRatingsList(supabase: Client, politicianId: string) {
   let query = supabase
     .from("politician_ratings")
-    .select("id, rating, comment, ghost_id, created_at, updated_at")
+    // news_articles(slug, headline) -- the "via <headline>" source link
+    // (see migration 20260822000002_politician_rating_news_article_source.sql).
+    // Null on both sides (source_news_article_id and the embed) for a
+    // rating cast outside any article context.
+    .select("id, rating, comment, ghost_id, created_at, updated_at, source_news_article_id, news_articles(slug, headline)")
     .eq("politician_id", politicianId)
     .order("updated_at", { ascending: false });
   if (!isDevEnvironment()) query = query.eq("is_test", false);

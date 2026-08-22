@@ -27,6 +27,14 @@ export function tagToSlug(tag: string): string {
   return slugifyText(tag);
 }
 
+/** "US" -> "United States 🇺🇸", "CA" -> "Canada 🇨🇦", anything else passed through unchanged. Used by the /news filter bar's country chips (NewsPageClient). */
+export function countryDisplayLabel(country: string): string {
+  const upper = country.toUpperCase();
+  if (upper === "CA") return "Canada 🇨🇦";
+  if (upper === "US") return "United States 🇺🇸";
+  return country;
+}
+
 export interface TagMatch {
   /** The real, original-cased tag string as authored on at least one article. */
   label: string;

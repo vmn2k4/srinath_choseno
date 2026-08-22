@@ -8,7 +8,7 @@ import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import PoliticianEngagementStats from "@/components/features/PoliticianEngagementStats";
 import PoliticianInlineRating from "@/components/features/PoliticianInlineRating";
 
-interface LinkedPolitician {
+export interface LinkedPolitician {
   id: string;
   full_name: string;
   designation?: string | null;
@@ -36,6 +36,12 @@ interface EngagementMap {
 interface NewsArticleLinkedPoliticiansProps {
   politicians: LinkedPolitician[];
   articleTitle: string;
+  // Threaded down to PoliticianInlineRating as the rating's source article
+  // (see migration 20260822000002_politician_rating_news_article_source.sql)
+  // -- optional only because a couple of loose/older call shapes may not
+  // have it in scope; every real caller should pass the article's id so a
+  // rating cast here shows up linked back to it wherever reviews are shown.
+  articleId?: string;
 }
 
 // Rate-and-discuss strip shown below every news article for each office
@@ -48,6 +54,7 @@ interface NewsArticleLinkedPoliticiansProps {
 export default function NewsArticleLinkedPoliticians({
   politicians,
   articleTitle,
+  articleId,
 }: NewsArticleLinkedPoliticiansProps) {
   const supabase = createClient();
   const [engagement, setEngagement] = useState<EngagementMap>({});
@@ -203,6 +210,7 @@ export default function NewsArticleLinkedPoliticians({
                   <PoliticianInlineRating
                     politicianId={politician.id}
                     politicianName={politician.full_name}
+                    newsArticleId={articleId}
                     onSubmitted={() => loadEngagementFor([politician.id])}
                     onCancel={() => setExpandedId(null)}
                   />

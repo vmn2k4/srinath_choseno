@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Newspaper } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button, Textarea, StarRating, Spinner } from "@/components/primitives";
 import { getMyRatingTimestamp, upsertPoliticianRating, getPoliticianRatingsList } from "@/lib/services/ratings";
@@ -15,6 +17,12 @@ interface RatingRecord {
   ghost_id: string;
   created_at: string;
   updated_at: string;
+  // The article the rater was reading when they cast this, if any -- see
+  // migration 20260822000002_politician_rating_news_article_source.sql.
+  // Both null for a rating cast directly from the profile/wall or anywhere
+  // else outside an article.
+  source_news_article_id?: string | null;
+  news_articles?: { slug: string; headline: string } | null;
 }
 
 // Inline "leave a review" panel — the non-modal alternative to
@@ -31,11 +39,17 @@ interface RatingRecord {
 export default function PoliticianInlineRating({
   politicianId,
   politicianName,
+  newsArticleId,
   onSubmitted,
   onCancel,
 }: {
   politicianId: string;
   politicianName: string;
+  // The article this rating panel is embedded in, if any -- recorded on
+  // the rating so it can be shown as a "via <headline>" link wherever
+  // reviews are listed. Omit for every non-article call site (wall page,
+  // election results, candidacy wall) so those ratings stay linkless.
+  newsArticleId?: string;
   // Fires right after a successful submit (no payload — this widget doesn't
   // know the true new aggregate, only its own vote) so the caller can
   // re-fetch the real summary for its own stats row.
@@ -106,7 +120,13 @@ export default function PoliticianInlineRating({
     setSubmitting(true);
     setError("");
     try {
-      const { error: submitError } = await upsertPoliticianRating(supabase, politicianId, rateValue, rateComment.trim());
+      const { error: submitError } = await upsertPoliticianRating(
+        supabase,
+        politicianId,
+        rateValue,
+        rateComment.trim(),
+        newsArticleId
+      );
       if (submitError) throw submitError;
 
       onSubmitted?.();
@@ -233,6 +253,16 @@ export default function PoliticianInlineRating({
                     <StarRating value={review.rating} size="xs" />
                     {review.comment && (
                       <p className="text-xs text-text-secondary leading-relaxed">{review.comment}</p>
+                    )}
+                    {review.news_articles && (
+                      <Link
+                        href={`/news/${review.news_articles.slug}`}
+                        className="inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:underline truncate max-w-full"
+                        title={review.news_articles.headline}
+                      >
+                        <Newspaper size={9} className="shrink-0" />
+                        <span className="truncate">via {review.news_articles.headline}</span>
+                      </Link>
                     )}
                   </div>
                 ))}

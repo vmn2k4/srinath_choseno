@@ -813,6 +813,7 @@ export default function NewsArticleDetailClient({
             .filter((p: any) => p.id) as any[]) || []
         }
         articleTitle={article.headline}
+        articleId={article.id}
       />
 
       {/* Related Coverage -- same category, keeps a reader (and a crawler)

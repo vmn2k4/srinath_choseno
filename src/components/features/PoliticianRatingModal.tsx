@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { X, Newspaper } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { X } from "lucide-react";
 import { Card, Button, Modal, Textarea, StarRating, Spinner } from "@/components/primitives";
 import {
   getMyRatingTimestamp,
@@ -21,6 +22,15 @@ interface RatingRecord {
   ghost_id: string;
   created_at: string;
   updated_at: string;
+  // The article the rater was reading when they cast this, if any -- see
+  // migration 20260822000002_politician_rating_news_article_source.sql.
+  // This modal never itself opens with an article in context (see
+  // PoliticianEngagementStats -- it opens this modal only when there's no
+  // onRateClick override, which is how the article-embedded rating flow
+  // swaps in PoliticianInlineRating instead), so it only ever displays
+  // this, never writes it.
+  source_news_article_id?: string | null;
+  news_articles?: { slug: string; headline: string } | null;
 }
 
 // The single "view + post ratings" surface for a politician, reused
@@ -226,6 +236,16 @@ export default function PoliticianRatingModal({
                       <StarRating value={review.rating} size="xs" />
                       {review.comment && (
                         <p className="text-sm text-text-secondary leading-relaxed">{review.comment}</p>
+                      )}
+                      {review.news_articles && (
+                        <Link
+                          href={`/news/${review.news_articles.slug}`}
+                          className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline truncate max-w-full"
+                          title={review.news_articles.headline}
+                        >
+                          <Newspaper size={11} className="shrink-0" />
+                          <span className="truncate">via {review.news_articles.headline}</span>
+                        </Link>
                       )}
                     </div>
                   ))
