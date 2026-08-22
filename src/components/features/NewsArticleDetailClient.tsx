@@ -165,6 +165,11 @@ export default function NewsArticleDetailClient({
   const [translatedBody, setTranslatedBody] = useState<string | null>(null);
   const [isTranslating, setIsTranslating] = useState(false);
   const [showTranslated, setShowTranslated] = useState(false);
+  // Set when MyMemory has nothing to translate (article is already in the
+  // requested language) -- shown next to the button instead of silently
+  // doing nothing, or worse, displaying the API's own error string as if it
+  // were the translation (see extractTranslation below).
+  const [translateNotice, setTranslateNotice] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   // Top "Review [Name]" CTA — expands the inline rating panel right here
   // instead of navigating to their wall, when there's exactly one tagged
@@ -174,6 +179,19 @@ export default function NewsArticleDetailClient({
   // buttons has its inline rating panel open (at most one at a time).
   const [expandedTopPoliticianId, setExpandedTopPoliticianId] = useState<string | null>(null);
 
+  // MyMemory returns HTTP 200 with a translatedText field even when it
+  // couldn't actually translate anything -- e.g. requesting autodetect|en
+  // on English source text comes back `{"translatedText":"PLEASE SELECT
+  // TWO DISTINCT LANGUAGES","responseStatus":"403"}`. The translatedText
+  // field alone looked like a real (if odd) translation and got rendered
+  // as the article's headline/body verbatim. responseStatus is the actual
+  // success signal -- only "200" is a real translation.
+  const extractTranslation = (data: any): string | null => {
+    if (String(data?.responseStatus) !== "200") return null;
+    const text = data?.responseData?.translatedText;
+    return typeof text === "string" && text.trim() ? text : null;
+  };
+
   const handleToggleTranslate = async () => {
     if (translatedBody || translatedHeadline) {
       setShowTranslated((prev) => !prev);
@@ -181,15 +199,19 @@ export default function NewsArticleDetailClient({
     }
 
     setIsTranslating(true);
+    setTranslateNotice(null);
     try {
+      let gotAnyTranslation = false;
+
       // 1. Translate headline
       if (article.headline) {
         const hRes = await fetch(
           `https://api.mymemory.translated.net/get?q=${encodeURIComponent(article.headline)}&langpair=autodetect|${locale}`
         );
-        const hData = await hRes.json();
-        if (hData?.responseData?.translatedText) {
-          setTranslatedHeadline(hData.responseData.translatedText);
+        const translated = extractTranslation(await hRes.json());
+        if (translated) {
+          setTranslatedHeadline(translated);
+          gotAnyTranslation = true;
         }
       }
 
@@ -198,9 +220,10 @@ export default function NewsArticleDetailClient({
         const sRes = await fetch(
           `https://api.mymemory.translated.net/get?q=${encodeURIComponent(article.summary)}&langpair=autodetect|${locale}`
         );
-        const sData = await sRes.json();
-        if (sData?.responseData?.translatedText) {
-          setTranslatedSummary(sData.responseData.translatedText);
+        const translated = extractTranslation(await sRes.json());
+        if (translated) {
+          setTranslatedSummary(translated);
+          gotAnyTranslation = true;
         }
       }
 
@@ -214,8 +237,9 @@ export default function NewsArticleDetailClient({
               const res = await fetch(
                 `https://api.mymemory.translated.net/get?q=${encodeURIComponent(para)}&langpair=autodetect|${locale}`
               );
-              const data = await res.json();
-              return data?.responseData?.translatedText || para;
+              const translated = extractTranslation(await res.json());
+              if (translated) gotAnyTranslation = true;
+              return translated || para;
             } catch {
               return para;
             }
@@ -224,9 +248,17 @@ export default function NewsArticleDetailClient({
         setTranslatedBody(translatedParas.join("\n\n"));
       }
 
-      setShowTranslated(true);
+      if (gotAnyTranslation) {
+        setShowTranslated(true);
+      } else {
+        // Nothing came back translated -- almost always because the
+        // article is already in the selected language. Say so instead of
+        // silently doing nothing (or, before this fix, showing MyMemory's
+        // raw error string as if it were the article).
+        setTranslateNotice("This article already appears to be in your selected language.");
+      }
     } catch {
-      // Graceful fallback if translation API is unavailable
+      setTranslateNotice("Translation is unavailable right now — please try again later.");
     } finally {
       setIsTranslating(false);
     }
@@ -440,6 +472,10 @@ export default function NewsArticleDetailClient({
           </button>
         </div>
       </div>
+
+      {translateNotice && (
+        <p className="-mt-4 text-right text-[11px] text-text-muted">{translateNotice}</p>
+      )}
 
       {/* Article header & Wrapped Body Card */}
       <Card padding="md" className="space-y-6">
