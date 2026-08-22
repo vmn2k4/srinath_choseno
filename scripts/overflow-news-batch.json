@@ -1,6 +1,206 @@
 [
   {
     "rank": 101,
+    "raw": "94,9.4,\"Fashion Tech Founder Sentenced to Five Years in Federal Prison for $300M Investor Fraud\",Judiciary,\"NY, US\",Civic Authority,2026-08-20T18:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"A federal judge sentences a fashion tech startup founder to 5 years in prison for fabricating 300 million dollars in revenues to deceive investors.\",\"A federal judge in Manhattan sentences a high-profile e-commerce entrepreneur to 60 months in prison for fabricating $300 million in software revenues and user subscriptions.\",https://www.choseno.com/news/fashion-tech-founder-sentenced-to-five-years-in-300m-investor-fraud-2026-08-20,https://www.choseno.com/news/fashion-tech-founder-sentenced-to-five-years-in-300m-investor-fraud-2026-08-20",
+    "archivedAt": "2026-08-22T05:30:00.064Z"
+  },
+  {
+    "rank": 102,
+    "raw": "95,9.3,\"Senate Armed Services Panel Demands Assurances on Stars and Stripes Press Freedom\",Congress,\"DC, US\",Civic Authority,2026-08-20T18:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Senate Armed Services Committee Democrats demand assurances from the Pentagon to safeguard the editorial independence of Stars and Stripes military journalists.\",\"Democratic members of the Senate Armed Services Committee send formal oversight inquiries to the Defense Department demanding guarantees that military journalists will not face censorship.\",https://www.choseno.com/news/senate-democrats-press-hegseth-on-editorial-independence-of-stars-and-stripes-2026-08-20,https://www.choseno.com/news/senate-democrats-press-hegseth-on-editorial-independence-of-stars-and-stripes-2026-08-20",
+    "archivedAt": "2026-08-22T05:30:00.065Z"
+  },
+  {
+    "rank": 103,
+    "raw": "96,9.3,\"Senate Agriculture Committee Initiates Inquiry Into USDA Economic Crop Data Accuracy\",Agriculture,\"DC, US\",Civic Authority,2026-08-20T18:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Senate Agriculture Committee leaders initiate an inquiry into USDA crop forecasting accuracy and staffing shortages impacting farm commodity markets.\",\"Senate Agriculture Committee leaders request an inspector general review of statistical anomalies in USDA world agricultural supply and demand estimates following regional staff attrition.\",https://www.choseno.com/news/senate-agriculture-leaders-probe-usda-data-integrity-and-staffing-levels-2026-08-20,https://www.choseno.com/news/senate-agriculture-leaders-probe-usda-data-integrity-and-staffing-levels-2026-08-20",
+    "archivedAt": "2026-08-22T05:30:00.065Z"
+  },
+  {
+    "rank": 104,
+    "raw": "97,9.3,\"Senator Curtis Delivers Foreign Policy Address Warning Against Prolonged Regional Interventions\",Foreign Policy,\"UT, US\",Civic Authority,2026-08-20T20:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Senator John Curtis delivers a foreign policy address urging strategic restraint in the Middle East and defending congressional war powers authorization.\",\"Utah Senator John Curtis delivers an address to foreign policy scholars, cautioning against escalating military entanglements in the Middle East and urging congressional authorization checks.\",https://www.choseno.com/news/curtis-cautions-congress-against-middle-east-escalation-in-foreign-policy-speech-2026-08-20,https://www.choseno.com/news/curtis-cautions-congress-against-middle-east-escalation-in-foreign-policy-speech-2026-08-20",
+    "archivedAt": "2026-08-22T05:30:00.065Z"
+  },
+  {
+    "rank": 105,
+    "raw": "98,9.2,\"Federal Investigators Execute Search Warrants in California Ethics and Campaign Inquiries\",Accountability,\"CA, US\",Gavin Newsom,2026-08-20T18:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Unsealed federal court filings show authorities executed search warrants for digital devices in an ongoing California campaign compliance inquiry.\",\"Court filings reveal federal authorities executed search warrants seizing electronic devices in connection with an ongoing investigation into campaign compliance.\",https://www.choseno.com/news/feds-seize-electronic-devices-in-california-congressional-ethics-investigation-2026-08-20,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-22T05:30:00.065Z"
+  },
+  {
+    "rank": 106,
+    "raw": "99,9.2,\"Corus Entertainment Restructures Regional Broadcast Newsrooms to Stabilize Operations\",Economy,\"ON, CA\",Doug Ford,2026-08-20T17:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Corus Entertainment restructures regional newsrooms across Global News and radio stations to navigate traditional advertising revenue shifts.\",\"Corus Entertainment initiates a round of newsroom consolidations across Global BC, Global National, and regional talk radio stations following third-quarter financial results.\",https://www.choseno.com/news/corus-entertainment-restructures-regional-broadcasting-operations-2026-08-20,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-22T05:30:00.065Z"
+  },
+  {
+    "rank": 107,
+    "raw": "100,9.1,\"Canada and European Allies Issue Joint Condemnation of West Bank E1 Settlement Expansion\",Foreign Policy,\"ON, CA\",Mélanie Joly,2026-08-20T21:10:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Canada joins the UK, France, Germany, and allies in a joint declaration condemning West Bank E1 settlement plans that threaten two-state peace.\",\"Canada joins the UK, France, Germany, and Italy in a formal diplomatic statement condemning settlement construction plans in the E1 corridor that sever territorial contiguity.\",https://www.choseno.com/news/uk-france-canada-issue-joint-condemnation-of-e1-settlement-plans-2026-08-20,https://www.choseno.com/wall/m-lanie-joly",
+    "archivedAt": "2026-08-22T05:30:00.065Z"
+  },
+  {
+    "rank": 101,
+    "raw": "68,9.1,\"Swiss Consular Officials Engage Indonesian Authorities on Cultural Heritage Sentencing Rules\",Foreign Policy,\"ON, CA\",Civic Authority,2026-08-20T17:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Swiss consular officials coordinate assistance in Bali following the sentencing of a citizen under regional cultural heritage protection laws.\",\"The Swiss Federal Department of Foreign Affairs coordinates consular assistance following the judicial sentencing of a Swiss citizen in Bali under cultural protection statutes.\",https://www.choseno.com/news/switzerland-indonesia-consular-dialogue-on-tourist-sentencing-standards-2026-08-20,https://www.choseno.com/news/switzerland-indonesia-consular-dialogue-on-tourist-sentencing-standards-2026-08-20",
+    "archivedAt": "2026-08-22T05:29:31.865Z"
+  },
+  {
+    "rank": 102,
+    "raw": "69,9.0,\"Federal Water Subcabinet Directs $310M for Rural Tribal and Municipal Clean Water Hubs\",Infrastructure,\"DC, US\",Civic Authority,2026-08-20T18:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The federal government allocates 310 million dollars for 62 rural and Tribal clean water and wastewater treatment projects across 14 states.\",\"The White House Water Subcabinet announces $310 million in federal Bipartisan Infrastructure Law grant disbursements for 62 rural and Tribal community drinking water systems.\",https://www.choseno.com/news/biden-harris-administration-highlights-rural-water-infrastructure-allocations-2026-08-20,https://www.choseno.com/news/biden-harris-administration-highlights-rural-water-infrastructure-allocations-2026-08-20",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 103,
+    "raw": "70,9.0,\"Ontario College of Social Workers Initiates Comprehensive Credential Verification Audit\",Accountability,\"ON, CA\",Doug Ford,2026-08-20T17:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Ontario College of Social Workers initiates a digital registry audit and real-time licensing verification to safeguard mental health services.\",\"Following Toronto Police fraud charges against an individual practicing with suspended credentials, the provincial regulatory college mandates real-time digital licensing registries.\",https://www.choseno.com/news/toronto-social-worker-credential-fraud-charges-spark-regulatory-review-2026-08-20,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 104,
+    "raw": "71,9.9,\"Canada-U.S. Trade Envoys Reach Tentative Accord to Halt 50% Tariffs on Steel and Manufacturing\",Trade,\"ON, CA\",Dominic LeBlanc,2026-08-20T20:50:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Canada and the U.S. reach a tentative trade agreement in Washington, establishing tariff caps on steel and auto manufacturing to avoid a cross-border crisis.\",\"Trade Minister Dominic LeBlanc and U.S. Trade Representative Jamieson Greer conclude intense bilateral talks in Washington, establishing a framework to ease industrial tariffs.\",https://www.choseno.com/news/leblanc-and-greer-finalize-tentative-trade-accord-halting-50-percent-tariffs-2026-08-20,https://www.choseno.com/wall/dominic-leblanc",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 105,
+    "raw": "72,9.8,\"Prime Minister Carney and Mexican President Sheinbaum Reaffirm Trilateral CUSMA Unity\",Foreign Policy,\"ON, CA\",Mark Carney,2026-08-20T20:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Prime Minister Mark Carney and Mexican President Claudia Sheinbaum hold bilateral talks, reaffirming unified defense of the trilateral CUSMA trade pact.\",\"Prime Minister Mark Carney confers with Mexican President Claudia Sheinbaum to coordinate joint trade defenses and protect North American supply chain integration.\",https://www.choseno.com/news/carney-sheinbaum-bilateral-call-reinforces-cusma-trilateral-defense-2026-08-20,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 106,
+    "raw": "73,9.8,\"Conservative Leader Poilievre Proposes National Critical Minerals Reserve to Leverage Trade Deals\",Economy,\"ON, CA\",Pierre Poilievre,2026-08-20T19:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Conservative Leader Pierre Poilievre proposes creating a Canadian critical minerals reserve to leverage permanent tariff exemptions with the United States.\",\"Opposition Leader Pierre Poilievre criticizes the government's trade handling, proposing a strategic Canadian critical minerals stockpile to guarantee tariff exemptions.\",https://www.choseno.com/news/poilievre-calls-for-strategic-critical-mineral-reserve-amid-trade-talks-2026-08-20,https://www.choseno.com/wall/pierre-poilievre",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 107,
+    "raw": "74,9.8,\"Foreign Affairs Minister Anand Meets Secretary of State Rubio on Continental NORAD Defense\",Defense,\"ON, CA\",Civic Authority,2026-08-20T19:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Foreign Affairs Minister Anita Anand meets U.S. Secretary of State Marco Rubio in Washington, cementing bilateral Arctic defense and NORAD modernization plans.\",\"Foreign Affairs Minister Anita Anand and U.S. Secretary of State Marco Rubio confer in Washington, cementing bilateral commitments to Arctic radar and missile defense upgrades.\",https://www.choseno.com/news/anand-meets-rubio-in-washington-on-continental-security-and-norad-modernization-2026-08-20,https://www.choseno.com/news/anand-meets-rubio-in-washington-on-continental-security-and-norad-modernization-2026-08-20",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 108,
+    "raw": "75,9.7,\"Governor Newsom Awards $11.3M in Prohousing Grants to Accelerate California Infill Construction\",Housing,\"CA, US\",Gavin Newsom,2026-08-20T18:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Governor Gavin Newsom awards 11.3 million dollars in Prohousing grants to 13 California cities that eliminated red tape to build affordable housing faster.\",\"California Governor Gavin Newsom distributes $11.3 million across 13 municipalities that have overhauled local zoning codes to speed up affordable housing development.\",https://www.choseno.com/news/newsom-prohousing-incentive-grants-eleven-million-thirteen-cities-2026-08-20,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 109,
+    "raw": "76,9.7,\"Governor Abbott Promotes Statewide Property Tax Relief Agenda at Tarrant County Fiscal Forum\",Fiscal Policy,\"TX, US\",Greg Abbott,2026-08-20T19:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Governor Greg Abbott outlines his legislative agenda in Tarrant County to compress property taxes and expand homestead exemptions across Texas.\",\"Texas Governor Greg Abbott outlines legislative priorities to compress local school property tax rates and eliminate bureaucratic appraisal creep during a Fort Worth appearance.\",https://www.choseno.com/news/abbott-property-tax-relief-model-tarrant-county-forum-2026-08-20,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 110,
+    "raw": "77,9.6,\"Governor Abbott Sets Special Election for Texas Senate District 22 for November 3\",Elections,\"TX, US\",Greg Abbott,2026-08-20T18:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Governor Greg Abbott issues an official proclamation scheduling a November 3 special election to fill the vacant seat in Texas Senate District 22.\",\"Texas Governor Greg Abbott issues an official proclamation ordering a November 3 special election to fill the vacant Senate District 22 seat following Brian Birdwell's retirement.\",https://www.choseno.com/news/abbott-calls-special-election-texas-senate-district-22-2026-08-20,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 111,
+    "raw": "78,9.6,\"EPA Issues Emergency Gasoline Fuel Waiver Raising Reid Vapor Pressure Limits\",Energy,\"DC, US\",Civic Authority,2026-08-20T19:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The EPA issues an emergency fuel waiver relaxing Reid Vapor Pressure limits for E10 gasoline to stabilize fuel supply ahead of the Labor Day travel rush.\",\"The Environmental Protection Agency issues an emergency waiver under the Clean Air Act, permitting higher volatility E10 fuel sales through September to stabilize consumer pump prices.\",https://www.choseno.com/news/epa-emergency-fuel-waiver-expands-e10-rvp-caps-nationwide-2026-08-20,https://www.choseno.com/news/epa-emergency-fuel-waiver-expands-e10-rvp-caps-nationwide-2026-08-20",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 112,
+    "raw": "79,9.5,\"EPA Deletes Eight Fully Remediated Hazardous Waste Sites from Superfund Priority List\",Environment,\"DC, US\",Civic Authority,2026-08-20T18:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The EPA officially deletes eight fully cleaned hazardous waste sites from the Superfund National Priorities List, clearing land for economic redevelopment.\",\"The EPA issues a final rule removing six entire sites and two partial properties from the National Priorities List following complete soil and groundwater decontamination.\",https://www.choseno.com/news/epa-superfund-deletion-eight-toxic-sites-cleaned-2026-08-20,https://www.choseno.com/news/epa-superfund-deletion-eight-toxic-sites-cleaned-2026-08-20",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 113,
+    "raw": "80,9.5,\"B.C. Supreme Court Rejects Sweeping Publication Ban in Transnational Extradition Hearing\",Judiciary,\"BC, CA\",David Eby,2026-08-20T18:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The B.C. Supreme Court upholds open court principles, rejecting a defense bid for a blanket publication ban in a major U.S. extradition bail hearing.\",\"Justice David Crerar dismisses an application to impose a blanket publication ban on bail evidence for three individuals facing U.S. drug conspiracy charges.\",https://www.choseno.com/news/bc-supreme-court-rejects-extradition-bail-publication-ban-2026-08-20,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 114,
+    "raw": "81,9.4,\"Palm Coast City Council Approves $17M Land Purchase Settlement to Resolve Water Lawsuit\",Municipal,\"FL, US\",Ron DeSantis,2026-08-20T17:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Palm Coast City Council votes 4-1 to approve a 17 million dollar settlement to purchase 259 acres in Town Center, resolving a utility capacity lawsuit.\",\"In a 4-1 vote, the Palm Coast City Council authorizes a $17 million settlement to acquire 259 acres in Town Center, resolving a long-standing utility capacity legal dispute.\",https://www.choseno.com/news/palm-coast-city-council-approves-seventeen-million-dollar-town-center-land-settlement-2026-08-20,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 115,
+    "raw": "82,9.3,\"Spokane City Council Ratifies Mayoral Emergency Declaration for Wildfire Relief Operations\",Municipal,\"WA, US\",Civic Authority,2026-08-20T17:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Spokane City Council votes unanimously to ratify the Mayor's wildfire emergency declaration, authorizing fast-tracked contracting and clean air shelters.\",\"The Spokane City Council passes Resolution 2026-0060 unanimously, authorizing ongoing emergency contracting and resource deployment to battle regional complex fires.\",https://www.choseno.com/news/spokane-city-council-ratifies-emergency-order-complex-wildfires-2026-08-20,https://www.choseno.com/news/spokane-city-council-ratifies-emergency-order-complex-wildfires-2026-08-20",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 116,
+    "raw": "83,9.3,\"Howe Sound Pulp and Paper Announces Permanent Closure of B.C. Mill Affecting 400 Workers\",Economy,\"BC, CA\",David Eby,2026-08-20T18:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Domtar announces the permanent closure of the Howe Sound Pulp and Paper mill in Port Mellon, impacting 400 workers on B.C.'s Sunshine Coast.\",\"Domtar announces the permanent shutdown of the historic Port Mellon mill on B.C.'s Sunshine Coast, citing high domestic fibre costs and depressed global paper pulp pricing.\",https://www.choseno.com/news/howe-sound-pulp-and-paper-announces-permanent-port-mellon-closure-2026-08-20,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 117,
+    "raw": "84,9.3,\"Ontario WSIB Cuts 466 Regional Claims and Administrative Jobs in Operational Consolidation\",Labor,\"ON, CA\",Doug Ford,2026-08-20T18:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Workplace Safety and Insurance Board (WSIB) eliminates 466 claims processing jobs across Ontario as part of a digital restructuring.\",\"The Workplace Safety and Insurance Board confirms 466 layoffs across northern and southwestern Ontario offices as part of a centralized digital modernization restructuring.\",https://www.choseno.com/news/wsib-ontario-cuts-466-jobs-in-claims-consolidation-plan-2026-08-20,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 118,
+    "raw": "85,9.2,\"Canadian Transportation Agency Orders WestJet to Eliminate 300-Pound Wheelchair Weight Cap\",Transportation,\"AB, CA\",Civic Authority,2026-08-20T17:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Canadian Transportation Agency orders WestJet to scrap its 300-pound motorized wheelchair weight limit, ruling it an undue barrier to accessible travel.\",\"The CTA rules that WestJet's cargo weight limits on motorized wheelchairs create an undue barrier for passengers with disabilities, ordering the policy repealed before July 2027.\",https://www.choseno.com/news/cta-orders-westjet-to-scrap-wheelchair-weight-cap-barrier-2026-08-20,https://www.choseno.com/news/cta-orders-westjet-to-scrap-wheelchair-weight-cap-barrier-2026-08-20",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 119,
+    "raw": "86,9.2,\"Eighth Circuit Upholds Landmark $1B National Association of Realtors Commission Settlement\",Judiciary,\"MO, US\",Civic Authority,2026-08-20T17:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The 8th Circuit Court of Appeals upholds the landmark 1 billion dollar NAR antitrust settlement, cementing transparent real estate commission reforms nationwide.\",\"The 8th U.S. Circuit Court of Appeals affirms a $1 billion nationwide antitrust class action settlement, mandating transparent broker commission disclosures across real estate markets.\",https://www.choseno.com/news/eighth-circuit-upholds-one-billion-dollar-realtor-antitrust-settlement-2026-08-20,https://www.choseno.com/news/eighth-circuit-upholds-one-billion-dollar-realtor-antitrust-settlement-2026-08-20",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 120,
+    "raw": "87,9.1,\"Windsor City Council Launches Expropriation of Derelict West-End Properties for Renewal\",Municipal,\"ON, CA\",Doug Ford,2026-08-20T18:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Windsor City Council launches formal expropriation proceedings on long-standing vacant west-end properties to build mixed-income housing and civic spaces.\",\"The City of Windsor files formal statutory applications to expropriate vacant commercial parcels in the west end to execute community safety and affordable infill projects.\",https://www.choseno.com/news/windsor-city-council-initiates-west-end-derelict-property-expropriation-2026-08-20,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 121,
+    "raw": "88,9.1,\"CRTC Launches Inquiry Into Municipal Alert System Volume and Temporary Carrier Theft Controls\",Technology,\"ON, CA\",Civic Authority,2026-08-20T17:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The CRTC launches an inquiry into emergency alert frequency to prevent alert fatigue, while approving 48-hour fraud locks on new smartphones.\",\"The CRTC opens a formal regulatory review into regional emergency alert frequencies in Manitoba while permitting short-term carrier device security locks to curb theft.\",https://www.choseno.com/news/crtc-investigation-emergency-alerts-carrier-phone-locking-rules-2026-08-20,https://www.choseno.com/news/crtc-investigation-emergency-alerts-carrier-phone-locking-rules-2026-08-20",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 122,
+    "raw": "89,9.0,\"Federal and B.C. Ministers Announce $106.5M Coastal Fisheries and Wild Salmon Restoration Fund\",Environment,\"BC, CA\",David Eby,2026-08-20T18:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Federal and B.C. ministers announce 106.5 million dollars in joint funding for 48 wild salmon habitat restoration and Indigenous fishery projects.\",\"Federal Fisheries Minister Joanne Thompson and B.C. ministers allocate $106.5 million through the BCFF to finance 48 wild salmon habitat restoration and Indigenous fishery partnerships.\",https://www.choseno.com/news/bc-fisheries-fund-announces-one-hundred-six-million-dollar-salmon-restoration-2026-08-20,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 123,
+    "raw": "90,9.0,\"Mayor Files State Supreme Court Lawsuit Against City Council Over Teaching Assistant Bonuses\",Judiciary,\"NY, US\",Civic Authority,2026-08-20T17:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"NYC Mayor Zohran Mamdani files a state lawsuit against City Council, challenging a law mandating 10,000 dollar bonuses for school teaching assistants.\",\"New York City Mayor Zohran Mamdani challenges a council-passed law granting $10,000 bonuses to paraprofessionals, arguing the measure violates mayoral collective bargaining powers.\",https://www.choseno.com/news/mamdani-lawsuit-nyc-council-teaching-assistant-bonuses-2026-08-20,https://www.choseno.com/news/mamdani-lawsuit-nyc-council-teaching-assistant-bonuses-2026-08-20",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 124,
+    "raw": "91,9.9,\"Federal Court Signals Injunction Blocking EPA Attempt to Nullify California Vehicle Emissions Rules\",Judiciary,\"DC, US\",Gavin Newsom,2026-08-20T13:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"A federal judge indicates the court will grant an injunction blocking the EPA from revoking California's long-standing Clean Air Act vehicle emissions waiver.\",\"U.S. District Judge Colleen Kollar-Kotelly indicates the court will likely enjoin the EPA from revoking California's statutory Clean Air Act waiver for zero-emission vehicles.\",https://www.choseno.com/news/dc-district-court-signals-injunction-protecting-california-clean-air-act-waiver-2026-08-20,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 125,
+    "raw": "92,9.8,\"Senate Environment Panel Leaders Demand EPA Halt Rollback of National PFAS Water Caps\",Environment,\"DC, US\",Bernie Sanders,2026-08-20T13:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Senate lawmakers petition the EPA to withdraw proposed rule changes that would weaken national drinking water limits on toxic PFAS chemicals.\",\"Senate Democratic leaders, led by Senator Bernie Sanders and committee chairs, send a formal petition to the EPA demanding it withdraw proposals to relax drinking water limits on toxic chemicals.\",https://www.choseno.com/news/senate-democrats-petition-epa-to-preserve-pfas-drinking-water-standards-2026-08-20,https://www.choseno.com/wall/bernie-sanders",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 126,
+    "raw": "93,9.8,\"Premier Ford Unveils Ontario Data Sovereignty Mandate for Public Sector Cloud Systems\",Technology,\"ON, CA\",Doug Ford,2026-08-20T13:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Ontario Premier Doug Ford unveils a provincial data sovereignty mandate requiring all public healthcare and municipal records to be stored on Canadian servers.\",\"Ontario Premier Doug Ford announces provincial directives requiring all municipal, healthcare, and educational digital records to be hosted exclusively on Canadian-based servers.\",https://www.choseno.com/news/ontario-premier-ford-champions-provincial-data-sovereignty-framework-2026-08-20,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 127,
+    "raw": "94,9.8,\"B.C. Court of Appeal Clarifies Municipal Discretion in Commercial Land Use Rezonings\",Judiciary,\"BC, CA\",David Eby,2026-08-20T12:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The B.C. Court of Appeal issues a landmark ruling affirming municipal authority to modify commercial development permits for public safety and flood resilience.\",\"The British Columbia Court of Appeal issues a major ruling in *Grace Mtn. Land Company v. 1055249 B.C. Ltd.*, affirming municipal authority to alter development permits for public safety.\",https://www.choseno.com/news/bc-court-of-appeal-clarifies-municipal-rezoning-authority-in-commercial-dispute-2026-08-20,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 128,
+    "raw": "95,9.7,\"Ontario Court of Appeal Upholds Statutory Alignment in Corporate Employment Contracts\",Labor,\"ON, CA\",Civic Authority,2026-08-20T12:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Ontario Court of Appeal establishes key employment law precedent, upholding standard contract termination clauses that align with provincial ESA minimums.\",\"The Ontario Court of Appeal issues a clarifying decision in Baker v. Van Dolder's Home Team, establishing that standard termination clauses remain enforceable if aligned with the ESA.\",https://www.choseno.com/news/ontario-court-of-appeal-upholds-employment-contract-termination-standards-2026-08-20,https://www.choseno.com/news/ontario-court-of-appeal-upholds-employment-contract-termination-standards-2026-08-20",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 129,
+    "raw": "96,9.7,\"Fifth Circuit Hears Oral Arguments on Texas Challenge to EPA Interstate Ozone Transport Rules\",Judiciary,\"TX, US\",Greg Abbott,2026-08-20T13:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Fifth Circuit hears oral arguments on Texas's challenge to EPA interstate smog reduction rules, with energy grid reliability and air quality at stake.\",\"A three-judge panel of the 5th U.S. Circuit Court of Appeals hears Texas state regulators challenge federal interstate smog reduction mandates for power plants and industrial boilers.\",https://www.choseno.com/news/fifth-circuit-weighs-texas-challenge-to-epa-good-neighbor-smog-regulations-2026-08-20,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 130,
+    "raw": "97,9.6,\"Governor Whitmer Signs $150M Advanced Battery and Clean Tech Manufacturing Tax Incentive\",Economy,\"MI, US\",Gretchen Whitmer,2026-08-20T13:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Governor Gretchen Whitmer signs legislation authorizing 150 million dollars in performance-based tax credits for clean tech and battery manufacturing in Michigan.\",\"Michigan Governor Gretchen Whitmer signs legislation authorizing $150 million in performance-based tax incentives to expand domestic electric vehicle battery and grid storage production.\",https://www.choseno.com/news/michigan-governor-whitmer-expands-clean-energy-manufacturing-tax-credits-2026-08-20,https://www.choseno.com/wall/gretchen-whitmer",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 131,
+    "raw": "98,9.6,\"Governor Pritzker Signs Groundwater Protection Act Restricting Industrial Aquifer Depletion\",Environment,\"IL, US\",JB Pritzker,2026-08-20T13:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Illinois Governor JB Pritzker signs the Groundwater Protection Act, placing strict withdrawal limits on industrial facilities to safeguard agricultural aquifers.\",\"Illinois Governor JB Pritzker signs Senate Bill 2912, establishing mandatory conservation zones and withdrawal permitting for major industrial facilities across vital aquifers.\",https://www.choseno.com/news/illinois-governor-pritzker-signs-statutory-protections-for-agricultural-groundwater-2026-08-20,https://www.choseno.com/wall/jb-pritzker",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 132,
+    "raw": "99,9.5,\"House Democratic Leader Jeffries Calls for State Department Probe Into Displaced Community Reports\",Foreign Policy,\"DC, US\",Hakeem Jeffries,2026-08-20T14:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"House Democratic Leader Hakeem Jeffries calls on the State Department to investigate civilian displacement reports and uphold two-state security principles.\",\"House Minority Leader Hakeem Jeffries issues a formal request to the State Department, urging diplomatic intervention and human rights monitoring regarding civilian displacements.\",https://www.choseno.com/news/house-democratic-leader-jeffries-demands-federal-inquiry-into-west-bank-settlement-actions-2026-08-20,https://www.choseno.com/wall/hakeem-jeffries",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 133,
+    "raw": "100,9.5,\"Senate Majority Leader Thune Outlines September Legislative Calendar for 12 Spending Bills\",Congress,\"DC, US\",John Thune,2026-08-20T14:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Senate Majority Leader John Thune announces the September floor schedule for regular appropriations bills to avert a federal government shutdown.\",\"Senate Majority Leader John Thune announces an expedited floor schedule for the Senate's return, aiming to pass individual appropriations bills ahead of the September 30 deadline.\",https://www.choseno.com/news/senate-majority-leader-thune-schedules-priority-floor-votes-for-fall-appropriations-2026-08-20,https://www.choseno.com/wall/john-thune",
+    "archivedAt": "2026-08-22T05:29:31.866Z"
+  },
+  {
+    "rank": 101,
     "raw": "91,9.4,\"Green Party Leader May Petitions for Emergency Commons Session on National Wildfire Mitigation\",Environment,\"BC, CA\",Elizabeth May,2026-08-20T14:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Green Party Leader Elizabeth May petitions for an emergency House of Commons debate on national wildfire resilience and permanent aerial firefighting funding.\",\"Green Party Leader Elizabeth May calls on the Speaker of the House of Commons to grant an emergency debate on climate resilience and aerial firefighting capacity.\",https://www.choseno.com/news/green-party-leader-may-demands-emergency-parliamentary-debate-on-wildfire-resilience-2026-08-20,https://www.choseno.com/wall/elizabeth-may",
     "archivedAt": "2026-08-21T08:01:56.957Z"
   },

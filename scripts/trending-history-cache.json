@@ -1,1120 +1,5 @@
 {
   "topics": {
-    "steve bourdeau maple syrup lawsuit": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "steve bourdeau maple syrup lawsuit"
-    },
-    "paula fletcher": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "paula fletcher"
-    },
-    "wedding": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "wedding"
-    },
-    "taskmaster": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "taskmaster"
-    },
-    "cor e du nord": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "corée du nord"
-    },
-    "jonas brothers tour toronto": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "jonas brothers tour toronto"
-    },
-    "h licopt re": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "hélicoptère"
-    },
-    "brendan cellucci": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "brendan cellucci"
-    },
-    "nick sogard": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "nick sogard"
-    },
-    "frank gansz": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "frank gansz"
-    },
-    "azzi fudd": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "azzi fudd"
-    },
-    "yair rodriguez": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "yair rodriguez"
-    },
-    "ed orgeron": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "ed orgeron"
-    },
-    "us airport flight disruptions": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "us airport flight disruptions"
-    },
-    "bill o reilly": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "bill o'reilly"
-    },
-    "jenni farley": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "jenni farley"
-    },
-    "winnie brinks": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "winnie brinks"
-    },
-    "millie bobby brown": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_trends",
-      "title": "millie bobby brown"
-    },
-    "opposition reacts to details of new churchill falls deal vocm": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Opposition Reacts to Details of New Churchill Falls Deal - VOCM"
-    },
-    "pakistani government files challenge against imran khan private hospital move reuters": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Pakistani government files challenge against Imran Khan private hospital move - Reuters"
-    },
-    "carney to brief cabinet premiers on trade deal with the u s ctv news": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Carney to brief cabinet, premiers on trade deal with the U.S. - CTV News"
-    },
-    "mike nesbitt health officials back minister following resignation bbc": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Mike Nesbitt: Health officials back minister following resignation - BBC"
-    },
-    "james comey s seashell post could be read as trump threat u s justice department ctv news": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "James Comey’s seashell post could be read as Trump threat: U.S. Justice Department - CTV News"
-    },
-    "media will have to register foreign backed political messaging says influence commissioner the hill times": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Media will have to register foreign-backed political messaging, says influence commissioner - The Hill Times"
-    },
-    "adviser to russian transportation minister resigns after azerbaijan issues warrant for his arrest the moscow times": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Adviser to Russian Transportation Minister Resigns After Azerbaijan Issues Warrant for His Arrest - The Moscow Times"
-    },
-    "venezuela abandons nicol s maduro to fate in us jail financial times": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Venezuela abandons Nicolás Maduro to fate in US jail - Financial Times"
-    },
-    "zelensky fires top aide as office faces graft probe the globe and mail": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Zelensky fires top aide as office faces graft probe - The Globe and Mail"
-    },
-    "attorney general overdue state inquiry into oct 7 should now wait for next government the times of israel": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Attorney general: Overdue state inquiry into Oct. 7 should now wait for next government - The Times of Israel"
-    },
-    "national security question trips up sen darline graham in south carolina debate ap news": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "National security question trips up Sen. Darline Graham in South Carolina debate - AP News"
-    },
-    "cocaine crackdown opens a new era of jungle warfare in colombia bloomberg com": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Cocaine Crackdown Opens a New Era of Jungle Warfare in Colombia - bloomberg.com"
-    },
-    "kennedy center tarp to stay up indefinitely lawyers say the washington post": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Kennedy Center tarp to stay up indefinitely, lawyers say - The Washington Post"
-    },
-    "it s bonkers jennifer hegseth s hands on role in her husband s pentagon the new york times": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "‘It’s Bonkers’: Jennifer Hegseth’s Hands-On Role in Her Husband’s Pentagon - The New York Times"
-    },
-    "sen king demands answers about conditions aboard uss abraham lincoln newscentermaine com": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Sen. King demands answers about conditions aboard USS Abraham Lincoln - newscentermaine.com"
-    },
-    "china mourns former premier boss zhu but on the communist party s terms wsj com": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "China Mourns Former Premier ‘Boss Zhu’—but on the Communist Party’s Terms - wsj.com"
-    },
-    "this secular congressman is urging democrats to fight christian nationalism the washington post": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "This secular congressman is urging Democrats to fight Christian nationalism - The Washington Post"
-    },
-    "new video raises concerns about mitch mcconnell days before hospitalization the daily beast": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "New Video Raises Concerns About Mitch McConnell Days Before Hospitalization - The Daily Beast"
-    },
-    "zelenskyy fires a top aide amid a graft probe as ukraine s ex defense minister demands elections ap news": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Zelenskyy fires a top aide amid a graft probe as Ukraine's ex-defense minister demands elections - AP News"
-    },
-    "secret apartments political posts report alleges corruption in kkl jnf workers union the times of israel": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Secret apartments, political posts: Report alleges corruption in KKL-JNF workers’ union - The Times of Israel"
-    },
-    "senators criticize trump administration s demands to access health data as a condition for lifesaving aid propublica org": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Senators Criticize Trump Administration’s Demands to Access Health Data as a Condition for Lifesaving Aid - propublica.org"
-    },
-    "grief led me to politics sonia gandhi memoir out on november 10 the tribune": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Grief led me to politics: Sonia Gandhi memoir out on November 10 - The Tribune"
-    },
-    "white house looks to revamp cyber supply chain security data calls federal news network": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "White House looks to revamp cyber supply chain security data calls - Federal News Network"
-    },
-    "trump says he s brokered a very good deal with canada after pausing 50 tariffs cbc": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Trump says he's brokered a 'very good deal' with Canada after pausing 50% tariffs - CBC"
-    },
-    "body of missing pilot found among plane debris in kawartha lakes citynews toronto": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Body of missing pilot found among plane debris in Kawartha Lakes - CityNews Toronto"
-    },
-    "trump nominates aide heidi overton to lead us food and drug administration bbc": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Trump nominates aide Heidi Overton to lead US Food and Drug Administration - BBC"
-    },
-    "who is natalie harp trump s right hand woman bbc": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Who is Natalie Harp, Trump's right-hand woman? - BBC"
-    },
-    "justin trudeau still receives rcmp protection on personal trips report national post": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Justin Trudeau still receives RCMP protection on personal trips: report - National Post"
-    },
-    "a brampton father says his son was abducted by his ex wife during a trip to poland he hasn t seen him since ctv news": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "A Brampton father says his son was abducted by his ex-wife during a trip to Poland. He hasn’t seen him since. - CTV News"
-    },
-    "a dog and pony show opposition slams ford after foi reveals texas trade trip cost taxpayers over 93k cbc news cbc": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "'A dog and pony show': Opposition slams Ford after FOI reveals Texas trade trip cost taxpayers over $93K | CBC News - CBC"
-    },
-    "calgary officer to stand trial for murder after two die in slow speed police chase castanet": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Calgary officer to stand trial for murder after two die in slow-speed police chase - Castanet"
-    },
-    "toronto couple s height difference goes viral after wedding photos revealed cp24": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Toronto couple’s height difference goes viral after wedding photos revealed - CP24"
-    },
-    "kim jong un s sister casts doubt on trump s claims of secret us north korea talks the guardian": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Kim Jong-un’s sister casts doubt on Trump’s claims of secret US-North Korea talks - The Guardian"
-    },
-    "australian mushroom murderer erin patterson appeals three convictions the globe and mail": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Australian mushroom murderer Erin Patterson appeals three convictions - The Globe and Mail"
-    },
-    "israel opens criminal probes over killings of 6 year old palestinian girl hind rajab gaza rescue workers cbc": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Israel opens criminal probes over killings of 6-year-old Palestinian girl Hind Rajab, Gaza rescue workers - CBC"
-    },
-    "trump says no iran talks planned claims hormuz new u s territory ctv news": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Trump says no Iran talks planned, claims Hormuz ‘new U.S. territory’ - CTV News"
-    },
-    "zuckerberg did not make child safety a priority former meta engineer testifies in major trial the globe and mail": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Zuckerberg did not make child safety a priority, former Meta engineer testifies in major trial - The Globe and Mail"
-    },
-    "explainer what will the new churchill falls deal mean for quebec and your hydro bill montreal gazette": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Explainer: What will the new Churchill Falls deal mean for Quebec and your hydro bill? - Montreal Gazette"
-    },
-    "key dates in keystone xl pipeline as trump claims contentious project being revived cbc": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Key dates in Keystone XL pipeline as Trump claims contentious project being revived - CBC"
-    },
-    "vaccine breakthrough stops cancer returning in trial bbc": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Vaccine breakthrough stops cancer returning in trial - BBC"
-    },
-    "juventus official fan club toronto named winner of the lg match day heroes contest pr newswire canada": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "JUVENTUS OFFICIAL FAN CLUB TORONTO NAMED WINNER OF THE LG MATCH DAY HEROES CONTEST - PR Newswire Canada"
-    },
-    "rivo launches multicultural streaming platform for immigrant stories canadianimmigrant ca": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Rivo launches multicultural streaming platform for immigrant stories - canadianimmigrant.ca"
-    },
-    "8 takeaways and surprises from florida wyoming and alaska primaries the washington post": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "8 takeaways and surprises from Florida, Wyoming and Alaska primaries - The Washington Post"
-    },
-    "u s eyes lower tariffs on metals and autos in canada trade deal wsj com": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "U.S. Eyes Lower Tariffs on Metals and Autos in Canada Trade Deal - wsj.com"
-    },
-    "losses are piling up for trump backed candidates cnn com": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Losses are piling up for Trump-backed candidates - cnn.com"
-    },
-    "lindsay clancy trial ends earlier than expected due to unforeseen circumstances cbs news": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Lindsay Clancy trial ends earlier than expected \"due to unforeseen circumstances\" - CBS News"
-    },
-    "democratic socialist angie nixon won tuesday s primary in florida can she win in november ap news": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Democratic socialist Angie Nixon won Tuesday's primary in Florida. Can she win in November? - AP News"
-    },
-    "trump picks dr heidi overton a top white house aide to lead the food and drug administration ap news": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Trump picks Dr. Heidi Overton, a top White House aide, to lead the Food and Drug Administration - AP News"
-    },
-    "too close to call democratic internal poll shows david jolly one point ahead of byron donalds florida politics": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Too close to call? Democratic internal poll shows David Jolly one point ahead of Byron Donalds - Florida Politics"
-    },
-    "trump says he will meet with kim jong un this year nbc news": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Trump says he will meet with Kim Jong Un this year - NBC News"
-    },
-    "we are not a bunch of woke marxist liberals here rural voters scramble texas election politico": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "'We are not a bunch of woke Marxist liberals here': Rural voters scramble Texas election - Politico"
-    },
-    "defense minister dismissed by zelensky demands elections in ukraine the washington post": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Defense minister dismissed by Zelensky demands elections in Ukraine - The Washington Post"
-    },
-    "exclusive mossad director syria foreign minister discussed turkish military deployments before strikes sources say reuters": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "EXCLUSIVE: Mossad director, Syria foreign minister discussed Turkish military deployments before strikes, sources say - Reuters"
-    },
-    "jos su rez president and gm of telemundo 31 49 and ft myers dies in helicopter crash nbcmiami com": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "José Suárez, president and GM of Telemundo 31, 49 and Ft. Myers dies in helicopter crash - nbcmiami.com"
-    },
-    "israel admits its soldiers fired at car in which hind rajab was killed the guardian": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Israel admits its soldiers fired at car in which Hind Rajab was killed - The Guardian"
-    },
-    "bond yields plunge after treasury announces surprise move to ease rising rates nbc news": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Bond yields plunge after Treasury announces surprise move to ease rising rates - NBC News"
-    },
-    "moderna shares double on success of mrna cancer vaccine wsj com": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Moderna Shares Double on Success of mRNA Cancer Vaccine - wsj.com"
-    },
-    "us retail giant receives 1bn boost from tariff refunds bbc": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "US retail giant receives $1bn boost from tariff refunds - BBC"
-    },
-    "why bond markets are unnerving rich world politicians the economist": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Why bond markets are unnerving rich-world politicians - The Economist"
-    },
-    "google pixel 11 series review is the magic fading ars technica": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Google Pixel 11 series review: Is the magic fading? - Ars Technica"
-    },
-    "amazon makes its ai powered alexa free on fire tv no prime required techcrunch com": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "google_news",
-      "title": "Amazon makes its AI-powered Alexa+ free on Fire TV, no Prime required - techcrunch.com"
-    },
-    "carney briefing cabinet premiers on potential trade deal with u s": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "cbc_politics",
-      "title": "Carney briefing cabinet, premiers on potential trade deal with U.S."
-    },
-    "negotiators fear u s tariffs will be imposed as provinces and washington dig in on demands": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "cbc_politics",
-      "title": "Negotiators fear U.S. tariffs will be imposed, as provinces and Washington dig in on demands"
-    },
-    "how iowans feel about trump s tariffs canada s treatment as republicans vie for support": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "cbc_politics",
-      "title": "How Iowans feel about Trump's tariffs, Canada's treatment as Republicans vie for support"
-    },
-    "province feds roll out 1b for municipalities that don t charge development fees": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "cbc_politics",
-      "title": "Province, feds roll out $1B for municipalities that don't charge development fees"
-    },
-    "five years after kabul fell the reckoning over afghanistan is far from over": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "cbc_politics",
-      "title": "Five years after Kabul fell, the reckoning over Afghanistan is far from over"
-    },
-    "petition calls for canada to officially commemorate soldiers killed in fenian raids": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "cbc_politics",
-      "title": "Petition calls for Canada to officially commemorate soldiers killed in Fenian raids"
-    },
-    "65 years after the berlin wall was built germany s east west scars help feed a rising far right party": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "cbc_politics",
-      "title": "65 years after the Berlin Wall was built, Germany’s east-west scars help feed a rising far-right party"
-    },
-    "canada u s far apart on tariff deal as deadline looms sources": {
-      "firstSeen": "2026-08-19T20:47:58.457Z",
-      "source": "cbc_politics",
-      "title": "Canada, U.S. far apart on tariff deal as deadline looms: sources"
-    },
-    "highway 401 accident": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "highway 401 accident"
-    },
-    "santa fe vs river plate": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "santa fe vs river plate"
-    },
-    "maladie virus ebola": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "maladie à virus ebola"
-    },
-    "flamengo vs cruzeiro": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "flamengo vs cruzeiro"
-    },
-    "tournoi cincinnati": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "tournoi cincinnati"
-    },
-    "paul sewald": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "paul sewald"
-    },
-    "borges tennis": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "borges tennis"
-    },
-    "la maison des vilains": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "la maison des vilains"
-    },
-    "what time does outer banks season 5 come out": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "what time does outer banks season 5 come out"
-    },
-    "cincinnati open": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "cincinnati open"
-    },
-    "lafc vs colorado": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "lafc vs colorado"
-    },
-    "shakira austin": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "shakira austin"
-    },
-    "tyler cameron": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "tyler cameron"
-    },
-    "austin vs seattle sounders": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "austin vs seattle sounders"
-    },
-    "sal stewart": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "sal stewart"
-    },
-    "tj harden": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "tj harden"
-    },
-    "jhoan duran": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "jhoan duran"
-    },
-    "christopher o connell": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "christopher o'connell"
-    },
-    "megan katseye": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "megan katseye"
-    },
-    "amber alert": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_trends",
-      "title": "amber alert"
-    },
-    "carney asks provinces to return u s booze to shelves as trade deal being finalized n s premier says cbc": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Carney asks provinces to return U.S. booze to shelves as trade deal being finalized, N.S. premier says - CBC"
-    },
-    "old cusma deal no longer possible moe says after carney briefing panow": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Old CUSMA deal no longer possible, Moe says after Carney briefing - paNOW"
-    },
-    "kim jong un s powerful sister says she is completely unaware if he contacted trump ctv news": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Kim Jong Un’s powerful sister says she is ‘completely unaware’ if he contacted Trump - CTV News"
-    },
-    "top global basic income experts gathering in toronto with senate bill top of mind cbc": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Top global basic income experts gathering in Toronto, with senate bill top of mind - CBC"
-    },
-    "national security question trips up sen darline graham in south carolina debate apnews com": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "National security question trips up Sen. Darline Graham in South Carolina debate - apnews.com"
-    },
-    "kim jong un s sister unaware of talks between us north korea the hill": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Kim Jong Un’s sister ‘unaware’ of talks between US, North Korea - The Hill"
-    },
-    "new video raises concerns about mcconnell days before hospitalization thedailybeast com": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "New Video Raises Concerns About McConnell Days Before Hospitalization - thedailybeast.com"
-    },
-    "80 of the world s problems involve old men hanging on barack obama s remarks revive debate over agein the times of india": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "“80% of the world’s problems involve old men hanging on”: Barack Obama’s remarks revive debate over agein - The Times of India"
-    },
-    "senators criticize trump administration s demands to access health data as a condition for lifesaving aid propublica": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Senators Criticize Trump Administration’s Demands to Access Health Data as a Condition for Lifesaving Aid - ProPublica"
-    },
-    "it s bonkers jennifer hegseth s hands on role in her husband s pentagon the seattle times": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "‘It’s bonkers’: Jennifer Hegseth’s hands-on role in her husband’s Pentagon - The Seattle Times"
-    },
-    "iran s speaker says bessent and hegseth are way out of their league the hill": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Iran’s Speaker says Bessent and Hegseth are ‘way out of their league’ - The Hill"
-    },
-    "canada and us say they are finalising a trade deal but details remain murky bbc": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Canada and US say they are finalising a trade deal, but details remain murky - BBC"
-    },
-    "why everyone is talking about trump s aide natalie harp cbc": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Why everyone is talking about Trump's aide Natalie Harp - CBC"
-    },
-    "who is lucky dutch police believe mystery man may have ties to canada global news": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Who is ‘Lucky’? Dutch police believe mystery man may have ties to Canada - Global News"
-    },
-    "bad year for b c drownings continues with vancouver island death vancouver sun": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Bad year for B.C. drownings continues with Vancouver Island death - Vancouver Sun"
-    },
-    "charges stayed against 11 youths in connection with teen slain by police ctv news": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Charges stayed against 11 youths in connection with teen slain by police - CTV News"
-    },
-    "what is keystone xl and why does trump want to bring it back to life global news": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "What is Keystone XL—and why does Trump want to bring it back to life? - Global News"
-    },
-    "north korea leader s sister denies talks with hostile us al jazeera": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "North Korea leader’s sister denies talks with ‘hostile’ US - Al Jazeera"
-    },
-    "prince harry and meghan moving back to the u k cbc": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Prince Harry and Meghan moving back to the U.K. - CBC"
-    },
-    "trump shifts approach to waiting iran out as tehran intensifies threats on gulf europe the times of israel": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Trump shifts approach to waiting Iran out as Tehran intensifies threats on Gulf, Europe - The Times of Israel"
-    },
-    "lindsay clancy didn t appreciate wrongfulness of killing her 3 children psychologist ctv news": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Lindsay Clancy didn’t appreciate ‘wrongfulness’ of killing her 3 children: psychologist - CTV News"
-    },
-    "ottawa partnership u s tariffs why churchill falls referendum axed says wakeham cbc": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Ottawa partnership, U.S. tariffs why Churchill Falls referendum axed, says Wakeham - CBC"
-    },
-    "zuckerberg put growth ahead of child safety former meta engineer testifies in major trial the globe and mail": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Zuckerberg put growth ahead of child safety, former Meta engineer testifies in major trial - The Globe and Mail"
-    },
-    "kraft dinner smoothie and pickle flavoured coffee what s on tap at the cne in toronto this year citynews toronto": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Kraft Dinner smoothie and pickle-flavoured coffee? What's on tap at the CNE in Toronto this year - CityNews Toronto"
-    },
-    "juventus official fan club toronto named winner of the lg match day heroes contest newswire ca": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "JUVENTUS OFFICIAL FAN CLUB TORONTO NAMED WINNER OF THE LG MATCH DAY HEROES CONTEST - newswire.ca"
-    },
-    "rivo launches multicultural streaming platform for immigrant stories canadian immigrant": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Rivo launches multicultural streaming platform for immigrant stories - Canadian Immigrant"
-    },
-    "trump shows off his new helipad brags about construction projects the washington post": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Trump shows off his new helipad, brags about construction projects - The Washington Post"
-    },
-    "lindsay clancy trial ends earlier than expected wednesday due to unforeseen circumstance cbs news": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Lindsay Clancy trial ends earlier than expected Wednesday due to \"unforeseen circumstance\" - CBS News"
-    },
-    "the topsy turvy world of trump s canada tariffs the new york times": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "The Topsy-Turvy World of Trump’s Canada Tariffs - The New York Times"
-    },
-    "former fauci adviser dr david morens pleads guilty to concealing covid related records npr": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Former Fauci adviser Dr. David Morens pleads guilty to concealing COVID-related records - NPR"
-    },
-    "trump announces most crushing economic operation ever against iran al jazeera": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Trump announces ‘most crushing economic operation ever’ against Iran - Al Jazeera"
-    },
-    "kennedy center tells court it won t try to restore trump s name to the building before sept 8 ap news": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Kennedy Center tells court it won’t try to restore Trump’s name to the building before Sept. 8 - AP News"
-    },
-    "lindsey graham s sister makes security blunder in car crash debate the telegraph": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Lindsey Graham’s sister makes security blunder in car-crash debate - The Telegraph"
-    },
-    "byron donalds is favored to become florida s first black governor the new york times": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Byron Donalds Is Favored to Become Florida’s First Black Governor - The New York Times"
-    },
-    "the freedom caucus is having a brutal primary run politico": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "The Freedom Caucus is having a brutal primary run - Politico"
-    },
-    "4 americans among 7 killed in kenya helicopter crash including telemundo executive nbc news": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "4 Americans among 7 killed in Kenya helicopter crash, including Telemundo executive - NBC News"
-    },
-    "trump s plan to squeeze iran s economy will live or die in dubai wsj": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Trump’s Plan to Squeeze Iran’s Economy Will Live or Die in Dubai - WSJ"
-    },
-    "prince harry and meghan moving back to britain this month the guardian": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Prince Harry and Meghan ‘moving back to Britain this month’ - The Guardian"
-    },
-    "u s debt hits 40 trillion as america s borrowing binge continues the new york times": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "U.S. Debt Hits $40 Trillion as America’s Borrowing Binge Continues - The New York Times"
-    },
-    "whistleblower arturo b jar leads testimony in landmark trial against meta npr": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Whistleblower Arturo Béjar leads testimony in landmark trial against Meta - NPR"
-    },
-    "bond market sell off threatens higher borrowing costs here is what it means for your money cbs news": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Bond market sell-off threatens higher borrowing costs. Here is what it means for your money. - CBS News"
-    },
-    "fed officials warned rate hikes may be needed if inflation stays high axios": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Fed officials warned rate hikes may be needed if inflation stays high - Axios"
-    },
-    "apple s camera equipped ai airpods remain on track for 2027 despite video leak bloomberg com": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "google_news",
-      "title": "Apple’s Camera-Equipped AI AirPods Remain on Track for 2027 Despite Video Leak - bloomberg.com"
-    },
-    "carney asks provinces to return u s booze to shelves as trade deal being finalized n s premier says": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "cbc_politics",
-      "title": "Carney asks provinces to return U.S. booze to shelves as trade deal being finalized, N.S. premier says"
-    },
-    "trump expected to slash tariffs on canadian goods carney asks premiers to put u s booze back on shelves": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "cbc_politics",
-      "title": "Trump expected to slash tariffs on Canadian goods, Carney asks premiers to put U.S. booze back on shelves"
-    },
-    "carney says last minute u s tariff negotiations are delicate and intense as deadline looms": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "cbc_politics",
-      "title": "Carney says last-minute U.S. tariff negotiations are 'delicate' and 'intense' as deadline looms"
-    },
-    "n l quebec announce new churchill falls agreement worth billions with help from ottawa": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "cbc_politics",
-      "title": "N.L., Quebec announce new Churchill Falls agreement worth billions — with help from Ottawa"
-    },
-    "where do canada u s trade negotiations stand here s a sector by sector breakdown": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "cbc_politics",
-      "title": "Where do Canada-U.S. trade negotiations stand? Here's a sector-by-sector breakdown"
-    },
-    "inflation rate rose to 3 in july as gas prices climbed again": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "cbc_politics",
-      "title": "Inflation rate rose to 3% in July as gas prices climbed again"
-    },
-    "push for co operation among european shipbuilders could have canadian ripple effect": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "cbc_politics",
-      "title": "Push for co-operation among European shipbuilders could have Canadian ripple effect"
-    },
-    "demand for canadian citizenship certificates soaring fuelled by americans": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "cbc_politics",
-      "title": "Demand for Canadian citizenship certificates soaring, fuelled by Americans"
-    },
-    "russian enriched uranium shipped to canadian owned westinghouse in u s": {
-      "firstSeen": "2026-08-20T01:11:59.690Z",
-      "source": "cbc_politics",
-      "title": "Russian enriched uranium shipped to Canadian-owned Westinghouse in U.S."
-    },
-    "dog": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "dog"
-    },
-    "charlie day": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "charlie day"
-    },
-    "hydro quebec": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "hydro quebec"
-    },
-    "pep guardiola": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "pep guardiola"
-    },
-    "aryna sabalenka": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "aryna sabalenka"
-    },
-    "montreal weather": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "montreal weather"
-    },
-    "bogus maple syrup": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "bogus maple syrup"
-    },
-    "mathieu baron": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "mathieu baron"
-    },
-    "lynx vs valkyries": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "lynx vs valkyries"
-    },
-    "felix auger aliassime": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "felix auger aliassime"
-    },
-    "son heung min": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "son heung-min"
-    },
-    "klystron 9": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "klystron 9"
-    },
-    "split superlatives": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "split superlatives"
-    },
-    "paul mescal": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "paul mescal"
-    },
-    "thunder valley": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "thunder valley"
-    },
-    "serial": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "serial"
-    },
-    "dust storm warning": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "dust storm warning"
-    },
-    "tanner scott": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "tanner scott"
-    },
-    "": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "许家印"
-    },
-    "gary indiana blackout": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_trends",
-      "title": "gary indiana blackout"
-    },
-    "fr chette says she is not reassured by new canada u s trade deal montreal gazette": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Fréchette says she is not reassured by new Canada-U.S. trade deal - Montreal Gazette"
-    },
-    "pm carney asks premiers to remove u s booze ban as officials try to finalize trade deal ctv news": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "PM Carney asks premiers to remove U.S. booze ban as officials try to finalize trade deal - CTV News"
-    },
-    "q a tony wakeham on the new churchill falls deal and how n l gets less money up front cbc": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Q&A: Tony Wakeham on the new Churchill Falls deal and how N.L. gets less money up front - CBC"
-    },
-    "finish the damn thing former alberta premier urges on keystone pipeline expansion ctv news": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "‘Finish the damn thing’: Former Alberta premier urges on Keystone pipeline expansion - CTV News"
-    },
-    "natalie harp worked at white house for over a year without security clearance report says forbes": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Natalie Harp Worked At White House For Over A Year Without Security Clearance, Report Says - Forbes"
-    },
-    "n s premier content with how u s trade negotiations are going cbc": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "N.S. premier 'content' with how U.S. trade negotiations are going - CBC"
-    },
-    "findlay s culture war video draws criticism within the interior s political debate cfjc today kamloops": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Findlay’s ‘culture war’ video draws criticism within the Interior’s political debate - CFJC Today Kamloops"
-    },
-    "media will have to register foreign backed political messaging says influence commissioner hilltimes com": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Media will have to register foreign-backed political messaging, says influence commissioner - hilltimes.com"
-    },
-    "pakistan rattled over us envoy calling j k an important part of india lodges strong protest in islamabad the tribune": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Pakistan rattled over US envoy calling J-K an important part of India, lodges strong protest in Islamabad - The Tribune"
-    },
-    "james braid to depart white house politico": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "James Braid to depart White House - Politico"
-    },
-    "air force major detained again for capitol protest after trump criticism the hill": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Air Force major detained again for Capitol protest after Trump criticism - The Hill"
-    },
-    "new video raises concerns about mcconnell days before hospitalization the daily beast": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "New Video Raises Concerns About McConnell Days Before Hospitalization - The Daily Beast"
-    },
-    "it s bonkers jennifer hegseth s hands on role in her husband s pentagon seattletimes com": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "‘It’s bonkers’: Jennifer Hegseth’s hands-on role in her husband’s Pentagon - seattletimes.com"
-    },
-    "canada u s officials work to finalize trade deal after new tariffs paused cbc": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Canada, U.S. officials work to finalize trade deal after new tariffs paused - CBC"
-    },
-    "montreal officer stabbed civilian shot during police intervention in st michel montreal gazette": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Montreal officer stabbed, civilian shot during police intervention in St-Michel - Montreal Gazette"
-    },
-    "trump threatens tremendous economic consequences on any country helping iran bbc": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Trump threatens 'tremendous economic consequences' on any country helping Iran - BBC"
-    },
-    "meet natalie harp the aide so close to trump she once rode in an suv trunk to accompany him ctv news": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Meet Natalie Harp, the aide so close to Trump she once rode in an SUV trunk to accompany him - CTV News"
-    },
-    "israel admits firing on car carrying five year old hind rajab opens probe al jazeera": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Israel admits firing on car carrying five-year-old Hind Rajab, opens probe - Al Jazeera"
-    },
-    "4 people in hospital following highway 401 crash that resulted in lengthy closure cp24": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "4 people in hospital following Highway 401 crash that resulted in lengthy closure - CP24"
-    },
-    "danielle smith acknowledges foreign influence campaigns are targeting alberta referendum the globe and mail": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Danielle Smith acknowledges foreign influence campaigns are targeting Alberta referendum - The Globe and Mail"
-    },
-    "missing pilot found dead after massive search in ontario global news": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Missing pilot found dead after massive search in Ontario - Global News"
-    },
-    "calgary officer to stand trial for murder after two die in slow speed police chase ctv news": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Calgary officer to stand trial for murder after two die in slow-speed police chase - CTV News"
-    },
-    "kosovo finds remains of at least 23 people in suspected mass graves al jazeera": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Kosovo finds remains of at least 23 people in suspected mass graves - Al Jazeera"
-    },
-    "north korea dismisses donald trump s overture financial times": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "North Korea dismisses Donald Trump’s overture - Financial Times"
-    },
-    "trump says he plans to meet with north korea s kim this year reuters": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Trump says he plans to meet with North Korea's Kim this year - Reuters"
-    },
-    "donald trump proposed reviving the keystone xl pipeline does canada still want it financial times": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Donald Trump proposed reviving the Keystone XL pipeline. Does Canada still want it? - Financial Times"
-    },
-    "gta vi leaker drops even more new footage and reveals their motivations forbes": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "‘GTA VI’ Leaker Drops Even More New Footage And Reveals Their Motivations - Forbes"
-    },
-    "trump shows off white house renovations and ornate new helipad the guardian": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Trump shows off White House renovations and ornate new helipad - The Guardian"
-    },
-    "lindsay clancy trial recap court ends abruptly after tiktoker questioned psychosis testimony nbc boston": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Lindsay Clancy trial recap: Court ends abruptly after TikToker questioned, psychosis testimony - NBC Boston"
-    },
-    "trump and canada s carney seem to make progress on a tariff deal but questions linger the new york times": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Trump and Canada’s Carney Seem to Make Progress on a Tariff Deal, but Questions Linger - The New York Times"
-    },
-    "pilot killed 2 pa state police troopers injured in midair crash at carlisle regional airport 6abc philadelphia": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Pilot killed, 2 Pa. State Police troopers injured in midair crash at Carlisle Regional Airport - 6abc Philadelphia"
-    },
-    "jimmy gomez being investigated for sexual harassments and assault lawyers allege politico": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Jimmy Gomez being investigated for 'sexual harassments and assault,' lawyers allege - Politico"
-    },
-    "prince harry and meghan will move back to u k after 6 years in u s the new york times": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Prince Harry and Meghan Will Move Back to U.K. After 6 Years in U.S. - The New York Times"
-    },
-    "trump nominates heidi overton to lead us food and drug administration al jazeera": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Trump nominates Heidi Overton to lead US Food and Drug Administration - Al Jazeera"
-    },
-    "missouri court allows new trump backed us house districts to be used in november election ap news": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Missouri court allows new Trump-backed US House districts to be used in November election - AP News"
-    },
-    "bodies discovered in swiss alps as melting glaciers reveal remains usa today": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Bodies discovered in Swiss Alps as melting glaciers reveal remains - USA Today"
-    },
-    "alarm in south korea as iran dispute with trump shakes a 72 year alliance al jazeera": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Alarm in South Korea as Iran dispute with Trump shakes a 72-year alliance - Al Jazeera"
-    },
-    "u s conducting stealth operation to transport oil through hormuz axios": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "U.S. conducting stealth operation to transport oil through Hormuz - Axios"
-    },
-    "cnbc daily open treasury attempts to rein in bond yields as u s debt swells past 40 trillion cnbc": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "CNBC Daily Open: Treasury attempts to rein in bond yields as U.S. debt swells past $40 trillion - CNBC"
-    },
-    "us national debt hits 40 trillion rising by 90k per second wjla": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "US national debt hits $40 trillion, rising by $90K per second - WJLA"
-    },
-    "google pixel 11 pro hands on review gsmarena com": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Google Pixel 11 Pro hands-on review - GSMArena.com"
-    },
-    "apple s camera equipped ai airpods remain on track for 2027 despite video leak bloomberg": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "google_news",
-      "title": "Apple’s Camera-Equipped AI AirPods Remain on Track for 2027 Despite Video Leak - Bloomberg"
-    },
-    "canada u s officials work to finalize trade deal after new tariffs paused": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "cbc_politics",
-      "title": "Canada, U.S. officials work to finalize trade deal after new tariffs paused"
-    },
-    "ottawa will look into screening processes amid nato intern spying allegations": {
-      "firstSeen": "2026-08-20T04:46:56.439Z",
-      "source": "cbc_politics",
-      "title": "Ottawa will look into screening processes amid NATO intern spying allegations"
-    },
     "rory mcilroy": {
       "firstSeen": "2026-08-20T14:54:00.666Z",
       "source": "google_trends",
@@ -2454,7 +1339,467 @@
       "firstSeen": "2026-08-21T08:00:15.196Z",
       "source": "cbc_politics",
       "title": "No referendum with Trump around, says PQ ahead of October election"
+    },
+    "dodgers": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "dodgers"
+    },
+    "pne": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "pne"
+    },
+    "nbc news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "nbc news"
+    },
+    "doug ford": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "doug ford"
+    },
+    "msnbc": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "msnbc"
+    },
+    "reds vs diamondbacks": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "reds vs diamondbacks"
+    },
+    "tempo": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "tempo"
+    },
+    "cnn news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "cnn news"
+    },
+    "trump truth social": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "trump truth social"
+    },
+    "fox news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "fox news"
+    },
+    "crypto news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "crypto news"
+    },
+    "max holloway": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "max holloway"
+    },
+    "xrp news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "xrp news"
+    },
+    "anthony hernandez": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "anthony hernandez"
+    },
+    "hyperliquid": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "hyperliquid"
+    },
+    "league of legends": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "league of legends"
+    },
+    "luke weaver": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "luke weaver"
+    },
+    "alex bregman": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "alex bregman"
+    },
+    "crypto": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "crypto"
+    },
+    "solana price": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_trends",
+      "title": "solana price"
+    },
+    "morning update trade negotiations are back on deadline the globe and mail": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Morning Update: Trade negotiations are back on deadline - The Globe and Mail"
+    },
+    "cracks in team canada as some premiers openly question booze boycott strategy the globe and mail": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Cracks in Team Canada as some premiers openly question booze boycott strategy - The Globe and Mail"
+    },
+    "new n l red tape reduction portfolio could work if resourced right says political scientist cbc": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "New N.L. red tape reduction portfolio could work, if resourced right, says political scientist - CBC"
+    },
+    "chief justice roberts briefly allows white house ballroom construction the hill": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Chief Justice Roberts briefly allows White House ballroom construction - The Hill"
+    },
+    "these mothers led the white house briefing room under trump biden usa today": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "These mothers led the White House briefing room under Trump, Biden - USA Today"
+    },
+    "burnham economic adviser o neill rules out government job bbc": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Burnham economic adviser O'Neill rules out government job - BBC"
+    },
+    "punjab people want it done sad bats for pact with ex ally bjp the tribune": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "‘Punjab people want it done’: SAD bats for pact with ex-ally BJP - The Tribune"
+    },
+    "tiananmen square vigil organizers convicted of inciting subversion in hong kong cbc": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Tiananmen Square vigil organizers convicted of 'inciting subversion' in Hong Kong - CBC"
+    },
+    "party leader has given me no red lines new health minister robbie butler bbc": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "'Party leader has given me no red lines' - new health minister Robbie Butler - BBC"
+    },
+    "labour stalling on jackdaw and rosebank because heart s not really in it says badenoch as it happened the guardian": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Labour stalling on Jackdaw and Rosebank because ‘heart’s not really in it’, says Badenoch – as it happened - The Guardian"
+    },
+    "aiming to get the best agreement alberta s smith speaks on trade deal ctv news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "‘Aiming to get the best agreement’: Alberta’s Smith speaks on trade deal - CTV News"
+    },
+    "bolivia ousts economy minister after lawmaker pressure in blow to paz reuters": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Bolivia ousts economy minister after lawmaker pressure, in blow to Paz - Reuters"
+    },
+    "alberta separatists reject reports of russia linked disinformation toronto star": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Alberta separatists reject reports of Russia-linked disinformation - Toronto Star"
+    },
+    "they have their own agenda india slams us body seeking sanctions on rss ndtv": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "\"They Have Their Own Agenda\": India Slams US Body Seeking Sanctions On RSS - NDTV"
+    },
+    "former hong kong vigil organizer strives to mark tiananmen crackdown despite convictions ap news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Former Hong Kong vigil organizer strives to mark Tiananmen crackdown despite convictions - AP News"
+    },
+    "us army secretary driscoll is expected to step down by year s end wsj reports reuters": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "US Army Secretary Driscoll is expected to step down by year's end, WSJ reports - Reuters"
+    },
+    "a bruising week for bolivia s president paz as scandal and setbacks test his presidency ap news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "A bruising week for Bolivia’s President Paz as scandal and setbacks test his presidency - AP News"
+    },
+    "pakistan ex pm imran khan s family accuses gov t of defying hospital order al jazeera": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Pakistan ex-PM Imran Khan’s family accuses gov’t of defying hospital order - Al Jazeera"
+    },
+    "mirza fakhrul islam alamgir sworn in as bangladesh s 23rd president the times of india": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Mirza Fakhrul Islam Alamgir sworn in as Bangladesh's 23rd President - The Times of India"
+    },
+    "american arab chamber fires its leader cites missing funds the detroit news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "American Arab Chamber fires its leader, cites missing funds - The Detroit News"
+    },
+    "nigeria orders investigation into second fake government agency ap news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Nigeria orders investigation into second fake government agency - AP News"
+    },
+    "because of him north capitol building named in honor of former utah gov mike leavitt ksl": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "'Because of him': North Capitol building named in honor of former Utah Gov. Mike Leavitt - KSL"
+    },
+    "who will replace karoline leavitt names emerge for white house press secretary katu": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Who will replace Karoline Leavitt? Names emerge for White House press secretary - KATU"
+    },
+    "photos vance touts steel investment visits price hill chili cincinnati enquirer": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Photos: Vance touts steel investment, visits Price Hill Chili - Cincinnati Enquirer"
+    },
+    "is it illegal for the president to spend patriotic donations on a white house ballroom or anything else the conversation": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Is it illegal for the president to spend ‘patriotic’ donations on a White House ballroom or anything else? - The Conversation"
+    },
+    "canada u s trade talks collapse washington imposes new tariffs the new york times": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Canada-U.S. Trade Talks Collapse; Washington Imposes New Tariffs - The New York Times"
+    },
+    "supreme court lets trump continue work on white house ballroom for now reuters": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Supreme Court lets Trump continue work on White House ballroom for now - Reuters"
+    },
+    "weekend wallop toronto under special weather statement for heavy rain with possible thunderstorms citynews toronto": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Weekend wallop: Toronto under special weather statement for heavy rain with possible thunderstorms - CityNews Toronto"
+    },
+    "montreal resident facing immigration fraud charges may have fled the country ctv news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Montreal resident facing immigration fraud charges may have fled the country - CTV News"
+    },
+    "u s alcohol bans must end for trade deal to happen canada s ambassador told council sources cbc": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "U.S. alcohol bans must end for trade deal to happen, Canada's ambassador told council: sources - CBC"
+    },
+    "trump s economic d day claims first victim not iran but us markets al jazeera": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Trump’s ‘economic D-Day’ claims first victim: Not Iran, but US markets - Al Jazeera"
+    },
+    "stabbing at edmonton sikh temple leaves 2 injured man in custody cbc": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Stabbing at Edmonton Sikh temple leaves 2 injured, man in custody - CBC"
+    },
+    "witnesses recount scene after plane crash on prince george b c highway the globe and mail": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Witnesses recount scene after plane crash on Prince George, B.C., highway - The Globe and Mail"
+    },
+    "5 year old boy airlifted to hospital after serious collision in barrie ctv news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "5-year-old boy airlifted to hospital after serious collision in Barrie - CTV News"
+    },
+    "national monument marking lgbtq persecution unveiled in ottawa ctv news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "National monument marking LGBTQ+ persecution unveiled in Ottawa - CTV News"
+    },
+    "lindsay clancy s defence rests at trial over whether postpartum psychosis drove her to kill her kids ctv news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Lindsay Clancy’s defence rests at trial over whether postpartum psychosis drove her to kill her kids - CTV News"
+    },
+    "like a dog you have to train them father charged with abusing infant toddler ctv news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "‘Like a dog, you have to train them:’ Father charged with abusing infant, toddler - CTV News"
+    },
+    "canada u k australia rebuke israel for decision on aid workers deaths castanet": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Canada, U.K., Australia rebuke Israel for decision on aid workers' deaths - Castanet"
+    },
+    "trump to temporarily lower beef tariffs angering u s cattle producers global news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Trump to temporarily lower beef tariffs, angering U.S. cattle producers - Global News"
+    },
+    "energy nl says local companies ready for labrador hydro megaprojects vocm": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Energy NL says Local Companies Ready for Labrador Hydro Megaprojects - VOCM"
+    },
+    "manitoba premier says port of churchill expansion could cost 80b and include offshore lng terminal cbc": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Manitoba premier says Port of Churchill expansion could cost $80B and include offshore LNG terminal - CBC"
+    },
+    "melting pot of disaster heartache and fear as pulp mill closure rocks b c s sunshine coast ctv news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "‘Melting pot of disaster’: Heartache and fear as pulp mill closure rocks B.C.’s Sunshine Coast - CTV News"
+    },
+    "from pickle flavoured coffee to kraft dinner smoothies cne opens today with wacky food combos the globe and mail": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "From pickle-flavoured coffee to Kraft Dinner smoothies, CNE opens today with wacky food combos - The Globe and Mail"
+    },
+    "vertical 6 bike rack review thule revert vs velocirax max vs yakima hangtight pinkbike": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Vertical 6-Bike Rack Review: Thule Revert vs. Velocirax Max vs. Yakima HangTight - Pinkbike"
+    },
+    "chase is on for grand theft auto vi leaker take two subpoenas microsoft and discord yahoo finance canada": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Chase Is On For ‘Grand Theft Auto VI’ Leaker—Take-Two Subpoenas Microsoft And Discord - Yahoo! Finance Canada"
+    },
+    "i m on the ballot trump lends a hand to struggling darline graham politico": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "‘I’m on the ballot’: Trump lends a hand to struggling Darline Graham - Politico"
+    },
+    "supreme court says trump can continue ballroom work as it weighs case the washington post": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Supreme Court says Trump can continue ballroom work as it weighs case - The Washington Post"
+    },
+    "live updates key iranian trading partner china rejects trump s economic d day threat cnn": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Live updates: Key Iranian trading partner China rejects Trump’s ‘economic D-Day’ threat - CNN"
+    },
+    "lindsay clancy s defense rests at trial over whether postpartum psychosis drove her to kill her kids ap news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Lindsay Clancy’s defense rests at trial over whether postpartum psychosis drove her to kill her kids - AP News"
+    },
+    "pentagon fires stars and stripes editor in chief publisher reporter the hill": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Pentagon fires Stars and Stripes editor in chief, publisher, reporter - The Hill"
+    },
+    "class action lawsuit filed against nipsco alleges lack of vegetation management prior to storm wgn tv": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Class-action lawsuit filed against NIPSCO, alleges lack of vegetation management prior to storm - WGN-TV"
+    },
+    "us postal service rule tightens mail in voting despite court orders blocking changes the guardian": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "US Postal Service rule tightens mail-in voting despite court orders blocking changes - The Guardian"
+    },
+    "plane crashed on second attempt to land in heavy fog in alaska killing all 8 aboard officials say ap news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Plane crashed on second attempt to land in heavy fog in Alaska, killing all 8 aboard, officials say - AP News"
+    },
+    "us imposes deep colorado river water cuts to california nevada and arizona reuters": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "US imposes deep Colorado River water cuts to California, Nevada and Arizona - Reuters"
+    },
+    "swedish police say 1 dead 2 injured after school sword attack cbs news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Swedish police say 1 dead, 2 injured after school sword attack - CBS News"
+    },
+    "russian double tap strike on shopping centre in ukraine kills 16 and wounds 130 reuters": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Russian 'double-tap' strike on shopping centre in Ukraine kills 16 and wounds 130 - Reuters"
+    },
+    "prince harry elton john other privacy case claimants ordered to pay daily mail publisher 13 million deadline": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Prince Harry, Elton John & Other Privacy Case Claimants Ordered To Pay Daily Mail Publisher $13 Million - Deadline"
+    },
+    "men from cuba and other countries describe being deported by the u s to a dangerous african nation we cannot leave cbs news": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Men from Cuba and other countries describe being deported by the U.S. to a dangerous African nation: \"We cannot leave\" - CBS News"
+    },
+    "tiktok settles with u s over child privacy concerns for 400 million the new york times": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "TikTok Settles With U.S. Over Child Privacy Concerns for $400 Million - The New York Times"
+    },
+    "e coli and salmonella outbreak linked to alfalfa sprouts sickens dozens across multiple states fox business": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "E coli and salmonella outbreak linked to alfalfa sprouts sickens dozens across multiple states - Fox Business"
+    },
+    "stock market news aug 21 2026 bitcoin jumps s p 500 ends friday with weekly loss wsj": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Stock Market News, Aug. 21, 2026: Bitcoin Jumps; S&P 500 Ends Friday With Weekly Loss - WSJ"
+    },
+    "boeing workers reject contract offer at crucial moment for company the seattle times": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "Boeing workers reject contract offer at crucial moment for company - The Seattle Times"
+    },
+    "chatgpt on mac can now read and respond to apple imessages engadget": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "ChatGPT On Mac Can Now Read And Respond To Apple iMessages - Engadget"
+    },
+    "the grand theft auto vi leak is speeding ahead without an exit in sight axios": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "google_news",
+      "title": "The \"Grand Theft Auto VI\" leak is speeding ahead without an exit in sight - Axios"
+    },
+    "new u s tariffs in effect after trade talks fail carney says canada plans to match levies": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "cbc_politics",
+      "title": "New U.S. tariffs in effect after trade talks fail, Carney says Canada plans to match levies"
+    },
+    "american tariffs on canadian goods take effect after trade talks fall apart": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "cbc_politics",
+      "title": "American tariffs on Canadian goods take effect after trade talks fall apart"
+    },
+    "u s alcohol bans must end for trade deal to happen canada s ambassador told council sources": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "cbc_politics",
+      "title": "U.S. alcohol bans must end for trade deal to happen, Canada's ambassador told council: sources"
+    },
+    "one of trump s top deputies has been unsatisfied with trade deal on the table for canada sources say": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "cbc_politics",
+      "title": "One of Trump's top deputies has been unsatisfied with trade deal on the table for Canada, sources say"
+    },
+    "canadian bans on u s alcohol take centre stage in tariff talks american businesses are caught in the middle": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "cbc_politics",
+      "title": "Canadian bans on U.S. alcohol take centre stage in tariff talks. American businesses are caught in the middle"
+    },
+    "rcmp arrest montreal minor in connection with alleged terror plot targeting school": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "cbc_politics",
+      "title": "RCMP arrest Montreal minor in connection with alleged terror plot targeting school"
+    },
+    "national 2slgbtq monument in ottawa draws on themes of destruction and renewal": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "cbc_politics",
+      "title": "National 2SLGBTQ+ monument in Ottawa draws on themes of destruction and renewal"
+    },
+    "trump pauses 50 tariffs on canadian goods for 3 days": {
+      "firstSeen": "2026-08-22T05:26:21.530Z",
+      "source": "cbc_politics",
+      "title": "Trump pauses 50% tariffs on Canadian goods for 3 days"
     }
   },
-  "lastRun": "2026-08-21T08:00:15.196Z"
+  "lastRun": "2026-08-22T05:26:21.530Z"
 }
