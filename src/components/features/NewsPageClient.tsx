@@ -4,10 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import {
   Newspaper,
-  Calendar,
-  ArrowRight,
   Globe,
-  Zap,
   ChevronLeft,
   ChevronRight,
   Filter,
@@ -16,12 +13,12 @@ import {
   MapPin,
   X,
 } from "lucide-react";
-import { Card, PageHeader, Badge, Button, Modal } from "@/components/primitives";
+import { Card, PageHeader, Button, Modal } from "@/components/primitives";
 import { useTranslation } from "@/contexts/LanguageContext";
-import { isBreakingNewsActive, type NewsArticleContent } from "@/lib/services/news";
-import ShareMenu, { type ShareData } from "@/components/features/ShareMenu";
+import type { ShareData } from "@/components/features/ShareMenu";
 import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
+import NewsArticleCard from "@/components/features/NewsArticleCard";
 import { SITE_URL } from "@/lib/constants/site";
 
 interface NewsArticleRow {
@@ -327,104 +324,22 @@ export default function NewsPageClient({
           {/* News Article Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {items.map((article) => {
-              const content = article.content as NewsArticleContent;
-              const isBreaking = isBreakingNewsActive(article as any);
-
-              // Check if this article tags any of the user's representatives
+              // Does this article tag any of the signed-in viewer's own
+              // representatives? Computed here (needs userRepresentatives,
+              // which the card has no reason to know about) and just handed
+              // to NewsArticleCard as a boolean.
               const repIdsSet = new Set(userRepresentatives.map((r) => r.id));
               const taggedUserReps = (article.news_article_politicians ?? []).filter((p) =>
                 repIdsSet.has(p.politician_id)
               );
 
-              // Prioritize event_date to reflect when the news happened
-              const rawDate = article.event_date || article.published_at || article.created_at;
-              const displayDate = rawDate
-                ? new Date(rawDate).toLocaleDateString("en-CA", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })
-                : null;
-
               return (
-                <Card
+                <NewsArticleCard
                   key={article.id}
-                  as={Link}
-                  href={`/news/${article.slug}`}
-                  interactive
-                  padding="none"
-                  className="group flex flex-col justify-between h-full overflow-hidden cursor-pointer hover:border-primary/40 transition-all duration-200"
-                >
-                  {/* Hero or Dynamic Visual Briefing Image */}
-                  <div className="relative h-44 w-full overflow-hidden bg-slate-100 border-b border-border-light/20">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={article.hero_image_url || `/news/${article.slug}/opengraph-image`}
-                      alt={content?.heroImageAlt ?? article.headline}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    {isBreaking && (
-                      <span className="absolute top-2 left-2 flex items-center gap-1 bg-danger text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md z-10">
-                        <Zap size={10} /> {t("newsPage.breaking")}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex flex-col flex-1 p-4 space-y-3">
-                    <div className="flex items-center justify-between gap-2 flex-wrap">
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        <Badge tone="primary">{article.category || "News"}</Badge>
-                        {taggedUserReps.length > 0 && (
-                          <Badge tone="accent" className="flex items-center gap-1">
-                            <UserCheck size={10} /> My Rep
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-text-muted">
-                        {article.country && (
-                          <span className="flex items-center gap-1 font-semibold">
-                            <Globe size={10} /> {article.country.toUpperCase() === "US" ? "USA 🇺🇸" : article.country.toUpperCase() === "CA" ? "CAN 🇨🇦" : article.country.toUpperCase()}
-                          </span>
-                        )}
-                        {displayDate && (
-                          <span className="flex items-center gap-1 font-medium">
-                            <Calendar size={10} /> {displayDate}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    {isBreaking && !article.hero_image_url && (
-                      <span className="inline-flex items-center gap-1 bg-danger/10 text-danger text-xs font-bold px-2 py-0.5 rounded-full w-fit">
-                        <Zap size={10} /> {t("newsPage.breaking")}
-                      </span>
-                    )}
-
-                    <h2 className="text-base font-bold text-text-main leading-snug line-clamp-2 md:line-clamp-3 group-hover:text-primary transition-colors">
-                      {article.headline}
-                    </h2>
-
-                    {article.summary && (
-                      <p className="hidden md:block text-xs text-text-muted leading-relaxed line-clamp-3">
-                        {article.summary}
-                      </p>
-                    )}
-
-                    <div className="flex items-center justify-between pt-2 mt-auto border-t border-border-light/20">
-                      <div className="inline-flex items-center gap-1.5 text-xs font-bold text-primary group-hover:text-primary-hover transition-colors">
-                        {t("newsPage.readFull")} <ArrowRight size={13} />
-                      </div>
-
-                      <ShareMenu
-                        articleId={article.id}
-                        shareData={generateShareData(article)}
-                        className="p-1.5 rounded-lg bg-surface/80 hover:bg-orange-500/20 text-text-muted hover:text-orange-500 transition-colors cursor-pointer"
-                        iconSize={13}
-                      />
-                    </div>
-                  </div>
-                </Card>
+                  article={article}
+                  shareData={generateShareData(article)}
+                  showMyRepBadge={taggedUserReps.length > 0}
+                />
               );
             })}
           </div>
