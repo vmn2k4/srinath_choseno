@@ -1,6 +1,206 @@
 [
   {
     "rank": 101,
+    "raw": "71,9.4,\"Saskatoon Opens Rhythm & Roots Festival Showcasing Multicultural Arts and Small Business Hubs\",Community,\"SK, CA\",Civic Authority,2026-08-21T01:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Saskatoon opens the 2026 Rhythm & Roots Asian Festival, featuring over 120 culinary and artisan vendors celebrating multicultural heritage.\",\"Saskatoon civic leaders and cultural associations launch the 2026 Rhythm & Roots Asian Festival at Prairieland Park, bringing together over 120 artisan culinary and cultural exhibits.\",https://www.choseno.com/news/saskatoon-hosts-rhythm-and-roots-asian-festival-celebrating-multicultural-heritage-2026-08-21,https://www.choseno.com/news/saskatoon-hosts-rhythm-and-roots-asian-festival-celebrating-multicultural-heritage-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.222Z"
+  },
+  {
+    "rank": 102,
+    "raw": "72,9.3,\"Manitoba Municipal Administrators Convene Brandon Summit on Digital Cybersecurity Standards\",Municipal,\"MB, CA\",Wab Kinew,2026-08-21T00:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Manitoba municipal administrators convene in Brandon to adopt unified cybersecurity and digital governance frameworks for rural and urban towns.\",\"Over 180 municipal chief administrative officers gather in Brandon to adopt unified cybersecurity frameworks and digital payroll compliance standards for Prairie towns.\",https://www.choseno.com/news/manitoba-association-of-municipal-administrators-convenes-governance-summit-2026-08-21,https://www.choseno.com/wall/wab-kinew",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 103,
+    "raw": "73,9.3,\"Premier Ford Outlines $30B Decade-Long School Infrastructure and Renewal Blueprint\",Education,\"ON, CA\",Doug Ford,2026-08-20T22:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Ontario Premier Doug Ford details a 30 billion dollar plan to build 120 new schools and modernize 400 existing facilities with on-site childcare.\",\"Ontario Premier Doug Ford details the deployment of a $30 billion capital strategy to construct 120 brand-new public schools and renovate 400 existing educational facilities.\",https://www.choseno.com/news/ontario-premier-ford-outlines-thirty-billion-dollar-school-capital-modernization-2026-08-21,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 104,
+    "raw": "74,9.3,\"U.S. Navy Carrier Strike Group Arrives in Arabian Sea to Reinforce Maritime Chokepoint Security\",Defense,\"DC, US\",Civic Authority,2026-08-20T23:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The USS George Washington Carrier Strike Group arrives in the Arabian Sea, reinforcing international commercial shipping and chokepoint security.\",\"The Nimitz-class aircraft carrier USS George Washington arrives in the Arabian Sea, joining Fifth Fleet surface combatants to secure international shipping lanes.\",https://www.choseno.com/news/united-states-fifth-fleet-deploys-uss-washington-carrier-strike-group-to-arabian-sea-2026-08-21,https://www.choseno.com/news/united-states-fifth-fleet-deploys-uss-washington-carrier-strike-group-to-arabian-sea-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 105,
+    "raw": "75,9.2,\"Video Game Industry Shift Highlights Digital Live-Service Sustainability Scrutiny\",Technology,\"CA, US\",Civic Authority,2026-08-20T22:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Riot Games announces the operational sunset of fighting game 2XKO, offering full refunds and highlighting shifts in digital live-service economics.\",\"Riot Games announces the sunsetting of its fighting title 2XKO within a year of release, prompting broader technology and entertainment market analysis on live-service gaming economics.\",https://www.choseno.com/news/riot-games-announces-operational-sunset-for-2xko-fighting-game-2026-08-21,https://www.choseno.com/news/riot-games-announces-operational-sunset-for-2xko-fighting-game-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 106,
+    "raw": "76,9.2,\"Canada and France Conclude Bilateral Parliamentary Accord on Sovereign AI Infrastructure\",Technology,\"ON, CA\",Mark Carney,2026-08-21T02:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Canada and France sign an interparliamentary accord establishing a 140 million dollar public compute fund for sovereign open-source AI research.\",\"Parliamentarians from Canada and France sign a joint cooperation framework in Paris, establishing shared open-source artificial intelligence compute clusters for academic researchers.\",https://www.choseno.com/news/french-national-assembly-and-canada-convene-ai-governance-summit-2026-08-21,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 107,
+    "raw": "77,9.1,\"Supreme Court of Canada Sets Fall Docket for Provincial Resource Jurisdiction Appeal\",Judiciary,\"ON, CA\",Danielle Smith,2026-08-20T22:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Supreme Court of Canada schedules November hearings for Alberta's major constitutional appeal over provincial resource jurisdiction.\",\"The Supreme Court of Canada announces its fall oral argument schedule, designating a major appeal on provincial constitutional authority over resource environmental offsets.\",https://www.choseno.com/news/supreme-court-of-canada-schedules-fall-hearings-on-provincial-carbon-pricing-powers-2026-08-21,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 108,
+    "raw": "78,9.1,\"Bank of Canada and ECB Complete Successful Wholesale Digital Settlement Pilot\",Economy,\"ON, CA\",Civic Authority,2026-08-21T02:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Bank of Canada and ECB complete a successful wholesale digital currency pilot, achieving 3-second cross-border payments between commercial banks.\",\"The Bank of Canada and the European Central Bank publish results from Project Jasper-Elysium, proving quantum-resistant wholesale digital currency settlements reduce transfer times to seconds.\",https://www.choseno.com/news/european-central-bank-and-bank-of-canada-issue-digital-currency-cross-border-study-2026-08-21,https://www.choseno.com/news/european-central-bank-and-bank-of-canada-issue-digital-currency-cross-border-study-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 109,
+    "raw": "79,9.0,\"Hydro-Québec Commits $340M to Upgrade Saguenay High-Voltage Transmission Network\",Energy,\"QC, CA\",François Legault,2026-08-20T23:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Hydro-Québec commits 340 million dollars to upgrade Saguenay high-voltage transmission lines, boosting industrial clean power capacity by 800 MW.\",\"Hydro-Québec announces a $340 million transmission line and substation refurbishment in the Saguenay–Lac-Saint-Jean region to power expanding aluminum smelters and data parks.\",https://www.choseno.com/news/quebec-hydro-announces-major-transmission-modernization-for-saguenay-industrial-corridor-2026-08-21,https://www.choseno.com/wall/fran-ois-legault",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 110,
+    "raw": "80,9.0,\"UN Human Rights Office Demands Unrestricted Humanitarian Access for Sudan Famine Zones\",Foreign Policy,\"ON, CA\",Mélanie Joly,2026-08-21T03:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The UN Human Rights Office demands warring factions in Sudan immediately unblock humanitarian aid corridors into famine zones in Darfur.\",\"The UN High Commissioner for Human Rights issues an urgent international appeal, demanding warring factions in Sudan cease blocking emergency food aid to Darfur and Kordofan.\",https://www.choseno.com/news/united-nations-human-rights-office-issues-urgent-appeal-for-sudan-humanitarian-convoys-2026-08-21,https://www.choseno.com/wall/m-lanie-joly",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 111,
+    "raw": "81,9.9,\"Aisha Wahab Wins California Special Election to Succeed Eric Swalwell in Congress\",Elections,\"CA, US\",Gavin Newsom,2026-08-21T01:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"State Senator Aisha Wahab wins California's 14th District special election, becoming the first Afghan-American elected to the U.S. House of Representatives.\",\"State Senator Aisha Wahab triumphs in California's 14th Congressional District special election, becoming the first Afghan-American elected to the U.S. House of Representatives.\",https://www.choseno.com/news/aisha-wahab-wins-california-14th-congressional-district-special-election-2026-08-21,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 112,
+    "raw": "82,9.8,\"Treasury Secretary Bessent Details Severe Secondary Sanctions Enforcement Against Iran\",Economy,\"DC, US\",Donald Trump,2026-08-21T00:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Treasury Secretary Scott Bessent details aggressive secondary sanctions targeting Iranian oil exports while doubling bond buybacks to stabilize markets.\",\"Treasury Secretary Scott Bessent announces sweeping new financial penalties targeting international shipping and banking intermediaries facilitating Iranian petroleum exports.\",https://www.choseno.com/news/treasury-secretary-bessent-announces-unprecedented-iran-sanctions-framework-2026-08-21,https://www.choseno.com/wall/donald-trump",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 113,
+    "raw": "83,9.8,\"Federal Authorities Arrest Albany Resident Over Alleged Plot to Bomb New York State Capitol\",Judiciary,\"NY, US\",Civic Authority,2026-08-21T00:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Federal authorities arrest an Albany resident charged with attempting to provide material support to ISIS in a plot to attack the New York State Capitol.\",\"The FBI and Joint Terrorism Task Force detain 35-year-old Jessica Bowie, charging her with attempting to provide material support to ISIS and orchestrating an attack on state legislative buildings.\",https://www.choseno.com/news/fbi-arrests-suspect-in-alleged-new-york-state-capitol-terror-plot-2026-08-21,https://www.choseno.com/news/fbi-arrests-suspect-in-alleged-new-york-state-capitol-terror-plot-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 114,
+    "raw": "84,9.8,\"BC Wildfire Service Battles 24,000-Hectare Bald Range Fire Near Summerland and Peachland\",Environment,\"BC, CA\",David Eby,2026-08-20T21:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The BC Wildfire Service deploys heavy air and ground crews as the Bald Range wildfire expands to 24,000 hectares near Summerland and Peachland.\",\"Persistent wind gusts drive renewed flare-ups on the Bald Range wildfire in the Okanagan, prompting emergency structural defense operations across rural interface zones.\",https://www.choseno.com/news/bc-bald-range-wildfire-grows-to-24000-hectares-as-crews-battle-winds-2026-08-21,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 115,
+    "raw": "85,9.7,\"Transportation Safety Board Deploys Investigators to Fatal Prince George Aircraft Crash\",Transportation,\"BC, CA\",Civic Authority,2026-08-21T00:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"TSB investigators deploy to Prince George, B.C., following a fatal emergency landing of a King Air aircraft on a municipal roadway.\",\"TSB investigators deploy to Prince George, B.C., following an emergency highway landing of a twin-engine Beech King Air that struck two vehicles on Foothills Boulevard.\",https://www.choseno.com/news/tsb-launches-investigation-into-fatal-prince-george-aircraft-emergency-landing-2026-08-21,https://www.choseno.com/news/tsb-launches-investigation-into-fatal-prince-george-aircraft-emergency-landing-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 116,
+    "raw": "86,9.7,\"Canadian Human Rights Tribunal Finds Former Alexander First Nation Chief Liable for Harassment\",Human Rights,\"AB, CA\",Civic Authority,2026-08-21T01:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Canadian Human Rights Tribunal finds a former First Nation chief liable for workplace harassment, mandating comprehensive governance reforms.\",\"The CHRT issues a landmark ruling finding a former First Nation chief liable for a nine-year pattern of workplace harassment, ordering systemic governance remedies.\",https://www.choseno.com/news/chrt-rules-former-alexander-first-nation-chief-sexually-harassed-employee-2026-08-21,https://www.choseno.com/news/chrt-rules-former-alexander-first-nation-chief-sexually-harassed-employee-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 117,
+    "raw": "87,9.6,\"Premier Wakeham Outlines Spring 2027 Groundbreaking Target for Churchill Falls Expansion\",Energy,\"NL, CA\",Civic Authority,2026-08-20T22:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Newfoundland Premier Tony Wakeham confirms initial engineering work for the Gull Island hydro project could break ground in spring 2027.\",\"Newfoundland and Labrador Premier Tony Wakeham confirms preliminary hydro engineering work for Gull Island could commence in spring 2027 under the finalized tri-party energy accord.\",https://www.choseno.com/news/newfoundland-premier-wakeham-advances-gull-island-churchill-falls-construction-timeline-2026-08-21,https://www.choseno.com/news/newfoundland-premier-wakeham-advances-gull-island-churchill-falls-construction-timeline-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 118,
+    "raw": "88,9.6,\"House Armed Services Leaders Warn Pentagon Against Altering CVN-81 Naming Charter\",Defense,\"DC, US\",Civic Authority,2026-08-21T03:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"House Armed Services lawmakers urge the Pentagon to uphold the historic naming charter of the nuclear aircraft carrier USS Doris Miller.\",\"Bipartisan members of the House Armed Services Committee caution the Department of the Navy against revoking the naming charter of the aircraft carrier USS Doris Miller.\",https://www.choseno.com/news/navy-secretary-and-pentagon-review-aircraft-carrier-naming-protocols-2026-08-21,https://www.choseno.com/news/navy-secretary-and-pentagon-review-aircraft-carrier-naming-protocols-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 119,
+    "raw": "89,9.5,\"Hong Kong High Court Convicts Former Tiananmen Vigil Organizers Under Security Law\",Foreign Policy,\"ON, CA\",Civic Authority,2026-08-21T03:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Hong Kong High Court convicts former Tiananmen vigil organizers of subversion under national security laws, sparking international outcry.\",\"Three former leaders of the Hong Kong Alliance are convicted of 'inciting subversion' in a landmark National Security Law ruling, drawing immediate international condemnation.\",https://www.choseno.com/news/hong-kong-court-convicts-tiananmen-vigil-leaders-under-national-security-statutes-2026-08-21,https://www.choseno.com/news/hong-kong-court-convicts-tiananmen-vigil-leaders-under-national-security-statutes-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 120,
+    "raw": "90,9.5,\"Bilateral Trade Rhetoric Intensifies as Canada-U.S. Envoys Race Against Tariff Expiration\",Trade,\"DC, US\",Mark Carney,2026-08-20T23:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Canada and U.S. negotiating teams work through the night to finalize an accord on steel and auto tariffs as the weekend deadline approaches.\",\"Vice President JD Vance and Canadian officials exchange sharp public remarks on trade strategy as Washington negotiating teams finalize legal text ahead of the weekend deadline.\",https://www.choseno.com/news/vance-and-carney-trade-rhetoric-highlights-critical-final-hours-of-tariff-negotiations-2026-08-21,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 121,
+    "raw": "91,9.4,\"Senate Intelligence and Judiciary Leaders Raise Privacy Questions on AI Messaging Plugins\",Technology,\"DC, US\",Civic Authority,2026-08-21T04:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Senate Judiciary privacy leaders initiate an oversight inquiry into AI agent integrations that access encrypted consumer messaging platforms.\",\"Senate lawmakers initiate a review of consumer privacy and encryption integrity following the rollout of automated artificial intelligence controls for personal messaging applications.\",https://www.choseno.com/news/openai-apple-messages-integration-sparks-bipartisan-senate-privacy-scrutiny-2026-08-21,https://www.choseno.com/news/openai-apple-messages-integration-sparks-bipartisan-senate-privacy-scrutiny-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 122,
+    "raw": "92,9.3,\"New San Andreas Geological Study Prompts California Seismic Safety Commission Review\",Science,\"CA, US\",Gavin Newsom,2026-08-21T04:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"A new geological study showing faster San Andreas fault slip rates south of the Bay Area prompts a California seismic safety and infrastructure review.\",\"Geological research indicating accelerated tectonic slip rates south of the Bay Area leads state emergency officials to review regional infrastructure earthquake resilience.\",https://www.choseno.com/news/san-andreas-fault-geological-slip-rate-study-prompts-california-emergency-review-2026-08-21,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 123,
+    "raw": "93,9.3,\"Islamabad High Court Orders Hospital Medical Care for Incarcerated Former PM Imran Khan\",Foreign Policy,\"ON, CA\",Civic Authority,2026-08-21T01:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Islamabad High Court orders authorities to transfer former Prime Minister Imran Khan from jail to a medical hospital for evaluations.\",\"The Islamabad High Court directs federal authorities to transfer former Pakistani Prime Minister Imran Khan from Adiala Jail to a specialized medical facility for diagnostic evaluations.\",https://www.choseno.com/news/pakistan-court-orders-hospital-transfer-for-former-prime-minister-imran-khan-2026-08-21,https://www.choseno.com/news/pakistan-court-orders-hospital-transfer-for-former-prime-minister-imran-khan-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 124,
+    "raw": "94,9.3,\"White House Confirms Departure of Liaison Staffer Following Western States Controversy\",Appointments,\"CO, US\",Civic Authority,2026-08-21T01:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The White House confirms the departure of an intergovernmental staffer, reaffirming transparent partnerships with Western state governors.\",\"The White House confirms the resignation of an intergovernmental liaison following bipartisan criticism from Western governors regarding regional public lands communications.\",https://www.choseno.com/news/colorado-governor-polis-and-white-house-address-staff-transition-2026-08-21,https://www.choseno.com/news/colorado-governor-polis-and-white-house-address-staff-transition-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 125,
+    "raw": "95,9.2,\"Ontario Police Services Disrupt High-End Vehicle Theft Ring Using Covert GPS Trackers\",Public Safety,\"ON, CA\",Doug Ford,2026-08-20T21:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Ontario police disrupt an organized auto theft ring that used covert GPS trackers on luxury vehicles, recovering 14 stolen trucks and SUVs.\",\"A multi-jurisdictional police operation across the Greater Toronto and Hamilton Area arrests key suspects in an organized cargo theft network utilizing covert electronic tracking tags.\",https://www.choseno.com/news/gtha-police-service-arrests-suspect-in-gps-tracked-auto-theft-ring-2026-08-21,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 126,
+    "raw": "96,9.2,\"Statistics Canada Records Third Consecutive Monthly Increase in Cross-Border Travel\",Economy,\"ON, CA\",Civic Authority,2026-08-20T20:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Statistics Canada records a third consecutive monthly increase in Canadian travel to the United States, reaching 2.4 million trips in July.\",\"StatCan data indicates Canadian automobile and air travel to the United States increased by 4.2% in July, driven by retail tourism and regional flight availability.\",https://www.choseno.com/news/statcan-reports-third-consecutive-monthly-rise-in-canadian-cross-border-travel-2026-08-21,https://www.choseno.com/news/statcan-reports-third-consecutive-monthly-rise-in-canadian-cross-border-travel-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 127,
+    "raw": "97,9.1,\"Sturgeon County Town Hall Concludes Review on Rural Data Center Grid Impacts\",Energy,\"AB, CA\",Danielle Smith,2026-08-20T22:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Alberta ministers and Sturgeon County council conclude a town hall on power grid rules and economic benefits of proposed rural AI data centers.\",\"Alberta Utilities Minister and county commissioners conclude community town hall sessions on proposed multi-gigawatt artificial intelligence data center campuses in Sturgeon County.\",https://www.choseno.com/news/sturgeon-county-town-hall-debates-rural-ai-data-center-power-infrastructure-2026-08-21,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 128,
+    "raw": "98,9.1,\"Department of Energy Outlines $450M Commercial Small Modular Reactor Matching Grants\",Energy,\"DC, US\",Civic Authority,2026-08-20T22:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Department of Energy announces 450 million dollars in matching grants to license and build commercial Small Modular Nuclear Reactors.\",\"The DOE releases final solicitation criteria for $450 million in cost-shared funding to license and deploy Gen III+ Small Modular Nuclear Reactors across industrial sites.\",https://www.choseno.com/news/department-of-energy-outlines-fall-advanced-nuclear-and-fusion-grant-awards-2026-08-21,https://www.choseno.com/news/department-of-energy-outlines-fall-advanced-nuclear-and-fusion-grant-awards-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 129,
+    "raw": "99,9.0,\"Bipartisan Japanese Parliamentary Delegation Departs for High-Level Talks in Beijing\",Foreign Policy,\"ON, CA\",Civic Authority,2026-08-21T02:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"A senior bipartisan Japanese parliamentary delegation arrives in Beijing for high-level talks on maritime trade stability and regional security.\",\"Lawmakers from Japan's ruling and opposition parties travel to Beijing to conduct bilateral talks on maritime trade stability, semiconductor export rules, and regional security.\",https://www.choseno.com/news/japan-parliamentary-delegation-schedules-beijing-diplomatic-talks-2026-08-21,https://www.choseno.com/news/japan-parliamentary-delegation-schedules-beijing-diplomatic-talks-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 130,
+    "raw": "100,9.0,\"IMF and WTO Joint Report Projects Steady Growth for Diversified Trade Corridors\",Economy,\"ON, CA\",Civic Authority,2026-08-21T00:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"A joint IMF and WTO report highlights that regional trade agreements and supply chain diversification continue to anchor global economic stability.\",\"A joint research bulletin from the IMF and WTO highlights that regionalized supply chains and multilateral tariff predictability support global GDP stability.\",https://www.choseno.com/news/wto-and-imf-issue-global-trade-resilience-bulletin-on-supply-chains-2026-08-21,https://www.choseno.com/news/wto-and-imf-issue-global-trade-resilience-bulletin-on-supply-chains-2026-08-21",
+    "archivedAt": "2026-08-22T13:29:00.224Z"
+  },
+  {
+    "rank": 101,
+    "raw": "91,9.9,\"P.E.I. Court of Appeal Hears Power Utility Challenge to Fiona Grid Restoration Caps\",Judiciary,\"PE, CA\",Civic Authority,2026-08-20T19:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The P.E.I. Court of Appeal hears arguments on whether Maritime Electric can pass 16 million dollars in post-tropical storm Fiona repair costs to ratepayers.\",\"Maritime Electric challenges an IRAC regulatory ruling that denied recovery of $16 million in post-tropical storm Fiona grid repair costs from ratepayer bills.\",https://www.choseno.com/news/pei-court-of-appeal-hears-maritime-electric-post-fiona-cost-recovery-dispute-2026-08-20,https://www.choseno.com/news/pei-court-of-appeal-hears-maritime-electric-post-fiona-cost-recovery-dispute-2026-08-20",
+    "archivedAt": "2026-08-22T13:27:39.963Z"
+  },
+  {
+    "rank": 102,
+    "raw": "92,9.8,\"Premier Fréchette Announces Regional Resource and Industrial Slate in Roberval\",Elections,\"QC, CA\",François Legault,2026-08-20T18:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Quebec Premier Christine Fréchette unveils CAQ regional candidates in Roberval, outlining a 220 million dollar forestry modernization program.\",\"Quebec Premier Christine Fréchette presents the Coalition Avenir Québec’s regional election nominees in the Saguenay–Lac-Saint-Jean region, prioritizing forestry modernization.\",https://www.choseno.com/news/quebec-premier-frechette-unveils-regional-economic-candidates-roberval-2026-08-20,https://www.choseno.com/wall/fran-ois-legault",
+    "archivedAt": "2026-08-22T13:27:39.963Z"
+  },
+  {
+    "rank": 103,
+    "raw": "93,9.8,\"Premier Kinew Urges Federal Negotiators to Stand Firm on Agricultural and Manufacturing Protections\",Trade,\"MB, CA\",Wab Kinew,2026-08-20T20:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Manitoba Premier Wab Kinew cautions federal negotiators against agricultural concessions in Washington trade talks, defending dairy supply management.\",\"Manitoba Premier Wab Kinew cautions Ottawa against making agricultural and industrial concessions in Washington trade talks, advocating for robust supply-managed dairy protections.\",https://www.choseno.com/news/manitoba-premier-kinew-demands-hardline-federal-protection-for-dairy-and-manufacturing-2026-08-20,https://www.choseno.com/wall/wab-kinew",
+    "archivedAt": "2026-08-22T13:27:39.963Z"
+  },
+  {
+    "rank": 104,
+    "raw": "94,9.8,\"Premier Houston Directs Nova Scotia Liquor Corporation to Restock American Alcohol\",Trade,\"NS, CA\",Tim Houston,2026-08-20T19:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Nova Scotia Premier Tim Houston directs the NSLC to restock American alcohol, providing constructive goodwill for federal trade negotiators in Washington.\",\"Nova Scotia Premier Tim Houston instructs the NSLC to return American spirits and wines to retail shelves, supporting federal trade negotiators in Washington.\",https://www.choseno.com/news/houston-restocks-american-alcohol-in-nova-scotia-as-trade-goodwill-gesture-2026-08-20,https://www.choseno.com/wall/tim-houston",
+    "archivedAt": "2026-08-22T13:27:39.963Z"
+  },
+  {
+    "rank": 105,
+    "raw": "95,9.7,\"Wisconsin Circuit Court Dismisses Residency and Property Tax Exemption Challenge\",Judiciary,\"WI, US\",Civic Authority,2026-08-20T18:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Dane County Circuit Court dismisses a lawsuit challenging primary residency property tax credits for an elected Wisconsin official.\",\"Dane County Circuit Court Judge Everett Mitchell dismisses a complaint challenging primary residency lottery tax credits for an elected municipal official.\",https://www.choseno.com/news/dane-county-court-dismisses-tax-break-residency-challenge-2026-08-20,https://www.choseno.com/news/dane-county-court-dismisses-tax-break-residency-challenge-2026-08-20",
+    "archivedAt": "2026-08-22T13:27:39.963Z"
+  },
+  {
+    "rank": 106,
+    "raw": "96,9.7,\"U.S. Attorney Announces Guilty Plea in Multimillion-Dollar Mortgage and COVID Loan Scheme\",Judiciary,\"NJ, US\",Civic Authority,2026-08-20T18:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Federal prosecutors secure a guilty plea in an 8.4 million dollar bank fraud and COVID loan scheme involving real estate portfolios in New Jersey.\",\"Federal prosecutors in Newark secure a guilty plea from a real estate investor who orchestrated a multi-state scheme to fraudulently obtain $8.4 million in commercial relief loans.\",https://www.choseno.com/news/us-attorney-new-jersey-announces-plea-in-multimillion-dollar-covid-mortgage-fraud-2026-08-20,https://www.choseno.com/news/us-attorney-new-jersey-announces-plea-in-multimillion-dollar-covid-mortgage-fraud-2026-08-20",
+    "archivedAt": "2026-08-22T13:27:39.963Z"
+  },
+  {
+    "rank": 107,
+    "raw": "97,9.6,\"Medicine Hat City Council Expands Municipal Grant Programs for Community Athletics\",Municipal,\"AB, CA\",Danielle Smith,2026-08-20T19:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Medicine Hat City Council approves directives to expand recreation fee subsidies and athletic grant programs for youth and community sports.\",\"Medicine Hat City Council initiates a review to expand subsidized access to civic recreation facilities and community athletic programs following summer sports engagement.\",https://www.choseno.com/news/medicine-hat-city-council-expands-community-recreation-access-2026-08-20,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-22T13:27:39.963Z"
+  },
+  {
+    "rank": 108,
+    "raw": "98,9.6,\"Royal Canadian Air Force Confirms 2026 Farewell Season for Historic Snowbirds CT-114 Jets\",Defense,\"SK, CA\",Civic Authority,2026-08-20T18:30:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The Royal Canadian Air Force confirms the final season for the historic Snowbirds CT-114 Tutor jets before transitioning to modern aircraft.\",\"The RCAF outlines the farewell demonstration schedule for the Snowbirds' CT-114 Tutor aircraft, preparing for a transition to new CT-157 Siskin II jets by the early 2030s.\",https://www.choseno.com/news/snowbirds-aerobatic-team-announces-final-ct114-tutor-commemorative-tour-2026-08-20,https://www.choseno.com/news/snowbirds-aerobatic-team-announces-final-ct114-tutor-commemorative-tour-2026-08-20",
+    "archivedAt": "2026-08-22T13:27:39.963Z"
+  },
+  {
+    "rank": 109,
+    "raw": "99,9.5,\"DOJ Dismantles Multi-State Narcotics and Money Laundering Pipeline Across Great Lakes and Appalachia\",Judiciary,\"WV, US\",Civic Authority,2026-08-20T19:15:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"The DOJ dismantles a major multi-state fentanyl and methamphetamine trafficking ring operating between Detroit and West Virginia, charging 18 individuals.\",\"Federal indictments unsealed in West Virginia charge 18 individuals in a coordinated DEA operation that dismantled a major fentanyl and methamphetamine distribution ring.\",https://www.choseno.com/news/doj-dismantles-detroit-to-west-virginia-interstate-narcotics-network-2026-08-20,https://www.choseno.com/news/doj-dismantles-detroit-to-west-virginia-interstate-narcotics-network-2026-08-20",
+    "archivedAt": "2026-08-22T13:27:39.963Z"
+  },
+  {
+    "rank": 110,
+    "raw": "100,9.5,\"State Department Imposes Targeted Financial Sanctions on Ten Cuban State Enterprises\",Foreign Policy,\"DC, US\",Civic Authority,2026-08-20T19:00:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"Secretary of State Marco Rubio announces new U.S. sanctions targeting ten Cuban military-owned commercial enterprises to cut state currency flows.\",\"U.S. Secretary of State Marco Rubio announces new Treasury and State Department sanctions on ten Cuban military-owned commercial entities to restrict foreign currency flows.\",https://www.choseno.com/news/rubio-imposes-new-economic-sanctions-on-ten-cuban-state-commercial-entities-2026-08-20,https://www.choseno.com/news/rubio-imposes-new-economic-sanctions-on-ten-cuban-state-commercial-entities-2026-08-20",
+    "archivedAt": "2026-08-22T13:27:39.963Z"
+  },
+  {
+    "rank": 101,
     "raw": "94,9.4,\"Fashion Tech Founder Sentenced to Five Years in Federal Prison for $300M Investor Fraud\",Judiciary,\"NY, US\",Civic Authority,2026-08-20T18:45:00Z,Evening Primetime (6:00 PM - 9:00 PM EST),\"A federal judge sentences a fashion tech startup founder to 5 years in prison for fabricating 300 million dollars in revenues to deceive investors.\",\"A federal judge in Manhattan sentences a high-profile e-commerce entrepreneur to 60 months in prison for fabricating $300 million in software revenues and user subscriptions.\",https://www.choseno.com/news/fashion-tech-founder-sentenced-to-five-years-in-300m-investor-fraud-2026-08-20,https://www.choseno.com/news/fashion-tech-founder-sentenced-to-five-years-in-300m-investor-fraud-2026-08-20",
     "archivedAt": "2026-08-22T05:30:00.064Z"
   },
