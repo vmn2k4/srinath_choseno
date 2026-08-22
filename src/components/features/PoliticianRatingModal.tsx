@@ -135,7 +135,12 @@ export default function PoliticianRatingModal({
 
   return (
     <Modal onOverlayClick={onClose}>
-      <Card padding="lg" className="space-y-6 w-[90vw] max-w-4xl max-h-[85vh] overflow-y-auto">
+      {/* !bg-surface overrides Card's default translucent "glass" look
+          (bg-surface/30) -- fine for a card embedded in a page, but this
+          modal sits over a blurred overlay + whatever page opened it, and
+          the translucent version read as washed-out/hard to read there.
+          Same fix MissionRegisterCTA already applies to its own modal. */}
+      <Card padding="lg" className="!bg-surface space-y-6 w-[90vw] max-w-4xl max-h-[85vh] overflow-y-auto">
         <div className="flex justify-between items-start">
           <div className="flex-1">
             <h2 className="font-bold text-lg text-text-main">{politicianName}</h2>

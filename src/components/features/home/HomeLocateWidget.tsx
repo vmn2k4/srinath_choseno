@@ -7,13 +7,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, Navigation, Loader2, MapPin, Star, Users, Flag } from "lucide-react";
-import { Card, Button, Input } from "@/components/primitives";
+import { Search, Navigation, Loader2, MapPin, ExternalLink, Flag } from "lucide-react";
+import { Card, Button, Input, Avatar } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { findBoundariesByPoint } from "@/lib/services/boundaries";
 import { getOfficeHoldersForShapes } from "@/lib/services/elections";
+import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import ReportDialog from "../ReportDialog";
+import PoliticianEngagementStats from "../PoliticianEngagementStats";
 import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { geocodeAddressFree, type GeocodeSuggestion } from "@/lib/utils/geocode";
 import { trackSearch } from "@/lib/analytics/events";
@@ -23,12 +25,16 @@ interface RepRow {
   id: string;
   map_shape_id: number;
   full_name: string;
+  photo_url?: string | null;
   election_role_types?: { role_title?: string | null } | null;
   profiles?: {
+    id?: string;
     current_ghost_id?: string | null;
-    politician_profiles?: { wall_slug?: string | null } | null;
+    politician_profiles?: { photo_url?: string | null; avatar_url?: string | null; wall_slug?: string | null } | null;
   } | null;
 }
+
+type EngagementSummary = { avgRating: number; ratingCount: number; commentCount: number; supporterCount: number };
 
 // Boundary type sort order: Federal → Provincial → Municipal
 const BOUNDARY_TYPE_ORDER: Record<string, number> = {
@@ -55,7 +61,7 @@ function wallHrefFor(rep: RepRow): string | null {
   return null;
 }
 
-export default function HomeLocateWidget() {
+export default function HomeLocateWidget({ className = "" }: { className?: string }) {
   const supabase = createClient();
   const guestLocation = useGuestLocation();
   const [query, setQuery] = useState("");
@@ -67,6 +73,37 @@ export default function HomeLocateWidget() {
   const [boundaries, setBoundaries] = useState<MatchedBoundary[] | null>(null);
   const [reps, setReps] = useState<RepRow[]>([]);
   const [reportRepId, setReportRepId] = useState<string | null>(null);
+  const [engagementSummaries, setEngagementSummaries] = useState<Map<string, EngagementSummary>>(new Map());
+
+  // Batch-fetch supporter/rating/comment summaries for every rep on screen,
+  // once per reps list -- same PoliticianEngagementStats widget and
+  // getPoliticianEngagementSummaries batch call PoliticianSidebar uses, so
+  // the star rating shown here and clicking it to rate is the exact same
+  // system as everywhere else, not a new one.
+  useEffect(() => {
+    const profileIds = reps.map((r) => r.profiles?.id).filter((id): id is string => Boolean(id));
+    if (profileIds.length === 0) {
+      setEngagementSummaries(new Map());
+      return;
+    }
+    let isMounted = true;
+    getPoliticianEngagementSummaries(supabase, profileIds).then(({ data }) => {
+      if (!isMounted || !data) return;
+      const map = new Map<string, EngagementSummary>();
+      (data as any[]).forEach((row) => {
+        map.set(row.politician_id, {
+          avgRating: row.avg_rating || 0,
+          ratingCount: row.rating_count || 0,
+          commentCount: row.comment_count || 0,
+          supporterCount: row.supporter_count || 0,
+        });
+      });
+      setEngagementSummaries(map);
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [reps, supabase]);
 
   // Component-owned service call (nothing else here plays the "page-level
   // client" role this widget could hand it off to) -- flags a rep row's
@@ -183,7 +220,15 @@ export default function HomeLocateWidget() {
   const busy = locating || loadingResults;
 
   return (
-    <Card variant="hero" padding="lg" className="w-full max-w-md text-left">
+    // padding="sm" + a larger override at sm+ (Card's `padding` prop itself
+    // isn't responsive) -- p-8 on a ~375px phone was over a fifth of the
+    // card's width gone to padding alone before content even started,
+    // compounding with the boundary-group box's own padding below it.
+    <Card
+      variant="hero"
+      padding="sm"
+      className={`w-full max-w-md text-left sm:!p-6 ${className}`.trim()}
+    >
       {!boundaries ? (
         <>
           <div className="flex items-center gap-2.5 mb-1">
@@ -296,7 +341,7 @@ export default function HomeLocateWidget() {
                   return (
                     <div
                       key={b.id}
-                      className="px-3.5 py-3 rounded-xl border border-border-light/40 bg-surface-elevated/70"
+                      className="px-2.5 py-2.5 sm:px-3.5 sm:py-3 rounded-xl border border-border-light/40 bg-surface-elevated/70"
                     >
                       <div className="mb-2">
                         <p className="text-[11px] font-semibold text-text-muted">{b.boundary_type}</p>
@@ -310,18 +355,48 @@ export default function HomeLocateWidget() {
                           <div className="space-y-1.5">
                             {displayReps.map((rep) => {
                               const wallHref = wallHrefFor(rep);
+                              const photo =
+                                rep.photo_url ||
+                                rep.profiles?.politician_profiles?.photo_url ||
+                                rep.profiles?.politician_profiles?.avatar_url ||
+                                null;
+                              const engagement = rep.profiles?.id ? engagementSummaries.get(rep.profiles.id) : undefined;
                               return (
-                                <div key={rep.id} className="flex items-center justify-between gap-2 group/rep">
-                                  <p className="min-w-0 text-xs text-text-muted flex items-center gap-1.5">
-                                    <Users size={11} className="shrink-0" aria-hidden="true" />
-                                    <span className="truncate">
-                                      {rep.full_name}
-                                      {rep.election_role_types?.role_title
-                                        ? ` · ${rep.election_role_types.role_title}`
-                                        : ""}
-                                    </span>
-                                  </p>
-                                  <div className="shrink-0 flex items-center gap-1.5">
+                                // One compact row: avatar + name/role (truncates, never
+                                // wraps) on line one, rating on line two -- View Wall and
+                                // report collapse to small fixed-width icon buttons on the
+                                // right of line one instead of a dedicated full-width row,
+                                // so a person takes ~2 lines instead of ~4 and the name
+                                // column gets the width back rather than losing it to a
+                                // button that used to span the whole row underneath.
+                                <div
+                                  key={rep.id}
+                                  className="group/rep flex items-center gap-2 rounded-lg py-1 px-1.5 -mx-1.5 hover:bg-surface-hover/40 transition-colors"
+                                >
+                                  <Avatar src={photo} name={rep.full_name} size="sm" className="shrink-0" />
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-baseline gap-1.5">
+                                      <p className="text-xs font-bold text-text-main truncate">{rep.full_name}</p>
+                                      {rep.election_role_types?.role_title && (
+                                        <span className="text-[10px] text-primary font-semibold truncate shrink-0">
+                                          {rep.election_role_types.role_title}
+                                        </span>
+                                      )}
+                                    </div>
+                                    {rep.profiles?.id && (
+                                      <PoliticianEngagementStats
+                                        politicianId={rep.profiles.id}
+                                        politicianName={rep.full_name}
+                                        supporterCount={engagement?.supporterCount ?? 0}
+                                        avgRating={engagement?.avgRating ?? 0}
+                                        ratingCount={engagement?.ratingCount ?? 0}
+                                        commentCount={engagement?.commentCount ?? 0}
+                                        size="xs"
+                                        className="mt-0.5"
+                                      />
+                                    )}
+                                  </div>
+                                  <div className="shrink-0 flex items-center gap-1">
                                     <button
                                       type="button"
                                       onClick={() => setReportRepId(rep.id)}
@@ -333,11 +408,11 @@ export default function HomeLocateWidget() {
                                     {wallHref && (
                                       <Link
                                         href={wallHref}
-                                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold text-primary bg-primary/10 hover:bg-primary/15 transition-colors whitespace-nowrap"
-                                        title="Rate this representative"
+                                        className="inline-flex items-center gap-1 h-7 px-2 rounded-full text-[11px] font-semibold text-primary bg-primary/10 hover:bg-primary/15 transition-colors"
+                                        title="View their wall"
                                       >
-                                        <Star size={12} className="fill-primary" aria-hidden="true" />
-                                        Rate
+                                        <ExternalLink size={12} aria-hidden="true" />
+                                        <span className="hidden sm:inline">View Wall</span>
                                       </Link>
                                     )}
                                   </div>

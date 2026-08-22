@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -17,20 +17,46 @@ import {
   Copy,
   Star,
   ArrowRight,
+  MapPin,
+  Landmark,
 } from "lucide-react";
-import { Card, Badge } from "@/components/primitives";
+import { Card, Badge, Button, Avatar, Spinner } from "@/components/primitives";
 import { useTranslation } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import NewsArticleBody from "@/components/features/NewsArticleBody";
 import NewsComments from "@/components/features/NewsComments";
 import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
 import NewsArticleLinkedPoliticians from "@/components/features/NewsArticleLinkedPoliticians";
 import PoliticianInlineRating from "@/components/features/PoliticianInlineRating";
+import PoliticianEngagementStats from "@/components/features/PoliticianEngagementStats";
 import RelatedNewsSection from "@/components/features/RelatedNewsSection";
 import ShareMenu, { type ShareData } from "@/components/features/ShareMenu";
+import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
+import { createClient } from "@/lib/supabase/client";
+import { getNationalShapeForCountry } from "@/lib/services/boundaries";
+import { getOfficeHoldersForShapes, getFeaturedOfficeHolders } from "@/lib/services/elections";
+import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import type { NewsArticle, NewsArticleContent } from "@/lib/services/news";
 import { stripEmoji } from "@/lib/utils/text";
 import { SITE_URL } from "@/lib/constants/site";
 import { categoryToSlug, tagToSlug } from "@/lib/utils/newsTaxonomy";
+import { isoCountryToMapShapesCountry } from "@/lib/utils/newsGeography";
+
+// A "key leader" card in the right rail below the article image -- shape
+// matches what getOfficeHoldersForShapes / getFeaturedOfficeHolders (both
+// src/lib/services/elections.ts) already return, trimmed to the fields
+// this card actually renders.
+interface KeyLeaderItem {
+  id: string;
+  full_name: string;
+  photo_url: string | null;
+  election_role_types?: { role_title?: string | null } | null;
+  profiles?: {
+    id: string;
+    current_ghost_id?: string | null;
+    politician_profiles?: { photo_url?: string | null; avatar_url?: string | null; wall_slug?: string | null } | null;
+  } | null;
+}
 
 interface NewsArticleDetailClientProps {
   article: NewsArticle;
@@ -54,6 +80,85 @@ export default function NewsArticleDetailClient({
   relatedArticles = [],
 }: NewsArticleDetailClientProps) {
   const { t, locale } = useTranslation();
+  const { user, loading: authLoading } = useAuth();
+  // Inline (not modal) so opening it pushes the floated image + body text
+  // down the page instead of covering them.
+  const [showFindInline, setShowFindInline] = useState(false);
+
+  // Key Leaders rail (right side, below the image) — a couple of the
+  // country's top office holders, batch-rated the same way PoliticianSidebar
+  // does for its "All Districts" view: national shape's office holder(s)
+  // first, backfilled with getFeaturedOfficeHolders if that's thin.
+  const [keyLeaders, setKeyLeaders] = useState<KeyLeaderItem[]>([]);
+  const [loadingLeaders, setLoadingLeaders] = useState(true);
+  const [leaderEngagement, setLeaderEngagement] = useState<
+    Map<string, { avgRating: number; ratingCount: number; commentCount: number; supporterCount: number }>
+  >(new Map());
+
+  useEffect(() => {
+    let isMounted = true;
+    async function loadKeyLeaders() {
+      if (!article.country) {
+        if (isMounted) setLoadingLeaders(false);
+        return;
+      }
+      setLoadingLeaders(true);
+      try {
+        const supabase = createClient();
+        const byId = new Map<string, KeyLeaderItem>();
+        // map_shapes.country / profiles.country store a free-text country name
+        // ("Canada", "USA") -- a different vocabulary than the ISO-2 code
+        // news_articles.country is normalized to ("CA", "US"). Translate before
+        // querying, or the country filter below silently matches nothing.
+        const mapShapesCountry = isoCountryToMapShapesCountry(article.country);
+
+        const { data: nationalShape } = await getNationalShapeForCountry(supabase, mapShapesCountry);
+        if (nationalShape?.id) {
+          const { data: holders } = await getOfficeHoldersForShapes(supabase, [nationalShape.id]);
+          (holders || []).forEach((h: any) => byId.set(h.id, h));
+        }
+        if (byId.size < 3) {
+          const { data: featured } = await getFeaturedOfficeHolders(supabase, mapShapesCountry);
+          (featured || []).forEach((h: any) => {
+            if (byId.size < 3) byId.set(h.id, h);
+          });
+        }
+
+        if (!isMounted) return;
+        const list = Array.from(byId.values()).slice(0, 3);
+        setKeyLeaders(list);
+        setLoadingLeaders(false);
+
+        const profileIds = list.map((h) => h.profiles?.id).filter((id): id is string => Boolean(id));
+        if (profileIds.length > 0) {
+          const { data: summaries } = await getPoliticianEngagementSummaries(supabase, profileIds);
+          if (!isMounted || !summaries) return;
+          const map = new Map<string, { avgRating: number; ratingCount: number; commentCount: number; supporterCount: number }>();
+          (summaries as any[]).forEach((row) => {
+            map.set(row.politician_id, {
+              avgRating: row.avg_rating || 0,
+              ratingCount: row.rating_count || 0,
+              commentCount: row.comment_count || 0,
+              supporterCount: row.supporter_count || 0,
+            });
+          });
+          setLeaderEngagement(map);
+        }
+      } catch {
+        // Best-effort widget -- an errored lookup (network blip, aborted
+        // request from a fast unmount/remount) just leaves the rail empty
+        // instead of spinning forever.
+        if (isMounted) {
+          setKeyLeaders([]);
+          setLoadingLeaders(false);
+        }
+      }
+    }
+    loadKeyLeaders();
+    return () => {
+      isMounted = false;
+    };
+  }, [article.country]);
 
   const [translatedHeadline, setTranslatedHeadline] = useState<string | null>(null);
   const [translatedSummary, setTranslatedSummary] = useState<string | null>(null);
@@ -269,6 +374,7 @@ export default function NewsArticleDetailClient({
   return (
     <div className="w-full max-w-none pb-20 px-4 lg:px-8 space-y-6">
       <MissionRegisterCTA variant="news" nextPath={`/news/${slug}`} />
+
       {/* Consolidated Nav + Article Meta Bar — back link, category, breaking
           badge on the left; quick copy, share, translate on the right.
           flex-nowrap keeps this pinned to a single row at every width;
@@ -469,6 +575,28 @@ export default function NewsArticleDetailClient({
 
         {/* Content Section: Text with Wrapped Visual Card on Right */}
         <div className="clearfix relative">
+          {/* Find My Representatives -- inline, not a modal: sits above the
+              image (a plain block before the float below, so it's laid out
+              first) and, when expanded, pushes the image and body text down
+              rather than covering them. Same HomeLocateWidget location→
+              boundary→office-holder lookup used on the homepage hero and the
+              /news listing page; its "Rate" buttons feed the same rating
+              system as everything else on this page. */}
+          {!authLoading && !user && (
+            <div className="space-y-3 mb-5">
+              <div className="p-3 bg-primary/5 rounded-2xl border border-primary/20 flex items-center justify-between flex-wrap gap-3">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
+                  <MapPin size={15} />
+                  <span>See who represents you, then say what you think of them</span>
+                </div>
+                <Button size="sm" variant="primary" onClick={() => setShowFindInline((v) => !v)}>
+                  {showFindInline ? "Hide" : "Find My Representatives"}
+                </Button>
+              </div>
+              {showFindInline && <HomeLocateWidget className="!bg-surface" />}
+            </div>
+          )}
+
           {/* Right-Aligned Floated Visual Card for Desktop / Block for Mobile */}
           <div className="w-full lg:w-[460px] xl:w-[500px] lg:float-right lg:ml-8 lg:mb-6 mb-6">
             {/* No overflow-hidden here (unlike the inner image wrapper below,
@@ -500,6 +628,75 @@ export default function NewsArticleDetailClient({
                 />
               </div>
             </div>
+
+            {/* Key Leaders -- a couple of the article's country's top office
+                holders (face + name + current rating), right below the
+                image. Avatar + PoliticianEngagementStats are the same
+                widgets PoliticianSidebar uses for this exact "current office
+                holders" list; clicking the rating opens the same
+                PoliticianRatingModal as everywhere else. */}
+            {article.country && (
+              <div className="mt-4 rounded-2xl border border-border-light/40 bg-surface-elevated/70 p-3 sm:p-4 space-y-2.5">
+                <h3 className="text-xs font-semibold text-text-muted uppercase tracking-widest flex items-center gap-1.5">
+                  <Landmark size={12} /> Key Leaders
+                </h3>
+                {loadingLeaders ? (
+                  <div className="flex justify-center py-3">
+                    <Spinner size="sm" />
+                  </div>
+                ) : keyLeaders.length === 0 ? (
+                  <p className="text-xs text-text-muted">No profiled leaders yet for this country.</p>
+                ) : (
+                  <div className="space-y-1.5">
+                    {keyLeaders.map((leader) => {
+                      const roleTitle = leader.election_role_types?.role_title || "Leader";
+                      const photo =
+                        leader.photo_url ||
+                        leader.profiles?.politician_profiles?.photo_url ||
+                        leader.profiles?.politician_profiles?.avatar_url ||
+                        null;
+                      const engagement = leader.profiles?.id ? leaderEngagement.get(leader.profiles.id) : undefined;
+                      const leaderWallSlug = leader.profiles?.politician_profiles?.wall_slug;
+                      const leaderWallUrl = leaderWallSlug
+                        ? `/wall/${leaderWallSlug}`
+                        : leader.profiles?.current_ghost_id
+                          ? `/wall/${leader.profiles.current_ghost_id}`
+                          : null;
+
+                      const cardContent = (
+                        <div className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-surface-hover/40 border border-transparent hover:border-border-light/40 transition-all">
+                          <Avatar src={photo} name={leader.full_name} size="sm" />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs font-bold text-text-main truncate">{leader.full_name}</p>
+                            <p className="text-[10px] text-primary font-semibold truncate">{roleTitle}</p>
+                            {leader.profiles?.id && (
+                              <PoliticianEngagementStats
+                                politicianId={leader.profiles.id}
+                                politicianName={leader.full_name}
+                                supporterCount={engagement?.supporterCount ?? 0}
+                                avgRating={engagement?.avgRating ?? 0}
+                                ratingCount={engagement?.ratingCount ?? 0}
+                                commentCount={engagement?.commentCount ?? 0}
+                                size="xs"
+                                className="mt-0.5"
+                              />
+                            )}
+                          </div>
+                        </div>
+                      );
+
+                      return leaderWallUrl ? (
+                        <Link key={leader.id} href={leaderWallUrl} className="block">
+                          {cardContent}
+                        </Link>
+                      ) : (
+                        <div key={leader.id}>{cardContent}</div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Body text that wraps cleanly around the right floated visual card */}

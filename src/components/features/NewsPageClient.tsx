@@ -13,12 +13,15 @@ import {
   Filter,
   UserCheck,
   Users,
+  MapPin,
+  X,
 } from "lucide-react";
-import { Card, PageHeader, Badge, Button } from "@/components/primitives";
+import { Card, PageHeader, Badge, Button, Modal } from "@/components/primitives";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { isBreakingNewsActive, type NewsArticleContent } from "@/lib/services/news";
 import ShareMenu, { type ShareData } from "@/components/features/ShareMenu";
 import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
+import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
 import { SITE_URL } from "@/lib/constants/site";
 
 interface NewsArticleRow {
@@ -87,6 +90,7 @@ export default function NewsPageClient({
   countries,
 }: NewsPageClientProps) {
   const { t } = useTranslation();
+  const [showFindDialog, setShowFindDialog] = useState(false);
 
   // Builds a /news?... href starting from the current filter state, applying
   // only the overrides passed in. Any category/country/rep override resets
@@ -215,6 +219,41 @@ export default function NewsPageClient({
             })}
           </div>
         </div>
+      )}
+
+      {/* Find My Representatives -- logged-out equivalent of the "Filter by
+          My Representatives" bar above. Opens the same location→boundary→
+          office-holder lookup used on the homepage hero (HomeLocateWidget),
+          so a visitor reading news can immediately see who represents them
+          and, via that widget's "Rate" links, jump into the existing
+          politician rating system (PoliticianRatingModal on /wall/[slug]) --
+          no new lookup or rating logic here, just reusing what's there. */}
+      {!isLoggedIn && (
+        <div className="p-3 bg-primary/5 rounded-2xl border border-primary/20 flex items-center justify-between flex-wrap gap-3">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
+            <MapPin size={15} />
+            <span>See who represents you, then say what you think of them</span>
+          </div>
+          <Button size="sm" variant="primary" onClick={() => setShowFindDialog(true)}>
+            Find My Representatives
+          </Button>
+        </div>
+      )}
+
+      {showFindDialog && (
+        <Modal onOverlayClick={() => setShowFindDialog(false)}>
+          <div className="relative w-[92vw] max-w-md">
+            <button
+              type="button"
+              onClick={() => setShowFindDialog(false)}
+              aria-label="Close"
+              className="absolute -top-3 -right-3 z-10 w-8 h-8 rounded-full bg-surface border border-border-light/40 shadow-lg flex items-center justify-center text-text-muted hover:text-text-main transition-colors cursor-pointer"
+            >
+              <X size={16} />
+            </button>
+            <HomeLocateWidget className="!bg-surface" />
+          </div>
+        </Modal>
       )}
 
       {/* Country & Category Filter Bar -- real crawlable links to
