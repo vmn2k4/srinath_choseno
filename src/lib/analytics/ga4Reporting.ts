@@ -1,5 +1,5 @@
 import { BetaAnalyticsDataClient } from "@google-analytics/data";
-import { DEFAULT_GA4_DATE_RANGE_DAYS, type Ga4DateRangeDays } from "@/lib/constants/ga4";
+import { DEFAULT_GA4_DATE_RANGE_DAYS, type Ga4DateRangeDays, type Ga4Granularity } from "@/lib/constants/ga4";
 
 // Server-only -- uses a service account private key, must never be imported
 // from a Client Component. Talks to the GA4 Data API (read-only reporting),
@@ -268,6 +268,331 @@ export async function getGa4Overview(
     return { success: true, data };
   } catch (err) {
     console.error("GA4 Data API request failed:", err);
+    return { success: false, error: err instanceof Error ? err.message : String(err) };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Region & Funnel Explorer -- answers "what did visitors from <city/state/
+// country> actually do": which pages they viewed, how long they engaged,
+// which page they landed on, and which custom events (our CTA clicks) fired
+// on which page. Built on the same GA4 Data API the overview above uses --
+// no separate tracking pipeline. The one thing genuinely NOT available here
+// is an ordered, per-session "page A -> page B -> page C" path: the Data API
+// only returns aggregated dimension/metric rows, never raw per-session event
+// sequences. For that, use GA4's own Explore > Path Exploration report (free,
+// already available in the GA4 UI, no build needed) or link the property to
+// BigQuery export for raw event-level querying. Everything queryable in
+// aggregate -- geo x page x engagement, landing pages, CTA/event breakdown,
+// day/week/month trends -- is implemented below.
+
+export type Ga4RegionFilters = { country?: string; region?: string; city?: string };
+
+export type Ga4GeoRow = {
+  country: string;
+  region: string;
+  city: string;
+  sessions: number;
+  activeUsers: number;
+  newUsers: number;
+  avgEngagementSec: number;
+  bounceRate: number;
+};
+
+export type Ga4RegionExplorer = {
+  filters: Ga4RegionFilters;
+  totals: {
+    sessions: number;
+    activeUsers: number;
+    pageViews: number;
+    avgEngagementSec: number;
+    newUsers: number;
+    bounceRate: number;
+  };
+  pages: {
+    path: string;
+    views: number;
+    sessions: number;
+    avgEngagementSec: number;
+    totalEngagementSec: number;
+    exits: number | null;
+    exitRatePct: number | null;
+  }[];
+  landingPages: {
+    path: string;
+    sessions: number;
+    bounceRate: number;
+    avgEngagementSec: number;
+    newUsers: number;
+  }[];
+  eventsByPage: { page: string; eventName: string; count: number }[];
+  trend: { period: string; sessions: number; activeUsers: number; pageViews: number }[];
+  exitsSupported: boolean;
+};
+
+// GA4's "yearWeek" comes back as YYYYWW, "yearMonth" as YYYYMM -- neither has
+// a natural separator to slice on like formatGa4Date's YYYYMMDD does.
+function formatGa4YearWeek(raw: string): string {
+  if (raw.length !== 6) return raw;
+  return `${raw.slice(0, 4)}-W${raw.slice(4, 6)}`;
+}
+function formatGa4YearMonth(raw: string): string {
+  if (raw.length !== 6) return raw;
+  return `${raw.slice(0, 4)}-${raw.slice(4, 6)}`;
+}
+
+const GRANULARITY_DIMENSION: Record<Ga4Granularity, string> = {
+  day: "date",
+  week: "yearWeek",
+  month: "yearMonth",
+};
+
+function formatGa4Period(granularity: Ga4Granularity, raw: string): string {
+  if (granularity === "day") return formatGa4Date(raw);
+  if (granularity === "week") return formatGa4YearWeek(raw);
+  return formatGa4YearMonth(raw);
+}
+
+// Noisy auto-collected events that aren't meaningful "what did they click"
+// signals -- excluded from the CTA/event-by-page breakdown so it stays
+// readable. Page views themselves are already covered by the `pages` table.
+const NOISE_EVENTS = new Set([
+  "page_view",
+  "session_start",
+  "first_visit",
+  "user_engagement",
+  "scroll",
+  "click",
+]);
+
+function buildGeoFilter(filters: Ga4RegionFilters) {
+  const clauses: Record<string, unknown>[] = [];
+  if (filters.country) {
+    clauses.push({ filter: { fieldName: "country", stringFilter: { matchType: "EXACT", value: filters.country } } });
+  }
+  if (filters.region) {
+    clauses.push({ filter: { fieldName: "region", stringFilter: { matchType: "EXACT", value: filters.region } } });
+  }
+  if (filters.city) {
+    clauses.push({ filter: { fieldName: "city", stringFilter: { matchType: "EXACT", value: filters.city } } });
+  }
+  if (clauses.length === 0) return undefined;
+  if (clauses.length === 1) return clauses[0];
+  return { andGroup: { expressions: clauses } };
+}
+
+// Full country x region x city breakdown -- powers the filter dropdowns and
+// answers "which regions do we actually get traffic from" on its own.
+export async function getGa4GeoBreakdown(
+  days: Ga4DateRangeDays = DEFAULT_GA4_DATE_RANGE_DAYS
+): Promise<{ success: boolean; data?: Ga4GeoRow[]; error?: string }> {
+  if (!isGa4ReportingConfigured()) {
+    return { success: false, error: "Google Analytics reporting is not configured yet." };
+  }
+  try {
+    const client = getClient();
+    const property = `properties/${PROPERTY_ID}`;
+    const [res] = await client.runReport({
+      property,
+      dateRanges: [{ startDate: `${days}daysAgo`, endDate: "today" }],
+      dimensions: [{ name: "country" }, { name: "region" }, { name: "city" }],
+      metrics: [
+        { name: "sessions" },
+        { name: "activeUsers" },
+        { name: "newUsers" },
+        { name: "userEngagementDuration" },
+        { name: "bounceRate" },
+      ],
+      orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
+      limit: 500,
+    });
+
+    const data: Ga4GeoRow[] = (res.rows || []).map((row) => {
+      const sessions = metricNum(row, 0);
+      const engagementDuration = metricNum(row, 3);
+      return {
+        country: dimStr(row, 0) || "Unknown",
+        region: dimStr(row, 1) || "(not set)",
+        city: dimStr(row, 2) || "(not set)",
+        sessions,
+        activeUsers: metricNum(row, 1),
+        newUsers: metricNum(row, 2),
+        avgEngagementSec: sessions > 0 ? Math.round(engagementDuration / sessions) : 0,
+        bounceRate: Math.round(metricNum(row, 4) * 100) / 100,
+      };
+    });
+
+    return { success: true, data };
+  } catch (err) {
+    console.error("GA4 geo breakdown request failed:", err);
+    return { success: false, error: err instanceof Error ? err.message : String(err) };
+  }
+}
+
+// The full explorer: everything about one geographic slice (or the whole
+// site, if no filter is passed) -- pages viewed + time spent, landing pages
+// (entrances), CTA/event breakdown by page, and a day/week/month trend.
+export async function getGa4RegionExplorer(
+  days: Ga4DateRangeDays = DEFAULT_GA4_DATE_RANGE_DAYS,
+  filters: Ga4RegionFilters = {},
+  granularity: Ga4Granularity = "day"
+): Promise<{ success: boolean; data?: Ga4RegionExplorer; error?: string }> {
+  if (!isGa4ReportingConfigured()) {
+    return { success: false, error: "Google Analytics reporting is not configured yet." };
+  }
+
+  try {
+    const client = getClient();
+    const property = `properties/${PROPERTY_ID}`;
+    const dateRanges = [{ startDate: `${days}daysAgo`, endDate: "today" }];
+    const dimensionFilter = buildGeoFilter(filters);
+    const granularityDimension = GRANULARITY_DIMENSION[granularity];
+
+    const [[totalsRes], [pagesRes], [landingRes], [eventsRes], [trendRes]] = await Promise.all([
+      client.runReport({
+        property,
+        dateRanges,
+        dimensionFilter,
+        metrics: [
+          { name: "sessions" },
+          { name: "activeUsers" },
+          { name: "screenPageViews" },
+          { name: "userEngagementDuration" },
+          { name: "newUsers" },
+          { name: "bounceRate" },
+        ],
+      }),
+      client.runReport({
+        property,
+        dateRanges,
+        dimensionFilter,
+        dimensions: [{ name: "pagePath" }],
+        metrics: [{ name: "screenPageViews" }, { name: "sessions" }, { name: "userEngagementDuration" }],
+        orderBys: [{ metric: { metricName: "screenPageViews" }, desc: true }],
+        limit: 30,
+      }),
+      client.runReport({
+        property,
+        dateRanges,
+        dimensionFilter,
+        dimensions: [{ name: "landingPage" }],
+        metrics: [
+          { name: "sessions" },
+          { name: "bounceRate" },
+          { name: "userEngagementDuration" },
+          { name: "newUsers" },
+        ],
+        orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
+        limit: 20,
+      }),
+      client.runReport({
+        property,
+        dateRanges,
+        dimensionFilter,
+        dimensions: [{ name: "pagePath" }, { name: "eventName" }],
+        metrics: [{ name: "eventCount" }],
+        orderBys: [{ metric: { metricName: "eventCount" }, desc: true }],
+        limit: 60,
+      }),
+      client.runReport({
+        property,
+        dateRanges,
+        dimensionFilter,
+        dimensions: [{ name: granularityDimension }],
+        metrics: [{ name: "sessions" }, { name: "activeUsers" }, { name: "screenPageViews" }],
+        orderBys: [{ dimension: { dimensionName: granularityDimension } }],
+        limit: 120,
+      }),
+    ]);
+
+    // Exits is queried separately and allowed to fail without sinking the
+    // whole explorer -- it's a less universally-documented GA4 Data API
+    // metric than the others, so degrade gracefully (exitRatePct: null) if
+    // this property/API version rejects it rather than erroring the page.
+    let exitsByPath = new Map<string, number>();
+    let exitsSupported = true;
+    try {
+      const [exitsRes] = await client.runReport({
+        property,
+        dateRanges,
+        dimensionFilter,
+        dimensions: [{ name: "pagePath" }],
+        metrics: [{ name: "exits" }],
+        limit: 30,
+      });
+      exitsByPath = new Map((exitsRes.rows || []).map((row) => [dimStr(row, 0) || "/", metricNum(row, 0)]));
+    } catch (exitErr) {
+      exitsSupported = false;
+      console.warn("GA4 'exits' metric unavailable, omitting exit rate:", exitErr);
+    }
+
+    const totalsRow = totalsRes.rows?.[0];
+    const totalSessions = metricNum(totalsRow, 0);
+
+    const pages = (pagesRes.rows || []).map((row) => {
+      const path = dimStr(row, 0) || "/";
+      const views = metricNum(row, 0);
+      const sessions = metricNum(row, 1);
+      const totalEngagementSec = Math.round(metricNum(row, 2));
+      const exits = exitsSupported ? exitsByPath.get(path) ?? 0 : null;
+      return {
+        path,
+        views,
+        sessions,
+        avgEngagementSec: sessions > 0 ? Math.round(totalEngagementSec / sessions) : 0,
+        totalEngagementSec,
+        exits,
+        exitRatePct: exits !== null && views > 0 ? Math.round((exits / views) * 1000) / 10 : null,
+      };
+    });
+
+    const landingPages = (landingRes.rows || []).map((row) => {
+      const sessions = metricNum(row, 0);
+      const engagementDuration = metricNum(row, 2);
+      return {
+        path: dimStr(row, 0) || "/",
+        sessions,
+        bounceRate: Math.round(metricNum(row, 1) * 100) / 100,
+        avgEngagementSec: sessions > 0 ? Math.round(engagementDuration / sessions) : 0,
+        newUsers: metricNum(row, 3),
+      };
+    });
+
+    const eventsByPage = (eventsRes.rows || [])
+      .map((row) => ({
+        page: dimStr(row, 0) || "/",
+        eventName: dimStr(row, 1),
+        count: metricNum(row, 0),
+      }))
+      .filter((e) => e.eventName && !NOISE_EVENTS.has(e.eventName));
+
+    const trend = (trendRes.rows || []).map((row) => ({
+      period: formatGa4Period(granularity, dimStr(row, 0)),
+      sessions: metricNum(row, 0),
+      activeUsers: metricNum(row, 1),
+      pageViews: metricNum(row, 2),
+    }));
+
+    const data: Ga4RegionExplorer = {
+      filters,
+      totals: {
+        sessions: totalSessions,
+        activeUsers: metricNum(totalsRow, 1),
+        pageViews: metricNum(totalsRow, 2),
+        avgEngagementSec: totalSessions > 0 ? Math.round(metricNum(totalsRow, 3) / totalSessions) : 0,
+        newUsers: metricNum(totalsRow, 4),
+        bounceRate: Math.round(metricNum(totalsRow, 5) * 100) / 100,
+      },
+      pages,
+      landingPages,
+      eventsByPage,
+      trend,
+      exitsSupported,
+    };
+
+    return { success: true, data };
+  } catch (err) {
+    console.error("GA4 region explorer request failed:", err);
     return { success: false, error: err instanceof Error ? err.message : String(err) };
   }
 }

@@ -424,6 +424,46 @@ export async function getFeaturedOfficeHolders(
   return res;
 }
 
+// "Key Leaders" panel (news article pages, potentially other country-wide
+// spots later) -- the country's national-shape office holder(s), backfilled
+// with getFeaturedOfficeHolders up to `limit`. This is genuinely the same
+// answer for every article/page asking about the same country, and
+// getFeaturedOfficeHolders' `order(updated_at)` full scan was costing
+// ~2-4s -- paid again on every single article view before this. Wrapped in
+// fetchWithCache (client-only, see apiCache.ts) so the first article view
+// for a country pays the query once and every other article/page for that
+// country during the TTL reuses it instantly. 15 min: who holds a seat
+// changes rarely; each caller still fetches live rating/engagement numbers
+// separately (getPoliticianEngagementSummaries), so ratings shown next to a
+// cached leader are never stale.
+export async function getKeyLeadersForCountry(
+  supabase: Client,
+  country: string,
+  limit = 3
+) {
+  return fetchWithCache(
+    `key-leaders:${country}:${limit}`,
+    async () => {
+      const byId = new Map<string, any>();
+
+      const { data: nationalShape } = await getNationalShapeForCountry(supabase, country);
+      if (nationalShape?.id) {
+        const { data: holders } = await getOfficeHoldersForShapes(supabase, [nationalShape.id]);
+        (holders || []).forEach((h: any) => byId.set(h.id, h));
+      }
+      if (byId.size < limit) {
+        const { data: featured } = await getFeaturedOfficeHolders(supabase, country);
+        (featured || []).forEach((h: any) => {
+          if (byId.size < limit) byId.set(h.id, h);
+        });
+      }
+
+      return { data: Array.from(byId.values()).slice(0, limit), error: null };
+    },
+    15 * 60 * 1000
+  );
+}
+
 export async function getOfficeHolderByRole(
   supabase: Client,
   mapShapeId: number | string,

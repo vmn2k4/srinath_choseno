@@ -10,3 +10,9 @@
 export const GA4_DATE_RANGES = [1, 3, 7, 14, 28, 30, 90] as const;
 export type Ga4DateRangeDays = (typeof GA4_DATE_RANGES)[number];
 export const DEFAULT_GA4_DATE_RANGE_DAYS: Ga4DateRangeDays = 30;
+
+// Trend grouping for the Region & Funnel Explorer -- maps 1:1 to GA4's own
+// date/yearWeek/yearMonth dimensions (see ga4Reporting.ts).
+export const GA4_GRANULARITIES = ["day", "week", "month"] as const;
+export type Ga4Granularity = (typeof GA4_GRANULARITIES)[number];
+export const DEFAULT_GA4_GRANULARITY: Ga4Granularity = "day";

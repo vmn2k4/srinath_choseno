@@ -33,8 +33,7 @@ import RelatedNewsSection from "@/components/features/RelatedNewsSection";
 import ShareMenu, { type ShareData } from "@/components/features/ShareMenu";
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
 import { createClient } from "@/lib/supabase/client";
-import { getNationalShapeForCountry } from "@/lib/services/boundaries";
-import { getOfficeHoldersForShapes, getFeaturedOfficeHolders } from "@/lib/services/elections";
+import { getKeyLeadersForCountry } from "@/lib/services/elections";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import type { NewsArticle, NewsArticleContent } from "@/lib/services/news";
 import { stripEmoji } from "@/lib/utils/text";
@@ -86,9 +85,9 @@ export default function NewsArticleDetailClient({
   const [showFindInline, setShowFindInline] = useState(false);
 
   // Key Leaders rail (right side, below the image) — a couple of the
-  // country's top office holders, batch-rated the same way PoliticianSidebar
-  // does for its "All Districts" view: national shape's office holder(s)
-  // first, backfilled with getFeaturedOfficeHolders if that's thin.
+  // country's top office holders. Resolution + a 15-min cache both live in
+  // getKeyLeadersForCountry (src/lib/services/elections.ts) since the
+  // answer is identical for every article from the same country.
   const [keyLeaders, setKeyLeaders] = useState<KeyLeaderItem[]>([]);
   const [loadingLeaders, setLoadingLeaders] = useState(true);
   const [leaderEngagement, setLeaderEngagement] = useState<
@@ -105,27 +104,19 @@ export default function NewsArticleDetailClient({
       setLoadingLeaders(true);
       try {
         const supabase = createClient();
-        const byId = new Map<string, KeyLeaderItem>();
         // map_shapes.country / profiles.country store a free-text country name
         // ("Canada", "USA") -- a different vocabulary than the ISO-2 code
         // news_articles.country is normalized to ("CA", "US"). Translate before
         // querying, or the country filter below silently matches nothing.
         const mapShapesCountry = isoCountryToMapShapesCountry(article.country);
 
-        const { data: nationalShape } = await getNationalShapeForCountry(supabase, mapShapesCountry);
-        if (nationalShape?.id) {
-          const { data: holders } = await getOfficeHoldersForShapes(supabase, [nationalShape.id]);
-          (holders || []).forEach((h: any) => byId.set(h.id, h));
-        }
-        if (byId.size < 3) {
-          const { data: featured } = await getFeaturedOfficeHolders(supabase, mapShapesCountry);
-          (featured || []).forEach((h: any) => {
-            if (byId.size < 3) byId.set(h.id, h);
-          });
-        }
+        // Cached per-country (see getKeyLeadersForCountry) -- every other
+        // article from this same country reuses this instead of re-running
+        // the underlying query.
+        const { data } = await getKeyLeadersForCountry(supabase, mapShapesCountry);
 
         if (!isMounted) return;
-        const list = Array.from(byId.values()).slice(0, 3);
+        const list = (data || []) as KeyLeaderItem[];
         setKeyLeaders(list);
         setLoadingLeaders(false);
 
@@ -179,6 +170,21 @@ export default function NewsArticleDetailClient({
   // buttons has its inline rating panel open (at most one at a time).
   const [expandedTopPoliticianId, setExpandedTopPoliticianId] = useState<string | null>(null);
 
+  // A translation already fetched for one site language is wrong once the
+  // visitor switches to another -- without this, handleToggleTranslate's
+  // "already have a translation, just toggle visibility" shortcut below
+  // would flip a stale (or, from a same-language no-op, unchanged) cached
+  // translation into view instead of re-fetching for the new language. This
+  // is what made "select Tamil, translate" sometimes show up in whatever
+  // language had been translated to earlier in the session.
+  useEffect(() => {
+    setTranslatedHeadline(null);
+    setTranslatedSummary(null);
+    setTranslatedBody(null);
+    setShowTranslated(false);
+    setTranslateNotice(null);
+  }, [locale]);
+
   // MyMemory returns HTTP 200 with a translatedText field even when it
   // couldn't actually translate anything -- e.g. requesting autodetect|en
   // on English source text comes back `{"translatedText":"PLEASE SELECT
@@ -228,6 +234,7 @@ export default function NewsArticleDetailClient({
       }
 
       // 3. Translate body by paragraph chunks to respect API limits
+      let joinedBody: string | null = null;
       if (content?.body) {
         const paragraphs = content.body.split("\n\n");
         const translatedParas = await Promise.all(
@@ -245,10 +252,16 @@ export default function NewsArticleDetailClient({
             }
           })
         );
-        setTranslatedBody(translatedParas.join("\n\n"));
+        joinedBody = translatedParas.join("\n\n");
       }
 
       if (gotAnyTranslation) {
+        // Only commit translatedBody once we know at least one field really
+        // translated -- setting it unconditionally (even to a reassembled
+        // string that's identical to the original) would make the "already
+        // translated, just toggle" shortcut above treat a same-language
+        // no-op as a cached translation on the next click.
+        if (joinedBody !== null) setTranslatedBody(joinedBody);
         setShowTranslated(true);
       } else {
         // Nothing came back translated -- almost always because the
