@@ -97,18 +97,24 @@ You are responsible for journalistic accuracy, source verification, relevance, f
 
 ---
 
-### 2. KEY LEADERS DATABASE PROFILE LOOKUP TABLE
+### 2. KEY LEADERS DATABASE PROFILE LOOKUP TABLE & MANDATORY TAGGING RULES
 
-Use these verified UUIDs for `taggedPoliticianIds` whenever stories involve these officials:
+> [!IMPORTANT]
+> **MANDATORY POLITICIAN TAGGING & PROFILE RESOLUTION RULES:**
+> 1. **Auto-Resolution against `profiles` table**: Ingestion scripts MUST query the `profiles` table using `role = 'politician'` and `full_name.ilike.*[Name]*` (do NOT query `politician_slug` on `profiles`, as `profiles` only contains `id`, `full_name`, `designation`, `constituency`, `role`).
+> 2. **Dual-Property Requirement**: Every article referencing a politician must include BOTH:
+>    - `taggedPoliticians`: `["Full Name"]` (e.g. `["David Eby"]`, `["Doug Ford"]`, `["Mark Carney"]`).
+>    - `taggedPoliticianIds`: `["uuid"]` (populated directly from the table below or dynamically resolved before insert).
+> 3. **Automatic Wall Mirroring**: The ingestion engine will execute `admin_sync_news_article_tags()` for each resolved `taggedPoliticianIds` to ensure live ratings, politician cards, and wall mirrors (`/wall/[slug]`) are instantly linked under the article.
 
 #### 🇺🇸 United States
 | Official | Position | Database Profile ID (`taggedPoliticianIds`) | Wall Slug |
 | :--- | :--- | :--- | :--- |
-| **Donald Trump** | President of the United States | `a5fdebea-5daf-4d7e-86f2-b1b55aae903d` | `donald-trump` |
+| **Donald Trump** | President of the United States | *(Pending Seed — use empty array `[]`)* | `donald-trump` |
 | **JD Vance** | Vice President of the United States | *(Pending Seed — use empty array `[]`)* | `jd-vance` |
 | **Mike Johnson** | Speaker of the U.S. House | `a655066e-0fc6-42d8-9334-8329acb6d80d` | `mike-johnson` |
 | **Hakeem Jeffries** | House Democratic / Minority Leader | `0bfc7974-d5a5-4740-bc6f-213d09b5cd90` | `hakeem-jeffries` |
-| **Chuck Schumer** | Senate Democratic / Minority Leader | `b0e16d47-d85a-4702-8e73-7187c8c2dd2d` | `chuck-schumer` |
+| **Chuck Schumer** | Senate Democratic / Minority Leader | *(Pending Seed — use empty array `[]`)* | `chuck-schumer` |
 | **John Thune** | Senate Majority Leader | `225f93a9-1ff0-4ccb-b8db-a4ff0e506873` | `john-thune` |
 | **Gavin Newsom** | Governor of California | `400a040b-ee2a-448e-b2e2-1faeea46b718` | `gavin-newsom` |
 | **Ron DeSantis** | Governor of Florida | `fc437e5a-1d25-4904-959e-88add7928b50` | `ron-desantis` |
@@ -116,26 +122,27 @@ Use these verified UUIDs for `taggedPoliticianIds` whenever stories involve thes
 | **JB Pritzker** | Governor of Illinois | `8f5b5344-ef1b-46cb-99bc-5ce45a84bfe9` | `jb-pritzker` |
 | **Josh Shapiro** | Governor of Pennsylvania | `b79d61e5-8476-45f0-9eed-a7d6304f6eac` | `josh-shapiro` |
 | **Gretchen Whitmer** | Governor of Michigan | `f7575c12-2971-4504-b654-bffde2bbf8d5` | `gretchen-whitmer` |
-| **Bernie Sanders** | U.S. Senator for Vermont | `cab4ec75-2cec-4917-96dc-1065dad7b062` | `bernie-sanders` |
+| **Spencer Cox** | Governor of Utah | `6564d6fb-ceeb-4c6a-b7bf-de269f88275e` | `spencer-cox` |
+| **Bernie Sanders** | U.S. Senator for Vermont | *(Pending Seed — use empty array `[]`)* | `bernie-sanders` |
 | **Ted Cruz** | U.S. Senator for Texas | *(Pending Seed — use empty array `[]`)* | `ted-cruz` |
 | **Elizabeth Warren** | U.S. Senator for Massachusetts | *(Pending Seed — use empty array `[]`)* | `elizabeth-warren` |
 
 #### 🇨🇦 Canada
 | Official | Position | Database Profile ID (`taggedPoliticianIds`) | Wall Slug |
 | :--- | :--- | :--- | :--- |
-| **Mark Carney** | Prime Minister of Canada | `4bd5cf73-1d03-4fb2-ae1b-2303c2c99737` | `mark-carney` |
+| **Mark Carney** | Prime Minister of Canada | `3ec78351-9bec-46b8-afea-45931f29646e` | `mark-carney` |
 | **Pierre Poilievre** | Leader of Official Opposition (CPC) | `a0d8ee32-8927-48bc-9a98-fee27dd02d51` | `pierre-poilievre` |
 | **Jagmeet Singh** | Leader of the NDP | *(Pending Seed — use empty array `[]`)* | `jagmeet-singh` |
 | **Yves-François Blanchet** | Leader of the Bloc Québécois | `2dffb263-e217-4ded-8c2a-26befa6a5a65` | `yves-francois-blanchet` |
 | **Chrystia Freeland** | Senior Cabinet Minister / Deputy PM | `4674a6d5-d9c0-4ec8-95ab-9a12cc27b5fa` | `chrystia-freeland` |
 | **Dominic LeBlanc** | Senior Cabinet Minister (Trade) | `885e12f5-33d9-42a1-8dc9-b276069da88d` | `dominic-leblanc` |
 | **Mélanie Joly** | Cabinet Minister (Foreign Affairs) | `9d4b37d7-06e7-4df1-b9a5-e068a776ba86` | `melanie-joly` |
-| **Doug Ford** | Premier of Ontario | `26ddb710-1861-4652-b8ed-dcbcc1dd7300` | `doug-ford` |
+| **Doug Ford** | Premier of Ontario | `12ed841a-877b-4c7d-984b-85716b2f2757` | `doug-ford` |
 | **François Legault** | Premier of Quebec | `19f76830-8288-487c-8ce7-0d6f64b0bb4a` | `francois-legault` |
-| **Danielle Smith** | Premier of Alberta | `77d86f33-0e15-46c3-8d2d-dd882a679be7` | `danielle-smith` |
-| **David Eby** | Premier of British Columbia | `a730729a-0a3b-4231-b93d-9b5524f9db5e` | `david-eby` |
-| **Wab Kinew** | Premier of Manitoba | `38870346-a851-434d-b894-8362aedc4966` | `wab-kinew` |
-| **Tim Houston** | Premier of Nova Scotia | `bcb1700f-740e-4d7c-8542-e346b4fb44f0` | `tim-houston` |
+| **Danielle Smith** | Premier of Alberta | `7daa1546-4225-4854-9bf7-90797ce5482d` | `danielle-smith` |
+| **David Eby** | Premier of British Columbia | `22251c1e-a7b6-4f60-b951-1da7b00c3323` | `david-eby` |
+| **Wab Kinew** | Premier of Manitoba | `cf2d272e-ffa7-4918-a94b-182212c41b68` | `wab-kinew` |
+| **Tim Houston** | Premier of Nova Scotia | `948faecc-432a-41a7-a3da-b4d12e328b5f` | `tim-houston` |
 | **Elizabeth May** | Leader of the Green Party | `50d60646-a942-415e-aea1-94d8293e888c` | `elizabeth-may` |
 | **Ravi Kahlon** | Senior B.C. Cabinet Minister | `472949c0-825a-498c-8a8e-33b6d292286e` | `ravi-kahlon` |
 
