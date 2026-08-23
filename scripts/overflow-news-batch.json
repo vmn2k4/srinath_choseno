@@ -1,6 +1,266 @@
 [
   {
     "rank": 101,
+    "raw": "49,7.5,\"Federal Maritime Commission Initiates Inquiry into Port Congestion Surcharges on Northern Border Corridors\",Economy,\"DC, US\",Civic Authority,2026-08-22T19:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The Federal Maritime Commission opens a formal inquiry into ocean carrier congestion surcharges on cargo moving through northern border ports.\",\"The FMC opened a formal regulatory inquiry into ocean shipping lines assessing unilateral congestion fees on containerized cargo rerouted between Seattle, Vancouver, and Detroit corridors.\",https://www.choseno.com/news/federal-maritime-commission-probes-northern-border-port-surcharges-2026-08-22,https://www.choseno.com/news/federal-maritime-commission-probes-northern-border-port-surcharges-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.089Z"
+  },
+  {
+    "rank": 102,
+    "raw": "50,7.5,\"Metrolinx Authorizes $74M Contract for Automated Signaling Upgrades on Lakeshore Rail Line\",Infrastructure,\"ON, CA\",Civic Authority,2026-08-22T16:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Metrolinx awards a 74 million dollar contract for digital signaling on the Lakeshore line, laying the groundwork for 15-minute all-day electric GO service.\",\"Ontario's regional transit agency finalized a major rail modernization contract to deploy Communications-Based Train Control on the GO Transit Lakeshore corridor.\",https://www.choseno.com/news/metrolinx-authorizes-74m-automated-signaling-upgrade-on-lakeshore-line-2026-08-22,https://www.choseno.com/news/metrolinx-authorizes-74m-automated-signaling-upgrade-on-lakeshore-line-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 103,
+    "raw": "51,7.4,\"CISA Issues Urgent Vulnerability Directive for Municipal Water Treatment Supervisory Systems\",Public Safety,\"DC, US\",Civic Authority,2026-08-22T19:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"CISA issues an urgent emergency directive requiring municipal water utilities to isolate industrial controllers and patch critical cyber vulnerabilities.\",\"The Cybersecurity and Infrastructure Security Agency mandated immediate patching of industrial programmable controllers in public water utilities following active exploitation attempts.\",https://www.choseno.com/news/cisa-issues-urgent-cybersecurity-directive-for-water-treatment-supervisory-systems-2026-08-22,https://www.choseno.com/news/cisa-issues-urgent-cybersecurity-directive-for-water-treatment-supervisory-systems-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 104,
+    "raw": "52,7.3,\"Montreal Executive Committee Passes $18M Green Corridor and Stormwater Retention Bylaw\",Municipal,\"QC, CA\",Civic Authority,2026-08-22T18:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Montreal approves 18 million dollars to construct urban sponge-parks and bioswales to absorb stormwater and prevent residential flooding.\",\"The City of Montreal approved capital funding to construct urban retention sponge-parks and bioswales across Ahuntsic-Cartierville and Saint-Laurent to mitigate urban flash flooding.\",https://www.choseno.com/news/montreal-executive-committee-passes-18m-green-corridor-and-stormwater-bylaw-2026-08-22,https://www.choseno.com/news/montreal-executive-committee-passes-18m-green-corridor-and-stormwater-bylaw-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 105,
+    "raw": "53,7.3,\"Calgary City Council Approves $52M Flood Barrier Extension Along Bow River Corridor\",Municipal,\"AB, CA\",Civic Authority,2026-08-22T19:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Calgary approves 52 million dollars to complete permanent flood barrier walls along the Bow River to protect the downtown core from high-water events.\",\"Calgary finalized engineering contracts to extend downtown flood barrier walls and pump stations along the Bow River, enhancing 1-in-200-year flood resilience for the city center.\",https://www.choseno.com/news/calgary-city-council-approves-52m-flood-barrier-extension-along-bow-river-2026-08-22,https://www.choseno.com/news/calgary-city-council-approves-52m-flood-barrier-extension-along-bow-river-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 106,
+    "raw": "54,7.3,\"Halifax Regional Municipality Approves Dedicated Rapid Transit Bus Corridors in $41M Transit Plan\",Municipal,\"NS, CA\",Civic Authority,2026-08-22T17:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Halifax Regional Council approves 41 million dollars for dedicated rapid transit bus lanes along Bayers Road and Robie Street to cut commute delays.\",\"Halifax Council approved the acquisition of right-of-way and construction of dedicated transit-only lanes along Bayers Road and Robie Street to improve transit reliability.\",https://www.choseno.com/news/halifax-regional-municipality-approves-rapid-transit-bus-lane-corridors-2026-08-22,https://www.choseno.com/news/halifax-regional-municipality-approves-rapid-transit-bus-lane-corridors-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 107,
+    "raw": "55,7.2,\"Edmonton City Council Authorizes $36M for Blatchford Geothermal District Energy Expansion\",Energy,\"AB, CA\",Civic Authority,2026-08-22T18:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Edmonton City Council approves 36 million dollars to expand the Blatchford geothermal district energy network, connecting 1,200 zero-carbon homes.\",\"Edmonton approved matching capital to expand its low-carbon district energy system in the Blatchford redevelopment, connecting 1,200 new net-zero residential units.\",https://www.choseno.com/news/edmonton-city-council-authorizes-36m-for-district-energy-geothermal-expansion-2026-08-22,https://www.choseno.com/news/edmonton-city-council-authorizes-36m-for-district-energy-geothermal-expansion-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 108,
+    "raw": "56,7.2,\"Ottawa Police Services Board Expands Neighborhood Resource Officer Teams Across Core Wards\",Public Safety,\"ON, CA\",Civic Authority,2026-08-22T16:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Ottawa Police Services Board deploys 28 dedicated Neighborhood Resource Team officers on foot patrols across the ByWard Market and downtown core.\",\"The Ottawa Police Services Board authorized the deployment of 28 dedicated foot-patrol officers to Rideau-Vanier, Centretown, and ByWard Market to enhance street-level safety.\",https://www.choseno.com/news/ottawa-police-services-board-expands-neighborhood-resource-officer-deployment-2026-08-22,https://www.choseno.com/news/ottawa-police-services-board-expands-neighborhood-resource-officer-deployment-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 109,
+    "raw": "57,7.1,\"Surrey City Council Approves $68M Contract for Cloverdale Multi-Sport Ice and Community Arena\",Municipal,\"BC, CA\",Brenda Locke,2026-08-22T17:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey City Council approves a 68 million dollar contract to construct a twin-pad community ice arena and sports fieldhouse in Cloverdale.\",\"Surrey awarded the prime construction contract for a twin-rink community arena and indoor sports complex in Cloverdale to meet growing youth recreation demands.\",https://www.choseno.com/news/surrey-city-council-approves-new-cloverdale-multi-sport-arena-contract-2026-08-22,https://www.choseno.com/wall/brenda-locke",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 110,
+    "raw": "58,7.1,\"Regina City Council Finalizes $28M Capital Financing for Wastewater Plant Biological Upgrades\",Municipal,\"SK, CA\",Civic Authority,2026-08-22T15:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Regina City Council approves 28 million dollars in capital upgrades for the McCarthy Boulevard Wastewater Plant to protect the Wascana Creek watershed.\",\"Regina approved capital funding to install advanced biological nutrient removal bioreactors at the McCarthy Boulevard plant, protecting the Wascana Creek watershed.\",https://www.choseno.com/news/regina-city-council-finalizes-28m-wastewater-treatment-plant-upgrades-2026-08-22,https://www.choseno.com/news/regina-city-council-finalizes-28m-wastewater-treatment-plant-upgrades-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 111,
+    "raw": "59,7.0,\"Victoria City Council Adopts Commercial Parking Lot Housing Conversion Incentive Policy\",Housing,\"BC, CA\",Marianne Alto,2026-08-22T17:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Victoria City Council approves 10-year property tax exemptions to encourage developers to transform downtown surface parking lots into rental housing.\",\"The City of Victoria introduced property tax holidays and expedited approvals to incentivize landowners to redevelop surface parking lots into mixed-use rental housing.\",https://www.choseno.com/news/victoria-city-council-adopts-commercial-parking-lot-housing-conversion-policy-2026-08-22,https://www.choseno.com/wall/marianne-alto",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 112,
+    "raw": "60,7.0,\"Kingston Expands Protected Micro-Mobility Network Following Historic Community Gatherings\",Municipal,\"ON, CA\",Civic Authority,2026-08-23T08:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Kingston approves 8.5 million dollars to construct 12 kilometres of protected bike lanes and expand electric bike-share hubs across the city.\",\"Kingston City Council approved $8.5M to connect downtown bicycle superhighways and expand electric bike-share hubs following record gathering in Springer Market Square.\",https://www.choseno.com/news/kingston-expands-community-micro-mobility-network-following-anniversary-events-2026-08-23,https://www.choseno.com/news/kingston-expands-community-micro-mobility-network-following-anniversary-events-2026-08-23",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 113,
+    "raw": "61,6.9,\"Mississauga City Council Establishes Permanent Cultural Event Corridor at Celebration Square\",Municipal,\"ON, CA\",Carolyn Parrish,2026-08-23T07:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mississauga approves 14 million dollars for permanent cultural staging and pedestrian plaza enhancements at downtown Celebration Square.\",\"Mississauga approved $14M in pedestrian plaza upgrades and permanent staging infrastructure to support major multicultural festivals at Celebration Square.\",https://www.choseno.com/news/mississauga-city-council-establishes-permanent-cultural-event-corridor-2026-08-23,https://www.choseno.com/wall/carolyn-parrish",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 114,
+    "raw": "62,6.8,\"Ajax Town Council Authorizes $7.2M Waterfront Trail Restoration and Shoreline Protection\",Municipal,\"ON, CA\",Shaun Collier,2026-08-23T07:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The Town of Ajax authorizes 7.2 million dollars for Lake Ontario shoreline stone armor and waterfront trail restoration.\",\"The Town of Ajax finalized contracts to reinforce Lake Ontario shoreline revetments and restore multi-use recreational trails damaged by severe wave erosion.\",https://www.choseno.com/news/ajax-town-council-authorizes-lakeshore-waterfront-trail-restoration-2026-08-23,https://www.choseno.com/wall/shaun-collier",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 115,
+    "raw": "63,6.8,\"Toronto City Council Authorizes $48M Accelerated Stormwater Upgrades in Vulnerable Ravine Wards\",Municipal,\"ON, CA\",Olivia Chow,2026-08-23T06:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Toronto City Council approves 48 million dollars for accelerated stormwater sewer and culvert upgrades across flood-prone ravine neighborhoods.\",\"Toronto approved emergency capital allocations to upgrade storm culverts and relief sewer mains across North York and Scarborough following severe weekend thunderstorm warnings.\",https://www.choseno.com/news/toronto-city-council-initiates-drainage-upgrades-following-severe-weekend-storms-2026-08-23,https://www.choseno.com/wall/olivia-chow",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 116,
+    "raw": "64,6.8,\"Department of Energy Allocates $350M for Long-Duration Energy Storage Pilot Projects\",Energy,\"DC, US\",Civic Authority,2026-08-22T17:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The U.S. Department of Energy commits 350 million dollars for 12 long-duration grid storage projects to provide multi-day clean power reserves.\",\"The DOE announced funding for 12 multi-day grid energy storage installations utilizing iron-flow and compressed carbon dioxide technologies across eight states.\",https://www.choseno.com/news/us-department-of-energy-allocates-350m-for-long-duration-energy-storage-2026-08-22,https://www.choseno.com/news/us-department-of-energy-allocates-350m-for-long-duration-energy-storage-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 117,
+    "raw": "65,6.7,\"EPA Finalizes Phase 3 Greenhouse Gas Emission Benchmarks for Heavy-Duty Vocational Trucks\",Environment,\"DC, US\",Civic Authority,2026-08-22T16:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The EPA finalizes Phase 3 emission standards for commercial heavy-duty trucks, projecting major zero-emission fleet adoption through 2032.\",\"The Environmental Protection Agency published final regulatory standards requiring significant carbon reductions across commercial freight trucks and public transit buses by 2032.\",https://www.choseno.com/news/epa-finalizes-phase-3-greenhouse-gas-standards-for-heavy-duty-trucks-2026-08-22,https://www.choseno.com/news/epa-finalizes-phase-3-greenhouse-gas-standards-for-heavy-duty-trucks-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 118,
+    "raw": "66,6.7,\"California High-Speed Rail Authority Completes 10-Mile Central Valley Viaduct Segment\",Infrastructure,\"CA, US\",Civic Authority,2026-08-22T18:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The California High-Speed Rail Authority completes a 10-mile elevated guideway viaduct in the Central Valley, moving closer to track laying.\",\"Construction teams completed structural placement of all concrete bridge spans on the Fresno-to-Madera high-speed rail guideway, preparing for track installation.\",https://www.choseno.com/news/california-high-speed-rail-completes-10-mile-central-valley-viaduct-2026-08-22,https://www.choseno.com/news/california-high-speed-rail-completes-10-mile-central-valley-viaduct-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 119,
+    "raw": "67,6.6,\"ERCOT Completes Summer Transmission Hardening as Peak Power Demand Reaches Record Highs\",Energy,\"TX, US\",Greg Abbott,2026-08-22T20:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"ERCOT completes 1.2 billion dollars in high-voltage transmission line upgrades, maintaining grid stability during record summer power demand in Texas.\",\"The Electric Reliability Council of Texas brought online $1.2B in transmission line upgrades and dynamic reactive power devices to stabilize the grid during August heatwaves.\",https://www.choseno.com/news/ercot-completes-summer-transmission-hardening-amid-record-peak-loads-2026-08-22,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 120,
+    "raw": "68,6.6,\"Florida Department of Education Enforces New Artificial Intelligence Literacy Guidelines in High Schools\",Education,\"FL, US\",Ron DeSantis,2026-08-22T15:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Florida Department of Education mandates AI literacy and digital ethics standards across all public high schools to prepare students for tech careers.\",\"State education regulators issued mandatory curriculum standards for grades 9-12 covering algorithmic ethics, data privacy, and career applications in AI technology.\",https://www.choseno.com/news/florida-department-of-education-enforces-ai-literacy-guidelines-in-schools-2026-08-22,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 121,
+    "raw": "69,6.5,\"MTA Authorizes $110M Subway Signal Upgrades on Lexington Avenue 4/5/6 Express Corridor\",Infrastructure,\"NY, US\",Civic Authority,2026-08-22T18:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The MTA approves 110 million dollars for digital CBTC signal upgrades on the Lexington Avenue 4/5/6 lines, expanding subway capacity and cutting delays.\",\"The Metropolitan Transportation Authority approved modern digital signaling contracts for the 4/5/6 subway lines between Grand Central and 125th Street to reduce train delays.\",https://www.choseno.com/news/mta-authorizes-110m-subway-signal-modernization-on-lexington-avenue-line-2026-08-22,https://www.choseno.com/news/mta-authorizes-110m-subway-signal-modernization-on-lexington-avenue-line-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 122,
+    "raw": "70,6.5,\"Chicago City Council Passes $45M Affordable Housing Trust Fund Allocation for West Side\",Housing,\"IL, US\",JB Pritzker,2026-08-22T17:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Chicago City Council approves 45 million dollars in housing trust funds to rehabilitate 650 affordable apartments and workforce homes on the West Side.\",\"Chicago approved dedicated tax-increment financing allocations to rehabilitate 650 affordable rental units and construct workforce housing in Garfield Park and Austin.\",https://www.choseno.com/news/chicago-city-council-passes-45m-affordable-housing-trust-fund-allocation-2026-08-22,https://www.choseno.com/wall/jb-pritzker",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 123,
+    "raw": "71,6.4,\"Washington State Department of Labor Issues Guidance on Workplace Heat and Smoke Protection\",Labor,\"WA, US\",Civic Authority,2026-08-22T16:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Washington State initiates safety inspections to enforce mandatory paid cool-down breaks, shade, and N95 masks for outdoor workers during heat and smoke.\",\"State labor regulators enacted emergency compliance audits for agricultural and construction employers, mandating paid rest breaks and clean-air respite during extreme weather.\",https://www.choseno.com/news/washington-labor-department-issues-workplace-heat-and-smoke-protection-guidance-2026-08-22,https://www.choseno.com/news/washington-labor-department-issues-workplace-heat-and-smoke-protection-guidance-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 124,
+    "raw": "72,6.3,\"Alberta Forestry and Parks Deploys Night-Vision Helitack Crews for Wildfire Initial Attack\",Public Safety,\"AB, CA\",Danielle Smith,2026-08-22T16:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Alberta deploys night-vision helicopter helitack crews to conduct precision water drops on wildfires overnight, suppressing fires before morning wind runs.\",\"Alberta expanded its wildland firefighting arsenal by certifying helicopter crews equipped with night-vision goggles to conduct nighttime water drops on newly ignited lightning strikes.\",https://www.choseno.com/news/alberta-forestry-deploys-night-vision-helitack-crews-for-wildfire-initial-attack-2026-08-22,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 125,
+    "raw": "73,6.3,\"BC Ferries Issues Request for Proposals for Four Zero-Emission Island-Class Hybrid Vessels\",Infrastructure,\"BC, CA\",David Eby,2026-08-22T18:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"BC Ferries issues an RFP for four new zero-emission battery-electric hybrid vessels to expand passenger and vehicle capacity on Gulf Island routes.\",\"BC Ferries launched international procurement for four battery-electric hybrid ferries to expand passenger and vehicle capacity on Northern and Southern Gulf Islands routes.\",https://www.choseno.com/news/bc-ferries-issues-rfp-for-four-zero-emission-island-class-hybrid-vessels-2026-08-22,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 126,
+    "raw": "74,6.3,\"Ontario Ministry of Agriculture Expands Greenhouse Innovation Grants to Enhance Winter Crop Yields\",Agriculture,\"ON, CA\",Doug Ford,2026-08-22T15:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Ontario approves 16 million dollars in agricultural grants to upgrade energy-efficient LED lighting and thermal curtains for commercial greenhouse growers.\",\"The Ministry of Agriculture committed $16M to co-fund advanced LED supplemental lighting and thermal curtain retrofits across Leamington and Niagara commercial greenhouse growers.\",https://www.choseno.com/news/ontario-agriculture-ministry-expands-greenhouse-innovation-grants-2026-08-22,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 127,
+    "raw": "75,6.2,\"Manitoba Hydro Completes Converter Station Modernization on Bipole III DC Line\",Energy,\"MB, CA\",Wab Kinew,2026-08-22T16:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Manitoba Hydro completes a 42 million dollar digital control modernization on the 2,000MW Bipole III HVDC transmission line, boosting grid reliability.\",\"Manitoba Hydro completed a $42M digital control system overhaul at the Keewatinohk and Riel converter stations, safeguarding high-voltage power transmission from northern dams.\",https://www.choseno.com/news/manitoba-hydro-completes-bipole-iii-converter-modernization-2026-08-22,https://www.choseno.com/wall/wab-kinew",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 128,
+    "raw": "76,6.2,\"Quebec Health Ministry Launches Digital Pediatric Emergency Triage System to Cut ER Waits\",Healthcare,\"QC, CA\",François Legault,2026-08-22T15:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Quebec launches a digital pediatric triage service to redirect non-urgent cases to community clinics and reduce hospital emergency room wait times.\",\"Santé Québec deployed an online pediatric triage platform across Montreal and Quebec City hospitals, diverting non-urgent infant cases to specialized community clinics.\",https://www.choseno.com/news/quebec-sante-launches-digital-pediatric-emergency-triage-system-2026-08-22,https://www.choseno.com/wall/fran-ois-legault",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 129,
+    "raw": "77,6.1,\"Arizona Department of Water Resources Mandates Groundwater Replenishment Rules for Pinal County\",Environment,\"AZ, US\",Civic Authority,2026-08-22T17:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Arizona enacts strict groundwater replenishment rules requiring Pinal County housing developers to secure renewable surface water for desert aquifers.\",\"State water regulators enacted strict rules requiring suburban housing developments in Pinal County to demonstrate physical 100-year renewable surface water supplies.\",https://www.choseno.com/news/arizona-water-resources-mandates-groundwater-replenishment-rules-in-pinal-county-2026-08-22,https://www.choseno.com/news/arizona-water-resources-mandates-groundwater-replenishment-rules-in-pinal-county-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 130,
+    "raw": "78,6.1,\"Georgia Ports Authority Approves $125M Expansion of Mason Mega Rail Facility at Port of Savannah\",Infrastructure,\"GA, US\",Civic Authority,2026-08-22T19:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Georgia Ports Authority approves 125 million dollars to expand the Port of Savannah's Mason Mega Rail terminal, increasing container capacity by 60 percent.\",\"The GPA board authorized capital financing to add eight new working rail tracks and four rail-mounted gantry cranes, expanding intermodal container capacity to Midwestern hubs.\",https://www.choseno.com/news/georgia-ports-authority-approves-125m-expansion-of-mason-mega-rail-facility-2026-08-22,https://www.choseno.com/news/georgia-ports-authority-approves-125m-expansion-of-mason-mega-rail-facility-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 131,
+    "raw": "79,9.9,\"Champlain Bridge Southbound Span Closes for Critical Joint Replacement and Roadway Maintenance\",Infrastructure,\"QC, CA\",François Legault,2026-08-22T07:30:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"The southbound Samuel De Champlain Bridge closes for 54 hours for critical joint replacement as extra REM train service runs to Brossard.\",\"Signature on the Saint Lawrence initiates complete 48-hour southbound traffic closure on Montreal's busiest crossing for expansion joint overhauls and deck resurfacing.\",https://www.choseno.com/news/pont-champlain-southbound-weekend-closure-prompts-major-montreal-traffic-rerouting-2026-08-22,https://www.choseno.com/wall/fran-ois-legault",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 132,
+    "raw": "80,9.8,\"Canadian Families of Four Pay Average of $21,115 for Public Healthcare in 2026, Study Finds\",Healthcare,\"BC, CA\",Civic Authority,2026-08-22T08:45:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"The average Canadian family of four pays $21,115 in taxes for public healthcare insurance in 2026, according to a new Fraser Institute report.\",\"Annual Fraser Institute fiscal analysis reveals that embedded health taxation has grown 3.8 times faster than household income over the past three decades.\",https://www.choseno.com/news/fraser-institute-study-canadian-family-pays-21k-in-taxes-for-public-healthcare-in-2026-2026-08-22,https://www.choseno.com/news/fraser-institute-study-canadian-family-pays-21k-in-taxes-for-public-healthcare-in-2026-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 133,
+    "raw": "81,9.8,\"Democratic Nominee James Talarico Outpaces Ken Paxton in Multi-Million Texas Senate Ad Blitz\",Politics,\"TX, US\",Civic Authority,2026-08-22T11:45:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Democratic candidate James Talarico reserves $12M in Texas TV advertising, outpacing Republican Ken Paxton in the high-profile U.S. Senate race.\",\"State Representative James Talarico reserves $12M in broadcast television time across Texas media markets, focusing on public school funding and property tax relief.\",https://www.choseno.com/news/james-talarico-outspends-ken-paxton-in-texas-us-senate-advertising-blitz-2026-08-22,https://www.choseno.com/news/james-talarico-outspends-ken-paxton-in-texas-us-senate-advertising-blitz-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 134,
+    "raw": "82,9.8,\"Canadian Energy Leaders Conclude 75th Banff Summit with Accord on Interprovincial Power Grids\",Energy,\"AB, CA\",Danielle Smith,2026-08-22T10:15:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Canadian energy executives conclude 75th Banff summit, demanding national interprovincial power grids and expanded Indigenous equity partnerships.\",\"CEEA delegates adopt a unified policy declaration calling on federal and provincial governments to expedite east-west high-voltage transmission lines and LNG export infrastructure.\",https://www.choseno.com/news/canadian-energy-executives-conclude-75th-banff-summit-demanding-national-grid-corridors-2026-08-22,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 135,
+    "raw": "83,9.7,\"Department of Homeland Security Begins Repatriation Flights Following Expiration of TPS Mandates\",Security,\"DC, US\",Civic Authority,2026-08-22T11:00:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"DHS begins chartered repatriation flights following the expiration of Temporary Protected Status designations for certain foreign nationals.\",\"Immigration and Customs Enforcement charters initial repatriation flights as humanitarian temporary protected status designations lapse for select foreign nationals.\",https://www.choseno.com/news/dhs-initiates-chartered-deportation-flights-following-expiration-of-tps-protections-2026-08-22,https://www.choseno.com/news/dhs-initiates-chartered-deportation-flights-following-expiration-of-tps-protections-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 136,
+    "raw": "84,9.7,\"Otipemisiwak Métis Government Opens 2026 Citizens' Gathering in Slave Lake\",Culture,\"AB, CA\",Civic Authority,2026-08-22T10:00:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"The Otipemisiwak Métis Government opens its 2026 Citizens' Gathering in Slave Lake, advancing self-government and heritage funding.\",\"Over 1,200 Métis citizens and district captains convene to debate natural resource revenue-sharing agreements, language preservation programs, and self-government treaties.\",https://www.choseno.com/news/metis-nation-of-alberta-opens-2026-citizens-gathering-in-slave-lake-on-self-government-2026-08-22,https://www.choseno.com/news/metis-nation-of-alberta-opens-2026-citizens-gathering-in-slave-lake-on-self-government-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 137,
+    "raw": "85,9.6,\"Indiana Regulators Order Independent Audit of Utility Storm Response as Thousands Remain in the Dark\",Infrastructure,\"IN, US\",Civic Authority,2026-08-22T13:25:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Indiana regulators order an independent audit into power utilities as thousands of residents endure a 10th day without electricity after severe storms.\",\"Ten days after a violent severe weather outbreak knocked out power to 250,000 customers, Indiana Utility Regulatory Commission launches review into NIPSCO and Duke Energy vegetation management.\",https://www.choseno.com/news/indiana-utilities-face-class-action-scrutiny-as-thousands-remain-without-power-10-days-after-storm-2026-08-22,https://www.choseno.com/news/indiana-utilities-face-class-action-scrutiny-as-thousands-remain-without-power-10-days-after-storm-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 138,
+    "raw": "86,9.6,\"South Korea Launches First Commercial Ice-Class Container Vessel on Arctic Northern Sea Route\",Trade,\"DC, US\",Civic Authority,2026-08-22T08:15:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"South Korea launches its first commercial container ship on the Arctic route, cutting 14 days off voyages between Asia and Europe.\",\"Maritime authorities in Busan dispatch a specialized vessel to test the transit corridor to Europe, cutting 14 days off the traditional Suez Canal passage.\",https://www.choseno.com/news/south-korea-dispatches-first-commercial-ice-class-container-vessel-on-arctic-route-2026-08-22,https://www.choseno.com/news/south-korea-dispatches-first-commercial-ice-class-container-vessel-on-arctic-route-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 139,
+    "raw": "87,9.5,\"Kingston Gathers at Springer Market Square to Mark 10th Anniversary of Tragically Hip's Final Concert\",Culture,\"ON, CA\",Civic Authority,2026-08-22T12:30:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Kingston gathers at Springer Market Square to mark the 10th anniversary of The Tragically Hip's final concert, supporting cancer research.\",\"Thousands of music fans and community members convene in Kingston for memorial viewing party and cancer research benefit celebrating Gord Downie's legacy.\",https://www.choseno.com/news/kingston-marks-10th-anniversary-of-the-tragically-hip-historic-final-concert-2026-08-22,https://www.choseno.com/news/kingston-marks-10th-anniversary-of-the-tragically-hip-historic-final-concert-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 140,
+    "raw": "88,9.5,\"U.S. National Debt Crosses Historic $40 Trillion Milestone as Borrowing Costs Surge\",Economy,\"DC, US\",Mike Johnson,2026-08-22T13:20:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"The U.S. national debt crosses the $40 trillion mark as annual interest costs surpass $1.1 trillion, intensifying fiscal commission talks in Congress.\",\"Treasury Department debt clock marks historic fiscal threshold, sparking renewed legislative calls from congressional budget leaders for statutory deficit reduction caps.\",https://www.choseno.com/news/us-national-debt-surpasses-40-trillion-prompting-bipartisan-fiscal-commission-calls-2026-08-22,https://www.choseno.com/wall/mike-johnson",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 141,
+    "raw": "89,9.4,\"OPP Investigates Fatal Single-Vehicle Motorcycle Collision on Highway 17 Near Arnprior\",Public Safety,\"ON, CA\",Civic Authority,2026-08-22T08:30:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"OPP investigates a fatal single-vehicle motorcycle collision on Highway 17 near Arnprior in Renfrew County.\",\"Ontario Provincial Police Renfrew detachment examines road conditions and mechanical factors after a fatal single-vehicle motorcycle incident west of Ottawa.\",https://www.choseno.com/news/opp-investigate-fatal-motorcycle-collision-on-highway-17-near-arnprior-2026-08-22,https://www.choseno.com/news/opp-investigate-fatal-motorcycle-collision-on-highway-17-near-arnprior-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 142,
+    "raw": "90,9.3,\"Cal/OSHA Fines Backcountry Mountain Guide Service $151,300 Following Deadly Tahoe Avalanche\",Legal,\"CA, US\",Civic Authority,2026-08-22T09:15:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Cal/OSHA fines a Tahoe backcountry guide company $151,300 over safety violations following a deadly Sierra Nevada avalanche.\",\"State workplace safety regulators cite Blackbird Mountain Guides for serious safety violations after an avalanche killed a client and injured three during a guided Sierra tour.\",https://www.choseno.com/news/cal-osha-fines-tahoe-guide-company-151k-over-deadly-february-backcountry-avalanche-2026-08-22,https://www.choseno.com/news/cal-osha-fines-tahoe-guide-company-151k-over-deadly-february-backcountry-avalanche-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 143,
+    "raw": "91,9.3,\"Southern Ontario Braces for Sharp Autumn Cool-Down Following Weekend Thunderstorms\",Environment,\"ON, CA\",Civic Authority,2026-08-22T13:10:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Southern Ontario transitions to crisp, fall-like weather with temperatures dropping 10°C following weekend rain across the Golden Horseshoe.\",\"A potent cold front drops temperatures by 10°C across the Golden Horseshoe, bringing welcome relief from humid air alongside localized urban downpours.\",https://www.choseno.com/news/southern-ontario-experiences-fall-like-cool-front-following-heavy-weekend-rain-2026-08-22,https://www.choseno.com/news/southern-ontario-experiences-fall-like-cool-front-following-heavy-weekend-rain-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 144,
+    "raw": "92,9.3,\"Florida TaxWatch Launches Research Hub to Inform Voters on November Property Tax Amendment\",Governance,\"FL, US\",Ron DeSantis,2026-08-22T11:30:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Florida TaxWatch launches an educational research hub on the November ballot measure to index homestead property tax exemptions to inflation.\",\"Nonpartisan taxpayer research institute publishes comprehensive fiscal model evaluating the impact of proposed homestead exemption inflation adjustments on municipal budgets.\",https://www.choseno.com/news/florida-taxwatch-launches-voter-education-centre-on-property-tax-ballot-amendment-2026-08-22,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 145,
+    "raw": "93,9.2,\"Amazon Adjusts Pricing on Smart Home Hardware to Offset High-Bandwidth Memory Supply Costs\",Technology,\"WA, US\",Civic Authority,2026-08-22T09:30:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Amazon raises prices on Echo and Fire TV devices by 10% as global memory chip supplies are diverted to AI data centre fabrication.\",\"Consumer hardware division raises MSRP on select Echo, Fire TV, and eero mesh devices by 8% to 12% as AI computing clusters create global memory chip shortages.\",https://www.choseno.com/news/amazon-adjusts-hardware-pricing-on-echo-and-fire-tv-devices-due-to-rising-memory-costs-2026-08-22,https://www.choseno.com/news/amazon-adjusts-hardware-pricing-on-echo-and-fire-tv-devices-due-to-rising-memory-costs-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 146,
+    "raw": "94,9.2,\"United Nations and International Human Rights Envoys Mark Day Against Religious Violence\",Diplomacy,\"NY, US\",Civic Authority,2026-08-22T08:30:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"The United Nations marks the International Day Commemorating the Victims of Religious Violence, urging enhanced protections for worship sites worldwide.\",\"Secretary-General releases annual report highlighting rising attacks on places of worship globally and calling for enhanced digital hate speech monitors.\",https://www.choseno.com/news/united-nations-marks-international-day-commemorating-victims-of-religious-violence-2026-08-22,https://www.choseno.com/news/united-nations-marks-international-day-commemorating-victims-of-religious-violence-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 147,
+    "raw": "95,9.1,\"Hong Kong Authorities Rebut Western Diplomatic Criticism Over Security Law Convictions\",Diplomacy,\"DC, US\",Civic Authority,2026-08-22T10:15:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Hong Kong authorities reject diplomatic criticism from Western consulates following subversion convictions of former civic vigil leaders.\",\"Security Bureau issues formal statement asserting judicial independence after U.S. and European consulates criticize subversion convictions of civil society organizers.\",https://www.choseno.com/news/hong-kong-government-rejects-western-diplomatic-criticism-over-security-law-verdicts-2026-08-22,https://www.choseno.com/news/hong-kong-government-rejects-western-diplomatic-criticism-over-security-law-verdicts-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 148,
+    "raw": "96,9.1,\"Former Estonian Prime Minister and European Commission Vice-President Siim Kallas Dies at 77\",Politics,\"DC, US\",Civic Authority,2026-08-22T11:45:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Former Estonian Prime Minister and EU Commission Vice-President Siim Kallas, architect of Estonia's currency reform, passes away at 77.\",\"Architect of Estonia's post-Soviet monetary reform and EU integration passes away; European and Baltic leaders mourn a transformative statesman.\",https://www.choseno.com/news/former-estonian-prime-minister-and-eu-commissioner-siim-kallas-dies-at-77-2026-08-22,https://www.choseno.com/news/former-estonian-prime-minister-and-eu-commissioner-siim-kallas-dies-at-77-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 149,
+    "raw": "97,9.0,\"Intense Heat and Wildfires Trigger Unexploded WWI and WWII Munitions Across European Forests\",Environment,\"DC, US\",Civic Authority,2026-08-22T09:00:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Intense wildfires in Europe trigger underground explosions of unexploded WWI and WWII artillery shells, forcing aerial firefighting tactics.\",\"Explosive Ordnance Disposal units mobilize across Slovenia, France, and Germany as underground legacy shells detonate in wildfire containment zones.\",https://www.choseno.com/news/european-wildfires-detonate-unexploded-world-war-munitions-prompting-specialized-eod-deployments-2026-08-22,https://www.choseno.com/news/european-wildfires-detonate-unexploded-world-war-munitions-prompting-specialized-eod-deployments-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 150,
+    "raw": "98,9.0,\"Back-to-School Costs Surge 8.4% as Apparel and Tech Equipment Strain U.S. Household Budgets\",Economy,\"DC, US\",Civic Authority,2026-08-22T11:20:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Back-to-school spending hits a record $895 per family as tech, apparel, and supply costs surge 8.4%, according to the National Retail Federation.\",\"National Retail Federation survey indicates average K-12 family spending will top $895 this autumn, driving increased consumer reliance on short-term installment debt.\",https://www.choseno.com/news/back-to-school-supply-costs-surge-8-percent-straining-us-family-budgets-2026-08-22,https://www.choseno.com/news/back-to-school-supply-costs-surge-8-percent-straining-us-family-budgets-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 151,
+    "raw": "99,8.9,\"Reciprocal Drone Strikes Target Industrial Energy Depots in Ukraine and Western Russia\",Defense,\"DC, US\",Civic Authority,2026-08-22T09:30:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Reciprocal drone strikes hit energy depots and rail hubs in Ukraine and Russia as both sides target logistics supply lines.\",\"Air defense forces intercept dozens of long-range UAVs as both militaries target fuel refining hubs and railway logistics nodes across contested borders.\",https://www.choseno.com/news/ukrainian-and-russian-drone-strikes-damage-industrial-facilities-as-frontline-exchanges-intensify-2026-08-22,https://www.choseno.com/news/ukrainian-and-russian-drone-strikes-damage-industrial-facilities-as-frontline-exchanges-intensify-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 152,
+    "raw": "100,8.8,\"World Plant Milk Day Highlights Shifting Consumer Preferences Across North American Dairy Markets\",Agriculture,\"ON, CA\",Civic Authority,2026-08-22T08:50:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Plant milk alternatives capture record 18% of Canadian milk market as Prairie farmers expand processing facilities for oat and soy crops.\",\"Market research indicates alternative oat and soy beverages now comprise 18% of Canadian retail milk volume, driving agricultural crop diversification.\",https://www.choseno.com/news/world-plant-milk-day-spotlights-canadian-dairy-and-plant-based-market-shifts-2026-08-22,https://www.choseno.com/news/world-plant-milk-day-spotlights-canadian-dairy-and-plant-based-market-shifts-2026-08-22",
+    "archivedAt": "2026-08-23T17:15:50.090Z"
+  },
+  {
+    "rank": 101,
     "raw": "23,8.8,\"National Be an Angel Day Drives Record Community Volunteer Inflows to Local Food Banks\",Culture,\"ON, CA\",Civic Authority,2026-08-22T09:15:00Z,Morning Primetime (9:00 AM - 12:00 PM EST),\"Canadians participate in National Be an Angel Day, setting volunteer records at local food banks and community centers nationwide.\",\"Civic charities and municipal shelter programs report massive volunteer turnout on August 22 as community networks mobilize to assist vulnerable neighbors.\",https://www.choseno.com/news/national-be-an-angel-day-inspires-community-volunteerism-and-civic-giving-across-canada-2026-08-22,https://www.choseno.com/news/national-be-an-angel-day-inspires-community-volunteerism-and-civic-giving-across-canada-2026-08-22",
     "archivedAt": "2026-08-23T09:27:40.511Z"
   },
