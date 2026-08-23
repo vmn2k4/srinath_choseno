@@ -1,3 +1,7 @@
+# Raw census/boundary source downloads (StatCan zips/CSVs, Census Bureau bulk files) —
+# pulled fresh via scripts/extract_*.py, never committed
+scripts/data/
+
 # Logs
 logs
 *.log
