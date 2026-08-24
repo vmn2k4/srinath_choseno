@@ -107,13 +107,20 @@ to a single election cycle.
 When a politician (the wall/candidacy owner) replies within a thread on their own Wall
 or Candidacy page, that reply — and any reply thread the owner directly participates in
 — is pulled out of the general comment order and rendered in a **spotlight section above
-the rest of the thread**, badged as the owner. This is implemented client-side (matching
-comment `ghost_id` against the wall/candidacy owner's `ghost_id`, in the shared
-`PostCard` component), not as a stored "pinned" database flag, and it only applies on
-Wall and Candidacy Wall threads — general Feed posts don't have an owner concept and
-aren't affected. The trade-off is the one you'd expect: a politician's reply is always
-visible and can't get buried, which also means a vague non-answer is immediately obvious
-sitting right under the pointed question that prompted it.
+the rest of the thread**, badged as the owner, **showing their real public full name
+instead of their `Ghost-XXXX` pseudonym** (per §3A — the name exists specifically to be
+public). This is implemented client-side (matching comment `ghost_id` against the
+wall/candidacy owner's `ghost_id`, in the shared `PostCard` component — and the same
+match/reveal in the video-pitch player, `PitchPlayer.tsx`, for replies on an answer
+video), not as a stored "pinned" database flag, and it only applies on Wall and
+Candidacy Wall threads — general Feed posts don't have an owner concept and aren't
+affected. Every other commenter in the same thread, including a *different* politician
+replying to someone else's post, still shows as `Ghost-XXXX` — the real-name reveal is
+narrowly scoped to "this is the owner talking about their own content," not "this
+commenter happens to be a politician." The trade-off is the one you'd expect: a
+politician's reply is always visible, identifiable, and can't get buried, which also
+means a vague non-answer is immediately obvious sitting right under the pointed question
+that prompted it.
 
 ### D. Video-first statements and verified endorsements
 

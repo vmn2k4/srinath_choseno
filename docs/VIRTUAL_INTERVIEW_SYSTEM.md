@@ -1,3 +1,12 @@
+> **Implementation status (2026-08-24):** Gaps 1–4 are built and live (see the
+> 2026-08-21 note below for the original build), and a substantial post-launch
+> refinement pass has since shipped on top — unified video-pitch player, resolved
+> wall-vs-feed visibility, share deep-links, real-name comment identity for owners,
+> and several correctness bugs found via live testing. **See "Post-launch
+> refinements (2026-08-24)" immediately below** for what changed and why; the
+> original plan (Gaps 1–4, further down this file) is kept as the design-rationale
+> record and is still accurate for anything it isn't explicitly superseded on.
+
 > **Implementation status (2026-08-21):** Gaps 1, 2, 3, and 4 are all built and live,
 > including full video generation. Migration `20260821000000_candidate_video_interviews.sql`
 > + `20260821000001_fix_candidacy_claim_requests_fk.sql` + `20260821000002_election_question_narration_text.sql`
@@ -8,6 +17,184 @@
 > `nvidia_shorts_studio/question_card_engine/generate.py`) are all built, typecheck
 > clean, and verified end-to-end in the live app (real TTS audio, real HyperFrames
 > render, real Supabase Storage upload, real DB persistence on approve).
+
+---
+
+## Post-launch refinements (2026-08-24)
+
+Everything below happened after the original Gaps 1–4 build, driven by live testing
+against a real candidate application end to end. Grouped by theme, not chronological.
+
+### One shared video-pitch player, not three
+
+`QuestionAnswerCarousel` and `PlayInterviewReel` started as two independent
+full-screen 9:16 viewers with near-duplicate frame/swipe/like/comment code, and
+neither had a Share button. Extracted the shared piece into
+**`PitchPlayer.tsx`** — a purely presentational component owning the 9:16 frame,
+up/down navigation (swipe, mouse wheel, and Up/Down/Left/Right arrow keys), the
+like + comment + share action rail, and the comments drawer. It takes an ordered
+`slides: PitchSlide[]` array (`{videoUrl, postId, caption, authorName,
+authorAvatarUrl, likesCount, comments, ownerGhostId, shareUrl, autoPlayOnEnd}`) and
+is fully controlled — the caller owns data-fetching and the like/comment mutations,
+`PitchPlayer` only renders and calls back. `postId: null` on a slide (a bare
+question-video prompt with nothing posted yet) hides the whole action rail for
+that slide — there's nothing to like/comment/share on a prompt, only on an answer.
+
+Three thin wrappers now sit on top of it, each just a data adapter:
+
+| Component | Slides | Used from |
+|---|---|---|
+| `QuestionAnswerCarousel.tsx` | One question, every candidate's answer (Gap 3's cross-candidate carousel) | Seat page's "Candidate Interview" tab |
+| `PlayInterviewReel.tsx` | One candidate, every question — two slides per question (`question` video, `autoPlayOnEnd: true`, then `answer` video) when the question has its own video, one slide when it doesn't | Seat-page candidate strip "Pitch" badge, `CandidacyWall`/`PoliticianWallClient` "Play Interview" button, the new candidate-strip in `ElectionInterviewTab` |
+| **`PitchPostPlayer.tsx`** *(new)* | A single standalone answer_pitch post opened from a wall/feed `PostCard` — plays that one question's video (if it has one) then the answer, same as a slice of the full reel | `PostCard`'s video thumbnail, when `post_kind === 'answer_pitch'` |
+
+`CandidateVideoInterviewPlayer.tsx` (the candidate's own **recording** flow —
+watch/record/replay, camera capture) is deliberately *not* part of this
+unification. It's a different concern (capture, not viewing) and merging it in
+would trade real risk for no UI benefit.
+
+**Bugs fixed by this consolidation, previously present only in one of the two
+original components:**
+- **Infinite-climbing like count.** `handleLike` did `likes_count + 1` locally on
+  every tap. `vote_on_post` is a server-side *toggle* — voting "like" again on a
+  post you already liked **removes** the like — so a second tap should show the
+  count going *down*, not up again. Fixed by reading the real count back via a new
+  `getPostVoteCounts(supabase, postId)` helper (`feed.ts`) after every vote instead
+  of guessing the delta.
+- **"Ghost-Unknown" on a freshly-posted comment.** The optimistic local comment
+  object hardcoded `ghost_id: ""`; `getGhostDisplayName` renders an empty ghost_id
+  as the literal string "Ghost-Unknown". Fixed by using the signed-in user's real
+  `profile.current_ghost_id`.
+- **`getCandidateAnswersByQuestion` returning nothing at all (PGRST201).** Its
+  `election_candidates!inner(... profiles(...))` embed became ambiguous once
+  `election_candidates` grew a third FK into `profiles`
+  (`added_by_election_admin_id`, `reviewed_by`, `politician_id`) — PostgREST
+  refused the whole request rather than guess which one. Fixed by disambiguating:
+  `profiles!election_candidates_politician_id_fkey(...)`, matching the pattern
+  every other `election_candidates → profiles` embed in `elections.ts` already
+  used. The UI had been silently swallowing this as "No candidate has answered
+  this question yet" instead of surfacing the real 400.
+- **Same query also selecting `election_candidates.display_name`/`avatar_url`,
+  neither of which exists as a real column on that table** (name/avatar have
+  always lived on the joined `profiles`/`politician_profiles` row) — a second,
+  independent cause of the same silent failure. Removed from the select; the
+  existing `profiles?.full_name || "Candidate"` fallback chains already handled
+  their absence correctly.
+
+### Standalone pitch posts play with context, not cold
+
+A `PostCard` for an `answer_pitch` post used to be a bare `<video>` with no idea
+what question it was answering — no caption, no question video, nothing. Wired
+`PostCard`'s video click through a new optional `onPitchVideoClick` prop (falls
+back to the existing `onMediaClick`/`StoryViewerModal` for every other kind of
+video post) that opens `PitchPostPlayer` instead, so a lone pitch clicked from a
+wall or feed plays "question, then answer" — the same sequencing the full
+interview reel uses — with the full like/comment/share rail on the answer slide.
+New service function: `getQuestionForAnswer(supabase, answerId)`.
+
+### Share: every pitch slide, deep-linked back to the exact clip
+
+Every slide with a real linked post now has a Share button (native share sheet
+via `navigator.share` when available, clipboard-copy fallback otherwise, both
+wrapped in try/catch — clipboard access can be denied by the browser, e.g. an
+unfocused document, and that's not worth surfacing as an error). `PitchPostPlayer`
+builds the link as `<current page>?pitch=<postId>`; `CandidacyWall` and
+`PoliticianWallClient` each read that query param once their posts have loaded
+and reopen `PitchPostPlayer` for the matching post — so a shared link lands
+straight on the clip, not the top of a whole wall. `QuestionAnswerCarousel`'s and
+`PlayInterviewReel`'s share links currently point at the page they were opened
+from (the seat page), not a clip-specific deep link — there's no permalink route
+for those two contexts yet; only the standalone-pitch path is fully deep-linked
+today.
+
+### Resolved: feed-visibility scope of `answer_pitch` posts (was an open question below)
+
+The original plan's "Open questions" section (bottom of this file) left this
+undecided. Now decided and built, reconciling two things that both turned out
+true and are **not in conflict**:
+
+- **On the candidate's own wall** (`CandidacyWall`/`PoliticianWallClient`), every
+  `answer_pitch` post shows individually, exactly like any other wall post — this
+  is the "standard treatment" Gap 4 always called for, and it's literally the
+  candidate's own posting history. (A brief interim pass hid them here on the
+  theory that the wall's "Play Interview" button already covered viewing them —
+  reverted; that wasn't what Gap 4 specified, and it meant a candidate's own video
+  answers were invisible on their own wall.)
+- **In the general Feed** — specifically its "Politician Pitches" story strip —
+  every answer for one candidate collapses into a **single grouped "Full
+  Interview" entry** (badged with the question count) instead of showing as N
+  separate story items, and `answer_pitch` posts are filtered out of the Feed's
+  regular scrollable post list entirely. The Feed is a cross-candidate discovery
+  surface, not a personal timeline; `upsert_answer_pitch_post` already set
+  `is_country`/`is_international` to `false` specifically to keep these off the
+  main feed (see Gap 4 above) — a separate bug (below) had been defeating that.
+
+**Bug that had been defeating the Feed-scoping intent:** `upsert_answer_pitch_post`
+also inserted a `post_boundaries` row per candidate boundary membership on every
+answer. `is_country`/`is_international` being `false` doesn't matter if the post
+is still boundary-tagged — `getMembershipScopedPosts` (the query behind a
+citizen's local Feed tab) filters on `post_boundaries`, not those two flags — so
+every individual answer was leaking into the local Feed as 9 separate full posts
+regardless. Migration `20260824000001_answer_pitch_posts_not_boundary_tagged.sql`
+removed the insert; a same-day follow-up,
+`20260824000002_restore_answer_pitch_boundary_tagging.sql`, put it back after
+realizing the Feed's story-strip *grouping* query needs these posts to still be
+boundary-tagged to find them at all — the actual fix belongs at the display layer
+(filter `post_kind = 'answer_pitch'` out of the rendered post list; group it into
+one story-strip entry), not by cutting the data out of the query entirely. Both
+migrations also backfill/set `election_candidate_answers.candidate_id` onto
+`posts.election_candidate_id`, which the grouping logic keys on.
+
+### Comment identity: real name for the wall/candidacy owner's own replies
+
+`docs/PLATFORM_SPEC.md` §3A requires a real public full name specifically
+*because* it appears on the public Wall (unlike a citizen's optional pseudonym),
+and §3C's "spotlighted replies" mechanic already badges an owner's reply as the
+owner — but until now, every comment thread (including that spotlight box) still
+rendered the owner's `Ghost-XXXX` pseudonym underneath the badge, never their
+real name. Fixed in both `PostCard.tsx` (new `ownerFullName` prop — deliberately
+separate from the existing `politicianAuthor` prop, which resolves the *post's*
+author and can differ from the *wall owner* on a mention post) and `PitchPlayer.tsx`
+(reuses the slide's own `authorName`). Scope is deliberately narrow and matches
+what's actually documented: only the wall/candidacy **owner's own reply** gets
+their real name shown. Every other commenter — a citizen, or an unrelated
+politician replying in someone else's thread — stays fully `Ghost-XXXX`
+anonymized, per §B's "every citizen post/comment is attributed to a rotating
+anonymous ghost_id."
+
+### Submit/approval UX matched to what the RPC actually does
+
+`submit_candidate_application` has always auto-approved on submit (flips
+`status` straight to `'approved'` unless already `'rejected'`) — there is no
+admin-review queue a `'pending'` candidacy is waiting on; an admin can only
+*reject* an already-approved candidacy after the fact. But `status` also stays
+`'pending'` forever for a candidacy that was simply never submitted, and the UI
+used the same "Pending Review" badge for both cases — reading as "waiting on
+someone else" when it actually meant "you haven't finished this yet." Fixed in
+`CandidateApplicationClient.tsx` and `PoliticianElectionsClient.tsx`: a
+`'pending'` status with no `submitted_at` now shows "Not Submitted" (amber) with
+an inline nudge, and the Submit button is disabled with an explanatory line when
+the RPC's other hard requirement — an intro video — is missing, instead of
+letting the click fail after the fact. On a successful submit, a dialog
+("Application Submitted & Approved!" or, if this candidacy was previously
+rejected, an accurate "resubmitted, stays rejected" message reading the RPC's
+actual returned `status`) replaces the old easy-to-miss inline status line and
+routes to My Elections on dismiss.
+
+### YouTube links now embed and play in-page
+
+Unrelated to the interview system directly, but touched in this pass:
+`LinkPreview.tsx` (used by the Feed/Wall post composer's URL-preview) now
+detects a YouTube URL (`watch`, `youtu.be`, Shorts, or an already-embedded link)
+and renders a real `<iframe>` embed **before** attempting the Microlink metadata
+fetch, not after it succeeds. YouTube never exposes a direct playable file via
+Microlink's `og:video` field regardless (only Vimeo/self-hosted clips do), so
+gating the embed behind that fetch meant a YouTube link only ever got the actual
+video if Microlink happened to succeed — and even then it wouldn't have, since
+Microlink still can't hand back a YouTube file. The iframe now needs nothing but
+the URL itself.
+
+---
 
 # Candidate Video Interview System — Plan v2
 
@@ -430,9 +617,8 @@ built up front.** Concretely, that means:
    the intended look for a question card? And: fresh AI-generated images per question,
    or one fixed background reused across all questions (faster, cheaper, more
    consistent)?
-2. **Feed-visibility scope of `answer_pitch` posts:** Gap 4 makes every video answer a
-   full `posts` row — should these also appear in the *main* Choseno feed (like a normal
-   wall post does today, per `create_wall_post`'s `is_country`/`is_international`
-   flags), or only ever surface on (a) the candidate's own wall and (b) the
-   question-comparison carousel? Affects whether `submit_candidate_application`'s daily
-   post-limit / feed-boundary logic needs to apply to them.
+2. ~~**Feed-visibility scope of `answer_pitch` posts**~~ — **Resolved 2026-08-24, see
+   "Post-launch refinements" at the top of this file.** Individually on the
+   candidate's own wall (standard treatment); grouped into one "Full Interview"
+   story-strip entry, and filtered out of the regular post list, in the general
+   Feed.
