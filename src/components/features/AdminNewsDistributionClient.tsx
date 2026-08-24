@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import Link from "next/link";
 import AdminSubNav from "./AdminSubNav";
 import {
@@ -15,6 +15,9 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  ChevronDown,
+  ArrowUp,
+  ArrowDown,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import {
@@ -25,9 +28,15 @@ import {
   type BatchSummary,
 } from "@/lib/services/news";
 import ShareMenu, { type ShareData } from "@/components/features/ShareMenu";
+import Checkbox from "@/components/primitives/Checkbox";
 import { stripEmoji } from "@/lib/utils/text";
 import { convertToPackificTime } from "@/lib/utils/timezone";
 import { SITE_URL } from "@/lib/constants/site";
+
+/** "2026-08-24 08:09" (raw UTC batch tag) -> "2026-08-24 01:09" (PST) for display. */
+function displayBatch(batch: string): string {
+  return batch.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/) ? convertToPackificTime(`${batch}:00Z`) : batch;
+}
 
 export default function AdminNewsDistributionClient() {
   const supabase = createClient();
@@ -44,7 +53,9 @@ export default function AdminNewsDistributionClient() {
   const [totalPublishedCount, setTotalPublishedCount] = useState<number>(0);
 
   // Filters & Sorting state
-  const [selectedBatch, setSelectedBatch] = useState<string>("all");
+  const [selectedBatches, setSelectedBatches] = useState<string[]>([]); // empty = All Batches
+  const [batchDropdownOpen, setBatchDropdownOpen] = useState(false);
+  const batchDropdownRef = useRef<HTMLDivElement>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("viral_desc");
 
@@ -83,7 +94,7 @@ export default function AdminNewsDistributionClient() {
         status: "published",
         page,
         pageSize,
-        batchNumber: selectedBatch,
+        batchNumber: selectedBatches.length ? selectedBatches : "all",
         search: searchQuery,
         sortBy,
       });
@@ -102,7 +113,7 @@ export default function AdminNewsDistributionClient() {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [supabase, page, pageSize, selectedBatch, searchQuery, sortBy]);
+  }, [supabase, page, pageSize, selectedBatches, searchQuery, sortBy]);
 
   // Load batches on initial mount
   useEffect(() => {
@@ -114,9 +125,33 @@ export default function AdminNewsDistributionClient() {
     fetchArticles();
   }, [fetchArticles]);
 
-  // Handle batch or search change: reset to page 1
-  const handleBatchChange = (newBatch: string) => {
-    setSelectedBatch(newBatch);
+  // Close the batch dropdown on an outside click
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (batchDropdownRef.current && !batchDropdownRef.current.contains(event.target as Node)) {
+        setBatchDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Handle batch selection change (multi-select): reset to page 1
+  const toggleBatch = (batch: string) => {
+    setSelectedBatches((prev) =>
+      prev.includes(batch) ? prev.filter((b) => b !== batch) : [...prev, batch]
+    );
+    setPage(1);
+  };
+
+  const selectOnlyBatch = (batch: string) => {
+    setSelectedBatches([batch]);
+    setPage(1);
+    setBatchDropdownOpen(false);
+  };
+
+  const clearBatchSelection = () => {
+    setSelectedBatches([]);
     setPage(1);
   };
 
@@ -189,7 +224,7 @@ export default function AdminNewsDistributionClient() {
           status: "published",
           page: 1,
           pageSize: Math.min(1000, totalCount),
-          batchNumber: selectedBatch,
+          batchNumber: selectedBatches.length ? selectedBatches : "all",
           search: searchQuery,
           sortBy,
         });
@@ -246,7 +281,11 @@ export default function AdminNewsDistributionClient() {
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
-      const filename = `published-news-${selectedBatch === "all" ? "all" : selectedBatch.replace(/[^a-zA-Z0-9]/g, "-")}.csv`;
+      const filename = `published-news-${
+        selectedBatches.length === 0
+          ? "all"
+          : selectedBatches.map((b) => b.replace(/[^a-zA-Z0-9]/g, "-")).join("_")
+      }.csv`;
       link.setAttribute("href", url);
       link.setAttribute("download", filename);
       document.body.appendChild(link);
@@ -315,33 +354,84 @@ export default function AdminNewsDistributionClient() {
             <h1 className="text-base font-bold text-text-main flex items-center gap-2">
               <span>Published News Batches</span>
               <span className="text-xs font-mono font-normal text-text-muted bg-background px-2 py-0.5 rounded border border-border">
-                {totalCount} {selectedBatch === "all" ? "total" : "in batch"}
+                {totalCount} {selectedBatches.length === 0 ? "total" : "in selection"}
               </span>
             </h1>
 
-            {/* Batch Filter Dropdown */}
-            <div className="flex items-center gap-1.5">
+            {/* Batch Filter Dropdown (multi-select) */}
+            <div className="flex items-center gap-1.5" ref={batchDropdownRef}>
               <span className="text-xs text-text-muted font-medium">Batch <span className="text-[10px] text-text-muted/60">(PST)</span>:</span>
-              <select
-                value={selectedBatch}
-                onChange={(e) => handleBatchChange(e.target.value)}
-                aria-label="Filter by batch"
-                className="px-2.5 py-1.5 bg-background border border-border rounded-lg text-xs font-mono text-text-main focus:outline-none focus:border-primary"
-              >
-                <option value="all">All Batches ({totalPublishedCount || "..."})</option>
-                {distinctBatches.map(({ batch, count }) => {
-                  // Parse the batch timestamp and convert to PST for display
-                  // Batch format is typically "YYYY-MM-DD HH:MM" in UTC
-                  const displayBatch = batch.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/)
-                    ? convertToPackificTime(`${batch}:00Z`)
-                    : batch;
-                  return (
-                    <option key={batch} value={batch}>
-                      {displayBatch} ({count})
-                    </option>
-                  );
-                })}
-              </select>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setBatchDropdownOpen((prev) => !prev)}
+                  aria-label="Filter by batch"
+                  aria-expanded={batchDropdownOpen}
+                  aria-haspopup="true"
+                  className="px-2.5 py-1.5 bg-background border border-border rounded-lg text-xs font-mono text-text-main focus:outline-none focus:border-primary hover:border-primary/50 transition-colors cursor-pointer flex items-center gap-1.5 min-w-[160px] justify-between"
+                >
+                  <span className="truncate">
+                    {selectedBatches.length === 0
+                      ? `All Batches (${totalPublishedCount || "..."})`
+                      : selectedBatches.length === 1
+                      ? `${displayBatch(selectedBatches[0])} (${
+                          distinctBatches.find((b) => b.batch === selectedBatches[0])?.count ?? 0
+                        })`
+                      : `${selectedBatches.length} batches selected`}
+                  </span>
+                  <ChevronDown size={13} className={`shrink-0 transition-transform ${batchDropdownOpen ? "rotate-180" : ""}`} />
+                </button>
+
+                {batchDropdownOpen && (
+                  <div className="absolute z-20 mt-1 w-72 max-h-96 overflow-y-auto bg-surface border border-border rounded-lg shadow-lg py-1">
+                    <div className="flex items-center justify-between px-3 py-1.5 border-b border-border/60 sticky top-0 bg-surface">
+                      <button
+                        type="button"
+                        onClick={clearBatchSelection}
+                        className={`text-xs font-semibold cursor-pointer hover:text-primary transition-colors ${
+                          selectedBatches.length === 0 ? "text-primary" : "text-text-muted"
+                        }`}
+                      >
+                        {selectedBatches.length === 0 ? "✓ " : ""}All Batches ({totalPublishedCount || "..."})
+                      </button>
+                      {selectedBatches.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={clearBatchSelection}
+                          className="text-[11px] text-text-muted hover:text-primary transition-colors cursor-pointer"
+                        >
+                          Clear
+                        </button>
+                      )}
+                    </div>
+                    {distinctBatches.map(({ batch, count }) => (
+                      <div
+                        key={batch}
+                        className="flex items-center justify-between gap-2 px-3 py-1.5 hover:bg-surface-hover/60 group"
+                      >
+                        <Checkbox
+                          id={`batch-${batch}`}
+                          checked={selectedBatches.includes(batch)}
+                          onChange={() => toggleBatch(batch)}
+                          label={
+                            <span className="text-xs font-mono text-text-main">
+                              {displayBatch(batch)} <span className="text-text-muted">({count})</span>
+                            </span>
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={() => selectOnlyBatch(batch)}
+                          title="Show only this batch"
+                          className="text-[10px] text-text-muted hover:text-primary transition-colors cursor-pointer opacity-0 group-hover:opacity-100 shrink-0"
+                        >
+                          only
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Sort Dropdown */}
@@ -434,7 +524,21 @@ export default function AdminNewsDistributionClient() {
                 <thead>
                   <tr className="border-b border-border bg-surface-hover/60 text-text-muted font-mono font-semibold uppercase text-[11px]">
                     <th className="py-2.5 px-3 w-12 text-center border-r border-border/40">#</th>
-                    <th className="py-2.5 px-3 w-16 text-center border-r border-border/40">Score</th>
+                    <th className="py-2.5 px-3 w-16 text-center border-r border-border/40">
+                      <button
+                        type="button"
+                        onClick={() => handleSortChange(sortBy === "viral_desc" ? "viral_asc" : "viral_desc")}
+                        title="Sort by score"
+                        className="inline-flex items-center gap-0.5 hover:text-primary transition-colors cursor-pointer uppercase font-mono font-semibold text-[11px]"
+                      >
+                        Score
+                        {sortBy === "viral_desc" ? (
+                          <ArrowDown size={11} className="text-primary" />
+                        ) : sortBy === "viral_asc" ? (
+                          <ArrowUp size={11} className="text-primary" />
+                        ) : null}
+                      </button>
+                    </th>
                     <th className="py-2.5 px-3 min-w-[125px] border-r border-border/40">Published <span className="text-[10px] text-text-muted/60">(PST)</span></th>
                     <th className="py-2.5 px-3 min-w-[280px] border-r border-border/40">Headline</th>
                     <th className="py-2.5 px-3 w-28 text-center border-r border-border/40">Share</th>
@@ -530,13 +634,11 @@ export default function AdminNewsDistributionClient() {
                         {/* 7. Batch */}
                         <td className="py-2 px-3 font-mono text-[11px] text-text-muted border-r border-border/40 whitespace-nowrap">
                           <button
-                            onClick={() => handleBatchChange(article.batchNumber)}
+                            onClick={() => selectOnlyBatch(article.batchNumber)}
                             title={`Click to filter: ${article.batchNumber}`}
                             className="hover:text-primary transition-colors cursor-pointer text-left"
                           >
-                            {article.batchNumber.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/)
-                              ? convertToPackificTime(`${article.batchNumber}:00Z`)
-                              : article.batchNumber}
+                            {displayBatch(article.batchNumber)}
                           </button>
                         </td>
 

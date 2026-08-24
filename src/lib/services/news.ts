@@ -813,7 +813,8 @@ export interface ListDistributionArticlesOptions {
   status?: string;
   page?: number;
   pageSize?: number;
-  batchNumber?: string;
+  /** One batch tag, several (multi-select), or "all"/omitted for no filter. */
+  batchNumber?: string | string[];
   search?: string;
   sortBy?: string;
 }
@@ -931,9 +932,15 @@ export async function listNewsArticlesForDistribution(
     query = query.eq("status", "published");
   }
 
-  // Filter by batch_number inside content JSONB if provided
+  // Filter by batch_number inside content JSONB if provided -- one batch
+  // (string) or several (multi-select array). "all"/empty means no filter.
   if (options.batchNumber && options.batchNumber !== "all") {
-    query = query.eq("content->>batch_number", options.batchNumber);
+    const batches = Array.isArray(options.batchNumber) ? options.batchNumber : [options.batchNumber];
+    if (batches.length === 1) {
+      query = query.eq("content->>batch_number", batches[0]);
+    } else if (batches.length > 1) {
+      query = query.in("content->>batch_number", batches);
+    }
   }
 
   // Filter by search query if provided
