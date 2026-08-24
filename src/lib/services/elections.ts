@@ -1171,8 +1171,8 @@ export async function getCandidateAnswersByQuestion(supabase: Client, questionId
       `
       id, video_url, context_text,
       election_candidates!inner(
-        id, display_name, avatar_url, status, seat_id,
-        profiles(id, full_name, current_ghost_id, politician_profiles(avatar_url, wall_slug))
+        id, status, seat_id,
+        profiles!election_candidates_politician_id_fkey(id, full_name, current_ghost_id, politician_profiles(avatar_url, wall_slug))
       ),
       posts(id, likes_count, dislikes_count, comments(id, ghost_id, content, created_at))
     `
@@ -1183,6 +1183,18 @@ export async function getCandidateAnswersByQuestion(supabase: Client, questionId
 }
 
 // Every video answer for one candidate, in question-rank order — powers the
+// The question a single answer belongs to -- powers PitchPostPlayer, which
+// plays a standalone pitch post's video as "question, then answer" (same
+// clip the actual interview shows) instead of dropping the viewer straight
+// into the answer with zero context, the way a bare <video> tag does.
+export async function getQuestionForAnswer(supabase: Client, answerId: string) {
+  return supabase
+    .from("election_candidate_answers")
+    .select("election_questions(question_text, question_video_url)")
+    .eq("id", answerId)
+    .single();
+}
+
 // "play entire interview" reel (sequenced autoplay through all of one
 // candidate's answers). rank comes from the joined election_questions row.
 export async function getCandidateVideoAnswersForReel(supabase: Client, candidateId: string) {
@@ -1191,7 +1203,9 @@ export async function getCandidateVideoAnswersForReel(supabase: Client, candidat
     .select(
       `
       id, video_url,
-      election_questions!inner(id, question_text, rank, visible_to_public)
+      election_questions!inner(id, question_text, rank, visible_to_public, question_video_url),
+      posts(id, likes_count, dislikes_count, comments(id, ghost_id, content, created_at)),
+      election_candidates!inner(id, profiles!election_candidates_politician_id_fkey(current_ghost_id, politician_profiles(avatar_url)))
     `
     )
     .eq("candidate_id", candidateId)

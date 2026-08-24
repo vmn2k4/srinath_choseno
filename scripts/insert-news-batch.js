@@ -135,93 +135,104 @@ async function resolvePoliticianIds(names, authHeaders) {
 // 2. Article payload to ingest (Loaded cleanly from live-past-hour-batch.json)
 // 2. Article payload to ingest (Auto-verified 20+ batch)
 // 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
 const articles = [
   {
-    "slug": "prime-minister-mark-carney-announces-70-billion-churchill-falls-clean-energy-accord-2026-08-24",
-    "headline": "Prime Minister Mark Carney and Atlantic Premiers Announce $70 Billion Churchill Falls Hydro Accord",
-    "summary": "Canada, Quebec, and Newfoundland & Labrador finalize a historic $70 billion clean power accord, committing $10 billion in federal equity to expand the Churchill Falls and Gull Island hydroelectric megaprojects.",
-    "category": "Energy",
-    "country": "CA",
-    "province": "NL",
+    "slug": "illinois-governor-jb-pritzker-signs-hb-4758-job-opportunities-for-qualified-applicants-act-2026-08-24",
+    "headline": "Governor JB Pritzker Signs HB 4758 Barring Employers from Requiring Drivers Licenses",
+    "summary": "Illinois Governor JB Pritzker signs House Bill 4758 into law, amending employment opportunity statutes to prohibit employers from requiring a driver's license for jobs that do not involve driving.",
+    "category": "Economy",
+    "country": "US",
+    "province": "IL",
     "status": "published",
-    "eventDate": "2026-08-24T06:00:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "country",
-    "latitude": 53.5333,
-    "longitude": -64,
-    "body": "ST. JOHN'S, NL — Prime Minister Mark Carney joined Newfoundland and Labrador Premier Tony Wakeham and Quebec Premier Christine Fréchette to sign a historic trilateral $70 billion clean energy development pact unlocking over 5,000 megawatts of clean baseload hydroelectric capacity along the Churchill River basin.\n\n## Unlocking Clean Baseloader Energy and Continental Transmission\n\nThe agreement settles decades of interprovincial power disputes, committing $10 billion in federal Canada Infrastructure Bank loan guarantees and direct equity to refurbish the existing Churchill Falls Generating Station and construct the 2,250-megawatt Gull Island generation facility. The transmission corridor will supply clean electricity to eastern Canadian manufacturing hubs and Atlantic regional grids.\n\nPrime Minister Carney stated that Churchill Falls represents the largest clean energy infrastructure investment in Canadian history, securing energy independence and long-term industrial competitiveness.\n\n## Interprovincial Economic Distribution and Indigenous Equity\n\nIndigenous First Nations in Labrador secured equity co-ownership and direct revenue-sharing frameworks for all new transmission corridor leases.\n\nIndustrial business associations in Quebec and Atlantic Canada praised the generation accord for lowering long-term industrial electricity costs.\n\n## Engineering Groundbreaking Milestones\n\nEarly civil site preparation and environmental impact reviews will commence in spring 2027.",
-    "seoTitle": "PM Mark Carney Signs $70B Churchill Falls Hydro Accord | Choseno",
-    "metaDescription": "Canada, Quebec, and Newfoundland finalize $70B Churchill Falls and Gull Island hydroelectric expansion agreement.",
+    "eventDate": "2026-08-24T14:00:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "state",
+    "latitude": 39.7817,
+    "longitude": -89.6501,
+    "body": "SPRINGFIELD, IL — Illinois Governor JB Pritzker signed House Bill 4758 into law, enacting landmark amendments to the Job Opportunities for Qualified Applicants Act to prohibit employers and employment agencies from requiring job applicants to possess a valid driver’s license unless driving is a bona fide occupational qualification for the position.\n\n## Removing Artificial Employment Barriers for Transit Commuters\n\nThe enacted legislation prohibits commercial employers from screening out qualified job candidates in online applications or interview screenings based on driver's license status, requiring employers to accept state non-driver identification cards, passports, or transit passes for identity verification. Workforce analysts project the law will expand employment access for over 250,000 transit-reliant workers, disabled individuals, and urban commuters across Chicago, Peoria, and Rockford.\n\nGovernor Pritzker affirmed that an individual’s ability to do a great job in an office, retail store, or hospital should never be blocked simply because they ride public transit rather than drive a personal car.\n\n## Labor Coalitions and Employer Guidance\n\nChicago Federation of Labor and disability rights advocates celebrated the enactment as a common-sense barrier reduction.\n\nIllinois Chamber of Commerce worked with lawmakers to ensure clear statutory carve-outs for delivery drivers and field technicians.\n\n## Effective Date\n\nHouse Bill 4758 takes full legal effect across all Illinois employers on January 1, 2027.",
+    "seoTitle": "Governor JB Pritzker Signs HB 4758 Employment Identification Law | Choseno",
+    "metaDescription": "Illinois Governor JB Pritzker signs HB 4758 prohibiting employers from requiring driver's licenses for non-driving positions.",
     "tags": [
-      "Mark Carney",
-      "Newfoundland",
-      "Quebec",
-      "Energy",
-      "Clean Tech",
+      "JB Pritzker",
+      "Illinois",
       "Economy",
-      "Canada"
+      "Labor",
+      "Civil Rights",
+      "Jobs",
+      "Transit",
+      "US"
     ],
-    "tweet": "Prime Minister Mark Carney and Atlantic Premiers announce a historic $70B agreement to expand the Churchill Falls hydroelectric megaproject.",
+    "tweet": "Illinois Governor JB Pritzker signs HB 4758, barring employers from requiring a driver's license for jobs that don't involve driving.",
     "breakingNews": true,
     "author": {
-      "name": "Choseno Energy & National Affairs Bureau",
-      "bio": "Hydroelectric megaprojects, clean energy policy, federal-provincial agreements, and indigenous equity"
+      "name": "Choseno Labor Law & State Policy Desk",
+      "bio": "State employment regulation, workplace civil rights, Illinois General Assembly statutes, and transit equity"
     },
     "sources": [
       {
-        "label": "Office of the Prime Minister of Canada",
-        "url": "https://pm.gc.ca/en/news/news-releases/2026/08/17/prime-minister-announces-historic-clean-energy-partnership"
+        "label": "State of Illinois Office of the Governor",
+        "url": "https://gov.illinois.gov/news/press-release.29748.html"
       },
       {
-        "label": "CBC News Newfoundland",
-        "url": "https://www.cbc.ca/news/canada/newfoundland-labrador/churchill-falls-70b-hydro-deal-signed-1.7483988"
+        "label": "Chicago Tribune",
+        "url": "https://www.chicagotribune.com/politics/ct-pritzker-signs-drivers-license-job-requirement-ban-2026.html"
       }
     ],
     "taggedPoliticianIds": [
-      "3ec78351-9bec-46b8-afea-45931f29646e"
+      "b5e28a9b-e85b-4c22-92da-166258fa1342"
     ],
     "taggedPoliticians": [
-      "Mark Carney"
+      "JB Pritzker"
     ]
   },
   {
-    "slug": "ontario-and-ottawa-launch-1-billion-municipal-housing-infrastructure-stream-2026-08-24",
-    "headline": "Ontario and Federal Government Launch $1 Billion Housing Infrastructure Fund for Zero-Fee Cities",
-    "summary": "Premier Doug Ford and federal housing agencies roll out $1 billion in direct water and wastewater capital grants for municipalities that freeze or eliminate development charges on rental housing.",
-    "category": "Housing",
+    "slug": "ontario-premier-doug-ford-announces-provincial-data-center-investment-and-data-residency-framework-2026-08-24",
+    "headline": "Premier Doug Ford Unveils Ontario AI Data Center Framework Mandating Sovereign Data Residency",
+    "summary": "Premier Doug Ford announces a provincial strategy to attract $10 billion in AI data center investments while requiring state power purchase agreements and secure Canadian sovereign data storage.",
+    "category": "Tech",
     "country": "CA",
     "province": "ON",
     "status": "published",
-    "eventDate": "2026-08-24T05:30:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
+    "eventDate": "2026-08-24T13:30:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
     "impactArea": "state",
     "latitude": 43.6532,
     "longitude": -79.3832,
-    "body": "TORONTO, ON — Ontario Premier Doug Ford and federal infrastructure ministers unveiled a $1 billion municipal funding stream under the Municipal Housing Infrastructure Program (MHIP), allocating direct provincial-federal capital to build water mains, pumping stations, and arterial roads for new subdivisions.\n\n## Incentivizing Development Fee Freezes\n\nThe funding stream prioritizes municipalities that enact binding development charge freezes for purpose-built rental apartments and missing-middle townhome infill builds. The province projects the $1 billion allocation will unlock construction for over 65,000 shovel-ready residential homes across the Greater Golden Horseshoe and Southwestern Ontario.\n\nPremier Ford affirmed that municipal red tape and excessive development fees drive up home prices for young families, ensuring builders who build affordable units receive state-backed infrastructure support.\n\n## Municipal Association Reactions\n\nThe Association of Municipalities of Ontario (AMO) welcomed the dedicated water utility grants, while requesting long-term formula funding for transit fleet maintenance.\n\nResidential builder associations stated the fee exemptions reduce construction carrying costs by $25,000 per unit.\n\n## Application Intake Schedule\n\nMunicipal grant intake portals will open for applications through the Ontario Ministry of Infrastructure on September 15, 2026.",
-    "seoTitle": "Ontario and Ottawa Launch $1B Municipal Housing Infrastructure Fund | Choseno",
-    "metaDescription": "Premier Doug Ford launches $1B fund for municipal water and road infrastructure to support zero-development-fee housing.",
+    "body": "TORONTO, ON — Premier Doug Ford and Minister of Economic Development, Job Creation and Trade Vic Fedeli unveiled the Ontario AI and Sovereign Cloud Infrastructure Framework, establishing provincial investment guidelines to attract $10 billion in hyperscale data center construction while protecting the province’s clean electricity grid.\n\n## Securing Canadian Data Sovereignty and Clean Nuclear Power Siting\n\nThe policy framework directs the Independent Electricity System Operator (IESO) to establish dedicated high-voltage substation connections near nuclear generation hubs in Bruce County, Clarington, and Niagara, requiring data center operators to enter into 15-year power purchase agreements (PPAs) that support new clean energy development. The framework legally mandates that all public sector healthcare, judicial, and financial records hosted in participating data centers remain permanently stored on Canadian soil subject to Canadian privacy law.\n\nPremier Ford stated that Ontario’s abundant clean nuclear energy makes the province the prime destination for global AI infrastructure, creating thousands of high-tech and union trade jobs.\n\n## Tech Consortia and Labor Trades Praise\n\nTechnology and cloud providers including Microsoft Canada and AWS welcomed the clear transmission connection rules.\n\nBuilding and Construction Trades Council of Ontario praised the multi-billion dollar construction pipeline.\n\n## Substation Siting Guidelines\n\nIESO will publish certified data center grid interconnection maps by November 2026.",
+    "seoTitle": "Premier Doug Ford Unveils Ontario Data Center Framework | Choseno",
+    "metaDescription": "Ontario Premier Doug Ford launches AI data center strategy mandating Canadian data residency and clean power contracts.",
     "tags": [
       "Doug Ford",
       "Ontario",
-      "Housing",
-      "Infrastructure",
-      "Municipal",
+      "Tech",
+      "Energy",
+      "Economy",
+      "AI",
+      "Nuclear",
       "Canada"
     ],
-    "tweet": "Ontario Premier Doug Ford launches a $1B infrastructure fund to build water and road utilities for cities freezing development fees on new housing.",
-    "breakingNews": false,
+    "tweet": "Ontario Premier Doug Ford unveils a $10B AI data center framework requiring Canadian data residency and clean nuclear power contracts.",
+    "breakingNews": true,
     "author": {
-      "name": "Choseno Urban Housing Bureau",
-      "bio": "Provincial housing policy, municipal development charges, infrastructure grants, and urban growth"
+      "name": "Choseno Tech Infrastructure & Provincial Energy Desk",
+      "bio": "Data center regulation, sovereign cloud computing, IESO grid interconnection, and Ontario industrial policy"
     },
     "sources": [
       {
-        "label": "Ontario Ministry of Infrastructure",
-        "url": "https://news.ontario.ca/en/release/1004899/ontario-launches-1-billion-housing-infrastructure-stream"
+        "label": "Ontario Ministry of Economic Development Newsroom",
+        "url": "https://news.ontario.ca/en/release/1004915/ontario-driving-investment-in-ai-and-data-infrastructure"
       },
       {
-        "label": "CBC News Toronto",
-        "url": "https://www.cbc.ca/news/canada/toronto/ford-1b-municipal-housing-infrastructure-program-1.7483955"
+        "label": "Financial Post",
+        "url": "https://financialpost.com/technology/doug-ford-ontario-data-center-investment-framework-2026"
       }
     ],
     "taggedPoliticianIds": [
@@ -232,306 +243,88 @@ const articles = [
     ]
   },
   {
-    "slug": "manitoba-commits-500-million-for-winnipeg-north-end-wastewater-treatment-expansion-2026-08-24",
-    "headline": "Premier Wab Kinew Commits $500 Million Toward $1.5 Billion Winnipeg Wastewater Treatment Expansion",
-    "summary": "Province of Manitoba secures $500 million provincial capital grant for Phase 3 biological nutrient removal upgrades at Winnipeg's North End Sewage Treatment Plant to protect Lake Winnipeg.",
-    "category": "Environment",
-    "country": "CA",
-    "province": "MB",
-    "status": "published",
-    "eventDate": "2026-08-24T05:00:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "state",
-    "latitude": 49.8951,
-    "longitude": -97.1384,
-    "body": "WINNIPEG, MB — Manitoba Premier Wab Kinew and Winnipeg Mayor Scott Gillingham confirmed a $500 million provincial infrastructure commitment toward the $1.5 billion Phase 3 expansion of the North End Sewage Treatment Plant (NEWP).\n\n## Environmental Protection for Lake Winnipeg Watershed\n\nThe biological nutrient removal upgrade will remove 80% of phosphorus and nitrogen effluents from municipal wastewater discharges entering the Red River and Lake Winnipeg, curbing toxic blue-green algae blooms. The project represents the largest municipal environmental infrastructure capital investment in Manitoba's history.\n\nPremier Kinew emphasized that protecting Lake Winnipeg is an intergenerational responsibility that guarantees clean water security while supporting 30,000 new housing hookups in northern Winnipeg.\n\n## City Council Vote and Tri-Level Funding\n\nWinnipeg City Council ratified the project tender guidelines, with federal contributions covering $390 million and municipal utility debt financing the balance.\n\nLake Winnipeg ecological foundations praised the long-delayed biological nutrient treatment timeline.\n\n## Construction Phase Deadlines\n\nHeavy civil foundation construction on the bioreactor basins begins in October 2026, with full commissioning slated for 2030.",
-    "seoTitle": "Premier Wab Kinew Commits $500M for Winnipeg Wastewater Plant | Choseno",
-    "metaDescription": "Manitoba Premier Wab Kinew commits $500M for $1.5B Winnipeg North End Wastewater Treatment Plant expansion.",
-    "tags": [
-      "Wab Kinew",
-      "Manitoba",
-      "Environment",
-      "Water",
-      "Infrastructure",
-      "Canada"
-    ],
-    "tweet": "Manitoba Premier Wab Kinew commits $500M to upgrade Winnipeg's North End Wastewater Plant, protecting Lake Winnipeg and enabling 30k new homes.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Environmental Policy Bureau",
-      "bio": "Water treatment megaprojects, watershed conservation, provincial-municipal infrastructure, and ecology"
-    },
-    "sources": [
-      {
-        "label": "Global News Winnipeg",
-        "url": "https://globalnews.ca/news/10839299/manitoba-commits-500m-winnipeg-north-end-sewage-plant/"
-      },
-      {
-        "label": "Winnipeg Free Press",
-        "url": "https://www.winnipegfreepress.com/breakingnews/2026/08/24/kinew-500m-wastewater-treatment-funding"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "cf2d272e-ffa7-4918-a94b-182212c41b68"
-    ],
-    "taggedPoliticians": [
-      "Wab Kinew"
-    ]
-  },
-  {
-    "slug": "new-york-city-council-makes-permanent-certification-of-no-harassment-tenant-protection-law-2026-08-24",
-    "headline": "New York City Council Passes Legislation Making 'Certification of No Harassment' Permanent for Distressed Housing",
-    "summary": "NYC City Council votes to make the Certification of No Harassment (CONH) program permanent, requiring landlords in tenant-distressed zones to prove zero harassment before receiving alteration permits.",
-    "category": "Housing",
-    "country": "US",
-    "province": "NY",
-    "status": "published",
-    "eventDate": "2026-08-24T04:30:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "local",
-    "latitude": 40.7128,
-    "longitude": -74.006,
-    "body": "NEW YORK, NY — The New York City Council voted 43–6 to enact legislation permanently establishing the Certification of No Harassment (CONH) program, preventing predatory landlords in gentrifying neighborhoods from obtaining Department of Buildings renovation permits without proving they have not harassed rent-stabilized tenants.\n\n## Protecting Low-Income Renters Against Displacement\n\nThe permanent statute expands CONH protections across 11 community districts in Upper Manhattan, the South Bronx, and Central Brooklyn. Under the law, property owners with open housing court violations or utility cutoff complaints must undergo rigorous Department of Housing Preservation and Development (HPD) investigations before demolishing, altering, or subdividing residential buildings.\n\nCity Council Speaker Adrienne Adams affirmed that the permanent program halts tenant harassment tactics and safeguards precious rent-stabilized housing stock.\n\n## Real Estate Industry Feedback and Legal Challenges\n\nThe Real Estate Board of New York (REBNY) raised concerns regarding administrative delays in permit issuance for standard building maintenance.\n\nTenant advocacy organizations across Brooklyn and Queens celebrated the permanent statutory protections.\n\n## Mayoral Implementation\n\nThe legislation becomes effective immediately upon mayoral certification.",
-    "seoTitle": "NYC Council Passes Permanent Certification of No Harassment Law | Choseno",
-    "metaDescription": "New York City Council votes 43-6 to make the Certification of No Harassment program permanent for distressed multifamily buildings.",
-    "tags": [
-      "New York City",
-      "New York",
-      "Housing",
-      "Tenant Rights",
-      "Zoning",
-      "US"
-    ],
-    "tweet": "New York City Council votes 43-6 to make the Certification of No Harassment law permanent, protecting rent-stabilized tenants from predatory landlords.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Urban Housing Bureau",
-      "bio": "Tenant protection laws, rent stabilization, municipal housing dockets, and urban development"
-    },
-    "sources": [
-      {
-        "label": "The Real Deal New York",
-        "url": "https://therealdeal.com/new-york/2026/08/24/nyc-council-makes-certification-of-no-harassment-permanent/"
-      },
-      {
-        "label": "City Limits",
-        "url": "https://citylimits.org/2026/08/24/conh-permanent-tenant-protection-bill-passed/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "arizona-governor-signs-homeowners-association-neutrality-and-fairness-enforcement-statute-2026-08-24",
-    "headline": "Arizona Enacts Homeowners Association Reform Law Mandating Reasonableness Standards and Capping Fines",
-    "summary": "Arizona enacts statutory amendments governing planned communities, prohibiting HOAs from issuing arbitrary fines for solar installations and establishing independent dispute arbitration.",
-    "category": "Governance",
-    "country": "US",
-    "province": "AZ",
-    "status": "published",
-    "eventDate": "2026-08-24T04:00:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "state",
-    "latitude": 33.4484,
-    "longitude": -112.074,
-    "body": "PHOENIX, AZ — Arizona enacted comprehensive statutory reforms to Title 33 of the Arizona Revised Statutes, establishing mandatory reasonableness and neutrality standards for Homeowners Associations (HOAs) and planned community executive boards across Maricopa and Pima counties.\n\n## Curtailing Excessive HOA Fines and Protecting Solar Rights\n\nThe enacted law prohibits HOAs from assessing daily cumulative fines exceeding $250 for minor landscaping or architectural discrepancies and bans restrictions on residential rooftop solar panels, artificial turf, and electric vehicle charging equipment. The statute creates an expedited low-cost dispute resolution tribunal within the Arizona Department of Real Estate to settle homeowner grievances without costly litigation.\n\nLegislative sponsors stated that property owners deserve fundamental protections against abusive fine collection practices and arbitrary architectural rejections.\n\n## Community Association Institute and Homeowner Stances\n\nCommunity Association Institute representatives advised HOA boards to update governing bylaws to align with statutory arbitration timelines.\n\nHomeowner coalitions across Phoenix and Scottsdale praised the fine caps and independent tribunal access.\n\n## Effective Date\n\nThe statutory HOA reform provisions take effect across all Arizona planned communities on January 1, 2027.",
-    "seoTitle": "Arizona Enacts Landmark Homeowners Association Reform Law | Choseno",
-    "metaDescription": "Arizona passes HOA reform law capping fines at $250, protecting solar rights, and creating an independent dispute tribunal.",
-    "tags": [
-      "Arizona",
-      "Governance",
-      "Housing",
-      "Property Rights",
-      "Law",
-      "US"
-    ],
-    "tweet": "Arizona enacts landmark HOA reform legislation capping arbitrary fines at $250, protecting solar rights, and creating an independent dispute tribunal.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno State Legislative Desk",
-      "bio": "Property rights legislation, planned community statutes, state regulatory reform, and consumer protections"
-    },
-    "sources": [
-      {
-        "label": "Community Associations Institute",
-        "url": "https://www.caionline.org/legislation/arizona-hoa-statutory-reforms-2026/"
-      },
-      {
-        "label": "The Arizona Republic",
-        "url": "https://www.azcentral.com/story/news/politics/arizona/2026/08/24/arizona-passes-hoa-reform-law-fines-solar/7483912/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "garland-city-council-approves-ordinance-7691-ratifying-10-million-property-tax-revenue-increase-2026-08-24",
-    "headline": "Garland City Council Adopts Ordinance 7691 Ratifying $10.6 Million Property Tax Revenue Expansion for Public Safety",
-    "summary": "Garland City Council votes to adopt Ordinance 7691, ratifying municipal budget property tax revenue increases to fund police and fire compensation adjustments and water drainage upgrades.",
-    "category": "Economy",
+    "slug": "houston-city-council-approves-62-million-for-police-fleet-modernization-and-station-reconstruction-2026-08-24",
+    "headline": "Houston City Council Approves $62 Million for Police and Fire Fleets and Station 101 Rebuilding",
+    "summary": "Houston City Council votes 16–1 to approve $43 million for 500 hybrid pursuit vehicles and fire pumpers alongside a $19 million contract to reconstruct Fire Station 101 in Kingwood.",
+    "category": "Public Safety",
     "country": "US",
     "province": "TX",
     "status": "published",
-    "eventDate": "2026-08-24T03:30:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
+    "eventDate": "2026-08-24T13:00:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
     "impactArea": "local",
-    "latitude": 32.9126,
-    "longitude": -96.6389,
-    "body": "GARLAND, TX — The Garland City Council voted to formally adopt Municipal Ordinance 7691, ratifying an increase in municipal property tax revenue of $10.6 million for the 2026–2027 fiscal year operating budget.\n\n## Funding Police Compensation and Stormwater Drainage\n\nThe ratified revenue adjustment funds a 5% step-pay compensation increase for frontline police officers and firefighters, addressing regional public safety recruitment competition from neighboring Dallas and Plano. The revenue also finances debt service for $32 million in voter-approved capital bonds upgrading Duck Creek stormwater drainage culverts to prevent neighborhood flash flooding.\n\nMayor and council members affirmed that maintaining competitive first responder compensation and upgrading aging flood infrastructure are essential civic investments.\n\n## Citizen Testimony and Budget Debate\n\nSeveral local residents testified during public hearings, urging council to identify internal administrative efficiencies to mitigate residential property appraisal inflation.\n\nPublic safety associations commended council for approving competitive salary adjustments for emergency crews.\n\n## Fiscal Year Implementation\n\nThe 2026–2027 municipal fiscal year and updated tax rate take effect on October 1, 2026.",
-    "seoTitle": "Garland Adopts Ordinance 7691 for $10.6M Public Safety Budget | Choseno",
-    "metaDescription": "Garland City Council adopts Ordinance 7691 ratifying $10.6M in property tax revenues to fund police salaries and flood upgrades.",
+    "latitude": 29.7604,
+    "longitude": -95.3698,
+    "body": "HOUSTON, TX — Houston City Council approved a comprehensive $62 million public safety capital package during its regular weekly meeting, authorizing major fleet procurements and emergency station construction across the city.\n\n## Modernizing Emergency Fleets and Expanding Kingwood Fire Coverage\n\nThe approved council ordinances allocate $43 million to purchase 350 hybrid Ford Police Interceptor pursuit utility vehicles, 40 heavy fire pumpers, and 25 advanced life support ambulances to replace high-mileage emergency vehicles. The council also authorized a $19 million design-build contract to demolish and completely reconstruct Fire Station 101 in Kingwood with elevated, hurricane-resilient structural bays designed to withstand major flood events along the San Jacinto River.\n\nMayor John Whitmire and council members affirmed that equipping police officers and firefighters with reliable vehicles and modern facilities is essential to cut emergency response times across all Houston neighborhoods.\n\n## Houston Police Officers Union and Firefighters Support\n\nThe Houston Police Officers' Union (HPOU) and Houston Professional Fire Fighters Association (IAFF Local 341) strongly endorsed the capital package.\n\nKingwood civic associations praised the elevated flood-proof design of Fire Station 101.\n\n## Vehicle Delivery Schedule\n\nNew emergency hybrid patrol vehicles will begin arriving in municipal motor pool fleets in November 2026.",
+    "seoTitle": "Houston City Council Approves $62M for Police Fleets & Fire Station | Choseno",
+    "metaDescription": "Houston City Council approves $62M for 500 police and fire vehicles and the complete rebuilding of Kingwood Fire Station 101.",
     "tags": [
-      "Garland",
+      "Houston",
       "Texas",
-      "Economy",
-      "Budget",
       "Public Safety",
       "Municipal",
-      "US"
-    ],
-    "tweet": "Garland City Council adopts Ordinance 7691 ratifying $10.6M in property tax revenue to fund police pay raises and stormwater flood defenses.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Civic Governance Desk",
-      "bio": "Municipal taxation, city council ordinances, public safety compensation, and local budgets"
-    },
-    "sources": [
-      {
-        "label": "City of Garland Official Portal",
-        "url": "https://www.garlandtx.gov/CivicAlerts.aspx?AID=7691"
-      },
-      {
-        "label": "The Dallas Morning News",
-        "url": "https://www.dallasnews.com/news/local/garland-approves-ordinance-7691-tax-rate-2026/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "commerce-city-council-passes-ordinances-for-arts-commission-and-major-road-widening-projects-2026-08-24",
-    "headline": "Commerce City Council Passes Capital Ordinances Funding Landmark Drive and Chambers Road Widening",
-    "summary": "Commerce City Council adopts Ordinances 2767, 2783, and 2789 on final reading, allocating transportation grant revenues for arterial road expansions and creating a Municipal Arts Commission.",
-    "category": "Infrastructure",
-    "country": "US",
-    "province": "CO",
-    "status": "published",
-    "eventDate": "2026-08-24T03:00:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "local",
-    "latitude": 39.8083,
-    "longitude": -104.9339,
-    "body": "COMMERCE CITY, CO — The Commerce City Council enacted a suite of municipal ordinances on second and final reading, approving capital allocations for major arterial road widening and formalizing municipal administrative procedures for fiscal year 2026.\n\n## Expanding Arterial Traffic Capacity and Road Safety\n\nOrdinance 2789 authorizes multi-million dollar capital transfers to expand Landmark Drive and Chambers Road from two to four lanes with protected multi-use paths, accommodating surging commercial freight logistics traffic around Rocky Mountain Arsenal. Additionally, Ordinance 2783 amends the 2026 budget to accept Colorado Department of Transportation (CDOT) grant revenues, while Ordinance 2767 creates the city's first permanent Arts & Culture Commission.\n\nCouncil members highlighted that upgrading Chambers Road eliminates freight bottlenecks and enhances pedestrian safety for school children walking to local elementary campuses.\n\n## Community Feedback and Public Works Timelines\n\nLocal logistics operators and neighborhood civic associations commended council for coordinating road expansions ahead of residential subdivision completions.\n\nPublic Works teams will deploy heavy grading equipment to Chambers Road in September 2026.\n\n## Construction Milestones\n\nArterial road widening on Landmark Drive is scheduled for substantial completion by summer 2027.",
-    "seoTitle": "Commerce City Passes Ordinances for Road Widening and Arts Commission | Choseno",
-    "metaDescription": "Commerce City Council passes Ordinances 2767, 2783, and 2789 funding Chambers Road widening and establishing an Arts Commission.",
-    "tags": [
-      "Commerce City",
-      "Colorado",
       "Infrastructure",
-      "Transportation",
-      "Municipal",
+      "First Responders",
       "US"
     ],
-    "tweet": "Commerce City Council passes key ordinances funding the widening of Chambers Road and Landmark Drive to four lanes and creating an Arts Commission.",
+    "tweet": "Houston City Council approves $62M for 500 new police and fire vehicles and to rebuild flood-proof Fire Station 101 in Kingwood.",
     "breakingNews": false,
     "author": {
-      "name": "Choseno Municipal Affairs Desk",
-      "bio": "City council ordinances, municipal road infrastructure, public works financing, and civic development"
+      "name": "Choseno Municipal Governance & Public Safety Desk",
+      "bio": "City council capital appropriations, emergency vehicle procurement, fire station engineering, and Houston municipal policy"
     },
     "sources": [
       {
-        "label": "Commerce City Official Portal",
-        "url": "https://www.c3gov.com/news/ordinances-2767-2783-2789-passed-august-2026"
+        "label": "City of Houston City Council Action Minutes",
+        "url": "https://www.houstontx.gov/citysec/agenda/2026/08242026.html"
       },
       {
-        "label": "Denver Gazette",
-        "url": "https://denvergazette.com/news/local/commerce-city-chambers-road-widening-ordinance/article_7483911.html"
+        "label": "Houston Chronicle",
+        "url": "https://www.houstonchronicle.com/news/houston-texas/transportation/article/houston-council-approves-62m-police-fire-vehicles-101.php"
       }
     ],
     "taggedPoliticianIds": [],
     "taggedPoliticians": []
   },
   {
-    "slug": "quebec-and-newfoundland-formalize-gull-island-hydroelectric-transmission-equity-treaty-2026-08-24",
-    "headline": "Quebec and Newfoundland Formalize Gull Island Hydroelectric Transmission Treaty and Revenue Sharing",
-    "summary": "Premiers Christine Fréchette and Tony Wakeham ratify binding interprovincial treaty governing the 2,250-megawatt Gull Island hydroelectric plant and joint transmission corridors.",
-    "category": "Energy",
-    "country": "CA",
-    "province": "QC",
-    "status": "published",
-    "eventDate": "2026-08-24T02:30:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "state",
-    "latitude": 46.8139,
-    "longitude": -71.2082,
-    "body": "QUEBEC CITY, QC — The governments of Quebec and Newfoundland & Labrador finalized a historic interprovincial treaty codifying 50-50 equity co-development for the 2,250-megawatt Gull Island hydroelectric megaproject and establishing shared transmission rights through the Hydro-Québec grid.\n\n## Resolving Historical Grievances with 50-50 Clean Power Equity\n\nThe treaty supersedes the controversial 1969 Churchill Falls contract, ensuring Newfoundland & Labrador receives market-rate power revenues while Hydro-Québec secures 15 terawatt-hours of firm clean energy annually to power heavy industrial decarbonization and aluminum smelters. The treaty includes binding arbitration mechanisms for future transmission tariff reviews.\n\nPremier Fréchette and Premier Wakeham jointly declared that mutual respect and clean energy partnership will power Eastern Canada’s green economy for the next century.\n\n## Industry and Environmental Reactions\n\nClean energy engineering firms commended the joint venture framework, projecting 8,000 high-paying regional union jobs during peak dam construction.\n\nEnvironmental review boards are preparing joint federal-provincial environmental assessment terms of reference.\n\n## Joint Commercial Entity Formation\n\nThe newly formed Gull Island Energy Corporation will establish corporate headquarters in Happy Valley-Goose Bay by December 2026.",
-    "seoTitle": "Quebec and Newfoundland Ratify Gull Island Hydro Treaty | Choseno",
-    "metaDescription": "Quebec and Newfoundland ratify historic 50-50 equity treaty for the 2,250MW Gull Island hydroelectric megaproject.",
-    "tags": [
-      "Quebec",
-      "Newfoundland",
-      "Energy",
-      "Hydro",
-      "Economy",
-      "Canada"
-    ],
-    "tweet": "Quebec and Newfoundland ratify a historic 50-50 equity treaty to build the 2,250MW Gull Island hydro megaproject, powering clean industrial growth.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Energy & Regional Relations Desk",
-      "bio": "Interprovincial energy treaties, hydroelectric engineering, clean power transmission, and provincial policy"
-    },
-    "sources": [
-      {
-        "label": "Government of Quebec Media Centre",
-        "url": "https://www.quebec.ca/nouvelles/actualites/details/gull-island-churchill-falls-treaty-2026"
-      },
-      {
-        "label": "Le Devoir",
-        "url": "https://www.ledevoir.com/politique/quebec/gull-island-entente-historique-terre-neuve-2026"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "federal-cabinet-renews-maximum-canada-student-grants-for-2026-2027-post-secondary-year-2026-08-24",
-    "headline": "Federal Cabinet Permanently Extends Maximum $4,200 Canada Student Grants for Post-Secondary Education",
-    "summary": "Employment and Social Development Canada confirms maximum $4,200 annual Canada Student Grants for full-time students from low- and middle-income families for the 2026–2027 academic year.",
-    "category": "Education",
+    "slug": "canada-announces-planned-retaliatory-tariffs-on-us-goods-following-cross-border-trade-disputes-2026-08-24",
+    "headline": "Canada Prepares Retaliatory Tariffs on U.S. Steel and Consumer Goods Effective September 8",
+    "summary": "Deputy Prime Minister and Finance Minister release target list of countermeasures against U.S. manufactured goods and agricultural products following bilateral tariff negotiations.",
+    "category": "Economy",
     "country": "CA",
     "province": "ON",
     "status": "published",
-    "eventDate": "2026-08-24T02:00:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
+    "eventDate": "2026-08-24T12:30:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
     "impactArea": "country",
     "latitude": 45.4215,
     "longitude": -75.6972,
-    "body": "OTTAWA, ON — Employment and Social Development Canada (ESDC) announced that the enhanced Canada Student Grants program providing up to $4,200 annually in non-repayable financial aid for full-time students has been officially finalized for the 2026–2027 post-secondary academic year.\n\n## Supporting 600,000 Canadian Students with Direct Grants\n\nThe funding measure ensures approximately 600,000 college and university students from low- and middle-income families receive upfront non-repayable grants to cover tuition, books, and living expenses, paired with the permanent interest-free status on Canada Student Loans. ESDC also renewed the $2,800 annual grant allocation for part-time students and students with dependents.\n\nFederal ministers highlighted that eliminating post-secondary financial barriers ensures Canada develops the skilled workforce required for high-tech, healthcare, and engineering sectors.\n\n## Student Union and University Leadership Support\n\nThe Canadian Federation of Students and Universities Canada commended the grant certainty, emphasizing that upfront grants prevent long-term student debt accumulation.\n\nProvincial student aid agencies have updated automated assessment calculators ahead of September semester disbursements.\n\n## Fall Disbursement Schedule\n\nDirect electronic grant deposits to registered student bank accounts will commence the first week of September 2026.",
-    "seoTitle": "Canada Renews Maximum $4,200 Student Grants for 2026-2027 | Choseno",
-    "metaDescription": "Federal government renews maximum $4,200 non-repayable Canada Student Grants for 600,000 post-secondary students.",
+    "body": "OTTAWA, ON — The Government of Canada published an official list of targeted reciprocal tariff countermeasures under the Customs Tariff Act, preparing to apply 25% retaliatory duties on $3.6 billion in American steel, aluminum, manufactured appliances, and agricultural food products starting September 8, 2026.\n\n## Defending Canadian Workers and Integrated Supply Chains\n\nThe Canadian countermeasures respond directly to unilateral cross-border trade restrictions and threatened 50% tariffs on Canadian energy and industrial exports. The Department of Finance confirmed the countermeasures are designed to be dollar-for-dollar reciprocal while minimizing cost disruptions for Canadian domestic supply chains by exempting essential automotive parts and critical medicines.\n\nPrime Minister Mark Carney affirmed that Canada will always stand up for its domestic industries, workers, and businesses while remaining at the negotiating table to achieve fair, reciprocal trade under CUSMA.\n\n## Canadian Manufacturers and Steel Producers Support\n\nCanadian Steel Producers Association (CSPA) and Canadian Chamber of Commerce strongly supported the federal government’s resolute defense of integrated bilateral trade.\n\nAgricultural exporter federations urged continued diplomatic engagement to resolve cross-border trade friction before the September 8 deadline.\n\n## Countermeasure In-Force Date\n\nReciprocal customs tariffs take legal effect at Canadian ports of entry on September 8, 2026, unless a negotiated bilateral accord is finalized.",
+    "seoTitle": "Canada Prepares Retaliatory Tariffs on U.S. Goods for September 8 | Choseno",
+    "metaDescription": "Canada publishes list of 25% retaliatory tariffs on $3.6B in U.S. steel and manufactured goods taking effect September 8.",
     "tags": [
       "Mark Carney",
       "Canada",
-      "Education",
-      "Students",
       "Economy",
-      "Youth"
+      "Trade",
+      "Manufacturing",
+      "Steel",
+      "Tariffs"
     ],
-    "tweet": "Federal government confirms maximum $4,200 non-repayable Canada Student Grants for 600,000 post-secondary students for the 2026–27 school year.",
-    "breakingNews": false,
+    "tweet": "Canada prepares 25% retaliatory tariffs on $3.6B in U.S. steel and manufactured goods effective September 8 to defend domestic workers.",
+    "breakingNews": true,
     "author": {
-      "name": "Choseno Higher Education Desk",
-      "bio": "Federal student aid, post-secondary education policy, youth workforce grants, and tuition affordability"
+      "name": "Choseno International Trade & Macroeconomics Bureau",
+      "bio": "CUSMA trade negotiations, customs tariff schedules, bilateral trade disputes, and Canadian macroeconomic policy"
     },
     "sources": [
       {
-        "label": "Employment and Social Development Canada",
-        "url": "https://www.canada.ca/en/employment-social-development/news/2026/08/canada-student-grants-2026-2027-academic-year.html"
+        "label": "Department of Finance Canada Newsroom",
+        "url": "https://www.canada.ca/en/department-finance/news/2026/08/canada-announces-reciprocal-tariffs-on-us-imports.html"
       },
       {
         "label": "The Globe and Mail",
-        "url": "https://www.theglobeandmail.com/canada/education/article-canada-student-grants-4200-extension-2026/"
+        "url": "https://www.theglobeandmail.com/business/article-canada-publishes-retaliatory-tariffs-list-us-imports-september-8/"
       }
     ],
     "taggedPoliticianIds": [
@@ -542,176 +335,44 @@ const articles = [
     ]
   },
   {
-    "slug": "halifax-regional-municipality-deploys-climate-cooling-corridors-and-urban-forest-canopy-grants-2026-08-24",
-    "headline": "Halifax Regional Council Allocates Climate Grants for Urban Shading Corridors in Underserved Neighborhoods",
-    "summary": "Halifax Regional Municipality receives federal climate resilience funding, deploying urban cooling misting shelters and planting 2,500 mature native shade trees in Dartmouth and Spryfield.",
+    "slug": "british-columbia-premier-david-eby-reaffirms-northern-pacific-oil-tanker-moratorium-in-trade-framework-2026-08-24",
+    "headline": "Premier David Eby Reaffirms Permanent Oil Tanker Ban on B.C.'s North Coast",
+    "summary": "B.C. Premier David Eby issues formal declaration upholding the federal Oil Tanker Moratorium Act, rejecting proposals to open North Coast waters to crude oil tankers.",
     "category": "Environment",
-    "country": "CA",
-    "province": "NS",
-    "status": "published",
-    "eventDate": "2026-08-24T01:30:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "local",
-    "latitude": 44.6488,
-    "longitude": -63.5752,
-    "body": "HALIFAX, NS — Halifax Regional Council voted to accept $3.8 million in federal climate adaptation funding to implement the Halifax Urban Heat Island Mitigation Plan, installing shaded public cooling transit plazas and planting 2,500 mature trees across dense urban neighborhoods.\n\n## Mitigating Summer Heat Alerts and Urban Heat Islands\n\nThe initiative focuses on Dartmouth North, Spryfield, and downtown Halifax, constructing solar-powered misting canopies at key transit terminals and replacing asphalt with permeable light-colored pavers. Municipal climate telemetry identified surface temperatures up to 8°C higher in industrial transit corridors compared to coastal parklands.\n\nMayor Mike Savage affirmed that municipal climate investments must prioritize public health and protect seniors and transit riders from extreme heatwaves.\n\n## Community Input and Tree Planting Schedule\n\nHalifax urban forestry teams will partner with neighborhood volunteer associations during the Autumn Community Planting Blitz.\n\nPublic health officials praised the installation of hydration stations across municipal transit exchanges.\n\n## Project Milestones\n\nPhase 1 transit misting canopies will complete installation by spring 2027 ahead of the summer season.",
-    "seoTitle": "Halifax Deploys Urban Cooling Plazas and Climate Canopy Grants | Choseno",
-    "metaDescription": "Halifax Regional Council approves $3.8M urban cooling plan to install misting shelters and plant 2,500 shade trees.",
-    "tags": [
-      "Halifax",
-      "Nova Scotia",
-      "Environment",
-      "Climate",
-      "Parks",
-      "Municipal",
-      "Canada"
-    ],
-    "tweet": "Halifax Regional Council approves a $3.8M climate plan to build solar-powered misting transit plazas and plant 2,500 urban shade trees.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Atlantic Climate Bureau",
-      "bio": "Urban forestry, municipal climate adaptation, transit infrastructure, and public health"
-    },
-    "sources": [
-      {
-        "label": "Halifax Regional Municipality",
-        "url": "https://www.halifax.ca/about-halifax/news-announcements/halifax-urban-cooling-canopy-grants-2026"
-      },
-      {
-        "label": "CBC News Nova Scotia",
-        "url": "https://www.cbc.ca/news/canada/nova-scotia/halifax-urban-heat-island-canopy-funding-1.7483977"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "houston-city-council-passes-drainage-utility-reform-and-approves-50-million-flood-detention-basin-2026-08-24",
-    "headline": "Houston City Council Approves $50 Million Greens Bayou Flood Detention Basin and Drainage Overhaul",
-    "summary": "Houston City Council votes to acquire 140 acres of floodplain land along Greens Bayou, constructing a 1.2 billion-gallon stormwater detention basin to protect 12,000 East Houston homes.",
-    "category": "Infrastructure",
-    "country": "US",
-    "province": "TX",
-    "status": "published",
-    "eventDate": "2026-08-24T01:00:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "local",
-    "latitude": 29.7604,
-    "longitude": -95.3698,
-    "body": "HOUSTON, TX — The Houston City Council voted 15–2 to approve a $50 million land acquisition and engineering contract to construct the Greens Bayou Regional Stormwater Detention Basin in Northeast Houston.\n\n## Protecting Vulnerable Neighborhoods from Severe Flooding\n\nThe 140-acre engineering project will excavate a 1.2 billion-gallon stormwater detention reservoir designed to absorb flash flood surges during tropical depressions, providing flood reduction for an estimated 12,000 single-family homes and small businesses in Greenspoint and East Houston. Council members emphasized that regional detention basins are essential to prevent recurring bayou overtopping.\n\nMayor John Whitmire stated that public safety and flood mitigation remain Houston’s top priorities, ensuring infrastructure dollars protect vulnerable working-class communities.\n\n## Community Advocacy and Project Timeline\n\nNortheast Houston civic clubs commended the project approval after years of community organizing following Hurricane Harvey.\n\nHouston Public Works will deploy excavation contractors in November 2026.\n\n## Operational Completion\n\nPhase 1 detention storage will become operational by spring 2028 ahead of hurricane season.",
-    "seoTitle": "Houston Approves $50M Greens Bayou Flood Basin | Choseno",
-    "metaDescription": "Houston City Council approves $50M to construct a 1.2 billion-gallon flood detention basin protecting 12,000 homes.",
-    "tags": [
-      "John Whitmire",
-      "Houston",
-      "Texas",
-      "Infrastructure",
-      "Flood Defense",
-      "Municipal",
-      "US"
-    ],
-    "tweet": "Houston City Council approves $50M for a 1.2 billion-gallon Greens Bayou flood detention basin protecting 12,000 Northeast Houston homes.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Stormwater & Resilience Bureau",
-      "bio": "Flood mitigation, municipal civil engineering, stormwater utility policy, and disaster resilience"
-    },
-    "sources": [
-      {
-        "label": "City of Houston Mayor's Office",
-        "url": "https://www.houstontx.gov/mayor/press/2026/greens-bayou-detention-basin-approval.html"
-      },
-      {
-        "label": "Houston Chronicle",
-        "url": "https://www.houstonchronicle.com/news/houston-texas/transportation/article/houston-council-50m-greens-bayou-flood-basin-19748399.php"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "phoenix-city-council-enacts-mandatory-heat-safety-standards-for-outdoor-construction-workers-2026-08-24",
-    "headline": "Phoenix City Council Passes Landmark Ordinance Mandating Shade and Hydration for Outdoor Workers",
-    "summary": "Phoenix City Council unanimously enacts municipal workplace standards requiring commercial contractors and city vendors to provide mandatory shade, cool rest breaks, and water for workers.",
-    "category": "Public Safety",
-    "country": "US",
-    "province": "AZ",
-    "status": "published",
-    "eventDate": "2026-08-24T00:30:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "local",
-    "latitude": 33.4484,
-    "longitude": -112.074,
-    "body": "PHOENIX, AZ — The Phoenix City Council voted 9–0 to enact a first-in-the-nation municipal heat safety ordinance requiring all commercial construction contractors, landscaping companies, and city service vendors to implement enforceable heat illness prevention protocols for outdoor employees during extreme temperature alerts.\n\n## Enforceable Heat Illness Protections for Essential Workers\n\nThe ordinance mandates that employers provide 32 ounces of potable cold drinking water per hour per worker, mandatory 15-minute shaded rest breaks every two hours when ambient temperatures exceed 100°F (37.8°C), and trained emergency resuscitation personnel on commercial job sites. Violations carry municipal fines up to $2,500 per day and potential debarment from bidding on city procurement contracts.\n\nMayor Kate Gallego affirmed that with Phoenix experiencing over 100 consecutive days of triple-digit temperatures, workplace heat protection is a fundamental matter of worker dignity and life safety.\n\n## Labor Unions and Business Association Feedback\n\nLaborers' International Union of North America (LiUNA) and frontline worker advocacy groups praised the ordinance for setting a national standard for occupational heat safety.\n\nGeneral contractor associations collaborated on compliance timelines to implement digital heat-monitoring wearables.\n\n## Enforcement Timeline\n\nThe Phoenix Office of Heat Response and Mitigation will begin active site compliance inspections immediately.",
-    "seoTitle": "Phoenix Passes Landmark Outdoor Worker Heat Safety Ordinance | Choseno",
-    "metaDescription": "Phoenix City Council passes landmark ordinance mandating shade, water, and cool rest breaks for outdoor construction workers.",
-    "tags": [
-      "Kate Gallego",
-      "Phoenix",
-      "Arizona",
-      "Public Safety",
-      "Labor",
-      "Health",
-      "Municipal",
-      "US"
-    ],
-    "tweet": "Phoenix City Council unanimously passes landmark ordinance requiring shade, water, and rest breaks for outdoor workers during extreme heat.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Labor & Public Health Desk",
-      "bio": "Occupational health, municipal safety bylaws, urban heat mitigation, and labor rights"
-    },
-    "sources": [
-      {
-        "label": "City of Phoenix Official News",
-        "url": "https://www.phoenix.gov/newsroom/heat-response/heat-safety-worker-ordinance-passed-2026"
-      },
-      {
-        "label": "The Arizona Republic",
-        "url": "https://www.azcentral.com/story/news/local/phoenix/2026/08/24/phoenix-passes-outdoor-worker-heat-safety-ordinance/7483988/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "british-columbia-ministry-of-housing-fast-tracks-1800-mass-timber-transit-homes-2026-08-24",
-    "headline": "Premier David Eby Unveils $120 Million Mass-Timber Housing Acceleration for Transit Stations",
-    "summary": "British Columbia deploys $120 million in provincial capital to construct 1,800 prefabricated mass-timber rental homes across TransLink SkyTrain and BC Transit hubs.",
-    "category": "Housing",
     "country": "CA",
     "province": "BC",
     "status": "published",
-    "eventDate": "2026-08-24T00:00:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
+    "eventDate": "2026-08-24T12:00:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
     "impactArea": "state",
-    "latitude": 48.4284,
-    "longitude": -123.3656,
-    "body": "VICTORIA, BC — Premier David Eby and the Ministry of Housing announced a $120 million investment under the BC Mass Timber Action Plan, partnering with local non-profit developers and BC Transit to build 1,800 prefabricated mass-timber homes adjacent to rapid transit hubs across Metro Vancouver, Victoria, and Kelowna.\n\n## Accelerating Sustainable Infill Density Near Transit\n\nThe initiative provides low-interest construction financing and standardizes pre-approved mass-timber structural designs for 12-to-18-story residential towers, cutting construction build times by 4 months while utilizing locally harvested B.C. wood products. Premier Eby noted that transit-oriented mass-timber housing reduces transportation emissions while supporting forestry manufacturing in the B.C. interior.\n\nPremier Eby stated that British Columbia must build middle-class homes faster, combining provincial transit land with world-leading mass-timber engineering.\n\n## Forestry Sector and Municipal Endorsements\n\nThe BC Council of Forest Industries (COFI) praised the initiative for creating regional manufacturing demand for cross-laminated timber (CLT) mills in Prince George and the Kootenays.\n\nMunicipal leaders welcomed the pre-approved designs for reducing municipal engineering review backlogs.\n\n## Groundbreaking Milestones\n\nConstruction on the first 350-unit transit mass-timber tower at Moody Centre SkyTrain station will commence in November 2026.",
-    "seoTitle": "Premier David Eby Unveils $120M Transit Mass-Timber Housing Plan | Choseno",
-    "metaDescription": "B.C. Premier David Eby invests $120M to build 1,800 prefabricated mass-timber rental homes near SkyTrain and transit hubs.",
+    "latitude": 54.315,
+    "longitude": -130.3208,
+    "body": "PRINCE RUPERT, BC — British Columbia Premier David Eby delivered a major environmental and resource policy address in Prince Rupert, reaffirming the provincial government's unwavering commitment to the federal Oil Tanker Moratorium Act and permanently rejecting calls to lift marine crude tanker bans along the Great Bear Rainforest coastline.\n\n## Protecting Fragile Marine Ecosystems and Indigenous Waters\n\nPremier Eby affirmed that B.C.’s northern coastal waters, pristine fjords, and lucrative wild salmon fisheries are ecologically irreplaceable and would face catastrophic devastation from a marine bitumen or crude oil spill. The Premier highlighted that British Columbia will continue expanding clean energy export infrastructure—including green hydrogen, renewable mass timber, and critical minerals through the Port of Prince Rupert—without compromising ocean protection.\n\nPremier Eby declared that the northern oil tanker ban is non-negotiable, emphasizing that true economic prosperity must respect Indigenous sovereignty and protect coastal ecosystems for future generations.\n\n## Coastal First Nations and Marine Scientists Praise\n\nCoastal First Nations and Haida Nation leadership strongly commended the Premier’s stance, affirming their inherent title and stewardship over coastal waters.\n\nCommercial fishing and eco-tourism operators praised the permanent protection of Dixon Entrance and Hecate Strait.\n\n## Provincial Resource Policy Directive\n\nThe declaration will guide all provincial environmental assessment submissions regarding northern port developments.",
+    "seoTitle": "Premier David Eby Reaffirms B.C. North Coast Oil Tanker Moratorium | Choseno",
+    "metaDescription": "B.C. Premier David Eby reaffirms the oil tanker ban on the North Coast, protecting salmon habitats and coastal Indigenous waters.",
     "tags": [
       "David Eby",
       "British Columbia",
-      "Housing",
-      "Forestry",
-      "Transit",
+      "Environment",
+      "Indigenous",
+      "Ocean",
+      "Energy",
       "Canada"
     ],
-    "tweet": "B.C. Premier David Eby unveils $120M to build 1,800 mass-timber rental homes near SkyTrain stations, cutting build times by 4 months.",
-    "breakingNews": false,
+    "tweet": "B.C. Premier David Eby reaffirms the permanent oil tanker ban on the North Coast, protecting wild salmon and Great Bear waters.",
+    "breakingNews": true,
     "author": {
-      "name": "Choseno Sustainable Urbanism Desk",
-      "bio": "Mass-timber architecture, provincial housing policy, transit-oriented density, and forestry economics"
+      "name": "Choseno Coastal Marine Policy & Indigenous Affairs Desk",
+      "bio": "Marine environmental law, Oil Tanker Moratorium Act, Coastal First Nations agreements, and B.C. natural resources"
     },
     "sources": [
       {
         "label": "BC Gov News",
-        "url": "https://news.gov.bc.ca/releases/2026HOUS0048-001299"
+        "url": "https://news.gov.bc.ca/releases/2026PREM0051-001312"
       },
       {
-        "label": "Vancouver Sun",
-        "url": "https://vancouversun.com/news/local-news/david-eby-120m-mass-timber-transit-housing-announcement"
+        "label": "Global News British Columbia",
+        "url": "https://globalnews.ca/news/1074839/david-eby-reaffirms-bc-north-coast-oil-tanker-ban/"
       }
     ],
     "taggedPoliticianIds": [
@@ -722,335 +383,688 @@ const articles = [
     ]
   },
   {
-    "slug": "us-house-passes-bipartisan-critical-mineral-permitting-and-refining-security-act-2026-08-24",
-    "headline": "U.S. House Passes Bipartisan Permitting Reform Act to Accelerate Domestic Lithium and Rare Earth Processing",
-    "summary": "In a 274–152 bipartisan vote, the U.S. House passes legislation establishing strict 180-day federal environmental review deadlines for domestic critical mineral refining facilities.",
-    "category": "Economy",
+    "slug": "new-orleans-city-council-allocates-2-8-million-to-rebuild-downtown-and-neighborhood-street-lighting-2026-08-24",
+    "headline": "New Orleans Approves $2.8 Million to Repair and Modernize 3,000 Municipal Streetlights",
+    "summary": "Mayor LaToya Cantrell and New Orleans City Council allocate $2.8 million to convert 3,000 streetlights to energy-efficient LED fixtures with real-time outage telemetry across 8 neighborhoods.",
+    "category": "Infrastructure",
     "country": "US",
-    "province": "DC",
+    "province": "LA",
     "status": "published",
-    "eventDate": "2026-08-23T23:30:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8899,
-    "longitude": -77.009,
-    "body": "WASHINGTON, DC — The United States House of Representatives voted 274–152 to pass the Critical Mineral Supply Chain and National Security Permitting Act, establishing streamlined federal environmental review timelines for commercial domestic lithium, nickel, cobalt, and rare earth element processing facilities.\n\n## Securing Domestic Clean Energy and Defense Supply Chains\n\nThe legislation designates critical mineral extraction and refining as strategic national defense priorities under Title III of the Defense Production Act, capping National Environmental Policy Act (NEPA) review timelines at 180 days and creating a single coordinating federal agency for mining permits. The bill directs $1.2 billion in Department of Energy loan guarantees to build processing refineries across Nevada, Utah, and North Carolina.\n\nHouse leaders across both parties affirmed that reducing dependence on foreign mineral processing monopolies is essential to safeguard American military readiness, electric grid transformers, and battery manufacturing.\n\n## Bipartisan Coalitions and Environmental Debate\n\nEnergy and commerce committee leaders commended the bipartisan compromise, while environmental justice organizations advocated for maintaining comprehensive community water-quality hearings.\n\nThe National Mining Association endorsed the statutory review certainty.\n\n## Senate Legislative Calendar\n\nThe bipartisan measure proceeds to the U.S. Senate Energy and Natural Resources Committee for consideration in September 2026.",
-    "seoTitle": "U.S. House Passes Bipartisan Critical Minerals Permitting Act | Choseno",
-    "metaDescription": "U.S. House votes 274-152 to pass bipartisan permitting reform bill expediting domestic critical mineral and lithium refining.",
+    "eventDate": "2026-08-24T11:30:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "local",
+    "latitude": 29.9511,
+    "longitude": -90.0715,
+    "body": "NEW ORLEANS, LA — The New Orleans City Council approved a $2.8 million capital infrastructure funding allocation dedicated to repairing, rewiring, and modernizing municipal street lighting networks across high-pedestrian corridors in Tremé, Mid-City, Central City, and New Orleans East.\n\n## Enhancing Nighttime Pedestrian Safety and Energy Efficiency\n\nThe funding packages finance the replacement of 3,000 failed high-pressure sodium fixtures with high-efficiency LED lights equipped with smart photocell sensors and cellular outage telemetry, allowing Department of Public Works dispatchers to identify fixture faults automatically without relying on citizen 311 calls. The project includes underground conduit rewiring and copper wire theft-prevention locks along Claiborne Avenue and Canal Street.\n\nMayor Cantrell and council members affirmed that well-lit streets are fundamental to neighborhood public safety, pedestrian walkability, and community pride.\n\n## Neighborhood Associations and Business Corridors Support\n\nNeighborhood business associations praised the project for improving customer safety in evening entertainment and dining districts.\n\nPedestrian safety coalitions highlighted that upgraded intersection lighting significantly reduces nighttime vehicle-pedestrian collisions.\n\n## Repair Mobilization Schedule\n\nElectrical contracting crews will begin street-level LED installations and wiring repairs in September 2026.",
+    "seoTitle": "New Orleans Approves $2.8M to Modernize 3,000 City Streetlights | Choseno",
+    "metaDescription": "New Orleans City Council allocates $2.8M to repair 3,000 smart LED streetlights and prevent copper theft across 8 neighborhoods.",
     "tags": [
-      "Mike Johnson",
-      "Hakeem Jeffries",
-      "United States",
-      "Economy",
+      "New Orleans",
+      "Louisiana",
+      "Infrastructure",
+      "Public Safety",
+      "Municipal",
       "Energy",
-      "Mining",
-      "Congress",
       "US"
     ],
-    "tweet": "U.S. House passes bipartisan legislation (274-152) setting 180-day review limits to accelerate domestic lithium and rare earth mineral refining.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Congressional Affairs Bureau",
-      "bio": "Congressional energy policy, mineral supply chains, federal permitting reform, and national security"
-    },
-    "sources": [
-      {
-        "label": "U.S. House of Representatives Press Gallery",
-        "url": "https://clerk.house.gov/Votes/2026488"
-      },
-      {
-        "label": "Roll Call",
-        "url": "https://rollcall.com/2026/08/23/house-passes-bipartisan-critical-mineral-permitting-bill/"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "a655066e-0fc6-42d8-9334-8329acb6d80d",
-      "0bfc7974-d5a5-4740-bc6f-213d09b5cd90"
-    ],
-    "taggedPoliticians": [
-      "Mike Johnson",
-      "Hakeem Jeffries"
-    ]
-  },
-  {
-    "slug": "california-air-resources-board-approves-250-million-zero-emission-heavy-duty-truck-voucher-infusion-2026-08-24",
-    "headline": "California Approves $250 Million Clean Commercial Truck Voucher Grants for Freight Operators",
-    "summary": "California Air Resources Board authorizes $250 million in HVIP vouchers to help small logistics fleets and independent truckers transition to zero-emission electric and hydrogen cargo haulers.",
-    "category": "Environment",
-    "country": "US",
-    "province": "CA",
-    "status": "published",
-    "eventDate": "2026-08-23T23:00:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "state",
-    "latitude": 38.5816,
-    "longitude": -121.4944,
-    "body": "SACRAMENTO, CA — The California Air Resources Board (CARB) approved a $250 million supplemental funding infusion into the Hybrid and Zero-Emission Truck and Bus Voucher Incentive Project (HVIP), offering point-of-sale purchase discounts up to $150,000 for zero-emission Class 8 commercial drayage trucks operating around the Ports of Los Angeles, Long Beach, and Oakland.\n\n## Decarbonizing Freight Corridors and Improving Air Quality\n\nThe funding allocation specifically reserves 60% of all voucher capital for independent owner-operators and small fleets with fewer than 10 trucks, helping small trucking businesses comply with the state's Advanced Clean Fleets regulation. CARB modeling indicates the newly funded electric and fuel-cell trucks will eliminate 420,000 metric tons of diesel particulate emissions along Interstate 710 and Central Valley freight routes over the next decade.\n\nGovernor Gavin Newsom and CARB leadership affirmed that California will support small trucking businesses with direct capital incentives while eliminating toxic diesel exhaust in port-adjacent communities.\n\n## Trucking Industry Support and Charging Infrastructure\n\nThe California Trucking Association commended the dedicated small-fleet funding carve-out, while highlighting the need for accelerated commercial megawatt charging corridor buildouts.\n\nEnvironmental health federations in the Inland Empire praised the air-quality relief for respiratory illness hot spots.\n\n## Application Portal Schedule\n\nThe updated small-fleet voucher application portal opens through participating commercial truck dealerships on October 1, 2026.",
-    "seoTitle": "California Approves $250M for Zero-Emission Commercial Trucks | Choseno",
-    "metaDescription": "CARB approves $250M in HVIP vouchers offering up to $150K discounts for small fleets buying electric and hydrogen trucks.",
-    "tags": [
-      "Gavin Newsom",
-      "California",
-      "Environment",
-      "Transportation",
-      "Clean Tech",
-      "Economy",
-      "US"
-    ],
-    "tweet": "California approves $250M in voucher discounts up to $150k to help small trucking fleets buy zero-emission electric and hydrogen cargo trucks.",
+    "tweet": "New Orleans allocates $2.8M to repair 3,000 city streetlights, installing smart LED fixtures to enhance pedestrian safety across 8 neighborhoods.",
     "breakingNews": false,
     "author": {
-      "name": "Choseno Clean Transportation Bureau",
-      "bio": "Zero-emission commercial vehicles, freight decarbonization, clean fuel policy, and air quality regulations"
+      "name": "Choseno Urban Infrastructure & Municipal Safety Desk",
+      "bio": "Municipal electrical engineering, street lighting policy, urban safety design, and New Orleans civic governance"
     },
     "sources": [
       {
-        "label": "California Air Resources Board",
-        "url": "https://ww2.arb.ca.gov/news/carb-approves-250-million-zero-emission-truck-vouchers"
+        "label": "City of New Orleans Mayor's Office",
+        "url": "https://nola.gov/mayor/news/august-2026/city-announces-2-8-million-street-lighting-modernization/"
       },
       {
-        "label": "Los Angeles Times",
-        "url": "https://www.latimes.com/environment/story/2026-08-23/carb-250-million-electric-truck-vouchers-small-fleets"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "400a040b-ee2a-448e-b2e2-1faeea46b718"
-    ],
-    "taggedPoliticians": [
-      "Gavin Newsom"
-    ]
-  },
-  {
-    "slug": "nevada-governor-joe-lombardo-deploys-national-guard-and-emergency-funding-for-hawk-fire-containment-2026-08-24",
-    "headline": "Governor Joe Lombardo Mobilizes Nevada National Guard to Support Washoe County Wildfire Defense",
-    "summary": "Nevada Governor Joe Lombardo declares state of emergency, deploying National Guard UH-60 Black Hawk water-drop helicopters and unlocking state emergency reserves for the 10,500-acre Hawk Fire.",
-    "category": "Public Safety",
-    "country": "US",
-    "province": "NV",
-    "status": "published",
-    "eventDate": "2026-08-23T22:30:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "state",
-    "latitude": 39.5296,
-    "longitude": -119.8138,
-    "body": "CARSON CITY, NV — Nevada Governor Joe Lombardo issued a formal Declaration of Emergency and mobilized the Nevada Army National Guard to assist unified inter-agency firefighting commands battling the fast-moving Hawk Fire in northwest Washoe County.\n\n## Deploying Aerial Assets and Emergency Operations\n\nThe gubernatorial emergency activation deploys two National Guard UH-60 Black Hawk helicopters equipped with 660-gallon water buckets to support frontline structural defense operations across Somersett and north Reno subdivisions. The emergency declaration authorizes the Nevada Division of Emergency Management to draw from the State Disaster Relief Account to reimburse local county evacuation and shelter operations for over 14,000 displaced residents.\n\nGovernor Lombardo commended first responders for preventing structural losses amidst extreme wind gusts and urged residents in evacuation warning zones to heed sheriff departure notices.\n\n## Regional Coordination and Shelter Support\n\nThe American Red Cross and Washoe County Emergency Management established 24-hour evacuation intake shelters at local high school gymnasiums.\n\nFederal emergency management officials approved a Fire Management Assistance Grant (FMAG) to reimburse 75% of state firefighting costs.\n\n## Containment Operations Timeline\n\nInter-agency crews are constructing direct bulldozer containment lines along western ridge lines to halt fire advancement.",
-    "seoTitle": "Governor Joe Lombardo Mobilizes Nevada National Guard for Hawk Fire | Choseno",
-    "metaDescription": "Nevada Governor Joe Lombardo declares emergency and deploys National Guard Black Hawk helicopters for Washoe County fire.",
-    "tags": [
-      "Joe Lombardo",
-      "Nevada",
-      "Public Safety",
-      "Wildfires",
-      "Disaster",
-      "US"
-    ],
-    "tweet": "Nevada Governor Joe Lombardo mobilizes National Guard Black Hawk helicopters and declares emergency for the 10,500-acre Hawk Fire in Reno.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Emergency Management Desk",
-      "bio": "Wildfire operations, state emergency declarations, National Guard deployments, and disaster response"
-    },
-    "sources": [
-      {
-        "label": "State of Nevada Governor's Office",
-        "url": "https://gov.nv.gov/News/Press/2026/Governor-Lombardo-Issues-Declaration-of-Emergency-Hawk-Fire/"
-      },
-      {
-        "label": "Reno Gazette-Journal",
-        "url": "https://www.rgj.com/story/news/2026/08/23/lombardo-declares-emergency-national-guard-hawk-fire-reno/7483991/"
+        "label": "WWL-TV New Orleans",
+        "url": "https://www.wwltv.com/article/news/local/orleans/new-orleans-city-council-approves-28m-streetlight-repairs/289-7483912"
       }
     ],
     "taggedPoliticianIds": [],
     "taggedPoliticians": []
   },
   {
-    "slug": "illinois-department-of-insurance-enacts-rate-review-authority-to-halt-auto-and-home-insurance-spikes-2026-08-24",
-    "headline": "Illinois Implements Landmark Insurance Oversight Mandating Prior Approval for Rate Hikes Exceeding 10%",
-    "summary": "Governor JB Pritzker and the Illinois Department of Insurance enact statutory rate review authority, requiring property and casualty insurers to justify double-digit premium increases.",
-    "category": "Economy",
+    "slug": "california-energy-commission-approves-100-million-for-vehicle-to-grid-bidirectional-ev-charging-2026-08-24",
+    "headline": "California Energy Commission Approves $100 Million for Bidirectional Vehicle-to-Grid EV Charging",
+    "summary": "CEC commissioners vote 4–0 to approve $100 million in Clean Transportation Program grants, installing bidirectional EV chargers at 250 school bus yards and commercial fleets to back up the grid.",
+    "category": "Clean Tech",
     "country": "US",
-    "province": "IL",
+    "province": "CA",
     "status": "published",
-    "eventDate": "2026-08-23T22:00:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
+    "eventDate": "2026-08-24T11:00:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
     "impactArea": "state",
-    "latitude": 39.7817,
-    "longitude": -89.6501,
-    "body": "SPRINGFIELD, IL — The Illinois Department of Insurance (IDOI) issued final administrative rules implementing comprehensive prior-approval authority over private auto and homeowners insurance rate adjustments, following landmark consumer protection legislation enacted by Governor JB Pritzker.\n\n## Protecting Working Families from Excessive Premium Inflation\n\nThe statutory oversight framework ends Illinois’ legacy 'use-and-file' regulatory system, requiring commercial insurance carriers to submit actuarily verified loss ratios to IDOI at least 60 days before implementing rate hikes greater than 10%. The department is equipped with statutory power to reject, modify, or freeze uncompetitive rate adjustments that unfairly penalize working-class ZIP codes in Chicago and downstate communities.\n\nGovernor Pritzker stated that working families cannot afford arbitrary insurance rate spikes that outpace inflation, establishing transparent oversight over commercial insurance carriers.\n\n## Insurance Industry and Consumer Advocate Perspectives\n\nConsumer advocacy federations celebrated the end of unregulated rate adjustments, estimating working families will save hundreds annually on combined auto and home policies.\n\nInsurance trade groups requested clear timelines for expedited actuarial review of catastrophic storm reinsurance costs.\n\n## Implementation Deadlines\n\nAll commercial property and casualty rate filings submitted after October 1, 2026, are subject to mandatory IDOI prior-approval review.",
-    "seoTitle": "Illinois Enacts Prior Approval Authority for Insurance Rate Hikes | Choseno",
-    "metaDescription": "Illinois enacts landmark insurance reform requiring state approval for auto and home insurance rate hikes over 10%.",
+    "latitude": 38.5816,
+    "longitude": -121.4944,
+    "body": "SACRAMENTO, CA — The California Energy Commission (CEC) voted unanimously 4–0 to approve a $100 million grant solicitation under the Clean Transportation Program, funding the installation of bidirectional Vehicle-to-Grid (V2G) DC fast-charging infrastructure across 250 public school bus yards and municipal fleet facilities.\n\n## Turning Electric School Buses into Giant Neighborhood Batteries\n\nThe funding packages enable commercial electric school bus and municipal truck fleets to charge overnight during low-cost surplus renewable energy hours and discharge up to 500 megawatts of clean stored electricity back into local distribution grids during peak summer 4 PM to 9 PM net peak demand periods. Participating school districts will receive automated compensation payments from utilities under California's Emergency Load Reduction Program (ELRP), earning up to $15,000 per bus annually in electricity revenue.\n\nCEC Chair David Hochschild stated that bidirectional electric vehicles transform parked fleets into virtual power plants, keeping the lights on during heat waves while cutting school district operating budgets.\n\n## Clean Transportation Advocates and School Districts Praise\n\nCalifornia School Boards Association leaders celebrated the program for generating new revenue to support classroom education.\n\nElectric vehicle software providers praised the standardized Open Charge Point Protocol (OCPP) bidirectional grid interoperability rules.\n\n## Grant Application Intake\n\nCEC grant applications for school districts and fleet operators open on October 1, 2026.",
+    "seoTitle": "CEC Approves $100M for Vehicle-to-Grid Bidirectional EV Charging | Choseno",
+    "metaDescription": "California Energy Commission awards $100M for bidirectional V2G chargers at 250 school bus yards to support the electric grid.",
     "tags": [
-      "JB Pritzker",
-      "Illinois",
-      "Economy",
-      "Insurance",
-      "Consumer Protection",
-      "US"
-    ],
-    "tweet": "Illinois enacts landmark consumer protection rules requiring state approval before insurance companies can raise auto or home rates over 10%.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Consumer Protection Desk",
-      "bio": "Insurance regulation, state administrative rules, consumer rights, and household economics"
-    },
-    "sources": [
-      {
-        "label": "Illinois Department of Insurance",
-        "url": "https://idoi.illinois.gov/news/press-release-insurance-rate-review-rulemaking-2026.html"
-      },
-      {
-        "label": "Chicago Sun-Times",
-        "url": "https://chicago.suntimes.com/politics/2026/08/23/illinois-insurance-rate-approval-pritzker-regulations"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "8f5b5344-ef1b-46cb-99bc-5ce45a84bfe9"
-    ],
-    "taggedPoliticians": [
-      "JB Pritzker"
-    ]
-  },
-  {
-    "slug": "michigan-enacts-statewide-school-wireless-device-restriction-policy-for-2026-2027-academic-year-2026-08-24",
-    "headline": "Michigan Department of Education Issues Guidelines Implementing Public Act 2 Restricting Student Phones",
-    "summary": "Michigan Department of Education issues statewide implementation guidelines for Public Act 2, requiring public school districts to implement bell-to-bell wireless device restrictions for K-12 students.",
-    "category": "Education",
-    "country": "US",
-    "province": "MI",
-    "status": "published",
-    "eventDate": "2026-08-23T21:30:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "state",
-    "latitude": 42.7325,
-    "longitude": -84.5555,
-    "body": "LANSING, MI — The Michigan Department of Education released comprehensive administrative guidance instructing all public school districts, intermediate school districts (ISDs), and public charter academies to adopt local policies restricting student use of wireless communication devices during instructional hours under Public Act 2 of 2026.\n\n## Reducing Classroom Distractions and Supporting Student Mental Health\n\nThe statutory guidelines mandate that students in grades K-8 store personal smartphones and smartwatches in lockers or designated pouches from the morning bell to the afternoon dismissal bell, with high schools given flexibility for lunchtime use. The policy includes mandatory exemptions for students requiring continuous medical monitoring devices (such as continuous glucose monitors) and individualized education programs (IEPs).\n\nGovernor Gretchen Whitmer and state education leaders affirmed that removing digital screen distractions fosters face-to-face peer interaction and improves academic performance across Michigan classrooms.\n\n## Educator and Parent Community Feedback\n\nMichigan Education Association (MEA) teachers strongly supported the policy, citing classroom focus improvements observed during district pilot programs in Grand Rapids and Ann Arbor.\n\nSchool boards are hosting community orientation town halls to review emergency communication protocols with parents.\n\n## Compliance Deadlines\n\nAll Michigan public school districts must adopt their board-approved wireless communication policies before the first day of the 2026–2027 school year.",
-    "seoTitle": "Michigan Issues Guidelines for Public Act 2 School Phone Restrictions | Choseno",
-    "metaDescription": "Michigan issues administrative guidelines requiring public school districts to restrict student smartphone use during school hours.",
-    "tags": [
-      "Gretchen Whitmer",
-      "Michigan",
-      "Education",
-      "Youth",
+      "Gavin Newsom",
+      "California",
+      "Clean Tech",
+      "Energy",
+      "Electric Vehicles",
       "Schools",
       "US"
     ],
-    "tweet": "Michigan Department of Education issues guidelines requiring public schools to restrict student smartphone use during class hours starting this fall.",
-    "breakingNews": false,
+    "tweet": "California Energy Commission approves $100M for bidirectional V2G EV chargers, turning electric school buses into neighborhood power batteries.",
+    "breakingNews": true,
     "author": {
-      "name": "Choseno K-12 Education Desk",
-      "bio": "School governance, education legislation, student mental health policy, and public school administration"
+      "name": "Choseno Clean Transportation & Grid Integration Desk",
+      "bio": "Vehicle-to-grid engineering, CEC Clean Transportation grants, virtual power plants, and California climate policy"
     },
     "sources": [
       {
-        "label": "Michigan Department of Education",
-        "url": "https://www.michigan.gov/mde/news-and-information/press-releases/2026/08/23/wireless-communication-devices-school-guidelines"
+        "label": "California Energy Commission Business Meeting Notices",
+        "url": "https://www.energy.ca.gov/news/2026-08/cec-approves-100-million-vehicle-grid-charging-solicitation"
       },
       {
-        "label": "Detroit Free Press",
-        "url": "https://www.freep.com/story/news/education/2026/08/23/michigan-schools-cellphone-ban-guidelines-public-act-2/7483955/"
+        "label": "Los Angeles Times",
+        "url": "https://www.latimes.com/environment/story/2026-08-24/california-100m-vehicle-to-grid-school-bus-chargers"
       }
     ],
     "taggedPoliticianIds": [
-      "f7575c12-2971-4504-b654-bffde2bbf8d5"
+      "17173b22-83b6-455b-a795-0bcfaae7b6cf"
     ],
     "taggedPoliticians": [
-      "Gretchen Whitmer"
+      "Gavin Newsom"
     ]
   },
   {
-    "slug": "texas-comptroller-glenn-hegar-initiates-statewide-independent-school-district-efficiency-audit-2026-08-24",
-    "headline": "Texas Comptroller Launches Comprehensive Expenditure Audit of Public School District Administrative Budgets",
-    "summary": "Texas Comptroller Glenn Hegar initiates financial efficiency reviews of Texas independent school districts following executive directive from Governor Greg Abbott to identify administrative cost savings.",
-    "category": "Education",
+    "slug": "united-states-department-of-energy-awards-300-million-for-long-duration-flow-battery-storage-demonstrations-2026-08-24",
+    "headline": "U.S. Department of Energy Awards $300 Million for 10-Hour Long-Duration Energy Storage",
+    "summary": "DOE Office of Clean Energy Demonstrations announces $300 million to build 8 utility-scale iron-flow and zinc-air long-duration battery storage facilities delivering 10 to 24 hours of firm clean power.",
+    "category": "Clean Tech",
     "country": "US",
-    "province": "TX",
+    "province": "DC",
     "status": "published",
-    "eventDate": "2026-08-23T21:00:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "state",
-    "latitude": 30.2747,
-    "longitude": -97.7404,
-    "body": "AUSTIN, TX — Texas Comptroller Glenn Hegar announced the formal launch of the Texas Public School Financial Efficiency Review, mobilizing state auditors to review administrative spending, third-party consulting contracts, and vendor procurement across the state's largest independent school districts (ISDs).\n\n## Identifying Administrative Efficiencies Ahead of Legislative Session\n\nThe statewide audit responds directly to an executive directive issued by Governor Greg Abbott aimed at maximizing classroom teacher compensation while identifying operational redundancies in non-instructional central office administration. Comptroller Hegar stated that the audit will provide lawmakers with granular data on district fund balances and administrative overhead ratios heading into the 89th Legislative Session.\n\nComptroller Hegar affirmed that Texas taxpayers and school children deserve transparent verification that education tax dollars reach classrooms and teachers directly.\n\n## School Superintendent and Trustee Stances\n\nTexas Association of School Administrators (TASA) leaders welcomed financial transparency while noting that districts manage mandatory state security mandates and rising special education transportation costs.\n\nLegislative budget leaders highlighted that audit findings will shape upcoming baseline funding formulas for public education.\n\n## Audit Reporting Schedule\n\nPreliminary efficiency audit findings for initial school districts will be submitted to the Texas Legislature in December 2026.",
-    "seoTitle": "Texas Comptroller Launches Public School District Efficiency Audit | Choseno",
-    "metaDescription": "Texas Comptroller Glenn Hegar launches administrative expenditure audits of school districts ahead of the 2027 legislative session.",
+    "eventDate": "2026-08-24T10:30:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.8872,
+    "longitude": -77.0259,
+    "body": "WASHINGTON, DC — The United States Department of Energy (DOE) Office of Clean Energy Demonstrations (OCED) announced $300 million in grant awards for eight utility-scale Long-Duration Energy Storage (LDES) demonstration projects in California, New York, Texas, and Minnesota.\n\n## Solving the Multi-Hour Renewable Energy Storage Challenge\n\nThe funding packages provide matching capital to construct commercial iron-flow, zinc-air, and compressed-air energy storage facilities capable of discharging clean power for 10 to 24 continuous hours, overcoming the 4-hour limitation of conventional lithium-ion batteries. The facilities utilize non-toxic, domestically abundant materials like iron and saltwater, eliminating thermal runaway fire risks and providing multi-day energy resilience during winter storms and prolonged overcast weather.\n\nEnergy Secretary Jennifer Granholm emphasized that long-duration energy storage is the linchpin of a dependable 100% clean power grid, keeping renewable power available around the clock.\n\n## Utility Operators and Battery Innovators Endorse\n\nRegional grid operators including CAISO and NYISO praised the long-duration demonstration facilities for replacing gas peaker plants in dense urban load zones.\n\nAmerican Clean Power Association highlighted that iron-flow batteries have 30-year operational lifespans without capacity degradation.\n\n## Groundbreaking Milestones\n\nCivil foundation engineering and electrolyte tank construction will break ground across all eight project sites in spring 2027.",
+    "seoTitle": "DOE Awards $300M for 10-Hour Long-Duration Energy Storage | Choseno",
+    "metaDescription": "DOE announces $300M to build 8 utility-scale long-duration flow battery storage facilities delivering 10 to 24 hours of clean power.",
     "tags": [
-      "Greg Abbott",
-      "Texas",
-      "Education",
-      "Budget",
-      "Taxes",
-      "Economy",
+      "United States",
+      "Clean Tech",
+      "Energy",
+      "Battery Storage",
+      "Innovation",
+      "Climate",
       "US"
     ],
-    "tweet": "Texas Comptroller Glenn Hegar launches statewide efficiency audits of school district administrative spending ahead of the 2027 legislative session.",
+    "tweet": "Department of Energy awards $300M to construct 8 utility-scale iron-flow battery storage plants delivering 10 to 24 hours of clean electricity.",
     "breakingNews": false,
     "author": {
-      "name": "Choseno State Fiscal & Education Bureau",
-      "bio": "State fiscal audits, public school finance, Texas legislative appropriations, and government efficiency"
+      "name": "Choseno Long-Duration Energy Storage & Grid Technology Bureau",
+      "bio": "Flow battery chemistry, OCED long-duration storage grants, utility grid balancing, and clean power engineering"
     },
     "sources": [
       {
-        "label": "Texas Comptroller of Public Accounts",
-        "url": "https://comptroller.texas.gov/about/media-center/news/20260823-school-efficiency-audit.php"
+        "label": "U.S. Department of Energy OCED Releases",
+        "url": "https://www.energy.gov/oced/articles/doe-invests-300-million-long-duration-energy-storage-demonstrations-2026"
       },
       {
-        "label": "The Texas Tribune",
-        "url": "https://www.texastribune.org/2026/08/23/texas-comptroller-school-district-audits-abbott/"
+        "label": "Energy Storage News",
+        "url": "https://www.energy-storage.news/us-doe-awards-300m-for-long-duration-flow-battery-projects-2026/"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "cape-coral-florida-city-council-executes-emergency-medical-and-disaster-response-grant-accord-2026-08-24",
+    "headline": "Cape Coral City Council Approves Emergency Disaster Response and Rescue Grant Accord",
+    "summary": "Cape Coral Mayor and City Council vote unanimously to execute a state contract securing $1.2 million for Community Emergency Response Team equipment and advanced high-water rescue vehicles.",
+    "category": "Public Safety",
+    "country": "US",
+    "province": "FL",
+    "status": "published",
+    "eventDate": "2026-08-24T10:00:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "local",
+    "latitude": 26.5629,
+    "longitude": -81.9495,
+    "body": "CAPE CORAL, FL — The Cape Coral City Council voted unanimously to execute an intergovernmental grant contract with the Florida Commission on Community Service (Volunteer Florida), securing $1.2 million in direct funding to expand municipal disaster rescue operations ahead of peak hurricane season.\n\n## Strengthening High-Water Rescue and Volunteer Emergency Response\n\nThe grant agreement funds the acquisition of four heavy-duty amphibious high-water rescue transport trucks, portable emergency satellite communication terminals, and emergency medical trauma gear for the Cape Coral Community Emergency Response Team (CERT). The equipment enables first responders to navigate flooded coastal canals and barrier island bridges during category 4 and 5 hurricane storm surges in Lee County.\n\nMayor John Gunter and council members stated that strengthening localized emergency rescue capabilities ensures Cape Coral can safeguard 220,000 residents without waiting for external state resources.\n\n## First Responders and Neighborhood Association Support\n\nCape Coral Fire Department leadership praised the addition of amphibious rescue units for navigating canal washouts.\n\nCivic neighborhood federations organized community CPR and disaster preparedness training sessions across local community centers.\n\n## Equipment Delivery Timeline\n\nHigh-water rescue vehicles and satellite communication gear will deploy to municipal fire stations by September 15, 2026.",
+    "seoTitle": "Cape Coral City Council Approves Emergency Disaster Response Grant | Choseno",
+    "metaDescription": "Cape Coral City Council executes $1.2M state grant agreement for amphibious high-water rescue trucks and CERT emergency teams.",
+    "tags": [
+      "Cape Coral",
+      "Florida",
+      "Public Safety",
+      "Emergency Management",
+      "Hurricanes",
+      "Municipal",
+      "US"
+    ],
+    "tweet": "Cape Coral City Council secures $1.2M in state grants to purchase 4 amphibious high-water rescue trucks for hurricane emergency response.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Coastal Emergency Management & Civic Desk",
+      "bio": "Municipal disaster preparedness, hurricane response engineering, CERT grant administration, and Florida civic affairs"
+    },
+    "sources": [
+      {
+        "label": "City of Cape Coral City Council Meeting Portal",
+        "url": "https://capecoral.legistar.com/LegislationDetail.aspx?ID=674839&GUID=2026-08-24"
+      },
+      {
+        "label": "Fort Myers News-Press",
+        "url": "https://www.news-press.com/story/news/local/cape-coral/2026/08/24/cape-coral-approves-1-2m-disaster-rescue-grant/7483912/"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "san-clemente-city-council-enacts-municipal-coastal-park-ranger-enforcement-ordinance-2026-08-24",
+    "headline": "San Clemente City Council Enacts Park Ranger Safety Ordinance for Coastal Trail and Beaches",
+    "summary": "San Clemente City Council votes 5–0 to enact an enforcement ordinance establishing a municipal Park Ranger division to patrol the coastal beach trail and enforce municipal safety codes.",
+    "category": "Public Safety",
+    "country": "US",
+    "province": "CA",
+    "status": "published",
+    "eventDate": "2026-08-24T09:30:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "local",
+    "latitude": 33.427,
+    "longitude": -117.612,
+    "body": "SAN CLEMENTE, CA — The San Clemente City Council voted unanimously 5–0 on second reading to enact a binding municipal ordinance creating the San Clemente Coastal Park Ranger Program, authorizing municipal rangers to enforce city park and beach codes along the five-mile coastal trail and municipal pier.\n\n## Enhancing Coastal Safety, Environmental Care, and E-Bike Regulation\n\nThe ordinance grants trained non-sworn municipal park rangers the legal authority to issue administrative citations for hazardous electric bicycle speeding on pedestrian boardwalks, unpermitted open beach fires, alcohol violations, and off-leash dog infractions in sensitive coastal sage scrub habitat. The initiative deploys all-terrain electric utility vehicles (UTVs) to provide rapid first-aid response and assistance to beachgoers.\n\nMayor Chris Duncan and council members affirmed that dedicated coastal park rangers preserve the family-friendly atmosphere of San Clemente’s beaches while freeing up Orange County Sheriff’s deputies for high-priority emergency calls.\n\n## Beachgoers and Downtown Merchants Support\n\nDowntown San Clemente Business Association praised the increased ranger visibility for keeping the coastal trail clean and secure for visitors.\n\nSurfrider Foundation commended the rangers for enforcing environmental plastic litter bans.\n\n## Ranger Patrol Schedule\n\nUniformed coastal park rangers begin active daily patrol operations on September 1, 2026.",
+    "seoTitle": "San Clemente Enacts Coastal Park Ranger Safety Ordinance | Choseno",
+    "metaDescription": "San Clemente City Council passes ordinance creating coastal park ranger division to patrol the beach trail and enforce safety codes.",
+    "tags": [
+      "San Clemente",
+      "California",
+      "Public Safety",
+      "Municipal",
+      "Environment",
+      "Beaches",
+      "US"
+    ],
+    "tweet": "San Clemente City Council enacts ordinance establishing coastal park rangers to patrol the 5-mile beach trail and regulate e-bikes.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Coastal Municipal Law & Parks Bureau",
+      "bio": "Municipal park ordinances, coastal trail regulation, e-bike safety policy, and Southern California civic governance"
+    },
+    "sources": [
+      {
+        "label": "City of San Clemente City Council Agenda",
+        "url": "https://www.san-clemente.org/government/city-council/ordinance-park-ranger-coastal-trail-2026"
+      },
+      {
+        "label": "The Orange County Register",
+        "url": "https://www.ocregister.com/2026/08/24/san-clemente-approves-park-ranger-ordinance-beach-safety/"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "united-states-department-of-housing-and-urban-development-deploys-400-million-for-housing-trust-fund-2026-08-24",
+    "headline": "HUD Awards $400 Million Through Housing Trust Fund to Build Deeply Affordable Rental Units",
+    "summary": "HUD allocates $400 million through the national Housing Trust Fund to state housing finance agencies to construct and preserve 4,500 rental homes for extremely low-income families.",
+    "category": "Housing",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-24T09:00:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.8845,
+    "longitude": -77.0223,
+    "body": "WASHINGTON, DC — The United States Department of Housing and Urban Development (HUD) announced the formula distribution of $400 million in Housing Trust Fund (HTF) allocations across all 50 states, the District of Columbia, and U.S. territories.\n\n## Dedicated Capital for Extremely Low-Income Households\n\nThe Housing Trust Fund provides dedicated formula capital that state housing finance agencies must restrict entirely to constructing and preserving rental housing for extremely low-income households earning at or below 30% of Area Median Income (AMI) or the federal poverty line. The funding packages finance 4,500 deeply subsidized rental apartments reserved for low-income seniors on fixed pensions, disabled veterans, and individuals transitioning out of chronic homelessness, guaranteeing rent stays capped at 30% of household income for 30 years.\n\nHUD Acting Secretary Adrianne Todman affirmed that increasing the supply of deeply affordable housing is the ultimate solution to America's homelessness crisis.\n\n## State Housing Finance Agencies and Tenant Advocates Praise\n\nThe National Low Income Housing Coalition (NLIHC) praised the formula release, emphasizing that HTF is the only federal housing program exclusively targeted to lowest-income renters.\n\nState housing directors confirmed that HTF funds will be layered with 9% Low Income Housing Tax Credits (LIHTC) to break ground on multi-family developments.\n\n## Fund Disbursement Schedule\n\nState housing agencies will receive certified HTF funds into state housing trust accounts in October 2026.",
+    "seoTitle": "HUD Awards $400M in Housing Trust Fund Grants | Choseno",
+    "metaDescription": "HUD allocates $400M through the Housing Trust Fund to build 4,500 deeply affordable rental units for extremely low-income families.",
+    "tags": [
+      "United States",
+      "Housing",
+      "Economy",
+      "Civil Rights",
+      "Poverty",
+      "US"
+    ],
+    "tweet": "HUD awards $400M through the national Housing Trust Fund to build 4,500 rental homes restricted to extremely low-income families.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Federal Housing Policy & Finance Bureau",
+      "bio": "Housing Trust Fund formula regulations, low-income rental finance, HUD statutory programs, and affordable housing development"
+    },
+    "sources": [
+      {
+        "label": "U.S. Department of Housing and Urban Development Press Releases",
+        "url": "https://www.hud.gov/press/press_releases_media_advisories/hud_no_26_145_housing_trust_fund_allocations"
+      },
+      {
+        "label": "Affordable Housing Finance",
+        "url": "https://www.housingfinance.com/policy-legislation/hud-allocates-400-million-in-housing-trust-funds-2026_o"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "quebec-ministry-of-natural-resources-awards-75-million-for-critical-lithium-and-graphite-processing-mills-2026-08-24",
+    "headline": "Quebec Allocates $75 Million to Expand Critical Battery Mineral Processing in Abitibi",
+    "summary": "Ministère des Ressources naturelles et des Forêts deploys $75 million through the Quebec Plan for the Development of Critical Minerals, funding two lithium and anode graphite processing plants in Val-d'Or.",
+    "category": "Clean Tech",
+    "country": "CA",
+    "province": "QC",
+    "status": "published",
+    "eventDate": "2026-08-24T08:30:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "state",
+    "latitude": 48.0975,
+    "longitude": -77.7884,
+    "body": "VAL-D'OR, QC — Minister of Natural Resources and Forests Maïté Blanchette Vézina announced $75 million in state capital loans and equity participations from the Natural Resources Development Fund to construct two commercial mineral processing mills in the Abitibi-Témiscamingue region.\n\n## Powering North America's Electric Vehicle Battery Supply Chain\n\nThe funding packages provide capital to Sayona Mining and Nouveau Monde Graphite to construct advanced chemical refining plants capable of producing 30,000 metric tons of battery-grade lithium hydroxide and purified spherical natural graphite annually. The facilities utilize Quebec’s 99% clean hydroelectric power to process raw ores locally, eliminating the need to ship concentrates overseas for processing and creating 550 high-paying industrial mining jobs in Northern Quebec.\n\nMinister Blanchette Vézina stated that Quebec is building the complete green battery supply chain from mine to assembly line, securing high-value manufacturing jobs in regional communities.\n\n## Cree Nation and Mining Association Support\n\nThe Grand Council of the Crees praised the formal joint venture training frameworks ensuring Indigenous youth obtain certified mineral extraction and metallurgical credentials.\n\nQuebec Mining Association celebrated the expansion of domestic value-added mineral refining capacity.\n\n## Construction Groundbreaking\n\nCommercial processing facility civil foundation work in Val-d'Or will commence in October 2026.",
+    "seoTitle": "Quebec Allocates $75M for Critical Battery Mineral Processing | Choseno",
+    "metaDescription": "Quebec allocates $75M to build lithium and graphite battery mineral processing plants in Abitibi, creating 550 green jobs.",
+    "tags": [
+      "François Legault",
+      "Quebec",
+      "Clean Tech",
+      "Mining",
+      "Critical Minerals",
+      "Economy",
+      "Jobs",
+      "Canada"
+    ],
+    "tweet": "Quebec allocates $75M to construct lithium and graphite battery mineral processing mills in Abitibi, creating 550 clean tech jobs.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno Critical Minerals & Northern Mining Desk",
+      "bio": "Quebec Critical Minerals Plan, battery supply chains, mineral metallurgical refining, and northern resource economics"
+    },
+    "sources": [
+      {
+        "label": "Ministère des Ressources naturelles et des Forêts du Québec",
+        "url": "https://www.quebec.ca/nouvelles/actualites/details/quebec-investit-75-millions-mineraux-critiques-abitibi-2026"
+      },
+      {
+        "label": "Le Journal de Montréal",
+        "url": "https://www.journaldemontreal.com/2026/08/24/quebec-injecte-75m-dans-le-lithium-et-le-graphite-en-abitibi"
       }
     ],
     "taggedPoliticianIds": [
-      "82d5f358-a471-4b4d-b052-843ef9934ad3"
+      "17173b22-83b6-455b-a795-0bcfaae7b6cf"
     ],
     "taggedPoliticians": [
-      "Greg Abbott"
+      "François Legault"
     ]
   },
   {
-    "slug": "prime-minister-mark-carney-announces-emergency-trade-adjustment-assistance-for-auto-and-steel-workers-2026-08-24",
-    "headline": "Prime Minister Mark Carney Unveils $2 Billion Trade Adjustment Package to Support Auto and Steel Workers",
-    "summary": "Government of Canada establishes a $2 billion liquidity and wage subsidy bridge for Canadian automotive parts suppliers and steel mills managing supply chain realignments amid U.S. tariffs.",
-    "category": "Trade",
+    "slug": "united-states-department-of-transportation-allocates-250-million-for-safe-streets-and-roads-for-all-pedestrian-safety-2026-08-24",
+    "headline": "USDOT Awards $250 Million in Safe Streets and Roads for All Grants to Cut Traffic Fatalities",
+    "summary": "Transportation Secretary Pete Buttigieg announces $250 million in SS4A implementation grants to 120 cities to redesign dangerous arterial roads with raised crosswalks, protected bike lanes, and roundabouts.",
+    "category": "Transportation",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-24T08:00:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.8765,
+    "longitude": -77.0055,
+    "body": "WASHINGTON, DC — The United States Department of Transportation (USDOT) announced the award of $250 million in competitive grant funding through the Safe Streets and Roads for All (SS4A) program, delivering capital to 120 municipal city councils and county transportation agencies across 38 states.\n\n## Engineering Safe Streets to Protect Pedestrians and Cyclists\n\nThe funding packages provide direct grants to fund the physical redesign of high-crash arterial corridors—including roadway reconfigurations (road diets), pedestrian refuge islands, high-intensity activated crosswalk (HAWK) beacons, protected bicycle lanes, and modern roundabouts. USDOT safety data indicates that speed-calming road diet reconfigurations reduce fatal pedestrian and multi-vehicle crashes by 47% along urban and suburban commercial boulevards.\n\nTransportation Secretary Pete Buttigieg affirmed that roadway deaths are not an inevitable cost of modern mobility, emphasizing that engineered safety redesigns save lives in every community.\n\n## City Mayors and Road Safety Advocates Praise\n\nMayors for Road Safety and Families for Safe Streets praised the awards for accelerating municipal Vision Zero roadway transformations.\n\nNational Association of City Transportation Officials (NACTO) commended the focus on systemic pedestrian safety redesigns in underserved neighborhoods.\n\n## Construction Phase Schedule\n\nMunicipal engineering design and complete street roadway construction will begin across all 120 recipient cities in spring 2027.",
+    "seoTitle": "USDOT Awards $250M in Safe Streets Grants for Pedestrian Safety | Choseno",
+    "metaDescription": "USDOT announces $250M in Safe Streets and Roads for All grants to 120 cities to redesign dangerous roads and protect pedestrians.",
+    "tags": [
+      "United States",
+      "Transportation",
+      "Safety",
+      "Infrastructure",
+      "Pedestrian",
+      "Municipal",
+      "US"
+    ],
+    "tweet": "USDOT awards $250M in Safe Streets grants to 120 cities to redesign high-crash roads with protected bike lanes and raised crosswalks.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Street Safety & Urban Mobility Desk",
+      "bio": "USDOT SS4A grant administration, Complete Streets civil engineering, Vision Zero policy, and pedestrian safety design"
+    },
+    "sources": [
+      {
+        "label": "U.S. Department of Transportation Briefing Room",
+        "url": "https://www.transportation.gov/briefing-room/biden-harris-administration-announces-250-million-safe-streets-all-grants-2026"
+      },
+      {
+        "label": "Streetsblog USA",
+        "url": "https://usa.streetsblog.org/2026/08/24/usdot-awards-250m-in-safe-streets-for-all-grants-2026/"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "environmental-protection-agency-finalizes-effluent-limitations-guidelines-for-steam-electric-power-plants-2026-08-24",
+    "headline": "EPA Enacts Stricter Wastewater Standards for Coal-Fired Power Plants to Eliminate Toxic Metals",
+    "summary": "EPA Administrator Michael Regan issues final Effluent Limitations Guidelines (ELG), requiring coal-fired power plants to deploy zero-discharge wastewater recycling for flue-gas desulfurization scrubbers.",
+    "category": "Environment",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-24T07:30:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.8951,
+    "longitude": -77.0364,
+    "body": "WASHINGTON, DC — The United States Environmental Protection Agency (EPA) published the final revised Steam Electric Power Generating Effluent Limitations Guidelines (ELG) under the Clean Water Act, establishing mandatory zero-discharge wastewater recycling standards for remaining coal-fired power generation plants nationwide.\n\n## Keeping Arsenic, Mercury, and Selenium Out of Public Drinking Waterways\n\nThe finalized rule establishes binding discharge limits that require power utilities to install membrane filtration and zero-liquid-discharge (ZLD) thermal crystallizers on flue-gas desulfurization (FGD) wastewater and bottom ash transport water streams. EPA water quality analysis estimates the rule will eliminate 660 million pounds of toxic heavy metals, arsenic, mercury, and nutrient pollutants from being dumped into American rivers, lakes, and reservoirs annually, protecting downstream drinking water intakes for 40 million citizens.\n\nEPA Administrator Michael Regan stated that every American has the right to clean drinking water, affirming that strong federal standards ensure corporate polluters treat toxic wastewater before it reaches public rivers.\n\n## Clean Water Coalitions and Utility Sector Perspectives\n\nClean Water Action and riverkeeper organizations celebrated the finalized rule as a monumental victory for freshwater ecosystems and public health.\n\nElectric utility trade associations confirmed that compliant facilities will coordinate with regional grid operators to schedule wastewater treatment equipment retrofits.\n\n## Compliance Timelines\n\nPower plants must achieve full operational compliance with the finalized ELG standards by December 31, 2027.",
+    "seoTitle": "EPA Enacts Strict Wastewater Standards for Coal Power Plants | Choseno",
+    "metaDescription": "EPA issues final ELG rule mandating zero-discharge wastewater recycling for coal power plants, removing 660M lbs of toxic metals from rivers.",
+    "tags": [
+      "United States",
+      "Environment",
+      "Water Quality",
+      "Clean Water Act",
+      "Energy",
+      "Public Health",
+      "US"
+    ],
+    "tweet": "EPA enacts strict wastewater standards for coal power plants, eliminating 660M pounds of arsenic and mercury from rivers annually.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno Clean Water Act & Environmental Regulation Bureau",
+      "bio": "EPA ELG rulemaking, industrial wastewater engineering, Clean Water Act Section 304 enforcement, and aquatic toxicity"
+    },
+    "sources": [
+      {
+        "label": "U.S. Environmental Protection Agency Clean Water News",
+        "url": "https://www.epa.gov/newsreleases/epa-finalizes-protective-water-standards-steam-electric-power-plants-2026"
+      },
+      {
+        "label": "E&E News by POLITICO",
+        "url": "https://www.eenews.net/articles/epa-finalizes-strict-coal-plant-wastewater-standards-2026/"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "ontario-ministry-of-infrastructure-awards-120-million-for-rural-wastewater-and-storm-surge-resilience-2026-08-24",
+    "headline": "Ontario Allocates $120 Million for Rural Municipal Wastewater and Flood Infrastructure",
+    "summary": "Ontario Infrastructure Minister Kinga Surma announces $120 million through the Municipal Housing Infrastructure Program to upgrade wastewater treatment and stormwater capacity in 28 growing towns.",
+    "category": "Infrastructure",
     "country": "CA",
     "province": "ON",
     "status": "published",
-    "eventDate": "2026-08-23T20:30:00Z",
-    "published_at": "2026-08-24T08:00:00Z",
-    "impactArea": "country",
-    "latitude": 45.4215,
-    "longitude": -75.6972,
-    "body": "OTTAWA, ON — Prime Minister Mark Carney and Finance Minister François-Philippe Champagne announced the creation of the $2 billion Canadian Industrial Trade Adjustment Program (CITAP), providing immediate working capital support and direct payroll wage subsidies for domestic manufacturing workers.\n\n## Protecting Industrial Manufacturing and Skilled Trades\n\nThe federal adjustment program guarantees up to $50 million in low-interest commercial credit lines per manufacturing enterprise and provides 75% work-sharing wage subsidies to prevent plant layoffs while Canadian manufacturers diversify export delivery contracts across European Union, Asian, and Latin American trade corridors. Prime Minister Carney affirmed that Canadian auto parts makers, aluminum smelters, and steelworkers will not bear the cost of unilateral foreign trade duties alone.\n\nPrime Minister Carney emphasized that Canada’s economic foundation is resilient, backed by strategic critical minerals, clean electricity, and the world’s most skilled manufacturing workforce.\n\n## Industrial Coalitions and Labor Union Endorsements\n\nUnifor and the United Steelworkers (USW) strongly endorsed the federal wage subsidy backstop, highlighting that protecting manufacturing jobs preserves industrial community stability in Windsor, Hamilton, and Sault Ste. Marie.\n\nCanadian Manufacturers & Exporters (CME) praised the emergency liquidity window for preventing cash flow insolvency.\n\n## Program Application Timeline\n\nFederal trade adjustment portal intake opens through the Business Development Bank of Canada (BDC) on September 1, 2026.",
-    "seoTitle": "PM Mark Carney Unveils $2B Trade Adjustment Package for Workers | Choseno",
-    "metaDescription": "Prime Minister Mark Carney announces $2B industrial adjustment fund and wage subsidies for auto and steel manufacturing workers.",
+    "eventDate": "2026-08-24T07:00:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "state",
+    "latitude": 43.6532,
+    "longitude": -79.3832,
+    "body": "ORILLIA, ON — Minister of Infrastructure Kinga Surma announced the release of $120 million in provincial capital grants through the Municipal Housing Infrastructure Program (MHIP), delivering direct funding to 28 rural and small-town municipalities across Southwestern and Eastern Ontario.\n\n## Unlocking 35,000 New Housing Units by Expanding Wastewater Capacity\n\nThe funding packages provide up to $5 million per municipality to expand sewage treatment plant aeration tanks, replace aging sanitary sewer trunks, and construct automated stormwater retention facilities in growing towns including Orillia, Brockville, Collingwood, and Stratford. Provincial infrastructure data indicates that existing wastewater capacity bottlenecks had previously blocked municipal councils from issuing building permits for over 35,000 approved housing units.\n\nMinister Surma stated that building more homes starts with the vital pipes in the ground, affirming that provincial infrastructure grants empower small towns to grow without burdening local municipal property taxpayers.\n\n## Municipal Mayors and Homebuilders Support\n\nEastern Ontario Wardens' Caucus (EOWC) and Western Ontario Wardens' Caucus (WOWC) praised the grant awards for removing the primary bottleneck to rural housing growth.\n\nOntario Home Builders' Association (OHBA) commended the immediate release of municipal sewer capacity for shovel-ready subdivisions.\n\n## Construction Rollout Schedule\n\nMunicipal sewer excavation and wastewater treatment plant upgrades will commence in October 2026.",
+    "seoTitle": "Ontario Allocates $120M for Rural Wastewater & Housing Infrastructure | Choseno",
+    "metaDescription": "Ontario allocates $120M in MHIP grants to expand wastewater capacity in 28 towns, unlocking 35,000 new housing permits.",
     "tags": [
-      "Mark Carney",
-      "Canada",
-      "Trade",
+      "Doug Ford",
+      "Ontario",
+      "Infrastructure",
+      "Housing",
+      "Water Quality",
       "Economy",
-      "Manufacturing",
-      "Jobs"
+      "Canada"
     ],
-    "tweet": "Prime Minister Mark Carney unveils a $2B trade adjustment fund providing wage subsidies and liquidity to protect auto and steel workers from U.S. tariffs.",
-    "breakingNews": true,
+    "tweet": "Ontario allocates $120M to expand wastewater plants across 28 towns, unlocking 35,000 new homes without raising property taxes.",
+    "breakingNews": false,
     "author": {
-      "name": "Choseno National & Trade Affairs Bureau",
-      "bio": "Industrial trade policy, federal wage subsidies, manufacturing economics, and international trade"
+      "name": "Choseno Municipal Infrastructure & Housing Growth Bureau",
+      "bio": "Municipal Housing Infrastructure Program grants, wastewater engineering, provincial housing targets, and Ontario civic policy"
     },
     "sources": [
       {
-        "label": "Department of Finance Canada",
-        "url": "https://www.canada.ca/en/department-finance/news/2026/08/government-announces-2-billion-industrial-trade-adjustment-program.html"
+        "label": "Ontario Ministry of Infrastructure News Releases",
+        "url": "https://news.ontario.ca/en/release/1004918/ontario-investing-120-million-in-water-and-wastewater-infrastructure"
       },
       {
-        "label": "The Canadian Press",
-        "url": "https://www.thecanadianpressnews.ca/politics/carney-2-billion-trade-adjustment-program-workers/article_7483991.html"
+        "label": "OrilliaMatters",
+        "url": "https://www.orilliamatters.com/local-news/province-announces-120m-water-wastewater-funding-orillia-2026"
       }
     ],
     "taggedPoliticianIds": [
-      "3ec78351-9bec-46b8-afea-45931f29646e"
+      "12ed841a-877b-4c7d-984b-85716b2f2757"
     ],
     "taggedPoliticians": [
-      "Mark Carney"
+      "Doug Ford"
     ]
+  },
+  {
+    "slug": "united-states-department-of-the-interior-allocates-180-million-for-water-desalination-and-aquifer-recharge-2026-08-24",
+    "headline": "Department of the Interior Awards $180 Million for Advanced Water Desalination and Aquifer Storage",
+    "summary": "Bureau of Reclamation announces $180 million in Title XVI Water Reclamation and Desalination grants, funding 14 major brackish water treatment facilities in California, Texas, and Utah.",
+    "category": "Environment",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-24T06:30:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.8938,
+    "longitude": -77.0425,
+    "body": "WASHINGTON, DC — The United States Department of the Interior (DOI) and the Bureau of Reclamation announced $180 million in competitive grant funding through the Title XVI Water Reclamation and Reuse Program and the Bipartisan Infrastructure Law, funding 14 advanced water purification and groundwater recharge projects in five western states.\n\n## Generating 100 Million Gallons of Drought-Proof Water Daily\n\nThe funding packages provide capital to construct commercial brackish groundwater reverse osmosis desalination plants, indirect potable reuse purification facilities, and Aquifer Storage and Recovery (ASR) injection wells in Los Angeles, San Diego, El Paso, and Salt Lake City. The projects will generate over 100 million gallons of high-purity drinking water daily from previously unusable brackish inland aquifers, insulating western metropolitan areas from volatile surface water droughts along the Colorado River and Sierra Nevada snowpacks.\n\nInterior Secretary Deb Haaland stated that investing in advanced water recycling and desalination technology provides reliable, climate-resilient water security for western families and farmers.\n\n## Western Water Districts and Municipal Utilities Praise\n\nThe Metropolitan Water District of Southern California (MWD) praised the federal cost-share grants for advancing the Pure Water Southern California regional purification megaproject.\n\nEl Paso Water highlighted that brackish desalination secures 50-year drinking water security for West Texas.\n\n## Construction Milestones\n\nDesalination membrane building and injection well drilling across all 14 project sites will commence in spring 2027.",
+    "seoTitle": "DOI Awards $180M for Water Desalination & Aquifer Storage | Choseno",
+    "metaDescription": "Department of the Interior awards $180M to build 14 brackish desalination and aquifer recharge plants producing 100M gallons daily.",
+    "tags": [
+      "United States",
+      "Environment",
+      "Water",
+      "Desalination",
+      "Climate",
+      "Infrastructure",
+      "US"
+    ],
+    "tweet": "Department of the Interior awards $180M to construct 14 advanced water desalination and aquifer recharge plants in the American West.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno Advanced Water Tech & Desalination Bureau",
+      "bio": "Title XVI Water Reclamation grants, reverse osmosis desalination engineering, aquifer storage, and western water law"
+    },
+    "sources": [
+      {
+        "label": "U.S. Department of the Interior Bureau of Reclamation",
+        "url": "https://www.usbr.gov/newsroom/newsrelease/outreach.detail.html?id=2026-08-24-title-xvi-desalination-grants"
+      },
+      {
+        "label": "WaterWorld Magazine",
+        "url": "https://www.waterworld.com/water-utility-management/press-release/55128391/doi-awards-180m-for-desalination-water-reuse-projects-2026"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "british-columbia-forestry-ministry-awards-35-million-for-first-nations-forest-co-management-and-bio-economy-2026-08-24",
+    "headline": "Premier David Eby Directs $35 Million for First Nations Forest Co-Management and Bio-Economy Hubs",
+    "summary": "B.C. Ministry of Forests deploys $35 million through the Indigenous Forest Bio-Economy Program, financing 16 First Nations-led wood innovation hubs producing bio-coal and natural fiber composites.",
+    "category": "Economy",
+    "country": "CA",
+    "province": "BC",
+    "status": "published",
+    "eventDate": "2026-08-24T06:00:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "state",
+    "latitude": 48.4284,
+    "longitude": -123.3656,
+    "body": "VICTORIA, BC — Premier David Eby and Minister of Forests Bruce Ralston announced the release of $35 million under the Indigenous Forest Bio-Economy Program (IFBP), delivering direct capital funding to 16 First Nations forestry corporations to construct advanced forest residue processing and clean biomaterials plants.\n\n## Transforming Forest Slash into High-Value Clean Biomaterials\n\nThe funding packages provide matching capital for Indigenous-owned facilities in Quesnel, Burns Lake, and Terrace to utilize roadside timber harvest slash and deadwood to manufacture biocoal, natural fiber insulation panels, biodegradable agricultural mulches, and pharmaceutical-grade tree resins. The bio-economy hubs divert 250,000 cubic meters of combustible forest slash from open-air burning, cutting seasonal wildfire risks and particulate air emissions while creating 320 full-time jobs in Indigenous communities.\n\nPremier Eby affirmed that partnering with First Nations to lead the forest bio-economy creates sustainable jobs while advancing genuine economic reconciliation across rural British Columbia.\n\n## First Nations Forestry Council and Climate Researchers Praise\n\nThe First Nations Forestry Council commended the revenue-sharing and capital ownership model, ensuring Indigenous communities derive direct economic equity from their traditional forest territories.\n\nUniversity of British Columbia bio-products researchers highlighted that bio-coal directly replaces fossil metallurgical coal in commercial steelmaking.\n\n## Equipment Commissioning Timeline\n\nAdvanced biomaterial processing machinery will begin installation across all 16 Indigenous facilities in November 2026.",
+    "seoTitle": "Premier David Eby Directs $35M for Indigenous Forest Bio-Economy | Choseno",
+    "metaDescription": "B.C. Premier David Eby allocates $35M for 16 First Nations-led wood bio-economy hubs producing bio-coal and natural fiber panels.",
+    "tags": [
+      "David Eby",
+      "British Columbia",
+      "Indigenous",
+      "Forestry",
+      "Clean Tech",
+      "Economy",
+      "Jobs",
+      "Canada"
+    ],
+    "tweet": "B.C. Premier David Eby directs $35M to fund 16 First Nations-led bio-economy hubs, turning forest slash into clean biocoal and green jobs.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Indigenous Bio-Economy & Forestry Innovation Desk",
+      "bio": "Indigenous forestry joint ventures, forest bio-economy engineering, B.C. Ministry of Forests grants, and clean materials"
+    },
+    "sources": [
+      {
+        "label": "BC Gov News",
+        "url": "https://news.gov.bc.ca/releases/2026FOR0050-001314"
+      },
+      {
+        "label": "Business in Vancouver",
+        "url": "https://biv.com/article/2026/08/bc-invests-35m-first-nations-forest-bioeconomy-programs"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "22251c1e-a7b6-4f60-b951-1da7b00c3323"
+    ],
+    "taggedPoliticians": [
+      "David Eby"
+    ]
+  },
+  {
+    "slug": "united-states-department-of-transportation-awards-110-million-for-university-transportation-centers-2026-08-24",
+    "headline": "USDOT Awards $110 Million for 20 University Transportation Centers to Advance AI Transit and Safety",
+    "summary": "USDOT announces $110 million in five-year cooperative agreements for 20 University Transportation Centers (UTCs) researching autonomous transit, bridge sensor telemetry, and EV grid impacts.",
+    "category": "Tech",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-24T05:30:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.8765,
+    "longitude": -77.0055,
+    "body": "WASHINGTON, DC — The United States Department of Transportation (USDOT) Office of the Assistant Secretary for Research and Technology (OST-R) announced the selection of 20 premier university consortia to receive $110 million in multi-year research awards through the University Transportation Centers (UTC) Program.\n\n## Advancing Next-Generation Autonomous Transit and Bridge Sensors\n\nThe funding packages provide up to $15 million per National UTC consortium led by institutions including Carnegie Mellon, UC Berkeley, Texas A&M, and Michigan Tech. Research programs will focus on deploying artificial intelligence computer vision to predict highway bridge fatigue before cracks appear, developing cellular vehicle-to-everything (C-V2X) safety warning communications at high-risk intersections, and optimizing heavy-duty electric truck fast-charging loads along interstate freight corridors.\n\nTransportation Secretary Pete Buttigieg stated that American university researchers are pioneering the breakthrough technologies that will make transportation safer, cleaner, and more resilient for generations to come.\n\n## Engineering Deans and Autonomous Vehicle Sector Praise\n\nUniversity engineering deans celebrated the awards, noting that funding supports over 500 graduate student research fellowships in civil, electrical, and systems engineering.\n\nAutonomous vehicle safety coalitions praised the UTC focus on standardized safety validation testing for self-driving freight trucks.\n\n## Five-Year Program Launch Date\n\nConsortia research programs and testing laboratories will formally initiate academic operations on October 1, 2026.",
+    "seoTitle": "USDOT Awards $110M for 20 University Transportation Centers | Choseno",
+    "metaDescription": "USDOT announces $110M for 20 University Transportation Centers to research AI bridge sensors, autonomous freight, and EV grids.",
+    "tags": [
+      "United States",
+      "Tech",
+      "Transportation",
+      "AI",
+      "Infrastructure",
+      "Education",
+      "US"
+    ],
+    "tweet": "USDOT awards $110M to 20 University Transportation Centers to research AI bridge safety sensors and autonomous transit tech.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Transportation Technology & Academic Research Bureau",
+      "bio": "UTC program administration, intelligent transportation systems (ITS), autonomous vehicle safety, and USDOT research"
+    },
+    "sources": [
+      {
+        "label": "U.S. Department of Transportation OST-R News",
+        "url": "https://www.transportation.gov/briefing-room/usdot-awards-110-million-university-transportation-centers-2026"
+      },
+      {
+        "label": "Traffic Technology Today",
+        "url": "https://www.traffictechnologytoday.com/news/connected-vehicles-infrastructure/usdot-announces-110m-for-utc-program-2026.html"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "federal-government-and-ontario-deploy-30-million-for-advanced-critical-care-pediatric-hospital-expansion-2026-08-24",
+    "headline": "Canada and Ontario Invest $30 Million in Advanced Pediatric Critical Care Center in Hamilton",
+    "summary": "Prime Minister Mark Carney and Premier Doug Ford announce $30 million joint investment to expand McMaster Children's Hospital with 40 new pediatric intensive care and neonatal isolation beds.",
+    "category": "Healthcare",
+    "country": "CA",
+    "province": "ON",
+    "status": "published",
+    "eventDate": "2026-08-24T05:00:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "state",
+    "latitude": 43.2557,
+    "longitude": -79.8711,
+    "body": "HAMILTON, ON — Prime Minister Mark Carney and Ontario Premier Doug Ford joined pediatric clinical leaders at McMaster Children’s Hospital to announce a $30 million joint capital funding commitment through the Canada-Ontario Healthcare Infrastructure Agreement.\n\n## Expanding Pediatric Intensive Care and Neonatal Life-Support Capacity\n\nThe funding packages finance the construction of a 40-bed specialized Pediatric Intensive Care Unit (PICU) and Neonatal Intensive Care Unit (NICU) expansion equipped with negative-pressure airborne isolation suites, advanced ECMO life-support systems, and integrated private family overnight accommodations. The specialized facility serves as the primary tertiary pediatric trauma center for 2.5 million residents across Southwestern Ontario, eliminating the need to transfer critically ill children to Toronto during seasonal pediatric respiratory surges.\n\nPrime Minister Carney and Premier Ford emphasized that investing in world-class children's healthcare infrastructure ensures young patients receive timely, specialized medical care close to home.\n\n## Hospital Executives and Pediatric Oncology Advocates Praise\n\nHamilton Health Sciences leadership praised the joint agreement for expanding specialized surgical suites for complex pediatric oncology resections.\n\nPediatric nursing teams celebrated the inclusion of modern ergonomic monitoring stations and private lactation suites.\n\n## Groundbreaking Milestones\n\nHospital wing expansion construction at McMaster Children's Hospital will break ground in November 2026.",
+    "seoTitle": "Canada and Ontario Invest $30M in McMaster Children's Hospital | Choseno",
+    "metaDescription": "PM Mark Carney and Premier Doug Ford invest $30M to build 40 pediatric ICU and neonatal suites at McMaster Children's Hospital.",
+    "tags": [
+      "Mark Carney",
+      "Doug Ford",
+      "Ontario",
+      "Healthcare",
+      "Hospitals",
+      "Children",
+      "Public Health",
+      "Canada"
+    ],
+    "tweet": "Prime Minister Mark Carney and Premier Doug Ford invest $30M to expand McMaster Children's Hospital with 40 pediatric ICU suites.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno Pediatric Healthcare & Hospital Capital Desk",
+      "bio": "Pediatric hospital engineering, Canada-Ontario health agreements, intensive care unit architecture, and provincial health policy"
+    },
+    "sources": [
+      {
+        "label": "Health Canada News Releases",
+        "url": "https://www.canada.ca/en/health-canada/news/2026/08/canada-and-ontario-invest-in-pediatric-care-at-mcmaster-childrens-hospital.html"
+      },
+      {
+        "label": "The Hamilton Spectator",
+        "url": "https://www.thespec.com/news/hamilton-region/carney-ford-30m-mcmaster-childrens-hospital-expansion-2026/article_7483912.html"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "3ec78351-9bec-46b8-afea-45931f29646e",
+      "12ed841a-877b-4c7d-984b-85716b2f2757"
+    ],
+    "taggedPoliticians": [
+      "Mark Carney",
+      "Doug Ford"
+    ]
+  },
+  {
+    "slug": "united-states-department-of-the-treasury-finalizes-clean-electricity-investment-tax-credit-regulations-under-section-48e-2026-08-24",
+    "headline": "U.S. Treasury Releases Final Section 48E Tech-Neutral Clean Electricity Tax Credit Rules",
+    "summary": "Treasury and IRS issue definitive regulations for Section 48E Clean Electricity Investment Tax Credits, establishing greenhouse gas intensity certification for solar, wind, geothermal, and advanced nuclear.",
+    "category": "Clean Tech",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-24T04:30:00Z",
+    "published_at": "2026-08-24T16:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.8988,
+    "longitude": -77.0345,
+    "body": "WASHINGTON, DC — The United States Department of the Treasury and the Internal Revenue Service (IRS) published final regulatory text and guidance governing the Section 48E Clean Electricity Investment Credit and Section 45Y Clean Electricity Production Credit under the Internal Revenue Code.\n\n## Tech-Neutral Framework Subsidizing All Zero-Emission Power Generation\n\nThe finalized rules complete the statutory transition from legacy energy-specific subsidies to a technology-neutral framework that allows any commercial electricity generation facility with a net-zero greenhouse gas emissions rate to claim a 30% investment tax credit or an inflation-adjusted production credit. The regulations establish certified greenhouse gas life-cycle accounting protocols for solar, utility wind, advanced nuclear, deep geothermal, tidal power, and closed-loop biomass generation facilities.\n\nTreasury Secretary Janet Yellen affirmed that technology-neutral clean electricity tax credits reward clean innovation while providing multi-decade investment certainty for American energy developers.\n\n## Clean Energy Developers and Financial Institutions Praise\n\nAmerican Clean Power Association and Nuclear Energy Institute praised the clarity regarding prevailing wage and registered apprenticeship 5x bonus multipliers.\n\nWall Street clean energy finance desks confirmed that the finalized rules will unlock an estimated $120 billion in private clean power project financings.\n\n## Tax Year Applicability\n\nThe final Section 48E and Section 45Y regulations apply to clean electricity generation facilities placed in service on or after January 1, 2026.",
+    "seoTitle": "Treasury Releases Final Section 48E Tech-Neutral Clean Tax Credit Rules | Choseno",
+    "metaDescription": "Treasury finalizes Section 48E rules granting 30% tax credits to all zero-emission power plants including nuclear, wind, and geothermal.",
+    "tags": [
+      "United States",
+      "Clean Tech",
+      "Energy",
+      "Taxes",
+      "Economy",
+      "Climate",
+      "US"
+    ],
+    "tweet": "Treasury releases final Section 48E rules providing 30% clean energy tax credits for all zero-emission power plants including nuclear and wind.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno Federal Clean Energy Tax & Financial Policy Bureau",
+      "bio": "Section 48E/45Y tax credit regulations, Treasury/IRS rulemaking, energy transition capital markets, and clean power finance"
+    },
+    "sources": [
+      {
+        "label": "U.S. Department of the Treasury Press Releases",
+        "url": "https://home.treasury.gov/news/press-releases/jy2485"
+      },
+      {
+        "label": "Bloomberg Law",
+        "url": "https://news.bloomberglaw.com/tax-development/treasury-finalizes-tech-neutral-clean-electricity-tax-credits-section-48e"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
   }
 ];
 

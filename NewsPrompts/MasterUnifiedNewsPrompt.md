@@ -12,7 +12,10 @@ This directive merges all rules, standards, and matrices from:
 
 ## 1. CORE OPERATING PRINCIPLES & MINIMUM VOLUME
 
-- **Mandatory Target**: Discover, verify, synthesize, and publish **AT LEAST 20 UNIQUE, FACT-DENSE ARTICLES** for any jurisdiction, cycle, or target municipality/official.
+- **Mandatory Target**: Discover, verify, synthesize, and publish **AT LEAST 20 UNIQUE, FACT-DENSE ARTICLES** per cycle.
+- **Strict Geographic Distribution Ratio (70% USA / 30% Canada)**:
+  - **70% United States (~14–15 articles per batch of 20)**: Cover US Federal (Washington DC / Congress / White House / Federal Agencies), 50 State Capitols (Governors / State Legislatures), and Major City Councils.
+  - **30% Canada (~5–6 articles per batch of 20)**: Cover Canadian Federal (Ottawa / Parliament / PMO), 10 Provincial Capitols (Premiers / Assemblies), and Major Canadian Municipalities.
 - **Deep Research Requirement**: Every article MUST be backed by primary source research (bill numbers, court docket filings, vote counts, budget figures) with both official and critic/opposition counter-perspectives.
 - **Zero Hallucination & Pre-Flight Deduplication**: Check existing slugs from Supabase to prevent duplicate coverage.
 - **Wall & Boundary Sync**: Every article resolving a politician UUID triggers `admin_sync_news_article_tags()` for `/wall/[slug]` and `admin_sync_news_article_boundaries()` for GIS boundaries.

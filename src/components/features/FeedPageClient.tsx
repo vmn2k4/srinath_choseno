@@ -23,7 +23,11 @@ import LinkPreview from "./LinkPreview";
 import { useTranslation } from "@/contexts/LanguageContext";
 import PostCard, { PostWithComments } from "./PostCard";
 import StoryStrip, { StoryPost } from "./StoryStrip";
+import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import PitchViewerModal from "./PitchViewerModal";
+// Only needed when a grouped "Full Interview" story entry is tapped, so it's
+// loaded on demand rather than in the main feed bundle.
+const PlayInterviewReel = dynamic(() => import("./PlayInterviewReel"), { ssr: false });
 import PoliticianSidebar from "./PoliticianSidebar";
 import MediaThumbnail from "./MediaThumbnail";
 import MentionTextarea from "./MentionTextarea";
@@ -131,6 +135,9 @@ export default function FeedPageClient() {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   const [activeStoryId, setActiveStoryId] = useState<string | null>(null);
+  const [activeInterview, setActiveInterview] = useState<{ candidateId: string; candidateName: string } | null>(
+    null
+  );
   const [extractedUrl, setExtractedUrl] = useState<string | null>(null);
   const [linkMetadata, setLinkMetadata] = useState<any>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -378,8 +385,15 @@ export default function FeedPageClient() {
   }, [profile]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const displayedPosts = useMemo(() => {
+    // Interview-answer posts power the "Full Interview" story-strip entry
+    // (see storyPosts above) but shouldn't also show up as N separate full
+    // post cards in the scrollable feed underneath -- that's the exact "9
+    // different videos" clutter this whole grouping exists to avoid. They
+    // stay in `posts` (so storyPosts can still see them) and are filtered
+    // out only here, at render time.
+    const feedEligible = posts.filter((p) => p.post_kind !== "answer_pitch");
     const effectiveSortMode = sortMode ?? defaultSortMode(profile?.role);
-    return effectiveSortMode === "engagement" ? sortByEngagement(posts) : posts;
+    return effectiveSortMode === "engagement" ? sortByEngagement(feedEligible) : feedEligible;
   }, [posts, sortMode, profile?.role]);
 
   const handlePostTextChange = (text: string) => {
@@ -541,14 +555,49 @@ export default function FeedPageClient() {
   // Story strip is ephemeral (like WhatsApp status) — only shows videos from
   // the last 24h. The underlying post stays in the regular feed forever.
   const storyWindowMs = storyStripHours * 60 * 60 * 1000;
-  const storyPosts: StoryPost[] = posts
-    .filter((p) => Boolean(p.video_url) && now - new Date(p.created_at || 0).getTime() < storyWindowMs)
-    .map((p) => ({
+  const videoPostsInWindow = posts.filter(
+    (p) => Boolean(p.video_url) && now - new Date(p.created_at || 0).getTime() < storyWindowMs
+  );
+
+  // Interview-answer posts (one per question a candidate recorded) collapse
+  // into a single "Full Interview" story entry per candidate instead of one
+  // entry per question -- tapping it opens PlayInterviewReel, which plays
+  // every question then its answer back to back as one continuous video
+  // instead of forcing a viewer to click through N separate clips.
+  const interviewGroups = new Map<string, PostWithComments[]>();
+  const standaloneVideoPosts: PostWithComments[] = [];
+  videoPostsInWindow.forEach((p) => {
+    if (p.post_kind === "answer_pitch" && p.election_candidate_id) {
+      const group = interviewGroups.get(p.election_candidate_id) || [];
+      group.push(p);
+      interviewGroups.set(p.election_candidate_id, group);
+    } else {
+      standaloneVideoPosts.push(p);
+    }
+  });
+
+  const mostRecent = (group: PostWithComments[]) =>
+    group.reduce((a, b) => (new Date(b.created_at || 0).getTime() > new Date(a.created_at || 0).getTime() ? b : a));
+
+  const storyPosts: (StoryPost & { created_at?: string | null })[] = [
+    ...Array.from(interviewGroups.entries()).map(([candidateId, group]) => {
+      const rep = mostRecent(group);
+      return {
+        id: rep.id,
+        video_url: rep.video_url!,
+        ghost_id: rep.ghost_id,
+        candidateId,
+        answerCount: group.length,
+        created_at: rep.created_at,
+      };
+    }),
+    ...standaloneVideoPosts.map((p) => ({
       id: p.id,
       video_url: p.video_url!,
-      content: p.content,
       ghost_id: p.ghost_id,
-    }));
+      created_at: p.created_at,
+    })),
+  ].sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
 
   const masterFilterOptions = [
     "all",
@@ -895,7 +944,18 @@ export default function FeedPageClient() {
                   its own emptiness. */}
               <StoryStrip
                 posts={storyPosts}
-                onSelect={(postId) => setActiveStoryId(postId)}
+                onSelect={(postId) => {
+                  const tapped = storyPosts.find((p) => p.id === postId);
+                  if (tapped?.candidateId) {
+                    const author = politicianAuthors.get(tapped.ghost_id);
+                    setActiveInterview({
+                      candidateId: tapped.candidateId,
+                      candidateName: author?.fullName || getGhostDisplayName(tapped.ghost_id),
+                    });
+                  } else {
+                    setActiveStoryId(postId);
+                  }
+                }}
               />
 
               {/* Filter Bar - Two-Line District / Level Pills */}
@@ -990,9 +1050,17 @@ export default function FeedPageClient() {
 
       {activeStoryId && (
         <PitchViewerModal
-          posts={storyPosts}
+          posts={storyPosts.filter((p) => !p.candidateId)}
           startId={activeStoryId}
           onClose={() => setActiveStoryId(null)}
+        />
+      )}
+
+      {activeInterview && (
+        <PlayInterviewReel
+          candidateId={activeInterview.candidateId}
+          candidateName={activeInterview.candidateName}
+          onClose={() => setActiveInterview(null)}
         />
       )}
 

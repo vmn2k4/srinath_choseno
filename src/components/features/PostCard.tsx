@@ -71,6 +71,7 @@ function renderContentWithMentions(content: string, mentions?: PostMention[] | n
 export default function PostCard({
   post,
   ownerGhostId,
+  ownerFullName,
   ownerBadgeLabel = "Candidate",
   viewerIsOwner = false,
   showVoteBar = true,
@@ -80,6 +81,7 @@ export default function PostCard({
   onCommentChange,
   onSubmitComment,
   onMediaClick,
+  onPitchVideoClick,
   politicianAuthor,
   onReport,
   commentError,
@@ -89,6 +91,15 @@ export default function PostCard({
 }: {
   post: PostWithComments;
   ownerGhostId?: string | null;
+  // The wall/candidacy owner's real public name -- used specifically for
+  // their own replies within a thread (the spotlight box, and any owner
+  // reply that ends up in the general list too), per docs/PLATFORM_SPEC.md
+  // §3A ("requires a real public full name ... it will appear on the public
+  // Wall") and §3C ("spotlighted replies ... badged as the owner"). Distinct
+  // from `politicianAuthor`, which resolves the *post's own* author and can
+  // differ from the wall owner on a mention post (someone else's post that
+  // shows up here only because the owner was @mentioned in it).
+  ownerFullName?: string | null;
   ownerBadgeLabel?: string;
   viewerIsOwner?: boolean;
   showVoteBar?: boolean;
@@ -98,6 +109,12 @@ export default function PostCard({
   onCommentChange: (value: string) => void;
   onSubmitComment: () => void;
   onMediaClick?: (url: string, type: "image" | "video") => void;
+  // Called instead of onMediaClick when this post is a video-interview
+  // answer (post_kind === 'answer_pitch') -- the caller opens PitchPostPlayer
+  // so the clip plays "question, then answer" with the same like/comment/
+  // share rail every other pitch view has, instead of a bare video with no
+  // context. Falls back to onMediaClick when omitted, or for any other post.
+  onPitchVideoClick?: (post: PostWithComments) => void;
   politicianAuthor?: PoliticianAuthorInfo | null;
   onReport?: (targetType: ReportTargetType, targetId: string, abuseType: string) => Promise<{ error?: unknown }>;
   commentError?: string;
@@ -271,7 +288,11 @@ export default function PostCard({
               <MediaThumbnail
                 url={post.video_url}
                 type="video"
-                onClick={() => onMediaClick?.(normalizeMediaUrl(post.video_url), "video")}
+                onClick={() =>
+                  post.post_kind === "answer_pitch" && onPitchVideoClick
+                    ? onPitchVideoClick(post)
+                    : onMediaClick?.(normalizeMediaUrl(post.video_url), "video")
+                }
               />
             )}
           </div>
@@ -312,7 +333,14 @@ export default function PostCard({
                 <div key={reply.id} className="pl-3 border-l-2 border-primary/50 space-y-1">
                   <div className="flex items-baseline gap-2">
                     <span className="text-xs font-bold text-text-main font-mono">
-                      {getGhostDisplayName(reply.ghost_id)}
+                      {/* This section only ever holds the wall/candidacy owner's
+                          own replies (candidateReplies' filter above), and
+                          docs/PLATFORM_SPEC.md §3A requires a real public full
+                          name specifically because it's meant to appear
+                          publicly -- show it instead of the Ghost pseudonym,
+                          same as the "Official Candidate Response" label
+                          above it already implies. */}
+                      {ownerFullName || getGhostDisplayName(reply.ghost_id)}
                     </span>
                     <span className="text-[10px] text-text-muted">
                       {reply.created_at ? new Date(reply.created_at).toLocaleString() : ""}
@@ -350,7 +378,15 @@ export default function PostCard({
               <div key={comment.id} className="pl-3 group/comment">
                 <div className="flex items-baseline gap-2 mb-0.5">
                   <span className="text-xs font-bold text-text-muted font-mono">
-                    {getGhostDisplayName(comment.ghost_id)}
+                    {/* Real name for the wall/candidacy owner's own reply --
+                        docs/PLATFORM_SPEC.md §3A/§3C, same as the spotlight
+                        box above. Any other commenter here is either a
+                        citizen or an unrelated politician neither this post
+                        nor this wall has already resolved a name for, so
+                        stays anonymized. */}
+                    {ownerGhostId && comment.ghost_id === ownerGhostId
+                      ? ownerFullName || getGhostDisplayName(comment.ghost_id)
+                      : getGhostDisplayName(comment.ghost_id)}
                   </span>
                   {ownerGhostId && comment.ghost_id === ownerGhostId && (
                     <Badge tone="primary">{viewerIsOwner ? "You" : ownerBadgeLabel}</Badge>

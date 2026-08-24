@@ -88,11 +88,18 @@ async function checkAndRun() {
       console.log(`[DUPLICATE IN BATCH] Skipping duplicate slug: "${art.slug}"`);
       continue;
     }
-    seenBatchSlugs.add(art.slug);
     uniqueArticles.push(art);
   }
 
+  let usCount = 0, caCount = 0;
+  for (const art of uniqueArticles) {
+    if (art.country === 'US') usCount++;
+    else if (art.country === 'CA') caCount++;
+  }
+
   console.log(`\nCurrent Batch Status: ${uniqueArticles.length} valid unique articles ready.`);
+  console.log(`  🇺🇸 United States: ${usCount} (${Math.round((usCount / (uniqueArticles.length || 1)) * 100)}%) - Target: ~70% (14+)`);
+  console.log(`  🇨🇦 Canada:        ${caCount} (${Math.round((caCount / (uniqueArticles.length || 1)) * 100)}%) - Target: ~30% (5-6)`);
 
   if (uniqueArticles.length < minTarget) {
     const deficit = minTarget - uniqueArticles.length;

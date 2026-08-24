@@ -37,7 +37,14 @@ interface StatusConfig {
   tone: "amber" | "emerald" | "rose";
 }
 
+// Submission auto-approves (submit_candidate_application flips status
+// straight to 'approved') -- there's no admin review queue a 'pending'
+// candidacy is actually waiting on. So 'pending' only ever means "still a
+// draft, not submitted yet", and the badge below is keyed on submitted_at
+// rather than status alone so it says that plainly instead of implying
+// someone else needs to act.
 const STATUS_COPY: Record<string, StatusConfig> = {
+  draft: { label: "Not Submitted", tone: "amber" },
   pending: { label: "Pending Review", tone: "amber" },
   approved: { label: "Approved", tone: "emerald" },
   rejected: { label: "Not Approved", tone: "rose" },
@@ -241,7 +248,12 @@ export default function PoliticianElectionsClient() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {myCandidacies.map((cand) => {
-              const statusCfg = STATUS_COPY[cand.status] || STATUS_COPY.pending;
+              // status stays 'pending' forever for a candidacy that was
+              // never submitted (submit_candidate_application is what flips
+              // it to 'approved'/'rejected') -- submitted_at is what tells a
+              // real pending-review case apart from a plain unfinished draft.
+              const isDraft = cand.status === "pending" && !cand.submitted_at;
+              const statusCfg = isDraft ? STATUS_COPY.draft : STATUS_COPY[cand.status] || STATUS_COPY.pending;
               return (
                 <Card
                   key={cand.id}
@@ -267,17 +279,25 @@ export default function PoliticianElectionsClient() {
                     <Badge tone={statusCfg.tone}>{statusCfg.label}</Badge>
                   </div>
 
+                  {isDraft && (
+                    <p className="text-[11px] text-warning-light bg-warning/10 border border-warning/25 rounded-lg px-2.5 py-1.5">
+                      Your application isn't submitted yet — finish it and hit{" "}
+                      <strong>Submit Application</strong> to get approved instantly, no admin
+                      review needed.
+                    </p>
+                  )}
+
                   <div className="flex items-center justify-between pt-3 border-t border-border-light/20 text-xs">
                     <Button
                       size="sm"
-                      variant="outline"
+                      variant={isDraft ? "primary" : "outline"}
                       onClick={(e) => {
                         e.stopPropagation();
                         router.push(`/apply/${cand.id}`);
                       }}
                       className="gap-1.5"
                     >
-                      <FileEdit size={13} /> Edit Application
+                      <FileEdit size={13} /> {isDraft ? "Submit Application" : "Edit Application"}
                     </Button>
 
                     <Button

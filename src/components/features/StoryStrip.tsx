@@ -6,6 +6,13 @@ export type StoryPost = {
   id: string;
   ghost_id: string;
   video_url: string | null;
+  // Set only for the one grouped entry representing a candidate's whole
+  // video interview (every per-question answer collapsed into a single
+  // thumbnail) -- see FeedPageClient's storyPosts derivation. When present,
+  // the caller routes the tap to PlayInterviewReel instead of the plain
+  // pitch viewer.
+  candidateId?: string;
+  answerCount?: number;
 };
 
 // Extracted from FeedPage.jsx's "Politician Pitches" horizontal video strip
@@ -51,6 +58,11 @@ export default function StoryStrip({
                   preload="metadata"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-lg transition-opacity group-hover:opacity-80" />
+                {post.candidateId && post.answerCount ? (
+                  <div className="absolute top-1.5 right-1.5 bg-primary text-text-on-primary text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow">
+                    {post.answerCount}Q
+                  </div>
+                ) : null}
                 <div className="absolute bottom-2 left-2 right-2 flex items-center gap-1.5">
                   <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center shrink-0 border border-primary-light">
                     <Video size={8} className="text-text-on-primary" />
@@ -59,6 +71,13 @@ export default function StoryStrip({
                     {getGhostDisplayName(post.ghost_id)}
                   </span>
                 </div>
+                {post.candidateId ? (
+                  <div className="absolute bottom-[22px] left-2 right-2">
+                    <span className="text-[9px] text-primary-light font-bold uppercase tracking-wide drop-shadow-md">
+                      Full Interview
+                    </span>
+                  </div>
+                ) : null}
               </div>
             </button>
         ))}

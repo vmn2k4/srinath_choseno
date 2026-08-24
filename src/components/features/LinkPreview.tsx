@@ -36,6 +36,16 @@ export default function LinkPreview({
   const [error, setError] = useState(false);
   const data = metadata || fetched;
 
+  // Checked before anything Microlink-dependent below: a YouTube embed only
+  // needs the URL itself, never metadata, so it shouldn't be gated behind a
+  // third-party fetch succeeding at all -- Microlink never exposes a direct
+  // playable file for YouTube regardless (only Vimeo/self-hosted clips get
+  // an og:video field), so waiting on it here only ever bought a broken
+  // "generic link card" fallback whenever that fetch was slow, rate-limited,
+  // or simply unreachable (e.g. a network policy blocking third-party
+  // calls), instead of the actual video.
+  const youTubeEmbedUrl = getYouTubeEmbedUrl(url || metadata?.url || "");
+
   // Ref instead of a dependency-array entry: this is a "call me when the
   // fetch resolves" callback, not a value the effect should re-run for —
   // adding it to the deps would refire the fetch on every parent re-render
@@ -83,6 +93,28 @@ export default function LinkPreview({
       ignore = true;
     };
   }, [url, metadata]);
+
+  if (youTubeEmbedUrl) {
+    return (
+      <div className="my-3 rounded-lg overflow-hidden border border-border-light bg-black">
+        <div className="relative w-full" style={{ aspectRatio: "16 / 9" }}>
+          <iframe
+            src={youTubeEmbedUrl}
+            title={data?.title || "YouTube video"}
+            className="absolute inset-0 w-full h-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
+        {(data?.title || data?.description) && (
+          <div className="p-3 bg-surface border-t border-border">
+            <h4 className="text-sm font-semibold text-text-secondary line-clamp-1">{data.title || data.url}</h4>
+            {data.description && <p className="text-xs text-text-muted mt-1 line-clamp-1">{data.description}</p>}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   if (error || (!loading && !data)) {
     if (!url) return null;
@@ -163,5 +195,37 @@ function safeHostname(url: string) {
     return new URL(url).hostname || "External Link";
   } catch {
     return "External Link";
+  }
+}
+
+// Recognizes the four URL shapes YouTube actually issues (watch, shortened
+// youtu.be, Shorts, and an already-embedded link) and returns the
+// player-ready embed URL, or null for anything else. `rel=0` keeps related-
+// video suggestions restricted to the same channel instead of the whole
+// site once playback ends.
+function getYouTubeEmbedUrl(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace(/^www\./, "");
+    let videoId: string | null = null;
+
+    if (host === "youtu.be") {
+      videoId = parsed.pathname.slice(1);
+    } else if (host === "youtube.com" || host === "m.youtube.com") {
+      if (parsed.pathname === "/watch") {
+        videoId = parsed.searchParams.get("v");
+      } else if (parsed.pathname.startsWith("/shorts/")) {
+        videoId = parsed.pathname.split("/")[2];
+      } else if (parsed.pathname.startsWith("/embed/")) {
+        videoId = parsed.pathname.split("/")[2];
+      }
+    } else {
+      return null;
+    }
+
+    videoId = videoId?.split(/[?&]/)[0] || null;
+    return videoId ? `https://www.youtube.com/embed/${videoId}?rel=0` : null;
+  } catch {
+    return null;
   }
 }

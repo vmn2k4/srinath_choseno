@@ -1,13 +1,16 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useAuth } from "@/contexts/AuthContext";
 import LinkPreview from "./LinkPreview";
 import PostCard, { type PostWithComments } from "@/components/features/PostCard";
+import PitchPostPlayer from "@/components/features/PitchPostPlayer";
 import MentionTextarea from "./MentionTextarea";
 import FeedSortControl from "./FeedSortControl";
+// Only needed once a "Play Interview" chip is tapped, so loaded on demand.
+const PlayInterviewReel = dynamic(() => import("./PlayInterviewReel"), { ssr: false });
 import { sortByEngagement, defaultSortMode } from "@/lib/utils/feedSort";
 import {
   Users,
@@ -179,11 +182,30 @@ export default function PoliticianWallClient({
   const [commentErrors, setCommentErrors] = useState<Record<string, string>>({});
   const [showReportProfile, setShowReportProfile] = useState(false);
   const [mediaPreview, setMediaPreview] = useState<{ url: string; type: "image" | "video" } | null>(null);
+  const [pitchPostToPlay, setPitchPostToPlay] = useState<PostWithComments | null>(null);
+
+  // A pitch's Share button links to ?pitch=<postId> on this same page (see
+  // PitchPostPlayer) -- once posts are loaded, reopen that exact clip
+  // instead of leaving a visitor who followed the link staring at the top
+  // of the whole wall with no idea which post it was about.
+  const handledPitchDeepLinkRef = useRef(false);
+  useEffect(() => {
+    if (handledPitchDeepLinkRef.current || posts.length === 0) return;
+    if (typeof window === "undefined") return;
+    const pitchId = new URLSearchParams(window.location.search).get("pitch");
+    if (!pitchId) return;
+    const match = posts.find((p) => p.id === pitchId);
+    if (match) {
+      handledPitchDeepLinkRef.current = true;
+      setPitchPostToPlay(match);
+    }
+  }, [posts]);
 
   const [politicianAuthors, setPoliticianAuthors] = useState<Map<string, { fullName: string; wallHref: string }>>(new Map());
   const [postMentions, setPostMentions] = useState<Map<string, { politicianId: string; fullName: string; wallHref: string }[]>>(new Map());
   const [mentionOnlyPostIds, setMentionOnlyPostIds] = useState<Set<string>>(new Set());
   const [candidacies, setCandidacies] = useState<any[]>([]);
+  const [showInterviewCandidateId, setShowInterviewCandidateId] = useState<string | null>(null);
 
   // Unified claim eligibility — see get_wall_claim_eligibility() (migration
   // 20260811170000). Derived from public data (no auth.users lookup needed):
@@ -206,9 +228,31 @@ export default function PoliticianWallClient({
   const [claimError, setClaimError] = useState("");
 
   const displayedPosts = useMemo(() => {
+    // Interview-answer posts show here like any other wall post --
+    // docs/VIRTUAL_INTERVIEW_SYSTEM.md: a video answer "gets the *standard*
+    // treatment every other post already has... no bespoke comment/like
+    // system for interview answers." Filtering them out (an earlier pass
+    // here) meant a candidate's own video answers were missing from their
+    // own posting history, which the doc doesn't call for -- the "Play
+    // Interview" chip below is an additional way to watch them all in
+    // sequence, not a replacement for them showing individually.
     const effectiveSortMode = sortMode ?? defaultSortMode(profile?.id ? "politician" : null);
     return effectiveSortMode === "engagement" ? sortByEngagement(posts) : posts;
   }, [posts, sortMode, profile?.id]);
+
+  // Which candidacies (this wall owner can be actively running for more than
+  // one seat at once) have at least one recorded video answer, and how many
+  // -- powers the small "Play Interview" affordance on each matching
+  // "Currently Running For" chip below.
+  const interviewCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    posts.forEach((p) => {
+      if (p.post_kind === "answer_pitch" && p.election_candidate_id) {
+        counts.set(p.election_candidate_id, (counts.get(p.election_candidate_id) || 0) + 1);
+      }
+    });
+    return counts;
+  }, [posts]);
 
   useEffect(() => {
     let cancelled = false;
@@ -636,6 +680,23 @@ export default function PoliticianWallClient({
   const isOwner = user && wallOwner?.id === user.id;
   const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 
+  // This wall owner can be actively campaigning for more than one seat at
+  // once (see the "Currently Running For" chips), each with its own set of
+  // interview answers -- picks whichever candidacy has the most recorded
+  // answers as the one "Play Interview" surfaces. Not gated on election
+  // status (unlike those chips, which only show *active* elections): the
+  // interview is recorded and worth watching well before an election goes
+  // active, so tying visibility to that would hide it for most of a
+  // candidate's actual campaign season.
+  let primaryInterviewCandidateId: string | null = null;
+  let primaryInterviewCount = 0;
+  interviewCounts.forEach((count, candidateId) => {
+    if (count > primaryInterviewCount) {
+      primaryInterviewCount = count;
+      primaryInterviewCandidateId = candidateId;
+    }
+  });
+
   // Action icon row extracted to a variable so it can render inline with the
   // contact icons on mobile (single combined row, saving a whole row of
   // height) while staying in its own right-aligned column on desktop —
@@ -663,6 +724,22 @@ export default function PoliticianWallClient({
           </span>
         )}
       </div>
+
+      {/* Every video-interview answer collapses into this one button instead
+          of showing up as N separate posts in the list below (see
+          displayedPosts). */}
+      {primaryInterviewCandidateId && (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setShowInterviewCandidateId(primaryInterviewCandidateId)}
+          className="gap-1.5 text-xs border-primary/30 text-primary-light hover:bg-primary/10 shrink-0"
+          title={`Play ${wallOwner?.full_name || "this candidate"}'s video interview`}
+        >
+          <Video size={13} />
+          Play Interview
+        </Button>
+      )}
 
       {/* Unified claim gating — see get_wall_claim_eligibility() (migration
           20260811170000). Shows nothing at all once the wall already has a
@@ -1106,6 +1183,7 @@ export default function PoliticianWallClient({
               key={post.id}
               post={post}
               ownerGhostId={ghostId}
+              ownerFullName={wallOwner?.full_name}
               ownerBadgeLabel="Politician"
               viewerIsOwner={isOwner}
               showVoteBar
@@ -1117,6 +1195,7 @@ export default function PoliticianWallClient({
               }
               onSubmitComment={() => handleCreateComment(post.id)}
               onMediaClick={(url, type) => setMediaPreview({ url, type })}
+              onPitchVideoClick={(p) => setPitchPostToPlay(p)}
               politicianAuthor={
                 politicianAuthors.get(post.ghost_id) ??
                 (post.ghost_id === ghostId && wallOwner?.full_name
@@ -1211,6 +1290,23 @@ export default function PoliticianWallClient({
           url={mediaPreview.url}
           type={mediaPreview.type}
           onClose={() => setMediaPreview(null)}
+        />
+      )}
+
+      {pitchPostToPlay && (
+        <PitchPostPlayer
+          post={pitchPostToPlay}
+          authorName={wallOwner?.full_name || "Candidate"}
+          authorAvatarUrl={wallOwner?.politician_profiles?.photo_url || wallOwner?.politician_profiles?.avatar_url}
+          onClose={() => setPitchPostToPlay(null)}
+        />
+      )}
+
+      {showInterviewCandidateId && (
+        <PlayInterviewReel
+          candidateId={showInterviewCandidateId}
+          candidateName={wallOwner?.full_name || "This candidate"}
+          onClose={() => setShowInterviewCandidateId(null)}
         />
       )}
 

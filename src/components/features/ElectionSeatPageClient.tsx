@@ -800,7 +800,19 @@ export default function ElectionSeatPageClient({
               </div>
 
               {activeMainTab === "interview" && seat?.elections?.id && (
-                <ElectionInterviewTab electionId={seat.elections.id} />
+                <ElectionInterviewTab
+                  electionId={seat.elections.id}
+                  candidates={candidates
+                    .filter((c) => candidateIdsWithVideo.has(c.id))
+                    .map((c) => {
+                      const pol = c.profiles?.politician_profiles;
+                      return {
+                        id: c.id,
+                        name: c.display_name || c.profiles?.full_name || "Candidate",
+                        avatarUrl: Array.isArray(pol) ? pol[0]?.avatar_url : pol?.avatar_url,
+                      };
+                    })}
+                />
               )}
 
               {activeMainTab === "results" && (
@@ -821,46 +833,22 @@ export default function ElectionSeatPageClient({
                     <span className="text-xs font-semibold text-text-muted">
                       Candidate {candidates.findIndex((c) => c.id === selectedCandidateId) + 1} of {candidates.length}
                     </span>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      {(() => {
-                        const activeCand = candidates.find((c) => c.id === selectedCandidateId);
-                        const ghostId = activeCand?.profiles?.current_ghost_id;
-                        if (!ghostId) return null;
-                        const candName = activeCand.display_name || activeCand.profiles?.full_name || "candidate";
-                        const roleTitle = seat?.role_title || "";
-                        // Prefer the candidate's real stored wall_slug — a
-                        // computed name+role slug can collide with an
-                        // unrelated profile's actual slug and silently link
-                        // to the wrong wall (see resolvePoliticianWallSlug
-                        // in CandidacyWall.tsx for the confirmed case).
-                        const pol = activeCand.profiles?.politician_profiles;
-                        const realSlug = Array.isArray(pol) ? pol[0]?.wall_slug : pol?.wall_slug;
-                        const slug = realSlug || buildPoliticianWallSlug(candName, roleTitle);
-                        const wallHref = `/wall/${slug}`;
-                        return (
-                          <Link href={wallHref}>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="gap-1.5 text-xs border-primary/30 text-primary-light hover:bg-primary/10"
-                              title={`View ${candName}'s full Politician Wall`}
-                            >
-                              <ExternalLink size={13} />
-                              View Politician Wall
-                            </Button>
-                          </Link>
-                        );
-                      })()}
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={handleCopyShareLink}
-                        className="gap-1.5 text-xs border-primary/30 text-primary-light hover:bg-primary/10"
-                      >
-                        {copiedShareLink ? <Check size={13} className="text-success" /> : <Share2 size={13} />}
-                        {copiedShareLink ? "Direct Link Copied!" : "Share Candidate Link"}
-                      </Button>
-                    </div>
+                    {/* "View Politician Wall" used to be duplicated here --
+                        CandidacyWall's own embedded header already renders
+                        that same button (plus Play Interview and Support
+                        right next to it), so a second copy up here just
+                        crowded this row for no benefit. Share Candidate Link
+                        is the only action genuinely unique to this seat-page
+                        context, so it's the only one left. */}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleCopyShareLink}
+                      className="gap-1.5 text-xs border-primary/30 text-primary-light hover:bg-primary/10"
+                    >
+                      {copiedShareLink ? <Check size={13} className="text-success" /> : <Share2 size={13} />}
+                      {copiedShareLink ? "Direct Link Copied!" : "Share Candidate Link"}
+                    </Button>
                   </div>
                   <CandidacyWall candidateId={selectedCandidateId} embedded />
                 </div>

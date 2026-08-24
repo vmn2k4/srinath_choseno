@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
@@ -10,6 +10,7 @@ import PlayInterviewReel from "./PlayInterviewReel";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 import PostCard, { type PostWithComments } from "@/components/features/PostCard";
+import PitchPostPlayer from "@/components/features/PitchPostPlayer";
 import MentionTextarea from "./MentionTextarea";
 import {
   getPublicCandidateById,
@@ -224,8 +225,28 @@ export default function CandidacyWall({
   const [claimStatus, setClaimStatus] = useState("");
   const [claimSubmitted, setClaimSubmitted] = useState(false);
   const [mediaPreview, setMediaPreview] = useState<{ url: string; type: "image" | "video" } | null>(null);
+  const [pitchPostToPlay, setPitchPostToPlay] = useState<PostWithComments | null>(null);
   const [showPositionsModal, setShowPositionsModal] = useState(false);
   const [showReel, setShowReel] = useState(false);
+
+  // A pitch's Share button links to ?pitch=<postId> on this same page (see
+  // PitchPostPlayer) -- once posts are loaded, reopen that exact clip
+  // instead of leaving a visitor who followed the link staring at the top
+  // of the whole wall with no idea which post it was about. Runs once per
+  // page load, not every time `posts` changes, so closing the player
+  // manually doesn't make it immediately reopen itself.
+  const handledPitchDeepLinkRef = useRef(false);
+  useEffect(() => {
+    if (handledPitchDeepLinkRef.current || posts.length === 0) return;
+    if (typeof window === "undefined") return;
+    const pitchId = new URLSearchParams(window.location.search).get("pitch");
+    if (!pitchId) return;
+    const match = posts.find((p) => p.id === pitchId);
+    if (match) {
+      handledPitchDeepLinkRef.current = true;
+      setPitchPostToPlay(match);
+    }
+  }, [posts]);
 
   const loadAnswers = async () => {
     const { data: answerRows } = await getPublicCandidateAnswers(supabase, candidateId);
@@ -585,6 +606,17 @@ export default function CandidacyWall({
     candidate.party_name ||
     candidateProfile?.party_name ||
     candidateProfile?.political_parties?.name;
+
+  // Interview-answer posts show in this list like any other wall post --
+  // docs/VIRTUAL_INTERVIEW_SYSTEM.md is explicit that a video answer "gets
+  // the *standard* treatment every other post already has... no bespoke
+  // comment/like system for interview answers." An earlier pass hid them
+  // here on the theory that "Play Interview" already covers viewing them,
+  // but that's not what the doc says, and it meant a candidate's own video
+  // answers didn't show up in their own posting history. Kept as its own
+  // variable (not just `posts`) in case a future pass needs to
+  // differentiate again.
+  const wallDisplayPosts = posts;
 
   return (
     <div className="w-full space-y-6">
@@ -1143,15 +1175,16 @@ export default function CandidacyWall({
             </Card>
           )}
 
-          {posts.length === 0 ? (
+          {wallDisplayPosts.length === 0 ? (
             <EmptyState description="No posts on this candidate wall yet." />
           ) : (
             <div className="space-y-6">
-              {posts.map((post) => (
+              {wallDisplayPosts.map((post) => (
                 <PostCard
                   key={post.id}
                   post={post}
                   ownerGhostId={candidate?.profiles?.current_ghost_id ?? profile?.current_ghost_id}
+                  ownerFullName={displayName}
                   ownerBadgeLabel="Candidate"
                   viewerIsOwner={isOwner}
                   showVoteBar
@@ -1163,6 +1196,7 @@ export default function CandidacyWall({
                   }
                   onSubmitComment={() => handleCreateComment(post.id)}
                   onMediaClick={(url, type) => setMediaPreview({ url, type })}
+                  onPitchVideoClick={(p) => setPitchPostToPlay(p)}
                   politicianAuthor={
                     politicianAuthors.get(post.ghost_id) ??
                     (post.ghost_id === candidate?.profiles?.current_ghost_id && candidate?.display_name
@@ -1189,6 +1223,15 @@ export default function CandidacyWall({
           url={mediaPreview.url}
           type={mediaPreview.type}
           onClose={() => setMediaPreview(null)}
+        />
+      )}
+
+      {pitchPostToPlay && (
+        <PitchPostPlayer
+          post={pitchPostToPlay}
+          authorName={displayName}
+          authorAvatarUrl={avatarUrl}
+          onClose={() => setPitchPostToPlay(null)}
         />
       )}
 

@@ -16,13 +16,14 @@ import {
   submitCandidateApplication,
   upsertAnswerPitchPost,
 } from "@/lib/services/elections";
-import { ArrowLeft, Send, Video, RefreshCw, ChevronUp, ChevronDown } from "lucide-react";
+import { ArrowLeft, Send, Video, RefreshCw, ChevronUp, ChevronDown, CheckCircle2 } from "lucide-react";
 import {
   Card,
   Button,
   Badge,
   Textarea,
   Spinner,
+  Modal,
 } from "@/components/primitives";
 import RatingScale from "@/components/features/RatingScale";
 import { createClient } from "@/lib/supabase/client";
@@ -42,7 +43,12 @@ const CandidateVideoInterviewPlayer = dynamic(
   { ssr: false, loading: () => <Spinner fullPage /> }
 );
 
+// Submission auto-approves (submit_candidate_application flips status
+// straight to 'approved') -- 'pending' never means "waiting on an admin", it
+// only ever means "still a draft, not submitted yet". See isDraft below,
+// which is what the badge actually keys off.
 const STATUS_COPY: Record<string, { label: string; tone: "amber" | "emerald" | "rose" }> = {
+  draft: { label: "Not Submitted", tone: "amber" },
   pending: { label: "Pending Review", tone: "amber" },
   approved: { label: "Approved", tone: "emerald" },
   rejected: { label: "Not Approved", tone: "rose" },
@@ -101,6 +107,7 @@ export default function CandidateApplicationClient({
   const [showIntroRecorder, setShowIntroRecorder] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
+  const [submitResultStatus, setSubmitResultStatus] = useState<"approved" | "rejected" | null>(null);
   const [draggedItem, setDraggedItem] = useState<{ questionId: string; optionId: string } | null>(null);
   const [highlightedQuestionId, setHighlightedQuestionId] = useState<string | null>(null);
   // null = haven't been through the "choose your questions" screen yet this
@@ -436,7 +443,12 @@ export default function CandidateApplicationClient({
       return;
     }
 
-    setStatusMessage("Application submitted successfully for admin review!");
+    // submit_candidate_application auto-approves on submit (no admin review
+    // queue exists) unless this candidacy was previously rejected, in which
+    // case it deliberately stays 'rejected' rather than silently reopening --
+    // the dialog's wording below reflects whichever actually happened
+    // instead of always claiming "for admin review".
+    setSubmitResultStatus((resAny?.status as "approved" | "rejected") ?? "approved");
     await fetchAll();
   };
 
@@ -457,7 +469,8 @@ export default function CandidateApplicationClient({
     );
   }
 
-  const statusCfg = STATUS_COPY[candidate.status] || STATUS_COPY.pending;
+  const isDraft = candidate.status === "pending" && !candidate.submitted_at;
+  const statusCfg = isDraft ? STATUS_COPY.draft : STATUS_COPY[candidate.status] || STATUS_COPY.pending;
 
   // "Choose your questions" gate -- shown once per session before the
   // answering flow. Required questions are pre-checked and can't be
@@ -850,11 +863,58 @@ export default function CandidateApplicationClient({
         </p>
       )}
 
+      {/* submit_candidate_application hard-blocks without an intro video --
+          surfaced here, before the click, instead of only as an error
+          message after a doomed submit attempt. */}
+      {!introVideoUrl && (
+        <p className="text-xs text-warning-light bg-warning/10 border border-warning/25 rounded-xl px-3 py-2">
+          Record your Introductory Campaign Video Pitch above before submitting — it's required to submit.
+        </p>
+      )}
+
       <div className="flex justify-end pt-4 border-t border-border-light/20">
-        <Button onClick={handleSubmit} disabled={submitting} className="gap-2 font-bold">
+        <Button
+          onClick={handleSubmit}
+          disabled={submitting || !introVideoUrl}
+          title={!introVideoUrl ? "Record your intro video pitch first" : undefined}
+          className="gap-2 font-bold"
+        >
           <Send size={15} /> {submitting ? "Submitting..." : "Submit Application"}
         </Button>
       </div>
+
+      {/* Submission is instant, not a request that sits in a queue -- a
+          dialog the candidate has to actively dismiss (rather than an inline
+          line of text easy to miss while already scrolled past this button)
+          makes that land, and routes straight back to My Elections where the
+          new "Approved" status is visible. */}
+      {submitResultStatus && (
+        <Modal onOverlayClick={() => setSubmitResultStatus(null)}>
+          <Card variant="hero" padding="lg" className="max-w-sm w-full text-center space-y-3">
+            <CheckCircle2
+              size={40}
+              className={`mx-auto ${submitResultStatus === "approved" ? "text-success" : "text-warning"}`}
+            />
+            <h2 className="text-lg font-bold text-text-main">
+              {submitResultStatus === "approved" ? "Application Submitted & Approved!" : "Application Resubmitted"}
+            </h2>
+            <p className="text-sm text-text-secondary">
+              {submitResultStatus === "approved"
+                ? "You're now a confirmed candidate for this seat — no admin review needed, it's live immediately."
+                : "Your updated application has been saved. This candidacy was previously rejected, so it stays under that status rather than reopening automatically."}
+            </p>
+            <Button
+              onClick={() => {
+                setSubmitResultStatus(null);
+                router.push("/politician/elections");
+              }}
+              className="w-full"
+            >
+              Go to My Elections
+            </Button>
+          </Card>
+        </Modal>
+      )}
     </div>
   );
 }

@@ -109,6 +109,15 @@ export async function voteOnPost(supabase: Client, postId: string, voteType: 1 |
   return supabase.rpc("vote_on_post", { p_post_id: postId, p_vote_type: voteType });
 }
 
+// vote_on_post is a toggle server-side (voting the same type again removes
+// the vote instead of adding another) -- a caller that just does
+// likes_count+1 after every call drifts from the real count the instant
+// someone un-votes. This reads the true count back so callers can set state
+// from it instead of guessing the delta client-side.
+export async function getPostVoteCounts(supabase: Client, postId: string) {
+  return supabase.from("posts").select("likes_count, dislikes_count").eq("id", postId).single();
+}
+
 // comments — shared by FeedPage, PoliticianWall, and CandidacyWall (identical
 // shape). Goes through the create_comment RPC, which resolves the ghost_id
 // server-side and enforces a 7-day per-(user, post) rate limit — direct

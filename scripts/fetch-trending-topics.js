@@ -239,12 +239,19 @@ async function main() {
     }
   }
 
-  // 2. Fetch Google News Top Feeds
+  // 2. Fetch Google News Top Feeds (Equally split between USA & Canada)
   const newsFeeds = [
-    { name: 'CA (Politics)', url: 'https://news.google.com/rss/headlines/section/topic/POLITICS?hl=en-CA&gl=CA&ceid=CA:en' },
-    { name: 'US (Politics)', url: 'https://news.google.com/rss/headlines/section/topic/POLITICS?hl=en-US&gl=US&ceid=US:en' },
+    // --- UNITED STATES (National, Federal/DC, & State Regions) ---
+    { name: 'US (National Politics)', url: 'https://news.google.com/rss/headlines/section/topic/POLITICS?hl=en-US&gl=US&ceid=US:en' },
+    { name: 'US (Top News)', url: 'https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en' },
+    { name: 'US (Washington DC / Federal)', url: 'https://news.google.com/rss/search?q=Washington+DC+OR+Congress+OR+White+House+when:6h&hl=en-US&gl=US&ceid=US:en' },
+    { name: 'US (State Legislatures & Governors)', url: 'https://news.google.com/rss/search?q=Governor+OR+%22State+Legislature%22+OR+%22City+Council%22+when:6h&hl=en-US&gl=US&ceid=US:en' },
+
+    // --- CANADA (National, Federal/Ottawa, & Provincial) ---
+    { name: 'CA (National Politics)', url: 'https://news.google.com/rss/headlines/section/topic/POLITICS?hl=en-CA&gl=CA&ceid=CA:en' },
     { name: 'CA (Top News)', url: 'https://news.google.com/rss?hl=en-CA&gl=CA&ceid=CA:en' },
-    { name: 'US (Top News)', url: 'https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en' }
+    { name: 'CA (Ottawa / Federal Parliament)', url: 'https://news.google.com/rss/search?q=Ottawa+OR+Parliament+OR+%22House+of+Commons%22+when:6h&hl=en-CA&gl=CA&ceid=CA:en' },
+    { name: 'CA (Provincial Premiers & Legislatures)', url: 'https://news.google.com/rss/search?q=Premier+OR+%22Provincial+Government%22+OR+%22Legislative+Assembly%22+when:6h&hl=en-CA&gl=CA&ceid=CA:en' }
   ];
 
   for (const feed of newsFeeds) {
@@ -257,9 +264,9 @@ async function main() {
     }
   }
 
-  // 3. Fetch CBC Politics Wire
+  // 3. Fetch Wire Feeds (US & CA)
   try {
-    const cbcRows = await fetchRssFeed('cbc_politics', 'https://www.cbc.ca/cmlink/rss-politics', 'CA (Politics)', fetchedAt, 20);
+    const cbcRows = await fetchRssFeed('cbc_politics', 'https://www.cbc.ca/cmlink/rss-politics', 'CA (CBC Politics)', fetchedAt, 20);
     console.log(`[CBC Politics]: Received ${cbcRows.length} wire stories`);
     rawItems.push(...cbcRows);
   } catch (err) {

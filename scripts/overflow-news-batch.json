@@ -1,6 +1,906 @@
 [
   {
     "rank": 101,
+    "raw": "81,9.9,\"Governor Dan McKee Signs Executive Order 26-05.1 Extending Ratepayer Relief on Heating Bills\",Energy,\"RI, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Rhode Island Governor Dan McKee signs Executive Order 26-05.1 deploying $18M in ratepayer relief and $200 heating bill credits for families.\",\"Rhode Island Governor Dan McKee issues Executive Order 26-05.1, extending emergency utility protections and deploying $18 million in state energy relief funds to offset winter electric rates.\",https://www.choseno.com/news/rhode-island-governor-dan-mckee-issues-executive-order-26-05-1-extending-energy-ratepayer-relief-2026-08-24,https://www.choseno.com/news/rhode-island-governor-dan-mckee-issues-executive-order-26-05-1-extending-energy-ratepayer-relief-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,9.8,\"Hawaiʻi County Council Enacts Bill 157 Establishing Emergency Housing Reconstruction Standards\",Housing,\"HI, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Hawaiʻi County Council unanimously enacts Bill 157, waiving permit fees and fast-tracking rebuilding for storm-damaged homes.\",\"Hawaiʻi County Council votes 9–0 to pass Bill 157, waiving building permit fees and establishing fast-track structural replacement rules for homes damaged by tropical storm flooding.\",https://www.choseno.com/news/hawaii-county-council-enacts-bill-157-disaster-recovery-housing-and-infrastructure-ordinance-2026-08-24,https://www.choseno.com/news/hawaii-county-council-enacts-bill-157-disaster-recovery-housing-and-infrastructure-ordinance-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,9.8,\"Governor Josh Green Issues Emergency Proclamation Unlocking $25 Million in Housing Relief Grants\",Housing,\"HI, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Hawaii Governor Josh Green issues an emergency proclamation unlocking $25M in direct housing grants and rental aid for storm-impacted families.\",\"Hawaii Governor Josh Green enacts an Emergency Proclamation, mobilizing $25 million in state emergency funds to provide direct rental assistance and property stabilization grants for displaced families.\",https://www.choseno.com/news/governor-josh-green-issues-emergency-housing-proclamation-for-tropical-cyclone-recovery-2026-08-24,https://www.choseno.com/news/governor-josh-green-issues-emergency-housing-proclamation-for-tropical-cyclone-recovery-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,9.8,\"Alaska Enacts HB 195 Establishing Expedited State Right-of-Way Permitting for Arctic Broadband\",Infrastructure,\"AK, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Alaska enacts HB 195 establishing expedited right-of-way permits to lay 1,200 miles of high-speed fiber broadband across rural Native villages.\",\"Governor Mike Dunleavy signs House Bill 195, creating streamlined state right-of-way permitting across rural Alaska highways to accelerate 1,200 miles of fiber-optic broadband deployment.\",https://www.choseno.com/news/alaska-legislature-enacts-hb-195-modernizing-rural-broadband-and-telehealth-permitting-2026-08-24,https://www.choseno.com/news/alaska-legislature-enacts-hb-195-modernizing-rural-broadband-and-telehealth-permitting-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,9.7,\"Maine Deploys $35 Million from Supplemental Budget for Rural Workforce Housing Construction\",Housing,\"ME, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Maine Governor Janet Mills deploys $35M from the state budget to build 600 affordable rental homes for rural nurses, teachers, and workers.\",\"Governor Janet Mills and MaineHousing roll out $35 million in forgivable capital grants to construct 600 middle-income rental homes for healthcare workers and teachers in rural counties.\",https://www.choseno.com/news/maine-enacts-supplemental-housing-budget-allocating-35-million-for-rural-workforce-apartments-2026-08-24,https://www.choseno.com/news/maine-enacts-supplemental-housing-budget-allocating-35-million-for-rural-workforce-apartments-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,9.7,\"Connecticut Deploys $20 Million Housing Trust Fund Grants to Towns Overhauling Infill Zoning\",Housing,\"CT, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Connecticut Governor Ned Lamont awards $20M in infrastructure grants to 18 towns that modernized zoning for transit-oriented housing.\",\"Governor Ned Lamont and the Connecticut Department of Housing award $20 million in incentive grants to 18 municipalities that eliminated single-family exclusionary zoning near rail stations.\",https://www.choseno.com/news/connecticut-department-of-housing-launches-municipal-housing-trust-fund-incentive-grants-2026-08-24,https://www.choseno.com/news/connecticut-department-of-housing-launches-municipal-housing-trust-fund-incentive-grants-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,9.6,\"Vermont Implements Act 181 Streamlining Act 250 Environmental Reviews for Downtown Housing\",Housing,\"VT, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Vermont implements landmark Act 181, exempting downtown housing from Act 250 reviews while establishing strict forest protections.\",\"Natural Resources Board issues administrative rules implementing Act 181, exempting designated downtown centers and village cores from Act 250 reviews to accelerate housing infill.\",https://www.choseno.com/news/vermont-general-assembly-enacts-act-181-modernizing-act-250-environmental-land-use-framework-2026-08-24,https://www.choseno.com/news/vermont-general-assembly-enacts-act-181-modernizing-act-250-environmental-land-use-framework-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,9.6,\"Prince Edward Island Implements Mandatory Paid Sick Leave and Rest Period Standards\",Governance,\"PE, CA\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Prince Edward Island implements modernized labor regulations mandating 3 paid sick days and 32 hours of weekly rest for workers.\",\"PEI Executive Council publishes Orders in Council enacting regulations under the updated Employment Standards Act, mandating 3 paid sick days annually and 32 consecutive hours of weekly rest.\",https://www.choseno.com/news/prince-edward-island-executive-council-issues-orders-implementing-updated-employment-standards-act-2026-08-24,https://www.choseno.com/news/prince-edward-island-executive-council-issues-orders-implementing-updated-employment-standards-act-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,9.5,\"Premier Tony Wakeham Restructures Executive Cabinet to Direct Major Energy and Infrastructure Projects\",Governance,\"NL, CA\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Newfoundland Premier Tony Wakeham creates a dedicated Major Projects Secretariat to oversee the $70B Churchill Falls hydro expansion.\",\"Newfoundland and Labrador Premier Tony Wakeham establishes the Major Projects and Energy Infrastructure Secretariat, consolidating ministerial oversight for Churchill Falls expansion and offshore wind.\",https://www.choseno.com/news/newfoundland-premier-tony-wakeham-announces-senior-civil-service-restructuring-for-megaproject-delivery-2026-08-24,https://www.choseno.com/news/newfoundland-premier-tony-wakeham-announces-senior-civil-service-restructuring-for-megaproject-delivery-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.5,\"Manitoba Justice Department Launches Specialized Anti-Retail Theft Prosecution and Safety Unit\",Public Safety,\"MB, CA\",Wab Kinew,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Manitoba launches a specialized retail crime prosecution team and deploys 30 safety officers to protect frontline retail workers.\",\"Province of Manitoba establishes a dedicated retail crime prosecution team and allocates $4.5 million to deploy coordinated community safety officers in commercial retail corridors.\",https://www.choseno.com/news/manitoba-justice-department-establishes-specialized-retail-crime-prosecution-and-diversion-unit-2026-08-24,https://www.choseno.com/wall/wab-kinew",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.4,\"Saskatchewan Expands Presumptive Occupational Cancer Coverage for Frontline Firefighters\",Public Safety,\"SK, CA\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Saskatchewan expands presumptive occupational cancer coverage, adding 6 additional cancers for municipal and wildland firefighters.\",\"Saskatchewan Workers' Compensation Board amends administrative regulations, adding six additional occupational cancers to presumptive coverage for municipal and wildland firefighters.\",https://www.choseno.com/news/saskatchewan-workers-compensation-board-expands-presumptive-cancer-coverage-for-firefighters-2026-08-24,https://www.choseno.com/news/saskatchewan-workers-compensation-board-expands-presumptive-cancer-coverage-for-firefighters-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.3,\"Alaska Certification Confirms Campaign Contribution Limit Initiative on November General Ballot\",Governance,\"AK, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Alaska certifies Ballot Measure 2 for the November ballot, allowing voters to restore $1,000 individual campaign contribution limits.\",\"Alaska Division of Elections certifies Ballot Measure 2 for the November general election, asking voters to restore statutory $1,000 annual individual limits on campaign donations.\",https://www.choseno.com/news/alaska-voters-advance-statutory-initiative-restoring-state-campaign-contribution-limits-2026-08-24,https://www.choseno.com/news/alaska-voters-advance-statutory-initiative-restoring-state-campaign-contribution-limits-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.3,\"Connecticut Implements Comprehensive Child Welfare and Independent Ombudsperson Oversight Law\",Governance,\"CT, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Connecticut enacts Public Act 26-112, creating an independent Child Welfare Ombudsperson and capping foster caseworker caseloads at 1:12.\",\"Connecticut Department of Children and Families brings Public Act 26-112 into force, creating an independent child welfare ombudsperson and mandating quarterly casework transparency audits.\",https://www.choseno.com/news/connecticut-department-of-children-and-families-implements-comprehensive-child-welfare-oversight-act-2026-08-24,https://www.choseno.com/news/connecticut-department-of-children-and-families-implements-comprehensive-child-welfare-oversight-act-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.3,\"U.S. Department of Energy Awards $450 Million for Rural Community Clean Energy Microgrids\",Energy,\"DC, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Department of Energy awards $450M to 35 rural electric cooperatives to install battery microgrids that keep power on during severe storms.\",\"Department of Energy selects 35 rural and tribal municipal utilities to receive $450 million in Grid Resilience and Innovation Partnership (GRIP) grants to install battery and solar microgrids.\",https://www.choseno.com/news/united-states-department-of-energy-awards-450-million-for-rural-clean-energy-microgrids-2026-08-24,https://www.choseno.com/news/united-states-department-of-energy-awards-450-million-for-rural-clean-energy-microgrids-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.2,\"Premier Tim Houston Deploys 12 Mobile Primary Care Health Vans Across Rural Nova Scotia\",Healthcare,\"NS, CA\",Tim Houston,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Nova Scotia Premier Tim Houston deploys 12 mobile primary care health vans to deliver doctor appointments across 50 rural coastal communities.\",\"Nova Scotia Health expands mobile clinical outreach, deploying 12 custom primary care vans providing doctor appointments, immunizations, and prescription renewals across coastal towns.\",https://www.choseno.com/news/nova-scotia-launches-mobile-health-clinic-fleet-expansion-for-rural-coastal-communities-2026-08-24,https://www.choseno.com/wall/tim-houston",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.2,\"Rhode Island Enacts Fair Chance Housing Law Prohibiting Blanket Criminal Record Rental Bans\",Housing,\"RI, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Rhode Island enacts the Fair Chance Housing Act, barring landlords from using blanket criminal record bans to deny rental housing.\",\"Rhode Island enacts the Fair Chance in Housing Act, prohibiting landlords from inquiring into rental applicants' criminal history prior to extending conditional lease offers.\",https://www.choseno.com/news/rhode-island-general-assembly-enacts-fair-chance-housing-statute-restricting-criminal-background-checks-2026-08-24,https://www.choseno.com/news/rhode-island-general-assembly-enacts-fair-chance-housing-statute-restricting-criminal-background-checks-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.1,\"Massachusetts DPU Orders Natural Gas Utilities to Transition Capital into Networked Geothermal\",Energy,\"MA, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Massachusetts DPU orders gas utilities to halt fossil expansion and build neighborhood networked geothermal clean energy loops.\",\"Massachusetts Department of Public Utilities issues landmark Order 20-80-B, requiring commercial gas utilities to pilot neighborhood networked geothermal thermal energy networks.\",https://www.choseno.com/news/massachusetts-department-of-public-utilities-enacts-comprehensive-clean-heat-regulatory-framework-2026-08-24,https://www.choseno.com/news/massachusetts-department-of-public-utilities-enacts-comprehensive-clean-heat-regulatory-framework-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,9.1,\"U.S. Department of Agriculture Awards $300 Million to Expand Independent Domestic Fertilizer Plants\",Agriculture,\"DC, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"USDA awards $300M to build 24 independent American fertilizer plants, reducing crop input costs for 75,000 family farmers by 20%.\",\"USDA Secretary Tom Vilsack announces $300 million in Fertilizer Product Expansion Program (FPEP) grants across 18 states to increase domestic nitrogen and phosphate manufacturing.\",https://www.choseno.com/news/united-states-department-of-agriculture-deploys-300-million-for-regional-fertilizer-production-expansion-2026-08-24,https://www.choseno.com/news/united-states-department-of-agriculture-deploys-300-million-for-regional-fertilizer-production-expansion-2026-08-24",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,9.0,\"Ontario Energy Board Enacts Fast-Track Grid Connection Rules for Utility Battery Storage Megaprojects\",Energy,\"ON, CA\",Doug Ford,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Ontario Energy Board enacts fast-track rules requiring electricity distributors to approve grid battery storage connections in 60 days.\",\"Ontario Energy Board (OEB) issues revised Distribution System Code rules, mandating 60-day connection approvals for grid-scale battery energy storage systems to support Ontario's nuclear baseload.\",https://www.choseno.com/news/ontario-energy-board-approves-multi-year-grid-connection-streamlining-for-battery-storage-2026-08-24,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,9.0,\"Premier David Eby Directs $50 Million to Expand Value-Added Wood Manufacturing and Mass Timber Mills\",Economy,\"BC, CA\",David Eby,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"B.C. Premier David Eby directs $50M to expand 22 value-added mass-timber mills, securing 1,800 union forestry manufacturing jobs.\",\"B.C. Ministry of Forests deploys $50 million through the BC Manufacturing Jobs Program, funding 22 mass-timber and engineered wood fabrication plants across the Interior and Vancouver Island.\",https://www.choseno.com/news/british-columbia-forestry-ministry-awards-50-million-in-value-added-timber-manufacturing-grants-2026-08-24,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-24T16:02:45.103Z"
+  },
+  {
+    "rank": 101,
+    "raw": "81,9.9,\"Cleveland City Council Enacts Emergency Ordinances Overhauling Housing Tax Abatement and Down Payment Grants\",Housing,\"OH, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Cleveland City Council passes emergency ordinances directing 100% property tax abatements into disinvested neighborhoods and expanding homebuyer grants.\",\"Cleveland City Council adopts emergency Ordinances 939-2026 and 940-2026, updating Community Reinvestment Area (CRA) residential tax abatements and expanding homebuyer construction gap grants.\",https://www.choseno.com/news/cleveland-city-council-approves-emergency-ordinances-939-and-940-for-cra-housing-abatement-2026-08-24,https://www.choseno.com/news/cleveland-city-council-approves-emergency-ordinances-939-and-940-for-cra-housing-abatement-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,9.8,\"Pittsburgh City Council Passes Comprehensive Pedestrian Safety Ordinance Banning Sidewalk Parking\",Public Safety,\"PA, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Pittsburgh City Council unanimously passes an ordinance imposing $110 fines and towing for vehicles parked on sidewalks and wheelchair ramps.\",\"Pittsburgh City Council votes 9–0 to close a municipal code loophole, authorizing immediate citations and towing for commercial and passenger vehicles obstructing public sidewalks and ramps.\",https://www.choseno.com/news/pittsburgh-city-council-passes-ordinance-closing-sidewalk-parking-enforcement-loophole-2026-08-24,https://www.choseno.com/news/pittsburgh-city-council-passes-ordinance-closing-sidewalk-parking-enforcement-loophole-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,9.8,\"San Jose City Council Advances Policy Overhaul to Accelerate 25,000 Transit-Oriented Homes\",Housing,\"CA, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"San Jose City Council advances landmark framework upzoning commercial strip malls near light rail to unlock 25,000 transit-connected homes.\",\"San Jose City Council approves the Urban Village Growth Framework, upzoning low-density commercial strip malls along VTA light rail lines to accommodate 25,000 multi-family homes.\",https://www.choseno.com/news/san-jose-city-council-advances-citywide-infill-density-framework-and-transit-commercial-rezoning-2026-08-24,https://www.choseno.com/news/san-jose-city-council-advances-citywide-infill-density-framework-and-transit-commercial-rezoning-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,9.8,\"Columbus City Council Unveils 'Zone In Phase Two' Modernizing Commercial Transit Corridors\",Governance,\"OH, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Columbus City Council unveils Zone In Phase Two, eliminating parking minimums and allowing 6-story mixed-use housing along 150 miles of bus corridors.\",\"Columbus City Council releases Phase Two of its historic Zone In code overhaul, eliminating parking minimums and allowing 6-story mixed-use infill along 150 miles of arterial bus transit corridors.\",https://www.choseno.com/news/columbus-city-council-unveils-zone-in-phase-two-overhaul-for-arterial-corridors-2026-08-24,https://www.choseno.com/news/columbus-city-council-unveils-zone-in-phase-two-overhaul-for-arterial-corridors-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,9.7,\"Oakland City Council Strengthens Municipal Rent Adjustment Program and Eviction Diversion Mediation\",Housing,\"CA, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Oakland City Council passes an ordinance requiring mandatory eviction mediation, offering $4,500 rental grants, and setting a 2.1% rent cap.\",\"Oakland City Council enacts municipal code reforms requiring mandatory mediation before formal eviction filings and adjusting the annual Consumer Price Index (CPI) rent increase cap to 2.1%.\",https://www.choseno.com/news/oakland-city-council-enacts-tenant-displacement-protection-and-eviction-diversion-statute-2026-08-24,https://www.choseno.com/news/oakland-city-council-enacts-tenant-displacement-protection-and-eviction-diversion-statute-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,9.7,\"Baltimore City Council Advances Transform Baltimore Zoning Amendments for Inner Harbor Revitalization\",Infrastructure,\"MD, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Baltimore City Council committee advances zoning amendments unlocking a $500M mixed-use redesign and 12 acres of public parklands at Inner Harbor.\",\"Baltimore City Council Land Use Committee approves zoning amendments to Transform Baltimore (Title 32), paving the way for a $500 million mixed-use public park and residential waterfront redesign.\",https://www.choseno.com/news/baltimore-city-council-advances-comprehensive-zoning-code-updates-for-commercial-waterfronts-2026-08-24,https://www.choseno.com/news/baltimore-city-council-advances-comprehensive-zoning-code-updates-for-commercial-waterfronts-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,9.6,\"Cincinnati City Council Approves $15 Million Capital Plan to Accelerate Lead Water Pipe Replacement\",Environment,\"OH, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Cincinnati City Council approves $15M to replace 3,500 private lead water service lines at zero cost to homeowners and daycares.\",\"Cincinnati City Council unanimously approves $15 million in capital bonding to replace 3,500 private lead water service lines at zero cost to homeowners and licensed child care facilities.\",https://www.choseno.com/news/cincinnati-city-council-allocates-15-million-for-lead-service-line-replacement-and-water-safety-2026-08-24,https://www.choseno.com/news/cincinnati-city-council-allocates-15-million-for-lead-service-line-replacement-and-water-safety-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,9.6,\"Berkley City Council Enacts Municipal Ordinance Restricting High-Speed Electric Bicycles on Sidewalks\",Public Safety,\"MI, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Berkley City Council passes an ordinance restricting high-speed electric bicycles on commercial sidewalks, requiring road lane use.\",\"Berkley City Council (Metro Detroit) passes an ordinance prohibiting Class 2 and Class 3 electric bicycles on downtown sidewalks, mandating on-street bike lanes to safeguard pedestrians.\",https://www.choseno.com/news/berkley-city-council-passes-ordinance-banning-high-speed-e-bikes-on-pedestrian-sidewalks-2026-08-24,https://www.choseno.com/news/berkley-city-council-passes-ordinance-banning-high-speed-e-bikes-on-pedestrian-sidewalks-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,9.5,\"Sacramento City Council Committee Advances Modernized Commercial Signage and Digital Display Rules\",Governance,\"CA, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Sacramento City Council committee advances digital signage ordinance mandating automatic nighttime dimming and 11 PM curfews near homes.\",\"Sacramento Law and Legislation Committee approves municipal code amendments establishing energy-efficiency standards and nighttime dimming requirements for commercial digital displays.\",https://www.choseno.com/news/sacramento-city-council-committee-advances-ordinance-regulating-digital-commercial-signage-2026-08-24,https://www.choseno.com/news/sacramento-city-council-committee-advances-ordinance-regulating-digital-commercial-signage-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.5,\"Sturgeon County Council Approves Multi-Year Agricultural Drainage and Rural Bridge Capital Plan\",Infrastructure,\"AB, CA\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Sturgeon County Council approves $8.5M to replace 5 aging timber bridges and upgrade 35km of drainage canals to protect farmland.\",\"Sturgeon County Council passes rural infrastructure plan, committing $8.5 million to reconstruct five timber agricultural bridges and upgrade 35 kilometers of regional drainage canals.\",https://www.choseno.com/news/sturgeon-county-council-approves-agricultural-water-drainage-and-road-protection-infrastructure-plan-2026-08-24,https://www.choseno.com/news/sturgeon-county-council-approves-agricultural-water-drainage-and-road-protection-infrastructure-plan-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.4,\"Canada and New Brunswick Allocate $18 Million for Edmundston Potable Water and Flood Defenses\",Infrastructure,\"NB, CA\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Canada and New Brunswick announce $18M to modernize Edmundston's water treatment plant and build flood dikes along the Madawaska River.\",\"Federal and New Brunswick governments deploy $18 million in joint infrastructure grants to upgrade the Edmundston Madawaska water filtration plant and construct Madawaska River flood dikes.\",https://www.choseno.com/news/new-brunswick-allocates-18-million-in-bilateral-infrastructure-funding-for-edmundston-water-treatment-2026-08-24,https://www.choseno.com/news/new-brunswick-allocates-18-million-in-bilateral-infrastructure-funding-for-edmundston-water-treatment-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.3,\"Federal Government Delivers $932 Million in Direct Infrastructure Funding to Ontario Municipalities\",Infrastructure,\"ON, CA\",Doug Ford,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Federal government transfers $932M to AMO, Toronto, and Ontario municipalities for local road, bridge, and transit infrastructure renewal.\",\"Infrastructure Canada transfers $932 million through the Canada Community-Building Fund (CCBF) to AMO, Toronto, and Ontario municipalities for local bridge, road, and transit repairs.\",https://www.choseno.com/news/association-of-municipalities-of-ontario-secures-932-million-federal-community-building-fund-tranche-2026-08-24,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.3,\"Utah Transportation Commission Approves $120 Million I-15 South Corridor Widening and Bus Priority Lanes\",Transportation,\"UT, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Utah approves $120M to widen I-15 and build dedicated UTA bus priority lanes through the Silicon Slopes tech corridor.\",\"Utah Transportation Commission awards $120 million to construct express toll and UTA bus-priority lanes along Interstate 15 between Draper and Lehi to alleviate Point of the Mountain congestion.\",https://www.choseno.com/news/utah-transportation-commission-approves-120-million-i-15-expansion-and-transit-priority-lanes-2026-08-24,https://www.choseno.com/news/utah-transportation-commission-approves-120-million-i-15-expansion-and-transit-priority-lanes-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.3,\"Governor Jared Polis Directs $30 Million in Clean Heat Grants for Commercial Buildings and Schools\",Environment,\"CO, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Colorado Governor Jared Polis directs $30M in grants to help schools and commercial buildings install geothermal heat pumps and lower heating bills.\",\"Colorado Energy Office launches $30 million Clean Heat Enterprise Grant Program, providing up to $500,000 for public school districts and commercial buildings installing geothermal and heat pump systems.\",https://www.choseno.com/news/colorado-energy-office-deploys-30-million-in-industrial-heat-pump-and-geothermal-conversion-grants-2026-08-24,https://www.choseno.com/news/colorado-energy-office-deploys-30-million-in-industrial-heat-pump-and-geothermal-conversion-grants-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.2,\"New Mexico Enacts Mandatory Produced Water Recycling Standards for Permian Basin Oil & Gas\",Environment,\"NM, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"New Mexico adopts landmark rules requiring oil and gas operators in the Permian Basin to recycle drilling wastewater and protect desert aquifers.\",\"New Mexico Environment Department adopts binding water conservation regulations requiring oil and gas operators in the Permian Basin to recycle 75% of industrial drilling wastewater by 2028.\",https://www.choseno.com/news/new-mexico-environment-department-enacts-strict-produced-water-recycling-rules-for-permian-basin-2026-08-24,https://www.choseno.com/news/new-mexico-environment-department-enacts-strict-produced-water-recycling-rules-for-permian-basin-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.2,\"Oregon Approves $45 Million in Seismic Safety Retrofits for Coastal Highway 101 Bridges\",Infrastructure,\"OR, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Oregon approves $45M in seismic retrofits for 7 coastal Highway 101 bridges to ensure lifeline access after Cascadia earthquakes.\",\"Oregon Transportation Commission awards $45 million to structurally reinforce seven Highway 101 coastal bridges against Cascadia subduction zone earthquakes and tsunami scour.\",https://www.choseno.com/news/oregon-department-of-transportation-allocates-45-million-for-cascadia-earthquake-bridge-retrofits-2026-08-24,https://www.choseno.com/news/oregon-department-of-transportation-allocates-45-million-for-cascadia-earthquake-bridge-retrofits-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.1,\"Halifax Regional Council Adopts Strict Municipal Expense Oversight and Monthly Public Disclosure Bylaw\",Governance,\"NS, CA\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Halifax Regional Council unanimously votes to mandate monthly online disclosure of all mayoral and councillor expense receipts.\",\"Halifax Regional Council unanimously adopts internal governance reforms requiring monthly online publishing of all mayoral and councillor expenses, receipts, and hospitality claims.\",https://www.choseno.com/news/halifax-regional-council-orders-mayoral-expense-accountability-and-transparency-reform-2026-08-24,https://www.choseno.com/news/halifax-regional-council-orders-mayoral-expense-accountability-and-transparency-reform-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,9.1,\"Department of Defense Implements Executive Order Establishing Military Spouse Employment Commission\",Governance,\"DC, US\",Civic Authority,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Department of Defense launches Military Spouse Employment Commission under EO 14417, establishing multi-state license reciprocity for military families.\",\"U.S. Department of Defense and Department of Labor launch national compact implementing Executive Order 14417, securing multi-state professional license reciprocity for military families.\",https://www.choseno.com/news/united-states-department-of-defense-establishes-military-spouse-employment-and-licensing-commission-2026-08-24,https://www.choseno.com/news/united-states-department-of-defense-establishes-military-spouse-employment-and-licensing-commission-2026-08-24",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,9.0,\"Canada and Manitoba Allocate $80 Million to Expedite Lake St. Martin Flood Protection Channels\",Infrastructure,\"MB, CA\",Wab Kinew,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Canada and Manitoba allocate $80M to expedite construction of the Lake St. Martin outlet channels, permanently protecting Interlake First Nations from floods.\",\"Premier Wab Kinew and federal infrastructure agencies deploy $80 million in joint funding to fast-track construction of permanent drainage outlet channels protecting Interlake First Nations.\",https://www.choseno.com/news/manitoba-and-ottawa-deploy-80-million-for-lake-manitoba-and-lake-st-martin-outlet-channels-2026-08-24,https://www.choseno.com/wall/wab-kinew",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,9.0,\"Health Canada Enacts Mandatory Fragrance Allergen Labeling Standards for Consumer Cosmetics\",Healthcare,\"ON, CA\",Mark Carney,2026-08-24T10:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Health Canada enacts mandatory cosmetics labeling rules requiring companies to disclose 24 specific fragrance allergens on product packaging.\",\"Health Canada brings updated Cosmetic Regulations into force under the Food and Drugs Act, mandating disclosure of 24 specific fragrance allergens on retail packaging to protect consumer health.\",https://www.choseno.com/news/federal-cabinet-enacts-enhanced-cosmetics-ingredient-transparency-and-safety-regulations-2026-08-24,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-24T15:02:53.433Z"
+  },
+  {
+    "rank": 101,
+    "raw": "81,9.9,\"Governor Tim Walz Issues Executive Order Halting Mineral Mining Reviews Around Boundary Waters\",Environment,\"MN, US\",Tim Walz,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Minnesota Governor Tim Walz signs an executive order halting all state mining permits and environmental reviews near the Boundary Waters Wilderness.\",\"Governor Tim Walz directs Minnesota DNR and MPCA to halt all environmental permitting for nonferrous sulfide mining within the Boundary Waters Canoe Area Wilderness watershed.\",https://www.choseno.com/news/minnesota-governor-tim-walz-signs-executive-order-banning-mining-permits-near-boundary-waters-2026-08-24,https://www.choseno.com/wall/tim-walz",
+    "archivedAt": "2026-08-24T14:02:11.231Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,9.8,\"Edmonton City Council Passes Housing Bylaws 21532, 21533, and 21563 for Mixed-Use Urban Infill\",Housing,\"AB, CA\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Edmonton City Council passes Bylaws 21532, 21533, and 21563, approving 650 transit-oriented homes and new parklands near Clareview LRT.\",\"Edmonton City Council enacts three land-use zoning bylaws unlocking medium-scale housing, pocket parklands, and transit-connected mixed-use density in Clareview and Gorman.\",https://www.choseno.com/news/edmonton-city-council-approves-bylaws-21532-21533-and-21563-for-transit-oriented-infill-housing-2026-08-24,https://www.choseno.com/news/edmonton-city-council-approves-bylaws-21532-21533-and-21563-for-transit-oriented-infill-housing-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.231Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,9.8,\"Portland City Council Unanimously Adopts RICAP 11 Code Overhaul to Streamline Commercial Infill\",Governance,\"OR, US\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Portland City Council unanimously adopts RICAP 11, overhauling municipal code to cut commercial permitting delays and revitalize downtown storefronts.\",\"Portland City Council enacts Regulatory Improvement Code Amendment Package 11 (RICAP 11), removing bureaucratic hurdles for small business storefronts and adaptive reuse projects.\",https://www.choseno.com/news/portland-city-council-adopts-ricap-11-regulatory-improvement-code-amendment-package-2026-08-24,https://www.choseno.com/news/portland-city-council-adopts-ricap-11-regulatory-improvement-code-amendment-package-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.231Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,9.8,\"North Carolina Enacts S445 Regulatory Reform Act of 2026 Cutting Commercial Permitting Timelines\",Economy,\"NC, US\",Josh Stein,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"North Carolina enacts the Regulatory Reform Act of 2026 (S445), streamlining environmental permits to accelerate advanced manufacturing site delivery.\",\"North Carolina General Assembly and Governor Josh Stein enact Senate Bill 445, streamlining environmental permitting for wastewater extensions and industrial site preparation.\",https://www.choseno.com/news/north-carolina-general-assembly-enacts-s445-regulatory-reform-act-of-2026-2026-08-24,https://www.choseno.com/wall/josh-stein",
+    "archivedAt": "2026-08-24T14:02:11.231Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,9.7,\"Ontario Ministry of Children and Social Services Modernizes Social Assistance Verification Framework\",Governance,\"ON, CA\",Doug Ford,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Ontario updates social assistance regulations, launching automated digital earnings reporting and protecting the $1,000 monthly ODSP work exemption.\",\"Government of Ontario updates Ontario Works (OW) and ODSP administrative regulations, introducing digital verification for employment earnings to reduce bureaucratic delays for recipients.\",https://www.choseno.com/news/ontario-enacts-regulatory-modernization-for-provincial-social-assistance-eligibility-2026-08-24,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-24T14:02:11.231Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,9.7,\"Governor Gavin Newsom Signs Groundbreaking Legislation Regulating Artificial Intelligence in Legal Practice\",Governance,\"CA, US\",Gavin Newsom,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"California Governor Gavin Newsom signs landmark legislation establishing strict ethics and verification rules for AI tools used by attorneys.\",\"California enacts statutory safeguards requiring legal generative AI tools to disclose algorithmic training datasets and establishing ethical guidelines for California State Bar attorneys.\",https://www.choseno.com/news/california-governor-gavin-newsom-signs-ai-statutory-standards-for-legal-practice-and-state-bar-2026-08-24,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-24T14:02:11.231Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,9.6,\"Seattle City Council Passes Ordinance Expanding Secure Safe-Parking Sites for Vehicular Residents\",Housing,\"WA, US\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Seattle City Council approves $4.8M to open 120 managed safe-parking spaces with hygiene trailers and caseworkers for vehicular residents.\",\"Seattle City Council approves $4.8 million expansion of the Vehicle Resident Assistance Program, creating 120 managed safe-parking spaces with sanitation, caseworkers, and rapid rehousing.\",https://www.choseno.com/news/seattle-city-council-expands-vehicle-resident-assistance-program-with-secure-transitional-parking-2026-08-24,https://www.choseno.com/news/seattle-city-council-expands-vehicle-resident-assistance-program-with-secure-transitional-parking-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.231Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,9.6,\"Governor Brian Kemp Directs $85 Million in State Surplus Capital to Stabilize Rural Emergency Rooms\",Healthcare,\"GA, US\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Georgia Governor Brian Kemp directs $85M in state surplus capital to upgrade emergency rooms and retain physicians across 28 rural hospitals.\",\"Governor Brian Kemp announces $85 million in state emergency stabilization grants to upgrade diagnostic equipment and retain emergency room physicians across 28 rural Georgia hospitals.\",https://www.choseno.com/news/georgia-governor-brian-kemp-directs-85-million-in-state-surplus-toward-rural-hospital-stabilization-2026-08-24,https://www.choseno.com/news/georgia-governor-brian-kemp-directs-85-million-in-state-surplus-toward-rural-hospital-stabilization-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.231Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,9.5,\"Premier Scott Moe Announces $65 Million Highway Infrastructure Plan for Mining Logistics Corridors\",Infrastructure,\"SK, CA\",Scott Moe,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Saskatchewan Premier Scott Moe commits $65M to twin key mining highways and upgrade bridges for global potash and uranium exports.\",\"Saskatchewan Premier Scott Moe commits $65 million to twin key mineral transport highways, expanding export throughput for global potash and uranium shipments.\",https://www.choseno.com/news/saskatchewan-premier-scott-moe-unveils-provincial-potash-and-uranium-export-logistics-corridor-strategy-2026-08-24,https://www.choseno.com/wall/scott-moe",
+    "archivedAt": "2026-08-24T14:02:11.231Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.5,\"Governor Maura Healey Signs $1 Billion Climatetech and Clean Energy Economic Competitiveness Act\",Economy,\"MA, US\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Massachusetts Governor Maura Healey signs a landmark $1B law establishing tax incentives and grants to make the state a global hub for climatetech.\",\"Governor Maura Healey enacts landmark $1 billion legislation establishing state tax credits, capital grants, and testing facilities for offshore wind, fusion energy, and clean tech startups.\",https://www.choseno.com/news/massachusetts-governor-maura-healey-signs-1-billion-climatetech-and-clean-energy-competitiveness-act-2026-08-24,https://www.choseno.com/news/massachusetts-governor-maura-healey-signs-1-billion-climatetech-and-clean-energy-competitiveness-act-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.231Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.4,\"Governor Phil Murphy Enacts Strict Drug Transparency Rules Mandating Prior Notice for Price Hikes\",Healthcare,\"NJ, US\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"New Jersey Governor Phil Murphy signs legislation mandating 60-day advance notice for prescription drug price hikes over 15% and auditing PBMs.\",\"New Jersey enacts statutory pharmaceutical oversight requiring drug manufacturers to justify price increases exceeding 15% and establishing penalty audits for pharmacy benefit managers.\",https://www.choseno.com/news/new-jersey-governor-phil-murphy-signs-prescription-drug-affordability-transparency-mandates-2026-08-24,https://www.choseno.com/news/new-jersey-governor-phil-murphy-signs-prescription-drug-affordability-transparency-mandates-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.231Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.3,\"Governor Tony Evers Directs $40 Million in Emergency State Funding to Filter PFAS from Municipal Wells\",Environment,\"WI, US\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Wisconsin Governor Tony Evers allocates $40M in emergency funding to install PFAS filtration systems across 60 municipal drinking water utilities.\",\"Governor Tony Evers allocates $40 million to install granular activated carbon filtration systems across 60 Wisconsin communities affected by PFAS chemical water contamination.\",https://www.choseno.com/news/wisconsin-governor-tony-evers-allocates-40-million-for-pfas-drinking-water-filtration-and-municipal-well-testing-2026-08-24,https://www.choseno.com/news/wisconsin-governor-tony-evers-allocates-40-million-for-pfas-drinking-water-filtration-and-municipal-well-testing-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.231Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.3,\"Governor Wes Moore Signs Executive Order Fast-Tracking Sparrows Point Offshore Wind Logistics Hub\",Energy,\"MD, US\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Maryland Governor Wes Moore signs an executive order fast-tracking a $150M offshore wind manufacturing and staging terminal at Sparrows Point.\",\"Governor Wes Moore enacts Executive Order 2026-11, coordinating state agencies to fast-track permits and capital for the Tradepoint Atlantic offshore wind manufacturing terminal at Sparrows Point.\",https://www.choseno.com/news/maryland-governor-wes-moore-signs-executive-order-accelerating-offshore-wind-port-infrastructure-2026-08-24,https://www.choseno.com/news/maryland-governor-wes-moore-signs-executive-order-accelerating-offshore-wind-port-infrastructure-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.232Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.3,\"Charlotte City Council Passes Neighborhood Commercial Infill Reforms for Small Retail and Cafes\",Governance,\"NC, US\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Charlotte City Council votes 8-3 to permit neighborhood corner cafes, bakeries, and micro-groceries in residential zones to boost walkability.\",\"Charlotte City Council amends Unified Development Ordinance (UDO), allowing ground-floor neighborhood commercial units (NCUs) like coffee shops and corner groceries in residential subdivisions.\",https://www.choseno.com/news/charlotte-city-council-approves-zoning-overhaul-allowing-accessory-commercial-units-in-neighborhoods-2026-08-24,https://www.choseno.com/news/charlotte-city-council-approves-zoning-overhaul-allowing-accessory-commercial-units-in-neighborhoods-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.232Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.2,\"Nashville Metro Council Approves $3.1 Billion 'Choose How You Move' Transit Plan for November Ballot\",Transportation,\"TN, US\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Nashville Metro Council votes 35-3 to place a $3.1B transit referendum on the November ballot, funding 54 miles of dedicated rapid transit corridors.\",\"Nashville Metro Council votes 35–3 to place a comprehensive $3.1 billion transit modernization referendum on the November ballot, funding 54 miles of dedicated bus rapid transit and 86 miles of sidewalks.\",https://www.choseno.com/news/nashville-metro-council-approves-3-1-billion-transport-modernization-referendum-docket-2026-08-24,https://www.choseno.com/news/nashville-metro-council-approves-3-1-billion-transport-modernization-referendum-docket-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.232Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.2,\"San Francisco Board of Supervisors Enacts Landmark Adaptive Reuse Ordinance for Financial District\",Economy,\"CA, US\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"San Francisco Board of Supervisors unanimously passes an ordinance fast-tracking vacant Financial District office conversions into biotech labs.\",\"San Francisco Board of Supervisors unanimously passes zoning legislation waiving conditional use hearings to fast-track commercial conversions of vacant downtown office towers into life science labs.\",https://www.choseno.com/news/san-francisco-board-of-supervisors-approves-downtown-office-to-laboratory-and-academic-adaptive-reuse-ordinance-2026-08-24,https://www.choseno.com/news/san-francisco-board-of-supervisors-approves-downtown-office-to-laboratory-and-academic-adaptive-reuse-ordinance-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.232Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.1,\"Quebec National Assembly Enacts Law Protecting Consumer Financial Data and Digital Sovereignty\",Governance,\"QC, CA\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Quebec National Assembly enacts landmark Bill 48, mandating strict consumer consent and data residency rules for fintech banking apps.\",\"Quebec adopts statutory consumer protections governing open banking and fintech algorithms, requiring explicit opt-in consent and local data residency for resident financial profiles.\",https://www.choseno.com/news/quebec-national-assembly-enacts-bill-48-mandating-open-banking-and-digital-identity-data-sovereignty-2026-08-24,https://www.choseno.com/news/quebec-national-assembly-enacts-bill-48-mandating-open-banking-and-digital-identity-data-sovereignty-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.232Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,9.1,\"U.S. Senate Passes Bipartisan Veterans Rural Healthcare and Clinical Telehealth Expansion Act\",Healthcare,\"DC, US\",Civic Authority,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"U.S. Senate passes bipartisan legislation (88-8) authorizing $3.4B to deploy 200 mobile clinics and eliminate telehealth copays for rural veterans.\",\"In an 88–8 bipartisan vote, the U.S. Senate passes legislation funding 200 mobile rural clinics and eliminating copays for veterans accessing telehealth psychiatric care.\",https://www.choseno.com/news/us-senate-approves-bipartisan-veterans-rural-telehealth-and-clinical-access-expansion-act-2026-08-24,https://www.choseno.com/news/us-senate-approves-bipartisan-veterans-rural-telehealth-and-clinical-access-expansion-act-2026-08-24",
+    "archivedAt": "2026-08-24T14:02:11.232Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,9.0,\"Calgary City Council Ratifies Core Alignment Contract for Green Line LRT Transit Megaproject\",Transportation,\"AB, CA\",Jyoti Gondek,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Calgary City Council approves construction contracts for the 18km Green Line LRT megaproject, locking in cost caps for downtown tunneling.\",\"Calgary City Council votes 10–4 to approve updated design-build procurement contracts for the downtown Green Line LRT core segment, locking in fixed-price construction cost caps.\",https://www.choseno.com/news/calgary-city-council-approves-green-line-lrt-core-segment-contract-and-procurement-safeguards-2026-08-24,https://www.choseno.com/wall/jyoti-gondek",
+    "archivedAt": "2026-08-24T14:02:11.232Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,9.0,\"Pennsylvania Implements Mandatory Energy Affordability Framework for Hyperscale AI Facilities\",Energy,\"PA, US\",Josh Shapiro,2026-08-24T09:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Pennsylvania enforces strict GRID standards requiring hyperscale AI data centers to provide on-site power and shield families from rate hikes.\",\"Pennsylvania Department of Environmental Protection releases operational guidelines for Executive Order 2026-05, mandating off-grid power generation for data centers over 50 megawatts.\",https://www.choseno.com/news/governor-josh-shapiro-issues-executive-order-2026-05-imposing-grid-rules-on-ai-data-centers-2026-08-24-v2,https://www.choseno.com/wall/josh-shapiro",
+    "archivedAt": "2026-08-24T14:02:11.232Z"
+  },
+  {
+    "rank": 101,
+    "raw": "81,9.9,\"Prime Minister Mark Carney and Atlantic Premiers Announce $70 Billion Churchill Falls Hydro Accord\",Energy,\"NL, CA\",Mark Carney,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Prime Minister Mark Carney and Atlantic Premiers announce a historic $70B agreement to expand the Churchill Falls hydroelectric megaproject.\",\"Canada, Quebec, and Newfoundland & Labrador finalize a historic $70 billion clean power accord, committing $10 billion in federal equity to expand the Churchill Falls and Gull Island hydroelectric megaprojects.\",https://www.choseno.com/news/prime-minister-mark-carney-announces-70-billion-churchill-falls-clean-energy-accord-2026-08-24,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,9.8,\"Ontario and Federal Government Launch $1 Billion Housing Infrastructure Fund for Zero-Fee Cities\",Housing,\"ON, CA\",Doug Ford,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Ontario Premier Doug Ford launches a $1B infrastructure fund to build water and road utilities for cities freezing development fees on new housing.\",\"Premier Doug Ford and federal housing agencies roll out $1 billion in direct water and wastewater capital grants for municipalities that freeze or eliminate development charges on rental housing.\",https://www.choseno.com/news/ontario-and-ottawa-launch-1-billion-municipal-housing-infrastructure-stream-2026-08-24,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,9.8,\"Premier Wab Kinew Commits $500 Million Toward $1.5 Billion Winnipeg Wastewater Treatment Expansion\",Environment,\"MB, CA\",Wab Kinew,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Manitoba Premier Wab Kinew commits $500M to upgrade Winnipeg's North End Wastewater Plant, protecting Lake Winnipeg and enabling 30k new homes.\",\"Province of Manitoba secures $500 million provincial capital grant for Phase 3 biological nutrient removal upgrades at Winnipeg's North End Sewage Treatment Plant to protect Lake Winnipeg.\",https://www.choseno.com/news/manitoba-commits-500-million-for-winnipeg-north-end-wastewater-treatment-expansion-2026-08-24,https://www.choseno.com/wall/wab-kinew",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,9.8,\"New York City Council Passes Legislation Making 'Certification of No Harassment' Permanent for Distressed Housing\",Housing,\"NY, US\",Civic Authority,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"New York City Council votes 43-6 to make the Certification of No Harassment law permanent, protecting rent-stabilized tenants from predatory landlords.\",\"NYC City Council votes to make the Certification of No Harassment (CONH) program permanent, requiring landlords in tenant-distressed zones to prove zero harassment before receiving alteration permits.\",https://www.choseno.com/news/new-york-city-council-makes-permanent-certification-of-no-harassment-tenant-protection-law-2026-08-24,https://www.choseno.com/news/new-york-city-council-makes-permanent-certification-of-no-harassment-tenant-protection-law-2026-08-24",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,9.7,\"Arizona Enacts Homeowners Association Reform Law Mandating Reasonableness Standards and Capping Fines\",Governance,\"AZ, US\",Civic Authority,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Arizona enacts landmark HOA reform legislation capping arbitrary fines at $250, protecting solar rights, and creating an independent dispute tribunal.\",\"Arizona enacts statutory amendments governing planned communities, prohibiting HOAs from issuing arbitrary fines for solar installations and establishing independent dispute arbitration.\",https://www.choseno.com/news/arizona-governor-signs-homeowners-association-neutrality-and-fairness-enforcement-statute-2026-08-24,https://www.choseno.com/news/arizona-governor-signs-homeowners-association-neutrality-and-fairness-enforcement-statute-2026-08-24",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,9.7,\"Garland City Council Adopts Ordinance 7691 Ratifying $10.6 Million Property Tax Revenue Expansion for Public Safety\",Economy,\"TX, US\",Civic Authority,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Garland City Council adopts Ordinance 7691 ratifying $10.6M in property tax revenue to fund police pay raises and stormwater flood defenses.\",\"Garland City Council votes to adopt Ordinance 7691, ratifying municipal budget property tax revenue increases to fund police and fire compensation adjustments and water drainage upgrades.\",https://www.choseno.com/news/garland-city-council-approves-ordinance-7691-ratifying-10-million-property-tax-revenue-increase-2026-08-24,https://www.choseno.com/news/garland-city-council-approves-ordinance-7691-ratifying-10-million-property-tax-revenue-increase-2026-08-24",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,9.6,\"Commerce City Council Passes Capital Ordinances Funding Landmark Drive and Chambers Road Widening\",Infrastructure,\"CO, US\",Civic Authority,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Commerce City Council passes key ordinances funding the widening of Chambers Road and Landmark Drive to four lanes and creating an Arts Commission.\",\"Commerce City Council adopts Ordinances 2767, 2783, and 2789 on final reading, allocating transportation grant revenues for arterial road expansions and creating a Municipal Arts Commission.\",https://www.choseno.com/news/commerce-city-council-passes-ordinances-for-arts-commission-and-major-road-widening-projects-2026-08-24,https://www.choseno.com/news/commerce-city-council-passes-ordinances-for-arts-commission-and-major-road-widening-projects-2026-08-24",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,9.6,\"Quebec and Newfoundland Formalize Gull Island Hydroelectric Transmission Treaty and Revenue Sharing\",Energy,\"QC, CA\",Civic Authority,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Quebec and Newfoundland ratify a historic 50-50 equity treaty to build the 2,250MW Gull Island hydro megaproject, powering clean industrial growth.\",\"Premiers Christine Fréchette and Tony Wakeham ratify binding interprovincial treaty governing the 2,250-megawatt Gull Island hydroelectric plant and joint transmission corridors.\",https://www.choseno.com/news/quebec-and-newfoundland-formalize-gull-island-hydroelectric-transmission-equity-treaty-2026-08-24,https://www.choseno.com/news/quebec-and-newfoundland-formalize-gull-island-hydroelectric-transmission-equity-treaty-2026-08-24",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,9.5,\"Federal Cabinet Permanently Extends Maximum $4,200 Canada Student Grants for Post-Secondary Education\",Education,\"ON, CA\",Mark Carney,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Federal government confirms maximum $4,200 non-repayable Canada Student Grants for 600,000 post-secondary students for the 2026–27 school year.\",\"Employment and Social Development Canada confirms maximum $4,200 annual Canada Student Grants for full-time students from low- and middle-income families for the 2026–2027 academic year.\",https://www.choseno.com/news/federal-cabinet-renews-maximum-canada-student-grants-for-2026-2027-post-secondary-year-2026-08-24,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.5,\"Halifax Regional Council Allocates Climate Grants for Urban Shading Corridors in Underserved Neighborhoods\",Environment,\"NS, CA\",Civic Authority,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Halifax Regional Council approves a $3.8M climate plan to build solar-powered misting transit plazas and plant 2,500 urban shade trees.\",\"Halifax Regional Municipality receives federal climate resilience funding, deploying urban cooling misting shelters and planting 2,500 mature native shade trees in Dartmouth and Spryfield.\",https://www.choseno.com/news/halifax-regional-municipality-deploys-climate-cooling-corridors-and-urban-forest-canopy-grants-2026-08-24,https://www.choseno.com/news/halifax-regional-municipality-deploys-climate-cooling-corridors-and-urban-forest-canopy-grants-2026-08-24",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.4,\"Houston City Council Approves $50 Million Greens Bayou Flood Detention Basin and Drainage Overhaul\",Infrastructure,\"TX, US\",Civic Authority,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Houston City Council approves $50M for a 1.2 billion-gallon Greens Bayou flood detention basin protecting 12,000 Northeast Houston homes.\",\"Houston City Council votes to acquire 140 acres of floodplain land along Greens Bayou, constructing a 1.2 billion-gallon stormwater detention basin to protect 12,000 East Houston homes.\",https://www.choseno.com/news/houston-city-council-passes-drainage-utility-reform-and-approves-50-million-flood-detention-basin-2026-08-24,https://www.choseno.com/news/houston-city-council-passes-drainage-utility-reform-and-approves-50-million-flood-detention-basin-2026-08-24",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.3,\"Phoenix City Council Passes Landmark Ordinance Mandating Shade and Hydration for Outdoor Workers\",Public Safety,\"AZ, US\",Civic Authority,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Phoenix City Council unanimously passes landmark ordinance requiring shade, water, and rest breaks for outdoor workers during extreme heat.\",\"Phoenix City Council unanimously enacts municipal workplace standards requiring commercial contractors and city vendors to provide mandatory shade, cool rest breaks, and water for workers.\",https://www.choseno.com/news/phoenix-city-council-enacts-mandatory-heat-safety-standards-for-outdoor-construction-workers-2026-08-24,https://www.choseno.com/news/phoenix-city-council-enacts-mandatory-heat-safety-standards-for-outdoor-construction-workers-2026-08-24",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.3,\"Premier David Eby Unveils $120 Million Mass-Timber Housing Acceleration for Transit Stations\",Housing,\"BC, CA\",David Eby,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"B.C. Premier David Eby unveils $120M to build 1,800 mass-timber rental homes near SkyTrain stations, cutting build times by 4 months.\",\"British Columbia deploys $120 million in provincial capital to construct 1,800 prefabricated mass-timber rental homes across TransLink SkyTrain and BC Transit hubs.\",https://www.choseno.com/news/british-columbia-ministry-of-housing-fast-tracks-1800-mass-timber-transit-homes-2026-08-24,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.3,\"U.S. House Passes Bipartisan Permitting Reform Act to Accelerate Domestic Lithium and Rare Earth Processing\",Economy,\"DC, US\",Mike Johnson,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"U.S. House passes bipartisan legislation (274-152) setting 180-day review limits to accelerate domestic lithium and rare earth mineral refining.\",\"In a 274–152 bipartisan vote, the U.S. House passes legislation establishing strict 180-day federal environmental review deadlines for domestic critical mineral refining facilities.\",https://www.choseno.com/news/us-house-passes-bipartisan-critical-mineral-permitting-and-refining-security-act-2026-08-24,https://www.choseno.com/wall/mike-johnson",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.2,\"California Approves $250 Million Clean Commercial Truck Voucher Grants for Freight Operators\",Environment,\"CA, US\",Gavin Newsom,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"California approves $250M in voucher discounts up to $150k to help small trucking fleets buy zero-emission electric and hydrogen cargo trucks.\",\"California Air Resources Board authorizes $250 million in HVIP vouchers to help small logistics fleets and independent truckers transition to zero-emission electric and hydrogen cargo haulers.\",https://www.choseno.com/news/california-air-resources-board-approves-250-million-zero-emission-heavy-duty-truck-voucher-infusion-2026-08-24,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.2,\"Governor Joe Lombardo Mobilizes Nevada National Guard to Support Washoe County Wildfire Defense\",Public Safety,\"NV, US\",Civic Authority,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Nevada Governor Joe Lombardo mobilizes National Guard Black Hawk helicopters and declares emergency for the 10,500-acre Hawk Fire in Reno.\",\"Nevada Governor Joe Lombardo declares state of emergency, deploying National Guard UH-60 Black Hawk water-drop helicopters and unlocking state emergency reserves for the 10,500-acre Hawk Fire.\",https://www.choseno.com/news/nevada-governor-joe-lombardo-deploys-national-guard-and-emergency-funding-for-hawk-fire-containment-2026-08-24,https://www.choseno.com/news/nevada-governor-joe-lombardo-deploys-national-guard-and-emergency-funding-for-hawk-fire-containment-2026-08-24",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.1,\"Illinois Implements Landmark Insurance Oversight Mandating Prior Approval for Rate Hikes Exceeding 10%\",Economy,\"IL, US\",JB Pritzker,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Illinois enacts landmark consumer protection rules requiring state approval before insurance companies can raise auto or home rates over 10%.\",\"Governor JB Pritzker and the Illinois Department of Insurance enact statutory rate review authority, requiring property and casualty insurers to justify double-digit premium increases.\",https://www.choseno.com/news/illinois-department-of-insurance-enacts-rate-review-authority-to-halt-auto-and-home-insurance-spikes-2026-08-24,https://www.choseno.com/wall/jb-pritzker",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,9.1,\"Michigan Department of Education Issues Guidelines Implementing Public Act 2 Restricting Student Phones\",Education,\"MI, US\",Gretchen Whitmer,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Michigan Department of Education issues guidelines requiring public schools to restrict student smartphone use during class hours starting this fall.\",\"Michigan Department of Education issues statewide implementation guidelines for Public Act 2, requiring public school districts to implement bell-to-bell wireless device restrictions for K-12 students.\",https://www.choseno.com/news/michigan-enacts-statewide-school-wireless-device-restriction-policy-for-2026-2027-academic-year-2026-08-24,https://www.choseno.com/wall/gretchen-whitmer",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,9.0,\"Texas Comptroller Launches Comprehensive Expenditure Audit of Public School District Administrative Budgets\",Education,\"TX, US\",Greg Abbott,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Texas Comptroller Glenn Hegar launches statewide efficiency audits of school district administrative spending ahead of the 2027 legislative session.\",\"Texas Comptroller Glenn Hegar initiates financial efficiency reviews of Texas independent school districts following executive directive from Governor Greg Abbott to identify administrative cost savings.\",https://www.choseno.com/news/texas-comptroller-glenn-hegar-initiates-statewide-independent-school-district-efficiency-audit-2026-08-24,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,9.0,\"Prime Minister Mark Carney Unveils $2 Billion Trade Adjustment Package to Support Auto and Steel Workers\",Trade,\"ON, CA\",Mark Carney,2026-08-24T08:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Prime Minister Mark Carney unveils a $2B trade adjustment fund providing wage subsidies and liquidity to protect auto and steel workers from U.S. tariffs.\",\"Government of Canada establishes a $2 billion liquidity and wage subsidy bridge for Canadian automotive parts suppliers and steel mills managing supply chain realignments amid U.S. tariffs.\",https://www.choseno.com/news/prime-minister-mark-carney-announces-emergency-trade-adjustment-assistance-for-auto-and-steel-workers-2026-08-24,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-24T13:03:28.969Z"
+  },
+  {
+    "rank": 101,
+    "raw": "81,9.9,\"Los Angeles City Council Passes 14-Day Fast-Track Permitting Ordinance for 2028 Olympic Venues\",Infrastructure,\"CA, US\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Los Angeles City Council unanimously passes an ordinance creating a 14-day fast-track permitting process for 2028 Olympic venue and transit projects.\",\"The Los Angeles City Council unanimously approves emergency planning exemptions expediting environmental reviews and building permits for 2028 Olympic transit and venue construction.\",https://www.choseno.com/news/los-angeles-city-council-approves-14-day-fast-track-permitting-for-2028-olympic-projects-2026-08-24,https://www.choseno.com/news/los-angeles-city-council-approves-14-day-fast-track-permitting-for-2028-olympic-projects-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,9.8,\"Mayor Mark Sutcliffe Tables Municipal Economic Defense Motion to Support Local Exporters Amid Tariff Dispute\",Economy,\"ON, CA\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Ottawa Mayor Mark Sutcliffe tables a municipal economic defense motion prioritizing local procurement to protect exporters from U.S. tariffs.\",\"Ottawa Mayor Mark Sutcliffe announces municipal relief measures, prioritizing local procurement and waiving commercial licensing fees for cross-border logistics businesses impacted by U.S. tariffs.\",https://www.choseno.com/news/ottawa-mayor-mark-sutcliffe-tables-emergency-economic-defense-motion-against-us-tariffs-2026-08-24,https://www.choseno.com/news/ottawa-mayor-mark-sutcliffe-tables-emergency-economic-defense-motion-against-us-tariffs-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,9.8,\"San Antonio City Council Votes 6–5 Defeating Public Ballot Vote on $489M Downtown Spurs Arena\",Infrastructure,\"TX, US\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"San Antonio City Council votes 6-5 against placing a $489M downtown arena funding package on the November ballot, opting for direct council approval.\",\"In a razor-thin 6–5 vote, San Antonio City Council rejects placing a $489 million public arena financing contribution on the November ballot, opting for direct council-negotiated term sheets.\",https://www.choseno.com/news/san-antonio-city-council-defeats-ballot-referendum-on-489-million-spurs-downtown-arena-2026-08-24,https://www.choseno.com/news/san-antonio-city-council-defeats-ballot-referendum-on-489-million-spurs-downtown-arena-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,9.8,\"Montreal Administration Mandates Police Body-Worn Cameras and Introduces Civic Worker Protection Bylaw\",Public Safety,\"QC, CA\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Montreal announces a $22M rollout of police body-worn cameras and municipal bylaws penalizing harassment of city transit and public safety workers.\",\"Montreal Mayor Soraya Martinez Ferrada announces city-wide body camera rollout for frontline police officers and introduces bylaws establishing fines for harassment directed at municipal employees.\",https://www.choseno.com/news/montreal-mayor-soraya-martinez-ferrada-unveils-body-worn-cameras-and-civic-respect-bylaw-2026-08-24,https://www.choseno.com/news/montreal-mayor-soraya-martinez-ferrada-unveils-body-worn-cameras-and-civic-respect-bylaw-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,9.7,\"Chicago Finalizes Phased Architecture Plan for $8.5 Billion O'Hare Global Terminal Expansion\",Infrastructure,\"IL, US\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Chicago Mayor Brandon Johnson finalizes agreement with airlines on phased construction for the multi-billion dollar O'Hare Global Terminal expansion.\",\"Mayor Brandon Johnson and the Chicago Department of Aviation reach accord with major commercial airlines, locking in phased construction timelines for the O'Hare Global Terminal.\",https://www.choseno.com/news/chicago-mayor-brandon-johnson-announces-phased-ohare-airport-global-terminal-expansion-2026-08-24,https://www.choseno.com/news/chicago-mayor-brandon-johnson-announces-phased-ohare-airport-global-terminal-expansion-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,9.7,\"Governor Josh Stein Directs $4.9 Million in Infrastructure Grants to Spur Rural Manufacturing\",Economy,\"NC, US\",Josh Stein,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"North Carolina Governor Josh Stein awards $4.9M in rural infrastructure grants to leverage $1B in private manufacturing investment.\",\"North Carolina Rural Infrastructure Authority awards $4.9 million for industrial water and sewer capacity, expected to attract $1 billion in private manufacturing investments.\",https://www.choseno.com/news/governor-josh-stein-directs-4-9-million-in-north-carolina-rural-infrastructure-grants-2026-08-24,https://www.choseno.com/wall/josh-stein",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,9.6,\"Governor Abigail Spanberger Delivers $507,000 in Agricultural Infrastructure Grants Across 14 Localities\",Environment,\"VA, US\",Abigail Spanberger,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Virginia Governor Abigail Spanberger awards $507K in AFID grants across 14 localities to expand meat processing and rural farm infrastructure.\",\"Virginia awards Agriculture and Forestry Industries Development (AFID) grants to expand meat processing facilities, cold storage distribution, and farm-to-table supply chains.\",https://www.choseno.com/news/governor-abigail-spanberger-awards-virginia-agricultural-infrastructure-development-grants-2026-08-24,https://www.choseno.com/wall/abigail-spanberger",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,9.6,\"Premier Danielle Smith Urges Federal-Provincial Table to Safeguard Energy Corridors Amid U.S. Duties\",Trade,\"AB, CA\",Danielle Smith,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Alberta Premier Danielle Smith calls for bilateral energy diplomacy to shield oil and gas corridors from escalating 50% U.S. border tariffs.\",\"Alberta Premier Danielle Smith terms 50% U.S. border tariffs untenable while calling on Ottawa to maintain bilateral energy trade exemptions and avoid escalating cross-border duties.\",https://www.choseno.com/news/premier-danielle-smith-urges-cross-border-energy-diplomacy-to-shield-alberta-exports-from-tariffs-2026-08-24,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,9.5,\"Premier Tim Houston Pledges $50 Million Liquidity Facility for Seafood and Forestry Exporters\",Economy,\"NS, CA\",Tim Houston,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Nova Scotia Premier Tim Houston creates a $50M emergency liquidity facility to support lobster fisheries and lumber mills impacted by U.S. tariffs.\",\"Nova Scotia Premier Tim Houston announces emergency provincial working capital loans for lobster fisheries, seafood processors, and lumber mills facing sudden U.S. border tariffs.\",https://www.choseno.com/news/premier-tim-houston-pledges-nova-scotia-seafood-and-forestry-liquidity-backstop-amid-us-tariffs-2026-08-24,https://www.choseno.com/wall/tim-houston",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.5,\"Winnipeg and Province of Manitoba Partner to Launch Free Youth Transit Pass Pilot Program\",Transportation,\"MB, CA\",Wab Kinew,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Winnipeg and Manitoba launch a $12M pilot delivering free universal transit passes to 45,000 youth and students starting this September.\",\"City of Winnipeg and Manitoba government co-fund free municipal transit passes for 45,000 students aged 11 to 21, launching across all Winnipeg Transit routes in September.\",https://www.choseno.com/news/winnipeg-city-council-partners-with-manitoba-to-launch-free-youth-transit-pass-pilot-2026-08-24,https://www.choseno.com/wall/wab-kinew",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.4,\"Edmonton City Council Debates $24 Million Winter Road Maintenance and Sidewalk Clearing Overhaul\",Infrastructure,\"AB, CA\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Edmonton City Council debates a $24M winter overhaul to mandate 24-hour snow clearance on residential sidewalks and school routes.\",\"Edmonton City Council reviews a major winter service policy overhaul, allocating $24 million for dedicated residential sidewalk plowing and high-frequency active transit snow clearance.\",https://www.choseno.com/news/edmonton-city-council-debates-24-million-snow-and-ice-control-operational-overhaul-2026-08-24,https://www.choseno.com/news/edmonton-city-council-debates-24-million-snow-and-ice-control-operational-overhaul-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.3,\"San Diego City Council Committee Advances Ordinance Guaranteeing Free Parking at Public Beaches and Coastal Parks\",Governance,\"CA, US\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"San Diego City Council advances an ordinance permanently barring paid parking meters at all city beaches and Mission Bay coastal parks.\",\"San Diego City Council Rules Committee advances permanent protections prohibiting paid parking meters at Mission Bay and coastal beach parking lots, safeguarding public coastal access.\",https://www.choseno.com/news/san-diego-city-council-rules-committee-advances-ordinance-guaranteeing-free-beach-parking-2026-08-24,https://www.choseno.com/news/san-diego-city-council-rules-committee-advances-ordinance-guaranteeing-free-beach-parking-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.3,\"Denver City Council Enacts 180-Day Moratorium on Hyperscale Data Centers to Safeguard Power Grid\",Environment,\"CO, US\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Denver City Council passes a 180-day moratorium on hyperscale data centers to study electricity grid impacts and water consumption.\",\"Denver City Council unanimously imposes a 6-month pause on commercial data center development permits, commissioning an independent electrical capacity and water conservation audit.\",https://www.choseno.com/news/denver-city-council-extends-moratorium-on-hyperscale-data-centers-pending-energy-audit-2026-08-24,https://www.choseno.com/news/denver-city-council-extends-moratorium-on-hyperscale-data-centers-pending-energy-audit-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.3,\"Boston City Council Committee Advances Stricter Energy Emissions Caps for Commercial High-Rises\",Environment,\"MA, US\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Boston City Council committee advances stricter BERDO emissions caps for commercial high-rises, reinvesting fines into affordable housing retrofits.\",\"Boston City Council Environment Committee approves updated Building Emissions Reduction and Disclosure Ordinance (BERDO) compliance timelines, mandating net-zero targets for towers by 2030.\",https://www.choseno.com/news/boston-city-council-advances-berdo-emissions-standards-for-commercial-residential-towers-2026-08-24,https://www.choseno.com/news/boston-city-council-advances-berdo-emissions-standards-for-commercial-residential-towers-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.2,\"City of Miami Finalizes Master Operating Framework for Historic Marine Stadium Revitalization\",Infrastructure,\"FL, US\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"City of Miami approves a $62M partnership to restore the iconic Virginia Key Marine Stadium following voter approval in the August election.\",\"Following voter referendum ratification, City of Miami Commission approves $62 million private-public partnership to restore the iconic Virginia Key Marine Stadium as a cultural venue.\",https://www.choseno.com/news/miami-voters-approve-historic-marine-stadium-revitalization-management-agreement-2026-08-24,https://www.choseno.com/news/miami-voters-approve-historic-marine-stadium-revitalization-management-agreement-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.2,\"Dallas City Council Orders Zoning Code Overhaul Mandating Buffer Zones for Commercial Data Centers\",Governance,\"TX, US\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Dallas City Council orders zoning code amendments requiring specific use permits and 500-foot residential buffers for commercial data centers.\",\"Dallas City Council directs City Plan Commission to amend Chapter 51A development codes, requiring specific use permits and 500-foot residential buffer zones for electrical data centers.\",https://www.choseno.com/news/dallas-city-council-initiates-zoning-amendments-regulating-commercial-data-center-locations-2026-08-24,https://www.choseno.com/news/dallas-city-council-initiates-zoning-amendments-regulating-commercial-data-center-locations-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.1,\"Calgary City Council Approves $18 Million in Infill Grants to Convert Vacant Office Towers into 450 Homes\",Housing,\"AB, CA\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Calgary City Council approves $18M in incentive grants to convert two vacant downtown office towers into 450 residential apartments and child care spaces.\",\"Calgary expands its Downtown Development Incentive Program, approving $18 million in grants to convert two vacant downtown office towers into 450 residential apartments and child care spaces.\",https://www.choseno.com/news/calgary-city-council-approves-18-million-downtown-commercial-to-residential-conversion-grants-2026-08-24,https://www.choseno.com/news/calgary-city-council-approves-18-million-downtown-commercial-to-residential-conversion-grants-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,9.1,\"Government of Canada Brings Key Provisions of Countering Foreign Interference Act into Legal Force\",Governance,\"ON, CA\",Mark Carney,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Government of Canada brings key provisions of the Countering Foreign Interference Act into force, establishing strict criminal penalties for covert state influence.\",\"Federal Order in Council brings statutory mandates of the Countering Foreign Interference Act into effect, establishing criminal penalties and preparing the mandatory Foreign Influence Transparency Registry.\",https://www.choseno.com/news/federal-government-enacts-countering-foreign-interference-act-provisions-establishing-foreign-agent-registry-2026-08-24,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,9.0,\"U.S. Department of Justice Issues Federal Guidance on Non-Citizen Voter Registration Prohibitions\",Governance,\"DC, US\",Civic Authority,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"U.S. Department of Justice issues guidance to all 50 state election directors on federal voter roll maintenance and citizenship verification standards.\",\"The U.S. Department of Justice issues compliance guidance to all 50 state election directors, reinforcing federal statutory verification requirements for voter rolls ahead of November midterm elections.\",https://www.choseno.com/news/us-department-of-justice-initiates-interstate-election-records-and-citizenship-safeguards-enforcement-2026-08-24,https://www.choseno.com/news/us-department-of-justice-initiates-interstate-election-records-and-citizenship-safeguards-enforcement-2026-08-24",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,9.0,\"California Legislature Passes SB 762 Authorizing County Transit Infrastructure Sales Tax Measures\",Transportation,\"CA, US\",Gavin Newsom,2026-08-24T07:25:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"California Legislature passes SB 762 authorizing county transportation commissions to place dedicated transit funding measures on local ballots.\",\"Governor Gavin Newsom receives SB 762 after bipartisan legislative approval, enabling county transportation commissions to place dedicated light rail and bus rapid transit funding measures before voters.\",https://www.choseno.com/news/california-legislature-passes-sb-762-authorizing-local-transit-infrastructure-ballot-measures-2026-08-24,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-24T12:02:12.013Z"
+  },
+  {
+    "rank": 101,
+    "raw": "81,9.9,\"Austin City Council Approves $6.6 Billion Municipal Budget and Initiates AI Data Center Water Reviews\",Economy,\"TX, US\",Civic Authority,2026-08-24T07:15:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Austin City Council approves a $6.6B municipal budget in a 9-2 vote and mandates reclaimed water cooling rules for AI data centers.\",\"Austin City Council passes its 2026–27 fiscal plan in a 9–2 vote, directing municipal water utilities to establish mandatory cooling water recycling rules for commercial AI facilities.\",https://www.choseno.com/news/austin-city-council-passes-6-billion-budget-and-initiates-ai-data-center-water-rules-2026-08-24,https://www.choseno.com/news/austin-city-council-passes-6-billion-budget-and-initiates-ai-data-center-water-rules-2026-08-24",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,9.8,\"Seattle Mayor Issues Executive Directive Guaranteeing 45-Day Permitting for Infill Modular Housing\",Housing,\"WA, US\",Civic Authority,2026-08-24T07:15:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Seattle Mayor issues an executive directive guaranteeing 45-day permit approvals for prefabricated modular and mass-timber housing.\",\"Seattle enacts executive housing reforms mandating 45-day permit turnarounds and pre-approved architectural designs for modular multifamily residential infill projects.\",https://www.choseno.com/news/seattle-mayor-wilson-issues-executive-order-accelerating-modular-infill-housing-approvals-2026-08-24,https://www.choseno.com/news/seattle-mayor-wilson-issues-executive-order-accelerating-modular-infill-housing-approvals-2026-08-24",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,9.8,\"Federal Government Deploys $34 Million Emergency Climate Relief for Wildfire-Impacted Municipalities\",Public Safety,\"BC, CA\",Mark Carney,2026-08-24T07:15:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Federal government deploys $34M in emergency relief across 128 municipalities and First Nations managing wildfire evacuations in Western Canada.\",\"Government of Canada announces direct infrastructure and community stabilization funding across 128 local jurisdictions managing extreme wildfire and severe weather displacement.\",https://www.choseno.com/news/federal-cabinet-delivers-34-million-emergency-climate-resilience-fund-for-wildfire-displaced-communities-2026-08-24,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,9.9,\"Mayor Olivia Chow and Federal Housing Ministers Announce $140 Million Infill Rental Acceleration\",Housing,\"ON, CA\",Olivia Chow,2026-08-24T06:45:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Toronto Mayor Olivia Chow and federal ministers announce $140M to build 2,200 non-profit rental homes on city-owned transit lands.\",\"Toronto City Council and federal infrastructure agencies deploy $140 million in housing accelerator funds to fast-track 2,200 non-profit and co-op rental apartments on municipal lands.\",https://www.choseno.com/news/mayor-olivia-chow-partners-with-federal-housing-accelerator-for-2200-toronto-rental-homes-2026-08-24,https://www.choseno.com/wall/olivia-chow",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,9.8,\"Mayor Ken Sim Reaffirms 'Zero Means Zero' Property Tax Cap as Vancouver Police Reach Hiring Targets\",Governance,\"BC, CA\",Ken Sim,2026-08-24T06:45:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Vancouver Mayor Ken Sim reaffirms 0% property tax cap while achieving 100-officer police and mental health nurse recruitment targets.\",\"Vancouver Mayor Ken Sim delivers civic governance address confirming zero municipal tax increases for 2026 while meeting recruiting benchmarks for 100 frontline police officers and mental health nurses.\",https://www.choseno.com/news/mayor-ken-sim-reaffirms-zero-property-tax-freeze-and-100-officer-vancouver-safety-milestone-2026-08-24,https://www.choseno.com/wall/ken-sim",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,9.8,\"Speaker Mike Johnson Promotes Permanent Small Business Expensing Provisions in Federal Tax Package\",Economy,\"LA, US\",Mike Johnson,2026-08-24T06:45:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"House Speaker Mike Johnson outlines legislative roadmap to make small business expensing and pass-through tax deductions permanent in 2027 budget.\",\"U.S. House Speaker Mike Johnson outlines legislative priorities to make 100% bonus depreciation and Section 199A small business tax deductions permanent in the upcoming fiscal 2027 budget reconciliation.\",https://www.choseno.com/news/speaker-mike-johnson-promotes-small-business-tax-cut-extensions-during-national-economic-tour-2026-08-24,https://www.choseno.com/wall/mike-johnson",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,9.8,\"Democratic Leader Hakeem Jeffries Unveils 'Affordability First' Legislative Framework for Working Families\",Economy,\"NY, US\",Hakeem Jeffries,2026-08-24T06:45:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"House Democratic Leader Hakeem Jeffries unveils federal framework to cap grocery price gouging and extend $35 insulin caps to private plans.\",\"House Democratic Leader Hakeem Jeffries outlines federal legislation to cap grocery supply chain margins, expand Medicare prescription cost limits to commercial plans, and build affordable starter homes.\",https://www.choseno.com/news/leader-hakeem-jeffries-demands-federal-anti-price-gouging-caps-on-prescription-drugs-and-groceries-2026-08-24,https://www.choseno.com/wall/hakeem-jeffries",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,9.9,\"Governor Gretchen Whitmer Directs $45 Million to 75 Public Parks and Trail Infrastructure Expansions\",Environment,\"MI, US\",Gretchen Whitmer,2026-08-24T06:30:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Michigan Governor Gretchen Whitmer directs $45M in state grants to expand 75 community parks, urban greenways, and public trails.\",\"Michigan enacts fiscal year 2027 appropriations delivering $45 million in direct state grants for 75 municipal land acquisition and public recreation projects.\",https://www.choseno.com/news/governor-gretchen-whitmer-celebrates-45-million-in-michigan-recreation-and-land-acquisition-grants-2026-08-24,https://www.choseno.com/wall/gretchen-whitmer",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,9.8,\"Governor JB Pritzker Signs SB 3925 Authorizing Direct Financial Grants for Flooded Urban Homeowners\",Housing,\"IL, US\",JB Pritzker,2026-08-24T06:30:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Illinois Governor JB Pritzker signs SB 3925 authorizing up to $15,000 in emergency state grants for homeowners facing flood damage.\",\"Illinois enacts Senate Bill 3925 and issues disaster declarations across 15 counties, unlocking low-interest structural repair funds and emergency grants for storm victims.\",https://www.choseno.com/news/governor-jb-pritzker-signs-senate-bill-3925-providing-state-flood-relief-grants-for-homeowners-2026-08-24,https://www.choseno.com/wall/jb-pritzker",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.8,\"Governor Josh Shapiro Issues Executive Order 2026-05 Imposing Grid Affordability Standards on Data Centers\",Economy,\"PA, US\",Josh Shapiro,2026-08-24T06:30:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Pennsylvania Governor Josh Shapiro signs Executive Order 2026-05 requiring AI data center developers to prove energy grid affordability before building.\",\"Pennsylvania Governor Josh Shapiro mandates that commercial AI data center developers prove electrical grid reliability and community power cost safeguards before receiving state permits.\",https://www.choseno.com/news/governor-josh-shapiro-signs-executive-order-2026-05-imposing-grid-rules-on-ai-data-centers-2026-08-24,https://www.choseno.com/wall/josh-shapiro",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.8,\"Premier Wab Kinew Calls for Domestic Purchasing Accord as Manitoba Fast-Tracks Churchill Port Rail Upgrades\",Trade,\"MB, CA\",Wab Kinew,2026-08-24T06:30:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Manitoba Premier Wab Kinew commits $30M to Port of Churchill arctic rail upgrades and urges removal of interprovincial trade barriers.\",\"Manitoba Premier Wab Kinew rallies Canadian provinces to eliminate interprovincial trade barriers and directs $30 million toward the Port of Churchill arctic trade corridor.\",https://www.choseno.com/news/premier-wab-kinew-pledges-interprovincial-trade-corridors-and-urges-domestic-purchasing-push-2026-08-24,https://www.choseno.com/wall/wab-kinew",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.9,\"Governor Gavin Newsom Signs Privacy Law Shielding Addresses of Immigrant Aid Workers\",Governance,\"CA, US\",Gavin Newsom,2026-08-24T06:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"California Governor Gavin Newsom signs legislation shielding residential addresses of immigrant aid and legal workers from public directories.\",\"California enacts new civil protections allowing immigrant legal aid attorneys and frontline non-profit staff to keep residential addresses confidential to prevent harassment.\",https://www.choseno.com/news/governor-gavin-newsom-signs-address-privacy-safeguards-for-immigrant-advocacy-workers-2026-08-24,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.8,\"California Awards $11.3 Million in Prohousing Grants to Expedite Infill Residential Approvals\",Housing,\"CA, US\",Gavin Newsom,2026-08-24T06:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"California Governor Gavin Newsom awards $11.3M in state grants to cities that eliminate parking minimums and fast-track affordable housing.\",\"Governor Gavin Newsom announces state incentive grants for designated prohousing municipalities that have enacted streamlined zoning for multifamily and transit-oriented housing.\",https://www.choseno.com/news/california-allocates-11-million-in-prohousing-incentive-grants-across-local-jurisdictions-2026-08-24,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.8,\"Governor Greg Abbott Directs Texas Agencies to Target 3% Budget Reductions Ahead of Legislative Session\",Economy,\"TX, US\",Greg Abbott,2026-08-24T06:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Texas Governor Greg Abbott directs state agencies to identify 3% budget cuts ahead of the upcoming legislative session to fund property tax relief.\",\"Texas Governor Greg Abbott issues formal budget guidance ordering state agencies to identify 3% operational savings and reviewing independent school district administrative expenditures.\",https://www.choseno.com/news/governor-greg-abbott-orders-3-percent-budget-reduction-review-for-texas-state-agencies-2026-08-24,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.8,\"Governor Ron DeSantis Enacts Annual Florida Tax Package Following $800 Million Line-Item Vetoes\",Economy,\"FL, US\",Ron DeSantis,2026-08-24T06:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Florida Governor Ron DeSantis enacts $1.5B in tax relief, cutting commercial lease taxes to 2% while exercising $800M in budget line-item vetoes.\",\"Florida implements statewide sales tax holidays and targeted commercial rent tax reductions as Governor Ron DeSantis certifies the $117.6 billion state budget.\",https://www.choseno.com/news/governor-ron-desantis-enacts-florida-tax-relief-package-and-completes-800m-budget-vetoes-2026-08-24,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.7,\"Premier Doug Ford Backs Federal Stance Vowing Dollar-for-Dollar Counter-Tariffs Against U.S. Duties\",Trade,\"ON, CA\",Doug Ford,2026-08-24T06:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Ontario Premier Doug Ford backs PM Mark Carney in enacting dollar-for-dollar counter-tariffs against U.S. imports starting September 8.\",\"Ontario Premier Doug Ford forms united industrial front with Prime Minister Mark Carney, calling for reciprocal tariffs on U.S. steel, dairy, and consumer goods taking effect September 8.\",https://www.choseno.com/news/premier-doug-ford-and-mark-carney-align-on-dollar-for-dollar-retaliatory-tariffs-against-us-duties-2026-08-24,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.9,\"Surrey Police Board Removes Chief Constable Norm Lipinski Amid Leadership Shakeup and Political Scrutiny\",Public Safety,\"BC, CA\",Brenda Locke,2026-08-23T23:58:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Police Board removes Chief Norm Lipinski, prompting the resignation of board chair Harley Chappell and calls for severance transparency.\",\"The Surrey Police Board terminates Chief Constable Norm Lipinski citing a leadership transition, sparking the resignation of board chair Harley Chappell and intense council debate over executive transparency.\",https://www.choseno.com/news/surrey-police-chief-norm-lipinski-removed-amid-board-resignation-and-governance-controversy-2026-08-23,https://www.choseno.com/wall/brenda-locke",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,9.8,\"Surrey City Council Debates 10,000-Seat City Centre Entertainment Arena and Whalley Land Strategy\",Infrastructure,\"BC, CA\",Brenda Locke,2026-08-23T23:58:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey City Council debates a proposed 10,000-seat arena in City Centre, weighing major entertainment economic gains against neighborhood community centre investments.\",\"Mayor Brenda Locke champions a proposed 10,000-seat arena in City Centre to host the Vancouver Giants, while Councillor Linda Annis urges redirection of capital toward neighborhood community centers.\",https://www.choseno.com/news/surrey-city-council-debates-10000-seat-city-centre-arena-and-whalley-land-transaction-2026-08-23,https://www.choseno.com/wall/brenda-locke",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,9.8,\"Surrey Council Maintains Stage 2 Water Framework During Summer Heat to Keep Public Pools Open\",Environment,\"BC, CA\",Brenda Locke,2026-08-23T23:58:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Council maintains Stage 2 water rules to keep public outdoor pools and spray parks open as cooling hubs during summer heatwaves.\",\"Mayor Brenda Locke and Surrey Council retain Stage 2 municipal water guidelines, prioritizing summer cooling and public recreation while neighboring Metro Vancouver jurisdictions implement Stage 3 restrictions.\",https://www.choseno.com/news/surrey-city-council-challenges-regional-water-restrictions-to-maintain-municipal-pools-2026-08-23,https://www.choseno.com/wall/brenda-locke",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,9.8,\"Surrey Bylaw Department Enforces Agricultural Land Permitting Compliance Review\",Governance,\"BC, CA\",Mandeep Nagra,2026-08-23T23:58:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"City of Surrey bylaw enforcement strengthens agricultural zoning compliance to protect farming integrity across ALR properties.\",\"City of Surrey bylaw enforcement issues compliance orders regarding unpermitted structures on agricultural parcels, highlighting council focus on strict zoning enforcement.\",https://www.choseno.com/news/surrey-council-investigates-agricultural-property-permitting-and-stop-work-compliance-2026-08-23,https://www.choseno.com/wall/mandeep-nagra",
+    "archivedAt": "2026-08-24T11:02:02.398Z"
+  },
+  {
+    "rank": 101,
+    "raw": "81,9.7,\"Surrey City Council Unanimously Demands Coordinated Federal-Provincial Task Force on Extortion Violence\",Public Safety,\"BC, CA\",Brenda Locke,2026-08-23T23:58:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey City Council unanimously demands a federal-provincial task force and strict criminal code penalties to stop business extortion threats.\",\"Mayor Brenda Locke and all Surrey councillors issue a joint emergency resolution calling for federal anti-gang legislation and specialized RCMP-SPS task force funding to halt business extortion threats.\",https://www.choseno.com/news/surrey-council-unites-to-demand-federal-and-provincial-action-on-business-extortion-crisis-2026-08-23,https://www.choseno.com/wall/brenda-locke",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,9.7,\"Surrey City Council Updates Streamside Protection and Urban Forest Management Bylaw\",Environment,\"BC, CA\",Pardeep Kooner,2026-08-23T23:58:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Council passes new tree canopy bylaws mandating 2:1 replacement ratios and 30m streamside buffers to protect urban salmon streams.\",\"Environment Committee Chair Pardeep Kooner and Councillor Mike Bose guide council adoption of enhanced tree replacement ratios and streamside protection setback guidelines.\",https://www.choseno.com/news/surrey-council-approves-urban-tree-canopy-and-streamside-protection-reforms-2026-08-23,https://www.choseno.com/wall/pardeep-kooner",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,9.9,\"Mayor Brenda Locke Leads Unanimous Surrey Council Vote Demanding Public Inquiry into Metro Vancouver\",Governance,\"BC, CA\",Brenda Locke,2026-08-23T23:55:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Mayor Brenda Locke leads a unanimous council vote calling for a provincial inquiry into Metro Vancouver financial governance and megaproject costs.\",\"Surrey City Council unanimously passes Mayor Brenda Locke's motion requesting B.C.'s Inspector of Municipalities launch a formal public inquiry into Metro Vancouver financial oversight and regional cost allocations.\",https://www.choseno.com/news/mayor-brenda-locke-leads-surrey-council-motion-for-public-inquiry-into-metro-vancouver-governance-2026-08-23,https://www.choseno.com/wall/brenda-locke",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,9.8,\"Councillor Linda Annis Pushes Light Rail Transit Priority for King George Boulevard Corridor\",Transportation,\"BC, CA\",Linda Annis,2026-08-23T23:55:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Councillor Linda Annis advocates for street-level light rail transit along King George Boulevard to connect City Centre and South Surrey communities.\",\"Surrey First Councillor Linda Annis challenges regional bus rapid transit proposals, championing permanent street-level light rail transit connecting Surrey City Centre, Newton, and South Surrey.\",https://www.choseno.com/news/councillor-linda-annis-champions-street-level-lrt-and-transit-equity-on-king-george-boulevard-2026-08-23,https://www.choseno.com/wall/linda-annis",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,9.8,\"Councillor Doug Elford Tables Motion to Expand Surrey City Council from 9 to 11 Members\",Governance,\"BC, CA\",Doug Elford,2026-08-23T23:55:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Councillor Doug Elford tables a governance motion to expand Surrey City Council from 9 to 11 members to match rapid population growth.\",\"Safe Surrey Coalition Councillor Doug Elford introduces governance reform to add two additional city councillors, ensuring proportional civic representation as Surrey approaches 700,000 residents.\",https://www.choseno.com/news/councillor-doug-elford-proposes-surrey-council-expansion-from-9-to-11-members-to-boost-representation-2026-08-23,https://www.choseno.com/wall/doug-elford",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,9.8,\"Councillors Harry Bains and Mandeep Nagra Back Municipal Health Administrator to Address ER Wait Times\",Health,\"BC, CA\",Harry Bains,2026-08-23T23:55:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Councillors Harry Bains and Mandeep Nagra unite across party lines to establish a municipal health coordinator to address emergency room wait times.\",\"Surrey Councillors Harry Bains and Mandeep Nagra vote to establish a dedicated municipal health advocacy administrator to coordinate with the provincial government on hospital capacity.\",https://www.choseno.com/news/councillors-harry-bains-and-mandeep-nagra-join-council-vote-to-advance-surrey-healthcare-advocacy-role-2026-08-23,https://www.choseno.com/wall/harry-bains",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,9.9,\"Councillor Linda Annis Unveils 300-Officer Public Safety Plan and Police Training Academy Proposal\",Public Safety,\"BC, CA\",Linda Annis,2026-08-23T23:45:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Councillor Linda Annis proposes a 4-year public safety plan to recruit 300 police officers and build a dedicated municipal training facility.\",\"Surrey First Councillor Linda Annis introduces a municipal public safety strategy proposing 300 additional officers over four years and a municipal police training center.\",https://www.choseno.com/news/councillor-linda-annis-proposes-comprehensive-surrey-public-safety-and-300-officer-expansion-2026-08-23,https://www.choseno.com/wall/linda-annis",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,9.8,\"Councillors Doug Elford and Mandeep Nagra Demand 60-Day Permit Approvals Under Surrey 2050 Plan\",Housing,\"BC, CA\",Doug Elford,2026-08-23T23:45:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Councillors Doug Elford and Mandeep Nagra push for 60-day building permit turnarounds along the Surrey-Langley SkyTrain corridor.\",\"Safe Surrey Coalition Councillors Doug Elford and Mandeep Nagra advocate for expedited 60-day residential building permits and zero property tax increases during official community plan debates.\",https://www.choseno.com/news/councillors-doug-elford-and-mandeep-nagra-challenge-surrey-2050-official-community-plan-transit-density-2026-08-23,https://www.choseno.com/wall/doug-elford",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,9.8,\"Councillor Mike Bose Leads Surrey Council Initiative to Protect Farmland and Expand Food Hubs\",Environment,\"BC, CA\",Mike Bose,2026-08-23T23:45:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Councillor Mike Bose champions agricultural protections and flood drainage upgrades for 19,000 acres of Serpentine Valley farmland.\",\"Surrey First Councillor Mike Bose spearheads agricultural preservation guidelines, safeguarding farmland in Serpentine and Nicomekl valleys while advancing municipal food security hubs.\",https://www.choseno.com/news/councillor-mike-bose-champions-agricultural-land-reserve-protections-and-local-food-security-2026-08-23,https://www.choseno.com/wall/mike-bose",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.8,\"Councillor Gordon Hepner Advances $45 Million Parkland and Community Sports Infrastructure Expansion\",Infrastructure,\"BC, CA\",Gordon Hepner,2026-08-23T23:45:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Parks Chair Gordon Hepner secures $45M for new turf sports pitches, LED lighting, and parkland expansion across Surrey.\",\"Parks and Recreation Committee Chair Gordon Hepner guides council approval of $45 million in new athletic fields, turf upgrades, and neighborhood park acquisitions across Surrey.\",https://www.choseno.com/news/councillor-gordon-hepner-advances-surrey-parkland-acquisition-and-recreation-expansion-by-law-2026-08-23,https://www.choseno.com/wall/gordon-hepner",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.7,\"Councillor Pardeep Kooner Leads Surrey Initiative to Fast-Track Urgent and Primary Healthcare Clinics\",Health,\"BC, CA\",Pardeep Kooner,2026-08-23T23:45:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Councillor Pardeep Kooner passes initiative to fast-track municipal permits and zoning for primary care doctor clinics in Surrey.\",\"Environment and Community Services Committee Chair Pardeep Kooner sponsors policy streamlining municipal permits for urgent primary healthcare centers in underserved neighborhoods.\",https://www.choseno.com/news/councillor-pardeep-kooner-leads-surrey-primary-care-clinic-and-healthcare-infrastructure-initiative-2026-08-23,https://www.choseno.com/wall/pardeep-kooner",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.7,\"Public Safety Chair Rob Stutt Advances Automated Speed Enforcement and Real-Time Camera Access\",Public Safety,\"BC, CA\",Rob Stutt,2026-08-23T23:45:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Public Safety Chair Rob Stutt advances automated camera technology and speed enforcement in 40 school zones across Surrey.\",\"Surrey Public Safety Committee Chair Rob Stutt oversees municipal camera integration and school zone safety enforcement to reduce pedestrian traffic incidents.\",https://www.choseno.com/news/councillor-rob-stutt-leads-public-safety-committee-in-cctv-and-traffic-safety-expansion-2026-08-23,https://www.choseno.com/wall/rob-stutt",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.6,\"Councillor Harry Bains Leads Surrey Small Business Commercial Permitting Modernization\",Economy,\"BC, CA\",Harry Bains,2026-08-23T23:45:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Surrey Councillor Harry Bains passes commercial permitting reforms, cutting business licensing and renovation wait times to under 10 days.\",\"Surrey City Councillor Harry Bains shepherds council approval for streamlined commercial licensing, cutting red tape for neighborhood retail, restaurants, and tech startups.\",https://www.choseno.com/news/councillor-harry-bains-champions-small-business-revitalization-and-commercial-permit-reforms-2026-08-23,https://www.choseno.com/wall/harry-bains",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.9,\"Mayor Brenda Locke and Surrey Police Board Reach $284.5 Million Operational Budget Accord\",Governance,\", \",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"\",\"Surrey Mayor Brenda Locke finalizes a $284.5 million municipal policing agreement with the Surrey Police Board, capping property tax impacts while maintaining frontline transition targets.\",https://www.choseno.com/news/mayor-brenda-locke-surrey-police-board-reach-284-million-police-budget-accord-2026-08-23,https://www.choseno.com/news/mayor-brenda-locke-surrey-police-board-reach-284-million-police-budget-accord-2026-08-23",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.9,\"House Democratic Leader Hakeem Jeffries and Jared Kushner Meet Privately in New York on Policy Cooperation\",Governance,\"NY, US\",Hakeem Jeffries,2026-08-23T20:30:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"House Democratic Leader Hakeem Jeffries meets privately with Jared Kushner in New York to discuss bipartisan criminal justice reform and budget priorities.\",\"House Democratic Leader Hakeem Jeffries convenes an unannounced private consultation with Jared Kushner in Manhattan to explore bipartisan cooperation on criminal justice reform and infrastructure funding.\",https://www.choseno.com/news/hakeem-jeffries-and-jared-kushner-meet-privately-in-nyc-to-discuss-bipartisan-legislation-2026-08-23,https://www.choseno.com/wall/hakeem-jeffries",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.8,\"Canadian Business Coalition Urges $5 Billion Export Stabilization Fund as Cross-Border Tariffs Bite\",Trade,\", \",Civic Authority,2026-08-21T07:55:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The Panama Canal Authority announces strict daily transit caps starting in September as El Niño drought cuts watershed rainfall by 34 percent.\",\"The Canadian Chamber of Commerce and manufacturing associations call on Prime Minister Mark Carney and Finance Minister Chrystia Freeland to establish an emergency liquidity bridge for exporters.\",https://www.choseno.com/news/canadian-business-leaders-urge-emergency-export-stabilization-as-us-tariffs-take-effect-2026-08-23,https://www.choseno.com/news/canadian-business-leaders-urge-emergency-export-stabilization-as-us-tariffs-take-effect-2026-08-23",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.9,\"Canadian Premiers Form United Front with PM Mark Carney as U.S. Border Tariffs Escalate\",Economy,\"DC, US\",Civic Authority,2026-08-21T07:55:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The Panama Canal Authority announces strict daily transit caps starting in September as El Niño drought cuts watershed rainfall by 34 percent.\",\"The Panama Canal Authority reduces daily vessel transits to 34 ships in September following unprecedented tropical drought, pushing slot auction bids to record highs.\",https://www.choseno.com/news/canadian-premiers-unite-behind-prime-minister-mark-carney-as-us-border-tariffs-escalate-2026-08-23,https://www.choseno.com/news/canadian-premiers-unite-behind-prime-minister-mark-carney-as-us-border-tariffs-escalate-2026-08-23",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,9.9,\"Trump Escalates Trade Dispute, Claiming Canada Demands U.S. State Benefits Without Legal Obligations\",Politics,\"DC, US\",Civic Authority,2026-08-23T13:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"President Trump criticizes Canadian trade policy, asserting Ottawa seeks U.S. state benefits without obligations as bilateral tariff dispute deepens.\",\"President Trump issued public statements following the breakdown of bilateral trade talks, accusing Canada of maintaining unfair agricultural barriers and defending 50% import tariffs.\",https://www.choseno.com/news/trump-escalates-trade-rhetoric-claims-canada-wants-state-benefits-without-membership-2026-08-23,https://www.choseno.com/news/trump-escalates-trade-rhetoric-claims-canada-wants-state-benefits-without-membership-2026-08-23",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,9.8,\"Prime Minister Carney Defends Decision to Exit Washington Talks, Citing Sovereignty and Cultural Safeguards\",Politics,\"ON, CA\",Mark Carney,2026-08-23T15:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Prime Minister Mark Carney defends walking away from Washington trade talks, asserting Canada will not sacrifice cultural rights or sovereignty.\",\"Mark Carney stated Canada will not compromise on French language protections or independent international trade agreements in response to aggressive American tariff demands.\",https://www.choseno.com/news/carney-defends-washington-exit-cites-defense-of-canadian-sovereignty-and-language-rights-2026-08-23,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,9.8,\"Hawk Fire Explodes to 10,500 Acres with 0% Containment, Prompting Washoe County State of Emergency\",Public Safety,\"NV, US\",Civic Authority,2026-08-23T16:15:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"The Hawk Fire expands past 10,500 acres in northwest Reno with zero percent containment, prompting a state of emergency and 14,000 home evacuations.\",\"Nevada Governor Joe Lombardo mobilized the National Guard as erratic wind gusts pushed the fast-moving wildfire into Somersett and Northwest Reno subdivisions.\",https://www.choseno.com/news/hawk-fire-surpasses-10000-acres-zero-containment-prompts-washoe-county-state-of-emergency-2026-08-23,https://www.choseno.com/news/hawk-fire-surpasses-10000-acres-zero-containment-prompts-washoe-county-state-of-emergency-2026-08-23",
+    "archivedAt": "2026-08-24T10:02:13.438Z"
+  },
+  {
+    "rank": 101,
+    "raw": "81,9.8,\"Severe South Coast Thunderstorm Halts Vancouver Airport Ground Operations and Knocks Out Power to Thousands\",Public Safety,\"BC, CA\",David Eby,2026-08-23T16:50:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"A rare and severe thunderstorm brings over 800 lightning strikes to Metro Vancouver, halting YVR ground flights and cutting power across the region.\",\"A rare tropical moisture surge triggered hundreds of cloud-to-ground lightning strikes across Metro Vancouver, shutting down YVR ramp operations and disrupting flights.\",https://www.choseno.com/news/severe-south-coast-thunderstorm-paralyzes-vancouver-airport-knocks-out-bc-hydro-power-2026-08-23,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,9.7,\"Premier Eby Confirms B.C. Liquor Stores Will Keep U.S. Products Off Shelves Following Trade Breakdown\",Politics,\"BC, CA\",David Eby,2026-08-23T11:45:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Premier David Eby confirms BC Liquor Stores will continue excluding American alcohol products from retail shelves during the ongoing trade dispute.\",\"British Columbia reinforced its retail boycott of American wine, beer, and spirits, redirecting prominent display space to provincial VQA wineries and craft breweries.\",https://www.choseno.com/news/eby-confirms-bc-liquor-stores-will-exclude-us-alcohol-products-amid-trade-war-2026-08-23,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,9.7,\"Premier Smith Urges Return to Trade Talks, Warning Retaliatory Tariffs Will Compound Alberta Energy Exposure\",Politics,\"AB, CA\",Danielle Smith,2026-08-23T11:15:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Alberta Premier Danielle Smith urges Ottawa to resume bilateral trade talks with Washington, warning that escalating counter-tariffs harm energy markets.\",\"Alberta Premier Danielle Smith expressed concern regarding federal retaliation plans, advocating direct state-level diplomatic outreach to safeguard cross-border energy corridors.\",https://www.choseno.com/news/danielle-smith-urges-federal-cabinet-to-reopen-us-negotiations-warns-against-counter-tariffs-2026-08-23,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,9.6,\"Premier Ford Convenes Emergency Industrial Roundtable in Hamilton to Coordinate Tariff Defense Grants\",Politics,\"ON, CA\",Doug Ford,2026-08-23T14:15:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Ontario Premier Doug Ford convenes an emergency manufacturing roundtable in Hamilton, pledging 1.5 billion dollars to protect steel and auto workers.\",\"Doug Ford met with steelmakers and automotive parts manufacturers to formulate a $1.5B provincial manufacturing liquidity backstop as U.S. tariffs threaten supply chains.\",https://www.choseno.com/news/doug-ford-convenes-emergency-ontario-manufacturing-roundtable-in-hamilton-2026-08-23,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,9.6,\"Premier Kinew Pledges Agricultural Subsidies and Direct Rail Support for Manitoba Grain and Hog Producers\",Politics,\"MB, CA\",Wab Kinew,2026-08-23T12:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Manitoba Premier Wab Kinew announces 85 million dollars in agricultural relief and rail subsidies through Churchill to support prairie farm families.\",\"Manitoba unveiled emergency freight assistance and low-interest operational credits to assist prairie farmers facing export disruptions and tariffs at U.S. border crossings.\",https://www.choseno.com/news/wab-kinew-pledges-manitoba-grain-and-pork-export-subsidies-amid-border-duties-2026-08-23,https://www.choseno.com/wall/wab-kinew",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,9.5,\"Premier Legault Reaffirms Quebec Cultural Safeguards as Non-Negotiable in North American Trade Talks\",Politics,\"QC, CA\",François Legault,2026-08-23T12:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Quebec Premier François Legault reaffirms that French language protections and cultural exemptions will never be compromised in trade negotiations.\",\"François Legault declared that Quebec will never accept federal trade compromises that dilute French language laws, cultural exemptions, or provincial forestry protections.\",https://www.choseno.com/news/francois-legault-reaffirms-quebec-cultural-sovereignty-in-trade-agreements-2026-08-23,https://www.choseno.com/wall/fran-ois-legault",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,9.5,\"Premier Houston Launches Emergency Seafood Trade Mission to Expand European and Asian Markets\",Politics,\"NS, CA\",Tim Houston,2026-08-23T13:45:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Nova Scotia Premier Tim Houston announces 22 million dollars in air cargo subsidies to expand European and Asian markets for Atlantic seafood exporters.\",\"Nova Scotia announced targeted cargo freight subsidies and trade missions to London, Paris, and Tokyo to safeguard Atlantic lobster and crab exporters against U.S. duties.\",https://www.choseno.com/news/tim-houston-launches-nova-scotia-seafood-export-diversification-mission-2026-08-23,https://www.choseno.com/wall/tim-houston",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,9.4,\"Governor Newsom Issues Executive Directive Fast-Tracking Grid-Scale Battery Storage Permitting Ahead of Heatwaves\",Energy,\"CA, US\",Gavin Newsom,2026-08-23T16:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Governor Gavin Newsom issues an executive order establishing a 45-day fast-track approval process for grid battery storage to boost California reliability.\",\"California enacted emergency administrative procedures allowing regional energy storage installations to secure environmental approvals within 45 days to reinforce grid resilience.\",https://www.choseno.com/news/gavin-newsom-signs-executive-order-accelerating-grid-scale-battery-storage-permits-2026-08-23,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,9.3,\"Governor DeSantis Pre-Positions Florida National Guard Logistics Units as Atlantic Tropical Wave Strengthens\",Public Safety,\"FL, US\",Ron DeSantis,2026-08-23T14:45:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Governor Ron DeSantis pre-positions Florida National Guard logistics units and emergency generators across staging hubs ahead of tropical storm activity.\",\"Florida authorized staging of high-water rescue vehicles, mobile water purification units, and emergency generators across Central and North Florida distribution hubs.\",https://www.choseno.com/news/ron-desantis-mobilizes-florida-national-guard-logistics-battalions-for-gulf-storm-readiness-2026-08-23,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.3,\"Governor Abbott Directs ERCOT to Enforce Maximum Generation Reserves as Late-August Heat Hits 105°F\",Energy,\"TX, US\",Greg Abbott,2026-08-23T16:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Governor Greg Abbott directs ERCOT to enforce maximum generation reserves across Texas power plants as electricity demand approaches 89,000 megawatts.\",\"Texas regulators instructed power generators to cancel non-essential maintenance outages and maintain continuous spinning reserves during sustained triple-digit temperatures.\",https://www.choseno.com/news/greg-abbott-directs-ercot-to-mandate-maximum-generation-reserves-amid-record-heat-2026-08-23,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.3,\"Governor Pritzker Announces $65M in State Grants to Expand Zero-Emission Public Bus Fleets\",Infrastructure,\"IL, US\",JB Pritzker,2026-08-23T15:45:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Governor JB Pritzker announces 65 million dollars in state grants to deploy 90 zero-emission electric buses across Chicago and suburban transit fleets.\",\"Illinois allocated capital funding to deploy 90 battery-electric buses and install high-power depot charging infrastructure across the Chicago Transit Authority and Pace systems.\",https://www.choseno.com/news/jb-pritzker-announces-65m-state-grants-for-zero-emission-bus-fleets-in-cook-county-2026-08-23,https://www.choseno.com/wall/jb-pritzker",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.2,\"Governor Shapiro Launches $28M Energy Workforce Initiative to Train Technicians for Nuclear and Natural Gas Facilities\",Labor,\"PA, US\",Josh Shapiro,2026-08-23T15:15:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Governor Josh Shapiro launches a 28 million dollar workforce initiative to train 1,200 skilled union technicians for Pennsylvania energy facilities.\",\"Pennsylvania established state-backed union apprenticeship partnerships to train 1,200 skilled instrument technicians and welders for advanced baseload energy generation.\",https://www.choseno.com/news/josh-shapiro-launches-pennsylvania-energy-workforce-training-initiative-2026-08-23,https://www.choseno.com/wall/josh-shapiro",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.2,\"Governor Whitmer Authorizes $320M Bipartisan Bridge Rehabilitation Package Across Southeast Michigan\",Infrastructure,\"MI, US\",Gretchen Whitmer,2026-08-23T14:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Governor Gretchen Whitmer signs a 320 million dollar infrastructure bill to repair 42 critical bridges across Wayne, Oakland, and Macomb counties.\",\"Michigan enacted major infrastructure financing to repair 42 structurally deficient road and freight rail bridges in Wayne, Oakland, and Macomb counties.\",https://www.choseno.com/news/gretchen-whitmer-authorizes-320m-bipartisan-bridge-rehabilitation-package-in-michigan-2026-08-23,https://www.choseno.com/wall/gretchen-whitmer",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.1,\"Governor Cox Finalizes Landmark Agricultural Water Leasing Pact to Deliver 65,000 Acre-Feet to Great Salt Lake\",Environment,\"UT, US\",Spencer Cox,2026-08-23T12:45:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Governor Spencer Cox finalizes a landmark 35 million dollar water leasing pact to deliver 65,000 acre-feet of conserved water into the Great Salt Lake.\",\"Utah completed voluntary water-sharing pacts with Bear River and Jordan River irrigation districts, compensating farmers for fallow water deliveries to stabilize lake levels.\",https://www.choseno.com/news/spencer-cox-finalizes-water-leasing-agreement-to-replenish-great-salt-lake-2026-08-23,https://www.choseno.com/wall/spencer-cox",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.1,\"Speaker Johnson Previews House Fall Legislative Strategy, Prioritizing Border Enforcement and Deficit Restraint\",Politics,\"DC, US\",Mike Johnson,2026-08-23T14:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Speaker Mike Johnson previews the House fall legislative agenda, demanding enhanced border security funding and federal spending restraint.\",\"House Speaker Mike Johnson signaled that House Republicans will condition fall continuing resolutions on mandatory border funding and non-defense spending reductions.\",https://www.choseno.com/news/speaker-mike-johnson-previews-fall-house-legislative-agenda-on-appropriations-and-border-2026-08-23,https://www.choseno.com/wall/mike-johnson",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.0,\"Democratic Leader Jeffries Calls for Emergency Hearings on Cross-Border Tariff Impact on Consumer Costs\",Politics,\"DC, US\",Hakeem Jeffries,2026-08-23T14:15:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"House Democratic Leader Hakeem Jeffries demands emergency congressional hearings on how 50% tariffs on Canadian goods will inflate household costs.\",\"House Democratic Leader Hakeem Jeffries demanded congressional oversight hearings into how 50% tariffs on Canadian lumber and agricultural products will increase grocery and housing expenses.\",https://www.choseno.com/news/hakeem-jeffries-calls-for-emergency-house-hearings-on-cross-border-tariff-impacts-2026-08-23,https://www.choseno.com/wall/hakeem-jeffries",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.0,\"Senate Majority Leader Thune Coordinates Farm Bill Negotiations Targeting Agricultural Export Protections\",Politics,\"DC, US\",John Thune,2026-08-23T15:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Senate Majority Leader John Thune coordinates Farm Bill amendments to expand export assistance and price safety nets for American farmers amid tariffs.\",\"John Thune convened Senate Agriculture Committee leaders to craft emergency agricultural export mitigation amendments ahead of Canadian retaliatory tariffs.\",https://www.choseno.com/news/senate-majority-leader-john-thune-coordinates-farm-bill-negotiations-to-shield-exporters-2026-08-23,https://www.choseno.com/wall/john-thune",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,8.9,\"Toronto Police Services Board Initiates Review Following Fatal Officer-Involved Shooting in Downtown Core\",Public Safety,\"ON, CA\",Olivia Chow,2026-08-23T11:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Ontario's SIU opens an independent investigation into a fatal police-involved shooting of a 26-year-old man in downtown Toronto early Sunday morning.\",\"The SIU invoked its mandate to investigate an early Sunday morning confrontation near Yonge and Dundas that resulted in the death of a 26-year-old man.\",https://www.choseno.com/news/toronto-police-services-board-initiates-independent-oversight-review-following-fatal-shooting-2026-08-23,https://www.choseno.com/wall/olivia-chow",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,8.8,\"Tropical Storm Moke Triggers Flash Floods and Landslides Across Hawaii County as Rainfall Tops 12 Inches\",Public Safety,\"HI, US\",Civic Authority,2026-08-23T13:15:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Tropical Storm Moke triggers flash flood emergencies on Hawaii's Big Island, dumping 12 inches of rain and closing highways along the Hamakua Coast.\",\"Hawaii Civil Defense opened emergency storm shelters in Hilo and Puna as torrential rainfall from Tropical Storm Moke washed out sections of Highway 19.\",https://www.choseno.com/news/tropical-storm-moke-triggers-widespread-flooding-and-road-closures-on-hawaii-big-island-2026-08-23,https://www.choseno.com/news/tropical-storm-moke-triggers-widespread-flooding-and-road-closures-on-hawaii-big-island-2026-08-23",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,8.8,\"Gary Mayor Demands Independent Utility Grid Inquiry as Thousands of Residents Endure 12-Day Outage\",Municipal,\"IN, US\",Civic Authority,2026-08-23T16:20:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Gary Mayor Eddie Melton petitions state regulators for an independent audit of NIPSCO as thousands of residents endure 12 days without electricity.\",\"Mayor Eddie Melton called upon state utility regulators to investigate NIPSCO's storm restoration response after severe weather left vulnerable neighborhoods without electricity.\",https://www.choseno.com/news/gary-indiana-mayor-calls-for-emergency-nipsco-grid-inquiry-as-thousands-endure-prolonged-outage-2026-08-23,https://www.choseno.com/news/gary-indiana-mayor-calls-for-emergency-nipsco-grid-inquiry-as-thousands-endure-prolonged-outage-2026-08-23",
+    "archivedAt": "2026-08-24T09:02:11.686Z"
+  },
+  {
+    "rank": 101,
+    "raw": "81,8.8,\"State Lawmakers Advance Bipartisan Surcharges on Massive AI Data Center Electricity Consumption\",Energy,\"VA, US\",Civic Authority,2026-08-23T16:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"State lawmakers advance bipartisan measures requiring massive AI data center campuses to self-fund grid upgrades and protect residential electric rates.\",\"Bipartisan coalitions in Virginia, Texas, and Georgia introduced measures requiring hyperscale data center operators to self-generate clean power or pay dedicated grid reliability fees.\",https://www.choseno.com/news/state-lawmakers-push-back-against-ai-data-center-power-allocations-in-virginia-and-texas-2026-08-23,https://www.choseno.com/news/state-lawmakers-push-back-against-ai-data-center-power-allocations-in-virginia-and-texas-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.459Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,8.7,\"European Union Urges Restraint and Multilateral Compliance Following U.S.-Canada Tariff Rupture\",Politics,\"DC, US\",Civic Authority,2026-08-23T13:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"The European Commission urges restraint in the U.S.-Canada trade dispute, warning that unilateral 50% tariffs undermine transatlantic supply chain stability.\",\"The European Commission expressed deep concern regarding unilateral 50% tariffs, warning that escalating trade barriers among transatlantic allies undermine global supply chain stability.\",https://www.choseno.com/news/eu-trade-commissioner-urges-wto-compliance-amid-us-canada-tariff-escalation-2026-08-23,https://www.choseno.com/news/eu-trade-commissioner-urges-wto-compliance-amid-us-canada-tariff-escalation-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,8.7,\"Canadian Chamber of Commerce Warns 50% Tariffs Threaten Cross-Border Manufacturing Networks\",Economy,\"ON, CA\",Civic Authority,2026-08-23T14:45:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"The Canadian Chamber of Commerce warns 50% border tariffs will disrupt synchronized manufacturing and increase consumer prices across North America.\",\"Business leaders projected widespread supply chain delays and consumer price inflation, urging Ottawa and Washington to establish an emergency business dispute task force.\",https://www.choseno.com/news/canadian-chamber-of-commerce-warns-of-widespread-supply-chain-inflation-from-50-percent-tariffs-2026-08-23,https://www.choseno.com/news/canadian-chamber-of-commerce-warns-of-widespread-supply-chain-inflation-from-50-percent-tariffs-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,8.6,\"Seattle City Council Advances Commercial Vacancy Tax to Incentivize Downtown Residential Conversions\",Housing,\"WA, US\",Civic Authority,2026-08-23T12:15:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Seattle City Council advances a commercial vacancy tax to incentivize downtown property owners to convert vacant office towers into residential apartments.\",\"Seattle formulated a tax penalty on prolonged vacant office towers, pairing fee revenues with regulatory streamlining for developers converting buildings into workforce housing.\",https://www.choseno.com/news/seattle-city-council-advances-commercial-vacancy-tax-to-incentivize-residential-conversions-2026-08-23,https://www.choseno.com/news/seattle-city-council-advances-commercial-vacancy-tax-to-incentivize-residential-conversions-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,8.6,\"Montreal Transit Corporation Deploys 50 Articulated Electric Buses on High-Capacity East-End Corridors\",Infrastructure,\"QC, CA\",Civic Authority,2026-08-23T13:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"The STM deploys 50 new zero-emission articulated electric buses on high-frequency transit routes in Montreal, expanding capacity and cutting emissions.\",\"The STM brought online high-capacity electric transit buses along Henri-Bourassa and Pie-IX boulevards, expanding public transit capacity while reducing urban diesel emissions.\",https://www.choseno.com/news/montreal-stm-deploys-50-zero-emission-articulated-electric-buses-on-high-frequency-routes-2026-08-23,https://www.choseno.com/news/montreal-stm-deploys-50-zero-emission-articulated-electric-buses-on-high-frequency-routes-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,8.5,\"Phoenix City Council Approves Expansion of Solar-Reflective Cool Pavement Across 120 Lane-Miles\",Environment,\"AZ, US\",Civic Authority,2026-08-23T15:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Phoenix City Council approves 14 million dollars to apply solar-reflective cool pavement across 120 lane-miles, lowering surface heat by up to 12 degrees.\",\"Phoenix authorized municipal funding to apply solar-reflective pavement coatings across high-heat residential neighborhoods, reducing ambient nighttime surface temperatures by up to 12°F.\",https://www.choseno.com/news/phoenix-city-council-approves-expansion-of-cool-pavement-coating-across-120-lane-miles-2026-08-23,https://www.choseno.com/news/phoenix-city-council-approves-expansion-of-cool-pavement-coating-across-120-lane-miles-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,8.4,\"Portland City Council Authorizes $28M for Seismic Retrofits of Historic Willamette River Bridges\",Infrastructure,\"OR, US\",Civic Authority,2026-08-23T13:45:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Portland and Multnomah County approve 28 million dollars in seismic retrofits for the Hawthorne and Morrison bridges to withstand major earthquakes.\",\"Portland and Multnomah County approved capital funding to reinforce bridge piers and install shock-absorbing dampers on the Hawthorne and Morrison bridges to withstand Cascadia earthquakes.\",https://www.choseno.com/news/portland-city-council-authorizes-28m-for-seismic-retrofits-of-historic-willamette-river-bridges-2026-08-23,https://www.choseno.com/news/portland-city-council-authorizes-28m-for-seismic-retrofits-of-historic-willamette-river-bridges-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,8.4,\"Calgary City Council Approves $52M Revised Utility Relocation Budget for Green Line LRT Core\",Infrastructure,\"AB, CA\",Civic Authority,2026-08-23T15:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Calgary City Council approves 52 million dollars for deep utility relocations in the Beltline and Downtown core to advance Green Line LRT construction.\",\"Calgary approved funding adjustments to accelerate deep water, electrical, and telecommunications line relocations along the downtown Green Line rapid transit corridor.\",https://www.choseno.com/news/calgary-city-council-approves-revised-utility-relocation-budget-for-green-line-lrt-core-2026-08-23,https://www.choseno.com/news/calgary-city-council-approves-revised-utility-relocation-budget-for-green-line-lrt-core-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,8.3,\"Edmonton City Council Authorizes $19M for Transitional Supportive Housing to Reduce Encampments\",Housing,\"AB, CA\",Civic Authority,2026-08-23T14:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Edmonton City Council approves 19 million dollars to open 240 supportive transitional housing units with 24/7 healthcare and mental health services.\",\"Edmonton approved capital and operational funding to open 240 supportive transitional shelter spaces equipped with wrap-around mental health and addictions recovery services.\",https://www.choseno.com/news/edmonton-city-council-authorizes-emergency-funding-for-transitional-supportive-housing-shelters-2026-08-23,https://www.choseno.com/news/edmonton-city-council-authorizes-emergency-funding-for-transitional-supportive-housing-shelters-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,8.3,\"Denver Regional Transportation District Board Votes to Extend Zero-Fare Youth Transit Pass Through 2027\",Infrastructure,\"CO, US\",Civic Authority,2026-08-23T13:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Denver RTD votes to extend its Zero Fare for Youth program through 2027, providing free bus and rail transit for all youth aged 19 and under.\",\"The RTD board approved permanent operational funding for the 'Zero Fare for Youth' program, providing free bus and light rail access for all youth aged 19 and under.\",https://www.choseno.com/news/denver-rtd-extends-zero-fare-youth-transit-program-through-2027-2026-08-23,https://www.choseno.com/news/denver-rtd-extends-zero-fare-youth-transit-program-through-2027-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,8.3,\"Dallas City Council Approves $35M Flood Detention Basin to Safeguard West Dallas Neighborhoods\",Infrastructure,\"TX, US\",Civic Authority,2026-08-23T16:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Dallas City Council approves 35 million dollars to construct a 280-acre flood detention basin along the Trinity River to protect West Dallas neighborhoods.\",\"Dallas authorized civil engineering construction for a 280-acre stormwater detention basin along the Trinity River floodplain to prevent residential flood inundation.\",https://www.choseno.com/news/dallas-city-council-approves-35m-trinity-river-flood-detention-basin-2026-08-23,https://www.choseno.com/news/dallas-city-council-approves-35m-trinity-river-flood-detention-basin-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,8.2,\"Atlanta City Council Authorizes BeltLine Transit Right-of-Way Reservation for Light Rail Expansion\",Infrastructure,\"GA, US\",Civic Authority,2026-08-23T14:45:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Atlanta City Council approves an ordinance reserving the BeltLine Eastside Trail transit right-of-way for upcoming streetcar and light rail construction.\",\"Atlanta approved formal zoning protection and utility reservations along the BeltLine Eastside Trail to prepare for streetcar and light rail transit construction.\",https://www.choseno.com/news/atlanta-city-council-authorizes-beltline-transit-right-of-way-reservation-for-light-rail-2026-08-23,https://www.choseno.com/news/atlanta-city-council-authorizes-beltline-transit-right-of-way-reservation-for-light-rail-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,8.2,\"Boston City Council Votes to Prohibit Fossil-Fuel Heating in All Major New Municipal Construction\",Environment,\"MA, US\",Civic Authority,2026-08-23T12:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Boston City Council votes to ban fossil-fuel heating in all new municipal buildings, requiring 100% all-electric geothermal and heat pump systems.\",\"Boston enacted a building decarbonization ordinance requiring all new city-funded schools, libraries, and administrative facilities to use all-electric geothermal and heat pump systems.\",https://www.choseno.com/news/boston-city-council-votes-to-prohibit-fossil-fuel-heating-in-new-municipal-buildings-2026-08-23,https://www.choseno.com/news/boston-city-council-votes-to-prohibit-fossil-fuel-heating-in-new-municipal-buildings-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,8.1,\"Philadelphia City Council Authorizes $18M in Targeted Community Violence Prevention Grants\",Public Safety,\"PA, US\",Civic Authority,2026-08-23T14:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Philadelphia City Council approves 18 million dollars for 45 grassroots community organizations providing youth mentorship and violence prevention.\",\"Philadelphia approved direct funding allocations for 45 grassroots non-profit organizations providing youth mentorship, street outreach, and trauma-informed behavioral counseling.\",https://www.choseno.com/news/philadelphia-city-council-authorizes-18m-in-community-led-violence-prevention-grants-2026-08-23,https://www.choseno.com/news/philadelphia-city-council-authorizes-18m-in-community-led-violence-prevention-grants-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,8.1,\"Miami City Commission Authorizes $12M Engineering Study for Biscayne Bay Multi-Layer Storm Surge Barriers\",Environment,\"FL, US\",Civic Authority,2026-08-23T15:15:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Miami City Commission approves a 12 million dollar engineering study with the Army Corps for nature-based storm surge barriers along Biscayne Bay.\",\"Miami and the U.S. Army Corps of Engineers initiated technical design reviews for submerged breakwaters, mangrove revetments, and automated surge gates to protect downtown.\",https://www.choseno.com/news/miami-city-commission-authorizes-engineering-study-for-biscayne-bay-storm-surge-barrier-2026-08-23,https://www.choseno.com/news/miami-city-commission-authorizes-engineering-study-for-biscayne-bay-storm-surge-barrier-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,8.0,\"Department of Transportation Allocates $85M for Heavy-Duty Electric Truck Charging Depots Along I-80\",Infrastructure,\"DC, US\",Civic Authority,2026-08-23T15:45:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"The U.S. DOT commits 85 million dollars to build six megawatt-scale commercial charging depots for electric freight trucks along Interstate 80.\",\"The Federal Highway Administration awarded grants to construct six multi-megawatt commercial charging plazas capable of recharging electric freight trucks in under 45 minutes.\",https://www.choseno.com/news/us-dot-allocates-85m-for-commercial-heavy-duty-ev-charging-depots-along-i-80-2026-08-23,https://www.choseno.com/news/us-dot-allocates-85m-for-commercial-heavy-duty-ev-charging-depots-along-i-80-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,8.0,\"Health Canada Issues National Safety Advisory Following Commercial Pet Food Pathogen Contamination\",Healthcare,\"ON, CA\",Civic Authority,2026-08-23T17:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Health Canada and CFIA issue a consumer safety advisory on commercial dog food recalls following laboratory detection of Salmonella and metal fragments.\",\"Federal health regulators and the CFIA issued consumer advisories after laboratory testing detected Salmonella and metallic contaminants in distributed commercial dog food batches.\",https://www.choseno.com/news/health-canada-issues-national-safety-advisory-on-commercial-pet-food-pathogen-recalls-2026-08-23,https://www.choseno.com/news/health-canada-issues-national-safety-advisory-on-commercial-pet-food-pathogen-recalls-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,7.9,\"FERC Reviews Major Regional Grid Operator Compliance Filings for Order 1920 Long-Term Transmission Plans\",Energy,\"DC, US\",Civic Authority,2026-08-23T16:45:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"FERC begins formal review of 20-year transmission compliance plans submitted by PJM and MISO to construct 24 billion dollars in high-voltage power lines.\",\"Federal energy regulators began formal evaluation of 20-year transmission plans submitted by PJM and MISO to build high-capacity inter-regional power corridors.\",https://www.choseno.com/news/ferc-reviews-inter-regional-transmission-planning-compliance-filings-across-pjm-and-miso-2026-08-23,https://www.choseno.com/news/ferc-reviews-inter-regional-transmission-planning-compliance-filings-across-pjm-and-miso-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,7.8,\"United Airlines Outlines Long-Term AI-Driven Flight Dispatch and Sustainable Aviation Fuel Transition\",Transportation,\"IL, US\",Civic Authority,2026-08-23T12:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"United Airlines CEO Scott Kirby details AI-powered flight routing and major sustainable aviation fuel agreements to reduce flight delays and carbon burn.\",\"CEO Scott Kirby detailed operational strategies integrating machine-learning flight trajectory software and expanded Sustainable Aviation Fuel (SAF) supply contracts across global hubs.\",https://www.choseno.com/news/united-airlines-ceo-outlines-ai-driven-flight-dispatch-and-sustainable-fuel-expansion-2026-08-23,https://www.choseno.com/news/united-airlines-ceo-outlines-ai-driven-flight-dispatch-and-sustainable-fuel-expansion-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,7.8,\"Health Authorities Expand High-Speed Mobile Telehealth Clinics Across Northern Prairie Communities\",Healthcare,\"SK, CA\",Civic Authority,2026-08-23T11:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Health authorities in Saskatchewan and Manitoba deploy satellite-connected mobile clinics to deliver specialized medical care to remote northern towns.\",\"A joint federal-provincial healthcare partnership deployed satellite-connected mobile medical clinics to deliver specialized cardiology and pediatric consultations to remote northern towns.\",https://www.choseno.com/news/health-authorities-expand-rural-mobile-telehealth-clinics-in-northern-saskatchewan-and-manitoba-2026-08-23,https://www.choseno.com/news/health-authorities-expand-rural-mobile-telehealth-clinics-in-northern-saskatchewan-and-manitoba-2026-08-23",
+    "archivedAt": "2026-08-24T08:10:51.461Z"
+  },
+  {
+    "rank": 101,
     "raw": "81,7.8,\"Transport Canada Issues Emergency Aviation Directives Restricting Unauthorized Drones Near Wildfires\",Public Safety,\"ON, CA\",Civic Authority,2026-08-23T12:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Transport Canada issues an emergency aviation notice warning that unauthorized drones near wildland fires face strict fines up to 25,000 dollars.\",\"Federal aviation regulators enacted strict airspace exclusion zones and increased statutory fines up to $25,000 for unauthorized drone flights that disrupt aerial water bombers.\",https://www.choseno.com/news/transport-canada-issues-strict-airspace-restrictions-for-drones-near-wildfire-operations-2026-08-23,https://www.choseno.com/news/transport-canada-issues-strict-airspace-restrictions-for-drones-near-wildfire-operations-2026-08-23",
     "archivedAt": "2026-08-24T07:25:51.450Z"
   },

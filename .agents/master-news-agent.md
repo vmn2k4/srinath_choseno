@@ -60,11 +60,16 @@ node scripts/get-last-publish-window.js --json
 node scripts/fetch-trending-topics.js --max-hours 6
 ```
 
-### Step 2: Loop Discovery Across All Tiers (Target: 20–30 Stories)
-Synthesize articles in chunks of 5–8 and append them to `scripts/bulk-news-batch.json` across:
-- **Tier 1 (Federal / National Wires)**: 5–8 articles (White House, Congress, Trade, PMO, Parliament).
-- **Tier 2 (State & Provincial Capitols)**: 8–10 articles (California, Texas, Florida, Michigan, Illinois, Pennsylvania, Ontario, BC, Alberta, Manitoba).
-- **Tier 3 (Municipal City Councils)**: 8–10 articles (Toronto, Vancouver, Surrey, Montreal, Chicago, New York, Los Angeles, Houston).
+### Step 2: Loop Discovery Across All Tiers (Strict 70% USA / 30% Canada Ratio)
+For every 20-article batch, synthesize:
+- **70% United States (~14–15 articles per batch)**:
+  - **US Federal & Washington DC**: 4–5 articles (White House, Congress, SCOTUS, Federal Agencies: DOE, DOT, EPA, HUD, USDA).
+  - **US State Capitols & Governors**: 6–7 articles (California, Texas, Florida, New York, Illinois, Pennsylvania, Ohio, Georgia, North Carolina, Michigan, etc.).
+  - **US Municipal City Councils**: 3–4 articles (New York, Los Angeles, Chicago, Houston, Phoenix, Philadelphia, San Antonio, San Diego, Dallas, Austin, etc.).
+- **30% Canada (~5–6 articles per batch)**:
+  - **Canada Federal & Ottawa**: 2 articles (PMO, Parliament, Federal Ministries, Supreme Court of Canada).
+  - **Canadian Provincial Premiers**: 2–3 articles (Ontario, Quebec, British Columbia, Alberta, Manitoba, Saskatchewan, Nova Scotia, etc.).
+  - **Canadian Municipalities**: 1–2 articles (Toronto, Montreal, Vancouver, Calgary, Edmonton, Ottawa, Winnipeg, etc.).
 
 ### Step 3: Run the Verification Loop
 ```bash
@@ -74,4 +79,4 @@ node scripts/auto-batch-pipeline.js --min 20
 - **If exit code is 0 (pass)**: Ingestion is complete! All 20+ stories are inserted, walls synced (`/wall/[slug]`), and CSV updated.
 
 ### Step 4: Final Report
-Output the live links table for all 20+ published articles.
+Output the live links table for all 20+ published articles with country/state breakdown verifying the 70% US / 30% Canada ratio.
