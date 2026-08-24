@@ -633,8 +633,19 @@ export default function PoliticianWallClient({
     }
   };
 
+  // Logged-out visitors used to have their click silently swallowed here --
+  // same "sign in first" redirect toggleSupport uses elsewhere on this wall,
+  // so a like/dislike attempt actually goes somewhere instead of doing
+  // nothing with no explanation.
+  const requireAuth = () => {
+    router.push(`/auth?next=${encodeURIComponent(window.location.pathname)}`);
+  };
+
   const handleVote = async (postId: string, voteType: 1 | -1) => {
-    if (!user) return;
+    if (!user) {
+      requireAuth();
+      return;
+    }
     const { error } = await voteOnPost(supabase, postId, voteType);
     if (!error) {
       trackPostEngagement(voteType === 1 ? "upvote" : "downvote", postId);
@@ -1189,6 +1200,7 @@ export default function PoliticianWallClient({
               showVoteBar
               onVote={(postId, voteType) => handleVote(postId, voteType)}
               canComment={!!user}
+              onRequireAuth={requireAuth}
               commentValue={commentInputs[post.id] || ""}
               onCommentChange={(text) =>
                 setCommentInputs({ ...commentInputs, [post.id]: text })

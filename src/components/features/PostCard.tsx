@@ -77,6 +77,7 @@ export default function PostCard({
   showVoteBar = true,
   onVote,
   canComment = true,
+  onRequireAuth,
   commentValue,
   onCommentChange,
   onSubmitComment,
@@ -105,6 +106,11 @@ export default function PostCard({
   showVoteBar?: boolean;
   onVote?: (postId: string, voteType: 1 | -1) => void;
   canComment?: boolean;
+  // Called when a logged-out visitor tries to comment (canComment is false
+  // for them) -- the caller decides where "sign in" sends them (e.g. back to
+  // this same wall via a `next` param). Comment box is hidden with no
+  // fallback when this is omitted, same as before.
+  onRequireAuth?: () => void;
   commentValue: string;
   onCommentChange: (value: string) => void;
   onSubmitComment: () => void;
@@ -411,7 +417,7 @@ export default function PostCard({
           </div>
         )}
 
-        {canComment && (
+        {canComment ? (
           <>
             <CommentComposer
               value={commentValue}
@@ -421,6 +427,16 @@ export default function PostCard({
             />
             {commentError && <p className="text-danger-light text-xs mt-1.5">{commentError}</p>}
           </>
+        ) : (
+          onRequireAuth && (
+            <button
+              type="button"
+              onClick={onRequireAuth}
+              className="w-full text-left text-sm text-text-muted bg-surface/50 border border-border-light/30 rounded-full px-4 py-2 hover:bg-surface-hover hover:text-text-main transition-colors"
+            >
+              Sign in to comment
+            </button>
+          )
         )}
       </div>
 

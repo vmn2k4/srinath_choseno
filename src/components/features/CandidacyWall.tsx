@@ -387,10 +387,18 @@ export default function CandidacyWall({
     await updateNominationFiled(supabase, candidateId, next);
   };
 
+  // Shared "you need to sign in first" redirect -- used by the Support
+  // button, the vote/comment buttons on wall posts below, and anywhere else
+  // a logged-out visitor tries a gated action instead of it just doing
+  // nothing.
+  const requireAuth = () => {
+    router.push("/auth");
+  };
+
   const toggleSupport = async () => {
     if (!candidate) return;
     if (!user) {
-      router.push("/auth");
+      requireAuth();
       return;
     }
     if (isSupporting) {
@@ -525,7 +533,10 @@ export default function CandidacyWall({
   };
 
   const handleVote = async (postId: string, voteType: 1 | -1) => {
-    if (!user) return;
+    if (!user) {
+      requireAuth();
+      return;
+    }
     const { error } = await voteOnPost(supabase, postId, voteType);
     if (!error) {
       trackPostEngagement(voteType === 1 ? "upvote" : "downvote", postId);
@@ -1169,7 +1180,7 @@ export default function CandidacyWall({
               <p className="text-xs text-text-secondary mb-3">
                 Sign in to post on {displayName}&apos;s campaign wall.
               </p>
-              <Button size="sm" onClick={() => router.push("/auth")} className="w-full">
+              <Button size="sm" onClick={requireAuth} className="w-full">
                 Sign In to Post
               </Button>
             </Card>
@@ -1190,6 +1201,7 @@ export default function CandidacyWall({
                   showVoteBar
                   onVote={(postId, voteType) => handleVote(postId, voteType)}
                   canComment={!!user}
+                  onRequireAuth={requireAuth}
                   commentValue={commentInputs[post.id] || ""}
                   onCommentChange={(text) =>
                     setCommentInputs({ ...commentInputs, [post.id]: text })
