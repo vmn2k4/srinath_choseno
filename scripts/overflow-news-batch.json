@@ -1,6 +1,276 @@
 [
   {
     "rank": 101,
+    "raw": "81,7.8,\"Transport Canada Issues Emergency Aviation Directives Restricting Unauthorized Drones Near Wildfires\",Public Safety,\"ON, CA\",Civic Authority,2026-08-23T12:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Transport Canada issues an emergency aviation notice warning that unauthorized drones near wildland fires face strict fines up to 25,000 dollars.\",\"Federal aviation regulators enacted strict airspace exclusion zones and increased statutory fines up to $25,000 for unauthorized drone flights that disrupt aerial water bombers.\",https://www.choseno.com/news/transport-canada-issues-strict-airspace-restrictions-for-drones-near-wildfire-operations-2026-08-23,https://www.choseno.com/news/transport-canada-issues-strict-airspace-restrictions-for-drones-near-wildfire-operations-2026-08-23",
+    "archivedAt": "2026-08-24T07:25:51.450Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,7.7,\"Mexico Economy Ministry Evaluates USMCA Rules as Unilateral Tariffs Threaten Trilateral Trade Stability\",Politics,\"DC, US\",Civic Authority,2026-08-23T14:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Mexico's Secretariat of Economy evaluates USMCA supply chain impacts, warning that unilateral tariffs threaten North American manufacturing stability.\",\"Mexican trade officials initiated internal reviews on rules of origin and trilateral supply chain safeguards, urging adherence to USMCA dispute resolution chapters.\",https://www.choseno.com/news/mexico-economy-ministry-evaluates-usmca-dispute-mechanisms-amid-us-canada-tariff-clash-2026-08-23,https://www.choseno.com/news/mexico-economy-ministry-evaluates-usmca-dispute-mechanisms-amid-us-canada-tariff-clash-2026-08-23",
+    "archivedAt": "2026-08-24T07:25:51.451Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,7.7,\"American Metal Manufacturers Petition Commerce Department for Targeted Exclusions on Canadian Primary Smelting Inputs\",Economy,\"DC, US\",Civic Authority,2026-08-23T15:15:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"American metal manufacturers petition the Commerce Department for tariff exclusions on primary Canadian aluminum to prevent factory cost spikes.\",\"U.S. industrial fabricators warned that 50% tariffs on unworked Canadian primary aluminum ingots and specialty steel billets will inflate domestic manufacturing costs.\",https://www.choseno.com/news/us-metal-manufacturers-petition-commerce-department-for-exclusions-on-canadian-raw-smelting-inputs-2026-08-23,https://www.choseno.com/news/us-metal-manufacturers-petition-commerce-department-for-exclusions-on-canadian-raw-smelting-inputs-2026-08-23",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,7.6,\"Central Banks Monitor Currency Spreads as Canadian Dollar Faces Headwinds Amid Tariff Disruption\",Economy,\"ON, CA\",Civic Authority,2026-08-23T16:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"The Bank of Canada and Federal Reserve monitor currency spreads and inflation risks as the Canadian dollar faces pressure from cross-border tariffs.\",\"Monetary policymakers reviewed foreign exchange volatility and inflation models after the Canadian dollar touched multi-month lows following the trade talk collapse.\",https://www.choseno.com/news/bank-of-canada-and-federal-reserve-monitor-currency-volatility-following-border-tariff-escalation-2026-08-23,https://www.choseno.com/news/bank-of-canada-and-federal-reserve-monitor-currency-volatility-following-border-tariff-escalation-2026-08-23",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,7.6,\"National Hurricane Center Tracks Three Tropical Waves as Atlantic Basin Approaches Climatological Peak\",Environment,\"FL, US\",Civic Authority,2026-08-23T17:10:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"The National Hurricane Center tracks three Atlantic tropical disturbances, projecting an 80% chance of tropical depression development within 48 hours.\",\"Hurricane forecasters identified an 80% probability of tropical depression development within 48 hours for a low-pressure system emerging off the West African coast.\",https://www.choseno.com/news/national-hurricane-center-monitors-three-tropical-disturbances-in-central-and-eastern-atlantic-2026-08-23,https://www.choseno.com/news/national-hurricane-center-monitors-three-tropical-disturbances-in-central-and-eastern-atlantic-2026-08-23",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,7.5,\"CAL FIRE Pre-Positions 24 Firefighting Strike Teams in Northern California Ahead of Dry Lightning Threat\",Public Safety,\"CA, US\",Gavin Newsom,2026-08-23T16:15:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"CAL FIRE pre-positions 24 wildland strike teams across Northern California ahead of dry lightning warnings to ensure rapid initial fire suppression.\",\"State wildland fire officials placed strike teams and helitack crews on elevated alert across Shasta, Trinity, and Siskiyou counties as upper-level monsoonal moisture moves inland.\",https://www.choseno.com/news/cal-fire-pre-positions-24-strike-teams-in-northern-california-due-to-dry-lightning-threat-2026-08-23,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,7.5,\"San Francisco Supervisors Approve Flexible Zoning to Accelerate Biotech Laboratory Conversions in SoMa\",Economy,\"CA, US\",Civic Authority,2026-08-23T14:30:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"San Francisco supervisors approve zoning reforms to accelerate converting vacant SoMa office buildings into life science and biotech research labs.\",\"San Francisco updated commercial land-use codes, eliminating conditional-use barriers to allow life sciences and wet-lab research facilities in underutilized South of Market offices.\",https://www.choseno.com/news/san-francisco-board-of-supervisors-approves-zoning-reform-for-biotech-conversions-in-soma-2026-08-23,https://www.choseno.com/news/san-francisco-board-of-supervisors-approves-zoning-reform-for-biotech-conversions-in-soma-2026-08-23",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,7.4,\"Los Angeles City Council Authorizes $42M for Earthquake-Resistant LADWP Water Mains in San Fernando Valley\",Infrastructure,\"CA, US\",Civic Authority,2026-08-23T16:00:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Los Angeles approves 42 million dollars for LADWP to install 14 miles of earthquake-resistant water trunk lines across the San Fernando Valley.\",\"The City of Los Angeles approved capital contracts to install ductile iron seismic water trunk lines across Van Nuys and North Hollywood to prevent pipe ruptures during earthquakes.\",https://www.choseno.com/news/los-angeles-city-council-authorizes-ladwp-water-main-replacement-in-san-fernando-valley-2026-08-23,https://www.choseno.com/news/los-angeles-city-council-authorizes-ladwp-water-main-replacement-in-san-fernando-valley-2026-08-23",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,7.3,\"Environment Canada Issues Air Quality Health Advisories for Southern Alberta as Regional Wildfire Smoke Drifts East\",Environment,\"AB, CA\",Danielle Smith,2026-08-23T16:45:00+00:00,Midday Peak (11:00 AM - 2:00 PM EST),\"Environment Canada issues Special Air Quality Statements for southern Alberta as regional wildfire smoke pushes the AQHI to high-risk levels.\",\"Air Quality Health Index (AQHI) values touched Level 7 (High Risk) in Lethbridge and Medicine Hat, prompting health guidance for vulnerable populations and outdoor workers.\",https://www.choseno.com/news/environment-canada-issues-air-quality-advisories-for-southern-alberta-due-to-wildfire-smoke-2026-08-23,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.9,\"Ottawa Mobilizes $25 Billion Trade Defense Package as U.S. 50% Tariffs Take Effect\",Economy,\"ON, CA\",Mark Carney,2026-08-23T06:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Canada establishes a 25 billion dollar export defense fund to shield businesses and workers after bilateral negotiations collapse and U.S. tariffs take effect.\",\"Prime Minister Mark Carney established a $25-billion federal contingency facility to protect domestic manufacturers and agricultural exporters after bilateral trade talks collapsed in Washington.\",https://www.choseno.com/news/carney-unveils-25b-emergency-transition-fund-as-us-50-percent-tariffs-hit-canadian-goods-2026-08-23,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.8,\"Manitoba Pledges Direct Rail and Grain Subsidies as Kinew Rallies Western Premiers Against Trade Penalties\",Economy,\"MB, CA\",Wab Kinew,2026-08-22T21:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Manitoba approves 45 million dollars in emergency freight subsidies to reroute prairie grain through Arctic and Pacific ports amid cross-border trade friction.\",\"Premier Wab Kinew committed provincial logistics subsidies to reroute prairie agricultural shipments to Churchill and Vancouver ports, affirming full alignment with federal trade posture.\",https://www.choseno.com/news/kinew-rallies-western-premiers-vows-direct-rail-subsidies-amid-border-dispute-2026-08-22,https://www.choseno.com/wall/wab-kinew",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.8,\"Ontario Orders Review of Cross-Border Electricity Contracts as Ford Cabinet Assesses Tariff Exposure\",Energy,\"ON, CA\",Doug Ford,2026-08-22T20:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Ontario orders a comprehensive review of cross-border electricity exports to neighboring states while expanding local procurement mandates for public transit.\",\"Premier Doug Ford directed the Independent Electricity System Operator to review power export agreements to neighboring U.S. states while expanding provincial supply-chain protections.\",https://www.choseno.com/news/ontario-reviews-cross-border-hydro-exports-as-doug-ford-convenes-cabinet-2026-08-22,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.8,\"British Columbia Imposes Mandatory Density Mandates Across 18 Municipal Transit Hubs\",Housing,\"BC, CA\",David Eby,2026-08-22T18:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"British Columbia implements binding transit-oriented density mandates across 18 rapid transit hubs to clear municipal zoning hurdles for 32,000 new homes.\",\"Premier David Eby and Housing Minister Ravi Kahlon finalized binding transit-oriented development bylaws, overriding municipal zoning delays for 32,000 projected residential units.\",https://www.choseno.com/news/bc-enforces-transit-oriented-density-mandates-across-18-regional-hubs-2026-08-22,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.7,\"Alberta Energy Regulator Enacts 2.5% Grid Surcharge on Data Center Projects Exceeding 50MW\",Energy,\"AB, CA\",Danielle Smith,2026-08-22T17:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Alberta enacts a mandatory 2.5 percent grid levy on hyperscale data centres over 50MW to protect consumer utility rates and fund transmission upgrades.\",\"Premier Danielle Smith's administration approved a new energy reliability tariff ensuring hyperscale computing facilities contribute directly to provincial transmission upgrades.\",https://www.choseno.com/news/alberta-institutes-grid-surcharge-on-large-scale-ai-data-centers-2026-08-22,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.7,\"Quebec Reaffirms Sovereignty Protections in Supply Chains as Legault Warns of Retaliatory Measures\",Politics,\"QC, CA\",François Legault,2026-08-22T16:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Quebec Premier François Legault declares provincial cultural and language protections non-negotiable as Canada coordinates retaliatory trade measures.\",\"Premier François Legault reiterated that Quebec will not compromise on French-language labeling or provincial procurement rules in bilateral trade discussions with the United States.\",https://www.choseno.com/news/quebec-reaffirms-supply-chain-language-standards-amid-trade-dispute-2026-08-22,https://www.choseno.com/wall/fran-ois-legault",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.6,\"Nova Scotia Expands Urgent Treatment Centers with $38M Health Infrastructure Allocation\",Healthcare,\"NS, CA\",Tim Houston,2026-08-22T15:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Nova Scotia commits 38 million dollars to open four new regional Urgent Treatment Centres, expanding healthcare access across rural communities.\",\"Premier Tim Houston announced the construction of four new regional Urgent Treatment Centres across rural communities to divert non-emergent visits from regional hospital ERs.\",https://www.choseno.com/news/nova-scotia-expands-urgent-treatment-centers-with-38m-allocation-2026-08-22,https://www.choseno.com/wall/tim-houston",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.6,\"Green Party Petitions Parliamentary Committee for National Wildfire Smoke Safety Standard\",Environment,\"BC, CA\",Elizabeth May,2026-08-22T15:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Green Party Leader Elizabeth May petitions Parliament to enact binding occupational health rules and stop-work triggers for workers exposed to wildfire smoke.\",\"Green Party Leader Elizabeth May called for binding federal occupational health rules mandating air filtration standards and outdoor work stop-triggers during peak PM2.5 events.\",https://www.choseno.com/news/green-party-petitions-for-national-wildfire-smoke-worker-safety-standard-2026-08-22,https://www.choseno.com/wall/elizabeth-may",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,9.5,\"Dominic LeBlanc Convenes Atlantic Trade Task Force on Seafood and Forest Export Levies\",Economy,\"NB, CA\",Dominic LeBlanc,2026-08-22T14:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Minister Dominic LeBlanc establishes an Atlantic Trade Mitigation Desk with 30 million dollars in seafood storage support amid border tariff pressures.\",\"Minister Dominic LeBlanc established an emergency regional desk in Moncton to assist Maritime exporters confronting steep border duties on lobster, aquaculture, and lumber shipments.\",https://www.choseno.com/news/dominic-leblanc-convenes-emergency-atlantic-trade-task-force-2026-08-22,https://www.choseno.com/wall/dominic-leblanc",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,9.5,\"Mélanie Joly Directs Canadian Consular Network to Support Border Manufacturers Facing U.S. Restrictions\",Politics,\"ON, CA\",Mélanie Joly,2026-08-22T14:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Minister Mélanie Joly directs Canadian consulates across 12 major U.S. cities to advocate directly with governors and industry on cross-border supply chain stability.\",\"Foreign Affairs Minister Mélanie Joly instructed Canadian consulates across 12 U.S. commercial hubs to provide direct advocacy for Canadian suppliers integrated in critical American infrastructure.\",https://www.choseno.com/news/melanie-joly-mobilizes-consular-network-to-assist-canadian-manufacturers-2026-08-22,https://www.choseno.com/wall/m-lanie-joly",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,9.4,\"Bloc Québécois Rebuffs U.S. Demands Over Cultural Exemption Clauses in Cross-Border Pacts\",Politics,\"QC, CA\",Yves-François Blanchet,2026-08-22T14:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Bloc Québécois Leader Yves-François Blanchet affirms strict red lines protecting supply management and cultural sovereignty against trade concessions.\",\"Leader Yves-François Blanchet declared that the Bloc Québécois will block any federal legislative concession that touches dairy supply management or cultural sovereignty.\",https://www.choseno.com/news/bloc-quebecois-rejects-us-demands-on-cultural-and-agricultural-exceptions-2026-08-22,https://www.choseno.com/wall/yves-fran-ois-blanchet",
+    "archivedAt": "2026-08-24T07:25:51.452Z"
+  },
+  {
+    "rank": 101,
+    "raw": "98,9.3,\"Opposition Leader Pierre Poilievre Urges Elimination of Industrial Carbon Taxes Amid Border Friction\",Politics,\"ON, CA\",Pierre Poilievre,2026-08-22T13:55:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Conservative Leader Pierre Poilievre calls for the immediate elimination of industrial carbon taxes to bolster Canadian manufacturing competitiveness.\",\"Conservative Leader Pierre Poilievre argued that removing domestic carbon levies is essential to keep Canadian manufacturing competitive against incoming tariff barriers.\",https://www.choseno.com/news/poilievre-urges-elimination-of-industrial-carbon-taxes-amid-border-friction-2026-08-22,https://www.choseno.com/wall/pierre-poilievre",
+    "archivedAt": "2026-08-24T07:17:38.398Z"
+  },
+  {
+    "rank": 102,
+    "raw": "99,9.3,\"Vancouver City Council Mandates Public Plebiscite on Healthcare Facility Zoning and Public Disorder\",Municipal,\"BC, CA\",Ken Sim,2026-08-22T21:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Vancouver City Council approves two civic ballot plebiscites regarding supervised consumption site zoning buffers and secure psychiatric care facilities.\",\"Mayor Ken Sim and council approved ballot questions for the upcoming civic election asking voters whether to restrict consumption sites near playgrounds and expand involuntary care units.\",https://www.choseno.com/news/vancouver-city-council-mandates-public-plebiscite-on-zoning-and-disorder-2026-08-22,https://www.choseno.com/wall/ken-sim",
+    "archivedAt": "2026-08-24T07:17:38.399Z"
+  },
+  {
+    "rank": 103,
+    "raw": "100,9.3,\"Windsor Council Initiates Expropriation of Derelict Historic Properties in Sandwich Towne Revitalization\",Municipal,\"ON, CA\",Drew Dilkens,2026-08-22T17:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Windsor initiates statutory expropriation on long-vacant heritage properties in Sandwich Towne to clear blight and restore affordable community housing.\",\"The City of Windsor published formal statutory notices to expropriate long-vacant heritage homes near the Ambassador Bridge to restore community housing and historic fabric.\",https://www.choseno.com/news/windsor-initiates-expropriation-of-derelict-properties-in-sandwich-towne-2026-08-22,https://www.choseno.com/wall/drew-dilkens",
+    "archivedAt": "2026-08-24T07:17:38.399Z"
+  },
+  {
+    "rank": 101,
+    "raw": "97,9.2,\"Ontario Ministry of Health Opens 60-Day Public Consultation on Digital Health Data Access Rules\",Healthcare,\"ON, CA\",Civic Authority,2026-08-22T16:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Ontario begins a 60-day public consultation on digital health data rules to eliminate clinical fax delays and streamline patient record sharing across clinics.\",\"The Ministry of Health initiated regulatory consultations to amend the Personal Health Information Protection Act, streamlining electronic patient record sharing among family health teams.\",https://www.choseno.com/news/ontario-ministry-of-health-opens-consultation-on-digital-health-data-rules-2026-08-22,https://www.choseno.com/news/ontario-ministry-of-health-opens-consultation-on-digital-health-data-rules-2026-08-22",
+    "archivedAt": "2026-08-24T07:10:23.763Z"
+  },
+  {
+    "rank": 102,
+    "raw": "98,9.2,\"Newfoundland and Labrador Finalizes Framework for Churchill Falls Hydro Royalty Renegotiation Debate\",Energy,\"NL, CA\",Andrew Furey,2026-08-22T16:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Newfoundland and Labrador finalizes legislative rules for an extraordinary House debate on Churchill Falls hydro renegotiations ahead of contract renewal.\",\"The House of Assembly set special legislative debate procedures to review provincial negotiating positions with Hydro-Québec ahead of the landmark 2041 contract renewal.\",https://www.choseno.com/news/newfoundland-finalizes-framework-for-churchill-falls-hydro-debate-2026-08-22,https://www.choseno.com/wall/andrew-furey",
+    "archivedAt": "2026-08-24T07:10:23.765Z"
+  },
+  {
+    "rank": 103,
+    "raw": "99,9.1,\"Hinton Advance Polls Open for High-Turnout Municipal By-Election to Fill Dual Council Vacancies\",Municipal,\"AB, CA\",Civic Authority,2026-08-22T16:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Advance voting opens in Hinton, Alberta, with strong turnout as seven candidates compete for two town council seats amidst local tax and healthcare debates.\",\"Voters in the resource hub of Hinton turned out in significant numbers for advance voting to fill two vacant municipal council seats, focusing on industrial taxation and healthcare access.\",https://www.choseno.com/news/hinton-advance-polls-open-for-high-turnout-municipal-by-election-2026-08-22,https://www.choseno.com/news/hinton-advance-polls-open-for-high-turnout-municipal-by-election-2026-08-22",
+    "archivedAt": "2026-08-24T07:10:23.765Z"
+  },
+  {
+    "rank": 104,
+    "raw": "100,9.1,\"St. Thomas and Central Elgin Mayors Announce Retirement Ahead of October Civic Elections\",Municipal,\"ON, CA\",Joe Preston,2026-08-22T14:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"St. Thomas Mayor Joe Preston and Central Elgin Mayor Andrew Sloan announce they will not seek re-election, opening leadership races amid regional EV growth.\",\"Longtime mayors Joe Preston and Andrew Sloan confirmed they will not seek re-election, setting up major leadership transitions as the region absorbs massive battery plant investments.\",https://www.choseno.com/news/st-thomas-and-central-elgin-mayors-announce-retirement-ahead-of-civic-elections-2026-08-22,https://www.choseno.com/wall/joe-preston",
+    "archivedAt": "2026-08-24T07:10:23.765Z"
+  },
+  {
+    "rank": 101,
+    "raw": "97,9.0,\"B.C. Ministry of Forests Audits $12M Public Grant Allocation Following Interior Mill Suspension\",Economy,\"BC, CA\",Civic Authority,2026-08-22T14:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"British Columbia audits 12 million dollars in public forestry grants following mill shutdowns in the Interior to enforce worker protection covenants.\",\"Provincial regulators launched an accountability review into capital grants awarded to major forestry operators after an idled Okanagan mill failed to maintain local employment targets.\",https://www.choseno.com/news/bc-ministry-of-forests-audits-12m-public-grant-following-interior-mill-closure-2026-08-22,https://www.choseno.com/news/bc-ministry-of-forests-audits-12m-public-grant-following-interior-mill-closure-2026-08-22",
+    "archivedAt": "2026-08-24T07:09:53.739Z"
+  },
+  {
+    "rank": 102,
+    "raw": "98,9.0,\"Northwest Territories RCMP Deploy Additional Patrols in Yellowknife Following Community Disturbance\",Public Safety,\"NT, CA\",Civic Authority,2026-08-22T23:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Northwest Territories RCMP increase patrols in Yellowknife following an isolated incident, ensuring community safety as the Fireweed Festival continues.\",\"RCMP and municipal enforcement increased high-visibility patrols in Yellowknife's Old Town after an isolated firearm discharge during the annual Fireweed Community Festival.\",https://www.choseno.com/news/northwest-territories-rcmp-deploy-patrols-after-festival-incident-2026-08-22,https://www.choseno.com/news/northwest-territories-rcmp-deploy-patrols-after-festival-incident-2026-08-22",
+    "archivedAt": "2026-08-24T07:09:53.740Z"
+  },
+  {
+    "rank": 103,
+    "raw": "99,8.9,\"Pentagon Leadership Friction Intensifies as Army Secretary Dan Driscoll Weighed Resignation\",Defense,\"DC, US\",Pete Hegseth,2026-08-23T03:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Internal policy tensions surface at the Pentagon as Army Secretary Dan Driscoll weighs resignation amid disagreements with Defense Secretary Pete Hegseth.\",\"Senior defense officials confirmed internal friction between Defense Secretary Pete Hegseth and Army Secretary Dan Driscoll regarding military readiness and personnel appointments.\",https://www.choseno.com/news/pentagon-leadership-tensions-surface-as-army-secretary-weighed-resignation-2026-08-23,https://www.choseno.com/wall/pete-hegseth",
+    "archivedAt": "2026-08-24T07:09:53.740Z"
+  },
+  {
+    "rank": 104,
+    "raw": "100,8.8,\"Postal Regulatory Commission Sued Over Rule Restricting Last-Minute Mail-in Ballot Postmarks\",Elections,\"DC, US\",Civic Authority,2026-08-22T20:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Voting rights groups and state officials sue the Postal Service over a new administrative rule altering postmarking procedures for mail-in ballots.\",\"Civil rights coalitions and state election officials filed emergency petitions against a new USPS administrative rule altering ballot postmarking guidelines ahead of the 2026 midterms.\",https://www.choseno.com/news/postal-service-faces-legal-challenge-over-mail-in-ballot-postmark-rule-2026-08-22,https://www.choseno.com/news/postal-service-faces-legal-challenge-over-mail-in-ballot-postmark-rule-2026-08-22",
+    "archivedAt": "2026-08-24T07:09:53.740Z"
+  },
+  {
+    "rank": 101,
+    "raw": "96,8.8,\"California Natural Resources Agency Expands Emergency Fuel Breaks as San Andreas Fault Ridge Under Scrutiny\",Environment,\"CA, US\",Gavin Newsom,2026-08-23T09:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"California authorizes 64 million dollars for emergency wildfire fuel breaks along San Andreas fault ridges to protect Bay Area and Central Coast communities.\",\"Governor Gavin Newsom authorized $64 million for mechanical fuel thinning along vulnerable Central Coast and Bay Area fault ridges following new geological slip surveys.\",https://www.choseno.com/news/california-resources-agency-expands-emergency-fuel-breaks-in-bay-area-2026-08-23,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-24T07:08:02.554Z"
+  },
+  {
+    "rank": 102,
+    "raw": "97,8.8,\"Florida Water Management Districts Allocate $45M for Everglades Agricultural Runoff Mitigation\",Environment,\"FL, US\",Ron DeSantis,2026-08-22T18:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Florida approves 45 million dollars to expand Everglades stormwater treatment wetlands, cutting agricultural runoff and protecting coastal estuaries.\",\"Governor Ron DeSantis approved major stormwater treatment cell upgrades in the Everglades Agricultural Area to accelerate phosphorus filtration and restore southern flow paths.\",https://www.choseno.com/news/florida-allocates-45m-for-everglades-agricultural-water-treatment-2026-08-22,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-24T07:08:02.555Z"
+  },
+  {
+    "rank": 103,
+    "raw": "98,8.7,\"Texas District Court Rejects Retrial Motion in High-Profile High School Track Facility Incident\",Judiciary,\"TX, US\",Greg Abbott,2026-08-23T02:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"A Texas District Court judge denies a motion for a new trial in a high-profile school track meet stabbing case, upholding a 25-year prison sentence.\",\"A Texas state judge denied a motion for a new trial for Karmelo Anthony, upholding a 25-year conviction following extensive legal arguments over jury instructions and evidence admissibility.\",https://www.choseno.com/news/texas-district-court-rejects-retrial-motion-in-high-profile-track-stabbing-2026-08-23,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-24T07:08:02.555Z"
+  },
+  {
+    "rank": 104,
+    "raw": "99,8.7,\"Illinois Commerce Commission Approves $210M Chicago Commuter Rail Modernization Grant\",Infrastructure,\"IL, US\",JB Pritzker,2026-08-22T18:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Illinois approves 210 million dollars for Chicago Metra to purchase zero-emission battery-electric trains and modernize regional transit infrastructure.\",\"Governor JB Pritzker and state transit regulators authorized matching capital to purchase battery-electric trainsets and upgrade maintenance facilities across the Metra network.\",https://www.choseno.com/news/illinois-commerce-commission-approves-210m-commuter-rail-modernization-2026-08-22,https://www.choseno.com/wall/jb-pritzker",
+    "archivedAt": "2026-08-24T07:08:02.555Z"
+  },
+  {
+    "rank": 105,
+    "raw": "100,8.6,\"Pennsylvania Emergency Management Agency Deploys Mobile Units Following Tornado Strike in Delaware Valley\",Public Safety,\"PA, US\",Josh Shapiro,2026-08-23T08:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Pennsylvania deploys emergency response units and utility crews across the Philadelphia region after a confirmed tornado causes widespread storm damage.\",\"Governor Josh Shapiro directed emergency teams and infrastructure repair crews to southeastern Pennsylvania and Delaware border communities following confirmed severe storm touchdowns.\",https://www.choseno.com/news/pennsylvania-emergency-agency-deploys-aid-following-delaware-valley-tornado-2026-08-23,https://www.choseno.com/wall/josh-shapiro",
+    "archivedAt": "2026-08-24T07:08:02.555Z"
+  },
+  {
+    "rank": 101,
+    "raw": "95,8.6,\"Michigan Economic Development Board Approves $85M Battery Manufacturing Workforce Grant\",Economy,\"MI, US\",Gretchen Whitmer,2026-08-22T17:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Michigan approves an 85 million dollar workforce development grant to train 6,500 advanced energy and battery technicians at state community colleges.\",\"Governor Gretchen Whitmer announced new funding through the Michigan Strategic Fund to train 6,500 advanced manufacturing technicians across Lansing and Grand Rapids community colleges.\",https://www.choseno.com/news/michigan-approves-85m-battery-manufacturing-workforce-training-grant-2026-08-22,https://www.choseno.com/wall/gretchen-whitmer",
+    "archivedAt": "2026-08-24T00:07:35.905Z"
+  },
+  {
+    "rank": 102,
+    "raw": "96,8.5,\"Utah Housing Commission Confronts Rising Median Home Valuations in Salt Lake Valley\",Housing,\"UT, US\",Spencer Cox,2026-08-23T09:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Utah Housing Commission proposes municipal zoning deregulation and infrastructure funds to counter soaring starter home prices along the Wasatch Front.\",\"Governor Spencer Cox's housing task force presented new policy recommendations to accelerate modular home construction and revise municipal zoning restrictions as entry prices climb.\",https://www.choseno.com/news/utah-housing-commission-confronts-rising-home-prices-in-salt-lake-valley-2026-08-23,https://www.choseno.com/wall/spencer-cox",
+    "archivedAt": "2026-08-24T00:07:35.906Z"
+  },
+  {
+    "rank": 103,
+    "raw": "97,8.4,\"House Speaker Mike Johnson Formulates Fall Legislative Agenda on Federal Spending and Border Enforcement\",Politics,\"DC, US\",Mike Johnson,2026-08-22T19:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Speaker Mike Johnson outlines the House Republican fall agenda, linking upcoming government funding bills to strict spending caps and border security.\",\"Speaker Mike Johnson signaled that House Republicans will condition upcoming continuing resolutions on strict federal spending caps and enhanced border enforcement measures.\",https://www.choseno.com/news/mike-johnson-outlines-fall-house-legislative-priorities-on-budget-and-border-2026-08-22,https://www.choseno.com/wall/mike-johnson",
+    "archivedAt": "2026-08-24T00:07:35.906Z"
+  },
+  {
+    "rank": 104,
+    "raw": "98,8.4,\"House Democratic Leader Hakeem Jeffries Calls for Emergency Hearings on Cross-Border Tariff Impact on Small Businesses\",Politics,\"DC, US\",Hakeem Jeffries,2026-08-22T19:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"House Democratic Leader Hakeem Jeffries calls for urgent congressional hearings into the impact of steep cross-border tariffs on small business supply chains.\",\"Democratic Leader Hakeem Jeffries urged the House Small Business Committee to examine supply-chain disruptions and cost increases hitting U.S. retailers and manufacturers from border duties.\",https://www.choseno.com/news/hakeem-jeffries-calls-for-emergency-hearings-on-small-business-tariff-impact-2026-08-22,https://www.choseno.com/wall/hakeem-jeffries",
+    "archivedAt": "2026-08-24T00:07:35.906Z"
+  },
+  {
+    "rank": 105,
+    "raw": "99,8.3,\"Senate Majority Leader John Thune Coordinates Farm Bill Negotiations Targeting Agricultural Export Relief\",Politics,\"DC, US\",John Thune,2026-08-22T18:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Senate Majority Leader John Thune coordinates Farm Bill negotiations to expand crop insurance and export market relief for American agricultural producers.\",\"Senate Majority Leader John Thune convened agricultural committee members to draft enhanced crop insurance and export mitigation funding in the forthcoming federal Farm Bill.\",https://www.choseno.com/news/john-thune-coordinates-senate-farm-bill-negotiations-targeting-export-relief-2026-08-22,https://www.choseno.com/wall/john-thune",
+    "archivedAt": "2026-08-24T00:07:35.906Z"
+  },
+  {
+    "rank": 106,
+    "raw": "100,8.3,\"Hawk Fire Forces Evacuations in Northwest Reno as High Winds Push Blaze into Somersett\",Public Safety,\"NV, US\",Civic Authority,2026-08-23T07:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The fast-moving Hawk Fire forces mandatory evacuations in northwest Reno as high winds push flames toward residential communities near Somersett.\",\"Reno Fire Department and Washoe County emergency officials expanded mandatory evacuation zones as gusty winds spread the Hawk Fire across dry sagebrush corridors.\",https://www.choseno.com/news/hawk-fire-prompts-expanded-evacuations-in-northwest-reno-2026-08-23,https://www.choseno.com/news/hawk-fire-prompts-expanded-evacuations-in-northwest-reno-2026-08-23",
+    "archivedAt": "2026-08-24T00:07:35.906Z"
+  },
+  {
+    "rank": 101,
+    "raw": "97,8.3,\"Tropical Storm Moke Triggers Flash Flood Warnings Across Hawaii County as Rainfall Exceeds 10 Inches\",Public Safety,\"HI, US\",Civic Authority,2026-08-23T07:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Tropical Storm Moke triggers flash flood emergencies and road closures across Hawaii Island as rainfall exceeds 12 inches on saturated ground.\",\"Emergency management officials in Hawaii County opened shelters and closed highways as Tropical Storm Moke brought torrential rainfall, triggering landslides along the Hamakua Coast.\",https://www.choseno.com/news/tropical-storm-moke-triggers-flash-floods-across-hawaii-big-island-2026-08-23,https://www.choseno.com/news/tropical-storm-moke-triggers-flash-floods-across-hawaii-big-island-2026-08-23",
+    "archivedAt": "2026-08-24T00:03:43.536Z"
+  },
+  {
+    "rank": 102,
+    "raw": "98,8.2,\"New York City Advocates Clash Over Pied-à-Terre Tax Rollout and Luxury Housing Surcharges\",Municipal,\"NY, US\",Civic Authority,2026-08-23T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"New York City prepares administrative rules for a luxury pied-à-terre tax surcharge on secondary residences to generate 650 million dollars for NYCHA.\",\"Real estate industry groups and progressive housing coalitions locked horns as the NYC Department of Finance drafted enforcement guidelines for non-resident luxury condo surcharges.\",https://www.choseno.com/news/new-york-city-advocates-clash-over-pied-a-terre-tax-implementation-2026-08-23,https://www.choseno.com/news/new-york-city-advocates-clash-over-pied-a-terre-tax-implementation-2026-08-23",
+    "archivedAt": "2026-08-24T00:03:43.537Z"
+  },
+  {
+    "rank": 103,
+    "raw": "99,8.2,\"California 15th Congressional District Special Election Results Certified with Aisha Wahab Victory\",Elections,\"CA, US\",Aisha Wahab,2026-08-23T07:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Democrat Aisha Wahab wins the special election for California's 15th Congressional District, succeeding Eric Swalwell in the U.S. House.\",\"State Senator Aisha Wahab won the special election for California's 15th Congressional District, succeeding Eric Swalwell and strengthening the progressive caucus in Washington.\",https://www.choseno.com/news/california-15th-district-special-election-results-certified-with-wahab-victory-2026-08-23,https://www.choseno.com/wall/aisha-wahab",
+    "archivedAt": "2026-08-24T00:03:43.537Z"
+  },
+  {
+    "rank": 104,
+    "raw": "100,8.1,\"Indiana Utility Regulatory Commission Convenes Hearing on Extended Grid Outages Following Severe Storms\",Energy,\"IN, US\",Civic Authority,2026-08-23T04:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Indiana utility regulators order power company executives to an emergency hearing as thousands of residents endure a 10-day storm-related blackout.\",\"State utility regulators ordered executive testimony from power providers as thousands of central and southern Indiana residents remained without power ten days after severe windstorms.\",https://www.choseno.com/news/indiana-utility-commission-convenes-hearing-on-extended-storm-outages-2026-08-23,https://www.choseno.com/news/indiana-utility-commission-convenes-hearing-on-extended-storm-outages-2026-08-23",
+    "archivedAt": "2026-08-24T00:03:43.537Z"
+  },
+  {
+    "rank": 101,
+    "raw": "94,8.1,\"Kern County Sheriff Details Investigation into Football Stadium Shooting in Bakersfield\",Public Safety,\"CA, US\",Civic Authority,2026-08-23T07:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Kern County authorities detain a 15-year-old suspect following a fatal shooting outside a Bakersfield high school football game, prompting security reviews.\",\"Law enforcement detained a 15-year-old suspect following an isolated shooting outside Independence High School that left one teenager dead and prompted new athletic safety protocols.\",https://www.choseno.com/news/kern-county-sheriff-investigates-shooting-at-high-school-football-game-2026-08-23,https://www.choseno.com/news/kern-county-sheriff-investigates-shooting-at-high-school-football-game-2026-08-23",
+    "archivedAt": "2026-08-23T23:58:52.108Z"
+  },
+  {
+    "rank": 102,
+    "raw": "95,8.0,\"Ohio Small Business Coalitions Rally Behind Local Retailer in Buc-ee's Trademark Dispute\",Economy,\"OH, US\",Civic Authority,2026-08-23T05:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Ohio small business coalitions rally behind a local family-owned store facing a federal trademark lawsuit from national chain Buc-ee's.\",\"Community leaders and independent business owners in central Ohio voiced strong support for a local family mini-mart facing federal trademark litigation from Texas-based chain Buc-ee's.\",https://www.choseno.com/news/ohio-small-business-coalitions-rally-behind-local-retailer-in-trademark-clash-2026-08-23,https://www.choseno.com/news/ohio-small-business-coalitions-rally-behind-local-retailer-in-trademark-clash-2026-08-23",
+    "archivedAt": "2026-08-23T23:58:52.109Z"
+  },
+  {
+    "rank": 103,
+    "raw": "96,8.0,\"Connecticut Housing Finance Authority Expands First-Time Homebuyer Assistance as Entry Prices Top $300,000\",Housing,\"CT, US\",Civic Authority,2026-08-23T09:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Connecticut expands first-time homebuyer assistance grants up to 35,000 dollars as entry-level starter home prices cross 300,000 dollars statewide.\",\"State housing officials expanded down payment assistance grants to $35,000 as entry-level home valuations in Connecticut doubled historical averages, straining working families.\",https://www.choseno.com/news/connecticut-housing-finance-authority-expands-homebuyer-assistance-2026-08-23,https://www.choseno.com/news/connecticut-housing-finance-authority-expands-homebuyer-assistance-2026-08-23",
+    "archivedAt": "2026-08-23T23:58:52.109Z"
+  },
+  {
+    "rank": 104,
+    "raw": "97,7.9,\"Delaware Emergency Management Agency Assesses Tornado Damage in Kent County Neighborhoods\",Public Safety,\"DE, US\",Civic Authority,2026-08-23T08:15:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Delaware emergency crews assess structural damage and restore power across Kent County following a confirmed tornado with 105 mph winds.\",\"DEMA and the National Weather Service conducted ground surveys in Kent County after an EF-1 tornado damaged residential structures and severed power lines in Harrington and Milford.\",https://www.choseno.com/news/delaware-emergency-management-agency-assesses-tornado-damage-in-kent-county-2026-08-23,https://www.choseno.com/news/delaware-emergency-management-agency-assesses-tornado-damage-in-kent-county-2026-08-23",
+    "archivedAt": "2026-08-23T23:58:52.109Z"
+  },
+  {
+    "rank": 105,
+    "raw": "98,7.8,\"DARPA Concludes Autonomous Swarm System Field Evaluations in Joint Desert Exercise\",Defense,\"AZ, US\",Civic Authority,2026-08-22T20:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"DARPA concludes field testing of autonomous drone swarm networks in Arizona, validating edge-computing navigation in GPS-denied environments.\",\"Defense researchers completed high-altitude multi-domain testing of cooperative autonomous drone networks in Arizona, assessing electronic warfare resilience for forward operations.\",https://www.choseno.com/news/darpa-concludes-autonomous-swarm-field-evaluations-in-joint-exercise-2026-08-22,https://www.choseno.com/news/darpa-concludes-autonomous-swarm-field-evaluations-in-joint-exercise-2026-08-22",
+    "archivedAt": "2026-08-23T23:58:52.109Z"
+  },
+  {
+    "rank": 106,
+    "raw": "99,7.8,\"Federal Railroad Administration Releases Comprehensive Bridge Safety Audit of Northeast Rail Corridor\",Infrastructure,\"DC, US\",Civic Authority,2026-08-22T20:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The Federal Railroad Administration releases a safety audit of 350 Northeast Corridor rail bridges, urging priority replacement of 42 aging spans.\",\"The FRA identified 42 century-old rail spans along the Northeast Corridor requiring priority capital rehabilitation, urging state matching funds to prevent service bottlenecks.\",https://www.choseno.com/news/federal-railroad-administration-releases-northeast-corridor-bridge-safety-audit-2026-08-22,https://www.choseno.com/news/federal-railroad-administration-releases-northeast-corridor-bridge-safety-audit-2026-08-22",
+    "archivedAt": "2026-08-23T23:58:52.109Z"
+  },
+  {
+    "rank": 107,
+    "raw": "100,7.8,\"Washington State Department of Ecology Enforces New Runoff Standards for Commercial Ports\",Environment,\"WA, US\",Civic Authority,2026-08-22T17:45:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Washington State issues strict new stormwater runoff rules for Puget Sound commercial ports to eliminate toxic tire chemicals and protect salmon.\",\"State environmental regulators issued updated water quality discharge permits for major Puget Sound marine terminals, requiring advanced filtration for tire wear chemicals and heavy metals.\",https://www.choseno.com/news/washington-department-of-ecology-enforces-new-commercial-port-runoff-standards-2026-08-22,https://www.choseno.com/news/washington-department-of-ecology-enforces-new-commercial-port-runoff-standards-2026-08-22",
+    "archivedAt": "2026-08-23T23:58:52.109Z"
+  },
+  {
+    "rank": 101,
+    "raw": "100,7.7,\"Oregon Public Utility Commission Mandates Community Microgrid Planning for Coastal Municipalities\",Energy,\"OR, US\",Civic Authority,2026-08-22T16:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Oregon Public Utility Commission mandates islandable community microgrids with battery storage at coastal emergency facilities for disaster resilience.\",\"The OPUC directed electric utilities to develop community microgrids with battery storage in tsunami inundation zones to maintain emergency power during seismic events.\",https://www.choseno.com/news/oregon-public-utility-commission-mandates-community-microgrid-planning-2026-08-22,https://www.choseno.com/news/oregon-public-utility-commission-mandates-community-microgrid-planning-2026-08-22",
+    "archivedAt": "2026-08-23T23:57:55.691Z"
+  },
+  {
+    "rank": 101,
     "raw": "99,7.7,\"Alberta Health Services Implements Rural Physician Retention Grant to Stem Emergency Department Closures\",Healthcare,\"AB, CA\",Danielle Smith,2026-08-22T15:30:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Alberta Health Services launches a 32 million dollar rural physician retention grant to stabilize emergency department staffing across rural hospitals.\",\"AHS launched a $32M physician retention program providing up to $80,000 in clinical incentives for doctors committing to rural hospitals across northern and central Alberta.\",https://www.choseno.com/news/alberta-health-services-implements-rural-physician-retention-grant-2026-08-22,https://www.choseno.com/wall/danielle-smith",
     "archivedAt": "2026-08-23T23:28:59.630Z"
   },
