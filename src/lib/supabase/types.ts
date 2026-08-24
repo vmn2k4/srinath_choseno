@@ -1060,6 +1060,7 @@ export type Database = {
       map_shapes: {
         Row: {
           boundary_type: string
+          census_data: Json | null
           code: string | null
           country: string
           created_at: string | null
@@ -1072,6 +1073,7 @@ export type Database = {
         }
         Insert: {
           boundary_type: string
+          census_data?: Json | null
           code?: string | null
           country: string
           created_at?: string | null
@@ -1084,6 +1086,7 @@ export type Database = {
         }
         Update: {
           boundary_type?: string
+          census_data?: Json | null
           code?: string | null
           country?: string
           created_at?: string | null
@@ -1225,6 +1228,7 @@ export type Database = {
           status: string
           summary: string | null
           updated_at: string
+          viral_score: number | null
         }
         Insert: {
           category?: string
@@ -1246,6 +1250,7 @@ export type Database = {
           status?: string
           summary?: string | null
           updated_at?: string
+          viral_score?: number | null
         }
         Update: {
           category?: string
@@ -1267,6 +1272,7 @@ export type Database = {
           status?: string
           summary?: string | null
           updated_at?: string
+          viral_score?: number | null
         }
         Relationships: [
           {
@@ -2754,6 +2760,7 @@ export type Database = {
         Args: { ""?: string; att_name: string; tbl: unknown }
         Returns: string
       }
+      _safe_numeric: { Args: { input: string }; Returns: number }
       _st_3dintersects: {
         Args: { geom1: unknown; geom2: unknown }
         Returns: boolean
@@ -3492,6 +3499,20 @@ export type Database = {
           report_count: number
           target_id: string
           target_type: string
+        }[]
+      }
+      get_news_article_engagement_rank: {
+        Args: {
+          p_category?: string
+          p_country?: string
+          p_event_date_after?: string
+          p_limit: number
+          p_offset: number
+        }
+        Returns: {
+          engagement_count: number
+          id: string
+          total_count: number
         }[]
       }
       get_or_create_political_party: {
@@ -4439,6 +4460,7 @@ export type Database = {
         Args: { p_upload_id: string }
         Returns: {
           boundary_type: string
+          census_data: Json | null
           code: string | null
           country: string
           created_at: string | null
