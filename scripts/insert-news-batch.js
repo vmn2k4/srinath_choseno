@@ -143,328 +143,92 @@ async function resolvePoliticianIds(names, authHeaders) {
 // 2. Article payload to ingest (Auto-verified 20+ batch)
 // 2. Article payload to ingest (Auto-verified 20+ batch)
 // 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
 const articles = [
   {
-    "slug": "illinois-governor-jb-pritzker-signs-hb-4758-job-opportunities-for-qualified-applicants-act-2026-08-24",
-    "headline": "Governor JB Pritzker Signs HB 4758 Barring Employers from Requiring Drivers Licenses",
-    "summary": "Illinois Governor JB Pritzker signs House Bill 4758 into law, amending employment opportunity statutes to prohibit employers from requiring a driver's license for jobs that do not involve driving.",
-    "category": "Economy",
+    "slug": "department-of-energy-issues-emergency-order-202-26-40-for-pennsylvania-eddystone-generating-station-2026-08-24",
+    "headline": "DOE Issues Emergency Order 202-26-40 Mandating Pennsylvania Grid Reliability Generation",
+    "summary": "U.S. Department of Energy invokes Section 202(c) of the Federal Power Act, ordering PJM to maintain Units 3 and 4 at the Eddystone Generating Station through November 2026.",
+    "category": "Energy",
     "country": "US",
-    "province": "IL",
+    "province": "PA",
     "status": "published",
-    "eventDate": "2026-08-24T14:00:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
+    "eventDate": "2026-08-24T15:00:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
     "impactArea": "state",
-    "latitude": 39.7817,
-    "longitude": -89.6501,
-    "body": "SPRINGFIELD, IL — Illinois Governor JB Pritzker signed House Bill 4758 into law, enacting landmark amendments to the Job Opportunities for Qualified Applicants Act to prohibit employers and employment agencies from requiring job applicants to possess a valid driver’s license unless driving is a bona fide occupational qualification for the position.\n\n## Removing Artificial Employment Barriers for Transit Commuters\n\nThe enacted legislation prohibits commercial employers from screening out qualified job candidates in online applications or interview screenings based on driver's license status, requiring employers to accept state non-driver identification cards, passports, or transit passes for identity verification. Workforce analysts project the law will expand employment access for over 250,000 transit-reliant workers, disabled individuals, and urban commuters across Chicago, Peoria, and Rockford.\n\nGovernor Pritzker affirmed that an individual’s ability to do a great job in an office, retail store, or hospital should never be blocked simply because they ride public transit rather than drive a personal car.\n\n## Labor Coalitions and Employer Guidance\n\nChicago Federation of Labor and disability rights advocates celebrated the enactment as a common-sense barrier reduction.\n\nIllinois Chamber of Commerce worked with lawmakers to ensure clear statutory carve-outs for delivery drivers and field technicians.\n\n## Effective Date\n\nHouse Bill 4758 takes full legal effect across all Illinois employers on January 1, 2027.",
-    "seoTitle": "Governor JB Pritzker Signs HB 4758 Employment Identification Law | Choseno",
-    "metaDescription": "Illinois Governor JB Pritzker signs HB 4758 prohibiting employers from requiring driver's licenses for non-driving positions.",
+    "latitude": 39.8584,
+    "longitude": -75.3263,
+    "body": "WASHINGTON, DC — The United States Department of Energy (DOE) issued emergency Order No. 202-26-40 under Section 202(c) of the Federal Power Act, ordering regional grid operator PJM Interconnection to ensure Units 3 and 4 of the Eddystone Generating Station in Delaware County, Pennsylvania, remain fully available for commercial power dispatch through November 20, 2026.\n\n## Preventing Grid Instability Amid Surging Mid-Atlantic Power Loads\n\nThe emergency federal order responds to urgent reliability petitions submitted by PJM following extreme late-summer regional heat waves and unprecedented electrical demand from regional industrial manufacturing and data center corridors. The order authorizes the Eddystone units to generate electricity up to their maximum 700-megawatt operating capacity when transmission system voltages drop, temporarily waiving local air operating permit run-time constraints during emergency grid calls.\n\nEnergy Secretary Jennifer Granholm affirmed that the federal government will use all statutory authorities to ensure electricity grids remain reliable, preventing blackouts for millions of Mid-Atlantic residents.\n\n## PJM Interconnection and Environmental Coalition Responses\n\nPJM grid dispatchers praised the emergency order, noting that Eddystone provides vital reactive power support to stabilize high-voltage transmission lines connecting Philadelphia and Delaware.\n\nEnvironmental and clean air advocates urged rapid deployment of regional battery energy storage to phase out fossil peaker generation.\n\n## Order Duration\n\nEmergency Order No. 202-26-40 remains in full legal effect through 11:59 PM on November 20, 2026.",
+    "seoTitle": "DOE Issues Emergency Order 202-26-40 for Pennsylvania Grid | Choseno",
+    "metaDescription": "DOE invokes Federal Power Act Section 202(c) to keep Pennsylvania's Eddystone Generating Station operating through November 2026.",
     "tags": [
-      "JB Pritzker",
-      "Illinois",
+      "Josh Shapiro",
+      "Pennsylvania",
+      "Energy",
+      "Utilities",
+      "Public Safety",
       "Economy",
-      "Labor",
-      "Civil Rights",
-      "Jobs",
-      "Transit",
       "US"
     ],
-    "tweet": "Illinois Governor JB Pritzker signs HB 4758, barring employers from requiring a driver's license for jobs that don't involve driving.",
+    "tweet": "Department of Energy issues Emergency Order 202-26-40, ordering PJM to keep PA's Eddystone Generating Station running to prevent blackouts.",
     "breakingNews": true,
     "author": {
-      "name": "Choseno Labor Law & State Policy Desk",
-      "bio": "State employment regulation, workplace civil rights, Illinois General Assembly statutes, and transit equity"
+      "name": "Choseno Federal Energy Regulation Bureau",
+      "bio": "Federal Power Act Section 202(c) emergency orders, PJM grid dispatch, wholesale electricity markets, and Pennsylvania energy"
     },
     "sources": [
       {
-        "label": "State of Illinois Office of the Governor",
-        "url": "https://gov.illinois.gov/news/press-release.29748.html"
+        "label": "U.S. Department of Energy Emergency Grid Orders",
+        "url": "https://www.energy.gov/oe/emergency-order-202-26-40-eddystone-pennsylvania"
       },
       {
-        "label": "Chicago Tribune",
-        "url": "https://www.chicagotribune.com/politics/ct-pritzker-signs-drivers-license-job-requirement-ban-2026.html"
+        "label": "The Philadelphia Inquirer",
+        "url": "https://www.inquirer.com/business/energy/doe-emergency-order-eddystone-power-plant-pjm-2026.html"
       }
     ],
-    "taggedPoliticianIds": [
-      "b5e28a9b-e85b-4c22-92da-166258fa1342"
-    ],
-    "taggedPoliticians": [
-      "JB Pritzker"
-    ]
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
   },
   {
-    "slug": "ontario-premier-doug-ford-announces-provincial-data-center-investment-and-data-residency-framework-2026-08-24",
-    "headline": "Premier Doug Ford Unveils Ontario AI Data Center Framework Mandating Sovereign Data Residency",
-    "summary": "Premier Doug Ford announces a provincial strategy to attract $10 billion in AI data center investments while requiring state power purchase agreements and secure Canadian sovereign data storage.",
+    "slug": "governor-gavin-newsom-signs-ab-1651-regulating-artificial-intelligence-in-legal-practice-2026-08-24",
+    "headline": "Governor Gavin Newsom Signs AB 1651 Establishing AI Accountability for California Attorneys",
+    "summary": "California Governor Gavin Newsom signs Assembly Bill 1651, mandating human attorney verification for generative AI court filings and requiring disclosure of automated legal tools to clients.",
     "category": "Tech",
-    "country": "CA",
-    "province": "ON",
-    "status": "published",
-    "eventDate": "2026-08-24T13:30:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "state",
-    "latitude": 43.6532,
-    "longitude": -79.3832,
-    "body": "TORONTO, ON — Premier Doug Ford and Minister of Economic Development, Job Creation and Trade Vic Fedeli unveiled the Ontario AI and Sovereign Cloud Infrastructure Framework, establishing provincial investment guidelines to attract $10 billion in hyperscale data center construction while protecting the province’s clean electricity grid.\n\n## Securing Canadian Data Sovereignty and Clean Nuclear Power Siting\n\nThe policy framework directs the Independent Electricity System Operator (IESO) to establish dedicated high-voltage substation connections near nuclear generation hubs in Bruce County, Clarington, and Niagara, requiring data center operators to enter into 15-year power purchase agreements (PPAs) that support new clean energy development. The framework legally mandates that all public sector healthcare, judicial, and financial records hosted in participating data centers remain permanently stored on Canadian soil subject to Canadian privacy law.\n\nPremier Ford stated that Ontario’s abundant clean nuclear energy makes the province the prime destination for global AI infrastructure, creating thousands of high-tech and union trade jobs.\n\n## Tech Consortia and Labor Trades Praise\n\nTechnology and cloud providers including Microsoft Canada and AWS welcomed the clear transmission connection rules.\n\nBuilding and Construction Trades Council of Ontario praised the multi-billion dollar construction pipeline.\n\n## Substation Siting Guidelines\n\nIESO will publish certified data center grid interconnection maps by November 2026.",
-    "seoTitle": "Premier Doug Ford Unveils Ontario Data Center Framework | Choseno",
-    "metaDescription": "Ontario Premier Doug Ford launches AI data center strategy mandating Canadian data residency and clean power contracts.",
-    "tags": [
-      "Doug Ford",
-      "Ontario",
-      "Tech",
-      "Energy",
-      "Economy",
-      "AI",
-      "Nuclear",
-      "Canada"
-    ],
-    "tweet": "Ontario Premier Doug Ford unveils a $10B AI data center framework requiring Canadian data residency and clean nuclear power contracts.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Tech Infrastructure & Provincial Energy Desk",
-      "bio": "Data center regulation, sovereign cloud computing, IESO grid interconnection, and Ontario industrial policy"
-    },
-    "sources": [
-      {
-        "label": "Ontario Ministry of Economic Development Newsroom",
-        "url": "https://news.ontario.ca/en/release/1004915/ontario-driving-investment-in-ai-and-data-infrastructure"
-      },
-      {
-        "label": "Financial Post",
-        "url": "https://financialpost.com/technology/doug-ford-ontario-data-center-investment-framework-2026"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "12ed841a-877b-4c7d-984b-85716b2f2757"
-    ],
-    "taggedPoliticians": [
-      "Doug Ford"
-    ]
-  },
-  {
-    "slug": "houston-city-council-approves-62-million-for-police-fleet-modernization-and-station-reconstruction-2026-08-24",
-    "headline": "Houston City Council Approves $62 Million for Police and Fire Fleets and Station 101 Rebuilding",
-    "summary": "Houston City Council votes 16–1 to approve $43 million for 500 hybrid pursuit vehicles and fire pumpers alongside a $19 million contract to reconstruct Fire Station 101 in Kingwood.",
-    "category": "Public Safety",
-    "country": "US",
-    "province": "TX",
-    "status": "published",
-    "eventDate": "2026-08-24T13:00:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "local",
-    "latitude": 29.7604,
-    "longitude": -95.3698,
-    "body": "HOUSTON, TX — Houston City Council approved a comprehensive $62 million public safety capital package during its regular weekly meeting, authorizing major fleet procurements and emergency station construction across the city.\n\n## Modernizing Emergency Fleets and Expanding Kingwood Fire Coverage\n\nThe approved council ordinances allocate $43 million to purchase 350 hybrid Ford Police Interceptor pursuit utility vehicles, 40 heavy fire pumpers, and 25 advanced life support ambulances to replace high-mileage emergency vehicles. The council also authorized a $19 million design-build contract to demolish and completely reconstruct Fire Station 101 in Kingwood with elevated, hurricane-resilient structural bays designed to withstand major flood events along the San Jacinto River.\n\nMayor John Whitmire and council members affirmed that equipping police officers and firefighters with reliable vehicles and modern facilities is essential to cut emergency response times across all Houston neighborhoods.\n\n## Houston Police Officers Union and Firefighters Support\n\nThe Houston Police Officers' Union (HPOU) and Houston Professional Fire Fighters Association (IAFF Local 341) strongly endorsed the capital package.\n\nKingwood civic associations praised the elevated flood-proof design of Fire Station 101.\n\n## Vehicle Delivery Schedule\n\nNew emergency hybrid patrol vehicles will begin arriving in municipal motor pool fleets in November 2026.",
-    "seoTitle": "Houston City Council Approves $62M for Police Fleets & Fire Station | Choseno",
-    "metaDescription": "Houston City Council approves $62M for 500 police and fire vehicles and the complete rebuilding of Kingwood Fire Station 101.",
-    "tags": [
-      "Houston",
-      "Texas",
-      "Public Safety",
-      "Municipal",
-      "Infrastructure",
-      "First Responders",
-      "US"
-    ],
-    "tweet": "Houston City Council approves $62M for 500 new police and fire vehicles and to rebuild flood-proof Fire Station 101 in Kingwood.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Municipal Governance & Public Safety Desk",
-      "bio": "City council capital appropriations, emergency vehicle procurement, fire station engineering, and Houston municipal policy"
-    },
-    "sources": [
-      {
-        "label": "City of Houston City Council Action Minutes",
-        "url": "https://www.houstontx.gov/citysec/agenda/2026/08242026.html"
-      },
-      {
-        "label": "Houston Chronicle",
-        "url": "https://www.houstonchronicle.com/news/houston-texas/transportation/article/houston-council-approves-62m-police-fire-vehicles-101.php"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "canada-announces-planned-retaliatory-tariffs-on-us-goods-following-cross-border-trade-disputes-2026-08-24",
-    "headline": "Canada Prepares Retaliatory Tariffs on U.S. Steel and Consumer Goods Effective September 8",
-    "summary": "Deputy Prime Minister and Finance Minister release target list of countermeasures against U.S. manufactured goods and agricultural products following bilateral tariff negotiations.",
-    "category": "Economy",
-    "country": "CA",
-    "province": "ON",
-    "status": "published",
-    "eventDate": "2026-08-24T12:30:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "country",
-    "latitude": 45.4215,
-    "longitude": -75.6972,
-    "body": "OTTAWA, ON — The Government of Canada published an official list of targeted reciprocal tariff countermeasures under the Customs Tariff Act, preparing to apply 25% retaliatory duties on $3.6 billion in American steel, aluminum, manufactured appliances, and agricultural food products starting September 8, 2026.\n\n## Defending Canadian Workers and Integrated Supply Chains\n\nThe Canadian countermeasures respond directly to unilateral cross-border trade restrictions and threatened 50% tariffs on Canadian energy and industrial exports. The Department of Finance confirmed the countermeasures are designed to be dollar-for-dollar reciprocal while minimizing cost disruptions for Canadian domestic supply chains by exempting essential automotive parts and critical medicines.\n\nPrime Minister Mark Carney affirmed that Canada will always stand up for its domestic industries, workers, and businesses while remaining at the negotiating table to achieve fair, reciprocal trade under CUSMA.\n\n## Canadian Manufacturers and Steel Producers Support\n\nCanadian Steel Producers Association (CSPA) and Canadian Chamber of Commerce strongly supported the federal government’s resolute defense of integrated bilateral trade.\n\nAgricultural exporter federations urged continued diplomatic engagement to resolve cross-border trade friction before the September 8 deadline.\n\n## Countermeasure In-Force Date\n\nReciprocal customs tariffs take legal effect at Canadian ports of entry on September 8, 2026, unless a negotiated bilateral accord is finalized.",
-    "seoTitle": "Canada Prepares Retaliatory Tariffs on U.S. Goods for September 8 | Choseno",
-    "metaDescription": "Canada publishes list of 25% retaliatory tariffs on $3.6B in U.S. steel and manufactured goods taking effect September 8.",
-    "tags": [
-      "Mark Carney",
-      "Canada",
-      "Economy",
-      "Trade",
-      "Manufacturing",
-      "Steel",
-      "Tariffs"
-    ],
-    "tweet": "Canada prepares 25% retaliatory tariffs on $3.6B in U.S. steel and manufactured goods effective September 8 to defend domestic workers.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno International Trade & Macroeconomics Bureau",
-      "bio": "CUSMA trade negotiations, customs tariff schedules, bilateral trade disputes, and Canadian macroeconomic policy"
-    },
-    "sources": [
-      {
-        "label": "Department of Finance Canada Newsroom",
-        "url": "https://www.canada.ca/en/department-finance/news/2026/08/canada-announces-reciprocal-tariffs-on-us-imports.html"
-      },
-      {
-        "label": "The Globe and Mail",
-        "url": "https://www.theglobeandmail.com/business/article-canada-publishes-retaliatory-tariffs-list-us-imports-september-8/"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "3ec78351-9bec-46b8-afea-45931f29646e"
-    ],
-    "taggedPoliticians": [
-      "Mark Carney"
-    ]
-  },
-  {
-    "slug": "british-columbia-premier-david-eby-reaffirms-northern-pacific-oil-tanker-moratorium-in-trade-framework-2026-08-24",
-    "headline": "Premier David Eby Reaffirms Permanent Oil Tanker Ban on B.C.'s North Coast",
-    "summary": "B.C. Premier David Eby issues formal declaration upholding the federal Oil Tanker Moratorium Act, rejecting proposals to open North Coast waters to crude oil tankers.",
-    "category": "Environment",
-    "country": "CA",
-    "province": "BC",
-    "status": "published",
-    "eventDate": "2026-08-24T12:00:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "state",
-    "latitude": 54.315,
-    "longitude": -130.3208,
-    "body": "PRINCE RUPERT, BC — British Columbia Premier David Eby delivered a major environmental and resource policy address in Prince Rupert, reaffirming the provincial government's unwavering commitment to the federal Oil Tanker Moratorium Act and permanently rejecting calls to lift marine crude tanker bans along the Great Bear Rainforest coastline.\n\n## Protecting Fragile Marine Ecosystems and Indigenous Waters\n\nPremier Eby affirmed that B.C.’s northern coastal waters, pristine fjords, and lucrative wild salmon fisheries are ecologically irreplaceable and would face catastrophic devastation from a marine bitumen or crude oil spill. The Premier highlighted that British Columbia will continue expanding clean energy export infrastructure—including green hydrogen, renewable mass timber, and critical minerals through the Port of Prince Rupert—without compromising ocean protection.\n\nPremier Eby declared that the northern oil tanker ban is non-negotiable, emphasizing that true economic prosperity must respect Indigenous sovereignty and protect coastal ecosystems for future generations.\n\n## Coastal First Nations and Marine Scientists Praise\n\nCoastal First Nations and Haida Nation leadership strongly commended the Premier’s stance, affirming their inherent title and stewardship over coastal waters.\n\nCommercial fishing and eco-tourism operators praised the permanent protection of Dixon Entrance and Hecate Strait.\n\n## Provincial Resource Policy Directive\n\nThe declaration will guide all provincial environmental assessment submissions regarding northern port developments.",
-    "seoTitle": "Premier David Eby Reaffirms B.C. North Coast Oil Tanker Moratorium | Choseno",
-    "metaDescription": "B.C. Premier David Eby reaffirms the oil tanker ban on the North Coast, protecting salmon habitats and coastal Indigenous waters.",
-    "tags": [
-      "David Eby",
-      "British Columbia",
-      "Environment",
-      "Indigenous",
-      "Ocean",
-      "Energy",
-      "Canada"
-    ],
-    "tweet": "B.C. Premier David Eby reaffirms the permanent oil tanker ban on the North Coast, protecting wild salmon and Great Bear waters.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Coastal Marine Policy & Indigenous Affairs Desk",
-      "bio": "Marine environmental law, Oil Tanker Moratorium Act, Coastal First Nations agreements, and B.C. natural resources"
-    },
-    "sources": [
-      {
-        "label": "BC Gov News",
-        "url": "https://news.gov.bc.ca/releases/2026PREM0051-001312"
-      },
-      {
-        "label": "Global News British Columbia",
-        "url": "https://globalnews.ca/news/1074839/david-eby-reaffirms-bc-north-coast-oil-tanker-ban/"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "22251c1e-a7b6-4f60-b951-1da7b00c3323"
-    ],
-    "taggedPoliticians": [
-      "David Eby"
-    ]
-  },
-  {
-    "slug": "new-orleans-city-council-allocates-2-8-million-to-rebuild-downtown-and-neighborhood-street-lighting-2026-08-24",
-    "headline": "New Orleans Approves $2.8 Million to Repair and Modernize 3,000 Municipal Streetlights",
-    "summary": "Mayor LaToya Cantrell and New Orleans City Council allocate $2.8 million to convert 3,000 streetlights to energy-efficient LED fixtures with real-time outage telemetry across 8 neighborhoods.",
-    "category": "Infrastructure",
-    "country": "US",
-    "province": "LA",
-    "status": "published",
-    "eventDate": "2026-08-24T11:30:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "local",
-    "latitude": 29.9511,
-    "longitude": -90.0715,
-    "body": "NEW ORLEANS, LA — The New Orleans City Council approved a $2.8 million capital infrastructure funding allocation dedicated to repairing, rewiring, and modernizing municipal street lighting networks across high-pedestrian corridors in Tremé, Mid-City, Central City, and New Orleans East.\n\n## Enhancing Nighttime Pedestrian Safety and Energy Efficiency\n\nThe funding packages finance the replacement of 3,000 failed high-pressure sodium fixtures with high-efficiency LED lights equipped with smart photocell sensors and cellular outage telemetry, allowing Department of Public Works dispatchers to identify fixture faults automatically without relying on citizen 311 calls. The project includes underground conduit rewiring and copper wire theft-prevention locks along Claiborne Avenue and Canal Street.\n\nMayor Cantrell and council members affirmed that well-lit streets are fundamental to neighborhood public safety, pedestrian walkability, and community pride.\n\n## Neighborhood Associations and Business Corridors Support\n\nNeighborhood business associations praised the project for improving customer safety in evening entertainment and dining districts.\n\nPedestrian safety coalitions highlighted that upgraded intersection lighting significantly reduces nighttime vehicle-pedestrian collisions.\n\n## Repair Mobilization Schedule\n\nElectrical contracting crews will begin street-level LED installations and wiring repairs in September 2026.",
-    "seoTitle": "New Orleans Approves $2.8M to Modernize 3,000 City Streetlights | Choseno",
-    "metaDescription": "New Orleans City Council allocates $2.8M to repair 3,000 smart LED streetlights and prevent copper theft across 8 neighborhoods.",
-    "tags": [
-      "New Orleans",
-      "Louisiana",
-      "Infrastructure",
-      "Public Safety",
-      "Municipal",
-      "Energy",
-      "US"
-    ],
-    "tweet": "New Orleans allocates $2.8M to repair 3,000 city streetlights, installing smart LED fixtures to enhance pedestrian safety across 8 neighborhoods.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Urban Infrastructure & Municipal Safety Desk",
-      "bio": "Municipal electrical engineering, street lighting policy, urban safety design, and New Orleans civic governance"
-    },
-    "sources": [
-      {
-        "label": "City of New Orleans Mayor's Office",
-        "url": "https://nola.gov/mayor/news/august-2026/city-announces-2-8-million-street-lighting-modernization/"
-      },
-      {
-        "label": "WWL-TV New Orleans",
-        "url": "https://www.wwltv.com/article/news/local/orleans/new-orleans-city-council-approves-28m-streetlight-repairs/289-7483912"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "california-energy-commission-approves-100-million-for-vehicle-to-grid-bidirectional-ev-charging-2026-08-24",
-    "headline": "California Energy Commission Approves $100 Million for Bidirectional Vehicle-to-Grid EV Charging",
-    "summary": "CEC commissioners vote 4–0 to approve $100 million in Clean Transportation Program grants, installing bidirectional EV chargers at 250 school bus yards and commercial fleets to back up the grid.",
-    "category": "Clean Tech",
     "country": "US",
     "province": "CA",
     "status": "published",
-    "eventDate": "2026-08-24T11:00:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
+    "eventDate": "2026-08-24T14:30:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
     "impactArea": "state",
     "latitude": 38.5816,
     "longitude": -121.4944,
-    "body": "SACRAMENTO, CA — The California Energy Commission (CEC) voted unanimously 4–0 to approve a $100 million grant solicitation under the Clean Transportation Program, funding the installation of bidirectional Vehicle-to-Grid (V2G) DC fast-charging infrastructure across 250 public school bus yards and municipal fleet facilities.\n\n## Turning Electric School Buses into Giant Neighborhood Batteries\n\nThe funding packages enable commercial electric school bus and municipal truck fleets to charge overnight during low-cost surplus renewable energy hours and discharge up to 500 megawatts of clean stored electricity back into local distribution grids during peak summer 4 PM to 9 PM net peak demand periods. Participating school districts will receive automated compensation payments from utilities under California's Emergency Load Reduction Program (ELRP), earning up to $15,000 per bus annually in electricity revenue.\n\nCEC Chair David Hochschild stated that bidirectional electric vehicles transform parked fleets into virtual power plants, keeping the lights on during heat waves while cutting school district operating budgets.\n\n## Clean Transportation Advocates and School Districts Praise\n\nCalifornia School Boards Association leaders celebrated the program for generating new revenue to support classroom education.\n\nElectric vehicle software providers praised the standardized Open Charge Point Protocol (OCPP) bidirectional grid interoperability rules.\n\n## Grant Application Intake\n\nCEC grant applications for school districts and fleet operators open on October 1, 2026.",
-    "seoTitle": "CEC Approves $100M for Vehicle-to-Grid Bidirectional EV Charging | Choseno",
-    "metaDescription": "California Energy Commission awards $100M for bidirectional V2G chargers at 250 school bus yards to support the electric grid.",
+    "body": "SACRAMENTO, CA — California Governor Gavin Newsom signed into law Assembly Bill 1651, amending the California Business and Professions Code to establish binding ethical standards and statutory guardrails for the use of generative artificial intelligence by licensed attorneys and legal technology providers.\n\n## Preventing Algorithmic Hallucinations in Judicial Proceedings\n\nThe enacted statute requires attorneys practicing in California courts to certify independent human review of all AI-generated legal briefs, case citations, and factual filings prior to court submission, establishing civil sanctions for submitting fictitious hallucinated case authorities. The law also mandates that legal practitioners disclose to clients whenever AI software is utilized to draft substantive contracts or calculate damages, and strictly prohibits generative AI models from training on confidential attorney-client privileged materials.\n\nGovernor Newsom affirmed that while California is the global capital of artificial intelligence innovation, ethical standards must protect consumers and preserve the integrity of the judicial system.\n\n## State Bar of California and Consumer Attorneys Endorse\n\nThe State Bar of California and Consumer Attorneys of California (CAOC) praised the legislation for codifying professional competency rules in the age of generative computing.\n\nLegaltech developers welcomed clear compliance definitions distinguishing automated administrative transcription from substantive legal drafting.\n\n## Effective Date\n\nAssembly Bill 1651 takes full statutory effect across all California courts and legal practices on January 1, 2027.",
+    "seoTitle": "Governor Gavin Newsom Signs AB 1651 AI Legal Ethics Law | Choseno",
+    "metaDescription": "California Governor Gavin Newsom signs AB 1651 requiring lawyers to verify AI-generated briefs and protect client confidentiality.",
     "tags": [
       "Gavin Newsom",
       "California",
-      "Clean Tech",
-      "Energy",
-      "Electric Vehicles",
-      "Schools",
+      "Tech",
+      "AI",
+      "Law",
+      "Judiciary",
+      "Consumer Protection",
       "US"
     ],
-    "tweet": "California Energy Commission approves $100M for bidirectional V2G EV chargers, turning electric school buses into neighborhood power batteries.",
+    "tweet": "California Governor Gavin Newsom signs AB 1651, requiring lawyers to verify AI-generated court filings and protect client confidentiality.",
     "breakingNews": true,
     "author": {
-      "name": "Choseno Clean Transportation & Grid Integration Desk",
-      "bio": "Vehicle-to-grid engineering, CEC Clean Transportation grants, virtual power plants, and California climate policy"
+      "name": "Choseno Legal Technology & AI Governance Desk",
+      "bio": "State AI regulation, judicial ethics statutes, legaltech compliance, and California technology policy"
     },
     "sources": [
       {
-        "label": "California Energy Commission Business Meeting Notices",
-        "url": "https://www.energy.ca.gov/news/2026-08/cec-approves-100-million-vehicle-grid-charging-solicitation"
+        "label": "Office of Governor Gavin Newsom",
+        "url": "https://www.gov.ca.gov/2026/08/24/governor-newsom-signs-legislation-regulating-ai-legal-practice-ab1651/"
       },
       {
-        "label": "Los Angeles Times",
-        "url": "https://www.latimes.com/environment/story/2026-08-24/california-100m-vehicle-to-grid-school-bus-chargers"
+        "label": "San Francisco Chronicle",
+        "url": "https://www.sfchronicle.com/politics/article/newsom-signs-ai-lawyer-ethics-bill-ab1651-2026.php"
       }
     ],
     "taggedPoliticianIds": [
@@ -475,356 +239,625 @@ const articles = [
     ]
   },
   {
-    "slug": "united-states-department-of-energy-awards-300-million-for-long-duration-flow-battery-storage-demonstrations-2026-08-24",
-    "headline": "U.S. Department of Energy Awards $300 Million for 10-Hour Long-Duration Energy Storage",
-    "summary": "DOE Office of Clean Energy Demonstrations announces $300 million to build 8 utility-scale iron-flow and zinc-air long-duration battery storage facilities delivering 10 to 24 hours of firm clean power.",
+    "slug": "department-of-energy-issues-emergency-order-202-26-39-for-michigan-jh-campbell-coal-plant-2026-08-24",
+    "headline": "DOE Issues Emergency Order 202-26-39 Directing Operation of Michigan Campbell Power Plant",
+    "summary": "U.S. Department of Energy orders MISO to maintain the J.H. Campbell coal-fired plant in West Olive, Michigan, through November 2026 to protect Midwest regional transmission stability.",
+    "category": "Energy",
+    "country": "US",
+    "province": "MI",
+    "status": "published",
+    "eventDate": "2026-08-24T14:00:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "state",
+    "latitude": 42.9064,
+    "longitude": -86.1959,
+    "body": "WASHINGTON, DC — The United States Department of Energy (DOE) issued emergency Order No. 202-26-39 under Section 202(c) of the Federal Power Act, directing the Midcontinent Independent System Operator (MISO) to ensure the 1,440-megawatt J.H. Campbell Generating Complex in Ottawa County, Michigan, remains available to generate electricity through November 14, 2026.\n\n## Securing Regional Voltage Stability for Midwest Industrial Grids\n\nThe emergency directive responds to transmission capacity constraints identified by MISO and Consumers Energy following the planned retirement transition of the facility. DOE electrical engineers determined that temporarily maintaining Campbell's baseload turbine operations is necessary to avoid localized low-voltage conditions and potential rolling outages across Western Michigan during late-summer peak manufacturing loads.\n\nDOE officials stated that emergency Section 202(c) orders are narrowly targeted bridge measures designed to protect regional grid stability while long-term transmission and clean battery infrastructure projects complete construction.\n\n## MISO Grid Operators and Environmental Perspectives\n\nMISO dispatchers confirmed that the emergency order provides essential spinning reserves to balance regional power transfers from Indiana and Illinois.\n\nMichigan clean energy advocates called for accelerating regional 345-kV transmission line upgrades to permanently transition off coal baseload generation.\n\n## Order Duration\n\nEmergency Order No. 202-26-39 remains active through November 14, 2026.",
+    "seoTitle": "DOE Issues Emergency Order 202-26-39 for Michigan Campbell Plant | Choseno",
+    "metaDescription": "DOE orders MISO to keep Michigan's J.H. Campbell coal plant operational through November 2026 to ensure grid reliability.",
+    "tags": [
+      "Gretchen Whitmer",
+      "Michigan",
+      "Energy",
+      "Utilities",
+      "Infrastructure",
+      "Economy",
+      "US"
+    ],
+    "tweet": "Department of Energy issues Emergency Order 202-26-39, directing MISO to keep Michigan's Campbell power plant running through November.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Midwest Grid Reliability Bureau",
+      "bio": "MISO regional transmission, Federal Power Act Section 202(c) orders, utility baseload engineering, and Michigan energy"
+    },
+    "sources": [
+      {
+        "label": "U.S. Department of Energy Grid Emergency Notices",
+        "url": "https://www.energy.gov/oe/emergency-order-202-26-39-campbell-michigan"
+      },
+      {
+        "label": "The Detroit News",
+        "url": "https://www.detroitnews.com/story/business/energy/2026/08/24/doe-emergency-order-consumers-energy-campbell-plant/7483912/"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "department-of-energy-issues-emergency-order-202-26-25a-for-maryland-wagner-generating-station-2026-08-24",
+    "headline": "DOE Issues Emergency Order 202-26-25A Authorizing Maryland Wagner Plant Operation",
+    "summary": "U.S. Department of Energy authorizes PJM to run Unit 4 of the Herbert A. Wagner Generating Station in Anne Arundel County, Maryland, through November 2026 to manage Baltimore grid demand.",
+    "category": "Energy",
+    "country": "US",
+    "province": "MD",
+    "status": "published",
+    "eventDate": "2026-08-24T13:30:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "state",
+    "latitude": 39.1762,
+    "longitude": -76.5297,
+    "body": "WASHINGTON, DC — The United States Department of Energy (DOE) issued emergency Order No. 202-26-25A under Section 202(c) of the Federal Power Act, granting PJM Interconnection the emergency authority to dispatch Unit 4 at the Herbert A. Wagner Generating Station in Baltimore Harbor through November 17, 2026.\n\n## Safeguarding Electricity Delivery to Greater Baltimore\n\nThe federal order resolves localized transmission congestion resulting from high summer electrical demand and regional transmission line maintenance in Central Maryland. The 415-megawatt oil-fired generating unit will operate on an as-needed basis to prevent voltage collapse and ensure uninterrupted electricity delivery to 1.5 million residential and commercial customers across Baltimore City and Anne Arundel County.\n\nEnergy Department officials emphasized that the order ensures emergency electricity is available during high-demand periods while Maryland advances long-term offshore wind and substation modernization projects.\n\n## Baltimore City Leadership and Clean Air Stances\n\nBaltimore regional business chambers welcomed the emergency reliability bridge to protect commercial port and logistics operations from power disruptions.\n\nChesapeake Bay environmental coalitions highlighted the importance of completing the Brandon Shores transmission line upgrades to retire legacy fossil generation.\n\n## Order Duration\n\nEmergency Order No. 202-26-25A remains in effect through November 17, 2026.",
+    "seoTitle": "DOE Issues Emergency Order 202-26-25A for Maryland Wagner Plant | Choseno",
+    "metaDescription": "DOE issues Emergency Order 202-26-25A authorizing Maryland's Wagner power plant to operate through November 2026 for Baltimore grid security.",
+    "tags": [
+      "Wes Moore",
+      "Maryland",
+      "Energy",
+      "Utilities",
+      "Infrastructure",
+      "Public Safety",
+      "US"
+    ],
+    "tweet": "Department of Energy issues Emergency Order 202-26-25A authorizing Maryland's Wagner power plant to operate through November.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Mid-Atlantic Energy Desk",
+      "bio": "Federal Power Act orders, PJM grid engineering, transmission line congestion, and Maryland utility governance"
+    },
+    "sources": [
+      {
+        "label": "U.S. Department of Energy Emergency Grid Authorizations",
+        "url": "https://www.energy.gov/oe/emergency-order-202-26-25a-wagner-maryland"
+      },
+      {
+        "label": "The Baltimore Sun",
+        "url": "https://www.baltimoresun.com/2026/08/24/doe-extends-emergency-order-wagner-power-plant-baltimore/"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "a9c2b489-7cf1-4560-a2d9-122e23da9123"
+    ],
+    "taggedPoliticians": [
+      "Wes Moore"
+    ]
+  },
+  {
+    "slug": "georgia-governor-brian-kemp-issues-executive-orders-suspending-dublin-city-school-board-and-naming-panel-2026-08-24",
+    "headline": "Governor Brian Kemp Issues Executive Orders Suspending Local School Board Members in Integrity Review",
+    "summary": "Georgia Governor Brian Kemp signs Executive Order 08.24.26.02, suspending members of the Dublin City Board of Education following an independent state governance review and appointing a nominating panel.",
+    "category": "Governance",
+    "country": "US",
+    "province": "GA",
+    "status": "published",
+    "eventDate": "2026-08-24T13:00:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "local",
+    "latitude": 32.5404,
+    "longitude": -82.9038,
+    "body": "ATLANTA, GA — Georgia Governor Brian Kemp signed Executive Order 08.24.26.02, executing statutory powers under O.C.G.A. § 45-5-6 to suspend members of the Dublin City Board of Education and establishing an independent five-member Nominating Committee to recommend interim replacements.\n\n## Restoring Governance Accountability and Protecting Public School Standards\n\nThe executive suspension follows a formal review by the Georgia State Board of Education and the Governor’s Special Review Commission, which found systemic governance breakdowns, budget non-compliance, and accreditation jeopardy within the municipal school district. The order appoints veteran educational leaders and civic figures to the nominating panel, tasking them with interviewing qualified community candidates and submitting interim appointments within 30 days.\n\nGovernor Kemp stated that ensuring transparent, ethical governance in public school districts is vital to protect student educational outcomes and maintain public trust.\n\n## Dublin Community and Educational Advocates Support\n\nDublin civic leaders and parent organizations praised the decisive gubernatorial intervention to safeguard the school system's regional accreditation.\n\nGeorgia Department of Education officials confirmed that state academic liaisons will provide daily administrative support to school staff during the leadership transition.\n\n## Nominating Panel Timeline\n\nThe Nominating Committee will deliver its recommended interim appointments to Governor Kemp by September 24, 2026.",
+    "seoTitle": "Governor Brian Kemp Suspends Dublin School Board Under State Integrity Order | Choseno",
+    "metaDescription": "Georgia Governor Brian Kemp signs executive order suspending Dublin City School Board members and appointing a nominating panel.",
+    "tags": [
+      "Brian Kemp",
+      "Georgia",
+      "Governance",
+      "Education",
+      "Integrity",
+      "Municipal",
+      "US"
+    ],
+    "tweet": "Georgia Governor Brian Kemp signs an executive order suspending Dublin School Board members to protect school district accreditation.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Georgia Civic Integrity & Education Bureau",
+      "bio": "State executive orders, school board accreditation law, municipal ethics review panels, and Georgia politics"
+    },
+    "sources": [
+      {
+        "label": "State of Georgia Governor's Office",
+        "url": "https://gov.georgia.gov/executive-action/executive-orders/2026-executive-orders/08-24-26-02-dublin-board"
+      },
+      {
+        "label": "The Telegraph (Macon)",
+        "url": "https://www.macon.com/news/local/education/article29748399.html"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "united-states-department-of-transportation-allocates-400-million-for-interstate-truck-electrification-corridors-2026-08-24",
+    "headline": "USDOT Awards $400 Million to Build Megawatt Charging Corridors for Electric Heavy Freight Trucks",
+    "summary": "Federal Highway Administration announces $400 million in CFI Program grants across 16 states, constructing 120 megawatt-scale heavy electric truck charging plazas along I-10, I-80, and I-95.",
+    "category": "Infrastructure",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-24T12:30:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.8765,
+    "longitude": -77.0055,
+    "body": "WASHINGTON, DC — The United States Department of Transportation (USDOT) and the Federal Highway Administration (FHWA) announced $400 million in grant awards through the Charging and Fueling Infrastructure (CFI) Discretionary Grant Program, funding the construction of 120 dedicated commercial heavy freight charging hubs along high-volume Interstate corridors.\n\n## Electrifying Continental Supply Chains with Megawatt Charging Tech\n\nThe funding packages provide capital to construct commercial charging plazas equipped with Megawatt Charging System (MCS) dispensers capable of delivering up to 1.2 megawatts of power per port, charging a Class 8 electric semi-truck in 30 minutes during mandatory driver rest breaks. The charging hubs will be strategically sited at commercial travel centers along Interstate 10 (California to Texas), Interstate 80 (Illinois to Utah), and Interstate 95 (New York to Florida), cutting freight corridor diesel emissions by 50%.\n\nTransportation Secretary Pete Buttigieg affirmed that building out heavy-duty electric freight charging infrastructure reduces commercial shipping costs and cleans the air in communities bordering major freight highways.\n\n## Trucking Associations and Electric Fleets Praise\n\nAmerican Trucking Associations (ATA) and commercial fleet operators praised the focus on high-power freight plazas along major freight logistics arteries.\n\nRegional electric utility cooperatives confirmed that all 120 charging sites incorporate utility-scale battery storage to balance local grid demand.\n\n## Groundbreaking Milestones\n\nCivil site grading and utility substation connections will break ground at highway travel plazas in spring 2027.",
+    "seoTitle": "USDOT Awards $400M for Megawatt Heavy Electric Truck Charging Hubs | Choseno",
+    "metaDescription": "USDOT announces $400M in CFI grants to build 120 megawatt-scale electric semi-truck charging plazas along I-10, I-80, and I-95.",
+    "tags": [
+      "United States",
+      "Infrastructure",
+      "Transportation",
+      "Electric Vehicles",
+      "Clean Tech",
+      "Logistics",
+      "US"
+    ],
+    "tweet": "USDOT awards $400M to build 120 megawatt-scale electric truck charging plazas along I-10, I-80, and I-95, charging semis in 30 minutes.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno Heavy Freight Electrification Desk",
+      "bio": "FHWA CFI grant administration, megawatt charging system engineering, commercial fleet electrification, and federal transport"
+    },
+    "sources": [
+      {
+        "label": "U.S. Department of Transportation FHWA News",
+        "url": "https://highways.dot.gov/newsroom/biden-harris-administration-announces-400-million-heavy-duty-freight-charging-2026"
+      },
+      {
+        "label": "Commercial Carrier Journal",
+        "url": "https://www.ccjdigital.com/alternative-power/article/15748391/dot-awards-400m-for-electric-semi-truck-megawatt-charging-corridors"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "environmental-protection-agency-deploys-200-million-for-tribal-and-rural-pfas-drinking-water-filtration-2026-08-24",
+    "headline": "EPA Awards $200 Million to Install PFAS Water Filtration Systems in 150 Rural Communities",
+    "summary": "EPA Administrator Michael Regan announces $200 million in Emerging Contaminants grants, providing 100% principal forgiveness for rural and tribal water systems installing granular activated carbon filters.",
+    "category": "Environment",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-24T12:00:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.8951,
+    "longitude": -77.0364,
+    "body": "WASHINGTON, DC — The United States Environmental Protection Agency (EPA) announced the distribution of $200 million in non-repayable grant awards through the Emerging Contaminants in Small or Disadvantaged Communities program, funding the immediate installation of advanced PFAS water filtration systems across 150 rural municipal utilities and tribal nations in 28 states.\n\n## Protecting Rural Tap Water from Forever Chemicals\n\nThe funding packages provide up to $2 million per water utility to install granular activated carbon (GAC) contactor vessels, ion-exchange resin systems, and high-recovery reverse osmosis membranes to remove per- and polyfluoroalkyl substances (PFAS) to non-detectable levels. The funding assists small water systems in achieving early compliance with federal Maximum Contaminant Levels (MCLs) of 4 parts per trillion for PFOA and PFOS without increasing residential monthly water rates.\n\nEPA Administrator Michael Regan stated that every community, regardless of size or tax base, deserves tap water that is clean and free of toxic forever chemicals.\n\n## Rural Water Associations and Tribal Health Leaders Praise\n\nThe National Rural Water Association (NRWA) commended the 100% grant structure, noting that small rural towns with populations under 10,000 lacked the bonding capacity to finance multi-million dollar filtration systems.\n\nTribal environmental directors celebrated the direct funding to safeguard reservation groundwater aquifers.\n\n## Construction Rollout Schedule\n\nWater filtration engineering packages will begin arriving at municipal water treatment plants in autumn 2026.",
+    "seoTitle": "EPA Awards $200M for Rural PFAS Water Filtration Systems | Choseno",
+    "metaDescription": "EPA allocates $200M in grants to install advanced PFAS filtration systems in 150 rural and tribal communities across 28 states.",
+    "tags": [
+      "United States",
+      "Environment",
+      "Water Quality",
+      "Public Health",
+      "Rural",
+      "Indigenous",
+      "US"
+    ],
+    "tweet": "EPA awards $200M in grants to install advanced PFAS filtration systems across 150 rural and tribal communities to eliminate forever chemicals.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno Drinking Water Quality & PFAS Remediation Bureau",
+      "bio": "EPA Safe Drinking Water Act compliance, PFAS treatment engineering, rural utility grants, and environmental toxicology"
+    },
+    "sources": [
+      {
+        "label": "U.S. Environmental Protection Agency Press Releases",
+        "url": "https://www.epa.gov/newsreleases/epa-announces-200-million-pfas-drinking-water-treatment-rural-tribal-2026"
+      },
+      {
+        "label": "Water Quality Products Magazine",
+        "url": "https://www.wqpmag.com/press-releases/epa-allocates-200m-for-emerging-contaminants-pfas-grants-2026"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "united-states-department-of-agriculture-awards-150-million-for-rural-veterinary-clinics-and-food-animal-services-2026-08-24",
+    "headline": "USDA Awards $150 Million to Address Rural Food Animal Veterinarian Shortages",
+    "summary": "USDA Secretary Tom Vilsack announces $150 million under the Veterinary Services Grant Program and VMLRP, providing student loan relief and clinic equipment grants for 350 rural large-animal vets.",
+    "category": "Agriculture",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-24T11:30:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.887,
+    "longitude": -77.0298,
+    "body": "WASHINGTON, DC — The United States Department of Agriculture (USDA) National Institute of Food and Agriculture (NIFA) announced $150 million in grant awards through the Veterinary Medicine Loan Repayment Program (VMLRP) and the Veterinary Services Grant Program (VSGP), delivering direct support to 350 rural food animal veterinary practitioners across 36 states.\n\n## Safeguarding Livestock Health and National Food Biosecurity\n\nThe funding packages provide up to $100,000 in direct veterinary school student debt relief for veterinarians who commit to four years of clinical service in designated shortage counties, alongside capital grants up to $150,000 for rural veterinary clinics to purchase mobile digital x-ray units, livestock hydraulic chutes, and biosecurity diagnostic gear. The program addresses severe veterinarian shortages in beef cattle, dairy, swine, and poultry producing counties in Iowa, Kansas, Texas, Nebraska, and Montana.\n\nUSDA leadership affirmed that food animal veterinarians are the frontline defense for American agriculture, protecting livestock health, rural economies, and the safety of the national food supply.\n\n## Cattlemen's Associations and Veterinary Federations Endorse\n\nThe American Veterinary Medical Association (AVMA) and National Cattlemen’s Beef Association (NCBA) strongly endorsed the funding expansion, citing vital reductions in herd mortality rates and rapid disease surveillance.\n\nVeterinary college deans praised the loan forgiveness program for helping young graduates choose rural large-animal practice.\n\n## Service Commitment Rollout\n\nApproved veterinary practitioners will commence funded clinical service agreements in rural shortage counties on October 1, 2026.",
+    "seoTitle": "USDA Awards $150M for Rural Food Animal Veterinarians | Choseno",
+    "metaDescription": "USDA announces $150M in VMLRP grants providing student loan relief and clinic gear for 350 rural large-animal veterinarians in 36 states.",
+    "tags": [
+      "United States",
+      "Agriculture",
+      "Rural",
+      "Healthcare",
+      "Food Security",
+      "Economy",
+      "US"
+    ],
+    "tweet": "USDA awards $150M in student loan relief and clinic grants for 350 rural large-animal veterinarians to protect livestock health.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Agricultural Veterinary & Biosecurity Desk",
+      "bio": "USDA NIFA veterinary grant administration, livestock disease surveillance, rural agricultural economics, and farm policy"
+    },
+    "sources": [
+      {
+        "label": "U.S. Department of Agriculture NIFA News",
+        "url": "https://www.nifa.usda.gov/press-releases/usda-invests-150-million-rural-veterinary-services-vmlrp-2026"
+      },
+      {
+        "label": "Bovine Veterinarian",
+        "url": "https://www.bovinevetonline.com/news/industry/usda-awards-150m-food-animal-veterinarian-loan-repayment-grants-2026"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "united-states-department-of-housing-and-urban-development-awards-275-million-for-manufactured-housing-park-infrastructure-2026-08-24",
+    "headline": "HUD Awards $275 Million in MAIN Grants to Modernize Resident-Owned Manufactured Home Parks",
+    "summary": "HUD announces $275 million in Preservation and Reinvestment Initiative for Community Enhancement (PRICE) grants to upgrade water, sewer, and storm shelters across 85 manufactured home communities.",
+    "category": "Housing",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-24T11:00:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.8845,
+    "longitude": -77.0223,
+    "body": "WASHINGTON, DC — The United States Department of Housing and Urban Development (HUD) announced $275 million in competitive grant awards through the Preservation and Reinvestment Initiative for Community Enhancement (PRICE) program, funding major infrastructure rehabilitation across 85 manufactured housing communities in 26 states.\n\n## Protecting Unsubsidized Naturally Occurring Affordable Housing\n\nThe funding packages provide direct grants to resident-owned mobile home cooperatives, non-profit housing developers, and tribal housing authorities to replace failing septic systems, install municipal water connections, pave drainage roads, and construct reinforced underground community storm shelters in hurricane and tornado-prone regions. The federal investments preserve over 12,000 naturally occurring affordable homes for low-income seniors and working families, preventing corporate land acquisitions and park closures.\n\nHUD Acting Secretary Adrianne Todman stated that manufactured housing is a critical pillar of affordable homeownership in America, affirming that federal grants ensure park residents have safe, modern utilities and permanent community stability.\n\n## Manufactured Home Resident Cooperatives and Housing Coalitions Support\n\nROC USA (Resident Owned Communities) celebrated the awards, highlighting that infrastructure grants prevent unaffordable rent hikes on fixed-income seniors.\n\nNational Low Income Housing Coalition commended the program for preserving unsubsidized affordable housing stock.\n\n## Construction Phase Timeline\n\nCivil infrastructure contractor bidding and utility excavation across all 85 manufactured home parks will begin in November 2026.",
+    "seoTitle": "HUD Awards $275M to Modernize Manufactured Home Communities | Choseno",
+    "metaDescription": "HUD announces $275M in PRICE grants to upgrade water, sewer, and storm shelters across 85 resident-owned manufactured home parks.",
+    "tags": [
+      "United States",
+      "Housing",
+      "Economy",
+      "Infrastructure",
+      "Public Safety",
+      "Civil Rights",
+      "US"
+    ],
+    "tweet": "HUD awards $275M to upgrade water systems, sewer mains, and storm shelters across 85 resident-owned manufactured home communities.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Manufactured Housing & Community Preservation Desk",
+      "bio": "HUD PRICE grant administration, resident-owned community cooperatives, manufactured housing finance, and civil infrastructure"
+    },
+    "sources": [
+      {
+        "label": "U.S. Department of Housing and Urban Development Newsroom",
+        "url": "https://www.hud.gov/press/press_releases_media_advisories/hud_no_26_148_price_manufactured_housing_awards"
+      },
+      {
+        "label": "Daily Yonder",
+        "url": "https://dailyyonder.com/hud-awards-275m-preserve-manufactured-housing-communities/2026/08/24/"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "united-states-department-of-energy-awards-200-million-for-advanced-geothermal-enhanced-systems-demonstrations-2026-08-24",
+    "headline": "U.S. Department of Energy Awards $200 Million for Enhanced Geothermal Systems in 5 States",
+    "summary": "DOE Geothermal Technologies Office announces $200 million for four utility-scale Enhanced Geothermal Systems (EGS) in Utah, Nevada, California, and Oregon, tapping deep hot dry rock for 24/7 clean power.",
     "category": "Clean Tech",
     "country": "US",
     "province": "DC",
     "status": "published",
     "eventDate": "2026-08-24T10:30:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
     "impactArea": "country",
     "latitude": 38.8872,
     "longitude": -77.0259,
-    "body": "WASHINGTON, DC — The United States Department of Energy (DOE) Office of Clean Energy Demonstrations (OCED) announced $300 million in grant awards for eight utility-scale Long-Duration Energy Storage (LDES) demonstration projects in California, New York, Texas, and Minnesota.\n\n## Solving the Multi-Hour Renewable Energy Storage Challenge\n\nThe funding packages provide matching capital to construct commercial iron-flow, zinc-air, and compressed-air energy storage facilities capable of discharging clean power for 10 to 24 continuous hours, overcoming the 4-hour limitation of conventional lithium-ion batteries. The facilities utilize non-toxic, domestically abundant materials like iron and saltwater, eliminating thermal runaway fire risks and providing multi-day energy resilience during winter storms and prolonged overcast weather.\n\nEnergy Secretary Jennifer Granholm emphasized that long-duration energy storage is the linchpin of a dependable 100% clean power grid, keeping renewable power available around the clock.\n\n## Utility Operators and Battery Innovators Endorse\n\nRegional grid operators including CAISO and NYISO praised the long-duration demonstration facilities for replacing gas peaker plants in dense urban load zones.\n\nAmerican Clean Power Association highlighted that iron-flow batteries have 30-year operational lifespans without capacity degradation.\n\n## Groundbreaking Milestones\n\nCivil foundation engineering and electrolyte tank construction will break ground across all eight project sites in spring 2027.",
-    "seoTitle": "DOE Awards $300M for 10-Hour Long-Duration Energy Storage | Choseno",
-    "metaDescription": "DOE announces $300M to build 8 utility-scale long-duration flow battery storage facilities delivering 10 to 24 hours of clean power.",
+    "body": "WASHINGTON, DC — The United States Department of Energy (DOE) Geothermal Technologies Office announced $200 million in demonstration grant awards under the Enhanced Geothermal Shot initiative, funding four commercial-scale Enhanced Geothermal Systems (EGS) power plants across the Western United States.\n\n## Unlocking Terawatts of Baseload Clean Power from the Earth's Core\n\nThe funding packages provide matching capital to clean tech drilling ventures—including Fervo Energy and Sage Geosystems—to drill multi-well horizontal geothermal loops 10,000 feet into hot crystalline rock formations in Utah, Nevada, California, and Oregon. Utilizing precision hydraulic stimulation techniques adapted from the oil and gas industry, the EGS facilities circulate pressurized water to extract geothermal heat and generate 400 megawatts of constant, weather-independent clean baseload electricity.\n\nEnergy Secretary Jennifer Granholm emphasized that enhanced geothermal energy has the potential to power millions of American homes and data centers 24/7 with zero carbon emissions.\n\n## Geothermal Innovators and Oilfield Labor Endorse\n\nThe Geothermal Rising association praised the cost-share grants, projecting that commercial EGS costs will decline below $45 per megawatt-hour by 2030.\n\nPetroleum equipment and drilling contractors welcomed the expansion, transitioning specialized oilfield drilling rigs and union roughneck crews into clean baseload power development.\n\n## Groundbreaking Milestones\n\nHorizontal multi-stage stimulation drilling at the Utah FORGE commercial site will commence in October 2026.",
+    "seoTitle": "DOE Awards $200M for Enhanced Geothermal Energy Demonstration Plants | Choseno",
+    "metaDescription": "DOE announces $200M in grants for four commercial Enhanced Geothermal Systems tapping hot dry rock for 24/7 clean baseload electricity.",
     "tags": [
       "United States",
       "Clean Tech",
       "Energy",
-      "Battery Storage",
+      "Geothermal",
       "Innovation",
       "Climate",
       "US"
     ],
-    "tweet": "Department of Energy awards $300M to construct 8 utility-scale iron-flow battery storage plants delivering 10 to 24 hours of clean electricity.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Long-Duration Energy Storage & Grid Technology Bureau",
-      "bio": "Flow battery chemistry, OCED long-duration storage grants, utility grid balancing, and clean power engineering"
-    },
-    "sources": [
-      {
-        "label": "U.S. Department of Energy OCED Releases",
-        "url": "https://www.energy.gov/oced/articles/doe-invests-300-million-long-duration-energy-storage-demonstrations-2026"
-      },
-      {
-        "label": "Energy Storage News",
-        "url": "https://www.energy-storage.news/us-doe-awards-300m-for-long-duration-flow-battery-projects-2026/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "cape-coral-florida-city-council-executes-emergency-medical-and-disaster-response-grant-accord-2026-08-24",
-    "headline": "Cape Coral City Council Approves Emergency Disaster Response and Rescue Grant Accord",
-    "summary": "Cape Coral Mayor and City Council vote unanimously to execute a state contract securing $1.2 million for Community Emergency Response Team equipment and advanced high-water rescue vehicles.",
-    "category": "Public Safety",
-    "country": "US",
-    "province": "FL",
-    "status": "published",
-    "eventDate": "2026-08-24T10:00:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "local",
-    "latitude": 26.5629,
-    "longitude": -81.9495,
-    "body": "CAPE CORAL, FL — The Cape Coral City Council voted unanimously to execute an intergovernmental grant contract with the Florida Commission on Community Service (Volunteer Florida), securing $1.2 million in direct funding to expand municipal disaster rescue operations ahead of peak hurricane season.\n\n## Strengthening High-Water Rescue and Volunteer Emergency Response\n\nThe grant agreement funds the acquisition of four heavy-duty amphibious high-water rescue transport trucks, portable emergency satellite communication terminals, and emergency medical trauma gear for the Cape Coral Community Emergency Response Team (CERT). The equipment enables first responders to navigate flooded coastal canals and barrier island bridges during category 4 and 5 hurricane storm surges in Lee County.\n\nMayor John Gunter and council members stated that strengthening localized emergency rescue capabilities ensures Cape Coral can safeguard 220,000 residents without waiting for external state resources.\n\n## First Responders and Neighborhood Association Support\n\nCape Coral Fire Department leadership praised the addition of amphibious rescue units for navigating canal washouts.\n\nCivic neighborhood federations organized community CPR and disaster preparedness training sessions across local community centers.\n\n## Equipment Delivery Timeline\n\nHigh-water rescue vehicles and satellite communication gear will deploy to municipal fire stations by September 15, 2026.",
-    "seoTitle": "Cape Coral City Council Approves Emergency Disaster Response Grant | Choseno",
-    "metaDescription": "Cape Coral City Council executes $1.2M state grant agreement for amphibious high-water rescue trucks and CERT emergency teams.",
-    "tags": [
-      "Cape Coral",
-      "Florida",
-      "Public Safety",
-      "Emergency Management",
-      "Hurricanes",
-      "Municipal",
-      "US"
-    ],
-    "tweet": "Cape Coral City Council secures $1.2M in state grants to purchase 4 amphibious high-water rescue trucks for hurricane emergency response.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Coastal Emergency Management & Civic Desk",
-      "bio": "Municipal disaster preparedness, hurricane response engineering, CERT grant administration, and Florida civic affairs"
-    },
-    "sources": [
-      {
-        "label": "City of Cape Coral City Council Meeting Portal",
-        "url": "https://capecoral.legistar.com/LegislationDetail.aspx?ID=674839&GUID=2026-08-24"
-      },
-      {
-        "label": "Fort Myers News-Press",
-        "url": "https://www.news-press.com/story/news/local/cape-coral/2026/08/24/cape-coral-approves-1-2m-disaster-rescue-grant/7483912/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "san-clemente-city-council-enacts-municipal-coastal-park-ranger-enforcement-ordinance-2026-08-24",
-    "headline": "San Clemente City Council Enacts Park Ranger Safety Ordinance for Coastal Trail and Beaches",
-    "summary": "San Clemente City Council votes 5–0 to enact an enforcement ordinance establishing a municipal Park Ranger division to patrol the coastal beach trail and enforce municipal safety codes.",
-    "category": "Public Safety",
-    "country": "US",
-    "province": "CA",
-    "status": "published",
-    "eventDate": "2026-08-24T09:30:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "local",
-    "latitude": 33.427,
-    "longitude": -117.612,
-    "body": "SAN CLEMENTE, CA — The San Clemente City Council voted unanimously 5–0 on second reading to enact a binding municipal ordinance creating the San Clemente Coastal Park Ranger Program, authorizing municipal rangers to enforce city park and beach codes along the five-mile coastal trail and municipal pier.\n\n## Enhancing Coastal Safety, Environmental Care, and E-Bike Regulation\n\nThe ordinance grants trained non-sworn municipal park rangers the legal authority to issue administrative citations for hazardous electric bicycle speeding on pedestrian boardwalks, unpermitted open beach fires, alcohol violations, and off-leash dog infractions in sensitive coastal sage scrub habitat. The initiative deploys all-terrain electric utility vehicles (UTVs) to provide rapid first-aid response and assistance to beachgoers.\n\nMayor Chris Duncan and council members affirmed that dedicated coastal park rangers preserve the family-friendly atmosphere of San Clemente’s beaches while freeing up Orange County Sheriff’s deputies for high-priority emergency calls.\n\n## Beachgoers and Downtown Merchants Support\n\nDowntown San Clemente Business Association praised the increased ranger visibility for keeping the coastal trail clean and secure for visitors.\n\nSurfrider Foundation commended the rangers for enforcing environmental plastic litter bans.\n\n## Ranger Patrol Schedule\n\nUniformed coastal park rangers begin active daily patrol operations on September 1, 2026.",
-    "seoTitle": "San Clemente Enacts Coastal Park Ranger Safety Ordinance | Choseno",
-    "metaDescription": "San Clemente City Council passes ordinance creating coastal park ranger division to patrol the beach trail and enforce safety codes.",
-    "tags": [
-      "San Clemente",
-      "California",
-      "Public Safety",
-      "Municipal",
-      "Environment",
-      "Beaches",
-      "US"
-    ],
-    "tweet": "San Clemente City Council enacts ordinance establishing coastal park rangers to patrol the 5-mile beach trail and regulate e-bikes.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Coastal Municipal Law & Parks Bureau",
-      "bio": "Municipal park ordinances, coastal trail regulation, e-bike safety policy, and Southern California civic governance"
-    },
-    "sources": [
-      {
-        "label": "City of San Clemente City Council Agenda",
-        "url": "https://www.san-clemente.org/government/city-council/ordinance-park-ranger-coastal-trail-2026"
-      },
-      {
-        "label": "The Orange County Register",
-        "url": "https://www.ocregister.com/2026/08/24/san-clemente-approves-park-ranger-ordinance-beach-safety/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "united-states-department-of-housing-and-urban-development-deploys-400-million-for-housing-trust-fund-2026-08-24",
-    "headline": "HUD Awards $400 Million Through Housing Trust Fund to Build Deeply Affordable Rental Units",
-    "summary": "HUD allocates $400 million through the national Housing Trust Fund to state housing finance agencies to construct and preserve 4,500 rental homes for extremely low-income families.",
-    "category": "Housing",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T09:00:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8845,
-    "longitude": -77.0223,
-    "body": "WASHINGTON, DC — The United States Department of Housing and Urban Development (HUD) announced the formula distribution of $400 million in Housing Trust Fund (HTF) allocations across all 50 states, the District of Columbia, and U.S. territories.\n\n## Dedicated Capital for Extremely Low-Income Households\n\nThe Housing Trust Fund provides dedicated formula capital that state housing finance agencies must restrict entirely to constructing and preserving rental housing for extremely low-income households earning at or below 30% of Area Median Income (AMI) or the federal poverty line. The funding packages finance 4,500 deeply subsidized rental apartments reserved for low-income seniors on fixed pensions, disabled veterans, and individuals transitioning out of chronic homelessness, guaranteeing rent stays capped at 30% of household income for 30 years.\n\nHUD Acting Secretary Adrianne Todman affirmed that increasing the supply of deeply affordable housing is the ultimate solution to America's homelessness crisis.\n\n## State Housing Finance Agencies and Tenant Advocates Praise\n\nThe National Low Income Housing Coalition (NLIHC) praised the formula release, emphasizing that HTF is the only federal housing program exclusively targeted to lowest-income renters.\n\nState housing directors confirmed that HTF funds will be layered with 9% Low Income Housing Tax Credits (LIHTC) to break ground on multi-family developments.\n\n## Fund Disbursement Schedule\n\nState housing agencies will receive certified HTF funds into state housing trust accounts in October 2026.",
-    "seoTitle": "HUD Awards $400M in Housing Trust Fund Grants | Choseno",
-    "metaDescription": "HUD allocates $400M through the Housing Trust Fund to build 4,500 deeply affordable rental units for extremely low-income families.",
-    "tags": [
-      "United States",
-      "Housing",
-      "Economy",
-      "Civil Rights",
-      "Poverty",
-      "US"
-    ],
-    "tweet": "HUD awards $400M through the national Housing Trust Fund to build 4,500 rental homes restricted to extremely low-income families.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Federal Housing Policy & Finance Bureau",
-      "bio": "Housing Trust Fund formula regulations, low-income rental finance, HUD statutory programs, and affordable housing development"
-    },
-    "sources": [
-      {
-        "label": "U.S. Department of Housing and Urban Development Press Releases",
-        "url": "https://www.hud.gov/press/press_releases_media_advisories/hud_no_26_145_housing_trust_fund_allocations"
-      },
-      {
-        "label": "Affordable Housing Finance",
-        "url": "https://www.housingfinance.com/policy-legislation/hud-allocates-400-million-in-housing-trust-funds-2026_o"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "quebec-ministry-of-natural-resources-awards-75-million-for-critical-lithium-and-graphite-processing-mills-2026-08-24",
-    "headline": "Quebec Allocates $75 Million to Expand Critical Battery Mineral Processing in Abitibi",
-    "summary": "Ministère des Ressources naturelles et des Forêts deploys $75 million through the Quebec Plan for the Development of Critical Minerals, funding two lithium and anode graphite processing plants in Val-d'Or.",
-    "category": "Clean Tech",
-    "country": "CA",
-    "province": "QC",
-    "status": "published",
-    "eventDate": "2026-08-24T08:30:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "state",
-    "latitude": 48.0975,
-    "longitude": -77.7884,
-    "body": "VAL-D'OR, QC — Minister of Natural Resources and Forests Maïté Blanchette Vézina announced $75 million in state capital loans and equity participations from the Natural Resources Development Fund to construct two commercial mineral processing mills in the Abitibi-Témiscamingue region.\n\n## Powering North America's Electric Vehicle Battery Supply Chain\n\nThe funding packages provide capital to Sayona Mining and Nouveau Monde Graphite to construct advanced chemical refining plants capable of producing 30,000 metric tons of battery-grade lithium hydroxide and purified spherical natural graphite annually. The facilities utilize Quebec’s 99% clean hydroelectric power to process raw ores locally, eliminating the need to ship concentrates overseas for processing and creating 550 high-paying industrial mining jobs in Northern Quebec.\n\nMinister Blanchette Vézina stated that Quebec is building the complete green battery supply chain from mine to assembly line, securing high-value manufacturing jobs in regional communities.\n\n## Cree Nation and Mining Association Support\n\nThe Grand Council of the Crees praised the formal joint venture training frameworks ensuring Indigenous youth obtain certified mineral extraction and metallurgical credentials.\n\nQuebec Mining Association celebrated the expansion of domestic value-added mineral refining capacity.\n\n## Construction Groundbreaking\n\nCommercial processing facility civil foundation work in Val-d'Or will commence in October 2026.",
-    "seoTitle": "Quebec Allocates $75M for Critical Battery Mineral Processing | Choseno",
-    "metaDescription": "Quebec allocates $75M to build lithium and graphite battery mineral processing plants in Abitibi, creating 550 green jobs.",
-    "tags": [
-      "François Legault",
-      "Quebec",
-      "Clean Tech",
-      "Mining",
-      "Critical Minerals",
-      "Economy",
-      "Jobs",
-      "Canada"
-    ],
-    "tweet": "Quebec allocates $75M to construct lithium and graphite battery mineral processing mills in Abitibi, creating 550 clean tech jobs.",
+    "tweet": "Department of Energy awards $200M to build four commercial Enhanced Geothermal power plants, tapping hot dry rock for 24/7 clean electricity.",
     "breakingNews": true,
     "author": {
-      "name": "Choseno Critical Minerals & Northern Mining Desk",
-      "bio": "Quebec Critical Minerals Plan, battery supply chains, mineral metallurgical refining, and northern resource economics"
+      "name": "Choseno Deep Geothermal & Subsurface Power Bureau",
+      "bio": "Enhanced Geothermal Systems (EGS) engineering, DOE Earthshot initiatives, baseload renewable power, and drilling technology"
     },
     "sources": [
       {
-        "label": "Ministère des Ressources naturelles et des Forêts du Québec",
-        "url": "https://www.quebec.ca/nouvelles/actualites/details/quebec-investit-75-millions-mineraux-critiques-abitibi-2026"
+        "label": "U.S. Department of Energy Geothermal Technologies Office",
+        "url": "https://www.energy.gov/eere/geothermal/articles/doe-invests-200-million-enhanced-geothermal-demonstrations-2026"
       },
       {
-        "label": "Le Journal de Montréal",
-        "url": "https://www.journaldemontreal.com/2026/08/24/quebec-injecte-75m-dans-le-lithium-et-le-graphite-en-abitibi"
+        "label": "Canary Media",
+        "url": "https://www.canarymedia.com/articles/geothermal/doe-awards-200m-next-gen-enhanced-geothermal-projects-2026"
       }
     ],
-    "taggedPoliticianIds": [
-      "17173b22-83b6-455b-a795-0bcfaae7b6cf"
-    ],
-    "taggedPoliticians": [
-      "François Legault"
-    ]
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
   },
   {
-    "slug": "united-states-department-of-transportation-allocates-250-million-for-safe-streets-and-roads-for-all-pedestrian-safety-2026-08-24",
-    "headline": "USDOT Awards $250 Million in Safe Streets and Roads for All Grants to Cut Traffic Fatalities",
-    "summary": "Transportation Secretary Pete Buttigieg announces $250 million in SS4A implementation grants to 120 cities to redesign dangerous arterial roads with raised crosswalks, protected bike lanes, and roundabouts.",
+    "slug": "united-states-department-of-transportation-allocates-175-million-for-ferry-boat-program-and-electrification-2026-08-24",
+    "headline": "USDOT Awards $175 Million for Electric Ferry Boats and Rural Coastal Transit Terminals",
+    "summary": "Federal Transit Administration announces $175 million in Ferry Programs grants to replace 15 diesel passenger ferries with hybrid-electric vessels in Washington, Alaska, New York, and North Carolina.",
     "category": "Transportation",
     "country": "US",
     "province": "DC",
     "status": "published",
-    "eventDate": "2026-08-24T08:00:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
+    "eventDate": "2026-08-24T10:00:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
     "impactArea": "country",
     "latitude": 38.8765,
     "longitude": -77.0055,
-    "body": "WASHINGTON, DC — The United States Department of Transportation (USDOT) announced the award of $250 million in competitive grant funding through the Safe Streets and Roads for All (SS4A) program, delivering capital to 120 municipal city councils and county transportation agencies across 38 states.\n\n## Engineering Safe Streets to Protect Pedestrians and Cyclists\n\nThe funding packages provide direct grants to fund the physical redesign of high-crash arterial corridors—including roadway reconfigurations (road diets), pedestrian refuge islands, high-intensity activated crosswalk (HAWK) beacons, protected bicycle lanes, and modern roundabouts. USDOT safety data indicates that speed-calming road diet reconfigurations reduce fatal pedestrian and multi-vehicle crashes by 47% along urban and suburban commercial boulevards.\n\nTransportation Secretary Pete Buttigieg affirmed that roadway deaths are not an inevitable cost of modern mobility, emphasizing that engineered safety redesigns save lives in every community.\n\n## City Mayors and Road Safety Advocates Praise\n\nMayors for Road Safety and Families for Safe Streets praised the awards for accelerating municipal Vision Zero roadway transformations.\n\nNational Association of City Transportation Officials (NACTO) commended the focus on systemic pedestrian safety redesigns in underserved neighborhoods.\n\n## Construction Phase Schedule\n\nMunicipal engineering design and complete street roadway construction will begin across all 120 recipient cities in spring 2027.",
-    "seoTitle": "USDOT Awards $250M in Safe Streets Grants for Pedestrian Safety | Choseno",
-    "metaDescription": "USDOT announces $250M in Safe Streets and Roads for All grants to 120 cities to redesign dangerous roads and protect pedestrians.",
+    "body": "WASHINGTON, DC — The United States Department of Transportation (USDOT) Federal Transit Administration (FTA) announced the award of $175 million in competitive grants through the Ferry Programs, delivering capital to 18 coastal and island municipal transit operators across 12 states.\n\n## Modernizing Maritime Transit with Zero-Emission Electric Vessels\n\nThe funding packages provide capital to construct 15 hybrid and all-electric passenger ferries, upgrade marine terminal rapid-charging berths, and construct passenger boarding walkways in Puget Sound (Washington), Southeast Alaska, New York Harbor, and the Outer Banks (North Carolina). Marine transit modeling indicates electric ferry conversions reduce operating fuel costs by 65% while eliminating diesel exhaust around crowded coastal commuter terminals.\n\nTransportation Secretary Pete Buttigieg stated that ferry services provide vital highway lifelines for island and coastal communities, affirming that federal grants make maritime travel cleaner, faster, and more dependable.\n\n## Ferry System Operators and Shipbuilders Support\n\nWashington State Ferries and the Alaska Marine Highway System praised the grants for modernizing aging vessel fleets.\n\nDomestic shipyard trade associations commended the Buy America requirements, securing union marine fabrication jobs in coastal shipyards.\n\n## Shipyard Construction Schedule\n\nVessel construction contracts will be awarded to American commercial shipyards in November 2026, with first hybrid vessel launches scheduled for late 2027.",
+    "seoTitle": "USDOT Awards $175M for Electric Passenger Ferries and Coastal Terminals | Choseno",
+    "metaDescription": "FTA announces $175M in grants to replace 15 diesel passenger ferries with hybrid-electric vessels across 12 coastal states.",
     "tags": [
       "United States",
       "Transportation",
-      "Safety",
+      "Maritime",
+      "Clean Tech",
       "Infrastructure",
-      "Pedestrian",
-      "Municipal",
+      "Transit",
       "US"
     ],
-    "tweet": "USDOT awards $250M in Safe Streets grants to 120 cities to redesign high-crash roads with protected bike lanes and raised crosswalks.",
+    "tweet": "USDOT awards $175M in grants to replace 15 diesel passenger ferries with clean hybrid-electric vessels across 12 coastal states.",
     "breakingNews": false,
     "author": {
-      "name": "Choseno Street Safety & Urban Mobility Desk",
-      "bio": "USDOT SS4A grant administration, Complete Streets civil engineering, Vision Zero policy, and pedestrian safety design"
+      "name": "Choseno Maritime Transit & Electric Vessel Desk",
+      "bio": "FTA Ferry Programs grant administration, electric marine propulsion engineering, passenger ferry systems, and coastal transit"
     },
     "sources": [
       {
-        "label": "U.S. Department of Transportation Briefing Room",
-        "url": "https://www.transportation.gov/briefing-room/biden-harris-administration-announces-250-million-safe-streets-all-grants-2026"
+        "label": "Federal Transit Administration Newsroom",
+        "url": "https://www.transit.dot.gov/about/news/biden-harris-administration-announces-175-million-ferry-service-grants-2026"
       },
       {
-        "label": "Streetsblog USA",
-        "url": "https://usa.streetsblog.org/2026/08/24/usdot-awards-250m-in-safe-streets-for-all-grants-2026/"
+        "label": "Marine Log",
+        "url": "https://www.marinelog.com/news/fta-awards-175m-in-electric-ferry-and-terminal-grants-2026/"
       }
     ],
     "taggedPoliticianIds": [],
     "taggedPoliticians": []
   },
   {
-    "slug": "environmental-protection-agency-finalizes-effluent-limitations-guidelines-for-steam-electric-power-plants-2026-08-24",
-    "headline": "EPA Enacts Stricter Wastewater Standards for Coal-Fired Power Plants to Eliminate Toxic Metals",
-    "summary": "EPA Administrator Michael Regan issues final Effluent Limitations Guidelines (ELG), requiring coal-fired power plants to deploy zero-discharge wastewater recycling for flue-gas desulfurization scrubbers.",
+    "slug": "united-states-department-of-agriculture-deploys-80-million-for-rural-fire-departments-and-brush-trucks-2026-08-24",
+    "headline": "USDA Awards $80 Million in Community Facilities Grants for 200 Rural Volunteer Fire Departments",
+    "summary": "USDA Rural Development allocates $80 million to purchase 200 all-terrain wildland brush trucks, bunker gear, and thermal imaging cameras for volunteer fire departments in small towns across 30 states.",
+    "category": "Public Safety",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-24T09:30:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.887,
+    "longitude": -77.0298,
+    "body": "WASHINGTON, DC — The United States Department of Agriculture (USDA) announced the award of $80 million in direct Community Facilities Grants and low-interest loans, delivering vital public safety capital to 200 volunteer fire departments and emergency medical service (EMS) districts in small rural communities nationwide.\n\n## Equipping Volunteer First Responders on the Front Lines\n\nThe funding packages provide up to $500,000 per volunteer department to replace 30-year-old frontline pumper engines with modern four-wheel-drive wildland brush trucks, purchase NFPA-certified structural firefighter turnout gear, and acquire digital thermal imaging cameras for search-and-rescue calls. The grants target small rural towns with populations under 5,000 that lack tax revenue to equip volunteer responders protecting farmland, grain elevators, and rural homes.\n\nUSDA leadership emphasized that volunteer firefighters are the backbone of rural emergency response, affirming that federal grants ensure first responders have reliable equipment to protect their neighbors and return home safely.\n\n## National Volunteer Fire Council Endorsement\n\nThe National Volunteer Fire Council (NVFC) strongly commended the grant deployment, highlighting that over 70% of the nation's fire service is staffed by dedicated volunteers.\n\nRural county emergency managers praised the inclusion of portable radio repeater systems for remote dead-zone coverage.\n\n## Equipment Delivery Schedule\n\nNew wildland firefighting brush trucks and protective gear will deploy to recipient rural stations in winter 2026.",
+    "seoTitle": "USDA Awards $80M for 200 Rural Volunteer Fire Departments | Choseno",
+    "metaDescription": "USDA allocates $80M to equip 200 rural volunteer fire departments with modern brush trucks, bunker gear, and thermal cameras.",
+    "tags": [
+      "United States",
+      "Public Safety",
+      "First Responders",
+      "Rural",
+      "Firefighters",
+      "Infrastructure",
+      "US"
+    ],
+    "tweet": "USDA awards $80M in grants to equip 200 rural volunteer fire departments with new four-wheel-drive brush trucks and protective gear.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Rural First Responder & Emergency Facilities Desk",
+      "bio": "USDA Community Facilities grants, volunteer fire department administration, emergency vehicle procurement, and rural safety"
+    },
+    "sources": [
+      {
+        "label": "U.S. Department of Agriculture Rural Development",
+        "url": "https://www.rd.usda.gov/newsroom/news-release/usda-invests-80-million-rural-emergency-first-responder-facilities-2026"
+      },
+      {
+        "label": "Firehouse Magazine",
+        "url": "https://www.firehouse.com/operations-training/news/55128392/usda-awards-80m-to-200-rural-volunteer-fire-departments"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "united-states-department-of-the-interior-allocates-110-million-for-national-fish-passage-and-dam-removal-2026-08-24",
+    "headline": "Department of the Interior Awards $110 Million to Remove 40 Obsolete Dams and Restore Salmon Rivers",
+    "summary": "U.S. Fish and Wildlife Service announces $110 million in National Fish Passage Program grants, removing 40 derelict dams and reopening 1,200 miles of spawning rivers across 18 states.",
     "category": "Environment",
     "country": "US",
     "province": "DC",
     "status": "published",
-    "eventDate": "2026-08-24T07:30:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
+    "eventDate": "2026-08-24T09:00:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
     "impactArea": "country",
-    "latitude": 38.8951,
-    "longitude": -77.0364,
-    "body": "WASHINGTON, DC — The United States Environmental Protection Agency (EPA) published the final revised Steam Electric Power Generating Effluent Limitations Guidelines (ELG) under the Clean Water Act, establishing mandatory zero-discharge wastewater recycling standards for remaining coal-fired power generation plants nationwide.\n\n## Keeping Arsenic, Mercury, and Selenium Out of Public Drinking Waterways\n\nThe finalized rule establishes binding discharge limits that require power utilities to install membrane filtration and zero-liquid-discharge (ZLD) thermal crystallizers on flue-gas desulfurization (FGD) wastewater and bottom ash transport water streams. EPA water quality analysis estimates the rule will eliminate 660 million pounds of toxic heavy metals, arsenic, mercury, and nutrient pollutants from being dumped into American rivers, lakes, and reservoirs annually, protecting downstream drinking water intakes for 40 million citizens.\n\nEPA Administrator Michael Regan stated that every American has the right to clean drinking water, affirming that strong federal standards ensure corporate polluters treat toxic wastewater before it reaches public rivers.\n\n## Clean Water Coalitions and Utility Sector Perspectives\n\nClean Water Action and riverkeeper organizations celebrated the finalized rule as a monumental victory for freshwater ecosystems and public health.\n\nElectric utility trade associations confirmed that compliant facilities will coordinate with regional grid operators to schedule wastewater treatment equipment retrofits.\n\n## Compliance Timelines\n\nPower plants must achieve full operational compliance with the finalized ELG standards by December 31, 2027.",
-    "seoTitle": "EPA Enacts Strict Wastewater Standards for Coal Power Plants | Choseno",
-    "metaDescription": "EPA issues final ELG rule mandating zero-discharge wastewater recycling for coal power plants, removing 660M lbs of toxic metals from rivers.",
+    "latitude": 38.8938,
+    "longitude": -77.0425,
+    "body": "WASHINGTON, DC — The United States Department of the Interior (DOI) and the U.S. Fish and Wildlife Service (USFWS) announced $110 million in competitive grant allocations through the National Fish Passage Program, funding the removal of 40 obsolete, high-hazard dams and the replacement of 150 restrictive culverts across 18 states.\n\n## Reconnecting Spawning Corridors for Salmon, Trout, and Migratory Fish\n\nThe funding packages provide capital to dismantle derelict industrial mill dams and replace undersized road culverts with natural bottom arch bridges in Maine, Oregon, Washington, North Carolina, and Pennsylvania. The river restoration projects will reconnect over 1,200 miles of historic upstream river spawning habitat for endangered Atlantic salmon, Pacific steelhead, and native brook trout while eliminating structural dam failure flood hazards for downstream municipal communities.\n\nInterior Secretary Deb Haaland stated that removing obsolete dams revitalizes free-flowing rivers, strengthens native fish populations, and reduces local flood risks.\n\n## American Rivers and Commercial Fishing Coalitions Praise\n\nAmerican Rivers and Trout Unlimited praised the investments as transformative for watershed biodiversity and ecological connectivity.\n\nTribal nations in the Pacific Northwest and New England celebrated the restoration of ancestral cultural salmon fishing runs.\n\n## Engineering and Deconstruction Timeline\n\nDam deconstruction engineering and river sediment stabilization will commence during low-flow river windows in summer 2027.",
+    "seoTitle": "DOI Awards $110M for National Fish Passage and Dam Removal | Choseno",
+    "metaDescription": "Department of the Interior allocates $110M to remove 40 obsolete dams and reopen 1,200 miles of salmon and trout rivers in 18 states.",
     "tags": [
       "United States",
       "Environment",
-      "Water Quality",
-      "Clean Water Act",
-      "Energy",
-      "Public Health",
+      "Conservation",
+      "Rivers",
+      "Salmon",
+      "Public Safety",
       "US"
     ],
-    "tweet": "EPA enacts strict wastewater standards for coal power plants, eliminating 660M pounds of arsenic and mercury from rivers annually.",
-    "breakingNews": true,
+    "tweet": "Department of the Interior awards $110M to remove 40 obsolete dams, reopening 1,200 miles of free-flowing rivers for salmon and trout.",
+    "breakingNews": false,
     "author": {
-      "name": "Choseno Clean Water Act & Environmental Regulation Bureau",
-      "bio": "EPA ELG rulemaking, industrial wastewater engineering, Clean Water Act Section 304 enforcement, and aquatic toxicity"
+      "name": "Choseno River Restoration & Aquatic Ecology Bureau",
+      "bio": "USFWS National Fish Passage Program, dam removal engineering, salmonid fisheries biology, and river watershed management"
     },
     "sources": [
       {
-        "label": "U.S. Environmental Protection Agency Clean Water News",
-        "url": "https://www.epa.gov/newsreleases/epa-finalizes-protective-water-standards-steam-electric-power-plants-2026"
+        "label": "U.S. Fish and Wildlife Service Newsroom",
+        "url": "https://www.fws.gov/press-release/2026-08/doi-announces-110-million-national-fish-passage-program"
       },
       {
-        "label": "E&E News by POLITICO",
-        "url": "https://www.eenews.net/articles/epa-finalizes-strict-coal-plant-wastewater-standards-2026/"
+        "label": "American Rivers News",
+        "url": "https://www.americanrivers.org/2026/08/doi-awards-110m-for-dam-removals-and-fish-passage-grants/"
       }
     ],
     "taggedPoliticianIds": [],
     "taggedPoliticians": []
   },
   {
-    "slug": "ontario-ministry-of-infrastructure-awards-120-million-for-rural-wastewater-and-storm-surge-resilience-2026-08-24",
-    "headline": "Ontario Allocates $120 Million for Rural Municipal Wastewater and Flood Infrastructure",
-    "summary": "Ontario Infrastructure Minister Kinga Surma announces $120 million through the Municipal Housing Infrastructure Program to upgrade wastewater treatment and stormwater capacity in 28 growing towns.",
-    "category": "Infrastructure",
-    "country": "CA",
-    "province": "ON",
+    "slug": "united-states-department-of-labor-deploys-90-million-for-women-in-apprenticeship-and-nontraditional-occupations-2026-08-24",
+    "headline": "U.S. Department of Labor Awards $90 Million to Train Women in Union Construction and Clean Energy Trades",
+    "summary": "Department of Labor Employment and Training Administration announces $90 million in WANTO and Apprenticeship Building America grants, training 15,000 women as union electricians and carpenters.",
+    "category": "Economy",
+    "country": "US",
+    "province": "DC",
     "status": "published",
-    "eventDate": "2026-08-24T07:00:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "state",
-    "latitude": 43.6532,
-    "longitude": -79.3832,
-    "body": "ORILLIA, ON — Minister of Infrastructure Kinga Surma announced the release of $120 million in provincial capital grants through the Municipal Housing Infrastructure Program (MHIP), delivering direct funding to 28 rural and small-town municipalities across Southwestern and Eastern Ontario.\n\n## Unlocking 35,000 New Housing Units by Expanding Wastewater Capacity\n\nThe funding packages provide up to $5 million per municipality to expand sewage treatment plant aeration tanks, replace aging sanitary sewer trunks, and construct automated stormwater retention facilities in growing towns including Orillia, Brockville, Collingwood, and Stratford. Provincial infrastructure data indicates that existing wastewater capacity bottlenecks had previously blocked municipal councils from issuing building permits for over 35,000 approved housing units.\n\nMinister Surma stated that building more homes starts with the vital pipes in the ground, affirming that provincial infrastructure grants empower small towns to grow without burdening local municipal property taxpayers.\n\n## Municipal Mayors and Homebuilders Support\n\nEastern Ontario Wardens' Caucus (EOWC) and Western Ontario Wardens' Caucus (WOWC) praised the grant awards for removing the primary bottleneck to rural housing growth.\n\nOntario Home Builders' Association (OHBA) commended the immediate release of municipal sewer capacity for shovel-ready subdivisions.\n\n## Construction Rollout Schedule\n\nMunicipal sewer excavation and wastewater treatment plant upgrades will commence in October 2026.",
-    "seoTitle": "Ontario Allocates $120M for Rural Wastewater & Housing Infrastructure | Choseno",
-    "metaDescription": "Ontario allocates $120M in MHIP grants to expand wastewater capacity in 28 towns, unlocking 35,000 new housing permits.",
+    "eventDate": "2026-08-24T08:30:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.8922,
+    "longitude": -77.0146,
+    "body": "WASHINGTON, DC — The United States Department of Labor (DOL) Employment and Training Administration announced the award of $90 million in grant funding through the Women in Apprenticeship and Nontraditional Occupations (WANTO) and Apprenticeship Building America initiatives, delivering capital to 45 joint labor-management training programs across 24 states.\n\n## Expanding High-Wage Career Pathways in Building and Industrial Trades\n\nThe funding packages provide direct technical assistance, pre-apprenticeship tuition subsidies, and supportive childcare stipends to train and place 15,000 women into registered union apprenticeships in high-demand construction, semiconductor manufacturing, and clean energy fields. Selected programs train women as certified union electricians (IBEW), pipefitters (UA), ironworkers (IW), and carpenters (UBC), securing entry into middle-class careers with starting wages averaging $35 per hour.\n\nActing Labor Secretary Julie Su stated that the historic infrastructure boom must empower women to build America's future, ensuring equal access to good-paying union jobs with benefits.\n\n## North America's Building Trades and Women in Trades Praise\n\nTradeswomen Taskforce and North America’s Building Trades Unions (NABTU) celebrated the grant awards, citing record enrollment in union apprenticeship programs.\n\nMajor clean energy developers highlighted that expanding trade apprenticeship capacity solves regional labor shortages on federal infrastructure projects.\n\n## Training Intake Rollout\n\nRegistered pre-apprenticeship cohorts will begin orientation across all 45 grantee training centers on October 1, 2026.",
+    "seoTitle": "DOL Awards $90M to Train Women in Union Construction Trades | Choseno",
+    "metaDescription": "Department of Labor announces $90M in grants to train 15,000 women in registered union apprenticeships in construction and clean energy.",
     "tags": [
-      "Doug Ford",
-      "Ontario",
-      "Infrastructure",
-      "Housing",
-      "Water Quality",
+      "United States",
       "Economy",
-      "Canada"
+      "Labor",
+      "Jobs",
+      "Civil Rights",
+      "Women",
+      "Infrastructure",
+      "US"
     ],
-    "tweet": "Ontario allocates $120M to expand wastewater plants across 28 towns, unlocking 35,000 new homes without raising property taxes.",
+    "tweet": "Department of Labor awards $90M to train 15,000 women in union construction apprenticeships, providing childcare stipends and career training.",
     "breakingNews": false,
     "author": {
-      "name": "Choseno Municipal Infrastructure & Housing Growth Bureau",
-      "bio": "Municipal Housing Infrastructure Program grants, wastewater engineering, provincial housing targets, and Ontario civic policy"
+      "name": "Choseno Workforce Development & Union Labor Bureau",
+      "bio": "Registered Apprenticeship programs, DOL WANTO grant administration, labor economics, and workforce equity policy"
     },
     "sources": [
       {
-        "label": "Ontario Ministry of Infrastructure News Releases",
-        "url": "https://news.ontario.ca/en/release/1004918/ontario-investing-120-million-in-water-and-wastewater-infrastructure"
+        "label": "U.S. Department of Labor ETA Newsroom",
+        "url": "https://www.dol.gov/newsroom/releases/eta/eta20260824-wanto-apprenticeship-awards"
       },
       {
-        "label": "OrilliaMatters",
-        "url": "https://www.orilliamatters.com/local-news/province-announces-120m-water-wastewater-funding-orillia-2026"
+        "label": "Engineering News-Record",
+        "url": "https://www.enr.com/articles/58395-dol-awards-90m-to-expand-women-in-construction-apprenticeships-2026"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "prime-minister-mark-carney-and-ottawa-deploy-60-million-for-national-semiconductor-design-and-packaging-hub-2026-08-24",
+    "headline": "Prime Minister Mark Carney Announces $60 Million to Build Advanced Silicon Packaging Hub in Ottawa",
+    "summary": "Prime Minister Mark Carney and Minister François-Philippe Champagne allocate $60 million from the Strategic Innovation Fund to construct a national advanced semiconductor packaging foundry in Kanata.",
+    "category": "Tech",
+    "country": "CA",
+    "province": "ON",
+    "status": "published",
+    "eventDate": "2026-08-24T08:00:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "country",
+    "latitude": 45.3188,
+    "longitude": -75.9017,
+    "body": "OTTAWA, ON — Prime Minister Mark Carney and Minister of Innovation, Science and Industry François-Philippe Champagne visited the Kanata North Technology Park to announce a $60 million federal investment from the Strategic Innovation Fund to build Canada’s first commercial Advanced Silicon Packaging and Heterogeneous Integration Foundry.\n\n## Establishing Domestic Semiconductor Sovereignty for Telecom and Defense\n\nThe $150 million state-of-the-art microelectronics facility will feature cleanroom packaging lines capable of assembling 3D optical and radio frequency (RF) chiplets for satellite communications, 6G telecommunications, and quantum computing processors. The commercial packaging foundry fills a critical gap in North American semiconductor supply chains, allowing Canadian fabless chip design startups to package prototypes domestically rather than relying on Asian packaging facilities.\n\nPrime Minister Carney emphasized that domestic semiconductor packaging capacity is essential for economic security, high-tech manufacturing, and global technology leadership.\n\n## Semiconductor Council and Tech Sector Endorse\n\nThe Semiconductor Alliance of Canada praised the investment, noting that packaging now accounts for 50% of semiconductor performance gains.\n\nCarleton University and University of Ottawa engineering faculties established specialized microelectronics graduate co-op programs.\n\n## Cleanroom Commissioning Schedule\n\nFoundry cleanroom construction in Kanata will commence in November 2026, with prototype packaging operations starting in early 2028.",
+    "seoTitle": "PM Mark Carney Announces $60M for Ottawa Semiconductor Packaging Hub | Choseno",
+    "metaDescription": "Prime Minister Mark Carney allocates $60M to build Canada's first commercial advanced semiconductor packaging foundry in Kanata.",
+    "tags": [
+      "Mark Carney",
+      "Canada",
+      "Tech",
+      "Semiconductors",
+      "Economy",
+      "Manufacturing",
+      "Jobs"
+    ],
+    "tweet": "Prime Minister Mark Carney announces $60M to build an advanced semiconductor packaging foundry in Kanata, securing domestic microchip tech.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno Canadian Semiconductor & Deep Tech Bureau",
+      "bio": "Semiconductor packaging technology, Strategic Innovation Fund policy, microelectronics supply chains, and Canadian industry"
+    },
+    "sources": [
+      {
+        "label": "Innovation, Science and Economic Development Canada",
+        "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/08/prime-minister-announces-investment-in-ottawa-semiconductor-packaging-hub.html"
+      },
+      {
+        "label": "Ottawa Citizen",
+        "url": "https://ottawacitizen.com/business/local-business/carney-announces-60m-advanced-semiconductor-foundry-kanata"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "3ec78351-9bec-46b8-afea-45931f29646e"
+    ],
+    "taggedPoliticians": [
+      "Mark Carney"
+    ]
+  },
+  {
+    "slug": "ontario-ministry-of-citizenship-and-multiculturalism-allocates-20-million-for-senior-community-and-active-living-centers-2026-08-24",
+    "headline": "Ontario Allocates $20 Million to Expand 300 Seniors Community and Active Living Centers",
+    "summary": "Ontario government deploys $20 million through the Seniors Community Grant Program, funding specialized mobility transit, dementia day programs, and recreation centers across 300 municipalities.",
+    "category": "Healthcare",
+    "country": "CA",
+    "province": "ON",
+    "status": "published",
+    "eventDate": "2026-08-24T07:30:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "state",
+    "latitude": 43.6532,
+    "longitude": -79.3832,
+    "body": "TORONTO, ON — Minister for Seniors and Accessibility Raymond Cho announced a $20 million provincial investment under the Seniors Community Grant Program and the Seniors Active Living Centres (SALC) initiative, delivering direct operational funding to 300 municipal and non-profit seniors' centers across Ontario.\n\n## Keeping Older Ontarians Healthy, Socially Connected, and Independent\n\nThe funding packages provide up to $50,000 per center to expand community health promotion classes, subsidized hot meal delivery vans, adult day programs for seniors with early-stage dementia, and wheelchair-accessible shuttle van routes connecting seniors to medical appointments and grocery stores. Provincial geriatric health research demonstrates that community active living programs reduce senior isolation, prevent falls, and delay premature admissions to long-term care homes.\n\nPremier Doug Ford and Minister Cho affirmed that seniors built the province of Ontario, ensuring they have access to vibrant community spaces that support active, healthy aging.\n\n## Older Adult Centers and Municipal Councils Praise\n\nOlder Adult Centres' Association of Ontario (OACAO) praised the stable annual grant funding for expanding bilingual and multicultural seniors' programs.\n\nRural municipal mayors commended the subsidized community shuttle van funding for preventing elder isolation in rural townships.\n\n## Program Grant Disbursement Schedule\n\nGrant funding will transfer to municipal and non-profit seniors' center bank accounts on October 1, 2026.",
+    "seoTitle": "Ontario Allocates $20M to Expand 300 Seniors Community Centers | Choseno",
+    "metaDescription": "Ontario government invests $20M in 300 Seniors Active Living Centres for mobility vans, dementia day programs, and meal delivery.",
+    "tags": [
+      "Doug Ford",
+      "Ontario",
+      "Healthcare",
+      "Seniors",
+      "Community",
+      "Municipal",
+      "Canada"
+    ],
+    "tweet": "Ontario allocates $20M to expand 300 Seniors Active Living Centres, funding accessible transit vans and dementia day programs.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Geriatric Health & Senior Policy Desk",
+      "bio": "Seniors Active Living Centres legislation, provincial aging strategies, municipal recreation funding, and Ontario policy"
+    },
+    "sources": [
+      {
+        "label": "Ontario Ministry for Seniors and Accessibility",
+        "url": "https://news.ontario.ca/en/release/1004921/ontario-investing-20-million-to-support-seniors-active-living-centres"
+      },
+      {
+        "label": "CP24",
+        "url": "https://www.cp24.com/news/ontario-20m-seniors-active-living-centres-funding-1.7483918"
       }
     ],
     "taggedPoliticianIds": [
@@ -835,89 +868,44 @@ const articles = [
     ]
   },
   {
-    "slug": "united-states-department-of-the-interior-allocates-180-million-for-water-desalination-and-aquifer-recharge-2026-08-24",
-    "headline": "Department of the Interior Awards $180 Million for Advanced Water Desalination and Aquifer Storage",
-    "summary": "Bureau of Reclamation announces $180 million in Title XVI Water Reclamation and Desalination grants, funding 14 major brackish water treatment facilities in California, Texas, and Utah.",
-    "category": "Environment",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T06:30:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8938,
-    "longitude": -77.0425,
-    "body": "WASHINGTON, DC — The United States Department of the Interior (DOI) and the Bureau of Reclamation announced $180 million in competitive grant funding through the Title XVI Water Reclamation and Reuse Program and the Bipartisan Infrastructure Law, funding 14 advanced water purification and groundwater recharge projects in five western states.\n\n## Generating 100 Million Gallons of Drought-Proof Water Daily\n\nThe funding packages provide capital to construct commercial brackish groundwater reverse osmosis desalination plants, indirect potable reuse purification facilities, and Aquifer Storage and Recovery (ASR) injection wells in Los Angeles, San Diego, El Paso, and Salt Lake City. The projects will generate over 100 million gallons of high-purity drinking water daily from previously unusable brackish inland aquifers, insulating western metropolitan areas from volatile surface water droughts along the Colorado River and Sierra Nevada snowpacks.\n\nInterior Secretary Deb Haaland stated that investing in advanced water recycling and desalination technology provides reliable, climate-resilient water security for western families and farmers.\n\n## Western Water Districts and Municipal Utilities Praise\n\nThe Metropolitan Water District of Southern California (MWD) praised the federal cost-share grants for advancing the Pure Water Southern California regional purification megaproject.\n\nEl Paso Water highlighted that brackish desalination secures 50-year drinking water security for West Texas.\n\n## Construction Milestones\n\nDesalination membrane building and injection well drilling across all 14 project sites will commence in spring 2027.",
-    "seoTitle": "DOI Awards $180M for Water Desalination & Aquifer Storage | Choseno",
-    "metaDescription": "Department of the Interior awards $180M to build 14 brackish desalination and aquifer recharge plants producing 100M gallons daily.",
-    "tags": [
-      "United States",
-      "Environment",
-      "Water",
-      "Desalination",
-      "Climate",
-      "Infrastructure",
-      "US"
-    ],
-    "tweet": "Department of the Interior awards $180M to construct 14 advanced water desalination and aquifer recharge plants in the American West.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Advanced Water Tech & Desalination Bureau",
-      "bio": "Title XVI Water Reclamation grants, reverse osmosis desalination engineering, aquifer storage, and western water law"
-    },
-    "sources": [
-      {
-        "label": "U.S. Department of the Interior Bureau of Reclamation",
-        "url": "https://www.usbr.gov/newsroom/newsrelease/outreach.detail.html?id=2026-08-24-title-xvi-desalination-grants"
-      },
-      {
-        "label": "WaterWorld Magazine",
-        "url": "https://www.waterworld.com/water-utility-management/press-release/55128391/doi-awards-180m-for-desalination-water-reuse-projects-2026"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "british-columbia-forestry-ministry-awards-35-million-for-first-nations-forest-co-management-and-bio-economy-2026-08-24",
-    "headline": "Premier David Eby Directs $35 Million for First Nations Forest Co-Management and Bio-Economy Hubs",
-    "summary": "B.C. Ministry of Forests deploys $35 million through the Indigenous Forest Bio-Economy Program, financing 16 First Nations-led wood innovation hubs producing bio-coal and natural fiber composites.",
-    "category": "Economy",
+    "slug": "british-columbia-ministry-of-housing-allocates-70-million-for-rapid-modular-seniors-supportive-housing-2026-08-24",
+    "headline": "Premier David Eby Directs $70 Million for 350 Modular Supportive Seniors Homes in 6 Cities",
+    "summary": "B.C. Ministry of Housing deploys $70 million through BC Housing's Building BC Community Housing Fund, constructing six modular seniors' supportive living developments in Prince Rupert, Nanaimo, and Kamloops.",
+    "category": "Housing",
     "country": "CA",
     "province": "BC",
     "status": "published",
-    "eventDate": "2026-08-24T06:00:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
+    "eventDate": "2026-08-24T07:00:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
     "impactArea": "state",
     "latitude": 48.4284,
     "longitude": -123.3656,
-    "body": "VICTORIA, BC — Premier David Eby and Minister of Forests Bruce Ralston announced the release of $35 million under the Indigenous Forest Bio-Economy Program (IFBP), delivering direct capital funding to 16 First Nations forestry corporations to construct advanced forest residue processing and clean biomaterials plants.\n\n## Transforming Forest Slash into High-Value Clean Biomaterials\n\nThe funding packages provide matching capital for Indigenous-owned facilities in Quesnel, Burns Lake, and Terrace to utilize roadside timber harvest slash and deadwood to manufacture biocoal, natural fiber insulation panels, biodegradable agricultural mulches, and pharmaceutical-grade tree resins. The bio-economy hubs divert 250,000 cubic meters of combustible forest slash from open-air burning, cutting seasonal wildfire risks and particulate air emissions while creating 320 full-time jobs in Indigenous communities.\n\nPremier Eby affirmed that partnering with First Nations to lead the forest bio-economy creates sustainable jobs while advancing genuine economic reconciliation across rural British Columbia.\n\n## First Nations Forestry Council and Climate Researchers Praise\n\nThe First Nations Forestry Council commended the revenue-sharing and capital ownership model, ensuring Indigenous communities derive direct economic equity from their traditional forest territories.\n\nUniversity of British Columbia bio-products researchers highlighted that bio-coal directly replaces fossil metallurgical coal in commercial steelmaking.\n\n## Equipment Commissioning Timeline\n\nAdvanced biomaterial processing machinery will begin installation across all 16 Indigenous facilities in November 2026.",
-    "seoTitle": "Premier David Eby Directs $35M for Indigenous Forest Bio-Economy | Choseno",
-    "metaDescription": "B.C. Premier David Eby allocates $35M for 16 First Nations-led wood bio-economy hubs producing bio-coal and natural fiber panels.",
+    "body": "VICTORIA, BC — Premier David Eby and Minister of Housing Ravi Kahlon announced the deployment of $70 million from the Community Housing Fund, funding the rapid modular construction of six supportive residential apartment buildings delivering 350 deeply affordable homes for low-income seniors and elders with disabilities.\n\n## Providing Dignified Shelter and On-Site Healthcare for Vulnerable Seniors\n\nThe modular housing developments will be built in Prince Rupert, Nanaimo, Kamloops, Vernon, Chilliwack, and Port Alberni, featuring barrier-free wheelchair design, emergency call pull-cords, communal dining facilities, and dedicated on-site home healthcare support workers. Rent will be strictly geared to income at 30% of the provincial seniors' pension supplement, insulating vulnerable older adults from extreme market rent inflation and homelessness.\n\nPremier Eby stated that seniors who worked their whole lives should never face homelessness or impossible rent choices, affirming that the province will build homes that seniors can afford in their home communities.\n\n## Non-Profit Housing Societies and Municipal Mayors Praise\n\nBC Non-Profit Housing Association praised the factory-built modular construction method for delivering completed homes in under 12 months.\n\nRegional municipal mayors commended the rapid development model for relieving severe local shelter waiting lists.\n\n## Construction Timeline\n\nFactory modular assembly will begin in October 2026, with senior tenant move-ins scheduled for autumn 2027.",
+    "seoTitle": "Premier David Eby Directs $70M for 350 Modular Seniors Homes | Choseno",
+    "metaDescription": "B.C. Premier David Eby allocates $70M to construct 350 modular supportive seniors' housing units across 6 regional cities.",
     "tags": [
       "David Eby",
       "British Columbia",
-      "Indigenous",
-      "Forestry",
-      "Clean Tech",
-      "Economy",
-      "Jobs",
+      "Housing",
+      "Seniors",
+      "Healthcare",
+      "Municipal",
       "Canada"
     ],
-    "tweet": "B.C. Premier David Eby directs $35M to fund 16 First Nations-led bio-economy hubs, turning forest slash into clean biocoal and green jobs.",
+    "tweet": "B.C. Premier David Eby directs $70M to build 350 modular supportive housing units for low-income seniors across 6 regional cities.",
     "breakingNews": false,
     "author": {
-      "name": "Choseno Indigenous Bio-Economy & Forestry Innovation Desk",
-      "bio": "Indigenous forestry joint ventures, forest bio-economy engineering, B.C. Ministry of Forests grants, and clean materials"
+      "name": "Choseno Affordable Seniors Housing Bureau",
+      "bio": "Modular supportive housing architecture, BC Housing Community Housing Fund, geriatric social policy, and B.C. governance"
     },
     "sources": [
       {
-        "label": "BC Gov News",
-        "url": "https://news.gov.bc.ca/releases/2026FOR0050-001314"
+        "label": "BC Gov News Releases",
+        "url": "https://news.gov.bc.ca/releases/2026HOUS0050-001318"
       },
       {
-        "label": "Business in Vancouver",
-        "url": "https://biv.com/article/2026/08/bc-invests-35m-first-nations-forest-bioeconomy-programs"
+        "label": "Vancouver Sun",
+        "url": "https://vancouversun.com/news/local-news/david-eby-70m-modular-seniors-supportive-housing-announcement"
       }
     ],
     "taggedPoliticianIds": [
@@ -928,143 +916,146 @@ const articles = [
     ]
   },
   {
-    "slug": "united-states-department-of-transportation-awards-110-million-for-university-transportation-centers-2026-08-24",
-    "headline": "USDOT Awards $110 Million for 20 University Transportation Centers to Advance AI Transit and Safety",
-    "summary": "USDOT announces $110 million in five-year cooperative agreements for 20 University Transportation Centers (UTCs) researching autonomous transit, bridge sensor telemetry, and EV grid impacts.",
-    "category": "Tech",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T05:30:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8765,
-    "longitude": -77.0055,
-    "body": "WASHINGTON, DC — The United States Department of Transportation (USDOT) Office of the Assistant Secretary for Research and Technology (OST-R) announced the selection of 20 premier university consortia to receive $110 million in multi-year research awards through the University Transportation Centers (UTC) Program.\n\n## Advancing Next-Generation Autonomous Transit and Bridge Sensors\n\nThe funding packages provide up to $15 million per National UTC consortium led by institutions including Carnegie Mellon, UC Berkeley, Texas A&M, and Michigan Tech. Research programs will focus on deploying artificial intelligence computer vision to predict highway bridge fatigue before cracks appear, developing cellular vehicle-to-everything (C-V2X) safety warning communications at high-risk intersections, and optimizing heavy-duty electric truck fast-charging loads along interstate freight corridors.\n\nTransportation Secretary Pete Buttigieg stated that American university researchers are pioneering the breakthrough technologies that will make transportation safer, cleaner, and more resilient for generations to come.\n\n## Engineering Deans and Autonomous Vehicle Sector Praise\n\nUniversity engineering deans celebrated the awards, noting that funding supports over 500 graduate student research fellowships in civil, electrical, and systems engineering.\n\nAutonomous vehicle safety coalitions praised the UTC focus on standardized safety validation testing for self-driving freight trucks.\n\n## Five-Year Program Launch Date\n\nConsortia research programs and testing laboratories will formally initiate academic operations on October 1, 2026.",
-    "seoTitle": "USDOT Awards $110M for 20 University Transportation Centers | Choseno",
-    "metaDescription": "USDOT announces $110M for 20 University Transportation Centers to research AI bridge sensors, autonomous freight, and EV grids.",
-    "tags": [
-      "United States",
-      "Tech",
-      "Transportation",
-      "AI",
-      "Infrastructure",
-      "Education",
-      "US"
-    ],
-    "tweet": "USDOT awards $110M to 20 University Transportation Centers to research AI bridge safety sensors and autonomous transit tech.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Transportation Technology & Academic Research Bureau",
-      "bio": "UTC program administration, intelligent transportation systems (ITS), autonomous vehicle safety, and USDOT research"
-    },
-    "sources": [
-      {
-        "label": "U.S. Department of Transportation OST-R News",
-        "url": "https://www.transportation.gov/briefing-room/usdot-awards-110-million-university-transportation-centers-2026"
-      },
-      {
-        "label": "Traffic Technology Today",
-        "url": "https://www.traffictechnologytoday.com/news/connected-vehicles-infrastructure/usdot-announces-110m-for-utc-program-2026.html"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "federal-government-and-ontario-deploy-30-million-for-advanced-critical-care-pediatric-hospital-expansion-2026-08-24",
-    "headline": "Canada and Ontario Invest $30 Million in Advanced Pediatric Critical Care Center in Hamilton",
-    "summary": "Prime Minister Mark Carney and Premier Doug Ford announce $30 million joint investment to expand McMaster Children's Hospital with 40 new pediatric intensive care and neonatal isolation beds.",
-    "category": "Healthcare",
+    "slug": "quebec-ministry-of-agriculture-allocates-40-million-for-greenhouse-electrification-and-winter-food-autonomy-2026-08-24",
+    "headline": "Quebec Allocates $40 Million to Expand Commercial Electric Greenhouses for Winter Food Autonomy",
+    "summary": "Ministère de l'Agriculture, des Pêcheries et de l'Alimentation du Québec (MAPAQ) deploys $40 million to subsidize high-efficiency LED grow lighting and thermal heat pumps for 80 commercial vegetable greenhouses.",
+    "category": "Agriculture",
     "country": "CA",
-    "province": "ON",
+    "province": "QC",
     "status": "published",
-    "eventDate": "2026-08-24T05:00:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
+    "eventDate": "2026-08-24T06:30:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
     "impactArea": "state",
-    "latitude": 43.2557,
-    "longitude": -79.8711,
-    "body": "HAMILTON, ON — Prime Minister Mark Carney and Ontario Premier Doug Ford joined pediatric clinical leaders at McMaster Children’s Hospital to announce a $30 million joint capital funding commitment through the Canada-Ontario Healthcare Infrastructure Agreement.\n\n## Expanding Pediatric Intensive Care and Neonatal Life-Support Capacity\n\nThe funding packages finance the construction of a 40-bed specialized Pediatric Intensive Care Unit (PICU) and Neonatal Intensive Care Unit (NICU) expansion equipped with negative-pressure airborne isolation suites, advanced ECMO life-support systems, and integrated private family overnight accommodations. The specialized facility serves as the primary tertiary pediatric trauma center for 2.5 million residents across Southwestern Ontario, eliminating the need to transfer critically ill children to Toronto during seasonal pediatric respiratory surges.\n\nPrime Minister Carney and Premier Ford emphasized that investing in world-class children's healthcare infrastructure ensures young patients receive timely, specialized medical care close to home.\n\n## Hospital Executives and Pediatric Oncology Advocates Praise\n\nHamilton Health Sciences leadership praised the joint agreement for expanding specialized surgical suites for complex pediatric oncology resections.\n\nPediatric nursing teams celebrated the inclusion of modern ergonomic monitoring stations and private lactation suites.\n\n## Groundbreaking Milestones\n\nHospital wing expansion construction at McMaster Children's Hospital will break ground in November 2026.",
-    "seoTitle": "Canada and Ontario Invest $30M in McMaster Children's Hospital | Choseno",
-    "metaDescription": "PM Mark Carney and Premier Doug Ford invest $30M to build 40 pediatric ICU and neonatal suites at McMaster Children's Hospital.",
+    "latitude": 46.8139,
+    "longitude": -71.2082,
+    "body": "QUEBEC CITY, QC — Minister of Agriculture, Fisheries and Food André Lamontagne announced the release of $40 million under the Greenhouse Development Strategy, delivering direct capital subsidies to 80 commercial vegetable and fruit greenhouse growers across the Montérégie, Chaudière-Appalaches, and Laurentides regions.\n\n## Tripling Domestic Winter Fresh Produce Production\n\nThe funding packages provide 50% state matching grants to install high-efficiency horticultural LED spectrum lighting, biomass and geothermal thermal heat pumps, and automated computerized environmental climate controls, allowing Quebec growers to harvest fresh tomatoes, cucumbers, peppers, and strawberries year-round. Utilizing Hydro-Québec’s preferential agricultural clean electricity rates (Rate LG), the program increases domestic fresh winter vegetable market share from 30% to 60%, insulating consumers from volatile import costs.\n\nMinister Lamontagne stated that expanding electric greenhouse cultivation strengthens Quebec's food autonomy and delivers fresh, locally grown produce to family dinner tables throughout the winter months.\n\n## Agricultural Producers Union and Horticultural Stances\n\nUnion des producteurs agricoles (UPA) strongly commended the capital grants, citing substantial reductions in greenhouse heating operating costs.\n\nGreenhouse vegetable growers praised the preferential Hydro-Québec electricity rates for ensuring year-round economic viability.\n\n## Grant Application Window\n\nAgricultural greenhouse operators can submit equipment funding applications through MAPAQ through November 15, 2026.",
+    "seoTitle": "Quebec Allocates $40M for Commercial Electric Greenhouses | Choseno",
+    "metaDescription": "Quebec MAPAQ allocates $40M to subsidize LED lighting and heat pumps for 80 commercial greenhouses to boost winter food autonomy.",
     "tags": [
-      "Mark Carney",
-      "Doug Ford",
-      "Ontario",
-      "Healthcare",
-      "Hospitals",
-      "Children",
-      "Public Health",
+      "François Legault",
+      "Quebec",
+      "Agriculture",
+      "Clean Tech",
+      "Energy",
+      "Food Security",
+      "Economy",
       "Canada"
     ],
-    "tweet": "Prime Minister Mark Carney and Premier Doug Ford invest $30M to expand McMaster Children's Hospital with 40 pediatric ICU suites.",
-    "breakingNews": true,
+    "tweet": "Quebec allocates $40M to subsidize commercial electric greenhouses, doubling domestic winter fresh vegetable production.",
+    "breakingNews": false,
     "author": {
-      "name": "Choseno Pediatric Healthcare & Hospital Capital Desk",
-      "bio": "Pediatric hospital engineering, Canada-Ontario health agreements, intensive care unit architecture, and provincial health policy"
+      "name": "Choseno Agricultural Technology & Food Sovereignty Desk",
+      "bio": "Greenhouse electrification engineering, MAPAQ agricultural grants, Hydro-Québec agro-rates, and Quebec food policy"
     },
     "sources": [
       {
-        "label": "Health Canada News Releases",
-        "url": "https://www.canada.ca/en/health-canada/news/2026/08/canada-and-ontario-invest-in-pediatric-care-at-mcmaster-childrens-hospital.html"
+        "label": "Ministère de l'Agriculture, des Pêcheries et de l'Alimentation du Québec",
+        "url": "https://www.quebec.ca/nouvelles/actualites/details/quebec-investit-40-millions-serres-electriques-autonomie-alimentaire-2026"
       },
       {
-        "label": "The Hamilton Spectator",
-        "url": "https://www.thespec.com/news/hamilton-region/carney-ford-30m-mcmaster-childrens-hospital-expansion-2026/article_7483912.html"
+        "label": "La Terre de chez nous",
+        "url": "https://www.laterre.ca/actualites/politique/quebec-injecte-40m-dans-le-developpement-des-serres-electriques"
       }
     ],
     "taggedPoliticianIds": [
-      "3ec78351-9bec-46b8-afea-45931f29646e",
-      "12ed841a-877b-4c7d-984b-85716b2f2757"
+      "17173b22-83b6-455b-a795-0bcfaae7b6cf"
     ],
     "taggedPoliticians": [
-      "Mark Carney",
-      "Doug Ford"
+      "François Legault"
     ]
   },
   {
-    "slug": "united-states-department-of-the-treasury-finalizes-clean-electricity-investment-tax-credit-regulations-under-section-48e-2026-08-24",
-    "headline": "U.S. Treasury Releases Final Section 48E Tech-Neutral Clean Electricity Tax Credit Rules",
-    "summary": "Treasury and IRS issue definitive regulations for Section 48E Clean Electricity Investment Tax Credits, establishing greenhouse gas intensity certification for solar, wind, geothermal, and advanced nuclear.",
-    "category": "Clean Tech",
-    "country": "US",
-    "province": "DC",
+    "slug": "city-of-calgary-approves-85-million-flood-mitigation-and-bow-river-barrier-expansion-contract-2026-08-24",
+    "headline": "Calgary City Council Approves $85 Million Bow River Flood Barrier and Pump Station Contract",
+    "summary": "Calgary City Council votes 13–1 to award an $85 million construction contract for the Downtown West Bow River Flood Barrier, building 2.5 kilometers of engineered berms to protect downtown from 1-in-200-year floods.",
+    "category": "Infrastructure",
+    "country": "CA",
+    "province": "AB",
     "status": "published",
-    "eventDate": "2026-08-24T04:30:00Z",
-    "published_at": "2026-08-24T16:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8988,
-    "longitude": -77.0345,
-    "body": "WASHINGTON, DC — The United States Department of the Treasury and the Internal Revenue Service (IRS) published final regulatory text and guidance governing the Section 48E Clean Electricity Investment Credit and Section 45Y Clean Electricity Production Credit under the Internal Revenue Code.\n\n## Tech-Neutral Framework Subsidizing All Zero-Emission Power Generation\n\nThe finalized rules complete the statutory transition from legacy energy-specific subsidies to a technology-neutral framework that allows any commercial electricity generation facility with a net-zero greenhouse gas emissions rate to claim a 30% investment tax credit or an inflation-adjusted production credit. The regulations establish certified greenhouse gas life-cycle accounting protocols for solar, utility wind, advanced nuclear, deep geothermal, tidal power, and closed-loop biomass generation facilities.\n\nTreasury Secretary Janet Yellen affirmed that technology-neutral clean electricity tax credits reward clean innovation while providing multi-decade investment certainty for American energy developers.\n\n## Clean Energy Developers and Financial Institutions Praise\n\nAmerican Clean Power Association and Nuclear Energy Institute praised the clarity regarding prevailing wage and registered apprenticeship 5x bonus multipliers.\n\nWall Street clean energy finance desks confirmed that the finalized rules will unlock an estimated $120 billion in private clean power project financings.\n\n## Tax Year Applicability\n\nThe final Section 48E and Section 45Y regulations apply to clean electricity generation facilities placed in service on or after January 1, 2026.",
-    "seoTitle": "Treasury Releases Final Section 48E Tech-Neutral Clean Tax Credit Rules | Choseno",
-    "metaDescription": "Treasury finalizes Section 48E rules granting 30% tax credits to all zero-emission power plants including nuclear, wind, and geothermal.",
+    "eventDate": "2026-08-24T06:00:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "local",
+    "latitude": 51.0447,
+    "longitude": -114.0719,
+    "body": "CALGARY, AB — Calgary City Council voted 13–1 during its regular council meeting to award an $85 million major civil construction contract to execute the Downtown West Bow River Flood Barrier and Stormwater Pumping Modernization Project.\n\n## Safeguarding Downtown Commercial Districts from 1-in-200-Year Flood Events\n\nThe civil engineering contract constructs 2.5 kilometers of continuous reinforced concrete flood walls, landscaped earthen berms, and three automated high-capacity stormwater lift pump stations between the Peace Bridge and 14th Street West. The infrastructure project completes Calgary’s comprehensive post-2013 river flood mitigation ring, protecting $4 billion in downtown commercial office buildings, light rail transit tunnels, and residential condominiums from severe spring river surges.\n\nMayor Jyoti Gondek and council members affirmed that flood resilience is essential to protect downtown workers, prevent catastrophic economic losses, and ensure municipal infrastructure withstands extreme climate weather.\n\n## Downtown Business Association and Engineering Endorsements\n\nCalgary Downtown Association praised the flood barrier design for incorporating widened public multi-use pathway promenades and native riparian plantings.\n\nCity of Calgary Water Resources engineers confirmed the barrier design accommodates upstream Springbank Off-Stream Reservoir operations.\n\n## Construction Groundbreaking\n\nCivil flood wall excavation along the Bow River pathway will commence in October 2026.",
+    "seoTitle": "Calgary Approves $85M Bow River Flood Barrier Contract | Choseno",
+    "metaDescription": "Calgary City Council votes 13–1 to award $85M contract to construct 2.5 km of flood walls and pump stations along the Bow River.",
     "tags": [
-      "United States",
-      "Clean Tech",
-      "Energy",
-      "Taxes",
-      "Economy",
-      "Climate",
-      "US"
+      "Calgary",
+      "Alberta",
+      "Infrastructure",
+      "Environment",
+      "Water",
+      "Municipal",
+      "Public Safety",
+      "Canada"
     ],
-    "tweet": "Treasury releases final Section 48E rules providing 30% clean energy tax credits for all zero-emission power plants including nuclear and wind.",
-    "breakingNews": true,
+    "tweet": "Calgary City Council approves an $85M contract to build 2.5 km of Bow River flood barriers, protecting downtown from 1-in-200-year floods.",
+    "breakingNews": false,
     "author": {
-      "name": "Choseno Federal Clean Energy Tax & Financial Policy Bureau",
-      "bio": "Section 48E/45Y tax credit regulations, Treasury/IRS rulemaking, energy transition capital markets, and clean power finance"
+      "name": "Choseno Municipal Flood Engineering & Urban Resilience Desk",
+      "bio": "River basin flood modeling, municipal civil engineering contracts, Bow River watershed management, and Calgary civic governance"
     },
     "sources": [
       {
-        "label": "U.S. Department of the Treasury Press Releases",
-        "url": "https://home.treasury.gov/news/press-releases/jy2485"
+        "label": "City of Calgary City Council Minutes",
+        "url": "https://www.calgary.ca/council/meetings/minutes-2026-08-24-bow-river-flood-barrier.html"
       },
       {
-        "label": "Bloomberg Law",
-        "url": "https://news.bloomberglaw.com/tax-development/treasury-finalizes-tech-neutral-clean-electricity-tax-credits-section-48e"
+        "label": "Calgary Herald",
+        "url": "https://calgaryherald.com/news/local-news/calgary-council-approves-85m-downtown-bow-river-flood-barrier-contract"
       }
     ],
     "taggedPoliticianIds": [],
     "taggedPoliticians": []
+  },
+  {
+    "slug": "manitoba-justice-department-allocates-18-million-for-first-nations-community-policing-and-restorative-justice-2026-08-24",
+    "headline": "Manitoba Allocates $18 Million to Expand First Nations Community Policing and Healing Lodges",
+    "summary": "Manitoba Justice Minister Matt Wiebe announces $18 million in tripartite funding to expand Indigenous-led community safety officer programs and restorative justice healing lodges across 12 First Nations.",
+    "category": "Justice",
+    "country": "CA",
+    "province": "MB",
+    "status": "published",
+    "eventDate": "2026-08-24T05:30:00Z",
+    "published_at": "2026-08-24T17:00:00Z",
+    "impactArea": "state",
+    "latitude": 49.8951,
+    "longitude": -97.1384,
+    "body": "WINNIPEG, MB — Manitoba Justice Minister and Attorney General Matt Wiebe announced an $18 million provincial funding commitment to expand Indigenous-led community safety officer programs and restorative justice healing lodges across 12 First Nations communities.\n\n## Empowering Community-Led Justice and Reducing Recidivism\n\nThe funding packages provide direct operational grants to train and deploy 60 First Nations Community Safety Officers (CSOs) equipped with peace officer status to handle community patrol, youth curfew outreach, and mental health crisis de-escalation in partnership with the Royal Canadian Mounted Police (RCMP). The initiative also funds the construction of three community-run restorative justice healing lodges, diverting non-violent offenders from provincial correctional centers into traditional elder-guided rehabilitation circles.\n\nPremier Wab Kinew and Minister Wiebe stated that Indigenous self-determination in community safety is essential to build safer communities and heal systemic injustices in the criminal justice system.\n\n## Assembly of Manitoba Chiefs and Tribal Councils Praise\n\nAssembly of Manitoba Chiefs (AMC) and Manitoba Keewatinowi Okimakanak (MKO) strongly endorsed the funding, highlighting that community safety officers have local trust and language fluency.\n\nRestorative justice coordinators praised the healing lodge model for delivering proven 70% reductions in youth re-offending rates.\n\n## Program Implementation Schedule\n\nNew Community Safety Officer academy training cohorts will commence in October 2026.",
+    "seoTitle": "Manitoba Allocates $18M for First Nations Policing & Healing Lodges | Choseno",
+    "metaDescription": "Manitoba Justice allocates $18M to deploy 60 Indigenous community safety officers and fund 3 restorative justice healing lodges.",
+    "tags": [
+      "Wab Kinew",
+      "Manitoba",
+      "Justice",
+      "Indigenous",
+      "Public Safety",
+      "Governance",
+      "Canada"
+    ],
+    "tweet": "Manitoba allocates $18M to deploy 60 First Nations Community Safety Officers and build three restorative justice healing lodges.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Indigenous Justice & Community Safety Desk",
+      "bio": "First Nations policing agreements, restorative justice legislation, Manitoba justice policy, and Indigenous governance"
+    },
+    "sources": [
+      {
+        "label": "Province of Manitoba News Releases",
+        "url": "https://news.gov.mb.ca/news/index.html?item=64905&posted=2026-08-24"
+      },
+      {
+        "label": "Winnipeg Free Press",
+        "url": "https://www.winnipegfreepress.com/breakingnews/2026/08/24/manitoba-18m-first-nations-policing-healing-lodges"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "cf2d272e-ffa7-4918-a94b-182212c41b68"
+    ],
+    "taggedPoliticians": [
+      "Wab Kinew"
+    ]
   }
 ];
 

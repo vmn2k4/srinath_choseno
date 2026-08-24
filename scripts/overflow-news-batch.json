@@ -1,6 +1,106 @@
 [
   {
     "rank": 101,
+    "raw": "81,9.9,\"Governor Andy Beshear Enacts Executive Order Mandating Energy Protection Plans for Data Centers\",Energy,\"KY, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Kentucky Governor Andy Beshear signs an executive order requiring commercial data centers to prove grid reliability and prevent rate hikes on families.\",\"Kentucky Governor Andy Beshear signs an executive order requiring commercial data center operators to provide independent energy generation and certify zero rate hikes for residential consumers.\",https://www.choseno.com/news/kentucky-governor-andy-beshear-issues-executive-order-regulating-ai-data-centers-and-protecting-energy-rates-2026-08-24,https://www.choseno.com/news/kentucky-governor-andy-beshear-issues-executive-order-regulating-ai-data-centers-and-protecting-energy-rates-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,9.8,\"Governor Mike Braun Declares Statewide Energy Emergency and Extends Gas Tax Suspension\",Economy,\"IN, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Indiana Governor Mike Braun extends the state's 34-cent gas tax suspension through September 5, saving drivers $45M over Labor Day travel.\",\"Indiana Governor Mike Braun signs an emergency declaration extending the state gasoline excise tax suspension through September 5, 2026, delivering direct fuel cost relief for motorists.\",https://www.choseno.com/news/indiana-governor-mike-braun-declares-energy-emergency-and-extends-state-gas-tax-suspension-2026-08-24,https://www.choseno.com/news/indiana-governor-mike-braun-declares-energy-emergency-and-extends-state-gas-tax-suspension-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,9.8,\"Governor Jim Pillen Appoints 17-Member Task Force to Oversee Data Center Infrastructure Impacts\",Energy,\"NE, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Nebraska Governor Jim Pillen appoints a 17-member task force under EO 26-17 to evaluate data center impacts on public power grids and aquifers.\",\"Nebraska Governor Jim Pillen names utility, agricultural, and municipal leaders to the State Data Center Task Force, authorized by Executive Order 26-17 to safeguard power grids and water supplies.\",https://www.choseno.com/news/nebraska-governor-jim-pillen-appoints-17-member-data-center-task-force-under-eo-26-17-2026-08-24,https://www.choseno.com/news/nebraska-governor-jim-pillen-appoints-17-member-data-center-task-force-under-eo-26-17-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,9.8,\"Governor Bill Lee Signs Executive Order 114 Establishing Transportation Project Accountability Council\",Transportation,\"TN, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Tennessee Governor Bill Lee signs Executive Order 114 creating an oversight council to monitor execution of the $3.3B transportation modernization fund.\",\"Tennessee Governor Bill Lee enacts Executive Order 114, creating an independent oversight council to monitor execution of the $3.3 billion Transportation Modernization Act capital fund.\",https://www.choseno.com/news/tennessee-governor-bill-lee-issues-executive-order-114-creating-transportation-accountability-council-2026-08-24,https://www.choseno.com/news/tennessee-governor-bill-lee-issues-executive-order-114-creating-transportation-accountability-council-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,9.7,\"Northwest Territories Implements Modernized Business Lending and Service Fee Schedule for Prosper NWT\",Economy,\"NT, CA\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Northwest Territories enacts modernized Prosper NWT lending rules, eliminating upfront fees on business loans under $100k in remote communities.\",\"Government of the Northwest Territories brings updated Prosper NWT regulations into force, reducing borrowing fee barriers and expanding micro-loan access for remote Indigenous entrepreneurs.\",https://www.choseno.com/news/northwest-territories-enacts-prosper-nwt-lending-and-business-services-fee-modernization-2026-08-24,https://www.choseno.com/news/northwest-territories-enacts-prosper-nwt-lending-and-business-services-fee-modernization-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,9.7,\"Whitehorse City Council Debates Bylaw 2026-25 Restricting Mineral Exploration in Urban Growth Boundaries\",Governance,\"YT, CA\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Whitehorse City Council debates Bylaw 2026-25, proposing 1,000m buffer setbacks between residential neighborhoods and mineral exploration claims.\",\"Whitehorse City Council reviews proposed amendments to the Official Community Plan under Bylaw 2026-25, establishing 1,000-meter buffer setbacks between residential areas and mineral claim staking.\",https://www.choseno.com/news/whitehorse-city-council-debates-bylaw-2026-25-regulating-urban-mineral-exploration-and-quarry-buffers-2026-08-24,https://www.choseno.com/news/whitehorse-city-council-debates-bylaw-2026-25-regulating-urban-mineral-exploration-and-quarry-buffers-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,9.6,\"Missouri DNR Awards $25 Million in Drinking Water and Lead Service Line Grants Across 30 Towns\",Environment,\"MO, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Missouri DNR awards $25M in 100% forgivable water grants to replace lead pipes and upgrade water towers across 30 rural communities.\",\"Missouri Department of Natural Resources allocates $25 million in drinking water state revolving funds, providing 100% principal forgiveness for rural communities replacing lead pipes.\",https://www.choseno.com/news/missouri-department-of-natural-resources-awards-25-million-for-rural-drinking-water-and-lead-pipe-abatement-2026-08-24,https://www.choseno.com/news/missouri-department-of-natural-resources-awards-25-million-for-rural-drinking-water-and-lead-pipe-abatement-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,9.6,\"Kansas Water Authority Approves $40 Million Capital Plan for Ogallala Aquifer Recharge and Irrigation Tech\",Environment,\"KS, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Kansas Water Authority approves $40M to fund precision drip irrigation and conserve the Ogallala Aquifer in Western Kansas.\",\"Kansas Water Authority allocates $40 million under the State Water Plan Fund, providing direct cost-share incentives for Western Kansas grain farmers installing precision subsurface drip irrigation.\",https://www.choseno.com/news/kansas-water-office-deploys-40-million-for-ogallala-aquifer-conservation-and-playa-wetland-restoration-2026-08-24,https://www.choseno.com/news/kansas-water-office-deploys-40-million-for-ogallala-aquifer-conservation-and-playa-wetland-restoration-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,9.5,\"Iowa Allocates $15 Million to Expand Statewide Cover Crop and Soil Nutrient Reduction Grants\",Environment,\"IA, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Iowa allocates $15M in cost-share grants to seed 850,000 acres of cover crops and reduce agricultural runoff into Mississippi watersheds.\",\"Iowa Department of Agriculture rolls out $15 million in cost-share funds under the Iowa Nutrient Reduction Strategy, funding cover crop plantings on 850,000 acres to protect Mississippi River watersheds.\",https://www.choseno.com/news/iowa-department-of-agriculture-expands-statewide-cover-crop-cost-share-and-nutrient-reduction-program-2026-08-24,https://www.choseno.com/news/iowa-department-of-agriculture-expands-statewide-cover-crop-cost-share-and-nutrient-reduction-program-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.5,\"Nunavut Housing Corporation Deploys $60 Million for 150 Modular Public Housing Units Across 8 Hamlets\",Housing,\"NU, CA\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Nunavut deploys $60M for 150 modular homes across 8 Arctic hamlets, building on permafrost foundations to tackle overcrowding.\",\"Nunavut Housing Corporation awards contracts under the Igluliuqatigiingniq Housing Strategy to construct 150 energy-efficient modular homes on insulated permafrost foundations in high Arctic hamlets.\",https://www.choseno.com/news/nunavut-housing-corporation-deploys-60-million-for-modular-infill-homes-in-high-arctic-communities-2026-08-24,https://www.choseno.com/news/nunavut-housing-corporation-deploys-60-million-for-modular-infill-homes-in-high-arctic-communities-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.4,\"City of Ogallala Secures $14 Million in Grants to Modernize Municipal Wastewater and Water Mains\",Infrastructure,\"NE, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Ogallala City Council secures $14M in state and federal grants to replace 12 miles of aging water mains and upgrade wastewater facilities.\",\"Ogallala City Council accepts $14 million in state and federal drinking water grants, funding the replacement of 12 miles of aging cast-iron water distribution pipes and modernizing wastewater aeration.\",https://www.choseno.com/news/ogallala-nebraska-city-council-secures-14-million-state-and-federal-water-infrastructure-redevelopment-grants-2026-08-24,https://www.choseno.com/news/ogallala-nebraska-city-council-secures-14-million-state-and-federal-water-infrastructure-redevelopment-grants-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.3,\"Department of the Interior Awards $125 Million for Tribal Climate Resilience and Community Relocation\",Environment,\"DC, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Department of the Interior awards $125M to 45 tribal nations to support climate resilience, coastal sea wall defense, and community relocation.\",\"Secretary Deb Haaland announces $125 million in Tribal Climate Resilience Program grants supporting 45 federally recognized tribes managing coastal erosion, sea-level rise, and wildfire defense.\",https://www.choseno.com/news/united-states-department-of-the-interior-allocates-125-million-for-tribal-climate-resilience-and-relocation-2026-08-24,https://www.choseno.com/news/united-states-department-of-the-interior-allocates-125-million-for-tribal-climate-resilience-and-relocation-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.3,\"TVA Board Approves $1.5 Billion Capital Plan for Clinch River Small Modular Nuclear Reactor\",Energy,\"TN, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"TVA Board approves $1.5B to build the nation's first commercial Small Modular Nuclear Reactor at the Clinch River site in Oak Ridge.\",\"Tennessee Valley Authority Board of Directors authorizes $1.5 billion for detailed engineering and long-lead component procurement for the BWRX-300 Small Modular Reactor at Clinch River.\",https://www.choseno.com/news/tennessee-valley-authority-approves-1-5-billion-clean-energy-and-nuclear-smr-pre-construction-accord-2026-08-24,https://www.choseno.com/news/tennessee-valley-authority-approves-1-5-billion-clean-energy-and-nuclear-smr-pre-construction-accord-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.3,\"Kentucky Enacts HB 281 Expanding Tuition-Free Dual-Credit Career & Technical Training for High Schoolers\",Education,\"KY, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Kentucky enacts HB 281, providing tuition-free dual-credit career and technical training for 35,000 public high school students.\",\"Kentucky General Assembly and Governor Andy Beshear bring House Bill 281 into effect, fully funding tuition-free career and technical dual-credit courses for 35,000 public high school students.\",https://www.choseno.com/news/kentucky-general-assembly-enacts-hb-281-streamlining-career-and-technical-education-dual-credit-pathways-2026-08-24,https://www.choseno.com/news/kentucky-general-assembly-enacts-hb-281-streamlining-career-and-technical-education-dual-credit-pathways-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.2,\"Iowa Utilities Commission Approves $500 Million Grid Hardening Plan to Prevent Storm Blackouts\",Infrastructure,\"IA, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Iowa Utilities Commission approves $500M to harden the electric grid, replacing wooden poles with steel to prevent storm blackouts.\",\"Iowa Utilities Commission approves comprehensive grid resilience filings from MidAmerican Energy and Alliant Energy, requiring undergrounding of vulnerable lines and steel pole replacements.\",https://www.choseno.com/news/iowa-utilities-commission-orders-500-million-electric-distribution-grid-hardening-against-derechos-2026-08-24,https://www.choseno.com/news/iowa-utilities-commission-orders-500-million-electric-distribution-grid-hardening-against-derechos-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.2,\"Kansas KDOT Awards $75 Million for Rail Logistics Hubs and Agricultural Freight Corridors\",Transportation,\"KS, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Kansas Governor Laura Kelly awards $75M to expand freight rail spurs and modernize agricultural highways across 15 counties.\",\"Governor Laura Kelly and KDOT announce $75 million in grants through the IKE Transportation Program, expanding freight rail spurs and modernizing heavy agricultural highways across 15 counties.\",https://www.choseno.com/news/kansas-department-of-transportation-allocates-75-million-for-highway-freight-expansion-and-rail-logistics-2026-08-24,https://www.choseno.com/news/kansas-department-of-transportation-allocates-75-million-for-highway-freight-expansion-and-rail-logistics-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.1,\"Indiana Implements Landmark Property Tax Relief Law Capping Residential Growth at 3%\",Economy,\"IN, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Indiana implements landmark legislation (HB 1042) capping annual homestead property tax bill increases at 3% to protect homeowners.\",\"Indiana Department of Local Government Finance brings House Bill 1042 into force, capping annual homestead property tax bill growth at 3% and protecting prime agricultural farmland.\",https://www.choseno.com/news/indiana-general-assembly-enacts-hb-1042-protecting-farmland-and-capping-residential-property-tax-growth-2026-08-24,https://www.choseno.com/news/indiana-general-assembly-enacts-hb-1042-protecting-farmland-and-capping-residential-property-tax-growth-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,9.1,\"U.S. Department of Labor Finalizes Overtime Rule Guaranteeing Time-and-a-Half Pay for 1 Million Workers\",Economy,\"DC, US\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Department of Labor finalizes rule raising the overtime salary cap to $58,656/year, guaranteeing time-and-a-half pay for 1M workers.\",\"Department of Labor Wage and Hour Division brings Phase Two of the Fair Labor Standards Act overtime rule into force, raising the standard salary exemption threshold to $58,656 annually.\",https://www.choseno.com/news/united-states-department-of-labor-finalizes-overtime-protections-for-1-million-salaried-workers-2026-08-24,https://www.choseno.com/news/united-states-department-of-labor-finalizes-overtime-protections-for-1-million-salaried-workers-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,9.0,\"Yukon Government Awards $32 Million Contract to Complete 800-Kilometer Dempster Fiber Link\",Infrastructure,\"YT, CA\",Civic Authority,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Yukon awards $32M to complete the 800km Dempster Fibre Line, creating a redundant telecommunications ring to prevent Arctic internet blackouts.\",\"Yukon Highways and Public Works awards final civil engineering contract to complete the 800km Dempster Fibre Line, securing redundant high-speed internet for Arctic communities.\",https://www.choseno.com/news/yukon-territorial-government-awards-32-million-for-dempster-fiber-optic-telecommunications-loop-completion-2026-08-24,https://www.choseno.com/news/yukon-territorial-government-awards-32-million-for-dempster-fiber-optic-telecommunications-loop-completion-2026-08-24",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,9.0,\"Federal Housing Advocate Releases Review Calling for National Enforceable Tenant Bill of Rights\",Housing,\"ON, CA\",Mark Carney,2026-08-24T12:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Federal Housing Advocate releases statutory report urging Parliament to enact a binding Renters' Bill of Rights and nationwide rent registry.\",\"Office of the Federal Housing Advocate submits statutory recommendations to Parliament, calling for nationwide rent control baselines, anti-renoviction penalties, and a federal tenant ombudsperson.\",https://www.choseno.com/news/federal-housing-advocate-releases-statutory-review-demanding-enforceable-tenant-rights-charter-2026-08-24,https://www.choseno.com/wall/mark-carney",
+    "archivedAt": "2026-08-24T17:02:25.634Z"
+  },
+  {
+    "rank": 101,
     "raw": "81,9.9,\"Governor Dan McKee Signs Executive Order 26-05.1 Extending Ratepayer Relief on Heating Bills\",Energy,\"RI, US\",Civic Authority,2026-08-24T11:00:00Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Rhode Island Governor Dan McKee signs Executive Order 26-05.1 deploying $18M in ratepayer relief and $200 heating bill credits for families.\",\"Rhode Island Governor Dan McKee issues Executive Order 26-05.1, extending emergency utility protections and deploying $18 million in state energy relief funds to offset winter electric rates.\",https://www.choseno.com/news/rhode-island-governor-dan-mckee-issues-executive-order-26-05-1-extending-energy-ratepayer-relief-2026-08-24,https://www.choseno.com/news/rhode-island-governor-dan-mckee-issues-executive-order-26-05-1-extending-energy-ratepayer-relief-2026-08-24",
     "archivedAt": "2026-08-24T16:02:45.103Z"
   },
