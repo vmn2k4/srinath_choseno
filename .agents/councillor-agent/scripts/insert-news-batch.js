@@ -44,6 +44,24 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   process.exit(1);
 }
 
+// Per-article virality score on the 0-10 scale the Admin > News
+// Distribution table renders (score.toFixed(1), gold/green thresholds at
+// 9.5/9.0 -- see AdminNewsDistributionClient.tsx). A prior version of this
+// script hardcoded viral_score: 9.6 for every article in a batch instead of
+// scoring each one, so an entire batch always rendered as a flat 9.6 row
+// after row. (Other one-off scripts, e.g. publish-aug23-50-batch.js, have
+// their own calculateViralityScore(), but on a 1-99 scale that doesn't
+// match this table's thresholds -- this is the same idea rescaled to 0-10.)
+function calculateViralityScore(article) {
+  let score = 8.0;
+  if (article.breakingNews) score += 0.8;
+  if (['Economy', 'Politics', 'Public Safety', 'Elections'].includes(article.category)) score += 0.5;
+  if (article.taggedPoliticians && article.taggedPoliticians.length > 0) score += 0.3;
+  if (article.impactArea === 'country' || article.impactArea === 'national') score += 0.3;
+  else if (article.impactArea === 'province' || article.impactArea === 'state') score += 0.15;
+  return Math.min(9.9, Math.max(7.5, Number(score.toFixed(1))));
+}
+
 // Function to authenticate and get valid Authorization header
 async function getAuthHeaders() {
   if (env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -459,7 +477,7 @@ async function run() {
         author: article.author || { name: 'Choseno Civic News Desk', bio: 'Civic and political reporting' },
         sources: article.sources || [],
         batch_number: batchTimestamp,
-        viral_score: 9.6,
+        viral_score: calculateViralityScore(article),
         shared_platforms: []
       }
     };
