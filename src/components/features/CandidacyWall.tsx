@@ -840,7 +840,7 @@ export default function CandidacyWall({
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 flex-wrap sm:shrink-0">
+              <div className="flex items-center gap-2 flex-wrap">
                 {candidate.profiles?.current_ghost_id && (
                   <Link
                     href={`/wall/${resolvePoliticianWallSlug(candidate, displayName, candidate.election_seats?.role_title)}`}
