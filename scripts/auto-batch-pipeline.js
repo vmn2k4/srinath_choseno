@@ -92,14 +92,19 @@ async function checkAndRun() {
   }
 
   let usCount = 0, caCount = 0;
+  let totalWords = 0;
   for (const art of uniqueArticles) {
     if (art.country === 'US') usCount++;
     else if (art.country === 'CA') caCount++;
+    const wordCount = (art.body || '').split(/\s+/).filter(Boolean).length;
+    totalWords += wordCount;
   }
+  const avgWords = Math.round(totalWords / (uniqueArticles.length || 1));
 
   console.log(`\nCurrent Batch Status: ${uniqueArticles.length} valid unique articles ready.`);
   console.log(`  🇺🇸 United States: ${usCount} (${Math.round((usCount / (uniqueArticles.length || 1)) * 100)}%) - Target: ~70% (14+)`);
   console.log(`  🇨🇦 Canada:        ${caCount} (${Math.round((caCount / (uniqueArticles.length || 1)) * 100)}%) - Target: ~30% (5-6)`);
+  console.log(`  📝 Average Length: ${avgWords} words per article (CNN standard: 750–1,400+ words)`);
 
   if (uniqueArticles.length < minTarget) {
     const deficit = minTarget - uniqueArticles.length;

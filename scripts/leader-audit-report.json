@@ -1,0 +1,1905 @@
+{
+  "auditedAt": "2026-08-24T19:36:21.306Z",
+  "totalArticles": 1289,
+  "newlySynced": 910,
+  "previouslyTagged": 0,
+  "untaggedNoLeader": [
+    {
+      "slug": "united-states-department-of-housing-and-urban-development-awards-320-million-for-youth-homelessness-demonstrations-2026-08-24",
+      "headline": "HUD Awards $320 Million to Eliminate Youth Homelessness and Provide Supportive Rental Housing",
+      "date": "2026-08-24T19:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-energy-awards-175-million-for-solid-state-electric-vehicle-battery-manufacturing-2026-08-24",
+      "headline": "U.S. Department of Energy Awards $175 Million for Domestic Solid-State EV Battery Gigafactories",
+      "date": "2026-08-24T19:00:00+00:00"
+    },
+    {
+      "slug": "city-of-edmonton-approves-95-million-contract-for-valley-line-west-lrt-traction-power-and-signaling-2026-08-24",
+      "headline": "Edmonton City Council Approves $95 Million Valley Line West LRT Signaling and Traction Contract",
+      "date": "2026-08-24T19:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-labor-awards-85-million-for-rural-youth-apprenticeships-and-stem-pathways-2026-08-24",
+      "headline": "U.S. Department of Labor Awards $85 Million to Expand Rural Youth Apprenticeships in High-Tech Trades",
+      "date": "2026-08-24T19:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-justice-awards-110-million-for-victim-services-and-legal-aid-assistance-2026-08-24",
+      "headline": "DOJ Awards $110 Million for Crime Victim Legal Aid and Emergency Trauma Support Services",
+      "date": "2026-08-24T19:00:00+00:00"
+    },
+    {
+      "slug": "environmental-protection-agency-finalizes-stringent-air-toxic-caps-for-synthetic-chemical-plants-2026-08-24",
+      "headline": "EPA Enacts Stricter Air Toxic Standards Slashing Cancer-Causing Emissions at 200 Chemical Plants",
+      "date": "2026-08-24T19:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-energy-awards-350-million-for-long-duration-iron-flow-battery-storage-2026-08-24",
+      "headline": "U.S. Department of Energy Awards $350 Million for Utility-Scale 24-Hour Iron-Flow Battery Systems",
+      "date": "2026-08-24T19:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-transportation-awards-500-million-for-interstate-freight-rail-bottleneck-elimination-2026-08-24",
+      "headline": "USDOT Awards $500 Million to Eliminate Freight Rail Chokepoints and Modernize Rail Corridors",
+      "date": "2026-08-24T19:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-the-interior-awards-190-million-for-western-water-recycling-and-desalination-plants-2026-08-24",
+      "headline": "Department of the Interior Awards $190 Million for Advanced Water Recycling and Purification Facilities",
+      "date": "2026-08-24T19:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-agriculture-awards-220-million-for-rural-broadband-gigabit-expansion-2026-08-24",
+      "headline": "USDA Awards $220 Million to Deploy Gigabit Fiber Broadband Across 50,000 Rural Farms and Homes",
+      "date": "2026-08-24T19:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-transportation-allocates-140-million-for-port-cargo-dock-modernization-2026-08-24",
+      "headline": "USDOT Awards $140 Million to Electrify Port Cranes and Modernize Cargo Terminals",
+      "date": "2026-08-24T19:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-the-interior-awards-85-million-for-national-park-historic-trail-and-visitor-infrastructure-2026-08-24",
+      "headline": "Department of the Interior Awards $85 Million to Rebuild Historic Trails and Visitor Facilities in 25 National Parks",
+      "date": "2026-08-24T19:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-justice-awards-95-million-for-body-worn-cameras-and-police-deescalation-training-2026-08-24",
+      "headline": "DOJ Awards $95 Million for Police Body-Worn Cameras and Crisis Intervention Training in 250 Cities",
+      "date": "2026-08-24T18:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-labor-deploys-50-million-for-mine-worker-retraining-and-clean-manufacturing-2026-08-24",
+      "headline": "U.S. Department of Labor Awards $50 Million for Coal Miner Retraining in West Virginia and Kentucky",
+      "date": "2026-08-24T18:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-the-interior-allocates-140-million-for-tribal-water-rights-settlement-infrastructure-2026-08-24",
+      "headline": "Department of the Interior Awards $140 Million for Indian Water Rights Settlement Infrastructure",
+      "date": "2026-08-24T18:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-transportation-allocates-125-million-for-advanced-air-mobility-vertiport-infrastructure-2026-08-24",
+      "headline": "FAA Awards $125 Million to Build Electric Air Taxi Vertiports at 15 Regional Commercial Airports",
+      "date": "2026-08-24T18:00:00+00:00"
+    },
+    {
+      "slug": "environmental-protection-agency-awards-130-million-for-brownfields-cleanups-and-urban-revitalization-2026-08-24",
+      "headline": "EPA Awards $130 Million to Clean Up and Redevelop 110 Contaminated Brownfield Sites",
+      "date": "2026-08-24T18:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-health-and-human-services-deploys-240-million-for-maternal-health-and-midwifery-training-2026-08-24",
+      "headline": "HHS Awards $240 Million to Expand Maternal Health Centers and Train 2,000 Certified Midwives",
+      "date": "2026-08-24T18:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-energy-awards-160-million-for-industrial-steam-electrification-and-thermal-batteries-2026-08-24",
+      "headline": "DOE Awards $160 Million to Electrify Industrial Steam and Deploy Thermal Batteries in 10 Factories",
+      "date": "2026-08-24T18:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-the-interior-allocates-65-million-for-national-wildlife-refuge-coastal-storm-resilience-2026-08-24",
+      "headline": "Department of the Interior Awards $65 Million to Restore Coastal Salt Marshes and Protect Refuges",
+      "date": "2026-08-24T18:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-transportation-allocates-320-million-for-interstate-bridge-rehabilitation-2026-08-24",
+      "headline": "USDOT Awards $320 Million to Rehabilitate 14 Major Interstate Bridges Across 8 States",
+      "date": "2026-08-24T18:00:00+00:00"
+    },
+    {
+      "slug": "city-of-calgary-council-considers-bylaw-to-revert-blanket-residential-rezoning-in-suburban-wards-2026-08-24",
+      "headline": "Calgary City Council Advances Public Hearings on Targeted Suburban Rezoning Bylaw",
+      "date": "2026-08-24T18:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-energy-awards-75-million-for-subsurface-carbon-mineralization-pilot-wells-2026-08-24",
+      "headline": "DOE Awards $75 Million for Basalt Carbon Mineralization Injection Wells in 3 Western States",
+      "date": "2026-08-24T18:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-housing-and-urban-development-awards-275-million-for-manufactured-housing-park-infrastructure-2026-08-24",
+      "headline": "HUD Awards $275 Million in MAIN Grants to Modernize Resident-Owned Manufactured Home Parks",
+      "date": "2026-08-24T17:00:00+00:00"
+    },
+    {
+      "slug": "environmental-protection-agency-deploys-200-million-for-tribal-and-rural-pfas-drinking-water-filtration-2026-08-24",
+      "headline": "EPA Awards $200 Million to Install PFAS Water Filtration Systems in 150 Rural Communities",
+      "date": "2026-08-24T17:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-transportation-allocates-175-million-for-ferry-boat-program-and-electrification-2026-08-24",
+      "headline": "USDOT Awards $175 Million for Electric Ferry Boats and Rural Coastal Transit Terminals",
+      "date": "2026-08-24T17:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-labor-deploys-90-million-for-women-in-apprenticeship-and-nontraditional-occupations-2026-08-24",
+      "headline": "U.S. Department of Labor Awards $90 Million to Train Women in Union Construction and Clean Energy Trades",
+      "date": "2026-08-24T17:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-agriculture-deploys-80-million-for-rural-fire-departments-and-brush-trucks-2026-08-24",
+      "headline": "USDA Awards $80 Million in Community Facilities Grants for 200 Rural Volunteer Fire Departments",
+      "date": "2026-08-24T17:00:00+00:00"
+    },
+    {
+      "slug": "city-of-calgary-approves-85-million-flood-mitigation-and-bow-river-barrier-expansion-contract-2026-08-24",
+      "headline": "Calgary City Council Approves $85 Million Bow River Flood Barrier and Pump Station Contract",
+      "date": "2026-08-24T17:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-energy-awards-200-million-for-advanced-geothermal-enhanced-systems-demonstrations-2026-08-24",
+      "headline": "U.S. Department of Energy Awards $200 Million for Enhanced Geothermal Systems in 5 States",
+      "date": "2026-08-24T17:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-agriculture-awards-150-million-for-rural-veterinary-clinics-and-food-animal-services-2026-08-24",
+      "headline": "USDA Awards $150 Million to Address Rural Food Animal Veterinarian Shortages",
+      "date": "2026-08-24T17:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-transportation-allocates-400-million-for-interstate-truck-electrification-corridors-2026-08-24",
+      "headline": "USDOT Awards $400 Million to Build Megawatt Charging Corridors for Electric Heavy Freight Trucks",
+      "date": "2026-08-24T17:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-the-interior-allocates-110-million-for-national-fish-passage-and-dam-removal-2026-08-24",
+      "headline": "Department of the Interior Awards $110 Million to Remove 40 Obsolete Dams and Restore Salmon Rivers",
+      "date": "2026-08-24T17:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-the-treasury-finalizes-clean-electricity-investment-tax-credit-regulations-under-section-48e-2026-08-24",
+      "headline": "U.S. Treasury Releases Final Section 48E Tech-Neutral Clean Electricity Tax Credit Rules",
+      "date": "2026-08-24T16:00:00+00:00"
+    },
+    {
+      "slug": "cape-coral-florida-city-council-executes-emergency-medical-and-disaster-response-grant-accord-2026-08-24",
+      "headline": "Cape Coral City Council Approves Emergency Disaster Response and Rescue Grant Accord",
+      "date": "2026-08-24T16:00:00+00:00"
+    },
+    {
+      "slug": "san-clemente-city-council-enacts-municipal-coastal-park-ranger-enforcement-ordinance-2026-08-24",
+      "headline": "San Clemente City Council Enacts Park Ranger Safety Ordinance for Coastal Trail and Beaches",
+      "date": "2026-08-24T16:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-energy-awards-300-million-for-long-duration-flow-battery-storage-demonstrations-2026-08-24",
+      "headline": "U.S. Department of Energy Awards $300 Million for 10-Hour Long-Duration Energy Storage",
+      "date": "2026-08-24T16:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-housing-and-urban-development-deploys-400-million-for-housing-trust-fund-2026-08-24",
+      "headline": "HUD Awards $400 Million Through Housing Trust Fund to Build Deeply Affordable Rental Units",
+      "date": "2026-08-24T16:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-transportation-allocates-250-million-for-safe-streets-and-roads-for-all-pedestrian-safety-2026-08-24",
+      "headline": "USDOT Awards $250 Million in Safe Streets and Roads for All Grants to Cut Traffic Fatalities",
+      "date": "2026-08-24T16:00:00+00:00"
+    },
+    {
+      "slug": "environmental-protection-agency-finalizes-effluent-limitations-guidelines-for-steam-electric-power-plants-2026-08-24",
+      "headline": "EPA Enacts Stricter Wastewater Standards for Coal-Fired Power Plants to Eliminate Toxic Metals",
+      "date": "2026-08-24T16:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-the-interior-allocates-180-million-for-water-desalination-and-aquifer-recharge-2026-08-24",
+      "headline": "Department of the Interior Awards $180 Million for Advanced Water Desalination and Aquifer Storage",
+      "date": "2026-08-24T16:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-transportation-awards-110-million-for-university-transportation-centers-2026-08-24",
+      "headline": "USDOT Awards $110 Million for 20 University Transportation Centers to Advance AI Transit and Safety",
+      "date": "2026-08-24T16:00:00+00:00"
+    },
+    {
+      "slug": "united-states-bureau-of-reclamation-announces-colorado-river-tier-2-water-reductions-for-2027-2026-08-24",
+      "headline": "Bureau of Reclamation Mandates Colorado River Water Reductions for Arizona and Nevada",
+      "date": "2026-08-24T15:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-energy-announces-400-million-for-advanced-nuclear-fuel-high-assay-leu-production-2026-08-24",
+      "headline": "U.S. Department of Energy Awards $400 Million to Build Domestic HALEU Nuclear Fuel Enrichment Hub",
+      "date": "2026-08-24T15:00:00+00:00"
+    },
+    {
+      "slug": "environmental-protection-agency-deploys-150-million-for-gulf-of-mexico-hypoxia-and-estuary-restoration-2026-08-24",
+      "headline": "EPA Awards $150 Million to Reduce Gulf of Mexico Dead Zone and Restore Estuary Water Quality",
+      "date": "2026-08-24T15:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-energy-awards-50-million-for-quantum-computing-research-centers-2026-08-24",
+      "headline": "U.S. Department of Energy Awards $50 Million for Five National Quantum Computing Research Hubs",
+      "date": "2026-08-24T15:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-transportation-awards-350-million-for-rail-crossing-elimination-grants-2026-08-24",
+      "headline": "U.S. Department of Transportation Awards $350 Million to Eliminate 50 Hazardous Highway-Rail Crossings",
+      "date": "2026-08-24T15:00:00+00:00"
+    },
+    {
+      "slug": "washington-utilities-and-transportation-commission-approves-puget-sound-energy-clean-energy-implementation-plan-2026-08-24",
+      "headline": "Washington UTC Approves PSE Clean Energy Plan Deploying 1,500 MW of Wind and Battery Storage",
+      "date": "2026-08-24T15:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-agriculture-deploys-200-million-for-rural-broadband-reconnect-program-2026-08-24",
+      "headline": "USDA Awards $200 Million in ReConnect Grants for Gigabit Fiber Across Remote Farming Communities",
+      "date": "2026-08-24T15:00:00+00:00"
+    },
+    {
+      "slug": "florida-legislature-approves-constitutional-referendum-clarifying-congressional-redistricting-standards-2026-08-24",
+      "headline": "Florida Legislature Approves Ballot Referendum Clarifying Congressional Redistricting Standards",
+      "date": "2026-08-24T14:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-energy-announces-375-million-for-advanced-battery-recycling-facilities-2026-08-24",
+      "headline": "U.S. Department of Energy Awards $375 Million to Expand Domestic Lithium Battery Recycling",
+      "date": "2026-08-24T14:00:00+00:00"
+    },
+    {
+      "slug": "federal-highway-administration-awards-150-million-for-interstate-bridge-safety-and-culvert-replacements-2026-08-24",
+      "headline": "Federal Highway Administration Awards $150 Million to Replace 45 Deteriorating Rural Highway Bridges",
+      "date": "2026-08-24T14:00:00+00:00"
+    },
+    {
+      "slug": "quebec-transportation-ministry-allocates-350-million-for-highway-15-and-highway-20-seismic-bridge-retrofits-2026-08-24",
+      "headline": "Transports Québec Approves $350 Million Seismic Retrofit Plan for Major Montreal Highway Viaducts",
+      "date": "2026-08-24T14:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-the-treasury-releases-final-clean-hydrogen-production-tax-credit-rules-2026-08-24",
+      "headline": "U.S. Treasury Releases Final Section 45V Clean Hydrogen Production Tax Credit Regulations",
+      "date": "2026-08-24T14:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-energy-allocates-250-million-for-industrial-heat-pump-decarbonization-grants-2026-08-24",
+      "headline": "DOE Awards $250 Million to Deploy Industrial Heat Pumps Across Food and Chemical Manufacturing",
+      "date": "2026-08-24T14:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-agriculture-approves-120-million-for-rural-telemedicine-and-distance-learning-2026-08-24",
+      "headline": "USDA Awards $120 Million for Rural Hospital Telemedicine and Distance Learning Networks",
+      "date": "2026-08-24T14:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-health-and-human-services-deploys-500-million-for-certified-community-behavioral-health-clinics-2026-08-24",
+      "headline": "HHS Awards $500 Million to Expand 24/7 Certified Community Behavioral Health Clinics Nationwide",
+      "date": "2026-08-24T14:00:00+00:00"
+    },
+    {
+      "slug": "quebec-electoral-commission-issues-binding-rules-on-third-party-campaign-spending-and-digital-ads-2026-08-24",
+      "headline": "Élections Québec Enacts Strict Transparency Rules for Digital Campaign Ads Ahead of General Election",
+      "date": "2026-08-24T13:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-justice-issues-final-ada-accessibility-mandates-for-state-and-local-government-web-portals-2026-08-24",
+      "headline": "DOJ Issues Final Rule Mandating Universal Digital Accessibility for State and Municipal Government Portals",
+      "date": "2026-08-24T13:00:00+00:00"
+    },
+    {
+      "slug": "louisiana-legislature-statutory-reforms-take-effect-expanding-new-orleans-sewerage-and-water-board-oversight-2026-08-24",
+      "headline": "Louisiana Enacts Sweeping Accountability Reforms Over New Orleans Sewerage and Water Board",
+      "date": "2026-08-24T13:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-veterans-affairs-deploys-600-million-for-veterans-transitional-housing-and-homelessness-prevention-2026-08-24",
+      "headline": "VA Awards $600 Million in Grants to End Veteran Homelessness and Fund Permanent Supportive Housing",
+      "date": "2026-08-24T13:00:00+00:00"
+    },
+    {
+      "slug": "environmental-protection-agency-deploys-1-billion-in-clean-heavy-duty-vehicle-grants-for-school-and-transit-fleets-2026-08-24",
+      "headline": "EPA Awards $1 Billion in Clean Heavy-Duty Vehicle Grants for Electric Buses and Commercial Fleets",
+      "date": "2026-08-24T13:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-transportation-finalizes-mandatory-airline-cash-refund-rules-for-delayed-flights-2026-08-24",
+      "headline": "DOT Brings Mandatory Automatic Airline Cash Refund Rules for Delayed Flights into Legal Force",
+      "date": "2026-08-24T13:00:00+00:00"
+    },
+    {
+      "slug": "national-oceanic-and-atmospheric-administration-allocates-220-million-for-coastal-climate-defense-and-fisheries-2026-08-24",
+      "headline": "NOAA Awards $220 Million in Climate-Ready Coasts Grants to Protect Ports and Marine Habitats",
+      "date": "2026-08-24T13:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-transportation-awards-1-8-billion-in-raise-grants-for-local-infrastructure-2026-08-24",
+      "headline": "U.S. Department of Transportation Awards $1.8 Billion in RAISE Grants for 148 Local Projects",
+      "date": "2026-08-24T13:00:00+00:00"
+    },
+    {
+      "slug": "yukon-special-committee-on-electoral-reform-finalizes-public-submissions-on-political-donation-caps-2026-08-24",
+      "headline": "Yukon Legislative Committee Advances Political Financing and Corporate Donation Reform Docket",
+      "date": "2026-08-24T13:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-housing-and-urban-development-awards-175-million-for-choice-neighborhoods-2026-08-24",
+      "headline": "HUD Awards $175 Million in Choice Neighborhoods Grants to Rebuild Distressed Public Housing",
+      "date": "2026-08-24T13:00:00+00:00"
+    },
+    {
+      "slug": "canada-and-northwest-territories-deploy-45-million-for-indigenous-economic-infrastructure-and-roads-2026-08-24",
+      "headline": "Canada and NWT Allocate $45 Million for Indigenous Infrastructure and Arctic Economic Corridors",
+      "date": "2026-08-24T13:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-the-interior-allocates-125-million-for-tribal-climate-resilience-and-relocation-2026-08-24",
+      "headline": "Department of the Interior Awards $125 Million for Tribal Climate Resilience and Community Relocation",
+      "date": "2026-08-24T12:00:00+00:00"
+    },
+    {
+      "slug": "ogallala-nebraska-city-council-secures-14-million-state-and-federal-water-infrastructure-redevelopment-grants-2026-08-24",
+      "headline": "City of Ogallala Secures $14 Million in Grants to Modernize Municipal Wastewater and Water Mains",
+      "date": "2026-08-24T12:00:00+00:00"
+    },
+    {
+      "slug": "missouri-department-of-natural-resources-awards-25-million-for-rural-drinking-water-and-lead-pipe-abatement-2026-08-24",
+      "headline": "Missouri DNR Awards $25 Million in Drinking Water and Lead Service Line Grants Across 30 Towns",
+      "date": "2026-08-24T12:00:00+00:00"
+    },
+    {
+      "slug": "iowa-utilities-commission-orders-500-million-electric-distribution-grid-hardening-against-derechos-2026-08-24",
+      "headline": "Iowa Utilities Commission Approves $500 Million Grid Hardening Plan to Prevent Storm Blackouts",
+      "date": "2026-08-24T12:00:00+00:00"
+    },
+    {
+      "slug": "tennessee-valley-authority-approves-1-5-billion-clean-energy-and-nuclear-smr-pre-construction-accord-2026-08-24",
+      "headline": "TVA Board Approves $1.5 Billion Capital Plan for Clinch River Small Modular Nuclear Reactor",
+      "date": "2026-08-24T12:00:00+00:00"
+    },
+    {
+      "slug": "iowa-department-of-agriculture-expands-statewide-cover-crop-cost-share-and-nutrient-reduction-program-2026-08-24",
+      "headline": "Iowa Allocates $15 Million to Expand Statewide Cover Crop and Soil Nutrient Reduction Grants",
+      "date": "2026-08-24T12:00:00+00:00"
+    },
+    {
+      "slug": "nunavut-housing-corporation-deploys-60-million-for-modular-infill-homes-in-high-arctic-communities-2026-08-24",
+      "headline": "Nunavut Housing Corporation Deploys $60 Million for 150 Modular Public Housing Units Across 8 Hamlets",
+      "date": "2026-08-24T12:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-labor-finalizes-overtime-protections-for-1-million-salaried-workers-2026-08-24",
+      "headline": "U.S. Department of Labor Finalizes Overtime Rule Guaranteeing Time-and-a-Half Pay for 1 Million Workers",
+      "date": "2026-08-24T12:00:00+00:00"
+    },
+    {
+      "slug": "whitehorse-city-council-debates-bylaw-2026-25-regulating-urban-mineral-exploration-and-quarry-buffers-2026-08-24",
+      "headline": "Whitehorse City Council Debates Bylaw 2026-25 Restricting Mineral Exploration in Urban Growth Boundaries",
+      "date": "2026-08-24T12:00:00+00:00"
+    },
+    {
+      "slug": "prince-edward-island-executive-council-issues-orders-implementing-updated-employment-standards-act-2026-08-24",
+      "headline": "Prince Edward Island Implements Mandatory Paid Sick Leave and Rest Period Standards",
+      "date": "2026-08-24T11:00:00+00:00"
+    },
+    {
+      "slug": "alaska-voters-advance-statutory-initiative-restoring-state-campaign-contribution-limits-2026-08-24",
+      "headline": "Alaska Certification Confirms Campaign Contribution Limit Initiative on November General Ballot",
+      "date": "2026-08-24T11:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-energy-awards-450-million-for-rural-clean-energy-microgrids-2026-08-24",
+      "headline": "U.S. Department of Energy Awards $450 Million for Rural Community Clean Energy Microgrids",
+      "date": "2026-08-24T11:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-agriculture-deploys-300-million-for-regional-fertilizer-production-expansion-2026-08-24",
+      "headline": "U.S. Department of Agriculture Awards $300 Million to Expand Independent Domestic Fertilizer Plants",
+      "date": "2026-08-24T11:00:00+00:00"
+    },
+    {
+      "slug": "hawaii-county-council-enacts-bill-157-disaster-recovery-housing-and-infrastructure-ordinance-2026-08-24",
+      "headline": "Hawaiʻi County Council Enacts Bill 157 Establishing Emergency Housing Reconstruction Standards",
+      "date": "2026-08-24T11:00:00+00:00"
+    },
+    {
+      "slug": "halifax-regional-council-orders-mayoral-expense-accountability-and-transparency-reform-2026-08-24",
+      "headline": "Halifax Regional Council Adopts Strict Municipal Expense Oversight and Monthly Public Disclosure Bylaw",
+      "date": "2026-08-24T10:00:00+00:00"
+    },
+    {
+      "slug": "oakland-city-council-enacts-tenant-displacement-protection-and-eviction-diversion-statute-2026-08-24",
+      "headline": "Oakland City Council Strengthens Municipal Rent Adjustment Program and Eviction Diversion Mediation",
+      "date": "2026-08-24T10:00:00+00:00"
+    },
+    {
+      "slug": "united-states-department-of-defense-establishes-military-spouse-employment-and-licensing-commission-2026-08-24",
+      "headline": "Department of Defense Implements Executive Order Establishing Military Spouse Employment Commission",
+      "date": "2026-08-24T10:00:00+00:00"
+    },
+    {
+      "slug": "berkley-city-council-passes-ordinance-banning-high-speed-e-bikes-on-pedestrian-sidewalks-2026-08-24",
+      "headline": "Berkley City Council Enacts Municipal Ordinance Restricting High-Speed Electric Bicycles on Sidewalks",
+      "date": "2026-08-24T10:00:00+00:00"
+    },
+    {
+      "slug": "pittsburgh-city-council-passes-ordinance-closing-sidewalk-parking-enforcement-loophole-2026-08-24",
+      "headline": "Pittsburgh City Council Passes Comprehensive Pedestrian Safety Ordinance Banning Sidewalk Parking",
+      "date": "2026-08-24T10:00:00+00:00"
+    },
+    {
+      "slug": "sacramento-city-council-committee-advances-ordinance-regulating-digital-commercial-signage-2026-08-24",
+      "headline": "Sacramento City Council Committee Advances Modernized Commercial Signage and Digital Display Rules",
+      "date": "2026-08-24T10:00:00+00:00"
+    },
+    {
+      "slug": "sturgeon-county-council-approves-agricultural-water-drainage-and-road-protection-infrastructure-plan-2026-08-24",
+      "headline": "Sturgeon County Council Approves Multi-Year Agricultural Drainage and Rural Bridge Capital Plan",
+      "date": "2026-08-24T10:00:00+00:00"
+    },
+    {
+      "slug": "quebec-national-assembly-enacts-bill-48-mandating-open-banking-and-digital-identity-data-sovereignty-2026-08-24",
+      "headline": "Quebec National Assembly Enacts Law Protecting Consumer Financial Data and Digital Sovereignty",
+      "date": "2026-08-24T09:00:00+00:00"
+    },
+    {
+      "slug": "us-senate-approves-bipartisan-veterans-rural-telehealth-and-clinical-access-expansion-act-2026-08-24",
+      "headline": "U.S. Senate Passes Bipartisan Veterans Rural Healthcare and Clinical Telehealth Expansion Act",
+      "date": "2026-08-24T09:00:00+00:00"
+    },
+    {
+      "slug": "calgary-city-council-approves-green-line-lrt-core-segment-contract-and-procurement-safeguards-2026-08-24",
+      "headline": "Calgary City Council Ratifies Core Alignment Contract for Green Line LRT Transit Megaproject",
+      "date": "2026-08-24T09:00:00+00:00"
+    },
+    {
+      "slug": "seattle-city-council-expands-vehicle-resident-assistance-program-with-secure-transitional-parking-2026-08-24",
+      "headline": "Seattle City Council Passes Ordinance Expanding Secure Safe-Parking Sites for Vehicular Residents",
+      "date": "2026-08-24T09:00:00+00:00"
+    },
+    {
+      "slug": "portland-city-council-adopts-ricap-11-regulatory-improvement-code-amendment-package-2026-08-24",
+      "headline": "Portland City Council Unanimously Adopts RICAP 11 Code Overhaul to Streamline Commercial Infill",
+      "date": "2026-08-24T09:00:00+00:00"
+    },
+    {
+      "slug": "edmonton-city-council-approves-bylaws-21532-21533-and-21563-for-transit-oriented-infill-housing-2026-08-24",
+      "headline": "Edmonton City Council Passes Housing Bylaws 21532, 21533, and 21563 for Mixed-Use Urban Infill",
+      "date": "2026-08-24T09:00:00+00:00"
+    },
+    {
+      "slug": "charlotte-city-council-approves-zoning-overhaul-allowing-accessory-commercial-units-in-neighborhoods-2026-08-24",
+      "headline": "Charlotte City Council Passes Neighborhood Commercial Infill Reforms for Small Retail and Cafes",
+      "date": "2026-08-24T09:00:00+00:00"
+    },
+    {
+      "slug": "halifax-regional-municipality-deploys-climate-cooling-corridors-and-urban-forest-canopy-grants-2026-08-24",
+      "headline": "Halifax Regional Council Allocates Climate Grants for Urban Shading Corridors in Underserved Neighborhoods",
+      "date": "2026-08-24T08:00:00+00:00"
+    },
+    {
+      "slug": "commerce-city-council-passes-ordinances-for-arts-commission-and-major-road-widening-projects-2026-08-24",
+      "headline": "Commerce City Council Passes Capital Ordinances Funding Landmark Drive and Chambers Road Widening",
+      "date": "2026-08-24T08:00:00+00:00"
+    },
+    {
+      "slug": "garland-city-council-approves-ordinance-7691-ratifying-10-million-property-tax-revenue-increase-2026-08-24",
+      "headline": "Garland City Council Adopts Ordinance 7691 Ratifying $10.6 Million Property Tax Revenue Expansion for Public Safety",
+      "date": "2026-08-24T08:00:00+00:00"
+    },
+    {
+      "slug": "arizona-governor-signs-homeowners-association-neutrality-and-fairness-enforcement-statute-2026-08-24",
+      "headline": "Arizona Enacts Homeowners Association Reform Law Mandating Reasonableness Standards and Capping Fines",
+      "date": "2026-08-24T08:00:00+00:00"
+    },
+    {
+      "slug": "san-diego-city-council-rules-committee-advances-ordinance-guaranteeing-free-beach-parking-2026-08-24",
+      "headline": "San Diego City Council Committee Advances Ordinance Guaranteeing Free Parking at Public Beaches and Coastal Parks",
+      "date": "2026-08-24T07:25:00+00:00"
+    },
+    {
+      "slug": "boston-city-council-advances-berdo-emissions-standards-for-commercial-residential-towers-2026-08-24",
+      "headline": "Boston City Council Committee Advances Stricter Energy Emissions Caps for Commercial High-Rises",
+      "date": "2026-08-24T07:25:00+00:00"
+    },
+    {
+      "slug": "denver-city-council-extends-moratorium-on-hyperscale-data-centers-pending-energy-audit-2026-08-24",
+      "headline": "Denver City Council Enacts 180-Day Moratorium on Hyperscale Data Centers to Safeguard Power Grid",
+      "date": "2026-08-24T07:25:00+00:00"
+    },
+    {
+      "slug": "dallas-city-council-initiates-zoning-amendments-regulating-commercial-data-center-locations-2026-08-24",
+      "headline": "Dallas City Council Orders Zoning Code Overhaul Mandating Buffer Zones for Commercial Data Centers",
+      "date": "2026-08-24T07:25:00+00:00"
+    },
+    {
+      "slug": "san-antonio-city-council-defeats-ballot-referendum-on-489-million-spurs-downtown-arena-2026-08-24",
+      "headline": "San Antonio City Council Votes 6–5 Defeating Public Ballot Vote on $489M Downtown Spurs Arena",
+      "date": "2026-08-24T07:25:00+00:00"
+    },
+    {
+      "slug": "us-department-of-justice-initiates-interstate-election-records-and-citizenship-safeguards-enforcement-2026-08-24",
+      "headline": "U.S. Department of Justice Issues Federal Guidance on Non-Citizen Voter Registration Prohibitions",
+      "date": "2026-08-24T07:25:00+00:00"
+    },
+    {
+      "slug": "edmonton-city-council-debates-24-million-snow-and-ice-control-operational-overhaul-2026-08-24",
+      "headline": "Edmonton City Council Debates $24 Million Winter Road Maintenance and Sidewalk Clearing Overhaul",
+      "date": "2026-08-24T07:25:00+00:00"
+    },
+    {
+      "slug": "austin-city-council-passes-6-billion-budget-and-initiates-ai-data-center-water-rules-2026-08-24",
+      "headline": "Austin City Council Approves $6.6 Billion Municipal Budget and Initiates AI Data Center Water Reviews",
+      "date": "2026-08-24T07:15:00+00:00"
+    },
+    {
+      "slug": "national-hurricane-center-monitors-three-tropical-disturbances-in-central-and-eastern-atlantic-2026-08-23",
+      "headline": "National Hurricane Center Tracks Three Tropical Waves as Atlantic Basin Approaches Climatological Peak",
+      "date": "2026-08-23T17:10:00+00:00"
+    },
+    {
+      "slug": "health-canada-issues-national-safety-advisory-on-commercial-pet-food-pathogen-recalls-2026-08-23",
+      "headline": "Health Canada Issues National Safety Advisory Following Commercial Pet Food Pathogen Contamination",
+      "date": "2026-08-23T17:00:00+00:00"
+    },
+    {
+      "slug": "severe-south-coast-thunderstorm-paralyzes-vancouver-airport-knocks-out-bc-hydro-power-2026-08-23",
+      "headline": "Severe South Coast Thunderstorm Halts Vancouver Airport Ground Operations and Knocks Out Power to Thousands",
+      "date": "2026-08-23T16:50:00+00:00"
+    },
+    {
+      "slug": "environment-canada-issues-air-quality-advisories-for-southern-alberta-due-to-wildfire-smoke-2026-08-23",
+      "headline": "Environment Canada Issues Air Quality Health Advisories for Southern Alberta as Regional Wildfire Smoke Drifts East",
+      "date": "2026-08-23T16:45:00+00:00"
+    },
+    {
+      "slug": "ferc-reviews-inter-regional-transmission-planning-compliance-filings-across-pjm-and-miso-2026-08-23",
+      "headline": "FERC Reviews Major Regional Grid Operator Compliance Filings for Order 1920 Long-Term Transmission Plans",
+      "date": "2026-08-23T16:45:00+00:00"
+    },
+    {
+      "slug": "state-lawmakers-push-back-against-ai-data-center-power-allocations-in-virginia-and-texas-2026-08-23",
+      "headline": "State Lawmakers Advance Bipartisan Surcharges on Massive AI Data Center Electricity Consumption",
+      "date": "2026-08-23T16:30:00+00:00"
+    },
+    {
+      "slug": "cal-fire-pre-positions-24-strike-teams-in-northern-california-due-to-dry-lightning-threat-2026-08-23",
+      "headline": "CAL FIRE Pre-Positions 24 Firefighting Strike Teams in Northern California Ahead of Dry Lightning Threat",
+      "date": "2026-08-23T16:15:00+00:00"
+    },
+    {
+      "slug": "los-angeles-city-council-authorizes-ladwp-water-main-replacement-in-san-fernando-valley-2026-08-23",
+      "headline": "Los Angeles City Council Authorizes $42M for Earthquake-Resistant LADWP Water Mains in San Fernando Valley",
+      "date": "2026-08-23T16:00:00+00:00"
+    },
+    {
+      "slug": "dallas-city-council-approves-35m-trinity-river-flood-detention-basin-2026-08-23",
+      "headline": "Dallas City Council Approves $35M Flood Detention Basin to Safeguard West Dallas Neighborhoods",
+      "date": "2026-08-23T16:00:00+00:00"
+    },
+    {
+      "slug": "bank-of-canada-and-federal-reserve-monitor-currency-volatility-following-border-tariff-escalation-2026-08-23",
+      "headline": "Central Banks Monitor Currency Spreads as Canadian Dollar Faces Headwinds Amid Tariff Disruption",
+      "date": "2026-08-23T16:00:00+00:00"
+    },
+    {
+      "slug": "us-dot-allocates-85m-for-commercial-heavy-duty-ev-charging-depots-along-i-80-2026-08-23",
+      "headline": "Department of Transportation Allocates $85M for Heavy-Duty Electric Truck Charging Depots Along I-80",
+      "date": "2026-08-23T15:45:00+00:00"
+    },
+    {
+      "slug": "calgary-city-council-approves-revised-utility-relocation-budget-for-green-line-lrt-core-2026-08-23",
+      "headline": "Calgary City Council Approves $52M Revised Utility Relocation Budget for Green Line LRT Core",
+      "date": "2026-08-23T15:30:00+00:00"
+    },
+    {
+      "slug": "us-metal-manufacturers-petition-commerce-department-for-exclusions-on-canadian-raw-smelting-inputs-2026-08-23",
+      "headline": "American Metal Manufacturers Petition Commerce Department for Targeted Exclusions on Canadian Primary Smelting Inputs",
+      "date": "2026-08-23T15:15:00+00:00"
+    },
+    {
+      "slug": "canadian-chamber-of-commerce-warns-of-widespread-supply-chain-inflation-from-50-percent-tariffs-2026-08-23",
+      "headline": "Canadian Chamber of Commerce Warns 50% Tariffs Threaten Cross-Border Manufacturing Networks",
+      "date": "2026-08-23T14:45:00+00:00"
+    },
+    {
+      "slug": "philadelphia-city-council-authorizes-18m-in-community-led-violence-prevention-grants-2026-08-23",
+      "headline": "Philadelphia City Council Authorizes $18M in Targeted Community Violence Prevention Grants",
+      "date": "2026-08-23T14:00:00+00:00"
+    },
+    {
+      "slug": "mexico-economy-ministry-evaluates-usmca-dispute-mechanisms-amid-us-canada-tariff-clash-2026-08-23",
+      "headline": "Mexico Economy Ministry Evaluates USMCA Rules as Unilateral Tariffs Threaten Trilateral Trade Stability",
+      "date": "2026-08-23T14:00:00+00:00"
+    },
+    {
+      "slug": "montreal-stm-deploys-50-zero-emission-articulated-electric-buses-on-high-frequency-routes-2026-08-23",
+      "headline": "Montreal Transit Corporation Deploys 50 Articulated Electric Buses on High-Capacity East-End Corridors",
+      "date": "2026-08-23T13:30:00+00:00"
+    },
+    {
+      "slug": "eu-trade-commissioner-urges-wto-compliance-amid-us-canada-tariff-escalation-2026-08-23",
+      "headline": "European Union Urges Restraint and Multilateral Compliance Following U.S.-Canada Tariff Rupture",
+      "date": "2026-08-23T13:30:00+00:00"
+    },
+    {
+      "slug": "tropical-storm-moke-triggers-widespread-flooding-and-road-closures-on-hawaii-big-island-2026-08-23",
+      "headline": "Tropical Storm Moke Triggers Flash Floods and Landslides Across Hawaii County as Rainfall Tops 12 Inches",
+      "date": "2026-08-23T13:15:00+00:00"
+    },
+    {
+      "slug": "denver-rtd-extends-zero-fare-youth-transit-program-through-2027-2026-08-23",
+      "headline": "Denver Regional Transportation District Board Votes to Extend Zero-Fare Youth Transit Pass Through 2027",
+      "date": "2026-08-23T13:00:00+00:00"
+    },
+    {
+      "slug": "transport-canada-issues-strict-airspace-restrictions-for-drones-near-wildfire-operations-2026-08-23",
+      "headline": "Transport Canada Issues Emergency Aviation Directives Restricting Unauthorized Drones Near Wildfires",
+      "date": "2026-08-23T12:30:00+00:00"
+    },
+    {
+      "slug": "health-authorities-expand-rural-mobile-telehealth-clinics-in-northern-saskatchewan-and-manitoba-2026-08-23",
+      "headline": "Health Authorities Expand High-Speed Mobile Telehealth Clinics Across Northern Prairie Communities",
+      "date": "2026-08-23T11:30:00+00:00"
+    },
+    {
+      "slug": "connecticut-housing-finance-authority-expands-homebuyer-assistance-2026-08-23",
+      "headline": "Connecticut Housing Finance Authority Expands First-Time Homebuyer Assistance as Entry Prices Top $300,000",
+      "date": "2026-08-23T09:30:00+00:00"
+    },
+    {
+      "slug": "kingston-expands-community-micro-mobility-network-following-anniversary-events-2026-08-23",
+      "headline": "Kingston Expands Protected Micro-Mobility Network Following Historic Community Gatherings",
+      "date": "2026-08-23T08:30:00+00:00"
+    },
+    {
+      "slug": "delaware-emergency-management-agency-assesses-tornado-damage-in-kent-county-2026-08-23",
+      "headline": "Delaware Emergency Management Agency Assesses Tornado Damage in Kent County Neighborhoods",
+      "date": "2026-08-23T08:15:00+00:00"
+    },
+    {
+      "slug": "kern-county-sheriff-investigates-shooting-at-high-school-football-game-2026-08-23",
+      "headline": "Kern County Sheriff Details Investigation into Football Stadium Shooting in Bakersfield",
+      "date": "2026-08-23T07:15:00+00:00"
+    },
+    {
+      "slug": "tropical-storm-moke-triggers-flash-floods-across-hawaii-big-island-2026-08-23",
+      "headline": "Tropical Storm Moke Triggers Flash Flood Warnings Across Hawaii County as Rainfall Exceeds 10 Inches",
+      "date": "2026-08-23T07:15:00+00:00"
+    },
+    {
+      "slug": "hawk-fire-prompts-expanded-evacuations-in-northwest-reno-2026-08-23",
+      "headline": "Hawk Fire Forces Evacuations in Northwest Reno as High Winds Push Blaze into Somersett",
+      "date": "2026-08-23T07:00:00+00:00"
+    },
+    {
+      "slug": "ohio-small-business-coalitions-rally-behind-local-retailer-in-trademark-clash-2026-08-23",
+      "headline": "Ohio Small Business Coalitions Rally Behind Local Retailer in Buc-ee's Trademark Dispute",
+      "date": "2026-08-23T05:30:00+00:00"
+    },
+    {
+      "slug": "indiana-utility-commission-convenes-hearing-on-extended-storm-outages-2026-08-23",
+      "headline": "Indiana Utility Regulatory Commission Convenes Hearing on Extended Grid Outages Following Severe Storms",
+      "date": "2026-08-23T04:45:00+00:00"
+    },
+    {
+      "slug": "new-york-city-advocates-clash-over-pied-a-terre-tax-implementation-2026-08-23",
+      "headline": "New York City Advocates Clash Over Pied-à-Terre Tax Rollout and Luxury Housing Surcharges",
+      "date": "2026-08-23T03:00:00+00:00"
+    },
+    {
+      "slug": "texas-district-court-rejects-retrial-motion-in-high-profile-track-stabbing-2026-08-23",
+      "headline": "Texas District Court Rejects Retrial Motion in High-Profile High School Track Facility Incident",
+      "date": "2026-08-23T02:30:00+00:00"
+    },
+    {
+      "slug": "postal-service-faces-legal-challenge-over-mail-in-ballot-postmark-rule-2026-08-22",
+      "headline": "Postal Regulatory Commission Sued Over Rule Restricting Last-Minute Mail-in Ballot Postmarks",
+      "date": "2026-08-22T20:45:00+00:00"
+    },
+    {
+      "slug": "darpa-concludes-autonomous-swarm-field-evaluations-in-joint-exercise-2026-08-22",
+      "headline": "DARPA Concludes Autonomous Swarm System Field Evaluations in Joint Desert Exercise",
+      "date": "2026-08-22T20:30:00+00:00"
+    },
+    {
+      "slug": "ercot-completes-summer-transmission-hardening-amid-record-peak-loads-2026-08-22",
+      "headline": "ERCOT Completes Summer Transmission Hardening as Peak Power Demand Reaches Record Highs",
+      "date": "2026-08-22T20:15:00+00:00"
+    },
+    {
+      "slug": "federal-railroad-administration-releases-northeast-corridor-bridge-safety-audit-2026-08-22",
+      "headline": "Federal Railroad Administration Releases Comprehensive Bridge Safety Audit of Northeast Rail Corridor",
+      "date": "2026-08-22T20:00:00+00:00"
+    },
+    {
+      "slug": "cisa-issues-urgent-cybersecurity-directive-for-water-treatment-supervisory-systems-2026-08-22",
+      "headline": "CISA Issues Urgent Vulnerability Directive for Municipal Water Treatment Supervisory Systems",
+      "date": "2026-08-22T19:45:00+00:00"
+    },
+    {
+      "slug": "calgary-city-council-approves-52m-flood-barrier-extension-along-bow-river-2026-08-22",
+      "headline": "Calgary City Council Approves $52M Flood Barrier Extension Along Bow River Corridor",
+      "date": "2026-08-22T19:30:00+00:00"
+    },
+    {
+      "slug": "federal-maritime-commission-probes-northern-border-port-surcharges-2026-08-22",
+      "headline": "Federal Maritime Commission Initiates Inquiry into Port Congestion Surcharges on Northern Border Corridors",
+      "date": "2026-08-22T19:15:00+00:00"
+    },
+    {
+      "slug": "georgia-ports-authority-approves-125m-expansion-of-mason-mega-rail-facility-2026-08-22",
+      "headline": "Georgia Ports Authority Approves $125M Expansion of Mason Mega Rail Facility at Port of Savannah",
+      "date": "2026-08-22T19:00:00+00:00"
+    },
+    {
+      "slug": "california-high-speed-rail-completes-10-mile-central-valley-viaduct-2026-08-22",
+      "headline": "California High-Speed Rail Authority Completes 10-Mile Central Valley Viaduct Segment",
+      "date": "2026-08-22T18:30:00+00:00"
+    },
+    {
+      "slug": "mta-authorizes-110m-subway-signal-modernization-on-lexington-avenue-line-2026-08-22",
+      "headline": "MTA Authorizes $110M Subway Signal Upgrades on Lexington Avenue 4/5/6 Express Corridor",
+      "date": "2026-08-22T18:15:00+00:00"
+    },
+    {
+      "slug": "edmonton-city-council-authorizes-36m-for-district-energy-geothermal-expansion-2026-08-22",
+      "headline": "Edmonton City Council Authorizes $36M for Blatchford Geothermal District Energy Expansion",
+      "date": "2026-08-22T18:00:00+00:00"
+    },
+    {
+      "slug": "bc-ferries-issues-rfp-for-four-zero-emission-island-class-hybrid-vessels-2026-08-22",
+      "headline": "BC Ferries Issues Request for Proposals for Four Zero-Emission Island-Class Hybrid Vessels",
+      "date": "2026-08-22T18:00:00+00:00"
+    },
+    {
+      "slug": "washington-department-of-ecology-enforces-new-commercial-port-runoff-standards-2026-08-22",
+      "headline": "Washington State Department of Ecology Enforces New Runoff Standards for Commercial Ports",
+      "date": "2026-08-22T17:45:00+00:00"
+    },
+    {
+      "slug": "arizona-water-resources-mandates-groundwater-replenishment-rules-in-pinal-county-2026-08-22",
+      "headline": "Arizona Department of Water Resources Mandates Groundwater Replenishment Rules for Pinal County",
+      "date": "2026-08-22T17:45:00+00:00"
+    },
+    {
+      "slug": "us-department-of-energy-allocates-350m-for-long-duration-energy-storage-2026-08-22",
+      "headline": "Department of Energy Allocates $350M for Long-Duration Energy Storage Pilot Projects",
+      "date": "2026-08-22T17:30:00+00:00"
+    },
+    {
+      "slug": "chicago-city-council-passes-45m-affordable-housing-trust-fund-allocation-2026-08-22",
+      "headline": "Chicago City Council Passes $45M Affordable Housing Trust Fund Allocation for West Side",
+      "date": "2026-08-22T17:00:00+00:00"
+    },
+    {
+      "slug": "halifax-regional-municipality-approves-rapid-transit-bus-lane-corridors-2026-08-22",
+      "headline": "Halifax Regional Municipality Approves Dedicated Rapid Transit Bus Corridors in $41M Transit Plan",
+      "date": "2026-08-22T17:00:00+00:00"
+    },
+    {
+      "slug": "metrolinx-authorizes-74m-automated-signaling-upgrade-on-lakeshore-line-2026-08-22",
+      "headline": "Metrolinx Authorizes $74M Contract for Automated Signaling Upgrades on Lakeshore Rail Line",
+      "date": "2026-08-22T16:45:00+00:00"
+    },
+    {
+      "slug": "alberta-forestry-deploys-night-vision-helitack-crews-for-wildfire-initial-attack-2026-08-22",
+      "headline": "Alberta Forestry and Parks Deploys Night-Vision Helitack Crews for Wildfire Initial Attack",
+      "date": "2026-08-22T16:45:00+00:00"
+    },
+    {
+      "slug": "oregon-public-utility-commission-mandates-community-microgrid-planning-2026-08-22",
+      "headline": "Oregon Public Utility Commission Mandates Community Microgrid Planning for Coastal Municipalities",
+      "date": "2026-08-22T16:30:00+00:00"
+    },
+    {
+      "slug": "manitoba-hydro-completes-bipole-iii-converter-modernization-2026-08-22",
+      "headline": "Manitoba Hydro Completes Converter Station Modernization on Bipole III DC Line",
+      "date": "2026-08-22T16:30:00+00:00"
+    },
+    {
+      "slug": "epa-finalizes-phase-3-greenhouse-gas-standards-for-heavy-duty-trucks-2026-08-22",
+      "headline": "EPA Finalizes Phase 3 Greenhouse Gas Emission Benchmarks for Heavy-Duty Vocational Trucks",
+      "date": "2026-08-22T16:30:00+00:00"
+    },
+    {
+      "slug": "ottawa-police-services-board-expands-neighborhood-resource-officer-deployment-2026-08-22",
+      "headline": "Ottawa Police Services Board Expands Neighborhood Resource Officer Teams Across Core Wards",
+      "date": "2026-08-22T16:15:00+00:00"
+    },
+    {
+      "slug": "washington-labor-department-issues-workplace-heat-and-smoke-protection-guidance-2026-08-22",
+      "headline": "Washington State Department of Labor Issues Guidance on Workplace Heat and Smoke Protection",
+      "date": "2026-08-22T16:00:00+00:00"
+    },
+    {
+      "slug": "newfoundland-finalizes-framework-for-churchill-falls-hydro-debate-2026-08-22",
+      "headline": "Newfoundland and Labrador Finalizes Framework for Churchill Falls Hydro Royalty Renegotiation Debate",
+      "date": "2026-08-22T16:00:00+00:00"
+    },
+    {
+      "slug": "regina-city-council-finalizes-28m-wastewater-treatment-plant-upgrades-2026-08-22",
+      "headline": "Regina City Council Finalizes $28M Capital Financing for Wastewater Plant Biological Upgrades",
+      "date": "2026-08-22T15:45:00+00:00"
+    },
+    {
+      "slug": "florida-department-of-education-enforces-ai-literacy-guidelines-in-schools-2026-08-22",
+      "headline": "Florida Department of Education Enforces New Artificial Intelligence Literacy Guidelines in High Schools",
+      "date": "2026-08-22T15:45:00+00:00"
+    },
+    {
+      "slug": "quebec-sante-launches-digital-pediatric-emergency-triage-system-2026-08-22",
+      "headline": "Quebec Health Ministry Launches Digital Pediatric Emergency Triage System to Cut ER Waits",
+      "date": "2026-08-22T15:30:00+00:00"
+    },
+    {
+      "slug": "ontario-agriculture-ministry-expands-greenhouse-innovation-grants-2026-08-22",
+      "headline": "Ontario Ministry of Agriculture Expands Greenhouse Innovation Grants to Enhance Winter Crop Yields",
+      "date": "2026-08-22T15:15:00+00:00"
+    },
+    {
+      "slug": "saskatchewan-water-security-agency-allocates-22m-for-irrigation-canals-2026-08-22",
+      "headline": "Saskatchewan Water Security Agency Allocates $22M for Regional Irrigation Canal Upgrades",
+      "date": "2026-08-22T15:00:00+00:00"
+    },
+    {
+      "slug": "pei-fisheries-introduces-wharf-resilience-funding-for-autumn-shellfish-2026-08-22",
+      "headline": "Prince Edward Island Department of Fisheries Introduces Wharf Resilience Funding for Autumn Shellfish Season",
+      "date": "2026-08-22T14:30:00+00:00"
+    },
+    {
+      "slug": "bc-ministry-of-forests-audits-12m-public-grant-following-interior-mill-closure-2026-08-22",
+      "headline": "B.C. Ministry of Forests Audits $12M Public Grant Allocation Following Interior Mill Suspension",
+      "date": "2026-08-22T14:15:00+00:00"
+    },
+    {
+      "slug": "indiana-utilities-face-class-action-scrutiny-as-thousands-remain-without-power-10-days-after-storm-2026-08-22",
+      "headline": "Indiana Regulators Order Independent Audit of Utility Storm Response as Thousands Remain in the Dark",
+      "date": "2026-08-22T13:25:00+00:00"
+    },
+    {
+      "slug": "swedish-police-conclude-initial-inquiries-into-isolated-school-incident-in-tranas-2026-08-22",
+      "headline": "Swedish Police Conclude Preliminary Inquiries into Isolated School Attack in Tranås",
+      "date": "2026-08-22T13:15:00+00:00"
+    },
+    {
+      "slug": "bayer-leverkusen-advances-in-dfb-pokal-with-4-0-victory-over-wehen-wiesbaden-2026-08-22",
+      "headline": "Bayer Leverkusen Cruises to 4-0 DFB-Pokal Victory to Open German Cup Campaign",
+      "date": "2026-08-22T13:15:00+00:00"
+    },
+    {
+      "slug": "red-bull-new-york-faces-chicago-fire-as-major-league-soccer-playoff-race-intensifies-2026-08-22",
+      "headline": "Red Bull New York Hosts Chicago Fire at Red Bull Arena in Crucial Eastern Conference Clash",
+      "date": "2026-08-22T13:10:00+00:00"
+    },
+    {
+      "slug": "southern-ontario-experiences-fall-like-cool-front-following-heavy-weekend-rain-2026-08-22",
+      "headline": "Southern Ontario Braces for Sharp Autumn Cool-Down Following Weekend Thunderstorms",
+      "date": "2026-08-22T13:10:00+00:00"
+    },
+    {
+      "slug": "barcelona-begins-la-liga-campaign-pursuing-domestic-title-three-peat-2026-08-22",
+      "headline": "Barcelona Begins La Liga Season with Focus on Historic Domestic Title Defense",
+      "date": "2026-08-22T13:10:00+00:00"
+    },
+    {
+      "slug": "ottawa-police-arrest-17-in-targeted-rideau-street-retail-theft-enforcement-operation-2026-08-22",
+      "headline": "Ottawa Police Detain 17 Suspects in Multi-Store Retail Theft Crackdown Along Rideau Street",
+      "date": "2026-08-22T13:00:00+00:00"
+    },
+    {
+      "slug": "yankees-aim-for-sixth-straight-win-against-blue-jays-in-high-stakes-al-east-battle-2026-08-22",
+      "headline": "New York Yankees Look to Extend Five-Game Winning Streak Against Toronto Blue Jays at Yankee Stadium",
+      "date": "2026-08-22T12:45:00+00:00"
+    },
+    {
+      "slug": "federal-judge-vacates-trump-immigrant-visa-freeze-affecting-75-countries-2026-08-22",
+      "headline": "Federal Judge Strikes Down Administration's Immigrant Visa Freeze on 75 Countries",
+      "date": "2026-08-22T12:30:00+00:00"
+    },
+    {
+      "slug": "back-to-school-supply-costs-surge-8-percent-straining-us-family-budgets-2026-08-22",
+      "headline": "Back-to-School Costs Surge 8.4% as Apparel and Tech Equipment Strain U.S. Household Budgets",
+      "date": "2026-08-22T11:20:00+00:00"
+    },
+    {
+      "slug": "dhs-initiates-chartered-deportation-flights-following-expiration-of-tps-protections-2026-08-22",
+      "headline": "Department of Homeland Security Begins Repatriation Flights Following Expiration of TPS Mandates",
+      "date": "2026-08-22T11:00:00+00:00"
+    },
+    {
+      "slug": "hong-kong-government-rejects-western-diplomatic-criticism-over-security-law-verdicts-2026-08-22",
+      "headline": "Hong Kong Authorities Rebut Western Diplomatic Criticism Over Security Law Convictions",
+      "date": "2026-08-22T10:15:00+00:00"
+    },
+    {
+      "slug": "metis-nation-of-alberta-opens-2026-citizens-gathering-in-slave-lake-on-self-government-2026-08-22",
+      "headline": "Otipemisiwak Métis Government Opens 2026 Citizens' Gathering in Slave Lake",
+      "date": "2026-08-22T10:00:00+00:00"
+    },
+    {
+      "slug": "irving-police-investigate-deadly-loop-12-multi-vehicle-collision-in-north-texas-2026-08-22",
+      "headline": "Irving Police and TxDOT Conduct Safety Audit Following Fatal Loop 12 Highway Collision",
+      "date": "2026-08-22T09:45:00+00:00"
+    },
+    {
+      "slug": "amazon-adjusts-hardware-pricing-on-echo-and-fire-tv-devices-due-to-rising-memory-costs-2026-08-22",
+      "headline": "Amazon Adjusts Pricing on Smart Home Hardware to Offset High-Bandwidth Memory Supply Costs",
+      "date": "2026-08-22T09:30:00+00:00"
+    },
+    {
+      "slug": "saskatchewan-marshals-service-pauses-specialized-tactical-unit-rollout-for-procurement-audit-2026-08-22",
+      "headline": "Saskatchewan Marshals Service Temporarily Pauses Tactical Response Unit for Equipment Review",
+      "date": "2026-08-22T09:30:00+00:00"
+    },
+    {
+      "slug": "ukrainian-and-russian-drone-strikes-damage-industrial-facilities-as-frontline-exchanges-intensify-2026-08-22",
+      "headline": "Reciprocal Drone Strikes Target Industrial Energy Depots in Ukraine and Western Russia",
+      "date": "2026-08-22T09:30:00+00:00"
+    },
+    {
+      "slug": "national-be-an-angel-day-inspires-community-volunteerism-and-civic-giving-across-canada-2026-08-22",
+      "headline": "National Be an Angel Day Drives Record Community Volunteer Inflows to Local Food Banks",
+      "date": "2026-08-22T09:15:00+00:00"
+    },
+    {
+      "slug": "cal-osha-fines-tahoe-guide-company-151k-over-deadly-february-backcountry-avalanche-2026-08-22",
+      "headline": "Cal/OSHA Fines Backcountry Mountain Guide Service $151,300 Following Deadly Tahoe Avalanche",
+      "date": "2026-08-22T09:15:00+00:00"
+    },
+    {
+      "slug": "european-wildfires-detonate-unexploded-world-war-munitions-prompting-specialized-eod-deployments-2026-08-22",
+      "headline": "Intense Heat and Wildfires Trigger Unexploded WWI and WWII Munitions Across European Forests",
+      "date": "2026-08-22T09:00:00+00:00"
+    },
+    {
+      "slug": "world-plant-milk-day-spotlights-canadian-dairy-and-plant-based-market-shifts-2026-08-22",
+      "headline": "World Plant Milk Day Highlights Shifting Consumer Preferences Across North American Dairy Markets",
+      "date": "2026-08-22T08:50:00+00:00"
+    },
+    {
+      "slug": "united-nations-marks-international-day-commemorating-victims-of-religious-violence-2026-08-22",
+      "headline": "United Nations and International Human Rights Envoys Mark Day Against Religious Violence",
+      "date": "2026-08-22T08:30:00+00:00"
+    },
+    {
+      "slug": "opp-investigate-fatal-motorcycle-collision-on-highway-17-near-arnprior-2026-08-22",
+      "headline": "OPP Investigates Fatal Single-Vehicle Motorcycle Collision on Highway 17 Near Arnprior",
+      "date": "2026-08-22T08:30:00+00:00"
+    },
+    {
+      "slug": "south-korea-dispatches-first-commercial-ice-class-container-vessel-on-arctic-route-2026-08-22",
+      "headline": "South Korea Launches First Commercial Ice-Class Container Vessel on Arctic Northern Sea Route",
+      "date": "2026-08-22T08:15:00+00:00"
+    },
+    {
+      "slug": "vancouver-opens-116th-pacific-national-exhibition-fair-with-new-rides-and-heritage-exhibits-2026-08-22",
+      "headline": "Vancouver Celebrates Opening of 116th Pacific National Exhibition Fair at Playland",
+      "date": "2026-08-22T05:15:00+00:00"
+    },
+    {
+      "slug": "cryptocurrency-markets-rally-as-hyperliquid-and-perpetual-futures-surge-amid-us-regulatory-shifts-2026-08-22",
+      "headline": "Crypto Markets Surge as On-Chain Perpetual Trading Platforms Gain Wall Street Traction",
+      "date": "2026-08-22T05:05:00+00:00"
+    },
+    {
+      "slug": "us-state-department-issues-updated-travel-advisories-for-latin-american-corridors-2026-08-22",
+      "headline": "State Department Updates Travel Advisories for Regional Travel in Latin America",
+      "date": "2026-08-22T04:45:00+00:00"
+    },
+    {
+      "slug": "conservative-leaders-convene-in-ottawa-for-canada-strong-and-free-national-summit-2026-08-22",
+      "headline": "Conservative Leaders and Policy Thinkers Open Canada Strong and Free Conference in Ottawa",
+      "date": "2026-08-22T04:15:00+00:00"
+    },
+    {
+      "slug": "cdc-and-fda-issue-urgent-recall-notice-on-alfalfa-sprouts-linked-to-multi-state-salmonella-outbreak-2026-08-22",
+      "headline": "CDC and FDA Issue Multi-State Warning Following Salmonella and E. Coli Outbreak in Produce",
+      "date": "2026-08-22T03:30:00+00:00"
+    },
+    {
+      "slug": "usps-enacts-new-mail-in-ballot-handling-protocols-amid-voting-rights-challenges-2026-08-22",
+      "headline": "USPS Implements Updated Election Mail Procedures Ahead of 2026 Midterm Deadlines",
+      "date": "2026-08-22T03:00:00+00:00"
+    },
+    {
+      "slug": "transport-safety-board-deploys-investigators-to-prince-george-highway-plane-crash-2026-08-22",
+      "headline": "Transportation Safety Board Probes Fatal Small Aircraft Crash on Prince George Highway",
+      "date": "2026-08-22T02:30:00+00:00"
+    },
+    {
+      "slug": "ntsb-investigates-deadly-small-aircraft-crash-near-alaska-radar-site-2026-08-21",
+      "headline": "NTSB Coordinates Remote Investigation into Deadly Alaska Commuter Plane Crash",
+      "date": "2026-08-22T02:15:00+00:00"
+    },
+    {
+      "slug": "edmonton-police-investigate-violent-incident-at-nanaksar-gurdwara-2026-08-21",
+      "headline": "Edmonton Police Detain Suspect Following Serious Stabbing Incident at Nanaksar Gurdwara",
+      "date": "2026-08-22T02:00:00+00:00"
+    },
+    {
+      "slug": "us-interior-department-imposes-mandatory-colorado-river-water-cuts-for-2027-2026-08-21",
+      "headline": "Department of the Interior Imposes Deep Colorado River Water Cuts for California, Arizona, and Nevada",
+      "date": "2026-08-22T01:45:00+00:00"
+    },
+    {
+      "slug": "toronto-and-gta-under-special-weather-statement-for-heavy-rainfall-as-cne-opens-2026-08-21",
+      "headline": "Environment Canada Issues Weather Advisory for Heavy Rain Across GTA During CNE Weekend",
+      "date": "2026-08-22T01:30:00+00:00"
+    },
+    {
+      "slug": "pentagon-replaces-editorial-leadership-at-stars-and-stripes-military-newspaper-2026-08-21",
+      "headline": "Pentagon Dismisses Top Editorial Leadership at Military Newspaper Stars and Stripes",
+      "date": "2026-08-22T00:15:00+00:00"
+    },
+    {
+      "slug": "boeing-machinists-reject-tentative-contract-proposal-raising-strike-risk-2026-08-21",
+      "headline": "Boeing Machinists Reject Contract Proposal as Labor Talks Reach Critical Juncture",
+      "date": "2026-08-21T23:15:00+00:00"
+    },
+    {
+      "slug": "usda-defends-tariff-exempt-beef-quota-amid-rancher-backlash-2026-08-21",
+      "headline": "USDA Defends 300,000-Ton Tariff-Free Beef Import Quota Amid Domestic Rancher Criticism",
+      "date": "2026-08-21T22:45:00+00:00"
+    },
+    {
+      "slug": "energy-nl-confirms-supply-chain-readiness-for-gull-island-hydro-megaproject-2026-08-21",
+      "headline": "Energy NL Confirms Provincial Supply Chain Readiness for Labrador Hydro Megaprojects",
+      "date": "2026-08-21T22:30:00+00:00"
+    },
+    {
+      "slug": "tsx-surges-250-points-buoyed-by-energy-shares-and-resilient-canadian-retail-data-2026-08-21",
+      "headline": "TSX Rebounds Over 250 Points as Canadian Retail Sales Rise and Energy Stocks Rally",
+      "date": "2026-08-21T22:00:00+00:00"
+    },
+    {
+      "slug": "white-house-notifies-congress-of-850m-un-dues-payment-conditioned-on-governance-reforms-2026-08-21",
+      "headline": "Administration Releases $850M in United Nations Dues Conditioned on Governance Reforms",
+      "date": "2026-08-21T21:30:00+00:00"
+    },
+    {
+      "slug": "supreme-court-grants-temporary-stay-allowing-white-house-ballroom-construction-2026-08-21",
+      "headline": "Supreme Court Grants Emergency Stay Permitting White House Ballroom Construction to Proceed",
+      "date": "2026-08-21T20:47:00+00:00"
+    },
+    {
+      "slug": "take-two-interactive-issues-federal-subpoenas-to-microsoft-and-discord-over-major-gaming-leaks-2026-08-21",
+      "headline": "Take-Two Interactive Issues Federal Subpoenas to Tech Platforms Over Major Gaming Data Leaks",
+      "date": "2026-08-21T20:30:00+00:00"
+    },
+    {
+      "slug": "rcmp-integrated-national-security-unit-arrests-montreal-minor-in-alleged-school-threat-plot-2026-08-21",
+      "headline": "RCMP Integrated National Security Enforcement Team Arrests Minor in Alleged School Threat",
+      "date": "2026-08-21T19:45:00+00:00"
+    },
+    {
+      "slug": "airshow-london-skydrive-2026-opens-featuring-north-american-military-aviation-showcase-2026-08-21",
+      "headline": "11th Annual Airshow London SkyDrive Takes Flight with Massive Aerial Demonstration",
+      "date": "2026-08-21T19:30:00+00:00"
+    },
+    {
+      "slug": "roots-corporation-agrees-to-go-private-sale-with-marquee-brands-for-cad-285m-2026-08-21",
+      "headline": "Iconic Canadian Retailer Roots Agrees to $285M Go-Private Deal with Marquee Brands",
+      "date": "2026-08-21T18:45:00+00:00"
+    },
+    {
+      "slug": "uk-high-court-orders-privacy-case-claimants-to-pay-13m-in-legal-costs-to-daily-mail-publisher-2026-08-21",
+      "headline": "High Court Orders Privacy Claimants to Pay $13M in Legal Costs to Daily Mail Publisher",
+      "date": "2026-08-21T16:30:00+00:00"
+    },
+    {
+      "slug": "panama-canal-authority-announces-severe-transit-caps-due-to-el-nino-drought-2026-08-21",
+      "headline": "Panama Canal Authority Imposes Daily Transit Caps as Watershed Rainfall Drops 34%",
+      "date": "2026-08-21T07:55:00+00:00"
+    },
+    {
+      "slug": "japan-executes-death-row-inmate-in-osaka-parlor-arson-first-under-takaichi-cabinet-2026-08-21",
+      "headline": "Japan Carries Out First Capital Punishment Execution in 14 Months",
+      "date": "2026-08-21T07:45:00+00:00"
+    },
+    {
+      "slug": "ntsb-investigates-fatal-military-radar-site-charter-plane-crash-in-alaska-2026-08-21",
+      "headline": "NTSB and Alaskan Command Investigate Fatal Charter Aircraft Crash at Remote Radar Site",
+      "date": "2026-08-21T07:15:00+00:00"
+    },
+    {
+      "slug": "south-korea-and-us-conclude-shortened-ulchi-freedom-shield-exercises-early-2026-08-21",
+      "headline": "U.S. and South Korea Conclude Truncated Joint Military Drills Amid Alliance Tensions",
+      "date": "2026-08-21T06:45:00+00:00"
+    },
+    {
+      "slug": "strait-of-hormuz-commercial-traffic-plummets-amid-naval-escorts-and-blockade-friction-2026-08-21",
+      "headline": "Commercial Shipping Plummets to Single Digits in Strait of Hormuz Amid Maritime Deterrence",
+      "date": "2026-08-21T06:15:00+00:00"
+    },
+    {
+      "slug": "cathay-pacific-launches-direct-central-asia-flights-to-almaty-2026-08-21",
+      "headline": "Cathay Pacific Inaugurates Direct Air Route Connecting Hong Kong and Kazakhstan",
+      "date": "2026-08-21T06:00:00+00:00"
+    },
+    {
+      "slug": "house-subcommittee-on-energy-examines-ai-data-center-transmission-costs-2026-08-21",
+      "headline": "House Energy Leaders Propose Federal Guardrails on AI Data Center Grid Power Allocation",
+      "date": "2026-08-21T05:45:00+00:00"
+    },
+    {
+      "slug": "hong-kong-court-convicts-tiananmen-vigil-leaders-under-national-security-statutes-2026-08-21",
+      "headline": "Hong Kong High Court Convicts Former Tiananmen Vigil Organizers Under Security Law",
+      "date": "2026-08-21T03:30:00+00:00"
+    },
+    {
+      "slug": "navy-secretary-and-pentagon-review-aircraft-carrier-naming-protocols-2026-08-21",
+      "headline": "House Armed Services Leaders Warn Pentagon Against Altering CVN-81 Naming Charter",
+      "date": "2026-08-21T03:15:00+00:00"
+    },
+    {
+      "slug": "european-central-bank-and-bank-of-canada-issue-digital-currency-cross-border-study-2026-08-21",
+      "headline": "Bank of Canada and ECB Complete Successful Wholesale Digital Settlement Pilot",
+      "date": "2026-08-21T02:45:00+00:00"
+    },
+    {
+      "slug": "japan-parliamentary-delegation-schedules-beijing-diplomatic-talks-2026-08-21",
+      "headline": "Bipartisan Japanese Parliamentary Delegation Departs for High-Level Talks in Beijing",
+      "date": "2026-08-21T02:00:00+00:00"
+    },
+    {
+      "slug": "saskatoon-hosts-rhythm-and-roots-asian-festival-celebrating-multicultural-heritage-2026-08-21",
+      "headline": "Saskatoon Opens Rhythm & Roots Festival Showcasing Multicultural Arts and Small Business Hubs",
+      "date": "2026-08-21T01:45:00+00:00"
+    },
+    {
+      "slug": "chrt-rules-former-alexander-first-nation-chief-sexually-harassed-employee-2026-08-21",
+      "headline": "Canadian Human Rights Tribunal Finds Former Alexander First Nation Chief Liable for Harassment",
+      "date": "2026-08-21T01:30:00+00:00"
+    },
+    {
+      "slug": "pakistan-court-orders-hospital-transfer-for-former-prime-minister-imran-khan-2026-08-21",
+      "headline": "Islamabad High Court Orders Hospital Medical Care for Incarcerated Former PM Imran Khan",
+      "date": "2026-08-21T01:15:00+00:00"
+    },
+    {
+      "slug": "wto-and-imf-issue-global-trade-resilience-bulletin-on-supply-chains-2026-08-21",
+      "headline": "IMF and WTO Joint Report Projects Steady Growth for Diversified Trade Corridors",
+      "date": "2026-08-21T00:30:00+00:00"
+    },
+    {
+      "slug": "united-states-fifth-fleet-deploys-uss-washington-carrier-strike-group-to-arabian-sea-2026-08-21",
+      "headline": "U.S. Navy Carrier Strike Group Arrives in Arabian Sea to Reinforce Maritime Chokepoint Security",
+      "date": "2026-08-20T23:15:00+00:00"
+    },
+    {
+      "slug": "department-of-energy-outlines-fall-advanced-nuclear-and-fusion-grant-awards-2026-08-21",
+      "headline": "Department of Energy Outlines $450M Commercial Small Modular Reactor Matching Grants",
+      "date": "2026-08-20T22:15:00+00:00"
+    },
+    {
+      "slug": "riot-games-announces-operational-sunset-for-2xko-fighting-game-2026-08-21",
+      "headline": "Video Game Industry Shift Highlights Digital Live-Service Sustainability Scrutiny",
+      "date": "2026-08-20T22:00:00+00:00"
+    },
+    {
+      "slug": "statcan-reports-third-consecutive-monthly-rise-in-canadian-cross-border-travel-2026-08-21",
+      "headline": "Statistics Canada Records Third Consecutive Monthly Increase in Cross-Border Travel",
+      "date": "2026-08-20T20:00:00+00:00"
+    },
+    {
+      "slug": "epa-emergency-fuel-waiver-expands-e10-rvp-caps-nationwide-2026-08-20",
+      "headline": "EPA Issues Emergency Gasoline Fuel Waiver Raising Reid Vapor Pressure Limits",
+      "date": "2026-08-20T19:45:00+00:00"
+    },
+    {
+      "slug": "doj-dismantles-detroit-to-west-virginia-interstate-narcotics-network-2026-08-20",
+      "headline": "DOJ Dismantles Multi-State Narcotics and Money Laundering Pipeline Across Great Lakes and Appalachia",
+      "date": "2026-08-20T19:15:00+00:00"
+    },
+    {
+      "slug": "pei-court-of-appeal-hears-maritime-electric-post-fiona-cost-recovery-dispute-2026-08-20",
+      "headline": "P.E.I. Court of Appeal Hears Power Utility Challenge to Fiona Grid Restoration Caps",
+      "date": "2026-08-20T19:00:00+00:00"
+    },
+    {
+      "slug": "rubio-imposes-new-economic-sanctions-on-ten-cuban-state-commercial-entities-2026-08-20",
+      "headline": "State Department Imposes Targeted Financial Sanctions on Ten Cuban State Enterprises",
+      "date": "2026-08-20T19:00:00+00:00"
+    },
+    {
+      "slug": "biden-harris-administration-highlights-rural-water-infrastructure-allocations-2026-08-20",
+      "headline": "Federal Water Subcabinet Directs $310M for Rural Tribal and Municipal Clean Water Hubs",
+      "date": "2026-08-20T18:45:00+00:00"
+    },
+    {
+      "slug": "us-attorney-new-jersey-announces-plea-in-multimillion-dollar-covid-mortgage-fraud-2026-08-20",
+      "headline": "U.S. Attorney Announces Guilty Plea in Multimillion-Dollar Mortgage and COVID Loan Scheme",
+      "date": "2026-08-20T18:45:00+00:00"
+    },
+    {
+      "slug": "epa-superfund-deletion-eight-toxic-sites-cleaned-2026-08-20",
+      "headline": "EPA Deletes Eight Fully Remediated Hazardous Waste Sites from Superfund Priority List",
+      "date": "2026-08-20T18:45:00+00:00"
+    },
+    {
+      "slug": "snowbirds-aerobatic-team-announces-final-ct114-tutor-commemorative-tour-2026-08-20",
+      "headline": "Royal Canadian Air Force Confirms 2026 Farewell Season for Historic Snowbirds CT-114 Jets",
+      "date": "2026-08-20T18:30:00+00:00"
+    },
+    {
+      "slug": "dane-county-court-dismisses-tax-break-residency-challenge-2026-08-20",
+      "headline": "Wisconsin Circuit Court Dismisses Residency and Property Tax Exemption Challenge",
+      "date": "2026-08-20T18:30:00+00:00"
+    },
+    {
+      "slug": "senate-agriculture-leaders-probe-usda-data-integrity-and-staffing-levels-2026-08-20",
+      "headline": "Senate Agriculture Committee Initiates Inquiry Into USDA Economic Crop Data Accuracy",
+      "date": "2026-08-20T18:30:00+00:00"
+    },
+    {
+      "slug": "eighth-circuit-upholds-one-billion-dollar-realtor-antitrust-settlement-2026-08-20",
+      "headline": "Eighth Circuit Upholds Landmark $1B National Association of Realtors Commission Settlement",
+      "date": "2026-08-20T17:45:00+00:00"
+    },
+    {
+      "slug": "crtc-investigation-emergency-alerts-carrier-phone-locking-rules-2026-08-20",
+      "headline": "CRTC Launches Inquiry Into Municipal Alert System Volume and Temporary Carrier Theft Controls",
+      "date": "2026-08-20T17:30:00+00:00"
+    },
+    {
+      "slug": "switzerland-indonesia-consular-dialogue-on-tourist-sentencing-standards-2026-08-20",
+      "headline": "Swiss Consular Officials Engage Indonesian Authorities on Cultural Heritage Sentencing Rules",
+      "date": "2026-08-20T17:30:00+00:00"
+    },
+    {
+      "slug": "cta-orders-westjet-to-scrap-wheelchair-weight-cap-barrier-2026-08-20",
+      "headline": "Canadian Transportation Agency Orders WestJet to Eliminate 300-Pound Wheelchair Weight Cap",
+      "date": "2026-08-20T17:00:00+00:00"
+    },
+    {
+      "slug": "senate-democrats-petition-epa-to-preserve-pfas-drinking-water-standards-2026-08-20",
+      "headline": "Senate Environment Panel Leaders Demand EPA Halt Rollback of National PFAS Water Caps",
+      "date": "2026-08-20T13:00:00+00:00"
+    },
+    {
+      "slug": "supreme-court-precedent-upholds-broker-liability-in-interstate-freight-accidents-2026-08-20",
+      "headline": "Supreme Court Freight Liability Precedent Reshapes Interstate Supply Chain Risk Standards",
+      "date": "2026-08-20T12:45:00+00:00"
+    },
+    {
+      "slug": "ontario-court-of-appeal-upholds-employment-contract-termination-standards-2026-08-20",
+      "headline": "Ontario Court of Appeal Upholds Statutory Alignment in Corporate Employment Contracts",
+      "date": "2026-08-20T12:45:00+00:00"
+    },
+    {
+      "slug": "bloomington-city-council-schedules-hearing-on-surplus-municipal-property-ordinance-2026-08-20",
+      "headline": "Bloomington Schedules Public Hearing on Reformed Municipal Property Disposition Code",
+      "date": "2026-08-20T12:30:00+00:00"
+    },
+    {
+      "slug": "bc-court-of-appeal-clarifies-municipal-rezoning-authority-in-commercial-dispute-2026-08-20",
+      "headline": "B.C. Court of Appeal Clarifies Municipal Discretion in Commercial Land Use Rezonings",
+      "date": "2026-08-20T12:30:00+00:00"
+    },
+    {
+      "slug": "south-carolina-county-appeals-zoning-approval-for-400-home-subdivision-2026-08-20",
+      "headline": "Laurens County Files Circuit Court Appeal to Halt 409-Home Subdivision Development",
+      "date": "2026-08-20T12:30:00+00:00"
+    },
+    {
+      "slug": "white-house-confirms-departure-of-legislative-director-james-braid-2026-08-20",
+      "headline": "White House Confirms Resignation of Legislative Affairs Director James Braid Ahead of Midterms",
+      "date": "2026-08-20T11:30:00+00:00"
+    },
+    {
+      "slug": "liberia-accepts-first-flight-under-us-third-country-deportation-pact-2026-08-20",
+      "headline": "First Third-Country Deportation Flight Arrives in Monrovia Under $45M U.S.-Liberia Agreement",
+      "date": "2026-08-20T11:00:00+00:00"
+    },
+    {
+      "slug": "air-force-major-detained-outside-us-capitol-following-protest-demonstration-2026-08-20",
+      "headline": "Active-Duty Air Force Major Detained at U.S. Capitol Grounds During Solitary Demonstration",
+      "date": "2026-08-20T11:00:00+00:00"
+    },
+    {
+      "slug": "white-house-confirms-planned-departure-of-legislative-affairs-director-2026-08-20",
+      "headline": "White House Legislative Director James Braid Prepares to Conclude West Wing Tenure",
+      "date": "2026-08-20T03:00:00+00:00"
+    },
+    {
+      "slug": "doj-shifts-disability-litigation-posture-challenging-olmstead-guidance-2026-08-20",
+      "headline": "Advocates Raise Alarm as Justice Department Modifies Integration Enforcement Stance in Disability Cases",
+      "date": "2026-08-20T02:45:00+00:00"
+    },
+    {
+      "slug": "windsor-and-stratford-close-nominations-for-2026-municipal-ballots-2026-08-20",
+      "headline": "Ontario Municipalities Finalize Candidate Slates as Fall Nomination Windows Close",
+      "date": "2026-08-20T02:45:00+00:00"
+    },
+    {
+      "slug": "fourth-circuit-upholds-curbs-on-immigration-actions-at-houses-of-worship-2026-08-20",
+      "headline": "Federal Appeals Court Rebuffs Homeland Security and Restricts Enforcement at Religious Sanctuaries",
+      "date": "2026-08-20T02:30:00+00:00"
+    },
+    {
+      "slug": "california-municipal-elections-appointments-made-in-uncontested-races-2026-08-20",
+      "headline": "California Municipalities Appoint Candidates in Lieu of Elections Following Filing Deadlines",
+      "date": "2026-08-20T02:30:00+00:00"
+    },
+    {
+      "slug": "castlegar-extends-west-kootenay-airport-operations-management-pact-2026-08-20",
+      "headline": "Castlegar City Council Approves 18-Month Extension for Regional Airport Operations",
+      "date": "2026-08-20T02:00:00+00:00"
+    },
+    {
+      "slug": "saint-john-opens-4-5m-supportive-housing-facility-for-vulnerable-youth-2026-08-20",
+      "headline": "Saint John Unveils $4.5M 'Jerome's Place' Supportive Housing Complex for At-Risk Youth",
+      "date": "2026-08-20T02:00:00+00:00"
+    },
+    {
+      "slug": "chilliwack-council-refers-townhouse-rezoning-for-broader-neighbourhood-review-2026-08-20",
+      "headline": "Chilliwack City Council Pauses Townhouse Rezoning to Address Neighbourhood Density Concerns",
+      "date": "2026-08-20T01:45:00+00:00"
+    },
+    {
+      "slug": "ottawa-planning-panel-advances-riverside-south-civic-and-library-hub-2026-08-20",
+      "headline": "Ottawa Planning Panel Clears Zoning Amendments for $38M Riverside South Community and Library Hub",
+      "date": "2026-08-20T01:30:00+00:00"
+    },
+    {
+      "slug": "white-house-imposes-economic-sanctions-enforcement-on-iranian-trade-2026-08-20",
+      "headline": "White House Tightens Secondary Economic Sanctions Targeting Global Maritime and Energy Ties to Tehran",
+      "date": "2026-08-20T00:45:00+00:00"
+    },
+    {
+      "slug": "senate-democrats-demand-oversight-of-foreign-health-data-mandates-2026-08-20",
+      "headline": "Senate Democratic Leadership Questions Executive Mandates Requiring Foreign Health Data for Humanitarian Aid",
+      "date": "2026-08-20T00:15:00+00:00"
+    },
+    {
+      "slug": "austin-audit-committee-advances-comprehensive-procurement-reform-ordinance-2026-08-20",
+      "headline": "Austin Audit and Finance Committee Approves Strict Independent Oversight Rules for Municipal Contracts",
+      "date": "2026-08-20T00:15:00+00:00"
+    },
+    {
+      "slug": "san-jose-rules-committee-advances-digital-equity-broadband-expansion-plan-2026-08-20",
+      "headline": "San Jose Rules Committee Recommends $8.4M Digital Infrastructure Plan for East Side Neighborhoods",
+      "date": "2026-08-20T00:00:00+00:00"
+    },
+    {
+      "slug": "virginia-governor-signs-comprehensive-water-transparency-legislation-2026-08-20",
+      "headline": "Virginia Enacts Water Transparency and Industrial Utility Disclosure Mandates for Data Hubs",
+      "date": "2026-08-20T00:00:00+00:00"
+    },
+    {
+      "slug": "phoenix-city-council-mandates-heat-safety-standards-construction-2026-08-19",
+      "headline": "Phoenix City Council Mandates Heat Safety Standards for Commercial Construction Workplaces",
+      "date": "2026-08-19T23:10:00+00:00"
+    },
+    {
+      "slug": "king-county-council-allocates-24m-rapidride-affordable-housing-2026-08-19",
+      "headline": "King County Council Allocates $24M to Acquire Transit-Oriented Affordable Housing Parcels Along RapidRide Lines",
+      "date": "2026-08-19T23:00:00+00:00"
+    },
+    {
+      "slug": "federal-court-hears-fraudulent-maple-syrup-class-action-retail-chains-2026-08-19",
+      "headline": "Federal Court Authorizes National Class Action Over Adulterated Maple Syrup Distribution",
+      "date": "2026-08-19T18:30:00+00:00"
+    },
+    {
+      "slug": "transportation-department-initiates-inquiry-820-flight-groundings-2026-08-19",
+      "headline": "Transportation Department Demands Airline Scheduling Audits After 820 Flights Cancelled in 24 Hours",
+      "date": "2026-08-19T18:30:00+00:00"
+    },
+    {
+      "slug": "moderna-mrna-cancer-vaccine-phase-3-trials-demonstrate-recurrence-reduction-2026-08-19",
+      "headline": "Phase 3 Clinical Trial Demonstrates 44% Reduction in Oncology Recurrence for mRNA Therapeutic Vaccine",
+      "date": "2026-08-19T17:50:00+00:00"
+    },
+    {
+      "slug": "treasury-doubles-liquidity-bond-buybacks-4b-curb-surging-yields-2026-08-19",
+      "headline": "Treasury Doubles Coupon Buyback Cap to $4B Following Multi-Decade Surge in Long-Term Yields",
+      "date": "2026-08-19T17:30:00+00:00"
+    },
+    {
+      "slug": "calgary-kings-bench-schedules-officer-murder-trial-pursuit-case-2026-08-19",
+      "headline": "Alberta Court of King's Bench Sets Trial Date for Calgary Officer in Fatal Pursuit Case",
+      "date": "2026-08-19T17:15:00+00:00"
+    },
+    {
+      "slug": "lincoln-memorial-reflecting-pool-drained-structural-liner-repairs-2026-08-19",
+      "headline": "National Mall Crews Drain Lincoln Memorial Reflecting Pool Following $14M Liner Degradation Dispute",
+      "date": "2026-08-19T16:30:00+00:00"
+    },
+    {
+      "slug": "senator-chuck-schumer-sponsors-independent-agency-protection-resolution-2026-08-19",
+      "headline": "Senate Resolution Seeks Statutory Firewall for Federal Regulatory Commission Chairs",
+      "date": "2026-08-19T16:30:00+00:00"
+    },
+    {
+      "slug": "court-trade-injunction-triggers-1b-tariff-refunds-us-retailers-2026-08-19",
+      "headline": "Court of International Trade Ruling Unlocks $1.1B in Supply Chain Duty Reimbursements",
+      "date": "2026-08-19T16:30:00+00:00"
+    },
+    {
+      "slug": "faa-transport-canada-issue-airworthiness-directive-regional-turboprops-2026-08-19",
+      "headline": "Aviation Authorities Mandate 48-Hour Inspection Regimes for 340 Regional Turboprop Aircraft",
+      "date": "2026-08-19T16:00:00+00:00"
+    },
+    {
+      "slug": "foreign-influence-commissioner-anton-boegman-issues-compliance-rules-2026-08-19",
+      "headline": "Canada Foreign Influence Registry Sets October 3 Filing Deadline for Political Messaging Entities",
+      "date": "2026-08-19T15:00:00+00:00"
+    },
+    {
+      "slug": "justice-department-evaluates-james-comey-social-media-filing-2026-08-19",
+      "headline": "Justice Department Reviews Online Post Involving Former FBI Director Amid Legal Disputes",
+      "date": "2026-08-19T12:30:00+00:00"
+    },
+    {
+      "slug": "usda-proposes-repealing-2001-roadless-rule-45m-acres-national-forests-2026-08-19",
+      "headline": "USDA Proposes Repealing 2001 Roadless Rule Across 45 Million Acres of National Forests",
+      "date": "2026-08-19T01:50:00+00:00"
+    },
+    {
+      "slug": "senate-finance-wyden-demands-records-base-group-payment-2026-08-19",
+      "headline": "Senate Finance Chairman Wyden Demands Disclosure on $2M Foreign Payment to Executive Entity",
+      "date": "2026-08-19T01:40:00+00:00"
+    },
+    {
+      "slug": "pentagon-seoul-halve-joint-military-drills-diplomatic-talks-2026-08-19",
+      "headline": "Pentagon and Seoul Halve Scope of Joint Military Exercises in Diplomatic Overture",
+      "date": "2026-08-19T01:35:00+00:00"
+    },
+    {
+      "slug": "federal-court-vacates-injunction-ethiopian-tps-rescission-2026-08-19",
+      "headline": "Federal District Court Vacates Injunction on Ethiopian Temporary Protected Status Rescission",
+      "date": "2026-08-19T01:20:00+00:00"
+    },
+    {
+      "slug": "federal-court-overturns-19-mile-izembek-refuge-road-swap-2026-08-19",
+      "headline": "Federal Judge Overturns 19-Mile Izembek Refuge Road Swap Under Conservation Statutes",
+      "date": "2026-08-19T01:15:00+00:00"
+    },
+    {
+      "slug": "maryland-federal-court-permits-birthright-citizenship-class-action-2026-08-19",
+      "headline": "Maryland Federal Court Permits Class Action Against Birthright Citizenship Executive Order",
+      "date": "2026-08-19T01:10:00+00:00"
+    },
+    {
+      "slug": "federal-court-dissolves-injunction-rhode-island-cannabis-licensing-2026-08-19",
+      "headline": "Federal Court Dissolves Injunction on Rhode Island Retail Cannabis Licensing Program",
+      "date": "2026-08-19T00:45:00+00:00"
+    },
+    {
+      "slug": "federal-judge-authorizes-exterior-paint-testing-eisenhower-building-2026-08-19",
+      "headline": "Federal Judge Authorizes Exterior Paint Testing for Historic Eisenhower Building Restoration",
+      "date": "2026-08-19T00:40:00+00:00"
+    },
+    {
+      "slug": "memphis-city-council-enacts-moratorium-industrial-data-centers-2026-08-19",
+      "headline": "Memphis City Council Enacts Initial Moratorium on Industrial High-Capacity Data Centers",
+      "date": "2026-08-19T00:15:00+00:00"
+    },
+    {
+      "slug": "chinese-humanoid-robotics-maker-unitree-surges-market-debut-2026-08-19",
+      "headline": "Chinese Humanoid Robotics Developer Unitree Surges in Multi-Billion Public Trading Debut",
+      "date": "2026-08-18T23:30:00+00:00"
+    },
+    {
+      "slug": "alaska-at-large-congressional-top-four-primary-results-2026-08-18",
+      "headline": "Alaska Certified Top-Four Primary Results Advance Candidates for U.S. House At-Large Seat",
+      "date": "2026-08-18T23:20:00+00:00"
+    },
+    {
+      "slug": "wyoming-at-large-congressional-republican-primary-results-2026-08-18",
+      "headline": "Wyoming Republican Primary Voters Select Nominee for At-Large U.S. House Seat",
+      "date": "2026-08-18T23:15:00+00:00"
+    },
+    {
+      "slug": "nih-fauci-aide-pleads-guilty-foia-public-records-obstruction-2026-08-18",
+      "headline": "Former Senior NIH Adviser Pleads Guilty to Federal Public Records Law Evasion",
+      "date": "2026-08-18T21:20:00+00:00"
+    },
+    {
+      "slug": "rockstar-games-enforces-global-copyright-takedowns-gta-6-leaks-2026-08-18",
+      "headline": "Rockstar Games and Take-Two Enforce Global Copyright Injunctions Against Leaked GTA 6 Footage",
+      "date": "2026-08-18T20:29:00+00:00"
+    },
+    {
+      "slug": "federal-court-enforces-fair-labor-standards-sanctions-wage-theft-2026-08-18",
+      "headline": "Federal Court Secures $3.8M Judgment Against Retail Chain for Unlawful Uniform Deductions",
+      "date": "2026-08-18T19:31:00+00:00"
+    },
+    {
+      "slug": "ashley-macisaac-settles-defamation-lawsuit-ai-search-hallucination-2026-08-18",
+      "headline": "Musician Ashley MacIsaac Settles Landmark Defamation Lawsuit Over AI Search Hallucinations",
+      "date": "2026-08-18T19:30:00+00:00"
+    },
+    {
+      "slug": "calgary-court-sentencing-hearing-serial-predator-vulnerable-persons-2026-08-18",
+      "headline": "Sentencing Hearing Begins in Calgary Court of King's Bench for Convicted Serial Predator",
+      "date": "2026-08-18T19:10:00+00:00"
+    },
+    {
+      "slug": "white-house-senior-legislative-liaison-emily-underwood-transition-2026-08-18",
+      "headline": "White House Senior Legislative Liaison Emily Underwood Announces Departure Ahead of Fall Session",
+      "date": "2026-08-18T19:01:00+00:00"
+    },
+    {
+      "slug": "ofpp-administrator-christine-rhodes-announces-departure-federal-procurement-2026-08-18",
+      "headline": "Office of Federal Procurement Policy Administrator Christine Rhodes Announces Resignation",
+      "date": "2026-08-18T19:01:00+00:00"
+    },
+    {
+      "slug": "greece-turkey-aegean-marine-park-sovereignty-dispute-eu-diplomacy-2026-08-18",
+      "headline": "Greece and Turkey Exchange Diplomatic Protests Over Aegean Sea Marine Protection Zones",
+      "date": "2026-08-18T18:53:00+00:00"
+    },
+    {
+      "slug": "house-intelligence-committee-declassified-swalwell-counterintelligence-records-2026-08-18",
+      "headline": "House Intelligence Committee Releases Declassified Counterintelligence Review Records",
+      "date": "2026-08-18T18:43:00+00:00"
+    },
+    {
+      "slug": "sonia-gandhi-releases-political-memoir-indian-parliamentary-history-2026-08-18",
+      "headline": "Sonia Gandhi Publishes Comprehensive Political Memoir on Indian Coalition Governance",
+      "date": "2026-08-18T18:41:00+00:00"
+    },
+    {
+      "slug": "delhi-municipal-corporation-wildlife-controls-badminton-world-championships-2026-08-18",
+      "headline": "Delhi Municipal Corporation Deploys Wildlife Control Teams Ahead of BWF World Championships",
+      "date": "2026-08-18T18:20:00+00:00"
+    },
+    {
+      "slug": "uk-cosmetics-safety-agency-bans-gel-nail-sensitizing-monomers-2026-08-18",
+      "headline": "U.K. Health and Safety Executive Implements Restrictions on Sensitizing Gel Nail Monomers",
+      "date": "2026-08-18T18:10:00+00:00"
+    },
+    {
+      "slug": "stellantis-recalls-850000-jeep-ram-vehicles-rearview-camera-nhtsa-2026-08-18",
+      "headline": "Stellantis Recalls 850,000 Vehicles Across U.S. Over Rearview Camera Software Glitch",
+      "date": "2026-08-18T18:00:00+00:00"
+    },
+    {
+      "slug": "treasury-bond-yields-jump-iran-energy-stalemate-wall-street-2026-08-18",
+      "headline": "U.S. Treasury Yields Surge as Middle East Energy Stalemate Unsettles Financial Markets",
+      "date": "2026-08-18T17:34:00+00:00"
+    },
+    {
+      "slug": "philadelphia-police-fairmount-park-assault-investigation-taskforce-2026-08-18",
+      "headline": "Philadelphia Police Deploy Tactical Patrols Following Assault Pattern Along Fairmount Park Trails",
+      "date": "2026-08-18T17:32:00+00:00"
+    },
+    {
+      "slug": "strait-of-hormuz-blockade-iran-us-oil-price-spike-wti-2026-08-18",
+      "headline": "Crude Oil Prices Climb to Highest Level Since July as Strait of Hormuz Standoff Intensifies",
+      "date": "2026-08-18T17:14:00+00:00"
+    },
+    {
+      "slug": "uae-missile-interception-iran-regional-security-alert-2026-08-18",
+      "headline": "United Arab Emirates Air Defenses Intercept Ballistic Threat Over Gulf Waters",
+      "date": "2026-08-18T17:11:00+00:00"
+    },
+    {
+      "slug": "halifax-regional-council-active-transit-bikeway-network-approval-2026-08-18",
+      "headline": "Halifax Regional Council Authorizes $38M Protected Active Transportation Corridor Network",
+      "date": "2026-08-18T17:00:00+00:00"
+    },
+    {
+      "slug": "edmonton-city-council-transit-fare-gates-arc-card-integration-2026-08-18",
+      "headline": "Edmonton City Council Evaluates $45M Automated Fare Gate System for LRT Network",
+      "date": "2026-08-18T16:30:00+00:00"
+    },
+    {
+      "slug": "disney-abc-lawsuit-fcc-media-regulator-broadcast-license-renewals-2026-08-18",
+      "headline": "Disney and ABC File Federal Lawsuit Against FCC Regulators Over Broadcast License Review Threats",
+      "date": "2026-08-18T16:22:00+00:00"
+    },
+    {
+      "slug": "dallas-city-council-smart-traffic-signal-modernization-ai-grid-2026-08-18",
+      "headline": "Dallas City Council Approves $180M Modernization of Municipal AI Traffic Signal Grid",
+      "date": "2026-08-18T16:15:00+00:00"
+    },
+    {
+      "slug": "crea-canadian-housing-market-july-sales-drop-balanced-inventory-2026-08-18",
+      "headline": "Canadian Housing Market Moves Toward Balanced Conditions as July Sales Drop 5.3%",
+      "date": "2026-08-18T16:00:00+00:00"
+    },
+    {
+      "slug": "pakistan-supreme-court-imran-khan-hospital-transfer-order-2026-08-18",
+      "headline": "Pakistan Supreme Court Orders Imran Khan Transferred to Hospital for Comprehensive Medical Care",
+      "date": "2026-08-18T16:00:00+00:00"
+    },
+    {
+      "slug": "russian-bank-deposit-outflows-war-seizure-concerns-moscow-2026-08-18",
+      "headline": "Russian Depositors Accelerate Banking Withdrawals Over Fears of State War Asset Levies",
+      "date": "2026-08-18T16:00:00+00:00"
+    },
+    {
+      "slug": "ukraine-drone-strike-moscow-energy-refineries-retaliation-2026-08-18",
+      "headline": "Ukrainian Long-Range Drone Strike Targets Energy Infrastructure Near Moscow Suburbs",
+      "date": "2026-08-18T15:55:00+00:00"
+    },
+    {
+      "slug": "white-house-communications-aide-natalie-harp-ethics-review-2026-08-18",
+      "headline": "House Oversight Committee Inquires into White House Communications Protocols and Social Coordination",
+      "date": "2026-08-18T15:39:00+00:00"
+    },
+    {
+      "slug": "ninth-circuit-upholds-disqualification-nevada-us-attorney-2026-08-18",
+      "headline": "Ninth Circuit Upholds Disqualification of Nominated U.S. Attorney in Nevada",
+      "date": "2026-08-18T15:30:00+00:00"
+    },
+    {
+      "slug": "home-depot-q2-earnings-home-renovation-slowdown-mortgage-rates-2026-08-18",
+      "headline": "Home Depot Reports Cautious Consumer Spending as High Mortgage Rates Constrain Major Renovations",
+      "date": "2026-08-18T15:01:00+00:00"
+    },
+    {
+      "slug": "openai-launches-chatgpt-for-teens-parental-controls-safety-2026-08-18",
+      "headline": "OpenAI Launches 'ChatGPT for Teens' with Built-In Parental Controls and Safety Guardrails",
+      "date": "2026-08-18T14:11:00+00:00"
+    },
+    {
+      "slug": "tropical-storm-lala-hawaii-power-outage-flash-floods-naalehu-2026-08-18",
+      "headline": "Hawaii Mobilizes Emergency Infrastructure Teams as Tropical Storm Lala Leaves 100,000 Without Power",
+      "date": "2026-08-18T02:32:00+00:00"
+    },
+    {
+      "slug": "anthropic-revenue-milestone-65-billion-ai-governance-hearings-2026-08-18",
+      "headline": "Frontier AI Financial Milestones Intensify Capitol Hill Calls for Comprehensive National AI Governance Standards",
+      "date": "2026-08-18T01:37:00+00:00"
+    },
+    {
+      "slug": "ftc-doxo-2-million-settlement-deceptive-search-ads-hidden-fees-2026-08-17",
+      "headline": "FTC Orders $2.1M Restitution in Deceptive Search Ad Settlement with Bill Payment Firm Doxo",
+      "date": "2026-08-18T00:15:00+00:00"
+    },
+    {
+      "slug": "penn-state-fraternity-cocaine-ring-indictment-14-arrests-2026-08-17",
+      "headline": "Centre County Prosecutors Indict 14 Individuals in Major University Campus Narcotics Ring Bust",
+      "date": "2026-08-17T23:36:00+00:00"
+    },
+    {
+      "slug": "mark-walter-insurance-annuity-solvency-probe-wall-street-2026-08-17",
+      "headline": "State Insurance Regulators Launch Multi-Jurisdictional Inquiry Into Private Equity Annuity Reserves",
+      "date": "2026-08-17T22:19:00+00:00"
+    },
+    {
+      "slug": "detroit-city-council-85m-zero-emission-transit-fleet-mandate-2026-08-17",
+      "headline": "Detroit City Council Authorizes $85M Federal Infrastructure Allocation to Electrify Municipal Bus Network",
+      "date": "2026-08-17T21:30:00+00:00"
+    },
+    {
+      "slug": "miami-dade-commission-authorizes-flood-mitigation-resilience-bonds-2026-08-17",
+      "headline": "Miami-Dade County Commission Approves $350M Resilience Bond Package for Coastal Flood Barriers",
+      "date": "2026-08-17T21:15:00+00:00"
+    },
+    {
+      "slug": "lindsay-clancy-massachusetts-murder-trial-defense-witnesses-postpartum-2026-08-17",
+      "headline": "Defense Witness Testimony Begins in Massachusetts Superior Court Murder Trial of Lindsay Clancy",
+      "date": "2026-08-17T20:15:00+00:00"
+    },
+    {
+      "slug": "raul-torrez-new-mexico-meta-942-million-judgment-youth-safety-bills-2026-08-17",
+      "headline": "New Mexico Secures $942 Million Final Judgment Against Meta as AG Raúl Torrez Drafts Child Safety AI Bills",
+      "date": "2026-08-17T18:45:00+00:00"
+    },
+    {
+      "slug": "us-navy-raytheon-rtx-22-billion-tomahawk-missile-production-deal-2026-08-17",
+      "headline": "Department of War Awards Raytheon $22.9 Billion Contract to Accelerate Tomahawk Cruise Missile Production",
+      "date": "2026-08-17T15:30:00+00:00"
+    },
+    {
+      "slug": "edmonton-city-council-transit-peace-officer-deployment-lrt-safety-crisis-2026-08-17",
+      "headline": "Edmonton Expands Transit Peace Officer Deployments and Outreach Teams Amid Surging LRT Safety Grievances",
+      "date": "2026-08-17T15:30:00+00:00"
+    },
+    {
+      "slug": "jared-kushner-netanyahu-jerusalem-meeting-gaza-ceasefire-roadmap-2026-08-17",
+      "headline": "Jared Kushner Holds Three-Hour Jerusalem Summit with Netanyahu to Advance U.S. 15-Point Gaza Framework",
+      "date": "2026-08-17T14:30:00+00:00"
+    },
+    {
+      "slug": "supreme-court-rejects-trump-appeal-e-jean-carroll-defamation-2026-08-17",
+      "headline": "U.S. Supreme Court Denies Donald Trump Appeal in $5.6 Million E. Jean Carroll Defamation Verdict",
+      "date": "2026-08-17T14:30:00+00:00"
+    },
+    {
+      "slug": "canada-wildfires-escalate-bc-ontario-august-2026",
+      "headline": "Wildfires Escalate Across Canada as Thousands Told to Leave Within Hours",
+      "date": "2026-08-04T07:00:00+00:00"
+    }
+  ],
+  "untaggedUnmatched": [
+    {
+      "slug": "new-jersey-enacts-s4162-affordable-power-purchase-agreements-extension-act-2026-08-24",
+      "headline": "Governor Mikie Sherrill Enacts S4162 Expanding Solar Power Purchase Agreements for Public Schools",
+      "date": "2026-08-24T14:00:00+00:00"
+    },
+    {
+      "slug": "virginia-governor-abigail-spanberger-outlines-fiscal-2027-budget-priorities-for-k-12-schools-and-data-center-taxation-2026-08-24",
+      "headline": "Governor Abigail Spanberger Outlines Fiscal 2027 Priorities for K-12 Funding and Data Center Taxes",
+      "date": "2026-08-24T14:00:00+00:00"
+    },
+    {
+      "slug": "governor-abigail-spanberger-awards-virginia-agricultural-infrastructure-development-grants-2026-08-24",
+      "headline": "Governor Abigail Spanberger Delivers $507,000 in Agricultural Infrastructure Grants Across 14 Localities",
+      "date": "2026-08-24T07:25:00+00:00"
+    },
+    {
+      "slug": "seattle-mayor-wilson-issues-executive-order-accelerating-modular-infill-housing-approvals-2026-08-24",
+      "headline": "Seattle Mayor Issues Executive Directive Guaranteeing 45-Day Permitting for Infill Modular Housing",
+      "date": "2026-08-24T07:15:00+00:00"
+    },
+    {
+      "slug": "gary-indiana-mayor-calls-for-emergency-nipsco-grid-inquiry-as-thousands-endure-prolonged-outage-2026-08-23",
+      "headline": "Gary Mayor Demands Independent Utility Grid Inquiry as Thousands of Residents Endure 12-Day Outage",
+      "date": "2026-08-23T16:20:00+00:00"
+    },
+    {
+      "slug": "pentagon-leadership-tensions-surface-as-army-secretary-weighed-resignation-2026-08-23",
+      "headline": "Pentagon Leadership Friction Intensifies as Army Secretary Dan Driscoll Weighed Resignation",
+      "date": "2026-08-23T03:45:00+00:00"
+    },
+    {
+      "slug": "st-thomas-and-central-elgin-mayors-announce-retirement-ahead-of-civic-elections-2026-08-22",
+      "headline": "St. Thomas and Central Elgin Mayors Announce Retirement Ahead of October Civic Elections",
+      "date": "2026-08-22T14:45:00+00:00"
+    },
+    {
+      "slug": "arsenal-begins-premier-league-title-campaign-with-commanding-victory-2026-08-22",
+      "headline": "Arsenal Kicks Off Premier League Campaign with Commanding Opening-Day Display",
+      "date": "2026-08-22T13:00:00+00:00"
+    },
+    {
+      "slug": "former-estonian-prime-minister-and-eu-commissioner-siim-kallas-dies-at-77-2026-08-22",
+      "headline": "Former Estonian Prime Minister and European Commission Vice-President Siim Kallas Dies at 77",
+      "date": "2026-08-22T11:45:00+00:00"
+    },
+    {
+      "slug": "vice-president-vance-touts-domestic-steel-manufacturing-investments-in-cincinnati-2026-08-21",
+      "headline": "Vice President JD Vance Touts Advanced Steel Manufacturing and Industrial Energy Policies in Ohio",
+      "date": "2026-08-22T02:00:00+00:00"
+    },
+    {
+      "slug": "army-secretary-christine-driscoll-announces-departure-by-year-end-2026-08-21",
+      "headline": "Secretary of the Army Christine Driscoll Announces Plan to Step Down by Year-End",
+      "date": "2026-08-22T00:00:00+00:00"
+    },
+    {
+      "slug": "mayor-zohran-mamdani-accelerates-shed-removal-program-clearing-historic-manhattan-corridors-2026-08-21",
+      "headline": "NYC Mayor Zohran Mamdani Accelerates Sidewalk Shed Removal Across Five Boroughs",
+      "date": "2026-08-21T20:15:00+00:00"
+    },
+    {
+      "slug": "white-house-evaluates-candidates-to-succeed-karoline-leavitt-as-press-secretary-2026-08-21",
+      "headline": "White House Vets Candidates to Succeed Karoline Leavitt as Press Secretary",
+      "date": "2026-08-21T16:45:00+00:00"
+    },
+    {
+      "slug": "treasury-secretary-bessent-announces-unprecedented-iran-sanctions-framework-2026-08-21",
+      "headline": "Treasury Secretary Bessent Details Severe Secondary Sanctions Enforcement Against Iran",
+      "date": "2026-08-21T00:00:00+00:00"
+    },
+    {
+      "slug": "french-language-watchdog-investigates-telehealth-accessibility-in-new-brunswick-2026-08-21",
+      "headline": "New Brunswick Official Languages Commissioner Probes French Access in Virtual Telehealth",
+      "date": "2026-08-20T23:15:00+00:00"
+    },
+    {
+      "slug": "curtis-cautions-congress-against-middle-east-escalation-in-foreign-policy-speech-2026-08-20",
+      "headline": "Senator Curtis Delivers Foreign Policy Address Warning Against Prolonged Regional Interventions",
+      "date": "2026-08-20T20:00:00+00:00"
+    },
+    {
+      "slug": "spokane-city-council-ratifies-emergency-order-complex-wildfires-2026-08-20",
+      "headline": "Spokane City Council Ratifies Mayoral Emergency Declaration for Wildfire Relief Operations",
+      "date": "2026-08-20T17:45:00+00:00"
+    },
+    {
+      "slug": "mamdani-lawsuit-nyc-council-teaching-assistant-bonuses-2026-08-20",
+      "headline": "Mayor Files State Supreme Court Lawsuit Against City Council Over Teaching Assistant Bonuses",
+      "date": "2026-08-20T17:45:00+00:00"
+    },
+    {
+      "slug": "virginia-governor-spanberger-outlines-2027-biennial-budget-priorities-2026-08-20",
+      "headline": "Governor Spanberger Outlines Fiscal Guardrails and Targeted Education Allocations for 2027",
+      "date": "2026-08-20T12:00:00+00:00"
+    },
+    {
+      "slug": "san-luis-obispo-council-rejects-mayoral-censure-motion-2026-08-20",
+      "headline": "San Luis Obispo City Council Rebuffs Censure Motion Against Mayor Stewart",
+      "date": "2026-08-20T11:30:00+00:00"
+    },
+    {
+      "slug": "peterborough-mayor-leal-declines-re-election-bid-as-council-clears-conduct-sanction-2026-08-20",
+      "headline": "Peterborough Mayor Leal Announces Retirement as City Council Declines Integrity Penalties",
+      "date": "2026-08-20T10:30:00+00:00"
+    },
+    {
+      "slug": "cobourg-calls-special-council-session-on-provincial-planning-amendments-2026-08-20",
+      "headline": "Cobourg Mayor Convenes Special Council Session on Provincial Planning Reforms",
+      "date": "2026-08-20T03:00:00+00:00"
+    },
+    {
+      "slug": "virginia-governor-spanberger-outlines-long-term-fiscal-priorities-2026-08-20",
+      "headline": "Governor Spanberger Outlines Fiscal Strategy and Cost-of-Living Priorities to Joint Money Panels",
+      "date": "2026-08-20T02:15:00+00:00"
+    },
+    {
+      "slug": "nyc-council-defends-respect-check-act-against-mayoral-challenge-2026-08-20",
+      "headline": "City Council Mounts Legal Defense of Paraprofessional Wage Act Following Mayoral Lawsuit",
+      "date": "2026-08-20T02:00:00+00:00"
+    },
+    {
+      "slug": "treasury-secretary-bessent-signals-continued-debt-stabilization-operations-2026-08-20",
+      "headline": "Treasury Secretary Outlines Phased Debt Buyback Schedule to Support Long-Term Market Stability",
+      "date": "2026-08-20T00:45:00+00:00"
+    },
+    {
+      "slug": "washington-state-attorney-general-leads-coalition-challenging-federal-driver-data-mandate-2026-08-20",
+      "headline": "Washington Attorney General Joins Multi-State Lawsuit Challenging Federal Driver Data Demands",
+      "date": "2026-08-20T00:00:00+00:00"
+    },
+    {
+      "slug": "clark-county-commissioners-grant-35m-las-vegas-medical-corridor-2026-08-19",
+      "headline": "Clark County Commissioners Grant $35M Infrastructure Bond for South Las Vegas Medical Corridor",
+      "date": "2026-08-19T23:05:00+00:00"
+    },
+    {
+      "slug": "senate-coalition-demands-investigation-uss-abraham-lincoln-conditions-2026-08-19",
+      "headline": "Fifteen Senators Demand Formal Pentagon Inquiry Into Conditions Aboard Extended Carrier Deployment",
+      "date": "2026-08-19T15:30:00+00:00"
+    },
+    {
+      "slug": "us-treasury-sanctions-icc-president-tomoko-akane-executive-order-14203-2026-08-19",
+      "headline": "U.S. Treasury Sanctions International Criminal Court President Under Executive Order 14203",
+      "date": "2026-08-19T01:45:00+00:00"
+    },
+    {
+      "slug": "northern-ireland-health-minister-mike-nesbitt-resigns-stormont-coalition-2026-08-18",
+      "headline": "Northern Ireland Health Minister Mike Nesbitt Resigns Amid Coalition Budget Dispute",
+      "date": "2026-08-18T20:46:00+00:00"
+    },
+    {
+      "slug": "alex-padilla-adam-schiff-senate-inquiry-uss-abraham-lincoln-carrier-health-2026-08-18",
+      "headline": "Senators Alex Padilla and Adam Schiff Launch Senate Inquiry into USS Abraham Lincoln Crew Health",
+      "date": "2026-08-18T19:36:00+00:00"
+    },
+    {
+      "slug": "south-korea-president-lee-worst-case-scenario-us-military-drills-reduction-2026-08-18",
+      "headline": "President Lee Directs South Korean Defense Overhaul as U.S. Joint Military Exercises Scale Back",
+      "date": "2026-08-18T04:49:00+00:00"
+    },
+    {
+      "slug": "trump-hegseth-south-korea-ulchi-freedom-shield-drills-reduction-2026-08-17",
+      "headline": "President Trump Orders Pentagon to Curtail 'Ulchi Freedom Shield' Joint Military Exercises with South Korea",
+      "date": "2026-08-17T18:30:00+00:00"
+    },
+    {
+      "slug": "andy-burnham-targeted-white-house-chief-of-staff-cyber-impersonation-2026-08-17",
+      "headline": "U.K. Prime Minister Andy Burnham Targeted in Cyber Impersonation of White House Chief of Staff Susie Wiles",
+      "date": "2026-08-17T14:30:00+00:00"
+    },
+    {
+      "slug": "karoline-leavitt-white-house-press-secretary-departure-family-2026-08-17",
+      "headline": "White House Press Secretary Karoline Leavitt Announces Departure Amid National Family and Career Discourse",
+      "date": "2026-08-17T14:30:00+00:00"
+    },
+    {
+      "slug": "ruben-gallego-uss-abraham-lincoln-carrier-deployment-oversight-2026-08-17",
+      "headline": "Senator Ruben Gallego Demands Congressional Investigation into Record 260-Day USS Abraham Lincoln Deployment",
+      "date": "2026-08-17T05:30:00+00:00"
+    }
+  ]
+}

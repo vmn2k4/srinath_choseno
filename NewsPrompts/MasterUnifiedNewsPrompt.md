@@ -18,7 +18,11 @@ This directive merges all rules, standards, and matrices from:
   - **30% Canada (~5–6 articles per batch of 20)**: Cover Canadian Federal (Ottawa / Parliament / PMO), 10 Provincial Capitols (Premiers / Assemblies), and Major Canadian Municipalities.
 - **Deep Research Requirement**: Every article MUST be backed by primary source research (bill numbers, court docket filings, vote counts, budget figures) with both official and critic/opposition counter-perspectives.
 - **Zero Hallucination & Pre-Flight Deduplication**: Check existing slugs from Supabase to prevent duplicate coverage.
-- **Wall & Boundary Sync**: Every article resolving a politician UUID triggers `admin_sync_news_article_tags()` for `/wall/[slug]` and `admin_sync_news_article_boundaries()` for GIS boundaries.
+- **Mandatory Politician Tagging Priority**:
+  - Whenever an elected official (Governor, Premier, Mayor, Cabinet Member, Senator, MP, MPP, MLA) is featured or quoted in an article, their exact full name **MUST** be placed into `taggedPoliticians: ["Full Name"]` (e.g. `["Greg Abbott"]`, `["Gavin Newsom"]`, `["Doug Ford"]`, `["Mark Carney"]`, `["David Eby"]`, `["Josh Shapiro"]`, `["Gretchen Whitmer"]`, `["Ron DeSantis"]`, `["JB Pritzker"]`, `["Wab Kinew"]`).
+  - **Civic Leaders fallback is strictly a last resort** ONLY for anonymous agency/bureau reports where no specific elected official exists.
+  - The ingestion engine automatically resolves names against the live `profiles` database table and links the story to the politician's `/wall/[slug]`.
+- **Wall & Boundary Sync**: Every article resolving a politician triggers `admin_sync_news_article_tags()` for `/wall/[slug]` and `admin_sync_news_article_boundaries()` for GIS boundaries.
 
 ---
 
@@ -46,16 +50,30 @@ Deploy multi-tier Google & Web queries parameterized by time window:
 
 ---
 
-## 4. 4-PART JOURNALISTIC BODY STRUCTURE (350–750 WORDS)
+## 4. CNN & AP INVESTIGATIVE ARTICLE BODY STRUCTURE (750–1,400+ WORDS)
 
-1. **Dateline & Impact Lead**:
-   `[CITY], [PROVINCE/STATE] — ` followed immediately by the concrete legislative/council action, fiscal consequence, and primary official involved.
-2. **Mechanics, Statutory Framework & Hard Figures**:
-   Specific funding figures, motion numbers, vote tallies, bylaw citations, and administrative mechanisms.
-3. **Constituent, Business & Neighborhood Impact**:
-   Direct local consequences for taxpayers, businesses, renters, commuters, specific wards, or ridings.
-4. **Accountability, Opposition Stance & Next Steps**:
-   Critic viewpoints, upcoming committee hearings, audit timelines, and next implementation milestones.
+Articles must match the comprehensive depth, narrative texture, and exhaustive investigative detail of major national wire and digital outlets (CNN Politics, AP News, Reuters, Washington Post). Avoid thin 3-paragraph summaries. Every story must contain deep contextual storytelling, direct quotes, legislative mechanics, budget line-items, and counter-perspectives across 5 to 7 detailed sections:
+
+1. **Dateline & Immediate Hard Lead (2–3 Paragraphs)**:
+   `[CITY], [PROVINCE/STATE] — ` A robust narrative lead establishing the immediate policy announcement, legislative vote, or executive action, the direct dollar figures involved, the key officials and agencies, and the broader political/economic stakes.
+
+2. **Legislative Mechanics, Statutory Authorities & Vote Tallies (2–3 Paragraphs)**:
+   Break down the exact legal mechanisms, bill or executive order numbers (e.g. *O.C.G.A. § 45-5-6*, *Section 202(c) of the Federal Power Act*, *Bill C-70*), statutory powers invoked, exact committee or floor vote splits (e.g. *voted 9–2*, *passed 68–31*), and specific funding formulas or procurement contract clauses.
+
+3. **In-Depth Program Architecture & Multi-Year Budget Breakdown (2–3 Paragraphs)**:
+   Detailed line-item allocations, matching grant ratios, multi-phase implementation schedules, and specific geographic disbursements across counties, ridings, or municipal wards.
+
+4. **On-the-Record Statements & Official Rationales (2 Paragraphs)**:
+   Substantive on-the-record quotes from the lead elected official (Governor, Premier, Mayor, Cabinet Secretary) and agency administrators outlining the governing rationale and policy defense.
+
+5. **Constituent, Regional & Economic Stakes (2–3 Paragraphs)**:
+   Real-world impact on local residents, workers, transit commuters, homeowners, small businesses, and municipal tax rates. Specific analysis of job creation numbers, wage thresholds, utility rate projections, and local neighborhood benefits.
+
+6. **Accountability, Opposition Arguments, Fiscal Oversight & Critical Analysis (2–3 Paragraphs)**:
+   Thorough exploration of the counter-arguments, opposition party stances, civil liberties or environmental critic perspectives, potential fiscal risks, union or industry pushback, and independent audit concerns.
+
+7. **Implementation Timelines, Public Input & Next Milestones (1–2 Paragraphs)**:
+   Specific calendar dates for committee hearings, public comment windows, regulatory rulemaking deadlines, bidding and procurement milestones, and eventual rollout.
 
 ---
 
