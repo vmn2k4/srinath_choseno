@@ -2,6 +2,7 @@ import type { SupabaseClient, PostgrestError } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { isDevEnvironment } from "@/lib/utils/environment";
 import { convertToPackificTime } from "@/lib/utils/timezone";
+import { fetchAllPages } from "@/lib/utils/fetchAllPages";
 
 type Client = SupabaseClient<Database>;
 type NewsArticleRow = Database["public"]["Tables"]["news_articles"]["Insert"];
@@ -837,13 +838,24 @@ export interface BatchSummary {
 export async function listDistinctBatches(
   supabase: Client
 ): Promise<{ data: BatchSummary[]; error: PostgrestError | null }> {
-  const { data, error } = await supabase
-    .from("news_articles")
-    .select("content, published_at, created_at")
-    .eq("status", "published");
+  // PostgREST caps an unbounded select at 1000 rows (db-max-rows) -- with no
+  // .order() the truncated slice is effectively an arbitrary subset of
+  // published articles, not "the oldest" or "the newest", so once the table
+  // passes 1000 published rows this silently undercounts whichever batches
+  // happen to land past the cut -- confirmed live on 2026-08-24 (total
+  // stuck at "1000" while the DB had 1068, with today's newest batches
+  // showing 2-3 articles instead of their real 20). Page through with
+  // fetchAllPages so every published row is counted.
+  const { data, error } = await fetchAllPages<any>((from, to) =>
+    supabase
+      .from("news_articles")
+      .select("content, published_at, created_at")
+      .eq("status", "published")
+      .range(from, to)
+  );
 
   if (error || !data) {
-    return { data: [], error };
+    return { data: [], error: error as PostgrestError | null };
   }
 
   const map = new Map<string, number>();
