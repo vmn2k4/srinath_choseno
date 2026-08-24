@@ -297,27 +297,6 @@ export default function NewsPageClient({
           </div>
         )}
 
-        {categories.length > 1 && (
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
-            <Filter size={14} className="text-text-muted shrink-0 mr-1 hidden sm:inline-block" />
-            {["All", ...categories].map((cat) => {
-              const isSelected = (category ?? "All") === cat;
-              return (
-                <Link
-                  key={cat}
-                  href={buildHref({ category: cat === "All" ? null : cat, rep: null })}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                    isSelected
-                      ? "bg-primary text-white shadow-sm"
-                      : "bg-surface/60 hover:bg-surface text-text-muted hover:text-text-main border border-border-light/30"
-                  }`}
-                >
-                  {cat}
-                </Link>
-              );
-            })}
-          </div>
-        )}
       </div>
 
       {error && (
