@@ -26,6 +26,7 @@ import {
 } from "@/lib/services/news";
 import ShareMenu, { type ShareData } from "@/components/features/ShareMenu";
 import { stripEmoji } from "@/lib/utils/text";
+import { convertToPackificTime } from "@/lib/utils/timezone";
 import { SITE_URL } from "@/lib/constants/site";
 
 export default function AdminNewsDistributionClient() {
@@ -228,7 +229,7 @@ export default function AdminNewsDistributionClient() {
         return [
           idx + 1,
           art.viralScore || 8.0,
-          sanitize(art.published_at || art.created_at),
+          sanitize(convertToPackificTime(art.published_at || art.created_at)),
           sanitize(art.headline),
           sanitize(sharedStr),
           sanitize(art.batchNumber),
@@ -320,7 +321,7 @@ export default function AdminNewsDistributionClient() {
 
             {/* Batch Filter Dropdown */}
             <div className="flex items-center gap-1.5">
-              <span className="text-xs text-text-muted font-medium">Batch:</span>
+              <span className="text-xs text-text-muted font-medium">Batch <span className="text-[10px] text-text-muted/60">(PST)</span>:</span>
               <select
                 value={selectedBatch}
                 onChange={(e) => handleBatchChange(e.target.value)}
@@ -328,11 +329,18 @@ export default function AdminNewsDistributionClient() {
                 className="px-2.5 py-1.5 bg-background border border-border rounded-lg text-xs font-mono text-text-main focus:outline-none focus:border-primary"
               >
                 <option value="all">All Batches ({totalPublishedCount || "..."})</option>
-                {distinctBatches.map(({ batch, count }) => (
-                  <option key={batch} value={batch}>
-                    {batch} ({count})
-                  </option>
-                ))}
+                {distinctBatches.map(({ batch, count }) => {
+                  // Parse the batch timestamp and convert to PST for display
+                  // Batch format is typically "YYYY-MM-DD HH:MM" in UTC
+                  const displayBatch = batch.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/)
+                    ? convertToPackificTime(`${batch}:00Z`)
+                    : batch;
+                  return (
+                    <option key={batch} value={batch}>
+                      {displayBatch} ({count})
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
@@ -427,7 +435,7 @@ export default function AdminNewsDistributionClient() {
                   <tr className="border-b border-border bg-surface-hover/60 text-text-muted font-mono font-semibold uppercase text-[11px]">
                     <th className="py-2.5 px-3 w-12 text-center border-r border-border/40">#</th>
                     <th className="py-2.5 px-3 w-16 text-center border-r border-border/40">Score</th>
-                    <th className="py-2.5 px-3 min-w-[125px] border-r border-border/40">Published</th>
+                    <th className="py-2.5 px-3 min-w-[125px] border-r border-border/40">Published <span className="text-[10px] text-text-muted/60">(PST)</span></th>
                     <th className="py-2.5 px-3 min-w-[280px] border-r border-border/40">Headline</th>
                     <th className="py-2.5 px-3 w-28 text-center border-r border-border/40">Share</th>
                     <th className="py-2.5 px-3 min-w-[140px] border-r border-border/40">Shared In</th>
@@ -476,7 +484,7 @@ export default function AdminNewsDistributionClient() {
                         {/* 3. Published Time */}
                         <td className="py-2 px-3 font-mono text-[11px] text-text-muted border-r border-border/40 whitespace-nowrap">
                           {article.published_at
-                            ? article.published_at.replace("T", " ").slice(0, 16)
+                            ? convertToPackificTime(article.published_at)
                             : "—"}
                         </td>
 
@@ -526,7 +534,9 @@ export default function AdminNewsDistributionClient() {
                             title={`Click to filter: ${article.batchNumber}`}
                             className="hover:text-primary transition-colors cursor-pointer text-left"
                           >
-                            {article.batchNumber}
+                            {article.batchNumber.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/)
+                              ? convertToPackificTime(`${article.batchNumber}:00Z`)
+                              : article.batchNumber}
                           </button>
                         </td>
 

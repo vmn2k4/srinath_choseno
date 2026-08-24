@@ -385,6 +385,16 @@ async function run() {
   console.log(`Starting ingestion of ${articles.length} news articles...`);
   const authHeaders = await getAuthHeaders();
 
+  // Batch tag for this run -- must be computed fresh each time the script
+  // runs, NOT hardcoded. A prior version of this script hardcoded a literal
+  // date/time here; every subsequent run (regardless of when it actually
+  // executed) kept stamping that same stale tag on brand-new articles,
+  // silently merging them into a days-old batch in the Admin > News
+  // Distribution dropdown (see supabase/migrations/20260824000000_auto_
+  // correct_stale_news_batch_number.sql, which also guards against this at
+  // the DB level, but fixing it here is the actual root cause).
+  const batchTimestamp = new Date().toISOString().slice(0, 16).replace('T', ' ');
+
   // Fetch existing slugs to avoid duplication
   const existingRes = await fetch(`${SUPABASE_URL}/rest/v1/news_articles?select=slug&limit=1000`, {
     headers: {
@@ -448,7 +458,7 @@ async function run() {
         breakingNews: !!article.breakingNews,
         author: article.author || { name: 'Choseno Civic News Desk', bio: 'Civic and political reporting' },
         sources: article.sources || [],
-        batch_number: '2026-08-21 08:00',
+        batch_number: batchTimestamp,
         viral_score: 9.6,
         shared_platforms: []
       }

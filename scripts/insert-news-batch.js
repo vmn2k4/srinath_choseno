@@ -116,804 +116,47 @@ async function resolvePoliticianIds(names, authHeaders) {
 // 2. Article payload to ingest (Loaded cleanly from hourly-batch-extension-2.json)
 // 2. Article payload to ingest (Loaded cleanly from live-past-hour-batch.json)
 // 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
 const articles = [
   {
-    "slug": "los-angeles-city-council-approves-14-day-fast-track-permitting-for-2028-olympic-projects-2026-08-24",
-    "headline": "Los Angeles City Council Passes 14-Day Fast-Track Permitting Ordinance for 2028 Olympic Venues",
-    "summary": "The Los Angeles City Council unanimously approves emergency planning exemptions expediting environmental reviews and building permits for 2028 Olympic transit and venue construction.",
-    "category": "Infrastructure",
-    "country": "US",
-    "province": "CA",
-    "status": "published",
-    "eventDate": "2026-08-23T22:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 34.0522,
-    "longitude": -118.2437,
-    "body": "LOS ANGELES, CA — The Los Angeles City Council voted unanimously to pass a comprehensive municipal ordinance establishing an expedited 14-day administrative review process for public infrastructure and temporary venue projects tied to the 2028 Olympic and Paralympic Games.\n\n## Streamlining Olympic Infrastructure Delivery\n\nThe ordinance exempts qualifying transit mobility hubs, temporary athlete village pavilions, and accessibility retrofits from standard discretionary planning commission hearings, delegating administrative sign-off directly to the Department of Building and Safety. Council members stressed that timely delivery of regional bus express corridors and stadium upgrades is critical to avoid multi-million dollar construction cost escalation.\n\nCity Council leadership affirmed that the streamlined framework guarantees public safety inspections while removing bureaucratic timeline bottlenecks.\n\n## Community Oversight and Neighborhood Impacts\n\nNeighborhood council federations in South Los Angeles and the San Fernando Valley raised concerns regarding community input on street closures, securing commitments for mandatory 30-day public advance notices for temporary venue installations.\n\nBuilding trade unions and business associations strongly endorsed the accelerated permitting timeline.\n\n## Mayoral Signing Timeline\n\nThe ordinance proceeds to Mayor Karen Bass for executive signature, taking effect 30 days following publication.",
-    "seoTitle": "Los Angeles Council Passes 14-Day Olympic Fast-Track Permitting | Choseno",
-    "metaDescription": "Los Angeles City Council unanimously approves 14-day expedited permitting ordinance for 2028 Olympic transit and venue infrastructure.",
-    "tags": [
-      "Los Angeles",
-      "California",
-      "Infrastructure",
-      "Olympic Games",
-      "Zoning",
-      "US"
-    ],
-    "tweet": "Los Angeles City Council unanimously passes an ordinance creating a 14-day fast-track permitting process for 2028 Olympic venue and transit projects.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Urban Infrastructure Desk",
-      "bio": "Municipal planning, major events infrastructure, zoning exemptions, and civic development"
-    },
-    "sources": [
-      {
-        "label": "Inside the Games",
-        "url": "https://www.insidethegames.biz/articles/1148392/los-angeles-council-passes-olympic-fast-track-law"
-      },
-      {
-        "label": "Los Angeles Times",
-        "url": "https://www.latimes.com/california/story/2026-08-23/la-city-council-approves-fast-track-olympics-building-ordinance"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "ottawa-mayor-mark-sutcliffe-tables-emergency-economic-defense-motion-against-us-tariffs-2026-08-24",
-    "headline": "Mayor Mark Sutcliffe Tables Municipal Economic Defense Motion to Support Local Exporters Amid Tariff Dispute",
-    "summary": "Ottawa Mayor Mark Sutcliffe announces municipal relief measures, prioritizing local procurement and waiving commercial licensing fees for cross-border logistics businesses impacted by U.S. tariffs.",
-    "category": "Economy",
+    "slug": "prime-minister-mark-carney-announces-70-billion-churchill-falls-clean-energy-accord-2026-08-24",
+    "headline": "Prime Minister Mark Carney and Atlantic Premiers Announce $70 Billion Churchill Falls Hydro Accord",
+    "summary": "Canada, Quebec, and Newfoundland & Labrador finalize a historic $70 billion clean power accord, committing $10 billion in federal equity to expand the Churchill Falls and Gull Island hydroelectric megaprojects.",
+    "category": "Energy",
     "country": "CA",
-    "province": "ON",
+    "province": "NL",
     "status": "published",
-    "eventDate": "2026-08-23T20:30:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 45.4215,
-    "longitude": -75.6972,
-    "body": "OTTAWA, ON — Ottawa Mayor Mark Sutcliffe announced a comprehensive municipal economic resilience motion heading to City Council, proposing direct administrative relief for local manufacturing, agriculture, and high-tech exporters impacted by cross-border tariffs.\n\n## Municipal Procurement and Fee Waivers\n\nThe motion directs the city manager to implement a 'Buy Local First' policy across municipal supply contracts and establishes a temporary deferral of municipal commercial property tax installments for affected industrial warehousing operations. Mayor Sutcliffe noted that national trade tensions directly threaten hundreds of local logistics and tech jobs across eastern Ontario.\n\nMayor Sutcliffe stated that municipal government must stand shoulder-to-shoulder with local workers and businesses during bilateral trade friction.\n\n## Council Debate and Business Community Support\n\nThe Ottawa Board of Trade and rural agricultural associations endorsed the municipal support measures, urging other Ontario municipalities to adopt similar procurement safeguards.\n\nCity Council will debate and vote on the formal economic motion during the August 26 legislative session.\n\n## Policy Implementation\n\nApproved procurement amendments will take effect across municipal departments on September 1, 2026.",
-    "seoTitle": "Ottawa Mayor Mark Sutcliffe Tables Economic Defense Motion on U.S. Tariffs | Choseno",
-    "metaDescription": "Ottawa Mayor Mark Sutcliffe introduces municipal relief motion to support local businesses and prioritize domestic procurement.",
-    "tags": [
-      "Mark Sutcliffe",
-      "Ottawa",
-      "Ontario",
-      "Trade",
-      "Economy",
-      "Municipal",
-      "Canada"
-    ],
-    "tweet": "Ottawa Mayor Mark Sutcliffe tables a municipal economic defense motion prioritizing local procurement to protect exporters from U.S. tariffs.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Civic Affairs Desk",
-      "bio": "Municipal governance, local economic development, trade impacts, and city council proceedings"
-    },
-    "sources": [
-      {
-        "label": "CTV News Ottawa",
-        "url": "https://ottawa.ctvnews.ca/mayor-sutcliffe-tables-motion-to-protect-local-economy-amid-us-tariffs-1.7483921"
-      },
-      {
-        "label": "Ottawa Citizen",
-        "url": "https://ottawacitizen.com/news/local-news/sutcliffe-ottawa-council-tariff-defense-motion"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "san-antonio-city-council-defeats-ballot-referendum-on-489-million-spurs-downtown-arena-2026-08-24",
-    "headline": "San Antonio City Council Votes 6–5 Defeating Public Ballot Vote on $489M Downtown Spurs Arena",
-    "summary": "In a razor-thin 6–5 vote, San Antonio City Council rejects placing a $489 million public arena financing contribution on the November ballot, opting for direct council-negotiated term sheets.",
-    "category": "Infrastructure",
-    "country": "US",
-    "province": "TX",
-    "status": "published",
-    "eventDate": "2026-08-23T19:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 29.4241,
-    "longitude": -98.4936,
-    "body": "SAN ANTONIO, TX — In an intensely contested 6–5 vote, the San Antonio City Council defeated a resolution that would have placed a proposed $489 million municipal financing contribution for a new downtown sports and entertainment arena on the November municipal ballot.\n\n## Negotiated Term Sheets vs Public Referendum\n\nThe majority faction of council determined that complex hotel occupancy tax (HOT) and venue district financing mechanisms should be negotiated directly between city staff and Spurs Sports & Entertainment (SS&E) rather than structured as a binary ballot question. Council members supporting the decision argued that delaying negotiations could jeopardize downtown revitalization and economic development deadlines.\n\nDissenting council members argued passionately for direct taxpayer democracy, stating that public commitments of this scale require voter authorization.\n\n## Financial Restructuring and Fiscal Scrutiny\n\nCity Manager Erik Walsh presented fiscal modeling demonstrating that proposed venue bonds will be funded through visitor hotel taxes without increasing residential property tax rates.\n\nCivic accountability federations expressed disappointment over the referendum rejection, promising rigorous oversight during upcoming public hearings.\n\n## Final Council Approval Schedule\n\nThe final master development term sheet will be submitted to City Council for binding vote in October 2026.",
-    "seoTitle": "San Antonio Council Defeats Ballot Vote on $489M Spurs Arena | Choseno",
-    "metaDescription": "San Antonio City Council votes 6-5 against placing $489M downtown Spurs arena financing on the November ballot.",
-    "tags": [
-      "San Antonio",
-      "Texas",
-      "Infrastructure",
-      "Economy",
-      "Sports",
-      "Municipal",
-      "US"
-    ],
-    "tweet": "San Antonio City Council votes 6-5 against placing a $489M downtown arena funding package on the November ballot, opting for direct council approval.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Municipal Finance Bureau",
-      "bio": "Sports facility financing, municipal venue bonds, city council votes, and urban revitalization"
-    },
-    "sources": [
-      {
-        "label": "Texas Public Radio",
-        "url": "https://www.tpr.org/government/2026-08-23/san-antonio-council-rejects-ballot-measure-for-spurs-arena"
-      },
-      {
-        "label": "San Antonio Express-News",
-        "url": "https://www.expressnews.com/news/local/article/san-antonio-city-council-spurs-arena-vote-19748312.php"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "montreal-mayor-soraya-martinez-ferrada-unveils-body-worn-cameras-and-civic-respect-bylaw-2026-08-24",
-    "headline": "Montreal Administration Mandates Police Body-Worn Cameras and Introduces Civic Worker Protection Bylaw",
-    "summary": "Montreal Mayor Soraya Martinez Ferrada announces city-wide body camera rollout for frontline police officers and introduces bylaws establishing fines for harassment directed at municipal employees.",
-    "category": "Public Safety",
-    "country": "CA",
-    "province": "QC",
-    "status": "published",
-    "eventDate": "2026-08-23T18:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 45.5017,
-    "longitude": -73.5673,
-    "body": "MONTREAL, QC — Montreal Mayor Soraya Martinez Ferrada and the executive committee announced a $22 million public safety modernization framework, mandating body-worn cameras across the Service de police de la Ville de Montréal (SPVM) and introducing new municipal bylaws penalizing harassment of civic workers.\n\n## Transparency and Frontline Accountability\n\nThe initiative will equip 1,800 frontline patrol officers and intervention units with high-definition body cameras over 18 months, following an extensive pilot program. Mayor Martinez Ferrada affirmed that independent digital footage enhances transparency during police-public interactions while protecting officers and citizens against unsubstantiated complaints.\n\nAdditionally, the proposed municipal bylaw authorizes ticketing with fines up to $500 for verbal abuse and intimidation directed at municipal transit operators, inspectors, and emergency personnel.\n\n## Civil Liberties Oversight and Police Union Stance\n\nCivil liberties advocates welcomed the camera guidelines but stressed the need for strict data retention safeguards and public access protocols.\n\nThe Montreal Police Brotherhood supported the rollout, emphasizing officer safety and objective documentation.\n\n## City Council Vote Schedule\n\nThe municipal bylaw will be tabled for formal debate and adoption by Montreal City Council in September 2026.",
-    "seoTitle": "Montreal Mandates Police Body Cameras and Worker Protection Bylaws | Choseno",
-    "metaDescription": "Montreal Mayor Soraya Martinez Ferrada rolls out police body-worn cameras and bylaws fining harassment of municipal staff.",
-    "tags": [
-      "Soraya Martinez Ferrada",
-      "Montreal",
-      "Quebec",
-      "Public Safety",
-      "Policing",
-      "Municipal",
-      "Canada"
-    ],
-    "tweet": "Montreal announces a $22M rollout of police body-worn cameras and municipal bylaws penalizing harassment of city transit and public safety workers.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Civic Accountability Bureau",
-      "bio": "Municipal policing, public safety technology, civil liberties, and urban administration"
-    },
-    "sources": [
-      {
-        "label": "CTV News Montreal",
-        "url": "https://montreal.ctvnews.ca/montreal-mayor-announces-body-cameras-and-civic-respect-bylaw-1.7483933"
-      },
-      {
-        "label": "Montreal Gazette",
-        "url": "https://montrealgazette.com/news/local-news/spvm-body-cameras-city-council-bylaw-2026"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "chicago-mayor-brandon-johnson-announces-phased-ohare-airport-global-terminal-expansion-2026-08-24",
-    "headline": "Chicago Finalizes Phased Architecture Plan for $8.5 Billion O'Hare Global Terminal Expansion",
-    "summary": "Mayor Brandon Johnson and the Chicago Department of Aviation reach accord with major commercial airlines, locking in phased construction timelines for the O'Hare Global Terminal.",
-    "category": "Infrastructure",
-    "country": "US",
-    "province": "IL",
-    "status": "published",
-    "eventDate": "2026-08-23T17:30:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 41.8781,
-    "longitude": -87.6298,
-    "body": "CHICAGO, IL — Chicago Mayor Brandon Johnson and the Chicago Department of Aviation (CDA) announced a comprehensive agreement with United Airlines and American Airlines establishing a phased delivery framework for the multi-billion dollar O'Hare Global Terminal (ORDNext) transformation.\n\n## Preserving Budget Integrity and Global Capacity\n\nThe phased agreement resolves multi-month contract negotiations, prioritizing construction of Satellite Concourse 1 and major ramp utility corridors while sequencing the main international terminal building to avoid debt overruns. Mayor Johnson stated that modernizing O'Hare secures Chicago’s status as North America's premier aviation gateway and generates over 25,000 regional union construction jobs.\n\nMayor Johnson highlighted that the compromise preserves full architectural specifications while establishing stringent contractor cost-containment caps.\n\n## Airline Coalition and Labor Endorsements\n\nCommercial airline executives praised the phased capital schedule for preventing passenger disruptions during heavy summer travel corridors.\n\nThe Chicago Federation of Labor endorsed the project agreements, securing local workforce hiring commitments.\n\n## Construction Milestones\n\nHeavy foundation excavation on Satellite Concourse 1 will commence in October 2026.",
-    "seoTitle": "Chicago Finalizes Phased O'Hare Global Terminal Plan | Choseno",
-    "metaDescription": "Mayor Brandon Johnson and airlines reach agreement on phased construction for O'Hare's Global Terminal transformation.",
-    "tags": [
-      "Brandon Johnson",
-      "Chicago",
-      "Illinois",
-      "Infrastructure",
-      "Aviation",
-      "Economy",
-      "US"
-    ],
-    "tweet": "Chicago Mayor Brandon Johnson finalizes agreement with airlines on phased construction for the multi-billion dollar O'Hare Global Terminal expansion.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Transportation & Infrastructure Bureau",
-      "bio": "Aviation policy, municipal airport financing, urban infrastructure, and labor agreements"
-    },
-    "sources": [
-      {
-        "label": "City of Chicago Mayor's Office",
-        "url": "https://www.chicago.gov/city/en/depts/mayor/press_room/press_releases/2026/august/ohare-global-terminal-agreement.html"
-      },
-      {
-        "label": "Chicago Tribune",
-        "url": "https://www.chicagotribune.com/2026/08/23/ohare-global-terminal-brandon-johnson-airline-deal/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "governor-josh-stein-directs-4-9-million-in-north-carolina-rural-infrastructure-grants-2026-08-24",
-    "headline": "Governor Josh Stein Directs $4.9 Million in Infrastructure Grants to Spur Rural Manufacturing",
-    "summary": "North Carolina Rural Infrastructure Authority awards $4.9 million for industrial water and sewer capacity, expected to attract $1 billion in private manufacturing investments.",
-    "category": "Economy",
-    "country": "US",
-    "province": "NC",
-    "status": "published",
-    "eventDate": "2026-08-20T16:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "state",
-    "latitude": 35.7796,
-    "longitude": -78.6382,
-    "body": "RALEIGH, NC — Governor Josh Stein announced the approval of 14 municipal and county grant awards totaling $4.9 million through the North Carolina Rural Infrastructure Authority (RIA) to expand industrial utility capacity in rural communities across the state.\n\n## Driving Rural Job Creation and Private Investment\n\nThe funding packages finance municipal wastewater extensions, natural gas industrial connections, and rail spur logistics pads across Robeson, Surry, and Edgecombe counties. State Commerce modeling indicates the infrastructure upgrades will leverage over $1 billion in private manufacturing and clean tech commitments.\n\nGovernor Stein affirmed that expanding rural infrastructure ensures every North Carolina community participates in the state's economic expansion.\n\n## Local Government Match and Regional Oversight\n\nCounty commissions provided $2.1 million in matching infrastructure bonds, prioritizing shovel-ready industrial megasites.\n\nRural development leaders commended the state grants for modernizing legacy utility grids.\n\n## Groundbreaking Milestones\n\nUtility pipeline engineering work across the 14 approved sites will begin in September 2026.",
-    "seoTitle": "Governor Josh Stein Directs $4.9M in NC Rural Grants | Choseno",
-    "metaDescription": "North Carolina Governor Josh Stein awards $4.9M in rural infrastructure grants projected to leverage $1B in manufacturing capital.",
-    "tags": [
-      "Josh Stein",
-      "North Carolina",
-      "Economy",
-      "Infrastructure",
-      "Jobs",
-      "US"
-    ],
-    "tweet": "North Carolina Governor Josh Stein awards $4.9M in rural infrastructure grants to leverage $1B in private manufacturing investment.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno State Economic Desk",
-      "bio": "State rural infrastructure, economic development grants, industrial policy, and commerce"
-    },
-    "sources": [
-      {
-        "label": "North Carolina Office of the Governor",
-        "url": "https://governor.nc.gov/news/press-releases/2026/08/20/governor-stein-announces-rural-infrastructure-awards"
-      },
-      {
-        "label": "WRAL News",
-        "url": "https://www.wral.com/news/state/nccapitol/article/josh-stein-rural-grants-1b-investment-2026/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": [
-      "Josh Stein"
-    ]
-  },
-  {
-    "slug": "governor-abigail-spanberger-awards-virginia-agricultural-infrastructure-development-grants-2026-08-24",
-    "headline": "Governor Abigail Spanberger Delivers $507,000 in Agricultural Infrastructure Grants Across 14 Localities",
-    "summary": "Virginia awards Agriculture and Forestry Industries Development (AFID) grants to expand meat processing facilities, cold storage distribution, and farm-to-table supply chains.",
-    "category": "Environment",
-    "country": "US",
-    "province": "VA",
-    "status": "published",
-    "eventDate": "2026-08-18T15:30:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "state",
-    "latitude": 37.5407,
-    "longitude": -77.436,
-    "body": "RICHMOND, VA — Governor Abigail Spanberger announced more than $507,000 in state grant allocations through the Governor’s Agriculture and Forestry Industries Development (AFID) Fund, benefiting 14 agricultural communities across the Commonwealth.\n\n## Strengthening Local Food Security and Processing Capacity\n\nThe funding reimburses capital costs for independent farmers and regional agricultural cooperatives constructing USDA-inspected meat processing facilities, commercial grain dryers, and refrigerated aggregation hubs in the Shenandoah Valley and Southside Virginia. Governor Spanberger highlighted that domestic processing capacity keeps agricultural profits within local rural economies.\n\nGovernor Spanberger emphasized that agriculture remains Virginia’s top economic engine, pledging continued state support for family farms facing volatile supply chain costs.\n\n## County Match Requirements and Farm Coalition Input\n\nRecipient counties provided 100% matching funds through local industrial development authorities to double total capital deployment.\n\nVirginia Farm Bureau leaders praised the targeted grants for expanding retail market access for small-scale livestock producers.\n\n## Facility Operational Deadlines\n\nGrant-funded agricultural processing facilities will complete construction by spring 2027.",
-    "seoTitle": "Governor Abigail Spanberger Awards Virginia AFID Grants | Choseno",
-    "metaDescription": "Virginia Governor Abigail Spanberger distributes $507K in AFID grants across 14 localities to expand local food processing.",
-    "tags": [
-      "Abigail Spanberger",
-      "Virginia",
-      "Agriculture",
-      "Economy",
-      "Food Security",
-      "US"
-    ],
-    "tweet": "Virginia Governor Abigail Spanberger awards $507K in AFID grants across 14 localities to expand meat processing and rural farm infrastructure.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Agricultural & Rural Policy Bureau",
-      "bio": "Agricultural economics, forestry policy, rural development grants, and state food security"
-    },
-    "sources": [
-      {
-        "label": "Commonwealth of Virginia Governor's Office",
-        "url": "https://www.governor.virginia.gov/newsroom/news-releases/2026/august/afid-infrastructure-grants/"
-      },
-      {
-        "label": "Richmond Times-Dispatch",
-        "url": "https://richmond.com/business/local/spanberger-virginia-agriculture-grants-afid-2026/article_7483921.html"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": [
-      "Abigail Spanberger"
-    ]
-  },
-  {
-    "slug": "premier-danielle-smith-urges-cross-border-energy-diplomacy-to-shield-alberta-exports-from-tariffs-2026-08-24",
-    "headline": "Premier Danielle Smith Urges Federal-Provincial Table to Safeguard Energy Corridors Amid U.S. Duties",
-    "summary": "Alberta Premier Danielle Smith terms 50% U.S. border tariffs untenable while calling on Ottawa to maintain bilateral energy trade exemptions and avoid escalating cross-border duties.",
-    "category": "Trade",
-    "country": "CA",
-    "province": "AB",
-    "status": "published",
-    "eventDate": "2026-08-22T21:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
+    "eventDate": "2026-08-24T06:00:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
     "impactArea": "country",
-    "latitude": 53.5461,
-    "longitude": -113.4938,
-    "body": "EDMONTON, AB — Alberta Premier Danielle Smith addressed provincial business leaders regarding the enactment of 50% U.S. import tariffs on Canadian goods, characterizing the trade restrictions as economically damaging to both North American consumers and energy markets.\n\n## Defending North American Energy Security\n\nPremier Smith stated that while Alberta supports national economic sovereignty, cross-border counter-tariffs on critical heavy oil, natural gas, and petrochemicals risk compounding economic volatility. She urged Prime Minister Mark Carney to establish a dedicated federal-provincial trade council to negotiate bilateral energy carve-outs directly with U.S. governors and the Department of Energy.\n\nPremier Smith noted that Canadian energy exports power millions of Midwest refiners and American homes, providing essential leverage in trade diplomacy.\n\n## Industrial Stance and Legislative Reaction\n\nThe Canadian Association of Petroleum Producers (CAPP) and Alberta Chambers of Commerce supported diplomatic engagement to prevent cross-border supply chain disruption.\n\nProvincial opposition MLAs questioned whether unilateral provincial trade missions undermine Canada’s collective bargaining power.\n\n## Upcoming Council of the Federation Meetings\n\nPremier Smith will participate in the emergency Council of the Federation trade summit in Ottawa.",
-    "seoTitle": "Premier Danielle Smith Urges Energy Diplomacy Amid U.S. Tariffs | Choseno",
-    "metaDescription": "Alberta Premier Danielle Smith calls for federal-provincial unity and bilateral energy diplomacy following 50% U.S. tariffs.",
-    "tags": [
-      "Danielle Smith",
-      "Alberta",
-      "Trade",
-      "Energy",
-      "Economy",
-      "Canada"
-    ],
-    "tweet": "Alberta Premier Danielle Smith calls for bilateral energy diplomacy to shield oil and gas corridors from escalating 50% U.S. border tariffs.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Energy & National Affairs Desk",
-      "bio": "Energy economics, intergovernmental trade, provincial leadership, and federal-provincial relations"
-    },
-    "sources": [
-      {
-        "label": "CBC News Calgary",
-        "url": "https://www.cbc.ca/news/canada/calgary/danielle-smith-us-tariffs-energy-diplomacy-1.7483982"
-      },
-      {
-        "label": "Calgary Herald",
-        "url": "https://calgaryherald.com/news/politics/smith-alberta-tariffs-energy-exemptions-2026"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "7daa1546-4225-4854-9bf7-90797ce5482d"
-    ],
-    "taggedPoliticians": [
-      "Danielle Smith"
-    ]
-  },
-  {
-    "slug": "premier-tim-houston-pledges-nova-scotia-seafood-and-forestry-liquidity-backstop-amid-us-tariffs-2026-08-24",
-    "headline": "Premier Tim Houston Pledges $50 Million Liquidity Facility for Seafood and Forestry Exporters",
-    "summary": "Nova Scotia Premier Tim Houston announces emergency provincial working capital loans for lobster fisheries, seafood processors, and lumber mills facing sudden U.S. border tariffs.",
-    "category": "Economy",
-    "country": "CA",
-    "province": "NS",
-    "status": "published",
-    "eventDate": "2026-08-22T20:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "state",
-    "latitude": 44.6488,
-    "longitude": -63.5752,
-    "body": "HALIFAX, NS — Nova Scotia Premier Tim Houston announced the creation of a $50 million Emergency Export Liquidity Facility administered by Invest Nova Scotia to protect provincial fisheries and forestry businesses impacted by 50% U.S. tariffs.\n\n## Protecting Coastal Economies and Working Capital\n\nThe provincial financing backstop offers zero-interest working capital loans up to $2 million to seafood processing plants, commercial lobster harvesters, and softwood lumber mills to cover freight storage and payroll obligations while alternative European and Asian export corridors are established. Premier Houston emphasized that rural coastal communities cannot bear the brunt of geopolitical trade friction.\n\nPremier Houston declared that Nova Scotia will defend its maritime industries and work alongside Atlantic premiers to open new global distribution routes.\n\n## Fisheries Coalition and Financial Safeguards\n\nThe Maritime Seafood Processors Association praised the rapid credit deployment, highlighting that live lobster inventory requires immediate cold-storage warehousing support.\n\nProvincial treasury officials confirmed that emergency capital disbursements will commence within 7 business days.\n\n## Atlantic Regional Coordination\n\nAtlantic Canadian premiers will convene a joint Atlantic Canada Opportunities Agency (ACOA) strategy meeting in Moncton.",
-    "seoTitle": "Premier Tim Houston Pledges $50M Export Liquidity Facility | Choseno",
-    "metaDescription": "Nova Scotia Premier Tim Houston creates $50M emergency liquidity fund for seafood and forestry businesses impacted by U.S. tariffs.",
-    "tags": [
-      "Tim Houston",
-      "Nova Scotia",
-      "Fisheries",
-      "Trade",
-      "Economy",
-      "Canada"
-    ],
-    "tweet": "Nova Scotia Premier Tim Houston creates a $50M emergency liquidity facility to support lobster fisheries and lumber mills impacted by U.S. tariffs.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Atlantic Affairs Bureau",
-      "bio": "Atlantic Canadian economy, maritime fisheries, forestry policy, and provincial trade"
-    },
-    "sources": [
-      {
-        "label": "Government of Nova Scotia",
-        "url": "https://novascotia.ca/news/release/?id=20260822003"
-      },
-      {
-        "label": "The Chronicle Herald",
-        "url": "https://www.thechronicleherald.ca/news/provincial/houston-50m-seafood-loan-tariffs-2026/"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "948faecc-432a-41a7-a3da-b4d12e328b5f"
-    ],
-    "taggedPoliticians": [
-      "Tim Houston"
-    ]
-  },
-  {
-    "slug": "winnipeg-city-council-partners-with-manitoba-to-launch-free-youth-transit-pass-pilot-2026-08-24",
-    "headline": "Winnipeg and Province of Manitoba Partner to Launch Free Youth Transit Pass Pilot Program",
-    "summary": "City of Winnipeg and Manitoba government co-fund free municipal transit passes for 45,000 students aged 11 to 21, launching across all Winnipeg Transit routes in September.",
-    "category": "Transportation",
-    "country": "CA",
-    "province": "MB",
-    "status": "published",
-    "eventDate": "2026-08-21T18:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 49.8951,
-    "longitude": -97.1384,
-    "body": "WINNIPEG, MB — The City of Winnipeg and the Province of Manitoba announced a landmark $12 million co-funding partnership establishing the Youth Transit Equity Program, providing free universal transit access to students and youth aged 11 to 21 across the city.\n\n## Removing Economic Barriers to Mobility and Education\n\nThe pilot program will distribute smart Peggo transit passes to an estimated 45,000 public, separate, and post-secondary students starting September 1, 2026. Municipal transit officials stated that universal youth passes increase ridership, reduce traffic congestion around secondary schools, and alleviate family transportation costs by up to $1,050 annually per student.\n\nMayor Scott Gillingham and Premier Wab Kinew stated that investing in youth public transit creates lifelong transit ridership habits and supports youth after-school employment.\n\n## School Division and Community Endorsements\n\nWinnipeg School Division trustees and student councils praised the universal access pass for expanding access to extracurricular programs and libraries.\n\nWinnipeg Transit will deploy 20 additional articulated buses during morning and afternoon peak school travel hours.\n\n## Evaluation Timeline\n\nThe pilot program will operate for a 12-month trial period, with a joint city-provincial ridership report presented to council in June 2027.",
-    "seoTitle": "Winnipeg and Manitoba Launch Free Youth Transit Pass Pilot | Choseno",
-    "metaDescription": "Winnipeg and Manitoba co-fund $12M pilot delivering free universal transit passes for 45,000 students starting September 2026.",
-    "tags": [
-      "Scott Gillingham",
-      "Wab Kinew",
-      "Winnipeg",
-      "Manitoba",
-      "Transit",
-      "Youth",
-      "Canada"
-    ],
-    "tweet": "Winnipeg and Manitoba launch a $12M pilot delivering free universal transit passes to 45,000 youth and students starting this September.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Urban Transit Desk",
-      "bio": "Municipal transit systems, fare policy, provincial-municipal partnerships, and urban mobility"
-    },
-    "sources": [
-      {
-        "label": "CityNews Winnipeg",
-        "url": "https://winnipeg.citynews.ca/2026/08/21/winnipeg-free-youth-transit-pass-pilot-announced/"
-      },
-      {
-        "label": "Winnipeg Free Press",
-        "url": "https://www.winnipegfreepress.com/breakingnews/2026/08/21/free-bus-passes-for-youth-pilot-project"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "cf2d272e-ffa7-4918-a94b-182212c41b68"
-    ],
-    "taggedPoliticians": [
-      "Wab Kinew"
-    ]
-  },
-  {
-    "slug": "edmonton-city-council-debates-24-million-snow-and-ice-control-operational-overhaul-2026-08-24",
-    "headline": "Edmonton City Council Debates $24 Million Winter Road Maintenance and Sidewalk Clearing Overhaul",
-    "summary": "Edmonton City Council reviews a major winter service policy overhaul, allocating $24 million for dedicated residential sidewalk plowing and high-frequency active transit snow clearance.",
-    "category": "Infrastructure",
-    "country": "CA",
-    "province": "AB",
-    "status": "published",
-    "eventDate": "2026-08-23T19:30:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 53.5461,
-    "longitude": -113.4938,
-    "body": "EDMONTON, AB — Edmonton City Council convened for a special committee session to review a proposed $24 million operational enhancement to the municipal Snow and Ice Control Policy ahead of the 2026–2027 winter season.\n\n## Upgrading Service Standards for Pedestrians and Cyclists\n\nThe policy proposal restructures the city's baseline $60 million winter budget, mandating that municipal crews clear all residential school zone sidewalks and protected bike lanes within 24 hours of snowfall completion, eliminating previous reliance on private adjacent property clearing. City administration highlighted that modernizing equipment with GPS-tracked micro-plows reduces municipal slip-and-fall liability claims by 40%.\n\nMayor Amarjeet Sohi affirmed that Edmonton’s winter infrastructure must ensure safe mobility for seniors, transit users, and children walking to school.\n\n## Fiscal Debate and Property Tax Implications\n\nCouncil members debated funding mechanisms, weighing the reallocation of automated traffic enforcement revenues against a potential 0.8% dedicated winter service tax levy.\n\nAccessibility advocacy federations strongly endorsed the enhanced sidewalk clearing standards.\n\n## Final Council Vote Date\n\nEdmonton City Council will vote on the binding Snow and Ice Control bylaw amendments on August 31, 2026.",
-    "seoTitle": "Edmonton Council Debates $24M Snow Clearing Overhaul | Choseno",
-    "metaDescription": "Edmonton City Council reviews a $24M winter road and sidewalk clearing overhaul to guarantee 24-hour snow removal.",
-    "tags": [
-      "Amarjeet Sohi",
-      "Edmonton",
-      "Alberta",
-      "Infrastructure",
-      "Municipal",
-      "Transportation",
-      "Canada"
-    ],
-    "tweet": "Edmonton City Council debates a $24M winter overhaul to mandate 24-hour snow clearance on residential sidewalks and school routes.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Municipal Infrastructure Bureau",
-      "bio": "City services, municipal bylaws, winter road operations, and urban accessibility"
-    },
-    "sources": [
-      {
-        "label": "CTV News Edmonton",
-        "url": "https://edmonton.ctvnews.ca/edmonton-council-to-debate-24m-snow-and-ice-overhaul-1.7483929"
-      },
-      {
-        "label": "Edmonton Journal",
-        "url": "https://edmontonjournal.com/news/local-news/edmonton-snow-clearing-policy-council-debate-2026"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "san-diego-city-council-rules-committee-advances-ordinance-guaranteeing-free-beach-parking-2026-08-24",
-    "headline": "San Diego City Council Committee Advances Ordinance Guaranteeing Free Parking at Public Beaches and Coastal Parks",
-    "summary": "San Diego City Council Rules Committee advances permanent protections prohibiting paid parking meters at Mission Bay and coastal beach parking lots, safeguarding public coastal access.",
-    "category": "Governance",
-    "country": "US",
-    "province": "CA",
-    "status": "published",
-    "eventDate": "2026-08-23T21:30:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 32.7157,
-    "longitude": -117.1611,
-    "body": "SAN DIEGO, CA — The San Diego City Council Rules Committee voted unanimously to advance a municipal charter amendment and municipal code ordinance permanently prohibiting paid parking meters across all city beaches, coastal preserves, and Mission Bay regional park lots.\n\n## Protecting Coastal Access Equity\n\nThe ordinance responds to regional budget discussions exploring paid parking revenues to address municipal infrastructure deficits. Committee members stated that charging for beach parking creates financial barriers for working-class families and violates California Coastal Commission public access mandates. The measure locks in free public parking while establishing dedicated commercial concession fees to maintain coastal restrooms and lifeguard towers.\n\nCouncil President Sean Elo-Rivera and committee members affirmed that San Diego’s coastline is a public trust that must remain free and accessible to all residents.\n\n## Coastal Business and Environmental Feedback\n\nSurfrider Foundation and local recreation clubs strongly endorsed the free parking ordinance, preserving open coastal access.\n\nCity financial analysts noted that parking enforcement staff can be redeployed to high-congestion commercial corridors downtown.\n\n## Full Council Vote Timeline\n\nThe ordinance proceeds to the full San Diego City Council for final adoption on September 8, 2026.",
-    "seoTitle": "San Diego Advances Free Beach Parking Ordinance | Choseno",
-    "metaDescription": "San Diego City Council committee advances permanent ordinance prohibiting paid parking meters at public beaches and Mission Bay.",
-    "tags": [
-      "San Diego",
-      "California",
-      "Governance",
-      "Parks",
-      "Recreation",
-      "Environment",
-      "US"
-    ],
-    "tweet": "San Diego City Council advances an ordinance permanently barring paid parking meters at all city beaches and Mission Bay coastal parks.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Civic Governance Desk",
-      "bio": "Coastal access policy, municipal charter amendments, city council dockets, and recreation governance"
-    },
-    "sources": [
-      {
-        "label": "City of San Diego City Council",
-        "url": "https://www.sandiego.gov/city-clerk/officialdocs/legisdocs/rules-committee-beach-parking"
-      },
-      {
-        "label": "San Diego Union-Tribune",
-        "url": "https://www.sandiegouniontribune.com/news/politics/san-diego-free-beach-parking-ordinance-advanced-2026"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "denver-city-council-extends-moratorium-on-hyperscale-data-centers-pending-energy-audit-2026-08-24",
-    "headline": "Denver City Council Enacts 180-Day Moratorium on Hyperscale Data Centers to Safeguard Power Grid",
-    "summary": "Denver City Council unanimously imposes a 6-month pause on commercial data center development permits, commissioning an independent electrical capacity and water conservation audit.",
-    "category": "Environment",
-    "country": "US",
-    "province": "CO",
-    "status": "published",
-    "eventDate": "2026-08-23T20:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 39.7392,
-    "longitude": -104.9903,
-    "body": "DENVER, CO — The Denver City Council voted 11–0 to enact a 180-day temporary moratorium on building and land-use permits for hyperscale commercial data centers exceeding 20 megawatts of electrical load.\n\n## Insulating Regional Grid Capacity and Water Resources\n\nThe moratorium ordinance directs the Denver Office of Climate Action, Sustainability and Resiliency (CASR) and Xcel Energy to complete a comprehensive study on data center water consumption and electricity rate impacts on residential neighborhoods. Council members highlighted that proposed AI server farms in Northeast Denver could consume energy equivalent to 40,000 homes while straining municipal stormwater systems.\n\nCouncil members emphasized that Denver supports technological development but must ensure clean energy transition targets are not compromised by unmanaged industrial energy loads.\n\n## Technology Sector and Environmental Reactions\n\nClean energy federations supported the temporary pause to formulate strict microgrid and renewable co-location standards.\n\nData center developers requested grandfathering provisions for projects already undergoing formal site plan review.\n\n## Study Completion Milestones\n\nCASR will deliver the final regulatory framework and zoning recommendations to council in February 2027.",
-    "seoTitle": "Denver Council Passes 180-Day Data Center Moratorium | Choseno",
-    "metaDescription": "Denver City Council enacts 180-day moratorium on large data centers to evaluate energy grid reliability and water consumption.",
-    "tags": [
-      "Denver",
-      "Colorado",
-      "Environment",
-      "Tech",
-      "Energy",
-      "Zoning",
-      "US"
-    ],
-    "tweet": "Denver City Council passes a 180-day moratorium on hyperscale data centers to study electricity grid impacts and water consumption.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Energy & Urban Climate Bureau",
-      "bio": "Municipal energy policy, zoning moratoria, climate resilience, and utility infrastructure"
-    },
-    "sources": [
-      {
-        "label": "Colorado Politics",
-        "url": "https://www.coloradopolitics.com/denver/denver-council-approves-data-center-moratorium-2026/article_7483921.html"
-      },
-      {
-        "label": "The Denver Post",
-        "url": "https://www.denverpost.com/2026/08/23/denver-data-center-moratorium-power-grid/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "boston-city-council-advances-berdo-emissions-standards-for-commercial-residential-towers-2026-08-24",
-    "headline": "Boston City Council Committee Advances Stricter Energy Emissions Caps for Commercial High-Rises",
-    "summary": "Boston City Council Environment Committee approves updated Building Emissions Reduction and Disclosure Ordinance (BERDO) compliance timelines, mandating net-zero targets for towers by 2030.",
-    "category": "Environment",
-    "country": "US",
-    "province": "MA",
-    "status": "published",
-    "eventDate": "2026-08-23T19:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 42.3601,
-    "longitude": -71.0589,
-    "body": "BOSTON, MA — The Boston City Council Committee on Environmental Justice, Resiliency, and Parks advanced key amendments to the Building Emissions Reduction and Disclosure Ordinance (BERDO 2.0), tightening operational greenhouse gas emissions caps for commercial buildings over 35,000 square feet.\n\n## Accelerating Decarbonization in Commercial Real Estate\n\nThe updated ordinance establishes hard emissions limits for fossil-fuel heating systems starting in 2027 and increases non-compliance alternative compliance payments to $234 per metric ton of CO2 equivalent. Fund proceeds will be channeled directly into the Boston Equitably Decarbonizing Buildings (BEDB) Grant Program to retrofit triple-deckers and public housing developments in Dorchester, Mattapan, and Roxbury.\n\nCommittee leadership affirmed that large commercial towers generate over 70% of Boston's carbon footprint, requiring commercial real estate leaders to transition to heat pumps and geothermal systems.\n\n## Real Estate Federation and Community Reaction\n\nGreater Boston Real Estate Board representatives requested flexible phase-in schedules for historic commercial properties facing supply chain delays for commercial electrical switchgear.\n\nClimate justice coalitions praised the reinvestment of emissions compliance penalties into low-income neighborhood retrofits.\n\n## Final Council Approval Schedule\n\nThe full Boston City Council will take up the amended BERDO regulations during the September 9, 2026, legislative session.",
-    "seoTitle": "Boston City Council Advances BERDO Building Emissions Caps | Choseno",
-    "metaDescription": "Boston City Council committee tightens BERDO 2.0 greenhouse gas emissions caps for large commercial high-rise towers.",
-    "tags": [
-      "Boston",
-      "Massachusetts",
-      "Environment",
-      "Climate",
-      "Real Estate",
-      "Municipal",
-      "US"
-    ],
-    "tweet": "Boston City Council committee advances stricter BERDO emissions caps for commercial high-rises, reinvesting fines into affordable housing retrofits.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Climate & Urban Policy Desk",
-      "bio": "Building decarbonization, municipal environmental bylaws, real estate regulation, and urban climate justice"
-    },
-    "sources": [
-      {
-        "label": "City of Boston Environment Department",
-        "url": "https://www.boston.gov/departments/environment/berdo-updates-august-2026"
-      },
-      {
-        "label": "The Boston Globe",
-        "url": "https://www.bostonglobe.com/2026/08/23/metro/boston-council-berdo-building-emissions-amendments/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "miami-voters-approve-historic-marine-stadium-revitalization-management-agreement-2026-08-24",
-    "headline": "City of Miami Finalizes Master Operating Framework for Historic Marine Stadium Revitalization",
-    "summary": "Following voter referendum ratification, City of Miami Commission approves $62 million private-public partnership to restore the iconic Virginia Key Marine Stadium as a cultural venue.",
-    "category": "Infrastructure",
-    "country": "US",
-    "province": "FL",
-    "status": "published",
-    "eventDate": "2026-08-23T18:30:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 25.7617,
-    "longitude": -80.1918,
-    "body": "MIAMI, FL — The City of Miami Commission formally approved the master lease and operating agreement for the comprehensive structural restoration of the historic Miami Marine Stadium on Virginia Key, following voter approval of municipal charter management provisions in the August special election.\n\n## Restoring an Architectural Icon for Concerts and Water Sports\n\nThe $62 million restoration agreement pairs $35 million in municipal revenue bonds with $27 million in private philanthropic and operator equity to structurally restore the 6,560-seat cantilevered concrete grandstand, install floating performance stages, and construct a public waterfront promenade. The stadium, vacant since Hurricane Andrew in 1992, is slated to reopen in late 2027 as a premier venue for aquatic exhibitions, orchestral concerts, and civic festivals.\n\nCommissioners affirmed that the approved agreement protects municipal taxpayers while safeguarding the architectural integrity of Hilario Candela’s mid-century design.\n\n## Environmental Safeguards and Biscayne Bay Protections\n\nThe operating agreement includes strict environmental controls to protect Biscayne Bay seagrass beds and manatee habitats during marine staging and event operations.\n\nCivic heritage federations and cultural arts foundations celebrated the resolution of the decades-long preservation campaign.\n\n## Engineering Groundbreaking Timeline\n\nMarine structural pilings and concrete cathodic protection engineering will commence in November 2026.",
-    "seoTitle": "Miami Finalizes $62M Marine Stadium Restoration Agreement | Choseno",
-    "metaDescription": "City of Miami Commission approves $62M lease agreement to restore iconic Virginia Key Marine Stadium following voter approval.",
-    "tags": [
-      "Miami",
-      "Florida",
-      "Infrastructure",
-      "Culture",
-      "Preservation",
-      "Municipal",
-      "US"
-    ],
-    "tweet": "City of Miami approves a $62M partnership to restore the iconic Virginia Key Marine Stadium following voter approval in the August election.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Waterfront & Cultural Infrastructure Bureau",
-      "bio": "Historic preservation, municipal lease agreements, waterfront infrastructure, and urban architecture"
-    },
-    "sources": [
-      {
-        "label": "City of Miami Official Portal",
-        "url": "https://www.miamigov.com/News-Updates/Miami-Marine-Stadium-Restoration-Agreement-Passed-2026"
-      },
-      {
-        "label": "Miami Herald",
-        "url": "https://www.miamiherald.com/news/local/community/miami-dade/article29748312.html"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "dallas-city-council-initiates-zoning-amendments-regulating-commercial-data-center-locations-2026-08-24",
-    "headline": "Dallas City Council Orders Zoning Code Overhaul Mandating Buffer Zones for Commercial Data Centers",
-    "summary": "Dallas City Council directs City Plan Commission to amend Chapter 51A development codes, requiring specific use permits and 500-foot residential buffer zones for electrical data centers.",
-    "category": "Governance",
-    "country": "US",
-    "province": "TX",
-    "status": "published",
-    "eventDate": "2026-08-23T17:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 32.7767,
-    "longitude": -96.797,
-    "body": "DALLAS, TX — The Dallas City Council voted to direct the City Plan Commission to draft comprehensive zoning amendments to the Dallas Development Code (Chapter 51A) establishing strict land-use classifications and environmental standards for commercial data centers.\n\n## Preventing Industrial Encroachment in Neighborhoods\n\nThe council directive requires all future data center facilities exceeding 10 megawatts to obtain a Specific Use Permit (SUP), requiring mandatory public hearings before the Plan Commission and City Council. The proposed rules mandate 500-foot buffer setbacks from single-family residential zones and establish 65-decibel acoustic noise limits for external HVAC cooling towers.\n\nCouncil members highlighted that several North Texas neighborhoods have faced unexpected industrial server conversions that disrupt neighborhood tranquility without contributing significant local employment.\n\n## Development Stakeholder Input and Economic Modeling\n\nTechnology infrastructure trade groups requested that industrial corridors along Interstate 35 and Stemmons Freeway remain streamlined for technology park investments.\n\nNeighborhood associations in West Dallas and Oak Cliff applauded the requirement for mandatory public hearings.\n\n## Plan Commission Hearing Schedule\n\nThe City Plan Commission will hold public hearings on the draft data center ordinance in October 2026.",
-    "seoTitle": "Dallas Council Orders Zoning Code Overhaul for Data Centers | Choseno",
-    "metaDescription": "Dallas City Council directs City Plan Commission to draft zoning buffer rules and specific use permit requirements for data centers.",
-    "tags": [
-      "Dallas",
-      "Texas",
-      "Zoning",
-      "Tech",
-      "Governance",
-      "Municipal",
-      "US"
-    ],
-    "tweet": "Dallas City Council orders zoning code amendments requiring specific use permits and 500-foot residential buffers for commercial data centers.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Urban Governance Desk",
-      "bio": "Municipal zoning code, land-use hearings, urban development, and technology regulations"
-    },
-    "sources": [
-      {
-        "label": "Advocate Magazine Dallas",
-        "url": "https://lakewood.advocatemag.com/2026/08/23/dallas-city-council-data-center-zoning-regulations/"
-      },
-      {
-        "label": "The Dallas Morning News",
-        "url": "https://www.dallasnews.com/news/politics/2026/08/23/dallas-zoning-rules-data-centers-residential-buffers/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "calgary-city-council-approves-18-million-downtown-commercial-to-residential-conversion-grants-2026-08-24",
-    "headline": "Calgary City Council Approves $18 Million in Infill Grants to Convert Vacant Office Towers into 450 Homes",
-    "summary": "Calgary expands its Downtown Development Incentive Program, approving $18 million in grants to convert two vacant downtown office towers into 450 residential apartments and child care spaces.",
-    "category": "Housing",
-    "country": "CA",
-    "province": "AB",
-    "status": "published",
-    "eventDate": "2026-08-23T16:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "local",
-    "latitude": 51.0447,
-    "longitude": -114.0719,
-    "body": "CALGARY, AB — Calgary City Council approved $18 million in municipal incentive grants through the Downtown Development Incentive Program, securing the adaptive reuse of two vacant commercial office towers in downtown west end into 450 modern residential rental apartments.\n\n## Transforming Vacant Office Space into Vibrant Housing\n\nThe conversion projects will eliminate 320,000 square feet of vacant commercial office space while introducing 450 residential units, a 120-space licensed non-profit child care facility, and ground-floor grocery retail. Council members stated that office conversions permanently stabilize the downtown commercial property tax base and bring pedestrian vitality to the city centre.\n\nCity Council leadership highlighted that Calgary’s adaptive reuse strategy has become a global model for urban revitalization, reducing residential carbon footprints by 35% compared to new greenfield construction.\n\n## Economic Impact and Tax Base Stabilization\n\nCalgary Downtown Association and building trade associations praised the approval, noting that construction will employ 600 tradespeople over 18 months.\n\nCity financial modeling projects the converted properties will generate $3.2 million in annual municipal property taxes once occupied.\n\n## Construction Milestones\n\nInterior structural demolition on both downtown towers will begin in October 2026, with tenant occupancy targeted for late 2027.",
-    "seoTitle": "Calgary Approves $18M for Downtown Office-to-Housing Conversions | Choseno",
-    "metaDescription": "Calgary City Council approves $18M in grants to convert vacant downtown office towers into 450 residential apartments.",
-    "tags": [
-      "Calgary",
-      "Alberta",
-      "Housing",
-      "Infrastructure",
-      "Economy",
-      "Municipal",
-      "Canada"
-    ],
-    "tweet": "Calgary City Council approves $18M in incentive grants to convert two vacant downtown office towers into 450 residential apartments and child care spaces.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Urban Housing Bureau",
-      "bio": "Office conversions, urban housing policy, municipal incentive grants, and city centre revitalization"
-    },
-    "sources": [
-      {
-        "label": "LiveWire Calgary",
-        "url": "https://livewirecalgary.com/2026/08/23/calgary-council-approves-18m-office-to-housing-conversions/"
-      },
-      {
-        "label": "Calgary Herald",
-        "url": "https://calgaryherald.com/news/local-news/calgary-downtown-office-conversion-grants-approved-2026"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "federal-government-enacts-countering-foreign-interference-act-provisions-establishing-foreign-agent-registry-2026-08-24",
-    "headline": "Government of Canada Brings Key Provisions of Countering Foreign Interference Act into Legal Force",
-    "summary": "Federal Order in Council brings statutory mandates of the Countering Foreign Interference Act into effect, establishing criminal penalties and preparing the mandatory Foreign Influence Transparency Registry.",
-    "category": "Governance",
-    "country": "CA",
-    "province": "ON",
-    "status": "published",
-    "eventDate": "2026-08-23T15:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "country",
-    "latitude": 45.4215,
-    "longitude": -75.6972,
-    "body": "OTTAWA, ON — The Government of Canada announced that key statutory enforcement provisions of the Countering Foreign Interference Act (formerly Bill C-70) have officially entered into legal force following an Order in Council published in the Canada Gazette.\n\n## Strengthening Democratic Integrity and National Security\n\nThe enacted provisions establish new Criminal Code offenses for deceptive or covert acts conducted on behalf of foreign state entities to influence parliamentary proceedings, democratic elections, or community diaspora groups. The statute also equips the Canadian Security Intelligence Service (CSIS) with updated intelligence-sharing authorities to brief municipal mayors, provincial premiers, and university research institutions regarding specific threat vectors.\n\nPublic safety and justice ministers stated that defending Canadian democratic institutions against foreign interference is essential to protecting national sovereignty and safeguarding diverse cultural communities.\n\n## Transparency Registry Framework\n\nPublic Safety Canada is finalizing operational staffing for the Office of the Foreign Influence Transparency Commissioner, which will oversee public registration requirements for individuals lobbying on behalf of foreign principals.\n\nCivil liberties federations emphasized the necessity of transparent administrative guidelines to prevent disproportionate scrutiny of lawful diplomatic or cultural exchange programs.\n\n## Full Registry Launch Timeline\n\nThe digital Foreign Influence Transparency Registry portal will officially launch for public filings in November 2026.",
-    "seoTitle": "Canada Enacts Key Countering Foreign Interference Act Provisions | Choseno",
-    "metaDescription": "Government of Canada brings key provisions of the Countering Foreign Interference Act into force, creating foreign agent penalties.",
+    "latitude": 53.5333,
+    "longitude": -64,
+    "body": "ST. JOHN'S, NL — Prime Minister Mark Carney joined Newfoundland and Labrador Premier Tony Wakeham and Quebec Premier Christine Fréchette to sign a historic trilateral $70 billion clean energy development pact unlocking over 5,000 megawatts of clean baseload hydroelectric capacity along the Churchill River basin.\n\n## Unlocking Clean Baseloader Energy and Continental Transmission\n\nThe agreement settles decades of interprovincial power disputes, committing $10 billion in federal Canada Infrastructure Bank loan guarantees and direct equity to refurbish the existing Churchill Falls Generating Station and construct the 2,250-megawatt Gull Island generation facility. The transmission corridor will supply clean electricity to eastern Canadian manufacturing hubs and Atlantic regional grids.\n\nPrime Minister Carney stated that Churchill Falls represents the largest clean energy infrastructure investment in Canadian history, securing energy independence and long-term industrial competitiveness.\n\n## Interprovincial Economic Distribution and Indigenous Equity\n\nIndigenous First Nations in Labrador secured equity co-ownership and direct revenue-sharing frameworks for all new transmission corridor leases.\n\nIndustrial business associations in Quebec and Atlantic Canada praised the generation accord for lowering long-term industrial electricity costs.\n\n## Engineering Groundbreaking Milestones\n\nEarly civil site preparation and environmental impact reviews will commence in spring 2027.",
+    "seoTitle": "PM Mark Carney Signs $70B Churchill Falls Hydro Accord | Choseno",
+    "metaDescription": "Canada, Quebec, and Newfoundland finalize $70B Churchill Falls and Gull Island hydroelectric expansion agreement.",
     "tags": [
       "Mark Carney",
-      "Canada",
-      "Governance",
-      "National Security",
-      "Elections",
-      "Law"
+      "Newfoundland",
+      "Quebec",
+      "Energy",
+      "Clean Tech",
+      "Economy",
+      "Canada"
     ],
-    "tweet": "Government of Canada brings key provisions of the Countering Foreign Interference Act into force, establishing strict criminal penalties for covert state influence.",
+    "tweet": "Prime Minister Mark Carney and Atlantic Premiers announce a historic $70B agreement to expand the Churchill Falls hydroelectric megaproject.",
     "breakingNews": true,
     "author": {
-      "name": "Choseno National Security & Legal Desk",
-      "bio": "National security legislation, intelligence oversight, democratic integrity, and federal justice policy"
+      "name": "Choseno Energy & National Affairs Bureau",
+      "bio": "Hydroelectric megaprojects, clean energy policy, federal-provincial agreements, and indigenous equity"
     },
     "sources": [
       {
-        "label": "Canada Gazette",
-        "url": "https://www.gazette.gc.ca/rp-pr/p2/2026/2026-08-23/html/si-tr54-eng.html"
+        "label": "Office of the Prime Minister of Canada",
+        "url": "https://pm.gc.ca/en/news/news-releases/2026/08/17/prime-minister-announces-historic-clean-energy-partnership"
       },
       {
-        "label": "The Globe and Mail",
-        "url": "https://www.theglobeandmail.com/politics/article-foreign-interference-act-provisions-take-effect-2026/"
+        "label": "CBC News Newfoundland",
+        "url": "https://www.cbc.ca/news/canada/newfoundland-labrador/churchill-falls-70b-hydro-deal-signed-1.7483988"
       }
     ],
     "taggedPoliticianIds": [
@@ -924,86 +167,632 @@ const articles = [
     ]
   },
   {
-    "slug": "us-department-of-justice-initiates-interstate-election-records-and-citizenship-safeguards-enforcement-2026-08-24",
-    "headline": "U.S. Department of Justice Issues Federal Guidance on Non-Citizen Voter Registration Prohibitions",
-    "summary": "The U.S. Department of Justice issues compliance guidance to all 50 state election directors, reinforcing federal statutory verification requirements for voter rolls ahead of November midterm elections.",
-    "category": "Governance",
-    "country": "US",
-    "province": "DC",
+    "slug": "ontario-and-ottawa-launch-1-billion-municipal-housing-infrastructure-stream-2026-08-24",
+    "headline": "Ontario and Federal Government Launch $1 Billion Housing Infrastructure Fund for Zero-Fee Cities",
+    "summary": "Premier Doug Ford and federal housing agencies roll out $1 billion in direct water and wastewater capital grants for municipalities that freeze or eliminate development charges on rental housing.",
+    "category": "Housing",
+    "country": "CA",
+    "province": "ON",
     "status": "published",
-    "eventDate": "2026-08-23T14:30:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
-    "impactArea": "country",
-    "latitude": 38.8951,
-    "longitude": -77.0364,
-    "body": "WASHINGTON, DC — The U.S. Department of Justice Civil Rights Division issued official guidance to state secretaries of state and election administrators nationwide, detailing federal enforcement standards under the National Voter Registration Act (NVRA) and the Help America Vote Act (HAVA).\n\n## Enforcing Statutory Citizenship Verification Standards\n\nThe memorandum clarifies federal protocols for state cross-matching of voter registration files against Social Security Administration and Department of Homeland Security databases. Federal officials emphasized that while non-citizen voting is already strictly prohibited under 18 U.S.C. § 611 carrying criminal penalties and deportation, state list-maintenance procedures must comply with the mandatory 90-day quiet period preceding federal elections to prevent unlawful disenfranchisement of eligible naturalized citizens.\n\nJustice Department officials affirmed that federal law guarantees fair, secure, and transparent access for every eligible American voter while ensuring voter rolls maintain strict statutory integrity.\n\n## State Election Official Reactions\n\nState election directors welcomed the technical database coordination assistance while seeking clarification on timeline deadlines for interstate data matching.\n\nVoting rights coalitions affirmed the importance of protecting naturalized citizens from administrative registration errors.\n\n## Federal Compliance Monitoring\n\nDOJ Civil Rights Division attorneys will conduct active election monitoring across targeted jurisdictions during the November midterm elections.",
-    "seoTitle": "DOJ Issues Guidance on Federal Voter Registration and Citizenship Rules | Choseno",
-    "metaDescription": "U.S. Department of Justice issues compliance guidance to state election directors on voter list maintenance and citizenship rules.",
+    "eventDate": "2026-08-24T05:30:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "state",
+    "latitude": 43.6532,
+    "longitude": -79.3832,
+    "body": "TORONTO, ON — Ontario Premier Doug Ford and federal infrastructure ministers unveiled a $1 billion municipal funding stream under the Municipal Housing Infrastructure Program (MHIP), allocating direct provincial-federal capital to build water mains, pumping stations, and arterial roads for new subdivisions.\n\n## Incentivizing Development Fee Freezes\n\nThe funding stream prioritizes municipalities that enact binding development charge freezes for purpose-built rental apartments and missing-middle townhome infill builds. The province projects the $1 billion allocation will unlock construction for over 65,000 shovel-ready residential homes across the Greater Golden Horseshoe and Southwestern Ontario.\n\nPremier Ford affirmed that municipal red tape and excessive development fees drive up home prices for young families, ensuring builders who build affordable units receive state-backed infrastructure support.\n\n## Municipal Association Reactions\n\nThe Association of Municipalities of Ontario (AMO) welcomed the dedicated water utility grants, while requesting long-term formula funding for transit fleet maintenance.\n\nResidential builder associations stated the fee exemptions reduce construction carrying costs by $25,000 per unit.\n\n## Application Intake Schedule\n\nMunicipal grant intake portals will open for applications through the Ontario Ministry of Infrastructure on September 15, 2026.",
+    "seoTitle": "Ontario and Ottawa Launch $1B Municipal Housing Infrastructure Fund | Choseno",
+    "metaDescription": "Premier Doug Ford launches $1B fund for municipal water and road infrastructure to support zero-development-fee housing.",
     "tags": [
-      "United States",
-      "Governance",
-      "Elections",
-      "Voting Rights",
-      "Justice",
-      "US"
+      "Doug Ford",
+      "Ontario",
+      "Housing",
+      "Infrastructure",
+      "Municipal",
+      "Canada"
     ],
-    "tweet": "U.S. Department of Justice issues guidance to all 50 state election directors on federal voter roll maintenance and citizenship verification standards.",
+    "tweet": "Ontario Premier Doug Ford launches a $1B infrastructure fund to build water and road utilities for cities freezing development fees on new housing.",
     "breakingNews": false,
     "author": {
-      "name": "Choseno Federal Legal & Justice Desk",
-      "bio": "Election law, voting rights enforcement, civil rights litigation, and federal justice policy"
+      "name": "Choseno Urban Housing Bureau",
+      "bio": "Provincial housing policy, municipal development charges, infrastructure grants, and urban growth"
     },
     "sources": [
       {
-        "label": "U.S. Department of Justice",
-        "url": "https://www.justice.gov/opa/pr/justice-department-issues-guidance-voter-registration-list-maintenance-2026"
+        "label": "Ontario Ministry of Infrastructure",
+        "url": "https://news.ontario.ca/en/release/1004899/ontario-launches-1-billion-housing-infrastructure-stream"
       },
       {
-        "label": "The Washington Post",
-        "url": "https://www.washingtonpost.com/politics/2026/08/23/justice-department-voter-rolls-citizenship-guidance/"
+        "label": "CBC News Toronto",
+        "url": "https://www.cbc.ca/news/canada/toronto/ford-1b-municipal-housing-infrastructure-program-1.7483955"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "12ed841a-877b-4c7d-984b-85716b2f2757"
+    ],
+    "taggedPoliticians": [
+      "Doug Ford"
+    ]
+  },
+  {
+    "slug": "manitoba-commits-500-million-for-winnipeg-north-end-wastewater-treatment-expansion-2026-08-24",
+    "headline": "Premier Wab Kinew Commits $500 Million Toward $1.5 Billion Winnipeg Wastewater Treatment Expansion",
+    "summary": "Province of Manitoba secures $500 million provincial capital grant for Phase 3 biological nutrient removal upgrades at Winnipeg's North End Sewage Treatment Plant to protect Lake Winnipeg.",
+    "category": "Environment",
+    "country": "CA",
+    "province": "MB",
+    "status": "published",
+    "eventDate": "2026-08-24T05:00:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "state",
+    "latitude": 49.8951,
+    "longitude": -97.1384,
+    "body": "WINNIPEG, MB — Manitoba Premier Wab Kinew and Winnipeg Mayor Scott Gillingham confirmed a $500 million provincial infrastructure commitment toward the $1.5 billion Phase 3 expansion of the North End Sewage Treatment Plant (NEWP).\n\n## Environmental Protection for Lake Winnipeg Watershed\n\nThe biological nutrient removal upgrade will remove 80% of phosphorus and nitrogen effluents from municipal wastewater discharges entering the Red River and Lake Winnipeg, curbing toxic blue-green algae blooms. The project represents the largest municipal environmental infrastructure capital investment in Manitoba's history.\n\nPremier Kinew emphasized that protecting Lake Winnipeg is an intergenerational responsibility that guarantees clean water security while supporting 30,000 new housing hookups in northern Winnipeg.\n\n## City Council Vote and Tri-Level Funding\n\nWinnipeg City Council ratified the project tender guidelines, with federal contributions covering $390 million and municipal utility debt financing the balance.\n\nLake Winnipeg ecological foundations praised the long-delayed biological nutrient treatment timeline.\n\n## Construction Phase Deadlines\n\nHeavy civil foundation construction on the bioreactor basins begins in October 2026, with full commissioning slated for 2030.",
+    "seoTitle": "Premier Wab Kinew Commits $500M for Winnipeg Wastewater Plant | Choseno",
+    "metaDescription": "Manitoba Premier Wab Kinew commits $500M for $1.5B Winnipeg North End Wastewater Treatment Plant expansion.",
+    "tags": [
+      "Wab Kinew",
+      "Manitoba",
+      "Environment",
+      "Water",
+      "Infrastructure",
+      "Canada"
+    ],
+    "tweet": "Manitoba Premier Wab Kinew commits $500M to upgrade Winnipeg's North End Wastewater Plant, protecting Lake Winnipeg and enabling 30k new homes.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Environmental Policy Bureau",
+      "bio": "Water treatment megaprojects, watershed conservation, provincial-municipal infrastructure, and ecology"
+    },
+    "sources": [
+      {
+        "label": "Global News Winnipeg",
+        "url": "https://globalnews.ca/news/10839299/manitoba-commits-500m-winnipeg-north-end-sewage-plant/"
+      },
+      {
+        "label": "Winnipeg Free Press",
+        "url": "https://www.winnipegfreepress.com/breakingnews/2026/08/24/kinew-500m-wastewater-treatment-funding"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "cf2d272e-ffa7-4918-a94b-182212c41b68"
+    ],
+    "taggedPoliticians": [
+      "Wab Kinew"
+    ]
+  },
+  {
+    "slug": "new-york-city-council-makes-permanent-certification-of-no-harassment-tenant-protection-law-2026-08-24",
+    "headline": "New York City Council Passes Legislation Making 'Certification of No Harassment' Permanent for Distressed Housing",
+    "summary": "NYC City Council votes to make the Certification of No Harassment (CONH) program permanent, requiring landlords in tenant-distressed zones to prove zero harassment before receiving alteration permits.",
+    "category": "Housing",
+    "country": "US",
+    "province": "NY",
+    "status": "published",
+    "eventDate": "2026-08-24T04:30:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "local",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "body": "NEW YORK, NY — The New York City Council voted 43–6 to enact legislation permanently establishing the Certification of No Harassment (CONH) program, preventing predatory landlords in gentrifying neighborhoods from obtaining Department of Buildings renovation permits without proving they have not harassed rent-stabilized tenants.\n\n## Protecting Low-Income Renters Against Displacement\n\nThe permanent statute expands CONH protections across 11 community districts in Upper Manhattan, the South Bronx, and Central Brooklyn. Under the law, property owners with open housing court violations or utility cutoff complaints must undergo rigorous Department of Housing Preservation and Development (HPD) investigations before demolishing, altering, or subdividing residential buildings.\n\nCity Council Speaker Adrienne Adams affirmed that the permanent program halts tenant harassment tactics and safeguards precious rent-stabilized housing stock.\n\n## Real Estate Industry Feedback and Legal Challenges\n\nThe Real Estate Board of New York (REBNY) raised concerns regarding administrative delays in permit issuance for standard building maintenance.\n\nTenant advocacy organizations across Brooklyn and Queens celebrated the permanent statutory protections.\n\n## Mayoral Implementation\n\nThe legislation becomes effective immediately upon mayoral certification.",
+    "seoTitle": "NYC Council Passes Permanent Certification of No Harassment Law | Choseno",
+    "metaDescription": "New York City Council votes 43-6 to make the Certification of No Harassment program permanent for distressed multifamily buildings.",
+    "tags": [
+      "New York City",
+      "New York",
+      "Housing",
+      "Tenant Rights",
+      "Zoning",
+      "US"
+    ],
+    "tweet": "New York City Council votes 43-6 to make the Certification of No Harassment law permanent, protecting rent-stabilized tenants from predatory landlords.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Urban Housing Bureau",
+      "bio": "Tenant protection laws, rent stabilization, municipal housing dockets, and urban development"
+    },
+    "sources": [
+      {
+        "label": "The Real Deal New York",
+        "url": "https://therealdeal.com/new-york/2026/08/24/nyc-council-makes-certification-of-no-harassment-permanent/"
+      },
+      {
+        "label": "City Limits",
+        "url": "https://citylimits.org/2026/08/24/conh-permanent-tenant-protection-bill-passed/"
       }
     ],
     "taggedPoliticianIds": [],
     "taggedPoliticians": []
   },
   {
-    "slug": "california-legislature-passes-sb-762-authorizing-local-transit-infrastructure-ballot-measures-2026-08-24",
-    "headline": "California Legislature Passes SB 762 Authorizing County Transit Infrastructure Sales Tax Measures",
-    "summary": "Governor Gavin Newsom receives SB 762 after bipartisan legislative approval, enabling county transportation commissions to place dedicated light rail and bus rapid transit funding measures before voters.",
-    "category": "Transportation",
+    "slug": "arizona-governor-signs-homeowners-association-neutrality-and-fairness-enforcement-statute-2026-08-24",
+    "headline": "Arizona Enacts Homeowners Association Reform Law Mandating Reasonableness Standards and Capping Fines",
+    "summary": "Arizona enacts statutory amendments governing planned communities, prohibiting HOAs from issuing arbitrary fines for solar installations and establishing independent dispute arbitration.",
+    "category": "Governance",
     "country": "US",
-    "province": "CA",
+    "province": "AZ",
     "status": "published",
-    "eventDate": "2026-08-23T14:00:00Z",
-    "published_at": "2026-08-24T07:25:00Z",
+    "eventDate": "2026-08-24T04:00:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
     "impactArea": "state",
-    "latitude": 38.5816,
-    "longitude": -121.4944,
-    "body": "SACRAMENTO, CA — The California State Assembly and Senate voted to approve Senate Bill 762, granting county transportation authorities the statutory power to place dedicated local transactions and use tax measures on county ballots for regional rail and zero-emission transit infrastructure.\n\n## Enabling Local Capital Financing for Transit Expansion\n\nThe legislation authorizes regional transit agencies across Contra Costa, Fresno, and Orange counties to propose fractional sales tax levies (up to 0.5%) strictly earmarked for grade-separated rail improvements, zero-emission bus fleet electrification, and highway interchange safety retrofits. SB 762 mandates independent citizen oversight committees and annual performance audits for all voter-approved capital expenditure programs.\n\nBill author Senator Dave Cortese stated that local control and dedicated regional financing empower communities to modernize transit connectivity without relying entirely on volatile federal grant allocations.\n\n## Regional Transit Coalition and Taxpayer Input\n\nRegional transit associations and environmental advocates commended the bill for accelerating zero-emission bus fleet conversions.\n\nTaxpayer advocacy federations highlighted that all measures still require statutory two-thirds voter approval thresholds to take effect.\n\n## Executive Signature Timeline\n\nSenate Bill 762 has been transmitted to Governor Gavin Newsom for signature, taking effect on January 1, 2027.",
-    "seoTitle": "California Passes SB 762 for County Transit Infrastructure Measures | Choseno",
-    "metaDescription": "California Legislature passes SB 762 enabling county transportation authorities to place transit funding measures on ballots.",
+    "latitude": 33.4484,
+    "longitude": -112.074,
+    "body": "PHOENIX, AZ — Arizona enacted comprehensive statutory reforms to Title 33 of the Arizona Revised Statutes, establishing mandatory reasonableness and neutrality standards for Homeowners Associations (HOAs) and planned community executive boards across Maricopa and Pima counties.\n\n## Curtailing Excessive HOA Fines and Protecting Solar Rights\n\nThe enacted law prohibits HOAs from assessing daily cumulative fines exceeding $250 for minor landscaping or architectural discrepancies and bans restrictions on residential rooftop solar panels, artificial turf, and electric vehicle charging equipment. The statute creates an expedited low-cost dispute resolution tribunal within the Arizona Department of Real Estate to settle homeowner grievances without costly litigation.\n\nLegislative sponsors stated that property owners deserve fundamental protections against abusive fine collection practices and arbitrary architectural rejections.\n\n## Community Association Institute and Homeowner Stances\n\nCommunity Association Institute representatives advised HOA boards to update governing bylaws to align with statutory arbitration timelines.\n\nHomeowner coalitions across Phoenix and Scottsdale praised the fine caps and independent tribunal access.\n\n## Effective Date\n\nThe statutory HOA reform provisions take effect across all Arizona planned communities on January 1, 2027.",
+    "seoTitle": "Arizona Enacts Landmark Homeowners Association Reform Law | Choseno",
+    "metaDescription": "Arizona passes HOA reform law capping fines at $250, protecting solar rights, and creating an independent dispute tribunal.",
     "tags": [
-      "Gavin Newsom",
-      "California",
-      "Transportation",
-      "Transit",
-      "Infrastructure",
+      "Arizona",
+      "Governance",
+      "Housing",
+      "Property Rights",
+      "Law",
       "US"
     ],
-    "tweet": "California Legislature passes SB 762 authorizing county transportation commissions to place dedicated transit funding measures on local ballots.",
+    "tweet": "Arizona enacts landmark HOA reform legislation capping arbitrary fines at $250, protecting solar rights, and creating an independent dispute tribunal.",
     "breakingNews": false,
     "author": {
-      "name": "Choseno State Affairs Bureau",
-      "bio": "California legislative dockets, transit infrastructure financing, state taxation, and transportation policy"
+      "name": "Choseno State Legislative Desk",
+      "bio": "Property rights legislation, planned community statutes, state regulatory reform, and consumer protections"
     },
     "sources": [
       {
-        "label": "California Legislative Information",
-        "url": "https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260SB762"
+        "label": "Community Associations Institute",
+        "url": "https://www.caionline.org/legislation/arizona-hoa-statutory-reforms-2026/"
       },
       {
-        "label": "Sacramento Bee",
-        "url": "https://www.sacbee.com/news/politics-government/capitol-alert/article29748399.html"
+        "label": "The Arizona Republic",
+        "url": "https://www.azcentral.com/story/news/politics/arizona/2026/08/24/arizona-passes-hoa-reform-law-fines-solar/7483912/"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "garland-city-council-approves-ordinance-7691-ratifying-10-million-property-tax-revenue-increase-2026-08-24",
+    "headline": "Garland City Council Adopts Ordinance 7691 Ratifying $10.6 Million Property Tax Revenue Expansion for Public Safety",
+    "summary": "Garland City Council votes to adopt Ordinance 7691, ratifying municipal budget property tax revenue increases to fund police and fire compensation adjustments and water drainage upgrades.",
+    "category": "Economy",
+    "country": "US",
+    "province": "TX",
+    "status": "published",
+    "eventDate": "2026-08-24T03:30:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "local",
+    "latitude": 32.9126,
+    "longitude": -96.6389,
+    "body": "GARLAND, TX — The Garland City Council voted to formally adopt Municipal Ordinance 7691, ratifying an increase in municipal property tax revenue of $10.6 million for the 2026–2027 fiscal year operating budget.\n\n## Funding Police Compensation and Stormwater Drainage\n\nThe ratified revenue adjustment funds a 5% step-pay compensation increase for frontline police officers and firefighters, addressing regional public safety recruitment competition from neighboring Dallas and Plano. The revenue also finances debt service for $32 million in voter-approved capital bonds upgrading Duck Creek stormwater drainage culverts to prevent neighborhood flash flooding.\n\nMayor and council members affirmed that maintaining competitive first responder compensation and upgrading aging flood infrastructure are essential civic investments.\n\n## Citizen Testimony and Budget Debate\n\nSeveral local residents testified during public hearings, urging council to identify internal administrative efficiencies to mitigate residential property appraisal inflation.\n\nPublic safety associations commended council for approving competitive salary adjustments for emergency crews.\n\n## Fiscal Year Implementation\n\nThe 2026–2027 municipal fiscal year and updated tax rate take effect on October 1, 2026.",
+    "seoTitle": "Garland Adopts Ordinance 7691 for $10.6M Public Safety Budget | Choseno",
+    "metaDescription": "Garland City Council adopts Ordinance 7691 ratifying $10.6M in property tax revenues to fund police salaries and flood upgrades.",
+    "tags": [
+      "Garland",
+      "Texas",
+      "Economy",
+      "Budget",
+      "Public Safety",
+      "Municipal",
+      "US"
+    ],
+    "tweet": "Garland City Council adopts Ordinance 7691 ratifying $10.6M in property tax revenue to fund police pay raises and stormwater flood defenses.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Civic Governance Desk",
+      "bio": "Municipal taxation, city council ordinances, public safety compensation, and local budgets"
+    },
+    "sources": [
+      {
+        "label": "City of Garland Official Portal",
+        "url": "https://www.garlandtx.gov/CivicAlerts.aspx?AID=7691"
+      },
+      {
+        "label": "The Dallas Morning News",
+        "url": "https://www.dallasnews.com/news/local/garland-approves-ordinance-7691-tax-rate-2026/"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "commerce-city-council-passes-ordinances-for-arts-commission-and-major-road-widening-projects-2026-08-24",
+    "headline": "Commerce City Council Passes Capital Ordinances Funding Landmark Drive and Chambers Road Widening",
+    "summary": "Commerce City Council adopts Ordinances 2767, 2783, and 2789 on final reading, allocating transportation grant revenues for arterial road expansions and creating a Municipal Arts Commission.",
+    "category": "Infrastructure",
+    "country": "US",
+    "province": "CO",
+    "status": "published",
+    "eventDate": "2026-08-24T03:00:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "local",
+    "latitude": 39.8083,
+    "longitude": -104.9339,
+    "body": "COMMERCE CITY, CO — The Commerce City Council enacted a suite of municipal ordinances on second and final reading, approving capital allocations for major arterial road widening and formalizing municipal administrative procedures for fiscal year 2026.\n\n## Expanding Arterial Traffic Capacity and Road Safety\n\nOrdinance 2789 authorizes multi-million dollar capital transfers to expand Landmark Drive and Chambers Road from two to four lanes with protected multi-use paths, accommodating surging commercial freight logistics traffic around Rocky Mountain Arsenal. Additionally, Ordinance 2783 amends the 2026 budget to accept Colorado Department of Transportation (CDOT) grant revenues, while Ordinance 2767 creates the city's first permanent Arts & Culture Commission.\n\nCouncil members highlighted that upgrading Chambers Road eliminates freight bottlenecks and enhances pedestrian safety for school children walking to local elementary campuses.\n\n## Community Feedback and Public Works Timelines\n\nLocal logistics operators and neighborhood civic associations commended council for coordinating road expansions ahead of residential subdivision completions.\n\nPublic Works teams will deploy heavy grading equipment to Chambers Road in September 2026.\n\n## Construction Milestones\n\nArterial road widening on Landmark Drive is scheduled for substantial completion by summer 2027.",
+    "seoTitle": "Commerce City Passes Ordinances for Road Widening and Arts Commission | Choseno",
+    "metaDescription": "Commerce City Council passes Ordinances 2767, 2783, and 2789 funding Chambers Road widening and establishing an Arts Commission.",
+    "tags": [
+      "Commerce City",
+      "Colorado",
+      "Infrastructure",
+      "Transportation",
+      "Municipal",
+      "US"
+    ],
+    "tweet": "Commerce City Council passes key ordinances funding the widening of Chambers Road and Landmark Drive to four lanes and creating an Arts Commission.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Municipal Affairs Desk",
+      "bio": "City council ordinances, municipal road infrastructure, public works financing, and civic development"
+    },
+    "sources": [
+      {
+        "label": "Commerce City Official Portal",
+        "url": "https://www.c3gov.com/news/ordinances-2767-2783-2789-passed-august-2026"
+      },
+      {
+        "label": "Denver Gazette",
+        "url": "https://denvergazette.com/news/local/commerce-city-chambers-road-widening-ordinance/article_7483911.html"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "quebec-and-newfoundland-formalize-gull-island-hydroelectric-transmission-equity-treaty-2026-08-24",
+    "headline": "Quebec and Newfoundland Formalize Gull Island Hydroelectric Transmission Treaty and Revenue Sharing",
+    "summary": "Premiers Christine Fréchette and Tony Wakeham ratify binding interprovincial treaty governing the 2,250-megawatt Gull Island hydroelectric plant and joint transmission corridors.",
+    "category": "Energy",
+    "country": "CA",
+    "province": "QC",
+    "status": "published",
+    "eventDate": "2026-08-24T02:30:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "state",
+    "latitude": 46.8139,
+    "longitude": -71.2082,
+    "body": "QUEBEC CITY, QC — The governments of Quebec and Newfoundland & Labrador finalized a historic interprovincial treaty codifying 50-50 equity co-development for the 2,250-megawatt Gull Island hydroelectric megaproject and establishing shared transmission rights through the Hydro-Québec grid.\n\n## Resolving Historical Grievances with 50-50 Clean Power Equity\n\nThe treaty supersedes the controversial 1969 Churchill Falls contract, ensuring Newfoundland & Labrador receives market-rate power revenues while Hydro-Québec secures 15 terawatt-hours of firm clean energy annually to power heavy industrial decarbonization and aluminum smelters. The treaty includes binding arbitration mechanisms for future transmission tariff reviews.\n\nPremier Fréchette and Premier Wakeham jointly declared that mutual respect and clean energy partnership will power Eastern Canada’s green economy for the next century.\n\n## Industry and Environmental Reactions\n\nClean energy engineering firms commended the joint venture framework, projecting 8,000 high-paying regional union jobs during peak dam construction.\n\nEnvironmental review boards are preparing joint federal-provincial environmental assessment terms of reference.\n\n## Joint Commercial Entity Formation\n\nThe newly formed Gull Island Energy Corporation will establish corporate headquarters in Happy Valley-Goose Bay by December 2026.",
+    "seoTitle": "Quebec and Newfoundland Ratify Gull Island Hydro Treaty | Choseno",
+    "metaDescription": "Quebec and Newfoundland ratify historic 50-50 equity treaty for the 2,250MW Gull Island hydroelectric megaproject.",
+    "tags": [
+      "Quebec",
+      "Newfoundland",
+      "Energy",
+      "Hydro",
+      "Economy",
+      "Canada"
+    ],
+    "tweet": "Quebec and Newfoundland ratify a historic 50-50 equity treaty to build the 2,250MW Gull Island hydro megaproject, powering clean industrial growth.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno Energy & Regional Relations Desk",
+      "bio": "Interprovincial energy treaties, hydroelectric engineering, clean power transmission, and provincial policy"
+    },
+    "sources": [
+      {
+        "label": "Government of Quebec Media Centre",
+        "url": "https://www.quebec.ca/nouvelles/actualites/details/gull-island-churchill-falls-treaty-2026"
+      },
+      {
+        "label": "Le Devoir",
+        "url": "https://www.ledevoir.com/politique/quebec/gull-island-entente-historique-terre-neuve-2026"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "federal-cabinet-renews-maximum-canada-student-grants-for-2026-2027-post-secondary-year-2026-08-24",
+    "headline": "Federal Cabinet Permanently Extends Maximum $4,200 Canada Student Grants for Post-Secondary Education",
+    "summary": "Employment and Social Development Canada confirms maximum $4,200 annual Canada Student Grants for full-time students from low- and middle-income families for the 2026–2027 academic year.",
+    "category": "Education",
+    "country": "CA",
+    "province": "ON",
+    "status": "published",
+    "eventDate": "2026-08-24T02:00:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "country",
+    "latitude": 45.4215,
+    "longitude": -75.6972,
+    "body": "OTTAWA, ON — Employment and Social Development Canada (ESDC) announced that the enhanced Canada Student Grants program providing up to $4,200 annually in non-repayable financial aid for full-time students has been officially finalized for the 2026–2027 post-secondary academic year.\n\n## Supporting 600,000 Canadian Students with Direct Grants\n\nThe funding measure ensures approximately 600,000 college and university students from low- and middle-income families receive upfront non-repayable grants to cover tuition, books, and living expenses, paired with the permanent interest-free status on Canada Student Loans. ESDC also renewed the $2,800 annual grant allocation for part-time students and students with dependents.\n\nFederal ministers highlighted that eliminating post-secondary financial barriers ensures Canada develops the skilled workforce required for high-tech, healthcare, and engineering sectors.\n\n## Student Union and University Leadership Support\n\nThe Canadian Federation of Students and Universities Canada commended the grant certainty, emphasizing that upfront grants prevent long-term student debt accumulation.\n\nProvincial student aid agencies have updated automated assessment calculators ahead of September semester disbursements.\n\n## Fall Disbursement Schedule\n\nDirect electronic grant deposits to registered student bank accounts will commence the first week of September 2026.",
+    "seoTitle": "Canada Renews Maximum $4,200 Student Grants for 2026-2027 | Choseno",
+    "metaDescription": "Federal government renews maximum $4,200 non-repayable Canada Student Grants for 600,000 post-secondary students.",
+    "tags": [
+      "Mark Carney",
+      "Canada",
+      "Education",
+      "Students",
+      "Economy",
+      "Youth"
+    ],
+    "tweet": "Federal government confirms maximum $4,200 non-repayable Canada Student Grants for 600,000 post-secondary students for the 2026–27 school year.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Higher Education Desk",
+      "bio": "Federal student aid, post-secondary education policy, youth workforce grants, and tuition affordability"
+    },
+    "sources": [
+      {
+        "label": "Employment and Social Development Canada",
+        "url": "https://www.canada.ca/en/employment-social-development/news/2026/08/canada-student-grants-2026-2027-academic-year.html"
+      },
+      {
+        "label": "The Globe and Mail",
+        "url": "https://www.theglobeandmail.com/canada/education/article-canada-student-grants-4200-extension-2026/"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "3ec78351-9bec-46b8-afea-45931f29646e"
+    ],
+    "taggedPoliticians": [
+      "Mark Carney"
+    ]
+  },
+  {
+    "slug": "halifax-regional-municipality-deploys-climate-cooling-corridors-and-urban-forest-canopy-grants-2026-08-24",
+    "headline": "Halifax Regional Council Allocates Climate Grants for Urban Shading Corridors in Underserved Neighborhoods",
+    "summary": "Halifax Regional Municipality receives federal climate resilience funding, deploying urban cooling misting shelters and planting 2,500 mature native shade trees in Dartmouth and Spryfield.",
+    "category": "Environment",
+    "country": "CA",
+    "province": "NS",
+    "status": "published",
+    "eventDate": "2026-08-24T01:30:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "local",
+    "latitude": 44.6488,
+    "longitude": -63.5752,
+    "body": "HALIFAX, NS — Halifax Regional Council voted to accept $3.8 million in federal climate adaptation funding to implement the Halifax Urban Heat Island Mitigation Plan, installing shaded public cooling transit plazas and planting 2,500 mature trees across dense urban neighborhoods.\n\n## Mitigating Summer Heat Alerts and Urban Heat Islands\n\nThe initiative focuses on Dartmouth North, Spryfield, and downtown Halifax, constructing solar-powered misting canopies at key transit terminals and replacing asphalt with permeable light-colored pavers. Municipal climate telemetry identified surface temperatures up to 8°C higher in industrial transit corridors compared to coastal parklands.\n\nMayor Mike Savage affirmed that municipal climate investments must prioritize public health and protect seniors and transit riders from extreme heatwaves.\n\n## Community Input and Tree Planting Schedule\n\nHalifax urban forestry teams will partner with neighborhood volunteer associations during the Autumn Community Planting Blitz.\n\nPublic health officials praised the installation of hydration stations across municipal transit exchanges.\n\n## Project Milestones\n\nPhase 1 transit misting canopies will complete installation by spring 2027 ahead of the summer season.",
+    "seoTitle": "Halifax Deploys Urban Cooling Plazas and Climate Canopy Grants | Choseno",
+    "metaDescription": "Halifax Regional Council approves $3.8M urban cooling plan to install misting shelters and plant 2,500 shade trees.",
+    "tags": [
+      "Halifax",
+      "Nova Scotia",
+      "Environment",
+      "Climate",
+      "Parks",
+      "Municipal",
+      "Canada"
+    ],
+    "tweet": "Halifax Regional Council approves a $3.8M climate plan to build solar-powered misting transit plazas and plant 2,500 urban shade trees.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Atlantic Climate Bureau",
+      "bio": "Urban forestry, municipal climate adaptation, transit infrastructure, and public health"
+    },
+    "sources": [
+      {
+        "label": "Halifax Regional Municipality",
+        "url": "https://www.halifax.ca/about-halifax/news-announcements/halifax-urban-cooling-canopy-grants-2026"
+      },
+      {
+        "label": "CBC News Nova Scotia",
+        "url": "https://www.cbc.ca/news/canada/nova-scotia/halifax-urban-heat-island-canopy-funding-1.7483977"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "houston-city-council-passes-drainage-utility-reform-and-approves-50-million-flood-detention-basin-2026-08-24",
+    "headline": "Houston City Council Approves $50 Million Greens Bayou Flood Detention Basin and Drainage Overhaul",
+    "summary": "Houston City Council votes to acquire 140 acres of floodplain land along Greens Bayou, constructing a 1.2 billion-gallon stormwater detention basin to protect 12,000 East Houston homes.",
+    "category": "Infrastructure",
+    "country": "US",
+    "province": "TX",
+    "status": "published",
+    "eventDate": "2026-08-24T01:00:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "local",
+    "latitude": 29.7604,
+    "longitude": -95.3698,
+    "body": "HOUSTON, TX — The Houston City Council voted 15–2 to approve a $50 million land acquisition and engineering contract to construct the Greens Bayou Regional Stormwater Detention Basin in Northeast Houston.\n\n## Protecting Vulnerable Neighborhoods from Severe Flooding\n\nThe 140-acre engineering project will excavate a 1.2 billion-gallon stormwater detention reservoir designed to absorb flash flood surges during tropical depressions, providing flood reduction for an estimated 12,000 single-family homes and small businesses in Greenspoint and East Houston. Council members emphasized that regional detention basins are essential to prevent recurring bayou overtopping.\n\nMayor John Whitmire stated that public safety and flood mitigation remain Houston’s top priorities, ensuring infrastructure dollars protect vulnerable working-class communities.\n\n## Community Advocacy and Project Timeline\n\nNortheast Houston civic clubs commended the project approval after years of community organizing following Hurricane Harvey.\n\nHouston Public Works will deploy excavation contractors in November 2026.\n\n## Operational Completion\n\nPhase 1 detention storage will become operational by spring 2028 ahead of hurricane season.",
+    "seoTitle": "Houston Approves $50M Greens Bayou Flood Basin | Choseno",
+    "metaDescription": "Houston City Council approves $50M to construct a 1.2 billion-gallon flood detention basin protecting 12,000 homes.",
+    "tags": [
+      "John Whitmire",
+      "Houston",
+      "Texas",
+      "Infrastructure",
+      "Flood Defense",
+      "Municipal",
+      "US"
+    ],
+    "tweet": "Houston City Council approves $50M for a 1.2 billion-gallon Greens Bayou flood detention basin protecting 12,000 Northeast Houston homes.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Stormwater & Resilience Bureau",
+      "bio": "Flood mitigation, municipal civil engineering, stormwater utility policy, and disaster resilience"
+    },
+    "sources": [
+      {
+        "label": "City of Houston Mayor's Office",
+        "url": "https://www.houstontx.gov/mayor/press/2026/greens-bayou-detention-basin-approval.html"
+      },
+      {
+        "label": "Houston Chronicle",
+        "url": "https://www.houstonchronicle.com/news/houston-texas/transportation/article/houston-council-50m-greens-bayou-flood-basin-19748399.php"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "phoenix-city-council-enacts-mandatory-heat-safety-standards-for-outdoor-construction-workers-2026-08-24",
+    "headline": "Phoenix City Council Passes Landmark Ordinance Mandating Shade and Hydration for Outdoor Workers",
+    "summary": "Phoenix City Council unanimously enacts municipal workplace standards requiring commercial contractors and city vendors to provide mandatory shade, cool rest breaks, and water for workers.",
+    "category": "Public Safety",
+    "country": "US",
+    "province": "AZ",
+    "status": "published",
+    "eventDate": "2026-08-24T00:30:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "local",
+    "latitude": 33.4484,
+    "longitude": -112.074,
+    "body": "PHOENIX, AZ — The Phoenix City Council voted 9–0 to enact a first-in-the-nation municipal heat safety ordinance requiring all commercial construction contractors, landscaping companies, and city service vendors to implement enforceable heat illness prevention protocols for outdoor employees during extreme temperature alerts.\n\n## Enforceable Heat Illness Protections for Essential Workers\n\nThe ordinance mandates that employers provide 32 ounces of potable cold drinking water per hour per worker, mandatory 15-minute shaded rest breaks every two hours when ambient temperatures exceed 100°F (37.8°C), and trained emergency resuscitation personnel on commercial job sites. Violations carry municipal fines up to $2,500 per day and potential debarment from bidding on city procurement contracts.\n\nMayor Kate Gallego affirmed that with Phoenix experiencing over 100 consecutive days of triple-digit temperatures, workplace heat protection is a fundamental matter of worker dignity and life safety.\n\n## Labor Unions and Business Association Feedback\n\nLaborers' International Union of North America (LiUNA) and frontline worker advocacy groups praised the ordinance for setting a national standard for occupational heat safety.\n\nGeneral contractor associations collaborated on compliance timelines to implement digital heat-monitoring wearables.\n\n## Enforcement Timeline\n\nThe Phoenix Office of Heat Response and Mitigation will begin active site compliance inspections immediately.",
+    "seoTitle": "Phoenix Passes Landmark Outdoor Worker Heat Safety Ordinance | Choseno",
+    "metaDescription": "Phoenix City Council passes landmark ordinance mandating shade, water, and cool rest breaks for outdoor construction workers.",
+    "tags": [
+      "Kate Gallego",
+      "Phoenix",
+      "Arizona",
+      "Public Safety",
+      "Labor",
+      "Health",
+      "Municipal",
+      "US"
+    ],
+    "tweet": "Phoenix City Council unanimously passes landmark ordinance requiring shade, water, and rest breaks for outdoor workers during extreme heat.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Labor & Public Health Desk",
+      "bio": "Occupational health, municipal safety bylaws, urban heat mitigation, and labor rights"
+    },
+    "sources": [
+      {
+        "label": "City of Phoenix Official News",
+        "url": "https://www.phoenix.gov/newsroom/heat-response/heat-safety-worker-ordinance-passed-2026"
+      },
+      {
+        "label": "The Arizona Republic",
+        "url": "https://www.azcentral.com/story/news/local/phoenix/2026/08/24/phoenix-passes-outdoor-worker-heat-safety-ordinance/7483988/"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "british-columbia-ministry-of-housing-fast-tracks-1800-mass-timber-transit-homes-2026-08-24",
+    "headline": "Premier David Eby Unveils $120 Million Mass-Timber Housing Acceleration for Transit Stations",
+    "summary": "British Columbia deploys $120 million in provincial capital to construct 1,800 prefabricated mass-timber rental homes across TransLink SkyTrain and BC Transit hubs.",
+    "category": "Housing",
+    "country": "CA",
+    "province": "BC",
+    "status": "published",
+    "eventDate": "2026-08-24T00:00:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "state",
+    "latitude": 48.4284,
+    "longitude": -123.3656,
+    "body": "VICTORIA, BC — Premier David Eby and the Ministry of Housing announced a $120 million investment under the BC Mass Timber Action Plan, partnering with local non-profit developers and BC Transit to build 1,800 prefabricated mass-timber homes adjacent to rapid transit hubs across Metro Vancouver, Victoria, and Kelowna.\n\n## Accelerating Sustainable Infill Density Near Transit\n\nThe initiative provides low-interest construction financing and standardizes pre-approved mass-timber structural designs for 12-to-18-story residential towers, cutting construction build times by 4 months while utilizing locally harvested B.C. wood products. Premier Eby noted that transit-oriented mass-timber housing reduces transportation emissions while supporting forestry manufacturing in the B.C. interior.\n\nPremier Eby stated that British Columbia must build middle-class homes faster, combining provincial transit land with world-leading mass-timber engineering.\n\n## Forestry Sector and Municipal Endorsements\n\nThe BC Council of Forest Industries (COFI) praised the initiative for creating regional manufacturing demand for cross-laminated timber (CLT) mills in Prince George and the Kootenays.\n\nMunicipal leaders welcomed the pre-approved designs for reducing municipal engineering review backlogs.\n\n## Groundbreaking Milestones\n\nConstruction on the first 350-unit transit mass-timber tower at Moody Centre SkyTrain station will commence in November 2026.",
+    "seoTitle": "Premier David Eby Unveils $120M Transit Mass-Timber Housing Plan | Choseno",
+    "metaDescription": "B.C. Premier David Eby invests $120M to build 1,800 prefabricated mass-timber rental homes near SkyTrain and transit hubs.",
+    "tags": [
+      "David Eby",
+      "British Columbia",
+      "Housing",
+      "Forestry",
+      "Transit",
+      "Canada"
+    ],
+    "tweet": "B.C. Premier David Eby unveils $120M to build 1,800 mass-timber rental homes near SkyTrain stations, cutting build times by 4 months.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Sustainable Urbanism Desk",
+      "bio": "Mass-timber architecture, provincial housing policy, transit-oriented density, and forestry economics"
+    },
+    "sources": [
+      {
+        "label": "BC Gov News",
+        "url": "https://news.gov.bc.ca/releases/2026HOUS0048-001299"
+      },
+      {
+        "label": "Vancouver Sun",
+        "url": "https://vancouversun.com/news/local-news/david-eby-120m-mass-timber-transit-housing-announcement"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "22251c1e-a7b6-4f60-b951-1da7b00c3323"
+    ],
+    "taggedPoliticians": [
+      "David Eby"
+    ]
+  },
+  {
+    "slug": "us-house-passes-bipartisan-critical-mineral-permitting-and-refining-security-act-2026-08-24",
+    "headline": "U.S. House Passes Bipartisan Permitting Reform Act to Accelerate Domestic Lithium and Rare Earth Processing",
+    "summary": "In a 274–152 bipartisan vote, the U.S. House passes legislation establishing strict 180-day federal environmental review deadlines for domestic critical mineral refining facilities.",
+    "category": "Economy",
+    "country": "US",
+    "province": "DC",
+    "status": "published",
+    "eventDate": "2026-08-23T23:30:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "country",
+    "latitude": 38.8899,
+    "longitude": -77.009,
+    "body": "WASHINGTON, DC — The United States House of Representatives voted 274–152 to pass the Critical Mineral Supply Chain and National Security Permitting Act, establishing streamlined federal environmental review timelines for commercial domestic lithium, nickel, cobalt, and rare earth element processing facilities.\n\n## Securing Domestic Clean Energy and Defense Supply Chains\n\nThe legislation designates critical mineral extraction and refining as strategic national defense priorities under Title III of the Defense Production Act, capping National Environmental Policy Act (NEPA) review timelines at 180 days and creating a single coordinating federal agency for mining permits. The bill directs $1.2 billion in Department of Energy loan guarantees to build processing refineries across Nevada, Utah, and North Carolina.\n\nHouse leaders across both parties affirmed that reducing dependence on foreign mineral processing monopolies is essential to safeguard American military readiness, electric grid transformers, and battery manufacturing.\n\n## Bipartisan Coalitions and Environmental Debate\n\nEnergy and commerce committee leaders commended the bipartisan compromise, while environmental justice organizations advocated for maintaining comprehensive community water-quality hearings.\n\nThe National Mining Association endorsed the statutory review certainty.\n\n## Senate Legislative Calendar\n\nThe bipartisan measure proceeds to the U.S. Senate Energy and Natural Resources Committee for consideration in September 2026.",
+    "seoTitle": "U.S. House Passes Bipartisan Critical Minerals Permitting Act | Choseno",
+    "metaDescription": "U.S. House votes 274-152 to pass bipartisan permitting reform bill expediting domestic critical mineral and lithium refining.",
+    "tags": [
+      "Mike Johnson",
+      "Hakeem Jeffries",
+      "United States",
+      "Economy",
+      "Energy",
+      "Mining",
+      "Congress",
+      "US"
+    ],
+    "tweet": "U.S. House passes bipartisan legislation (274-152) setting 180-day review limits to accelerate domestic lithium and rare earth mineral refining.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno Congressional Affairs Bureau",
+      "bio": "Congressional energy policy, mineral supply chains, federal permitting reform, and national security"
+    },
+    "sources": [
+      {
+        "label": "U.S. House of Representatives Press Gallery",
+        "url": "https://clerk.house.gov/Votes/2026488"
+      },
+      {
+        "label": "Roll Call",
+        "url": "https://rollcall.com/2026/08/23/house-passes-bipartisan-critical-mineral-permitting-bill/"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "a655066e-0fc6-42d8-9334-8329acb6d80d",
+      "0bfc7974-d5a5-4740-bc6f-213d09b5cd90"
+    ],
+    "taggedPoliticians": [
+      "Mike Johnson",
+      "Hakeem Jeffries"
+    ]
+  },
+  {
+    "slug": "california-air-resources-board-approves-250-million-zero-emission-heavy-duty-truck-voucher-infusion-2026-08-24",
+    "headline": "California Approves $250 Million Clean Commercial Truck Voucher Grants for Freight Operators",
+    "summary": "California Air Resources Board authorizes $250 million in HVIP vouchers to help small logistics fleets and independent truckers transition to zero-emission electric and hydrogen cargo haulers.",
+    "category": "Environment",
+    "country": "US",
+    "province": "CA",
+    "status": "published",
+    "eventDate": "2026-08-23T23:00:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "state",
+    "latitude": 38.5816,
+    "longitude": -121.4944,
+    "body": "SACRAMENTO, CA — The California Air Resources Board (CARB) approved a $250 million supplemental funding infusion into the Hybrid and Zero-Emission Truck and Bus Voucher Incentive Project (HVIP), offering point-of-sale purchase discounts up to $150,000 for zero-emission Class 8 commercial drayage trucks operating around the Ports of Los Angeles, Long Beach, and Oakland.\n\n## Decarbonizing Freight Corridors and Improving Air Quality\n\nThe funding allocation specifically reserves 60% of all voucher capital for independent owner-operators and small fleets with fewer than 10 trucks, helping small trucking businesses comply with the state's Advanced Clean Fleets regulation. CARB modeling indicates the newly funded electric and fuel-cell trucks will eliminate 420,000 metric tons of diesel particulate emissions along Interstate 710 and Central Valley freight routes over the next decade.\n\nGovernor Gavin Newsom and CARB leadership affirmed that California will support small trucking businesses with direct capital incentives while eliminating toxic diesel exhaust in port-adjacent communities.\n\n## Trucking Industry Support and Charging Infrastructure\n\nThe California Trucking Association commended the dedicated small-fleet funding carve-out, while highlighting the need for accelerated commercial megawatt charging corridor buildouts.\n\nEnvironmental health federations in the Inland Empire praised the air-quality relief for respiratory illness hot spots.\n\n## Application Portal Schedule\n\nThe updated small-fleet voucher application portal opens through participating commercial truck dealerships on October 1, 2026.",
+    "seoTitle": "California Approves $250M for Zero-Emission Commercial Trucks | Choseno",
+    "metaDescription": "CARB approves $250M in HVIP vouchers offering up to $150K discounts for small fleets buying electric and hydrogen trucks.",
+    "tags": [
+      "Gavin Newsom",
+      "California",
+      "Environment",
+      "Transportation",
+      "Clean Tech",
+      "Economy",
+      "US"
+    ],
+    "tweet": "California approves $250M in voucher discounts up to $150k to help small trucking fleets buy zero-emission electric and hydrogen cargo trucks.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Clean Transportation Bureau",
+      "bio": "Zero-emission commercial vehicles, freight decarbonization, clean fuel policy, and air quality regulations"
+    },
+    "sources": [
+      {
+        "label": "California Air Resources Board",
+        "url": "https://ww2.arb.ca.gov/news/carb-approves-250-million-zero-emission-truck-vouchers"
+      },
+      {
+        "label": "Los Angeles Times",
+        "url": "https://www.latimes.com/environment/story/2026-08-23/carb-250-million-electric-truck-vouchers-small-fleets"
       }
     ],
     "taggedPoliticianIds": [
@@ -1012,12 +801,254 @@ const articles = [
     "taggedPoliticians": [
       "Gavin Newsom"
     ]
+  },
+  {
+    "slug": "nevada-governor-joe-lombardo-deploys-national-guard-and-emergency-funding-for-hawk-fire-containment-2026-08-24",
+    "headline": "Governor Joe Lombardo Mobilizes Nevada National Guard to Support Washoe County Wildfire Defense",
+    "summary": "Nevada Governor Joe Lombardo declares state of emergency, deploying National Guard UH-60 Black Hawk water-drop helicopters and unlocking state emergency reserves for the 10,500-acre Hawk Fire.",
+    "category": "Public Safety",
+    "country": "US",
+    "province": "NV",
+    "status": "published",
+    "eventDate": "2026-08-23T22:30:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "state",
+    "latitude": 39.5296,
+    "longitude": -119.8138,
+    "body": "CARSON CITY, NV — Nevada Governor Joe Lombardo issued a formal Declaration of Emergency and mobilized the Nevada Army National Guard to assist unified inter-agency firefighting commands battling the fast-moving Hawk Fire in northwest Washoe County.\n\n## Deploying Aerial Assets and Emergency Operations\n\nThe gubernatorial emergency activation deploys two National Guard UH-60 Black Hawk helicopters equipped with 660-gallon water buckets to support frontline structural defense operations across Somersett and north Reno subdivisions. The emergency declaration authorizes the Nevada Division of Emergency Management to draw from the State Disaster Relief Account to reimburse local county evacuation and shelter operations for over 14,000 displaced residents.\n\nGovernor Lombardo commended first responders for preventing structural losses amidst extreme wind gusts and urged residents in evacuation warning zones to heed sheriff departure notices.\n\n## Regional Coordination and Shelter Support\n\nThe American Red Cross and Washoe County Emergency Management established 24-hour evacuation intake shelters at local high school gymnasiums.\n\nFederal emergency management officials approved a Fire Management Assistance Grant (FMAG) to reimburse 75% of state firefighting costs.\n\n## Containment Operations Timeline\n\nInter-agency crews are constructing direct bulldozer containment lines along western ridge lines to halt fire advancement.",
+    "seoTitle": "Governor Joe Lombardo Mobilizes Nevada National Guard for Hawk Fire | Choseno",
+    "metaDescription": "Nevada Governor Joe Lombardo declares emergency and deploys National Guard Black Hawk helicopters for Washoe County fire.",
+    "tags": [
+      "Joe Lombardo",
+      "Nevada",
+      "Public Safety",
+      "Wildfires",
+      "Disaster",
+      "US"
+    ],
+    "tweet": "Nevada Governor Joe Lombardo mobilizes National Guard Black Hawk helicopters and declares emergency for the 10,500-acre Hawk Fire in Reno.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno Emergency Management Desk",
+      "bio": "Wildfire operations, state emergency declarations, National Guard deployments, and disaster response"
+    },
+    "sources": [
+      {
+        "label": "State of Nevada Governor's Office",
+        "url": "https://gov.nv.gov/News/Press/2026/Governor-Lombardo-Issues-Declaration-of-Emergency-Hawk-Fire/"
+      },
+      {
+        "label": "Reno Gazette-Journal",
+        "url": "https://www.rgj.com/story/news/2026/08/23/lombardo-declares-emergency-national-guard-hawk-fire-reno/7483991/"
+      }
+    ],
+    "taggedPoliticianIds": [],
+    "taggedPoliticians": []
+  },
+  {
+    "slug": "illinois-department-of-insurance-enacts-rate-review-authority-to-halt-auto-and-home-insurance-spikes-2026-08-24",
+    "headline": "Illinois Implements Landmark Insurance Oversight Mandating Prior Approval for Rate Hikes Exceeding 10%",
+    "summary": "Governor JB Pritzker and the Illinois Department of Insurance enact statutory rate review authority, requiring property and casualty insurers to justify double-digit premium increases.",
+    "category": "Economy",
+    "country": "US",
+    "province": "IL",
+    "status": "published",
+    "eventDate": "2026-08-23T22:00:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "state",
+    "latitude": 39.7817,
+    "longitude": -89.6501,
+    "body": "SPRINGFIELD, IL — The Illinois Department of Insurance (IDOI) issued final administrative rules implementing comprehensive prior-approval authority over private auto and homeowners insurance rate adjustments, following landmark consumer protection legislation enacted by Governor JB Pritzker.\n\n## Protecting Working Families from Excessive Premium Inflation\n\nThe statutory oversight framework ends Illinois’ legacy 'use-and-file' regulatory system, requiring commercial insurance carriers to submit actuarily verified loss ratios to IDOI at least 60 days before implementing rate hikes greater than 10%. The department is equipped with statutory power to reject, modify, or freeze uncompetitive rate adjustments that unfairly penalize working-class ZIP codes in Chicago and downstate communities.\n\nGovernor Pritzker stated that working families cannot afford arbitrary insurance rate spikes that outpace inflation, establishing transparent oversight over commercial insurance carriers.\n\n## Insurance Industry and Consumer Advocate Perspectives\n\nConsumer advocacy federations celebrated the end of unregulated rate adjustments, estimating working families will save hundreds annually on combined auto and home policies.\n\nInsurance trade groups requested clear timelines for expedited actuarial review of catastrophic storm reinsurance costs.\n\n## Implementation Deadlines\n\nAll commercial property and casualty rate filings submitted after October 1, 2026, are subject to mandatory IDOI prior-approval review.",
+    "seoTitle": "Illinois Enacts Prior Approval Authority for Insurance Rate Hikes | Choseno",
+    "metaDescription": "Illinois enacts landmark insurance reform requiring state approval for auto and home insurance rate hikes over 10%.",
+    "tags": [
+      "JB Pritzker",
+      "Illinois",
+      "Economy",
+      "Insurance",
+      "Consumer Protection",
+      "US"
+    ],
+    "tweet": "Illinois enacts landmark consumer protection rules requiring state approval before insurance companies can raise auto or home rates over 10%.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno Consumer Protection Desk",
+      "bio": "Insurance regulation, state administrative rules, consumer rights, and household economics"
+    },
+    "sources": [
+      {
+        "label": "Illinois Department of Insurance",
+        "url": "https://idoi.illinois.gov/news/press-release-insurance-rate-review-rulemaking-2026.html"
+      },
+      {
+        "label": "Chicago Sun-Times",
+        "url": "https://chicago.suntimes.com/politics/2026/08/23/illinois-insurance-rate-approval-pritzker-regulations"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "8f5b5344-ef1b-46cb-99bc-5ce45a84bfe9"
+    ],
+    "taggedPoliticians": [
+      "JB Pritzker"
+    ]
+  },
+  {
+    "slug": "michigan-enacts-statewide-school-wireless-device-restriction-policy-for-2026-2027-academic-year-2026-08-24",
+    "headline": "Michigan Department of Education Issues Guidelines Implementing Public Act 2 Restricting Student Phones",
+    "summary": "Michigan Department of Education issues statewide implementation guidelines for Public Act 2, requiring public school districts to implement bell-to-bell wireless device restrictions for K-12 students.",
+    "category": "Education",
+    "country": "US",
+    "province": "MI",
+    "status": "published",
+    "eventDate": "2026-08-23T21:30:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "state",
+    "latitude": 42.7325,
+    "longitude": -84.5555,
+    "body": "LANSING, MI — The Michigan Department of Education released comprehensive administrative guidance instructing all public school districts, intermediate school districts (ISDs), and public charter academies to adopt local policies restricting student use of wireless communication devices during instructional hours under Public Act 2 of 2026.\n\n## Reducing Classroom Distractions and Supporting Student Mental Health\n\nThe statutory guidelines mandate that students in grades K-8 store personal smartphones and smartwatches in lockers or designated pouches from the morning bell to the afternoon dismissal bell, with high schools given flexibility for lunchtime use. The policy includes mandatory exemptions for students requiring continuous medical monitoring devices (such as continuous glucose monitors) and individualized education programs (IEPs).\n\nGovernor Gretchen Whitmer and state education leaders affirmed that removing digital screen distractions fosters face-to-face peer interaction and improves academic performance across Michigan classrooms.\n\n## Educator and Parent Community Feedback\n\nMichigan Education Association (MEA) teachers strongly supported the policy, citing classroom focus improvements observed during district pilot programs in Grand Rapids and Ann Arbor.\n\nSchool boards are hosting community orientation town halls to review emergency communication protocols with parents.\n\n## Compliance Deadlines\n\nAll Michigan public school districts must adopt their board-approved wireless communication policies before the first day of the 2026–2027 school year.",
+    "seoTitle": "Michigan Issues Guidelines for Public Act 2 School Phone Restrictions | Choseno",
+    "metaDescription": "Michigan issues administrative guidelines requiring public school districts to restrict student smartphone use during school hours.",
+    "tags": [
+      "Gretchen Whitmer",
+      "Michigan",
+      "Education",
+      "Youth",
+      "Schools",
+      "US"
+    ],
+    "tweet": "Michigan Department of Education issues guidelines requiring public schools to restrict student smartphone use during class hours starting this fall.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno K-12 Education Desk",
+      "bio": "School governance, education legislation, student mental health policy, and public school administration"
+    },
+    "sources": [
+      {
+        "label": "Michigan Department of Education",
+        "url": "https://www.michigan.gov/mde/news-and-information/press-releases/2026/08/23/wireless-communication-devices-school-guidelines"
+      },
+      {
+        "label": "Detroit Free Press",
+        "url": "https://www.freep.com/story/news/education/2026/08/23/michigan-schools-cellphone-ban-guidelines-public-act-2/7483955/"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "f7575c12-2971-4504-b654-bffde2bbf8d5"
+    ],
+    "taggedPoliticians": [
+      "Gretchen Whitmer"
+    ]
+  },
+  {
+    "slug": "texas-comptroller-glenn-hegar-initiates-statewide-independent-school-district-efficiency-audit-2026-08-24",
+    "headline": "Texas Comptroller Launches Comprehensive Expenditure Audit of Public School District Administrative Budgets",
+    "summary": "Texas Comptroller Glenn Hegar initiates financial efficiency reviews of Texas independent school districts following executive directive from Governor Greg Abbott to identify administrative cost savings.",
+    "category": "Education",
+    "country": "US",
+    "province": "TX",
+    "status": "published",
+    "eventDate": "2026-08-23T21:00:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "state",
+    "latitude": 30.2747,
+    "longitude": -97.7404,
+    "body": "AUSTIN, TX — Texas Comptroller Glenn Hegar announced the formal launch of the Texas Public School Financial Efficiency Review, mobilizing state auditors to review administrative spending, third-party consulting contracts, and vendor procurement across the state's largest independent school districts (ISDs).\n\n## Identifying Administrative Efficiencies Ahead of Legislative Session\n\nThe statewide audit responds directly to an executive directive issued by Governor Greg Abbott aimed at maximizing classroom teacher compensation while identifying operational redundancies in non-instructional central office administration. Comptroller Hegar stated that the audit will provide lawmakers with granular data on district fund balances and administrative overhead ratios heading into the 89th Legislative Session.\n\nComptroller Hegar affirmed that Texas taxpayers and school children deserve transparent verification that education tax dollars reach classrooms and teachers directly.\n\n## School Superintendent and Trustee Stances\n\nTexas Association of School Administrators (TASA) leaders welcomed financial transparency while noting that districts manage mandatory state security mandates and rising special education transportation costs.\n\nLegislative budget leaders highlighted that audit findings will shape upcoming baseline funding formulas for public education.\n\n## Audit Reporting Schedule\n\nPreliminary efficiency audit findings for initial school districts will be submitted to the Texas Legislature in December 2026.",
+    "seoTitle": "Texas Comptroller Launches Public School District Efficiency Audit | Choseno",
+    "metaDescription": "Texas Comptroller Glenn Hegar launches administrative expenditure audits of school districts ahead of the 2027 legislative session.",
+    "tags": [
+      "Greg Abbott",
+      "Texas",
+      "Education",
+      "Budget",
+      "Taxes",
+      "Economy",
+      "US"
+    ],
+    "tweet": "Texas Comptroller Glenn Hegar launches statewide efficiency audits of school district administrative spending ahead of the 2027 legislative session.",
+    "breakingNews": false,
+    "author": {
+      "name": "Choseno State Fiscal & Education Bureau",
+      "bio": "State fiscal audits, public school finance, Texas legislative appropriations, and government efficiency"
+    },
+    "sources": [
+      {
+        "label": "Texas Comptroller of Public Accounts",
+        "url": "https://comptroller.texas.gov/about/media-center/news/20260823-school-efficiency-audit.php"
+      },
+      {
+        "label": "The Texas Tribune",
+        "url": "https://www.texastribune.org/2026/08/23/texas-comptroller-school-district-audits-abbott/"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "82d5f358-a471-4b4d-b052-843ef9934ad3"
+    ],
+    "taggedPoliticians": [
+      "Greg Abbott"
+    ]
+  },
+  {
+    "slug": "prime-minister-mark-carney-announces-emergency-trade-adjustment-assistance-for-auto-and-steel-workers-2026-08-24",
+    "headline": "Prime Minister Mark Carney Unveils $2 Billion Trade Adjustment Package to Support Auto and Steel Workers",
+    "summary": "Government of Canada establishes a $2 billion liquidity and wage subsidy bridge for Canadian automotive parts suppliers and steel mills managing supply chain realignments amid U.S. tariffs.",
+    "category": "Trade",
+    "country": "CA",
+    "province": "ON",
+    "status": "published",
+    "eventDate": "2026-08-23T20:30:00Z",
+    "published_at": "2026-08-24T08:00:00Z",
+    "impactArea": "country",
+    "latitude": 45.4215,
+    "longitude": -75.6972,
+    "body": "OTTAWA, ON — Prime Minister Mark Carney and Finance Minister François-Philippe Champagne announced the creation of the $2 billion Canadian Industrial Trade Adjustment Program (CITAP), providing immediate working capital support and direct payroll wage subsidies for domestic manufacturing workers.\n\n## Protecting Industrial Manufacturing and Skilled Trades\n\nThe federal adjustment program guarantees up to $50 million in low-interest commercial credit lines per manufacturing enterprise and provides 75% work-sharing wage subsidies to prevent plant layoffs while Canadian manufacturers diversify export delivery contracts across European Union, Asian, and Latin American trade corridors. Prime Minister Carney affirmed that Canadian auto parts makers, aluminum smelters, and steelworkers will not bear the cost of unilateral foreign trade duties alone.\n\nPrime Minister Carney emphasized that Canada’s economic foundation is resilient, backed by strategic critical minerals, clean electricity, and the world’s most skilled manufacturing workforce.\n\n## Industrial Coalitions and Labor Union Endorsements\n\nUnifor and the United Steelworkers (USW) strongly endorsed the federal wage subsidy backstop, highlighting that protecting manufacturing jobs preserves industrial community stability in Windsor, Hamilton, and Sault Ste. Marie.\n\nCanadian Manufacturers & Exporters (CME) praised the emergency liquidity window for preventing cash flow insolvency.\n\n## Program Application Timeline\n\nFederal trade adjustment portal intake opens through the Business Development Bank of Canada (BDC) on September 1, 2026.",
+    "seoTitle": "PM Mark Carney Unveils $2B Trade Adjustment Package for Workers | Choseno",
+    "metaDescription": "Prime Minister Mark Carney announces $2B industrial adjustment fund and wage subsidies for auto and steel manufacturing workers.",
+    "tags": [
+      "Mark Carney",
+      "Canada",
+      "Trade",
+      "Economy",
+      "Manufacturing",
+      "Jobs"
+    ],
+    "tweet": "Prime Minister Mark Carney unveils a $2B trade adjustment fund providing wage subsidies and liquidity to protect auto and steel workers from U.S. tariffs.",
+    "breakingNews": true,
+    "author": {
+      "name": "Choseno National & Trade Affairs Bureau",
+      "bio": "Industrial trade policy, federal wage subsidies, manufacturing economics, and international trade"
+    },
+    "sources": [
+      {
+        "label": "Department of Finance Canada",
+        "url": "https://www.canada.ca/en/department-finance/news/2026/08/government-announces-2-billion-industrial-trade-adjustment-program.html"
+      },
+      {
+        "label": "The Canadian Press",
+        "url": "https://www.thecanadianpressnews.ca/politics/carney-2-billion-trade-adjustment-program-workers/article_7483991.html"
+      }
+    ],
+    "taggedPoliticianIds": [
+      "3ec78351-9bec-46b8-afea-45931f29646e"
+    ],
+    "taggedPoliticians": [
+      "Mark Carney"
+    ]
   }
 ];
 
 async function run() {
   console.log(`Starting ingestion of ${articles.length} news articles...`);
   const authHeaders = await getAuthHeaders();
+
+  // Batch tag for this run -- must be computed fresh each time the script
+  // runs, NOT hardcoded. A prior version of this script hardcoded a literal
+  // date/time here; every subsequent run (regardless of when it actually
+  // executed) kept stamping that same stale tag on brand-new articles,
+  // silently merging them into a days-old batch in the Admin > News
+  // Distribution dropdown (see supabase/migrations/20260824000000_auto_
+  // correct_stale_news_batch_number.sql, which also guards against this at
+  // the DB level, but fixing it here is the actual root cause).
+  const batchTimestamp = new Date().toISOString().slice(0, 16).replace('T', ' ');
 
   // Fetch existing slugs to avoid duplication
   const existingRes = await fetch(`${SUPABASE_URL}/rest/v1/news_articles?select=slug&limit=1000`, {
@@ -1082,7 +1113,7 @@ async function run() {
         breakingNews: !!article.breakingNews,
         author: article.author || { name: 'Choseno Civic News Desk', bio: 'Civic and political reporting' },
         sources: article.sources || [],
-        batch_number: '2026-08-21 08:00',
+        batch_number: batchTimestamp,
         viral_score: 9.6,
         shared_platforms: []
       }

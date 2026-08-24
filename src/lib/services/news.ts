@@ -1,6 +1,7 @@
 import type { SupabaseClient, PostgrestError } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { isDevEnvironment } from "@/lib/utils/environment";
+import { convertToPackificTime } from "@/lib/utils/timezone";
 
 type Client = SupabaseClient<Database>;
 type NewsArticleRow = Database["public"]["Tables"]["news_articles"]["Insert"];
@@ -792,19 +793,7 @@ export function extractBodySummary(body?: string, maxChars = 200): string {
  * e.g. "2026-08-18T23:25:00.000Z" -> "2026-08-18 23:25"
  */
 export function formatBatchNumberFromDate(isoDate?: string | null): string {
-  if (!isoDate) {
-    const now = new Date();
-    return `${now.toISOString().slice(0, 10)} ${now.toISOString().slice(11, 16)}`;
-  }
-  try {
-    const d = new Date(isoDate);
-    if (isNaN(d.getTime())) return "Unknown Batch";
-    const datePart = d.toISOString().slice(0, 10);
-    const timePart = d.toISOString().slice(11, 16);
-    return `${datePart} ${timePart}`;
-  } catch {
-    return "Unknown Batch";
-  }
+  return convertToPackificTime(isoDate);
 }
 
 // ── Distribution & Social Sharing Functions ───────────────────────────────
