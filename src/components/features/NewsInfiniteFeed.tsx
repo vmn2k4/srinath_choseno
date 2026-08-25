@@ -1,18 +1,15 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import Link from "next/link";
-import { Calendar, Globe, Zap, ArrowRight, CheckCircle2 } from "lucide-react";
-import { Card, Spinner } from "@/components/primitives";
+import { CheckCircle2 } from "lucide-react";
+import { Spinner } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import {
   getPublishedNewsArticles,
   getPublishedNewsArticlesByEngagement,
-  isBreakingNewsActive,
   type NewsArticle,
-  type NewsArticleContent,
 } from "@/lib/services/news";
-import NewsArticleLinkedPoliticians, { type LinkedPolitician } from "@/components/features/NewsArticleLinkedPoliticians";
+import NewsFeedPostCard from "@/components/features/NewsFeedPostCard";
 import NewsFeedControls, { type NewsFeedSortMode, type NewsFeedTimeRange } from "@/components/features/NewsFeedControls";
 
 const PAGE_SIZE = 12;
@@ -186,7 +183,7 @@ function NewsInfiniteFeedList({
       ) : (
         <div className="space-y-5">
           {articles.map((article) => (
-            <FeedPost key={article.id} article={article} />
+            <NewsFeedPostCard key={article.id} article={article} />
           ))}
         </div>
       )}
@@ -226,111 +223,3 @@ function NewsInfiniteFeedList({
   );
 }
 
-function FeedPost({ article }: { article: NewsArticle }) {
-  const content = article.content as NewsArticleContent | undefined;
-  const isBreaking = isBreakingNewsActive(article);
-  const rawDate = article.event_date || article.published_at || article.created_at;
-  const displayDate = rawDate
-    ? new Date(rawDate).toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" })
-    : null;
-
-  // news_article_politicians isn't on the NewsArticle type (it's a query-
-  // shaped join, not a column -- see getPublishedNewsArticles's comment),
-  // so it's read off the row loosely here the same way NewsPageClient does
-  // for the same join.
-  const taggedPoliticians = (
-    (
-      article as unknown as {
-        news_article_politicians?: Array<{ politician_id: string; profiles: LinkedPolitician | null }>;
-      }
-    ).news_article_politicians ?? []
-  )
-    .map((p) => p.profiles)
-    .filter((p): p is LinkedPolitician => Boolean(p));
-
-  // Landscape images (real hero photos, and every auto-generated
-  // opengraph-image fallback -- those are a fixed 1200x630 composite) read
-  // better beside the text than stretched full-width above it; a tall
-  // portrait photo works the other way round. Not knowable up front (only
-  // the URL is stored, not dimensions), so it's measured client-side once
-  // the image actually loads and the layout switches accordingly. Defaults
-  // to 1200/630 -- the OG-composite's fixed size, and the common case for
-  // real photos too -- so there's no layout jump for most cards; only
-  // flips to stacked for the portrait minority once its real ratio loads.
-  //
-  // The container is sized to this exact ratio (CSS aspect-ratio, not a
-  // fixed h-* class) and the image is object-contain, not object-cover --
-  // NewsArticleCard hit this same problem first (see its own comment): a
-  // fixed-height container force-cropping the wide OG composite chopped
-  // its edges off. Matching the container's aspect ratio to the image's
-  // real one means the image scales fully responsively with card width and
-  // is never cropped, on any screen size.
-  const [aspectRatio, setAspectRatio] = useState(1200 / 630);
-  const isWide = aspectRatio >= 1.2;
-
-  return (
-    <Card padding="none" className="overflow-hidden">
-      <Link href={`/news/${article.slug}`} className={`group block ${isWide ? "sm:flex sm:flex-row" : ""}`}>
-        <div
-          className={`relative shrink-0 overflow-hidden bg-slate-100 flex items-center justify-center ${
-            isWide ? "sm:w-2/5" : "w-full"
-          }`}
-          style={{ aspectRatio }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={article.hero_image_url || `/news/${article.slug}/opengraph-image`}
-            alt={content?.heroImageAlt ?? article.headline}
-            onLoad={(e) => {
-              const { naturalWidth, naturalHeight } = e.currentTarget;
-              if (naturalWidth && naturalHeight) setAspectRatio(naturalWidth / naturalHeight);
-            }}
-            className="w-full h-full object-contain object-center transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
-          />
-        </div>
-        <div className="flex-1 p-4 md:p-5 space-y-2.5">
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-primary/10 text-primary">
-              {article.category || "News"}
-            </span>
-            {isBreaking && (
-              <span className="inline-flex items-center gap-1 bg-danger/10 text-danger text-xs font-bold px-2 py-0.5 rounded-full">
-                <Zap size={10} /> Breaking
-              </span>
-            )}
-            {article.country && (
-              <span className="inline-flex items-center gap-1 text-xs font-semibold text-text-muted">
-                <Globe size={10} /> {article.country.toUpperCase()}
-              </span>
-            )}
-            {displayDate && (
-              <span className="inline-flex items-center gap-1 text-xs font-medium text-text-muted">
-                <Calendar size={10} /> {displayDate}
-              </span>
-            )}
-          </div>
-          <h3 className="text-lg font-extrabold text-text-main leading-snug group-hover:text-primary transition-colors">
-            {article.headline}
-          </h3>
-          {article.summary && <p className="text-sm text-text-muted leading-relaxed">{article.summary}</p>}
-          <span className="inline-flex items-center gap-1.5 text-sm font-bold text-primary group-hover:text-primary-hover transition-colors">
-            Read full article <ArrowRight size={14} />
-          </span>
-        </div>
-      </Link>
-
-      {/* Outside the Link -- NewsArticleLinkedPoliticians renders its own
-          buttons/links (rate, view wall), which can't nest inside one. */}
-      {taggedPoliticians.length > 0 && (
-        <div className="px-4 md:px-5 pb-4 md:pb-5 pt-1 border-t border-border-light/20">
-          <NewsArticleLinkedPoliticians
-            politicians={taggedPoliticians}
-            articleTitle={article.headline}
-            articleId={article.id}
-          />
-        </div>
-      )}
-    </Card>
-  );
-}

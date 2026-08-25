@@ -374,6 +374,17 @@ export default function NewsArticleDetailClient({
     basePostText
   )}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(combinedTagList.join(","))}`;
 
+  const customTweetArticle = (content as any)?.tweetarticle?.trim();
+  const politicianMentions = taggedReps.length > 0 ? taggedReps.join(", ") : "Elected Officials";
+  const jurisdiction = [article.province, article.country].filter(Boolean).join(", ") || "National";
+  const summaryText = activeSummary || "";
+
+  const tweetArticleText =
+    customTweetArticle ||
+    `${activeHeadline}\n\n📍 KEY FACTS & SCOPE:\n• Jurisdiction: ${jurisdiction}\n• Officials Involved: ${politicianMentions}\n• Overview: ${summaryText}\n\n🗣️ THE PERSPECTIVES:\n• Civic Context: Detailed reporting, debate, and community impact analysis are available on Choseno.\n• Transparency: Follow legislative milestones, vote counts, and budget line-items.\n\n🗳️ Rate this decision and view the official public record on Choseno:\n📰 Full Article: ${shareUrl}\n\n${formattedHashtagString}`;
+
+  const imageUrl = article.hero_image_url || `${SITE_URL}/api/news/${article.slug}/og-image`;
+
   // Feeds the shared <ShareMenu/> -- both the header "Share" button and the
   // briefing card's "Share This Briefing" button pass this same object, so
   // they open the exact same set of destinations (Copy Link, X, WhatsApp,
@@ -386,6 +397,8 @@ export default function NewsArticleDetailClient({
     shareText,
     hashtags: combinedTagList,
     twitterUrl: twitterShareUrl,
+    tweetArticleText,
+    imageUrl,
   };
 
   const handleCopyLink = () => {

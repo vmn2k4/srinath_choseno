@@ -17,7 +17,10 @@ This directive merges all rules, standards, and matrices from:
   - **70% United States (~14–15 articles per batch of 20)**: Cover US Federal (Washington DC / Congress / White House / Federal Agencies), 50 State Capitols (Governors / State Legislatures), and Major City Councils.
   - **30% Canada (~5–6 articles per batch of 20)**: Cover Canadian Federal (Ottawa / Parliament / PMO), 10 Provincial Capitols (Premiers / Assemblies), and Major Canadian Municipalities.
 - **Deep Research Requirement**: Every article MUST be backed by primary source research (bill numbers, court docket filings, vote counts, budget figures) with both official and critic/opposition counter-perspectives.
-- **Zero Hallucination & Pre-Flight Deduplication**: Check existing slugs from Supabase to prevent duplicate coverage.
+- **Multi-Tiered Semantic Deduplication**:
+  - Check incoming stories against **all existing database articles** (using both exact slug and semantic headline/token similarity > 60%).
+  - Never generate or publish duplicate stories on the same legislative vote, executive order, or policy announcement that has already been covered in a prior batch.
+  - The pipeline automatically enforces semantic deduplication in `scripts/auto-batch-pipeline.js`, rejecting any story that overlaps with previous coverage.
 - **Mandatory Politician Tagging Priority**:
   - Whenever an elected official (Governor, Premier, Mayor, Cabinet Member, Senator, MP, MPP, MLA) is featured or quoted in an article, their exact full name **MUST** be placed into `taggedPoliticians: ["Full Name"]` (e.g. `["Greg Abbott"]`, `["Gavin Newsom"]`, `["Doug Ford"]`, `["Mark Carney"]`, `["David Eby"]`, `["Josh Shapiro"]`, `["Gretchen Whitmer"]`, `["Ron DeSantis"]`, `["JB Pritzker"]`, `["Wab Kinew"]`).
   - **Civic Leaders fallback is strictly a last resort** ONLY for anonymous agency/bureau reports where no specific elected official exists.
@@ -77,11 +80,24 @@ Articles must match the comprehensive depth, narrative texture, and exhaustive i
 
 ---
 
-## 5. SOCIAL HOOK (TWEET) REQUIREMENTS
+## 5. SOCIAL HOOKS (SHORT TWEET & LONG TWEETARTICLE) REQUIREMENTS
 
-- 120–220 characters.
-- Must explain public significance and civic stakes.
-- **Strict Rule: NO hashtags, NO @handles, NO URLs, and NO emojis.**
+Every generated news article MUST include both:
+1. **`tweet` (Short 140–200 Character Hook)**:
+   - Concise summary explaining the public significance, numbers, and civic stakes.
+   - **Strict Rule: Plain text only — NO hashtags, NO @handles, NO URLs, and NO emojis.** (Choseno dynamically attaches the canonical card URL and PascalCase hashtags).
+
+2. **`tweetarticle` (Long-Form 800–1,500 Character Neutral X Premium Post)**:
+   - Pre-formatted, highly structured long post optimized for Twitter/X Premium sharing.
+   - **Structure**:
+     - *Headline & Jurisdiction/Leadership Lead*
+     - `📍 THE MEASURE / KEY FACTS:` (3–4 bullet points with hard dollar numbers, bill citations, and geographic scope)
+     - `🗣️ THE PERSPECTIVES:` (Balanced summary: 1 bullet for proponents/leadership rationale + 1 bullet for opposition/critics/concerns)
+     - `🗳️ Rate this decision and view the official public record on Choseno:`
+     - `📰 Full Article: https://www.choseno.com/news/[slug]`
+     - `👤 Politician Wall: https://www.choseno.com/wall/[politician-slug]` (if tagged)
+     - Relevant topic hashtags (e.g. `#CityPoli #StatePoli #Choseno`)
+   - **Editorial Rule**: Maintain 100% neutrality — do not rate or assign subjective grades; invite the citizens to rate the decision on Choseno.
 
 ---
 

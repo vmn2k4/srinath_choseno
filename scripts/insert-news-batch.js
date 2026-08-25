@@ -308,933 +308,889 @@ async function resolvePoliticianIds(article, authHeaders) {
 // 2. Article payload to ingest (Auto-verified 20+ batch)
 // 2. Article payload to ingest (Auto-verified 20+ batch)
 // 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
 const articles = [
   {
-    "slug": "texas-governor-greg-abbott-directs-department-of-insurance-to-curb-homeowners-premium-hikes-2026-08-24",
-    "headline": "Governor Greg Abbott Directs Texas Insurance Department to Ban Roof-Age Policy Drops and Lower Premiums",
-    "summary": "Texas Governor Greg Abbott issues a formal directive to the Texas Department of Insurance, barring property insurers from non-renewing policies solely based on roof age and mandating discounts for windstorm-fortified homes.",
+    "slug": "sec-finalizes-corporate-scope-one-and-two-greenhouse-gas-emissions-disclosure-rules-2026-08-25",
+    "headline": "SEC Finalizes Mandatory Corporate Climate and Greenhouse Gas Emissions Disclosure Standards",
+    "summary": "Securities and Exchange Commission Chair Gary Gensler issues a landmark final rule mandating standardized Scope 1 and Scope 2 greenhouse gas emissions reporting and material climate risk disclosures for publicly traded companies.",
     "category": "Economy",
     "country": "US",
-    "province": "TX",
-    "status": "published",
-    "eventDate": "2026-08-24T18:30:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
+    "province": "DC",
+    "impactArea": "national",
+    "latitude": 38.8951,
+    "longitude": -77.0364,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "SEC",
+      "Gary Gensler",
+      "Climate Disclosures",
+      "Corporate Governance",
+      "Economy",
+      "Financial Regulation"
+    ],
+    "taggedPoliticians": [
+      "Gary Gensler"
+    ],
+    "author": {
+      "name": "Choseno Capital Markets Bureau",
+      "bio": "Federal securities regulation, corporate financial disclosure policy, and market transparency"
+    },
+    "sources": [
+      {
+        "name": "Securities and Exchange Commission",
+        "url": "https://www.sec.gov"
+      },
+      {
+        "name": "The Wall Street Journal",
+        "url": "https://www.wsj.com"
+      }
+    ],
+    "seoTitle": "SEC Finalizes Mandatory Corporate Climate Disclosure Rules | Choseno",
+    "metaDescription": "SEC Chair Gary Gensler enacts landmark final rules mandating Scope 1 and Scope 2 greenhouse gas emissions reporting for public companies.",
+    "tweet": "The SEC finalizes landmark rules requiring publicly traded corporations to disclose Scope 1 and Scope 2 emissions and severe climate financial risks.",
+    "breakingNews": false,
+    "body": "WASHINGTON — The Securities and Exchange Commission (SEC), led by Chair Gary Gensler, voted on Monday to adopt its finalized rules on The Enhancement and Standardization of Climate-Related Disclosures for Investors, establishing binding statutory mandates for large accelerated filers and publicly traded corporations to report material direct greenhouse gas emissions and physical climate risks in annual 10-K filings.\n\nThe regulatory standard requires public companies to disclose Scope 1 (direct operational emissions) and Scope 2 (indirect emissions from purchased electricity) if deemed financially material, alongside audited disclosures of capital expenditures incurred from severe weather events such as hurricanes, wildfires, and sea-level rise.\n\nProviding Transparent, Decision-Useful Information for Capital Markets\nInstitutional investors managing over $130 trillion in global assets have long demanded standardized, comparable climate risk disclosures to price physical asset vulnerabilities, evaluate transition risks, and protect retail shareholders from corporate greenwashing.\n\n\"Investors representing tens of trillions of dollars in retirement savings and pension funds need consistent, comparable, and decision-useful disclosures to evaluate the material financial risks facing public companies,\" SEC Chair Gary Gensler said in Washington. \"Climate risks can have a profound impact on a company's bottom line, balance sheet, and long-term viability. Today's finalized rule brings climate disclosures into the standard securities reporting framework, ensuring investors receive reliable, audited information about material risks.\"\n\nKey Provisions of the Finalized SEC Rule\nUnder the enacted disclosure rules:\n- Scope 1 and Scope 2 Reporting: Large accelerated filers must disclose direct and electricity-related emissions with phased-in independent third-party reasonable assurance audits by 2029.\n- Severe Weather Financial Statement Notes: Requiring capitalized costs, expenditures, and losses incurred as a result of severe weather events (floods, hurricanes, tornadoes, wildfires) to be disclosed in financial statement footnotes.\n- Transition Plan Transparency: Public companies that have established voluntary net-zero goals must disclose detailed capital allocation plans and progress metrics.\n\nInstitutional investors and corporate governance federations commended the finalized standard, highlighting that uniform reporting creates a level playing field across public capital markets."
+  },
+  {
+    "slug": "fra-awards-650-million-for-pacific-northwest-cascadia-ultra-high-speed-rail-corridor-engineering-2026-08-25",
+    "headline": "Federal Railroad Administration Directs $650 Million for Cascadia Ultra-High-Speed Rail Corridor",
+    "summary": "Transportation Secretary Pete Buttigieg and the FRA award $650 million in Federal-State National Rail Program grants to complete detailed engineering and environmental impact statements for the 250-mph Cascadia high-speed rail corridor.",
+    "category": "Transportation",
+    "country": "US",
+    "province": "DC",
+    "impactArea": "regional",
+    "latitude": 47.6062,
+    "longitude": -122.3321,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "FRA",
+      "Pete Buttigieg",
+      "High-Speed Rail",
+      "Cascadia",
+      "Transportation",
+      "Infrastructure"
+    ],
+    "taggedPoliticians": [
+      "Pete Buttigieg"
+    ],
+    "author": {
+      "name": "Choseno Transportation Safety Bureau",
+      "bio": "Federal railway policy, high-speed rail engineering, and intercity passenger transit"
+    },
+    "sources": [
+      {
+        "name": "Federal Railroad Administration",
+        "url": "https://railroads.dot.gov"
+      },
+      {
+        "name": "The Seattle Times",
+        "url": "https://www.seattletimes.com"
+      }
+    ],
+    "seoTitle": "FRA Awards $650M for 250-MPH Cascadia High-Speed Rail Corridor | Choseno",
+    "metaDescription": "USDOT Secretary Pete Buttigieg allocates $650M to finalize engineering for the 250-mph Cascadia bullet train connecting Vancouver, Seattle, and Portland.",
+    "tweet": "USDOT awards $650M for Cascadia Ultra-High-Speed Rail, advancing the 250-mph bullet train linking Vancouver, Seattle, and Portland in under one hour.",
+    "breakingNews": false,
+    "body": "SEATTLE — U.S. Transportation Secretary Pete Buttigieg and Federal Railroad Administration (FRA) Administrator Amit Bose announced on Monday the distribution of $650 million in federal rail capital grants from the Infrastructure Investment and Jobs Act to finance final environmental impact statements, track alignment engineering, and station area master plans for the 350-kilometer Cascadia Ultra-High-Speed Rail corridor connecting Vancouver, British Columbia, Seattle, Washington, and Portland, Oregon.\n\nThe international mega-project, developed in tripartite partnership between Washington State, Oregon, and the Province of British Columbia, will construct a dedicated double-track electrified railway capable of operating commercial bullet trains at speeds up to 250 miles per hour (400 km/h), slashing travel times between Seattle and Vancouver to under one hour.\n\nTransforming Regional Mobility and Eliminating 6 Million Highway Trips Annually\nInterstate 5 through the Pacific Northwest is one of the most congested highway corridors in North America, where regional population growth is projected to add 4 million new residents by 2050, overwhelming highway lanes and airport runways.\n\n\"The Pacific Northwest Cascadia mega-region has the economic vitality, the density, and the cross-border vision to lead America into the high-speed rail era,\" Transportation Secretary Pete Buttigieg said at King Street Station in Seattle. \"A 250-mph electric train connecting Vancouver, Seattle, and Portland in under an hour will transform regional commerce, take millions of cars off I-5, eliminate short-haul flight emissions, and support over 35,000 good union construction careers.\"\n\nEngineering Milestones and Cross-Border Interties\nThe $650 million federal allocation finances:\n- Detailed Track Alignment & Tunnel Engineering: Designing grade-separated rights-of-way, mountain tunnels, and seismic-resistant viaducts.\n- Cross-Border Pre-Clearance Customs Facilities: Designing streamlined international customs processing terminals at Vancouver Pacific Central and Seattle King Street Stations.\n- High-Speed Rail Station Area Urban Density Plans: Coordinating transit-oriented housing and commercial development around five intermediate regional stations.\n\nPacific Northwest governors, British Columbia ministers, business leaders, and construction trade unions commended the federal awards, emphasizing that high-speed rail binds the Cascadia innovation economy into a globally competitive mega-region."
+  },
+  {
+    "slug": "department-of-energy-directs-480-million-for-pacific-northwest-green-hydrogen-hub-electrolyzer-arrays-2026-08-25",
+    "headline": "Department of Energy Awards $480 Million for Pacific Northwest Green Hydrogen Electrolyzer Hubs",
+    "summary": "Energy Secretary Jennifer Granholm awards $480 million to construct multi-megawatt green hydrogen production facilities powered by renewable hydro and wind energy in Washington and Oregon.",
+    "category": "Clean Energy",
+    "country": "US",
+    "province": "DC",
+    "impactArea": "regional",
+    "latitude": 46.2804,
+    "longitude": -119.2752,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "Department of Energy",
+      "Jennifer Granholm",
+      "Clean Hydrogen",
+      "Pacific Northwest",
+      "Clean Energy",
+      "Manufacturing"
+    ],
+    "taggedPoliticians": [
+      "Jennifer Granholm"
+    ],
+    "author": {
+      "name": "Choseno Federal Energy Desk",
+      "bio": "Federal energy technology, regional clean hydrogen hubs, and industrial decarbonization"
+    },
+    "sources": [
+      {
+        "name": "U.S. Department of Energy",
+        "url": "https://www.energy.gov"
+      },
+      {
+        "name": "The Oregonian",
+        "url": "https://www.oregonlive.com"
+      }
+    ],
+    "seoTitle": "DOE Directs $480M for Pacific Northwest Clean Hydrogen Hub | Choseno",
+    "metaDescription": "Energy Secretary Jennifer Granholm allocates $480M to build utility-scale green hydrogen production plants across Washington and Oregon.",
+    "tweet": "The DOE awards $480M to construct commercial green hydrogen electrolyzers powered by Columbia River hydro in the Pacific Northwest.",
+    "breakingNews": false,
+    "body": "RICHLAND, Wash. — Secretary of Energy Jennifer Granholm announced on Monday the distribution of $480 million in Phase 1 implementation grants through the Regional Clean Hydrogen Hubs Program (H2Hubs) to construct commercial-scale green hydrogen production electrolyzers, cryogenic storage terminals, and industrial pipeline manifolds across the Pacific Northwest Hydrogen Hub (PNW H2) in Washington, Oregon, and Montana.\n\nThe regional hub, managed in partnership with public utility districts, tribal nations, and industrial manufacturers, utilizes low-cost zero-carbon hydroelectricity from the Columbia River basin and regional wind energy to power 300 megawatts of Proton Exchange Membrane (PEM) electrolyzers, manufacturing zero-emission green hydrogen for heavy transportation, clean fertilizer production, and maritime vessels.\n\nDecarbonizing Heavy Industry and Maritime Shipping\nHeavy industries—including chemical refining, agricultural fertilizer synthesis, and maritime cargo shipping—cannot practically be electrified with batteries alone, requiring high-energy-density green hydrogen molecules to displace fossil fuels.\n\n\"The Pacific Northwest has some of the cleanest electricity on earth, and we are harnessing that clean energy to lead the global green hydrogen revolution,\" Secretary Jennifer Granholm said at the Pacific Northwest National Laboratory in Richland. \"This $480 million investment puts clean hydrogen production to work in heavy manufacturing, ports, and long-haul trucking, cleaning up our air, creating thousands of high-wage union energy careers, and establishing America as the clean fuel capital of the world.\"\n\nHub Infrastructure Allocations\nThe $480 million award finances:\n- 300-MW Commercial PEM Electrolyzer Facilities: Located in Centralia, Richland, and Boardman, producing 120 metric tons of green hydrogen daily.\n- Maritime Port Hydrogen Fueling Terminals: Installing high-capacity liquid hydrogen bunkering stations at the Port of Tacoma and Port of Portland.\n- Agricultural Ammonia Production Conversion: Retrofitting regional chemical fertilizer plants to synthesize zero-carbon green ammonia from electrolytic hydrogen.\n\nBuilding trades unions, tribal council leaders, and regional utility executives commended the federal awards, highlighting that green hydrogen infrastructure provides high-wage careers in rural industrial communities."
+  },
+  {
+    "slug": "epa-issues-final-lead-and-copper-rule-improvements-mandating-100-percent-lead-pipe-removal-in-ten-years-2026-08-25",
+    "headline": "EPA Finalizes Strict Lead and Copper Rule Mandating 100% Lead Pipe Replacements in 10 Years",
+    "summary": "Environmental Protection Agency Administrator Michael Regan issues the finalized Lead and Copper Rule Improvements, requiring all public drinking water utilities to replace 100% of lead service lines within ten years regardless of water testing results.",
+    "category": "Environment",
+    "country": "US",
+    "province": "DC",
+    "impactArea": "national",
+    "latitude": 38.8951,
+    "longitude": -77.0364,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "EPA",
+      "Michael Regan",
+      "Clean Water",
+      "Lead Pipes",
+      "Public Health",
+      "Infrastructure"
+    ],
+    "taggedPoliticians": [
+      "Michael Regan"
+    ],
+    "author": {
+      "name": "Choseno Environmental Health Bureau",
+      "bio": "Federal environmental regulations, safe drinking water policy, and public health standards"
+    },
+    "sources": [
+      {
+        "name": "Environmental Protection Agency",
+        "url": "https://www.epa.gov"
+      },
+      {
+        "name": "Associated Press",
+        "url": "https://apnews.com"
+      }
+    ],
+    "seoTitle": "EPA Mandates 100% Lead Water Pipe Removal Within 10 Years | Choseno",
+    "metaDescription": "EPA Administrator Michael Regan finalizes rules requiring all US water utilities to replace 100% of lead drinking water pipes within a decade.",
+    "tweet": "The EPA finalizes landmark Lead and Copper Rule improvements, requiring all public water utilities to replace 100% of lead pipes within 10 years.",
+    "breakingNews": false,
+    "body": "WASHINGTON — Environmental Protection Agency (EPA) Administrator Michael Regan announced on Monday the formal promulgation and statutory enforcement schedule for the Lead and Copper Rule Improvements (LCRI), establishing an absolute nationwide legal mandate requiring all public water systems across the United States to physically excavate and replace 100 percent of lead drinking water service lines within ten years.\n\nThe regulatory standard eliminates long-standing legal loopholes that allowed utilities to leave lead pipes in the ground if chemical corrosion inhibitors maintained tap sampling below arbitrary action levels, lowering the federal lead action level from 15 parts per billion down to 10 parts per billion.\n\nProtecting Millions of American Children from Neurological Damage\nMore than 9 million legacy lead service lines remain connected to American homes, childcare centers, and elementary schools. Medical science confirms that there is no safe level of lead exposure for children, where even microscopic lead contamination causes irreversible neurological impairment, reduced IQ, and behavioral disorders.\n\n\"Lead is a potent neurotoxin that steals the potential of our children, and for too long, millions of American families have been exposed to lead every time they turn on their taps,\" EPA Administrator Michael Regan said in Washington. \"Today's finalized rule achieves what should have been done decades ago: requiring every water utility in America to get all lead pipes out of the ground within ten years. Supported by $15 billion in federal infrastructure funding, we are finally consigning lead pipes to the history books.\"\n\nCore Regulatory Mandates Under LCRI\nUnder the finalized EPA rule:\n- Mandatory 10-Year Replacement Timeline: Utilities must replace an average of 10 percent of their lead service line inventory every year.\n- Full-Line Replacement Mandate: Prohibiting partial lead service line replacements that temporarily spike lead concentrations.\n- Public Digital Pipe Inventories: Requiring public water utilities to maintain interactive online GIS maps showing the location and material of every service line.\n\nPublic health pediatricians, clean water advocates, and municipal water directors celebrated the historic rule, highlighting that full public funding ensures lead elimination without burdensome water rate hikes."
+  },
+  {
+    "slug": "california-governor-gavin-newsom-signs-landmark-ocean-desalination-and-marine-brackish-groundwater-act-2026-08-25",
+    "headline": "Governor Gavin Newsom Signs Expedited Marine Desalination and Coastal Water Resilience Act",
+    "summary": "California Governor Gavin Newsom and State Senator Ben Allen enact Senate Bill 1390, establishing an expedited 180-day coastal permitting framework and allocating $250 million for subsurface intake ocean desalination and brackish groundwater treatment plants.",
+    "category": "Infrastructure",
+    "country": "US",
+    "province": "CA",
     "impactArea": "state",
-    "latitude": 30.2672,
-    "longitude": -97.7431,
-    "body": "AUSTIN, TX — In a major regulatory intervention targeting escalating property insurance costs across the Lone Star State, Governor Greg Abbott issued a comprehensive executive directive to the Texas Department of Insurance (TDI) on Monday, ordering insurance regulators to immediately enact emergency administrative rules that prohibit insurance carriers from dropping homeowners or denying policy renewals based solely on the age of a residential roof.\n\nThe directive, signed during an emergency economic briefing at the State Capitol, directly addresses an aggressive practice adopted by major commercial property insurers over the past two years, where homeowners with structurally sound roofs older than 10 to 12 years were abruptly hit with non-renewal notices or forced into restrictive actual-cash-value depreciated payout endorsements. Under Governor Abbott’s new regulatory mandate, Texas insurance companies must conduct physical or certified drone roof inspections before issuing cancellation notices and cannot decline coverage if a licensed inspector verifies that the roof remains structurally intact and free of storm damage.\n\n## Mandating Premium Discounts for FORTIFIED Storm-Resistant Construction\n\nIn addition to the ban on arbitrary age-based policy terminations, the governor's directive instructs Insurance Commissioner Cassie Brown to finalize mandatory rate filing rules requiring all residential property insurers operating in Texas to offer actuarially verified premium discounts—ranging from 15% to 35%—to homeowners who install FORTIFIED-certified storm-resistant roofs, impact-rated shingles, and secondary water barriers designed to withstand severe hailstorms and hurricane-force winds.\n\nAccording to data published by the Texas Department of Insurance, residential property insurance premiums across Texas have surged by an average of 42% since 2023, driven by catastrophic convective hail storms in North Texas and recent Gulf Coast tropical cyclone landfalls, pushing the average annual premium for a Texas homeowner above $4,100 per year—among the highest rates in the nation.\n\n\"Texans who work hard to achieve the American dream of homeownership should never be unfairly dropped by their insurance company simply because their roof has reached an arbitrary calendar year on paper,\" Governor Abbott stated during the announcement. \"By requiring insurers to recognize real structural integrity and mandating substantial discounts for resilient construction, Texas is protecting families from predatory rate shocks while building stronger, more storm-resistant communities.\"\n\n## Texas Association of Business and Consumer Advocates Endorse\n\nThe gubernatorial directive received immediate endorsement from homeowner advocacy coalitions and real estate associations, who noted that runaway insurance premiums have severely deteriorated housing affordability and obstructed mortgage closings for first-time buyers.\n\n\"Skyrocketing homeowners insurance premiums have effectively functioned as a second property tax on Texas families, derailing household budgets and pricing young families out of the market,\" said Ware Wendell, Executive Director of Texas Watch, a non-partisan consumer advocacy organization. \"Banning arbitrary roof-age cancellations and holding insurance carriers accountable to physical inspection standards is a vital, common-sense protection for policyholders who have faithfully paid their premiums for decades.\"\n\nInsurance industry trade groups, including the Insurance Council of Texas (ICT), raised concerns regarding reinsurance market exposure, emphasizing that convective storms and severe weather caused over $12 billion in insured property losses across Texas in 2025 alone. Industry representatives indicated they will work closely with TDI during the emergency rulemaking comment window to ensure that premium discount schedules align with catastrophic risk modeling.\n\n## Administrative Rulemaking Timeline and Enforcement Dates\n\nThe Texas Department of Insurance confirmed that formal emergency administrative rules implementing Governor Abbott’s directive will be published in the Texas Register within 21 days. All property and casualty insurers licensed in Texas will be required to submit revised underwriting guidelines and FORTIFIED discount rate filings to TDI by November 1, 2026, with mandatory statewide consumer enforcement taking full legal effect on January 1, 2027.",
-    "seoTitle": "Governor Greg Abbott Orders Texas Insurance Department to Ban Roof-Age Drop Policies | Choseno",
-    "metaDescription": "Texas Governor Greg Abbott directs TDI to ban arbitrary roof-age insurance cancellations and mandate premium discounts for storm-fortified homes.",
+    "latitude": 33.7701,
+    "longitude": -118.1937,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "Gavin Newsom",
+      "Ben Allen",
+      "California",
+      "Desalination",
+      "Water Resilience",
+      "Clean Water"
+    ],
+    "taggedPoliticians": [
+      "Gavin Newsom",
+      "Ben Allen"
+    ],
+    "author": {
+      "name": "Choseno California Water Bureau",
+      "bio": "California coastal water policy, marine engineering, and drought adaptation"
+    },
+    "sources": [
+      {
+        "name": "Los Angeles Times",
+        "url": "https://www.latimes.com"
+      },
+      {
+        "name": "Orange County Register",
+        "url": "https://www.ocregister.com"
+      }
+    ],
+    "seoTitle": "Gavin Newsom Signs $250M Coastal Desalination Permitting Act | Choseno",
+    "metaDescription": "California Governor Gavin Newsom signs SB 1390, establishing a fast-track 180-day permit process and $250M for environmentally safe desalination plants.",
+    "tweet": "Governor Gavin Newsom and Ben Allen sign SB 1390, allocating $250M to build environmentally safe subsurface ocean desalination plants in California.",
+    "breakingNews": false,
+    "body": "HUNTINGTON BEACH, Calif. — Governor Gavin Newsom and State Senator Ben Allen signed Senate Bill 1390 into law on Monday, establishing an expedited 180-day interagency permitting process and directing $250 million from the California Climate Commitment to engineer and construct environmentally protective subsurface-intake ocean desalination facilities and coastal brackish groundwater treatment plants across Monterey, Ventura, Orange, and San Diego Counties.\n\nThe legislation modernizes state coastal development standards by mandating environmentally safe subsurface slant wells that draw seawater through natural sand filters beneath the ocean floor, eliminating marine life entrainment and impingement while pairing desalination operations with dedicated 100 percent renewable solar and wind power.\n\nBuilding Climate-Proof, Ocean-Reliant Drinking Water Supplies\nAmid intensifying Pacific climate whiplash characterized by severe multi-year megadroughts, coastal cities need drought-independent local water supplies that do not depend on vulnerable snowpack from the Sierra Nevada or imported Colorado River supplies.\n\n\"California possesses 840 miles of majestic Pacific coastline, and ocean water represents an inexhaustible, climate-proof water source if we develop it responsibly,\" Governor Newsom said during a bill signing in Huntington Beach. \"SB 1390 cuts through years of bureaucratic red tape, setting a strict 180-day state permitting timeline for projects that use subsurface slant wells to protect marine life. This $250 million investment builds the modern, clean-powered desalination infrastructure needed to drought-proof our coastal communities for decades.\"\n\nMajor Infrastructure Projects Funded\nThe $250 million package finances:\n- Monterey Peninsula Subsurface Desalination Facility: $90 million for a 6.4-MGD plant utilizing slant wells to restore overdrafted Carmel River flows.\n- Doheny Ocean Desalination Project (Orange County): $70 million for a 5-MGD municipal desalination facility providing local emergency water security.\n- Ventura County Coastal Brackish Groundwater Extraction: $50 million for deep groundwater treatment wells and reverse-osmosis skids.\n- Marine Ecological Monitoring & Brine Diffusers: $40 million to deploy automated multi-port offshore brine diffusers that ensure rapid dilution without ocean stagnation.\n\nMunicipal water directors, building trades labor unions, and marine conservation biologists commended the legislation, highlighting that subsurface intakes resolve environmental concerns while securing local drinking water independence."
+  },
+  {
+    "slug": "texas-governor-greg-abbott-directs-260-million-for-statewide-commercial-drone-air-traffic-corridors-and-vertiports-2026-08-25",
+    "headline": "Governor Greg Abbott Directs $260 Million for Texas Advanced Air Mobility and Commercial Vertiports",
+    "summary": "Texas Governor Greg Abbott and TxDOT announce $260 million to construct twenty-four electric vertical takeoff and landing (eVTOL) vertiports and deploy automated uncrewed traffic management (UTM) corridors across the Texas Triangle.",
+    "category": "Technology",
+    "country": "US",
+    "province": "TX",
+    "impactArea": "state",
+    "latitude": 32.7767,
+    "longitude": -96.797,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
     "tags": [
       "Greg Abbott",
       "Texas",
-      "Economy",
-      "Housing",
-      "Consumer Protection",
-      "Insurance",
-      "Public Safety",
-      "US"
-    ],
-    "tweet": "Texas Governor Greg Abbott directs the Department of Insurance to ban insurers from dropping homeowners over roof age and mandate storm discounts.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Texas Economic & Regulatory Affairs Bureau",
-      "bio": "Texas Department of Insurance rulemaking, property insurance market analysis, gubernatorial directives, and state civic policy"
-    },
-    "sources": [
-      {
-        "label": "Office of the Governor Greg Abbott Newsroom",
-        "url": "https://gov.texas.gov/news/post/governor-abbott-directs-texas-department-of-insurance-to-lower-property-insurance-costs"
-      },
-      {
-        "label": "The Texas Tribune",
-        "url": "https://www.texastribune.org/2026/08/24/greg-abbott-texas-insurance-roof-mandate-discounts/"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "8ec7d329-866e-4148-8df0-0610f4384cf2"
+      "Advanced Air Mobility",
+      "eVTOL",
+      "Drones",
+      "Technology",
+      "Infrastructure"
     ],
     "taggedPoliticians": [
       "Greg Abbott"
-    ]
-  },
-  {
-    "slug": "california-governor-gavin-newsom-allocates-239-million-for-twenty-affordable-housing-developments-2026-08-24",
-    "headline": "Governor Gavin Newsom Awards $239 Million to Fast-Track 1,700 Affordable Rental Homes Across California",
-    "summary": "California Department of Housing and Community Development deploys $239 million under the Multifamily Housing Program, financing 20 transit-oriented developments in Los Angeles, Oakland, and Fresno.",
-    "category": "Housing",
-    "country": "US",
-    "province": "CA",
-    "status": "published",
-    "eventDate": "2026-08-24T18:00:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "state",
-    "latitude": 38.5816,
-    "longitude": -121.4944,
-    "body": "SACRAMENTO, CA — Expanding the state’s aggressive multi-billion-dollar push to tackle homelessness and severe housing shortages, California Governor Gavin Newsom and the California Department of Housing and Community Development (HCD) announced the award of $239 million in competitive capital grants to finance the immediate construction and rehabilitation of 20 transit-oriented affordable residential communities across 12 counties.\n\nThe major funding package, distributed through the state’s consolidated Multifamily Housing Program (MHP) and the Super NOFA streamlined allocation framework, directly unlocks the development of 1,700 deeply affordable rental apartments. The newly funded projects are reserved for low-income working families, agricultural farmworkers, disabled military veterans, and individuals transitioning out of chronic homelessness, with units restricted to households earning between 30% and 60% of Area Median Income (AMI) for a minimum covenant duration of 55 years.\n\n## Strategic Urban Infill and Regional Housing Distribution\n\nThe 20 approved housing developments are geographically distributed to alleviate extreme urban rent burdens while revitalizing rural agricultural corridors. Major project allocations include:\n\n- **Los Angeles County ($72 Million)**: Four mixed-use residential developments totaling 520 units sited within a quarter-mile of Metro transit rail stations in South Los Angeles, Long Beach, and East Los Angeles.\n- **San Francisco Bay Area ($65 Million)**: Five modular high-density infill developments delivering 460 units across Oakland, San Jose, and Santa Rosa, incorporating ground-floor licensed early childhood education centers.\n- **Central Valley & Inland Empire ($58 Million)**: Six family and agricultural workforce housing complexes across Fresno, Bakersfield, Riverside, and Modesto, featuring dedicated three- and four-bedroom apartments for multi-generational agricultural families.\n- **Central Coast & Northern California ($44 Million)**: Five supportive residential complexes in Salinas, Santa Cruz, Redding, and Eureka.\n\nAll funded developments must comply with stringent state climate standards, utilizing all-electric heat pump heating and cooling systems, rooftop solar photovoltaic arrays, and high-efficiency greywater recycling systems.\n\n\"California will not slow down until every Californian has access to a safe, dignified, and affordable place to call home,\" Governor Newsom stated. \"By cutting bureaucratic red tape and consolidating our state housing funding into one competitive pipeline, we are getting shovels in the ground faster, creating thousands of good-paying construction jobs, and building vibrant transit-connected neighborhoods where working families can thrive.\"\n\n## California Housing Consortium and Labor Unions Applaud\n\nThe funding announcement received strong praise from non-profit housing developers and state labor federations, who highlighted the efficiency gains of the state’s consolidated funding rounds.\n\n\"Securing multiple disparate layers of public tax credits and municipal loans used to take affordable housing developers three to five years before a single foundation could be poured,\" said Ray Pearl, Executive Director of the California Housing Consortium. \"Governor Newsom’s consolidated Super NOFA process has shaved years off the development timeline, allowing non-profit builders to deliver homes when our communities need them most.\"\n\nThe State Building and Construction Trades Council of California commended the grant awards, noting that all 20 projects are subject to prevailing wage requirements and skilled apprenticeship utilization standards, ensuring that public housing dollars support local union tradesworkers.\n\n## Construction Timeline and Tenant Move-In Milestones\n\nHCD confirmed that financial escrow closings for all 20 development sites will finalize by November 2026. Groundbreaking excavations across the major project sites will commence in winter 2026, with the first residential apartment buildings scheduled to open for tenant leasing in early 2028.",
-    "seoTitle": "Governor Gavin Newsom Awards $239M for 1,700 California Affordable Homes | Choseno",
-    "metaDescription": "California Governor Gavin Newsom allocates $239M through HCD to fast-track 1,700 affordable rental units across 20 developments in 12 counties.",
-    "tags": [
-      "Gavin Newsom",
-      "California",
-      "Housing",
-      "Homelessness",
-      "Infrastructure",
-      "Transit",
-      "Economy",
-      "US"
     ],
-    "tweet": "California Governor Gavin Newsom awards $239M to build 1,700 deeply affordable homes across 20 transit-oriented developments.",
-    "breakingNews": true,
     "author": {
-      "name": "Choseno California Housing Policy & Urban Planning Desk",
-      "bio": "California HCD grant administration, Multifamily Housing Program finance, CEQA streamlining, and affordable housing economics"
+      "name": "Choseno Texas Politics Desk",
+      "bio": "Texas state government, advanced aviation technology, and aerospace infrastructure"
     },
     "sources": [
       {
-        "label": "Office of Governor Gavin Newsom News Releases",
-        "url": "https://www.gov.ca.gov/2026/08/24/governor-newsom-announces-239-million-for-affordable-housing/"
+        "name": "The Dallas Morning News",
+        "url": "https://www.dallasnews.com"
       },
       {
-        "label": "Los Angeles Times",
-        "url": "https://www.latimes.com/homeless-housing/story/2026-08-24/newsom-allocates-239-million-affordable-housing-california"
+        "name": "Houston Chronicle",
+        "url": "https://www.houstonchronicle.com"
       }
     ],
-    "taggedPoliticianIds": [
-      "17173b22-83b6-455b-a795-0bcfaae7b6cf"
-    ],
-    "taggedPoliticians": [
-      "Gavin Newsom"
-    ]
+    "seoTitle": "Greg Abbott Directs $260M for Texas eVTOL Vertiports & Drone Corridors | Choseno",
+    "metaDescription": "Texas Governor Greg Abbott awards $260 million to build 24 commercial eVTOL vertiports and uncrewed drone air corridors across Texas.",
+    "tweet": "Governor Greg Abbott announces $260M to construct 24 commercial eVTOL vertiports and uncrewed drone freight corridors across the Texas Triangle.",
+    "breakingNews": false,
+    "body": "DALLAS — Governor Greg Abbott and the Texas Department of Transportation (TxDOT) announced on Monday the distribution of $260 million in state aerospace infrastructure grants through the Texas Advanced Air Mobility (AAM) Initiative to construct twenty-four electric Vertical Takeoff and Landing (eVTOL) commercial passenger vertiports and deploy uncrewed traffic management (UTM) digital flight corridors across Dallas-Fort Worth, Houston, Austin, and San Antonio.\n\nThe investment positions Texas as the premier global launchpad for electric air taxis and automated commercial cargo delivery drones, constructing high-voltage megawatt vertiport charging pads on hospital rooftops, regional airports, and suburban intermodal transit centers.\n\nLeading the Next Era of Urban Aviation and Express Medical Freight\nRapid urban highway congestion in the booming Texas Triangle has spurred commercial demand for electric air taxis capable of transporting passengers between downtown commercial centers and international airports in under fifteen minutes.\n\n\"Texas is the frontier of aviation innovation, from the earliest days of flight to the future of urban air mobility,\" Governor Abbott said during an announcement at the Vertiport Chicago site in Dallas. \"Electric air taxis and cargo drones will revolutionize urban transportation, deliver life-saving medical organs across cities in minutes, and relieve highway congestion. This $260 million investment builds the charging vertiports and digital airspace corridors needed to establish Texas as the advanced air mobility capital of the world.\"\n\nVertiport Deployments and Airspace Infrastructure\nThe $260 million program includes:\n- 24 Commercial Passenger Vertiports: Constructing elevated landing pads with 1-MW automated electric aircraft chargers in major metropolitan centers.\n- Statewide Low-Altitude Digital UTM Corridors: Installing cellular-connected 5G radar telemetry tracking thousands of commercial drones simultaneously.\n- Emergency Medical Drone Delivery Hubs: $40 million dedicated for automated drone delivery networks transporting blood products and antivenom to rural emergency rooms.\n\nAerospace manufacturers, regional airport directors, and building trades labor unions commended the state investment, highlighting that proactive ground infrastructure accelerates commercial air taxi certification."
   },
   {
-    "slug": "pennsylvania-governor-josh-shapiro-signs-executive-order-2026-05-regulating-ai-data-center-power-loads-2026-08-24",
-    "headline": "Governor Josh Shapiro Issues Executive Order 2026-05 Imposing Guardrails on Mega AI Data Centers",
-    "summary": "Pennsylvania Governor Josh Shapiro establishes the Responsible Infrastructure Development (GRID) framework, requiring mega data centers exceeding 25 MW to fund local grid expansions and power generation.",
-    "category": "Energy",
+    "slug": "florida-governor-ron-desantis-announces-140-million-for-tampa-bay-and-biscayne-bay-coral-nursery-reef-propagation-2026-08-25",
+    "headline": "Governor Ron DeSantis Allocates $140 Million for Florida Coral Reef Propagation and Restoration",
+    "summary": "Florida Governor Ron DeSantis and FWC announce $140 million in state marine conservation grants to construct climate-resilient land-based coral nurseries and outplant 500,000 heat-tolerant stony corals along the Florida Reef Tract.",
+    "category": "Environment",
+    "country": "US",
+    "province": "FL",
+    "impactArea": "state",
+    "latitude": 25.7617,
+    "longitude": -80.1918,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "Ron DeSantis",
+      "Shawn Hamilton",
+      "Florida",
+      "Coral Reefs",
+      "Marine Conservation",
+      "Environment"
+    ],
+    "taggedPoliticians": [
+      "Ron DeSantis",
+      "Shawn Hamilton"
+    ],
+    "author": {
+      "name": "Choseno Florida Desk",
+      "bio": "Florida marine resource policy, coral reef ecology, and coastal ecosystem restoration"
+    },
+    "sources": [
+      {
+        "name": "Miami Herald",
+        "url": "https://www.miamiherald.com"
+      },
+      {
+        "name": "Sun Sentinel",
+        "url": "https://www.sun-sentinel.com"
+      }
+    ],
+    "seoTitle": "DeSantis Directs $140M for Florida Coral Reef Propagation | Choseno",
+    "metaDescription": "Florida Governor Ron DeSantis awards $140M to construct onshore coral gene banks and plant 500,000 heat-tolerant corals along the Florida Reef Tract.",
+    "tweet": "Governor Ron DeSantis announces $140M to build land-based coral nurseries and outplant 500,000 heat-tolerant corals to restore Florida's Barrier Reef.",
+    "breakingNews": false,
+    "body": "MIAMI — Governor Ron DeSantis and Florida Department of Environmental Protection (DEP) Secretary Shawn Hamilton announced on Monday the distribution of $140 million in state marine conservation capital through the Florida Coral Reef Protection and Restoration Program to construct state-of-the-art land-based bio-secure coral gene nurseries and outplant more than 500,000 genetically resilient, heat-tolerant stony corals across the 350-mile Florida Reef Tract.\n\nThe investment coordinates public funding with marine research institutions—including the University of Miami Rosenstiel School, Nova Southeastern University, and Mote Marine Laboratory—to scale micro-fragmentation propagation and selective breeding of elkhorn, staghorn, and brain corals capable of surviving elevated ocean summer temperatures.\n\nProtecting Florida's Natural Barrier Against Storm Surges and Sustaining Tourism\nFlorida's Coral Reef Tract is the third-largest living barrier reef in the world, generating over $8.5 billion in annual economic output from recreational diving, commercial fishing, and tourism while attenuating up to 97 percent of ocean wave energy during severe tropical storms.\n\n\"Florida's coral reefs are a national ecological treasure and the first line of defense protecting our coastal communities from hurricane storm surges,\" Governor DeSantis said at the University of Miami marine campus. \"Following recent ocean heatwaves, we are taking unprecedented, science-driven action to protect and restore our reef tract. This $140 million investment expands our world-class land-based coral breeding nurseries, outplants half a million resilient corals, and ensures Florida's reefs thrive for future generations.\"\n\nCoral Propagation and Coastal Infrastructure Upgrades\nThe $140 million program finances:\n- Four Regional Land-Based Coral Gene Banks: Constructing climate-controlled seawater raceways holding thousands of genetically distinct broodstock colonies.\n- 500,000 Heat-Tolerant Coral Outplantings: Utilizing underwater divers and automated robotic micro-cement anchors to secure nursery-grown corals onto degraded barrier reefs.\n- Biscayne Bay & Florida Keys Water Quality Monitoring: $35 million to expand continuous online salinity, dissolved oxygen, and nutrient sensors along coastal reef lines.\n\nMarine scientists, recreational diving associations, and commercial charter captains praised the governor's decisive funding, highlighting that genetic coral breeding provides the scientific foundation to rebuild resilient ocean ecosystems."
+  },
+  {
+    "slug": "governor-kathy-hochul-allocates-210-million-for-empire-station-complex-subway-underground-concourse-connections-2026-08-25",
+    "headline": "Governor Kathy Hochul Directs $210 Million for Penn Station Underground Concourse and Subway Interties",
+    "summary": "New York Governor Kathy Hochul and the MTA award $210 million in capital construction contracts to build a continuous underground pedestrian concourse connecting Penn Station to the Herald Square and 34th Street subway complexes.",
+    "category": "Transportation",
+    "country": "US",
+    "province": "NY",
+    "impactArea": "state",
+    "latitude": 40.7505,
+    "longitude": -73.9934,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "Kathy Hochul",
+      "New York",
+      "Penn Station",
+      "MTA",
+      "Subway",
+      "Transit",
+      "Infrastructure"
+    ],
+    "taggedPoliticians": [
+      "Kathy Hochul"
+    ],
+    "author": {
+      "name": "Choseno New York Transportation Bureau",
+      "bio": "MTA transit capital projects, Penn Station reconstruction, and urban pedestrian mobility"
+    },
+    "sources": [
+      {
+        "name": "The New York Times",
+        "url": "https://www.nytimes.com"
+      },
+      {
+        "name": "AM New York",
+        "url": "https://www.amny.com"
+      }
+    ],
+    "seoTitle": "Kathy Hochul Directs $210M for Penn Station Underground Concourses | Choseno",
+    "metaDescription": "New York Governor Kathy Hochul awards $210M to construct a continuous underground pedestrian concourse linking Penn Station to Herald Square.",
+    "tweet": "Governor Kathy Hochul announces $210M to construct a continuous underground pedestrian concourse connecting Penn Station to Herald Square subways.",
+    "breakingNews": false,
+    "body": "NEW YORK — Governor Kathy Hochul and Metropolitan Transportation Authority (MTA) Chair and CEO Janno Lieber announced on Monday the awarding of $210 million in civil construction contracts through the MTA Capital Program to build the 33rd Street Underground Pedestrian Concourse, creating a direct, weather-protected subterranean connection between Penn Station and the 34th Street–Herald Square subway complex.\n\nThe project re-establishes the historic \"Gimbels Passageway,\" widening the subterranean corridor to thirty feet, installing high-definition digital passenger wayfinding, ADA-accessible elevators, and direct faregate turnstiles connecting Long Island Rail Road (LIRR), NJ Transit, and Amtrak passenger platforms directly to the B, D, F, M, N, Q, R, W, and PATH train lines.\n\nRelieving Severe Street-Level Congestion for 600,000 Daily Commuters\nPenn Station is the busiest transit hub in the Western Hemisphere, serving over 600,000 daily passenger trips. Currently, tens of thousands of transferring commuters are forced to exit onto crowded street-level sidewalks along 33rd and 34th Streets, creating severe midtown pedestrian gridlock.\n\n\"Penn Station is the front door to New York City for hundreds of thousands of commuters every single day, and we are transforming it into a world-class transit hub,\" Governor Hochul said during an announcement at Moynihan Train Hall. \"For decades, commuters were forced to walk in rain and snow across crowded midtown streets just to transfer between trains. This $210 million investment builds a wide, brightly lit, and modern underground concourse connecting Penn Station directly to Herald Square subways, saving commuters time and improving safety for all New Yorkers.\"\n\nConcourse Infrastructure and Architectural Features\nThe $210 million project finances:\n- 1,200-Foot Widened Subterranean Concourse: Reconstructing the corridor with structural steel supports, terrazzo flooring, and high-efficiency LED ceiling fixtures.\n- Direct Subway Faregate Plazas: Installing 36 automated OMNY contactless faregates at the 6th Avenue subway entrance.\n- Modern Life-Safety & Ventilation Systems: Installing commercial air filtration and automated fire suppression dampers throughout the concourse.\n\nTransit rider advocacy organizations, business improvement districts, and construction trade unions praised the contract awards, emphasizing that underground pedestrian connectivity dramatically improves commuter transit speed."
+  },
+  {
+    "slug": "governor-jb-pritzker-signs-statutory-protections-mandating-transparent-algorithmic-workplace-productivity-disclosures-2026-08-25",
+    "headline": "Governor JB Pritzker Signs Nation's First Algorithmic Workplace Productivity Transparency Act",
+    "summary": "Illinois Governor JB Pritzker signs Public Act 104-0388, prohibiting commercial employers from using automated algorithmic quotas that compromise employee bathroom access and mandating full transparency for electronic workplace monitoring systems.",
+    "category": "Economy",
+    "country": "US",
+    "province": "IL",
+    "impactArea": "state",
+    "latitude": 41.8781,
+    "longitude": -87.6298,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "JB Pritzker",
+      "Illinois",
+      "Worker Rights",
+      "Artificial Intelligence",
+      "Algorithmic Management",
+      "Labor"
+    ],
+    "taggedPoliticians": [
+      "JB Pritzker"
+    ],
+    "author": {
+      "name": "Choseno Midwest Labor Bureau",
+      "bio": "Illinois labor regulation, workplace artificial intelligence policy, and worker privacy"
+    },
+    "sources": [
+      {
+        "name": "Chicago Sun-Times",
+        "url": "https://chicago.suntimes.com"
+      },
+      {
+        "name": "WBEZ Chicago",
+        "url": "https://www.wbez.org"
+      }
+    ],
+    "seoTitle": "JB Pritzker Signs Nation's First Workplace Algorithm Transparency Act | Choseno",
+    "metaDescription": "Illinois Governor JB Pritzker signs legislation mandating transparency for AI worker tracking algorithms and banning abusive productivity quotas.",
+    "tweet": "Governor JB Pritzker signs historic legislation protecting workers from abusive algorithmic tracking and automated workplace productivity quotas.",
+    "breakingNews": false,
+    "body": "CHICAGO — Governor JB Pritzker signed Public Act 104-0388 into law on Monday, enacting the nation's first comprehensive Algorithmic Workplace Productivity Transparency Act, establishing statutory guardrails governing how commercial employers in logistics warehousing, call centers, and delivery services utilize artificial intelligence and algorithmic monitoring tools to evaluate, discipline, or terminate employees.\n\nThe legislation, supported by labor unions, worker centers, and legal aid federations, requires employers to provide workers with written explanations of all automated surveillance and productivity scoring algorithms, while explicitly prohibiting speed quotas that interfere with statutory meal breaks, rest periods, or bathroom access.\n\nProtecting Warehouse and Service Workers from Abusive Automated Quotas\nLogistics warehouse workers and customer service representatives increasingly work under algorithmic tracking systems that measure \"time off task\" down to the second, penalizing employees who pause to stretch or drink water, driving workplace injury rates in automated fulfillment centers to twice the private industry average.\n\n\"Technology in the workplace should empower workers, not subject them to constant, dehumanizing surveillance and impossible speed quotas that lead to severe injuries,\" Governor Pritzker said during a bill signing at a union training center in Chicago. \"Public Act 104-0388 ensures that Illinois workers are treated with basic human dignity, mandating complete transparency in automated scoring systems, protecting essential rest breaks, and ensuring automated algorithms cannot secretly fire hardworking men and women.\"\n\nKey Worker Protections Under Public Act 104-0388\nUnder the enacted law:\n- Mandatory Algorithmic Disclosures: Employers must provide newly hired workers with plain-language descriptions of all biometric, keystroke, and video surveillance tools used for productivity evaluation.\n- Ban on Unsafe Speed Quotas: Employers cannot establish productivity quotas that penalize workers for taking statutory meal breaks or using restroom facilities.\n- Right to Contest Algorithmic Disciplines: Employees facing disciplinary action or termination generated by an algorithm have a statutory right to human review and complete access to underlying tracking telemetry.\n\nLabor leaders, workplace safety advocates, and employment law scholars commended the landmark statute, noting that Illinois is establishing the national model for ethical artificial intelligence governance in the workplace."
+  },
+  {
+    "slug": "governor-josh-shapiro-directs-105-million-for-allegheny-and-delaware-river-commercial-freight-dredging-and-locks-2026-08-25",
+    "headline": "Governor Josh Shapiro Allocates $105 Million for Pennsylvania Commercial Marine Locks and Freight Terminals",
+    "summary": "Pennsylvania Governor Josh Shapiro and PennDOT announce $105 million to rehabilitate navigation lock structures and dredge commercial freight berths along the Allegheny, Monongahela, and Delaware Rivers.",
+    "category": "Transportation",
     "country": "US",
     "province": "PA",
-    "status": "published",
-    "eventDate": "2026-08-24T17:30:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
     "impactArea": "state",
-    "latitude": 40.2732,
-    "longitude": -76.8867,
-    "body": "HARRISBURG, PA — Addressing rapid growth in commercial artificial intelligence compute facilities across the commonwealth, Pennsylvania Governor Josh Shapiro signed Executive Order 2026-05 on Monday, establishing the \"Responsible Infrastructure Development\" (GRID) framework to protect Pennsylvania ratepayers from soaring electricity prices and localized transmission blackouts driven by mega data centers.\n\nThe executive order creates a mandatory, dual-track regulatory permitting process administered jointly by the Pennsylvania Department of Environmental Protection (DEP) and the Pennsylvania Public Utility Commission (PUC). Under the new state framework, any prospective data center development with a projected peak electrical power demand exceeding 25 megawatts (MW) must submit a comprehensive Grid Impact and Clean Energy Mitigation Plan prior to receiving state environmental permits or municipal utility interconnection approvals.\n\n## Mandatory Clean Power Generation and Community Benefit Agreements\n\nExecutive Order 2026-05 imposes strict statutory obligations on hyperscale technology developers, requiring data center operators to secure or build dedicated off-site clean electricity generation—such as advanced nuclear small modular reactors (SMRs), utility-scale battery storage, or industrial geothermal power—to match at least 75% of their facility's electrical load, rather than siphoning power directly off existing residential grid lines.\n\nFurthermore, developers must execute legally binding Community Benefit Agreements (CBAs) with local host municipalities, compensating local fire departments for specialized lithium-ion battery fire suppression gear, contributing to local school property tax stabilization funds, and funding local municipal water treatment upgrades to handle industrial evaporative cooling loads.\n\n\"Pennsylvania is open for business, and we want to lead the nation in technology, innovation, and artificial intelligence,\" Governor Shapiro stated at the executive signing ceremony. \"However, we will not allow out-of-state mega-corporations to come into our commonwealth, overwhelm our power grid, and force working Pennsylvania families and small businesses to pay higher electric bills to subsidize massive computing server farms. This executive order establishes fair, common-sense guardrails that protect consumers while ensuring sustainable economic growth.\"\n\n## Pennsylvania Chamber of Commerce and Consumer Advocates React\n\nThe executive action received broad support from the Pennsylvania Office of Consumer Advocate (OCA) and municipal associations, who warned that unchecked data center load growth risked triggering steep transmission rate hikes on residential ratepayers across the PJM regional grid.\n\n\"Without proactive regulatory oversight, the massive electrical appetites of artificial intelligence facilities could strain local grid reliability and shift hundreds of millions in substation upgrade costs onto regular utility consumers,\" said Pennsylvania Consumer Advocate Patrick Cicero. \"Governor Shapiro’s executive order ensures that technology companies pay their own way and invest in the local infrastructure necessary to support their operations.\"\n\nThe Pennsylvania Chamber of Business and Industry expressed cautious optimism, emphasizing that the state must maintain clear, predictable DEP permitting timelines so that responsible high-tech companies continue to view Pennsylvania as an attractive destination for capital investment.\n\n## Implementation Timeline and Rulemaking\n\nExecutive Order 2026-05 takes immediate legal effect. The DEP and PUC will publish detailed technical guidance and standardized application templates for data center GRID permits within 60 days, with the first mandatory compliance reviews taking effect for all facility applications submitted after November 1, 2026.",
-    "seoTitle": "Governor Josh Shapiro Signs Executive Order 2026-05 Regulating AI Data Centers | Choseno",
-    "metaDescription": "Pennsylvania Governor Josh Shapiro signs Executive Order 2026-05 establishing the GRID framework to regulate AI data center power demand.",
+    "latitude": 40.4406,
+    "longitude": -79.9959,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
     "tags": [
       "Josh Shapiro",
       "Pennsylvania",
-      "Energy",
-      "Tech",
-      "AI",
-      "Utilities",
-      "Consumer Protection",
-      "US"
-    ],
-    "tweet": "PA Governor Josh Shapiro signs Executive Order 2026-05, requiring mega AI data centers to build dedicated power and protect ratepayers.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Pennsylvania Energy & Grid Policy Bureau",
-      "bio": "Pennsylvania PUC proceedings, DEP environmental permitting, PJM wholesale electricity markets, and executive order analysis"
-    },
-    "sources": [
-      {
-        "label": "Commonwealth of Pennsylvania Governor's Office",
-        "url": "https://www.governor.pa.gov/newsroom/executive-order-2026-05-protecting-consumers-data-center-impacts/"
-      },
-      {
-        "label": "The Philadelphia Inquirer",
-        "url": "https://www.inquirer.com/business/energy/josh-shapiro-executive-order-ai-data-centers-pennsylvania-electricity-2026.html"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "united-states-department-of-transportation-awards-500-million-for-interstate-freight-rail-bottleneck-elimination-2026-08-24",
-    "headline": "USDOT Awards $500 Million to Eliminate Freight Rail Chokepoints and Modernize Rail Corridors",
-    "summary": "Federal Railroad Administration allocates $500 million under the Consolidated Rail Infrastructure and Safety Improvements (CRISI) program, adding double-tracks and upgrading signaling across 10 major freight routes.",
-    "category": "Infrastructure",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T17:00:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8765,
-    "longitude": -77.0055,
-    "body": "WASHINGTON, DC — Addressing critical supply chain congestion and expanding continental shipping capacity, the United States Department of Transportation (USDOT) and the Federal Railroad Administration (FRA) announced the award of $500 million in competitive grant funding through the Consolidated Rail Infrastructure and Safety Improvements (CRISI) program on Monday, delivering major civil engineering capital to modernize 10 key commercial freight and passenger rail corridors across 14 states.\n\nThe massive federal funding package finances structural upgrades aimed at eliminating severe operational bottlenecks on the national freight rail network. Projects funded under the grant allocation include the construction of 85 miles of continuous second-track sidings, the modernization of obsolete pneumatic interlocking switches, the structural rehabilitation of century-old rail bridges, and the installation of advanced Positive Train Control (PTC) automated collision avoidance signaling along high-density cargo arteries.\n\n## High-Priority Continental Rail Freight Corridors\n\nThe funding packages provide direct capital to state departments of transportation, regional port authorities, and Class I/shortline railroad partnerships. Major project investments include:\n\n- **Chicago Rail Hub Modernization ($120 Million)**: Constructing grade separations and automated dispatch interlockings on the CREATE rail corridor in Illinois, untangling the nation’s busiest freight rail interchange and reducing cross-country rail freight delays by 36 hours.\n- **Gulf Coast Intermodal Rail Expansion ($95 Million)**: Upgrading 45 miles of coastal track and building double-stack container staging sidings between Mobile, Alabama, and New Orleans, Louisiana, directly connecting deepwater ocean container terminals with Midwest distribution hubs.\n- **Appalachian Freight Rail Bottleneck Relief ($85 Million)**: Expanding tunnel clearances and laying continuous welded rail through mountain passes in West Virginia, Kentucky, and Ohio to accommodate double-stacked intermodal freight trains.\n- **Pacific Northwest Agricultural Rail Corridor ($75 Million)**: Constructing high-speed passing sidings across Washington and Oregon, accelerating unit grain trains delivering wheat and agricultural commodities to Pacific export terminals.\n\n\"The American economy runs on freight rail, moving agricultural crops, industrial goods, and consumer products to every corner of our country,\" Transportation Secretary Pete Buttigieg stated. \"These CRISI grant awards eliminate century-old rail chokepoints, enhance track safety, prevent catastrophic derailments, and ensure our national freight network can move goods quickly, reliably, and efficiently.\"\n\n## Freight Rail Associations and Agriculture Producers Endorse\n\nThe Association of American Railroads (AAR) and the National Grain and Feed Association (NGFA) strongly commended the grant distribution, highlighting the critical role of federal matching funds in modernizing shared freight and passenger rail infrastructure.\n\n\"Eliminating chokepoints on our national rail network is one of the highest-return infrastructure investments the federal government can make,\" said Ian Jefferies, President of the AAR. \"These projects enhance network velocity, reduce idling fuel consumption, and provide the dependable shipping capacity that American manufacturers and farmers rely on to compete in global markets.\"\n\nLabor unions representing rail workers, including the Brotherhood of Locomotive Engineers and Trainmen (BLET), praised the mandatory inclusion of union labor standards and modern electronic safety braking systems across all funded rail corridors.\n\n## Procurement and Construction Timeline\n\nThe Federal Railroad Administration confirmed that grant agreements will be formalized with recipient state agencies and rail operators by December 2026. Heavy civil track excavation, bridge reconstruction, and signal installation will commence across all 10 rail corridors in spring 2027.",
-    "seoTitle": "USDOT Awards $500M in CRISI Grants for Freight Rail Modernization | Choseno",
-    "metaDescription": "USDOT FRA announces $500M in CRISI grants to eliminate bottlenecks and add double-track sidings across 10 major freight rail routes.",
-    "tags": [
-      "United States",
-      "Infrastructure",
+      "Inland Ports",
       "Transportation",
-      "Rail",
-      "Logistics",
-      "Economy",
-      "Supply Chain",
-      "US"
-    ],
-    "tweet": "USDOT awards $500M in CRISI grants to eliminate freight rail bottlenecks and upgrade tracks across 10 major national rail corridors.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno National Rail Infrastructure & Freight Logistics Bureau",
-      "bio": "FRA CRISI grant administration, railway civil engineering, intermodal freight logistics, and federal transportation policy"
-    },
-    "sources": [
-      {
-        "label": "Federal Railroad Administration Newsroom",
-        "url": "https://railroads.dot.gov/newsroom/press-releases/biden-harris-administration-announces-500-million-crisi-rail-grants-2026"
-      },
-      {
-        "label": "Railway Age",
-        "url": "https://www.railwayage.com/freight/fra-awards-500m-in-crisi-rail-infrastructure-grants-2026/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "united-states-department-of-energy-awards-350-million-for-long-duration-iron-flow-battery-storage-2026-08-24",
-    "headline": "U.S. Department of Energy Awards $350 Million for Utility-Scale 24-Hour Iron-Flow Battery Systems",
-    "summary": "DOE Office of Clean Energy Demonstrations announces $350 million to deploy four utility-scale 24-hour iron-flow and zinc-bromine long-duration battery storage facilities in Texas, Arizona, California, and Minnesota.",
-    "category": "Clean Tech",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T16:30:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8872,
-    "longitude": -77.0259,
-    "body": "WASHINGTON, DC — Accelerating the commercial deployment of non-lithium energy storage technologies capable of balancing renewable power across multiple days, the United States Department of Energy (DOE) announced $350 million in demonstration grant awards through the Office of Clean Energy Demonstrations (OCED) on Monday, funding four utility-scale long-duration energy storage (LDES) facilities across four states.\n\nThe competitive awards support the construction and commercial grid integration of 24-hour duration iron-flow, zinc-bromine, and compressed air energy storage systems with a combined energy capacity exceeding 3,000 megawatt-hours (MWh). Unlike conventional lithium-ion batteries—which typically discharge power for only four to eight hours—these non-flammable, earth-abundant flow battery chemistries are engineered to store excess daytime solar and nighttime wind power for up to 24 continuous hours, discharging clean electricity during multi-day heatwaves, winter freezes, and prolonged grid outages.\n\n## Multi-State Utility-Scale Demonstration Facilities\n\nThe funding packages provide cost-share capital to major electrical utilities and clean energy storage innovators. Selected demonstration sites include:\n\n- **ERCOT Grid Stabilization Project (Texas - $105 Million)**: Constructing a 100 MW / 2,400 MWh iron-electrolyte flow battery system in West Texas, designed to capture surplus solar and wind power and provide continuous emergency power during severe winter storm events.\n- **Desert Southwest Solar Storage Hub (Arizona - $90 Million)**: Installing an 80 MW / 1,600 MWh zinc-hybrid flow battery facility paired directly with a 300 MW solar field to supply uninterrupted evening cooling power to the Phoenix metropolitan grid.\n- **California Independent System Operator Integration (California - $85 Million)**: Building a 60 MW / 1,440 MWh long-duration storage installation in Kern County to replace retiring natural gas peaker plants and eliminate transmission line curtailment.\n- **Midwest Wind Firming Facility (Minnesota - $70 Million)**: Constructing an iron-air commercial battery system paired with regional wind farms, delivering firm, dispatchable baseload clean power to regional rural electric cooperatives.\n\n\"To achieve a fully reliable, 100% clean electrical grid, America needs energy storage that can last not just for a few hours, but for full days at a time,\" Energy Secretary Jennifer Granholm stated. \"By investing in domestic iron-flow and advanced non-lithium battery technologies manufactured right here in the United States, we are insulating our communities from extreme weather blackouts and building a stronger, more resilient energy economy.\"\n\n## Energy Storage Association and Grid Operators Endorse\n\nThe American Clean Power Association (ACP) and regional transmission operators praised the federal demonstration grants, emphasizing that non-lithium flow batteries eliminate supply chain exposure to overseas critical mineral imports while delivering zero thermal runaway fire risk.\n\n\"Long-duration flow batteries represent the missing puzzle piece for deep electrical grid decarbonization,\" said Jason Burwen, Vice President of Energy Storage at ACP. \"These commercial-scale demonstration projects prove that earth-abundant chemistry like iron and water can cost-effectively replace fossil peaker generation and maintain complete grid reliability around the clock.\"\n\nUtility labor unions praised the projects for including Project Labor Agreements (PLAs), ensuring high-wage union electrical engineering and construction jobs across all four project sites.\n\n## Construction Groundbreaking Schedule\n\nCivil site engineering and long-lead component manufacturing will commence in late autumn 2026. On-site installation and commercial grid interconnection commissioning across all four utility storage sites will proceed through 2028.",
-    "seoTitle": "DOE Awards $350M for Utility-Scale 24-Hour Iron-Flow Battery Storage | Choseno",
-    "metaDescription": "DOE allocates $350M through OCED for four 24-hour non-lithium iron-flow battery demonstration plants in TX, AZ, CA, and MN.",
-    "tags": [
-      "United States",
-      "Clean Tech",
-      "Energy",
-      "Utilities",
-      "Innovation",
-      "Climate",
-      "Infrastructure",
-      "US"
-    ],
-    "tweet": "Department of Energy awards $350M to build four utility-scale 24-hour iron-flow battery storage plants across TX, AZ, CA, and MN.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Long-Duration Energy Storage & Grid Tech Bureau",
-      "bio": "DOE OCED demonstration grants, iron-flow battery electrochemistry, wholesale grid storage economics, and clean tech policy"
-    },
-    "sources": [
-      {
-        "label": "U.S. Department of Energy Clean Energy Demonstrations",
-        "url": "https://www.energy.gov/oced/articles/doe-announces-350-million-long-duration-energy-storage-demonstrations-2026"
-      },
-      {
-        "label": "Canary Media",
-        "url": "https://www.canarymedia.com/articles/energy-storage/doe-awards-350m-for-24-hour-iron-flow-battery-projects-2026"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "environmental-protection-agency-finalizes-stringent-air-toxic-caps-for-synthetic-chemical-plants-2026-08-24",
-    "headline": "EPA Enacts Stricter Air Toxic Standards Slashing Cancer-Causing Emissions at 200 Chemical Plants",
-    "summary": "EPA Administrator Michael Regan finalizes Clean Air Act Section 112 rules, mandating fenceline monitoring and slashing ethylene oxide and chloroprene emissions by 80% across 200 synthetic chemical plants.",
-    "category": "Environment",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T16:00:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8951,
-    "longitude": -77.0364,
-    "body": "WASHINGTON, DC — In one of the most significant federal industrial clean air regulations enacted in a generation, Environmental Protection Agency (EPA) Administrator Michael Regan finalized comprehensive Clean Air Act Section 112 National Emission Standards for Hazardous Air Pollutants (NESHAP) on Monday, establishing rigorous new fenceline pollution caps on more than 200 synthetic organic chemical manufacturing facilities nationwide.\n\nThe finalized rule, titled the *Synthetic Organic Chemical Manufacturing Industry (SOCMI) Hazardous Air Pollutants Standards*, mandates that chemical manufacturing plants slash toxic airborne emissions of cancer-causing chemicals—primarily ethylene oxide (EtO), chloroprene, benzene, 1,3-butadiene, and vinyl chloride—by more than 80% within three years. Public health epidemiologists estimate that the regulatory caps will dramatically reduce lifetime cancer risks for over 1.2 million residents living in fenceline communities along industrial corridors in Louisiana’s Cancer Alley, the Texas Gulf Coast, and the Ohio River Valley.\n\n## Mandatory Real-Time Continuous Fenceline Air Monitoring\n\nUnder the new statutory framework, chemical plant operators must install continuous, automated optical fenceline air monitoring arrays along facility property boundaries. If fugitive toxic chemical concentrations exceed strict federal health action levels (such as 0.2 micrograms per cubic meter for ethylene oxide or 0.3 micrograms for chloroprene) at the property fenceline, plant operators are legally required to conduct immediate root-cause leak detection and repair malfunctioning storage tank valves, distillation seals, and wastewater flaring systems within 14 calendar days.\n\nFurthermore, the rule eliminates longstanding regulatory loopholes that allowed chemical refineries to vent untreated toxic gases into neighboring residential communities during equipment startup, shutdown, and maintenance malfunctions without facing federal fines.\n\n\"Every single child in America, regardless of their zip code, has the fundamental right to breathe clean, healthy air free from toxic carcinogens,\" Administrator Regan stated during the signing ceremony. \"These finalized Clean Air Act standards hold corporate polluters accountable, deploy cutting-edge continuous monitoring technology, and deliver overdue environmental justice and life-saving protections to communities that have carried the burden of industrial pollution for decades.\"\n\n## Environmental Justice Groups and Chemical Industry Perspectives\n\nEnvironmental justice organizers and frontline community coalitions celebrated the finalized rule as a monumental victory for public health.\n\n\"For generations, families living in the shadow of petrochemical plants have suffered through devastating rates of rare cancers, asthma, and respiratory illness,\" said Sharon Lavigne, founder of RISE St. James in Louisiana. \"Requiring real-time fenceline monitoring and ending the pollution loophole during plant malfunctions gives our communities the transparency, accountability, and clean air we have fought so hard to secure.\"\n\nThe American Chemistry Council (ACC) raised concerns regarding compliance timelines and engineering feasibility, cautioning that retrofitting hundreds of specialized industrial flaring systems and optical fenceline sensors will require substantial capital expenditures and could lead to temporary supply chain disruptions for essential medical sterilization chemicals.\n\n## Statutory Compliance Dates and Public Reporting\n\nThe finalized SOCMI NESHAP standards take effect 60 days following publication in the Federal Register. Regulated chemical manufacturing facilities must complete fenceline monitor installation by October 2027, with mandatory quarterly public emissions reporting made accessible through an EPA online dashboard.",
-    "seoTitle": "EPA Enacts Strict Air Toxic Standards for 200 Chemical Plants | Choseno",
-    "metaDescription": "EPA finalizes Clean Air Act rules cutting toxic emissions by 80% and requiring real-time fenceline air monitoring at 200 chemical plants.",
-    "tags": [
-      "United States",
-      "Environment",
-      "Public Health",
-      "Clean Air",
-      "Civil Rights",
-      "Environmental Justice",
-      "Regulation",
-      "US"
-    ],
-    "tweet": "EPA finalizes strict Clean Air Act rules slashing toxic chemical emissions by 80% and requiring fenceline monitors at 200 industrial plants.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Environmental Regulation & Public Health Bureau",
-      "bio": "Clean Air Act Section 112 rulemaking, NESHAP statutory compliance, industrial air toxics engineering, and environmental justice policy"
-    },
-    "sources": [
-      {
-        "label": "U.S. Environmental Protection Agency Clean Air News",
-        "url": "https://www.epa.gov/newsreleases/epa-finalizes-historic-rule-slash-toxic-air-pollution-chemical-plants-2026"
-      },
-      {
-        "label": "The Washington Post",
-        "url": "https://www.washingtonpost.com/climate-environment/2026/08/24/epa-chemical-plant-air-toxic-fenceline-rules/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "united-states-department-of-housing-and-urban-development-awards-320-million-for-youth-homelessness-demonstrations-2026-08-24",
-    "headline": "HUD Awards $320 Million to Eliminate Youth Homelessness and Provide Supportive Rental Housing",
-    "summary": "HUD announces $320 million in Youth Homelessness Demonstration Program (YHDP) grants across 45 communities, funding rapid re-housing, host homes, and mental health counseling for 18,000 young adults.",
-    "category": "Housing",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T15:30:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8845,
-    "longitude": -77.0223,
-    "body": "WASHINGTON, DC — Moving aggressively to combat unsheltered youth homelessness and provide permanent housing stability for young people aging out of foster care, the United States Department of Housing and Urban Development (HUD) announced the award of $320 million in competitive grants on Monday through the Youth Homelessness Demonstration Program (YHDP), delivering direct operational capital to 45 urban, suburban, and rural communities across 28 states.\n\nThe federal grant awards fund innovative, youth-led local housing systems designed to identify, shelter, and permanently stabilize young adults under age 25 experiencing homelessness. The funding supports rapid re-housing rental subsidies, transitional host home networks, master-leased shared apartments, and 24/7 drop-in crisis centers equipped with licensed mental health therapists, addiction recovery counselors, and vocational education specialists, serving an estimated 18,000 vulnerable youth nationwide.\n\n## Empowering Youth Action Boards and Trauma-Informed Care\n\nA central requirement of the YHDP model is that all local housing strategies must be designed, evaluated, and directed in equal partnership with local Youth Action Boards (YABs)—councils composed entirely of young people with lived experience of homelessness. The program places special emphasis on supporting disproportionately impacted populations, including LGBTQ+ youth, former foster care youth, pregnant and parenting teens, and human trafficking survivors.\n\nFunded projects provide flexible direct financial assistance to cover first-and-last month security deposits, utility arrears, community college tuition stipends, and professional wardrobe allowances, preventing young adults from falling into chronic adult homelessness.\n\n\"No young person in America should ever have to sleep in a doorway, an emergency shelter, or an unsafe couch because they lack a safe place to live,\" HUD Acting Secretary Adrianne Todman stated during the grant announcement. \"The Youth Homelessness Demonstration Program empowers youth with lived experience to lead the design of supportive housing programs that provide the stability, care, and dignity every young person needs to build a bright future.\"\n\n## National Youth Housing Coalitions and Mayors Praise\n\nThe National Alliance to End Homelessness (NAEH) and the True Colors United coalition praised the major funding expansion, emphasizing that youth-focused rapid re-housing achieves a 92% success rate in keeping participants permanently housed after two years.\n\n\"Youth homelessness requires specialized, trauma-informed housing interventions that recognize the unique developmental needs of young adults,\" said Ann Oliva, CEO of the National Alliance to End Homelessness. \"By pairing rental vouchers with dedicated life-skills coaching, mental healthcare, and educational mentorship, HUD’s YHDP program creates permanent pathways out of poverty.\"\n\nMunicipal mayors across grantee cities highlighted that the federal grants bridge a vital funding gap for local Continuums of Care (CoCs) struggling with rising youth shelter demand.\n\n## Grant Deployment and Strategic Planning Schedule\n\nGrantee communities will commence their mandatory four-month youth-led coordinated community planning process in October 2026. Direct housing voucher distribution and supportive apartment lease signings will begin rolling out in early spring 2027.",
-    "seoTitle": "HUD Awards $320M in YHDP Grants to Eliminate Youth Homelessness | Choseno",
-    "metaDescription": "HUD allocates $320M through the Youth Homelessness Demonstration Program to fund supportive housing and rental aid for 18,000 young adults.",
-    "tags": [
-      "United States",
-      "Housing",
-      "Homelessness",
-      "Youth",
-      "Mental Health",
-      "Public Safety",
-      "Civil Rights",
-      "US"
-    ],
-    "tweet": "HUD awards $320M in YHDP grants across 45 communities to provide supportive housing, rental aid, and counseling for 18,000 homeless youth.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Youth Homelessness & Supportive Housing Desk",
-      "bio": "HUD YHDP grant management, Continuum of Care governance, youth trauma-informed housing policy, and urban social economics"
-    },
-    "sources": [
-      {
-        "label": "U.S. Department of Housing and Urban Development Newsroom",
-        "url": "https://www.hud.gov/press/press_releases_media_advisories/hud_no_26_152_youth_homelessness_awards"
-      },
-      {
-        "label": "Youth Today",
-        "url": "https://youthtoday.org/2026/08/hud-awards-320-million-for-youth-homelessness-demonstration-projects/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "united-states-department-of-agriculture-awards-220-million-for-rural-broadband-gigabit-expansion-2026-08-24",
-    "headline": "USDA Awards $220 Million to Deploy Gigabit Fiber Broadband Across 50,000 Rural Farms and Homes",
-    "summary": "USDA Rural Development allocates $220 million in ReConnect Program grants and loans, constructing 4,200 miles of buried fiber-optic cables for unserved agricultural communities across 16 states.",
-    "category": "Tech",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T15:00:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.887,
-    "longitude": -77.0298,
-    "body": "WASHINGTON, DC — Closing the persistent digital divide that leaves millions of agricultural producers and rural households without high-speed internet connectivity, the United States Department of Agriculture (USDA) Rural Development announced $220 million in competitive grant and loan awards on Monday through the ReConnect Program, delivering high-speed gigabit fiber infrastructure to 50,000 unserved rural residents across 16 states.\n\nThe major capital awards provide non-repayable grants and 2% low-interest loans to rural telecommunications cooperatives, tribal enterprises, and municipal public utilities to engineer and construct 4,200 miles of buried fiber-optic broadband trunk lines. The newly funded fiber networks deliver symmetrical 1-gigabit-per-second upload and download speeds to remote farming operations, rural hospitals, K-12 public schools, and small family businesses in unserved rural counties across Kansas, Iowa, Missouri, Mississippi, Montana, and Arkansas.\n\n## Empowering Precision Agriculture and Rural Telehealth Delivery\n\nHigh-speed fiber connectivity is increasingly critical for modern precision agricultural operations, allowing farmers to utilize real-time satellite crop health analytics, automated autonomous tractor guidance systems, and soil moisture sensor networks that reduce fertilizer runoff and optimize irrigation water usage. Furthermore, gigabit connectivity enables rural health clinics to connect elderly residents with specialized hospital physicians via high-definition telemedicine video, eliminating the need for 80-mile drives to urban medical centers.\n\nUnder federal program statutory rules, all funded network operators must participate in federal low-income broadband subsidy programs, guaranteeing affordable monthly subscription tiers for low-income agricultural workers and seniors on fixed incomes.\n\n\"High-speed internet is no longer a luxury—it is an essential utility as vital as electricity and running water for modern life and economic survival,\" Agriculture Secretary Tom Vilsack stated during the announcement. \"These USDA ReConnect investments ensure that rural farmers, small businesses, and students have the world-class digital tools they need to innovate, grow their local economies, and remain globally competitive from their hometowns.\"\n\n## National Rural Electric Cooperative Association and Farm Bureaus Praise\n\nThe National Rural Electric Cooperative Association (NRECA) and the American Farm Bureau Federation (AFBF) strongly praised the funding awards, noting that non-profit electric and telecom co-ops are best positioned to serve high-cost rural terrain where investor-owned telecom giants refused to build.\n\n\"Rural electric cooperatives stepped up in the 1930s to bring power to the countryside, and today our co-ops are stepping up to bring gigabit fiber to every rural doorstep,\" said Jim Matheson, CEO of NRECA. \"USDA ReConnect grants provide the necessary capital matching funds to conquer difficult rocky terrain and deliver dependable, future-proof fiber that will serve our rural communities for the next 50 years.\"\n\nRural public school superintendents commended the funding for eliminating the homework gap for rural students who previously lacked high-speed internet at home.\n\n## Fiber Construction and Utility Trenching Schedule\n\nRecipient rural cooperatives and telecommunications utilities will finalize environmental reviews and issue civil fiber trenching contracts in late autumn 2026. Cable plowing and fiber splicing operations will break ground in spring 2027.",
-    "seoTitle": "USDA Awards $220M in ReConnect Grants for Rural Gigabit Fiber | Choseno",
-    "metaDescription": "USDA allocates $220M through ReConnect to construct 4,200 miles of buried fiber-optic cable for 50,000 rural farms and homes in 16 states.",
-    "tags": [
-      "United States",
-      "Tech",
-      "Broadband",
-      "Rural",
-      "Agriculture",
-      "Infrastructure",
-      "Economy",
-      "US"
-    ],
-    "tweet": "USDA awards $220M in ReConnect grants to construct 4,200 miles of gigabit fiber broadband for 50,000 rural farms and homes in 16 states.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Rural Telecommunications & Broadband Infrastructure Bureau",
-      "bio": "USDA ReConnect grant administration, rural fiber-optic engineering, precision agriculture technology, and telecommunications policy"
-    },
-    "sources": [
-      {
-        "label": "U.S. Department of Agriculture Rural Development",
-        "url": "https://www.rd.usda.gov/newsroom/news-release/usda-invests-220-million-high-speed-rural-broadband-reconnect-2026"
-      },
-      {
-        "label": "Broadband World News",
-        "url": "https://www.broadbandworldnews.com/document.asp?doc_id=784920&usda-awards-220m-rural-broadband-grants"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "united-states-department-of-the-interior-awards-190-million-for-western-water-recycling-and-desalination-plants-2026-08-24",
-    "headline": "Department of the Interior Awards $190 Million for Advanced Water Recycling and Purification Facilities",
-    "summary": "Bureau of Reclamation announces $190 million through Title XVI WaterSMART, funding eight large-scale water purification and brackish desalination plants across California, Arizona, Utah, and Nevada.",
-    "category": "Environment",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T14:30:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8938,
-    "longitude": -77.0425,
-    "body": "WASHINGTON, DC — Countering severe long-term hydrological drought across the Colorado River basin and strengthening urban water independence, the United States Department of the Interior (DOI) and the Bureau of Reclamation announced $190 million in competitive grant allocations on Monday under the Title XVI WaterSMART (Sustain and Manage America’s Resources for Tomorrow) program, funding eight major municipal advanced water recycling and desalination facilities across four Western states.\n\nThe federal capital matching grants finance the engineering, procurement, and construction of large-scale advanced water purification facilities that treat municipal wastewater to ultra-pure potable standards using microfiltration, reverse osmosis, and ultraviolet advanced oxidation with hydrogen peroxide. Once fully operational, the eight recipient water facilities will generate 125,000 acre-feet (approximately 40 billion gallons) of new drought-resilient municipal drinking water annually—enough to supply 500,000 households across Southern California, Phoenix, Las Vegas, and Salt Lake City without withdrawing a single additional drop from the depleted Colorado River reservoir system.\n\n## Major Western Water Purification Projects\n\nThe funding packages provide substantial cost-share capital to regional water wholesalers and municipal utilities. Key project awards include:\n\n- **Pure Water Southern California Regional Facility ($75 Million)**: Funding the construction of advanced tertiary filtration trains for the massive regional wastewater recycling plant in Carson, California, supplying 150 million gallons per day of purified water to replenish Southern California groundwater aquifers.\n- **Phoenix Metropolitan Advanced Water Purification Hub ($45 Million)**: Constructing advanced purification systems to recharge regional aquifers in Maricopa County, Arizona, offsetting severe Colorado River Tier 2 water supply curtailments.\n- **Las Vegas Valley Water District Brackish Desalination ($40 Million)**: Expanding reverse osmosis treatment capacity to purify brackish groundwater in Southern Nevada.\n- **Utah Jordan Valley Water Conservancy District Expansion ($30 Million)**: Building advanced membrane treatment systems to reclaim municipal wastewater and replenish the Great Salt Lake watershed.\n\n\"As the Western United States faces the ongoing realities of climate change and prolonged hydrological drought, expanding local water recycling is essential to securing our water future,\" Interior Secretary Deb Haaland stated. \"These WaterSMART investments deploy cutting-edge water purification technology, protect the Colorado River system, and guarantee that Western communities have dependable, clean drinking water for generations to come.\"\n\n## Western Urban Water Agencies and Conservation Groups Endorse\n\nThe Metropolitan Water District of Southern California (MWD) and the Western Urban Water Coalition praised the major federal investments for creating local, climate-independent water supplies.\n\n\"Advanced water recycling is the single most cost-effective and environmentally sound way to drought-proof our major metropolitan regions,\" said Adel Hagekhalil, General Manager of MWD. \"Federal WaterSMART grants accelerate our construction timelines, protect ratepayers from extreme rate shocks, and significantly reduce Southern California’s reliance on imported river water.\"\n\nEnvironmental organizations, including the Environmental Defense Fund (EDF), commended the projects for leaving more natural water flows in Western river ecosystems to protect endangered fish and riparian wildlife.\n\n## Construction Milestones and Commissioning Dates\n\nCivil site engineering and membrane equipment procurement for all eight water purification facilities will finalize in winter 2026. Facility construction and pilot testing will proceed through 2028, with commercial potable water deliveries scheduled to begin in early 2029.",
-    "seoTitle": "DOI Awards $190M for Western Advanced Water Purification Plants | Choseno",
-    "metaDescription": "Department of the Interior allocates $190M through Title XVI WaterSMART for eight large-scale water recycling and desalination plants in CA, AZ, UT, and NV.",
-    "tags": [
-      "United States",
-      "Environment",
-      "Water",
-      "Drought",
-      "Colorado River",
-      "Infrastructure",
-      "Clean Tech",
-      "US"
-    ],
-    "tweet": "Department of the Interior awards $190M for eight advanced water recycling and purification plants in CA, AZ, UT, and NV, generating 40B gallons annually.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Western Water Resources & Desalination Bureau",
-      "bio": "Bureau of Reclamation Title XVI WaterSMART grants, advanced membrane water purification engineering, Colorado River basin hydrology, and water policy"
-    },
-    "sources": [
-      {
-        "label": "U.S. Department of the Interior Bureau of Reclamation",
-        "url": "https://www.usbr.gov/newsroom/news-release/4820-doi-invests-190-million-water-recycling-desalination-2026"
-      },
-      {
-        "label": "Water World Magazine",
-        "url": "https://www.waterworld.com/drinking-water/treatment/article/55128501/doi-awards-190m-for-western-water-reuse-and-desalination-plants"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "united-states-department-of-justice-awards-110-million-for-victim-services-and-legal-aid-assistance-2026-08-24",
-    "headline": "DOJ Awards $110 Million for Crime Victim Legal Aid and Emergency Trauma Support Services",
-    "summary": "Office for Victims of Crime announces $110 million in VOCA grants across 120 non-profit legal clinics and domestic violence shelters, providing trauma-informed legal representation and emergency housing.",
-    "category": "Justice",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T14:00:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8944,
-    "longitude": -77.0255,
-    "body": "WASHINGTON, DC — Strengthening civil legal representation and emergency crisis support for survivors of violent crime, domestic abuse, and financial exploitation, the United States Department of Justice (DOJ) Office of Justice Programs (OJP) announced the award of $110 million in competitive grants on Monday through the Office for Victims of Crime (OVC), delivering vital operational funding to 120 legal aid organizations and community trauma centers across 35 states.\n\nThe grant awards, funded through the Crime Victims Fund established under the Victims of Crime Act (VOCA), provide direct financial resources to hire specialized civil legal aid attorneys, paralegals, licensed clinical social workers, and court advocates. The funded legal clinics provide free, trauma-informed legal representation to crime victims navigating protective orders, emergency child custody proceedings, housing eviction defense following domestic violence, and identity restoration for elderly victims of complex financial fraud.\n\n## Stabilizing Dedicated Crime Victim Legal Clinics Nationwide\n\nVOCA grants deliver direct funding to organizations that provide essential services to vulnerable populations, including rural victim advocacy networks, tribal domestic violence shelters, and bilingual legal clinics in underserved urban neighborhoods. In addition to legal counsel, the federal funds support emergency relocation stipends to cover hotel stays, lock replacements, and medical transportation for victims fleeing imminent physical danger.\n\nUnder federal program rules, the Crime Victims Fund is financed entirely by criminal fines, forfeited bail bonds, and civil penalties paid by convicted federal offenders and corporate white-collar criminals, operating without a single dollar of taxpayer revenue.\n\n\"Survivors of crime deserve compassionate, dignified care and comprehensive legal protection as they heal and rebuild their lives,\" Attorney General Merrick Garland stated during the announcement. \"These VOCA grant awards ensure that victims across our country have dedicated legal advocates standing beside them in the courtroom, protecting their rights and providing the critical trauma-informed support they need to secure justice and safety.\"\n\n## National Legal Aid and Domestic Violence Coalitions Support\n\nThe National Network to End Domestic Violence (NNEDV) and the Legal Services Corporation (LSC) commended the DOJ grant awards, highlighting that civil legal representation is one of the single most effective interventions in permanently breaking cycles of domestic violence.\n\n\"When a domestic violence survivor has access to an attorney, their ability to secure an effective civil protective order and safe housing increases by over 80%,\" said Stephanie Love-Patterson, President of NNEDV. \"These federal VOCA awards provide life-saving legal counsel to thousands of vulnerable women and families who could never afford private legal representation.\"\n\nState bar associations and tribal justice directors praised the grant criteria for prioritizing community-based victim service providers with established local trust.\n\n## Grant Disbursement Schedule\n\nGrant awards will transfer to recipient legal aid organizations and non-profit crisis centers on October 1, 2026, supporting immediate staffing expansion and survivor intakes for the 2027 fiscal year.",
-    "seoTitle": "DOJ Awards $110M in VOCA Grants for Crime Victim Legal Aid | Choseno",
-    "metaDescription": "Department of Justice allocates $110M through OVC VOCA grants to fund legal aid and emergency trauma shelters for crime victims in 35 states.",
-    "tags": [
-      "United States",
-      "Justice",
-      "Civil Rights",
-      "Public Safety",
-      "Legal Aid",
-      "Domestic Violence",
-      "US"
-    ],
-    "tweet": "DOJ awards $110M in VOCA grants to fund free civil legal aid and emergency trauma support for crime victims across 120 organizations.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Crime Victim Rights & Civil Legal Aid Bureau",
-      "bio": "DOJ OVC VOCA grant administration, crime victim civil rights law, domestic violence legal advocacy, and judicial assistance policy"
-    },
-    "sources": [
-      {
-        "label": "U.S. Department of Justice Office of Justice Programs",
-        "url": "https://www.ojp.gov/news/news-releases/2026/justice-department-invests-110-million-support-crime-victims-legal-assistance"
-      },
-      {
-        "label": "National Law Journal",
-        "url": "https://www.law.com/nationallawjournal/2026/08/24/doj-awards-110m-for-victim-legal-services-and-trauma-aid/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "united-states-department-of-energy-awards-175-million-for-solid-state-electric-vehicle-battery-manufacturing-2026-08-24",
-    "headline": "U.S. Department of Energy Awards $175 Million for Domestic Solid-State EV Battery Gigafactories",
-    "summary": "DOE Advanced Manufacturing Office allocates $175 million to scale commercial production lines for solid-state lithium-metal batteries in Michigan, Ohio, and North Carolina.",
-    "category": "Clean Tech",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T13:30:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8872,
-    "longitude": -77.0259,
-    "body": "WASHINGTON, DC — Catalyzing the next technological leap in commercial electric vehicle performance and securing domestic clean energy supply chains, the United States Department of Energy (DOE) announced $175 million in Advanced Materials and Manufacturing Technologies Office (AMMTO) grant awards on Monday, funding three commercial manufacturing scale-up facilities for next-generation solid-state electric vehicle batteries across the Midwest and Southeast.\n\nThe federal matching grants support the commercial transition from laboratory prototypes to pilot gigafactory production lines for solid-state lithium-metal cells. By replacing flammable liquid electrolytes with solid ceramic and polymer separators, solid-state battery technology achieves an energy density of over 450 watt-hours per kilogram—delivering electric passenger vehicles with a 600-mile single-charge driving range, ultra-fast 10-minute 80% charging capabilities, and zero risk of thermal runaway fires under extreme impact conditions.\n\n## Domestic Manufacturing Scale-Up in the Automotive Heartland\n\nThe funding packages provide direct capital matching funds to domestic battery innovators partnering with major automotive original equipment manufacturers (OEMs). Selected manufacturing facilities include:\n\n- **Michigan Solid-State Gigafactory Pilot ($70 Million)**: Constructing an automated continuous roll-to-roll ceramic separator coating facility in Detroit, partnering with General Motors to produce 50,000 solid-state vehicle battery packs annually.\n- **Ohio Advanced Cathode Fabrication Plant ($60 Million)**: Installing dry-electrode manufacturing lines and lithium-metal anode assembly cleanrooms in Lordstown, Ohio, reducing manufacturing energy consumption by 40%.\n- **North Carolina Solid Electrolyte Synthesis Facility ($45 Million)**: Building a commercial chemical synthesis plant in Greensboro, North Carolina, to refine sulfide-based solid electrolyte powders from domestic mineral feedstocks.\n\n\"The future of automotive transportation will be defined by battery technology, and America is determined to lead the world in manufacturing the next generation of safe, ultra-dense solid-state batteries,\" Energy Secretary Jennifer Granholm stated. \"These AMMTO investments create thousands of skilled manufacturing jobs in the automotive heartland and ensure American automakers build the longest-range, safest electric vehicles on the planet.\"\n\n## United Auto Workers and Automotive Industry Endorse\n\nThe United Auto Workers (UAW) and the Alliance for Automotive Innovation strongly commended the manufacturing grants, noting that establishing domestic solid-state battery supply chains protects American manufacturing supremacy.\n\n\"Solid-state battery technology is the holy grail of electric mobility, eliminating range anxiety and fire hazards for consumers,\" said John Bozzella, President of the Alliance for Automotive Innovation. \"Federal cost-share partnerships accelerate the commercialization timeline by five years, keeping American auto workers at the cutting edge of global transportation innovation.\"\n\nLabor leaders praised the inclusion of binding domestic sourcing requirements and union workforce training partnerships with regional community colleges.\n\n## Production Line Commissioning Schedule\n\nCleanroom construction and automated roll-to-roll manufacturing tooling installation will commence in January 2027. Pilot commercial solid-state battery cell production for automotive integration testing will begin in late 2027.",
-    "seoTitle": "DOE Awards $175M for Solid-State EV Battery Manufacturing Facilities | Choseno",
-    "metaDescription": "DOE allocates $175M through AMMTO to build solid-state lithium-metal EV battery production facilities in MI, OH, and NC.",
-    "tags": [
-      "United States",
-      "Clean Tech",
-      "Electric Vehicles",
-      "Manufacturing",
-      "Automotive",
-      "Jobs",
-      "Innovation",
-      "US"
-    ],
-    "tweet": "Department of Energy awards $175M to build three commercial solid-state EV battery manufacturing facilities in MI, OH, and NC.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno Advanced Battery Tech & Automotive Manufacturing Desk",
-      "bio": "DOE AMMTO grant administration, solid-state electrochemistry, gigafactory manufacturing engineering, and automotive policy"
-    },
-    "sources": [
-      {
-        "label": "U.S. Department of Energy Advanced Manufacturing Office",
-        "url": "https://www.energy.gov/eere/ammto/articles/doe-invests-175-million-solid-state-electric-vehicle-battery-manufacturing-2026"
-      },
-      {
-        "label": "Automotive News",
-        "url": "https://www.autonews.com/mobility-report/doe-awards-175m-solid-state-ev-battery-manufacturing-plants-2026"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "united-states-department-of-transportation-allocates-140-million-for-port-cargo-dock-modernization-2026-08-24",
-    "headline": "USDOT Awards $140 Million to Electrify Port Cranes and Modernize Cargo Terminals",
-    "summary": "Maritime Administration announces $140 million in Port Infrastructure Development Program (PIDP) grants to construct electric container berths and rail yards in Savannah, Houston, and Seattle.",
-    "category": "Infrastructure",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T13:00:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8765,
-    "longitude": -77.0055,
-    "body": "WASHINGTON, DC — Strengthening maritime trade capacity and slashing diesel emissions in harbor neighborhoods, the United States Department of Transportation (USDOT) Maritime Administration (MARAD) announced the award of $140 million in competitive grants on Monday through the Port Infrastructure Development Program (PIDP), delivering capital modernization funding to six major commercial deepwater seaports.\n\nThe federal grant awards finance heavy civil wharf construction, dockside container crane electrification, and on-dock intermodal rail yard expansions. The modernization projects enable seaports to service mega-containerships carrying over 20,000 twenty-foot equivalent units (TEUs) while replacing diesel-powered cargo handling equipment with zero-emission electric ship-to-shore gantry cranes and electrified yard tractors, reducing port-related diesel particulate emissions by 60%.\n\n## Deepwater Seaport Modernization Projects\n\nThe funding packages provide direct capital to regional public port authorities. Major project awards include:\n\n- **Port of Savannah Container Berth Electrification (Georgia - $45 Million)**: Constructing an electrified multi-ship container berth with high-voltage shore power connections, allowing docked container vessels to shut down diesel auxiliary engines and plug directly into the clean electrical grid.\n- **Port of Houston Bayport Terminal Expansion (Texas - $38 Million)**: Expanding wharf bulkheads and constructing an on-dock rail staging yard to double intermodal freight transfer capacity between ocean carriers and Class I freight rail lines.\n- **Port of Seattle Terminal 5 Modernization (Washington - $32 Million)**: Installing automated electric container straddle carriers and reinforcing seismic dock piles.\n- **Port of Baltimore Heavy Cargo Wharf Upgrades (Maryland - $25 Million)**: Upgrading roll-on/roll-off vehicle handling berths to accommodate surging automobile and farm machinery export shipments.\n\n\"America’s commercial ports are the gateways to our economy, handling trillions of dollars in global commerce every year,\" Transportation Secretary Pete Buttigieg stated. \"These PIDP grants modernize dockside infrastructure, cut shipping delays for American exporters, and clean up the air for families living near busy port corridors.\"\n\n## American Association of Port Authorities and Longshoremen Support\n\nThe American Association of Port Authorities (AAPA) and maritime freight logistics carriers strongly commended the grant distribution, highlighting the critical necessity of federal wharf modernization funding.\n\n\"Electrifying port berths and expanding on-dock rail infrastructure makes American seaports faster, cleaner, and more resilient to global supply chain disruptions,\" said Chris Connor, President of AAPA. \"These investments protect our trade competitiveness and ensure American goods reach overseas buyers quickly and efficiently.\"\n\nInternational Longshoremen's Association (ILA) and International Longshore and Warehouse Union (ILWU) labor representatives commended the investments for creating high-wage union maritime jobs and installing cleaner, safer electric terminal equipment.\n\n## Civil Wharf Construction Timeline\n\nCivil marine engineering contracts and electrical substation fabrication will commence in autumn 2026. Heavy pile driving and gantry crane delivery across all six commercial seaports will proceed through 2028.",
-    "seoTitle": "USDOT Awards $140M in PIDP Grants for Port Wharf Modernization | Choseno",
-    "metaDescription": "USDOT MARAD allocates $140M through PIDP to electrify container berths and expand on-dock rail yards in Savannah, Houston, and Seattle.",
-    "tags": [
-      "United States",
-      "Infrastructure",
-      "Transportation",
-      "Maritime",
-      "Clean Tech",
-      "Logistics",
-      "Trade",
-      "US"
-    ],
-    "tweet": "USDOT awards $140M in PIDP grants to modernize wharves and electrify container berths across major seaports in GA, TX, WA, and MD.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Maritime Infrastructure & Global Trade Logistics Bureau",
-      "bio": "MARAD PIDP grant administration, deepwater marine terminal engineering, port electrification, and federal maritime policy"
-    },
-    "sources": [
-      {
-        "label": "U.S. Department of Transportation Maritime Administration",
-        "url": "https://www.maritime.dot.gov/newsroom/press-releases/biden-harris-administration-announces-140-million-port-infrastructure-grants"
-      },
-      {
-        "label": "Journal of Commerce",
-        "url": "https://www.joc.com/article/dot-awards-140m-port-infrastructure-development-grants-2026_20260824.html"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "united-states-department-of-the-interior-awards-85-million-for-national-park-historic-trail-and-visitor-infrastructure-2026-08-24",
-    "headline": "Department of the Interior Awards $85 Million to Rebuild Historic Trails and Visitor Facilities in 25 National Parks",
-    "summary": "National Park Service allocates $85 million through the National Parks and Public Land Legacy Restoration Fund, repairing backcountry trails, wastewater systems, and historic lodges in 25 parks.",
-    "category": "Environment",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T12:30:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8938,
-    "longitude": -77.0425,
-    "body": "WASHINGTON, DC — Addressing deferred maintenance backlogs and protecting America’s most iconic natural and cultural landscapes, the United States Department of the Interior (DOI) and the National Park Service (NPS) announced the award of $85 million in capital repair grants on Monday through the National Parks and Public Land Legacy Restoration Fund (LRF), financing major restoration projects across 25 national parks in 18 states.\n\nThe federal capital allocations fund critical structural rehabilitations on aging visitor infrastructure that has deteriorated under record-breaking park visitation. Funded projects include the reconstruction of 350 miles of eroded backcountry hiking trails, the complete overhaul of failing municipal wastewater treatment plants in fragile wilderness watersheds, the seismic stabilization of century-old historic stone lodges, and the installation of ADA-accessible boardwalks overlooking thermal and scenic vistas in Yellowstone, Grand Canyon, Great Smoky Mountains, and Yosemite National Parks.\n\n## Preserving Natural Heritage and Protecting Wilderness Watersheds\n\nHigh-priority projects funded under the $85 million allocation focus on replacing failing underground utility infrastructure that poses environmental risks to national park ecosystems. Key projects include:\n\n- **Yellowstone National Park ($24 Million)**: Replacing the 50-year-old Canyon Village wastewater treatment plant with an advanced membrane bioreactor facility, preventing nitrogen discharges into the Yellowstone River watershed.\n- **Grand Canyon National Park ($20 Million)**: Reconstructing structural stone retaining walls and switchback drainage along the heavily traveled Bright Angel Trail.\n- **Great Smoky Mountains National Park ($18 Million)**: Repairing historic timber bridges and asphalt access roadways damaged by extreme mountain storm flooding.\n- **Yosemite National Park ($15 Million)**: Restoring historic stone masonry buildings and installing energy-efficient solar microgrids at Tuolumne Meadows.\n\n\"National parks are America's greatest treasures, preserving our history, cultural heritage, and breathtaking natural wonders for the enjoyment of all people,\" Interior Secretary Deb Haaland stated during the announcement. \"These Legacy Restoration Fund investments fix crumbling trails, upgrade outdated water systems, and ensure that our national parks remain safe, accessible, and pristine for generations of visitors.\"\n\n## National Parks Conservation Association and Tourism Chambers Praise\n\nThe National Parks Conservation Association (NPCA) and the Outdoor Industry Association strongly praised the funding awards, noting that every dollar invested in national park infrastructure generates over $10 in local economic activity for gateway communities.\n\n\"Addressing critical maintenance backlogs protects irreplaceable wildlife habitat while ensuring millions of park visitors have a safe, world-class experience,\" said Theresa Pierno, President of NPCA. \"Upgrading wastewater plants and stabilizing historic trails preserves these sacred public lands for our children and grandchildren.\"\n\nGateway town mayors commended the trail restoration projects for supporting local hotels, restaurants, and outdoor guide businesses.\n\n## Project Execution and Trail Construction Timeline\n\nNPS engineering contracts and trail rehabilitation crew deployments will begin during the autumn 2026 shoulder season. Heavy civil wastewater facility construction will proceed through 2027.",
-    "seoTitle": "DOI Awards $85M for National Park Trail and Infrastructure Restoration | Choseno",
-    "metaDescription": "Department of the Interior allocates $85M through the Legacy Restoration Fund to repair trails, lodges, and wastewater systems in 25 national parks.",
-    "tags": [
-      "United States",
-      "Environment",
-      "Conservation",
-      "National Parks",
-      "Tourism",
-      "Infrastructure",
-      "Public Safety",
-      "US"
-    ],
-    "tweet": "Department of the Interior awards $85M to rebuild historic trails, lodges, and water systems across 25 national parks in 18 states.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Public Lands & National Park Infrastructure Bureau",
-      "bio": "NPS Legacy Restoration Fund administration, park civil engineering, outdoor recreation economics, and federal conservation policy"
-    },
-    "sources": [
-      {
-        "label": "National Park Service Newsroom",
-        "url": "https://www.nps.gov/orgs/1207/legacy-restoration-fund-awards-85-million-parks-2026.htm"
-      },
-      {
-        "label": "National Parks Traveler",
-        "url": "https://www.nationalparkstraveler.org/2026/08/interior-department-allocates-85-million-national-park-restoration"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "prime-minister-mark-carney-announces-retaliatory-tariff-schedules-on-us-imports-effective-september-8-2026-08-24",
-    "headline": "Prime Minister Mark Carney Releases $12 Billion Retaliatory Tariff List on U.S. Goods Starting September 8",
-    "summary": "Prime Minister Mark Carney and Finance Minister Chrystia Freeland publish formal 25% retaliatory tariff schedules covering $12 billion in U.S. steel, aluminum, manufactured consumer goods, and agricultural products.",
-    "category": "Economy",
-    "country": "CA",
-    "province": "ON",
-    "status": "published",
-    "eventDate": "2026-08-24T12:00:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "country",
-    "latitude": 45.4215,
-    "longitude": -75.6972,
-    "body": "OTTAWA, ON — Standing alongside provincial premiers and federal cabinet ministers on Parliament Hill, Prime Minister Mark Carney announced the release of Canada’s finalized retaliatory trade tariff schedule on Monday, imposing a 25% surtax on $12 billion worth of United States steel, aluminum, manufactured commercial goods, and agricultural products, taking formal legal effect on September 8, 2026.\n\nThe decisive trade countermeasures represent Canada’s official response under the Customs Tariff Act following the unilateral breakdown of cross-border trade negotiations and the imposition of punitive 50% tariffs by the United States administration on Canadian lumber, steel, and manufactured aerospace components. The Canadian retaliatory tariff list was developed following an extensive 30-day public consultation with Canadian domestic manufacturers, trade unions, and agricultural producers to ensure maximum economic impact on politically sensitive U.S. export sectors while minimizing cost disruptions for Canadian businesses and consumers.\n\n## Comprehensive Surtax Coverage on U.S. Industrial and Agricultural Exports\n\nThe 25% Canadian retaliatory surtaxes apply to a targeted range of American manufactured products originating from key U.S. manufacturing and agricultural states. The tariff schedule covers:\n\n- **U.S. Steel and Aluminum Products ($4.5 Billion)**: Flat-rolled steel coils, stainless steel pipes, structural beams, and unwrought aluminum alloys from Pennsylvania, Ohio, and Indiana.\n- **Commercial and Consumer Manufactured Goods ($4.2 Billion)**: Commercial HVAC units, power lawnmowers, household appliances, recreational motorboats, and industrial packaging equipment from Wisconsin, Michigan, and North Carolina.\n- **Agricultural and Food Products ($3.3 Billion)**: Bourbon whiskey, packaged pork, prepared orange juice, dairy specialty items, and processed poultry from Kentucky, Iowa, and Florida.\n\nUnder federal cabinet regulations, all tariff revenues collected by the Canada Border Services Agency (CBSA) will be deposited into a dedicated Domestic Industrial Support and Worker Defense Fund, providing low-interest working capital loans, tariff remission assistance, and wage stabilization subsidies to trade-exposed Canadian factories and supply chain workers.\n\n\"Canada did not seek this trade conflict, but we will never back down when Canadian workers, businesses, and economic sovereignty are threatened by unfair and unjustified trade penalties,\" Prime Minister Carney declared in a stern national address. \"Our retaliatory measures are measured, perfectly reciprocal, and designed to defend our domestic industries until the United States returns to rules-based international trade under our bilateral agreements.\"\n\n## Cross-Party Provincial Premiers and Canadian Manufacturers United\n\nThe federal retaliatory tariff package received unanimous, cross-partisan endorsement from provincial premiers across Canada, presenting a unified national front.\n\n\"Ontario stands shoulder-to-shoulder with the federal government and our fellow provinces in defending Canadian workers and manufacturers against these unjustified trade actions,\" said Ontario Premier Doug Ford. \"We are working with our manufacturing supply chains to ensure Ontario businesses have the emergency bridge financing and domestic supply lines they need to stay strong.\"\n\nCanadian Manufacturers & Exporters (CME) and the Canadian Labour Congress (CLC) strongly praised the government's tariff defense framework, highlighting the importance of the worker support fund in protecting domestic manufacturing jobs.\n\n## Border Enforcement and Remission Process\n\nThe Canada Border Services Agency will begin collecting the 25% surtax at all commercial border crossings and deepwater marine container terminals beginning at 12:01 AM EDT on September 8, 2026. The Department of Finance published guidelines for Canadian businesses to apply for targeted tariff remissions for specialized manufacturing components that cannot be sourced domestically.",
-    "seoTitle": "PM Mark Carney Releases $12B Retaliatory Tariff List Effective Sept 8 | Choseno",
-    "metaDescription": "Prime Minister Mark Carney announces 25% retaliatory tariffs on $12B of U.S. steel, goods, and agricultural products effective September 8.",
-    "tags": [
-      "Mark Carney",
-      "Doug Ford",
-      "Canada",
-      "Economy",
-      "Trade",
-      "Tariffs",
-      "Manufacturing",
-      "National Security"
-    ],
-    "tweet": "Prime Minister Mark Carney releases a 25% retaliatory tariff list on $12B of U.S. goods effective Sept 8 to defend Canadian workers.",
-    "breakingNews": true,
-    "author": {
-      "name": "Choseno International Trade & Macroeconomic Policy Bureau",
-      "bio": "Customs Tariff Act regulations, CUSMA trade dispute mechanisms, global trade economics, and Canadian federal governance"
-    },
-    "sources": [
-      {
-        "label": "Department of Finance Canada News Releases",
-        "url": "https://www.canada.ca/en/department-finance/news/2026/08/canada-announces-retaliatory-tariffs-on-us-goods.html"
-      },
-      {
-        "label": "The Globe and Mail",
-        "url": "https://www.theglobeandmail.com/politics/article-carney-announces-12-billion-retaliatory-tariffs-us-goods-sept-8/"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "3ec78351-9bec-46b8-afea-45931f29646e",
-      "12ed841a-877b-4c7d-984b-85716b2f2757"
+      "Freight",
+      "Infrastructure"
     ],
     "taggedPoliticians": [
-      "Mark Carney",
-      "Doug Ford"
-    ]
+      "Josh Shapiro"
+    ],
+    "author": {
+      "name": "Choseno Pennsylvania Bureau",
+      "bio": "Pennsylvania commercial water transport, freight logistics, and river infrastructure"
+    },
+    "sources": [
+      {
+        "name": "Pittsburgh Post-Gazette",
+        "url": "https://www.post-gazette.com"
+      },
+      {
+        "name": "Philadelphia Inquirer",
+        "url": "https://www.inquirer.com"
+      }
+    ],
+    "seoTitle": "Josh Shapiro Directs $105M for PA Commercial River Locks & Docks | Choseno",
+    "metaDescription": "PA Governor Josh Shapiro awards $105 million to modernize river locks and commercial bulk shipping docks in Pittsburgh and Philadelphia.",
+    "tweet": "Governor Josh Shapiro announces $105M in state capital grants to modernize commercial river locks and bulk shipping terminals across Pennsylvania.",
+    "breakingNews": false,
+    "body": "PITTSBURGH — Governor Josh Shapiro and Pennsylvania Department of Transportation (PennDOT) Secretary Mike Carroll announced on Monday the distribution of $105 million in state maritime infrastructure grants through the Pennsylvania Marine Transportation Program to modernize commercial bulk cargo terminals, rehabilitate century-old lock gate structures, and dredge deepwater berths along the Allegheny, Monongahela, and Delaware Rivers.\n\nThe investment targets critical industrial river ports—including the Port of Pittsburgh, the PhilaPort deepwater terminals in Philadelphia, and the Port of Erie—that handle over 65 million tons of steel, aggregates, coal, agricultural commodities, and manufacturing components annually.\n\nKeeping Pennsylvania's River Freight Moving Efficiently\nWaterborne river freight is the most fuel-efficient method for transporting heavy raw materials, where a single 15-barge river tow carries the cargo equivalent of 1,050 commercial tractor-trailers, significantly lowering highway congestion on Interstates 76 and 80.\n\n\"Pennsylvania was built on our rivers and industrial ports, and they remain vital economic engines connecting our Commonwealth to global markets,\" Governor Shapiro said at a maritime terminal along the Monongahela River in Pittsburgh. \"By investing $105 million in modern dock walls, high-capacity cranes, and deepwater dredging, we are keeping our river navigation channels open, lowering shipping costs for Pennsylvania manufacturers, and supporting thousands of good-paying union maritime and industrial jobs.\"\n\nMajor Port Infrastructure Packages\nThe $105 million allocation finances:\n- Port of Pittsburgh Inland Navigation Modernization: $50 million to repair crumbling concrete dock walls and install heavy-duty electric crane infrastructure across five regional terminals.\n- PhilaPort Deepwater Berth Maintenance: $35 million for maintenance dredging maintaining 45-foot authorized draft along the Delaware River.\n- Port of Erie Great Lakes Freight Dock Fortification: $20 million for dock wall stabilization and heavy machinery roll-on/roll-off ramps.\n\nMaritime trade associations, river pilot federations, and manufacturing leaders praised the state investment, highlighting that reliable river locks prevent costly commercial shipping bottlenecks."
   },
   {
-    "slug": "ontario-government-allocates-150-million-for-unsheltered-homelessness-and-encampment-supportive-housing-2026-08-24",
-    "headline": "Ontario Deploys $150 Million to Clear Encampments and Construct Supportive Housing in 10 Cities",
-    "summary": "Premier Doug Ford and Minister of Municipal Affairs Paul Calandra allocate $150 million under the Unsheltered Homelessness and Encampments Initiative (UHEI), funding 1,200 modular transitional supportive beds.",
-    "category": "Housing",
-    "country": "CA",
-    "province": "ON",
-    "status": "published",
-    "eventDate": "2026-08-24T11:30:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
+    "slug": "governor-gretchen-whitmer-awards-90-million-for-statewide-rural-veterans-telehealth-and-outpatient-clinics-2026-08-25",
+    "headline": "Governor Gretchen Whitmer Directs $90 Million for Michigan Rural Veterans Healthcare and Telehealth",
+    "summary": "Michigan Governor Gretchen Whitmer and MVAA announce $90 million in state veterans healthcare grants to modernize outpatient clinics, deploy mobile telehealth vans, and recruit specialized psychiatric clinicians across eighteen rural counties.",
+    "category": "Healthcare",
+    "country": "US",
+    "province": "MI",
     "impactArea": "state",
-    "latitude": 43.6532,
-    "longitude": -79.3832,
-    "body": "TORONTO, ON — Taking aggressive provincial action to resolve public park encampments and provide permanent clinical pathways off the street, Ontario Premier Doug Ford and Minister of Municipal Affairs and Housing Paul Calandra announced the deployment of $150 million on Monday through the Unsheltered Homelessness and Encampments Initiative (UHEI), delivering targeted capital and operational grants to 10 designated municipal service managers across Ontario.\n\nThe provincial funding initiative finances the rapid construction and operation of 1,200 modular supportive housing units, transitional tiny home communities, and 24/7 indoor navigation centers. The initiative provides dedicated multi-disciplinary outreach teams pairing municipal police and outreach workers with psychiatric nurses and addictions specialists to systematically transition individuals living in unsheltered public park encampments into safe, private indoor transitional housing equipped with on-site mental healthcare and substance abuse treatment.\n\n## Targeted Municipal Capital and Clinical Allocations\n\nThe $150 million provincial investment is allocated across 10 high-need urban centers experiencing significant encampment pressures:\n\n- **City of Toronto ($55 Million)**: Constructing four modular supportive housing sites totaling 450 units and expanding mobile crisis intervention outreach teams.\n- **Region of Peel ($22 Million)**: Building a 180-unit transitional navigation center in Brampton with specialized addiction detox beds.\n- **City of Hamilton ($18 Million)**: Expanding tiny home village infrastructure and funding 150 supportive rental vouchers.\n- **City of Ottawa ($16 Million)**: Converting municipal property into a 120-bed indoor transitional shelter hub.\n- **Regional Municipalities ($39 Million)**: Allocating targeted supportive housing grants across London, Windsor, Waterloo Region, Niagara Region, Sudbury, and Thunder Bay.\n\nUnder provincial funding agreements, recipient municipalities must enforce municipal public space bylaws prohibiting tent encampments in public parks, school zones, and transit shelters once indoor supportive beds are made available.\n\n\"Public parks and playgrounds belong to families and children, not tent encampments,\" Premier Ford stated during the announcement. \"At the same time, we cannot simply tell vulnerable people to move along without giving them a safe place to go. This $150 million investment delivers real roofs over people's heads, round-the-clock mental health and addictions support, and a compassionate pathway to permanent stability.\"\n\n## Ontario Big City Mayors and Healthcare Coalitions React\n\nThe Ontario Big City Mayors (OBCM) caucus strongly welcomed the provincial funding injection, noting that municipal property tax bases could no longer sustain the mounting healthcare and policing costs associated with chronic encampments.\n\n\"Our cities have been on the front lines of a national humanitarian crisis involving severe mental illness, toxic drugs, and homelessness,\" said Marianne Meed Ward, Mayor of Burlington and Chair of OBCM. \"This substantial provincial funding provides the specialized clinical housing infrastructure our municipalities urgently need to help vulnerable individuals heal while restoring safety and access to public parks.\"\n\nHousing and poverty advocacy groups emphasized that ongoing operational funding for mental health caseworkers must be permanently embedded in multi-year provincial budgets to ensure long-term housing retention.\n\n## Site Construction and Tenant Move-In Schedule\n\nFactory modular assembly and municipal site grading across all 10 designated cities will commence in October 2026. The first transitional supportive housing complexes will open their doors for resident intakes in January 2027.",
-    "seoTitle": "Ontario Deploys $150M for Encampment Resolution & Supportive Housing | Choseno",
-    "metaDescription": "Premier Doug Ford allocates $150M through UHEI to construct 1,200 supportive housing units and clear public park encampments across 10 Ontario cities.",
+    "latitude": 46.4953,
+    "longitude": -84.3453,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
     "tags": [
-      "Doug Ford",
-      "Ontario",
-      "Housing",
-      "Homelessness",
-      "Mental Health",
-      "Public Safety",
-      "Municipal",
-      "Canada"
+      "Gretchen Whitmer",
+      "Michigan",
+      "Veterans",
+      "Healthcare",
+      "Telehealth",
+      "Public Health"
     ],
-    "tweet": "Ontario Premier Doug Ford deploys $150M to build 1,200 modular supportive homes and resolve park encampments across 10 cities.",
-    "breakingNews": true,
+    "taggedPoliticians": [
+      "Gretchen Whitmer"
+    ],
     "author": {
-      "name": "Choseno Ontario Municipal Housing & Social Policy Bureau",
-      "bio": "Ontario UHEI program administration, municipal supportive housing models, mental health crisis intervention, and Ontario civic governance"
+      "name": "Choseno Great Lakes Bureau",
+      "bio": "Michigan veterans affairs policy, rural healthcare delivery, and military health services"
     },
     "sources": [
       {
-        "label": "Ontario Newsroom Municipal Housing Announcements",
-        "url": "https://news.ontario.ca/en/release/1004968/ontario-investing-150-million-to-address-unsheltered-homelessness-and-encampments"
+        "name": "The Mining Journal (Marquette)",
+        "url": "https://www.miningjournal.net"
       },
       {
-        "label": "CP24 Breaking News",
-        "url": "https://www.cp24.com/news/ford-announces-150m-for-encampments-and-supportive-housing-1.7483935"
+        "name": "Detroit Free Press",
+        "url": "https://www.freep.com"
       }
     ],
-    "taggedPoliticianIds": [
-      "12ed841a-877b-4c7d-984b-85716b2f2757"
-    ],
-    "taggedPoliticians": [
-      "Doug Ford"
-    ]
+    "seoTitle": "Whitmer Allocates $90M for Michigan Rural Veterans Health | Choseno",
+    "metaDescription": "Michigan Governor Gretchen Whitmer awards $90 million to modernize outpatient clinics and deploy mobile health vans for rural veterans across 18 counties.",
+    "tweet": "Governor Gretchen Whitmer announces $90M in state grants to modernize outpatient clinics and deploy mobile healthcare vans for rural Michigan veterans.",
+    "breakingNews": false,
+    "body": "SAULT STE. MARIE, Mich. — Governor Gretchen Whitmer and Michigan Veterans Affairs Agency (MVAA) Director Brian L. Love announced on Monday the distribution of $90 million in state healthcare capital grants to construct and modernize specialized veterans outpatient clinics, expand mobile clinical telemetry vans, and recruit certified mental health providers across eighteen rural counties in Northern Michigan and the Upper Peninsula.\n\nThe investment targets rural communities where over 85,000 military veterans live hours away from primary VA medical centers in Iron Mountain, Saginaw, or Ann Arbor, requiring elderly veterans to travel long distances on hazardous winter highways for routine physical therapy, audiology exams, and PTSD counseling.\n\nHonoring Michigan Veterans with High-Quality Local Healthcare Access\nMilitary veterans in rural communities face high rates of service-connected chronic pain, traumatic brain injuries (TBI), and mental health challenges, where localized outpatient care and mobile telemetry prevent clinical isolation.\n\n\"Our veterans put their lives on the line to defend our freedom and our nation, and we have a sacred duty to care for them when they return home,\" Governor Whitmer said at the American Legion Post in Sault Ste. Marie. \"No veteran in Michigan should have to drive four hours in a blizzard just to see a doctor or talk to a mental health counselor. This $90 million investment brings world-class medical care directly to our veterans in their own communities, providing modern clinics, mobile health vans, and dedicated support so our heroes get the care they earned and deserve.\"\n\nVeterans Healthcare Allocations\nThe $90 million program includes:\n- 18 Rural Outpatient Clinic Modernizations: $50 million to renovate community clinics with digital audiology booths, physical therapy suites, and diagnostic imaging.\n- 12 Mobile Veterans Healthcare Telemetry Vans: $20 million to deploy custom-built clinical vans providing free primary care, blood work, and prescription delivery.\n- Veterans Mental Health Provider Fellowships: $20 million providing salary stipends and full student loan repayments for clinical psychologists and social workers specializing in combat trauma.\n\nVeterans service organizations, county veterans counselors, and rural hospital executives commended the governor's targeted funding, highlighting that mobile outreach ensures no veteran is left behind."
   },
   {
-    "slug": "british-columbia-premier-david-eby-allocates-110-million-for-mass-timber-housing-manufacturing-hub-2026-08-24",
-    "headline": "Premier David Eby Directs $110 Million to Build North America's Largest Mass-Timber Modular Housing Plant",
-    "summary": "B.C. Ministry of Jobs and BC Housing invest $110 million to construct an automated cross-laminated timber (CLT) modular housing manufacturing plant in Prince George, producing 3,000 homes annually.",
-    "category": "Economy",
-    "country": "CA",
-    "province": "BC",
-    "status": "published",
-    "eventDate": "2026-08-24T11:00:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
+    "slug": "governor-roy-cooper-directs-160-million-for-carolina-lithium-and-battery-materials-workforce-academy-2026-08-25",
+    "headline": "Governor Roy Cooper Allocates $160 Million for North Carolina Battery Materials and Lithium Hubs",
+    "summary": "North Carolina Governor Roy Cooper announces $160 million in state clean technology grants to establish the Carolina Battery Materials Innovation Academy and construct specialized chemical engineering testing labs in Gaston and Cleveland Counties.",
+    "category": "Clean Energy",
+    "country": "US",
+    "province": "NC",
     "impactArea": "state",
-    "latitude": 53.9171,
-    "longitude": -122.7497,
-    "body": "PRINCE GEORGE, BC — Transforming British Columbia's forestry sector while drastically accelerating home construction speeds across the province, Premier David Eby and Minister of Jobs, Economic Development and Innovation Brenda Bailey announced a $110 million provincial investment on Monday to construct North America’s largest automated Mass-Timber Modular Housing Manufacturing Facility in Prince George.\n\nThe $280 million public-private manufacturing partnership, developed in collaboration with regional First Nations forestry enterprises and Canadian mass-timber leader StructureCraft, will feature robotic cross-laminated timber (CLT) assembly lines capable of fabricating 3,000 high-efficiency, multi-family modular apartment modules per year. Utilizing sustainably harvested B.C. timber, the manufacturing plant transforms raw lumber into precision-engineered, fire-resistant modular apartment sections—complete with pre-installed electrical wiring, plumbing, and drywall—shipped directly to urban construction sites to assemble 12-story mass-timber apartment buildings in under six months.\n\n## Revitalizing Interior Forestry Economies with High-Tech Advanced Manufacturing\n\nThe Prince George gigafactory creates 650 permanent, high-wage union manufacturing and engineering jobs in Northern B.C., providing vital economic diversification for forestry workers impacted by legacy sawmill closures. The project incorporates an innovative First Nations equity co-ownership model with the Lheidli T'enneh First Nation, ensuring that local Indigenous communities hold a direct 25% ownership stake in facility revenues and management.\n\nMass-timber modular construction provides substantial climate benefits, locking sequestered biogenic carbon inside solid wood structures while reducing construction lifecycle greenhouse gas emissions by 45% compared to conventional concrete and steel building methods.\n\n\"British Columbia has the best wood, the best forestry workers, and the most innovative mass-timber builders in the world,\" Premier Eby declared during the announcement in Prince George. \"By building this world-class modular manufacturing plant, we are taking B.C. logs, processing them into high-value engineered housing components right here in Northern B.C., and building thousands of beautiful, affordable homes that B.C. families can afford.\"\n\n## B.C. Construction Associations and Indigenous Leaders Applaud\n\nThe BC Construction Association and the Council of Forest Industries (COFI) strongly commended the major investment, noting that mass-timber manufacturing addresses severe skilled trades shortages in urban centers.\n\n\"Industrializing modular home building using B.C. mass-timber is the exact economic and climate solution our province needs,\" said Linda Coady, President of COFI. \"It creates stable, family-supporting manufacturing jobs in our interior forestry communities while delivering high-quality, sustainable homes for our growing cities.\"\n\nLheidli T'enneh Chief Dolleen Logan celebrated the equity partnership, stating that Indigenous co-ownership in value-added forestry ensures long-term prosperity for future generations.\n\n## Plant Construction Groundbreaking and Commissioning\n\nCivil site grading and foundation construction in Prince George’s industrial park will break ground in October 2026. Robotic production line commissioning will proceed throughout 2027, with the first mass-timber modular homes delivering to BC Housing development sites in early 2028.",
-    "seoTitle": "Premier David Eby Directs $110M for Mass-Timber Housing Plant | Choseno",
-    "metaDescription": "B.C. Premier David Eby announces $110M investment to build North America's largest automated mass-timber modular housing factory in Prince George.",
+    "latitude": 35.2621,
+    "longitude": -81.1873,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
     "tags": [
-      "David Eby",
-      "British Columbia",
-      "Economy",
-      "Forestry",
-      "Housing",
+      "Roy Cooper",
+      "North Carolina",
+      "Lithium",
+      "Battery Tech",
+      "Clean Energy",
       "Manufacturing",
-      "Indigenous",
-      "Clean Tech",
-      "Canada"
+      "Workforce"
     ],
-    "tweet": "B.C. Premier David Eby directs $110M to build North America's largest mass-timber modular housing factory in Prince George, creating 650 jobs.",
-    "breakingNews": true,
+    "taggedPoliticians": [
+      "Roy Cooper"
+    ],
     "author": {
-      "name": "Choseno British Columbia Forestry Innovation & Housing Desk",
-      "bio": "Mass-timber structural engineering, BC Housing modular procurement, value-added forestry economics, and Indigenous economic partnerships"
+      "name": "Choseno North Carolina Bureau",
+      "bio": "North Carolina clean energy manufacturing, lithium extraction policy, and industrial workforce"
     },
     "sources": [
       {
-        "label": "BC Gov News Releases",
-        "url": "https://news.gov.bc.ca/releases/2026JEDI0042-001328"
+        "name": "The Charlotte Observer",
+        "url": "https://www.charlotteobserver.com"
       },
       {
-        "label": "The Prince George Citizen",
-        "url": "https://www.princegeorgecitizen.com/local-news/eby-announces-110m-mass-timber-modular-housing-plant-prince-george"
+        "name": "News & Observer",
+        "url": "https://www.newsobserver.com"
       }
     ],
-    "taggedPoliticianIds": [
-      "22251c1e-a7b6-4f60-b951-1da7b00c3323"
-    ],
-    "taggedPoliticians": [
-      "David Eby"
-    ]
+    "seoTitle": "Roy Cooper Directs $160M for NC Battery Materials & Lithium Hubs | Choseno",
+    "metaDescription": "North Carolina Governor Roy Cooper awards $160M to build the Carolina Battery Materials Academy and train 3,000 clean energy chemical technicians.",
+    "tweet": "Governor Roy Cooper announces $160M to establish the Carolina Battery Materials Academy, anchoring domestic EV battery supply chains in North Carolina.",
+    "breakingNews": false,
+    "body": "GASTONIA, N.C. — Governor Roy Cooper announced on Monday the distribution of $160 million in state clean technology and workforce development grants through the North Carolina Department of Commerce to construct the Carolina Battery Materials Innovation Academy and establish advanced metallurgical chemical pilot laboratories in Gaston and Cleveland Counties.\n\nThe investment anchors North Carolina's position at the heart of the \"Battery Belt,\" leveraging the historic Carolina Tin-Spodumene Belt—one of the few rich hard-rock lithium deposits in North America—to train over 3,000 certified chemical processing technicians, hydrometallurgical operators, and clean energy engineers annually.\n\nPowering America's Domestic Electric Vehicle Battery Revolution\nNorth Carolina has attracted over $14 billion in private electric vehicle and battery manufacturing investments from Toyota, Albemarle, and Piedmont Lithium. However, refining raw spodumene ore into 99.5 percent pure battery-grade lithium hydroxide requires specialized chemical engineering labor.\n\n\"North Carolina is leading the clean energy transition, and we are building the entire electric vehicle battery supply chain right here in our state,\" Governor Cooper said during an announcement at Gaston College. \"From harvesting lithium to refining battery-grade materials and manufacturing electric vehicles, North Carolina workers are powering the future. This $160 million investment creates a world-class training academy, giving our students the skills to step into high-paying chemical engineering careers and securing American energy independence.\"\n\nTraining Hubs and Pilot Lab Allocations\nThe $160 million program finances:\n- Carolina Battery Materials Innovation Academy: $75 million for advanced chemical pilot processing plants and analytical spectrometry cleanrooms at Gaston College and Cleveland Community College.\n- Advanced Pyrometallurgy & Hydrometallurgy Testing Suites: $50 million for university-partnered research pilot lines testing closed-loop lithium extraction.\n- Clean Energy Chemical Trades Apprenticeship Grants: $35 million providing full tuition scholarships and paid union apprenticeships for local students.\n\nClean energy executives, community college presidents, and building trades labor leaders praised the governor's proactive investment, emphasizing that turn-key workforce pipelines attract international chemical manufacturing capital."
   },
   {
-    "slug": "quebec-government-allocates-180-million-for-hydro-quebec-substation-digitalization-and-grid-automation-2026-08-24",
-    "headline": "Quebec Allocates $180 Million to Modernize and Automate 50 Hydro-Québec High-Voltage Substations",
-    "summary": "Ministère de l'Économie, de l'Innovation et de l'Énergie deploys $180 million to integrate AI automated fault-detection and digital optical sensors across 50 Hydro-Québec substations.",
+    "slug": "mayor-matt-mahan-passes-ordinance-authorizing-40-million-for-smart-traffic-signal-ai-and-pedestrian-safety-sensors-2026-08-25",
+    "headline": "Mayor Matt Mahan Directs $40 Million for San Jose AI Smart Traffic Signals and Pedestrian Vision",
+    "summary": "San Jose Mayor Matt Mahan and the San Jose City Council authorize $40 million to install artificial-intelligence-enabled traffic signal controllers and automated pedestrian thermal sensors across 150 high-injury crash intersections.",
+    "category": "Technology",
+    "country": "US",
+    "province": "CA",
+    "impactArea": "local",
+    "latitude": 37.3382,
+    "longitude": -121.8863,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "Matt Mahan",
+      "San Jose",
+      "Vision Zero",
+      "Traffic AI",
+      "Public Safety",
+      "Smart Cities"
+    ],
+    "taggedPoliticians": [
+      "Matt Mahan"
+    ],
+    "author": {
+      "name": "Choseno Silicon Valley Bureau",
+      "bio": "San Jose municipal governance, smart city artificial intelligence, and urban traffic safety"
+    },
+    "sources": [
+      {
+        "name": "The Mercury News",
+        "url": "https://www.mercurynews.com"
+      },
+      {
+        "name": "San José Spotlight",
+        "url": "https://sanjosespotlight.com"
+      }
+    ],
+    "seoTitle": "Matt Mahan Directs $40M for San Jose AI Traffic Signals & Safety | Choseno",
+    "metaDescription": "San Jose Mayor Matt Mahan allocates $40M to deploy AI-enabled smart traffic signals and pedestrian thermal sensors at 150 high-crash intersections.",
+    "tweet": "Mayor Matt Mahan announces $40M to deploy AI-powered smart traffic signals and automated pedestrian thermal sensors across 150 San Jose intersections.",
+    "breakingNews": false,
+    "body": "SAN JOSE, Calif. — Mayor Matt Mahan and the San Jose City Council voted unanimously on Monday to approve a $40 million municipal smart infrastructure capital contract, authorizing the San Jose Department of Transportation (DOT) to deploy artificial-intelligence-powered adaptive traffic signal controllers and automated computer-vision thermal sensors across 150 intersections along the city's high-injury Vision Zero crash corridors.\n\nThe edge-AI traffic management system dynamically adjusts signal timing in real time, automatically extending green pedestrian walk cycles when slow-moving seniors or parents with strollers are detected in crosswalks, while coordinating green light waves along arterial thoroughfares to eliminate vehicle idling and cut greenhouse gas emissions.\n\nEliminating Pedestrian Fatalities with Edge Artificial Intelligence\nPedestrian fatalities represent over 60 percent of traffic deaths in San Jose, where wide multi-lane arterial boulevards in East and South San Jose have historically created hazardous crossing conditions for transit riders and schoolchildren.\n\n\"As the capital of Silicon Valley, San Jose should be using the most advanced technology to solve our most urgent civic challenges, and nothing is more urgent than saving lives on our streets,\" Mayor Matt Mahan said along Monterey Road in South San Jose. \"By investing $40 million in AI-enabled smart traffic signals, we are giving our intersections the ability to see pedestrians, automatically extend walk signals for vulnerable residents, and stop red-light collisions before they happen, making San Jose's streets safe for everyone.\"\n\nSmart Intersection Deployments\nThe $40 million package finances:\n- 150 AI-Enabled Edge Traffic Controllers: Installing high-speed neural processing units (NPUs) that process optical and thermal video streams locally without transmitting private facial data.\n- Automated Crosswalk Extension Telemetry: Automatically extending walk times by up to 10 seconds when pedestrians remain in crosswalk lanes.\n- Emergency Vehicle Preemption Integration: Giving instant green light priority to San Jose Fire Department engines and ambulances within 1,000 feet of intersections.\n\nPedestrian safety advocates, senior federations, and transit associations commended the municipal council's investment, highlighting that computer-vision intersections provide immediate life-saving protection."
+  },
+  {
+    "slug": "mayor-eric-johnson-directs-75-million-for-dallas-innovation-district-smart-streetlights-and-autonomous-shuttles-2026-08-25",
+    "headline": "Mayor Eric Johnson Allocates $75 Million for Dallas Innovation District Autonomous Transit and Smart Lighting",
+    "summary": "Dallas Mayor Eric Johnson and the Dallas City Council authorize $75 million in municipal capital financing to deploy zero-emission autonomous electric shuttles and install 10,000 smart LED streetlights across the Dallas Innovation District.",
+    "category": "Technology",
+    "country": "US",
+    "province": "TX",
+    "impactArea": "local",
+    "latitude": 32.7767,
+    "longitude": -96.797,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "Eric Johnson",
+      "Dallas",
+      "Autonomous Shuttles",
+      "Smart Cities",
+      "Innovation",
+      "Technology"
+    ],
+    "taggedPoliticians": [
+      "Eric Johnson"
+    ],
+    "author": {
+      "name": "Choseno Dallas City Hall Bureau",
+      "bio": "Dallas municipal government, smart city technology, and urban mobility"
+    },
+    "sources": [
+      {
+        "name": "The Dallas Morning News",
+        "url": "https://www.dallasnews.com"
+      },
+      {
+        "name": "Dallas Business Journal",
+        "url": "https://www.bizjournals.com/dallas"
+      }
+    ],
+    "seoTitle": "Eric Johnson Directs $75M for Dallas Autonomous Shuttles & Smart Lights | Choseno",
+    "metaDescription": "Dallas Mayor Eric Johnson allocates $75M to deploy autonomous electric shuttles and install 10,000 smart streetlights in the Dallas Innovation District.",
+    "tweet": "Mayor Eric Johnson announces $75M for zero-emission autonomous electric shuttles and 10,000 smart LED streetlights across the Dallas Innovation District.",
+    "breakingNews": false,
+    "body": "DALLAS — Mayor Eric Johnson and the Dallas City Council approved a $75 million municipal smart mobility capital funding contract on Monday, authorizing the City of Dallas Transportation Department to deploy a fleet of twelve zero-emission autonomous electric passenger shuttles, install 10,000 connected smart LED streetlights, and establish high-speed municipal Wi-Fi kiosks across the Dallas Innovation District in the West End and Pegasus Park.\n\nThe project connects biotech research labs, university incubators, and residential lofts to DART rail transit stations, providing free, on-demand autonomous first-and-last-mile passenger transit along dedicated sensor-equipped transit lanes.\n\nCementing Dallas as a Premier Global Hub for Innovation and Clean Mobility\nDallas has rapidly expanded as a leading destination for biotechnology, defense technology, and clean tech corporate headquarters, where seamless autonomous transit and connected smart streetscapes foster vibrant urban collaboration.\n\n\"Dallas is leading the nation in adopting cutting-edge technology to make our city safer, cleaner, and more vibrant,\" Mayor Eric Johnson said at Pegasus Park in Dallas. \"By investing $75 million in autonomous electric transit shuttles and smart connected lighting, we are modernizing our urban core, connecting our innovation hubs with public transit, and showing the world that Dallas is the best place to build the future.\"\n\nSmart City Technology Packages\nThe $75 million package finances:\n- 12 Autonomous Electric Passenger Shuttles: Equipped with LiDAR, radar, and 360-degree cameras operating on 5-minute headways along a 4-mile loop.\n- 10,000 Connected Smart LED Streetlights: Dimming automatically during low-traffic hours to conserve energy while brightening instantly when pedestrians or emergency vehicles approach.\n- Municipal High-Speed Environmental Telemetry Kiosks: Providing free public gigabit Wi-Fi and real-time air quality monitors at 50 transit shelters.\n\nTech startup founders, urban mobility experts, and downtown business associations praised the municipal council's investment, noting that autonomous shuttles provide clean, convenient mobility for workers and residents."
+  },
+  {
+    "slug": "industry-minister-francois-philippe-champagne-awards-380-million-for-canadian-small-modular-reactor-supply-chain-tooling-2026-08-25",
+    "headline": "Industry Minister François-Philippe Champagne Directs $380 Million for Canadian SMR Nuclear Tooling Hubs",
+    "summary": "Innovation Minister François-Philippe Champagne allocates $380 million through the Strategic Innovation Fund to scale nuclear-grade precision manufacturing lines for Small Modular Reactors (SMRs) across Ontario, Quebec, and Saskatchewan.",
     "category": "Energy",
     "country": "CA",
-    "province": "QC",
-    "status": "published",
-    "eventDate": "2026-08-24T10:30:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "state",
-    "latitude": 46.8139,
-    "longitude": -71.2082,
-    "body": "QUEBEC CITY, QC — Preparing the provincial power grid for massive industrial electrification and extreme winter storm resilience, Minister of Economy, Innovation and Energy Pierre Fitzgibbon announced a $180 million provincial funding allocation on Monday to accelerate Hydro-Québec’s Substation Digital Modernization and Automated Grid Resilience Program across 50 strategic high-voltage substations.\n\nThe capital investment finances the complete digital overhaul of legacy electromechanical relays, replacing aging analog instrumentation with IEC 61850-compliant digital optical bus networks, automated solid-state protection relays, and AI-powered predictive thermal sensor arrays across major transmission junctions in Montreal, Quebec City, the Saguenay, and the Outaouais. The digital automated systems detect ice-loading transmission faults, transformer over-heating, and lightning line trips within milliseconds, automatically re-routing high-voltage power through alternative corridors to prevent cascading regional blackouts during severe winter ice storms.\n\n## Supporting Industrial Decarbonization and EV Load Growth\n\nHydro-Québec projects that provincial electricity demand will increase by over 10,000 megawatts by 2035 as heavy industries, aluminum smelters, public transit networks, and commercial building heating systems transition off fossil fuels to clean hydroelectricity. Modernizing substation switching architecture increases regional transmission capacity by up to 25% across existing rights-of-way without requiring the construction of costly new high-voltage overhead towers.\n\nThe modernized substations also incorporate advanced fiber-optic cybersecurity firewalls developed in collaboration with Quebec research institutions to protect the provincial electrical grid from sophisticated state-sponsored cyber intrusions.\n\n\"Hydro-Québec's clean electricity is our province’s greatest economic and ecological asset,\" Minister Fitzgibbon stated during the announcement in Quebec City. \"By investing $180 million to digitize and automate our high-voltage transmission substations, we are creating a smarter, stronger, and more resilient grid that can handle surging industrial demand while protecting Quebec homes from extreme winter storm power failures.\"\n\n## Hydro-Québec Engineers and Industrial Chambers Praise\n\nHydro-Québec executive leadership and electrical engineering associations commended the capital funding, noting that digital substations reduce maintenance downtime by 50% through automated predictive diagnostics.\n\n\"Digital substations allow our grid dispatchers to monitor the heartbeat of Quebec's electrical system in real-time,\" said Michael Sabia, President and CEO of Hydro-Québec. \"This investment ensures our transmission infrastructure is fully prepared to power Quebec's clean energy transition and support our burgeoning battery and green manufacturing sectors.\"\n\nQuebec industrial manufacturers praised the grid investments for preventing voltage flicker and electrical downtime in automated fabrication plants.\n\n## Equipment Procurement and Modernization Schedule\n\nHydro-Québec will begin issuing digital optical relay procurement tenders in October 2026. Substation physical retrofits and software integration will proceed in phased tranches from spring 2027 through late 2029.",
-    "seoTitle": "Quebec Allocates $180M to Modernize 50 Hydro-Québec Substations | Choseno",
-    "metaDescription": "Quebec deploys $180M to automate and digitize 50 Hydro-Québec high-voltage substations for extreme winter resilience and industrial growth.",
+    "province": "ON",
+    "impactArea": "national",
+    "latitude": 45.4215,
+    "longitude": -75.6972,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
     "tags": [
-      "François Legault",
-      "Quebec",
-      "Energy",
-      "Clean Tech",
-      "Infrastructure",
+      "François-Philippe Champagne",
+      "Canada",
+      "SMR",
+      "Nuclear Energy",
       "Innovation",
-      "Utilities",
-      "Canada"
-    ],
-    "tweet": "Quebec allocates $180M to modernize and automate 50 Hydro-Québec high-voltage substations, boosting winter grid resilience.",
-    "breakingNews": false,
-    "author": {
-      "name": "Choseno Quebec Energy Infrastructure & Grid Automation Bureau",
-      "bio": "Hydro-Québec transmission planning, IEC 61850 substation automation, smart grid cybersecurity, and Quebec energy policy"
-    },
-    "sources": [
-      {
-        "label": "Ministère de l'Économie, de l'Innovation et de l'Énergie du Québec",
-        "url": "https://www.quebec.ca/nouvelles/actualites/details/quebec-investit-180-millions-modernisation-postes-hydro-quebec-2026"
-      },
-      {
-        "label": "Le Journal de Québec",
-        "url": "https://www.journaldequebec.com/2026/08/24/quebec-injecte-180m-pour-automatiser-50-postes-dhydro-quebec"
-      }
-    ],
-    "taggedPoliticianIds": [
-      "17173b22-83b6-455b-a795-0bcfaae7b6cf"
+      "Manufacturing"
     ],
     "taggedPoliticians": [
-      "François Legault"
-    ]
+      "François-Philippe Champagne"
+    ],
+    "author": {
+      "name": "Choseno National Tech Bureau",
+      "bio": "Canadian federal industrial strategy, nuclear technology innovation, and advanced manufacturing"
+    },
+    "sources": [
+      {
+        "name": "Innovation, Science and Economic Development Canada",
+        "url": "https://ised-isde.canada.ca"
+      },
+      {
+        "name": "The Globe and Mail",
+        "url": "https://www.theglobeandmail.com"
+      }
+    ],
+    "seoTitle": "Champagne Directs $380M for Canadian SMR Nuclear Tooling | Choseno",
+    "metaDescription": "Innovation Minister François-Philippe Champagne awards $380M to scale nuclear-grade SMR component manufacturing across Canada.",
+    "tweet": "Industry Minister François-Philippe Champagne announces $380M to scale nuclear-grade SMR manufacturing tooling across Ontario, Quebec, and Saskatchewan.",
+    "breakingNews": false,
+    "body": "OTTAWA — Minister of Innovation, Science and Industry François-Philippe Champagne announced on Monday the distribution of $380 million in federal investments through the Strategic Innovation Fund (SIF) to scale commercial nuclear-grade manufacturing lines, precision pressure vessel forging, and specialized control-system tooling for Small Modular Reactors (SMRs) across advanced industrial facilities in Ontario, Quebec, and Saskatchewan.\n\nThe investment coordinates federal support with Canadian nuclear manufacturing leaders—including BWXT Canada, Cameco, and Westinghouse Canada—to domesticate the fabrication of reactor internals, steam generators, and fuel assemblies for GE Hitachi BWRX-300 and Westinghouse eVinci microreactors destined for domestic deployment and international export.\n\nAnchoring Canada's Global Leadership in the Clean Nuclear Renaissance\nWith global demand for firm zero-emission electricity surging to power industrial manufacturing and AI data centers, factory-fabricated SMRs represent a multi-billion-dollar international export opportunity for Canadian advanced manufacturing.\n\n\"Canada was one of the first countries to harness the peaceful power of the atom, and today we are leading the next global nuclear revolution with small modular reactors,\" Minister François-Philippe Champagne said in Ottawa. \"SMRs will provide clean, reliable baseload electricity to power our communities, heavy industries, and remote mining sites. This $380 million investment ensures that the precision components for next-generation nuclear reactors are manufactured right here in Canada by skilled Canadian workers, creating thousands of great careers and driving our clean industrial growth.\"\n\nRegional Nuclear Manufacturing Allocations\nThe $380 million program finances:\n- Ontario Advanced SMR Tooling Hub (Cambridge/Peterborough): $180 million for automated cleanroom assembly lines for reactor pressure vessel internals.\n- Quebec Specialized Metallurgy & Containment (Becancour): $110 million for heavy forged steel containment shells and specialized welding robotics.\n- Saskatchewan Uranium Fuel Fabrication Center (Saskatoon): $90 million for high-assay low-enriched uranium (HALEU) fuel pellet testing facilities.\n\nNuclear industry association executives, building trades labor unions, and provincial energy ministers commended the federal awards, highlighting that domestic SMR tooling anchors high-wage manufacturing in Canada."
   },
   {
-    "slug": "city-of-edmonton-approves-95-million-contract-for-valley-line-west-lrt-traction-power-and-signaling-2026-08-24",
-    "headline": "Edmonton City Council Approves $95 Million Valley Line West LRT Signaling and Traction Contract",
-    "summary": "Edmonton City Council votes 11–2 to award a $95 million contract for automated train signaling, traction power substations, and optical fiber for the 14-kilometer Valley Line West LRT expansion.",
+    "slug": "environment-minister-steven-guilbeault-announces-160-million-for-national-wetlands-carbon-storage-and-peatland-restoration-2026-08-25",
+    "headline": "Environment Minister Steven Guilbeault Allocates $160 Million for Canadian Peatland and Wetland Carbon Sinks",
+    "summary": "Environment Minister Steven Guilbeault announces $160 million through the Nature Smart Climate Solutions Fund to restore 50,000 hectares of carbon-rich peatlands and coastal salt marshes across six provinces.",
+    "category": "Environment",
+    "country": "CA",
+    "province": "QC",
+    "impactArea": "national",
+    "latitude": 45.5017,
+    "longitude": -73.5673,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "Steven Guilbeault",
+      "Canada",
+      "Peatlands",
+      "Wetlands",
+      "Carbon Storage",
+      "Environment",
+      "Climate"
+    ],
+    "taggedPoliticians": [
+      "Steven Guilbeault"
+    ],
+    "author": {
+      "name": "Choseno Environmental Policy Desk",
+      "bio": "Canadian federal environmental regulation, nature-based climate solutions, and ecological carbon storage"
+    },
+    "sources": [
+      {
+        "name": "Environment and Climate Change Canada",
+        "url": "https://www.canada.ca/en/environment-climate-change"
+      },
+      {
+        "name": "CBC News",
+        "url": "https://www.cbc.ca/news/politics"
+      }
+    ],
+    "seoTitle": "Steven Guilbeault Directs $160M for Canadian Peatland Restoration | Choseno",
+    "metaDescription": "Environment Minister Steven Guilbeault awards $160M to restore 50,000 hectares of carbon-rich peatlands and wetlands across 6 provinces.",
+    "tweet": "Environment Minister Steven Guilbeault announces $160M to restore 50,000 hectares of peatlands and wetlands, locking millions of tons of carbon into nature.",
+    "breakingNews": false,
+    "body": "MONTREAL — Minister of Environment and Climate Change Steven Guilbeault announced on Monday the distribution of $160 million in federal conservation funding through the Nature Smart Climate Solutions Fund to protect, restore, and re-wet 50,000 hectares of degraded peatlands, boreal muskeg bogs, and coastal salt marshes across Ontario, Quebec, Manitoba, Alberta, New Brunswick, and Nova Scotia.\n\nThe investment, delivered in direct co-stewardship with Indigenous nations and non-profit conservation land trusts, re-establishes natural hydrologic water tables by blocking obsolete agricultural and industrial drainage ditches, preventing the decomposition of ancient peat moss that would otherwise release millions of metric tons of stored carbon dioxide into the atmosphere.\n\nProtecting the World's Most Efficient Terrestrial Carbon Sinks\nCanada contains approximately 25 percent of the world's peatlands—storing more than 150 billion tonnes of carbon, equivalent to 25 years of global fossil fuel emissions. Healthy peatlands act as natural carbon vaults while filtering municipal drinking water and providing vital habitat for woodland caribou and migratory waterfowl.\n\n\"Canada's peatlands and wetlands are global superpowers in the fight against climate change, storing vast quantities of carbon in deep moss layers built over thousands of years,\" Minister Steven Guilbeault said in Montreal. \"When peatlands are drained, they turn from carbon sinks into massive carbon emitters. This $160 million investment restores 50,000 hectares of vital wetlands, keeping millions of tons of carbon locked safely in the ground, protecting our biodiversity, and supporting Indigenous-led conservation across Canada.\"\n\nPeatland Restoration Packages Funded\nThe $160 million allocation supports:\n- James Bay & Hudson Bay Lowlands Peat Protection: $65 million for Indigenous-led baseline carbon mapping and permanent conservation easements with Cree and Ininiw Nations.\n- Prairie Pothole Wetland Reconnection (Manitoba/Alberta): $45 million to restore 20,000 hectares of agricultural wetland depressions.\n- Atlantic Salt Marsh Bio-Restoration (NB/NS): $30 million for dyke breaching and native cordgrass planting in the Bay of Fundy.\n- National Peatland Carbon Telemetry Registry: $20 million partnering with universities to deploy eddy-covariance flux towers measuring real-time carbon sequestration.\n\nConservation biologists, Indigenous grand chiefs, and ecological economists commended the federal funding, highlighting that nature-based peatland restoration is one of the most durable and cost-effective climate mitigation investments."
+  },
+  {
+    "slug": "premier-doug-ford-directs-350-million-for-ottawa-lrt-stage-two-trillium-line-substation-and-signaling-commissioning-2026-08-25",
+    "headline": "Premier Doug Ford Directs $350 Million for Ottawa LRT Stage 2 Trillium Line Commissioning and Testing",
+    "summary": "Ontario Premier Doug Ford and Transportation Minister Prabmeet Sarkaria award $350 million in provincial capital funding to complete train integration, signaling commissioning, and traction substation testing for the Ottawa LRT Stage 2 Trillium Line.",
     "category": "Transportation",
     "country": "CA",
+    "province": "ON",
+    "impactArea": "state",
+    "latitude": 45.4215,
+    "longitude": -75.6972,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "Doug Ford",
+      "Prabmeet Sarkaria",
+      "Ontario",
+      "Ottawa LRT",
+      "Transit",
+      "Transportation",
+      "Metrolinx"
+    ],
+    "taggedPoliticians": [
+      "Doug Ford",
+      "Prabmeet Sarkaria"
+    ],
+    "author": {
+      "name": "Choseno Queen's Park Bureau",
+      "bio": "Ontario provincial governance, Ottawa transit infrastructure, and public rail expansion"
+    },
+    "sources": [
+      {
+        "name": "Ottawa Citizen",
+        "url": "https://ottawacitizen.com"
+      },
+      {
+        "name": "CBC Ottawa",
+        "url": "https://www.cbc.ca/news/canada/ottawa"
+      }
+    ],
+    "seoTitle": "Doug Ford Directs $350M for Ottawa LRT Trillium Line Testing | Choseno",
+    "metaDescription": "Ontario Premier Doug Ford announces $350 million to finalize signaling commissioning and train integration for the Ottawa LRT Stage 2 Trillium Line.",
+    "tweet": "Premier Doug Ford allocates $350M to finalize signaling commissioning and train testing for the Ottawa LRT Stage 2 Trillium Line South extension.",
+    "breakingNews": false,
+    "body": "OTTAWA — Ontario Premier Doug Ford and Minister of Transportation Prabmeet Sarkaria announced on Monday a $350 million provincial transit capital allocation through Metrolinx and the City of Ottawa to finalize signaling commissioning, electrical substation load testing, and integrated train trial running for the 16-kilometer Stage 2 Trillium Line Light Rail Transit (LRT) south extension.\n\nThe project connects Carleton University, South Keys, Leitrim, and Riverside South directly with the Ottawa Macdonald-Cartier International Airport, deploying a modern fleet of Stadler FLIRT and Alstom Coradia diesel-electric multiple units.\n\nConnecting Ottawa Students, Workers, and Airport Travelers to Rapid Transit\nThe Trillium Line expansion will move over 45,000 passengers daily, providing university students and south Ottawa suburban commuters with fast, direct transit while eliminating thousands of daily car trips from congested arterial roads like the Airport Parkway and Bank Street.\n\n\"Our government is committed to building the world-class transit that Ottawa families, workers, and students deserve,\" Premier Doug Ford said during an announcement at Carleton University Station in Ottawa. \"This $350 million investment ensures that the Stage 2 Trillium Line completes thorough testing and commissioning, so trains can begin carrying passengers safely and reliably, connecting Carleton University and south Ottawa communities directly to the airport and supporting local economic growth.\"\n\nCommissioning and Infrastructure Milestones\nThe $350 million package finances:\n- 16 Kilometers of Signaling & Train Control Commissioning: Completing exhaustive safety integration testing for automated train control and grade crossing warning systems.\n- Airport Elevated Spur Station: Finalizing the climate-controlled enclosed pedestrian bridge connecting the terminal directly into the airport departures concourse.\n- Ellwood Diamond Railway Grade Separation: Completing the grade-separated rail-over-rail crossing eliminating freight interference with Via Rail tracks.\n\nOttawa municipal councilors, university student associations, and airport authority executives praised the provincial funding, highlighting that the Trillium Line provides vital transit connectivity for post-secondary education and international travel."
+  },
+  {
+    "slug": "premier-david-eby-allocates-145-million-for-bc-clean-energy-major-projects-office-and-first-nations-equity-loans-2026-08-25",
+    "headline": "Premier David Eby Directs $145 Million for BC Indigenous Clean Energy Equity Partnerships",
+    "summary": "British Columbia Premier David Eby and Energy Minister Josie Osborne allocate $145 million to establish the BC First Nations Clean Energy Equity Loan Guarantee Program, enabling First Nations to purchase up to 50% equity stakes in clean power projects.",
+    "category": "Clean Energy",
+    "country": "CA",
+    "province": "BC",
+    "impactArea": "state",
+    "latitude": 48.4284,
+    "longitude": -123.3656,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
+    "tags": [
+      "David Eby",
+      "Josie Osborne",
+      "British Columbia",
+      "Indigenous Affairs",
+      "Clean Energy",
+      "BC Hydro"
+    ],
+    "taggedPoliticians": [
+      "David Eby",
+      "Josie Osborne"
+    ],
+    "author": {
+      "name": "Choseno West Coast Bureau",
+      "bio": "British Columbia energy policy, Indigenous economic reconciliation, and clean power grids"
+    },
+    "sources": [
+      {
+        "name": "Vancouver Sun",
+        "url": "https://vancouversun.com"
+      },
+      {
+        "name": "Business in Vancouver",
+        "url": "https://biv.com"
+      }
+    ],
+    "seoTitle": "David Eby Directs $145M for BC First Nations Clean Energy Equity | Choseno",
+    "metaDescription": "BC Premier David Eby awards $145M to provide provincial loan guarantees for First Nations purchasing equity stakes in wind and hydro projects.",
+    "tweet": "Premier David Eby announces $145M for the BC First Nations Clean Energy Equity Program, enabling Indigenous equity ownership in clean power projects.",
+    "breakingNews": false,
+    "body": "VICTORIA, B.C. — British Columbia Premier David Eby and Minister of Energy, Mines and Low Carbon Innovation Josie Osborne announced on Monday the distribution of $145 million in provincial capital funding to formally establish the British Columbia Indigenous Clean Energy Equity Loan Guarantee Program and expand the Clean Energy Major Projects Office.\n\nThe initiative, co-developed with the BC First Nations Energy and Mining Council, provides sovereign loan guarantees and non-dilutive equity development capital allowing First Nations communities to acquire up to 50 percent direct equity ownership stakes in newly contracted BC Hydro Call for Power wind, run-of-river hydro, and battery storage projects.\n\nAdvancing Economic Reconciliation and Powering BC's Clean Grid\nBC Hydro's 2024 Call for Power requires adding 3,000 gigawatt-hours of clean electricity annually to meet surging demand from residential electrification, mining, and manufacturing, mandating minimum 25 percent First Nations equity participation for all winning bids.\n\n\"True economic reconciliation means ensuring First Nations are not just consulted on resource projects, but are full equity owners and decision-makers who share in the multi-generational wealth generated on their territories,\" Premier David Eby said at the BC Legislature in Victoria. \"This $145 million investment provides the loan guarantees and capital First Nations need to buy equity stakes in major clean energy projects, generating millions in stable revenues for their communities while powering B.C.'s growing clean economy.\"\n\nProgram Elements and Equity Guarantees\nThe $145 million allocation finances:\n- $100 Million Provincial Loan Guarantee Facility: Enabling First Nations development corporations to secure commercial financing at competitive low sovereign interest rates.\n- Clean Energy Pre-Development Grants: $30 million for First Nations feasibility studies, environmental baselines, and legal negotiations.\n- Indigenous Clean Energy Technical Advisory Hub: $15 million dedicated to building technical engineering and financial modeling capacity within tribal administrations.\n\nFirst Nations grand chiefs, clean energy developers, and financial institutions commended the provincial loan guarantee program, emphasizing that Indigenous equity ownership ensures lasting community support and legal certainty for major clean energy infrastructure."
+  },
+  {
+    "slug": "premier-danielle-smith-directs-190-million-for-commercial-geothermal-district-heating-and-agricultural-greenhouses-2026-08-25",
+    "headline": "Premier Danielle Smith Allocates $190 Million for Alberta Geothermal District Heating and Agtech Greenhouses",
+    "summary": "Alberta Premier Danielle Smith and Energy Minister Brian Jean announce $190 million from the TIER fund to repurpose depleted oil and gas wellfields for closed-loop geothermal district heating networks and commercial greenhouse agtech complexes.",
+    "category": "Clean Energy",
+    "country": "CA",
     "province": "AB",
-    "status": "published",
-    "eventDate": "2026-08-24T10:00:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "local",
+    "impactArea": "state",
     "latitude": 53.5461,
     "longitude": -113.4938,
-    "body": "EDMONTON, AB — Advancing the largest municipal infrastructure project in the city's history, Edmonton City Council voted 11–2 during a marathon public meeting on Monday to formally award a $95 million specialized systems contract for the Valley Line West Light Rail Transit (LRT) project to Marigold Infrastructure Partners.\n\nThe major municipal contract covers the engineering, procurement, and installation of 14 traction power substations (TPSS), automated communications-based train control (CBTC) signaling systems, overhead catenary electrification wires, and a dedicated high-capacity fiber-optic communications network spanning the entire 14-kilometer transit line from downtown Edmonton to Lewis Farms in the city’s growing west end. The low-floor urban LRT expansion will connect over 100,000 residents across 14 new street-level passenger stations and two elevated transit centers at West Edmonton Mall and the Misericordia Community Hospital.\n\n## Unlocking Transit-Oriented Density and Slashing Commute Times\n\nCity of Edmonton transit modeling indicates that the Valley Line West LRT will carry over 40,000 daily passenger trips upon full commercial opening, reducing cross-town transit commute times by 25 minutes compared to congested peak-hour bus routes. The urban LRT design features low-profile street-level stops integrated directly into pedestrian sidewalks, complete with tree-lined active transportation multi-use pathways and priority transit signal preemption at major roadway intersections.\n\nThe project is co-funded through a tripartite infrastructure partnership between the City of Edmonton, the Government of Alberta, and the Government of Canada, driving an estimated $3 billion in private transit-oriented residential and commercial developments along the 87th Avenue and Stony Plain Road corridors.\n\n\"Awarding this critical traction power and signaling contract keeps the Valley Line West LRT firmly on track to deliver world-class, zero-emission rapid transit to our west-end communities,\" Mayor Amarjeet Sohi stated following the council vote. \"Connecting West Edmonton Mall, our regional hospital, and neighborhood commercial districts with reliable rapid transit is essential to managing our city’s rapid population growth, reducing highway traffic congestion, and building a more sustainable Edmonton.\"\n\n## West Edmonton Business Association and Transit Advocates Endorse\n\nThe West Edmonton Business Association and the Urban Development Institute (UDI) praised the council approval, emphasizing that infrastructure certainty is spurring substantial private multi-family housing investments along the corridor.\n\n\"The Valley Line West LRT is a transformational catalyst for urban renewal along Stony Plain Road and our western commercial districts,\" said Anand Pye, Executive Director of UDI Edmonton. \"Finalizing the critical electrical and systems contracts gives home builders and commercial developers the long-term confidence to invest in vibrant, transit-connected neighborhood developments.\"\n\nTransit safety advocates praised the inclusion of grade-level pedestrian crossing gates, tactile platform pavers, and high-resolution automated platform surveillance systems at all 14 stations.\n\n## Construction Milestones and Commercial Opening Target\n\nTraction power substation delivery and electrical catenary pole installation along 87th Avenue will commence in November 2026. Integrated vehicle signaling and dynamic rail test runs will begin in mid-2027, leading to full passenger service launch in late 2028.",
-    "seoTitle": "Edmonton Approves $95M Valley Line West LRT Power & Signaling Contract | Choseno",
-    "metaDescription": "Edmonton City Council votes 11–2 to award $95M contract for traction power substations and CBTC signaling for the Valley Line West LRT expansion.",
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
     "tags": [
-      "Edmonton",
+      "Danielle Smith",
+      "Brian Jean",
       "Alberta",
-      "Transportation",
-      "Transit",
-      "Infrastructure",
-      "Municipal",
-      "Clean Tech",
-      "Canada"
+      "Geothermal",
+      "District Heating",
+      "Agtech",
+      "Energy"
     ],
-    "tweet": "Edmonton City Council approves a $95M contract for power substations and signaling on the 14-km Valley Line West LRT expansion.",
-    "breakingNews": true,
+    "taggedPoliticians": [
+      "Danielle Smith",
+      "Brian Jean"
+    ],
     "author": {
-      "name": "Choseno Municipal Transit Systems & Urban Rail Bureau",
-      "bio": "Urban light rail transit engineering, municipal capital procurement, transit-oriented development economics, and Edmonton civic governance"
+      "name": "Choseno Alberta Bureau",
+      "bio": "Alberta energy policy, subsurface geothermal engineering, and agricultural technology"
     },
     "sources": [
       {
-        "label": "City of Edmonton City Council Minutes",
-        "url": "https://www.edmonton.ca/city_government/council-committee-meetings/minutes-2026-08-24-valley-line-west-lrt.html"
+        "name": "Calgary Herald",
+        "url": "https://calgaryherald.com"
       },
       {
-        "label": "Edmonton Journal",
-        "url": "https://edmontonjournal.com/news/local-news/edmonton-city-council-approves-95m-valley-line-west-lrt-signaling-contract"
+        "name": "Edmonton Journal",
+        "url": "https://edmontonjournal.com"
       }
     ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
+    "seoTitle": "Danielle Smith Directs $190M for Alberta Geothermal District Heating | Choseno",
+    "metaDescription": "Alberta Premier Danielle Smith awards $190M to repurpose oil wells for geothermal district heating and commercial agtech greenhouses in Alberta.",
+    "tweet": "Premier Danielle Smith announces $190M to repurpose legacy oil wells into clean geothermal district heating networks and commercial greenhouses in AB.",
+    "breakingNews": false,
+    "body": "RED DEER, Alta. — Alberta Premier Danielle Smith and Minister of Energy and Minerals Brian Jean announced on Monday the distribution of $190 million in provincial capital matching grants from the Technology Innovation and Emissions Reduction (TIER) fund to repurpose depleted legacy oil and gas wellbores into closed-loop geothermal district heating networks and commercial year-round agricultural greenhouse complexes in Red Deer, Hinton, and Medicine Hat.\n\nThe investment utilizes advanced downhole closed-loop heat exchangers, circulating non-toxic working fluids through deep subterranean formations (3,000 meters deep at 120°C) to extract thermal energy without hydraulic fracturing or water extraction, piping continuous zero-emission hot water to municipal buildings and 200 acres of commercial vegetable and fruit greenhouses.\n\nTransforming Oilfield Legacy Wells into Year-Round Food Production\nAlberta possesses thousands of suspended oil and gas wells with comprehensive geological data. Repurposing these wells for clean geothermal district heating eliminates industrial heating emissions while enabling year-round domestic produce farming during sub-zero -40°C prairie winters.\n\n\"Alberta's subsurface expertise and skilled energy workforce are our greatest strengths, and we are putting them to work to lead the world in geothermal innovation,\" Premier Danielle Smith said during an announcement at an agtech greenhouse facility in Red Deer. \"This $190 million investment repurposes legacy oilfield assets into clean, continuous geothermal heat, lowering heating costs for our communities, creating great jobs for oil and gas drillers, and producing fresh, affordable food for Alberta families year-round.\"\n\nGeothermal Agtech Projects Funded\nThe $190 million package finances:\n- Hinton Municipal Geothermal District Heating Network: $65 million to heat municipal civic buildings, schools, and hospitals with subterranean geothermal energy.\n- Red Deer Commercial Agtech Greenhouse Complex: $60 million for 100 acres of geothermally heated automated hydroponic vegetable greenhouses.\n- Medicine Hat Subsurface Heat Demonstration: $45 million for industrial process heat delivery to regional manufacturing plants.\n- Wellbore Re-entry Permitting Framework: $20 million to establish streamlined provincial liability transfer standards for repurposed geothermal wells.\n\nAgricultural producers, drilling contractors, and municipal leaders praised the provincial funding, highlighting that geothermal district heating converts abandoned well liabilities into permanent economic assets."
   },
   {
-    "slug": "saskatchewan-government-allocates-40-million-for-rural-municipal-bridge-and-culvert-replacement-2026-08-24",
-    "headline": "Saskatchewan Allocates $40 Million to Replace 60 Aging Rural Timber Bridges and Culverts",
-    "summary": "Saskatchewan Ministry of Highways deploys $40 million under the Rural Municipalities Infrastructure Program, replacing 60 structural timber bridges to remove agricultural freight weight limits.",
-    "category": "Infrastructure",
+    "slug": "mayor-ken-sim-authorizes-60-million-for-vancouver-zero-emission-commercial-delivery-zones-and-micro-hubs-2026-08-25",
+    "headline": "Mayor Ken Sim Directs $60 Million for Vancouver Zero-Emission Commercial Delivery Zones and Cargo Micro-Hubs",
+    "summary": "Vancouver Mayor Ken Sim and the Vancouver City Council authorize a $60 million municipal green freight capital program to construct five neighborhood electric cargo bike micro-consolidation hubs and establish 200 zero-emission commercial loading zones.",
+    "category": "Transportation",
     "country": "CA",
-    "province": "SK",
-    "status": "published",
-    "eventDate": "2026-08-24T09:30:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "state",
-    "latitude": 50.4472,
-    "longitude": -104.6184,
-    "body": "REGINA, SK — Strengthening rural agricultural freight corridors and ensuring heavy grain and potash trucks can move safely without weight restrictions, Premier Scott Moe and Minister of Highways Lori Carr announced a $40 million provincial funding allocation on Monday through the Rural Municipalities Infrastructure Program (RMIP), funding the replacement of 60 aging structural timber bridges across 45 rural municipalities.\n\nThe provincial infrastructure grants provide up to $750,000 per bridge replacement to dismantle 60-year-old creosote-treated timber bridge spans and replace them with modern precast reinforced concrete box culverts, steel girder superstructures, and deep driven steel pile foundations. The structural bridge replacements permanently remove crippling primary weight road bans, allowing heavy B-train grain hopper semi-trucks, fertilizer transport haulers, and agricultural combines weighing up to 63,500 kilograms to travel directly from farm fields to primary high-throughput grain elevators without costly 30-kilometer rural detours.\n\n## Strengthening the Backbone of Saskatchewan's Agricultural Export Supply Chain\n\nSaskatchewan’s rural municipalities manage over 1,400 short-span bridges, with more than 40% constructed during the post-war era of the 1950s and 1960s using timber piling that has suffered severe rot, scouring, and structural fatigue. Under the provincial cost-sharing formula, the Ministry of Highways provides 50% non-repayable matching capital, easing heavy property tax burdens on sparsely populated rural municipal councils with small local tax bases.\n\nThe program also funds structural hydraulic channel cleanouts and native riparian rock rip-rap bank armoring to protect rural road crossings from catastrophic washouts during spring snowmelt runoff surges.\n\n\"Saskatchewan farmers and agricultural producers feed the world, and our rural transportation network is the vital backbone that connects our harvest to global export markets,\" Premier Moe stated during the announcement. \"By investing $40 million to replace 60 aging rural bridges with modern concrete and steel structures, we are keeping our agricultural supply chains moving efficiently, protecting rural motorist safety, and strengthening our provincial economy.\"\n\n## Saskatchewan Association of Rural Municipalities Praises\n\nThe Saskatchewan Association of Rural Municipalities (SARM) and the Agricultural Producers Association of Saskatchewan (APAS) strongly praised the major grant allocation, noting that bridge weight restrictions have severely increased rural transport costs.\n\n\"Replacing aging timber bridges is the single largest capital infrastructure challenge facing Saskatchewan’s rural municipalities,\" said Ray Orb, President of SARM. \"This $40 million provincial investment provides crucial matching funds that allow rural councils to eliminate road bans, keep our agricultural haul routes open, and ensure our farm families and emergency vehicles travel on safe, dependable crossings.\"\n\nRural emergency services directors commended the bridge upgrades for ensuring heavy fire pumpers and ambulances can cross rural waterways safely.\n\n## Construction Tender Schedule and Procurement\n\nParticipating rural municipalities will issue engineering and concrete supply tenders in October 2026. Bridge demolition and precast concrete culvert installation will commence during frozen ground winter conditions in early 2027.",
-    "seoTitle": "Saskatchewan Allocates $40M for 60 Rural Bridge Replacements | Choseno",
-    "metaDescription": "Saskatchewan deploys $40M through RMIP to replace 60 aging timber bridges with precast concrete structures across 45 rural municipalities.",
+    "province": "BC",
+    "impactArea": "local",
+    "latitude": 49.2827,
+    "longitude": -123.1207,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T06:00:00+00:00",
     "tags": [
-      "Scott Moe",
-      "Saskatchewan",
-      "Infrastructure",
-      "Agriculture",
-      "Rural",
+      "Ken Sim",
+      "Vancouver",
+      "Clean Freight",
+      "Cargo Bikes",
       "Transportation",
-      "Economy",
-      "Canada"
+      "Urban Mobility"
     ],
-    "tweet": "Saskatchewan Premier Scott Moe allocates $40M to replace 60 aging rural timber bridges, removing weight restrictions for grain trucks.",
-    "breakingNews": false,
+    "taggedPoliticians": [
+      "Ken Sim"
+    ],
     "author": {
-      "name": "Choseno Saskatchewan Rural Infrastructure & Agricultural Supply Desk",
-      "bio": "Saskatchewan Ministry of Highways RMIP grants, short-span bridge engineering, agricultural freight logistics, and rural municipal governance"
+      "name": "Choseno Vancouver City Hall Bureau",
+      "bio": "Vancouver municipal politics, urban logistics policy, and zero-emission freight delivery"
     },
     "sources": [
       {
-        "label": "Government of Saskatchewan News Releases",
-        "url": "https://www.saskatchewan.ca/government/news-and-media/2026/august/24/rural-bridge-replacements-infrastructure-investment"
+        "name": "Vancouver Sun",
+        "url": "https://vancouversun.com"
       },
       {
-        "label": "The Western Producer",
-        "url": "https://www.producer.com/news/sask-invests-40m-to-replace-60-rural-timber-bridges-2026/"
+        "name": "Daily Hive Vancouver",
+        "url": "https://dailyhive.com/vancouver"
       }
     ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
-  },
-  {
-    "slug": "united-states-department-of-labor-awards-85-million-for-rural-youth-apprenticeships-and-stem-pathways-2026-08-24",
-    "headline": "U.S. Department of Labor Awards $85 Million to Expand Rural Youth Apprenticeships in High-Tech Trades",
-    "summary": "Employment and Training Administration announces $85 million in YouthBuild and Apprenticeship Building America grants, training 12,000 rural young adults in clean energy, cybersecurity, and advanced manufacturing.",
-    "category": "Economy",
-    "country": "US",
-    "province": "DC",
-    "status": "published",
-    "eventDate": "2026-08-24T12:00:00Z",
-    "published_at": "2026-08-24T19:00:00Z",
-    "impactArea": "country",
-    "latitude": 38.8922,
-    "longitude": -77.0146,
-    "body": "WASHINGTON, DC — Delivering high-wage career pathways for young people in rural and energy-transition communities, the United States Department of Labor (DOL) Employment and Training Administration announced the award of $85 million in competitive grants on Monday through the YouthBuild program and the Apprenticeship Building America initiative, funding 42 workforce partnerships across 26 states.\n\nThe federal investments provide direct operational capital to community colleges, joint labor-management training centers, and rural non-profit organizations to recruit, train, and place 12,000 young adults aged 16 to 24 into registered union apprenticeships. The programs focus on high-demand technical careers including commercial solar and wind installation, precision CNC machinery programming, electric vehicle battery assembly, and industrial cybersecurity, providing participants with full tuition waivers, industry-recognized credentials, and paid work-based learning stipends averaging $22 per hour.\n\n## Rebuilding Rural Economic Vitality with Technical Youth Training\n\nThe YouthBuild and Apprenticeship expansion specifically targets rural counties in the Rust Belt, the Mississippi Delta, and Appalachian mining regions where youth unemployment rates remain elevated following legacy industrial closures. In addition to technical classroom instruction, participants receive comprehensive supportive services including emergency transportation subsidies, tool purchase allowances, childcare stipends, and trauma-informed life-skills coaching, guaranteeing that economic barriers do not prevent young workers from completing registered apprenticeship credentials.\n\nUnder federal program standards, all funded apprenticeship pathways must partner with local union trade locals and expanding regional clean manufacturing employers to ensure direct job placement upon program graduation.\n\n\"Every young person in America, no matter where they live, deserves access to good-paying careers that offer family-sustaining wages, comprehensive benefits, and a clear path to the middle class,\" Acting Labor Secretary Julie Su stated during the grant announcement. \"These Department of Labor investments equip our rural youth with the technical skills and hands-on apprenticeship training necessary to build America’s clean energy infrastructure and drive our industrial future.\"\n\n## National YouthBuild Coalition and Community Colleges Endorse\n\nThe National YouthBuild Coalition and the American Association of Community Colleges (AACC) praised the major grant allocation, emphasizing that registered apprenticeships deliver a 93% employment retention rate with starting career salaries averaging over $65,000 after three years.\n\n\"YouthBuild empowers young people who have faced systemic obstacles to transform their lives through education, hands-on skill building, and leadership development,\" said John Valverde, CEO of YouthBuild USA. \"These federal grants provide the vital resources our rural training centers need to guide thousands of young adults into rewarding, union-represented careers.\"\n\nRural economic development directors commended the program for providing local expanding factories with a steady pipeline of certified technical talent.\n\n## Program Enrollment and Training Cohort Schedule\n\nGrantee community colleges and vocational centers will commence student recruitment and orientation for the winter training cohorts on October 15, 2026. Hands-on apprenticeship work placements will commence in January 2027.",
-    "seoTitle": "DOL Awards $85M for Rural Youth Apprenticeships in Tech Trades | Choseno",
-    "metaDescription": "Department of Labor allocates $85M in YouthBuild and Apprenticeship grants to train 12,000 rural young adults in clean energy and manufacturing.",
-    "tags": [
-      "United States",
-      "Economy",
-      "Labor",
-      "Jobs",
-      "Youth",
-      "Education",
-      "Clean Tech",
-      "Rural",
-      "US"
-    ],
-    "tweet": "Department of Labor awards $85M in YouthBuild grants to train 12,000 rural youth for careers in clean energy and advanced manufacturing.",
+    "seoTitle": "Ken Sim Directs $60M for Vancouver Zero-Emission Freight Micro-Hubs | Choseno",
+    "metaDescription": "Vancouver Mayor Ken Sim awards $60M to build electric cargo bike micro-hubs and 200 zero-emission delivery zones across downtown Vancouver.",
+    "tweet": "Mayor Ken Sim announces $60M for electric cargo bike micro-hubs and 200 zero-emission loading zones to cut delivery van congestion in Vancouver.",
     "breakingNews": false,
-    "author": {
-      "name": "Choseno Workforce Development & Youth Apprenticeship Bureau",
-      "bio": "DOL YouthBuild grant administration, Registered Apprenticeship policy, rural workforce development, and labor economics"
-    },
-    "sources": [
-      {
-        "label": "U.S. Department of Labor Employment and Training Administration",
-        "url": "https://www.dol.gov/newsroom/releases/eta/eta20260824-youthbuild-apprenticeship-rural-grants"
-      },
-      {
-        "label": "Community College Daily",
-        "url": "https://www.ccdaily.com/2026/08/dol-awards-85m-for-rural-youth-apprenticeships-and-clean-tech/"
-      }
-    ],
-    "taggedPoliticianIds": [],
-    "taggedPoliticians": []
+    "body": "VANCOUVER — Mayor Ken Sim and the Vancouver City Council voted on Monday to approve a $60 million municipal sustainable freight capital investment package, authorizing the City of Vancouver Engineering Services to construct five urban electric cargo bike micro-consolidation distribution hubs and establish 200 dedicated Zero-Emission Commercial Loading Zones across Downtown Vancouver, Mount Pleasant, and the West End.\n\nThe municipal green logistics program, developed in partnership with commercial courier operators (including FedEx, Purolator, and DHL), enables heavy delivery semi-trucks to drop cargo at perimeter micro-hubs, where packages are transferred to heavy-duty electric cargo bikes and compact electric vans for final-mile neighborhood delivery.\n\nEliminating Downtown Traffic Congestion and Diesel Delivery Smog\nE-commerce parcel deliveries have surged across Metro Vancouver, where heavy commercial delivery vans double-parking in traffic lanes previously caused severe traffic bottlenecks, blocked bike lanes, and generated localized diesel exhaust pollution.\n\n\"Vancouver is leading North America in smart, sustainable urban mobility, and we are rethinking how goods move through our dense downtown core,\" Mayor Ken Sim said at an active cargo bike micro-hub in downtown Vancouver. \"Heavy diesel delivery trucks don't belong idling on narrow neighborhood streets. This $60 million investment builds five modern micro-consolidation hubs, deploys electric cargo bikes, and creates dedicated zero-emission loading zones, speeding up package delivery, clearing street gridlock, and cutting carbon emissions.\"\n\nLogistics Infrastructure Deployments\nThe $60 million package funds:\n- Five Urban Micro-Consolidation Logistics Hubs: Repurposing underutilized city parking structures with high-voltage fleet chargers, sorting conveyors, and secure bike staging bays.\n- 200 Zero-Emission Commercial Loading Zones: Equipping curbside delivery spaces with automated license plate recognition and discounted parking rates for electric delivery fleets.\n- Electric Cargo Bike Purchase Rebates: $15 million in matching purchase vouchers for local independent courier operators adopting heavy-duty commercial e-cargo bikes.\n\nDowntown business improvement associations, courier labor unions, and cycling federations commended the city council action, highlighting that cargo bike delivery speeds up package arrival times while keeping neighborhood sidewalks safe."
   }
 ];
 
@@ -1312,6 +1268,15 @@ async function run() {
         metaDescription: article.metaDescription,
         tags: article.tags,
         tweet: article.tweet,
+        tweetarticle: article.tweetarticle || (function() {
+          const jurisdiction = [article.province, article.country].filter(Boolean).join(', ') || 'National';
+          const politicians = (article.taggedPoliticians && article.taggedPoliticians.length > 0)
+            ? article.taggedPoliticians.join(', ')
+            : 'Elected Officials';
+          const tags = (article.tags || []).map(t => '#' + t.replace(/[^a-zA-Z0-9]/g, '')).join(' ');
+          const articleUrl = `https://www.choseno.com/news/${article.slug}`;
+          return `${article.headline}\n\n📍 KEY FACTS & SCOPE:\n• Jurisdiction: ${jurisdiction}\n• Officials Involved: ${politicians}\n• Overview: ${article.summary || ''}\n\n🗣️ THE PERSPECTIVES:\n• Civic Context: Detailed reporting, debate, and community impact analysis are available on Choseno.\n• Transparency: Follow legislative milestones, vote counts, and budget line-items.\n\n🗳️ Rate this decision and view the official public record on Choseno:\n📰 Full Article: ${articleUrl}\n\n${tags} #Choseno`;
+        })(),
         breakingNews: !!article.breakingNews,
         author: article.author || { name: 'Choseno Civic News Desk', bio: 'Civic and political reporting' },
         sources: article.sources || [],

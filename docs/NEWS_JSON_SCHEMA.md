@@ -29,6 +29,7 @@
 | `heroImageAlt` | ❌ | string | Accessible description (REQUIRED if hero_image_url set) |
 | `heroImageCaption` | ❌ | string | Photo credit |
 | `tweet` | 🌟 | string | **Captivating, click-optimized X/Twitter hook (~180-200 chars max)**. Plain text only — NO emojis, NO hashtags, NO URLs (Choseno automatically appends card link + topic hashtags). |
+| `tweetarticle` | 🌟 | string | **Long-Form X (Twitter) Premium Neutral Article Post (~800-1,500 chars)**. Formatted with headline, key facts bullet points, balanced perspectives, and neutral Choseno rating CTA. |
 | `author` | ❌ | object | {name, bio, photoUrl (optional)} |
 | `taggedParty` | ❌ | string | Political party name (if specific party is subject) |
 | `political_party_id` | ❌ | number | Internal DB ID (auto-set from taggedParty) |

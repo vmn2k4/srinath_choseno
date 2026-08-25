@@ -18,7 +18,7 @@ import { useTranslation } from "@/contexts/LanguageContext";
 import type { ShareData } from "@/components/features/ShareMenu";
 import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
-import NewsArticleCard from "@/components/features/NewsArticleCard";
+import NewsFeedPostCard from "@/components/features/NewsFeedPostCard";
 import NewsInfiniteFeed from "@/components/features/NewsInfiniteFeed";
 import { countryDisplayLabel } from "@/lib/utils/newsTaxonomy";
 import { SITE_URL } from "@/lib/constants/site";
@@ -153,6 +153,14 @@ export default function NewsPageClient({
     const shareText = `${basePostText}\n\n${hashtagList}\n${shareUrl}`;
     const hashtags = [categoryTag.replace("#", ""), locTag.replace("#", ""), "Choseno", "RateYourPolitician"].filter(Boolean);
 
+    const customTweetArticle = (article.content as any)?.tweetarticle?.trim();
+    const summaryText = article.summary || "";
+    const tweetArticleText =
+      customTweetArticle ||
+      `${article.headline}\n\n📍 KEY FACTS & SCOPE:\n• Jurisdiction: ${[article.province, article.country].filter(Boolean).join(", ") || "National"}\n• Overview: ${summaryText}\n\n🗣️ THE PERSPECTIVES:\n• Civic Context: Detailed reporting, debate, and community impact analysis are available on Choseno.\n• Transparency: Follow legislative milestones, vote counts, and budget line-items.\n\n🗳️ Rate this decision and view the official public record on Choseno:\n📰 Full Article: ${shareUrl}\n\n${hashtagList}`;
+
+    const imageUrl = article.hero_image_url || `${SITE_URL}/api/news/${article.slug}/og-image`;
+
     return {
       url: shareUrl,
       basePostText,
@@ -160,6 +168,8 @@ export default function NewsPageClient({
       shareText,
       hashtags,
       twitterUrl: `https://twitter.com/intent/tweet?text=${encodeURIComponent(basePostText)}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(hashtags.join(","))}`,
+      tweetArticleText,
+      imageUrl,
     };
   };
 
@@ -318,20 +328,25 @@ export default function NewsPageClient({
         </Card>
       ) : (
         <>
-          {/* News Article Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* News Feed -- same NewsFeedPostCard as the default /news feed
+              (NewsInfiniteFeed), not a separate compact grid card, so a
+              filtered or paginated view of /news reads as the same page,
+              not a lesser one. Single-column like the feed it matches --
+              the card's wide hero-image layout needs the width a 3-up grid
+              column doesn't have. */}
+          <div className="space-y-5">
             {items.map((article) => {
               // Does this article tag any of the signed-in viewer's own
               // representatives? Computed here (needs userRepresentatives,
               // which the card has no reason to know about) and just handed
-              // to NewsArticleCard as a boolean.
+              // to NewsFeedPostCard as a boolean.
               const repIdsSet = new Set(userRepresentatives.map((r) => r.id));
               const taggedUserReps = (article.news_article_politicians ?? []).filter((p) =>
                 repIdsSet.has(p.politician_id)
               );
 
               return (
-                <NewsArticleCard
+                <NewsFeedPostCard
                   key={article.id}
                   article={article}
                   shareData={generateShareData(article)}

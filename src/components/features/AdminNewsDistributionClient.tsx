@@ -189,6 +189,8 @@ export default function AdminNewsDistributionClient() {
 
     if (platform === "Facebook" || platform === "LinkedIn" || platform === "Instagram") {
       showToast(`Marked shared on ${platform}! Caption copied to clipboard — press Paste (Cmd+V) into your post`, "success");
+    } else if (platform === "X (Article)") {
+      showToast("Opening X composer with article text! Image copied to clipboard — press Paste (Cmd+V) to attach image", "success");
     } else {
       showToast(`Marked shared on ${platform}`, "success");
     }
@@ -323,10 +325,23 @@ export default function AdminNewsDistributionClient() {
           : `${article.headline}\n\nTrack local democracy and rate your representatives on @choseno!`)
     );
 
+    // Build or fetch long-form tweetarticle for X Premium
+    const customTweetArticle = (article.content as any)?.tweetarticle?.trim();
+    const wallUrl = article.primaryWallSlug ? `${SITE_URL}/wall/${article.primaryWallSlug}` : undefined;
+    const politicianMentions = taggedReps.length > 0 ? taggedReps.join(", ") : (article.primaryPoliticianName || "Elected Officials");
+    const jurisdiction = [article.province, article.country].filter(Boolean).join(", ") || "National";
+    const summaryText = article.summary || "";
+
+    const tweetArticleText =
+      customTweetArticle ||
+      `${article.headline}\n\n📍 KEY FACTS & SCOPE:\n• Jurisdiction: ${jurisdiction}\n• Officials Involved: ${politicianMentions}\n• Overview: ${summaryText}\n\n🗣️ THE PERSPECTIVES:\n• Civic Context: Detailed reporting, debate, and community impact analysis are available on Choseno.\n• Transparency: Follow legislative milestones, vote counts, and budget line-items.\n\n🗳️ Rate this decision and view the official public record on Choseno:\n📰 Full Article: ${shareUrl}${wallUrl ? `\n👤 Politician Wall: ${wallUrl}` : ""}\n\n${formattedHashtagString}`;
+
     const shareText = `${basePostText}\n\n${formattedHashtagString}\n${shareUrl}`;
     const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       basePostText
     )}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(combinedTagList.join(","))}`;
+
+    const imageUrl = article.hero_image_url || `${SITE_URL}/api/news/${article.slug}/og-image`;
 
     return {
       url: shareUrl,
@@ -335,6 +350,8 @@ export default function AdminNewsDistributionClient() {
       shareText,
       hashtags: combinedTagList,
       twitterUrl: twitterShareUrl,
+      tweetArticleText,
+      imageUrl,
     };
   };
 

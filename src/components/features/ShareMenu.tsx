@@ -15,6 +15,8 @@ export interface ShareData {
   shareText: string;
   hashtags: string[];
   twitterUrl: string;
+  tweetArticleText?: string;
+  imageUrl?: string;
 }
 
 interface ShareMenuProps {
@@ -207,6 +209,52 @@ export default function ShareMenu({
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
         </svg>
         <span>Share on X</span>
+      </button>
+
+      {/* 2b. Share on X as Article (Long Post for X Premium) */}
+      <button
+        onClick={async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const articleText = shareData.tweetArticleText || shareData.shareText;
+          const articleTwitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(articleText)}`;
+
+          // 1. Try copying image to clipboard for quick paste (Cmd+V) into X composer
+          if (shareData.imageUrl && typeof navigator !== "undefined" && navigator.clipboard) {
+            try {
+              const res = await fetch(shareData.imageUrl);
+              const blob = await res.blob();
+              if (blob && blob.type.startsWith("image/")) {
+                await navigator.clipboard.write([
+                  new ClipboardItem({ [blob.type]: blob })
+                ]);
+              }
+            } catch {
+              // If image clipboard fails (e.g. CORS or security restrictions), copy article text as backup
+              try {
+                await navigator.clipboard.writeText(articleText);
+              } catch {}
+            }
+          } else if (typeof navigator !== "undefined" && navigator.clipboard) {
+            try {
+              await navigator.clipboard.writeText(articleText);
+            } catch {}
+          }
+
+          window.open(articleTwitterUrl, "_blank", "noopener,noreferrer");
+          closeMenu("X (Article)");
+        }}
+        className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-sky-50 text-sky-800 font-semibold transition-colors text-left w-full cursor-pointer group"
+      >
+        <div className="flex items-center gap-2.5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
+          <span>Share on X as Article</span>
+        </div>
+        <span className="text-[9px] uppercase font-bold tracking-wider bg-sky-100 group-hover:bg-sky-200 text-sky-700 px-1.5 py-0.5 rounded transition-colors">
+          Premium
+        </span>
       </button>
 
       {/* 3. Share on WhatsApp */}

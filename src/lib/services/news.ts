@@ -79,6 +79,11 @@ export interface NewsArticleContent {
    * generated text when unset (see docs/NEWS_JSON_SCHEMA.md).
    */
   tweet?: string;
+  /**
+   * Optional long-form structured neutral post formatted for X (Twitter) Premium (800-1500 chars).
+   * Includes key policy points, balanced perspectives, and a neutral CTA to rate on Choseno.
+   */
+  tweetarticle?: string;
   /** Human-readable publishing batch timestamp/tag (e.g. "2026-08-18 23:25" or "BATCH-2026-08-18-2325") */
   batch_number?: string;
   /** Calculated or assigned viral potential score (e.g. 9.8) */
