@@ -307,45 +307,67 @@ async function checkAndRun() {
     uniqueArticles.push(art);
   }
 
+  const { verifyAndFetchUrl } = require('./rss-feed-collector');
+  const { verifyArticleQuotesAndFacts } = require('./quote-and-fact-verifier');
+
+  console.log(`\nExecuting Ground-Truth URL & Quote Verification Gatekeeper on ${uniqueArticles.length} candidates...`);
+  const verifiedBatch = [];
+
+  for (const art of uniqueArticles) {
+    const sourceUrl = art.sources?.[0]?.url;
+    if (!sourceUrl) {
+      console.log(`[REJECTED (Missing Source URL)] "${art.headline}"`);
+      continue;
+    }
+
+    // Check URL status
+    const urlCheck = await verifyAndFetchUrl(sourceUrl);
+    if (urlCheck.tier === 'rejected') {
+      console.log(`[REJECTED (URL Status ${urlCheck.status})] "${art.headline}" -> ${sourceUrl}`);
+      continue;
+    }
+
+    // Check quotes
+    const quoteCheck = verifyArticleQuotesAndFacts(art, {
+      tier: urlCheck.tier,
+      sourceUrl: urlCheck.finalUrl || sourceUrl,
+      sourceName: art.sources?.[0]?.name || 'Wire Source',
+      sourceBodyText: urlCheck.bodyText || '',
+      sourceDescription: art.summary || ''
+    });
+
+    art.body = quoteCheck.sanitizedBody;
+    if (art.content) art.content.body = quoteCheck.sanitizedBody;
+
+    console.log(`[VERIFIED ${urlCheck.tier.toUpperCase()}] "${art.headline.slice(0, 60)}..." (Quotes: ${quoteCheck.verifiedQuotesCount} valid, ${quoteCheck.strippedQuotesCount} sanitized)`);
+    verifiedBatch.push(art);
+  }
+
   let usCount = 0, caCount = 0;
   let totalWords = 0;
-  for (const art of uniqueArticles) {
+  for (const art of verifiedBatch) {
     if (art.country === 'US') usCount++;
     else if (art.country === 'CA') caCount++;
     const wordCount = (art.body || '').split(/\s+/).filter(Boolean).length;
     totalWords += wordCount;
   }
-  const avgWords = Math.round(totalWords / (uniqueArticles.length || 1));
+  const avgWords = Math.round(totalWords / (verifiedBatch.length || 1));
 
-  console.log(`\nCurrent Batch Status: ${uniqueArticles.length} valid unique articles ready.`);
-  console.log(`  🇺🇸 United States: ${usCount} (${Math.round((usCount / (uniqueArticles.length || 1)) * 100)}%) - Target: ~70% (14+)`);
-  console.log(`  🇨🇦 Canada:        ${caCount} (${Math.round((caCount / (uniqueArticles.length || 1)) * 100)}%) - Target: ~30% (5-6)`);
-  console.log(`  📝 Average Length: ${avgWords} words per article (CNN standard: 750–1,400+ words)`);
+  console.log(`\nVerified Ground-Truth Batch Status: ${verifiedBatch.length} valid articles ready.`);
+  console.log(`  🇺🇸 United States: ${usCount}`);
+  console.log(`  🇨🇦 Canada:        ${caCount}`);
+  console.log(`  📝 Average Length: ${avgWords} words per article`);
 
-  if (uniqueArticles.length < minTarget) {
-    const deficit = minTarget - uniqueArticles.length;
-    console.log(`\n❌ [THRESHOLD NOT MET] Need ${deficit} more unique articles to reach target of ${minTarget}.`);
-    console.log(`Agent must perform additional discovery loops across:`);
-    console.log(`  - Federal / National Wires (US/CA)`);
-    console.log(`  - State / Provincial Capitols`);
-    console.log(`  - Municipal / City Councils`);
-    console.log(`\nAppend ${deficit} more verified stories into scripts/bulk-news-batch.json and re-run.\n`);
-    process.exit(2);
+  if (verifiedBatch.length === 0) {
+    console.log(`\n❌ No verified articles ready for publication.\n`);
+    process.exit(0);
   }
 
-  console.log(`\n✅ [THRESHOLD MET] ${uniqueArticles.length} >= ${minTarget}. Proceeding to auto-ingest into Supabase!`);
+  console.log(`\n✅ Proceeding to auto-ingest ${verifiedBatch.length} verified articles into Supabase!`);
 
   // Write verified unique articles cleanly into insert script
-  const insertScript = path.resolve(__dirname, 'insert-news-batch.js');
-  let code = fs.readFileSync(insertScript, 'utf8');
-  const replacement = `// 2. Article payload to ingest (Auto-verified 20+ batch)\nconst articles = ${JSON.stringify(uniqueArticles, null, 2)};`;
-  
-  const startIdx = code.indexOf('const articles =');
-  const endIdx = code.indexOf('async function run()');
-  if (startIdx !== -1 && endIdx !== -1) {
-    const newCode = code.substring(0, startIdx) + replacement + '\n\n' + code.substring(endIdx);
-    fs.writeFileSync(insertScript, newCode, 'utf8');
-  }
+  const bufferPath = path.resolve(__dirname, 'bulk-news-batch.json');
+  fs.writeFileSync(bufferPath, JSON.stringify(verifiedBatch, null, 2), 'utf8');
 
   // Execute ingestion
   console.log('\nExecuting batch ingestion into Supabase...');

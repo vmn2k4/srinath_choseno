@@ -227,6 +227,7 @@ Admin creates election (boundary + role + dates) → candidates register
 | **Officeholder claim dual-link invite** | [OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md](OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md) §4.1 | Live (one email, two links — sign up fresh or merge into an existing account; completing either invalidates both) |
 | **Unified wall claim eligibility + self-service requests** | [OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md](OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md) §4.6 | Live (one eligibility check for both officeholder and generic politician walls; "Claim This Wall" now also works self-service on officeholder walls with no admin invite needed; fixed a bug where the claim button showed on walls that already had a real owner) |
 | **Mayor/Councillor HTML outreach campaign** | [OUTREACH_GUIDE.md](../OUTREACH_GUIDE.md) §4 | Live (`/admin/campaign` — professional Mayor/Councillor HTML templates, search-to-add recipients via the nav-bar search RPC, per-recipient editable wall slug, send preview; fixed a `send-email` MIME bug where HTML sends with non-ASCII characters were silently dropped by receiving mail servers despite reporting success) |
+| **All 6 campaign email templates — required/optional fields per template** | [CAMPAIGN_EMAIL_TEMPLATES.md](CAMPAIGN_EMAIL_TEMPLATES.md) | Live (field-by-field reference for Mayor, Councillor, Candidate Nominees, Civic Parties, Students Association, Professor/Academic — CSV/JSON import format, `wall_slug` pitfalls, what happens automatically on send) |
 
 ---
 

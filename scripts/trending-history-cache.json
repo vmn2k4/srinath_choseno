@@ -1,415 +1,5 @@
 {
   "topics": {
-    "binance exchange": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "binance exchange"
-    },
-    "motley fool": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "motley fool"
-    },
-    "twitch": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "twitch"
-    },
-    "betmgm": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "betmgm"
-    },
-    "draftkings": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "draftkings"
-    },
-    "lunar eclipse": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "lunar eclipse"
-    },
-    "binance trading": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "binance trading"
-    },
-    "japan earthquakes": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "japan earthquakes"
-    },
-    "tragically hip final concert": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "tragically hip final concert"
-    },
-    "vancouver news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "vancouver news"
-    },
-    "home prices": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "home prices"
-    },
-    "engagement rings": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "engagement rings"
-    },
-    "weather philadelphia": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "weather philadelphia"
-    },
-    "theo james": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "theo james"
-    },
-    "lioness season 3 episode 4": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "lioness season 3 episode 4"
-    },
-    "family horror movie": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "family horror movie"
-    },
-    "tropical storm moke": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "tropical storm moke"
-    },
-    "japan tokyo earthquake today": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "japan tokyo earthquake today"
-    },
-    "progressive": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_trends",
-      "title": "progressive"
-    },
-    "premiers back carney as trade war with u s escalates cbc": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Premiers back Carney as trade war with U.S. escalates - CBC"
-    },
-    "alberta separatists blueprint for independent nation draws scrutiny calgary herald": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Alberta separatists' blueprint for independent nation draws scrutiny - Calgary Herald"
-    },
-    "kinew stands with carney vows to fight back against trump s tariffs ctv news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Kinew stands with Carney, vows to fight back against Trump’s tariffs - CTV News"
-    },
-    "bjp joins calls for bhagwant mann s resignation over allegations against wife ndtv": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "BJP Joins Calls For Bhagwant Mann's Resignation Over Allegations Against Wife - NDTV"
-    },
-    "germany s merz to press cabinet for faster pro growth reforms reuters": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Germany's Merz to press cabinet for faster pro-growth reforms - Reuters"
-    },
-    "ex punjab special chief secretary seeks law to abrogate indus waters treaty the tribune": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Ex-Punjab Special Chief Secretary seeks law to abrogate Indus Waters Treaty - The Tribune"
-    },
-    "uup rambunctious week in the turbulent life of the party bbc": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "UUP: Rambunctious week in the turbulent life of the party - BBC"
-    },
-    "germany news friedrich merz visits area struck by fires dw": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Germany news: Friedrich Merz visits area struck by fires - DW"
-    },
-    "australia s capital to join gun buyback in response to bondi beach attack albanese says reuters": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Australia's capital to join gun buyback in response to Bondi Beach attack, Albanese says - Reuters"
-    },
-    "uzbekistan s saida mirziyoeva gains new powers fueling succession questions radio free europe radio liberty": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Uzbekistan's Saida Mirziyoeva Gains New Powers, Fueling Succession Questions - Radio Free Europe/Radio Liberty"
-    },
-    "president trump white house ballroom construction under budget ahead of schedule the hill": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "President Trump: White House ballroom construction ‘under budget,’ ‘ahead of schedule’ - The Hill"
-    },
-    "student leader to bangladesh president mirza fakhrul s political journey ndtv": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Student Leader To Bangladesh President: Mirza Fakhrul's Political Journey - NDTV"
-    },
-    "the canadian province set to vote on becoming a breakaway country abc news headlines australian broadcasting corporation": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "The Canadian province set to vote on becoming a breakaway country - ABC News & Headlines – Australian Broadcasting Corporation"
-    },
-    "germany news friedrich merz to visit area struck by fires dw": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Germany news: Friedrich Merz to visit area struck by fires - DW"
-    },
-    "anwar s one time ally turns rival with new malaysia party bloomberg com": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Anwar’s One-Time Ally Turns Rival With New Malaysia Party - Bloomberg.com"
-    },
-    "thai opposition leader acknowledges meeting with taiwan representative taiwan news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Thai opposition leader acknowledges meeting with Taiwan representative - Taiwan News"
-    },
-    "defense secretary pete hegseth s tension with army secretary dan driscoll could lead to early departure military com": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Defense Secretary Pete Hegseth's Tension With Army Secretary Dan Driscoll Could Lead to Early Departure - Military.com"
-    },
-    "randy mastro goes to war against mamdani amid the pied terre tax rollout new york post": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Randy Mastro goes to war against Mamdani amid the pied-à-terre tax rollout - New York Post"
-    },
-    "race for japan s vaguely defined 2nd capital puts fair selection in focus japan today": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Race for Japan's vaguely defined '2nd capital' puts fair selection in focus - Japan Today"
-    },
-    "mexican governor accused by us of cartel ties returns to office reuters": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Mexican governor accused by US of cartel ties returns to office - Reuters"
-    },
-    "choose between us and tn chief secretary left parties to cm vijay deccan herald": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "'Choose between us and TN Chief Secretary’: Left parties to CM Vijay - Deccan Herald"
-    },
-    "because of him north capitol building named in honor of former utah gov mike leavitt ksl news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "'Because of him': North Capitol building named in honor of former Utah Gov. Mike Leavitt - KSL News"
-    },
-    "trump says canada wants benefits of being us state as carney says countries in trade war bbc": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Trump says Canada wants 'benefits' of being US state as Carney says countries in trade war - BBC"
-    },
-    "toronto parts of gta under yellow warning due to severe thunderstorm cp24": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Toronto, parts of GTA under yellow warning due to severe thunderstorm - CP24"
-    },
-    "ottawa area distillery looks east and west after canada u s trade talks collapse ctv news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Ottawa-area distillery looks east and west after Canada-U.S. trade talks collapse - CTV News"
-    },
-    "fireweed festival to continue as planned after saturday shooting cabin radio": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Fireweed Festival to ‘continue as planned’ after Saturday shooting - Cabin Radio"
-    },
-    "heavy downpours flood risk looming for n s southern n b cbc": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Heavy downpours, flood risk looming for N.S., southern N.B. - CBC"
-    },
-    "what independence would look like according to alberta prosperity project ctv news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "What independence would look like, according to Alberta Prosperity Project - CTV News"
-    },
-    "police shooting in toronto leaves driver dead global news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Police shooting in Toronto leaves driver dead - Global News"
-    },
-    "more summerland residents allowed home as bald range fire grows to 24 000 hectares global news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "More Summerland residents allowed home as Bald Range fire grows to 24,000 hectares - Global News"
-    },
-    "man charged after winnipeg police allege he sexually assaulted 4 more teens cbc": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Man charged after Winnipeg police allege he sexually assaulted 4 more teens - CBC"
-    },
-    "deleted tweets show natalie harp s zealous support of trump on january 6 ctv news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Deleted tweets show Natalie Harp’s zealous support of Trump on January 6 - CTV News"
-    },
-    "russia ukraine trade attacks as putin warns of far more destructive hits al jazeera": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Russia, Ukraine trade attacks as Putin warns of ‘far more destructive’ hits - Al Jazeera"
-    },
-    "iran s new security chief says neighbours who join us economic war will be considered enemies the guardian": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Iran’s new security chief says neighbours who join US economic war will be considered ‘enemies’ - The Guardian"
-    },
-    "details still being finalized for churchill falls debate in house of assembly vocm": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Details Still Being Finalized for Churchill Falls Debate in House of Assembly - VOCM"
-    },
-    "alberta minister faces more fury at second town hall on ai data centres global news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Alberta minister faces more fury at second town hall on AI data centres - Global News"
-    },
-    "forestry giant behind idled b c mill received millions in government funding cbc": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Forestry giant behind idled B.C. mill received millions in government funding - CBC"
-    },
-    "cloudflare announces kitesurf a browser engine for agents infoq com": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Cloudflare Announces Kitesurf, a Browser Engine for Agents - infoq.com"
-    },
-    "kinistino woman wins 2008 mini cooper in annual radio contest sasknow": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Kinistino woman wins 2008 Mini Cooper in annual radio contest - saskNOW"
-    },
-    "iran warns of retaliation against countries joining us economic war al jazeera": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Iran warns of retaliation against countries joining US ‘economic war’ - Al Jazeera"
-    },
-    "deleted tweets show natalie harp s zealous support of trump on january 6 cnn": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Deleted tweets show Natalie Harp’s zealous support of Trump on January 6 - CNN"
-    },
-    "it s been terrible thousands in indiana remain without power the new york times": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "‘It’s Been Terrible’: Thousands in Indiana Remain Without Power - The New York Times"
-    },
-    "texas judge denies karmelo anthony s request for new trial in deadly stabbing at track meet ap news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Texas judge denies Karmelo Anthony’s request for new trial in deadly stabbing at track meet - AP News"
-    },
-    "15 year old arrested in deadly shooting at independence high football game kbak": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "15-year-old arrested in deadly shooting at Independence High football game - KBAK"
-    },
-    "army secretary dan driscoll considering stepping down sources say cbs news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Army Secretary Dan Driscoll considering stepping down, sources say - CBS News"
-    },
-    "tropical storm moke poised to slam into hawaii just days after hurricane lala the guardian": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Tropical Storm Moke poised to slam into Hawaii just days after Hurricane Lala - The Guardian"
-    },
-    "hawk fire evacuation zone expands south into somersett northwest reno reno gazette journal": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Hawk Fire evacuation zone expands south into Somersett, northwest Reno - Reno Gazette Journal"
-    },
-    "us postal service issues rule to tighten requirements for mail in voting despite courts looking to block the hill": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "US Postal Service issues rule to tighten requirements for mail-in voting despite courts looking to block - The Hill"
-    },
-    "mayors to get powers to overrule local councils on planning decisions bbc": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Mayors to get powers to overrule local councils on planning decisions - BBC"
-    },
-    "fedorov decries corruption in defense ministry doubles down on calls for elections the kyiv independent": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Fedorov decries corruption in Defense Ministry, doubles down on calls for elections - The Kyiv Independent"
-    },
-    "pope leo calls for dialogue over conflict says young catholics are a sign of hope politico": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Pope Leo calls for dialogue over conflict, says young Catholics are a sign of hope - Politico"
-    },
-    "robot archer lights up zhixin as 2nd world humanoid robot games open in beijing global times": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Robot archer lights up 'Zhixin' as 2nd World Humanoid Robot Games open in Beijing - Global Times"
-    },
-    "buc ee s chain draws outcry in ohio for launching fight over a mini mart s beaver logo ap news": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Buc-ee’s chain draws outcry in Ohio for launching fight over a mini mart’s beaver logo - AP News"
-    },
-    "how a big bet on cancer vaccines brought moderna back from the brink wsj": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "How a Big Bet on Cancer Vaccines Brought Moderna Back from the Brink - WSJ"
-    },
-    "9 yields with well covered and growing dividends for early retirement seeking alpha": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "9% Yields With Well-Covered And Growing Dividends For Early Retirement - Seeking Alpha"
-    },
-    "weekly poll results a clear favorite emerges from the google pixel 11 family gsmarena com news gsmarena com": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "Weekly poll results: a clear favorite emerges from the Google Pixel 11 family - GSMArena.com news - GSMArena.com"
-    },
-    "gta 6 leaker has now reached a strip club as rockstar scrambles forbes": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "google_news",
-      "title": "‘GTA 6’ Leaker Has Now Reached A Strip Club As Rockstar Scrambles - Forbes"
-    },
-    "how trump s tariffs work to redistribute wealth up the food chain": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "cbc_politics",
-      "title": "How Trump's tariffs work to redistribute wealth up the food chain"
-    },
-    "canada s an agricultural superpower could it feed the whole world": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "cbc_politics",
-      "title": "Canada's an agricultural superpower. Could it feed the whole world?"
-    },
-    "mark carney doesn t stop the united states from driving negotiations over a cliff": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "cbc_politics",
-      "title": "Mark Carney doesn't stop the United States from driving negotiations over a cliff"
-    },
-    "carney says trade deal became untenable when u s asked too much and offered too little": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "cbc_politics",
-      "title": "Carney says trade deal became untenable when U.S. 'asked too much and offered too little'"
-    },
-    "premiers back carney as trade war with u s escalates": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "cbc_politics",
-      "title": "Premiers back Carney as trade war with U.S. escalates"
-    },
-    "read mark carney s full speech after trade talks with the u s collapsed": {
-      "firstSeen": "2026-08-23T09:22:23.940Z",
-      "source": "cbc_politics",
-      "title": "Read Mark Carney's full speech after trade talks with the U.S. collapsed"
-    },
     "cardinals vs phillies": {
       "firstSeen": "2026-08-23T17:12:11.814Z",
       "source": "google_trends",
@@ -6199,7 +5789,262 @@
       "firstSeen": "2026-08-25T08:43:59.896Z",
       "source": "google_news",
       "title": "Extended Highlights | Southampton 0-1 West Ham | Premier League - West Ham United"
+    },
+    "farmers almanac": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "farmers almanac"
+    },
+    "h1b visas": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "h1b visas"
+    },
+    "mexique": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "mexique"
+    },
+    "honey": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "honey"
+    },
+    "vince young": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "vince young"
+    },
+    "nasa": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "nasa"
+    },
+    "ground beef": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "ground beef"
+    },
+    "car accident lawyer": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "car accident lawyer"
+    },
+    "little league world series 2026 scores": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "little league world series 2026 scores"
+    },
+    "space x": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "space x"
+    },
+    "spacex launch today": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "spacex launch today"
+    },
+    "phillies score": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "phillies score"
+    },
+    "edward furlong": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "edward furlong"
+    },
+    "snow": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_trends",
+      "title": "snow"
+    },
+    "trump s trade war with canada could rattle economies in states with key senate races ap news": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Trump’s trade war with Canada could rattle economies in states with key Senate races - AP News"
+    },
+    "why some trump supporters aren t sold on darline graham from the politics desk nbc news": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Why some Trump supporters aren’t sold on Darline Graham: From the Politics Desk - NBC News"
+    },
+    "religious references in lindsay clancy trial anger judge and defense the new york times": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Religious References in Lindsay Clancy Trial Anger Judge and Defense - The New York Times"
+    },
+    "burnham plans us trip next month to lobby trump on ukraine needs bloomberg com": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Burnham Plans US Trip Next Month to Lobby Trump on Ukraine Needs - Bloomberg.com"
+    },
+    "third drone and suspected explosives found at german airport euronews com": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Third drone and suspected explosives found at German airport - Euronews.com"
+    },
+    "france tornado dozens injured and hundreds of homes damaged bbc": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "France tornado: dozens injured and hundreds of homes damaged - BBC"
+    },
+    "us treasury s scott bessent will lose battle with bond markets former mentor warns the guardian": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "US Treasury’s Scott Bessent ‘will lose’ battle with bond markets, former mentor warns - The Guardian"
+    },
+    "target apologizes for children s clown halloween costume after backlash cnn": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Target apologizes for children’s clown Halloween costume after backlash - CNN"
+    },
+    "google s clever android 17 motion sickness feature is finally rolling out android authority": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Google's clever Android 17 motion sickness feature is finally rolling out - Android Authority"
+    },
+    "exclusive michigan state senator was in talks to endorse el sayed before piker flap semafor": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Exclusive / Michigan state senator was in talks to endorse El-Sayed before Piker flap - Semafor"
+    },
+    "secret service aware of iranian state media video threatening life of barron trump egypt independent": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Secret Service aware of Iranian state media video threatening life of Barron Trump - Egypt Independent"
+    },
+    "trump s 10 kg weight gain sparks health concerns": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Trump's 10 kg Weight Gain Sparks Health Concerns - 조선일보"
+    },
+    "salem city council seeks applicants for vacancy after john saunders death roanoke times": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Salem City Council seeks applicants for vacancy after John Saunders' death - Roanoke Times"
+    },
+    "this new state department wants to help you get that permit the business journals": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "This new state department wants to help you get that permit - The Business Journals"
+    },
+    "mckee foulkes address affordability issues in journal q a the providence journal": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "McKee, Foulkes address affordability issues in Journal Q&A - The Providence Journal"
+    },
+    "residents call on greenville city council to review flock camera usage greenville online": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Residents call on Greenville City Council to review Flock camera usage - Greenville Online"
+    },
+    "poll shows shapiro with a wide lead in pennsylvania the new york times": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Poll Shows Shapiro With a Wide Lead in Pennsylvania - The New York Times"
+    },
+    "aiken city council approves concept plan for whiskey road retail project post and courier": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Aiken City Council approves concept plan for Whiskey Road retail project - Post and Courier"
+    },
+    "municipal dispensary becomes focus of grand rapids city council meeting news grandrapidsmn com grand rapids herald review": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Municipal dispensary becomes focus of Grand Rapids City Council meeting | News | grandrapidsmn.com - Grand Rapids Herald-Review"
+    },
+    "vermont students get another chance to be governor burlington free press": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Vermont students get another chance to be governor - Burlington Free Press"
+    },
+    "coldwater city council advances pursuit of historical marker application for the beach house wtvb": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Coldwater City Council advances pursuit of Historical Marker application for The Beach House - WTVB"
+    },
+    "where do mckee foulkes stand on gas pipelines or renewables to make energy affordable the providence journal": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Where do McKee, Foulkes stand on gas pipelines or renewables to make energy affordable? - The Providence Journal"
+    },
+    "foulkes and mckee share their plans to make groceries more affordable the providence journal": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Foulkes and McKee share their plans to make groceries more affordable - The Providence Journal"
+    },
+    "mckee foulkes weigh in on if ri should try state run grocery stores the providence journal": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "McKee, Foulkes weigh in on if RI should try state-run grocery stores - The Providence Journal"
+    },
+    "trump sends indiana stone to italy to carve white house ballroom columns euronews com": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Trump sends Indiana stone to Italy to carve White House ballroom columns - Euronews.com"
+    },
+    "jd vance calls canada a u s state in freudian slip vows to fight back against ridiculous tariffs national post": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "JD Vance calls Canada a U.S. state in 'Freudian slip,' vows to fight back against 'ridiculous tariffs' - National Post"
+    },
+    "how much vancouver airbnb hosts earned during fifa world cup daily hive": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "How much Vancouver Airbnb hosts earned during FIFA World Cup - Daily Hive"
+    },
+    "one ui 9 makes switching from iphone to galaxy easier sammyguru": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "One UI 9 Makes Switching From iPhone to Galaxy Easier - SammyGuru"
+    },
+    "trump is on a mission to destroy the canadian economy letters to the editor ottawa citizen": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Trump is on a mission to destroy the Canadian economy | Letters to the Editor - Ottawa Citizen"
+    },
+    "ottawa to announce details of retaliatory tariffs on u s today ctv news": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Ottawa to announce details of retaliatory tariffs on U.S. today - CTV News"
+    },
+    "in the news today ottawa announces retaliatory tariffs b c wildfires osap changes winnipeg sun": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "In the news today: Ottawa announces retaliatory tariffs, B.C. wildfires, OSAP changes - Winnipeg Sun"
+    },
+    "you re a loser ontario premier responds to trump s latest tariff threats vocm": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "‘You’re a Loser’: Ontario Premier Responds to Trump’s Latest Tariff Threats - VOCM"
+    },
+    "watch fulham vs chelsea live stream online dazn ca dazn": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Watch Fulham vs. Chelsea Live Stream Online | DAZN CA - DAZN"
+    },
+    "rio ferdinand names the shock premier league striker man utd must sign yahoo sports canada": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Rio Ferdinand names the shock Premier League striker Man Utd MUST sign - Yahoo Sports Canada"
+    },
+    "premier league predictions jones knows best bets chelsea to make statement at fulham on mnf sky sports": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Premier League predictions & Jones Knows' best bets: Chelsea to make statement at Fulham on MNF - Sky Sports"
+    },
+    "notley kenney join forces to co chair business campaign against alberta separation citynews toronto": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Notley, Kenney join forces to co-chair business campaign against Alberta separation - CityNews Toronto"
+    },
+    "alan shearer urges arsenal to nab julian alvarez to secure premier league title dominance yahoo sports canada": {
+      "firstSeen": "2026-08-25T09:44:26.535Z",
+      "source": "google_news",
+      "title": "Alan Shearer urges Arsenal to 'nab' Julian Alvarez to secure Premier League title dominance - Yahoo Sports Canada"
     }
   },
-  "lastRun": "2026-08-25T08:43:59.896Z"
+  "lastRun": "2026-08-25T09:44:26.535Z"
 }

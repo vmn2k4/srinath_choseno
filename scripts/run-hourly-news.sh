@@ -12,17 +12,9 @@ echo "========================================================" >> "$LOG_FILE"
 
 cd "$PROJECT_DIR" || exit 1
 
-# 1. Fetch dynamic lookback window
-echo "Checking last publish window..." >> "$LOG_FILE"
-/opt/homebrew/bin/node scripts/get-last-publish-window.js >> "$LOG_FILE" 2>&1
-
-# 2. Fetch trending topics and RSS wire signals (6-hour window)
-echo "Fetching trending topics and wire feeds..." >> "$LOG_FILE"
-/opt/homebrew/bin/node scripts/fetch-trending-topics.js --max-hours 6 >> "$LOG_FILE" 2>&1
-
-# 3. Execute batch ingestion & auto-sync tags / boundaries
-echo "Executing batch ingestion into Supabase..." >> "$LOG_FILE"
-/opt/homebrew/bin/node scripts/insert-news-batch.js >> "$LOG_FILE" 2>&1
+# 1. Execute Verified RSS News Ingestion Pipeline (Machine Ground Truth & Quote Gatekeeper)
+echo "Executing Verified RSS News Pipeline..." >> "$LOG_FILE"
+/opt/homebrew/bin/node scripts/rss-verified-pipeline.js --max-hours 6 >> "$LOG_FILE" 2>&1
 
 echo "Hourly run completed at: $(date)" >> "$LOG_FILE"
 echo "" >> "$LOG_FILE"

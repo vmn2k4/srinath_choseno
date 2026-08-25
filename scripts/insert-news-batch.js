@@ -1294,21 +1294,33 @@ const articles = [
 ];
 
 async function run() {
-  console.log(`Starting ingestion of ${articles.length} news articles...`);
+  let articlesToIngest = articles;
+  const inputArg = process.argv[2];
+  if (inputArg && fs.existsSync(inputArg)) {
+    try {
+      articlesToIngest = JSON.parse(fs.readFileSync(inputArg, 'utf8'));
+    } catch (e) {
+      console.warn('Could not parse input file, using default articles array');
+    }
+  } else {
+    const bulkPath = path.resolve(__dirname, 'bulk-news-batch.json');
+    if (fs.existsSync(bulkPath)) {
+      try {
+        const parsed = JSON.parse(fs.readFileSync(bulkPath, 'utf8'));
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          articlesToIngest = parsed;
+        }
+      } catch (e) {}
+    }
+  }
+
+  console.log(`Starting ingestion of ${articlesToIngest.length} news articles...`);
   const authHeaders = await getAuthHeaders();
 
-  // Batch tag for this run -- must be computed fresh each time the script
-  // runs, NOT hardcoded. A prior version of this script hardcoded a literal
-  // date/time here; every subsequent run (regardless of when it actually
-  // executed) kept stamping that same stale tag on brand-new articles,
-  // silently merging them into a days-old batch in the Admin > News
-  // Distribution dropdown (see supabase/migrations/20260824000000_auto_
-  // correct_stale_news_batch_number.sql, which also guards against this at
-  // the DB level, but fixing it here is the actual root cause).
   const batchTimestamp = new Date().toISOString().slice(0, 16).replace('T', ' ');
 
   // Fetch existing slugs to avoid duplication
-  const existingRes = await fetch(`${SUPABASE_URL}/rest/v1/news_articles?select=slug&limit=1000`, {
+  const existingRes = await fetch(`${SUPABASE_URL}/rest/v1/news_articles?select=slug&limit=2000`, {
     headers: {
       apikey: authHeaders.apikey,
       Authorization: authHeaders.Authorization
@@ -1327,7 +1339,7 @@ async function run() {
   const inserted = [];
   const skipped = [];
 
-  for (const article of articles) {
+  for (const article of articlesToIngest) {
     if (existingSlugs.has(article.slug)) {
       console.log(`[SKIPPED] Slug exists: ${article.slug}`);
       skipped.push(article.slug);
@@ -1487,10 +1499,14 @@ async function run() {
     // Generate static OG card if local/deployed route is active
     if (created.status === 'published') {
       try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 1500);
         const ogRes = await fetch(`${SITE_URL}/api/news/${created.slug}/og-image`, {
+          signal: controller.signal,
           method: 'POST',
           headers: { Authorization: authHeaders.Authorization }
         });
+        clearTimeout(timeout);
         if (ogRes.ok) {
           console.log(`  -> Generated share-card image`);
         }

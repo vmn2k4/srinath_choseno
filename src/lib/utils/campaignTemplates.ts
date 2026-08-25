@@ -171,7 +171,7 @@ const MAYOR_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 15px; margin: 0 0 24px 0;">Hi Mayor {{name}},</p>
 
-        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics. Created right here in BC (Surrey).</p>
 
         <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
             <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">Your wall is now live</p>
@@ -261,7 +261,7 @@ const MAYOR_BODY = `<!DOCTYPE html>
         <div class="section">
             <p class="section-title">Why I Built This</p>
             <p class="section-content">
-                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to BC to build a life and start my own company. Choseno is the result.
+                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to Surrey, BC to build a life and start my own company. Choseno is the result. With Canadian data staying in Canadian hands, it's a homegrown option alongside the platforms you already use.
             </p>
         </div>
 
@@ -432,7 +432,7 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 15px; margin: 0 0 24px 0;">Hi Councillor {{name}},</p>
 
-        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics. Created right here in BC (Surrey).</p>
 
         <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
             <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">Your wall is now live</p>
@@ -528,7 +528,7 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
         <div class="section">
             <p class="section-title">Why I Built This</p>
             <p class="section-content">
-                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to BC to build a life and start my own company. Choseno is the result.
+                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to Surrey, BC to build a life and start my own company. Choseno is the result. With Canadian data staying in Canadian hands, it's a homegrown option alongside the platforms you already use.
             </p>
         </div>
 
@@ -699,7 +699,7 @@ const PARTY_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 15px; margin: 0 0 24px 0;">Hi {{name}} Team,</p>
 
-        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics. Created right here in BC (Surrey).</p>
 
         <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
             <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">100% Free Civic Platform — We Work With Your Candidates</p>
@@ -790,7 +790,7 @@ const PARTY_BODY = `<!DOCTYPE html>
         <div class="section">
             <p class="section-title">Why I Built This</p>
             <p class="section-content">
-                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to BC to build a life and start my own company. Choseno was born to strengthen local democracy by helping voters see and evaluate the actual individuals running, making informed choice accessible to all.
+                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to Surrey, BC to build a life and start my own company. Choseno was born to strengthen local democracy by helping voters see and evaluate the actual individuals running, making informed choice accessible to all. With Canadian data staying in Canadian hands, it's a homegrown option alongside the platforms you already use.
             </p>
         </div>
 
@@ -961,7 +961,7 @@ const CANDIDATE_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 15px; margin: 0 0 24px 0;">Hi {{name}},</p>
 
-        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics. Created right here in BC (Surrey).</p>
 
         <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
             <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">Your 2026 Campaign Wall on Choseno — 100% Free Service</p>
@@ -1052,7 +1052,7 @@ const CANDIDATE_BODY = `<!DOCTYPE html>
         <div class="section">
             <p class="section-title">Why I Built This</p>
             <p class="section-content">
-                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to BC to build a life and start my own company. Choseno was built to level the playing field for dedicated local candidates by helping voters discover and evaluate the actual person running, not just party machinery.
+                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to Surrey, BC to build a life and start my own company. Choseno was built to level the playing field for dedicated local candidates by helping voters discover and evaluate the actual person running, not just party machinery. With Canadian data staying in Canadian hands, it's a homegrown option alongside the platforms you already use.
             </p>
         </div>
 
@@ -1223,7 +1223,7 @@ const PSSA_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 15px; margin: 0 0 24px 0;">Hi {{name}},</p>
 
-        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics. Created right here in BC (Surrey).</p>
 
         <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
             <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">Inaugural Opportunity for Students</p>
@@ -1323,7 +1323,7 @@ const PSSA_BODY = `<!DOCTYPE html>
         <div class="section">
             <p class="section-title">Why I Built This</p>
             <p class="section-content">
-                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to BC to build a life and start my own company. Choseno is the result—a bridge between technology and local democracy.
+                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to Surrey, BC to build a life and start my own company. Choseno is the result—a bridge between technology and local democracy. With Canadian data staying in Canadian hands, it's a homegrown option alongside the platforms you already use.
             </p>
         </div>
 
@@ -1494,7 +1494,7 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
 
         <p style="font-size: 15px; margin: 0 0 24px 0;">Dear Professor {{name}},</p>
 
-        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics.</p>
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. I would like to introduce our new product — a dedicated social network for politics. Created right here in BC (Surrey).</p>
 
         <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
             <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">Specific Ask: 10 Student Researchers for 2026 Municipal Elections</p>
@@ -1589,7 +1589,7 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
         <div class="section">
             <p class="section-title">Why I Built This</p>
             <p class="section-content">
-                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to BC to build a life and start my own company. As a new Canadian citizen, I realized I couldn't easily find out who was participating in local elections or what they actually stood for — a challenge I faced as an immigrant in India too.
+                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to Surrey, BC to build a life and start my own company. As a new Canadian citizen, I realized I couldn't easily find out who was participating in local elections or what they actually stood for — a challenge I faced as an immigrant in India too. With Canadian data staying in Canadian hands, it's a homegrown option alongside the platforms you already use.
             </p>
             <p class="section-content">
                 Most people choose based on party affiliation, not the actual person representing them. My hope is that Choseno helps voters see the candidate, not just the party. True democracy means informed choice at the individual level. That's what this research project enables — authentic candidate data directly from student researchers.
