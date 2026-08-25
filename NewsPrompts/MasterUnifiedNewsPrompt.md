@@ -21,35 +21,73 @@ This directive merges all rules, standards, and matrices from:
   - Check incoming stories against **all existing database articles** (using both exact slug and semantic headline/token similarity > 60%).
   - Never generate or publish duplicate stories on the same legislative vote, executive order, or policy announcement that has already been covered in a prior batch.
   - The pipeline automatically enforces semantic deduplication in `scripts/auto-batch-pipeline.js`, rejecting any story that overlaps with previous coverage.
+- **Real-Time News Wire Sourcing (Past-Hour Lookback Window)**:
+  - Every batch MUST be sourced directly from live breaking feeds (Google News Politics, CBC Politics, The Globe and Mail, The Hill, Reuters, AP, local municipal wires) timestamped within the lookback window between the last published article and the current time.
+  - Never fabricate titles, roles, or leaders. Accurately report names and official positions exactly as documented by real-time primary reporting.
 - **Mandatory Politician Tagging Priority**:
-  - Whenever an elected official (Governor, Premier, Mayor, Cabinet Member, Senator, MP, MPP, MLA) is featured or quoted in an article, their exact full name **MUST** be placed into `taggedPoliticians: ["Full Name"]` (e.g. `["Greg Abbott"]`, `["Gavin Newsom"]`, `["Doug Ford"]`, `["Mark Carney"]`, `["David Eby"]`, `["Josh Shapiro"]`, `["Gretchen Whitmer"]`, `["Ron DeSantis"]`, `["JB Pritzker"]`, `["Wab Kinew"]`).
-  - **Civic Leaders fallback is strictly a last resort** ONLY for anonymous agency/bureau reports where no specific elected official exists.
-  - The ingestion engine automatically resolves names against the live `profiles` database table and links the story to the politician's `/wall/[slug]`.
+  - Whenever an elected official (Governor, Premier, Mayor, Cabinet Minister, Senator, MP, MPP, MLA, Council Member) is featured or quoted in an article, their exact full name **MUST** be placed into `taggedPoliticians: ["Full Name"]`.
+  - The ingestion engine dynamically resolves names against the live `profiles` database table (31,680+ verified profiles) and links the story to their official `/wall/[slug]`.
 - **Wall & Boundary Sync**: Every article resolving a politician triggers `admin_sync_news_article_tags()` for `/wall/[slug]` and `admin_sync_news_article_boundaries()` for GIS boundaries.
 
 ---
 
-## 2. EXHAUSTIVE DISCOVERY MATRIX (FROM UNIVERSAL PROMPT)
+## 2. THE CORE EDITORIAL MISSION: HELPING PEOPLE FORM OPINIONS
 
-Deploy multi-tier Google & Web queries parameterized by time window:
-- **Federal Governance**: `("executive order" OR "cabinet decision" OR "regulatory change" OR "statutory notice") (site:gov OR site:gc.ca OR site:whitehouse.gov OR site:pm.gc.ca)`
-- **State & Provincial Dockets**: `("Governor" OR "Premier") ("signed legislation" OR "executive directive" OR "veto" OR "budget allocation") (site:gov.bc.ca OR site:ontario.ca OR site:alberta.ca OR site:gov.ca.gov OR site:texas.gov OR site:ny.gov OR site:florida.gov)`
-- **Municipal & Regional Infrastructure**: `("City Council" OR "Mayor" OR "County Commissioners") ("approved funding" OR "zoning amendment" OR "transit expansion" OR "emergency declaration")`
-- **Judicial & Regulatory Rulings**: `("Supreme Court" OR "Court of Appeal" OR "District Court" OR "Federal Court") ("ruled" OR "struck down" OR "injunction" OR "settlement") (site:uscourts.gov OR site:scc-csc.ca OR site:canlii.org)`
+Choseno is designed to empower citizens to **understand the issues, form informed opinions, and hold leaders accountable**.
+
+- **High-Value Impact Over Rigid Silos**:
+  If a major story breaks in **national/state politics, international trade, tariffs, macro-economic shifts, defense, labor standoffs, constitutional rights, or technology policy** — it MUST be covered if it has substantive public impact, regardless of whether it fits neatly into an existing regional or municipal bucket.
+- **The Opinion-Formation Standard**:
+  Every article must provide the facts, legal/policy mechanics, and balanced perspectives necessary for an everyday citizen to ask: *"Do I agree with this decision? Where do I stand on this leader's record?"*
+- **Strict Exclusion (Zero Entertainment / Fluff)**:
+  - ❌ **NEVER Cover**: Entertainment, celebrity gossip, pop-culture drama, lifestyle, sports scores, or clickbait fluff.
+  - ✅ **ALWAYS Cover**: Substantive politics, high-stakes trade, government decisions, court battles, and civic controversies.
 
 ---
 
-## 3. 6 JOURNALISTIC HEADLINE ARCHETYPES (FROM MASTER PROMPT)
+## 3. BROAD & CAPTIVATING POLITICAL & TRADE NEWS BEATS (CNN / AP / REUTERS WIRE STANDARD)
+
+Stories should encompass the full spectrum of high-impact, gripping national, state, and international affairs. Cover authentic, high-interest reporting including:
+
+1. **National & State Political Controversies & Free Speech**:
+   - High-voltage political disputes (e.g., military servicemembers or officials investigated under UCMJ Article 88 or the Hatch Act for political statements).
+   - High-profile public clashes between elected leaders, cabinet secretaries, and party caucuses.
+   - Civil liberties, political dissent, and First Amendment debates in government institutions.
+2. **International Trade, Tariffs & Cross-Border Economy**:
+   - US–Canada trade disputes, cross-border tariffs, supply chain security, critical minerals pacts, and international commercial agreements.
+   - Central bank interest rate shifts, major industrial trade policy, and economic competitiveness battles.
+3. **Elections, Campaigns, Debates & Endorsements**:
+   - Heated primary and general election battles across US Senate/House, Governors, and Canadian Parliament/Provincial Ridings.
+   - High-profile candidate debates, controversial campaign statements, major endorsements, and polling shifts.
+   - Ballot propositions, voter qualification battles, and redistricting map disputes.
+4. **Congressional & Parliamentary Showdowns**:
+   - Contentious floor votes, filibusters, committee subpoena battles, oversight hearings, censures, and executive veto overrides.
+   - Partisan clashes over judicial nominations, border policies, defense authorizations, and social policy legislation.
+5. **Executive Actions, Policy Mandates & Regulatory Directives**:
+   - Sweeping presidential, gubernatorial, or ministerial executive orders and administrative rules.
+   - National security directives, international trade/tariff actions, consumer protection bans, and immigration policy shifts.
+6. **Judicial Battles, Supreme Court Rulings & Injunctions**:
+   - Landmark federal and supreme court decisions striking down or upholding state and federal laws.
+   - Multi-state lawsuits by Attorneys General challenging federal regulations or executive orders.
+7. **Ethics Inquiries, Special Counsels & Investigations**:
+   - Department of Justice, Inspector General, and parliamentary ethics commissioner investigations into political officials.
+   - Campaign finance scrutiny, foreign interference probes, and public integrity audits.
+8. **Civic & Regional Policy Developments**:
+   - Significant municipal or regional policy shifts, police accountability, housing zoning overhauls, and public safety initiatives.
+
+---
+
+## 4. 6 JOURNALISTIC HEADLINE ARCHETYPES (FROM MASTER PROMPT)
 
 - ❌ **BANNED Crutch Verbs**: *"Advances"*, *"Champions"*, *"Spearheads"*, *"Unveils"*, *"Rolls Out"*, *"Highlights"*, *"Pushes for"*.
-- ❌ **BANNED Formulas**: `[Name] Unveils [Topic] for [City]`
-- ✅ **Rotate Across 6 Journalistic Archetypes**:
-  1. *Outcome / Fiscal Impact Lead*: Start with the dollar amount or measurable result.
-  2. *Institutional & Council Action*: Focus on council votes, agency rulings, or court decisions.
-  3. *Conflict, Debate & Oversight*: Highlight legislative debate, committee friction, or audit findings.
-  4. *Regulatory & Statutory Specifics*: Cite the bill number, capacity threshold, or bylaw amendment.
-  5. *Direct Quote / Stance*: Highlight a decisive quote or stance.
-  6. *Electoral & Regional Context*: Emphasize district boundaries, primary stakes, or succession.
+- ❌ **BANNED Monoculture**: Avoid repeating *"Directs $X Million"* or *"Allocates $X Million"* across multiple headlines in the same batch.
+- ✅ **Rotate Across Diverse Journalistic Angles**:
+  1. *Political Controversy / Stance*: "US Air Force Charges Airman Under Article 88 Over Public Political Criticism"
+  2. *Legislative / Floor Action*: "Senate Passes Defense Authorization Following 14-Hour Filibuster on Social Policy Amendments"
+  3. *Judicial / Regulatory Injunction*: "Federal Judge Blocks State Border Enforcement Law, Ruling Authority Rests Exclusively with Washington"
+  4. *Executive Action / Policy Ban*: "Governor Issues Executive Order Banning Foreign Land Ownership Near Military Bases"
+  5. *Ethics / Oversight Inquiry*: "House Oversight Committee Issues Subpoenas to Federal Regulators in Commercial Procurement Probe"
+  6. *Electoral / Campaign Clash*: "Gubernatorial Debate Sparks Clash Over State Income Tax Repeal and Public School Vouchers"
 
 ---
 
@@ -84,18 +122,23 @@ Articles must match the comprehensive depth, narrative texture, and exhaustive i
 
 Every generated news article MUST include both:
 1. **`tweet` (Short 140–200 Character Hook)**:
-   - Concise summary explaining the public significance, numbers, and civic stakes.
+   - High-tension, captivating lead explaining the hard dollar numbers, public significance, and taxpayer stakes.
    - **Strict Rule: Plain text only — NO hashtags, NO @handles, NO URLs, and NO emojis.** (Choseno dynamically attaches the canonical card URL and PascalCase hashtags).
 
-2. **`tweetarticle` (Long-Form 800–1,500 Character Neutral X Premium Post)**:
-   - Pre-formatted, highly structured long post optimized for Twitter/X Premium sharing.
+2. **`tweetarticle` (Long-Form 800–1,500 Character Captivating X Premium Post)**:
+   - Formatted for maximum engagement, high read-through rate, and "Show more" expand clicks on X (Twitter).
+   - **Strict Rule: ZERO EMOJIS — Maintain high-authority, investigative news formatting.**
    - **Structure**:
-     - *Headline & Jurisdiction/Leadership Lead*
-     - `📍 THE MEASURE / KEY FACTS:` (3–4 bullet points with hard dollar numbers, bill citations, and geographic scope)
-     - `🗣️ THE PERSPECTIVES:` (Balanced summary: 1 bullet for proponents/leadership rationale + 1 bullet for opposition/critics/concerns)
-     - `🗳️ Rate this decision and view the official public record on Choseno:`
-     - `📰 Full Article: https://www.choseno.com/news/[slug]`
-     - `👤 Politician Wall: https://www.choseno.com/wall/[politician-slug]` (if tagged)
+     - *Headline & Gripping Narrative Lead (2–3 sentences highlighting the conflict, taxpayer stakes, or policy shift)*
+     - `Review [Mr./Ms. Full Name] on Choseno:`
+       `https://choseno.com/wall/[politician-slug]` (**ONLY if the official is an elected politician with an active profile in Choseno** — e.g. Governor, Premier, Mayor, MP, MLA, Senator. Omit for appointed agency chairs or regulators).
+     - `WHAT CHANGED & TAXPAYER IMPACT:` (3–4 bullet points with exact figures, bill numbers, and community impact)
+     - `THE DEBATE:` (Balanced: 1 bullet for proponents/governing rationale + 1 bullet for opposition/critics/unanswered questions)
+     - `NOW YOU HAVE THE SAY — CHOSENO:`
+       `Choseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review [Mr./Ms. Full Name]'s record, speak your mind, and let your fellow constituents know where you stand on their official public wall:`
+       `https://choseno.com/wall/[politician-slug]` (**ONLY if the official is an elected politician with an active profile in Choseno**. If no politician wall exists, use `CHOSENO — GOOGLE REVIEWS FOR DEMOCRACY & POLICY:\nChoseno is like Google Reviews for democracy. Review public decisions, track government accountability, and share your rating on Choseno:`).
+     - `Read the full investigative report on Choseno:`
+     - `https://choseno.com/news/[slug]`
      - Relevant topic hashtags (e.g. `#CityPoli #StatePoli #Choseno`)
    - **Editorial Rule**: Maintain 100% neutrality — do not rate or assign subjective grades; invite the citizens to rate the decision on Choseno.
 

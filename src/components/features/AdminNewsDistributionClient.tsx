@@ -18,17 +18,20 @@ import {
   ChevronDown,
   ArrowUp,
   ArrowDown,
+  Trash2,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import {
   listNewsArticlesForDistribution,
   listDistinctBatches,
   recordNewsArticleShare,
+  deleteNewsArticles,
   type DistributionArticle,
   type BatchSummary,
 } from "@/lib/services/news";
 import ShareMenu, { type ShareData } from "@/components/features/ShareMenu";
 import Checkbox from "@/components/primitives/Checkbox";
+import { ConfirmDialog } from "@/components/primitives";
 import { stripEmoji } from "@/lib/utils/text";
 import { convertToPackificTime } from "@/lib/utils/timezone";
 import { SITE_URL } from "@/lib/constants/site";
@@ -65,6 +68,15 @@ export default function AdminNewsDistributionClient() {
   const [copiedTweetSlug, setCopiedTweetSlug] = useState<string | null>(null);
   const [statusMessage, setStatusMessage] = useState<{ text: string; type: "success" | "info" | "error" } | null>(null);
 
+  // Bulk selection & delete -- scoped to the current page's loaded rows (not
+  // "every article matching the filter"), same as a typical admin table
+  // checkbox list. Cleared on every fresh fetch (page/filter/sort change, or
+  // a reload after delete) so a stale selection can never point at rows
+  // that are no longer on screen.
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [bulkDeleting, setBulkDeleting] = useState(false);
+
   const showToast = (text: string, type: "success" | "info" | "error" = "success") => {
     setStatusMessage({ text, type });
     setTimeout(() => setStatusMessage(null), 3000);
@@ -88,6 +100,7 @@ export default function AdminNewsDistributionClient() {
   const fetchArticles = useCallback(async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true);
     else setLoading(true);
+    setSelectedIds(new Set());
 
     try {
       const res = await listNewsArticlesForDistribution(supabase, {
@@ -189,8 +202,8 @@ export default function AdminNewsDistributionClient() {
 
     if (platform === "Facebook" || platform === "LinkedIn" || platform === "Instagram") {
       showToast(`Marked shared on ${platform}! Caption copied to clipboard — press Paste (Cmd+V) into your post`, "success");
-    } else if (platform === "X (Article)") {
-      showToast("Opening X composer with article text! Image copied to clipboard — press Paste (Cmd+V) to attach image", "success");
+    } else if (platform === "X Articles" || platform === "X (Article)") {
+      showToast("Article text copied to clipboard! Opening X Articles — press Paste (Cmd+V) into the editor", "success");
     } else {
       showToast(`Marked shared on ${platform}`, "success");
     }
@@ -199,6 +212,55 @@ export default function AdminNewsDistributionClient() {
       await recordNewsArticleShare(supabase, articleId, platform);
     } catch (err) {
       console.error("Failed to persist platform share:", err);
+    }
+  };
+
+  // Bulk selection helpers
+  const toggleSelected = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const allOnPageSelected = articles.length > 0 && articles.every((a) => selectedIds.has(a.id));
+  const someOnPageSelected = articles.some((a) => selectedIds.has(a.id));
+
+  const toggleSelectAllOnPage = () => {
+    setSelectedIds((prev) => {
+      if (allOnPageSelected) {
+        const next = new Set(prev);
+        articles.forEach((a) => next.delete(a.id));
+        return next;
+      }
+      const next = new Set(prev);
+      articles.forEach((a) => next.add(a.id));
+      return next;
+    });
+  };
+
+  // Permanently deletes every selected article from news_articles (and, via
+  // ON DELETE CASCADE/SET NULL, its tags/geo rows -- see deleteNewsArticles's
+  // own comment). Irreversible, so this only ever runs from the confirm
+  // dialog below, never straight off the toolbar button.
+  const handleBulkDelete = async () => {
+    const ids = Array.from(selectedIds);
+    if (ids.length === 0) return;
+    setBulkDeleting(true);
+    try {
+      const { error } = await deleteNewsArticles(supabase, ids);
+      if (error) throw new Error(error.message);
+      showToast(`Deleted ${ids.length} article${ids.length === 1 ? "" : "s"}.`, "success");
+      setSelectedIds(new Set());
+      setDeleteConfirmOpen(false);
+      await Promise.all([fetchArticles(), fetchBatches()]);
+    } catch (err: any) {
+      console.error("Bulk delete failed:", err);
+      showToast(err?.message || "Failed to delete selected articles", "error");
+    } finally {
+      setBulkDeleting(false);
     }
   };
 
@@ -325,16 +387,25 @@ export default function AdminNewsDistributionClient() {
           : `${article.headline}\n\nTrack local democracy and rate your representatives on @choseno!`)
     );
 
-    // Build or fetch long-form tweetarticle for X Premium
+    // Build or fetch captivating, emoji-free long-form tweetarticle for X Premium / X Articles
     const customTweetArticle = (article.content as any)?.tweetarticle?.trim();
     const wallUrl = article.primaryWallSlug ? `${SITE_URL}/wall/${article.primaryWallSlug}` : undefined;
-    const politicianMentions = taggedReps.length > 0 ? taggedReps.join(", ") : (article.primaryPoliticianName || "Elected Officials");
-    const jurisdiction = [article.province, article.country].filter(Boolean).join(", ") || "National";
+    const politicianName = article.primaryPoliticianName;
     const summaryText = article.summary || "";
 
-    const tweetArticleText =
+    const topReviewPrompt = wallUrl && politicianName
+      ? `Review ${politicianName} on Choseno:\n${wallUrl}\n\n`
+      : "";
+
+    const bottomCtaSection = wallUrl && politicianName
+      ? `NOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review ${politicianName}'s record, speak your mind, and let your fellow constituents know where you stand on their official public wall:\n${wallUrl}`
+      : `CHOSENO — GOOGLE REVIEWS FOR DEMOCRACY & POLICY:\nChoseno is like Google Reviews for democracy. Review public decisions, track government accountability, and share your rating on Choseno:\n${shareUrl}`;
+
+    const rawTweetArticle =
       customTweetArticle ||
-      `${article.headline}\n\n📍 KEY FACTS & SCOPE:\n• Jurisdiction: ${jurisdiction}\n• Officials Involved: ${politicianMentions}\n• Overview: ${summaryText}\n\n🗣️ THE PERSPECTIVES:\n• Civic Context: Detailed reporting, debate, and community impact analysis are available on Choseno.\n• Transparency: Follow legislative milestones, vote counts, and budget line-items.\n\n🗳️ Rate this decision and view the official public record on Choseno:\n📰 Full Article: ${shareUrl}${wallUrl ? `\n👤 Politician Wall: ${wallUrl}` : ""}\n\n${formattedHashtagString}`;
+      `${article.headline}\n\n${topReviewPrompt}WHAT CHANGED & TAXPAYER IMPACT:\n- Overview: ${summaryText}\n- Policy Details: Full legislative analysis, budget line-items, and vote counts available on Choseno.\n\nTHE DEBATE:\n- Civic Context: Review community perspectives, stakeholder reactions, and policy trade-offs.\n- Transparency: Track implementation milestones and accountability records.\n\n${bottomCtaSection}\n\nRead the full report on Choseno:\n${shareUrl}\n\n${formattedHashtagString}`;
+
+    const tweetArticleText = stripEmoji(rawTweetArticle);
 
     const shareText = `${basePostText}\n\n${formattedHashtagString}\n${shareUrl}`;
     const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
@@ -470,6 +541,18 @@ export default function AdminNewsDistributionClient() {
           </div>
 
           <div className="flex items-center gap-2.5">
+            {/* Bulk Delete -- only shown once something's checked */}
+            {selectedIds.size > 0 && (
+              <button
+                onClick={() => setDeleteConfirmOpen(true)}
+                title="Permanently delete the selected articles"
+                className="px-3 py-1.5 bg-rose-500/10 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold hover:bg-rose-500/20 transition-colors flex items-center gap-1.5 cursor-pointer"
+              >
+                <Trash2 size={13} />
+                <span>Delete {selectedIds.size} selected</span>
+              </button>
+            )}
+
             {/* Search Input */}
             <div className="relative">
               <Search
@@ -540,6 +623,18 @@ export default function AdminNewsDistributionClient() {
               <table className="w-full text-left text-xs border-collapse font-sans">
                 <thead>
                   <tr className="border-b border-border bg-surface-hover/60 text-text-muted font-mono font-semibold uppercase text-[11px]">
+                    <th className="py-2.5 px-3 w-9 text-center border-r border-border/40">
+                      <input
+                        type="checkbox"
+                        aria-label="Select all articles on this page"
+                        checked={allOnPageSelected}
+                        ref={(el) => {
+                          if (el) el.indeterminate = !allOnPageSelected && someOnPageSelected;
+                        }}
+                        onChange={toggleSelectAllOnPage}
+                        className="w-4 h-4 accent-primary rounded border-border-light cursor-pointer"
+                      />
+                    </th>
                     <th className="py-2.5 px-3 w-12 text-center border-r border-border/40">#</th>
                     <th className="py-2.5 px-3 w-16 text-center border-r border-border/40">
                       <button
@@ -577,11 +672,24 @@ export default function AdminNewsDistributionClient() {
                     const sharedList = article.sharedPlatforms || [];
                     const rowNumber = (page - 1) * pageSize + index + 1;
 
+                    const isSelected = selectedIds.has(article.id);
+
                     return (
                       <tr
                         key={article.id}
-                        className="hover:bg-surface-hover/50 transition-colors group"
+                        className={`hover:bg-surface-hover/50 transition-colors group ${isSelected ? "bg-primary/5" : ""}`}
                       >
+                        {/* 0. Select */}
+                        <td className="py-2 px-3 text-center border-r border-border/40">
+                          <input
+                            type="checkbox"
+                            aria-label={`Select "${article.headline}"`}
+                            checked={isSelected}
+                            onChange={() => toggleSelected(article.id)}
+                            className="w-4 h-4 accent-primary rounded border-border-light cursor-pointer"
+                          />
+                        </td>
+
                         {/* 1. ID / Rank */}
                         <td className="py-2 px-3 text-center font-mono text-text-muted border-r border-border/40">
                           {rowNumber}
@@ -788,6 +896,18 @@ export default function AdminNewsDistributionClient() {
           )}
         </div>
       </div>
+
+      {/* Bulk delete confirm */}
+      <ConfirmDialog
+        open={deleteConfirmOpen}
+        title="Delete Articles"
+        message={`Permanently delete ${selectedIds.size} article${selectedIds.size === 1 ? "" : "s"}? This removes them from the site entirely (feed, wall posts, share links) and cannot be undone.`}
+        confirmLabel="Delete"
+        tone="danger"
+        loading={bulkDeleting}
+        onConfirm={handleBulkDelete}
+        onCancel={() => setDeleteConfirmOpen(false)}
+      />
     </div>
   );
 }

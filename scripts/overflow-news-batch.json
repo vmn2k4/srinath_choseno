@@ -1,6 +1,426 @@
 [
   {
     "rank": 101,
+    "raw": "81,9.1,\"Premier Doug Ford Directs $350 Million for Ottawa LRT Stage 2 Trillium Line Commissioning and Testing\",Transportation,\"ON, CA\",Doug Ford,2026-08-25T06:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier Doug Ford allocates $350M to finalize signaling commissioning and train testing for the Ottawa LRT Stage 2 Trillium Line South extension.\",\"Ontario Premier Doug Ford and Transportation Minister Prabmeet Sarkaria award $350 million in provincial capital funding to complete train integration, signaling commissioning, and traction substation testing for the Ottawa LRT Stage 2 Trillium Line.\",https://www.choseno.com/news/premier-doug-ford-directs-350-million-for-ottawa-lrt-stage-two-trillium-line-substation-and-signaling-commissioning-2026-08-25,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,9.1,\"Premier David Eby Directs $145 Million for BC Indigenous Clean Energy Equity Partnerships\",Clean Energy,\"BC, CA\",David Eby,2026-08-25T06:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier David Eby announces $145M for the BC First Nations Clean Energy Equity Program, enabling Indigenous equity ownership in clean power projects.\",\"British Columbia Premier David Eby and Energy Minister Josie Osborne allocate $145 million to establish the BC First Nations Clean Energy Equity Loan Guarantee Program, enabling First Nations to purchase up to 50% equity stakes in clean power projects.\",https://www.choseno.com/news/premier-david-eby-allocates-145-million-for-bc-clean-energy-major-projects-office-and-first-nations-equity-loans-2026-08-25,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,9.0,\"Premier Danielle Smith Allocates $190 Million for Alberta Geothermal District Heating and Agtech Greenhouses\",Clean Energy,\"AB, CA\",Danielle Smith,2026-08-25T06:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier Danielle Smith announces $190M to repurpose legacy oil wells into clean geothermal district heating networks and commercial greenhouses in AB.\",\"Alberta Premier Danielle Smith and Energy Minister Brian Jean announce $190 million from the TIER fund to repurpose depleted oil and gas wellfields for closed-loop geothermal district heating networks and commercial greenhouse agtech complexes.\",https://www.choseno.com/news/premier-danielle-smith-directs-190-million-for-commercial-geothermal-district-heating-and-agricultural-greenhouses-2026-08-25,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,9.0,\"Mayor Ken Sim Directs $60 Million for Vancouver Zero-Emission Commercial Delivery Zones and Cargo Micro-Hubs\",Transportation,\"BC, CA\",Ken Sim,2026-08-25T06:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor Ken Sim announces $60M for electric cargo bike micro-hubs and 200 zero-emission loading zones to cut delivery van congestion in Vancouver.\",\"Vancouver Mayor Ken Sim and the Vancouver City Council authorize a $60 million municipal green freight capital program to construct five neighborhood electric cargo bike micro-consolidation hubs and establish 200 zero-emission commercial loading zones.\",https://www.choseno.com/news/mayor-ken-sim-authorizes-60-million-for-vancouver-zero-emission-commercial-delivery-zones-and-micro-hubs-2026-08-25,https://www.choseno.com/wall/ken-sim",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,9.9,\"Department of Energy Awards $220 Million for Superhot Rock Deep Geothermal Power Drilling\",Energy,\"DC, US\",Jennifer Granholm,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The DOE awards $220M to develop deep superhot rock geothermal drilling, tapping limitless 500°C clean baseload power 6 kilometers underground.\",\"Energy Secretary Jennifer Granholm and ARPA-E allocate $220 million to construct commercial deep-well drilling rigs capable of penetrating 500°C crystalline granite at depths of six kilometers for next-generation baseload geothermal electricity.\",https://www.choseno.com/news/arpa-e-awards-220-million-for-superhot-rock-deep-drilling-and-closed-loop-geothermal-power-2026-08-25,https://www.choseno.com/wall/jennifer-granholm",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,9.8,\"USDA Forest Service Allocates $340 Million for Mechanical Forest Thinning and Wildfire Fuel Reduction\",Environment,\"DC, US\",Tom Vilsack,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The USDA allocates $340M to mechanically thin 2.5M acres of Western national forests, establishing defensive fuelbreaks against catastrophic wildfires.\",\"Agriculture Secretary Tom Vilsack and Forest Service Chief Randy Moore direct $340 million from the Bipartisan Infrastructure Law to execute mechanical forest thinning, mastication, and prescribed fire treatments across 2.5 million acres of Western national forests.\",https://www.choseno.com/news/usda-forest-service-allocates-340-million-for-mechanical-wildfire-fuel-reduction-and-prescribed-fire-cooperative-agreements-2026-08-25,https://www.choseno.com/wall/tom-vilsack",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,9.8,\"Department of Commerce Awards $504 Million for Twelve Regional Tech and Innovation Hubs\",Technology,\"DC, US\",Gina Raimondo,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The Department of Commerce awards $504M to scale 12 Regional Tech Hubs, driving advanced manufacturing and technology leadership across America's heartland.\",\"Commerce Secretary Gina Raimondo announces $504 million in CHIPS and Science Act implementation grants to scale twelve designated Regional Technology and Innovation Hubs in quantum, biotechnology, clean energy, and advanced manufacturing.\",https://www.choseno.com/news/eda-awards-504-million-for-twelve-regional-technology-and-innovation-hubs-across-fourteen-states-2026-08-25,https://www.choseno.com/wall/gina-raimondo",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,9.8,\"HHS Awards $180 Million for Rural Maternal Health Clinics and Remote Fetal Telemetry\",Healthcare,\"DC, US\",Xavier Becerra,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"HHS awards $180M in HRSA grants to equip 120 rural health clinics with diagnostic ultrasound telemetry and deploy mobile prenatal care vans.\",\"Health and Human Services Secretary Xavier Becerra and HRSA allocate $180 million in Rural Maternity Care grants to equip 120 community health centers with high-definition diagnostic fetal ultrasound carts and mobile prenatal telemetry vans.\",https://www.choseno.com/news/hrsa-allocates-180-million-to-expand-rural-maternal-health-clinics-and-fetal-telemetry-networks-2026-08-25,https://www.choseno.com/wall/xavier-becerra",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,9.7,\"Governor Gavin Newsom Signs Nation's Strongest Digital and Agricultural Right-to-Repair Act\",Economy,\"CA, US\",Gavin Newsom,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Gavin Newsom signs SB 1488, enacting the nation's strongest Right-to-Repair law covering consumer electronics and agricultural tractors.\",\"California Governor Gavin Newsom and State Senator Susan Talamantes Eggman enact Senate Bill 1488, requiring consumer electronics manufacturers and agricultural tractor producers to provide diagnostic software, schematics, and genuine replacement parts.\",https://www.choseno.com/news/california-governor-gavin-newsom-signs-landmark-digital-right-to-repair-and-agricultural-equipment-act-2026-08-25,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.7,\"Governor Greg Abbott Directs $230 Million for Rio Grande Valley Flood Mitigation and Canal Widening\",Infrastructure,\"TX, US\",Greg Abbott,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Greg Abbott announces $230M from the Flood Infrastructure Fund to construct automated drainage weirs and widen canals across the Rio Grande Valley.\",\"Texas Governor Greg Abbott and the Texas Water Development Board allocate $230 million from the Flood Infrastructure Fund to construct regional detention basins, automated drainage weirs, and widen conveyance channels in Hidalgo and Cameron Counties.\",https://www.choseno.com/news/texas-governor-greg-abbott-announces-230-million-for-rio-grande-valley-drainage-conveyance-and-flood-weirs-2026-08-25,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.6,\"Governor Ron DeSantis Allocates $115 Million for Florida Living Shorelines and Dune Fortifications\",Environment,\"FL, US\",Ron DeSantis,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Ron DeSantis announces $115M in Resilient Florida grants to construct living oyster reefs and fortify coastal barrier dunes across 12 counties.\",\"Florida Governor Ron DeSantis and DEP Secretary Shawn Hamilton award $115 million in Resilient Florida grants to construct engineered living oyster reefs, restore barrier island dunes, and install coastal storm surge barriers in twelve coastal counties.\",https://www.choseno.com/news/florida-governor-ron-desantis-directs-115-million-for-coastal-resiliency-living-shorelines-and-dune-restoration-2026-08-25,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.6,\"Governor Kathy Hochul Directs $150 Million for Adirondack and Catskill Mountain Municipal Sewers\",Infrastructure,\"NY, US\",Kathy Hochul,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Kathy Hochul announces $150M in clean water grants to construct modern municipal sewer networks across 18 Adirondack and Catskill towns.\",\"New York Governor Kathy Hochul announces $150 million in Clean Water Infrastructure Act grants to construct modern centralized sewage collection networks and replace aging septic tanks in eighteen rural mountain communities.\",https://www.choseno.com/news/governor-kathy-hochul-signs-legislation-funding-150-million-for-adirondack-and-catskill-municipal-sewer-expansions-2026-08-25,https://www.choseno.com/wall/kathy-hochul",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.5,\"Governor JB Pritzker Directs $200 Million for Illinois Community College Advanced Manufacturing Academies\",Education,\"IL, US\",JB Pritzker,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor JB Pritzker announces $200M to construct advanced manufacturing and robotics training centers across 8 Illinois community colleges.\",\"Illinois Governor JB Pritzker and ICCB announce $200 million from the Rebuild Illinois capital plan to build state-of-the-art Advanced Manufacturing and Robotics Training Academies across eight regional community college districts.\",https://www.choseno.com/news/governor-jb-pritzker-authorizes-200-million-for-illinois-community-college-advanced-manufacturing-training-academies-2026-08-25,https://www.choseno.com/wall/jb-pritzker",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.5,\"Governor Josh Shapiro Awards $120 Million for Pennsylvania Industrial Brownfield Site Preparation\",Economy,\"PA, US\",Josh Shapiro,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Josh Shapiro announces $120M in PA SITES grants to clean up brownfields and prepare 15 shovel-ready industrial manufacturing megasites in PA.\",\"Pennsylvania Governor Josh Shapiro directs $120 million through the PA SITES program to conduct environmental remediation, grade earthworks, and install high-voltage electric and rail connections at fifteen shovel-ready industrial megasites.\",https://www.choseno.com/news/governor-josh-shapiro-announces-120-million-for-statewide-commercial-brownfield-remediation-and-industrial-site-prep-2026-08-25,https://www.choseno.com/wall/josh-shapiro",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.4,\"Governor Gretchen Whitmer Directs $140 Million for Great Lakes Coastal Wetlands and Invasive Species Defense\",Environment,\"MI, US\",Gretchen Whitmer,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Gretchen Whitmer announces $140M to restore 15,000 acres of Great Lakes coastal wetlands and construct advanced invasive carp deterrent barriers.\",\"Michigan Governor Gretchen Whitmer and EGLE announce $140 million in Resilient Great Lakes grants to restore 15,000 acres of coastal freshwater wetlands and construct automated acoustic and electrical invasive carp deterrent barriers.\",https://www.choseno.com/news/governor-gretchen-whitmer-directs-140-million-for-great-lakes-coastal-wetland-restoration-and-invasive-species-barriers-2026-08-25,https://www.choseno.com/wall/gretchen-whitmer",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.3,\"Governor Brian Kemp Allocates $170 Million for Georgia Rural Gigabit Middle-Mile Fiber Rings\",Technology,\"GA, US\",Brian Kemp,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Brian Kemp announces $170M in broadband grants to construct 3,800 miles of fiber rings connecting 50,000 rural homes in South Georgia.\",\"Georgia Governor Brian Kemp and the Georgia Technology Authority announce $170 million in Capital Projects Fund grants to construct 3,800 miles of high-capacity middle-mile fiber rings connecting 50,000 unserved rural homes in South Georgia.\",https://www.choseno.com/news/governor-brian-kemp-awards-170-million-for-statewide-rural-broadband-middle-mile-fiber-rings-2026-08-25,https://www.choseno.com/wall/brian-kemp",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.3,\"Mayor Ron Nirenberg Directs $55 Million for San Antonio Urban Solar Shade Trees and Cool Corridors\",Environment,\"TX, US\",Ron Nirenberg,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor Ron Nirenberg announces $55M to install 120 solar shade canopies at transit stops and plant 25,000 trees across San Antonio heat corridors.\",\"San Antonio Mayor Ron Nirenberg and the San Antonio City Council approve a $55 million climate adaptation contract to install 120 solar-photovoltaic shade canopies at VIA transit stations and plant 25,000 native shade trees across high-heat corridors.\",https://www.choseno.com/news/mayor-ron-nirenberg-passes-ordinance-authorizing-55-million-for-urban-solar-tree-canopies-and-cool-corridor-sidewalks-2026-08-25,https://www.choseno.com/wall/ron-nirenberg",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,9.3,\"Mayor Cherelle Parker Allocates $80 Million for Philadelphia Community Foot Patrols and Crisis Units\",Public Safety,\"PA, US\",Cherelle Parker,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor Cherelle Parker announces $80M to deploy 300 dedicated walking foot-patrol police officers and mental health teams across 40 Philadelphia corridors.\",\"Philadelphia Mayor Cherelle Parker and the Philadelphia Police Department authorize an $80 million public safety package to deploy 300 dedicated walking foot-patrol officers and co-deployed mental health crisis intervention teams in forty business districts.\",https://www.choseno.com/news/mayor-cherelle-parker-directs-80-million-for-philadelphia-police-neighborhood-foot-patrol-and-crisis-response-teams-2026-08-25,https://www.choseno.com/wall/cherelle-parker",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,9.2,\"Natural Resources Minister Jonathan Wilkinson Directs $310 Million for Critical Mineral Roads and Clean Microgrids\",Economy,\"ON, CA\",Jonathan Wilkinson,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Natural Resources Minister Jonathan Wilkinson announces $310M to construct all-weather access roads and clean microgrids for northern critical mineral mines.\",\"Energy and Natural Resources Minister Jonathan Wilkinson awards $310 million through the Critical Minerals Infrastructure Fund to construct all-weather haul roads, high-voltage transmission lines, and clean microgrids for northern mining projects.\",https://www.choseno.com/news/natural-resources-minister-jonathan-wilkinson-allocates-310-million-for-canadian-critical-mineral-infrastructure-fund-2026-08-25,https://www.choseno.com/wall/jonathan-wilkinson",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,9.2,\"Indigenous Services Minister Patty Hajdu Directs $250 Million for First Nations Health Centers and Telehealth\",Healthcare,\"ON, CA\",Patty Hajdu,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Indigenous Services Minister Patty Hajdu announces $250M to build 18 community health centers and satellite telehealth consoles across remote First Nations.\",\"Indigenous Services Minister Patty Hajdu announces $250 million in dedicated federal capital funding to construct eighteen community-controlled primary healthcare centers and install satellite diagnostic telehealth consoles across remote First Nations.\",https://www.choseno.com/news/indigenous-services-minister-patty-hajdu-announces-250-million-for-first-nations-community-health-centers-and-telehealth-2026-08-25,https://www.choseno.com/wall/patty-hajdu",
+    "archivedAt": "2026-08-25T09:04:12.954Z"
+  },
+  {
+    "rank": 101,
+    "raw": "80,9.1,\"Premier Doug Ford Directs $480 Million for GO Transit Rail Electrification and Double-Tracking\",Transportation,\"ON, CA\",Doug Ford,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier Doug Ford announces $480M to build electrical substations and double-tracking for GO Transit rail electrification on the Kitchener line.\",\"Ontario Premier Doug Ford and Transportation Minister Prabmeet Sarkaria award $480 million in Metrolinx construction contracts to build electrical traction substations and install 35 kilometers of continuous double-track on the Kitchener GO rail line.\",https://www.choseno.com/news/premier-doug-ford-allocates-480-million-for-go-transit-rail-electrification-substations-and-double-tracking-2026-08-25,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 102,
+    "raw": "81,9.1,\"Premier David Eby Directs $135 Million for BC Wildfire Night-Vision Helitack and Air Tanker Fleets\",Public Safety,\"BC, CA\",David Eby,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier David Eby announces $135M to equip BC Wildfire Service with night-vision firefighting helicopters and 5 amphibious air tankers for 24/7 attacks.\",\"British Columbia Premier David Eby and Forests Minister Bruce Ralston announce $135 million to procure five heavy amphibious water-bombers and equip initial-attack helicopter crews with night-vision goggle telemetry for 24/7 wildfire suppression.\",https://www.choseno.com/news/premier-david-eby-directs-135-million-for-bc-wildfire-aviation-fleet-expansion-and-night-vision-helicopters-2026-08-25,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 103,
+    "raw": "82,9.0,\"Premier François Legault Directs $280 Million for Zero-Carbon Elysis Aluminum Smelting in Saguenay\",Clean Energy,\"QC, CA\",François Legault,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier François Legault announces $280M to scale commercial Elysis inert anode green aluminum smelting in Saguenay, producing pure oxygen instead of CO2.\",\"Quebec Premier François Legault and Economy Minister Pierre Fitzgibbon announce a $280 million provincial investment to construct commercial-scale Elysis inert anode zero-carbon aluminum smelting cells at the Alma Works in Saguenay-Lac-Saint-Jean.\",https://www.choseno.com/news/premier-francois-legault-announces-280-million-for-saguenay-lac-saint-jean-green-aluminum-smelting-demonstrations-2026-08-25,https://www.choseno.com/wall/fran-ois-legault",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 104,
+    "raw": "83,9.0,\"Mayor Jyoti Gondek Directs $65 Million for Calgary Green Line LRT Underground Utility Works\",Transportation,\"AB, CA\",Jyoti Gondek,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor Jyoti Gondek and Calgary City Council authorize $65M for advance underground utility relocations and station plazas for the Green Line LRT.\",\"Calgary Mayor Jyoti Gondek and Calgary City Council authorize $65 million in municipal capital financing to execute advance underground utility relocations, deep watermain shoring, and passenger station plaza designs for the Green Line LRT Phase 1.\",https://www.choseno.com/news/mayor-jyoti-gondek-authorizes-65-million-for-calgary-green-line-lrt-advance-utility-relocations-and-station-plazas-2026-08-25,https://www.choseno.com/wall/jyoti-gondek",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 105,
+    "raw": "84,8.9,\"Mayor Michelle Wu Allocates $45 Million for Boston Networked Geothermal Energy Microgrids\",Energy,\"MA, US\",Michelle Wu,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor Michelle Wu approves $45M to install networked geothermal heating and cooling microgrids across Boston public housing communities.\",\"Boston Mayor Michelle Wu and the Boston City Council approve $45 million in Green New Deal capital funding to construct shallow-bore networked geothermal district heating and cooling systems across Mattapan and East Boston public housing developments.\",https://www.choseno.com/news/mayor-michelle-wu-allocates-45-million-for-boston-municipal-geothermal-district-energy-microgrids-2026-08-25,https://www.choseno.com/wall/michelle-wu",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 106,
+    "raw": "85,8.8,\"Premier Danielle Smith Directs $180 Million for Alberta Industrial Carbon Capture and Hydrogen Rail Hub\",Energy,\"AB, CA\",Danielle Smith,2026-08-25T05:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier Danielle Smith directs $180M to construct carbon capture compression hubs and hydrogen rail terminals in Alberta's Industrial Heartland.\",\"Alberta Premier Danielle Smith and Energy Minister Brian Jean allocate $180 million through the Alberta Petrochemicals Incentive Program to construct high-capacity CO2 compression hubs and dedicated hydrogen rail tanker loading racks in the Industrial Heartland.\",https://www.choseno.com/news/premier-danielle-smith-announces-180-million-for-alberta-carbon-capture-and-hydrogen-industrial-corridor-2026-08-25,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 107,
+    "raw": "86,9.9,\"NLRB Issues Landmark Joint-Employer Standard Expanding Collective Bargaining in Franchise Networks\",Economy,\"DC, US\",Lauren McFerran,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The NLRB establishes a historic joint-employer standard requiring corporate parent brands to negotiate at the bargaining table with franchise workers.\",\"National Labor Relations Board Chair Lauren McFerran issues a precedent-setting decision establishing that parent corporations exerting indirect control over wages and scheduling share joint-employer liability with franchisees.\",https://www.choseno.com/news/nlrb-issues-landmark-joint-employer-ruling-establishing-collective-bargaining-rights-for-franchise-workers-2026-08-25,https://www.choseno.com/wall/lauren-mcferran",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 108,
+    "raw": "87,9.8,\"USDOT Allocates $410 Million for Heavy Freight Electric Truck Charging Corridors Across 15 Interstate Highways\",Clean Energy,\"DC, US\",Pete Buttigieg,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"USDOT allocates $410M to construct 50 megawatt-scale electric semi-truck charging plazas across 15 major US interstate freight corridors.\",\"Transportation Secretary Pete Buttigieg and FHWA Administrator Shailen Bhatt announce $410 million in NEVI grants to construct 50 megawatt-scale commercial electric truck charging hubs along major interstate freight corridors.\",https://www.choseno.com/news/fhwa-allocates-410-million-in-national-electric-vehicle-infrastructure-grants-for-freight-highway-corridors-2026-08-25,https://www.choseno.com/wall/pete-buttigieg",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 109,
+    "raw": "88,9.8,\"Department of the Interior Unlocks 31 Million Acres of Public Lands for Utility-Scale Solar and Storage\",Clean Energy,\"DC, US\",Deb Haaland,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The DOI finalizes the Western Solar Plan, opening 31M acres of public lands across 11 states for utility-scale solar and transmission development.\",\"Interior Secretary Deb Haaland and BLM Director Tracy Stone-Manning finalize the updated Western Solar Plan, opening 31 million acres of public lands across eleven Western states for accelerated utility-scale solar and transmission siting.\",https://www.choseno.com/news/bureau-of-land-management-finalizes-western-solar-plan-unlocking-31-million-acres-for-utility-scale-renewables-2026-08-25,https://www.choseno.com/wall/deb-haaland",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 110,
+    "raw": "89,9.8,\"EPA Directs $290 Million for Rural Municipal PFAS Water Filtration Systems Across 18 States\",Environment,\"DC, US\",Michael Regan,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The EPA awards $290M to install advanced carbon filtration at 350 rural municipal water plants to eliminate toxic PFAS forever chemicals.\",\"Environmental Protection Agency Administrator Michael Regan allocates $290 million from the Bipartisan Infrastructure Law to install granular activated carbon and ion-exchange filtration systems at 350 rural municipal drinking water plants.\",https://www.choseno.com/news/epa-awards-290-million-to-eliminate-pfas-forever-chemicals-in-rural-drinking-water-wells-across-eighteen-states-2026-08-25,https://www.choseno.com/wall/michael-regan",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 111,
+    "raw": "90,9.7,\"Governor Gavin Newsom Directs $310 Million for Central Valley Flood-Managed Aquifer Recharge\",Environment,\"CA, US\",Gavin Newsom,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Gavin Newsom signs AB 1920, directing $310M to capture winter storm runoff and recharge 1.5 million acre-feet into Central Valley aquifers.\",\"California Governor Gavin Newsom signs Assembly Bill 1920, appropriating $310 million to construct canal diversions, temporary settling basins, and agricultural on-farm flooding infrastructure to recharge 1.5 million acre-feet of groundwater.\",https://www.choseno.com/news/california-governor-gavin-newsom-signs-landmark-groundwater-replenishment-and-flood-aquifer-recharge-act-2026-08-25,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 112,
+    "raw": "91,9.7,\"Governor Greg Abbott Directs $310 Million for Texas AI Semiconductor Packaging Cleanrooms\",Technology,\"TX, US\",Greg Abbott,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Greg Abbott announces $310M from the Texas Semiconductor Innovation Fund to construct advanced AI chip packaging cleanrooms.\",\"Texas Governor Greg Abbott and the Texas CHIPS Act Executive Committee allocate $310 million from the Texas Semiconductor Innovation Fund to construct advanced 2.5D/3D packaging cleanrooms and silicon photonics labs in Austin and Dallas.\",https://www.choseno.com/news/texas-governor-greg-abbott-directs-310-million-for-statewide-artificial-intelligence-semiconductor-fabrication-grants-2026-08-25,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 113,
+    "raw": "92,9.6,\"Governor Ron DeSantis Allocates $160 Million for Space Coast Commercial Airspace and Radar Telemetry\",Technology,\"FL, US\",Ron DeSantis,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Ron DeSantis announces $160M for automated Space-Air radar integration and highway expansions connecting Orlando to Cape Canaveral.\",\"Florida Governor Ron DeSantis and FDOT announce $160 million to deploy automated Space-Air Integration radar networks and widen state aerospace transit highways connecting Orlando and Cape Canaveral.\",https://www.choseno.com/news/florida-governor-ron-desantis-signs-legislation-funding-160-million-for-space-coast-commercial-air-corridors-and-radar-2026-08-25,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 114,
+    "raw": "93,9.6,\"Governor Kathy Hochul Directs $180 Million for Adirondack and Catskill Forest Watershed Conservation\",Environment,\"NY, US\",Kathy Hochul,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Kathy Hochul announces $180M to permanently protect 40,000 acres of forest watersheds across the Adirondack and Catskill Mountain Parks.\",\"New York Governor Kathy Hochul announces $180 million in Environmental Protection Fund grants to acquire permanent conservation easements protecting 40,000 acres of working forest watersheds in the Adirondack and Catskill Parks.\",https://www.choseno.com/news/governor-kathy-hochul-awards-180-million-for-adirondack-and-catskill-clean-watershed-forest-easements-2026-08-25,https://www.choseno.com/wall/kathy-hochul",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 115,
+    "raw": "94,9.5,\"Governor JB Pritzker Allocates $140 Million for Modernizing Illinois Advanced Metal Casting Foundries\",Economy,\"IL, US\",JB Pritzker,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor JB Pritzker announces $140M to modernize 12 Illinois metal casting foundries with advanced 3D sand printing and electric induction furnaces.\",\"Illinois Governor JB Pritzker and DCEO announce $140 million in capital grants from the Rebuild Illinois program to retool twelve commercial metal casting foundries with automated 3D sand-printing and electric arc induction furnaces.\",https://www.choseno.com/news/governor-jb-pritzker-directs-140-million-for-chicago-south-side-and-rockford-advanced-metal-casting-foundries-2026-08-25,https://www.choseno.com/wall/jb-pritzker",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 116,
+    "raw": "95,9.5,\"Governor Josh Shapiro Directs $90 Million for Northern Tier Rural Gigabit Broadband Expansion\",Technology,\"PA, US\",Josh Shapiro,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Josh Shapiro announces $90M in broadband grants to deliver high-speed fiber internet to 28,000 rural homes across PA's Northern Tier.\",\"Pennsylvania Governor Josh Shapiro and the Pennsylvania Broadband Development Authority announce $90 million in capital grants to construct 2,200 miles of fiber-optic broadband across Bradford, Tioga, Potter, and Susquehanna Counties.\",https://www.choseno.com/news/governor-josh-shapiro-signs-executive-order-allocating-90-million-for-rural-broadband-fiber-drops-in-northern-tier-2026-08-25,https://www.choseno.com/wall/josh-shapiro",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 117,
+    "raw": "96,9.4,\"Governor Gretchen Whitmer Allocates $130 Million to Harden Michigan Power Grids Against Ice Storms\",Energy,\"MI, US\",Gretchen Whitmer,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Gretchen Whitmer announces $130M to underground 350 miles of vulnerable power lines and install automated self-healing grid reclosers in Michigan.\",\"Michigan Governor Gretchen Whitmer and the Michigan Public Service Commission award $130 million to underground 350 miles of vulnerable neighborhood electrical lines and install automated self-healing grid reclosers across sixteen counties.\",https://www.choseno.com/news/governor-gretchen-whitmer-directs-130-million-for-statewide-high-voltage-grid-hardening-and-undergrounding-2026-08-25,https://www.choseno.com/wall/gretchen-whitmer",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 118,
+    "raw": "97,9.3,\"Governor Brian Kemp Directs $180 Million for Savannah River Multimodal Logistics Corridors\",Infrastructure,\"GA, US\",Brian Kemp,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Brian Kemp announces $180M to build dedicated rail overpasses and container transfer yards along the Savannah River freight corridor.\",\"Georgia Governor Brian Kemp and the Georgia Ports Authority allocate $180 million to construct direct freight rail overpasses, heavy-haul container transfer ramps, and expanded staging yards along the Savannah River logistics corridor.\",https://www.choseno.com/news/governor-brian-kemp-announces-180-million-for-savannah-river-logistics-corridor-and-multimodal-rail-ramps-2026-08-25,https://www.choseno.com/wall/brian-kemp",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 119,
+    "raw": "98,9.3,\"Mayor Kate Gallego Directs $65 Million for Phoenix Advanced Water Purification Recycling Center\",Infrastructure,\"AZ, US\",Kate Gallego,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor Kate Gallego announces $65M to build the 20-MGD Cave Creek Water Purification Facility, recycling wastewater into pure drinking water for Phoenix.\",\"Phoenix Mayor Kate Gallego and the Phoenix City Council approve a $65 million municipal water capital contract to begin engineering and construction on the 20-million-gallon-per-day Cave Creek Advanced Water Purification Facility.\",https://www.choseno.com/news/mayor-kate-gallego-passes-ordinance-authorizing-65-million-for-advanced-water-purification-and-direct-potable-reuse-facility-2026-08-25,https://www.choseno.com/wall/kate-gallego",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 120,
+    "raw": "99,9.3,\"Mayor John Whitmire Allocates $95 Million for Houston Bayou Drainage and Stormwater Basins\",Infrastructure,\"TX, US\",John Whitmire,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor John Whitmire announces $95M in municipal flood mitigation funding to widen drainage culverts and build stormwater basins across Houston.\",\"Houston Mayor John Whitmire and the Houston City Council approve a $95 million municipal drainage infrastructure package to construct regional stormwater detention basins and widen drainage culverts along Buffalo Bayou and White Oak Bayou.\",https://www.choseno.com/news/mayor-john-whitmire-directs-95-million-for-harris-county-drainage-conveyance-culverts-and-bayou-detention-basins-2026-08-25,https://www.choseno.com/wall/john-whitmire",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 121,
+    "raw": "100,9.2,\"Industry Minister François-Philippe Champagne Directs $320 Million for Canadian AI Safety Institute and Supercomputing Compute\",Technology,\"ON, CA\",François-Philippe Champagne,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Industry Minister François-Philippe Champagne announces $320M to deploy sovereign AI supercomputing clusters and launch the Canadian AI Safety Institute.\",\"Innovation Minister François-Philippe Champagne announces $320 million from the AI Compute Access Fund to finance sovereign high-performance AI supercomputers and establish the Canadian Artificial Intelligence Safety Institute in Montreal and Toronto.\",https://www.choseno.com/news/industry-minister-francois-philippe-champagne-allocates-320-million-for-canadian-ai-safety-institute-and-supercomputing-compute-2026-08-25,https://www.choseno.com/wall/fran-ois-philippe-champagne",
+    "archivedAt": "2026-08-25T08:48:08.043Z"
+  },
+  {
+    "rank": 101,
+    "raw": "78,9.2,\"Fisheries Minister Diane Lebouthillier Allocates $140 Million for Pacific Wild Salmon Enhancement and Hatchery Modernization\",Environment,\"BC, CA\",Diane Lebouthillier,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Fisheries Minister Diane Lebouthillier announces $140M to modernize 22 community wild salmon hatcheries and deploy river eDNA telemetry across BC.\",\"Fisheries and Oceans Minister Diane Lebouthillier announces $140 million under the Pacific Salmon Strategy Initiative to rebuild twenty-two community salmon enhancement hatcheries and deploy automated environmental DNA (eDNA) river monitoring.\",https://www.choseno.com/news/fisheries-minister-diane-lebouthillier-announces-140-million-for-pacific-wild-salmon-hatchery-modernization-and-e-dna-monitoring-2026-08-25,https://www.choseno.com/wall/diane-lebouthillier",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 102,
+    "raw": "79,9.1,\"Premier Doug Ford Allocates $420 Million for Highway 7 Four-Lane Expansion Between Kitchener and Guelph\",Transportation,\"ON, CA\",Doug Ford,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier Doug Ford announces $420M to build Grand River bridge structures and interchanges for the new 4-lane Highway 7 between Kitchener and Guelph.\",\"Ontario Premier Doug Ford and Transportation Minister Prabmeet Sarkaria award $420 million in provincial construction contracts to build twin bridges over the Grand River and construct grade-separated interchanges for the new four-lane Highway 7 freeway.\",https://www.choseno.com/news/premier-doug-ford-directs-420-million-for-highway-7-expansion-and-new-bridge-interchanges-between-kitchener-and-guelph-2026-08-25,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 103,
+    "raw": "80,9.1,\"Premier David Eby Directs $175 Million for BC Coastal Passenger Ferry Hybrid-Electric Propulsion Retrofits\",Clean Energy,\"BC, CA\",David Eby,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier David Eby announces $175M to repower 8 coastal passenger ferries with battery-electric propulsion, cutting marine emissions across BC.\",\"British Columbia Premier David Eby and Transportation Minister Rob Fleming allocate $175 million to repower eight coastal passenger ferries with modern lithium-titanate battery energy storage and zero-emission electric propulsion pods.\",https://www.choseno.com/news/premier-david-eby-announces-175-million-for-vancouver-island-and-coastal-hybrid-electric-ferry-propulsion-retrofits-2026-08-25,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 104,
+    "raw": "81,9.0,\"Premier Danielle Smith Allocates $185 Million for Alberta Clean Hydrogen Transport Corridors\",Energy,\"AB, CA\",Danielle Smith,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier Danielle Smith announces $185M to construct commercial clean hydrogen production and heavy truck fueling stations along Alberta's Highway 2.\",\"Alberta Premier Danielle Smith and Energy Minister Brian Jean announce $185 million from the Alberta Hydrogen Roadmap to build commercial clean hydrogen production plants and five heavy-vehicle liquid hydrogen fueling plazas along Highway 2.\",https://www.choseno.com/news/premier-danielle-smith-directs-185-million-for-industrial-hydrogen-blending-and-heavy-transport-refueling-corridors-2026-08-25,https://www.choseno.com/wall/danielle-smith",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 105,
+    "raw": "82,9.0,\"Mayor Jyoti Gondek Directs $80 Million for Calgary Bow River Flood Barriers and Promenade Elevation\",Infrastructure,\"AB, CA\",Jyoti Gondek,2026-08-25T03:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor Jyoti Gondek announces $80M to construct 3 kilometers of engineered flood barrier walls and elevate the Bow River promenade in downtown Calgary.\",\"Calgary Mayor Jyoti Gondek and Calgary City Council authorize an $80 million municipal flood resilience contract to construct three kilometers of engineered flood barrier walls and elevate the Bow River pedestrian pathway in Downtown Calgary.\",https://www.choseno.com/news/mayor-jyoti-gondek-authorizes-80-million-for-downtown-calgary-flood-barrier-and-bow-river-promenade-elevation-2026-08-25,https://www.choseno.com/wall/jyoti-gondek",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 106,
+    "raw": "83,9.9,\"FCC Mandates Carrier-Level AI Voice Cloning Detection and Biometric Call Blocking\",Technology,\"DC, US\",Jessica Rosenworcel,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The FCC mandates real-time carrier-level AI voice clone detection across US telecom networks to stop deepfake fraud and impersonation scams.\",\"Federal Communications Commission Chair Jessica Rosenworcel issues a binding regulatory order requiring telecommunications carriers to deploy real-time acoustic AI voice-cloning detection algorithms on public switched networks.\",https://www.choseno.com/news/fcc-mandates-carrier-level-ai-voice-cloning-detection-and-biometric-call-blocking-2026-08-25,https://www.choseno.com/wall/jessica-rosenworcel",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 107,
+    "raw": "84,9.8,\"HUD Awards $450 Million for Mass Timber Sustainable Affordable Housing Across Twenty Cities\",Housing,\"DC, US\",Adrianne Todman,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"HUD awards $450M to build 6,000 energy-efficient mass timber affordable housing apartments across 20 major American cities.\",\"Acting HUD Secretary Adrianne Todman announces $450 million in Green and Resilient Retrofit Program grants to construct multi-family affordable housing utilizing carbon-sequestering mass timber and cross-laminated timber across twenty cities.\",https://www.choseno.com/news/hud-allocates-450-million-for-mass-timber-affordable-housing-grants-across-twenty-cities-2026-08-25,https://www.choseno.com/wall/adrianne-todman",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 108,
+    "raw": "85,9.8,\"CDC Directs $280 Million for Genomic Wastewater Pathogen Surveillance Across 50 States\",Healthcare,\"DC, US\",Mandy Cohen,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The CDC awards $280M to expand genomic wastewater surveillance to 1,500 municipal utilities, detecting viral pathogen outbreaks weeks in advance.\",\"Centers for Disease Control and Prevention Director Mandy Cohen allocates $280 million to expand the National Wastewater Surveillance System to 1,500 municipal treatment utilities for early avian influenza and respiratory pathogen detection.\",https://www.choseno.com/news/cdc-deploys-280-million-for-statewide-wastewater-pathogen-and-avian-influenza-genomic-sequencing-2026-08-25,https://www.choseno.com/wall/mandy-cohen",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 109,
+    "raw": "86,9.8,\"FERC Finalizes Rule Mandating Interregional Electric Transmission Capacity Standards\",Energy,\"DC, US\",Willie Phillips,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"FERC issues a landmark rule mandating interregional power transfer minimums between electric grids to stop extreme weather blackouts.\",\"Federal Energy Regulatory Commission Chairman Willie Phillips issues a landmark final order mandating minimum 30% interregional transfer capacities between regional electric grids to prevent winter freeze and heatwave blackouts.\",https://www.choseno.com/news/ferc-finalizes-order-two-thousand-mandating-interregional-transmission-transfer-capacity-standards-2026-08-25,https://www.choseno.com/wall/willie-phillips",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 110,
+    "raw": "87,9.7,\"Governor Gavin Newsom Directs $290 Million for Tribal and Rural Clean Energy Microgrids\",Clean Energy,\"CA, US\",Gavin Newsom,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Gavin Newsom signs SB 1374, directing $290M to construct 50 islandable clean microgrids across California tribal nations and rural towns.\",\"California Governor Gavin Newsom signs Senate Bill 1374, appropriating $290 million in state clean energy grants to construct fifty community solar, battery, and geothermal microgrids across sovereign tribal nations and rural fire-prone communities.\",https://www.choseno.com/news/california-governor-gavin-newsom-signs-climate-resilient-microgrid-act-allocating-290-million-for-tribal-and-rural-power-2026-08-25,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 111,
+    "raw": "88,9.7,\"Governor Greg Abbott Directs $175 Million for Texas Wildfire Containment Aircraft and Firebreaks\",Public Safety,\"TX, US\",Greg Abbott,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Greg Abbott announces $175M to procure 5 amphibious firefighting air tankers and construct 800 miles of firebreaks across Texas ranchlands.\",\"Texas Governor Greg Abbott and the Texas A&M Forest Service announce $175 million to procure five amphibious firefighting air tankers and construct 800 miles of mechanical fuelbreak corridors across the Texas Panhandle and Hill Country.\",https://www.choseno.com/news/texas-governor-greg-abbott-signs-legislation-funding-175-million-for-statewide-wildfire-containment-aircraft-and-firebreaks-2026-08-25,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 112,
+    "raw": "89,9.6,\"Governor Ron DeSantis Allocates $135 Million for Space Coast Orbital Launch and Rail Infrastructure\",Technology,\"FL, US\",Ron DeSantis,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Ron DeSantis announces $135M to expand Cape Canaveral Spaceport launch rail spurs, cleanrooms, and high-voltage power for commercial space.\",\"Florida Governor Ron DeSantis and Space Florida announce $135 million in state aerospace infrastructure grants to construct heavy-load railway spurs, payload integration cleanrooms, and high-voltage grid links at Cape Canaveral Spaceport.\",https://www.choseno.com/news/florida-governor-ron-desantis-directs-135-million-for-space-coast-orbital-launch-rail-and-payload-processing-facilities-2026-08-25,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 113,
+    "raw": "90,9.6,\"Governor Kathy Hochul Directs $190 Million for Hudson Valley Clean Hydrogen Heavy Truck Corridors\",Clean Energy,\"NY, US\",Kathy Hochul,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Kathy Hochul announces $190M to construct green hydrogen production plants and heavy truck fueling stations along I-87 and I-90.\",\"New York Governor Kathy Hochul announces $190 million in NYSERDA clean energy grants to construct four commercial green hydrogen electrolyzer plants and ten high-capacity hydrogen fuel-cell truck fueling stations along Interstate 87 and Interstate 90.\",https://www.choseno.com/news/governor-kathy-hochul-allocates-190-million-for-hudson-valley-and-capital-region-clean-hydrogen-fuel-cell-corridors-2026-08-25,https://www.choseno.com/wall/kathy-hochul",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 114,
+    "raw": "91,9.5,\"Governor JB Pritzker Signs Historic Ban on Medical Debt Reporting to Consumer Credit Bureaus\",Healthcare,\"IL, US\",JB Pritzker,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor JB Pritzker signs SB 1450, enacting a historic ban on medical debt on consumer credit reports, protecting millions of Illinois patients.\",\"Illinois Governor JB Pritzker signs Senate Bill 1450, establishing an absolute statutory ban prohibiting consumer reporting agencies from including medical debt on Illinois credit reports and barring hospitals from aggressive debt collection.\",https://www.choseno.com/news/governor-jb-pritzker-signs-statutory-protections-banning-medical-debt-from-consumer-credit-reports-2026-08-25,https://www.choseno.com/wall/jb-pritzker",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 115,
+    "raw": "92,9.5,\"Governor Josh Shapiro Allocates $85 Million for Pennsylvania Farmland Preservation and Soil Health\",Environment,\"PA, US\",Josh Shapiro,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Josh Shapiro announces $85M to permanently preserve 25,000 acres of family farmland and protect Chesapeake Bay water quality in PA.\",\"Pennsylvania Governor Josh Shapiro and the Department of Agriculture award $85 million to purchase permanent agricultural conservation easements preserving 25,000 acres of prime farmland and funding cover crop soil health practices.\",https://www.choseno.com/news/governor-josh-shapiro-directs-85-million-for-statewide-agricultural-conservation-easements-and-soil-health-2026-08-25,https://www.choseno.com/wall/josh-shapiro",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 116,
+    "raw": "93,9.4,\"Governor Gretchen Whitmer Directs $115 Million to Electrify Mackinac Island and Cross-Lake Ferries\",Clean Energy,\"MI, US\",Gretchen Whitmer,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Gretchen Whitmer announces $115M to construct high-power marine charging docks and electrify passenger ferries serving Mackinac Island.\",\"Michigan Governor Gretchen Whitmer and the Michigan Department of Transportation award $115 million to build marine rapid-charging stations and deploy zero-emission passenger ferries serving Mackinac Island and Lake Michigan routes.\",https://www.choseno.com/news/governor-gretchen-whitmer-awards-115-million-for-great-lakes-cross-lake-ferry-electrification-and-dockside-power-2026-08-25,https://www.choseno.com/wall/gretchen-whitmer",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 117,
+    "raw": "94,9.3,\"Governor Roy Cooper Allocates $150 Million for Research Triangle Advanced Biomanufacturing Hubs\",Technology,\"NC, US\",Roy Cooper,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Roy Cooper announces $150M to construct advanced biomanufacturing cleanrooms and train 5,000 life sciences technicians across North Carolina.\",\"North Carolina Governor Roy Cooper announces $150 million in North Carolina Biotechnology Center capital grants to build specialized cell therapy cleanroom training suites across four community colleges in the Research Triangle and Triad regions.\",https://www.choseno.com/news/governor-roy-cooper-announces-150-million-for-research-triangle-biomanufacturing-and-gene-therapy-training-hubs-2026-08-25,https://www.choseno.com/wall/roy-cooper",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 118,
+    "raw": "95,9.3,\"Mayor Matt Mahan Directs $45 Million for San Jose Automated Clean Streets and Creekway Trash Traps\",Environment,\"CA, US\",Matt Mahan,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor Matt Mahan announces $45M for automated electric sidewalk sweepers and hydrodynamic trash booms to clean streets and creeks across San Jose.\",\"San Jose Mayor Matt Mahan and San Jose City Council authorize $45 million in municipal beautification funding to deploy electric sidewalk sweepers and install automated hydrodynamic trash booms along the Guadalupe River and Coyote Creek.\",https://www.choseno.com/news/mayor-matt-mahan-directs-45-million-for-automated-sidewalk-sweeper-fleets-and-creekway-trash-traps-2026-08-25,https://www.choseno.com/wall/matt-mahan",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 119,
+    "raw": "96,9.3,\"Mayor Eric Johnson Allocates $70 Million for Great Trinity Forest Trail Network and Wetland Parks\",Environment,\"TX, US\",Eric Johnson,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor Eric Johnson announces $70M to construct 25 miles of hiking and biking trails and wetland preserves in the 6,000-acre Great Trinity Forest in Dallas.\",\"Dallas Mayor Eric Johnson and the Dallas Park and Recreation Board authorize $70 million from the 2024 Bond Program to construct twenty-five miles of paved trail connections and nature preserves within the 6,000-acre Great Trinity Forest.\",https://www.choseno.com/news/mayor-eric-johnson-authorizes-70-million-for-trinity-river-forest-trail-connections-and-flood-basin-parks-2026-08-25,https://www.choseno.com/wall/eric-johnson",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 120,
+    "raw": "97,9.2,\"Transport Minister Anita Anand Directs $350 Million for Canadian Zero-Emission Commercial Truck Subsidies\",Transportation,\"ON, CA\",Anita Anand,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Transport Minister Anita Anand announces $350M in expanded iMHZEV rebates of up to $200,000 for zero-emission electric freight trucks in Canada.\",\"Transport Minister Anita Anand announces $350 million in expanded Incentives for Medium- and Heavy-Duty Zero-Emission Vehicles (iMHZEV) funding, providing point-of-sale rebates of up to $200,000 for electric and hydrogen commercial freight trucks.\",https://www.choseno.com/news/transport-minister-anita-anand-allocates-350-million-for-canadian-zero-emission-heavy-truck-incentive-program-2026-08-25,https://www.choseno.com/wall/anita-anand",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 121,
+    "raw": "98,9.2,\"Environment Minister Steven Guilbeault Enacts 30% Post-Consumer Recycled Content Mandates\",Environment,\"QC, CA\",Steven Guilbeault,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Environment Minister Steven Guilbeault enacts binding rules requiring 30% post-consumer recycled plastic in commercial packaging across Canada.\",\"Environment Minister Steven Guilbeault issues finalized regulations under the Canadian Environmental Protection Act, mandating 30% minimum post-consumer recycled plastic content in all commercial beverage and packaging containers by 2028.\",https://www.choseno.com/news/environment-minister-steven-guilbeault-enacts-federal-recycled-content-mandates-for-commercial-beverage-containers-2026-08-25,https://www.choseno.com/wall/steven-guilbeault",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 122,
+    "raw": "99,9.1,\"Premier Doug Ford Directs $380 Million for Waterloo ION and Hamilton LRT Track Construction\",Transportation,\"ON, CA\",Doug Ford,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier Doug Ford announces $380M to build electrical substations and rail trackbeds for the Waterloo ION Stage 2 and Hamilton Light Rail systems.\",\"Ontario Premier Doug Ford and Transportation Minister Prabmeet Sarkaria announce $380 million in provincial capital contracts for electrical traction substations and trackbed civil works for the Waterloo ION Stage 2 and Hamilton Light Rail Transit systems.\",https://www.choseno.com/news/premier-doug-ford-allocates-380-million-for-waterloo-and-hamilton-light-rail-transit-substation-and-track-works-2026-08-25,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 123,
+    "raw": "100,9.1,\"Premier David Eby Directs $120 Million for BC Mass Timber Prefabrication and Modular Housing Plants\",Housing,\"BC, CA\",David Eby,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier David Eby announces $120M to expand 4 commercial mass timber manufacturing plants, turning BC wood into prefabricated modular homes.\",\"British Columbia Premier David Eby and Jobs Minister Brenda Bailey allocate $120 million from the BC Manufacturing Jobs Fund to expand four commercial mass timber prefabrication and cross-laminated timber manufacturing factories in BC.\",https://www.choseno.com/news/premier-david-eby-directs-120-million-for-bc-mass-timber-prefabrication-manufacturing-facilities-2026-08-25,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-25T08:05:55.900Z"
+  },
+  {
+    "rank": 101,
+    "raw": "81,9.0,\"Premier François Legault Directs $300 Million for Hydro-Québec Gaspésie Wind Power Transmission\",Clean Energy,\"QC, CA\",François Legault,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier François Legault announces $300M for Hydro-Québec transmission lines connecting 1,200 megawatts of clean wind energy in Gaspésie.\",\"Quebec Premier François Legault and Energy Minister Pierre Fitzgibbon announce $300 million to construct 180 kilometers of 315-kV transmission lines and two electrical substations connecting 1,200 megawatts of community wind energy in Gaspésie.\",https://www.choseno.com/news/premier-francois-legault-announces-300-million-for-hydro-quebec-wind-farm-and-substation-interconnections-in-gaspesie-2026-08-25,https://www.choseno.com/wall/fran-ois-legault",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 102,
+    "raw": "82,9.0,\"Mayor Ken Sim Allocates $55 Million for False Creek Seawall Climate Resilience and Elevation\",Infrastructure,\"BC, CA\",Ken Sim,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor Ken Sim announces $55M to elevate and fortify 4 kilometers of Vancouver's iconic False Creek Seawall to protect against storm surges.\",\"Vancouver Mayor Ken Sim and Vancouver City Council approve $55 million in municipal capital financing to raise and fortify four kilometers of the False Creek Seawall by one meter, protecting downtown Granville Island from coastal storm surges.\",https://www.choseno.com/news/mayor-ken-sim-authorizes-55-million-for-granville-island-and-false-creek-seawall-climate-resilience-elevations-2026-08-25,https://www.choseno.com/wall/ken-sim",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 103,
+    "raw": "83,9.9,\"CFPB Issues Final Rule Capping Commercial Bank Overdraft and Insufficient Funds Fees at $3\",Economy,\"DC, US\",Rohit Chopra,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The CFPB finalizes a historic rule capping bank overdraft fees at $3, eliminating billions in predatory junk fees for working families.\",\"Consumer Financial Protection Bureau Director Rohit Chopra finalizes a landmark rule reining in excessive $35 bank overdraft fees, capping benchmark fees at $3 and saving consumers $3.5 billion annually.\",https://www.choseno.com/news/cfpb-issues-final-rule-prohibiting-excessive-bank-overdraft-and-nsf-fees-2026-08-25,https://www.choseno.com/wall/rohit-chopra",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 104,
+    "raw": "84,9.8,\"FAA Mandates Automated Runway Status Lights at Top 40 Commercial Hub Airports\",Transportation,\"DC, US\",Mike Whitaker,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The FAA mandates automated in-pavement Runway Status Lights at 40 major US commercial airports, creating a direct visual defense against near-miss incursions.\",\"Federal Aviation Administration Administrator Mike Whitaker issues a binding safety directive requiring forty major commercial airports to install automated in-pavement Runway Status Lights (RWSL) to prevent surface runway incursions.\",https://www.choseno.com/news/faa-finalizes-mandatory-runway-status-light-systems-at-top-40-commercial-airports-2026-08-25,https://www.choseno.com/wall/mike-whitaker",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 105,
+    "raw": "85,9.8,\"NOAA Awards $310 Million for Living Shorelines and Mangrove Storm Buffers Across Coastal States\",Environment,\"DC, US\",Rick Spinrad,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"NOAA awards $310M in Climate-Ready Coasts grants to build living oyster reefs and restore mangrove buffers against hurricane storm surges.\",\"Under Secretary of Commerce and NOAA Administrator Rick Spinrad awards $310 million in Climate-Ready Coasts grants to construct engineered living oyster reefs, restore mangrove forests, and stabilize barrier dunes across fifteen coastal states.\",https://www.choseno.com/news/noaa-awards-310-million-for-living-shorelines-and-mangrove-wetland-storm-buffers-2026-08-25,https://www.choseno.com/wall/rick-spinrad",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 106,
+    "raw": "86,9.8,\"HHS Allocates $260 Million for 24/7 Mobile Mental Health Crisis Teams and 988 Telehealth Vans\",Healthcare,\"DC, US\",Xavier Becerra,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"HHS awards $260M in SAMHSA grants to deploy 250 mobile crisis response vans staffed with psychiatric clinicians for rapid 988 emergency response.\",\"Health and Human Services Secretary Xavier Becerra and SAMHSA announce $260 million in federal behavioral health grants to deploy 250 mobile crisis response vans staffed with mental health clinicians and peer specialists nationwide.\",https://www.choseno.com/news/samhsa-allocates-260-million-for-statewide-mobile-crisis-intervention-teams-and-988-telehealth-2026-08-25,https://www.choseno.com/wall/xavier-becerra",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 107,
+    "raw": "87,9.7,\"Governor Gavin Newsom Directs $350 Million for California Senior Care Hubs and In-Home Support\",Healthcare,\"CA, US\",Gavin Newsom,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Gavin Newsom signs AB 1820, directing $350M to build 40 senior wellness hubs and raise wages for 100,000 in-home supportive care workers.\",\"California Governor Gavin Newsom signs Assembly Bill 1820, appropriating $350 million from the Master Plan for Aging to construct forty community-based geriatric health hubs and increase wages for 100,000 in-home supportive care workers.\",https://www.choseno.com/news/california-governor-gavin-newsom-signs-master-plan-for-aging-allocating-350-million-for-community-care-hubs-2026-08-25,https://www.choseno.com/wall/gavin-newsom",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 108,
+    "raw": "88,9.7,\"Governor Greg Abbott Directs $275 Million for Port of Corpus Christi Deepwater Channel Completion\",Transportation,\"TX, US\",Greg Abbott,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Greg Abbott announces $275M to complete the Port of Corpus Christi deepwater channel deepening, securing Texas energy export dominance.\",\"Texas Governor Greg Abbott and Port of Corpus Christi officials announce $275 million in state maritime infrastructure funding to complete dredging the ship channel to 54 feet, accommodating fully loaded Very Large Crude Carriers.\",https://www.choseno.com/news/texas-governor-greg-abbott-announces-275-million-for-port-of-corpus-christi-channel-deepening-project-2026-08-25,https://www.choseno.com/wall/greg-abbott",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 109,
+    "raw": "89,9.6,\"Governor Ron DeSantis Allocates $150 Million for St. Johns River Basin Filter Marshes and Water Quality\",Environment,\"FL, US\",Ron DeSantis,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Ron DeSantis announces $150M in clean water grants to construct 7,200 acres of filter marshes to restore Florida's historic St. Johns River.\",\"Florida Governor Ron DeSantis and DEP Secretary Shawn Hamilton award $150 million to construct 7,200 acres of flow-through treatment marshes and upgrade regional wastewater plants along the 310-mile St. Johns River.\",https://www.choseno.com/news/florida-governor-ron-desantis-directs-150-million-for-st-johns-river-water-quality-and-basin-filter-marshes-2026-08-25,https://www.choseno.com/wall/ron-desantis",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 110,
+    "raw": "90,9.6,\"Governor Kathy Hochul Directs $175 Million for Western New York Main Street and Commercial Corridors\",Housing,\"NY, US\",Kathy Hochul,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Kathy Hochul announces $175M in state grants to restore historic storefronts and build mixed-income housing across Buffalo and Rochester.\",\"New York Governor Kathy Hochul announces $175 million in Western New York Downtown Revitalization grants to restore historic commercial storefronts, construct mixed-income housing, and build public pedestrian plazas in Buffalo and Rochester.\",https://www.choseno.com/news/governor-kathy-hochul-awards-175-million-for-buffalo-and-rochester-neighborhood-commercial-revitalization-2026-08-25,https://www.choseno.com/wall/kathy-hochul",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 111,
+    "raw": "91,9.5,\"Governor JB Pritzker Directs $500 Million to Construct Illinois Quantum and Microelectronics Park\",Technology,\"IL, US\",JB Pritzker,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor JB Pritzker announces $500M to build the world-leading Illinois Quantum and Microelectronics Park on a 128-acre South Chicago site.\",\"Illinois Governor JB Pritzker and the Illinois General Assembly allocate $500 million to construct the Illinois Quantum and Microelectronics Park on a 128-acre former steel plant site in South Chicago.\",https://www.choseno.com/news/governor-jb-pritzker-signs-legislation-establishing-first-in-nation-statewide-quantum-computing-campus-in-chicago-2026-08-25,https://www.choseno.com/wall/jb-pritzker",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 112,
+    "raw": "92,9.5,\"Governor Josh Shapiro Allocates $110 Million for Pennsylvania Municipal Bridge Replacements\",Transportation,\"PA, US\",Josh Shapiro,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Josh Shapiro announces $110M in state grants to replace 120 weight-restricted municipal and county bridges across 35 PA counties.\",\"Pennsylvania Governor Josh Shapiro and PennDOT award $110 million in direct state infrastructure grants to repair or replace 120 deteriorated, weight-restricted municipal and county bridges across thirty-five counties.\",https://www.choseno.com/news/governor-josh-shapiro-announces-110-million-for-statewide-bridge-preservation-and-timber-deck-reconstructions-2026-08-25,https://www.choseno.com/wall/josh-shapiro",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 113,
+    "raw": "93,9.4,\"Governor Gretchen Whitmer Allocates $125 Million for Michigan Commercial Fleet Electrification Hubs\",Clean Energy,\"MI, US\",Gretchen Whitmer,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Gretchen Whitmer announces $125M to build megawatt commercial electric truck depots and train 2,000 EV heavy-fleet technicians in Michigan.\",\"Michigan Governor Gretchen Whitmer and the Michigan Economic Development Corporation award $125 million to build megawatt-scale electric truck charging depots and establish heavy EV technician training labs across the state.\",https://www.choseno.com/news/governor-gretchen-whitmer-directs-125-million-for-heavy-duty-electrified-fleet-depots-and-workforce-training-2026-08-25,https://www.choseno.com/wall/gretchen-whitmer",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 114,
+    "raw": "94,9.3,\"Governor Brian Kemp Directs $160 Million for Georgia Rural Hospital Stabilization and ER Upgrades\",Healthcare,\"GA, US\",Brian Kemp,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Brian Kemp announces $160M in state grants to modernize emergency rooms and recruit physicians across 20 rural Georgia community hospitals.\",\"Georgia Governor Brian Kemp and the Georgia Department of Community Health award $160 million in Rural Hospital Stabilization grants to modernize emergency departments and recruit diagnostic specialists in twenty rural Georgia counties.\",https://www.choseno.com/news/governor-brian-kemp-awards-160-million-for-rural-hospital-stabilization-and-emergency-room-modernizations-2026-08-25,https://www.choseno.com/wall/brian-kemp",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 115,
+    "raw": "95,9.3,\"Mayor London Breed Directs $60 Million for San Francisco Downtown Ground-Floor Retail and Arts Conversions\",Economy,\"CA, US\",London Breed,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor London Breed announces $60M to transform vacant downtown storefronts into vibrant retail shops, cafes, and artist studios across San Francisco.\",\"San Francisco Mayor London Breed and the Board of Supervisors authorize $60 million from the Downtown Economic Vitality Fund to convert vacant commercial storefronts into culinary incubators, artist studios, and local retail boutiques.\",https://www.choseno.com/news/mayor-london-breed-passes-ordinance-authorizing-60-million-for-downtown-commercial-ground-floor-arts-and-retail-conversions-2026-08-25,https://www.choseno.com/wall/london-breed",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 116,
+    "raw": "96,9.3,\"Mayor Todd Gloria Directs $80 Million for Pure Water San Diego Purification Conveyance Tunnel\",Infrastructure,\"CA, US\",Todd Gloria,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Mayor Todd Gloria announces $80M for the 8-mile Pure Water San Diego conveyance pipeline, supplying 50% of the city's drinking water locally by 2035.\",\"San Diego Mayor Todd Gloria and San Diego City Council approve $80 million in municipal water financing to construct the 8-mile Pure Water Phase Two purified water conveyance tunnel connecting the Harbor Drive facility to Lake Murray.\",https://www.choseno.com/news/mayor-todd-gloria-directs-80-million-for-pure-water-san-diego-phase-two-water-purification-tunnel-2026-08-25,https://www.choseno.com/wall/todd-gloria",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 117,
+    "raw": "97,9.2,\"Industry Minister François-Philippe Champagne Directs $400 Million for Canadian Quantum Computing Hubs\",Technology,\"ON, CA\",François-Philippe Champagne,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Industry Minister François-Philippe Champagne announces $400M to scale commercial quantum hardware manufacturing in Waterloo, Montreal, and Vancouver.\",\"Minister of Innovation, Science and Industry François-Philippe Champagne allocates $400 million through the National Quantum Strategy to finance commercial quantum hardware fabrication hubs in Waterloo, Montreal, and Vancouver.\",https://www.choseno.com/news/industry-minister-francois-philippe-champagne-announces-400-million-for-canadian-quantum-computing-commercial-hubs-2026-08-25,https://www.choseno.com/wall/fran-ois-philippe-champagne",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 118,
+    "raw": "98,9.2,\"Transport Minister Anita Anand Enacts Comprehensive Fatigue and Telemetry Standards for Canadian Rail\",Transportation,\"ON, CA\",Anita Anand,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Transport Minister Anita Anand enacts landmark rail safety rules mandating 10-hour maximum shifts and 12-hour rest periods for Canadian train crews.\",\"Transport Minister Anita Anand issues binding amendments to the Railway Safety Act, mandating maximum 10-hour duty shifts, mandatory 12-hour rest periods, and synchronized in-cab telemetry recorders on all Class 1 freight trains operating in Canada.\",https://www.choseno.com/news/transport-minister-anita-anand-mandates-enhanced-fatigue-management-and-in-cab-audio-telemetry-for-freight-rail-2026-08-25,https://www.choseno.com/wall/anita-anand",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 119,
+    "raw": "99,9.1,\"Premier Doug Ford Directs $450 Million for Bradford Bypass Highway and Bridge Construction\",Transportation,\"ON, CA\",Doug Ford,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier Doug Ford announces $450M to construct bridge structures and interchanges for the Bradford Bypass, saving commuters 35 minutes across Simcoe County.\",\"Ontario Premier Doug Ford and Transportation Minister Prabmeet Sarkaria award $450 million in provincial construction contracts to build bridge crossings and interchange connections for the 16.2-kilometer Bradford Bypass highway.\",https://www.choseno.com/news/premier-doug-ford-allocates-450-million-for-bradford-bypass-highway-corridor-and-interchange-construction-2026-08-25,https://www.choseno.com/wall/doug-ford",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 120,
+    "raw": "100,9.1,\"Premier David Eby Allocates $160 Million for TransLink RapidBus Priority Corridors in Vancouver and Surrey\",Transportation,\"BC, CA\",David Eby,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier David Eby announces $160M to build 40 kilometers of dedicated bus lanes and transit signal priority across Metro Vancouver RapidBus corridors.\",\"British Columbia Premier David Eby and Transportation Minister Rob Fleming announce $160 million to construct 40 kilometers of dedicated bus-only lanes, queue jumps, and transit signal priority along four major Metro Vancouver transit corridors.\",https://www.choseno.com/news/premier-david-eby-directs-160-million-for-vancouver-and-surrey-rapid-transit-bus-priority-corridors-2026-08-25,https://www.choseno.com/wall/david-eby",
+    "archivedAt": "2026-08-25T07:04:53.979Z"
+  },
+  {
+    "rank": 101,
     "raw": "81,9.0,\"Premier Danielle Smith Directs $200 Million to Expand Cancer Radiotherapy Suites in Calgary and Edmonton\",Healthcare,\"AB, CA\",Danielle Smith,2026-08-25T02:00:00+00:00,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Premier Danielle Smith announces $200M to install 12 precision MR-Linac radiation therapy suites at the Calgary and Edmonton Cancer Institutes.\",\"Alberta Premier Danielle Smith and Health Minister Adriana LaGrange allocate $200 million to install twelve high-precision MR-Linac linear accelerators and expand robotic radiosurgery suites at the Arthur J.E. Child and Cross Cancer Institutes.\",https://www.choseno.com/news/premier-danielle-smith-announces-200-million-for-calgary-and-edmonton-specialized-cancer-radiotherapy-centers-2026-08-25,https://www.choseno.com/wall/danielle-smith",
     "archivedAt": "2026-08-25T06:16:21.567Z"
   },

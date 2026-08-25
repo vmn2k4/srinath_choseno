@@ -406,6 +406,20 @@ export async function deleteNewsArticle(
   return supabase.from("news_articles").delete().eq("id", id);
 }
 
+// Bulk variant for admin multi-select delete (news-distribution table). One
+// round trip via `.in()` rather than N sequential deleteNewsArticle calls --
+// same RLS ("Admins can manage news articles", news_platform migration)
+// gates it, and every dependent row (news_article_politicians, the event/
+// geo table, import-source rows) is ON DELETE CASCADE/SET NULL at the DB
+// level already, so no app-side cleanup is needed here either.
+export async function deleteNewsArticles(
+  supabase: Client,
+  ids: string[]
+): Promise<{ data: null; error: PostgrestError | null }> {
+  if (ids.length === 0) return { data: null, error: null };
+  return supabase.from("news_articles").delete().in("id", ids);
+}
+
 // ── Hero image upload ─────────────────────────────────────────────────────
 
 export async function uploadNewsHeroImage(supabase: Client, file: File, slug: string) {

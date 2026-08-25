@@ -375,13 +375,22 @@ export default function NewsArticleDetailClient({
   )}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(combinedTagList.join(","))}`;
 
   const customTweetArticle = (content as any)?.tweetarticle?.trim();
-  const politicianMentions = taggedReps.length > 0 ? taggedReps.join(", ") : "Elected Officials";
-  const jurisdiction = [article.province, article.country].filter(Boolean).join(", ") || "National";
+  const politicianName = taggedReps.length > 0 ? taggedReps.join(", ") : undefined;
   const summaryText = activeSummary || "";
 
-  const tweetArticleText =
+  const topReviewPrompt = politicianName
+    ? `Review ${politicianName} on Choseno:\n${shareUrl}\n\n`
+    : "";
+
+  const bottomCtaSection = politicianName
+    ? `NOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review ${politicianName}'s record, speak your mind, and let your fellow constituents know where you stand on their official public wall on Choseno.`
+    : `CHOSENO — GOOGLE REVIEWS FOR DEMOCRACY & POLICY:\nChoseno is like Google Reviews for democracy. Review public decisions, track government accountability, and share your rating on Choseno:\n${shareUrl}`;
+
+  const rawTweetArticle =
     customTweetArticle ||
-    `${activeHeadline}\n\n📍 KEY FACTS & SCOPE:\n• Jurisdiction: ${jurisdiction}\n• Officials Involved: ${politicianMentions}\n• Overview: ${summaryText}\n\n🗣️ THE PERSPECTIVES:\n• Civic Context: Detailed reporting, debate, and community impact analysis are available on Choseno.\n• Transparency: Follow legislative milestones, vote counts, and budget line-items.\n\n🗳️ Rate this decision and view the official public record on Choseno:\n📰 Full Article: ${shareUrl}\n\n${formattedHashtagString}`;
+    `${activeHeadline}\n\n${topReviewPrompt}WHAT CHANGED & TAXPAYER IMPACT:\n- Overview: ${summaryText}\n- Policy Details: Full legislative analysis, budget line-items, and vote counts available on Choseno.\n\nTHE DEBATE:\n- Civic Context: Review community perspectives, stakeholder reactions, and policy trade-offs.\n- Transparency: Track implementation milestones and accountability records.\n\n${bottomCtaSection}\n\nRead the full report on Choseno:\n${shareUrl}\n\n${formattedHashtagString}`;
+
+  const tweetArticleText = stripEmoji(rawTweetArticle);
 
   const imageUrl = article.hero_image_url || `${SITE_URL}/api/news/${article.slug}/og-image`;
 

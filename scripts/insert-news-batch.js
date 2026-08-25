@@ -52,6 +52,14 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
 // after row. (Other one-off scripts, e.g. publish-aug23-50-batch.js, have
 // their own calculateViralityScore(), but on a 1-99 scale that doesn't
 // match this table's thresholds -- this is the same idea rescaled to 0-10.)
+function stripEmoji(str) {
+  if (!str) return '';
+  return str
+    .replace(/[\u{1F300}-\u{1F9FF}]|[\u{1FA00}-\u{1FAFF}]|[\u{2600}-\u{27BF}]|[\u{1F1E6}-\u{1F1FF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{FE00}-\u{FE0F}]|[\u{1F900}-\u{1F9FF}]|[\u{200D}]/gu, '')
+    .replace(/[ \t]+/g, ' ')
+    .trim();
+}
+
 function calculateViralityScore(article) {
   let score = 8.0;
   if (article.breakingNews) score += 0.8;
@@ -170,7 +178,7 @@ async function resolvePoliticianIds(article, authHeaders) {
       let offset = 0;
       const pageSize = 1000;
       while (true) {
-        const profRes = await fetch(`${SUPABASE_URL}/rest/v1/profiles?select=id,full_name,designation,constituency,country,role&role=eq.politician&order=id.asc&limit=${pageSize}&offset=${offset}`, {
+        const profRes = await fetch(`${SUPABASE_URL}/rest/v1/profiles?select=id,full_name,designation,constituency,country,role,current_ghost_id,politician_profiles(wall_slug,political_target_role)&role=eq.politician&order=id.asc&limit=${pageSize}&offset=${offset}`, {
           headers: {
             apikey: authHeaders.apikey,
             Authorization: authHeaders.Authorization
@@ -230,7 +238,8 @@ async function resolvePoliticianIds(article, authHeaders) {
     // ── GEOGRAPHIC DISAMBIGUATION & VALIDATION ────────────────────────────
     const profCountry = normalizeCountry(prof.country);
     const profConstituency = normalizeName(prof.constituency || '');
-    const profDesignation = (prof.designation || '').toLowerCase();
+    const pp = Array.isArray(prof.politician_profiles) ? prof.politician_profiles[0] : prof.politician_profiles;
+    const profDesignation = (pp?.political_target_role || prof.designation || '').toLowerCase();
 
     // Check if this is a high-level federal leader (President, PM, Senator, MP, Federal Cabinet)
     const isFederalLeader = /(president|prime minister|senator|minister|mp\b|representative|congress)/i.test(profDesignation) ||
@@ -246,6 +255,11 @@ async function resolvePoliticianIds(article, authHeaders) {
 
     if (isFederalLeader) {
       geoScore = 5; // Federal leaders are broadly applicable across their nation
+    }
+
+    // Executive bonus for top officeholders (Premier > MPP, PM > MP, Governor > Rep)
+    if (/(prime minister|president|premier|governor|mayor)/i.test(profDesignation)) {
+      geoScore += 3;
     }
 
     // State / Province match
@@ -269,21 +283,33 @@ async function resolvePoliticianIds(article, authHeaders) {
     candidateMatchesByName.get(normName).push({ id: prof.id, score: geoScore, prof });
   }
 
-  const selectedIds = new Set();
+  const selectedMatches = [];
 
   // For each distinct leader name matched, pick the best geographic fit
   for (const [name, matches] of candidateMatchesByName.entries()) {
-    if (matches.length === 1) {
-      selectedIds.add(matches[0].id);
-    } else {
-      // Multiple leaders share this name -- sort by highest geographic relevance
-      matches.sort((a, b) => b.score - a.score);
-      // If the top match has a distinct geographic connection, select it
-      selectedIds.add(matches[0].id);
-    }
+    matches.sort((a, b) => b.score - a.score);
+    selectedMatches.push(matches[0]);
   }
 
-  return Array.from(selectedIds);
+  const selectedIds = selectedMatches.map(m => m.id);
+  const matchedProfiles = selectedMatches.map(m => m.prof);
+  
+  // Resolve canonical wall slug for primary politician
+  let primaryWallSlug = null;
+  let primaryPoliticianName = null;
+  if (matchedProfiles.length > 0) {
+    const primary = matchedProfiles[0];
+    primaryPoliticianName = primary.full_name;
+    const pp = Array.isArray(primary.politician_profiles) ? primary.politician_profiles[0] : primary.politician_profiles;
+    primaryWallSlug = pp?.wall_slug || primary.current_ghost_id || null;
+  }
+
+  return {
+    ids: selectedIds,
+    profiles: matchedProfiles,
+    primaryWallSlug,
+    primaryPoliticianName
+  };
 }
 
 /// 2. Article payload to ingest (Surrey Municipal Officials 1-Year Investigative Coverage)
@@ -320,877 +346,950 @@ async function resolvePoliticianIds(article, authHeaders) {
 // 2. Article payload to ingest (Auto-verified 20+ batch)
 // 2. Article payload to ingest (Auto-verified 20+ batch)
 // 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
+// 2. Article payload to ingest (Auto-verified 20+ batch)
 const articles = [
   {
-    "slug": "sec-finalizes-corporate-scope-one-and-two-greenhouse-gas-emissions-disclosure-rules-2026-08-25",
-    "headline": "SEC Finalizes Mandatory Corporate Climate and Greenhouse Gas Emissions Disclosure Standards",
-    "summary": "Securities and Exchange Commission Chair Gary Gensler issues a landmark final rule mandating standardized Scope 1 and Scope 2 greenhouse gas emissions reporting and material climate risk disclosures for publicly traded companies.",
-    "category": "Economy",
-    "country": "US",
-    "province": "DC",
-    "impactArea": "national",
-    "latitude": 38.8951,
-    "longitude": -77.0364,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "SEC",
-      "Gary Gensler",
-      "Climate Disclosures",
-      "Corporate Governance",
-      "Economy",
-      "Financial Regulation"
-    ],
-    "taggedPoliticians": [
-      "Gary Gensler"
-    ],
-    "author": {
-      "name": "Choseno Capital Markets Bureau",
-      "bio": "Federal securities regulation, corporate financial disclosure policy, and market transparency"
-    },
-    "sources": [
-      {
-        "name": "Securities and Exchange Commission",
-        "url": "https://www.sec.gov"
-      },
-      {
-        "name": "The Wall Street Journal",
-        "url": "https://www.wsj.com"
-      }
-    ],
-    "seoTitle": "SEC Finalizes Mandatory Corporate Climate Disclosure Rules | Choseno",
-    "metaDescription": "SEC Chair Gary Gensler enacts landmark final rules mandating Scope 1 and Scope 2 greenhouse gas emissions reporting for public companies.",
-    "tweet": "The SEC finalizes landmark rules requiring publicly traded corporations to disclose Scope 1 and Scope 2 emissions and severe climate financial risks.",
-    "breakingNews": false,
-    "body": "WASHINGTON — The Securities and Exchange Commission (SEC), led by Chair Gary Gensler, voted on Monday to adopt its finalized rules on The Enhancement and Standardization of Climate-Related Disclosures for Investors, establishing binding statutory mandates for large accelerated filers and publicly traded corporations to report material direct greenhouse gas emissions and physical climate risks in annual 10-K filings.\n\nThe regulatory standard requires public companies to disclose Scope 1 (direct operational emissions) and Scope 2 (indirect emissions from purchased electricity) if deemed financially material, alongside audited disclosures of capital expenditures incurred from severe weather events such as hurricanes, wildfires, and sea-level rise.\n\nProviding Transparent, Decision-Useful Information for Capital Markets\nInstitutional investors managing over $130 trillion in global assets have long demanded standardized, comparable climate risk disclosures to price physical asset vulnerabilities, evaluate transition risks, and protect retail shareholders from corporate greenwashing.\n\n\"Investors representing tens of trillions of dollars in retirement savings and pension funds need consistent, comparable, and decision-useful disclosures to evaluate the material financial risks facing public companies,\" SEC Chair Gary Gensler said in Washington. \"Climate risks can have a profound impact on a company's bottom line, balance sheet, and long-term viability. Today's finalized rule brings climate disclosures into the standard securities reporting framework, ensuring investors receive reliable, audited information about material risks.\"\n\nKey Provisions of the Finalized SEC Rule\nUnder the enacted disclosure rules:\n- Scope 1 and Scope 2 Reporting: Large accelerated filers must disclose direct and electricity-related emissions with phased-in independent third-party reasonable assurance audits by 2029.\n- Severe Weather Financial Statement Notes: Requiring capitalized costs, expenditures, and losses incurred as a result of severe weather events (floods, hurricanes, tornadoes, wildfires) to be disclosed in financial statement footnotes.\n- Transition Plan Transparency: Public companies that have established voluntary net-zero goals must disclose detailed capital allocation plans and progress metrics.\n\nInstitutional investors and corporate governance federations commended the finalized standard, highlighting that uniform reporting creates a level playing field across public capital markets."
-  },
-  {
-    "slug": "fra-awards-650-million-for-pacific-northwest-cascadia-ultra-high-speed-rail-corridor-engineering-2026-08-25",
-    "headline": "Federal Railroad Administration Directs $650 Million for Cascadia Ultra-High-Speed Rail Corridor",
-    "summary": "Transportation Secretary Pete Buttigieg and the FRA award $650 million in Federal-State National Rail Program grants to complete detailed engineering and environmental impact statements for the 250-mph Cascadia high-speed rail corridor.",
-    "category": "Transportation",
-    "country": "US",
-    "province": "DC",
-    "impactArea": "regional",
-    "latitude": 47.6062,
-    "longitude": -122.3321,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "FRA",
-      "Pete Buttigieg",
-      "High-Speed Rail",
-      "Cascadia",
-      "Transportation",
-      "Infrastructure"
-    ],
-    "taggedPoliticians": [
-      "Pete Buttigieg"
-    ],
-    "author": {
-      "name": "Choseno Transportation Safety Bureau",
-      "bio": "Federal railway policy, high-speed rail engineering, and intercity passenger transit"
-    },
-    "sources": [
-      {
-        "name": "Federal Railroad Administration",
-        "url": "https://railroads.dot.gov"
-      },
-      {
-        "name": "The Seattle Times",
-        "url": "https://www.seattletimes.com"
-      }
-    ],
-    "seoTitle": "FRA Awards $650M for 250-MPH Cascadia High-Speed Rail Corridor | Choseno",
-    "metaDescription": "USDOT Secretary Pete Buttigieg allocates $650M to finalize engineering for the 250-mph Cascadia bullet train connecting Vancouver, Seattle, and Portland.",
-    "tweet": "USDOT awards $650M for Cascadia Ultra-High-Speed Rail, advancing the 250-mph bullet train linking Vancouver, Seattle, and Portland in under one hour.",
-    "breakingNews": false,
-    "body": "SEATTLE — U.S. Transportation Secretary Pete Buttigieg and Federal Railroad Administration (FRA) Administrator Amit Bose announced on Monday the distribution of $650 million in federal rail capital grants from the Infrastructure Investment and Jobs Act to finance final environmental impact statements, track alignment engineering, and station area master plans for the 350-kilometer Cascadia Ultra-High-Speed Rail corridor connecting Vancouver, British Columbia, Seattle, Washington, and Portland, Oregon.\n\nThe international mega-project, developed in tripartite partnership between Washington State, Oregon, and the Province of British Columbia, will construct a dedicated double-track electrified railway capable of operating commercial bullet trains at speeds up to 250 miles per hour (400 km/h), slashing travel times between Seattle and Vancouver to under one hour.\n\nTransforming Regional Mobility and Eliminating 6 Million Highway Trips Annually\nInterstate 5 through the Pacific Northwest is one of the most congested highway corridors in North America, where regional population growth is projected to add 4 million new residents by 2050, overwhelming highway lanes and airport runways.\n\n\"The Pacific Northwest Cascadia mega-region has the economic vitality, the density, and the cross-border vision to lead America into the high-speed rail era,\" Transportation Secretary Pete Buttigieg said at King Street Station in Seattle. \"A 250-mph electric train connecting Vancouver, Seattle, and Portland in under an hour will transform regional commerce, take millions of cars off I-5, eliminate short-haul flight emissions, and support over 35,000 good union construction careers.\"\n\nEngineering Milestones and Cross-Border Interties\nThe $650 million federal allocation finances:\n- Detailed Track Alignment & Tunnel Engineering: Designing grade-separated rights-of-way, mountain tunnels, and seismic-resistant viaducts.\n- Cross-Border Pre-Clearance Customs Facilities: Designing streamlined international customs processing terminals at Vancouver Pacific Central and Seattle King Street Stations.\n- High-Speed Rail Station Area Urban Density Plans: Coordinating transit-oriented housing and commercial development around five intermediate regional stations.\n\nPacific Northwest governors, British Columbia ministers, business leaders, and construction trade unions commended the federal awards, emphasizing that high-speed rail binds the Cascadia innovation economy into a globally competitive mega-region."
-  },
-  {
-    "slug": "department-of-energy-directs-480-million-for-pacific-northwest-green-hydrogen-hub-electrolyzer-arrays-2026-08-25",
-    "headline": "Department of Energy Awards $480 Million for Pacific Northwest Green Hydrogen Electrolyzer Hubs",
-    "summary": "Energy Secretary Jennifer Granholm awards $480 million to construct multi-megawatt green hydrogen production facilities powered by renewable hydro and wind energy in Washington and Oregon.",
-    "category": "Clean Energy",
-    "country": "US",
-    "province": "DC",
-    "impactArea": "regional",
-    "latitude": 46.2804,
-    "longitude": -119.2752,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "Department of Energy",
-      "Jennifer Granholm",
-      "Clean Hydrogen",
-      "Pacific Northwest",
-      "Clean Energy",
-      "Manufacturing"
-    ],
-    "taggedPoliticians": [
-      "Jennifer Granholm"
-    ],
-    "author": {
-      "name": "Choseno Federal Energy Desk",
-      "bio": "Federal energy technology, regional clean hydrogen hubs, and industrial decarbonization"
-    },
-    "sources": [
-      {
-        "name": "U.S. Department of Energy",
-        "url": "https://www.energy.gov"
-      },
-      {
-        "name": "The Oregonian",
-        "url": "https://www.oregonlive.com"
-      }
-    ],
-    "seoTitle": "DOE Directs $480M for Pacific Northwest Clean Hydrogen Hub | Choseno",
-    "metaDescription": "Energy Secretary Jennifer Granholm allocates $480M to build utility-scale green hydrogen production plants across Washington and Oregon.",
-    "tweet": "The DOE awards $480M to construct commercial green hydrogen electrolyzers powered by Columbia River hydro in the Pacific Northwest.",
-    "breakingNews": false,
-    "body": "RICHLAND, Wash. — Secretary of Energy Jennifer Granholm announced on Monday the distribution of $480 million in Phase 1 implementation grants through the Regional Clean Hydrogen Hubs Program (H2Hubs) to construct commercial-scale green hydrogen production electrolyzers, cryogenic storage terminals, and industrial pipeline manifolds across the Pacific Northwest Hydrogen Hub (PNW H2) in Washington, Oregon, and Montana.\n\nThe regional hub, managed in partnership with public utility districts, tribal nations, and industrial manufacturers, utilizes low-cost zero-carbon hydroelectricity from the Columbia River basin and regional wind energy to power 300 megawatts of Proton Exchange Membrane (PEM) electrolyzers, manufacturing zero-emission green hydrogen for heavy transportation, clean fertilizer production, and maritime vessels.\n\nDecarbonizing Heavy Industry and Maritime Shipping\nHeavy industries—including chemical refining, agricultural fertilizer synthesis, and maritime cargo shipping—cannot practically be electrified with batteries alone, requiring high-energy-density green hydrogen molecules to displace fossil fuels.\n\n\"The Pacific Northwest has some of the cleanest electricity on earth, and we are harnessing that clean energy to lead the global green hydrogen revolution,\" Secretary Jennifer Granholm said at the Pacific Northwest National Laboratory in Richland. \"This $480 million investment puts clean hydrogen production to work in heavy manufacturing, ports, and long-haul trucking, cleaning up our air, creating thousands of high-wage union energy careers, and establishing America as the clean fuel capital of the world.\"\n\nHub Infrastructure Allocations\nThe $480 million award finances:\n- 300-MW Commercial PEM Electrolyzer Facilities: Located in Centralia, Richland, and Boardman, producing 120 metric tons of green hydrogen daily.\n- Maritime Port Hydrogen Fueling Terminals: Installing high-capacity liquid hydrogen bunkering stations at the Port of Tacoma and Port of Portland.\n- Agricultural Ammonia Production Conversion: Retrofitting regional chemical fertilizer plants to synthesize zero-carbon green ammonia from electrolytic hydrogen.\n\nBuilding trades unions, tribal council leaders, and regional utility executives commended the federal awards, highlighting that green hydrogen infrastructure provides high-wage careers in rural industrial communities."
-  },
-  {
-    "slug": "epa-issues-final-lead-and-copper-rule-improvements-mandating-100-percent-lead-pipe-removal-in-ten-years-2026-08-25",
-    "headline": "EPA Finalizes Strict Lead and Copper Rule Mandating 100% Lead Pipe Replacements in 10 Years",
-    "summary": "Environmental Protection Agency Administrator Michael Regan issues the finalized Lead and Copper Rule Improvements, requiring all public drinking water utilities to replace 100% of lead service lines within ten years regardless of water testing results.",
-    "category": "Environment",
-    "country": "US",
-    "province": "DC",
-    "impactArea": "national",
-    "latitude": 38.8951,
-    "longitude": -77.0364,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "EPA",
-      "Michael Regan",
-      "Clean Water",
-      "Lead Pipes",
-      "Public Health",
-      "Infrastructure"
-    ],
-    "taggedPoliticians": [
-      "Michael Regan"
-    ],
-    "author": {
-      "name": "Choseno Environmental Health Bureau",
-      "bio": "Federal environmental regulations, safe drinking water policy, and public health standards"
-    },
-    "sources": [
-      {
-        "name": "Environmental Protection Agency",
-        "url": "https://www.epa.gov"
-      },
-      {
-        "name": "Associated Press",
-        "url": "https://apnews.com"
-      }
-    ],
-    "seoTitle": "EPA Mandates 100% Lead Water Pipe Removal Within 10 Years | Choseno",
-    "metaDescription": "EPA Administrator Michael Regan finalizes rules requiring all US water utilities to replace 100% of lead drinking water pipes within a decade.",
-    "tweet": "The EPA finalizes landmark Lead and Copper Rule improvements, requiring all public water utilities to replace 100% of lead pipes within 10 years.",
-    "breakingNews": false,
-    "body": "WASHINGTON — Environmental Protection Agency (EPA) Administrator Michael Regan announced on Monday the formal promulgation and statutory enforcement schedule for the Lead and Copper Rule Improvements (LCRI), establishing an absolute nationwide legal mandate requiring all public water systems across the United States to physically excavate and replace 100 percent of lead drinking water service lines within ten years.\n\nThe regulatory standard eliminates long-standing legal loopholes that allowed utilities to leave lead pipes in the ground if chemical corrosion inhibitors maintained tap sampling below arbitrary action levels, lowering the federal lead action level from 15 parts per billion down to 10 parts per billion.\n\nProtecting Millions of American Children from Neurological Damage\nMore than 9 million legacy lead service lines remain connected to American homes, childcare centers, and elementary schools. Medical science confirms that there is no safe level of lead exposure for children, where even microscopic lead contamination causes irreversible neurological impairment, reduced IQ, and behavioral disorders.\n\n\"Lead is a potent neurotoxin that steals the potential of our children, and for too long, millions of American families have been exposed to lead every time they turn on their taps,\" EPA Administrator Michael Regan said in Washington. \"Today's finalized rule achieves what should have been done decades ago: requiring every water utility in America to get all lead pipes out of the ground within ten years. Supported by $15 billion in federal infrastructure funding, we are finally consigning lead pipes to the history books.\"\n\nCore Regulatory Mandates Under LCRI\nUnder the finalized EPA rule:\n- Mandatory 10-Year Replacement Timeline: Utilities must replace an average of 10 percent of their lead service line inventory every year.\n- Full-Line Replacement Mandate: Prohibiting partial lead service line replacements that temporarily spike lead concentrations.\n- Public Digital Pipe Inventories: Requiring public water utilities to maintain interactive online GIS maps showing the location and material of every service line.\n\nPublic health pediatricians, clean water advocates, and municipal water directors celebrated the historic rule, highlighting that full public funding ensures lead elimination without burdensome water rate hikes."
-  },
-  {
-    "slug": "california-governor-gavin-newsom-signs-landmark-ocean-desalination-and-marine-brackish-groundwater-act-2026-08-25",
-    "headline": "Governor Gavin Newsom Signs Expedited Marine Desalination and Coastal Water Resilience Act",
-    "summary": "California Governor Gavin Newsom and State Senator Ben Allen enact Senate Bill 1390, establishing an expedited 180-day coastal permitting framework and allocating $250 million for subsurface intake ocean desalination and brackish groundwater treatment plants.",
-    "category": "Infrastructure",
-    "country": "US",
-    "province": "CA",
-    "impactArea": "state",
-    "latitude": 33.7701,
-    "longitude": -118.1937,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "Gavin Newsom",
-      "Ben Allen",
-      "California",
-      "Desalination",
-      "Water Resilience",
-      "Clean Water"
-    ],
-    "taggedPoliticians": [
-      "Gavin Newsom",
-      "Ben Allen"
-    ],
-    "author": {
-      "name": "Choseno California Water Bureau",
-      "bio": "California coastal water policy, marine engineering, and drought adaptation"
-    },
-    "sources": [
-      {
-        "name": "Los Angeles Times",
-        "url": "https://www.latimes.com"
-      },
-      {
-        "name": "Orange County Register",
-        "url": "https://www.ocregister.com"
-      }
-    ],
-    "seoTitle": "Gavin Newsom Signs $250M Coastal Desalination Permitting Act | Choseno",
-    "metaDescription": "California Governor Gavin Newsom signs SB 1390, establishing a fast-track 180-day permit process and $250M for environmentally safe desalination plants.",
-    "tweet": "Governor Gavin Newsom and Ben Allen sign SB 1390, allocating $250M to build environmentally safe subsurface ocean desalination plants in California.",
-    "breakingNews": false,
-    "body": "HUNTINGTON BEACH, Calif. — Governor Gavin Newsom and State Senator Ben Allen signed Senate Bill 1390 into law on Monday, establishing an expedited 180-day interagency permitting process and directing $250 million from the California Climate Commitment to engineer and construct environmentally protective subsurface-intake ocean desalination facilities and coastal brackish groundwater treatment plants across Monterey, Ventura, Orange, and San Diego Counties.\n\nThe legislation modernizes state coastal development standards by mandating environmentally safe subsurface slant wells that draw seawater through natural sand filters beneath the ocean floor, eliminating marine life entrainment and impingement while pairing desalination operations with dedicated 100 percent renewable solar and wind power.\n\nBuilding Climate-Proof, Ocean-Reliant Drinking Water Supplies\nAmid intensifying Pacific climate whiplash characterized by severe multi-year megadroughts, coastal cities need drought-independent local water supplies that do not depend on vulnerable snowpack from the Sierra Nevada or imported Colorado River supplies.\n\n\"California possesses 840 miles of majestic Pacific coastline, and ocean water represents an inexhaustible, climate-proof water source if we develop it responsibly,\" Governor Newsom said during a bill signing in Huntington Beach. \"SB 1390 cuts through years of bureaucratic red tape, setting a strict 180-day state permitting timeline for projects that use subsurface slant wells to protect marine life. This $250 million investment builds the modern, clean-powered desalination infrastructure needed to drought-proof our coastal communities for decades.\"\n\nMajor Infrastructure Projects Funded\nThe $250 million package finances:\n- Monterey Peninsula Subsurface Desalination Facility: $90 million for a 6.4-MGD plant utilizing slant wells to restore overdrafted Carmel River flows.\n- Doheny Ocean Desalination Project (Orange County): $70 million for a 5-MGD municipal desalination facility providing local emergency water security.\n- Ventura County Coastal Brackish Groundwater Extraction: $50 million for deep groundwater treatment wells and reverse-osmosis skids.\n- Marine Ecological Monitoring & Brine Diffusers: $40 million to deploy automated multi-port offshore brine diffusers that ensure rapid dilution without ocean stagnation.\n\nMunicipal water directors, building trades labor unions, and marine conservation biologists commended the legislation, highlighting that subsurface intakes resolve environmental concerns while securing local drinking water independence."
-  },
-  {
-    "slug": "texas-governor-greg-abbott-directs-260-million-for-statewide-commercial-drone-air-traffic-corridors-and-vertiports-2026-08-25",
-    "headline": "Governor Greg Abbott Directs $260 Million for Texas Advanced Air Mobility and Commercial Vertiports",
-    "summary": "Texas Governor Greg Abbott and TxDOT announce $260 million to construct twenty-four electric vertical takeoff and landing (eVTOL) vertiports and deploy automated uncrewed traffic management (UTM) corridors across the Texas Triangle.",
-    "category": "Technology",
-    "country": "US",
-    "province": "TX",
-    "impactArea": "state",
-    "latitude": 32.7767,
-    "longitude": -96.797,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "Greg Abbott",
-      "Texas",
-      "Advanced Air Mobility",
-      "eVTOL",
-      "Drones",
-      "Technology",
-      "Infrastructure"
-    ],
-    "taggedPoliticians": [
-      "Greg Abbott"
-    ],
-    "author": {
-      "name": "Choseno Texas Politics Desk",
-      "bio": "Texas state government, advanced aviation technology, and aerospace infrastructure"
-    },
-    "sources": [
-      {
-        "name": "The Dallas Morning News",
-        "url": "https://www.dallasnews.com"
-      },
-      {
-        "name": "Houston Chronicle",
-        "url": "https://www.houstonchronicle.com"
-      }
-    ],
-    "seoTitle": "Greg Abbott Directs $260M for Texas eVTOL Vertiports & Drone Corridors | Choseno",
-    "metaDescription": "Texas Governor Greg Abbott awards $260 million to build 24 commercial eVTOL vertiports and uncrewed drone air corridors across Texas.",
-    "tweet": "Governor Greg Abbott announces $260M to construct 24 commercial eVTOL vertiports and uncrewed drone freight corridors across the Texas Triangle.",
-    "breakingNews": false,
-    "body": "DALLAS — Governor Greg Abbott and the Texas Department of Transportation (TxDOT) announced on Monday the distribution of $260 million in state aerospace infrastructure grants through the Texas Advanced Air Mobility (AAM) Initiative to construct twenty-four electric Vertical Takeoff and Landing (eVTOL) commercial passenger vertiports and deploy uncrewed traffic management (UTM) digital flight corridors across Dallas-Fort Worth, Houston, Austin, and San Antonio.\n\nThe investment positions Texas as the premier global launchpad for electric air taxis and automated commercial cargo delivery drones, constructing high-voltage megawatt vertiport charging pads on hospital rooftops, regional airports, and suburban intermodal transit centers.\n\nLeading the Next Era of Urban Aviation and Express Medical Freight\nRapid urban highway congestion in the booming Texas Triangle has spurred commercial demand for electric air taxis capable of transporting passengers between downtown commercial centers and international airports in under fifteen minutes.\n\n\"Texas is the frontier of aviation innovation, from the earliest days of flight to the future of urban air mobility,\" Governor Abbott said during an announcement at the Vertiport Chicago site in Dallas. \"Electric air taxis and cargo drones will revolutionize urban transportation, deliver life-saving medical organs across cities in minutes, and relieve highway congestion. This $260 million investment builds the charging vertiports and digital airspace corridors needed to establish Texas as the advanced air mobility capital of the world.\"\n\nVertiport Deployments and Airspace Infrastructure\nThe $260 million program includes:\n- 24 Commercial Passenger Vertiports: Constructing elevated landing pads with 1-MW automated electric aircraft chargers in major metropolitan centers.\n- Statewide Low-Altitude Digital UTM Corridors: Installing cellular-connected 5G radar telemetry tracking thousands of commercial drones simultaneously.\n- Emergency Medical Drone Delivery Hubs: $40 million dedicated for automated drone delivery networks transporting blood products and antivenom to rural emergency rooms.\n\nAerospace manufacturers, regional airport directors, and building trades labor unions commended the state investment, highlighting that proactive ground infrastructure accelerates commercial air taxi certification."
-  },
-  {
-    "slug": "florida-governor-ron-desantis-announces-140-million-for-tampa-bay-and-biscayne-bay-coral-nursery-reef-propagation-2026-08-25",
-    "headline": "Governor Ron DeSantis Allocates $140 Million for Florida Coral Reef Propagation and Restoration",
-    "summary": "Florida Governor Ron DeSantis and FWC announce $140 million in state marine conservation grants to construct climate-resilient land-based coral nurseries and outplant 500,000 heat-tolerant stony corals along the Florida Reef Tract.",
-    "category": "Environment",
-    "country": "US",
-    "province": "FL",
-    "impactArea": "state",
-    "latitude": 25.7617,
-    "longitude": -80.1918,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "Ron DeSantis",
-      "Shawn Hamilton",
-      "Florida",
-      "Coral Reefs",
-      "Marine Conservation",
-      "Environment"
-    ],
-    "taggedPoliticians": [
-      "Ron DeSantis",
-      "Shawn Hamilton"
-    ],
-    "author": {
-      "name": "Choseno Florida Desk",
-      "bio": "Florida marine resource policy, coral reef ecology, and coastal ecosystem restoration"
-    },
-    "sources": [
-      {
-        "name": "Miami Herald",
-        "url": "https://www.miamiherald.com"
-      },
-      {
-        "name": "Sun Sentinel",
-        "url": "https://www.sun-sentinel.com"
-      }
-    ],
-    "seoTitle": "DeSantis Directs $140M for Florida Coral Reef Propagation | Choseno",
-    "metaDescription": "Florida Governor Ron DeSantis awards $140M to construct onshore coral gene banks and plant 500,000 heat-tolerant corals along the Florida Reef Tract.",
-    "tweet": "Governor Ron DeSantis announces $140M to build land-based coral nurseries and outplant 500,000 heat-tolerant corals to restore Florida's Barrier Reef.",
-    "breakingNews": false,
-    "body": "MIAMI — Governor Ron DeSantis and Florida Department of Environmental Protection (DEP) Secretary Shawn Hamilton announced on Monday the distribution of $140 million in state marine conservation capital through the Florida Coral Reef Protection and Restoration Program to construct state-of-the-art land-based bio-secure coral gene nurseries and outplant more than 500,000 genetically resilient, heat-tolerant stony corals across the 350-mile Florida Reef Tract.\n\nThe investment coordinates public funding with marine research institutions—including the University of Miami Rosenstiel School, Nova Southeastern University, and Mote Marine Laboratory—to scale micro-fragmentation propagation and selective breeding of elkhorn, staghorn, and brain corals capable of surviving elevated ocean summer temperatures.\n\nProtecting Florida's Natural Barrier Against Storm Surges and Sustaining Tourism\nFlorida's Coral Reef Tract is the third-largest living barrier reef in the world, generating over $8.5 billion in annual economic output from recreational diving, commercial fishing, and tourism while attenuating up to 97 percent of ocean wave energy during severe tropical storms.\n\n\"Florida's coral reefs are a national ecological treasure and the first line of defense protecting our coastal communities from hurricane storm surges,\" Governor DeSantis said at the University of Miami marine campus. \"Following recent ocean heatwaves, we are taking unprecedented, science-driven action to protect and restore our reef tract. This $140 million investment expands our world-class land-based coral breeding nurseries, outplants half a million resilient corals, and ensures Florida's reefs thrive for future generations.\"\n\nCoral Propagation and Coastal Infrastructure Upgrades\nThe $140 million program finances:\n- Four Regional Land-Based Coral Gene Banks: Constructing climate-controlled seawater raceways holding thousands of genetically distinct broodstock colonies.\n- 500,000 Heat-Tolerant Coral Outplantings: Utilizing underwater divers and automated robotic micro-cement anchors to secure nursery-grown corals onto degraded barrier reefs.\n- Biscayne Bay & Florida Keys Water Quality Monitoring: $35 million to expand continuous online salinity, dissolved oxygen, and nutrient sensors along coastal reef lines.\n\nMarine scientists, recreational diving associations, and commercial charter captains praised the governor's decisive funding, highlighting that genetic coral breeding provides the scientific foundation to rebuild resilient ocean ecosystems."
-  },
-  {
-    "slug": "governor-kathy-hochul-allocates-210-million-for-empire-station-complex-subway-underground-concourse-connections-2026-08-25",
-    "headline": "Governor Kathy Hochul Directs $210 Million for Penn Station Underground Concourse and Subway Interties",
-    "summary": "New York Governor Kathy Hochul and the MTA award $210 million in capital construction contracts to build a continuous underground pedestrian concourse connecting Penn Station to the Herald Square and 34th Street subway complexes.",
-    "category": "Transportation",
-    "country": "US",
-    "province": "NY",
-    "impactArea": "state",
-    "latitude": 40.7505,
-    "longitude": -73.9934,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "Kathy Hochul",
-      "New York",
-      "Penn Station",
-      "MTA",
-      "Subway",
-      "Transit",
-      "Infrastructure"
-    ],
-    "taggedPoliticians": [
-      "Kathy Hochul"
-    ],
-    "author": {
-      "name": "Choseno New York Transportation Bureau",
-      "bio": "MTA transit capital projects, Penn Station reconstruction, and urban pedestrian mobility"
-    },
-    "sources": [
-      {
-        "name": "The New York Times",
-        "url": "https://www.nytimes.com"
-      },
-      {
-        "name": "AM New York",
-        "url": "https://www.amny.com"
-      }
-    ],
-    "seoTitle": "Kathy Hochul Directs $210M for Penn Station Underground Concourses | Choseno",
-    "metaDescription": "New York Governor Kathy Hochul awards $210M to construct a continuous underground pedestrian concourse linking Penn Station to Herald Square.",
-    "tweet": "Governor Kathy Hochul announces $210M to construct a continuous underground pedestrian concourse connecting Penn Station to Herald Square subways.",
-    "breakingNews": false,
-    "body": "NEW YORK — Governor Kathy Hochul and Metropolitan Transportation Authority (MTA) Chair and CEO Janno Lieber announced on Monday the awarding of $210 million in civil construction contracts through the MTA Capital Program to build the 33rd Street Underground Pedestrian Concourse, creating a direct, weather-protected subterranean connection between Penn Station and the 34th Street–Herald Square subway complex.\n\nThe project re-establishes the historic \"Gimbels Passageway,\" widening the subterranean corridor to thirty feet, installing high-definition digital passenger wayfinding, ADA-accessible elevators, and direct faregate turnstiles connecting Long Island Rail Road (LIRR), NJ Transit, and Amtrak passenger platforms directly to the B, D, F, M, N, Q, R, W, and PATH train lines.\n\nRelieving Severe Street-Level Congestion for 600,000 Daily Commuters\nPenn Station is the busiest transit hub in the Western Hemisphere, serving over 600,000 daily passenger trips. Currently, tens of thousands of transferring commuters are forced to exit onto crowded street-level sidewalks along 33rd and 34th Streets, creating severe midtown pedestrian gridlock.\n\n\"Penn Station is the front door to New York City for hundreds of thousands of commuters every single day, and we are transforming it into a world-class transit hub,\" Governor Hochul said during an announcement at Moynihan Train Hall. \"For decades, commuters were forced to walk in rain and snow across crowded midtown streets just to transfer between trains. This $210 million investment builds a wide, brightly lit, and modern underground concourse connecting Penn Station directly to Herald Square subways, saving commuters time and improving safety for all New Yorkers.\"\n\nConcourse Infrastructure and Architectural Features\nThe $210 million project finances:\n- 1,200-Foot Widened Subterranean Concourse: Reconstructing the corridor with structural steel supports, terrazzo flooring, and high-efficiency LED ceiling fixtures.\n- Direct Subway Faregate Plazas: Installing 36 automated OMNY contactless faregates at the 6th Avenue subway entrance.\n- Modern Life-Safety & Ventilation Systems: Installing commercial air filtration and automated fire suppression dampers throughout the concourse.\n\nTransit rider advocacy organizations, business improvement districts, and construction trade unions praised the contract awards, emphasizing that underground pedestrian connectivity dramatically improves commuter transit speed."
-  },
-  {
-    "slug": "governor-jb-pritzker-signs-statutory-protections-mandating-transparent-algorithmic-workplace-productivity-disclosures-2026-08-25",
-    "headline": "Governor JB Pritzker Signs Nation's First Algorithmic Workplace Productivity Transparency Act",
-    "summary": "Illinois Governor JB Pritzker signs Public Act 104-0388, prohibiting commercial employers from using automated algorithmic quotas that compromise employee bathroom access and mandating full transparency for electronic workplace monitoring systems.",
-    "category": "Economy",
-    "country": "US",
-    "province": "IL",
-    "impactArea": "state",
-    "latitude": 41.8781,
-    "longitude": -87.6298,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "JB Pritzker",
-      "Illinois",
-      "Worker Rights",
-      "Artificial Intelligence",
-      "Algorithmic Management",
-      "Labor"
-    ],
-    "taggedPoliticians": [
-      "JB Pritzker"
-    ],
-    "author": {
-      "name": "Choseno Midwest Labor Bureau",
-      "bio": "Illinois labor regulation, workplace artificial intelligence policy, and worker privacy"
-    },
-    "sources": [
-      {
-        "name": "Chicago Sun-Times",
-        "url": "https://chicago.suntimes.com"
-      },
-      {
-        "name": "WBEZ Chicago",
-        "url": "https://www.wbez.org"
-      }
-    ],
-    "seoTitle": "JB Pritzker Signs Nation's First Workplace Algorithm Transparency Act | Choseno",
-    "metaDescription": "Illinois Governor JB Pritzker signs legislation mandating transparency for AI worker tracking algorithms and banning abusive productivity quotas.",
-    "tweet": "Governor JB Pritzker signs historic legislation protecting workers from abusive algorithmic tracking and automated workplace productivity quotas.",
-    "breakingNews": false,
-    "body": "CHICAGO — Governor JB Pritzker signed Public Act 104-0388 into law on Monday, enacting the nation's first comprehensive Algorithmic Workplace Productivity Transparency Act, establishing statutory guardrails governing how commercial employers in logistics warehousing, call centers, and delivery services utilize artificial intelligence and algorithmic monitoring tools to evaluate, discipline, or terminate employees.\n\nThe legislation, supported by labor unions, worker centers, and legal aid federations, requires employers to provide workers with written explanations of all automated surveillance and productivity scoring algorithms, while explicitly prohibiting speed quotas that interfere with statutory meal breaks, rest periods, or bathroom access.\n\nProtecting Warehouse and Service Workers from Abusive Automated Quotas\nLogistics warehouse workers and customer service representatives increasingly work under algorithmic tracking systems that measure \"time off task\" down to the second, penalizing employees who pause to stretch or drink water, driving workplace injury rates in automated fulfillment centers to twice the private industry average.\n\n\"Technology in the workplace should empower workers, not subject them to constant, dehumanizing surveillance and impossible speed quotas that lead to severe injuries,\" Governor Pritzker said during a bill signing at a union training center in Chicago. \"Public Act 104-0388 ensures that Illinois workers are treated with basic human dignity, mandating complete transparency in automated scoring systems, protecting essential rest breaks, and ensuring automated algorithms cannot secretly fire hardworking men and women.\"\n\nKey Worker Protections Under Public Act 104-0388\nUnder the enacted law:\n- Mandatory Algorithmic Disclosures: Employers must provide newly hired workers with plain-language descriptions of all biometric, keystroke, and video surveillance tools used for productivity evaluation.\n- Ban on Unsafe Speed Quotas: Employers cannot establish productivity quotas that penalize workers for taking statutory meal breaks or using restroom facilities.\n- Right to Contest Algorithmic Disciplines: Employees facing disciplinary action or termination generated by an algorithm have a statutory right to human review and complete access to underlying tracking telemetry.\n\nLabor leaders, workplace safety advocates, and employment law scholars commended the landmark statute, noting that Illinois is establishing the national model for ethical artificial intelligence governance in the workplace."
-  },
-  {
-    "slug": "governor-josh-shapiro-directs-105-million-for-allegheny-and-delaware-river-commercial-freight-dredging-and-locks-2026-08-25",
-    "headline": "Governor Josh Shapiro Allocates $105 Million for Pennsylvania Commercial Marine Locks and Freight Terminals",
-    "summary": "Pennsylvania Governor Josh Shapiro and PennDOT announce $105 million to rehabilitate navigation lock structures and dredge commercial freight berths along the Allegheny, Monongahela, and Delaware Rivers.",
-    "category": "Transportation",
-    "country": "US",
-    "province": "PA",
-    "impactArea": "state",
-    "latitude": 40.4406,
-    "longitude": -79.9959,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "Josh Shapiro",
-      "Pennsylvania",
-      "Inland Ports",
-      "Transportation",
-      "Freight",
-      "Infrastructure"
-    ],
-    "taggedPoliticians": [
-      "Josh Shapiro"
-    ],
-    "author": {
-      "name": "Choseno Pennsylvania Bureau",
-      "bio": "Pennsylvania commercial water transport, freight logistics, and river infrastructure"
-    },
-    "sources": [
-      {
-        "name": "Pittsburgh Post-Gazette",
-        "url": "https://www.post-gazette.com"
-      },
-      {
-        "name": "Philadelphia Inquirer",
-        "url": "https://www.inquirer.com"
-      }
-    ],
-    "seoTitle": "Josh Shapiro Directs $105M for PA Commercial River Locks & Docks | Choseno",
-    "metaDescription": "PA Governor Josh Shapiro awards $105 million to modernize river locks and commercial bulk shipping docks in Pittsburgh and Philadelphia.",
-    "tweet": "Governor Josh Shapiro announces $105M in state capital grants to modernize commercial river locks and bulk shipping terminals across Pennsylvania.",
-    "breakingNews": false,
-    "body": "PITTSBURGH — Governor Josh Shapiro and Pennsylvania Department of Transportation (PennDOT) Secretary Mike Carroll announced on Monday the distribution of $105 million in state maritime infrastructure grants through the Pennsylvania Marine Transportation Program to modernize commercial bulk cargo terminals, rehabilitate century-old lock gate structures, and dredge deepwater berths along the Allegheny, Monongahela, and Delaware Rivers.\n\nThe investment targets critical industrial river ports—including the Port of Pittsburgh, the PhilaPort deepwater terminals in Philadelphia, and the Port of Erie—that handle over 65 million tons of steel, aggregates, coal, agricultural commodities, and manufacturing components annually.\n\nKeeping Pennsylvania's River Freight Moving Efficiently\nWaterborne river freight is the most fuel-efficient method for transporting heavy raw materials, where a single 15-barge river tow carries the cargo equivalent of 1,050 commercial tractor-trailers, significantly lowering highway congestion on Interstates 76 and 80.\n\n\"Pennsylvania was built on our rivers and industrial ports, and they remain vital economic engines connecting our Commonwealth to global markets,\" Governor Shapiro said at a maritime terminal along the Monongahela River in Pittsburgh. \"By investing $105 million in modern dock walls, high-capacity cranes, and deepwater dredging, we are keeping our river navigation channels open, lowering shipping costs for Pennsylvania manufacturers, and supporting thousands of good-paying union maritime and industrial jobs.\"\n\nMajor Port Infrastructure Packages\nThe $105 million allocation finances:\n- Port of Pittsburgh Inland Navigation Modernization: $50 million to repair crumbling concrete dock walls and install heavy-duty electric crane infrastructure across five regional terminals.\n- PhilaPort Deepwater Berth Maintenance: $35 million for maintenance dredging maintaining 45-foot authorized draft along the Delaware River.\n- Port of Erie Great Lakes Freight Dock Fortification: $20 million for dock wall stabilization and heavy machinery roll-on/roll-off ramps.\n\nMaritime trade associations, river pilot federations, and manufacturing leaders praised the state investment, highlighting that reliable river locks prevent costly commercial shipping bottlenecks."
-  },
-  {
-    "slug": "governor-gretchen-whitmer-awards-90-million-for-statewide-rural-veterans-telehealth-and-outpatient-clinics-2026-08-25",
-    "headline": "Governor Gretchen Whitmer Directs $90 Million for Michigan Rural Veterans Healthcare and Telehealth",
-    "summary": "Michigan Governor Gretchen Whitmer and MVAA announce $90 million in state veterans healthcare grants to modernize outpatient clinics, deploy mobile telehealth vans, and recruit specialized psychiatric clinicians across eighteen rural counties.",
-    "category": "Healthcare",
-    "country": "US",
-    "province": "MI",
-    "impactArea": "state",
-    "latitude": 46.4953,
-    "longitude": -84.3453,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "Gretchen Whitmer",
-      "Michigan",
-      "Veterans",
-      "Healthcare",
-      "Telehealth",
-      "Public Health"
-    ],
-    "taggedPoliticians": [
-      "Gretchen Whitmer"
-    ],
-    "author": {
-      "name": "Choseno Great Lakes Bureau",
-      "bio": "Michigan veterans affairs policy, rural healthcare delivery, and military health services"
-    },
-    "sources": [
-      {
-        "name": "The Mining Journal (Marquette)",
-        "url": "https://www.miningjournal.net"
-      },
-      {
-        "name": "Detroit Free Press",
-        "url": "https://www.freep.com"
-      }
-    ],
-    "seoTitle": "Whitmer Allocates $90M for Michigan Rural Veterans Health | Choseno",
-    "metaDescription": "Michigan Governor Gretchen Whitmer awards $90 million to modernize outpatient clinics and deploy mobile health vans for rural veterans across 18 counties.",
-    "tweet": "Governor Gretchen Whitmer announces $90M in state grants to modernize outpatient clinics and deploy mobile healthcare vans for rural Michigan veterans.",
-    "breakingNews": false,
-    "body": "SAULT STE. MARIE, Mich. — Governor Gretchen Whitmer and Michigan Veterans Affairs Agency (MVAA) Director Brian L. Love announced on Monday the distribution of $90 million in state healthcare capital grants to construct and modernize specialized veterans outpatient clinics, expand mobile clinical telemetry vans, and recruit certified mental health providers across eighteen rural counties in Northern Michigan and the Upper Peninsula.\n\nThe investment targets rural communities where over 85,000 military veterans live hours away from primary VA medical centers in Iron Mountain, Saginaw, or Ann Arbor, requiring elderly veterans to travel long distances on hazardous winter highways for routine physical therapy, audiology exams, and PTSD counseling.\n\nHonoring Michigan Veterans with High-Quality Local Healthcare Access\nMilitary veterans in rural communities face high rates of service-connected chronic pain, traumatic brain injuries (TBI), and mental health challenges, where localized outpatient care and mobile telemetry prevent clinical isolation.\n\n\"Our veterans put their lives on the line to defend our freedom and our nation, and we have a sacred duty to care for them when they return home,\" Governor Whitmer said at the American Legion Post in Sault Ste. Marie. \"No veteran in Michigan should have to drive four hours in a blizzard just to see a doctor or talk to a mental health counselor. This $90 million investment brings world-class medical care directly to our veterans in their own communities, providing modern clinics, mobile health vans, and dedicated support so our heroes get the care they earned and deserve.\"\n\nVeterans Healthcare Allocations\nThe $90 million program includes:\n- 18 Rural Outpatient Clinic Modernizations: $50 million to renovate community clinics with digital audiology booths, physical therapy suites, and diagnostic imaging.\n- 12 Mobile Veterans Healthcare Telemetry Vans: $20 million to deploy custom-built clinical vans providing free primary care, blood work, and prescription delivery.\n- Veterans Mental Health Provider Fellowships: $20 million providing salary stipends and full student loan repayments for clinical psychologists and social workers specializing in combat trauma.\n\nVeterans service organizations, county veterans counselors, and rural hospital executives commended the governor's targeted funding, highlighting that mobile outreach ensures no veteran is left behind."
-  },
-  {
-    "slug": "governor-roy-cooper-directs-160-million-for-carolina-lithium-and-battery-materials-workforce-academy-2026-08-25",
-    "headline": "Governor Roy Cooper Allocates $160 Million for North Carolina Battery Materials and Lithium Hubs",
-    "summary": "North Carolina Governor Roy Cooper announces $160 million in state clean technology grants to establish the Carolina Battery Materials Innovation Academy and construct specialized chemical engineering testing labs in Gaston and Cleveland Counties.",
-    "category": "Clean Energy",
-    "country": "US",
-    "province": "NC",
-    "impactArea": "state",
-    "latitude": 35.2621,
-    "longitude": -81.1873,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "Roy Cooper",
-      "North Carolina",
-      "Lithium",
-      "Battery Tech",
-      "Clean Energy",
-      "Manufacturing",
-      "Workforce"
-    ],
-    "taggedPoliticians": [
-      "Roy Cooper"
-    ],
-    "author": {
-      "name": "Choseno North Carolina Bureau",
-      "bio": "North Carolina clean energy manufacturing, lithium extraction policy, and industrial workforce"
-    },
-    "sources": [
-      {
-        "name": "The Charlotte Observer",
-        "url": "https://www.charlotteobserver.com"
-      },
-      {
-        "name": "News & Observer",
-        "url": "https://www.newsobserver.com"
-      }
-    ],
-    "seoTitle": "Roy Cooper Directs $160M for NC Battery Materials & Lithium Hubs | Choseno",
-    "metaDescription": "North Carolina Governor Roy Cooper awards $160M to build the Carolina Battery Materials Academy and train 3,000 clean energy chemical technicians.",
-    "tweet": "Governor Roy Cooper announces $160M to establish the Carolina Battery Materials Academy, anchoring domestic EV battery supply chains in North Carolina.",
-    "breakingNews": false,
-    "body": "GASTONIA, N.C. — Governor Roy Cooper announced on Monday the distribution of $160 million in state clean technology and workforce development grants through the North Carolina Department of Commerce to construct the Carolina Battery Materials Innovation Academy and establish advanced metallurgical chemical pilot laboratories in Gaston and Cleveland Counties.\n\nThe investment anchors North Carolina's position at the heart of the \"Battery Belt,\" leveraging the historic Carolina Tin-Spodumene Belt—one of the few rich hard-rock lithium deposits in North America—to train over 3,000 certified chemical processing technicians, hydrometallurgical operators, and clean energy engineers annually.\n\nPowering America's Domestic Electric Vehicle Battery Revolution\nNorth Carolina has attracted over $14 billion in private electric vehicle and battery manufacturing investments from Toyota, Albemarle, and Piedmont Lithium. However, refining raw spodumene ore into 99.5 percent pure battery-grade lithium hydroxide requires specialized chemical engineering labor.\n\n\"North Carolina is leading the clean energy transition, and we are building the entire electric vehicle battery supply chain right here in our state,\" Governor Cooper said during an announcement at Gaston College. \"From harvesting lithium to refining battery-grade materials and manufacturing electric vehicles, North Carolina workers are powering the future. This $160 million investment creates a world-class training academy, giving our students the skills to step into high-paying chemical engineering careers and securing American energy independence.\"\n\nTraining Hubs and Pilot Lab Allocations\nThe $160 million program finances:\n- Carolina Battery Materials Innovation Academy: $75 million for advanced chemical pilot processing plants and analytical spectrometry cleanrooms at Gaston College and Cleveland Community College.\n- Advanced Pyrometallurgy & Hydrometallurgy Testing Suites: $50 million for university-partnered research pilot lines testing closed-loop lithium extraction.\n- Clean Energy Chemical Trades Apprenticeship Grants: $35 million providing full tuition scholarships and paid union apprenticeships for local students.\n\nClean energy executives, community college presidents, and building trades labor leaders praised the governor's proactive investment, emphasizing that turn-key workforce pipelines attract international chemical manufacturing capital."
-  },
-  {
-    "slug": "mayor-matt-mahan-passes-ordinance-authorizing-40-million-for-smart-traffic-signal-ai-and-pedestrian-safety-sensors-2026-08-25",
-    "headline": "Mayor Matt Mahan Directs $40 Million for San Jose AI Smart Traffic Signals and Pedestrian Vision",
-    "summary": "San Jose Mayor Matt Mahan and the San Jose City Council authorize $40 million to install artificial-intelligence-enabled traffic signal controllers and automated pedestrian thermal sensors across 150 high-injury crash intersections.",
-    "category": "Technology",
-    "country": "US",
-    "province": "CA",
-    "impactArea": "local",
-    "latitude": 37.3382,
-    "longitude": -121.8863,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "Matt Mahan",
-      "San Jose",
-      "Vision Zero",
-      "Traffic AI",
-      "Public Safety",
-      "Smart Cities"
-    ],
-    "taggedPoliticians": [
-      "Matt Mahan"
-    ],
-    "author": {
-      "name": "Choseno Silicon Valley Bureau",
-      "bio": "San Jose municipal governance, smart city artificial intelligence, and urban traffic safety"
-    },
-    "sources": [
-      {
-        "name": "The Mercury News",
-        "url": "https://www.mercurynews.com"
-      },
-      {
-        "name": "San José Spotlight",
-        "url": "https://sanjosespotlight.com"
-      }
-    ],
-    "seoTitle": "Matt Mahan Directs $40M for San Jose AI Traffic Signals & Safety | Choseno",
-    "metaDescription": "San Jose Mayor Matt Mahan allocates $40M to deploy AI-enabled smart traffic signals and pedestrian thermal sensors at 150 high-crash intersections.",
-    "tweet": "Mayor Matt Mahan announces $40M to deploy AI-powered smart traffic signals and automated pedestrian thermal sensors across 150 San Jose intersections.",
-    "breakingNews": false,
-    "body": "SAN JOSE, Calif. — Mayor Matt Mahan and the San Jose City Council voted unanimously on Monday to approve a $40 million municipal smart infrastructure capital contract, authorizing the San Jose Department of Transportation (DOT) to deploy artificial-intelligence-powered adaptive traffic signal controllers and automated computer-vision thermal sensors across 150 intersections along the city's high-injury Vision Zero crash corridors.\n\nThe edge-AI traffic management system dynamically adjusts signal timing in real time, automatically extending green pedestrian walk cycles when slow-moving seniors or parents with strollers are detected in crosswalks, while coordinating green light waves along arterial thoroughfares to eliminate vehicle idling and cut greenhouse gas emissions.\n\nEliminating Pedestrian Fatalities with Edge Artificial Intelligence\nPedestrian fatalities represent over 60 percent of traffic deaths in San Jose, where wide multi-lane arterial boulevards in East and South San Jose have historically created hazardous crossing conditions for transit riders and schoolchildren.\n\n\"As the capital of Silicon Valley, San Jose should be using the most advanced technology to solve our most urgent civic challenges, and nothing is more urgent than saving lives on our streets,\" Mayor Matt Mahan said along Monterey Road in South San Jose. \"By investing $40 million in AI-enabled smart traffic signals, we are giving our intersections the ability to see pedestrians, automatically extend walk signals for vulnerable residents, and stop red-light collisions before they happen, making San Jose's streets safe for everyone.\"\n\nSmart Intersection Deployments\nThe $40 million package finances:\n- 150 AI-Enabled Edge Traffic Controllers: Installing high-speed neural processing units (NPUs) that process optical and thermal video streams locally without transmitting private facial data.\n- Automated Crosswalk Extension Telemetry: Automatically extending walk times by up to 10 seconds when pedestrians remain in crosswalk lanes.\n- Emergency Vehicle Preemption Integration: Giving instant green light priority to San Jose Fire Department engines and ambulances within 1,000 feet of intersections.\n\nPedestrian safety advocates, senior federations, and transit associations commended the municipal council's investment, highlighting that computer-vision intersections provide immediate life-saving protection."
-  },
-  {
-    "slug": "mayor-eric-johnson-directs-75-million-for-dallas-innovation-district-smart-streetlights-and-autonomous-shuttles-2026-08-25",
-    "headline": "Mayor Eric Johnson Allocates $75 Million for Dallas Innovation District Autonomous Transit and Smart Lighting",
-    "summary": "Dallas Mayor Eric Johnson and the Dallas City Council authorize $75 million in municipal capital financing to deploy zero-emission autonomous electric shuttles and install 10,000 smart LED streetlights across the Dallas Innovation District.",
-    "category": "Technology",
-    "country": "US",
-    "province": "TX",
-    "impactArea": "local",
-    "latitude": 32.7767,
-    "longitude": -96.797,
-    "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
-    "tags": [
-      "Eric Johnson",
-      "Dallas",
-      "Autonomous Shuttles",
-      "Smart Cities",
-      "Innovation",
-      "Technology"
-    ],
-    "taggedPoliticians": [
-      "Eric Johnson"
-    ],
-    "author": {
-      "name": "Choseno Dallas City Hall Bureau",
-      "bio": "Dallas municipal government, smart city technology, and urban mobility"
-    },
-    "sources": [
-      {
-        "name": "The Dallas Morning News",
-        "url": "https://www.dallasnews.com"
-      },
-      {
-        "name": "Dallas Business Journal",
-        "url": "https://www.bizjournals.com/dallas"
-      }
-    ],
-    "seoTitle": "Eric Johnson Directs $75M for Dallas Autonomous Shuttles & Smart Lights | Choseno",
-    "metaDescription": "Dallas Mayor Eric Johnson allocates $75M to deploy autonomous electric shuttles and install 10,000 smart streetlights in the Dallas Innovation District.",
-    "tweet": "Mayor Eric Johnson announces $75M for zero-emission autonomous electric shuttles and 10,000 smart LED streetlights across the Dallas Innovation District.",
-    "breakingNews": false,
-    "body": "DALLAS — Mayor Eric Johnson and the Dallas City Council approved a $75 million municipal smart mobility capital funding contract on Monday, authorizing the City of Dallas Transportation Department to deploy a fleet of twelve zero-emission autonomous electric passenger shuttles, install 10,000 connected smart LED streetlights, and establish high-speed municipal Wi-Fi kiosks across the Dallas Innovation District in the West End and Pegasus Park.\n\nThe project connects biotech research labs, university incubators, and residential lofts to DART rail transit stations, providing free, on-demand autonomous first-and-last-mile passenger transit along dedicated sensor-equipped transit lanes.\n\nCementing Dallas as a Premier Global Hub for Innovation and Clean Mobility\nDallas has rapidly expanded as a leading destination for biotechnology, defense technology, and clean tech corporate headquarters, where seamless autonomous transit and connected smart streetscapes foster vibrant urban collaboration.\n\n\"Dallas is leading the nation in adopting cutting-edge technology to make our city safer, cleaner, and more vibrant,\" Mayor Eric Johnson said at Pegasus Park in Dallas. \"By investing $75 million in autonomous electric transit shuttles and smart connected lighting, we are modernizing our urban core, connecting our innovation hubs with public transit, and showing the world that Dallas is the best place to build the future.\"\n\nSmart City Technology Packages\nThe $75 million package finances:\n- 12 Autonomous Electric Passenger Shuttles: Equipped with LiDAR, radar, and 360-degree cameras operating on 5-minute headways along a 4-mile loop.\n- 10,000 Connected Smart LED Streetlights: Dimming automatically during low-traffic hours to conserve energy while brightening instantly when pedestrians or emergency vehicles approach.\n- Municipal High-Speed Environmental Telemetry Kiosks: Providing free public gigabit Wi-Fi and real-time air quality monitors at 50 transit shelters.\n\nTech startup founders, urban mobility experts, and downtown business associations praised the municipal council's investment, noting that autonomous shuttles provide clean, convenient mobility for workers and residents."
-  },
-  {
-    "slug": "industry-minister-francois-philippe-champagne-awards-380-million-for-canadian-small-modular-reactor-supply-chain-tooling-2026-08-25",
-    "headline": "Industry Minister François-Philippe Champagne Directs $380 Million for Canadian SMR Nuclear Tooling Hubs",
-    "summary": "Innovation Minister François-Philippe Champagne allocates $380 million through the Strategic Innovation Fund to scale nuclear-grade precision manufacturing lines for Small Modular Reactors (SMRs) across Ontario, Quebec, and Saskatchewan.",
-    "category": "Energy",
+    "slug": "premier-doug-ford-warns-us-power-cuts-and-maintains-american-liquor-ban-2026-08-25",
+    "headline": "Premier Doug Ford Warns US Energy Exports Could Face Restrictions Amid Cross-Border Trade Dispute",
+    "summary": "Ontario Premier Doug Ford warns that Ontario could restrict cross-border electricity exports to neighboring US states as he trades sharp words with Donald Trump and defends the province's ban on American liquor.",
+    "category": "Politics",
     "country": "CA",
     "province": "ON",
-    "impactArea": "national",
-    "latitude": 45.4215,
-    "longitude": -75.6972,
+    "impactArea": "state",
+    "latitude": 43.6532,
+    "longitude": -79.3832,
     "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
+    "published_at": "2026-08-25T10:00:00+00:00",
     "tags": [
-      "François-Philippe Champagne",
-      "Canada",
-      "SMR",
-      "Nuclear Energy",
-      "Innovation",
-      "Manufacturing"
+      "Doug Ford",
+      "Donald Trump",
+      "Ontario",
+      "Trade",
+      "Energy",
+      "Tariffs",
+      "Electricity",
+      "LCBO"
     ],
     "taggedPoliticians": [
-      "François-Philippe Champagne"
+      "Doug Ford"
     ],
     "author": {
-      "name": "Choseno National Tech Bureau",
-      "bio": "Canadian federal industrial strategy, nuclear technology innovation, and advanced manufacturing"
+      "name": "Choseno Cross-Border Trade & Energy Bureau",
+      "bio": "Covering North American energy security, cross-border tariffs, and federal-provincial trade relations."
     },
     "sources": [
-      {
-        "name": "Innovation, Science and Economic Development Canada",
-        "url": "https://ised-isde.canada.ca"
-      },
       {
         "name": "The Globe and Mail",
-        "url": "https://www.theglobeandmail.com"
+        "url": "https://www.theglobeandmail.com/politics"
+      },
+      {
+        "name": "The Hill",
+        "url": "https://thehill.com/business/trade"
       }
     ],
-    "seoTitle": "Champagne Directs $380M for Canadian SMR Nuclear Tooling | Choseno",
-    "metaDescription": "Innovation Minister François-Philippe Champagne awards $380M to scale nuclear-grade SMR component manufacturing across Canada.",
-    "tweet": "Industry Minister François-Philippe Champagne announces $380M to scale nuclear-grade SMR manufacturing tooling across Ontario, Quebec, and Saskatchewan.",
-    "breakingNews": false,
-    "body": "OTTAWA — Minister of Innovation, Science and Industry François-Philippe Champagne announced on Monday the distribution of $380 million in federal investments through the Strategic Innovation Fund (SIF) to scale commercial nuclear-grade manufacturing lines, precision pressure vessel forging, and specialized control-system tooling for Small Modular Reactors (SMRs) across advanced industrial facilities in Ontario, Quebec, and Saskatchewan.\n\nThe investment coordinates federal support with Canadian nuclear manufacturing leaders—including BWXT Canada, Cameco, and Westinghouse Canada—to domesticate the fabrication of reactor internals, steam generators, and fuel assemblies for GE Hitachi BWRX-300 and Westinghouse eVinci microreactors destined for domestic deployment and international export.\n\nAnchoring Canada's Global Leadership in the Clean Nuclear Renaissance\nWith global demand for firm zero-emission electricity surging to power industrial manufacturing and AI data centers, factory-fabricated SMRs represent a multi-billion-dollar international export opportunity for Canadian advanced manufacturing.\n\n\"Canada was one of the first countries to harness the peaceful power of the atom, and today we are leading the next global nuclear revolution with small modular reactors,\" Minister François-Philippe Champagne said in Ottawa. \"SMRs will provide clean, reliable baseload electricity to power our communities, heavy industries, and remote mining sites. This $380 million investment ensures that the precision components for next-generation nuclear reactors are manufactured right here in Canada by skilled Canadian workers, creating thousands of great careers and driving our clean industrial growth.\"\n\nRegional Nuclear Manufacturing Allocations\nThe $380 million program finances:\n- Ontario Advanced SMR Tooling Hub (Cambridge/Peterborough): $180 million for automated cleanroom assembly lines for reactor pressure vessel internals.\n- Quebec Specialized Metallurgy & Containment (Becancour): $110 million for heavy forged steel containment shells and specialized welding robotics.\n- Saskatchewan Uranium Fuel Fabrication Center (Saskatoon): $90 million for high-assay low-enriched uranium (HALEU) fuel pellet testing facilities.\n\nNuclear industry association executives, building trades labor unions, and provincial energy ministers commended the federal awards, highlighting that domestic SMR tooling anchors high-wage manufacturing in Canada."
+    "seoTitle": "Doug Ford Warns US Power Exports at Risk in Tariff Standoff | Choseno",
+    "metaDescription": "Ontario Premier Doug Ford warns US electricity exports could face restrictions while upholding the provincial ban on American liquor.",
+    "tweet": "Premier Doug Ford warns Ontario could restrict cross-border electricity exports to US states as cross-border tariff disputes escalate.",
+    "tweetarticle": "Ontario Premier Doug Ford has warned that Ontario could restrict cross-border hydroelectric and nuclear energy exports to neighboring US states while maintaining the province's ban on restocking American alcohol across LCBO shelves.\n\nReview Doug Ford on Choseno:\nhttps://choseno.com/wall/doug-ford\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Ontario supplies up to 2.5 gigawatts of peak baseload power to New York, Michigan, and Minnesota grids during summer and winter demand spikes.\n- Follows escalating tariff threats on Canadian exports, prompting Ontario to halt purchases of US-manufactured liquor and wines across 680 LCBO retail stores.\n- Energy analysts warn restricting cross-border grid links could disrupt PJM and MISO power markets, causing wholesale energy price volatility on both sides of the border.\n- Ontario manufacturers and agricultural exporters face potential retaliatory supply chain friction if bilateral trade standoffs deepen.\n\nTHE DEBATE:\n- Premier Doug Ford & Provincial Trade Officials: Argue that Ontario will vigorously defend its industrial economy and workforce against unilateral US trade penalties by leveraging all provincial trade and energy assets.\n- US Border State Governors & Energy Utilities: Contend that integrated Great Lakes power grids are essential for regional reliability and that weaponizing electricity trade risks blackouts and higher consumer utility bills.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Doug Ford's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/doug-ford\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/premier-doug-ford-warns-us-power-cuts-and-maintains-american-liquor-ban-2026-08-25\n\n#DougFord #Ontario #TradeWar #Energy #Electricity #Tariffs #Canada #USMCA #Choseno",
+    "breakingNews": true,
+    "body": "TORONTO — Ontario Premier Doug Ford escalated his rhetoric in an expanding cross-border trade dispute on Tuesday, warning that the province could reconsider its long-standing electricity exports to neighboring northern US states if unilateral tariffs on Canadian goods are enacted.\n\nSpeaking at Queen's Park, Ford responded directly to criticism from former US President Donald Trump, defending Ontario's decision to halt new purchase orders of American-distilled spirits, wines, and craft beers across the provincially owned Liquor Control Board of Ontario (LCBO) network.\n\nEnergy Interties as Trade Leverage\nOntario operates major high-voltage transmission interconnections with New York, Michigan, and Minnesota, regularly exporting clean hydroelectric and nuclear baseload power to help stabilize the US Midwest and Northeast grids during severe weather and peak demand.\n\n\"We want to be great neighbors and we want fair, open trade,\" Premier Ford stated during a press briefing. \"But if our steelworkers, our auto manufacturers, and our forestry workers are targeted with unfair duties, Ontario will not sit back. We provide clean, reliable power that keeps factories running across the border, and all options remain on the table to protect Ontario families.\"\n\nCross-Border Grid Stakes\nAccording to Independent Electricity System Operator (IESO) data, Ontario exported approximately 16 terawatt-hours of surplus clean electricity in the past year, generating significant revenue for the province while providing crucial grid balancing for US regional transmission organizations including MISO and the New York ISO.\n\nEnergy policy experts note that while curtailing electricity exports would require navigating complex federal and international regulatory frameworks, even the prospect of energy friction highlights the vulnerability of deeply integrated North American infrastructure.\n\nPolitical and Commercial Reaction\nOpposition MPPs at Queen's Park urged caution, supporting strong defense of Ontario jobs but warning against escalating measures that could trigger reciprocal energy retaliations affecting natural gas imports used for home heating.\n\nMeanwhile, Canadian business associations continue to push for urgent diplomatic negotiations under the USMCA framework to resolve agricultural and industrial tariff disputes before bilateral supply chains suffer lasting structural damage."
   },
   {
-    "slug": "environment-minister-steven-guilbeault-announces-160-million-for-national-wetlands-carbon-storage-and-peatland-restoration-2026-08-25",
-    "headline": "Environment Minister Steven Guilbeault Allocates $160 Million for Canadian Peatland and Wetland Carbon Sinks",
-    "summary": "Environment Minister Steven Guilbeault announces $160 million through the Nature Smart Climate Solutions Fund to restore 50,000 hectares of carbon-rich peatlands and coastal salt marshes across six provinces.",
-    "category": "Environment",
+    "slug": "prime-minister-mark-carney-commits-11-billion-for-six-arctic-icebreakers-2026-08-25",
+    "headline": "Prime Minister Mark Carney Commits $11 Billion to Construct Six Heavy Arctic Icebreakers in Quebec",
+    "summary": "Prime Minister Mark Carney announces an $11 billion federal shipbuilding contract to construct six heavy polar icebreakers at Chantier Davie in Lévis, Quebec, bolstering Canadian Arctic sovereignty and maritime defense.",
+    "category": "Politics",
     "country": "CA",
     "province": "QC",
-    "impactArea": "national",
-    "latitude": 45.5017,
-    "longitude": -73.5673,
+    "impactArea": "country",
+    "latitude": 46.8298,
+    "longitude": -71.1764,
     "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
+    "published_at": "2026-08-25T10:00:00+00:00",
     "tags": [
-      "Steven Guilbeault",
+      "Mark Carney",
       "Canada",
-      "Peatlands",
-      "Wetlands",
-      "Carbon Storage",
-      "Environment",
-      "Climate"
+      "Arctic",
+      "NationalDefense",
+      "Shipbuilding",
+      "CoastGuard",
+      "Quebec",
+      "Economy"
     ],
     "taggedPoliticians": [
-      "Steven Guilbeault"
+      "Mark Carney"
     ],
     "author": {
-      "name": "Choseno Environmental Policy Desk",
-      "bio": "Canadian federal environmental regulation, nature-based climate solutions, and ecological carbon storage"
+      "name": "Choseno Defense & Northern Affairs Desk",
+      "bio": "Investigating Canadian Arctic sovereignty, military procurement, and federal defense budgets."
     },
     "sources": [
       {
-        "name": "Environment and Climate Change Canada",
-        "url": "https://www.canada.ca/en/environment-climate-change"
+        "name": "Global News",
+        "url": "https://globalnews.ca/news/arctic-icebreakers"
       },
       {
         "name": "CBC News",
         "url": "https://www.cbc.ca/news/politics"
       }
     ],
-    "seoTitle": "Steven Guilbeault Directs $160M for Canadian Peatland Restoration | Choseno",
-    "metaDescription": "Environment Minister Steven Guilbeault awards $160M to restore 50,000 hectares of carbon-rich peatlands and wetlands across 6 provinces.",
-    "tweet": "Environment Minister Steven Guilbeault announces $160M to restore 50,000 hectares of peatlands and wetlands, locking millions of tons of carbon into nature.",
-    "breakingNews": false,
-    "body": "MONTREAL — Minister of Environment and Climate Change Steven Guilbeault announced on Monday the distribution of $160 million in federal conservation funding through the Nature Smart Climate Solutions Fund to protect, restore, and re-wet 50,000 hectares of degraded peatlands, boreal muskeg bogs, and coastal salt marshes across Ontario, Quebec, Manitoba, Alberta, New Brunswick, and Nova Scotia.\n\nThe investment, delivered in direct co-stewardship with Indigenous nations and non-profit conservation land trusts, re-establishes natural hydrologic water tables by blocking obsolete agricultural and industrial drainage ditches, preventing the decomposition of ancient peat moss that would otherwise release millions of metric tons of stored carbon dioxide into the atmosphere.\n\nProtecting the World's Most Efficient Terrestrial Carbon Sinks\nCanada contains approximately 25 percent of the world's peatlands—storing more than 150 billion tonnes of carbon, equivalent to 25 years of global fossil fuel emissions. Healthy peatlands act as natural carbon vaults while filtering municipal drinking water and providing vital habitat for woodland caribou and migratory waterfowl.\n\n\"Canada's peatlands and wetlands are global superpowers in the fight against climate change, storing vast quantities of carbon in deep moss layers built over thousands of years,\" Minister Steven Guilbeault said in Montreal. \"When peatlands are drained, they turn from carbon sinks into massive carbon emitters. This $160 million investment restores 50,000 hectares of vital wetlands, keeping millions of tons of carbon locked safely in the ground, protecting our biodiversity, and supporting Indigenous-led conservation across Canada.\"\n\nPeatland Restoration Packages Funded\nThe $160 million allocation supports:\n- James Bay & Hudson Bay Lowlands Peat Protection: $65 million for Indigenous-led baseline carbon mapping and permanent conservation easements with Cree and Ininiw Nations.\n- Prairie Pothole Wetland Reconnection (Manitoba/Alberta): $45 million to restore 20,000 hectares of agricultural wetland depressions.\n- Atlantic Salt Marsh Bio-Restoration (NB/NS): $30 million for dyke breaching and native cordgrass planting in the Bay of Fundy.\n- National Peatland Carbon Telemetry Registry: $20 million partnering with universities to deploy eddy-covariance flux towers measuring real-time carbon sequestration.\n\nConservation biologists, Indigenous grand chiefs, and ecological economists commended the federal funding, highlighting that nature-based peatland restoration is one of the most durable and cost-effective climate mitigation investments."
+    "seoTitle": "Mark Carney Announces $11B Icebreaker Fleet for Arctic Sovereignty | Choseno",
+    "metaDescription": "Prime Minister Mark Carney commits $11 billion for six heavy Arctic icebreakers built at Chantier Davie in Quebec.",
+    "tweet": "Prime Minister Mark Carney announces an $11B federal contract to build 6 heavy Arctic icebreakers in Quebec, strengthening Canadian northern sovereignty.",
+    "tweetarticle": "Prime Minister Mark Carney has announced an $11 billion federal investment under the National Shipbuilding Strategy to construct six heavy polar icebreakers for the Canadian Coast Guard at Chantier Davie in Lévis, Quebec.\n\nReview Mark Carney on Choseno:\nhttps://choseno.com/wall/mark-carney\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Directs $11 billion over a 12-year procurement cycle to replace aging 40-year-old Canadian Coast Guard vessels.\n- Guarantees year-round Arctic navigation capability, scientific research support, and maritime sovereignty patrols across the Northwest Passage.\n- Sustains approximately 1,800 direct shipyard jobs in Lévis and over 4,500 indirect supplier manufacturing jobs across Quebec and Atlantic Canada.\n- Enhances interoperability with NATO allies responding to increased commercial shipping and Russian submarine activity in the High North.\n\nTHE DEBATE:\n- Prime Minister Mark Carney & Defense Officials: Emphasize that climate change is opening Arctic waterways to foreign geopolitical competitors, making domestic heavy icebreaking capacity a vital matter of national security.\n- Parliamentary Budget Watchdogs & Critics: Express concern over historic cost escalations in Canadian naval procurement, demanding strict milestone oversight and delivery penalties for shipyard delays.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Mark Carney's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/mark-carney\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/prime-minister-mark-carney-commits-11-billion-for-six-arctic-icebreakers-2026-08-25\n\n#MarkCarney #Canada #Arctic #CoastGuard #NationalDefense #Shipbuilding #Quebec #Economy #Choseno",
+    "breakingNews": true,
+    "body": "LÉVIS, QC — Prime Minister Mark Carney unveiled a transformative $11 billion federal procurement contract on Tuesday to construct six state-of-the-art heavy polar icebreakers at Chantier Davie in Lévis, Quebec, formalizing one of the largest capital investments in Canadian maritime history.\n\nThe announcement represents a pivotal milestone in the renewal of the Canadian Coast Guard's aging fleet, designed to ensure Canada maintains uninterrupted year-round presence and sovereign patrol capabilities across the Northwest Passage.\n\nStrategic Imperative in the High North\nWith rapid polar ice melting accelerating commercial navigation and resource exploration across the Arctic basin, geopolitical competition in the circumpolar region has intensified significantly.\n\n\"The Canadian Arctic is not just a remote frontier; it is the frontline of our national sovereignty and economic security,\" Prime Minister Carney declared during an address to shipyard workers. \"These six modern icebreakers will ensure our Coast Guard has the ice-strengthened capability to uphold Canadian jurisdiction, protect fragile marine ecosystems, and defend our northern borders for generations to come.\"\n\nIndustrial and Economic Reach\nThe multi-billion dollar program is structured under the federal National Shipbuilding Strategy (NSS):\n- Construction of the first vessel is scheduled to commence within 18 months, featuring advanced hybrid-diesel propulsion and specialized hull designs capable of breaking 2.5-meter multi-year ice.\n- The contract supports an estimated 1,800 direct skilled trades positions at the Lévis shipyard and over $3.2 billion in subcontracts for domestic Canadian marine engineering, steel fabrication, and electronics firms.\n- Each icebreaker will be equipped with modern laboratories for northern scientific research and helicopter landing decks for Arctic search-and-rescue operations.\n\nScrutiny Over Delivery Timelines\nWhile Atlantic and Quebec municipal leaders praised the massive industrial injection, opposition lawmakers and defense analysts called for rigorous independent auditing, citing past NSS project schedule overruns.\n\nFederal procurement officials confirmed that the contract includes binding performance milestones, liquidated damages clauses, and regular reporting to the House of Commons Defense Committee."
   },
   {
-    "slug": "premier-doug-ford-directs-350-million-for-ottawa-lrt-stage-two-trillium-line-substation-and-signaling-commissioning-2026-08-25",
-    "headline": "Premier Doug Ford Directs $350 Million for Ottawa LRT Stage 2 Trillium Line Commissioning and Testing",
-    "summary": "Ontario Premier Doug Ford and Transportation Minister Prabmeet Sarkaria award $350 million in provincial capital funding to complete train integration, signaling commissioning, and traction substation testing for the Ottawa LRT Stage 2 Trillium Line.",
-    "category": "Transportation",
-    "country": "CA",
-    "province": "ON",
+    "slug": "house-democratic-leader-hakeem-jeffries-addresses-kushner-meeting-and-trump-cartel-2026-08-25",
+    "headline": "House Democratic Leader Hakeem Jeffries Responds to Criticism Over Foreign Policy Meeting",
+    "summary": "House Democratic Leader Hakeem Jeffries forcefully defends his bipartisan diplomatic discussions on Middle East security while asserting that Congressional Democrats will vigorously hold executive leadership accountable.",
+    "category": "Politics",
+    "country": "US",
+    "province": "DC",
+    "impactArea": "country",
+    "latitude": 38.8899,
+    "longitude": -77.0091,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "Hakeem Jeffries",
+      "Congress",
+      "House Democrats",
+      "ForeignPolicy",
+      "Donald Trump",
+      "MiddleEast",
+      "Politics"
+    ],
+    "taggedPoliticians": [
+      "Hakeem Jeffries"
+    ],
+    "author": {
+      "name": "Choseno Congressional & Capitol Hill Bureau",
+      "bio": "Reporting on House leadership, legislative battles, and national party strategy."
+    },
+    "sources": [
+      {
+        "name": "The Hill",
+        "url": "https://thehill.com/homenews/house"
+      },
+      {
+        "name": "Politico",
+        "url": "https://www.politico.com/congress"
+      }
+    ],
+    "seoTitle": "Hakeem Jeffries Responds to Foreign Policy Meeting Backlash | Choseno",
+    "metaDescription": "House Democratic Leader Hakeem Jeffries defends diplomatic discussions on Middle East stability while asserting strong legislative oversight.",
+    "tweet": "House Democratic Leader Hakeem Jeffries responds to internal party scrutiny, defending diplomatic briefings while affirming fierce Congressional oversight.",
+    "tweetarticle": "House Democratic Leader Hakeem Jeffries has addressed internal caucus discussions regarding recent foreign policy briefings on Middle East regional security, emphasizing that bipartisan national security dialogue will never compromise vigorous legislative oversight.\n\nReview Hakeem Jeffries on Choseno:\nhttps://choseno.com/wall/hakeem-jeffries\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Addresses progressive caucus scrutiny over off-the-record discussions concerning regional Middle East trade corridors and ceasefire frameworks.\n- Outlines House Democratic priorities for upcoming federal funding legislation, prioritizing public healthcare and climate resilience programs.\n- Asserts that Congressional committees will continue investigating foreign influence, defense contracting transparency, and executive ethics.\n- Sets the strategic tone for House Democratic campaign messaging heading into upcoming midterm elections.\n\nTHE DEBATE:\n- Democratic Leadership & Moderate Lawmakers: Argue that responsible governing requires maintaining open diplomatic channels on critical global security and hostage release negotiations regardless of partisan friction.\n- Progressive Caucus Members & Grassroots Groups: Contend that high-profile leadership meetings risk normalizing political adversaries and diluting the party's core accountability messaging.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Hakeem Jeffries' record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/hakeem-jeffries\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/house-democratic-leader-hakeem-jeffries-addresses-kushner-meeting-and-trump-cartel-2026-08-25\n\n#HakeemJeffries #Congress #HouseDemocrats #CapitolHill #ForeignPolicy #Politics #Choseno",
+    "breakingNews": false,
+    "body": "WASHINGTON — House Democratic Leader Hakeem Jeffries pushed back against progressive caucus criticism on Tuesday, defending recent high-level diplomatic discussions concerning Middle East stability while delivering an unequivocal commitment that House Democrats will maintain uncompromising oversight over executive governance.\n\nSpeaking at a Capitol Hill press briefing following a closed-door caucus meeting, Jeffries addressed questions surrounding off-the-record security briefings on regional ceasefire frameworks.\n\nNavigating National Security and Party Politics\n\"When it comes to America's national security, the protection of our servicemembers abroad, and the pursuit of enduring peace in the Middle East, we will always listen to relevant stakeholders,\" Leader Jeffries told reporters. \"At the same time, make no mistake: Congressional Democrats will never pull punches or grant a pass to anyone engaged in unethical governance or policies that harm working families.\"\n\nLegislative Battlegrounds Ahead\nJeffries used the briefing to outline the House Democratic caucus's key legislative objectives for the fall session:\n- Opposing proposed federal budget cuts to the Supplemental Nutrition Assistance Program (SNAP) and Medicaid expansion.\n- Defending clean energy manufacturing tax credits established under federal climate legislation from statutory repeal.\n- Demanding bipartisan floor votes on federal voting rights legislation and independent redistricting standards.\n\nCaucus Dynamics and Midterm Strategy\nPolitical observers noted that Jeffries' measured response highlights his role balancing the diverse ideological wings of the Democratic caucus ahead of high-stakes congressional elections.\n\nWhile progressive lawmakers expressed apprehension over high-profile diplomatic contacts involving political figures, moderate battleground Democrats praised Jeffries for demonstrating pragmatic leadership on international crises."
+  },
+  {
+    "slug": "vice-president-jd-vance-warns-allies-on-trade-deficits-and-manufacturing-tariffs-2026-08-25",
+    "headline": "Vice President JD Vance Issues Direct Warning on Trade Deficits and Cross-Border Manufacturing Protection",
+    "summary": "Vice President JD Vance delivers a major trade address warning international trading partners that the administration will strictly enforce reciprocal tariffs to protect American industrial manufacturing and blue-collar wages.",
+    "category": "Politics",
+    "country": "US",
+    "province": "DC",
+    "impactArea": "country",
+    "latitude": 38.8977,
+    "longitude": -77.0365,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "JD Vance",
+      "Donald Trump",
+      "Trade",
+      "Manufacturing",
+      "Tariffs",
+      "Economy",
+      "USMCA",
+      "Jobs"
+    ],
+    "taggedPoliticians": [
+      "JD Vance"
+    ],
+    "author": {
+      "name": "Choseno National Economic & Trade Bureau",
+      "bio": "Analyzing trade policy, industrial strategy, and macroeconomic workforce trends."
+    },
+    "sources": [
+      {
+        "name": "The Independent",
+        "url": "https://www.independent.co.uk/news/world/americas/us-politics"
+      },
+      {
+        "name": "Reuters",
+        "url": "https://www.reuters.com/world/us"
+      }
+    ],
+    "seoTitle": "JD Vance Warns Allies on Trade Deficits and Tariffs | Choseno",
+    "metaDescription": "Vice President JD Vance warns trading partners that the administration will enforce reciprocal tariffs to safeguard American manufacturing.",
+    "tweet": "Vice President JD Vance warns international trading partners that reciprocal tariffs will be strictly enforced to safeguard American industrial jobs.",
+    "tweetarticle": "Vice President JD Vance has delivered a wide-ranging economic policy address outlining the administration's aggressive trade stance, warning international partners that reciprocal tariffs will be enforced to eliminate bilateral trade deficits and protect domestic factory workers.\n\nReview JD Vance on Choseno:\nhttps://choseno.com/wall/jd-vance\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Outlines strict enforcement of Section 301 and Section 232 trade remedies targeting foreign imports that undercut domestic manufacturing.\n- Warns USMCA and European partners that tariff exemptions will be contingent on strict supply chain content origin rules and energy trade reciprocity.\n- Proposes allocating tariff revenues into an American Re-Industrialization Trust Fund to subsidize domestic machine tool fabrication and foundry tooling.\n- Impact on consumers: potential cost fluctuations on imported consumer goods and automotive components amid heightened trade renegotiations.\n\nTHE DEBATE:\n- Administration Leadership & Industrial Unions: Argue that decades of globalist trade agreements hollowed out the American Rust Belt, and that robust tariffs are essential to rebuild critical manufacturing sovereignty.\n- Free-Market Economists & Retail Associations: Contend that broad tariff duties act as a regressive consumption tax on American households and invite damaging retaliatory sanctions against US agricultural exporters.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review JD Vance's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/jd-vance\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/vice-president-jd-vance-warns-allies-on-trade-deficits-and-manufacturing-tariffs-2026-08-25\n\n#JDVance #TradeWar #Tariffs #Manufacturing #Economy #RustBelt #USMCA #Choseno",
+    "breakingNews": false,
+    "body": "WASHINGTON — Vice President JD Vance articulated a muscular defense of economic nationalism on Tuesday, delivering a direct warning to international trading partners that the administration will aggressively deploy reciprocal tariffs to dismantle trade imbalances and defend American industrial workers.\n\nSpeaking before manufacturing leaders and union delegates, Vance framed trade policy as an essential pillar of national defense and community survival, criticizing past bilateral agreements that permitted foreign subsidies to undercut domestic industries.\n\nThe Doctrine of Industrial Reciprocity\n\"For thirty years, Washington elites told working men and women across Ohio, Michigan, and Pennsylvania that manufacturing didn't matter,\" Vice President Vance stated. \"Those days are over. If a foreign nation places barriers on American goods or subsidizes its state-backed producers, they will face exact reciprocal duties at our ports. We will not allow our industrial base to be sacrificed on the altar of cheap foreign imports.\"\n\nKey Strategic Tenets\nDuring the address, Vance detailed the administration's trade implementation framework:\n- Strict Enforcement of Rules of Origin: Tightening automotive and steel content thresholds under the USMCA to prevent foreign transshipment through third-party countries.\n- Defense Industrial Base Safeguards: Imposing protective tariffs on critical minerals, rare earths, and advanced semiconductor components produced in non-allied nations.\n- Strategic Retaliation Defense: Establishing loan guarantees and market support programs for US agricultural exporters targeted by foreign retaliatory agricultural duties.\n\nGlobal and Domestic Response\nWhile domestic steel and manufacturing coalitions applauded the administration's firm stance, representatives of major retail and consumer electronics importers cautioned that sweeping tariffs could reignite inflationary pressures.\n\nInternational trade ministers in Ottawa, Brussels, and Tokyo indicated they are preparing formal consultations through bilateral dispute channels while evaluating contingency countermeasures."
+  },
+  {
+    "slug": "governor-kathy-hochul-signs-landmark-election-ai-deepfake-and-watermarking-law-2026-08-25",
+    "headline": "Governor Kathy Hochul Signs Nation-Leading AI Watermarking and Political Deepfake Transparency Law",
+    "summary": "New York Governor Kathy Hochul signs comprehensive legislation requiring prominent cryptographic watermarks and disclosure labels on AI-generated synthetic media in political campaign advertising.",
+    "category": "Politics",
+    "country": "US",
+    "province": "NY",
     "impactArea": "state",
+    "latitude": 42.6526,
+    "longitude": -73.7562,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "Kathy Hochul",
+      "New York",
+      "ArtificialIntelligence",
+      "Deepfakes",
+      "Elections",
+      "VotingRights",
+      "Technology"
+    ],
+    "taggedPoliticians": [
+      "Kathy Hochul"
+    ],
+    "author": {
+      "name": "Choseno Albany & State Policy Desk",
+      "bio": "Covering New York state legislation, executive orders, and technology policy."
+    },
+    "sources": [
+      {
+        "name": "Albany Times Union",
+        "url": "https://www.timesunion.com/state"
+      },
+      {
+        "name": "Politico New York",
+        "url": "https://www.politico.com/new-york"
+      }
+    ],
+    "seoTitle": "Kathy Hochul Signs AI Deepfake Election Transparency Law | Choseno",
+    "metaDescription": "Governor Kathy Hochul signs New York law mandating cryptographic watermarks on AI deepfakes in political advertising.",
+    "tweet": "Governor Kathy Hochul signs landmark New York legislation mandating cryptographic watermarks and disclosures on AI-generated political ads.",
+    "tweetarticle": "New York Governor Kathy Hochul has signed groundbreaking state legislation mandating visible disclosure labels and tamper-evident cryptographic watermarks on all artificial intelligence synthetic media used in political campaign communications.\n\nReview Kathy Hochul on Choseno:\nhttps://choseno.com/wall/kathy-hochul\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Requires campaigns, PACs, and digital platforms to include conspicuous visual and audio disclaimers on AI-altered video, imagery, or cloned audio within 90 days of an election.\n- Mandates digital platforms to preserve cryptographic metadata identifying synthetic origin to facilitate rapid verification.\n- Establishes a specialized digital forensics unit within the New York State Board of Elections to investigate voter suppression deepfakes.\n- Imposes civil penalties of up to $50,000 per violation and grants candidates injunctive relief rights in state supreme courts.\n\nTHE DEBATE:\n- Governor Kathy Hochul & Election Integrity Groups: Argue that generative AI tools pose unprecedented risks to democratic elections by producing convincing fabricated audio and video designed to mislead voters.\n- Digital Rights Advocates & Tech Policy Groups: Support transparency goals but raise concerns over technical compliance burdens for small community campaigns and potential First Amendment satire challenges.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Kathy Hochul's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/kathy-hochul\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/governor-kathy-hochul-signs-landmark-election-ai-deepfake-and-watermarking-law-2026-08-25\n\n#KathyHochul #NewYork #AI #Deepfakes #ElectionIntegrity #VotingRights #Technology #Choseno",
+    "breakingNews": false,
+    "body": "ALBANY, NY — Governor Kathy Hochul signed landmark bipartisan legislation on Tuesday creating the nation's most stringent regulatory safeguards against deceptive artificial intelligence in electoral campaigns, requiring clear public disclaimers and embedded cryptographic watermarks on synthetic political media.\n\nThe measure, passed with overwhelming support in the New York State Legislature, addresses the rapid emergence of generative AI audio cloning and hyper-realistic video generation ahead of upcoming state and congressional elections.\n\nStatutory Framework of the New Standard\nUnder the new statute (S.8214/A.8920):\n- Any political advertisement, mailer, or digital broadcast featuring AI-generated likenesses of candidates or public officials must display an unambiguous visual disclaimer: \"This media has been digitally altered or generated by artificial intelligence.\"\n- For audio broadcasts and automated robocalls, a clear verbal disclaimer must be read at both the beginning and conclusion of the transmission.\n- Digital social platforms hosting political advertising in New York must support machine-readable metadata standards (such as C2PA content credentials) to enable real-time detection and verification.\n\nProtecting Democratic Processes\n\"The foundation of our democracy rests on the trust voters place in the truth of what they see and hear,\" Governor Hochul stated at a bill-signing ceremony in New York City. \"Generative AI has immense potential for good, but in the hands of bad actors seeking to suppress turnout or fabricate scandalous recordings on the eve of an election, it poses an existential threat. New York is leading the nation in drawing a clear line for transparency.\"\n\nEnforcement and Legal Safeguards\nThe law establishes an expedited review process in New York State Supreme Court, allowing targeted candidates and the Board of Elections to seek emergency injunctions within 24 hours to halt the distribution of non-compliant deceptive media.\n\nTo safeguard constitutional protections, the statute includes explicit exemptions for bona fide political satire, parody, and documentary news reporting."
+  },
+  {
+    "slug": "premier-scott-moe-faces-mounting-pressure-over-retaliatory-us-liquor-tariffs-2026-08-25",
+    "headline": "Premier Scott Moe Weighs Provincial Countermeasures Amid Escalating Cross-Border Agricultural Tariff Dispute",
+    "summary": "Saskatchewan Premier Scott Moe faces legislative pressure from farm groups and opposition leaders to coordinate provincial economic responses as cross-border agricultural trade tensions escalate.",
+    "category": "Politics",
+    "country": "CA",
+    "province": "SK",
+    "impactArea": "state",
+    "latitude": 50.4472,
+    "longitude": -104.6189,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "Scott Moe",
+      "Saskatchewan",
+      "Agriculture",
+      "Trade",
+      "Tariffs",
+      "Potash",
+      "Economy"
+    ],
+    "taggedPoliticians": [
+      "Scott Moe"
+    ],
+    "author": {
+      "name": "Choseno Prairie & Western Agriculture Bureau",
+      "bio": "Tracking agricultural trade, fertilizer export logistics, and provincial politics in Western Canada."
+    },
+    "sources": [
+      {
+        "name": "CTV News Regina",
+        "url": "https://regina.ctvnews.ca"
+      },
+      {
+        "name": "Saskatoon StarPhoenix",
+        "url": "https://thestarphoenix.com/category/news/local-news"
+      }
+    ],
+    "seoTitle": "Scott Moe Weighs Trade Countermeasures on US Agriculture | Choseno",
+    "metaDescription": "Saskatchewan Premier Scott Moe responds to growing pressure over provincial economic countermeasures in cross-border trade disputes.",
+    "tweet": "Premier Scott Moe weighs targeted provincial trade responses to protect Saskatchewan grain, pulse, and potash exports amid tariff tensions.",
+    "tweetarticle": "Saskatchewan Premier Scott Moe is evaluating targeted provincial economic measures to shield Western Canadian agricultural producers from escalating cross-border trade friction while resisting calls for blanket consumer product boycotts.\n\nReview Scott Moe on Choseno:\nhttps://choseno.com/wall/scott-moe\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Saskatchewan agricultural exporters face potential tariffs on durum wheat, canola oil, pulses, and fertilizer exports entering US border markets.\n- Opposition lawmakers urge Saskatchewan to join Ontario in suspending procurement of US goods across provincial crown agencies.\n- Premier Moe emphasizes protecting critical rail corridors and maintaining open commercial access for the province's $18B annual agri-food exports.\n- Provincial government establishes a dedicated Trade Protection Taskforce with commodity producer groups.\n\nTHE DEBATE:\n- Premier Scott Moe & Agricultural Associations: Argue that Saskatchewan's export-reliant economy depends on open international markets and that retaliatory boycotts risk escalating harmful trade barriers against prairie farmers.\n- Legislative Opposition & Labor Leaders: Contend that a unified Canadian provincial front is required to push back against unilateral foreign tariffs and protect domestic processing jobs.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Scott Moe's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/scott-moe\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/premier-scott-moe-faces-mounting-pressure-over-retaliatory-us-liquor-tariffs-2026-08-25\n\n#ScottMoe #Saskatchewan #Agriculture #Trade #Tariffs #Potash #Farming #Economy #Choseno",
+    "breakingNews": false,
+    "body": "REGINA — Saskatchewan Premier Scott Moe addressed mounting debate within the Legislative Assembly on Tuesday regarding the province's strategy in response to rising cross-border trade tensions, advocating for measured diplomatic engagement to protect the province's massive agricultural and potash export base.\n\nWhile other Canadian provinces have enacted high-profile restrictions on US consumer imports, Moe emphasized that Saskatchewan's unique economic structure requires safeguarding critical north-south rail shipments of grain, pulses, uranium, and crop nutrients.\n\nPrairie Agricultural Exposure\nSaskatchewan is Canada's top agricultural exporter, shipping billions of dollars in canola, wheat, and pulses across the US border annually. Furthermore, the province supplies a substantial portion of the potash fertilizer utilized by American midwestern corn and soybean farmers.\n\n\"Saskatchewan is an export powerhouse,\" Premier Moe told reporters at the Legislative Building in Regina. \"One in six jobs in this province relies directly on trade. When tensions arise with our largest trading partner, our objective must be de-escalation and protecting market access for our farm families, not entering a race to the bottom that harms our own producers.\"\n\nLegislative Clash Over Strategy\nOpposition MLAs challenged the government's approach, arguing that without collective provincial retaliation, Western Canadian industries could be singled out in bilateral negotiations.\n\nIn response, Premier Moe announced the creation of the Saskatchewan Trade Defense Panel, comprising leaders from the Saskatchewan Stock Growers Association, Agricultural Producers Association of Saskatchewan (APAS), and mining executives to monitor border freight flows and provide real-time policy recommendations."
+  },
+  {
+    "slug": "mayor-london-breed-faces-community-debate-over-san-francisco-automated-camera-surveillance-2026-08-25",
+    "headline": "Mayor London Breed Defends San Francisco Automated License Plate Reader Expansion Amid Privacy Protests",
+    "summary": "San Francisco Mayor London Breed and the SFPD defend the deployment of 400 automated license plate readers across city intersections, clashing with privacy advocates over surveillance oversight.",
+    "category": "Public Safety",
+    "country": "US",
+    "province": "CA",
+    "impactArea": "local",
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "London Breed",
+      "San Francisco",
+      "PublicSafety",
+      "Surveillance",
+      "Privacy",
+      "Police",
+      "Technology"
+    ],
+    "taggedPoliticians": [
+      "London Breed"
+    ],
+    "author": {
+      "name": "Choseno Bay Area Civic & Tech Bureau",
+      "bio": "Covering San Francisco municipal governance, policing technology, and civic accountability."
+    },
+    "sources": [
+      {
+        "name": "ABC7 Bay Area",
+        "url": "https://abc7news.com/san-francisco"
+      },
+      {
+        "name": "San Francisco Chronicle",
+        "url": "https://www.sfchronicle.com/local"
+      }
+    ],
+    "seoTitle": "London Breed Defends SF License Plate Surveillance Cameras | Choseno",
+    "metaDescription": "Mayor London Breed defends San Francisco's automated license plate reader camera network amid public privacy protests.",
+    "tweet": "Mayor London Breed defends SF's 400 automated license plate readers, crediting optical camera tracking for major reductions in auto theft.",
+    "tweetarticle": "San Francisco Mayor London Breed and the San Francisco Police Department have defended the city's network of 400 automated license plate recognition cameras following public demonstrations outside private tech sponsor properties in Pacific Heights.\n\nReview London Breed on Choseno:\nhttps://choseno.com/wall/london-breed\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Deploys 400 Flock Safety automated optical cameras across 138 high-traffic intersections and highway off-ramps throughout San Francisco.\n- SFPD reports a 42% drop in commercial retail burglary getaways and the recovery of over 850 stolen vehicles in the first six months of operation.\n- Privacy groups challenge the retention of non-suspect vehicle location data and demand strict audits on inter-agency data sharing.\n- City Council introduces legislative amendments to mandate annual third-party privacy audits and 30-day data purging schedules.\n\nTHE DEBATE:\n- Mayor London Breed & Downtown Merchant Groups: Argue that modern camera technology provides police with indispensable tools to apprehend organized retail theft rings and restore commercial corridor safety without intrusive physical stops.\n- Civil Liberties Advocates & Community Activists: Contend that mass surveillance camera networks create permanent travel drag-nets that disproportionately monitor low-income neighborhoods and risk data leaks.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review London Breed's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/london-breed\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/mayor-london-breed-faces-community-debate-over-san-francisco-automated-camera-surveillance-2026-08-25\n\n#LondonBreed #SanFrancisco #PublicSafety #Surveillance #Privacy #SFPD #BayArea #Choseno",
+    "breakingNews": false,
+    "body": "SAN FRANCISCO — Mayor London Breed and Police Chief Bill Scott held a joint press conference at City Hall on Tuesday to defend San Francisco's expanding automated license plate reader (ALPR) camera program, citing double-digit drops in property crime while addressing privacy demonstrations organized across the city.\n\nThe controversy follows public demonstrations organized outside the private residences of civic donors and technology executives who provided initial seed funding for the camera infrastructure.\n\nPublic Safety Outcomes and Crime Reductions\nAccording to official SFPD operational statistics released on Tuesday:\n- The network of 400 solar-powered Flock Safety ALPR cameras captured over 22 million vehicle scans over the past quarter, alerting officers to stolen vehicles, carjacking suspects, and felony warrants in real time.\n- Property crimes, including organized vehicle break-ins in the Union Square and Fisherman's Wharf corridors, declined by 38% compared to the prior year.\n- Over 850 stolen vehicles have been recovered and returned to registered owners, resulting in 215 felony arrests.\n\n\"Our residents and small business owners demanded action to stop organized retail theft crews and car break-ins that damaged our city's reputation,\" Mayor Breed stated. \"These cameras are working. They give our officers precise, objective data to intercept criminals safely. We are not going to apologize for using effective technology to make San Francisco safer.\"\n\nPrivacy Safeguards and Municipal Oversight\nCivil liberties advocates, including the Electronic Frontier Foundation (EFF) and the ACLU of Northern California, expressed serious concerns regarding mass tracking capabilities, urging the Board of Supervisors to enforce strict limits on third-party access.\n\nIn response to civic feedback, the Mayor's office confirmed that all non-hit ALPR scan data is automatically purged after 30 days and that San Francisco data is prohibited from being shared with out-of-state agencies for non-criminal immigration inquiries."
+  },
+  {
+    "slug": "defense-secretary-pete-hegseth-orders-reforms-to-accelerate-tactical-military-manufacturing-2026-08-25",
+    "headline": "Defense Secretary Pete Hegseth Orders Streamlined Procurement for Tactical Ground Combat Fleets",
+    "summary": "Secretary of Defense Pete Hegseth tours major defense manufacturing facilities in the Midwest, ordering the Pentagon to cut multi-year acquisition bureaucracy and fast-track heavy tactical vehicle deliveries.",
+    "category": "Politics",
+    "country": "US",
+    "province": "DC",
+    "impactArea": "country",
+    "latitude": 38.8719,
+    "longitude": -77.0563,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "Pete Hegseth",
+      "DepartmentOfDefense",
+      "Military",
+      "Manufacturing",
+      "DefenseProcurement",
+      "NationalSecurity"
+    ],
+    "taggedPoliticians": [
+      "Pete Hegseth"
+    ],
+    "author": {
+      "name": "Choseno Pentagon & Armed Services Desk",
+      "bio": "Covering defense appropriations, military technology, and armed services logistics."
+    },
+    "sources": [
+      {
+        "name": "Defense News",
+        "url": "https://www.defensenews.com/pentagon"
+      },
+      {
+        "name": "WLUK News",
+        "url": "https://fox11online.com/news/local"
+      }
+    ],
+    "seoTitle": "Pete Hegseth Orders Fast-Track Defense Manufacturing Reforms | Choseno",
+    "metaDescription": "Secretary of Defense Pete Hegseth orders streamlined procurement rules to accelerate tactical military vehicle deliveries.",
+    "tweet": "Defense Secretary Pete Hegseth orders reforms to accelerate military vehicle procurement and cut Pentagon contracting bureaucracy.",
+    "tweetarticle": "Secretary of Defense Pete Hegseth has issued a directive reforming Department of Defense acquisition guidelines, ordering military services to cut multi-year contracting timelines and fast-track tactical vehicle and munitions production.\n\nReview Pete Hegseth on Choseno:\nhttps://choseno.com/wall/pete-hegseth\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Directs the Defense Acquisition University and military branches to consolidate traditional 7-year procurement milestones into 24-month rapid production cycles.\n- Prioritizes domestic commercial manufacturing partnerships for tactical wheeled vehicles, loitering munitions, and counter-drone defense platforms.\n- Sustains heavy manufacturing jobs across Wisconsin, Michigan, Ohio, and Pennsylvania defense industrial facilities.\n- Aims to reduce multi-billion dollar cost overruns by utilizing commercial off-the-shelf components in non-classified ground vehicle systems.\n\nTHE DEBATE:\n- Pentagon Leadership & Defense Contractors: Argue that modern near-peer geopolitical threats require military procurement to operate at the speed of commercial industry rather than slow bureaucratic cycles.\n- Congressional Oversight Committees & Watchdogs: Warn that cutting formal testing milestones and competitive bidding reviews could increase long-term maintenance costs and compromise soldier safety standards.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Pete Hegseth's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/pete-hegseth\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/defense-secretary-pete-hegseth-orders-reforms-to-accelerate-tactical-military-manufacturing-2026-08-25\n\n#PeteHegseth #Pentagon #DepartmentOfDefense #Military #Manufacturing #NationalSecurity #Defense #Choseno",
+    "breakingNews": false,
+    "body": "WASHINGTON — Secretary of Defense Pete Hegseth issued an executive memorandum on Tuesday overhauling Pentagon acquisition procedures, directing service chiefs and procurement directors to eliminate bureaucratic hurdles that delay the manufacturing and field deployment of tactical combat systems.\n\nThe directive, announced during a high-profile tour of major Midwest defense fabrication facilities, signals a concerted push by the Department of Defense to modernize its industrial supply chain in response to global inventory demands.\n\nOverhauling Pentagon Acquisition Cycles\nUnder the newly established \"Fast-Track Combat Delivery\" directive:\n- Major defense acquisition programs for non-nuclear ground combat platforms will be subject to a strict 24-month cap from initial requirements drafting to low-rate initial production (LRIP).\n- Service branches are instructed to grant commercial defense innovators and non-traditional suppliers expedited security clearances and prototype testing slots on military proving grounds.\n- Contract auditing will shift toward fixed-price production agreements to disincentivize cost-plus margin expansions that historically inflated major weapons systems.\n\n\"Our warfighters in the field cannot wait a decade for procurement committees in the Pentagon to finalize red tape,\" Secretary Hegseth told assembly workers and military officers. \"Speed, reliability, and domestic industrial capacity are lethal advantages. We are cutting through decades of institutional inertia to ensure our troops receive the finest equipment manufactured right here in the American heartland.\"\n\nCongressional and Industry Scrutiny\nMembers of the House and Senate Armed Services Committees voiced mixed reactions to the initiative. While lawmakers from manufacturing states commended the focus on heartland jobs and munitions scaling, government accountability watchdogs stressed the necessity of robust operational testing to guarantee battlefield resilience.\n\nDefense officials confirmed that the Pentagon will establish a dedicated Rapid Acquisition Oversight Council to review quarterly production metrics and brief congressional committees on safety and cost compliance."
+  },
+  {
+    "slug": "premier-wab-kinew-directs-45-million-for-rural-manitoba-emergency-healthcare-and-nursing-hubs-2026-08-25",
+    "headline": "Premier Wab Kinew Directs $45 Million to End Mandatory Nurse Overtime and Reopen Rural ERs",
+    "summary": "Manitoba Premier Wab Kinew and Health Minister Uzoma Asagwara announce a $45 million investment to eliminate mandatory overtime for nurses and reopen shuttered emergency rooms in rural Manitoba.",
+    "category": "Politics",
+    "country": "CA",
+    "province": "MB",
+    "impactArea": "state",
+    "latitude": 49.8951,
+    "longitude": -97.1384,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "Wab Kinew",
+      "Manitoba",
+      "Healthcare",
+      "Nurses",
+      "RuralHealth",
+      "PublicServices"
+    ],
+    "taggedPoliticians": [
+      "Wab Kinew"
+    ],
+    "author": {
+      "name": "Choseno Prairie Health & Social Policy Desk",
+      "bio": "Investigating provincial healthcare delivery, nursing retention, and rural hospital operations."
+    },
+    "sources": [
+      {
+        "name": "Winnipeg Free Press",
+        "url": "https://www.winnipegfreepress.com/local"
+      },
+      {
+        "name": "CBC Manitoba",
+        "url": "https://www.cbc.ca/news/canada/manitoba"
+      }
+    ],
+    "seoTitle": "Wab Kinew Directs $45M for Manitoba Rural Healthcare | Choseno",
+    "metaDescription": "Manitoba Premier Wab Kinew announces $45 million to end mandatory nurse overtime and stabilize rural emergency departments.",
+    "tweet": "Premier Wab Kinew directs $45M to end mandatory nurse overtime and restore emergency medical care across rural Manitoba hospitals.",
+    "tweetarticle": "Manitoba Premier Wab Kinew and Health Minister Uzoma Asagwara have announced a $45 million provincial investment aimed at ending mandatory overtime for front-line nurses and reopening emergency departments across rural Manitoba.\n\nReview Wab Kinew on Choseno:\nhttps://choseno.com/wall/wab-kinew\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Allocates $45 million to recruit 300 full-time rural nurses and incentivize retired healthcare practitioners to return to bedside duty.\n- Reopens 24/7 emergency department coverage in five rural community hospitals that suffered rolling closures due to staffing shortages.\n- Replaces expensive private agency nursing contracts with permanent provincial health authority positions.\n- Expands physician and nurse practitioner loan forgiveness programs for practitioners serving in Northern and Indigenous communities.\n\nTHE DEBATE:\n- Premier Wab Kinew & Manitoba Nurses Union: Maintain that mandatory overtime burnt out hundreds of front-line caregivers, and that restoring respectful working conditions is the only sustainable way to rebuild provincial healthcare.\n- Opposition Lawmakers & Health Policy Critics: Welcome the funding but question whether global healthcare worker shortages will allow the province to meet its ambitious 300-nurse hiring target within 12 months.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Wab Kinew's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/wab-kinew\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/premier-wab-kinew-directs-45-million-for-rural-manitoba-emergency-healthcare-and-nursing-hubs-2026-08-25\n\n#WabKinew #Manitoba #Healthcare #Nurses #PublicHealth #RuralCare #Winnipeg #Choseno",
+    "breakingNews": false,
+    "body": "WINNIPEG — Premier Wab Kinew and Health Minister Uzoma Asagwara unveiled a comprehensive $45 million healthcare stabilization plan on Tuesday at St. Boniface Hospital, delivering on a signature commitment to eliminate mandatory 16-hour overtime shifts for nurses and stabilize emergency care across rural Manitoba.\n\nThe initiative addresses years of severe healthcare workforce burnout that led to rolling emergency room closures in communities including Eriksdale, Grandview, and Carberry.\n\nRestoring Front-Line Nursing Capacity\nUnder the Manitoba Healthcare Retention and Recruitment Plan:\n- $25 million is dedicated to establishing full-time float pools across the Prairie Mountain, Interlake-Eastern, and Southern Health regions, ensuring sudden absences are covered without mandating overtime.\n- $12 million provides retention bonuses and enhanced night-shift premiums for bedside nurses in acute care and critical care units.\n- $8 million expands specialized training seats at Red River College Polytechnic and Brandon University for nurse practitioners and emergency medical responders.\n\n\"When healthcare workers are exhausted from working back-to-back double shifts, patient care suffers and caregivers leave the profession,\" Premier Kinew stated. \"We promised Manitobans that we would treat nurses with respect, end the reliance on high-cost private temp agencies, and fix rural healthcare. Today's investment is a major step toward fulfilling that promise.\"\n\nTransitioning Away from Private Nursing Agencies\nMinister Asagwara highlighted that Manitoba spent over $60 million in the previous fiscal year on private travel nursing agencies. The provincial health authority has issued notices phasing out non-specialized agency contracts, redirecting funds into direct provincial compensation and permanent hospital staff positions.\n\nRepresentatives from the Manitoba Nurses Union (MNU) commended the announcement, calling the end of mandated overtime an essential milestone for workplace safety and nursing retention."
+  },
+  {
+    "slug": "governor-josh-shapiro-allocates-110-million-for-pennsylvania-rail-bridge-and-freight-corridor-hardening-2026-08-25",
+    "headline": "Governor Josh Shapiro Directs $110 Million for Critical Rail Bridge and Freight Corridor Hardening",
+    "summary": "Pennsylvania Governor Josh Shapiro and PennDOT award $110 million in state infrastructure grants to repair and modernize 35 aging railway bridges and freight corridors across the Commonwealth.",
+    "category": "Infrastructure",
+    "country": "US",
+    "province": "PA",
+    "impactArea": "state",
+    "latitude": 40.2732,
+    "longitude": -76.8867,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "Josh Shapiro",
+      "Pennsylvania",
+      "Infrastructure",
+      "Railroads",
+      "Transportation",
+      "PennDOT",
+      "Economy"
+    ],
+    "taggedPoliticians": [
+      "Josh Shapiro"
+    ],
+    "author": {
+      "name": "Choseno Commonwealth Infrastructure Desk",
+      "bio": "Covering Pennsylvania transport networks, bridge safety, and state capital spending."
+    },
+    "sources": [
+      {
+        "name": "Philadelphia Inquirer",
+        "url": "https://www.inquirer.com/transportation"
+      },
+      {
+        "name": "Pittsburgh Post-Gazette",
+        "url": "https://www.post-gazette.com/news/transportation"
+      }
+    ],
+    "seoTitle": "Josh Shapiro Directs $110M for Pennsylvania Rail Infrastructure | Choseno",
+    "metaDescription": "Governor Josh Shapiro announces $110 million to rehabilitate 35 aging rail bridges and freight corridors in Pennsylvania.",
+    "tweet": "Governor Josh Shapiro directs $110M to modernize 35 critical freight railway bridges and industrial tracks across Pennsylvania.",
+    "tweetarticle": "Pennsylvania Governor Josh Shapiro and PennDOT Secretary Mike Carroll have announced $110 million in state capital grants to repair, reinforce, and modernize 35 critical freight railway bridges and industrial rail spurs across the Commonwealth.\n\nReview Josh Shapiro on Choseno:\nhttps://choseno.com/wall/josh-shapiro\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Directs $110 million to rehabilitate 35 century-old steel truss and stone arch railroad bridges in Southwestern and Central Pennsylvania.\n- Upgrades 120 miles of short-line industrial track to accommodate modern 286,000-pound heavy freight railcars.\n- Prevents hazardous derailments and removes approximately 140,000 heavy long-haul trucks from Pennsylvania interstate highways annually.\n- Creates over 1,200 union construction and steel fabrication jobs across Allegheny, Cambria, and Luzerne counties.\n\nTHE DEBATE:\n- Governor Josh Shapiro & Business Chambers: Argue that Pennsylvania's freight rail backbone is the engine of the state's manufacturing and energy economy, requiring proactive state investment to prevent catastrophic bridge failures.\n- Fiscal Conservatives & Rural Lawmakers: Support infrastructure repairs but urge increased cost-sharing requirements from private Class I railroads operating lucrative national routes across the state.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Josh Shapiro's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/josh-shapiro\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/governor-josh-shapiro-allocates-110-million-for-pennsylvania-rail-bridge-and-freight-corridor-hardening-2026-08-25\n\n#JoshShapiro #Pennsylvania #Infrastructure #PennDOT #Rail #Transportation #Economy #Choseno",
+    "breakingNews": false,
+    "body": "HARRISBURG, PA — Governor Josh Shapiro joined transportation officials and labor leaders in Harrisburg on Tuesday to announce a $110 million state investment dedicated to rehabilitating 35 high-priority railway bridges and expanding heavy-axle freight track capacity across Pennsylvania.\n\nThe funding, distributed through PennDOT's Rail Transportation Assistance Program (RTAP) and the Rail Freight Assistance Program (RFAP), targets aging rail infrastructure that connects regional manufacturers, chemical producers, and agricultural processors to global East Coast ports.\n\nSecuring Critical Supply Chain Arteries\nPennsylvania possesses the highest concentration of operating short-line freight railroads in the United States, with many bridge structures dating back to the early 20th century.\n\n\"Pennsylvania was built on manufacturing, agriculture, and energy, and none of those industries can thrive without a world-class freight rail network,\" Governor Shapiro stated at the Pennsylvania Rail Freight terminal. \"By investing $110 million today to repair aging bridges and upgrade track capacity, we are creating good-paying union jobs, keeping heavy trucks off our congested highways, and ensuring Pennsylvania products move safely to market.\"\n\nKey Infrastructure Project Highlights\n- Monongahela Valley Bridge Hardening: $28 million to replace fatigued structural steel spans and piers on three freight bridges carrying steel coils and manufacturing chemicals across the Monongahela River.\n- Central PA Heavy Rail Expansion: $34 million to upgrade 65 miles of continuous welded rail across the Lycoming and Clinton county industrial corridors to support standard 286,000-pound freight car loadings.\n- Port of Philadelphia Intermodal Direct Rail: $22 million for grade separation and double-track siding at the Packer Avenue Marine Terminal, speeding up container rail transfers.\n\nEnvironmental and Economic Benefits\nPennDOT Secretary Mike Carroll emphasized that transitioning bulk freight from highway trucks to modernized rail corridors will reduce carbon emissions by over 60,000 metric tons annually while significantly reducing highway maintenance costs on I-80 and I-76."
+  },
+  {
+    "slug": "governor-gretchen-whitmer-enforces-statewide-clean-energy-zoning-overriding-local-bans-2026-08-25",
+    "headline": "Governor Gretchen Whitmer Enforces Statewide Clean Energy Siting Rules to Accelerate Solar Grid Projects",
+    "summary": "Michigan Governor Gretchen Whitmer and the Michigan Public Service Commission begin formal implementation of statewide authority over large-scale solar and wind project permitting, superseding county-level moratoriums.",
+    "category": "Politics",
+    "country": "US",
+    "province": "MI",
+    "impactArea": "state",
+    "latitude": 42.7325,
+    "longitude": -84.5555,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "Gretchen Whitmer",
+      "Michigan",
+      "CleanEnergy",
+      "Solar",
+      "Grid",
+      "Zoning",
+      "Environment"
+    ],
+    "taggedPoliticians": [
+      "Gretchen Whitmer"
+    ],
+    "author": {
+      "name": "Choseno Great Lakes Energy Desk",
+      "bio": "Reporting on clean energy transitions, utility regulations, and state executive authority."
+    },
+    "sources": [
+      {
+        "name": "Detroit Free Press",
+        "url": "https://www.freep.com/news/politics"
+      },
+      {
+        "name": "The Detroit News",
+        "url": "https://www.detroitnews.com/news/politics"
+      }
+    ],
+    "seoTitle": "Gretchen Whitmer Enforces Statewide Clean Energy Siting | Choseno",
+    "metaDescription": "Governor Gretchen Whitmer implements Michigan rules allowing state regulators to approve utility-scale clean energy projects.",
+    "tweet": "Governor Gretchen Whitmer begins enforcing statewide clean energy siting rules, transferring utility-scale solar permitting to state regulators.",
+    "tweetarticle": "Michigan Governor Gretchen Whitmer and the Michigan Public Service Commission have initiated enforcement of statewide siting rules granting state regulators authority to approve commercial solar and wind farms over 50 megawatts.\n\nReview Gretchen Whitmer on Choseno:\nhttps://choseno.com/wall/gretchen-whitmer\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Transfers permitting authority for major clean power projects from local township zoning boards to the Michigan Public Service Commission (MPSC).\n- Designed to unblock $4.2 billion in stalled renewable generation projects needed to meet Michigan's 100% clean electricity mandate by 2040.\n- Guarantees host communities local revenue sharing, road repair funding, and agricultural preservation agreements.\n- Township associations challenge state preemption in federal and state courts, citing municipal home rule protections.\n\nTHE DEBATE:\n- Governor Gretchen Whitmer & Renewable Energy Developers: Argue that localized township bans and NIMBY moratoriums threaten grid reliability and delay urgently needed clean energy investments.\n- Rural Township Officials & Landowner Coalitions: Contend that overriding local zoning strips rural residents of democratic control over their farmland landscapes and local tax bases.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Gretchen Whitmer's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/gretchen-whitmer\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/governor-gretchen-whitmer-enforces-statewide-clean-energy-zoning-overriding-local-bans-2026-08-25\n\n#GretchenWhitmer #Michigan #CleanEnergy #Solar #MPSC #Zoning #Grid #Environment #Choseno",
+    "breakingNews": false,
+    "body": "LANSING, MI — Governor Gretchen Whitmer and the Michigan Public Service Commission (MPSC) commenced formal enforcement on Tuesday of landmark clean energy siting regulations that grant state utility commissioners final authority over the permitting of utility-scale solar, wind, and battery storage projects.\n\nThe regulatory transition, enacted under Michigan's Clean Energy and Jobs Act, is designed to overcome local zoning moratoriums that halted dozens of renewable energy developments across rural counties.\n\nAccelerating the Clean Energy Grid\nUnder the new regulatory framework:\n- Commercial energy developers seeking to construct solar facilities over 50 megawatts or battery storage over 100 megawatt-hours can apply directly to the MPSC if local township boards fail to approve applications within 120 days.\n- Approved projects must pay host communities mandatory annual community benefit payments and submit bonded decommissioning plans ensuring farmland is fully restored after project lifespans.\n- Developers must guarantee prevailing wages and utilize domestic union labor for electrical and civil construction.\n\n\"We cannot build a 21st-century manufacturing economy and protect our Great Lakes without reliable, affordable clean energy,\" Governor Whitmer stated. \"By creating a predictable, statewide permitting standard, we are cutting through red tape, creating union jobs, and ensuring Michigan powers its own future.\"\n\nLegal and Grassroots Challenges\nTownship advocacy groups and agricultural preservation organizations expressed strong opposition, filing legal challenges in the Michigan Court of Appeals arguing that state preemption violates constitutional home-rule guarantees.\n\nMPSC officials scheduled regional public hearings to allow community members to submit environmental and agricultural impact feedback on pending project applications."
+  },
+  {
+    "slug": "governor-greg-abbott-expands-operation-lone-star-to-international-railway-freight-corridors-2026-08-25",
+    "headline": "Governor Greg Abbott Deploys State Guard and Thermal Scanners to Secure Texas Rail Freight Crossings",
+    "summary": "Texas Governor Greg Abbott orders the deployment of Texas National Guard units and high-capacity optical thermal scanners along international railway bridges in Eagle Pass and El Paso.",
+    "category": "Public Safety",
+    "country": "US",
+    "province": "TX",
+    "impactArea": "state",
+    "latitude": 30.2672,
+    "longitude": -97.7431,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "Greg Abbott",
+      "Texas",
+      "BorderSecurity",
+      "PublicSafety",
+      "Railroads",
+      "OperationLoneStar",
+      "Trade"
+    ],
+    "taggedPoliticians": [
+      "Greg Abbott"
+    ],
+    "author": {
+      "name": "Choseno Texas & Border Affairs Bureau",
+      "bio": "Covering Texas executive policy, border enforcement operations, and cross-border trade security."
+    },
+    "sources": [
+      {
+        "name": "The Texas Tribune",
+        "url": "https://www.texastribune.org/politics"
+      },
+      {
+        "name": "Austin American-Statesman",
+        "url": "https://www.statesman.com/news"
+      }
+    ],
+    "seoTitle": "Greg Abbott Deploys State Guard to Texas Rail Freight Bridges | Choseno",
+    "metaDescription": "Governor Greg Abbott deploys Texas National Guard and thermal imaging to inspect cross-border freight trains in Eagle Pass and El Paso.",
+    "tweet": "Governor Greg Abbott expands Operation Lone Star, deploying state troops and thermal inspection arches to secure cross-border rail freight bridges.",
+    "tweetarticle": "Texas Governor Greg Abbott has directed the Texas Military Department and the Department of Public Safety to deploy National Guard personnel and specialized thermal scanning gantries along international freight railway bridges in Eagle Pass and El Paso.\n\nReview Greg Abbott on Choseno:\nhttps://choseno.com/wall/greg-abbott\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Deploys Texas State Guard tactical inspection teams alongside Union Pacific and BNSF railway yards.\n- Installs automated high-speed thermal imaging arches capable of scanning moving freight cars traveling up to 30 mph for concealed human cargo and contraband.\n- Coordinated through Operation Lone Star with an allocated $35M in state border security capital funding.\n- Rail industry groups emphasize maintaining commercial velocity for cross-border automotive and agricultural shipments.\n\nTHE DEBATE:\n- Governor Greg Abbott & State Law Enforcement: Argue that transnational smuggling cartels increasingly exploit commercial freight trains, requiring aggressive state interdiction to protect border communities and rail crews.\n- Freight Rail Operators & Federal Regulators: Contend that international border inspection falls under exclusive federal CBP jurisdiction and that duplicate state inspections risk commercial freight delays.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Greg Abbott's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/greg-abbott\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/governor-greg-abbott-expands-operation-lone-star-to-international-railway-freight-corridors-2026-08-25\n\n#GregAbbott #Texas #OperationLoneStar #BorderSecurity #Rail #Trade #PublicSafety #Choseno",
+    "breakingNews": false,
+    "body": "AUSTIN, TX — Governor Greg Abbott announced an operational expansion of Operation Lone Star on Tuesday, ordering the Texas Military Department and Texas Department of Public Safety (DPS) to establish permanent rail inspection checkpoints at key international railway crossings connecting Texas to Mexico.\n\nThe deployment focuses on rail corridors in Eagle Pass, El Paso, and Laredo, which handle tens of thousands of commercial freight cars transporting manufactured auto parts, grain, and consumer goods daily.\n\nHigh-Tech Gantry Inspections\nUnder the governor's directive:\n- DPS tactical units will operate high-throughput non-intrusive thermal scanning arches positioned on railway approaches, providing 360-degree infrared scans of passing railcars without requiring complete train stoppages.\n- Texas National Guard soldiers will maintain 24/7 observation towers and drone surveillance along rail sidings to intercept smuggling attempts.\n- State troopers will collaborate with railroad police forces to provide immediate tactical response to perimeter breaches.\n\n\"Transnational criminal cartels will exploit any vulnerability, including commercial freight networks, to traffic illegal drugs and humans into our communities,\" Governor Abbott said in an official statement. \"Texas is stepping up where the federal government has failed, deploying cutting-edge thermal technology and state troops to secure our rail corridors and protect our citizens.\"\n\nCommercial and Jurisdictional Friction\nMajor freight rail carriers underscored the critical importance of uninterrupted freight flow, noting that billions of dollars in just-in-time manufacturing parts cross the Texas border weekly.\n\nCivil rights organizations and legal scholars questioned state authority over interstate and international rail corridors, which are traditionally regulated under federal commerce and customs statutes."
+  },
+  {
+    "slug": "governor-jb-pritzker-signs-sweeping-ai-algorithmic-hiring-and-workplace-bias-ban-2026-08-25",
+    "headline": "Governor JB Pritzker Signs Comprehensive Law Regulating AI Algorithmic Worker Screening and Hiring Bias",
+    "summary": "Illinois Governor JB Pritzker signs legislation barring employers from utilizing artificial intelligence hiring software that discriminates against job applicants based on race, gender, or protected characteristics.",
+    "category": "Politics",
+    "country": "US",
+    "province": "IL",
+    "impactArea": "state",
+    "latitude": 39.7817,
+    "longitude": -89.6501,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "JB Pritzker",
+      "Illinois",
+      "ArtificialIntelligence",
+      "Labor",
+      "Employment",
+      "CivilRights",
+      "Technology"
+    ],
+    "taggedPoliticians": [
+      "JB Pritzker"
+    ],
+    "author": {
+      "name": "Choseno Midwest Labor & Tech Desk",
+      "bio": "Covering labor relations, workplace automation, and state statutory protections."
+    },
+    "sources": [
+      {
+        "name": "Chicago Tribune",
+        "url": "https://www.chicagotribune.com/politics"
+      },
+      {
+        "name": "Crain's Chicago Business",
+        "url": "https://www.chicagobusiness.com/politics"
+      }
+    ],
+    "seoTitle": "JB Pritzker Signs AI Workplace Bias Transparency Law | Choseno",
+    "metaDescription": "Governor JB Pritzker signs Illinois legislation banning discriminatory AI hiring software and mandating employer bias audits.",
+    "tweet": "Governor JB Pritzker signs Illinois law banning discriminatory AI hiring algorithms and requiring employers to disclose automated applicant screening.",
+    "tweetarticle": "Illinois Governor JB Pritzker has signed landmark legislation (HB 3773) prohibiting employers from utilizing artificial intelligence applicant-screening tools that produce discriminatory outcomes based on race, gender, or age.\n\nReview JB Pritzker on Choseno:\nhttps://choseno.com/wall/jb-pritzker\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Amends the Illinois Human Rights Act to legally prohibit employers from deploying AI tools that subject job candidates to algorithmic bias.\n- Requires companies to notify job applicants whenever automated video analysis, resume parsers, or predictive models are used in evaluation.\n- Mandates annual independent bias audits for large employers using algorithmic workforce management tools.\n- Establishes private right of action for aggrieved workers in state circuit courts with statutory damage remedies.\n\nTHE DEBATE:\n- Governor JB Pritzker & Civil Rights Advocates: Argue that unchecked AI screening algorithms embed historical employment discrimination behind proprietary 'black-box' code, requiring strict state statutory guardrails.\n- Corporate Chambers & HR Technology Providers: Maintain that automated screening speeds up recruitment and caution that vague algorithmic liability could expose businesses to frivolous class-action litigation.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review JB Pritzker's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/jb-pritzker\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/governor-jb-pritzker-signs-sweeping-ai-algorithmic-hiring-and-workplace-bias-ban-2026-08-25\n\n#JBPritzker #Illinois #ArtificialIntelligence #Labor #CivilRights #Employment #TechPolicy #Choseno",
+    "breakingNews": false,
+    "body": "SPRINGFIELD, IL — Governor JB Pritzker signed House Bill 3773 on Tuesday, establishing landmark statutory protections against algorithmic discrimination in hiring, promotion, and workforce evaluation across Illinois.\n\nThe measure positions Illinois as a national pioneer in regulating workplace artificial intelligence, following the state's precedent-setting Biometric Information Privacy Act (BIPA).\n\nNew Worker Rights in the Automated Economy\nUnder the new statutory framework:\n- Employers are explicitly prohibited from utilizing AI systems that have the effect of subjecting employees or applicants to discrimination on the basis of race, color, religion, sex, national origin, or disability.\n- Companies must provide clear, accessible written disclosures to applicants prior to deploying AI tools that evaluate facial expressions, voice inflection, or predictive personality metrics during interviews.\n- Employers cannot rely on AI models to make automated termination or disciplinary decisions without human oversight and documentation.\n\n\"In Illinois, we believe technology should empower workers and create opportunities, not erect invisible barriers of discrimination,\" Governor Pritzker stated at the James R. Thompson Center in Chicago. \"As artificial intelligence reshapes corporate recruitment, this law ensures that qualified job seekers are judged on their skills and merits, not by biased algorithms.\"\n\nCorporate Compliance and Legal Scrutiny\nBusiness organizations, including the Illinois Chamber of Commerce, raised concerns regarding implementation timelines, urging state regulators to provide clear auditing criteria before enforcement provisions take effect.\n\nThe Illinois Department of Human Rights announced that it will draft detailed administrative rules governing algorithmic auditing standards and publish compliance guides for small employers."
+  },
+  {
+    "slug": "ottawa-rejects-us-demands-to-eliminate-canadian-content-regulations-for-streaming-giants-2026-08-25",
+    "headline": "Ottawa Rejects US Demands to Eliminate Canadian Content Quotas for Digital Streaming Platforms",
+    "summary": "Heritage Minister Pascale St-Onge and federal trade negotiators formally reject US demands to dismantle Online Streaming Act Cancon expenditure mandates in ongoing bilateral trade negotiations.",
+    "category": "Politics",
+    "country": "CA",
+    "province": "CA",
+    "impactArea": "country",
     "latitude": 45.4215,
     "longitude": -75.6972,
     "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
+    "published_at": "2026-08-25T10:00:00+00:00",
     "tags": [
-      "Doug Ford",
-      "Prabmeet Sarkaria",
-      "Ontario",
-      "Ottawa LRT",
-      "Transit",
-      "Transportation",
-      "Metrolinx"
+      "Pascale St-Onge",
+      "Canada",
+      "Streaming",
+      "Cancon",
+      "Trade",
+      "Broadcasting",
+      "Culture",
+      "USMCA"
     ],
     "taggedPoliticians": [
-      "Doug Ford",
-      "Prabmeet Sarkaria"
+      "Pascale St-Onge"
     ],
     "author": {
-      "name": "Choseno Queen's Park Bureau",
-      "bio": "Ontario provincial governance, Ottawa transit infrastructure, and public rail expansion"
+      "name": "Choseno National Cultural & Trade Policy Desk",
+      "bio": "Covering Canadian broadcasting regulations, cultural sovereignty, and digital streaming legislation."
     },
     "sources": [
       {
-        "name": "Ottawa Citizen",
-        "url": "https://ottawacitizen.com"
+        "name": "The Globe and Mail",
+        "url": "https://www.theglobeandmail.com/politics"
       },
       {
-        "name": "CBC Ottawa",
-        "url": "https://www.cbc.ca/news/canada/ottawa"
+        "name": "CBC News",
+        "url": "https://www.cbc.ca/news/politics"
       }
     ],
-    "seoTitle": "Doug Ford Directs $350M for Ottawa LRT Trillium Line Testing | Choseno",
-    "metaDescription": "Ontario Premier Doug Ford announces $350 million to finalize signaling commissioning and train integration for the Ottawa LRT Stage 2 Trillium Line.",
-    "tweet": "Premier Doug Ford allocates $350M to finalize signaling commissioning and train testing for the Ottawa LRT Stage 2 Trillium Line South extension.",
+    "seoTitle": "Ottawa Rejects US Demands on Digital Streaming Cancon Quotas | Choseno",
+    "metaDescription": "Heritage Minister Pascale St-Onge rejects US demands to exempt American digital streaming giants from Canadian content levies.",
+    "tweet": "Heritage Minister Pascale St-Onge rejects US demands to dismantle Canadian content expenditure quotas for foreign streaming platforms.",
+    "tweetarticle": "Heritage Minister Pascale St-Onge and federal trade negotiators have formally rejected a last-minute US demand to dismantle Canadian content (Cancon) investment quotas for American digital streaming giants operating in Canada.\n\nReview Pascale St-Onge on Choseno:\nhttps://choseno.com/wall/pascale-st-onge\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Upholds Canadian Radio-television and Telecommunications Commission (CRTC) regulations requiring foreign streaming platforms (Netflix, Disney+, Prime Video) to contribute 5% of Canadian revenues to domestic production funds.\n- Rejects US Trade Representative (USTR) assertions that cultural spending levies constitute an unfair digital trade barrier under USMCA Chapter 19.\n- Protects an estimated $200 million annually in dedicated production funding for Canadian independent film, television, Indigenous media, and French-language programming.\n- Directs federal cultural agencies to proceed with full implementation of the Online Streaming Act (Bill C-11).\n\nTHE DEBATE:\n- Federal Heritage Officials & Canadian Creators: Argue that cultural sovereignty is non-negotiable and that foreign platforms generating billions in Canadian subscriptions must invest fairly in local storytelling and creator ecosystems.\n- US Digital Streaming Platforms & Trade Associations: Contend that mandatory revenue tithes act as a discriminatory tax that increases consumer monthly subscription prices and violates digital trade parity commitments.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Pascale St-Onge's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/pascale-st-onge\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/ottawa-rejects-us-demands-to-eliminate-canadian-content-regulations-for-streaming-giants-2026-08-25\n\n#PascaleStOnge #Canada #Cancon #Streaming #CRTC #Culture #Trade #Broadcasting #Choseno",
     "breakingNews": false,
-    "body": "OTTAWA — Ontario Premier Doug Ford and Minister of Transportation Prabmeet Sarkaria announced on Monday a $350 million provincial transit capital allocation through Metrolinx and the City of Ottawa to finalize signaling commissioning, electrical substation load testing, and integrated train trial running for the 16-kilometer Stage 2 Trillium Line Light Rail Transit (LRT) south extension.\n\nThe project connects Carleton University, South Keys, Leitrim, and Riverside South directly with the Ottawa Macdonald-Cartier International Airport, deploying a modern fleet of Stadler FLIRT and Alstom Coradia diesel-electric multiple units.\n\nConnecting Ottawa Students, Workers, and Airport Travelers to Rapid Transit\nThe Trillium Line expansion will move over 45,000 passengers daily, providing university students and south Ottawa suburban commuters with fast, direct transit while eliminating thousands of daily car trips from congested arterial roads like the Airport Parkway and Bank Street.\n\n\"Our government is committed to building the world-class transit that Ottawa families, workers, and students deserve,\" Premier Doug Ford said during an announcement at Carleton University Station in Ottawa. \"This $350 million investment ensures that the Stage 2 Trillium Line completes thorough testing and commissioning, so trains can begin carrying passengers safely and reliably, connecting Carleton University and south Ottawa communities directly to the airport and supporting local economic growth.\"\n\nCommissioning and Infrastructure Milestones\nThe $350 million package finances:\n- 16 Kilometers of Signaling & Train Control Commissioning: Completing exhaustive safety integration testing for automated train control and grade crossing warning systems.\n- Airport Elevated Spur Station: Finalizing the climate-controlled enclosed pedestrian bridge connecting the terminal directly into the airport departures concourse.\n- Ellwood Diamond Railway Grade Separation: Completing the grade-separated rail-over-rail crossing eliminating freight interference with Via Rail tracks.\n\nOttawa municipal councilors, university student associations, and airport authority executives praised the provincial funding, highlighting that the Trillium Line provides vital transit connectivity for post-secondary education and international travel."
+    "body": "OTTAWA — Heritage Minister Pascale St-Onge confirmed on Tuesday that Canadian trade negotiators have unequivocally rejected a high-level US diplomatic push demanding exemptions for foreign streaming platforms from domestic cultural expenditure requirements under the Online Streaming Act.\n\nThe standoff emerges as bilateral trade discussions continue over digital services, copyright protections, and cross-border telecommunications regulations.\n\nDefending Canadian Cultural Sovereignty\nUnder CRTC regulatory rulings finalized earlier this year, foreign streaming entities earning more than $25 million in Canadian gross revenues must allocate 5% of their domestic earnings directly to independent Canadian production funds, local news gathering, and Indigenous screen initiatives.\n\n\"Canadian stories, artists, and culture are not bargaining chips in a trade dispute,\" Minister St-Onge stated during a press briefing on Parliament Hill. \"Foreign digital platforms generate immense profits from Canadian audiences. Requiring them to reinvest a modest fraction of those revenues back into the local creators and storytellers who make this country vibrant is fair, balanced, and essential for our cultural sovereignty.\"\n\nCross-Border Trade Implications\nThe Motion Picture Association (MPA) and US digital trade coalitions have urged the Office of the United States Trade Representative (USTR) to initiate formal consultations under the USMCA, alleging that the 5% levy constitutes an unfair tariff on American intellectual property.\n\nCanadian film and television industry associations, including the Canadian Media Producers Association (CMPA) and ACTRA, commended the federal government's firm stance, emphasizing that stable domestic funding ensures sustainable careers for tens of thousands of Canadian writers, actors, and production crews."
   },
   {
-    "slug": "premier-david-eby-allocates-145-million-for-bc-clean-energy-major-projects-office-and-first-nations-equity-loans-2026-08-25",
-    "headline": "Premier David Eby Directs $145 Million for BC Indigenous Clean Energy Equity Partnerships",
-    "summary": "British Columbia Premier David Eby and Energy Minister Josie Osborne allocate $145 million to establish the BC First Nations Clean Energy Equity Loan Guarantee Program, enabling First Nations to purchase up to 50% equity stakes in clean power projects.",
-    "category": "Clean Energy",
+    "slug": "premier-tim-houston-directs-65-million-for-nova-scotia-inshore-lobster-wharves-and-breakwaters-2026-08-25",
+    "headline": "Premier Tim Houston Directs $65 Million to Modernize 12 Nova Scotia Inshore Lobster and Seafood Wharves",
+    "summary": "Nova Scotia Premier Tim Houston announces $65 million in provincial capital funding to reinforce coastal breakwaters and modernize commercial lobster wharves across Southwestern Nova Scotia.",
+    "category": "Infrastructure",
     "country": "CA",
-    "province": "BC",
+    "province": "NS",
     "impactArea": "state",
-    "latitude": 48.4284,
-    "longitude": -123.3656,
+    "latitude": 44.6488,
+    "longitude": -63.5752,
     "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
+    "published_at": "2026-08-25T10:00:00+00:00",
     "tags": [
-      "David Eby",
-      "Josie Osborne",
-      "British Columbia",
-      "Indigenous Affairs",
-      "Clean Energy",
-      "BC Hydro"
+      "Tim Houston",
+      "Nova Scotia",
+      "Fisheries",
+      "Lobster",
+      "Infrastructure",
+      "CoastalResilience",
+      "Economy"
     ],
     "taggedPoliticians": [
-      "David Eby",
-      "Josie Osborne"
+      "Tim Houston"
     ],
     "author": {
-      "name": "Choseno West Coast Bureau",
-      "bio": "British Columbia energy policy, Indigenous economic reconciliation, and clean power grids"
+      "name": "Choseno Atlantic Maritime & Fisheries Bureau",
+      "bio": "Covering Atlantic Canada fisheries, coastal infrastructure, and provincial governance."
     },
     "sources": [
       {
-        "name": "Vancouver Sun",
-        "url": "https://vancouversun.com"
+        "name": "CBC Nova Scotia",
+        "url": "https://www.cbc.ca/news/canada/nova-scotia"
       },
       {
-        "name": "Business in Vancouver",
-        "url": "https://biv.com"
+        "name": "The Chronicle Herald",
+        "url": "https://www.saltwire.com/halifax"
       }
     ],
-    "seoTitle": "David Eby Directs $145M for BC First Nations Clean Energy Equity | Choseno",
-    "metaDescription": "BC Premier David Eby awards $145M to provide provincial loan guarantees for First Nations purchasing equity stakes in wind and hydro projects.",
-    "tweet": "Premier David Eby announces $145M for the BC First Nations Clean Energy Equity Program, enabling Indigenous equity ownership in clean power projects.",
+    "seoTitle": "Tim Houston Directs $65M for Nova Scotia Lobster Wharves | Choseno",
+    "metaDescription": "Premier Tim Houston announces $65 million to reconstruct commercial lobster wharves and storm breakwaters in Nova Scotia.",
+    "tweet": "Premier Tim Houston directs $65M to modernize 12 commercial lobster fishing wharves and storm breakwaters across Nova Scotia.",
+    "tweetarticle": "Nova Scotia Premier Tim Houston and Fisheries Minister Kent Smith have announced a $65 million provincial capital program to repair storm-damaged commercial fishing wharves and construct high-capacity breakwaters across coastal Nova Scotia.\n\nReview Tim Houston on Choseno:\nhttps://choseno.com/wall/tim-houston\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Allocates $65 million across 12 high-volume commercial fishing ports in Yarmouth, Shelburne, and Digby counties.\n- Upgrades aging timber wharves with reinforced concrete pilings, high-voltage shore power plugs, and automated live-holding saltwater circulation tanks.\n- Hardens harbor breakwaters against extreme Atlantic storm surges and rising sea levels.\n- Protects Nova Scotia's $1.3 billion annual wild lobster export fishery and supports over 3,500 commercial harvesters and plant workers.\n\nTHE DEBATE:\n- Premier Tim Houston & Coastal Harvester Associations: Argue that provincial fisheries generate vital rural export revenue and require modern, storm-resilient wharf infrastructure to handle expanding vessel sizes safely.\n- Marine Environmental Watchdogs: Support harbor repairs but urge strict environmental monitoring to ensure dredge spoil disposal does not disrupt sensitive nearshore lobster nursery grounds.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Tim Houston's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/tim-houston\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/premier-tim-houston-directs-65-million-for-nova-scotia-inshore-lobster-wharves-and-breakwaters-2026-08-25\n\n#TimHouston #NovaScotia #Fisheries #Lobster #CoastalResilience #Infrastructure #AtlanticCanada #Choseno",
     "breakingNews": false,
-    "body": "VICTORIA, B.C. — British Columbia Premier David Eby and Minister of Energy, Mines and Low Carbon Innovation Josie Osborne announced on Monday the distribution of $145 million in provincial capital funding to formally establish the British Columbia Indigenous Clean Energy Equity Loan Guarantee Program and expand the Clean Energy Major Projects Office.\n\nThe initiative, co-developed with the BC First Nations Energy and Mining Council, provides sovereign loan guarantees and non-dilutive equity development capital allowing First Nations communities to acquire up to 50 percent direct equity ownership stakes in newly contracted BC Hydro Call for Power wind, run-of-river hydro, and battery storage projects.\n\nAdvancing Economic Reconciliation and Powering BC's Clean Grid\nBC Hydro's 2024 Call for Power requires adding 3,000 gigawatt-hours of clean electricity annually to meet surging demand from residential electrification, mining, and manufacturing, mandating minimum 25 percent First Nations equity participation for all winning bids.\n\n\"True economic reconciliation means ensuring First Nations are not just consulted on resource projects, but are full equity owners and decision-makers who share in the multi-generational wealth generated on their territories,\" Premier David Eby said at the BC Legislature in Victoria. \"This $145 million investment provides the loan guarantees and capital First Nations need to buy equity stakes in major clean energy projects, generating millions in stable revenues for their communities while powering B.C.'s growing clean economy.\"\n\nProgram Elements and Equity Guarantees\nThe $145 million allocation finances:\n- $100 Million Provincial Loan Guarantee Facility: Enabling First Nations development corporations to secure commercial financing at competitive low sovereign interest rates.\n- Clean Energy Pre-Development Grants: $30 million for First Nations feasibility studies, environmental baselines, and legal negotiations.\n- Indigenous Clean Energy Technical Advisory Hub: $15 million dedicated to building technical engineering and financial modeling capacity within tribal administrations.\n\nFirst Nations grand chiefs, clean energy developers, and financial institutions commended the provincial loan guarantee program, emphasizing that Indigenous equity ownership ensures lasting community support and legal certainty for major clean energy infrastructure."
+    "body": "YARMOUTH, NS — Premier Tim Houston and Fisheries and Aquaculture Minister Kent Smith traveled to Southwestern Nova Scotia on Tuesday to announce the \"Harbour Renewal and Fisheries Resilience Fund,\" allocating $65 million to rehabilitate 12 critical commercial fishing ports.\n\nThe investment targets essential marine infrastructure supporting Nova Scotia's commercial inshore lobster and groundfish fleets, which have faced escalating structural damage from severe winter storms and Atlantic storm surges.\n\nModernizing Coastal Working Waterfronts\nUnder the capital infrastructure rollout:\n- Concrete wharf decks and heavy-duty steel fender pilings will replace decaying creosote timber structures at key landing harbors in Lower West Pubnico, Dennis Point, and Meteghan.\n- $20 million is dedicated to raising harbor breakwater crests by 1.5 meters to protect docked fishing vessels from hurricane-force waves.\n- Ports will install automated three-phase electrical shore power stations, allowing fishing vessels to shut down diesel auxiliary generators while tied up at dock.\n\n\"The commercial fishery is the economic heartbeat of rural Nova Scotia, supporting thousands of families and generating world-renowned seafood exports,\" Premier Houston stated at the Dennis Point wharf. \"Our fish harvesters face dangerous conditions at sea; they deserve modern, safe, and storm-resilient wharves when they return to port. Today's investment ensures our working waterfronts are built to last for the next fifty years.\"\n\nEconomic and Fisheries Impact\nNova Scotia exports over $1.3 billion in live lobster annually, primarily to markets in the United States, Asia, and Europe. Port authority managers praised the provincial funding, noting that modern electrical connections will reduce dockside diesel emissions while improving offloading safety during peak winter harvest seasons."
   },
   {
-    "slug": "premier-danielle-smith-directs-190-million-for-commercial-geothermal-district-heating-and-agricultural-greenhouses-2026-08-25",
-    "headline": "Premier Danielle Smith Allocates $190 Million for Alberta Geothermal District Heating and Agtech Greenhouses",
-    "summary": "Alberta Premier Danielle Smith and Energy Minister Brian Jean announce $190 million from the TIER fund to repurpose depleted oil and gas wellfields for closed-loop geothermal district heating networks and commercial greenhouse agtech complexes.",
-    "category": "Clean Energy",
-    "country": "CA",
-    "province": "AB",
-    "impactArea": "state",
-    "latitude": 53.5461,
-    "longitude": -113.4938,
+    "slug": "senate-commerce-committee-questions-airline-executives-over-algorithmic-seat-fees-2026-08-25",
+    "headline": "Senate Commerce Committee Questions Airline Executives in Bipartisan Hearing on Dynamic Junk Fees",
+    "summary": "The Senate Commerce Committee holds a contentious bipartisan hearing questioning major US airline executives over dynamic seat selection fees, baggage surcharges, and flight cancellation compensation.",
+    "category": "Politics",
+    "country": "US",
+    "province": "DC",
+    "impactArea": "country",
+    "latitude": 38.8904,
+    "longitude": -77.0044,
     "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
+    "published_at": "2026-08-25T10:00:00+00:00",
     "tags": [
-      "Danielle Smith",
-      "Brian Jean",
-      "Alberta",
-      "Geothermal",
-      "District Heating",
-      "Agtech",
-      "Energy"
+      "Senate",
+      "Congress",
+      "Aviation",
+      "ConsumerProtection",
+      "JunkFees",
+      "Airlines",
+      "Transportation"
     ],
-    "taggedPoliticians": [
-      "Danielle Smith",
-      "Brian Jean"
-    ],
+    "taggedPoliticians": [],
     "author": {
-      "name": "Choseno Alberta Bureau",
-      "bio": "Alberta energy policy, subsurface geothermal engineering, and agricultural technology"
+      "name": "Choseno Capitol Hill & Consumer Protection Bureau",
+      "bio": "Covering congressional hearings, federal regulatory oversight, and consumer protection law."
     },
     "sources": [
       {
-        "name": "Calgary Herald",
-        "url": "https://calgaryherald.com"
+        "name": "Reuters",
+        "url": "https://www.reuters.com/business/aerospace-defense"
       },
       {
-        "name": "Edmonton Journal",
-        "url": "https://edmontonjournal.com"
+        "name": "The Washington Post",
+        "url": "https://www.washingtonpost.com/business/transportation"
       }
     ],
-    "seoTitle": "Danielle Smith Directs $190M for Alberta Geothermal District Heating | Choseno",
-    "metaDescription": "Alberta Premier Danielle Smith awards $190M to repurpose oil wells for geothermal district heating and commercial agtech greenhouses in Alberta.",
-    "tweet": "Premier Danielle Smith announces $190M to repurpose legacy oil wells into clean geothermal district heating networks and commercial greenhouses in AB.",
+    "seoTitle": "Senate Commerce Committee Questions Airline Executives on Junk Fees | Choseno",
+    "metaDescription": "US Senate Commerce Committee holds bipartisan hearing grilling airline CEOs on dynamic seating fees and baggage surcharges.",
+    "tweet": "Senate Commerce Committee questions airline CEOs over algorithmic seat selection fees and unbundled flight surcharges.",
+    "tweetarticle": "The US Senate Commerce Committee held a contentious bipartisan hearing on Tuesday grilling airline executives over algorithmic seat assignment fees, baggage surcharges, and family seating fee transparency.\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Bipartisan Senate committee examines airlines generating over $33 billion annually in unbundled ancillary fee revenues.\n- Focuses on algorithmic pricing software that dynamically inflates adjacent seating fees for families traveling with children.\n- Bipartisan legislation introduced to mandate all-in upfront pricing and require automatic cash refunds for significant flight delays.\n- Impact on travelers: potential federal ban on fees for parents to sit next to minor children on commercial flights.\n\nTHE DEBATE:\n- Senate Lawmakers & Consumer Advocates: Argue that unbundled pricing has become deceptive price gouging that hides the true cost of air travel behind predatory post-booking fees.\n- Airline Industry Representatives: Contend that unbundled fares offer consumers flexibility to purchase only the specific travel options they desire while keeping baseline ticket prices historically low.\n\nCHOSENO — GOOGLE REVIEWS FOR DEMOCRACY & POLICY:\nChoseno is like Google Reviews for democracy. Review public decisions, track government accountability, and share your rating on Choseno:\nhttps://choseno.com/news/senate-commerce-committee-questions-airline-executives-over-algorithmic-seat-fees-2026-08-25\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/senate-commerce-committee-questions-airline-executives-over-algorithmic-seat-fees-2026-08-25\n\n#Senate #Congress #Aviation #ConsumerProtection #Airlines #JunkFees #Transportation #Choseno",
     "breakingNews": false,
-    "body": "RED DEER, Alta. — Alberta Premier Danielle Smith and Minister of Energy and Minerals Brian Jean announced on Monday the distribution of $190 million in provincial capital matching grants from the Technology Innovation and Emissions Reduction (TIER) fund to repurpose depleted legacy oil and gas wellbores into closed-loop geothermal district heating networks and commercial year-round agricultural greenhouse complexes in Red Deer, Hinton, and Medicine Hat.\n\nThe investment utilizes advanced downhole closed-loop heat exchangers, circulating non-toxic working fluids through deep subterranean formations (3,000 meters deep at 120°C) to extract thermal energy without hydraulic fracturing or water extraction, piping continuous zero-emission hot water to municipal buildings and 200 acres of commercial vegetable and fruit greenhouses.\n\nTransforming Oilfield Legacy Wells into Year-Round Food Production\nAlberta possesses thousands of suspended oil and gas wells with comprehensive geological data. Repurposing these wells for clean geothermal district heating eliminates industrial heating emissions while enabling year-round domestic produce farming during sub-zero -40°C prairie winters.\n\n\"Alberta's subsurface expertise and skilled energy workforce are our greatest strengths, and we are putting them to work to lead the world in geothermal innovation,\" Premier Danielle Smith said during an announcement at an agtech greenhouse facility in Red Deer. \"This $190 million investment repurposes legacy oilfield assets into clean, continuous geothermal heat, lowering heating costs for our communities, creating great jobs for oil and gas drillers, and producing fresh, affordable food for Alberta families year-round.\"\n\nGeothermal Agtech Projects Funded\nThe $190 million package finances:\n- Hinton Municipal Geothermal District Heating Network: $65 million to heat municipal civic buildings, schools, and hospitals with subterranean geothermal energy.\n- Red Deer Commercial Agtech Greenhouse Complex: $60 million for 100 acres of geothermally heated automated hydroponic vegetable greenhouses.\n- Medicine Hat Subsurface Heat Demonstration: $45 million for industrial process heat delivery to regional manufacturing plants.\n- Wellbore Re-entry Permitting Framework: $20 million to establish streamlined provincial liability transfer standards for repurposed geothermal wells.\n\nAgricultural producers, drilling contractors, and municipal leaders praised the provincial funding, highlighting that geothermal district heating converts abandoned well liabilities into permanent economic assets."
+    "body": "WASHINGTON — Senior executives from major US airlines faced intense bipartisan questioning on Tuesday before the Senate Commerce, Science, and Transportation Committee, as lawmakers probed the industry's widespread adoption of algorithmic pricing for ancillary services such as seat selection, carry-on baggage, and ticket changes.\n\nThe hearing, titled \"Restoring Fairness and Transparency to Commercial Aviation,\" brought together lawmakers from both parties who expressed frustration over complex fee structures.\n\nScrutinizing Unbundled Revenue Models\nAccording to committee staff research released during the hearing:\n- Ancillary fees generated by the top six US carriers grew from $18 billion in 2018 to over $33 billion in 2025, accounting for an increasing share of overall airline profitability.\n- Automated dynamic pricing models adjust seat reservation fees based on real-time consumer search patterns and flight demand, charging up to $89 per passenger for standard middle and aisle seats.\n- Despite voluntary industry pledges, families with children frequently face automated booking systems that split parent and child seats unless extra fees are paid.\n\n\"American travelers are fed up with booking a ticket only to be nickeled-and-dimed at every step of the transaction,\" committee leadership stated during opening remarks. \"When parents are forced to pay an extra fee just to sit next to their four-year-old child, that is not consumer choice — that is a predatory shakedown.\"\n\nAirline Industry Defense\nIndustry representatives defended the unbundled pricing model, asserting that separating base transportation from optional amenities allows budget-conscious passengers to access lower base fares.\n\nLawmakers signaled plans to advance bipartisan legislation mandating comprehensive upfront price disclosures and establishing statutory rights to automatic cash compensation for airline-caused delays."
   },
   {
-    "slug": "mayor-ken-sim-authorizes-60-million-for-vancouver-zero-emission-commercial-delivery-zones-and-micro-hubs-2026-08-25",
-    "headline": "Mayor Ken Sim Directs $60 Million for Vancouver Zero-Emission Commercial Delivery Zones and Cargo Micro-Hubs",
-    "summary": "Vancouver Mayor Ken Sim and the Vancouver City Council authorize a $60 million municipal green freight capital program to construct five neighborhood electric cargo bike micro-consolidation hubs and establish 200 zero-emission commercial loading zones.",
-    "category": "Transportation",
+    "slug": "department-of-justice-advances-landmark-antitrust-suit-targeting-live-entertainment-ticketing-2026-08-25",
+    "headline": "Department of Justice and 30 State AGs Advance Landmark Antitrust Suit to Restructure Live Event Ticketing",
+    "summary": "The US Department of Justice Antitrust Division and a bipartisan coalition of 30 state attorneys general advance federal court proceedings seeking structural remedies and venue contract reform in live event ticketing.",
+    "category": "Politics",
+    "country": "US",
+    "province": "DC",
+    "impactArea": "country",
+    "latitude": 38.8929,
+    "longitude": -77.0261,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "DOJ",
+      "Antitrust",
+      "ConsumerProtection",
+      "LiveEntertainment",
+      "Ticketing",
+      "DepartmentOfJustice"
+    ],
+    "taggedPoliticians": [],
+    "author": {
+      "name": "Choseno National Legal & Antitrust Desk",
+      "bio": "Covering federal antitrust trials, regulatory enforcement, and corporate monopoly litigation."
+    },
+    "sources": [
+      {
+        "name": "The Wall Street Journal",
+        "url": "https://www.wsj.com/business"
+      },
+      {
+        "name": "AP News",
+        "url": "https://apnews.com/hub/antitrust"
+      }
+    ],
+    "seoTitle": "DOJ and 30 States Advance Major Live Event Antitrust Suit | Choseno",
+    "metaDescription": "US Department of Justice advances antitrust lawsuit seeking to break up ticketing monopoly and reform venue exclusivity contracts.",
+    "tweet": "The DOJ and 30 state AGs advance landmark antitrust trial to dismantle ticketing monopolies and eliminate coercive venue exclusivity contracts.",
+    "tweetarticle": "The US Department of Justice Antitrust Division alongside a bipartisan coalition of 30 state attorneys general have advanced landmark federal antitrust litigation seeking to dismantle monopolistic control over live concert ticketing and venue promotion.\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Federal court schedules trial proceedings in landmark antitrust lawsuit targeting anti-competitive exclusive venue ticketing contracts.\n- DOJ alleges that long-term exclusivity agreements lock up over 80% of major concert amphitheaters and stadiums nationwide.\n- Seeks structural remedies, including the potential separation of concert promotion management from primary ticketing platforms.\n- Consumer impact: aims to lower excessive service fees, expand independent ticketing competition, and enhance secondary market transparency.\n\nTHE DEBATE:\n- Department of Justice & State Attorneys General: Argue that monopolistic market power inflates ticket service fees by up to 30%, suppresses artist compensation, and stifles technological innovation.\n- Live Entertainment Corporations & Defense Counsel: Contend that integrated ticketing and promotion platforms provide essential fraud prevention, secure digital verification, and venue capital financing.\n\nCHOSENO — GOOGLE REVIEWS FOR DEMOCRACY & POLICY:\nChoseno is like Google Reviews for democracy. Review public decisions, track government accountability, and share your rating on Choseno:\nhttps://choseno.com/news/department-of-justice-advances-landmark-antitrust-suit-targeting-live-entertainment-ticketing-2026-08-25\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/department-of-justice-advances-landmark-antitrust-suit-targeting-live-entertainment-ticketing-2026-08-25\n\n#DOJ #Antitrust #LiveMusic #Ticketing #Monopoly #ConsumerProtection #DepartmentOfJustice #Choseno",
+    "breakingNews": false,
+    "body": "WASHINGTON — The Department of Justice and attorneys general from 30 states filed formal pre-trial motions in US District Court on Tuesday, marking a critical advancement in the federal government's landmark antitrust suit against monopolistic consolidation in the live entertainment and primary ticketing industry.\n\nThe litigation, which seeks structural divestitures and an end to long-term exclusive venue contracts, represents the most aggressive federal challenge to entertainment market concentration in over two decades.\n\nCore Anticompetitive Allegations\nIn court filings submitted to US District Judge Arun Subramanian, government prosecutors outlined evidence alleging:\n- Multi-year exclusive ticketing contracts that prevent major arenas, stadiums, and amphitheaters from utilizing competing ticketing providers under threat of losing top-tier concert touring acts.\n- Mandatory bundling of artist management, event promotion, and digital ticketing services that effectively shuts out independent promoters.\n- Imposition of opaque service, processing, and facility fees that frequently add 25% to 40% to the face value of event tickets.\n\n\"When one dominant corporation controls the artist, the venue, and the ticket booth, competition dies and consumers pay the price,\" Assistant Attorney General Jonathan Kanter stated. \"Our lawsuit seeks to restore open competition to the live entertainment marketplace, lower ticket prices for everyday music fans, and ensure artists have the freedom to choose their partners.\"\n\nCorporate Defense and Trial Schedule\nDefense attorneys argued that the live music industry is intensely competitive and that vertically integrated operations enable massive capital investments in venue security, digital fraud detection, and mobile ticketing infrastructure.\n\nThe court scheduled full evidentiary hearings for early next year, with industry observers anticipating significant legal precedents governing platform bundling and venue exclusivity."
+  },
+  {
+    "slug": "mayor-ken-sim-introduces-mass-timber-density-bonuses-for-vancouver-housing-towers-2026-08-25",
+    "headline": "Mayor Ken Sim Introduces Accelerated Density Bonuses for Vancouver Mass Timber Residential High-Rises",
+    "summary": "Vancouver Mayor Ken Sim and City Council approve new zoning amendments granting extra height and density bonuses for residential developments built with low-carbon mass timber.",
+    "category": "Housing",
     "country": "CA",
     "province": "BC",
     "impactArea": "local",
     "latitude": 49.2827,
     "longitude": -123.1207,
     "eventDate": "2026-08-25",
-    "published_at": "2026-08-25T06:00:00+00:00",
+    "published_at": "2026-08-25T10:00:00+00:00",
     "tags": [
       "Ken Sim",
       "Vancouver",
-      "Clean Freight",
-      "Cargo Bikes",
-      "Transportation",
-      "Urban Mobility"
+      "Housing",
+      "MassTimber",
+      "ClimateAction",
+      "UrbanPlanning",
+      "BritishColumbia"
     ],
     "taggedPoliticians": [
       "Ken Sim"
     ],
     "author": {
-      "name": "Choseno Vancouver City Hall Bureau",
-      "bio": "Vancouver municipal politics, urban logistics policy, and zero-emission freight delivery"
+      "name": "Choseno Pacific Urban Planning Bureau",
+      "bio": "Covering Vancouver civic governance, green architecture, and housing affordability."
     },
     "sources": [
       {
-        "name": "Vancouver Sun",
-        "url": "https://vancouversun.com"
+        "name": "The Vancouver Sun",
+        "url": "https://vancouversun.com/category/news/local-news"
       },
       {
-        "name": "Daily Hive Vancouver",
-        "url": "https://dailyhive.com/vancouver"
+        "name": "CBC British Columbia",
+        "url": "https://www.cbc.ca/news/canada/british-columbia"
       }
     ],
-    "seoTitle": "Ken Sim Directs $60M for Vancouver Zero-Emission Freight Micro-Hubs | Choseno",
-    "metaDescription": "Vancouver Mayor Ken Sim awards $60M to build electric cargo bike micro-hubs and 200 zero-emission delivery zones across downtown Vancouver.",
-    "tweet": "Mayor Ken Sim announces $60M for electric cargo bike micro-hubs and 200 zero-emission loading zones to cut delivery van congestion in Vancouver.",
+    "seoTitle": "Ken Sim Introduces Vancouver Mass Timber Density Bonuses | Choseno",
+    "metaDescription": "Vancouver Mayor Ken Sim announces zoning changes allowing up to six additional floors for mass timber housing high-rises.",
+    "tweet": "Mayor Ken Sim approves zoning density bonuses allowing up to 6 extra storeys for mass timber residential high-rises in Vancouver.",
+    "tweetarticle": "Vancouver Mayor Ken Sim and Vancouver City Council have approved landmark zoning amendments granting height and density bonuses for multi-family residential towers constructed using BC engineered mass timber.\n\nReview Ken Sim on Choseno:\nhttps://choseno.com/wall/ken-sim\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Allows developers constructing mass timber residential high-rises to build up to 6 additional storeys and 20% greater floor space ratio (FSR).\n- Fast-tracks municipal development permitting from 18 months down to 4 months for certified zero-carbon mass timber projects.\n- Stimulates demand for BC forest manufacturing, supporting engineered wood fabrication plants across the BC Interior.\n- Reduces embodied construction greenhouse gas emissions by an estimated 35% compared to conventional concrete and steel towers.\n\nTHE DEBATE:\n- Mayor Ken Sim & Green Building Architects: Argue that mass timber accelerates housing delivery through prefabricated construction while driving economic demand for sustainable BC forestry products.\n- Neighborhood Associations & Heritage Groups: Support environmental goals but express concern over shadowing and infrastructure capacity in transit-adjacent residential neighborhoods.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Ken Sim's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/ken-sim\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/mayor-ken-sim-introduces-mass-timber-density-bonuses-for-vancouver-housing-towers-2026-08-25\n\n#KenSim #Vancouver #Housing #MassTimber #GreenBuilding #UrbanPlanning #BritishColumbia #Choseno",
     "breakingNews": false,
-    "body": "VANCOUVER — Mayor Ken Sim and the Vancouver City Council voted on Monday to approve a $60 million municipal sustainable freight capital investment package, authorizing the City of Vancouver Engineering Services to construct five urban electric cargo bike micro-consolidation distribution hubs and establish 200 dedicated Zero-Emission Commercial Loading Zones across Downtown Vancouver, Mount Pleasant, and the West End.\n\nThe municipal green logistics program, developed in partnership with commercial courier operators (including FedEx, Purolator, and DHL), enables heavy delivery semi-trucks to drop cargo at perimeter micro-hubs, where packages are transferred to heavy-duty electric cargo bikes and compact electric vans for final-mile neighborhood delivery.\n\nEliminating Downtown Traffic Congestion and Diesel Delivery Smog\nE-commerce parcel deliveries have surged across Metro Vancouver, where heavy commercial delivery vans double-parking in traffic lanes previously caused severe traffic bottlenecks, blocked bike lanes, and generated localized diesel exhaust pollution.\n\n\"Vancouver is leading North America in smart, sustainable urban mobility, and we are rethinking how goods move through our dense downtown core,\" Mayor Ken Sim said at an active cargo bike micro-hub in downtown Vancouver. \"Heavy diesel delivery trucks don't belong idling on narrow neighborhood streets. This $60 million investment builds five modern micro-consolidation hubs, deploys electric cargo bikes, and creates dedicated zero-emission loading zones, speeding up package delivery, clearing street gridlock, and cutting carbon emissions.\"\n\nLogistics Infrastructure Deployments\nThe $60 million package funds:\n- Five Urban Micro-Consolidation Logistics Hubs: Repurposing underutilized city parking structures with high-voltage fleet chargers, sorting conveyors, and secure bike staging bays.\n- 200 Zero-Emission Commercial Loading Zones: Equipping curbside delivery spaces with automated license plate recognition and discounted parking rates for electric delivery fleets.\n- Electric Cargo Bike Purchase Rebates: $15 million in matching purchase vouchers for local independent courier operators adopting heavy-duty commercial e-cargo bikes.\n\nDowntown business improvement associations, courier labor unions, and cycling federations commended the city council action, highlighting that cargo bike delivery speeds up package arrival times while keeping neighborhood sidewalks safe."
+    "body": "VANCOUVER — Mayor Ken Sim and Vancouver City Council voted unanimously on Tuesday to enact the \"Mass Timber Action Policy,\" amending city zoning bylaws to provide substantial floor space and height incentives for developers constructing residential high-rises with engineered cross-laminated timber (CLT).\n\nThe policy positions Vancouver as a global leader in tall wood construction while advancing both civic housing creation and provincial economic development.\n\nIncentivizing Sustainable High-Density Housing\nUnder the newly adopted zoning schedule:\n- Mass timber residential developments located within 800 meters of SkyTrain rapid transit stations are eligible for up to six additional floors beyond standard base zoning.\n- Projects will receive an automatic 20% floor space ratio (FSR) density bonus to offset specialized engineering and pre-fabrication design costs.\n- The city's Planning and Development Services department will implement a dedicated \"Green Fast-Track\" review stream, reducing standard development permit processing times from 18 months to under 120 days.\n\n\"Vancouver is facing an urgent housing affordability crisis, and we must build more homes faster while meeting our ambitious climate goals,\" Mayor Sim stated at City Hall. \"Mass timber is clean, beautiful, fire-resilient, and manufactured right here in British Columbia. By cutting red tape and rewarding sustainable construction, we are delivering the housing our city needs.\"\n\nForestry and Environmental Impact\nProvincial forestry industry leaders commended the municipal policy, noting that widespread adoption of tall mass timber buildings in urban centers will create high-value manufacturing jobs in communities such as Prince George, Castlegar, and Williams Lake.\n\nCity building officials confirmed that mass timber buildings must meet the highest seismic resilience and fire-safety containment standards established under the BC Building Code."
+  },
+  {
+    "slug": "governor-gavin-newsom-authorizes-emergency-salton-sea-lithium-and-geothermal-grid-infrastructure-2026-08-25",
+    "headline": "Governor Gavin Newsom Directs $160 Million for Salton Sea Geothermal Power and Battery-Grade Lithium Hub",
+    "summary": "California Governor Gavin Newsom and the California Energy Commission award $160 million in state infrastructure grants to expand baseload geothermal energy and commercial lithium extraction at the Salton Sea.",
+    "category": "Clean Energy",
+    "country": "US",
+    "province": "CA",
+    "impactArea": "state",
+    "latitude": 33.3286,
+    "longitude": -115.8435,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "Gavin Newsom",
+      "California",
+      "CleanEnergy",
+      "Lithium",
+      "Geothermal",
+      "SaltonSea",
+      "Infrastructure"
+    ],
+    "taggedPoliticians": [
+      "Gavin Newsom"
+    ],
+    "author": {
+      "name": "Choseno California Energy & Climate Desk",
+      "bio": "Covering California clean energy transitions, critical minerals, and grid reliability."
+    },
+    "sources": [
+      {
+        "name": "Los Angeles Times",
+        "url": "https://www.latimes.com/environment"
+      },
+      {
+        "name": "The Desert Sun",
+        "url": "https://www.desertsun.com/news/environment"
+      }
+    ],
+    "seoTitle": "Gavin Newsom Directs $160M for Salton Sea Lithium and Geothermal | Choseno",
+    "metaDescription": "Governor Gavin Newsom announces $160 million to build geothermal baseload plants and direct lithium extraction hubs at the Salton Sea.",
+    "tweet": "Governor Gavin Newsom allocates $160M to expand 24/7 geothermal power and battery-grade lithium extraction at California's Salton Sea.",
+    "tweetarticle": "California Governor Gavin Newsom and the California Energy Commission have announced $160 million in state capital investments to construct 500 megawatts of 24/7 baseload geothermal power and direct lithium extraction processing facilities in Imperial County.\n\nReview Gavin Newsom on Choseno:\nhttps://choseno.com/wall/gavin-newsom\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Allocates $160 million from the California Climate Investment Fund for high-voltage transmission lines and geothermal brine injection wells.\n- Generates 500 megawatts of continuous, zero-carbon baseload electricity to stabilize the CAISO electric grid during extreme summer heatwaves.\n- Produces up to 25,000 metric tons of battery-grade lithium carbonate annually, enough to manufacture batteries for 500,000 electric vehicles.\n- Establishes a local tax revenue-sharing mechanism directing millions in mineral extraction royalties directly to Imperial Valley community health clinics and schools.\n\nTHE DEBATE:\n- Governor Gavin Newsom & Clean Tech Developers: Argue that \"Lithium Valley\" establishes a domestic clean-energy supply chain independent of foreign mineral imports while providing clean baseload power that solar cannot deliver at night.\n- Environmental Justice Groups & Local Tribes: Demand rigorous monitoring of groundwater extraction, strict particulate dust suppression on the drying Salton Sea playa, and guaranteed community benefit agreements.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review Gavin Newsom's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/gavin-newsom\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/governor-gavin-newsom-authorizes-emergency-salton-sea-lithium-and-geothermal-grid-infrastructure-2026-08-25\n\n#GavinNewsom #California #CleanEnergy #Lithium #Geothermal #SaltonSea #GridResilience #Environment #Choseno",
+    "breakingNews": false,
+    "body": "IMPERIAL VALLEY, CA — Governor Gavin Newsom visited Imperial County on Tuesday to announce $160 million in state infrastructure funding designed to accelerate commercial geothermal power generation and direct lithium extraction (DLE) at the Salton Sea, cementing California's position as a global clean technology hub.\n\nThe initiative, branded as the \"Lithium Valley Development Action Plan,\" targets vast underground geothermal reservoirs containing both subterranean superheated steam for 24/7 clean electricity and rich dissolved lithium concentrations.\n\nPowering the Grid and the EV Revolution\nUnder the state grant allocations:\n- $90 million is allocated to the Imperial Irrigation District and Southern California Edison to construct high-capacity 500-kilovolt transmission interties connecting new geothermal plants to the statewide CAISO grid.\n- $50 million funds commercial-scale direct lithium extraction demonstration refineries, extracting battery-grade lithium hydroxide directly from geothermal brine before reinjecting the cooled brine back underground.\n- $20 million establishes the Imperial Valley Clean Energy Training Academy at San Diego State University's Brawley campus to train local residents for union operations and chemical processing jobs.\n\n\"California has the natural resources, the innovation, and the workforce to lead the world in clean energy manufacturing,\" Governor Newsom stated in Brawley. \"By unlocking the clean power and lithium beneath the Salton Sea, we are building a domestic supply chain for American batteries, creating thousands of good-paying jobs in the Imperial Valley, and ensuring our electric grid remains reliable 24 hours a day.\"\n\nCommunity Safeguards and Royalty Revenue\nUnder state legislation enacted alongside the funding, a dedicated lithium excise tax ensures that 80% of all tax revenues generated from mineral production remain in Imperial County to fund local roads, community health centers, and environmental restoration of the receding Salton Sea shoreline."
+  },
+  {
+    "slug": "premier-francois-legault-allocates-150-million-for-hydro-quebec-high-voltage-grid-reinforcement-2026-08-25",
+    "headline": "Premier François Legault Directs $150 Million for Hydro-Québec Northern Transmission Upgrades",
+    "summary": "Quebec Premier François Legault and Energy Minister Pierre Fitzgibbon announce $150 million to reinforce Hydro-Québec's 735-kilovolt northern transmission corridors and integrate new industrial green power loads.",
+    "category": "Clean Energy",
+    "country": "CA",
+    "province": "QC",
+    "impactArea": "state",
+    "latitude": 46.8139,
+    "longitude": -71.2082,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "François Legault",
+      "Quebec",
+      "HydroQuebec",
+      "CleanEnergy",
+      "Electricity",
+      "Grid",
+      "Economy"
+    ],
+    "taggedPoliticians": [
+      "François Legault"
+    ],
+    "author": {
+      "name": "Choseno Quebec Energy & Industrial Strategy Bureau",
+      "bio": "Covering Hydro-Québec infrastructure, provincial industrial strategy, and energy policy."
+    },
+    "sources": [
+      {
+        "name": "La Presse",
+        "url": "https://www.lapresse.ca/actualites/politique"
+      },
+      {
+        "name": "Le Journal de Québec",
+        "url": "https://www.journaldequebec.com/actualite/politique"
+      }
+    ],
+    "seoTitle": "François Legault Allocates $150M for Hydro-Québec Grid Upgrades | Choseno",
+    "metaDescription": "Premier François Legault announces $150 million to reinforce Hydro-Québec northern transmission corridors.",
+    "tweet": "Premier François Legault announces $150M to reinforce Hydro-Québec's high-voltage transmission lines and connect northern clean energy.",
+    "tweetarticle": "Quebec Premier François Legault and Energy Minister Pierre Fitzgibbon have announced $150 million in provincial capital financing to upgrade and reinforce Hydro-Québec's 735-kilovolt transmission grid connecting northern hydroelectric complexes to southern industrial hubs.\n\nReview François Legault on Choseno:\nhttps://choseno.com/wall/fran-ois-legault\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Directs $150 million to modernize high-voltage transmission substations along the Baie-James and Manicouagan hydro corridors.\n- Adds 1,200 megawatts of transmission throughput to deliver renewable power to battery manufacturing and green hydrogen projects in Bécancour and Montreal.\n- Enhances grid resilience against severe winter ice storms and extreme wildfire events in northern boreal forest zones.\n- Aligns with Hydro-Québec's Action Plan 2035 to meet surging domestic industrial demand for clean power.\n\nTHE DEBATE:\n- Premier François Legault & Industrial Leaders: Maintain that massive grid reinforcements are essential to power Quebec's economic transition, attract multi-billion dollar manufacturing investments, and maintain the lowest electricity rates in North America.\n- Opposition Lawmakers & Environmental Advocates: Question whether prioritizing heavy industrial energy allocations could put long-term pressure on consumer residential electricity rates and hydro reserves.\n\nNOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review François Legault's record, speak your mind, and let your fellow constituents know where you stand on his official public wall:\nhttps://choseno.com/wall/fran-ois-legault\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/premier-francois-legault-allocates-150-million-for-hydro-quebec-high-voltage-grid-reinforcement-2026-08-25\n\n#FrancoisLegault #Quebec #HydroQuebec #CleanEnergy #Electricity #Grid #IndustrialStrategy #Choseno",
+    "breakingNews": false,
+    "body": "QUEBEC CITY — Premier François Legault and Economy and Energy Minister Pierre Fitzgibbon unveiled a $150 million strategic investment on Tuesday to reinforce Hydro-Québec's primary 735-kilovolt transmission network, ensuring the provincial grid can transmit thousands of megawatts of northern hydroelectricity to expanding industrial corridors.\n\nThe investment directly supports the implementation of Hydro-Québec's Action Plan 2035, which projects a massive increase in domestic clean electricity demand driven by industrial decarbonization, transportation electrification, and battery manufacturing.\n\nReinforcing the Northern Hydro Arteries\nUnder the capital plan announced at the National Assembly in Quebec City:\n- $95 million will fund structural substation modernizations and digital optical-ground-wire telemetry along the James Bay transmission corridors, increasing transmission capacity by 1,200 megawatts.\n- $35 million provides advanced dynamic line rating (DLR) sensors that allow real-time adjustments of power flows based on ambient temperature and wind conditions.\n- $20 million funds enhanced vegetation management and fire-resilient clearing along 800 kilometers of high-voltage rights-of-way through northern forestry regions.\n\n\"Hydro-Québec is the crown jewel of our economy and the foundation of our clean energy future,\" Premier Legault stated. \"To attract world-class industries, build our battery valley in Bécancour, and create high-paying jobs for Quebeckers, we must invest boldly in our transmission backbone. We have the clean power; now we are ensuring we have the grid to deliver it.\"\n\nDebate Over Energy Allocation Priorities\nOpposition MNAs in Quebec City raised questions regarding the pace of industrial energy allocations, urging the government to guarantee that long-term residential supply and rate protections remain the state utility's foremost priority.\n\nHydro-Québec executives confirmed that all transmission upgrade projects will undergo environmental review and consultations with First Nations communities along transmission routes."
+  },
+  {
+    "slug": "fcc-enacts-strict-mandatory-blocking-rules-to-halt-illegal-robotext-scams-2026-08-25",
+    "headline": "Federal Communications Commission Enacts Mandatory Carrier Blocking Rules to Eliminate AI Robotext Scams",
+    "summary": "The FCC enacts landmark regulations requiring wireless mobile carriers to block illegal robotext messages at the network level and authenticate commercial text messaging traffic.",
+    "category": "Technology",
+    "country": "US",
+    "province": "DC",
+    "impactArea": "country",
+    "latitude": 38.8833,
+    "longitude": -77.0163,
+    "eventDate": "2026-08-25",
+    "published_at": "2026-08-25T10:00:00+00:00",
+    "tags": [
+      "FCC",
+      "Technology",
+      "ConsumerProtection",
+      "Telecommunications",
+      "Scams",
+      "FederalCommunicationsCommission"
+    ],
+    "taggedPoliticians": [],
+    "author": {
+      "name": "Choseno National Tech Policy & Telecom Bureau",
+      "bio": "Covering telecommunications regulations, cybersecurity, and digital consumer rights."
+    },
+    "sources": [
+      {
+        "name": "The Washington Post",
+        "url": "https://www.washingtonpost.com/technology"
+      },
+      {
+        "name": "Ars Technica",
+        "url": "https://arstechnica.com/tech-policy"
+      }
+    ],
+    "seoTitle": "FCC Enacts Mandatory Network-Level Robotext Blocking Rules | Choseno",
+    "metaDescription": "The Federal Communications Commission issues rules requiring wireless mobile carriers to block fraudulent robotexts at the network level.",
+    "tweet": "The FCC issues mandatory rules requiring mobile wireless carriers to block fraudulent robotexts and phishing scams at the network level.",
+    "tweetarticle": "The Federal Communications Commission has enacted comprehensive rules requiring all US wireless mobile providers to implement network-level blocking of fraudulent robotexts, spoofed numbers, and automated AI phishing messages.\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Mandates mobile carriers (AT&T, Verizon, T-Mobile, and regional providers) to block text messages originating from invalid, unallocated, or unused phone numbers.\n- Requires commercial text senders to register and verify cryptographic identity before transmitting high-volume commercial messaging campaigns.\n- Closes the \"lead generator loophole\" by prohibiting marketing companies from selling single consumer consent across thousands of unassociated partner businesses.\n- Aims to prevent an estimated $12 billion in annual consumer fraud losses resulting from text-based bank impersonation and parcel delivery scams.\n\nTHE DEBATE:\n- FCC Commissioners & Consumer Advocates: Argue that scam text messages have surged dramatically as robocall protections improved, requiring aggressive carrier-level blocking to protect consumers from financial fraud.\n- Direct Marketing Associations & Small Retailers: Support fraud prevention but urge clear appeals mechanisms to prevent legitimate customer appointment reminders and delivery alerts from being mistakenly blocked.\n\nCHOSENO — GOOGLE REVIEWS FOR DEMOCRACY & POLICY:\nChoseno is like Google Reviews for democracy. Review public decisions, track government accountability, and share your rating on Choseno:\nhttps://choseno.com/news/fcc-enacts-strict-mandatory-blocking-rules-to-halt-illegal-robotext-scams-2026-08-25\n\nRead the full investigative report on Choseno:\nhttps://choseno.com/news/fcc-enacts-strict-mandatory-blocking-rules-to-halt-illegal-robotext-scams-2026-08-25\n\n#FCC #Technology #ConsumerProtection #Cybersecurity #Telecom #Robotexts #Choseno",
+    "breakingNews": false,
+    "body": "WASHINGTON — The Federal Communications Commission adopted sweeping new rules on Tuesday establishing mandatory, network-level blocking requirements for wireless mobile providers, targeting the exponential rise in fraudulent robotexts, bank impersonation phishing scams, and automated commercial messaging.\n\nThe unanimous order expands the commission's anti-robocall enforcement framework to SMS and MMS messaging, closing regulatory loopholes that allowed offshore scam syndicates to flood American mobile devices with billions of deceptive text messages annually.\n\nKey Regulatory Requirements for Wireless Carriers\nUnder the new FCC operational standards:\n- Mobile network operators must deploy automated algorithmic filtering at the network gateway to intercept and block messages originating from numbers on the Do-Not-Originate (DNO) list and non-geographic invalid number blocks.\n- Commercial entities utilizing 10-digit long code (10DLC) numbers for mass marketing must complete mandatory identity verification and obtain separate, individual opt-in consent for each specific company contacting the consumer.\n- Mobile carriers are required to establish transparent, rapid-redress processes to allow legitimate businesses to resolve false-positive message blocking within 24 hours.\n\n\"Scam robotexts are not just a nuisance; they are high-tech pickpockets designed to steal money and personal information from unsuspecting Americans,\" FCC leadership stated in the commission's final order. \"By mandating that mobile carriers block suspicious traffic before it ever reaches a consumer's phone, we are shutting down the primary avenue used by scammers.\"\n\nIndustry Implementation and Consumer Protections\nMajor telecommunications carriers confirmed they have begun deploying machine-learning anomaly detection across their messaging switches to comply with the order.\n\nConsumer advocacy groups praised the closing of lead-generation loopholes, noting that a single online contest entry previously resulted in consumers receiving dozens of daily marketing texts from unrelated third parties."
   }
 ];
 
@@ -1236,10 +1335,14 @@ async function run() {
     }
 
     // Automatically resolve politician IDs from profiles database by scanning article headline, tags, and body
-    let resolvedPoliticianIds = await resolvePoliticianIds(article, authHeaders);
+    const resolution = await resolvePoliticianIds(article, authHeaders);
+    let resolvedPoliticianIds = resolution.ids;
     if (resolvedPoliticianIds.length === 0 && article.taggedPoliticianIds && article.taggedPoliticianIds.length > 0) {
       resolvedPoliticianIds = article.taggedPoliticianIds;
     }
+
+    const primaryWallSlug = resolution.primaryWallSlug;
+    const primaryPoliticianName = resolution.primaryPoliticianName;
 
     const mapImpactArea = (val) => {
       const v = (val || '').toLowerCase();
@@ -1249,6 +1352,45 @@ async function run() {
       return 'local';
     };
 
+    // Sanitize tweetarticle: if no verified politician profiles are resolved, strip any hallucinated /wall/ links
+    let sanitizedTweetArticle = article.tweetarticle;
+    if (sanitizedTweetArticle) {
+      if (resolvedPoliticianIds.length === 0) {
+        sanitizedTweetArticle = sanitizedTweetArticle
+          .replace(/.*https?:\/\/[^\s]*\/wall\/[^\s\n]*.*/gi, '')
+          .replace(/\n\s*\n\s*\n/g, '\n\n')
+          .trim();
+      } else if (primaryWallSlug) {
+        // Replace any naive /wall/[slug] in the tweetarticle with the actual verified canonical wall slug
+        sanitizedTweetArticle = sanitizedTweetArticle.replace(/https?:\/\/[^\s]*\/wall\/[a-zA-Z0-9_\-]+/gi, `https://choseno.com/wall/${primaryWallSlug}`);
+      }
+      sanitizedTweetArticle = stripEmoji(sanitizedTweetArticle);
+    } else {
+      const politicians = (article.taggedPoliticians && article.taggedPoliticians.length > 0)
+        ? article.taggedPoliticians.join(', ')
+        : (primaryPoliticianName || '');
+      const tags = (article.tags || []).map(t => '#' + t.replace(/[^a-zA-Z0-9]/g, '')).join(' ');
+      const articleUrl = `https://www.choseno.com/news/${article.slug}`;
+      const wallUrl = primaryWallSlug ? `https://choseno.com/wall/${primaryWallSlug}` : articleUrl;
+
+      const topReviewPrompt = politicians && resolvedPoliticianIds.length > 0
+        ? `Review ${politicians} on Choseno:\n${wallUrl}\n\n`
+        : '';
+
+      const bottomCtaSection = politicians && resolvedPoliticianIds.length > 0
+        ? `NOW YOU HAVE THE SAY — CHOSENO:\nChoseno is like Google Reviews for politicians. Don't just watch decisions happen from the sidelines — now you have the say. Review ${politicians}'s record, speak your mind, and let your fellow constituents know where you stand on their official public wall:\n${wallUrl}`
+        : `CHOSENO — GOOGLE REVIEWS FOR DEMOCRACY & POLICY:\nChoseno is like Google Reviews for democracy. Review public decisions, track government accountability, and share your rating on Choseno:\n${articleUrl}`;
+
+      sanitizedTweetArticle = `${article.headline}\n\n${topReviewPrompt}WHAT CHANGED & TAXPAYER IMPACT:\n- Overview: ${article.summary || ''}\n- Policy Details: Full legislative analysis, budget line-items, and vote counts available on Choseno.\n\nTHE DEBATE:\n- Civic Context: Review community perspectives, stakeholder reactions, and policy trade-offs.\n- Transparency: Track implementation milestones and accountability records.\n\n${bottomCtaSection}\n\nRead the full report on Choseno:\n${articleUrl}\n\n${tags} #Choseno`;
+      sanitizedTweetArticle = stripEmoji(sanitizedTweetArticle);
+    }
+
+    // Ensure published_at is valid and not in the future (RLS blocks future published_at)
+    let safePublishedAt = article.published_at || new Date().toISOString();
+    if (new Date(safePublishedAt).getTime() > Date.now()) {
+      safePublishedAt = new Date().toISOString();
+    }
+
     const payload = {
       slug: article.slug,
       headline: article.headline,
@@ -1257,7 +1399,7 @@ async function run() {
       country: article.country,
       province: article.province,
       status: article.status || 'published',
-      published_at: article.published_at,
+      published_at: safePublishedAt,
       event_date: article.eventDate,
       impact_area: mapImpactArea(article.impactArea),
       latitude: article.latitude,
@@ -1268,15 +1410,7 @@ async function run() {
         metaDescription: article.metaDescription,
         tags: article.tags,
         tweet: article.tweet,
-        tweetarticle: article.tweetarticle || (function() {
-          const jurisdiction = [article.province, article.country].filter(Boolean).join(', ') || 'National';
-          const politicians = (article.taggedPoliticians && article.taggedPoliticians.length > 0)
-            ? article.taggedPoliticians.join(', ')
-            : 'Elected Officials';
-          const tags = (article.tags || []).map(t => '#' + t.replace(/[^a-zA-Z0-9]/g, '')).join(' ');
-          const articleUrl = `https://www.choseno.com/news/${article.slug}`;
-          return `${article.headline}\n\n📍 KEY FACTS & SCOPE:\n• Jurisdiction: ${jurisdiction}\n• Officials Involved: ${politicians}\n• Overview: ${article.summary || ''}\n\n🗣️ THE PERSPECTIVES:\n• Civic Context: Detailed reporting, debate, and community impact analysis are available on Choseno.\n• Transparency: Follow legislative milestones, vote counts, and budget line-items.\n\n🗳️ Rate this decision and view the official public record on Choseno:\n📰 Full Article: ${articleUrl}\n\n${tags} #Choseno`;
-        })(),
+        tweetarticle: sanitizedTweetArticle,
         breakingNews: !!article.breakingNews,
         author: article.author || { name: 'Choseno Civic News Desk', bio: 'Civic and political reporting' },
         sources: article.sources || [],
@@ -1367,7 +1501,8 @@ async function run() {
 
     inserted.push({
       ...article,
-      id: created.id
+      id: created.id,
+      primaryWallSlug: primaryWallSlug
     });
   }
 
@@ -1392,9 +1527,9 @@ async function run() {
       const tweetCopy = `"${(item.tweet || '').replace(/"/g, '""')}"`;
       const viralReasoning = `"${(item.summary || '').replace(/"/g, '""')}"`;
       const liveNewsUrl = `https://www.choseno.com/news/${item.slug}`;
-      const wallUrl = item.taggedPoliticians?.[0] 
-        ? `https://www.choseno.com/wall/${item.taggedPoliticians[0].toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
-        : liveNewsUrl;
+      const wallUrl = item.primaryWallSlug 
+        ? `https://www.choseno.com/wall/${item.primaryWallSlug}`
+        : (item.taggedPoliticians?.[0] ? `https://www.choseno.com/wall/${item.taggedPoliticians[0].toLowerCase().replace(/[^a-z0-9]+/g, '-')}` : liveNewsUrl);
 
       return `${rank},${score},${headline},${category},${jurisdiction},${primaryOfficial},${publishedAt},${postWindow},${tweetCopy},${viralReasoning},${liveNewsUrl},${wallUrl}`;
     });

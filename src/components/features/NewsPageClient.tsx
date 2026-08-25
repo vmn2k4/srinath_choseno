@@ -22,6 +22,7 @@ import NewsFeedPostCard from "@/components/features/NewsFeedPostCard";
 import NewsInfiniteFeed from "@/components/features/NewsInfiniteFeed";
 import { countryDisplayLabel } from "@/lib/utils/newsTaxonomy";
 import { SITE_URL } from "@/lib/constants/site";
+import { stripEmoji } from "@/lib/utils/text";
 
 interface NewsArticleRow {
   id: string;
@@ -155,9 +156,11 @@ export default function NewsPageClient({
 
     const customTweetArticle = (article.content as any)?.tweetarticle?.trim();
     const summaryText = article.summary || "";
-    const tweetArticleText =
+    const rawTweetArticle =
       customTweetArticle ||
-      `${article.headline}\n\n📍 KEY FACTS & SCOPE:\n• Jurisdiction: ${[article.province, article.country].filter(Boolean).join(", ") || "National"}\n• Overview: ${summaryText}\n\n🗣️ THE PERSPECTIVES:\n• Civic Context: Detailed reporting, debate, and community impact analysis are available on Choseno.\n• Transparency: Follow legislative milestones, vote counts, and budget line-items.\n\n🗳️ Rate this decision and view the official public record on Choseno:\n📰 Full Article: ${shareUrl}\n\n${hashtagList}`;
+      `${article.headline}\n\nWHAT CHANGED & TAXPAYER IMPACT:\n- Overview: ${summaryText}\n- Policy Details: Full legislative analysis, budget line-items, and vote counts available on Choseno.\n\nTHE DEBATE:\n- Civic Context: Review community perspectives, stakeholder reactions, and policy trade-offs.\n- Transparency: Track implementation milestones and accountability records.\n\nCHOSENO — GOOGLE REVIEWS FOR DEMOCRACY & POLICY:\nChoseno is like Google Reviews for democracy. Review public decisions, track government accountability, and share your rating on Choseno:\n${shareUrl}\n\n${hashtagList}`;
+
+    const tweetArticleText = stripEmoji(rawTweetArticle);
 
     const imageUrl = article.hero_image_url || `${SITE_URL}/api/news/${article.slug}/og-image`;
 

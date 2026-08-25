@@ -192,9 +192,24 @@ export async function getWallOwnerProfileBySlug(supabase: Client, wallSlug: stri
   // 2. Fallback: Try matching full_name by converting slug hyphens to spaces (e.g. "john-doe" -> "John Doe")
   if (!res.data && wallSlug) {
     const nameFromSlug = wallSlug.replace(/-/g, " ");
-    let nameQuery = supabase.from("profiles").select(selectFields).ilike("full_name", nameFromSlug);
+    let nameQuery = supabase
+      .from("profiles")
+      .select(selectFields)
+      .ilike("full_name", nameFromSlug)
+      .order("created_at", { ascending: false })
+      .limit(5);
     if (!isDevEnvironment()) nameQuery = nameQuery.eq("is_test", false);
-    res = await nameQuery.maybeSingle();
+    const { data: nameMatches } = await nameQuery;
+    if (nameMatches && nameMatches.length > 0) {
+      // Pick executive / highest role profile if multiple match (e.g. Premier > MPP, PM > MP, Governor > Representative)
+      const primaryMatch = nameMatches.find((p) => {
+        const targetRole = (p.politician_profiles as any)?.political_target_role || "";
+        return /(prime minister|president|premier|governor|mayor|senator)/i.test(targetRole);
+      }) || nameMatches[0];
+
+      (res as any).data = primaryMatch;
+      (res as any).error = null;
+    }
   }
 
   // 3. Fallback: Try matching by profile id or current_ghost_id if wallSlug is a UUID

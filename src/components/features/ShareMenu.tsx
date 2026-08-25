@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Share2, Copy, Check, MessageCircle } from "lucide-react";
+import { Share2, Copy, Check, MessageCircle, Image as ImageIcon, Download } from "lucide-react";
 
 // Single source of truth for "share this article" data + the dropdown of
 // destinations (Copy Link, X, WhatsApp, LinkedIn, Facebook, Telegram,
@@ -124,6 +124,8 @@ export default function ShareMenu({
     };
   }, [isOpen]);
 
+  const [copiedImage, setCopiedImage] = useState(false);
+
   const handleCopyLink = () => {
     if (typeof navigator !== "undefined" && navigator.clipboard) {
       navigator.clipboard.writeText(shareData.url);
@@ -131,6 +133,47 @@ export default function ShareMenu({
       setTimeout(() => setCopied(false), 2500);
       onShare?.("Copy Link");
     }
+  };
+
+  const handleCopyImage = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!shareData.imageUrl) return;
+
+    try {
+      const res = await fetch(shareData.imageUrl);
+      const blob = await res.blob();
+      const pngBlob = blob.type === "image/png" ? blob : new Blob([blob], { type: "image/png" });
+      if (typeof navigator !== "undefined" && navigator.clipboard && (window as any).ClipboardItem) {
+        await navigator.clipboard.write([
+          new (window as any).ClipboardItem({
+            "image/png": pngBlob,
+          }),
+        ]);
+        setCopiedImage(true);
+        setTimeout(() => setCopiedImage(false), 2500);
+        onShare?.("Copy Image");
+      } else {
+        window.open(shareData.imageUrl, "_blank");
+      }
+    } catch (err) {
+      console.warn("Clipboard image copy not supported, opening image:", err);
+      window.open(shareData.imageUrl, "_blank");
+    }
+  };
+
+  const handleDownloadImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!shareData.imageUrl) return;
+    const a = document.createElement("a");
+    a.href = shareData.imageUrl;
+    a.download = `choseno-share-card-${articleId}.png`;
+    a.target = "_blank";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    closeMenu("Download Image");
   };
 
   const handleNativeShareOrCopy = async () => {
@@ -195,54 +238,18 @@ export default function ShareMenu({
         )}
       </button>
 
-      {/* 2. Share on X */}
+      {/* 2. Share on X (Auto-Filled Long Post for X Premium) */}
       <button
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          window.open(shareData.twitterUrl, "_blank", "noopener,noreferrer");
-          closeMenu("X");
-        }}
-        className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-sky-50 text-sky-700 font-semibold transition-colors text-left w-full cursor-pointer"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-        </svg>
-        <span>Share on X</span>
-      </button>
-
-      {/* 2b. Share on X as Article (Long Post for X Premium) */}
-      <button
-        onClick={async (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const articleText = shareData.tweetArticleText || shareData.shareText;
-          const articleTwitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(articleText)}`;
-
-          // 1. Try copying image to clipboard for quick paste (Cmd+V) into X composer
-          if (shareData.imageUrl && typeof navigator !== "undefined" && navigator.clipboard) {
-            try {
-              const res = await fetch(shareData.imageUrl);
-              const blob = await res.blob();
-              if (blob && blob.type.startsWith("image/")) {
-                await navigator.clipboard.write([
-                  new ClipboardItem({ [blob.type]: blob })
-                ]);
-              }
-            } catch {
-              // If image clipboard fails (e.g. CORS or security restrictions), copy article text as backup
-              try {
-                await navigator.clipboard.writeText(articleText);
-              } catch {}
-            }
-          } else if (typeof navigator !== "undefined" && navigator.clipboard) {
-            try {
-              await navigator.clipboard.writeText(articleText);
-            } catch {}
+          const longArticleText = shareData.tweetArticleText || shareData.shareText;
+          const prefilledTwitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(longArticleText)}`;
+          if (typeof navigator !== "undefined" && navigator.clipboard) {
+            navigator.clipboard.writeText(longArticleText).catch(() => {});
           }
-
-          window.open(articleTwitterUrl, "_blank", "noopener,noreferrer");
-          closeMenu("X (Article)");
+          window.open(prefilledTwitterUrl, "_blank", "noopener,noreferrer");
+          closeMenu("X Long Post");
         }}
         className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-sky-50 text-sky-800 font-semibold transition-colors text-left w-full cursor-pointer group"
       >
@@ -250,11 +257,88 @@ export default function ShareMenu({
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
           </svg>
-          <span>Share on X as Article</span>
+          <span>Share on X (Pre-Filled Long Post)</span>
         </div>
         <span className="text-[9px] uppercase font-bold tracking-wider bg-sky-100 group-hover:bg-sky-200 text-sky-700 px-1.5 py-0.5 rounded transition-colors">
-          Premium
+          Auto-Filled
         </span>
+      </button>
+
+      {/* 2b. Publish as X Article (Copies to Clipboard + Opens x.com/compose/articles) */}
+      <button
+        onClick={async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const articleText = shareData.tweetArticleText || shareData.shareText;
+
+          // Copy full article text to clipboard
+          if (typeof navigator !== "undefined" && navigator.clipboard) {
+            try {
+              await navigator.clipboard.writeText(articleText);
+            } catch {}
+          }
+
+          // Open X's dedicated Article editor
+          window.open("https://x.com/compose/articles", "_blank", "noopener,noreferrer");
+          closeMenu("X Articles");
+        }}
+        className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-sky-50 text-sky-700 font-semibold transition-colors text-left w-full cursor-pointer group"
+      >
+        <div className="flex items-center gap-2.5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
+          <span>Write on X Articles (x.com/articles)</span>
+        </div>
+        <span className="text-[9px] uppercase font-bold tracking-wider bg-slate-100 group-hover:bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded transition-colors">
+          Editor
+        </span>
+      </button>
+
+      {/* 2c. Copy & Download Share Card Graphic */}
+      {shareData.imageUrl && (
+        <div className="flex items-center gap-1 my-0.5 px-1 py-1 rounded-lg bg-sky-50/70 border border-sky-100">
+          <button
+            onClick={handleCopyImage}
+            title="Copy Share Card image to clipboard to paste (Cmd+V) into your X post"
+            className="flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-sky-100 text-sky-800 font-medium transition-colors text-[11px] cursor-pointer"
+          >
+            {copiedImage ? (
+              <>
+                <Check size={12} className="text-green-600" />
+                <span className="text-green-700 font-bold">Image Copied!</span>
+              </>
+            ) : (
+              <>
+                <ImageIcon size={12} className="text-sky-600" />
+                <span>Copy Image (Cmd+V)</span>
+              </>
+            )}
+          </button>
+          <button
+            onClick={handleDownloadImage}
+            title="Download Share Card PNG"
+            className="p-1.5 rounded-md hover:bg-sky-100 text-sky-700 transition-colors cursor-pointer"
+          >
+            <Download size={13} />
+          </button>
+        </div>
+      )}
+
+      {/* 2d. Share Short Hook on X */}
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          window.open(shareData.twitterUrl, "_blank", "noopener,noreferrer");
+          closeMenu("X");
+        }}
+        className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-sky-50 text-sky-600 font-medium transition-colors text-left w-full cursor-pointer text-xs"
+      >
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+        <span>Share on X (Short 280-char Hook)</span>
       </button>
 
       {/* 3. Share on WhatsApp */}
