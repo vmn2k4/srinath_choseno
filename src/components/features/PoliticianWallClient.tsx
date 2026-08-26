@@ -25,6 +25,7 @@ import {
   Globe,
   ShieldCheck,
   CheckCircle2,
+  Star,
 } from "lucide-react";
 import { getOwnProfile, getUserBoundaryShapeIds } from "@/lib/services/profile";
 import {
@@ -1033,6 +1034,40 @@ export default function PoliticianWallClient({
             </div>
           </div>
         )}
+
+        {/* "Be the first to review" motivation banner -- the direct answer
+            to a wall with zero reviews reading as dead/abandoned. Only
+            shown while showInlineRating is false so it doesn't duplicate
+            the expanded panel it opens (rendered further up, next to the
+            star rating control). Hidden the moment ratingSummary.count
+            ticks above 0 via refreshRatingSummary, same state the star
+            rating and "See reviews" link already read from. */}
+        {ratingSummary.count === 0 && !showInlineRating && (
+          <div className="pt-4 border-t border-border-light/20">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-primary/5 border border-dashed border-primary/25">
+              <div className="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
+                <Star size={18} className="text-primary fill-primary/25" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold text-text-main">
+                  No one has reviewed {wallOwner?.full_name || "this politician"} yet — you&rsquo;d be the first
+                </p>
+                <p className="text-xs text-text-secondary mt-0.5 leading-relaxed">
+                  Rate them on their record and recent news coverage. Reviews post under your anonymous Ghost
+                  ID — {wallOwner?.full_name || "they"} and every other visitor only ever see that, never your
+                  real name.
+                </p>
+              </div>
+              <Button
+                size="sm"
+                onClick={() => (user ? setShowInlineRating(true) : requireAuth())}
+                className="gap-1.5 shrink-0 w-full sm:w-auto"
+              >
+                <Star size={13} /> Be the First to Review
+              </Button>
+            </div>
+          </div>
+        )}
       </Card>
 
       {/* Post Composer — collapses to a single tap-to-expand row (same
@@ -1181,7 +1216,13 @@ export default function PoliticianWallClient({
 
       {/* Wall Post Feed */}
       {displayedPosts.length === 0 ? (
-        <EmptyState description="No posts on this wall yet." />
+        <EmptyState
+          icon={Users}
+          title="It's quiet here"
+          description={`No public posts yet. Leave the first message for ${wallOwner?.full_name || "this politician"}${
+            ratingSummary.count === 0 ? ", or rate them above" : ""
+          } — both help other constituents get a read on them.`}
+        />
       ) : (
         <>
           <FeedSortControl

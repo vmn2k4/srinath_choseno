@@ -16,7 +16,17 @@ export default function ErrorPage({
 
   useEffect(() => {
     console.error(error);
-    trackError({ errorType: "render_exception", message: error.message, page: pathname });
+    trackError({
+      errorType: "render_exception",
+      message: error.message,
+      // error.digest correlates this row to the matching server-side log
+      // line for the same render failure -- window.location adds the query
+      // string usePathname() drops, since a render exception is often
+      // param-dependent (e.g. a bad ?tab= value).
+      page: typeof window !== "undefined" ? window.location.pathname + window.location.search : pathname,
+      stack: error.stack,
+      digest: error.digest,
+    });
   }, [error, pathname]);
 
   return (

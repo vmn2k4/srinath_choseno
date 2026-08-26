@@ -205,6 +205,13 @@ const MAYOR_BODY = `<!DOCTYPE html>
         </div>
 
         <div class="section">
+            <p class="section-title">We're Interviewing 2026 Candidates</p>
+            <p class="section-content">
+                We're interviewing candidates running in the 2026 municipal elections and publishing those interviews on Choseno so voters can compare candidates side by side. We'd like to interview you. It's completely free, and takes as little as 15 minutes — over a call or in person at your office, whichever works best for you. Let us know if you're interested; you can set this up using any of the options below.
+            </p>
+        </div>
+
+        <div class="section">
             <p class="section-title">How to Get Started</p>
             <div class="ways-grid" style="display: block; width: 100%; margin: 16px 0;">
                 <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
@@ -463,6 +470,13 @@ const COUNCILLOR_BODY = `<!DOCTYPE html>
                 <li>Let constituents post authentic testimonials about your representation</li>
                 <li>Connect directly with voters</li>
             </ul>
+        </div>
+
+        <div class="section">
+            <p class="section-title">We're Interviewing 2026 Candidates</p>
+            <p class="section-content">
+                We're interviewing candidates running in the 2026 municipal elections and publishing those interviews on Choseno so voters can compare candidates side by side. We'd like to interview you. It's completely free, and takes as little as 15 minutes — over a call or in person at your office, whichever works best for you. Let us know if you're interested; you can set this up using any of the options below.
+            </p>
         </div>
 
         <div class="section">
@@ -734,6 +748,13 @@ const PARTY_BODY = `<!DOCTYPE html>
         </div>
 
         <div class="section">
+            <p class="section-title">We're Interviewing 2026 Candidates</p>
+            <p class="section-content">
+                We're interviewing candidates running in the 2026 municipal elections and publishing those interviews on Choseno so voters can compare candidates side by side. We'd like to interview your candidates, and hear from your team as well. It's completely free, and takes as little as 15 minutes — over a call or in person at your office, whichever works best for you. Let us know if you're interested; you can set this up using any of the options below.
+            </p>
+        </div>
+
+        <div class="section">
             <p class="section-title">How We Can Work Together</p>
             <div class="ways-grid" style="display: block; width: 100%; margin: 16px 0;">
                 <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
@@ -993,6 +1014,13 @@ const CANDIDATE_BODY = `<!DOCTYPE html>
                 <li><strong>Collect Endorsements:</strong> Allow constituents and community leaders to post testimonials on your wall.</li>
                 <li><strong>Direct Voter Q&A:</strong> Answer questions directly from local residents in your district.</li>
             </ul>
+        </div>
+
+        <div class="section">
+            <p class="section-title">We're Interviewing 2026 Candidates</p>
+            <p class="section-content">
+                We're interviewing candidates running in the 2026 municipal elections and publishing those interviews on Choseno so voters can compare candidates side by side. We'd like to interview you about your run for {{role}} in {{city}}. It's completely free, and takes as little as 15 minutes — over a call or in person at your office, whichever works best for you. Let us know if you're interested; you can set this up using any of the options below.
+            </p>
         </div>
 
         <div class="section">

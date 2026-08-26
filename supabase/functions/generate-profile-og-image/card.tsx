@@ -10,6 +10,18 @@ export interface OgCardInput {
   title: string;
   subtitle?: string | null;
   photoUrl?: string | null;
+  /** Political party, shown as a small chip under the title when provided. */
+  partyName?: string | null;
+  /**
+   * Rating summary for the footer band's second line. Omitted entirely
+   * (both left undefined) by callers that don't have this data yet -- the
+   * wall-post-thread and candidacy cards -- so it falls back to the old
+   * generic tagline instead of guessing "be the first" for a page that may
+   * actually have reviews already. Only the wall profile card (the one
+   * page that already fetches this for its own metadata) passes it.
+   */
+  ratingAvg?: number | null;
+  ratingCount?: number | null;
 }
 
 function truncateWordSafe(text: string, maxLen: number): string {
@@ -22,10 +34,23 @@ function truncateWordSafe(text: string, maxLen: number): string {
   return `${truncated.trimEnd()}…`;
 }
 
-export function ProfileOgCard({ eyebrow, title, subtitle, photoUrl }: OgCardInput) {
+export function ProfileOgCard({ eyebrow, title, subtitle, photoUrl, partyName, ratingAvg, ratingCount }: OgCardInput) {
   const safeTitle = truncateWordSafe(title, 85);
   const safeSubtitle = subtitle ? truncateWordSafe(subtitle, 140) : null;
   const initialLetter = title.trim() ? title.trim().charAt(0).toUpperCase() : 'C';
+  const firstName = title.trim().split(/\s+/)[0] || title;
+  // Only render a rating-aware line when the caller actually supplied rating
+  // data (ratingCount !== undefined) -- see the ratingCount doc comment above.
+  const hasRatingData = ratingCount !== undefined && ratingCount !== null;
+  // No "★" glyph here (unlike the vector-SVG stars elsewhere on this card) --
+  // the sans-serif font Satori falls back to for plain text doesn't carry
+  // the Unicode star glyph, which rendered as a tofu box in testing. "/5"
+  // reads just as clearly without depending on font glyph coverage.
+  const footerSubtext = hasRatingData
+    ? ratingCount > 0
+      ? `${ratingAvg?.toFixed(1)}/5 average from ${ratingCount} constituent review${ratingCount === 1 ? '' : 's'} · Add yours anonymously`
+      : `Be the first to rate ${firstName} — reviews are 100% anonymous`
+    : 'Civic accountability platform · Rate candidates & elected leaders';
 
   return (
     <div
@@ -106,13 +131,37 @@ export function ProfileOgCard({ eyebrow, title, subtitle, photoUrl }: OgCardInpu
         </div>
       </div>
 
+      {/* Product-mechanic advertisement -- the one line every share of this
+          card carries regardless of whether this particular person has any
+          coverage yet, since the card is generic across wall/candidacy/post
+          call sites. Fills what used to be a wide empty gap between the top
+          bar and the name card. */}
+      <div style={{ display: 'flex', alignItems: 'center', marginTop: 14, zIndex: 10 }}>
+        <span
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            fontSize: 14,
+            fontWeight: 800,
+            color: '#166534',
+            background: '#dcfce7',
+            padding: '6px 16px',
+            borderRadius: 999,
+            border: '1.5px solid rgba(22, 101, 52, 0.25)',
+          }}
+        >
+          📰 Rated on real news coverage — not just opinion
+        </span>
+      </div>
+
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           gap: 28,
           zIndex: 10,
-          marginTop: 8,
+          marginTop: 14,
           marginBottom: 8,
           flex: 1,
         }}
@@ -137,11 +186,29 @@ export function ProfileOgCard({ eyebrow, title, subtitle, photoUrl }: OgCardInpu
               lineHeight: 1.2,
               color: '#090d16',
               letterSpacing: '-0.03em',
-              marginBottom: safeSubtitle ? 12 : 0,
+              marginBottom: safeSubtitle || partyName ? 12 : 0,
             }}
           >
             {safeTitle}
           </div>
+
+          {partyName && (
+            <div style={{ display: 'flex', marginBottom: safeSubtitle ? 10 : 0 }}>
+              <span
+                style={{
+                  display: 'flex',
+                  fontSize: 15,
+                  fontWeight: 800,
+                  color: '#1d4ed8',
+                  background: 'rgba(37, 99, 235, 0.1)',
+                  padding: '4px 14px',
+                  borderRadius: 999,
+                }}
+              >
+                {partyName}
+              </span>
+            </div>
+          )}
 
           {safeSubtitle && (
             <div style={{ display: 'flex', fontSize: 18, color: '#334155', lineHeight: 1.4, fontWeight: 600 }}>
@@ -229,7 +296,7 @@ export function ProfileOgCard({ eyebrow, title, subtitle, photoUrl }: OgCardInpu
               </div>
             </div>
             <div style={{ display: 'flex', fontSize: 13, color: '#e2e8f0', fontWeight: 700, marginTop: 2 }}>
-              Civic accountability platform · Rate candidates & elected leaders
+              {footerSubtext}
             </div>
           </div>
         </div>

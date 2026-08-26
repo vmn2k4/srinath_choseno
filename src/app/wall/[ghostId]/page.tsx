@@ -9,14 +9,17 @@ import {
   getSEOProfileSummary,
   getSEOProfileSummaryBySlug,
 } from "@/lib/services/politicianWall";
-import { getNewsArticlesByPolitician } from "@/lib/services/news";
+import { getNewsArticlesByPolitician, getPublishedNewsArticles } from "@/lib/services/news";
+import { getRelatedPoliticians } from "@/lib/services/politicians";
 import { redirect } from "next/navigation";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, Newspaper } from "lucide-react";
+import { ArrowRight, ChevronRight, Newspaper, Users } from "lucide-react";
 import { SITE_URL } from "@/lib/constants/site";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
+import { normalizeCountryCode } from "@/lib/utils/newsGeography";
 import NewsArticleCard from "@/components/features/NewsArticleCard";
+import RelatedPoliticianCard from "@/components/features/RelatedPoliticianCard";
 
 const BASE_URL = SITE_URL;
 
@@ -159,17 +162,45 @@ export default async function WallPage({ params }: WallPageProps) {
 
   if (canonicalWallSlug && ghostId !== canonicalWallSlug) redirect(`/wall/${canonicalWallSlug}`);
 
-  const [{ data: posts }, supportCountRes, { data: newsArchivePreview, count: newsArchiveCount }] = await Promise.all([
-    getWallPosts(supabase, owner.current_ghost_id),
-    owner?.id ? getSupporterCount(supabase, owner.id) : Promise.resolve({ count: 0 }),
-    // Full indexed news archive for this politician now lives at
-    // /wall/[slug]/news (see that route) -- this is just a 3-card teaser so
-    // the wall itself links out to it, instead of the wall only ever
-    // linking to the couple of articles mirrored as posts.
-    owner?.id
-      ? getNewsArticlesByPolitician(supabase, owner.id, { limit: 3, withCount: true })
-      : Promise.resolve({ data: [], count: 0 }),
-  ]);
+  const ownerPartyId = (owner?.politician_profiles as { political_party_id?: number | null } | null)?.political_party_id;
+
+  const [{ data: posts }, supportCountRes, { data: newsArchivePreview, count: newsArchiveCount }, { data: relatedPoliticians }] =
+    await Promise.all([
+      getWallPosts(supabase, owner.current_ghost_id),
+      owner?.id ? getSupporterCount(supabase, owner.id) : Promise.resolve({ count: 0 }),
+      // Full indexed news archive for this politician now lives at
+      // /wall/[slug]/news (see that route) -- this is just a 3-card teaser so
+      // the wall itself links out to it, instead of the wall only ever
+      // linking to the couple of articles mirrored as posts.
+      owner?.id
+        ? getNewsArticlesByPolitician(supabase, owner.id, { limit: 3, withCount: true })
+        : Promise.resolve({ data: [], count: 0 }),
+      // "Related People" rail -- gives a visitor who lands on a brand-new,
+      // otherwise-empty wall (no posts, no reviews, no tagged news yet)
+      // somewhere else on the platform to go instead of a dead end.
+      owner?.id
+        ? getRelatedPoliticians(supabase, { excludeProfileId: owner.id, politicalPartyId: ownerPartyId, country: owner.country })
+        : Promise.resolve({ data: [] }),
+    ]);
+
+  // No news article has been tagged to this specific politician yet --
+  // fall back to general recent coverage for their country so the wall
+  // still has *something* linking out to /news instead of the section
+  // disappearing entirely. Sequential (not folded into the Promise.all
+  // above) since it's only worth the extra round trip when the direct
+  // lookup came back empty.
+  let generalNewsFallback: typeof newsArchivePreview = null;
+  if ((!newsArchivePreview || newsArchivePreview.length === 0) && owner.country) {
+    // profiles.country is a free-text name ("Canada"); news_articles.country
+    // is the ISO-2 code ("CA") -- normalizeCountryCode bridges the two, same
+    // as every other cross-table country filter in newsGeography.ts's own
+    // header comment. Without it this silently matches zero rows for every
+    // Canadian/US politician instead of falling back to anything.
+    const { data } = await getPublishedNewsArticles(supabase, { country: normalizeCountryCode(owner.country), limit: 3 });
+    generalNewsFallback = data;
+  }
+  const newsToShow = newsArchivePreview && newsArchivePreview.length > 0 ? newsArchivePreview : generalNewsFallback;
+  const newsIsDirectlyTagged = Boolean(newsArchivePreview && newsArchivePreview.length > 0);
 
   const canonicalUrl = `${BASE_URL}/wall/${canonicalWallSlug}`;
 
@@ -280,6 +311,30 @@ export default async function WallPage({ params }: WallPageProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
       )}
+      {/* Visible counterpart to the BreadcrumbList schema above -- gives a
+          visitor who landed here straight from a search result or a shared
+          link somewhere to go besides the wall itself, instead of the trail
+          existing only for crawlers. */}
+      <nav aria-label="Breadcrumb" className="w-full max-w-none px-4 lg:px-8 pt-4 -mb-2">
+        <ol className="flex items-center gap-1.5 text-xs font-medium text-text-muted flex-wrap">
+          <li>
+            <Link href="/" className="hover:text-primary transition-colors">
+              Home
+            </Link>
+          </li>
+          <ChevronRight size={12} className="shrink-0 opacity-60" />
+          <li>
+            <Link href="/elections" className="hover:text-primary transition-colors">
+              Elections & Races
+            </Link>
+          </li>
+          <ChevronRight size={12} className="shrink-0 opacity-60" />
+          <li className="text-text-secondary font-semibold truncate max-w-[220px]" aria-current="page">
+            {name}
+          </li>
+        </ol>
+      </nav>
+
       <PoliticianWallClient
         ghostId={owner.current_ghost_id}
         initialWallOwner={owner as any}
@@ -288,23 +343,52 @@ export default async function WallPage({ params }: WallPageProps) {
       />
 
       {/* News coverage teaser -- links out to the full indexed archive at
-          /wall/[slug]/news rather than dead-ending on the wall itself. */}
-      {newsArchivePreview && newsArchivePreview.length > 0 && (
-        <div className="w-full max-w-none px-4 lg:px-8 pb-16 -mt-6 space-y-4">
+          /wall/[slug]/news when articles are actually tagged to this
+          politician; falls back to general recent coverage for their
+          country (newsIsDirectlyTagged=false) so a brand-new wall with no
+          tagged articles yet still has a news section instead of none. */}
+      {newsToShow && newsToShow.length > 0 && (
+        <div className="w-full max-w-none px-4 lg:px-8 pb-8 -mt-6 space-y-4">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-sm font-bold text-text-main flex items-center gap-2">
-              <Newspaper size={16} className="text-primary" /> News Coverage of {name}
+              <Newspaper size={16} className="text-primary" />
+              {newsIsDirectlyTagged ? `News Coverage of ${name}` : "Recent Political News"}
             </h2>
             <Link
-              href={`/wall/${canonicalWallSlug}/news`}
+              href={newsIsDirectlyTagged ? `/wall/${canonicalWallSlug}/news` : "/news"}
               className="text-xs font-bold text-primary hover:text-primary-hover inline-flex items-center gap-1 shrink-0"
             >
-              View all {newsArchiveCount ?? newsArchivePreview.length} stories <ArrowRight size={12} />
+              {newsIsDirectlyTagged ? `View all ${newsArchiveCount ?? newsToShow.length} stories` : "Browse all news"}{" "}
+              <ArrowRight size={12} />
             </Link>
           </div>
+          {!newsIsDirectlyTagged && (
+            <p className="text-xs text-text-muted -mt-2">
+              No stories are tagged to {name} yet &mdash; here&rsquo;s what&rsquo;s happening in {owner.country} right now.
+              Rate {name} on an article once one covers them.
+            </p>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {newsArchivePreview.map((article: any) => (
+            {newsToShow.map((article: any) => (
               <NewsArticleCard key={article.id} article={article} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Related People -- the other half of "this wall is empty, now
+          what": someone landing on a wall with no reviews/posts/news yet
+          gets somewhere else to go instead of a dead end. Fellow party
+          members first, topped up with other current officeholders in the
+          same country (see getRelatedPoliticians). */}
+      {relatedPoliticians && relatedPoliticians.length > 0 && (
+        <div className="w-full max-w-none px-4 lg:px-8 pb-16 space-y-4">
+          <h2 className="text-sm font-bold text-text-main flex items-center gap-2">
+            <Users size={16} className="text-primary" /> Related People
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {relatedPoliticians.map((politician) => (
+              <RelatedPoliticianCard key={politician.id} politician={politician} />
             ))}
           </div>
         </div>

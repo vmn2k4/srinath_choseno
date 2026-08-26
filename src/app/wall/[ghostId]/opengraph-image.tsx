@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { OG_IMAGE_SIZE, OG_IMAGE_CONTENT_TYPE } from "@/lib/utils/ogCard";
 import { createPublicClient } from "@/lib/supabase/public";
-import { getWallOwnerProfile, getWallOwnerProfileBySlug } from "@/lib/services/politicianWall";
+import { getSEOProfileSummary, getSEOProfileSummaryBySlug } from "@/lib/services/politicianWall";
 
 export const alt = "Politician's Public Wall | Choseno";
 export const size = OG_IMAGE_SIZE;
@@ -19,7 +19,7 @@ interface Props {
 type WallOwner = {
   id?: string;
   full_name?: string;
-  politician_profiles?: { bio?: string; avatar_url?: string } | null;
+  politician_profiles?: { bio?: string; avatar_url?: string; political_parties?: { name?: string } | null } | null;
 };
 
 // All rendering lives in the generate-profile-og-image Supabase Edge
@@ -37,14 +37,19 @@ export default async function Image({ params }: Props) {
   const { ghostId } = await params;
   const supabase = createPublicClient();
   const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(ghostId);
-  const { data } = isUuid
-    ? await getWallOwnerProfile(supabase, ghostId)
-    : await getWallOwnerProfileBySlug(supabase, ghostId);
+  // getSEOProfileSummary(BySlug) instead of the bare owner lookup -- same
+  // rating aggregate the page's own generateMetadata already computes, so
+  // the share card can say "4.6★ from 12 reviews" or "Be the first to
+  // rate" instead of carrying no rating context at all.
+  const { owner: data, rating } = isUuid
+    ? await getSEOProfileSummary(supabase, ghostId)
+    : await getSEOProfileSummaryBySlug(supabase, ghostId);
   const owner = data as unknown as WallOwner | null;
 
   const name = owner?.full_name || "Politician";
   const bio = owner?.politician_profiles?.bio;
   const avatarUrl = owner?.politician_profiles?.avatar_url;
+  const partyName = owner?.politician_profiles?.political_parties?.name;
   const cacheKey = `wall/${owner?.id || ghostId}`;
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -54,7 +59,15 @@ export default async function Image({ params }: Props) {
       const res = await fetch(functionUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ eyebrow: "Public Wall", title: name, subtitle: bio || null, photoUrl: avatarUrl || null }),
+        body: JSON.stringify({
+          eyebrow: "Public Wall",
+          title: name,
+          subtitle: bio || null,
+          photoUrl: avatarUrl || null,
+          partyName: partyName || null,
+          ratingAvg: rating?.avg ?? null,
+          ratingCount: rating?.count ?? 0,
+        }),
         next: { revalidate: 3600 },
       });
       if (res.ok) {

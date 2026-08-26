@@ -784,6 +784,7 @@ export default function CampaignAdminClient() {
   const [previewEmail, setPreviewEmail] = useState<EmailPreviewData | null>(null);
   const [sendingAll, setSendingAll] = useState(false);
   const [confirmSendAll, setConfirmSendAll] = useState(false);
+  const [confirmDiscardAll, setConfirmDiscardAll] = useState(false);
 
   const [history, setHistory] = useState<CampaignSendRow[]>([]);
   const [stats, setStats] = useState<CampaignStatsRow[]>([]);
@@ -954,6 +955,15 @@ export default function CampaignAdminClient() {
         return { ...r, data, error };
       })
     );
+  };
+
+  // Drops one pending recipient from the review list before sending -- e.g. a
+  // bad row from a pasted CSV, or someone who shouldn't get this campaign.
+  // No confirm needed (mirrors per-row Send, which also has none) -- only the
+  // bulk "Discard all" below is confirmed, since that's the one action that
+  // can wipe out a large pasted/imported batch in one click.
+  const removeRow = (index: number) => {
+    setRows((prev) => prev.filter((_, i) => i !== index));
   };
 
   const applyPreset = (preset: CampaignTemplatePreset) => {
@@ -1581,6 +1591,15 @@ export default function CampaignAdminClient() {
               )}
               <Button
                 size="sm"
+                variant="outline"
+                onClick={() => setConfirmDiscardAll(true)}
+                disabled={sendingAll}
+                className="gap-1.5 border-rose-500/40 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10"
+              >
+                <Trash2 size={13} /> Discard all
+              </Button>
+              <Button
+                size="sm"
                 onClick={() => setConfirmSendAll(true)}
                 disabled={!canSendAll}
                 className="gap-1.5"
@@ -1684,6 +1703,16 @@ export default function CampaignAdminClient() {
                       </>
                     )}
                   </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => removeRow(i)}
+                    disabled={r.status === "sending"}
+                    title="Discard this recipient"
+                    className="gap-1 !px-2 border-rose-500/40 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10"
+                  >
+                    <Trash2 size={13} />
+                  </Button>
                 </div>
               </div>
             ))}
@@ -1704,6 +1733,19 @@ export default function CampaignAdminClient() {
         loading={sendingAll}
         onConfirm={runSendAll}
         onCancel={() => setConfirmSendAll(false)}
+      />
+
+      <ConfirmDialog
+        open={confirmDiscardAll}
+        title={`Discard all ${rows.length} recipient${rows.length === 1 ? "" : "s"}?`}
+        message="This clears the pending review list below -- nothing has been sent yet, so no email is affected. You'll need to re-paste or re-add recipients to start over."
+        tone="danger"
+        confirmLabel="Discard all"
+        onConfirm={() => {
+          setRows([]);
+          setConfirmDiscardAll(false);
+        }}
+        onCancel={() => setConfirmDiscardAll(false)}
       />
 
       {deleteTarget && deleteTarget.type === "group" ? (

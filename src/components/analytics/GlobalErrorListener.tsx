@@ -14,7 +14,8 @@ export default function GlobalErrorListener() {
       trackError({
         errorType: "uncaught_exception",
         message: event.message,
-        page: window.location.pathname,
+        page: window.location.pathname + window.location.search,
+        stack: event.error instanceof Error ? event.error.stack : null,
       });
     };
     const onRejection = (event: PromiseRejectionEvent) => {
@@ -23,7 +24,8 @@ export default function GlobalErrorListener() {
       trackError({
         errorType: "unhandled_rejection",
         message,
-        page: window.location.pathname,
+        page: window.location.pathname + window.location.search,
+        stack: reason instanceof Error ? reason.stack : null,
       });
     };
 

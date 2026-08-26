@@ -824,15 +824,23 @@ export default function CandidacyWall({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Candidate Info & Campaign Details */}
         <div className="lg:col-span-5 space-y-6">
-          <Card padding="md" className="space-y-4">
-            {/* Header — its own row on mobile so the action buttons get a
-                full-width row to wrap into instead of squeezing next to
-                the avatar/name and getting clipped off-screen. */}
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
-              <div className="flex items-center gap-3">
+          <Card padding="md" className="@container space-y-4">
+            {/* Header — sized off the CARD's own rendered width (@container),
+                not the viewport. This card can be embedded in a narrow
+                column (e.g. the seat-page candidate strip) even on a wide
+                screen, where sm:/md: viewport breakpoints would wrongly
+                think there's room and let the button row push past the
+                card's edge. Below @sm it's "tab mode": name gets its own
+                full-width row and actions stack in a second full-width row
+                instead of squeezing beside it. Button labels only render
+                at @lg+; below that every action is an icon-only button
+                (title=tooltip carries the label) so the row can never grow
+                wider than the card. */}
+            <div className="flex flex-col @sm:flex-row @sm:items-start @sm:justify-between gap-3 @sm:gap-4">
+              <div className="flex items-center gap-3 min-w-0">
                 <Avatar src={avatarUrl} name={displayName} size="lg" />
-                <div>
-                  <h1 className="text-xl font-bold text-text-main flex items-center gap-2">
+                <div className="min-w-0">
+                  <h1 className="text-xl font-bold text-text-main flex items-center gap-2 truncate">
                     {displayName}
                   </h1>
                   <div className="mt-1 flex items-center gap-2 flex-wrap">
@@ -851,7 +859,7 @@ export default function CandidacyWall({
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-2 flex-wrap @sm:justify-end">
                 {candidate.profiles?.current_ghost_id && (
                   <Link
                     href={`/wall/${resolvePoliticianWallSlug(candidate, displayName, candidate.election_seats?.role_title)}`}
@@ -863,8 +871,7 @@ export default function CandidacyWall({
                       title={`View ${displayName}'s full Politician Wall`}
                     >
                       <ExternalLink size={13} />
-                      <span className="sm:hidden">View Wall</span>
-                      <span className="hidden sm:inline">View Politician Wall</span>
+                      <span className="hidden @lg:inline">View Politician Wall</span>
                     </Button>
                   </Link>
                 )}
@@ -882,7 +889,7 @@ export default function CandidacyWall({
                     title={`Play ${displayName}'s full interview`}
                   >
                     <Video size={13} />
-                    Play Interview
+                    <span className="hidden @lg:inline">Play Interview</span>
                   </Button>
                 )}
 
@@ -892,12 +899,13 @@ export default function CandidacyWall({
                   size="sm"
                   onClick={toggleSupport}
                   className="gap-1.5 shrink-0"
+                  title={isSupporting ? "Withdraw support" : "Support this candidate"}
                 >
                   <Heart
                     size={14}
                     className={isSupporting ? "fill-current" : ""}
                   />
-                  {supportCount > 0 ? supportCount : "Support"}
+                  <span>{supportCount > 0 ? supportCount : <span className="hidden @lg:inline">Support</span>}</span>
                 </Button>
               </div>
             </div>

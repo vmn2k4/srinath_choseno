@@ -1,4 +1,7 @@
 import { sendEvent } from "./gtag";
+import { createClient } from "@/lib/supabase/client";
+import { logClientError, type ClientErrorType } from "@/lib/services/errorLog";
+import { isDevEnvironment } from "@/lib/utils/environment";
 
 // Wraps GA4's own recommended events (sign_up, login, search, share,
 // select_content) where one exists -- these unlock GA4's built-in reports
@@ -87,10 +90,47 @@ export function trackSelectContent(contentType: string, itemId: string) {
   sendEvent("select_content", { content_type: contentType, item_id: itemId });
 }
 
-export function trackError(params: { errorType: string; message?: string; page?: string }) {
+// GA4's error_occurred stays as the aggregate volume/trend signal (shows up
+// in the same reports as every other event). It can't carry the detail
+// needed to actually fix something though -- message is truncated to 150
+// chars below before GA4 even sees it, there's no stack-trace field, and
+// error_type/message were never registered as GA4 custom dimensions so
+// they're not even queryable via the Data API today (see
+// analytics-live-data-pull-howto memory). client_error_logs (Supabase) is
+// the detailed side: full message, stack, page, browser, viewport -- see
+// 20260826000000_client_error_logs.sql.
+//
+// Never lets a failure here throw: this runs inside window.onerror /
+// onunhandledrejection handlers, so an exception in the reporting path
+// itself would recurse into those same handlers.
+export function trackError(params: {
+  errorType: ClientErrorType;
+  message?: string;
+  page?: string;
+  stack?: string | null;
+  digest?: string | null;
+}) {
   sendEvent("error_occurred", {
     error_type: params.errorType,
     message: params.message?.slice(0, 150),
     page: params.page,
   });
+
+  if (typeof window === "undefined") return;
+  try {
+    const supabase = createClient();
+    void logClientError(supabase, {
+      errorType: params.errorType,
+      message: params.message || "(no message)",
+      page: params.page || window.location.pathname,
+      stack: params.stack ?? null,
+      digest: params.digest ?? null,
+      referrer: document.referrer || null,
+      userAgent: navigator.userAgent,
+      viewport: `${window.innerWidth}x${window.innerHeight}`,
+      isTest: isDevEnvironment(),
+    });
+  } catch {
+    // Swallow -- see note above.
+  }
 }

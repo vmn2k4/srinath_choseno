@@ -51,6 +51,11 @@ interface CardBody {
   title: string;
   subtitle?: string | null;
   photoUrl?: string | null;
+  // See the matching doc comment on OgCardInput in card.tsx -- optional,
+  // wall-profile-card-only fields. Passed straight through to ProfileOgCard.
+  partyName?: string | null;
+  ratingAvg?: number | null;
+  ratingCount?: number | null;
 }
 
 Deno.serve(async (req) => {
