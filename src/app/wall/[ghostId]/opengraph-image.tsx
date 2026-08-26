@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { OG_IMAGE_SIZE, OG_IMAGE_CONTENT_TYPE } from "@/lib/utils/ogCard";
 import { createPublicClient } from "@/lib/supabase/public";
 import { getSEOProfileSummary, getSEOProfileSummaryBySlug } from "@/lib/services/politicianWall";
+import { getNewsArticlesByPolitician } from "@/lib/services/news";
 
 export const alt = "Politician's Public Wall | Choseno";
 export const size = OG_IMAGE_SIZE;
@@ -19,7 +20,12 @@ interface Props {
 type WallOwner = {
   id?: string;
   full_name?: string;
-  politician_profiles?: { bio?: string; avatar_url?: string; political_parties?: { name?: string } | null } | null;
+  politician_profiles?: {
+    bio?: string;
+    avatar_url?: string;
+    photo_url?: string | null;
+    political_parties?: { name?: string } | null;
+  } | null;
 };
 
 // All rendering lives in the generate-profile-og-image Supabase Edge
@@ -48,9 +54,28 @@ export default async function Image({ params }: Props) {
 
   const name = owner?.full_name || "Politician";
   const bio = owner?.politician_profiles?.bio;
-  const avatarUrl = owner?.politician_profiles?.avatar_url;
+  // photo_url (set by enrichProfileWithContactFallback from a linked
+  // office_holders record, e.g. an official government headshot) takes
+  // priority over avatar_url (a self-uploaded photo) -- this route used to
+  // read only avatar_url, which meant a profile with a real official photo
+  // via the office_holders fallback (not self-uploaded) always fell through
+  // to the plain letter-circle instead. Same priority PoliticianWallClient
+  // already uses for its own Avatar.
+  const avatarUrl = owner?.politician_profiles?.photo_url || owner?.politician_profiles?.avatar_url;
   const partyName = owner?.politician_profiles?.political_parties?.name;
   const cacheKey = `wall/${owner?.id || ghostId}`;
+
+  // Latest tagged article + total count -- lets the card say something real
+  // and specific to this person ("In the news: '...'" / "69 news stories")
+  // instead of the same generic tagline on every wall regardless of how
+  // much real coverage exists.
+  let latestHeadline: string | null = null;
+  let newsCount = 0;
+  if (owner?.id) {
+    const { data: latestNews, count } = await getNewsArticlesByPolitician(supabase, owner.id, { limit: 1, withCount: true });
+    latestHeadline = latestNews?.[0]?.headline || null;
+    newsCount = count ?? 0;
+  }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   if (supabaseUrl) {
@@ -67,6 +92,8 @@ export default async function Image({ params }: Props) {
           partyName: partyName || null,
           ratingAvg: rating?.avg ?? null,
           ratingCount: rating?.count ?? 0,
+          latestHeadline,
+          newsCount,
         }),
         next: { revalidate: 3600 },
       });

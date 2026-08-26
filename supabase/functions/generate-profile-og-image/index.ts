@@ -35,11 +35,12 @@
 // Authorization header, same public-image-endpoint reasoning.
 import { ImageResponse } from 'npm:@vercel/og@^0';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.4';
-import { ProfileOgCard } from './card.tsx';
+import { ProfileOgCard, ProfileStoryCard } from './card.tsx';
 
 const BUCKET = 'profile-og-images';
 const TTL_MS = 24 * 60 * 60 * 1000;
-const SIZE = { width: 1200, height: 630 };
+const LANDSCAPE_SIZE = { width: 1200, height: 630 };
+const STORY_SIZE = { width: 810, height: 1440 };
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -66,6 +67,23 @@ Deno.serve(async (req) => {
   if (!cacheKey) {
     return new Response('cacheKey query param is required', { status: 400, headers: CORS_HEADERS });
   }
+  // ?format=story renders the 810x1440 vertical asset (9:16, same ratio as
+  // Instagram's 1080x1920 recommendation, scaled down 25% -- rendering a
+  // remote photo into a full 1080x1920 canvas hit this function's compute
+  // limit in testing; the no-photo case rendered fine at full size, so the
+  // cost is specifically compositing a fetched image into a large
+  // destination area, not the canvas size alone) for posting natively to
+  // Instagram/Facebook/Snapchat Stories or as a Reel cover, instead of the
+  // default 1200x630 landscape card used for og:image/twitter:image link
+  // unfurling. Read from the query string (not the POST body) since the
+  // cache check below runs before the body is parsed -- a GET request has
+  // no body at all. Suffixed onto the object path (not a separate bucket
+  // subfolder) so the existing "wall/<id>.png" landscape cache keys are
+  // untouched by this addition.
+  const format = url.searchParams.get('format') === 'story' ? 'story' : 'landscape';
+  const SIZE = format === 'story' ? STORY_SIZE : LANDSCAPE_SIZE;
+  const CardComponent = format === 'story' ? ProfileStoryCard : ProfileOgCard;
+
   // cacheKey arrives as a "/"-joined path (e.g. "wall/<id>") -- keep the
   // slashes as Storage subdirectories rather than flattening, purely for
   // readability when browsing the bucket; sanitize anything else so a
@@ -74,7 +92,7 @@ Deno.serve(async (req) => {
     .split('/')
     .map((seg) => seg.replace(/[^a-zA-Z0-9_.-]/g, '_'))
     .join('/');
-  const objectPath = `${safeKey}.png`;
+  const objectPath = format === 'story' ? `${safeKey}-story.png` : `${safeKey}.png`;
 
   const supabaseAdmin = createClient(
     Deno.env.get('SUPABASE_URL')!,
@@ -97,7 +115,7 @@ Deno.serve(async (req) => {
       return new Response('Body must include at least { eyebrow, title }', { status: 400, headers: CORS_HEADERS });
     }
 
-    const image = new ImageResponse(ProfileOgCard(body) as any, { ...SIZE });
+    const image = new ImageResponse(CardComponent(body) as any, { ...SIZE });
     const png = await image.arrayBuffer();
 
     const { error: uploadError } = await supabaseAdmin.storage
