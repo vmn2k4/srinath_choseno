@@ -1548,6 +1548,28 @@ async function run() {
     });
   }
 
+  // 3.5. Optional: Auto-post newly published articles to Twitter / X if configured
+  if (inserted.length > 0) {
+    try {
+      const COOKIES_PATH = path.join(__dirname, 'twitter-cookies.json');
+      const hasTwitterAuth = fs.existsSync(COOKIES_PATH) || process.env.TWITTER_USERNAME || env.TWITTER_USERNAME;
+      if (hasTwitterAuth) {
+        const { postTweet } = require('./post-to-twitter');
+        console.log(`\n[Twitter Auto-Poster] Dispatching tweets for ${inserted.length} newly inserted articles...`);
+        for (const item of inserted) {
+          try {
+            await postTweet(item);
+            await new Promise(r => setTimeout(r, 4000));
+          } catch (twErr) {
+            console.warn(`  Warning: Could not tweet article "${item.headline}":`, twErr.message);
+          }
+        }
+      }
+    } catch (e) {
+      // Ignore if twitter poster is not configured
+    }
+  }
+
   // 4. Update batch-ranked-news.csv (keeping top 100) and overflow into scripts/overflow-news-batch.json
   if (inserted.length > 0) {
     const csvPath = path.resolve(__dirname, '..', 'batch-ranked-news.csv');

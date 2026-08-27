@@ -1,0 +1,857 @@
+name,email,role,city,wall_slug,population
+Richard Lee,,Councillor,Burnaby,richard-lee-councillor,249125
+Chak Au,,Councillor,Richmond,chak-au-councillor,209937
+Gord Lovegrove,,Councillor,Kelowna,gord-lovegrove-councillor,144576
+Colin Plant,,Councillor,Saanich,colin-plant-councillor,117735
+Judy Brownoff,,Councillor,Saanich,judy-brownoff-councillor,117735
+Karen Harper,,Councillor,Saanich,karen-harper-councillor,117735
+Mena Westhaver,,Councillor,Saanich,mena-westhaver-councillor,117735
+Nathalie Chambers,,Councillor,Saanich,nathalie-chambers-councillor,117735
+Susan Brice,,Councillor,Saanich,susan-brice-councillor,117735
+Teale Phelps Bondaroff,,Councillor,Saanich,teale-phelps-bondaroff-councillor,117735
+Zac de Vries,,Councillor,Saanich,zac-de-vries-councillor,117735
+Alicia Guichon,,Councillor,Delta,alicia-guichon-councillor,108455
+Daniel Boisvert,,Councillor,Delta,daniel-boisvert-councillor,108455
+Dylan Kruger,,Councillor,Delta,dylan-kruger-councillor,108455
+Jennifer Johal,,Councillor,Delta,jennifer-johal-councillor,108455
+Jessie Dosanjh,,Councillor,Delta,jessie-dosanjh-councillor,108455
+Rod Binder,,Councillor,Delta,rod-binder-councillor,108455
+Ben Geselbracht,,Councillor,Nanaimo,ben-geselbracht-councillor,99863
+Erin Hemmens,,Councillor,Nanaimo,erin-hemmens-councillor,99863
+Hilary Eastmure,,Councillor,Nanaimo,hilary-eastmure-councillor,99863
+Ian Thorpe,,Councillor,Nanaimo,ian-thorpe-councillor,99863
+Janice Perrino,,Councillor,Nanaimo,janice-perrino-councillor,99863
+Paul Manly,,Councillor,Nanaimo,paul-manly-councillor,99863
+Sheryl Armstrong,,Councillor,Nanaimo,sheryl-armstrong-councillor,99863
+Tyler Brown,,Councillor,Nanaimo,tyler-brown-councillor,99863
+Bill Sarai,,Councillor,Kamloops,bill-sarai-councillor,97902
+Dale Bass,,Councillor,Kamloops,dale-bass-councillor,97902
+Katie Neustaeter,,Councillor,Kamloops,katie-neustaeter-councillor,97902
+Kelly Hall,,Councillor,Kamloops,kelly-hall-councillor,97902
+Margot Middleton,,Councillor,Kamloops,margot-middleton-councillor,97902
+Mike O'Reilly,,Councillor,Kamloops,mike-o-reilly-councillor,97902
+Nancy Bepple,,Councillor,Kamloops,nancy-bepple-councillor,97902
+Stephen Karpuk,,Councillor,Kamloops,stephen-karpuk-councillor,97902
+Bud Mercer,,Councillor,Chilliwack,bud-mercer-councillor,93203
+Chris Kloot,,Councillor,Chilliwack,chris-kloot-councillor,93203
+Harv Westeringh,,Councillor,Chilliwack,harv-westeringh-councillor,93203
+Jason Lum,,Councillor,Chilliwack,jason-lum-councillor,93203
+Jeff Shields,,Councillor,Chilliwack,jeff-shields-councillor,93203
+Nicole Huitema Read,,Councillor,Chilliwack,nicole-huitema-read-councillor,93203
+Christopher Mark Coleman,,Councillor,Victoria,christopher-mark-coleman-councillor,91867
+Ahmed Yousef,,Councillor,Maple Ridge,ahmed-yousef-councillor,90990
+Jenny Tan,,Councillor,Maple Ridge,jenny-tan-councillor,90990
+Judy Dueck,,Councillor,Maple Ridge,judy-dueck-councillor,90990
+Korleen Carreras,,Councillor,Maple Ridge,korleen-carreras-councillor,90990
+Onyeka Dozie,,Councillor,Maple Ridge,onyeka-dozie-councillor,90990
+Sunny Schiller,,Councillor,Maple Ridge,sunny-schiller-councillor,90990
+Daniel FONTAINE,,Councillor,New Westminster,daniel-fontaine-councillor,78916
+Jaimie MCEVOY,,Councillor,New Westminster,jaimie-mcevoy-councillor,78916
+Nadine NAKAGAWA,,Councillor,New Westminster,nadine-nakagawa-councillor,78916
+Paul MINHAS,,Councillor,New Westminster,paul-minhas-councillor,78916
+Ruby CAMPBELL,,Councillor,New Westminster,ruby-campbell-councillor,78916
+Tasha HENDERSON,,Councillor,New Westminster,tasha-henderson-councillor,78916
+Brian Skakun,,Councillor,Prince George,brian-skakun-councillor,76708
+Cori Ramsay,,Councillor,Prince George,cori-ramsay-councillor,76708
+Garth Frizzell,,Councillor,Prince George,garth-frizzell-councillor,76708
+Kyle Sampson,,Councillor,Prince George,kyle-sampson-councillor,76708
+Ron Polillo,,Councillor,Prince George,ron-polillo-councillor,76708
+Susan Scott,,Councillor,Prince George,susan-scott-councillor,76708
+Tim Bennett,,Councillor,Prince George,tim-bennett-councillor,76708
+Trudy Klassen,,Councillor,Prince George,trudy-klassen-councillor,76708
+Darrell Penner,,Councillor,Port Coquitlam,darrell-penner-councillor,61498
+Dean Washington,,Councillor,Port Coquitlam,dean-washington-councillor,61498
+Glenn Pollock,,Councillor,Port Coquitlam,glenn-pollock-councillor,61498
+Nancy McCurrach,,Councillor,Port Coquitlam,nancy-mccurrach-councillor,61498
+Paige Petriw,,Councillor,Port Coquitlam,paige-petriw-councillor,61498
+Steve Darling,,Councillor,Port Coquitlam,steve-darling-councillor,61498
+Angela GIRARD,,Councillor,North Vancouver (City),angela-girard-councillor,58120
+Betty Forbes,,Councillor,North Vancouver (City),betty-forbes-councillor,58120
+Catherine Pope,,Councillor,North Vancouver (City),catherine-pope-councillor,58120
+Don BELL,,Councillor,North Vancouver (City),don-bell-councillor,58120
+Herman Mah,,Councillor,North Vancouver (City),herman-mah-councillor,58120
+Holly BACK,,Councillor,North Vancouver (City),holly-back-councillor,58120
+Jessica McILROY,,Councillor,North Vancouver (City),jessica-mcilroy-councillor,58120
+Jim Hanson,,Councillor,North Vancouver (City),jim-hanson-councillor,58120
+Jordan Back,,Councillor,North Vancouver (City),jordan-back-councillor,58120
+Lisa Muri,,Councillor,North Vancouver (City),lisa-muri-councillor,58120
+Shervin SHAHRIARI,,Councillor,North Vancouver (City),shervin-shahriari-councillor,58120
+Tony VALENTE,,Councillor,North Vancouver (City),tony-valente-councillor,58120
+Colby Harder,,Councillor,Langford,colby-harder-councillor,46584
+Keith Yacucha,,Councillor,Langford,keith-yacucha-councillor,46584
+Kimberley Guiry,,Councillor,Langford,kimberley-guiry-councillor,46584
+Lillian Szpak,,Councillor,Langford,lillian-szpak-councillor,46584
+Mark Morley,,Councillor,Langford,mark-morley-councillor,46584
+Mary Wagner,,Councillor,Langford,mary-wagner-councillor,46584
+Akbal Mund,,Councillor,Vernon,akbal-mund-councillor,44519
+Brian Guy,,Councillor,Vernon,brian-guy-councillor,44519
+Brian Quiring,,Councillor,Vernon,brian-quiring-councillor,44519
+Kari Gares,,Councillor,Vernon,kari-gares-councillor,44519
+Kelly Fehr,,Councillor,Vernon,kelly-fehr-councillor,44519
+Teresa Durning,,Councillor,Vernon,teresa-durning-councillor,44519
+Christine Cassidy,,Councillor,West Vancouver,christine-cassidy-councillor,44122
+Gambioli Nora,,Councillor,West Vancouver,gambioli-nora-councillor,44122
+Linda Watt,,Councillor,West Vancouver,linda-watt-councillor,44122
+Peter Lambur,,Councillor,West Vancouver,peter-lambur-councillor,44122
+Scott Snider,,Councillor,West Vancouver,scott-snider-councillor,44122
+Sharon Thompson,,Councillor,West Vancouver,sharon-thompson-councillor,44122
+Angel Elias,,Councillor,Mission,angel-elias-councillor,41519
+Carol Hamilton,,Councillor,Mission,carol-hamilton-councillor,41519
+Danny Plecas,,Councillor,Mission,danny-plecas-councillor,41519
+Jag Gill,,Councillor,Mission,jag-gill-councillor,41519
+Ken Herar,,Councillor,Mission,ken-herar-councillor,41519
+Mark Davies,,Councillor,Mission,mark-davies-councillor,41519
+Amelia Boultbee,,Councillor,Penticton,amelia-boultbee-councillor,36885
+Campbell Watt,,Councillor,Penticton,campbell-watt-councillor,36885
+Helena Konanz,,Councillor,Penticton,helena-konanz-councillor,36885
+Isaac Gilbert,,Councillor,Penticton,isaac-gilbert-councillor,36885
+James Miller,,Councillor,Penticton,james-miller-councillor,36885
+Julius Bloomfield,,Councillor,Penticton,julius-bloomfield-councillor,36885
+Ryan Graham,,Councillor,Penticton,ryan-graham-councillor,36885
+Carol Zanon,,Councillor,West Kelowna,carol-zanon-councillor,36078
+Garrett Millsap,,Councillor,West Kelowna,garrett-millsap-councillor,36078
+Jason Friesen,,Councillor,West Kelowna,jason-friesen-councillor,36078
+Rick de Jong,,Councillor,West Kelowna,rick-de-jong-councillor,36078
+Stephen Johnston,,Councillor,West Kelowna,stephen-johnston-councillor,36078
+Tasha Da Silva,,Councillor,West Kelowna,tasha-da-silva-councillor,36078
+Ben Lanyon,,Councillor,Campbell River,ben-lanyon-councillor,35519
+Doug Chapman,,Councillor,Campbell River,doug-chapman-councillor,35519
+Ron Kerr,,Councillor,Campbell River,ron-kerr-councillor,35519
+Sean Smyth,,Councillor,Campbell River,sean-smyth-councillor,35519
+Susan Sinnott,,Councillor,Campbell River,susan-sinnott-councillor,35519
+Tanille Johnston,,Councillor,Campbell River,tanille-johnston-councillor,35519
+Amy Lubik,,Councillor,Port Moody,amy-lubik-councillor,33535
+Callan Morrison,,Councillor,Port Moody,callan-morrison-councillor,33535
+Diana Dilworth,,Councillor,Port Moody,diana-dilworth-councillor,33535
+Haven Lurbiecki,,Councillor,Port Moody,haven-lurbiecki-councillor,33535
+Kyla Knowles,,Councillor,Port Moody,kyla-knowles-councillor,33535
+Meghan Lahti,,Councillor,Port Moody,meghan-lahti-councillor,33535
+Samantha Agtarap,,Councillor,Port Moody,samantha-agtarap-councillor,33535
+Bruce Findlay,,Councillor,North Cowichan,bruce-findlay-councillor,31990
+Chris Istace,,Councillor,North Cowichan,chris-istace-councillor,31990
+Christopher Justice,,Councillor,North Cowichan,christopher-justice-councillor,31990
+Debra Toporowski,,Councillor,North Cowichan,debra-toporowski-councillor,31990
+Mike Caljouw,,Councillor,North Cowichan,mike-caljouw-councillor,31990
+Rob Douglas,,Councillor,North Cowichan,rob-douglas-councillor,31990
+Tek Manhas,,Councillor,North Cowichan,tek-manhas-councillor,31990
+Barb Martens,,Councillor,Langley (City),barb-martens-councillor,28963
+Delaney Mack,,Councillor,Langley (City),delaney-mack-councillor,28963
+Kim Richter,,Councillor,Langley (City),kim-richter-councillor,28963
+Leith White,,Councillor,Langley (City),leith-white-councillor,28963
+Margaret Kunst,,Councillor,Langley (City),margaret-kunst-councillor,28963
+Michael Pratt,,Councillor,Langley (City),michael-pratt-councillor,28963
+Mike Solyom,,Councillor,Langley (City),mike-solyom-councillor,28963
+Misty Van Popta,,Councillor,Langley (City),misty-van-popta-councillor,28963
+Paul Albrecht,,Councillor,Langley (City),paul-albrecht-councillor,28963
+Robert Rindt,,Councillor,Langley (City),robert-rindt-councillor,28963
+Rosemary Wallace,,Councillor,Langley (City),rosemary-wallace-councillor,28963
+Steve Ferguson,,Councillor,Langley (City),steve-ferguson-councillor,28963
+Teri James,,Councillor,Langley (City),teri-james-councillor,28963
+Tim Baillie,,Councillor,Langley (City),tim-baillie-councillor,28963
+David Frisch,,Councillor,Courtenay,david-frisch-councillor,28420
+Doug Hillian,,Councillor,Courtenay,doug-hillian-councillor,28420
+Evan Jolicoeur,,Councillor,Courtenay,evan-jolicoeur-councillor,28420
+Melanie McCollum,,Councillor,Courtenay,melanie-mccollum-councillor,28420
+Wendy Morin,,Councillor,Courtenay,wendy-morin-councillor,28420
+Will Cole-Hamilton,,Councillor,Courtenay,will-cole-hamilton-councillor,28420
+Andrew Hamilton,,Councillor,Squamish,andrew-hamilton-councillor,23819
+Armand Hurford,,Councillor,Squamish,armand-hurford-councillor,23819
+Chris Pettingill,,Councillor,Squamish,chris-pettingill-councillor,23819
+Eric Andersen,,Councillor,Squamish,eric-andersen-councillor,23819
+Jenna Stoner,,Councillor,Squamish,jenna-stoner-councillor,23819
+John French,,Councillor,Squamish,john-french-councillor,23819
+Lauren Greenlaw,,Councillor,Squamish,lauren-greenlaw-councillor,23819
+Bill Lawrence,,Councillor,White Rock,bill-lawrence-councillor,21939
+Christopher Trevelyan,,Councillor,White Rock,christopher-trevelyan-councillor,21939
+David Chesney,,Councillor,White Rock,david-chesney-councillor,21939
+Elaine Cheung,,Councillor,White Rock,elaine-cheung-councillor,21939
+Ernie Klassen,,Councillor,White Rock,ernie-klassen-councillor,21939
+Michele Partridge,,Councillor,White Rock,michele-partridge-councillor,21939
+BYRON STEWART,,Councillor,Fort St. John,byron-stewart-councillor,21465
+GORD KLASSEN,,Councillor,Fort St. John,gord-klassen-councillor,21465
+JIM LEQUIERE,,Councillor,Fort St. John,jim-lequiere-councillor,21465
+SARAH MACDOUGALL,,Councillor,Fort St. John,sarah-macdougall-councillor,21465
+TONY ZABINSKY,,Councillor,Fort St. John,tony-zabinsky-councillor,21465
+TREVOR BOLIN,,Councillor,Fort St. John,trevor-bolin-councillor,21465
+Lynnette Wray,,Councillor,Cranbrook,lynnette-wray-councillor,20499
+Mike Peabody,,Councillor,Cranbrook,mike-peabody-councillor,20499
+Norma Blissett,,Councillor,Cranbrook,norma-blissett-councillor,20499
+Ron Popoff,,Councillor,Cranbrook,ron-popoff-councillor,20499
+Wayne Price,,Councillor,Cranbrook,wayne-price-councillor,20499
+Wayne Stetski,,Councillor,Cranbrook,wayne-stetski-councillor,20499
+Wesly Graham,,Councillor,Cranbrook,wesly-graham-councillor,20499
+David Gonella,,Councillor,Salmon Arm,david-gonella-councillor,19432
+Debbie Cannon,,Councillor,Salmon Arm,debbie-cannon-councillor,19432
+Kevin Flynn,,Councillor,Salmon Arm,kevin-flynn-councillor,19432
+Louise Wallace Richmond,,Councillor,Salmon Arm,louise-wallace-richmond-councillor,19432
+Sylvia Lindgren,,Councillor,Salmon Arm,sylvia-lindgren-councillor,19432
+Tim Lavery,,Councillor,Salmon Arm,tim-lavery-councillor,19432
+Alison Evans,,Councillor,Pitt Meadows,alison-evans-councillor,19146
+Bob Meachen,,Councillor,Pitt Meadows,bob-meachen-councillor,19146
+Gwen O'Connell,,Councillor,Pitt Meadows,gwen-o-connell-councillor,19146
+Mike Hayes,,Councillor,Pitt Meadows,mike-hayes-councillor,19146
+Mike Manion,,Councillor,Pitt Meadows,mike-manion-councillor,19146
+Nicole MacDonald,,Councillor,Pitt Meadows,nicole-macdonald-councillor,19146
+Tracy Elke,,Councillor,Pitt Meadows,tracy-elke-councillor,19146
+Cynthia Day,,Councillor,Colwood,cynthia-day-councillor,18961
+David Grove,,Councillor,Colwood,david-grove-councillor,18961
+Dean Jantzen,,Councillor,Colwood,dean-jantzen-councillor,18961
+Doug Kobayashi,,Councillor,Colwood,doug-kobayashi-councillor,18961
+Ian Ward,,Councillor,Colwood,ian-ward-councillor,18961
+Kim Jordison,,Councillor,Colwood,kim-jordison-councillor,18961
+Misty Olsen,,Councillor,Colwood,misty-olsen-councillor,18961
+Charles MEALEY,,Councillor,Port Alberni,charles-mealey-councillor,18259
+Cindy SOLDA,,Councillor,Port Alberni,cindy-solda-councillor,18259
+Debbie HAGGARD,,Councillor,Port Alberni,debbie-haggard-councillor,18259
+Dustin DAME,,Councillor,Port Alberni,dustin-dame-councillor,18259
+John DOUGLAS,,Councillor,Port Alberni,john-douglas-councillor,18259
+Todd PATOLA,,Councillor,Port Alberni,todd-patola-councillor,18259
+Andrew Appleton,,Councillor,Oak Bay,andrew-appleton-councillor,17990
+Cairine Green,,Councillor,Oak Bay,cairine-green-councillor,17990
+Carrie Smart,,Councillor,Oak Bay,carrie-smart-councillor,17990
+Esther Paterson,,Councillor,Oak Bay,esther-paterson-councillor,17990
+Hazel Braithwaite,,Councillor,Oak Bay,hazel-braithwaite-councillor,17990
+Lesley Watson,,Councillor,Oak Bay,lesley-watson-councillor,17990
+Jacob Helliwell,,Councillor,Esquimalt (Township),jacob-helliwell-councillor,17533
+Jane Vermeulen,,Councillor,Esquimalt (Township),jane-vermeulen-councillor,17533
+Ken Armour,,Councillor,Esquimalt (Township),ken-armour-councillor,17533
+Lynda Hundleby,,Councillor,Esquimalt (Township),lynda-hundleby-councillor,17533
+Meagan Brame,,Councillor,Esquimalt (Township),meagan-brame-councillor,17533
+Tim Morrison,,Councillor,Esquimalt (Township),tim-morrison-councillor,17533
+Bob Thompson,,Councillor,Central Saanich,bob-thompson-councillor,17385
+Christopher Graham,,Councillor,Central Saanich,christopher-graham-councillor,17385
+Gord Newton,,Councillor,Central Saanich,gord-newton-councillor,17385
+Niall Paltiel,,Councillor,Central Saanich,niall-paltiel-councillor,17385
+Sarah Riddell,,Councillor,Central Saanich,sarah-riddell-councillor,17385
+Zeb King,,Councillor,Central Saanich,zeb-king-councillor,17385
+Bib PATEL,,Councillor,Lake Country,bib-patel-councillor,15817
+Cara REED,,Councillor,Lake Country,cara-reed-councillor,15817
+Heather IRVINE,,Councillor,Lake Country,heather-irvine-councillor,15817
+Michael LEWIS,,Councillor,Lake Country,michael-lewis-councillor,15817
+Todd MCKENZIE,,Councillor,Lake Country,todd-mckenzie-councillor,15817
+Tricia BRETT,,Councillor,Lake Country,tricia-brett-councillor,15817
+Al Beddows,,Councillor,Sooke,al-beddows-councillor,15086
+Dana Lajeunesse,,Councillor,Sooke,dana-lajeunesse-councillor,15086
+Jeff Bateman,,Councillor,Sooke,jeff-bateman-councillor,15086
+Kevin Pearson,,Councillor,Sooke,kevin-pearson-councillor,15086
+Megan McMath,,Councillor,Sooke,megan-mcmath-councillor,15086
+Tony St-Pierre,,Councillor,Sooke,tony-st-pierre-councillor,15086
+Chris Haslett,,Councillor,Comox,chris-haslett-councillor,14806
+Jenn Meilleur,,Councillor,Comox,jenn-meilleur-councillor,14806
+Jonathan Kerr,,Councillor,Comox,jonathan-kerr-councillor,14806
+Ken Grant,,Councillor,Comox,ken-grant-councillor,14806
+Maureen Swift,,Councillor,Comox,maureen-swift-councillor,14806
+Steve Blacklock,,Councillor,Comox,steve-blacklock-councillor,14806
+Arthur De Jong,,Councillor,Whistler,arthur-de-jong-councillor,13982
+Cathy Jewett,,Councillor,Whistler,cathy-jewett-councillor,13982
+Jeff Murl,,Councillor,Whistler,jeff-murl-councillor,13982
+Jen Ford,,Councillor,Whistler,jen-ford-councillor,13982
+Jessie Morden,,Councillor,Whistler,jessie-morden-councillor,13982
+Ralph Forsyth,,Councillor,Whistler,ralph-forsyth-councillor,13982
+Cindy Elliott,,Councillor,Powell River,cindy-elliott-councillor,13943
+Earl Almeida,,Councillor,Powell River,earl-almeida-councillor,13943
+George Doubt,,Councillor,Powell River,george-doubt-councillor,13943
+Jim Palm,,Councillor,Powell River,jim-palm-councillor,13943
+Rob Southcott,,Councillor,Powell River,rob-southcott-councillor,13943
+Trina Isakson,,Councillor,Powell River,trina-isakson-councillor,13943
+Adam Fras,,Councillor,Parksville,adam-fras-councillor,13642
+Amit Gaur,,Councillor,Parksville,amit-gaur-councillor,13642
+Doug O'Brien,,Councillor,Parksville,doug-o-brien-councillor,13642
+Joel Grenz,,Councillor,Parksville,joel-grenz-councillor,13642
+Mary Beil,,Councillor,Parksville,mary-beil-councillor,13642
+Sean Wood,,Councillor,Parksville,sean-wood-councillor,13642
+Sylvia Martin,,Councillor,Parksville,sylvia-martin-councillor,13642
+Amy Kaempf,,Councillor,Dawson Creek,amy-kaempf-councillor,12323
+Charlie Parslow,,Councillor,Dawson Creek,charlie-parslow-councillor,12323
+Darcy Dober,,Councillor,Dawson Creek,darcy-dober-councillor,12323
+Gregg Apolonio,,Councillor,Dawson Creek,gregg-apolonio-councillor,12323
+Jerimy Earl,,Councillor,Dawson Creek,jerimy-earl-councillor,12323
+Kyle MacDonald,,Councillor,Dawson Creek,kyle-macdonald-councillor,12323
+Michael Sudnik,,Councillor,Dawson Creek,michael-sudnik-councillor,12323
+Chad Rintoul,,Councillor,Sidney,chad-rintoul-councillor,12318
+Richard Novek,,Councillor,Sidney,richard-novek-councillor,12318
+Sara Duncan,,Councillor,Sidney,sara-duncan-councillor,12318
+Scott Garnett,,Councillor,Sidney,scott-garnett-councillor,12318
+Steve Duck,,Councillor,Sidney,steve-duck-councillor,12318
+Terri O'Keeffe,,Councillor,Sidney,terri-o-keeffe-councillor,12318
+Barry Cunningham,,Councillor,Prince Rupert,barry-cunningham-councillor,12300
+Gurvinder Randhawa,,Councillor,Prince Rupert,gurvinder-randhawa-councillor,12300
+Nick Adey,,Councillor,Prince Rupert,nick-adey-councillor,12300
+Reid Skelton-Morven,,Councillor,Prince Rupert,reid-skelton-morven-councillor,12300
+Teri Forster,,Councillor,Prince Rupert,teri-forster-councillor,12300
+Wade Niesh,,Councillor,Prince Rupert,wade-niesh-councillor,12300
+Brett Smyth,,Councillor,North Saanich,brett-smyth-councillor,12235
+Celia Stock,,Councillor,North Saanich,celia-stock-councillor,12235
+Irene Mcconkey,,Councillor,North Saanich,irene-mcconkey-councillor,12235
+Jack McClintock,,Councillor,North Saanich,jack-mcclintock-councillor,12235
+Phil DiBattista,,Councillor,North Saanich,phil-dibattista-councillor,12235
+Sanjiv,,Councillor,North Saanich,sanjiv-councillor,12235
+Adrienne Betts,,Councillor,Summerland,adrienne-betts-councillor,12042
+Doug Patan,,Councillor,Summerland,doug-patan-councillor,12042
+Erin Trainer,,Councillor,Summerland,erin-trainer-councillor,12042
+Janet Peake,,Councillor,Summerland,janet-peake-councillor,12042
+Martin  Van Alphen,,Councillor,Summerland,martin-van-alphen-councillor,12042
+Richard Barkwill,,Councillor,Summerland,richard-barkwill-councillor,12042
+Brian Downie,,Councillor,Terrace,brian-downie-councillor,12017
+Chris Apps,,Councillor,Terrace,chris-apps-councillor,12017
+Dave Gordon,,Councillor,Terrace,dave-gordon-councillor,12017
+Inder Dhillon,,Councillor,Terrace,inder-dhillon-councillor,12017
+James Cordeiro,,Councillor,Terrace,james-cordeiro-councillor,12017
+Sarah Zimmerman,,Councillor,Terrace,sarah-zimmerman-councillor,12017
+Sean Bujtas,,Councillor,Terrace,sean-bujtas-councillor,12017
+Alison MacKenzie,,Councillor,View Royal,alison-mackenzie-councillor,11575
+Damian Kowalewich,,Councillor,View Royal,damian-kowalewich-councillor,11575
+Don Brown,,Councillor,View Royal,don-brown-councillor,11575
+Gery Lemon,,Councillor,View Royal,gery-lemon-councillor,11575
+John Rogers,,Councillor,View Royal,john-rogers-councillor,11575
+Ron Mattson,,Councillor,View Royal,ron-mattson-councillor,11575
+Doug Dirk,,Councillor,Coldstream,doug-dirk-councillor,11171
+Jeremy Levy,,Councillor,Coldstream,jeremy-levy-councillor,11171
+Jim Garlick,,Councillor,Coldstream,jim-garlick-mayor,11171
+Pat Cochrane,,Councillor,Coldstream,pat-cochrane-councillor,11171
+Ruth Hoyte,,Councillor,Coldstream,ruth-hoyte-councillor,11171
+Simone Runyan,,Councillor,Coldstream,simone-runyan-councillor,11171
+Stephanie Hoffman,,Councillor,Coldstream,stephanie-hoffman-councillor,11171
+Janice Morrison,,Councillor,Nelson,janice-morrison-councillor,11106
+Jesse Pineiro,,Councillor,Nelson,jesse-pineiro-councillor,11106
+Jesse Woodward,,Councillor,Nelson,jesse-woodward-councillor,11106
+Kate Tait,,Councillor,Nelson,kate-tait-councillor,11106
+Keith Page,,Councillor,Nelson,keith-page-councillor,11106
+Leslie Payne,,Councillor,Nelson,leslie-payne-councillor,11106
+Rik Logtenberg,,Councillor,Nelson,rik-logtenberg-councillor,11106
+Angie Delainey,,Councillor,Williams Lake,angie-delainey-councillor,10947
+Jazmyn Lyons,,Councillor,Williams Lake,jazmyn-lyons-councillor,10947
+Joan Flaspohler,,Councillor,Williams Lake,joan-flaspohler-councillor,10947
+Michael Moses,,Councillor,Williams Lake,michael-moses-councillor,10947
+Scott Nelson,,Councillor,Williams Lake,scott-nelson-councillor,10947
+Sheila Boehm,,Councillor,Williams Lake,sheila-boehm-councillor,10947
+Adam Shepherd,,Councillor,Sechelt,adam-shepherd-councillor,10847
+Alton Toth,,Councillor,Sechelt,alton-toth-councillor,10847
+Brenda Rowe,,Councillor,Sechelt,brenda-rowe-councillor,10847
+Darren Inkster,,Councillor,Sechelt,darren-inkster-councillor,10847
+Dianne McLauchlan,,Councillor,Sechelt,dianne-mclauchlan-councillor,10847
+Donna Bell,,Councillor,Sechelt,donna-bell-councillor,10847
+Debra McKelvie,,Councillor,Quesnel,debra-mckelvie-councillor,9889
+Laurey-Anne Roodenburg,,Councillor,Quesnel,laurey-anne-roodenburg-councillor,9889
+Martin Runge,,Councillor,Quesnel,martin-runge-councillor,9889
+Mitch Vik,,Councillor,Quesnel,mitch-vik-councillor,9889
+Ron Paull,,Councillor,Quesnel,ron-paull-councillor,9889
+Scott Elliott,,Councillor,Quesnel,scott-elliott-councillor,9889
+Tony Goulet,,Councillor,Quesnel,tony-goulet-councillor,9889
+Anne Skipsey,,Councillor,Qualicum Beach,anne-skipsey-councillor,9303
+Jean Young,,Councillor,Qualicum Beach,jean-young-councillor,9303
+Petronella Vander Valk,,Councillor,Qualicum Beach,petronella-vander-valk-councillor,9303
+Scott Harrison,,Councillor,Qualicum Beach,scott-harrison-councillor,9303
+Teunis Westbroek,,Councillor,Qualicum Beach,teunis-westbroek-councillor,9303
+Amanda Jacobson,,Councillor,Ladysmith,amanda-jacobson-councillor,8990
+Duck Paterson,,Councillor,Ladysmith,duck-paterson-councillor,8990
+Jeff Virtanen,,Councillor,Ladysmith,jeff-virtanen-councillor,8990
+Marsh Stevens,,Councillor,Ladysmith,marsh-stevens-councillor,8990
+Ray Gourlay,,Councillor,Ladysmith,ray-gourlay-councillor,8990
+Tricia McKay,,Councillor,Ladysmith,tricia-mckay-councillor,8990
+Brian Bogle,,Councillor,Castlegar,brian-bogle-councillor,8338
+Cherryl MacLeod,,Councillor,Castlegar,cherryl-macleod-councillor,8338
+Darcy Bell,,Councillor,Castlegar,darcy-bell-councillor,8338
+Maria McFaddin,,Councillor,Castlegar,maria-mcfaddin-councillor,8338
+Sandy Bojechko,,Councillor,Castlegar,sandy-bojechko-councillor,8338
+Shirley Falstead,,Councillor,Castlegar,shirley-falstead-councillor,8338
+Sue Heaton-Sherstobitoff,,Councillor,Castlegar,sue-heaton-sherstobitoff-councillor,8338
+Aaron Orlando,,Councillor,Revelstoke,aaron-orlando-councillor,8275
+Austin Luciow,,Councillor,Revelstoke,austin-luciow-councillor,8275
+Gary Sulz,,Councillor,Revelstoke,gary-sulz-councillor,8275
+Lee Devlin,,Councillor,Revelstoke,lee-devlin-councillor,8275
+Matt Cherry,,Councillor,Revelstoke,matt-cherry-councillor,8275
+Tim Palmer,,Councillor,Revelstoke,tim-palmer-councillor,8275
+Tim Stapenhurst,,Councillor,Revelstoke,tim-stapenhurst-councillor,8275
+Edwin Empinado,,Councillor,Kitimat,edwin-empinado-councillor,8236
+Gerry Leibel,,Councillor,Kitimat,gerry-leibel-councillor,8236
+Graham Pitzel,,Councillor,Kitimat,graham-pitzel-councillor,8236
+Mario Feldhoff,,Councillor,Kitimat,mario-feldhoff-councillor,8236
+Michelle Martins,,Councillor,Kitimat,michelle-martins-councillor,8236
+Terry Marleau,,Councillor,Kitimat,terry-marleau-councillor,8236
+Jason McBain,,Councillor,Kimberley,jason-mcbain-councillor,8115
+Kevin Dunnebacke,,Councillor,Kimberley,kevin-dunnebacke-councillor,8115
+Sandra Roberts,,Councillor,Kimberley,sandra-roberts-councillor,8115
+Steven Royer,,Councillor,Kimberley,steven-royer-councillor,8115
+Sue Cairns,,Councillor,Kimberley,sue-cairns-councillor,8115
+Woody Maguire,,Councillor,Kimberley,woody-maguire-councillor,8115
+Bev Benson,,Councillor,Trail,bev-benson-councillor,7920
+Colleen Jones,,Councillor,Trail,colleen-jones-councillor,7920
+Doug Wilson,,Councillor,Trail,doug-wilson-councillor,7920
+Nick Cashol,,Councillor,Trail,nick-cashol-councillor,7920
+Paul Butler,,Councillor,Trail,paul-butler-councillor,7920
+Terry Martin,,Councillor,Trail,terry-martin-councillor,7920
+Thea Hanson,,Councillor,Trail,thea-hanson-councillor,7920
+Adam Etchart,,Councillor,Merritt,adam-etchart-councillor,7051
+Claire Newman,,Councillor,Merritt,claire-newman-councillor,7051
+Dana Egan,,Councillor,Merritt,dana-egan-councillor,7051
+Manuel Olguin,,Councillor,Merritt,manuel-olguin-councillor,7051
+Paul Petroczi,,Councillor,Merritt,paul-petroczi-councillor,7051
+Wendy Charney,,Councillor,Merritt,wendy-charney-councillor,7051
+Angela Skoglund,,Councillor,Hope,angela-skoglund-councillor,6686
+Crystal Sedore,,Councillor,Hope,crystal-sedore-councillor,6686
+Heather Stewin,,Councillor,Hope,heather-stewin-councillor,6686
+Pauline Newbigging,,Councillor,Hope,pauline-newbigging-councillor,6686
+Scott Medlock,,Councillor,Hope,scott-medlock-councillor,6686
+Zachary Wells,,Councillor,Hope,zachary-wells-councillor,6686
+Harsh Ramadass,,Councillor,Fernie,harsh-ramadass-councillor,6320
+Kevin McIsaac,,Councillor,Fernie,kevin-mcisaac-councillor,6320
+Kyle Hamilton,,Councillor,Fernie,kyle-hamilton-councillor,6320
+Ted Shoesmith,,Councillor,Fernie,ted-shoesmith-councillor,6320
+Tracey Audia Kelly,,Councillor,Fernie,tracey-audia-kelly-councillor,6320
+Troy Nixon,,Councillor,Fernie,troy-nixon-councillor,6320
+Duane Post,,Councillor,Kent,duane-post-councillor,6300
+Kerstin Schwichtenberg,,Councillor,Kent,kerstin-schwichtenberg-councillor,6300
+Stan Watchorn,,Councillor,Kent,stan-watchorn-councillor,6300
+Susan Spaeti,,Councillor,Kent,susan-spaeti-councillor,6300
+Alena Glasman,,Councillor,Peachland,alena-glasman-councillor,5789
+David Collins,,Councillor,Peachland,david-collins-councillor,5789
+Keith Thom,,Councillor,Peachland,keith-thom-councillor,5789
+Patrick Van Minsel,,Councillor,Peachland,patrick-van-minsel-councillor,5789
+Randey Brophy,,Councillor,Peachland,randey-brophy-councillor,5789
+Rick Ingram,,Councillor,Peachland,rick-ingram-councillor,5789
+Terry Condon,,Councillor,Peachland,terry-condon-councillor,5789
+Anthony Mondia,,Councillor,Creston,anthony-mondia-councillor,5583
+Arnold DeBoon,,Councillor,Creston,arnold-deboon-councillor,5583
+Denise Dumas,,Councillor,Creston,denise-dumas-councillor,5583
+Jim Elford,,Councillor,Creston,jim-elford-councillor,5583
+Keith Baldwin,,Councillor,Creston,keith-baldwin-councillor,5583
+Monique Arès,,Councillor,Creston,monique-ar-s-councillor,5583
+Norm Eisler,,Councillor,Creston,norm-eisler-councillor,5583
+Claude Moreira,,Councillor,Osoyoos,claude-moreira-councillor,5556
+Jim King,,Councillor,Osoyoos,jim-king-councillor,5556
+Johnny Cheong,,Councillor,Osoyoos,johnny-cheong-councillor,5556
+Myers Bennett,,Councillor,Osoyoos,myers-bennett-councillor,5556
+Robert Appleby,,Councillor,Osoyoos,robert-appleby-councillor,5556
+Zachary Poturica,,Councillor,Osoyoos,zachary-poturica-councillor,5556
+Calvin Elliott,,Councillor,Smithers,calvin-elliott-councillor,5378
+Frank Wray,,Councillor,Smithers,frank-wray-councillor,5378
+Genevieve Paterson,,Councillor,Smithers,genevieve-paterson-councillor,5378
+John Buikema,,Councillor,Smithers,john-buikema-councillor,5378
+Laura Leonard,,Councillor,Smithers,laura-leonard-councillor,5378
+Sam Raven,,Councillor,Smithers,sam-raven-councillor,5378
+Jessie VALSTAR,,Councillor,Armstrong,jessie-valstar-councillor,5323
+Mark WEHNER,,Councillor,Armstrong,mark-wehner-councillor,5323
+Neil TODD,,Councillor,Armstrong,neil-todd-councillor,5323
+Ryan NITCHIE,,Councillor,Armstrong,ryan-nitchie-councillor,5323
+Shirley FOWLER,,Councillor,Armstrong,shirley-fowler-councillor,5323
+Steven DRAPALA,,Councillor,Armstrong,steven-drapala-councillor,5323
+Andrew Casson,,Councillor,Spallumcheen,andrew-casson-councillor,5307
+Christine LeMaire,,Councillor,Spallumcheen,christine-lemaire-councillor,5307
+Gerry Popoff,,Councillor,Spallumcheen,gerry-popoff-councillor,5307
+Joe Van Tienhoven,,Councillor,Spallumcheen,joe-van-tienhoven-councillor,5307
+John Bakker,,Councillor,Spallumcheen,john-bakker-councillor,5307
+Todd York,,Councillor,Spallumcheen,todd-york-councillor,5307
+Aimee Grice,,Councillor,Oliver,aimee-grice-councillor,5094
+Bhupinder Dhaliwal,,Councillor,Oliver,bhupinder-dhaliwal-councillor,5094
+David Mattes,,Councillor,Oliver,david-mattes-councillor,5094
+Petra Veintimilla,,Councillor,Oliver,petra-veintimilla-councillor,5094
+Rick Machial,,Councillor,Oliver,rick-machial-councillor,5094
+Terry Schafer,,Councillor,Oliver,terry-schafer-councillor,5094
+Jay Shukin,,Councillor,Metchosin,jay-shukin-councillor,5067
+Sharie Epp,,Councillor,Metchosin,sharie-epp-councillor,5067
+Shelly Donaldson,,Councillor,Metchosin,shelly-donaldson-councillor,5067
+Steve Gray,,Councillor,Metchosin,steve-gray-councillor,5067
+Carol Newington,,Councillor,Duncan,carol-newington-councillor,5047
+Garry Bruce,,Councillor,Duncan,garry-bruce-councillor,5047
+Jenni Capps,,Councillor,Duncan,jenni-capps-councillor,5047
+Mike McKinlay,,Councillor,Duncan,mike-mckinlay-councillor,5047
+Stacy Middlemiss,,Councillor,Duncan,stacy-middlemiss-councillor,5047
+Tom Duncan,,Councillor,Duncan,tom-duncan-councillor,5047
+Annemarie De Andrade,,Councillor,Gibsons,annemarie-de-andrade-councillor,4758
+Christi Thompson,,Councillor,Gibsons,christi-thompson-councillor,4758
+David Croal,,Councillor,Gibsons,david-croal-councillor,4758
+Stafford Lumley,,Councillor,Gibsons,stafford-lumley-councillor,4758
+Jesse Ketler,,Councillor,Cumberland,jesse-ketler-councillor,4447
+Neil Borecky,,Councillor,Cumberland,neil-borecky-councillor,4447
+Sean Sullivan,,Councillor,Cumberland,sean-sullivan-councillor,4447
+Troy Therrien,,Councillor,Cumberland,troy-therrien-councillor,4447
+Vickey Brown,,Councillor,Cumberland,vickey-brown-councillor,4447
+Brian Frenkel,,Councillor,Vanderhoof,brian-frenkel-councillor,4346
+Cyndi Lauze,,Councillor,Vanderhoof,cyndi-lauze-councillor,4346
+David Van Dolah,,Councillor,Vanderhoof,david-van-dolah-councillor,4346
+Ernest Martens,,Councillor,Vanderhoof,ernest-martens-councillor,4346
+Ken Young,,Councillor,Vanderhoof,ken-young-councillor,4346
+Kevin Moutray,,Councillor,Vanderhoof,kevin-moutray-councillor,4346
+Tom Bulmer,,Councillor,Vanderhoof,tom-bulmer-councillor,4346
+ALEX JURGENSEN,,Councillor,Bowen Island,alex-jurgensen-councillor,4256
+ALISON MORSE,,Councillor,Bowen Island,alison-morse-councillor,4256
+JOHN SAUNDERS,,Councillor,Bowen Island,john-saunders-councillor,4256
+JUDITH GEDYE,,Councillor,Bowen Island,judith-gedye-councillor,4256
+SUE ELLEN FAST,,Councillor,Bowen Island,sue-ellen-fast-councillor,4256
+WAKE TIM,,Councillor,Bowen Island,wake-tim-councillor,4256
+Amy Cardozo,,Councillor,Sparwood,amy-cardozo-councillor,4148
+Chris Nand,,Councillor,Sparwood,chris-nand-councillor,4148
+Jason Christensen,,Councillor,Sparwood,jason-christensen-councillor,4148
+John Baher,,Councillor,Sparwood,john-baher-councillor,4148
+Sam Atwal,,Councillor,Sparwood,sam-atwal-councillor,4148
+Steven Kallies,,Councillor,Sparwood,steven-kallies-councillor,4148
+Craig Humpherys,,Councillor,Rossland,craig-humpherys-councillor,4140
+Eliza Boyce,,Councillor,Rossland,eliza-boyce-councillor,4140
+Jeff Weaver,,Councillor,Rossland,jeff-weaver-councillor,4140
+Lisa Kwiatkowski,,Councillor,Rossland,lisa-kwiatkowski-councillor,4140
+Maya Provencal,,Councillor,Rossland,maya-provencal-councillor,4140
+Stewart Spooner,,Councillor,Rossland,stewart-spooner-councillor,4140
+CHRISTINE THOMPSON,,Councillor,Grand Forks,christine-thompson-councillor,4112
+DAVID MARK,,Councillor,Grand Forks,david-mark-councillor,4112
+DEBORAH LAFLEUR,,Councillor,Grand Forks,deborah-lafleur-councillor,4112
+NEIL KROG,,Councillor,Grand Forks,neil-krog-councillor,4112
+ROD ZIELINSKI,,Councillor,Grand Forks,rod-zielinski-councillor,4112
+ZAK EBURNE-STOODLEY,,Councillor,Grand Forks,zak-eburne-stoodley-councillor,4112
+Chris Hambruch,,Councillor,Golden,chris-hambruch-councillor,3986
+John Manuel,,Councillor,Golden,john-manuel-councillor,3986
+Joy Guyot,,Councillor,Golden,joy-guyot-councillor,3986
+Kristi Cooper,,Councillor,Golden,kristi-cooper-councillor,3986
+Richard Dale,,Councillor,Golden,richard-dale-councillor,3986
+Wes Routley,,Councillor,Golden,wes-routley-councillor,3986
+Brenda Enax,,Councillor,Northern Rockies,brenda-enax-councillor,3947
+Danny Soles,,Councillor,Northern Rockies,danny-soles-councillor,3947
+John Roper,,Councillor,Northern Rockies,john-roper-councillor,3947
+Kyle Andrews,,Councillor,Northern Rockies,kyle-andrews-councillor,3947
+Leslie Dickie,,Councillor,Northern Rockies,leslie-dickie-councillor,3947
+Lorraine Gerwing,,Councillor,Northern Rockies,lorraine-gerwing-councillor,3947
+Gerry Taft,,Councillor,Invermere,gerry-taft-councillor,3917
+Kayja Becker,,Councillor,Invermere,kayja-becker-councillor,3917
+Theresa Wood,,Councillor,Invermere,theresa-wood-councillor,3917
+Brian Texmo,,Councillor,Port Hardy,brian-texmo-councillor,3902
+Dennis Dugas,,Councillor,Port Hardy,dennis-dugas-mayor,3902
+Fred Robertson,,Councillor,Port Hardy,fred-robertson-councillor,3902
+Janet Dorward,,Councillor,Port Hardy,janet-dorward-councillor,3902
+John Tidbury,,Councillor,Port Hardy,john-tidbury-councillor,3902
+Treena Smith,,Councillor,Port Hardy,treena-smith-councillor,3902
+Ian SAVAGE,,Councillor,Lantzville,ian-savage-councillor,3817
+Joan JONES,,Councillor,Lantzville,joan-jones-councillor,3817
+Jonathan LERNER,,Councillor,Lantzville,jonathan-lerner-councillor,3817
+Rachelle MUNDELL,,Councillor,Lantzville,rachelle-mundell-councillor,3817
+Jennie Helmer,,Councillor,Pemberton,jennie-helmer-councillor,3407
+Katrina Nightingale,,Councillor,Pemberton,katrina-nightingale-councillor,3407
+Laura Ramsden,,Councillor,Pemberton,laura-ramsden-councillor,3407
+Ted Craddock,,Councillor,Pemberton,ted-craddock-councillor,3407
+Aaron Frisby,,Councillor,Lake Cowichan,aaron-frisby-councillor,3325
+Carolyne Austin,,Councillor,Lake Cowichan,carolyne-austin-councillor,3325
+Kristine Sandhu,,Councillor,Lake Cowichan,kristine-sandhu-councillor,3325
+Lorna Vomacka,,Councillor,Lake Cowichan,lorna-vomacka-councillor,3325
+Tim McGonigle,,Councillor,Lake Cowichan,tim-mcgonigle-councillor,3325
+Amber Hipkiss,,Councillor,Mackenzie,amber-hipkiss-councillor,3281
+Andy Barnes,,Councillor,Mackenzie,andy-barnes-councillor,3281
+Jesse Wright,,Councillor,Mackenzie,jesse-wright-councillor,3281
+Kyle Tapper,,Councillor,Mackenzie,kyle-tapper-councillor,3281
+Raye McMeeken,,Councillor,Mackenzie,raye-mcmeeken-councillor,3281
+Viktor Brumovsky,,Councillor,Mackenzie,viktor-brumovsky-councillor,3281
+Jonathan Van Barneveld,,Councillor,Houston,jonathan-van-barneveld-councillor,3052
+Lisa Mueller,,Councillor,Houston,lisa-mueller-councillor,3052
+Rebecca Hougen,,Councillor,Houston,rebecca-hougen-councillor,3052
+Thomas Stringfellow,,Councillor,Houston,thomas-stringfellow-councillor,3052
+Tom Euverman,,Councillor,Houston,tom-euverman-councillor,3052
+Troy Reitsma,,Councillor,Houston,troy-reitsma-councillor,3052
+Brian Schreiner,,Councillor,Enderby,brian-schreiner-councillor,3028
+David Ramey,,Councillor,Enderby,david-ramey-councillor,3028
+Roxanne Davyduke,,Councillor,Enderby,roxanne-davyduke-councillor,3028
+Sarah Yerhoff,,Councillor,Enderby,sarah-yerhoff-councillor,3028
+Shawn Shishido,,Councillor,Enderby,shawn-shishido-councillor,3028
+Tundra Baird,,Councillor,Enderby,tundra-baird-councillor,3028
+Sébastien Gaudette,,Councillor,Capilano 5,s-bastien-gaudette-councillor,2899
+BARB GOULD,,Councillor,Princeton,barb-gould-councillor,2894
+GEORGE ELLIOTT,,Councillor,Princeton,george-elliott-councillor,2894
+RANDY MCLEAN,,Councillor,Princeton,randy-mclean-councillor,2894
+TYLER WILLIS,,Councillor,Princeton,tyler-willis-councillor,2894
+Bert Schalekamp,,Councillor,Elkford,bert-schalekamp-councillor,2749
+Duncan McDonald,,Councillor,Elkford,duncan-mcdonald-councillor,2749
+Jason Meldrum,,Councillor,Elkford,jason-meldrum-councillor,2749
+Len Gostick,,Councillor,Elkford,len-gostick-councillor,2749
+Shawna Bryant,,Councillor,Elkford,shawna-bryant-councillor,2749
+Steve Fairbairn,,Councillor,Elkford,steve-fairbairn-councillor,2749
+Tathlina Lovlin,,Councillor,Elkford,tathlina-lovlin-councillor,2749
+Bob Evans,,Councillor,Sicamous,bob-evans-councillor,2613
+Colleen Anderson,,Councillor,Sicamous,colleen-anderson-councillor,2613
+Gord Bushell,,Councillor,Sicamous,gord-bushell-councillor,2613
+Ian Baillie,,Councillor,Sicamous,ian-baillie-councillor,2613
+Malcolm Makayev,,Councillor,Sicamous,malcolm-makayev-councillor,2613
+Pam Beech,,Councillor,Sicamous,pam-beech-councillor,2613
+Siobhan Rich,,Councillor,Sicamous,siobhan-rich-councillor,2613
+Al Anderson,,Councillor,Tofino,al-anderson-councillor,2516
+Ali Sawyer,,Councillor,Tofino,ali-sawyer-councillor,2516
+Dan Law,,Councillor,Tofino,dan-law-councillor,2516
+Duncan McMaster,,Councillor,Tofino,duncan-mcmaster-councillor,2516
+Kat Thomas,,Councillor,Tofino,kat-thomas-councillor,2516
+Sarah Sloman,,Councillor,Tofino,sarah-sloman-councillor,2516
+Tom Stere,,Councillor,Tofino,tom-stere-councillor,2516
+Ann Baird,,Councillor,Highlands,ann-baird-councillor,2482
+Gord Baird,,Councillor,Highlands,gord-baird-councillor,2482
+Karel Roessingh,,Councillor,Highlands,karel-roessingh-councillor,2482
+Leslie Anderson,,Councillor,Highlands,leslie-anderson-councillor,2482
+Marcie McLean,,Councillor,Highlands,marcie-mclean-councillor,2482
+Rose Stanton,,Councillor,Highlands,rose-stanton-councillor,2482
+Colin Connett,,Councillor,Chase,colin-connett-councillor,2399
+Fred Torbohm,,Councillor,Chase,fred-torbohm-councillor,2399
+Jane Herman,,Councillor,Chase,jane-herman-councillor,2399
+Ron Harder,,Councillor,Chase,ron-harder-councillor,2399
+Chris Norbury,,Councillor,Tumbler Ridge,chris-norbury-councillor,2399
+Darryl Krakowka,,Councillor,Tumbler Ridge,darryl-krakowka-councillor,2399
+Ken Klikach,,Councillor,Tumbler Ridge,ken-klikach-councillor,2399
+Luana Dusseault,,Councillor,Tumbler Ridge,luana-dusseault-councillor,2399
+Nicole Noksana,,Councillor,Tumbler Ridge,nicole-noksana-councillor,2399
+Ron Hofman,,Councillor,Tumbler Ridge,ron-hofman-councillor,2399
+Roxanne Gulick,,Councillor,Tumbler Ridge,roxanne-gulick-councillor,2399
+Bill Haring,,Councillor,Clearwater,bill-haring-councillor,2388
+Ken Matheson,,Councillor,Clearwater,ken-matheson-councillor,2388
+Lyle Mackenzie,,Councillor,Clearwater,lyle-mackenzie-councillor,2388
+Lynne Frizzle,,Councillor,Clearwater,lynne-frizzle-councillor,2388
+Shelley Sim,,Councillor,Clearwater,shelley-sim-councillor,2388
+Theresa Braaten,,Councillor,Clearwater,theresa-braaten-councillor,2388
+Jérémie Meunier,,Councillor,Burrard Inlet 3,j-r-mie-meunier-councillor,2373
+Douglas Richardson,,Councillor,Anmore,douglas-richardson-councillor,2356
+Kim Trowbridge,,Councillor,Anmore,kim-trowbridge-councillor,2356
+Paul Weverink,,Councillor,Anmore,paul-weverink-councillor,2356
+Polly Krier,,Councillor,Anmore,polly-krier-councillor,2356
+Ann-Marie Baron,,Councillor,Port McNeill,ann-marie-baron-councillor,2356
+Leighann Ruel,,Councillor,Port McNeill,leighann-ruel-councillor,2356
+Michelle Carson,,Councillor,Port McNeill,michelle-carson-councillor,2356
+Shelley Downey,,Councillor,Port McNeill,shelley-downey-councillor,2356
+Andrea Smith,,Councillor,Chetwynd,andrea-smith-councillor,2302
+Clay Bassendowski,,Councillor,Chetwynd,clay-bassendowski-councillor,2302
+Janet Wark,,Councillor,Chetwynd,janet-wark-councillor,2302
+Julia Nelson,,Councillor,Chetwynd,julia-nelson-councillor,2302
+Kayla MacDonald,,Councillor,Chetwynd,kayla-macdonald-councillor,2302
+Melvin Deck,,Councillor,Chetwynd,melvin-deck-councillor,2302
+Barb Wiebe,,Councillor,Lillooet,barb-wiebe-councillor,2302
+Laurie Hopfl,,Councillor,Lillooet,laurie-hopfl-councillor,2302
+Patti Flann,,Councillor,Lillooet,patti-flann-councillor,2302
+Randy McNary,,Councillor,Lillooet,randy-mcnary-councillor,2302
+Rolf de Bruin,,Councillor,Lillooet,rolf-de-bruin-councillor,2302
+Chris Candy,,Councillor,Logan Lake,chris-candy-councillor,2255
+Garry Youd,,Councillor,Logan Lake,garry-youd-councillor,2255
+Jim McNeely,,Councillor,Logan Lake,jim-mcneely-councillor,2255
+Lawrence Hart,,Councillor,Logan Lake,lawrence-hart-councillor,2255
+Marion Bell,,Councillor,Logan Lake,marion-bell-councillor,2255
+Peter Martell,,Councillor,Logan Lake,peter-martell-councillor,2255
+Ian Kennington,,Councillor,Ucluelet,ian-kennington-councillor,2066
+Jennifer Hoar,,Councillor,Ucluelet,jennifer-hoar-councillor,2066
+Marilyn McEwen,,Councillor,Ucluelet,marilyn-mcewen-councillor,2066
+Mark Maftei,,Councillor,Ucluelet,mark-maftei-councillor,2066
+Shawn Anderson,,Councillor,Ucluelet,shawn-anderson-councillor,2066
+Geoff Bevan,,Councillor,Lumby,geoff-bevan-councillor,2063
+Lori Mindnich,,Councillor,Lumby,lori-mindnich-councillor,2063
+Randal Ostafichuk,,Councillor,Lumby,randal-ostafichuk-councillor,2063
+Sherry Kineshanko,,Councillor,Lumby,sherry-kineshanko-councillor,2063
+Bill Wenman,,Councillor,Fruitvale,bill-wenman-councillor,1958
+Catherine Ellison,,Councillor,Fruitvale,catherine-ellison-councillor,1958
+Julia Mason,,Councillor,Fruitvale,julia-mason-councillor,1958
+Wes Startup,,Councillor,Fruitvale,wes-startup-councillor,1958
+Chris Pettman,,Councillor,One Hundred Mile House,chris-pettman-councillor,1928
+David Mingo,,Councillor,One Hundred Mile House,david-mingo-councillor,1928
+Maureen Pinkney,,Councillor,One Hundred Mile House,maureen-pinkney-councillor,1928
+Ralph Fossum,,Councillor,One Hundred Mile House,ralph-fossum-councillor,1928
+Allan Jackson,,Councillor,Harrison Hot Springs,allan-jackson-councillor,1905
+John Buckley,,Councillor,Harrison Hot Springs,john-buckley-councillor,1905
+Leo Facio,,Councillor,Harrison Hot Springs,leo-facio-mayor,1905
+Michie Vidal,,Councillor,Harrison Hot Springs,michie-vidal-councillor,1905
+Colin McInnis,,Councillor,Barriere,colin-mcinnis-councillor,1765
+Donna Kibble,,Councillor,Barriere,donna-kibble-councillor,1765
+Judy Armstrong,,Councillor,Barriere,judy-armstrong-councillor,1765
+Louise Lodge,,Councillor,Barriere,louise-lodge-councillor,1765
+Rob Kerslake,,Councillor,Barriere,rob-kerslake-councillor,1765
+Scott Kershaw,,Councillor,Barriere,scott-kershaw-councillor,1765
+Carolyn Amantea,,Councillor,Warfield,carolyn-amantea-councillor,1753
+Fran Noone,,Councillor,Warfield,fran-noone-councillor,1753
+Jim Hill,,Councillor,Warfield,jim-hill-councillor,1753
+Raymond Masleck,,Councillor,Warfield,raymond-masleck-councillor,1753
+Doreen Lambert,,Councillor,Ashcroft,doreen-lambert-councillor,1670
+Jessica Clement,,Councillor,Ashcroft,jessica-clement-councillor,1670
+Jonah Anstett,,Councillor,Ashcroft,jonah-anstett-councillor,1670
+Nadine Davenport,,Councillor,Ashcroft,nadine-davenport-councillor,1670
+Charlie Rensby,,Councillor,Burns Lake,charlie-rensby-councillor,1659
+Darrell Hill,,Councillor,Burns Lake,darrell-hill-councillor,1659
+Henry Wiebe,,Councillor,Burns Lake,henry-wiebe-councillor,1659
+Kevin White,,Councillor,Burns Lake,kevin-white-councillor,1659
+Kristy Bjarnason,,Councillor,Burns Lake,kristy-bjarnason-councillor,1659
+Marianne Lambert,,Councillor,Musqueam 2,marianne-lambert-councillor,1646
+Arden Holley,,Councillor,Keremeos,arden-holley-councillor,1608
+Garry Elliott,,Councillor,Keremeos,garry-elliott-councillor,1608
+Jason Wiebe,,Councillor,Keremeos,jason-wiebe-councillor,1608
+Jeremy Evans,,Councillor,Keremeos,jeremy-evans-councillor,1608
+Tracy Henderson,,Councillor,Keremeos,tracy-henderson-councillor,1608
+Aidan McLaren-Caux,,Councillor,Nakusp,aidan-mclaren-caux-councillor,1589
+Dawn Edwards,,Councillor,Nakusp,dawn-edwards-councillor,1589
+Mason Hough,,Councillor,Nakusp,mason-hough-councillor,1589
+Tina Knooihuizen,,Councillor,Nakusp,tina-knooihuizen-councillor,1589
+Annette Morgan,,Councillor,Telkwa,annette-morgan-councillor,1474
+Cathy Frenette,,Councillor,Telkwa,cathy-frenette-councillor,1474
+Lee Ewald,,Councillor,Telkwa,lee-ewald-councillor,1474
+Simon Schat,,Councillor,Telkwa,simon-schat-councillor,1474
+Marcus Reuter,,Councillor,Lions Bay,marcus-reuter-councillor,1390
+Michael Broughton,,Councillor,Lions Bay,michael-broughton-councillor,1390
+Neville Abbott,,Councillor,Lions Bay,neville-abbott-councillor,1390
+Norm Barmeier,,Councillor,Lions Bay,norm-barmeier-councillor,1390
+Corbett Boschman,,Councillor,Fort St. James,corbett-boschman-councillor,1386
+Jennifer Howell,,Councillor,Fort St. James,jennifer-howell-councillor,1386
+Judith Friesen,,Councillor,Fort St. James,judith-friesen-councillor,1386
+Kris Nielsen,,Councillor,Fort St. James,kris-nielsen-councillor,1386
+CAREY COLLIN,,Councillor,Radium Hot Springs,carey-collin-councillor,1339
+CHRISTI FERGUSON-HUSTON,,Councillor,Radium Hot Springs,christi-ferguson-huston-councillor,1339
+DALE SHUDRA,,Councillor,Radium Hot Springs,dale-shudra-councillor,1339
+ERIN PALASHNIUK,,Councillor,Radium Hot Springs,erin-palashniuk-councillor,1339
+Betty Ponto,,Councillor,Taylor,betty-ponto-councillor,1317
+Brent Taillefer,,Councillor,Taylor,brent-taillefer-councillor,1317
+Desirae Graziano,,Councillor,Taylor,desirae-graziano-councillor,1317
+Michelle Turnbull,,Councillor,Taylor,michelle-turnbull-councillor,1317
+Murray Giesbrecht,,Councillor,Taylor,murray-giesbrecht-councillor,1317
+Alison Pringle,,Councillor,Gold River,alison-pringle-councillor,1246
+Henry Fossen,,Councillor,Gold River,henry-fossen-councillor,1246
+Nikki Pichert,,Councillor,Gold River,nikki-pichert-councillor,1246
+Peter Wehmeier,,Councillor,Gold River,peter-wehmeier-councillor,1246
+David Weiser,,Councillor,Thompson-Nicola E (Bonaparte Plateau),david-weiser-councillor,1162
+Jennifer Lins,,Councillor,Salmo,jennifer-lins-councillor,1140
+Kenzie Neil,,Councillor,Salmo,kenzie-neil-councillor,1140
+Melanie Cox,,Councillor,Salmo,melanie-cox-councillor,1140
+Todd Wallace,,Councillor,Salmo,todd-wallace-councillor,1140
+Holly Blanchette,,Councillor,Valemount,holly-blanchette-councillor,1052
+Pete Pearson,,Councillor,Valemount,pete-pearson-councillor,1052
+Erika Bird,,Councillor,Kaslo,erika-bird-councillor,1049
+Matthew Brown,,Councillor,Kaslo,matthew-brown-councillor,1049
+Molly Leathwood,,Councillor,Kaslo,molly-leathwood-councillor,1049
+Robert Lang,,Councillor,Kaslo,robert-lang-councillor,1049
+CINDY COOK,,Councillor,Montrose,cindy-cook-councillor,1013
+DONALD BERRIAULT,,Councillor,Montrose,donald-berriault-councillor,1013
+PAUL CARON,,Councillor,Montrose,paul-caron-councillor,1013
+RORY STEEP,,Councillor,Montrose,rory-steep-councillor,1013
+Carmen Ranta,,Councillor,Cache Creek,carmen-ranta-councillor,969
+David Dubois,,Councillor,Cache Creek,david-dubois-councillor,969
+Kelly Debert,,Councillor,Cache Creek,kelly-debert-councillor,969
+Sue Peters,,Councillor,Cache Creek,sue-peters-councillor,969
+Audrey Fennema,,Councillor,Fraser Lake,audrey-fennema-councillor,965
+Craig LePoidevin,,Councillor,Fraser Lake,craig-lepoidevin-councillor,965
+Joe Jenkinson,,Councillor,Fraser Lake,joe-jenkinson-councillor,965
+Jolene Webb,,Councillor,Fraser Lake,jolene-webb-councillor,965
+Ayla Pearson,,Councillor,Queen Charlotte,ayla-pearson-councillor,964
+Jesse Embree,,Councillor,Queen Charlotte,jesse-embree-councillor,964
+Lisa Pineault,,Councillor,Queen Charlotte,lisa-pineault-councillor,964
+Sean Young,,Councillor,Queen Charlotte,sean-young-councillor,964
+Deborah Beattie,,Councillor,Hudson's Hope,deborah-beattie-councillor,841
+James Cryderman,,Councillor,Hudson's Hope,james-cryderman-councillor,841
+Kelly Miller,,Councillor,Hudson's Hope,kelly-miller-councillor,841
+Tashana Winnicky,,Councillor,Hudson's Hope,tashana-winnicky-councillor,841
+Tina Jeffrey,,Councillor,Hudson's Hope,tina-jeffrey-councillor,841
+Travous Quibell,,Councillor,Hudson's Hope,travous-quibell-councillor,841
+Barry Pages,,Councillor,Masset,barry-pages-mayor,838
+Bret Johnston,,Councillor,Masset,bret-johnston-councillor,838
+Jim Currie,,Councillor,Masset,jim-currie-councillor,838
+Terry Carty,,Councillor,Masset,terry-carty-councillor,838
+Anora Kobza,,Councillor,Canal Flats,anora-kobza-councillor,802
+Jennifer Noble,,Councillor,Canal Flats,jennifer-noble-councillor,802
+Justin Stanbury,,Councillor,Canal Flats,justin-stanbury-councillor,802
+Patricia Reed,,Councillor,Canal Flats,patricia-reed-councillor,802
+Danielle Veach,,Councillor,Pouce Coupe,danielle-veach-councillor,762
+James Wall,,Councillor,Pouce Coupe,james-wall-councillor,762
+Kurtis Rabel,,Councillor,Pouce Coupe,kurtis-rabel-councillor,762
+Marcel Woodill,,Councillor,Pouce Coupe,marcel-woodill-councillor,762
+Raymond Johnston,,Councillor,Pouce Coupe,raymond-johnston-councillor,762
+David Stewart,,Councillor,Port Alice,david-stewart-councillor,739
+Holly Aldis,,Councillor,Port Alice,holly-aldis-councillor,739
+Russell Murray,,Councillor,Port Alice,russell-murray-councillor,739
+Sean Watson,,Councillor,Port Alice,sean-watson-councillor,739
+Clint Huisman,,Councillor,Greenwood,clint-huisman-councillor,702
+Gerry Shaw,,Councillor,Greenwood,gerry-shaw-councillor,702
+Jessica McLean,,Councillor,Greenwood,jessica-mclean-councillor,702
+Jim Nathorst,,Councillor,Greenwood,jim-nathorst-councillor,702
+Carolina Clark,,Councillor,Belcarra,carolina-clark-councillor,687
+Janet Ruzycki,,Councillor,Belcarra,janet-ruzycki-councillor,687
+Joe Elworthy,,Councillor,Belcarra,joe-elworthy-councillor,687
+Liisa Wilder,,Councillor,Belcarra,liisa-wilder-councillor,687
+Aaron Pownall,,Councillor,Midway,aaron-pownall-councillor,651
+Darrin Metcalf,,Councillor,Midway,darrin-metcalf-councillor,651
+Judy Willsey,,Councillor,Midway,judy-willsey-councillor,651
+Richard Dunsdon,,Councillor,Midway,richard-dunsdon-councillor,651
+Allan Berg,,Councillor,New Hazelton,allan-berg-councillor,602
+Braunwyn Henwood,,Councillor,New Hazelton,braunwyn-henwood-councillor,602
+George Burns,,Councillor,New Hazelton,george-burns-councillor,602
+Jutta Hobenshield,,Councillor,New Hazelton,jutta-hobenshield-councillor,602
+Mike Weeber,,Councillor,New Hazelton,mike-weeber-councillor,602
+Ray Sturney,,Councillor,New Hazelton,ray-sturney-councillor,602
+Diane Smith,,Councillor,McBride,diane-smith-councillor,588
+Glen Frear,,Councillor,McBride,glen-frear-councillor,588
+Joe Kolida,,Councillor,McBride,joe-kolida-councillor,588
+Peter Caputo,,Councillor,McBride,peter-caputo-councillor,588
+Darrell Schapansky,,Councillor,Clinton,darrell-schapansky-councillor,568
+David Park,,Councillor,Clinton,david-park-councillor,568
+Nicholas Kosovic,,Councillor,Clinton,nicholas-kosovic-councillor,568
+Sandi Burrage,,Councillor,Clinton,sandi-burrage-councillor,568
+FRANK KAMERMANS,,Councillor,Stewart,frank-kamermans-councillor,517
+HOPI KRUCHOWSKI,,Councillor,Stewart,hopi-kruchowski-councillor,517
+JESSICA KENNEDY,,Councillor,Stewart,jessica-kennedy-councillor,517
+KEENAN KENNEDY,,Councillor,Stewart,keenan-kennedy-councillor,517
+NINA RUSSELL,,Councillor,Stewart,nina-russell-councillor,517
+SEAN POWNALL,,Councillor,Stewart,sean-pownall-councillor,517
+Annie Surprenant,,Councillor,Penelakut Island 7,annie-surprenant-councillor,513
+Casey Law,,Councillor,New Denver,casey-law-councillor,487
+Colin Moss,,Councillor,New Denver,colin-moss-councillor,487
+Danika Hammond,,Councillor,New Denver,danika-hammond-councillor,487
+John Fyke,,Councillor,New Denver,john-fyke-councillor,487
+CHRISTINE MACKENZIE,,Councillor,Port Edward,christine-mackenzie-councillor,470
+COLLEEN MCDONALD,,Councillor,Port Edward,colleen-mcdonald-councillor,470
+DAN FRANZEN,,Councillor,Port Edward,dan-franzen-councillor,470
+JAMES BROWN,,Councillor,Port Edward,james-brown-councillor,470
+Kane Gordon,,Councillor,Alert Bay (Village),kane-gordon-councillor,449
+Larry Hill,,Councillor,Alert Bay (Village),larry-hill-councillor,449
+Lisanne Granger,,Councillor,Alert Bay (Village),lisanne-granger-councillor,449
+Sandra McGregor,,Councillor,Alert Bay (Village),sandra-mcgregor-councillor,449
+Cheryl Northcott,,Councillor,Tahsis,cheryl-northcott-councillor,393
+Douglas Elliott,,Councillor,Tahsis,douglas-elliott-councillor,393
+Meggan Joseph,,Councillor,Tahsis,meggan-joseph-councillor,393
+Sarah Fowler,,Councillor,Tahsis,sarah-fowler-councillor,393
+Casey Chapman,,Councillor,Alert Bay (Reserve),casey-chapman-councillor,382
+Kane Gordon,,Councillor,Alert Bay (Reserve),kane-gordon-councillor,382
+Lisanne Granger,,Councillor,Alert Bay (Reserve),lisanne-granger-councillor,382
+Veronica McGregor,,Councillor,Alert Bay (Reserve),veronica-mcgregor-councillor,382
+Ezra BULLER,,Councillor,Slocan,ezra-buller-councillor,379
+Joanna VAN BYNEN,,Councillor,Slocan,joanna-van-bynen-councillor,379
+Jordan KNOTT,,Councillor,Slocan,jordan-knott-councillor,379
+Madeleine PERRIERE,,Councillor,Slocan,madeleine-perriere-councillor,379
+Brigid Cumming,,Councillor,Port Clements,brigid-cumming-councillor,340
+Dennis Reindl,,Councillor,Port Clements,dennis-reindl-councillor,340
+Kazamir Falconbridge,,Councillor,Port Clements,kazamir-falconbridge-councillor,340
+Wayne Nicol,,Councillor,Port Clements,wayne-nicol-councillor,340
+Calvin THOMPSON,,Councillor,Granisle,calvin-thompson-councillor,337
+Heather DEDIO,,Councillor,Granisle,heather-dedio-councillor,337
+Karen BARBER,,Councillor,Granisle,karen-barber-councillor,337
+Marilyn BERGLUND,,Councillor,Granisle,marilyn-berglund-councillor,337
+Kohen Gilkin,,Councillor,Sayward,kohen-gilkin-councillor,334
+Scott Burchett,,Councillor,Sayward,scott-burchett-councillor,334
+Sue Poulsen,,Councillor,Sayward,sue-poulsen-councillor,334
+Tom Tinsley,,Councillor,Sayward,tom-tinsley-councillor,334
+Buddy Smith,,Councillor,Hazelton,buddy-smith-councillor,257
+Christine Anonuevo,,Councillor,Hazelton,christine-anonuevo-councillor,257
+Jody Tetreau,,Councillor,Hazelton,jody-tetreau-councillor,257
+Julie Maitland,,Councillor,Hazelton,julie-maitland-councillor,257
+Wendy Blackstock,,Councillor,Hazelton,wendy-blackstock-councillor,257
+Amanda Frayn,,Councillor,Quatsino Subdivision 18,amanda-frayn-councillor,246
+Dirk Van Stralen,,Councillor,Wells,dirk-van-stralen-councillor,218
+Dorothea Funk,,Councillor,Wells,dorothea-funk-councillor,218
+Jennifer Lewis,,Councillor,Wells,jennifer-lewis-councillor,218
+Josh Trotter-Wanner,,Councillor,Wells,josh-trotter-wanner-councillor,218
+Jennifer Thoss,,Councillor,Lytton,jennifer-thoss-councillor,210
+Jessoa Lightfoot,,Councillor,Lytton,jessoa-lightfoot-councillor,210
+Melissa Michell,,Councillor,Lytton,melissa-michell-councillor,210
+Nonie McCann,,Councillor,Lytton,nonie-mccann-councillor,210
+Brian Mills,,Councillor,Silverton,brian-mills-councillor,149
+Clarence Denbok,,Councillor,Silverton,clarence-denbok-councillor,149
+Leah Main,,Councillor,Silverton,leah-main-councillor,149
+Margaret Scaia,,Councillor,Silverton,margaret-scaia-councillor,149
+François Roy,,Councillor,Cape Mudge 10,fran-ois-roy-councillor,145
+Adrian O'Connor,,Councillor,Zeballos,adrian-o-connor-councillor,126
+Barb Lewis,,Councillor,Zeballos,barb-lewis-councillor,126
+Justin Janisse,,Councillor,Zeballos,justin-janisse-councillor,126
+Ronald Deck,,Councillor,Zeballos,ronald-deck-councillor,126
+Andrea Boardman,,Councillor,Esquimalt (Reserve),andrea-boardman-councillor,120
+Darlene Rotchford,,Councillor,Esquimalt (Reserve),darlene-rotchford-councillor,120
+Duncan Cavens,,Councillor,Esquimalt (Reserve),duncan-cavens-councillor,120
+Jacob Helliwell,,Councillor,Esquimalt (Reserve),jacob-helliwell-councillor,120
+Ken Armour,,Councillor,Esquimalt (Reserve),ken-armour-councillor,120
+Tim Morrison,,Councillor,Esquimalt (Reserve),tim-morrison-councillor,120
+Jessica Racine-Lehoux,,Councillor,Oyster Bay 12,jessica-racine-lehoux-councillor,105
+Patricia Poissant,,Councillor,McMillan Island 6,patricia-poissant-councillor,96
+Mélanie Dufresne,,Councillor,Coquitlam 1,m-lanie-dufresne-councillor,55
+Claire Charbonneau,,Councillor,Squaw-Hay-One 11,claire-charbonneau-councillor,29
+Jean Fontaine,,Councillor,Musqueam 4,jean-fontaine-councillor,10
+Lyne Poitras,,Councillor,Galiano Island 9,lyne-poitras-councillor,0
+Marco Savard,,Councillor,Squirrel Cove 8,marco-savard-councillor,0

@@ -1,0 +1,238 @@
+name,email,role,city,wall_slug,population
+Adriane Carr,Adriane.Carr@vancouver.ca,Councillor,Vancouver,adriane-carr-councillor,662248
+Brian Montague,Brian.Montague@vancouver.ca,Councillor,Vancouver,brian-montague-councillor,662248
+Christine Boyle,Christine.Boyle@vancouver.ca,Councillor,Vancouver,christine-boyle-councillor,662248
+Lenny Zhou,Lenny.Zhou@vancouver.ca,Councillor,Vancouver,lenny-zhou-councillor,662248
+Lisa Dominato,Lisa.Dominato@vancouver.ca,Councillor,Vancouver,lisa-dominato-councillor,662248
+Mike Klassen,Mike.Klassen@vancouver.ca,Councillor,Vancouver,mike-klassen-councillor,662248
+Pete Fry,Pete.Fry@vancouver.ca,Councillor,Vancouver,pete-fry-councillor,662248
+Peter Meiszner,Peter.Meiszner@vancouver.ca,Councillor,Vancouver,peter-meiszner-councillor,662248
+Rebecca Bligh,Rebecca.Bligh@vancouver.ca,Councillor,Vancouver,rebecca-bligh-councillor,662248
+Sarah Kirby-Yung,Sarah.Kirby-Yung@vancouver.ca,Councillor,Vancouver,sarah-kirby-yung-councillor,662248
+Doug Elford,doug.elford@surrey.ca,Councillor,Surrey,doug-elford-councillor,568322
+Gordon Hepner,ghepner@surrey.ca,Councillor,Surrey,gordon-hepner-councillor,568322
+Harry Bains,harry.bains@surrey.ca,Councillor,Surrey,harry-bains-councillor,568322
+Linda Annis,linda.annis@surrey.ca,Councillor,Surrey,linda-annis-councillor,568322
+Mandeep Nagra,mandeep.nagra@surrey.ca,Councillor,Surrey,mandeep-nagra-councillor,568322
+Mike Bose,mike.bose@surrey.ca,Councillor,Surrey,mike-bose-councillor,568322
+Pardeep Kooner,pardeep.kooner@surrey.ca,Councillor,Surrey,pardeep-kooner-councillor,568322
+Rob Stutt,rob.stutt@surrey.ca,Councillor,Surrey,rob-stutt-councillor,568322
+Alison Gu,alison.gu@burnaby.ca,Councillor,Burnaby,alison-gu-councillor,249125
+Daniel Tetrault,daniel.tetrault@burnaby.ca,Councillor,Burnaby,daniel-tetrault-councillor,249125
+James Wang,james.wang@burnaby.ca,Councillor,Burnaby,james-wang-councillor,249125
+Joe Keithley,joe.keithley@burnaby.ca,Councillor,Burnaby,joe-keithley-councillor,249125
+Maita Santiago,maita.santiago@burnaby.ca,Councillor,Burnaby,maita-santiago-councillor,249125
+Pietro Calendino,pietro.calendino@burnaby.ca,Councillor,Burnaby,pietro-calendino-councillor,249125
+Sav Dhaliwal,sav.dhaliwal@burnaby.ca,Councillor,Burnaby,sav-dhaliwal-councillor,249125
+Alexa Loo,Alexa.Loo@richmond.ca,Councillor,Richmond,alexa-loo-councillor,209937
+Andy Hobbs,Andy.Hobbs@richmond.ca,Councillor,Richmond,andy-hobbs-councillor,209937
+Bill McNulty,Bill.McNulty@richmond.ca,Councillor,Richmond,bill-mcnulty-councillor,209937
+Carol Day,Carol.Day@richmond.ca,Councillor,Richmond,carol-day-councillor,209937
+Kash Heed,Kash.Heed@richmond.ca,Councillor,Richmond,kash-heed-councillor,209937
+Laura Gillanders,Laura.Gillanders@richmond.ca,Councillor,Richmond,laura-gillanders-councillor,209937
+Michael Wolfe,Michael.Wolfe@richmond.ca,Councillor,Richmond,michael-wolfe-councillor,209937
+Dave Loewen,Mawarkentin@abbotsford.ca,Councillor,Abbotsford,dave-loewen-councillor,153524
+Dave Sidhu,pross@abbotsford.ca,Councillor,Abbotsford,dave-sidhu-councillor,153524
+Kelly Chahal,dsidhu@abbotsford.ca,Councillor,Abbotsford,kelly-chahal-councillor,153524
+Les Barkman,dfloewen@abbotsford.ca,Councillor,Abbotsford,les-barkman-councillor,153524
+Mark Warkentin,sgibson@abbotsford.ca,Councillor,Abbotsford,mark-warkentin-councillor,153524
+Patricia Driessen,kchahal@abbotsford.ca,Councillor,Abbotsford,patricia-driessen-councillor,153524
+Patricia Ross,pdriessen@abbotsford.ca,Councillor,Abbotsford,patricia-ross-councillor,153524
+Simon Gibson,lbarkman@abbotsford.ca,Councillor,Abbotsford,simon-gibson-councillor,153524
+Brent Asmundson,basmundson@coquitlam.ca,Councillor,Coquitlam,brent-asmundson-councillor,148625
+Craig Hodge,chodge@coquitlam.ca,Councillor,Coquitlam,craig-hodge-councillor,148625
+Dennis Marsden,dmarsden@coquitlam.ca,Councillor,Coquitlam,dennis-marsden-councillor,148625
+Matt Djonlic,mdjonlic@coquitlam.ca,Councillor,Coquitlam,matt-djonlic-councillor,148625
+Robert Mazzarolo,rmazzarolo@coquitlam.ca,Councillor,Coquitlam,robert-mazzarolo-councillor,148625
+Steve Kim,skim@coquitlam.ca,Councillor,Coquitlam,steve-kim-councillor,148625
+Teri Towner,ttowner@coquitlam.ca,Councillor,Coquitlam,teri-towner-councillor,148625
+Trish Mandewo,tmandewo@coquitlam.ca,Councillor,Coquitlam,trish-mandewo-councillor,148625
+Charlie Hodge,chodge@kelowna.ca,Councillor,Kelowna,charlie-hodge-councillor,144576
+Loyal Wooldridge,lwooldridge@kelowna.ca,Councillor,Kelowna,loyal-wooldridge-councillor,144576
+Luke Stack,lstack@kelowna.ca,Councillor,Kelowna,luke-stack-councillor,144576
+Maxine DeHart,mdehart@kelowna.ca,Councillor,Kelowna,maxine-dehart-councillor,144576
+Mohini Singh,msingh@kelowna.ca,Councillor,Kelowna,mohini-singh-councillor,144576
+Rick Webber,rwebber@kelowna.ca,Councillor,Kelowna,rick-webber-councillor,144576
+Ron Cannan,rcannan@kelowna.ca,Councillor,Kelowna,ron-cannan-councillor,144576
+Barb Martens,bmartens@tol.ca,Councillor,Langley (Township),barb-martens-councillor,132603
+Blair Whitmarsh,bwhitmarsh@tol.ca,Councillor,Langley (Township),blair-whitmarsh-councillor,132603
+Kim Richter,krichter@tol.ca,Councillor,Langley (Township),kim-richter-councillor,132603
+Margaret Kunst,mkunst@tol.ca,Councillor,Langley (Township),margaret-kunst-councillor,132603
+Michael Pratt,mpratt@tol.ca,Councillor,Langley (Township),michael-pratt-councillor,132603
+Rob Rindt,rrindt@tol.ca,Councillor,Langley (Township),rob-rindt-councillor,132603
+Steve Ferguson,sferguson@tol.ca,Councillor,Langley (Township),steve-ferguson-councillor,132603
+Tim Baillie,tbaillie@tol.ca,Councillor,Langley (Township),tim-baillie-councillor,132603
+Dave Thompson,Dave.Thompson@victoria.ca,Councillor,Victoria,dave-thompson-councillor,91867
+Jeremy Caradonna,jcaradonna@victoria.ca,Councillor,Victoria,jeremy-caradonna-councillor,91867
+Krista Loughton,kloughton@victoria.ca,Councillor,Victoria,krista-loughton-councillor,91867
+Marg Gardiner,mgardiner@victoria.ca,Councillor,Victoria,marg-gardiner-councillor,91867
+Matt Dell,mdell@victoria.ca,Councillor,Victoria,matt-dell-councillor,91867
+Stephen Hammond,shammond@victoria.ca,Councillor,Victoria,stephen-hammond-councillor,91867
+Susan Kim,skim@victoria.ca,Councillor,Victoria,susan-kim-councillor,91867
+Delaney Mack,dmack@langleycity.ca,Councillor,Langley (City),delaney-mack-councillor,28963
+Leith White,lwhite@langleycity.ca,Councillor,Langley (City),leith-white-councillor,28963
+Mike Solyom,msolyom@langleycity.ca,Councillor,Langley (City),mike-solyom-councillor,28963
+Paul Albrecht,palbrecht@langleycity.ca,Councillor,Langley (City),paul-albrecht-councillor,28963
+Rosemary Wallace,rwallace@langleycity.ca,Councillor,Langley (City),rosemary-wallace-councillor,28963
+Teri James,tjames@langleycity.ca,Councillor,Langley (City),teri-james-councillor,28963
+Carl Dufour,carl.dufour@ville.saguenay.qc.ca,Councillor,Capilano 5,carl-dufour-councillor,2899
+Christopher Edmond,christopher.edmond@montreal-est.ca,Councillor,Capilano 5,christopher-edmond-councillor,2899
+Christopher von Roretz,cvonroretz@ville.dorval.qc.ca,Councillor,Capilano 5,christopher-von-roretz-councillor,2899
+Claudia Abaunza,Claudia.Abaunza@ville.terrebonne.qc.ca,Councillor,Capilano 5,claudia-abaunza-councillor,2899
+Claudio Benedetti,claudio.benedetti@brossard.ca,Councillor,Capilano 5,claudio-benedetti-councillor,2899
+Cynthia Homan,cynthia.homan@pointe-claire.ca,Councillor,Capilano 5,cynthia-homan-councillor,2899
+Dennis Dicks,ddicks@senneville.ca,Councillor,Capilano 5,dennis-dicks-councillor,2899
+Jason Rossie,jason.rossie@beaconsfield.ca,Councillor,Capilano 5,jason-rossie-councillor,2899
+Jessica Desroches Lauzon,jdesrocheslauzon@vsj.ca,Councillor,Capilano 5,jessica-desroches-lauzon-councillor,2899
+Judith Prud'homme,judith.prudhomme@ville.mercier.qc.ca,Councillor,Capilano 5,judith-prud-homme-councillor,2899
+Karine Lavertu,klavertu@ville.levis.qc.ca,Councillor,Capilano 5,karine-lavertu-councillor,2899
+Mitch Kujavsky,mkujavsky@cotesaintluc.org,Councillor,Capilano 5,mitch-kujavsky-councillor,2899
+Morris Vesely,mvesely@ddo.qc.ca,Councillor,Capilano 5,morris-vesely-councillor,2899
+Rachel M. Deslauriers,mdeslauriers.rachel@gatineau.ca,Councillor,Capilano 5,rachel-m-deslauriers-councillor,2899
+Shawn Moss,smoss@westmount.org,Councillor,Capilano 5,shawn-moss-councillor,2899
+Stephen Bouchard,sbouchard@ville.kirkland.qc.ca,Councillor,Capilano 5,stephen-bouchard-councillor,2899
+Yvan Labelle,ylabelle@sadb.qc.ca,Councillor,Capilano 5,yvan-labelle-councillor,2899
+Caroline Murray,murray.caroline@gatineau.ca,Councillor,Burrard Inlet 3,caroline-murray-councillor,2373
+Daniel Boyer,dboyer@sadb.qc.ca,Councillor,Burrard Inlet 3,daniel-boyer-councillor,2373
+Isabelle Demers,idemers@ville.levis.qc.ca,Councillor,Burrard Inlet 3,isabelle-demers-councillor,2373
+Jacques Bouchard,jacquesbouchard@vsj.ca,Councillor,Burrard Inlet 3,jacques-bouchard-councillor,2373
+Jamie Fabian,jfabian@cotesaintluc.org,Councillor,Burrard Inlet 3,jamie-fabian-councillor,2373
+Jeff J. Shamie,jshamie@westmount.org,Councillor,Burrard Inlet 3,jeff-j-shamie-councillor,2373
+Kelly Thorstad-Cullen,kelly.thorstad-cullen@pointe-claire.ca,Councillor,Burrard Inlet 3,kelly-thorstad-cullen-councillor,2373
+Linda Jun Lu,ljunlu@ville.dorval.qc.ca,Councillor,Burrard Inlet 3,linda-jun-lu-councillor,2373
+Michel Bélisle,michel.belisle@montreal-est.ca,Councillor,Burrard Inlet 3,michel-b-lisle-councillor,2373
+Michel Thiffault,michel.thiffault@ville.saguenay.qc.ca,Councillor,Burrard Inlet 3,michel-thiffault-councillor,2373
+Nancy Kokinasidis,nkokinasidis@ville.kirkland.qc.ca,Councillor,Burrard Inlet 3,nancy-kokinasidis-councillor,2373
+Nathalie Lepage,Nathalie.lepage@ville.terrebonne.qc.ca,Councillor,Burrard Inlet 3,nathalie-lepage-councillor,2373
+Robert Mercuri,robert.mercuri@beaconsfield.ca,Councillor,Burrard Inlet 3,robert-mercuri-councillor,2373
+Sandy Jesion,sjesion@ddo.qc.ca,Councillor,Burrard Inlet 3,sandy-jesion-councillor,2373
+Stéphanie Quintal,stephanie.quintal@brossard.ca,Councillor,Burrard Inlet 3,st-phanie-quintal-councillor,2373
+Tony Bolduc,tony.bolduc@ville.mercier.qc.ca,Councillor,Burrard Inlet 3,tony-bolduc-councillor,2373
+Claude Bouchard,claude.bouchard@ville.saguenay.qc.ca,Councillor,Musqueam 2,claude-bouchard-councillor,1646
+Errol Johnson,ejohnson@ddo.qc.ca,Councillor,Musqueam 2,errol-johnson-councillor,1646
+Jeannot Demers,jeannot.demers@ville.levis.qc.ca,Councillor,Musqueam 2,jeannot-demers-councillor,1646
+Jonathan Chomski,jchomski@westmount.org,Councillor,Musqueam 2,jonathan-chomski-councillor,1646
+Luciano Piciacchia,lpiciacchia@ville.kirkland.qc.ca,Councillor,Musqueam 2,luciano-piciacchia-councillor,1646
+Ludovic Matthews,ludovic.matthews@pointe-claire.ca,Councillor,Musqueam 2,ludovic-matthews-councillor,1646
+Marie Léveillé,marie.leveille@beaconsfield.ca,Councillor,Musqueam 2,marie-l-veill-councillor,1646
+Mike Cohen,mcohen@cotesaintluc.org,Councillor,Musqueam 2,mike-cohen-councillor,1646
+Pascal Brault,pbrault@ville.dorval.qc.ca,Councillor,Musqueam 2,pascal-brault-councillor,1646
+Pascal St-Onge,pastonge@vsj.ca,Councillor,Musqueam 2,pascal-st-onge-councillor,1646
+Pierre Matuszewski,pmatuszewski@senneville.ca,Councillor,Musqueam 2,pierre-matuszewski-councillor,1646
+Raymond Berthiaume,Raymond.Berthiaume@ville.terrebonne.qc.ca,Councillor,Musqueam 2,raymond-berthiaume-councillor,1646
+Sonia Ben-Arfa,ben-arfa.sonia@gatineau.ca,Councillor,Musqueam 2,sonia-ben-arfa-councillor,1646
+Stéphanie Felx,stephanie.felx@ville.mercier.qc.ca,Councillor,Musqueam 2,st-phanie-felx-councillor,1646
+Tina Del Vecchio,tina.delvecchio@brossard.ca,Councillor,Musqueam 2,tina-del-vecchio-councillor,1646
+Yan Major,yan.major@montreal-est.ca,Councillor,Musqueam 2,yan-major-councillor,1646
+Amélie Landry,alandry@ville.levis.qc.ca,Councillor,Chemainus 13,am-lie-landry-councillor,818
+Catherine Craig-St-Louis,craig-st-louis.catherine@gatineau.ca,Councillor,Chemainus 13,catherine-craig-st-louis-councillor,818
+Raynald Simard,raynald.simard@ville.saguenay.qc.ca,Councillor,Chemainus 13,raynald-simard-councillor,818
+Robert Auger,Robert.Auger@ville.terrebonne.qc.ca,Councillor,Chemainus 13,robert-auger-councillor,818
+Ann Jeffrey,ajeffrey@ville.levis.qc.ca,Councillor,Marktosis 15,ann-jeffrey-councillor,760
+Chloé Bourgeois,bourgeois.chloe@gatineau.ca,Councillor,Marktosis 15,chlo-bourgeois-councillor,760
+Martin Harvey,martin.harvey@ville.saguenay.qc.ca,Councillor,Marktosis 15,martin-harvey-councillor,760
+Sonia Leblanc,Sonia.Leblanc@ville.terrebonne.qc.ca,Councillor,Marktosis 15,sonia-leblanc-councillor,760
+Antoine Assaf,antoine.assaf@brossard.ca,Councillor,Penelakut Island 7,antoine-assaf-councillor,513
+Eric Stork,eric.stork@pointe-claire.ca,Councillor,Penelakut Island 7,eric-stork-councillor,513
+Guy Dumoulin,gdumoulin@ville.levis.qc.ca,Councillor,Penelakut Island 7,guy-dumoulin-councillor,513
+Marie-Ève Couturier,MarieEve.Couturier@ville.terrebonne.qc.ca,Councillor,Penelakut Island 7,marie-ve-couturier-councillor,513
+Matthew E. Aronson,maronson@westmount.org,Councillor,Penelakut Island 7,matthew-e-aronson-councillor,513
+Paul Dufort,pdufort@ville.kirkland.qc.ca,Councillor,Penelakut Island 7,paul-dufort-councillor,513
+Pulkit Kantawala,pkantawala@ddo.qc.ca,Councillor,Penelakut Island 7,pulkit-kantawala-councillor,513
+Serge Gaudreault,serge.gaudreault@ville.saguenay.qc.ca,Councillor,Penelakut Island 7,serge-gaudreault-councillor,513
+Sidney Benizri,sbenizri@cotesaintluc.org,Councillor,Penelakut Island 7,sidney-benizri-councillor,513
+Sonia Goulet,sgoulet@vsj.ca,Councillor,Penelakut Island 7,sonia-goulet-councillor,513
+Steve Moran,moran.steve@gatineau.ca,Councillor,Penelakut Island 7,steve-moran-councillor,513
+Fleur Paradis,fparadis@ville.levis.qc.ca,Councillor,Waiwakum 14,fleur-paradis-councillor,224
+Jean Tremblay,jean.tremblay.elu@ville.saguenay.qc.ca,Councillor,Waiwakum 14,jean-tremblay-councillor,224
+Luc Chénier,chenier.luc@gatineau.ca,Councillor,Waiwakum 14,luc-ch-nier-councillor,224
+Michel Corbeil,Michel.Corbeil@ville.terrebonne.qc.ca,Councillor,Waiwakum 14,michel-corbeil-councillor,224
+Michael Korhonen,korhonen.michael@gatineau.ca,Councillor,Tsa Xana 18,michael-korhonen-councillor,205
+Frédérik Clément,fclement@vsj.ca,Councillor,Cape Mudge 10,fr-d-rik-cl-ment-councillor,145
+Jacques Cleary,jacques.cleary@ville.saguenay.qc.ca,Councillor,Cape Mudge 10,jacques-cleary-councillor,145
+Julie Bélisle,belisle.julie@gatineau.ca,Councillor,Cape Mudge 10,julie-b-lisle-councillor,145
+Robert Morin,Robert.morin@ville.terrebonne.qc.ca,Councillor,Cape Mudge 10,robert-morin-councillor,145
+Steve Dorval,steve.dorval@ville.levis.qc.ca,Councillor,Cape Mudge 10,steve-dorval-councillor,145
+Alexandre Fallu,afallu@ville.levis.qc.ca,Councillor,Oyster Bay 12,alexandre-fallu-councillor,105
+André Fontaine,Andre.fontaine@ville.terrebonne.qc.ca,Councillor,Oyster Bay 12,andr-fontaine-councillor,105
+Marc Carrière,carriere.marc@gatineau.ca,Councillor,Oyster Bay 12,marc-carri-re-councillor,105
+Marie-Claude Poitras,mpoitras@vsj.ca,Councillor,Oyster Bay 12,marie-claude-poitras-councillor,105
+Michel Potvin,michel.potvin@ville.saguenay.qc.ca,Councillor,Oyster Bay 12,michel-potvin-councillor,105
+Adrian Corbo,corbo.adrian@gatineau.ca,Councillor,McMillan Island 6,adrian-corbo-councillor,96
+Bruno Tremblay,bruno.tremblay@pointe-claire.ca,Councillor,McMillan Island 6,bruno-tremblay-councillor,96
+Denis Gignac,dgignac@sadb.qc.ca,Councillor,McMillan Island 6,denis-gignac-councillor,96
+Isabelle L'Heureux-Leblanc,ilheureuxleblanc@vsj.ca,Councillor,McMillan Island 6,isabelle-l-heureux-leblanc-councillor,96
+Jean-Marc Crevier,jean-marc.crevier@ville.saguenay.qc.ca,Councillor,McMillan Island 6,jean-marc-crevier-councillor,96
+Joe Bou-Faisal,jboufaisal@ville.dorval.qc.ca,Councillor,McMillan Island 6,joe-bou-faisal-councillor,96
+John Morson,jmorson@ville.kirkland.qc.ca,Councillor,McMillan Island 6,john-morson-councillor,96
+Linda Zizas,linda.zizas@montreal-est.ca,Councillor,McMillan Island 6,linda-zizas-councillor,96
+Lior Azerad,lazerad@cotesaintluc.org,Councillor,McMillan Island 6,lior-azerad-councillor,96
+Martin Laplaine,martin.laplaine@ville.mercier.qc.ca,Councillor,McMillan Island 6,martin-laplaine-councillor,96
+Michel Turner,mturner@ville.levis.qc.ca,Councillor,McMillan Island 6,michel-turner-councillor,96
+Paul Levine,plevine@westmount.org,Councillor,McMillan Island 6,paul-levine-councillor,96
+Sophie Allard,sophie.allard@brossard.ca,Councillor,McMillan Island 6,sophie-allard-councillor,96
+Tanya Narang,tnarang@senneville.ca,Councillor,McMillan Island 6,tanya-narang-councillor,96
+Tim Quinn,tim.quinn@beaconsfield.ca,Councillor,McMillan Island 6,tim-quinn-councillor,96
+Valérie Assouline,vassouline@ddo.qc.ca,Councillor,McMillan Island 6,val-rie-assouline-councillor,96
+Valérie Doyon,Valerie.Doyon@ville.terrebonne.qc.ca,Councillor,McMillan Island 6,val-rie-doyon-councillor,96
+Jean Lessard,lessard.jean@gatineau.ca,Councillor,Kowtain 17,jean-lessard-councillor,59
+Antonio D'Amico,adamico@westmount.org,Councillor,Coquitlam 1,antonio-d-amico-councillor,55
+Christian Gaudette,christian.gaudette@brossard.ca,Councillor,Coquitlam 1,christian-gaudette-councillor,55
+Claudine Demers,claudine.demers@pointe-claire.ca,Councillor,Coquitlam 1,claudine-demers-councillor,55
+Daniel Lucier,daniel.lucier@brossard.ca,Councillor,Coquitlam 1,daniel-lucier-councillor,55
+Dominique Godin,dominique.godin@beaconsfield.ca,Councillor,Coquitlam 1,dominique-godin-councillor,55
+Eric Monette,emonette@vsj.ca,Councillor,Coquitlam 1,eric-monette-councillor,55
+Jimmy Bouchard,jimmy.bouchard@ville.saguenay.qc.ca,Councillor,Coquitlam 1,jimmy-bouchard-councillor,55
+Julie Larivée,julie.larivee@montreal-est.ca,Councillor,Coquitlam 1,julie-lariv-e-councillor,55
+Laurence Parent,lparent@ddo.qc.ca,Councillor,Coquitlam 1,laurence-parent-councillor,55
+Michael Brown,mbrown@ville.kirkland.qc.ca,Councillor,Coquitlam 1,michael-brown-councillor,55
+Oren Sebag,osebag@cotesaintluc.org,Councillor,Coquitlam 1,oren-sebag-councillor,55
+Paul Trudeau,ptrudeau@ville.dorval.qc.ca,Councillor,Coquitlam 1,paul-trudeau-councillor,55
+Ryan Young,ryoung@sadb.qc.ca,Councillor,Coquitlam 1,ryan-young-councillor,55
+Serge Bonin,sbonin@ville.levis.qc.ca,Councillor,Coquitlam 1,serge-bonin-councillor,55
+Stephen Lee,slee@senneville.ca,Councillor,Coquitlam 1,stephen-lee-councillor,55
+Stéphane Roy,stephane.roy@ville.mercier.qc.ca,Councillor,Coquitlam 1,st-phane-roy-councillor,55
+Vicky Mokas,vicky.mokas@ville.terrebonne.qc.ca,Councillor,Coquitlam 1,vicky-mokas-councillor,55
+Vincent Roy,roy.vincent@gatineau.ca,Councillor,Coquitlam 1,vincent-roy-councillor,55
+Daniel Aucoin,Daniel.Aucoin@ville.terrebonne.qc.ca,Councillor,Squaw-Hay-One 11,daniel-aucoin-councillor,29
+Marc Bouchard,marc.bouchard@ville.saguenay.qc.ca,Councillor,Squaw-Hay-One 11,marc-bouchard-councillor,29
+Serge Côté,scote@ville.levis.qc.ca,Councillor,Squaw-Hay-One 11,serge-c-t-councillor,29
+Simon Marcil,smarcil@vsj.ca,Councillor,Squaw-Hay-One 11,simon-marcil-councillor,29
+Tiffany-Lee Norris Parent,norris-parent.tiffany-lee@gatineau.ca,Councillor,Squaw-Hay-One 11,tiffany-lee-norris-parent-councillor,29
+Marc-André Michaud,Marc-andre.michaud@ville.terrebonne.qc.ca,Councillor,Seaichem 16,marc-andr-michaud-councillor,15
+Timmy Jutras,jutras.timmy@gatineau.ca,Councillor,Seaichem 16,timmy-jutras-councillor,15
+Andrew Swidzinski,andrew.swidzinski@pointe-claire.ca,Councillor,Musqueam 4,andrew-swidzinski-councillor,10
+Anna Guarnieri,Anna.Guarnieri@ville.terrebonne.qc.ca,Councillor,Musqueam 4,anna-guarnieri-councillor,10
+Bettyna Bélizaire,belizaire.bettyna@gatineau.ca,Councillor,Musqueam 4,bettyna-b-lizaire-councillor,10
+David Newell,david.newell@beaconsfield.ca,Councillor,Musqueam 4,david-newell-councillor,10
+Domenico Zito,dzito@ville.kirkland.qc.ca,Councillor,Musqueam 4,domenico-zito-councillor,10
+Gurveen K. Chadha,gchadha@westmount.org,Councillor,Musqueam 4,gurveen-k-chadha-councillor,10
+Joanie Mathieu,jmathieu@vsj.ca,Councillor,Musqueam 4,joanie-mathieu-councillor,10
+Kevin Armstrong,kevin.armstrong@ville.saguenay.qc.ca,Councillor,Musqueam 4,kevin-armstrong-councillor,10
+Mario Bordeleau,mario.bordeleau@montreal-est.ca,Councillor,Musqueam 4,mario-bordeleau-councillor,10
+Michelle Jackson Trepanier,mjackson@senneville.ca,Councillor,Musqueam 4,michelle-jackson-trepanier-councillor,10
+Nicole Duchastel,nduchastel@ville.dorval.qc.ca,Councillor,Musqueam 4,nicole-duchastel-councillor,10
+Patrick Langlois,patrick.langlois@brossard.ca,Councillor,Musqueam 4,patrick-langlois-councillor,10
+Philippe Drolet,philippe.drolet@ville.mercier.qc.ca,Councillor,Musqueam 4,philippe-drolet-councillor,10
+Réjean Lamontagne,rlamontagne@ville.levis.qc.ca,Councillor,Musqueam 4,r-jean-lamontagne-councillor,10
+Steven Erdelyi,serdelyi@cotesaintluc.org,Councillor,Musqueam 4,steven-erdelyi-councillor,10
+Tanya Toledano,ttoledano@ddo.qc.ca,Councillor,Musqueam 4,tanya-toledano-councillor,10
+Tom Broad,tbroad@sadb.qc.ca,Councillor,Musqueam 4,tom-broad-councillor,10
+Edmond Leclerc,leclerc.edmond@gatineau.ca,Councillor,Entlqwekkinh 19,edmond-leclerc-councillor,5
+Benoît Ladouceur,Benoit.Ladouceur@ville.terrebonne.qc.ca,Councillor,Galiano Island 9,beno-t-ladouceur-councillor,0
+Brigitte Duchesneau,bduchesneau@ville.levis.qc.ca,Councillor,Galiano Island 9,brigitte-duchesneau-councillor,0
+Isabelle N. Miron,miron.isabellen@gatineau.ca,Councillor,Galiano Island 9,isabelle-n-miron-councillor,0
+Michel Tremblay,michel.tremblay@ville.saguenay.qc.ca,Councillor,Galiano Island 9,michel-tremblay-councillor,0
+Michelle J. Hui,michelle.hui@brossard.ca,Councillor,Galiano Island 9,michelle-j-hui-councillor,0
+Paula Gonzalves,pgonzalves@vsj.ca,Councillor,Galiano Island 9,paula-gonzalves-councillor,0
+Anastasia Assimakopoulos,anastasia@ddo.qc.ca,Councillor,Squirrel Cove 8,anastasia-assimakopoulos-councillor,0
+Andee Shuster,ashuster@cotesaintluc.org,Councillor,Squirrel Cove 8,andee-shuster-councillor,0
+Carl Miguel Maldonado,CarlMiguel.Maldonado@ville.terrebonne.qc.ca,Councillor,Squirrel Cove 8,carl-miguel-maldonado-councillor,0
+Isabelle Cousineau,cousineau.isabelle@gatineau.ca,Councillor,Squirrel Cove 8,isabelle-cousineau-councillor,0
+Karen Cliffe,kcliffe@ville.kirkland.qc.ca,Councillor,Squirrel Cove 8,karen-cliffe-councillor,0
+Kathleen Kez,kkez@westmount.org,Councillor,Squirrel Cove 8,kathleen-kez-councillor,0
+Marc-Antoine Lachance,malachance@vsj.ca,Councillor,Squirrel Cove 8,marc-antoine-lachance-councillor,0
+Michel Patry,michel.patry@ville.levis.qc.ca,Councillor,Squirrel Cove 8,michel-patry-councillor,0
+Mike Potvin,mike.potvin@pointe-claire.ca,Councillor,Squirrel Cove 8,mike-potvin-councillor,0
+Mireille Jean,mireille.jean@ville.saguenay.qc.ca,Councillor,Squirrel Cove 8,mireille-jean-councillor,0
+Xixi Li,xixi.li@brossard.ca,Councillor,Squirrel Cove 8,xixi-li-councillor,0

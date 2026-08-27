@@ -27,6 +27,7 @@
     "@supabase/supabase-js": "^2.112.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
+    "agent-twitter-client": "^0.0.18",
     "framer-motion": "^12.43.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^1.28.0",
