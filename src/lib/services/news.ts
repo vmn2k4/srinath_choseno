@@ -2,7 +2,6 @@ import type { SupabaseClient, PostgrestError } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { isDevEnvironment } from "@/lib/utils/environment";
 import { convertToPackificTime } from "@/lib/utils/timezone";
-import { fetchAllPages } from "@/lib/utils/fetchAllPages";
 
 type Client = SupabaseClient<Database>;
 type NewsArticleRow = Database["public"]["Tables"]["news_articles"]["Insert"];
@@ -88,8 +87,9 @@ export interface NewsArticleContent {
    * Optional medium-length neutral post -- shorter than tweetarticle, but
    * unlike `tweet` (a bare headline hook with no CTA), this one's whole
    * point is the review CTA: names the tagged politician and prompts the
-   * reader to review them. One or two short sentences, e.g. "What do you
-   * think of {name}? Review them on Choseno." Same as `tweet`, this is
+   * reader to review them, anchored to this story's specific decision. One
+   * or two short sentences, e.g. "Do you agree with {name}'s {decision}?
+   * Review them on Choseno." Same as `tweet`, this is
    * text ONLY -- no URL: the wall link isn't known at generation time (a
    * newly-tagged politician may not have a wall_slug yet), so
    * NewsArticleDetailClient resolves and appends it afterwards. Same
@@ -867,46 +867,28 @@ export interface BatchSummary {
 
 /**
  * Lightweight query to fetch distinct batch names and story counts without pulling heavy relations.
+ *
+ * Used to page through every published row client-side just to GROUP BY
+ * content->>'batch_number' in JS (see git history) -- with 2000+ published
+ * articles and a multi-KB `content` JSONB per row, that meant several MB
+ * transferred on every page load and every Refresh click just to populate a
+ * ~140-entry dropdown. get_news_batch_summary() (20260827000000 migration)
+ * does the same GROUP BY in Postgres and returns just the (batch, count)
+ * pairs.
  */
 export async function listDistinctBatches(
   supabase: Client
 ): Promise<{ data: BatchSummary[]; error: PostgrestError | null }> {
-  // PostgREST caps an unbounded select at 1000 rows (db-max-rows) -- with no
-  // .order() the truncated slice is effectively an arbitrary subset of
-  // published articles, not "the oldest" or "the newest", so once the table
-  // passes 1000 published rows this silently undercounts whichever batches
-  // happen to land past the cut -- confirmed live on 2026-08-24 (total
-  // stuck at "1000" while the DB had 1068, with today's newest batches
-  // showing 2-3 articles instead of their real 20). Page through with
-  // fetchAllPages so every published row is counted.
-  const { data, error } = await fetchAllPages<any>((from, to) =>
-    supabase
-      .from("news_articles")
-      .select("content, published_at, created_at")
-      .eq("status", "published")
-      .range(from, to)
-  );
+  const { data, error } = await (supabase.rpc as any)("get_news_batch_summary");
 
   if (error || !data) {
     return { data: [], error: error as PostgrestError | null };
   }
 
-  const map = new Map<string, number>();
-  data.forEach((row: any) => {
-    const content = row.content || {};
-    const rawBatch = content.batch_number;
-    const b =
-      rawBatch !== undefined && rawBatch !== null && String(rawBatch).trim() !== ""
-        ? String(rawBatch).trim()
-        : formatBatchNumberFromDate(row.published_at || row.created_at);
-    if (b) {
-      map.set(b, (map.get(b) || 0) + 1);
-    }
-  });
-
-  const batches = Array.from(map.entries())
-    .map(([batch, count]) => ({ batch: String(batch), count }))
-    .sort((a, b) => String(b.batch).localeCompare(String(a.batch), undefined, { numeric: true, sensitivity: "base" }));
+  const batches = (data as { batch: string; count: number }[]).map((row) => ({
+    batch: row.batch,
+    count: Number(row.count),
+  }));
 
   return { data: batches, error: null };
 }

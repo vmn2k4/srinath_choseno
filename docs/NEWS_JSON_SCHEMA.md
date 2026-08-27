@@ -29,7 +29,7 @@
 | `heroImageAlt` | ❌ | string | Accessible description (REQUIRED if hero_image_url set) |
 | `heroImageCaption` | ❌ | string | Photo credit |
 | `tweet` | 🌟 | string | **Captivating, click-optimized X/Twitter hook (~180-200 chars max)**. Plain text only — NO emojis, NO hashtags, NO URLs (Choseno automatically appends card link + topic hashtags). |
-| `tweetmedium` | 🌟 | string | **One neutral review-CTA sentence, required whenever a politician is tagged** — "What do you think of {name}? Review them on Choseno." Leads with the review prompt, not the news. Plain text only — NO emoji, NO hashtags, NO URL, NO opinion/praise/criticism (Choseno resolves and appends the tagged politician's actual wall link afterwards). |
+| `tweetmedium` | 🌟 | string | **One neutral review-CTA sentence, required whenever a politician is tagged** — anchored to this story's specific decision, e.g. "Do you agree with {name}'s {short decision phrase}? Review them on Choseno." Leads with the review prompt, not the news. Plain text only — NO emoji, NO hashtags, NO URL, NO opinion/praise/criticism/loaded adjectives (Choseno resolves and appends the tagged politician's actual wall link afterwards). |
 | `tweetarticle` | 🌟 | string | **Long-Form X (Twitter) Premium Neutral Article Post (~800-1,500 chars)**. Formatted with headline, key facts bullet points, balanced perspectives, and neutral Choseno rating CTA. |
 | `author` | ❌ | object | {name, bio, photoUrl (optional)} |
 | `taggedParty` | ❌ | string | Political party name (if specific party is subject) |
@@ -332,7 +332,7 @@ When a reader clicks "Share on X" on an article, Choseno needs some post text. B
 
 ## Tweet Medium — Review-First Share Text (Required when a politician is tagged)
 
-`tweet` leads with the news. `tweetarticle` is a full long-form analysis for X Premium. `tweetmedium` is neither — its only job is putting the review CTA in front of the reader before anything else, since driving reviews matters more here than summarizing the story. Set it whenever `taggedPoliticians`/`taggedPoliticianIds` is non-empty.
+`tweet` leads with the news. `tweetarticle` is a full long-form analysis for X Premium. `tweetmedium` is neither — its only job is putting the review CTA in front of the reader before anything else, since driving reviews matters more here than summarizing the story. Anchor it to the specific decision/action in *this* story rather than a generic prompt — that's the hook that gets people to click through. Set it whenever `taggedPoliticians`/`taggedPoliticianIds` is non-empty.
 
 Same rule as `tweet`: this is **just the sentence** — no URL. The politician's wall may not exist yet at generation time (a newly-tagged person might not have a `wall_slug` set), so Choseno resolves and appends the real link when a reader actually shares, not before.
 
@@ -341,11 +341,17 @@ Same rule as `tweet`: this is **just the sentence** — no URL. The politician's
 ```json
 {
   "taggedPoliticians": ["Mark Carney"],
-  "tweetmedium": "What do you think of Mark Carney? Review them on Choseno."
+  "tweetmedium": "Do you agree with Mark Carney's decision to raise the federal carbon levy? Review them on Choseno."
 }
 ```
 
 ### ❌ Incorrect
+
+```json
+{
+  "tweetmedium": "What do you think of Mark Carney? Review them on Choseno."  // ❌ Generic — doesn't reference the story's actual decision, weaker hook
+}
+```
 
 ```json
 {
@@ -355,7 +361,7 @@ Same rule as `tweet`: this is **just the sentence** — no URL. The politician's
 
 ```json
 {
-  "tweetmedium": "What do you think of Mark Carney? Review them: https://www.choseno.com/wall/mark-carney-prime-minister"  // ❌ URL included — Choseno appends the real wall link itself
+  "tweetmedium": "Do you agree with Mark Carney's decision to raise the federal carbon levy? Review them: https://www.choseno.com/wall/mark-carney-prime-minister"  // ❌ URL included — Choseno appends the real wall link itself
 }
 ```
 

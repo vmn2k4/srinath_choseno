@@ -350,6 +350,20 @@ export default function NewsArticleDetailClient({
 
   const formattedHashtagString = combinedTagList.map((t) => `#${t}`).join(" ");
 
+  // Politician data used by the short tweet's link, the top CTA button, the
+  // medium tweet's review link, and the long-post CTA below — resolved once
+  // here so all of them (and the button/anchor further down) share the same
+  // source of truth.
+  const linkedPoliticians = ((article as any).news_article_politicians?.filter((p: any) => p.profiles?.id) || []) as any[];
+  const primaryPolitician = linkedPoliticians[0]?.profiles;
+  const primaryWallSlug = primaryPolitician?.politician_profiles?.wall_slug;
+  const primaryWallUrl = primaryWallSlug
+    ? `/wall/${primaryWallSlug}`
+    : primaryPolitician?.current_ghost_id
+      ? `/wall/${primaryPolitician.current_ghost_id}`
+      : null;
+  const primaryWallFullUrl = primaryWallUrl ? `${SITE_URL}${primaryWallUrl}` : null;
+
   // The article's own hand-written `content.tweet` wins when set (admin/AI
   // JSON, see docs/NEWS_JSON_SCHEMA.md); otherwise fall back to the
   // auto-generated headline + CTA line. Either way it goes through
@@ -364,28 +378,19 @@ export default function NewsArticleDetailClient({
         : `${activeHeadline}\n\nTrack local democracy and rate your representatives on @choseno!`)
   );
 
-  const shareText = `${basePostText}\n\n${formattedHashtagString}\n${shareUrl}`;
+  // Short tweet links to the politician's wall (not the article) when one is
+  // tagged and resolved — the click-through goal here is "go review them",
+  // same reasoning the medium tweet below already uses. Falls back to the
+  // article link when no politician/wall is available.
+  const shareText = `${basePostText}\n\n${formattedHashtagString}\n${primaryWallFullUrl || shareUrl}`;
 
   // Twitter/X intent parameters:
   // - text: basePostText (custom `content.tweet` if the article has one, else the auto-generated headline + CTA)
-  // - url: Canonical URL (X automatically renders this as a rich Summary Large Image Card)
+  // - url: politician's wall link when available, else the canonical article URL (X renders whichever as a rich Summary Large Image Card)
   // - hashtags: Comma-separated list of all topics
   const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     basePostText
-  )}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(combinedTagList.join(","))}`;
-
-  // Politician data used by the top CTA button, the medium tweet's review
-  // link, and the long-post CTA below — resolved once here so all three
-  // (and the button/anchor further down) share the same source of truth.
-  const linkedPoliticians = ((article as any).news_article_politicians?.filter((p: any) => p.profiles?.id) || []) as any[];
-  const primaryPolitician = linkedPoliticians[0]?.profiles;
-  const primaryWallSlug = primaryPolitician?.politician_profiles?.wall_slug;
-  const primaryWallUrl = primaryWallSlug
-    ? `/wall/${primaryWallSlug}`
-    : primaryPolitician?.current_ghost_id
-      ? `/wall/${primaryPolitician.current_ghost_id}`
-      : null;
-  const primaryWallFullUrl = primaryWallUrl ? `${SITE_URL}${primaryWallUrl}` : null;
+  )}&url=${encodeURIComponent(primaryWallFullUrl || shareUrl)}&hashtags=${encodeURIComponent(combinedTagList.join(","))}`;
 
   const customTweetArticle = (content as any)?.tweetarticle?.trim();
   const politicianName = taggedReps.length > 0 ? taggedReps.join(", ") : undefined;

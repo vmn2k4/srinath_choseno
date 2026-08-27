@@ -428,10 +428,14 @@ export default function AdminNewsDistributionClient() {
       wallUrl || shareUrl
     )}`;
 
-    const shareText = `${basePostText}\n\n${formattedHashtagString}\n${shareUrl}`;
+    // Short tweet links to the politician's wall (not the article) when one
+    // is tagged and resolved -- the click-through goal for this post is
+    // "go review them", same reasoning as mediumTwitterUrl above. Falls
+    // back to the article link when no politician/wall is available.
+    const shareText = `${basePostText}\n\n${formattedHashtagString}\n${wallUrl || shareUrl}`;
     const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       basePostText
-    )}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(combinedTagList.join(","))}`;
+    )}&url=${encodeURIComponent(wallUrl || shareUrl)}&hashtags=${encodeURIComponent(combinedTagList.join(","))}`;
 
     const imageUrl = article.hero_image_url || `${SITE_URL}/api/news/${article.slug}/og-image`;
 
