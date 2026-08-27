@@ -67,6 +67,21 @@ function dimStr(row: { dimensionValues?: { value?: string | null }[] | null } | 
   return row?.dimensionValues?.[index]?.value || "";
 }
 
+// GA4's "bounceRate" metric comes back as a 0-1 fraction (e.g. 0.6234 for a
+// 62.34% bounce rate) -- unlike Search Console's "ctr", which the client
+// library there already returns the same way but this codebase converts to
+// points at the call site (see searchConsole.ts: `(row.ctr || 0) * 100`).
+// Every bounceRate field in this file needs that same *100 conversion --
+// route them all through here so the previous bug (rounding the raw
+// fraction to 2dp and calling it done, e.g. 0.6234 -> "0.62") can't sneak
+// back in one call site at a time. Every consumer (AnalyticsOverviewDashboard's
+// <50/<65 "traffic quality" thresholds, GoogleAnalyticsAdminClient's
+// `.toFixed(n)}%`) already assumes 0-100 -- this is the fix, not a followup
+// change to those.
+function bounceRatePct(row: { metricValues?: { value?: string | null }[] | null } | undefined, index: number): number {
+  return Math.round(metricNum(row, index) * 10000) / 100;
+}
+
 // GA4's "date" dimension comes back as YYYYMMDD with no separators.
 function formatGa4Date(raw: string): string {
   if (raw.length !== 8) return raw;
@@ -205,7 +220,7 @@ export async function getGa4Overview(
         activeUsers: metricNum(totalsRow, 1),
         pageViews: metricNum(totalsRow, 2),
         avgEngagementSec: Math.round(metricNum(totalsRow, 3)),
-        bounceRate: Math.round(metricNum(totalsRow, 4) * 100) / 100,
+        bounceRate: bounceRatePct(totalsRow, 4),
         conversions: metricNum(totalsRow, 5),
         newUsers: metricNum(totalsRow, 6),
       },
@@ -214,7 +229,7 @@ export async function getGa4Overview(
         sessions: metricNum(row, 0),
         activeUsers: metricNum(row, 1),
         pageViews: metricNum(row, 2),
-        bounceRate: Math.round(metricNum(row, 3) * 100) / 100,
+        bounceRate: bounceRatePct(row, 3),
         newUsers: metricNum(row, 4),
       })),
       hourlyTrend: (hourlyRes.rows || [])
@@ -241,13 +256,13 @@ export async function getGa4Overview(
       devices: (deviceRes.rows || []).map((row) => ({
         category: dimStr(row, 0) || "unknown",
         sessions: metricNum(row, 0),
-        bounceRate: Math.round(metricNum(row, 1) * 100) / 100,
+        bounceRate: bounceRatePct(row, 1),
       })),
       topCountries: (countryRes.rows || []).map((row) => ({
         country: dimStr(row, 0) || "Unknown",
         sessions: metricNum(row, 0),
         activeUsers: metricNum(row, 1),
-        bounceRate: Math.round(metricNum(row, 2) * 100) / 100,
+        bounceRate: bounceRatePct(row, 2),
       })),
       topCities: (cityRes.rows || []).map((row) => ({
         city: dimStr(row, 0) || "Unknown",
@@ -418,7 +433,7 @@ export async function getGa4GeoBreakdown(
         activeUsers: metricNum(row, 1),
         newUsers: metricNum(row, 2),
         avgEngagementSec: sessions > 0 ? Math.round(engagementDuration / sessions) : 0,
-        bounceRate: Math.round(metricNum(row, 4) * 100) / 100,
+        bounceRate: bounceRatePct(row, 4),
       };
     });
 
@@ -552,7 +567,7 @@ export async function getGa4RegionExplorer(
       return {
         path: dimStr(row, 0) || "/",
         sessions,
-        bounceRate: Math.round(metricNum(row, 1) * 100) / 100,
+        bounceRate: bounceRatePct(row, 1),
         avgEngagementSec: sessions > 0 ? Math.round(engagementDuration / sessions) : 0,
         newUsers: metricNum(row, 3),
       };
@@ -581,7 +596,7 @@ export async function getGa4RegionExplorer(
         pageViews: metricNum(totalsRow, 2),
         avgEngagementSec: totalSessions > 0 ? Math.round(metricNum(totalsRow, 3) / totalSessions) : 0,
         newUsers: metricNum(totalsRow, 4),
-        bounceRate: Math.round(metricNum(totalsRow, 5) * 100) / 100,
+        bounceRate: bounceRatePct(totalsRow, 5),
       },
       pages,
       landingPages,
