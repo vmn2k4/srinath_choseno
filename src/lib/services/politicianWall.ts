@@ -14,7 +14,7 @@ async function enrichProfileWithContactFallback(supabase: Client, profileData: a
   const { data: ohMatches } = await supabase
     .from("office_holders")
     .select(
-      "linked_profile_id, contact_email, contact_phone, source_url, photo_url, holding_since, is_current, term_ended_at, election_role_types(role_title), map_shapes(name, boundary_type)"
+      "linked_profile_id, map_shape_id, contact_email, contact_phone, source_url, photo_url, holding_since, is_current, term_ended_at, election_role_types(role_title), map_shapes(name, boundary_type)"
     )
     .or(`linked_profile_id.eq.${profileData.id},full_name.ilike."${escapedName}"`);
 
@@ -52,11 +52,22 @@ async function enrichProfileWithContactFallback(supabase: Client, profileData: a
       roleTitle: m.election_role_types.role_title as string,
       jurisdictionName: (m.map_shapes?.name as string | undefined) || null,
       boundaryType: (m.map_shapes?.boundary_type as string | undefined) || null,
+      mapShapeId: (m.map_shape_id as number | undefined) ?? null,
     }))
     .reduce((acc: any[], p: any) => {
       if (!acc.some((x) => x.roleTitle === p.roleTitle && x.jurisdictionName === p.jurisdictionName)) acc.push(p);
       return acc;
     }, []);
+
+  // politician_profiles.target_boundary_id is a free-text field almost
+  // never actually populated (backfilled for a small handful of profiles
+  // out of 30k+) -- office_holders.map_shape_id is the reliable source of
+  // truth instead (NOT NULL, populated for essentially every current
+  // officeholder). Exposed here as its own field rather than overwriting
+  // target_boundary_id, since callers (getRelatedPoliticians, races-nearby
+  // lookups) need the real numeric id regardless of whether the older
+  // column ever gets backfilled.
+  pp.resolved_boundary_id = pp.positions[0]?.mapShapeId ?? null;
 
   if (ohMatches && ohMatches.length > 0) {
     // Prefer a current row's contact/photo details over a former one's when
@@ -111,6 +122,8 @@ export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
          wall_slug,
          political_target_role,
          target_boundary_name,
+         target_boundary_id,
+         target_boundary_type,
          political_party_id,
          bio,
          avatar_url,
@@ -154,6 +167,8 @@ export async function getWallOwnerProfileBySlug(supabase: Client, wallSlug: stri
          wall_slug,
          political_target_role,
          target_boundary_name,
+         target_boundary_id,
+         target_boundary_type,
          political_party_id,
          bio,
          avatar_url,
@@ -456,7 +471,7 @@ export async function getActiveCandidacies(supabase: Client, profileId: string) 
       `id, seat_id, status,
        election_seats(
          id, role_title,
-         map_shapes(name, boundary_type),
+         map_shapes(name, boundary_type, properties),
          elections(id, name, status, election_date)
        )`
     )

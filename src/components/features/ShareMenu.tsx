@@ -16,6 +16,16 @@ export interface ShareData {
   hashtags: string[];
   twitterUrl: string;
   tweetArticleText?: string;
+  /**
+   * Medium-length X post -- shorter than tweetArticleText (the 800-1500
+   * char X-Premium-only long post) but unlike twitterUrl's bare 280-char
+   * headline hook, this one leads with the review CTA: names the tagged
+   * politician and links straight to their wall, since that's the point of
+   * this whole share flow more than the news summary is. Falls back to
+   * basePostText when the caller has no politician/wall to point at.
+   */
+  mediumPostText?: string;
+  mediumTwitterUrl?: string;
   imageUrl?: string;
 }
 
@@ -340,6 +350,28 @@ export default function ShareMenu({
         </svg>
         <span>Share on X (Short 280-char Hook)</span>
       </button>
+
+      {/* 2e. Share Medium (review-focused) Post on X -- between the bare
+          280-char headline hook above and the 800-1500 char X-Premium-only
+          long post further up. Leads with "review this person" instead of
+          the news summary; still fits the free-tier 280-char limit for most
+          names, but works for Premium too since it's not length-gated. */}
+      {shareData.mediumTwitterUrl && (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            window.open(shareData.mediumTwitterUrl, "_blank", "noopener,noreferrer");
+            closeMenu("X Medium Post");
+          }}
+          className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-sky-50 text-sky-700 font-semibold transition-colors text-left w-full cursor-pointer"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
+          <span>Share on X (Medium Post)</span>
+        </button>
+      )}
 
       {/* 3. Share on WhatsApp */}
       <button

@@ -169,6 +169,29 @@ function normalizeCountry(c) {
   return s.toUpperCase();
 }
 
+// A profile's `full_name` is often the full legal name (e.g. "Donald J. Trump",
+// "Sanford D. Bishop, Jr."), but news headlines/tags/body text almost always
+// refer to the person by first+last name only ("Trump", "Donald Trump",
+// "Sanford Bishop") -- never the middle initial or generational suffix. The
+// direct full-name regex below never matches that shorter, far more common
+// form, so anyone with a middle name/initial or suffix in `profiles.full_name`
+// (this was empirically confirmed for "Donald J. Trump" -- 0 auto-tagged
+// articles despite dozens mentioning him by name/headline) silently never
+// gets auto-tagged. getShortName() strips middle tokens/suffixes down to
+// "first last" so that shorter, common form is ALSO tested as a match
+// candidate alongside the full legal name and any LEADER_ALIASES entry.
+const NAME_SUFFIXES = new Set(['jr', 'sr', 'ii', 'iii', 'iv']);
+function getShortName(normName) {
+  const tokens = normName.split(' ').filter(t => t && !NAME_SUFFIXES.has(t));
+  if (tokens.length <= 2) return tokens.join(' ');
+  return `${tokens[0]} ${tokens[tokens.length - 1]}`;
+}
+
+const FEDERAL_LEADER_SHORT_NAMES = new Set([
+  'mark carney', 'pierre poilievre', 'justin trudeau', 'chrystia freeland', 'donald trump', 'joe biden',
+  'kamala harris', 'jd vance', 'hakeem jeffries', 'mike johnson', 'john thune', 'mitch mcconnell', 'alexandria ocasio cortez'
+]);
+
 // Helper to look up politician profile IDs by name and scan article text with geographic disambiguation
 async function resolvePoliticianIds(article, authHeaders) {
   if (!cachedPoliticianProfiles) {
@@ -215,21 +238,24 @@ async function resolvePoliticianIds(article, authHeaders) {
     if (!prof.full_name || prof.full_name.trim().length < 4) continue;
     const normName = normalizeName(prof.full_name);
     if (PROFILE_BLACKLIST.has(normName)) continue;
+    const shortName = getShortName(normName);
 
     let isMatch = false;
 
-    // 1. Direct word-boundary regex matching
-    const escapedName = normName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const nameRegex = new RegExp(`\\b${escapedName}\\b`, 'i');
-    if (nameRegex.test(normText)) {
-      isMatch = true;
-    } else if (LEADER_ALIASES[normName]) {
-      // 2. Alias matching
-      const alias = LEADER_ALIASES[normName];
-      const aliasEscaped = alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const aliasRegex = new RegExp(`\\b${aliasEscaped}\\b`, 'i');
-      if (aliasRegex.test(normText)) {
+    // Test the full legal name, the short "first last" form (drops middle
+    // names/initials/suffixes -- see getShortName()), and any explicit
+    // LEADER_ALIASES entry. Any one matching as a word-bounded substring of
+    // the article text is sufficient.
+    const candidates = new Set([normName, shortName]);
+    if (LEADER_ALIASES[normName]) candidates.add(normalizeName(LEADER_ALIASES[normName]));
+
+    for (const candidate of candidates) {
+      if (!candidate || candidate.length < 4) continue;
+      const escaped = candidate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`\\b${escaped}\\b`, 'i');
+      if (regex.test(normText)) {
         isMatch = true;
+        break;
       }
     }
 
@@ -243,7 +269,7 @@ async function resolvePoliticianIds(article, authHeaders) {
 
     // Check if this is a high-level federal leader (President, PM, Senator, MP, Federal Cabinet)
     const isFederalLeader = /(president|prime minister|senator|minister|mp\b|representative|congress)/i.test(profDesignation) ||
-      ['mark carney', 'pierre poilievre', 'justin trudeau', 'chrystia freeland', 'donald trump', 'joe biden', 'kamala harris', 'jd vance', 'hakeem jeffries', 'mike johnson', 'john thune', 'mitch mcconnell', 'alexandria ocasio cortez'].includes(normName);
+      FEDERAL_LEADER_SHORT_NAMES.has(normName) || FEDERAL_LEADER_SHORT_NAMES.has(shortName);
 
     // Country cross-check: if both article and profile have countries, they must match (unless bilateral trade/federal news)
     if (articleCountry && profCountry && articleCountry !== profCountry && !isFederalLeader) {

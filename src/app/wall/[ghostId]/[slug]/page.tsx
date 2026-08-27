@@ -241,12 +241,18 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
-      <PoliticianWallClient
-        ghostId={owner?.current_ghost_id || ghostId}
-        initialWallOwner={owner as any}
-        initialPosts={(posts as any) || []}
-        initialSupportCount={"count" in supportCountRes ? (supportCountRes as any).count || 0 : 0}
-      />
+      {/* PoliticianWallClient no longer carries its own horizontal padding
+          (see its own comment) -- this is now the one place that supplies
+          it for this route, matching what the main wall page does with its
+          own wrapper. */}
+      <div className="w-full max-w-none px-4 lg:px-8">
+        <PoliticianWallClient
+          ghostId={owner?.current_ghost_id || ghostId}
+          initialWallOwner={owner as any}
+          initialPosts={(posts as any) || []}
+          initialSupportCount={"count" in supportCountRes ? (supportCountRes as any).count || 0 : 0}
+        />
+      </div>
     </>
   );
 }

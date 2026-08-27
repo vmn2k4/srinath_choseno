@@ -11,12 +11,14 @@ import {
 } from "@/lib/services/politicianWall";
 import { getNewsArticlesByPolitician, getPublishedNewsArticles } from "@/lib/services/news";
 import { getRelatedPoliticians } from "@/lib/services/politicians";
+import { getOpenSeatsNearShapeIds } from "@/lib/services/elections";
+import { getShapeContainers } from "@/lib/services/boundaries";
 import { redirect } from "next/navigation";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, ChevronRight, Newspaper, Users } from "lucide-react";
+import { ArrowRight, ChevronRight, Newspaper, Users, Vote, MapPin } from "lucide-react";
 import { SITE_URL } from "@/lib/constants/site";
-import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
+import { buildPoliticianWallSlug, buildSeatSlug } from "@/lib/utils/slugs";
 import { normalizeCountryCode } from "@/lib/utils/newsGeography";
 import NewsArticleCard from "@/components/features/NewsArticleCard";
 import RelatedPoliticianCard from "@/components/features/RelatedPoliticianCard";
@@ -118,7 +120,14 @@ export async function generateMetadata({
       description,
       url: canonicalUrl,
       siteName: "Choseno",
-      type: "profile",
+      // "profile" is a less common OG type -- X's card parser may not
+      // recognize it cleanly and fall back to its own richer content-
+      // extraction rendering (the bullet-point "article summary" card seen
+      // in testing) instead of the plain summary_large_image card the
+      // twitter.card below asks for. "website" is the type X's parser
+      // handles most predictably. Unverified against live X behavior --
+      // this is a targeted experiment, not a confirmed fix.
+      type: "website",
       images: [
         {
           url: ogImageUrl,
@@ -163,25 +172,79 @@ export default async function WallPage({ params }: WallPageProps) {
   if (canonicalWallSlug && ghostId !== canonicalWallSlug) redirect(`/wall/${canonicalWallSlug}`);
 
   const ownerPartyId = (owner?.politician_profiles as { political_party_id?: number | null } | null)?.political_party_id;
+  // politician_profiles.target_boundary_id is a free-text field that's
+  // essentially never actually populated (5 of 31,687 rows, checked
+  // directly) -- resolved_boundary_id (set by enrichProfileWithContact
+  // Fallback in politicianWall.ts from the owner's own linked office_holders
+  // row, which reliably has a real map_shape_id) is the real source for
+  // every boundary-scoped lookup below.
+  const ownerBoundaryId = (owner?.politician_profiles as { resolved_boundary_id?: number | null } | null)?.resolved_boundary_id ?? null;
 
-  const [{ data: posts }, supportCountRes, { data: newsArchivePreview, count: newsArchiveCount }, { data: relatedPoliticians }] =
-    await Promise.all([
-      getWallPosts(supabase, owner.current_ghost_id),
-      owner?.id ? getSupporterCount(supabase, owner.id) : Promise.resolve({ count: 0 }),
-      // Full indexed news archive for this politician now lives at
-      // /wall/[slug]/news (see that route) -- this is just a 3-card teaser so
-      // the wall itself links out to it, instead of the wall only ever
-      // linking to the couple of articles mirrored as posts.
-      owner?.id
-        ? getNewsArticlesByPolitician(supabase, owner.id, { limit: 3, withCount: true })
-        : Promise.resolve({ data: [], count: 0 }),
-      // "Related People" rail -- gives a visitor who lands on a brand-new,
-      // otherwise-empty wall (no posts, no reviews, no tagged news yet)
-      // somewhere else on the platform to go instead of a dead end.
-      owner?.id
-        ? getRelatedPoliticians(supabase, { excludeProfileId: owner.id, politicalPartyId: ownerPartyId, country: owner.country })
-        : Promise.resolve({ data: [] }),
-    ]);
+  // "Same country" alone was the old fallback for both Related People and
+  // (implicitly) any area-scoped lookup -- it produced results with no
+  // actual geographic relevance (a Michigan Representative's wall showing
+  // an Austin mayor and Chicago councillors, sharing nothing but a party
+  // and a country). Almost every district/riding has exactly one current
+  // officeholder, so matching on the exact boundary alone is nearly always
+  // empty too. What a visitor actually wants is "other leaders from this
+  // area" -- the Governor, Senators, other Representatives, State
+  // Senators, city mayors -- which means walking UP to the containing
+  // state/province (shape_containers) and then back DOWN to every other
+  // shape inside it. Sequential, not folded into the main Promise.all
+  // below, since areaShapeIds has to exist before the queries that use it
+  // can even be constructed.
+  let areaShapeIds: number[] = ownerBoundaryId ? [ownerBoundaryId] : [];
+  if (ownerBoundaryId) {
+    const { data: containers } = await getShapeContainers(supabase, ownerBoundaryId);
+    const containerIds = (containers || []).map((c: any) => c.container_shape_id).filter(Boolean);
+    if (containerIds.length > 0) {
+      areaShapeIds.push(...containerIds);
+      const { data: siblingShapes } = await supabase
+        .from("shape_containers")
+        .select("map_shape_id")
+        .in("container_shape_id", containerIds);
+      areaShapeIds.push(...((siblingShapes || []).map((s: any) => s.map_shape_id).filter(Boolean)));
+    }
+  }
+
+  const [
+    { data: posts },
+    supportCountRes,
+    { data: newsArchivePreview, count: newsArchiveCount },
+    { data: relatedPoliticians },
+    { data: areaSeats },
+  ] = await Promise.all([
+    getWallPosts(supabase, owner.current_ghost_id),
+    owner?.id ? getSupporterCount(supabase, owner.id) : Promise.resolve({ count: 0 }),
+    // Full indexed news archive for this politician now lives at
+    // /wall/[slug]/news (see that route) -- this is just a 3-card teaser so
+    // the wall itself links out to it, instead of the wall only ever
+    // linking to the couple of articles mirrored as posts.
+    owner?.id
+      ? getNewsArticlesByPolitician(supabase, owner.id, { limit: 3, withCount: true })
+      : Promise.resolve({ data: [], count: 0 }),
+    // "Related People" rail -- gives a visitor who lands on a brand-new,
+    // otherwise-empty wall (no posts, no reviews, no tagged news yet)
+    // somewhere else on the platform to go instead of a dead end. Exact
+    // boundary first (rare -- most seats are single-holder), then the
+    // wider area (see areaShapeIds above and getRelatedPoliticians's doc
+    // comment), then party, then country.
+    owner?.id
+      ? getRelatedPoliticians(supabase, {
+          excludeProfileId: owner.id,
+          politicalPartyId: ownerPartyId,
+          country: owner.country,
+          boundaryId: ownerBoundaryId,
+          areaShapeIds,
+        })
+      : Promise.resolve({ data: [] }),
+    // Races happening in this politician's own area -- not just their exact
+    // seat (an upcoming re-election, when one's open) but the same
+    // state/province-wide area used for Related People above, so a
+    // Governor's or Senate race shows up here too, not only a race for the
+    // visitor's own specific district.
+    areaShapeIds.length > 0 ? getOpenSeatsNearShapeIds(supabase, areaShapeIds) : Promise.resolve({ data: [] }),
+  ]);
 
   // No news article has been tagged to this specific politician yet --
   // fall back to general recent coverage for their country so the wall
@@ -311,88 +374,164 @@ export default async function WallPage({ params }: WallPageProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
       )}
-      {/* Visible counterpart to the BreadcrumbList schema above -- gives a
-          visitor who landed here straight from a search result or a shared
-          link somewhere to go besides the wall itself, instead of the trail
-          existing only for crawlers. */}
-      <nav aria-label="Breadcrumb" className="w-full max-w-none px-4 lg:px-8 pt-4 -mb-2">
-        <ol className="flex items-center gap-1.5 text-xs font-medium text-text-muted flex-wrap">
-          <li>
-            <Link href="/" className="hover:text-primary transition-colors">
-              Home
-            </Link>
-          </li>
-          <ChevronRight size={12} className="shrink-0 opacity-60" />
-          <li>
-            <Link href="/elections" className="hover:text-primary transition-colors">
-              Elections & Races
-            </Link>
-          </li>
-          <ChevronRight size={12} className="shrink-0 opacity-60" />
-          <li className="text-text-secondary font-semibold truncate max-w-[220px]" aria-current="page">
-            {name}
-          </li>
-        </ol>
-      </nav>
+      <div className="w-full max-w-none px-4 lg:px-8 pt-4 pb-4 flex items-center justify-between gap-3 flex-wrap">
+        {/* Visible counterpart to the BreadcrumbList schema above -- gives a
+            visitor who landed here straight from a search result or a shared
+            link somewhere to go besides the wall itself, instead of the trail
+            existing only for crawlers. */}
+        <nav aria-label="Breadcrumb">
+          <ol className="flex items-center gap-1.5 text-xs font-medium text-text-muted flex-wrap">
+            <li>
+              <Link href="/" className="hover:text-primary transition-colors">
+                Home
+              </Link>
+            </li>
+            <ChevronRight size={12} className="shrink-0 opacity-60" />
+            <li>
+              <Link href="/elections" className="hover:text-primary transition-colors">
+                Elections & Races
+              </Link>
+            </li>
+            <ChevronRight size={12} className="shrink-0 opacity-60" />
+            <li className="text-text-secondary font-semibold truncate max-w-[220px]" aria-current="page">
+              {name}
+            </li>
+          </ol>
+        </nav>
+        {/* This is {name}'s district -- a natural moment to point a visitor
+            at finding their OWN, rather than only ever being able to look up
+            someone else's. Server-rendered (not in PoliticianWallClient) so
+            it's visible immediately, no client hydration wait. */}
+        <Link
+          href="/find-my-district"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-primary hover:bg-primary-hover transition-colors shrink-0 px-3 py-1.5 rounded-lg"
+        >
+          <MapPin size={12} /> Find your district & leaders <ArrowRight size={12} />
+        </Link>
+      </div>
 
-      <PoliticianWallClient
-        ghostId={owner.current_ghost_id}
-        initialWallOwner={owner as any}
-        initialPosts={(posts as any) || []}
-        initialSupportCount={"count" in supportCountRes ? supportCountRes.count || 0 : 0}
-      />
+      {/* Discovery rail passed as a prop, not a sibling -- PoliticianWallClient
+          places this beside the post feed specifically (below the profile
+          header/rating bar/composer, which stay full-width), not beside
+          the whole component. Order: Related People, then Races Happening,
+          then Related News below both -- news moved here from its own
+          full-width section since it's the same "here's somewhere else to
+          go" discovery content as the other two, not primary wall content. */}
+      <div className="w-full max-w-none px-4 lg:px-8 pb-16">
+        <PoliticianWallClient
+          ghostId={owner.current_ghost_id}
+          initialWallOwner={owner as any}
+          initialPosts={(posts as any) || []}
+          initialSupportCount={"count" in supportCountRes ? supportCountRes.count || 0 : 0}
+          sidebar={
+            <div className="space-y-8">
+              {/* Related People -- the other half of "this wall is empty,
+                  now what": someone landing on a wall with no
+                  reviews/posts/news yet gets somewhere else to go instead
+                  of a dead end. Exact boundary first (rare), then the same
+                  area (state/province and everything in it), then party,
+                  then country (see getRelatedPoliticians). */}
+              {relatedPoliticians && relatedPoliticians.length > 0 && (
+                <div className="space-y-4">
+                  <h2 className="text-sm font-bold text-text-main flex items-center gap-2">
+                    <Users size={16} className="text-primary" /> Related People
+                  </h2>
+                  <div className="grid grid-cols-1 gap-3">
+                    {relatedPoliticians.map((politician) => (
+                      <RelatedPoliticianCard key={politician.id} politician={politician} />
+                    ))}
+                  </div>
+                </div>
+              )}
 
-      {/* News coverage teaser -- links out to the full indexed archive at
-          /wall/[slug]/news when articles are actually tagged to this
-          politician; falls back to general recent coverage for their
-          country (newsIsDirectlyTagged=false) so a brand-new wall with no
-          tagged articles yet still has a news section instead of none. */}
-      {newsToShow && newsToShow.length > 0 && (
-        <div className="w-full max-w-none px-4 lg:px-8 pb-8 -mt-6 space-y-4">
-          <div className="flex items-center justify-between gap-3">
-            <h2 className="text-sm font-bold text-text-main flex items-center gap-2">
-              <Newspaper size={16} className="text-primary" />
-              {newsIsDirectlyTagged ? `News Coverage of ${name}` : "Recent Political News"}
-            </h2>
-            <Link
-              href={newsIsDirectlyTagged ? `/wall/${canonicalWallSlug}/news` : "/news"}
-              className="text-xs font-bold text-primary hover:text-primary-hover inline-flex items-center gap-1 shrink-0"
-            >
-              {newsIsDirectlyTagged ? `View all ${newsArchiveCount ?? newsToShow.length} stories` : "Browse all news"}{" "}
-              <ArrowRight size={12} />
-            </Link>
-          </div>
-          {!newsIsDirectlyTagged && (
-            <p className="text-xs text-text-muted -mt-2">
-              No stories are tagged to {name} yet &mdash; here&rsquo;s what&rsquo;s happening in {owner.country} right now.
-              Rate {name} on an article once one covers them.
-            </p>
-          )}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {newsToShow.map((article: any) => (
-              <NewsArticleCard key={article.id} article={article} />
-            ))}
-          </div>
-        </div>
-      )}
+              {/* Races Happening in This Area -- an upcoming or active
+                  election anywhere in {name}'s broader area (their own seat
+                  plus their state/province and everything in it -- see
+                  areaShapeIds), surfaced right on their wall instead of
+                  requiring a visitor to already know to check /elections
+                  separately. Capped at 5 -- a whole state can easily have a
+                  dozen+ open congressional races at once, and a long
+                  identical-looking list ("U.S. Representative" repeated
+                  with no way to tell them apart) is worse than a short one.
+                  Each row's primary line now names the actual district/area
+                  (not just the shared role title) so the 5 that do show are
+                  distinguishable at a glance. Empty for most walls most of
+                  the time (elections aren't constantly running) -- that's
+                  expected, not a bug. */}
+              {areaSeats && areaSeats.length > 0 && (
+                <div className="space-y-4">
+                  <h2 className="text-sm font-bold text-text-main flex items-center gap-2">
+                    <Vote size={16} className="text-primary" /> Races Happening in {boundaryName || "This Area"}
+                  </h2>
+                  <div className="grid grid-cols-1 gap-3">
+                    {areaSeats.slice(0, 5).map((seat: any) => {
+                      const election = Array.isArray(seat.elections) ? seat.elections[0] : seat.elections;
+                      const shape = Array.isArray(seat.map_shapes) ? seat.map_shapes[0] : seat.map_shapes;
+                      const seatSlug = buildSeatSlug({ id: seat.id, role_title: seat.role_title, map_shapes: shape });
+                      const electionDate = election?.election_date
+                        ? new Date(election.election_date).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })
+                        : null;
+                      return (
+                        <Link
+                          key={seat.id}
+                          href={`/elections/seat/${seatSlug}`}
+                          className="flex items-center justify-between gap-3 p-4 rounded-xl border border-border bg-surface hover:border-primary/40 transition-colors"
+                        >
+                          <div className="min-w-0">
+                            <p className="text-sm font-bold text-text-main truncate">
+                              {seat.role_title}
+                              {shape?.name ? ` — ${shape.name}` : ""}
+                            </p>
+                            <p className="text-xs text-text-muted truncate">
+                              {election?.name || "Election"}
+                              {electionDate ? ` · ${electionDate}` : ""}
+                            </p>
+                          </div>
+                          <ArrowRight size={14} className="shrink-0 text-text-muted" />
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
-      {/* Related People -- the other half of "this wall is empty, now
-          what": someone landing on a wall with no reviews/posts/news yet
-          gets somewhere else to go instead of a dead end. Fellow party
-          members first, topped up with other current officeholders in the
-          same country (see getRelatedPoliticians). */}
-      {relatedPoliticians && relatedPoliticians.length > 0 && (
-        <div className="w-full max-w-none px-4 lg:px-8 pb-16 space-y-4">
-          <h2 className="text-sm font-bold text-text-main flex items-center gap-2">
-            <Users size={16} className="text-primary" /> Related People
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {relatedPoliticians.map((politician) => (
-              <RelatedPoliticianCard key={politician.id} politician={politician} />
-            ))}
-          </div>
-        </div>
-      )}
+              {/* Related News -- links out to the full indexed archive at
+                  /wall/[slug]/news when articles are actually tagged to
+                  this politician; falls back to general recent coverage
+                  for their country (newsIsDirectlyTagged=false) so a
+                  brand-new wall with no tagged articles yet still has a
+                  news section instead of none. */}
+              {newsToShow && newsToShow.length > 0 && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <h2 className="text-sm font-bold text-text-main flex items-center gap-2">
+                      <Newspaper size={16} className="text-primary" />
+                      {newsIsDirectlyTagged ? "Related News" : "Recent Political News"}
+                    </h2>
+                    <Link
+                      href={newsIsDirectlyTagged ? `/wall/${canonicalWallSlug}/news` : "/news"}
+                      className="text-xs font-bold text-primary hover:text-primary-hover inline-flex items-center gap-1 shrink-0"
+                    >
+                      {newsIsDirectlyTagged ? `View all ${newsArchiveCount ?? newsToShow.length}` : "Browse all"}{" "}
+                      <ArrowRight size={12} />
+                    </Link>
+                  </div>
+                  {!newsIsDirectlyTagged && (
+                    <p className="text-xs text-text-muted -mt-2">
+                      No stories are tagged to {name} yet &mdash; here&rsquo;s what&rsquo;s happening in {owner.country} right now.
+                    </p>
+                  )}
+                  <div className="grid grid-cols-1 gap-3">
+                    {newsToShow.map((article: any) => (
+                      <NewsArticleCard key={article.id} article={article} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          }
+        />
+      </div>
     </>
   );
 }

@@ -29,6 +29,7 @@
 | `heroImageAlt` | ❌ | string | Accessible description (REQUIRED if hero_image_url set) |
 | `heroImageCaption` | ❌ | string | Photo credit |
 | `tweet` | 🌟 | string | **Captivating, click-optimized X/Twitter hook (~180-200 chars max)**. Plain text only — NO emojis, NO hashtags, NO URLs (Choseno automatically appends card link + topic hashtags). |
+| `tweetmedium` | 🌟 | string | **One neutral review-CTA sentence, required whenever a politician is tagged** — "What do you think of {name}? Review them on Choseno." Leads with the review prompt, not the news. Plain text only — NO emoji, NO hashtags, NO URL, NO opinion/praise/criticism (Choseno resolves and appends the tagged politician's actual wall link afterwards). |
 | `tweetarticle` | 🌟 | string | **Long-Form X (Twitter) Premium Neutral Article Post (~800-1,500 chars)**. Formatted with headline, key facts bullet points, balanced perspectives, and neutral Choseno rating CTA. |
 | `author` | ❌ | object | {name, bio, photoUrl (optional)} |
 | `taggedParty` | ❌ | string | Political party name (if specific party is subject) |
@@ -329,6 +330,39 @@ When a reader clicks "Share on X" on an article, Choseno needs some post text. B
 
 ---
 
+## Tweet Medium — Review-First Share Text (Required when a politician is tagged)
+
+`tweet` leads with the news. `tweetarticle` is a full long-form analysis for X Premium. `tweetmedium` is neither — its only job is putting the review CTA in front of the reader before anything else, since driving reviews matters more here than summarizing the story. Set it whenever `taggedPoliticians`/`taggedPoliticianIds` is non-empty.
+
+Same rule as `tweet`: this is **just the sentence** — no URL. The politician's wall may not exist yet at generation time (a newly-tagged person might not have a `wall_slug` set), so Choseno resolves and appends the real link when a reader actually shares, not before.
+
+### ✅ Correct
+
+```json
+{
+  "taggedPoliticians": ["Mark Carney"],
+  "tweetmedium": "What do you think of Mark Carney? Review them on Choseno."
+}
+```
+
+### ❌ Incorrect
+
+```json
+{
+  "tweetmedium": "Mark Carney is doing a great job managing the economy — review him!"  // ❌ Opinion/praise baked in — must stay neutral regardless of how the story reflects on the person
+}
+```
+
+```json
+{
+  "tweetmedium": "What do you think of Mark Carney? Review them: https://www.choseno.com/wall/mark-carney-prime-minister"  // ❌ URL included — Choseno appends the real wall link itself
+}
+```
+
+**Rule:** Omit only when no politician is tagged — the frontend falls back to the article's headline hook in that case. When a politician *is* tagged, always set it; that's the whole point of this field.
+
+---
+
 ## Breaking News (Auto-Expires)
 
 ### ✅ Breaking News
@@ -455,6 +489,7 @@ Before running the script, verify Grok will generate:
 - [ ] Hero image URL only if source provides real image
 - [ ] If hero_image_url set, heroImageAlt also set
 - [ ] If `tweet` is set: no emoji, no hashtags, no URL, under ~200 characters
+- [ ] If a politician is tagged: `tweetmedium` is set, is one neutral sentence, and has no emoji/hashtags/URL/opinion
 
 ---
 

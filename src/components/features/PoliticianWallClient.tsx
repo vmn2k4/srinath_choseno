@@ -78,7 +78,7 @@ const VideoRecorder = dynamic(() => import("./VideoRecorder"), {
 import ReportDialog from "./ReportDialog";
 import { createClient } from "@/lib/supabase/client";
 import { trackPostCreated, trackPostEngagement, trackCommentAdded, trackPoliticianViewed } from "@/lib/analytics/events";
-import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
+import { buildPoliticianWallSlug, buildSeatSlug } from "@/lib/utils/slugs";
 import { mergeWallPosts } from "@/lib/utils/mergeWallPosts";
 
 interface WallOwnerRecord {
@@ -134,6 +134,16 @@ interface PoliticianWallClientProps {
   initialWallOwner?: WallOwnerRecord | null;
   initialPosts?: PostWithComments[];
   initialSupportCount?: number;
+  /**
+   * Optional discovery-rail content (Related People, Races Happening, etc.)
+   * rendered beside the post feed specifically -- not beside the profile
+   * header/rating bar/composer above it. Passed in as a prop (rather than
+   * page.tsx wrapping this whole component in a grid) so it can start at
+   * the feed's actual position without needing to split this component's
+   * shared state across two separately-rendered pieces. Server-rendered
+   * content (page.tsx builds it, this component only places it).
+   */
+  sidebar?: React.ReactNode;
 }
 
 export default function PoliticianWallClient({
@@ -141,6 +151,7 @@ export default function PoliticianWallClient({
   initialWallOwner = null,
   initialPosts = [],
   initialSupportCount = 0,
+  sidebar,
 }: PoliticianWallClientProps) {
   const supabase = createClient();
   const { user } = useAuth();
@@ -822,7 +833,11 @@ export default function PoliticianWallClient({
   );
 
   return (
-    <div className="w-full max-w-none pb-20 px-4 lg:px-8 space-y-6">
+    // No horizontal padding here -- both call sites (src/app/wall/[ghostId]/
+    // page.tsx and .../[slug]/page.tsx) supply their own px-4 lg:px-8 wrapper
+    // now, so this component can be nested inside a wider layout (a grid
+    // column alongside a sidebar, on the main wall page) without doubling up.
+    <div className="w-full max-w-none pb-20 space-y-6">
       {/* Accessible SEO & AI Search Entity Lead Block */}
       {wallOwner && (
         <section aria-label="Politician Profile Overview" className="sr-only">
@@ -1015,14 +1030,26 @@ export default function PoliticianWallClient({
                 const seat = cand.election_seats as any;
                 const election = seat?.elections as any;
                 const shape = seat?.map_shapes as any;
-                const isActive = election?.status === "active";
+                // "active" alone was wrong -- a race sitting in nomination
+                // (the normal state for most of an election cycle, well
+                // before polling day) has status "nominations_open" or
+                // "nominations_closed", not "active" yet. That narrower
+                // check meant this chip silently rendered nothing for
+                // almost every real candidacy, even though the "CURRENTLY
+                // RUNNING FOR" heading above it still showed (it only
+                // checks candidacies.length > 0). Same open-race status set
+                // used everywhere else in the app (see
+                // getOpenSeatsNearShapeIds in elections.ts).
+                const isOpenRace = ["nominations_open", "nominations_closed", "active"].includes(election?.status);
 
-                if (!isActive) return null;
+                if (!isOpenRace || !seat?.id) return null;
+
+                const seatSlug = buildSeatSlug({ id: seat.id, role_title: seat.role_title, map_shapes: shape });
 
                 return (
                   <a
                     key={cand.id}
-                    href={`/elections/${election?.id}/seats/${cand.seat_id}`}
+                    href={`/elections/seat/${seatSlug}`}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-hover border border-border-light/60 rounded-full hover:bg-surface-active hover:border-primary/40 transition-all text-xs font-semibold text-text-secondary"
                   >
                     <span>{seat?.role_title}</span>
@@ -1214,7 +1241,11 @@ export default function PoliticianWallClient({
         </Card>
       )}
 
-      {/* Wall Post Feed */}
+      {/* Wall Post Feed -- paired with the optional sidebar prop in a grid
+          starting exactly here, not any higher (the profile header, rating
+          bar, and composer above stay full-width). */}
+      <div className={sidebar ? "lg:grid lg:grid-cols-[1fr_340px] lg:gap-8 lg:items-start" : undefined}>
+      <div className="min-w-0">
       {displayedPosts.length === 0 ? (
         <EmptyState
           icon={Users}
@@ -1264,6 +1295,9 @@ export default function PoliticianWallClient({
           </div>
         </>
       )}
+      </div>
+      {sidebar && <div className="mt-8 lg:mt-0">{sidebar}</div>}
+      </div>
 
       {showReportProfile && wallOwner?.id && (
         <ReportDialog

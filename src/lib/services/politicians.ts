@@ -129,11 +129,18 @@ function toRelatedPolitician(row: any): RelatedPolitician | null {
 /**
  * Other current office holders to surface as "Related People" on a
  * politician's wall -- the wall page's antidote to a first-time visitor
- * landing on a brand-new, empty profile with nowhere else to go. Two-tier:
- * fellow party members first (most relevant), topped up with any other
- * current officeholder in the same country if the party alone doesn't fill
- * `limit` (e.g. an independent, or a party with too few other seated
- * members yet).
+ * landing on a brand-new, empty profile with nowhere else to go. Four-tier,
+ * most relevant first: other current officeholders in the exact SAME
+ * boundary (rare -- most districts have exactly one seat, so this usually
+ * only hits for a city with multiple councillors), then anyone in the same
+ * broader AREA (their state/province and everything within it -- the
+ * Governor, Senators, other Representatives, State Senators, city mayors --
+ * see areaShapeIds), then fellow party members anywhere, then topped up
+ * with any other current officeholder in the same country if none of the
+ * above fill `limit`. Country alone (the old fallback) produced results
+ * with no actual geographic relevance -- a Michigan Representative's wall
+ * showing an Austin mayor and Chicago councillors, sharing nothing but a
+ * party and a country -- which the areaShapeIds tier exists to fix.
  */
 export async function getRelatedPoliticians(
   supabase: Client,
@@ -141,10 +148,16 @@ export async function getRelatedPoliticians(
     excludeProfileId?: string | null;
     politicalPartyId?: number | null;
     country?: string | null;
+    /** The wall subject's own boundary (their office_holders.map_shape_id) -- other officeholders sharing this exact seat/district are the single most relevant match possible, when they exist at all. */
+    boundaryId?: number | string | null;
+    /** The wall subject's boundary PLUS its containing state/province PLUS every other shape within that same state/province (see page.tsx's shape_containers lookup) -- this is what actually finds "other leaders from the same area" for the near-universal case of a single-seat district with nobody else to match on boundaryId alone. */
+    areaShapeIds?: (number | string)[] | null;
     limit?: number;
   }
 ): Promise<{ data: RelatedPolitician[] }> {
   const limit = params.limit ?? 4;
+  const boundaryId = params.boundaryId ? Number(params.boundaryId) : null;
+  const areaShapeIds = (params.areaShapeIds || []).map(Number).filter((n) => !Number.isNaN(n));
 
   const baseQuery = () => {
     let q = supabase
@@ -160,25 +173,38 @@ export async function getRelatedPoliticians(
 
   const rows: any[] = [];
   const seenIds = new Set<string>();
-
-  if (params.politicalPartyId) {
-    const { data } = await baseQuery().eq("political_party_id", params.politicalPartyId);
+  const addRows = (data: any[] | null) => {
     for (const row of data || []) {
-      if (seenIds.has(row.id)) continue;
+      if (seenIds.has(row.id) || rows.length >= limit) continue;
       rows.push(row);
       seenIds.add(row.id);
     }
+  };
+
+  if (boundaryId && !Number.isNaN(boundaryId)) {
+    const { data } = await baseQuery().eq("map_shape_id", boundaryId);
+    addRows(data);
+  }
+
+  if (rows.length < limit && areaShapeIds.length > 0) {
+    let areaQuery = baseQuery().in("map_shape_id", areaShapeIds);
+    if (seenIds.size > 0) areaQuery = areaQuery.not("id", "in", `(${[...seenIds].join(",")})`);
+    const { data } = await areaQuery;
+    addRows(data);
+  }
+
+  if (rows.length < limit && params.politicalPartyId) {
+    let partyQuery = baseQuery().eq("political_party_id", params.politicalPartyId);
+    if (seenIds.size > 0) partyQuery = partyQuery.not("id", "in", `(${[...seenIds].join(",")})`);
+    const { data } = await partyQuery;
+    addRows(data);
   }
 
   if (rows.length < limit) {
     let fallbackQuery = baseQuery();
     if (seenIds.size > 0) fallbackQuery = fallbackQuery.not("id", "in", `(${[...seenIds].join(",")})`);
     const { data } = await fallbackQuery;
-    for (const row of data || []) {
-      if (seenIds.has(row.id) || rows.length >= limit) continue;
-      rows.push(row);
-      seenIds.add(row.id);
-    }
+    addRows(data);
   }
 
   return { data: rows.map(toRelatedPolitician).filter((p): p is RelatedPolitician => p !== null).slice(0, limit) };

@@ -84,6 +84,19 @@ export interface NewsArticleContent {
    * Includes key policy points, balanced perspectives, and a neutral CTA to rate on Choseno.
    */
   tweetarticle?: string;
+  /**
+   * Optional medium-length neutral post -- shorter than tweetarticle, but
+   * unlike `tweet` (a bare headline hook with no CTA), this one's whole
+   * point is the review CTA: names the tagged politician and prompts the
+   * reader to review them. One or two short sentences, e.g. "What do you
+   * think of {name}? Review them on Choseno." Same as `tweet`, this is
+   * text ONLY -- no URL: the wall link isn't known at generation time (a
+   * newly-tagged politician may not have a wall_slug yet), so
+   * NewsArticleDetailClient resolves and appends it afterwards. Same
+   * neutrality rules as `tweet`/`tweetarticle` apply. Falls back to a
+   * generated version when unset (see docs/NEWS_JSON_SCHEMA.md).
+   */
+  tweetmedium?: string;
   /** Human-readable publishing batch timestamp/tag (e.g. "2026-08-18 23:25" or "BATCH-2026-08-18-2325") */
   batch_number?: string;
   /** Calculated or assigned viral potential score (e.g. 9.8) */

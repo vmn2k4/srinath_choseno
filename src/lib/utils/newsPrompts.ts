@@ -98,6 +98,7 @@ ${personInstructions(person)}
   "metaDescription": "Concise meta description under 160 characters summarizing the article for search engines",
   "tags": ["tag1", "tag2", "tag3"],
   "tweet": "REQUIRED & CLICK-OPTIMIZED. A highly engaging, captivating 1-2 sentence hook designed for X/Twitter sharing to maximize discovery and click-throughs. Focus on the civic stakes, key decision, or accountability angle (e.g. 'Premier David Eby reshuffles BC Cabinet amid surging healthcare demands — see how the changes impact your riding.'). Plain text ONLY — no emojis, no hashtags, no URLs (Choseno automatically appends the canonical card link and topic hashtags). Keep under 200 characters.",
+  "tweetmedium": "REQUIRED whenever taggedPoliticians/taggedPoliticianIds is non-empty, otherwise omit. A single neutral sentence that puts REVIEWING THE POLITICIAN ahead of everything else — not a news summary, a review prompt. Pattern: 'What do you think of {full name}? Review them on Choseno.' — swap in the actual tagged politician's name (join with 'and' if 2, use 'the officials involved' if 3+). Strictly neutral: no praise, no criticism, no loaded framing — the sentence should read the same regardless of whether the story reflects well or badly on the person. Plain text ONLY — no emoji, no hashtags, no URL (Choseno resolves and appends the politician's actual wall link afterwards, since a newly-tagged politician may not have one yet at generation time).",
   "breakingNews": false,
   "author": {
     "name": "Choseno Civic News Desk",
@@ -133,6 +134,7 @@ ${personInstructions(person)}
 - Meta Description: 150-160 characters, write for CTR not gaming
 - Tags: 3-5 tags, relevant to the story
 - Tweet: High-engagement 1-2 sentence hook (~140-200 chars). Plain text, NO emoji, NO hashtags, NO URL — Choseno appends the link and auto-generated hashtags itself.
+- Tweet Medium: One neutral sentence putting the review CTA first, only when a politician is tagged — "What do you think of {name}? Review them on Choseno." No praise or criticism baked in, no emoji/hashtags/URL (Choseno appends the wall link itself once it's resolved).
 - Breaking News: Only mark as true if article is <6 hours old and unexpected. The badge auto-clears itself ${BREAKING_NEWS_ACTIVE_HOURS} hours after publish, so never set it for older or evergreen stories.
 - Country/Province: prefer ISO-2 codes (CA, US, ON, BC…), but full names are accepted too
 - Images: Never fabricate a hero_image_url — only set it if the source material gives you a real image URL and its photo credit. No image? Omit all three image fields; Choseno automatically renders the dynamic OpenGraph visual card.
@@ -151,6 +153,7 @@ ${personInstructions(person)}
 ❌ DON'T assume or fill gaps with reasonable inferences
 ❌ DON'T include editorializing or opinion
 ❌ DON'T put emoji, hashtags, or a URL inside "tweet" — Choseno strips/derives those automatically and you'll get duplicates
+❌ DON'T put emoji, a URL, or any opinion/praise/criticism inside "tweetmedium" — it's a neutral review prompt, not a take
 
 ✅ DO start with verified facts and datelines
 ✅ DO quote only when explicitly provided in source
@@ -219,6 +222,7 @@ The output MUST be a valid JSON object with a batch array:
       "metaDescription": "Meta description under 160 chars",
       "tags": ["tag1", "tag2", "tag3"],
       "tweet": "Captivating 1-2 sentence hook designed for high engagement on X/Twitter. Focus on civic stakes/key decisions. Plain text ONLY (no emoji, hashtags, or URLs — Choseno appends those). ~200 chars max.",
+      "tweetmedium": "REQUIRED whenever taggedPoliticians/taggedPoliticianIds is non-empty, otherwise omit. One neutral sentence putting the review CTA first, not a news summary: 'What do you think of {full name}? Review them on Choseno.' No praise/criticism/loaded framing, no emoji/hashtags/URL — Choseno appends the wall link itself.",
       "breakingNews": false,
       "author": { "name": "Author", "bio": "Role", "photoUrl": "https://... — OPTIONAL" },
       "sources": [{ "label": "Source", "url": "https://..." }],
@@ -281,6 +285,8 @@ ${IMPACT_AREA_GUIDE}
 13. **Politician/Party tagging:** Only set taggedPoliticians/taggedPoliticianIds/taggedParty when a specific politician or party is a direct subject of that article. Use the politician's full name exactly as it would appear on a public profile, or their exact profile id if one is known. Never invent an id.
 
 14. **Tweet Copy:** Captivating 1-2 sentence hook (~140-200 chars). Plain text only — no emoji, no hashtags, no URL. Choseno automatically appends the canonical card link and topic hashtags.
+
+15. **Tweet Medium Copy:** Whenever an article tags a politician, also write \`tweetmedium\`: one neutral sentence leading with the review CTA instead of the news — "What do you think of {name}? Review them on Choseno." No praise, criticism, emoji, hashtags, or URL — Choseno resolves and appends the actual wall link afterwards.
 
 Here are today's news stories and topics:`;
 }

@@ -374,9 +374,58 @@ export default function NewsArticleDetailClient({
     basePostText
   )}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(combinedTagList.join(","))}`;
 
+  // Politician data used by the top CTA button, the medium tweet's review
+  // link, and the long-post CTA below — resolved once here so all three
+  // (and the button/anchor further down) share the same source of truth.
+  const linkedPoliticians = ((article as any).news_article_politicians?.filter((p: any) => p.profiles?.id) || []) as any[];
+  const primaryPolitician = linkedPoliticians[0]?.profiles;
+  const primaryWallSlug = primaryPolitician?.politician_profiles?.wall_slug;
+  const primaryWallUrl = primaryWallSlug
+    ? `/wall/${primaryWallSlug}`
+    : primaryPolitician?.current_ghost_id
+      ? `/wall/${primaryPolitician.current_ghost_id}`
+      : null;
+  const primaryWallFullUrl = primaryWallUrl ? `${SITE_URL}${primaryWallUrl}` : null;
+
   const customTweetArticle = (content as any)?.tweetarticle?.trim();
   const politicianName = taggedReps.length > 0 ? taggedReps.join(", ") : undefined;
   const summaryText = activeSummary || "";
+
+  // Medium tweet -- sits between the 280-char headline hook (no CTA, no
+  // link) and the 800-1500 char long post (X-Premium-only, full analysis).
+  // Structure: the news hook, then the article link, then the review CTA
+  // (name + wall link), then hashtags -- so it reads as a complete post
+  // (news -> where to read more -> where to weigh in) rather than a bare
+  // one-liner, while still keeping the review prompt front and center
+  // instead of buried at the end like the long post does.
+  //
+  // `content.tweetmedium` (like `tweet`) is the review-prompt SENTENCE
+  // ONLY, not the whole composite -- generated without knowing the wall
+  // URL (a newly-tagged politician may not have a wall_slug yet at
+  // generation time), so the master news agent never embeds it; this
+  // assembles the rest around it, the same split responsibility
+  // `tweet`/`shareText` already use for hashtags+URL.
+  const customTweetMedium = (content as any)?.tweetmedium?.trim();
+  const mediumReviewSentence =
+    customTweetMedium || (politicianName ? `What do you think of ${politicianName}? Review them on Choseno.` : null);
+  // The wall URL IS embedded inline here (unlike an earlier version of this
+  // that omitted it, assuming the intent API's `url` param would show up as
+  // visible text on its own -- confirmed in testing that it does not; `url`
+  // only controls which link X's card-preview picks, it doesn't add
+  // visible text to the compose box). So both jobs need doing: the link
+  // has to actually be readable/clickable in the posted tweet (inline
+  // text, last among the two links -- article link comes first since it's
+  // the lower-priority one), AND `url` below still designates the wall
+  // link as the card X shows, which is the part that actually worked when
+  // tested (the article's card stopped winning once this was added).
+  const mediumPostText = stripEmoji(
+    [basePostText, `Detailed Article Link: ${shareUrl}`, mediumReviewSentence, primaryWallFullUrl, formattedHashtagString]
+      .filter(Boolean)
+      .join("\n\n")
+  );
+  const mediumTwitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(mediumPostText)}&url=${encodeURIComponent(
+    primaryWallFullUrl || shareUrl
+  )}`;
 
   const topReviewPrompt = politicianName
     ? `Review ${politicianName} on Choseno:\n${shareUrl}\n\n`
@@ -407,6 +456,8 @@ export default function NewsArticleDetailClient({
     hashtags: combinedTagList,
     twitterUrl: twitterShareUrl,
     tweetArticleText,
+    mediumPostText,
+    mediumTwitterUrl,
     imageUrl,
   };
 
@@ -418,16 +469,9 @@ export default function NewsArticleDetailClient({
     }
   };
 
-  // Politician data used by the top CTA button — resolved once here so both
-  // the button and its anchor/wall link share the same source of truth.
-  const linkedPoliticians = ((article as any).news_article_politicians?.filter((p: any) => p.profiles?.id) || []) as any[];
-  const primaryPolitician = linkedPoliticians[0]?.profiles;
-  const primaryWallSlug = primaryPolitician?.politician_profiles?.wall_slug;
-  const primaryWallUrl = primaryWallSlug
-    ? `/wall/${primaryWallSlug}`
-    : primaryPolitician?.current_ghost_id
-      ? `/wall/${primaryPolitician.current_ghost_id}`
-      : null;
+  // primaryPolitician/primaryWallUrl are already resolved above (used to
+  // build the medium tweet's review link) -- reused here for the top CTA
+  // button so both stay in sync from one source of truth.
   const rateCtaLabel =
     linkedPoliticians.length === 1
       ? `Review ${primaryPolitician?.full_name || "now"}`

@@ -162,6 +162,25 @@ export default function NewsPageClient({
 
     const tweetArticleText = stripEmoji(rawTweetArticle);
 
+    // Medium tweet -- news hook, then the article link, then the review
+    // CTA, then hashtags. Same composite structure as the article detail
+    // page's version. This component only has the lean politician join
+    // (id/full_name, no wall_slug -- see withPoliticianDetails's doc
+    // comment in news.ts: fetching wall_slug for every tagged politician
+    // on every card in a 20+ card grid isn't worth the extra joined
+    // columns), so the review sentence has no wall link to point to --
+    // the article link right above it is the click-through path instead,
+    // and the article page has its own "Review X" CTA once there.
+    const customTweetMedium = (article.content as any)?.tweetmedium?.trim();
+    const taggedNames = (article.news_article_politicians ?? [])
+      .map((p) => p.profiles?.full_name)
+      .filter((n): n is string => Boolean(n));
+    const mediumReviewSentence =
+      customTweetMedium || (taggedNames.length > 0 ? `What do you think of ${taggedNames.join(", ")}? Review them on Choseno.` : null);
+    const mediumPostText = stripEmoji(
+      [basePostText, `Detailed Article Link: ${shareUrl}`, mediumReviewSentence, hashtagList].filter(Boolean).join("\n\n")
+    );
+
     const imageUrl = article.hero_image_url || `${SITE_URL}/api/news/${article.slug}/og-image`;
 
     return {
@@ -172,6 +191,12 @@ export default function NewsPageClient({
       hashtags,
       twitterUrl: `https://twitter.com/intent/tweet?text=${encodeURIComponent(basePostText)}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent(hashtags.join(","))}`,
       tweetArticleText,
+      mediumPostText,
+      // No wall link at this call site (see comment above), so the article
+      // link is the designated card via the intent API's `url` param --
+      // same mechanism twitterUrl above already uses, kept consistent even
+      // though there's only one link to choose from here.
+      mediumTwitterUrl: `https://twitter.com/intent/tweet?text=${encodeURIComponent(mediumPostText)}&url=${encodeURIComponent(shareUrl)}`,
       imageUrl,
     };
   };

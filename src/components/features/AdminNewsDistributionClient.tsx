@@ -407,6 +407,27 @@ export default function AdminNewsDistributionClient() {
 
     const tweetArticleText = stripEmoji(rawTweetArticle);
 
+    // Medium tweet -- news hook, then the article link, then the review
+    // CTA, then the wall link, then hashtags. wallUrl/politicianName are
+    // already resolved above for the long-post CTA, so this reuses them.
+    // wallUrl IS embedded inline (unlike an earlier version that omitted
+    // it, assuming the intent API's `url` param would surface it as
+    // visible text -- confirmed in testing it does not, `url` only
+    // controls which link gets the card preview). Both jobs still needed:
+    // the link has to actually be readable in the posted tweet, AND `url`
+    // still designates the wall link as the card X shows.
+    const customTweetMedium = (article.content as any)?.tweetmedium?.trim();
+    const mediumReviewSentence =
+      customTweetMedium || (politicianName ? `What do you think of ${politicianName}? Review them on Choseno.` : null);
+    const mediumPostText = stripEmoji(
+      [basePostText, `Detailed Article Link: ${shareUrl}`, mediumReviewSentence, wallUrl, formattedHashtagString]
+        .filter(Boolean)
+        .join("\n\n")
+    );
+    const mediumTwitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(mediumPostText)}&url=${encodeURIComponent(
+      wallUrl || shareUrl
+    )}`;
+
     const shareText = `${basePostText}\n\n${formattedHashtagString}\n${shareUrl}`;
     const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       basePostText
@@ -422,6 +443,8 @@ export default function AdminNewsDistributionClient() {
       hashtags: combinedTagList,
       twitterUrl: twitterShareUrl,
       tweetArticleText,
+      mediumPostText,
+      mediumTwitterUrl,
       imageUrl,
     };
   };
