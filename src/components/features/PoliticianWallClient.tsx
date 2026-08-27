@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useAuth } from "@/contexts/AuthContext";
@@ -41,6 +41,7 @@ import {
   subscribeToSupportChanges,
   unsubscribeFromSupportChanges,
   getActiveCandidacies,
+  WALL_PAGE_SIZE,
 } from "@/lib/services/politicianWall";
 import { uploadPostImage, createComment, hydratePoliticianAuthors, hydratePostMentions, voteOnPost } from "@/lib/services/feed";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
@@ -162,6 +163,23 @@ export default function PoliticianWallClient({
   const [profile, setProfile] = useState<{ id: string; current_ghost_id: string; country?: string | null } | null>(null);
   const [viewerShapeIds, setViewerShapeIds] = useState<number[]>([]);
   const [posts, setPosts] = useState<PostWithComments[]>(initialPosts);
+  // Infinite scroll -- raw accumulators for BOTH sources that feed into
+  // `posts` (authored/wall posts + posts where the owner was only
+  // @mentioned), kept separately from the deduped/sorted `posts` state
+  // itself. Every load (initial or "load more") re-runs mergeWallPosts
+  // against the FULL accumulated sets rather than trying to merge just the
+  // newest batch in -- the two sources interleave by date, so there's no
+  // way to know where "page 2" starts in the already-merged display list
+  // without redoing the merge from the raw sources each time. Feed sizes
+  // here are moderate (nowhere near the news feed's volume), so redoing
+  // the sort/dedup on every page is cheap.
+  const [rawAuthoredPosts, setRawAuthoredPosts] = useState<PostWithComments[]>(initialPosts);
+  const [rawMentionedPosts, setRawMentionedPosts] = useState<PostWithComments[]>([]);
+  const [feedOffset, setFeedOffset] = useState(0);
+  const [hasMorePosts, setHasMorePosts] = useState(true);
+  const [loadingMorePosts, setLoadingMorePosts] = useState(false);
+  const loadingMorePostsRef = useRef(false);
+  const feedSentinelRef = useRef<HTMLDivElement | null>(null);
   const [sortMode, setSortMode] = useState<"recency" | "engagement" | null>(null);
   const [loading, setLoading] = useState(!initialWallOwner);
   const [newPostContent, setNewPostContent] = useState("");
@@ -389,6 +407,9 @@ export default function PoliticianWallClient({
     }
   };
 
+  // Manual refresh (after posting/voting/etc.) -- always resets back to
+  // page 1 rather than trying to preserve infinite-scroll position, since
+  // a fresh post at the top shifts everything else's offset anyway.
   const fetchPosts = async () => {
     try {
       const { data, error } = await getWallPosts(supabase, ghostId);
@@ -400,6 +421,11 @@ export default function PoliticianWallClient({
         const { data: mentionedData } = await getMentionedWallPosts(supabase, wallOwner.id);
         mentioned = (mentionedData as PostWithComments[]) || [];
       }
+      setRawAuthoredPosts(authored);
+      setRawMentionedPosts(mentioned);
+      setFeedOffset(authored.length);
+      setHasMorePosts(authored.length === WALL_PAGE_SIZE || mentioned.length === WALL_PAGE_SIZE);
+
       const { merged, mentionOnlyIds } = mergeWallPosts(authored, mentioned);
       setPosts(merged);
       setMentionOnlyPostIds(mentionOnlyIds);
@@ -416,6 +442,82 @@ export default function PoliticianWallClient({
       setLoading(false);
     }
   };
+
+  // Infinite scroll -- fetches the next page from BOTH sources (using
+  // feedOffset for each, since page N of "authored" and page N of
+  // "mentioned" are independent lists that only get interleaved by
+  // mergeWallPosts, not two halves of one combined offset) and re-merges
+  // against the full accumulated raw sets. hasMorePosts stays true as long
+  // as EITHER source's last page came back full -- the other might still
+  // have more even if one is already exhausted.
+  const loadMorePosts = useCallback(async () => {
+    if (loadingMorePostsRef.current || !hasMorePosts) return;
+    loadingMorePostsRef.current = true;
+    setLoadingMorePosts(true);
+
+    try {
+      const [{ data: moreAuthoredData, error: authoredErr }, mentionedRes] = await Promise.all([
+        getWallPosts(supabase, ghostId, { offset: feedOffset, limit: WALL_PAGE_SIZE }),
+        wallOwner?.id
+          ? getMentionedWallPosts(supabase, wallOwner.id, { offset: feedOffset, limit: WALL_PAGE_SIZE })
+          : Promise.resolve({ data: [] as PostWithComments[] }),
+      ]);
+      if (authoredErr) throw authoredErr;
+
+      const moreAuthored = (moreAuthoredData as PostWithComments[]) || [];
+      const moreMentioned = (mentionedRes.data as PostWithComments[]) || [];
+
+      const nextAuthored = [...rawAuthoredPosts, ...moreAuthored];
+      const nextMentioned = [...rawMentionedPosts, ...moreMentioned];
+      setRawAuthoredPosts(nextAuthored);
+      setRawMentionedPosts(nextMentioned);
+      setFeedOffset((prev) => prev + WALL_PAGE_SIZE);
+      setHasMorePosts(moreAuthored.length === WALL_PAGE_SIZE || moreMentioned.length === WALL_PAGE_SIZE);
+
+      const { merged, mentionOnlyIds } = mergeWallPosts(nextAuthored, nextMentioned);
+      setPosts(merged);
+      setMentionOnlyPostIds(mentionOnlyIds);
+
+      const [mentionsMap, authorsMap] = await Promise.all([
+        hydratePostMentions(supabase, merged),
+        hydratePoliticianAuthors(supabase, merged),
+      ]);
+      setPostMentions(mentionsMap);
+      if (ghostId && wallOwner?.full_name) {
+        authorsMap.set(ghostId, {
+          fullName: wallOwner.full_name,
+          wallHref: `/wall/${wallOwner.politician_profiles?.wall_slug || buildPoliticianWallSlug(wallOwner.full_name, wallOwner.politician_profiles?.political_target_role)}`,
+        });
+      }
+      setPoliticianAuthors(authorsMap);
+    } catch (err) {
+      console.error("Failed to load more wall posts:", err);
+      // Leave hasMorePosts as-is so the sentinel can retry on next
+      // intersection rather than permanently declaring the feed exhausted
+      // over a transient network error.
+    } finally {
+      setLoadingMorePosts(false);
+      loadingMorePostsRef.current = false;
+    }
+  }, [supabase, ghostId, wallOwner?.id, wallOwner?.full_name, wallOwner?.politician_profiles, feedOffset, hasMorePosts, rawAuthoredPosts, rawMentionedPosts]);
+
+  // Same IntersectionObserver pattern as NewsInfiniteFeed -- 600px
+  // rootMargin so the next page starts loading well before the sentinel
+  // is actually on screen, not once the visitor hits a dead-stop at the
+  // bottom.
+  useEffect(() => {
+    if (!hasMorePosts) return;
+    const el = feedSentinelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) loadMorePosts();
+      },
+      { rootMargin: "600px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasMorePosts, loadMorePosts]);
 
   useEffect(() => {
     let supportChannel: ReturnType<typeof subscribeToSupportChanges> | null = null;
@@ -508,6 +610,11 @@ export default function PoliticianWallClient({
 
       if (!postErr && isMounted) {
         const authored = (postRows as PostWithComments[]) || [];
+        setRawAuthoredPosts(authored);
+        setRawMentionedPosts(mentioned);
+        setFeedOffset(authored.length);
+        setHasMorePosts(authored.length === WALL_PAGE_SIZE || mentioned.length === WALL_PAGE_SIZE);
+
         const { merged, mentionOnlyIds } = mergeWallPosts(authored, mentioned);
         if (!isMounted) return;
         setPosts(merged);
@@ -1294,6 +1401,23 @@ export default function PoliticianWallClient({
           ))}
           </div>
         </>
+      )}
+
+      {/* Infinite scroll sentinel -- same IntersectionObserver pattern as
+          NewsInfiniteFeed. Rendered even while displayedPosts is empty (the
+          EmptyState above already covers that message) so the observer has
+          something to watch once posts do start coming in from a fresh
+          wall. */}
+      {hasMorePosts && (
+        <div ref={feedSentinelRef} className="py-6 flex justify-center">
+          {loadingMorePosts && <Spinner />}
+        </div>
+      )}
+      {!hasMorePosts && displayedPosts.length > 0 && (
+        <div className="py-6 text-center text-xs text-text-muted flex items-center justify-center gap-1.5">
+          <CheckCircle2 size={14} className="text-primary" />
+          You&rsquo;re all caught up
+        </div>
       )}
       </div>
       {sidebar && <div className="mt-8 lg:mt-0">{sidebar}</div>}

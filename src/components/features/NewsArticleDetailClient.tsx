@@ -744,6 +744,18 @@ export default function NewsArticleDetailClient({
               </div>
             </div>
 
+            {/* Same "find your own district" CTA as the politician wall
+                page's breadcrumb -- a reader who just saw Key Leaders for
+                this article's country is a natural moment to point them at
+                finding leaders for their OWN area instead of only ever
+                reading about someone else's. */}
+            <Link
+              href="/find-my-district"
+              className="mt-4 inline-flex w-full items-center justify-center gap-1.5 text-xs font-bold text-white bg-primary hover:bg-primary-hover transition-colors px-3 py-2.5 rounded-xl"
+            >
+              <MapPin size={12} /> Find your district & leaders <ArrowRight size={12} />
+            </Link>
+
             {/* Key Leaders -- a couple of the article's country's top office
                 holders (face + name + current rating), right below the
                 image. Avatar + PoliticianEngagementStats are the same

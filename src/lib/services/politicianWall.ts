@@ -360,7 +360,7 @@ export async function getSupportersList(
 // Capped here so every existing caller is protected immediately; {offset}
 // is threaded through for a future "load more" without another signature
 // change.
-const WALL_PAGE_SIZE = 50;
+export const WALL_PAGE_SIZE = 50;
 
 export async function getWallPosts(
   supabase: Client,
