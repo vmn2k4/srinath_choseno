@@ -92,49 +92,53 @@ export function ProfileOgCard({
         display: 'flex',
         flexDirection: 'row',
         fontFamily: 'sans-serif',
-        background: '#0b0d14',
+        // Solid, not gradient -- this is what shows through behind the
+        // right panel's text (orange name, white/gray copy, cyan badge,
+        // gold "take action" line). A gradient here muddied contrast for
+        // whichever color happened to land on its darker or oranger end;
+        // flat color guarantees every text color reads the same everywhere
+        // on the panel. Slightly warmer than pure black rather than a
+        // harsh #000.
+        background: '#12141f',
       }}
     >
-      {/* Left: full-bleed photo poster. No pastel card-in-a-card, no letter
-          circle floating in whitespace -- the photo (or a bold placeholder)
-          fills the whole left panel like a magazine cover. */}
-      <div style={{ display: 'flex', position: 'relative', width: 500, height: 630, background: '#1a1d29', overflow: 'hidden' }}>
+      {/* Left: full-height photo poster, untouched by the banner -- the
+          banner lives only in the right column below, not spanning over
+          the image. */}
+      <div
+        style={{
+          display: 'flex',
+          position: 'relative',
+          width: 460,
+          height: '100%',
+          // Same warm-glow treatment for the no-photo fallback so it's
+          // never flat black either.
+          background: 'radial-gradient(circle at 50% 45%, rgba(249,115,22,0.2) 0%, #171b28 55%, #05060a 100%)',
+          overflow: 'hidden',
+        }}
+      >
         {photoUrl ? (
           <img
             src={photoUrl}
             alt={title}
-            width="500"
+            width="460"
             height="630"
-            style={{ position: 'absolute', top: 0, left: 0, width: 500, height: 630, objectFit: 'cover' }}
+            style={{ position: 'absolute', top: 0, left: 0, width: 460, height: '100%', objectFit: 'cover' }}
           />
         ) : (
           <div style={{ display: 'flex', width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ display: 'flex', fontSize: 220, fontWeight: 900, color: '#2d3142' }}>{initialLetter}</span>
+            <span style={{ display: 'flex', fontSize: 180, fontWeight: 900, color: '#2d3142' }}>{initialLetter}</span>
           </div>
         )}
-
-        {/* Bottom scrim so white name text stays legible over any photo. */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: 260,
-            display: 'flex',
-            background: 'linear-gradient(to top, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0) 100%)',
-          }}
-        />
-
-        <div style={{ position: 'absolute', top: 28, left: 28, display: 'flex' }}>
+        <div style={{ position: 'absolute', top: 18, left: 18, display: 'flex' }}>
           <span
             style={{
               display: 'flex',
-              fontSize: 13,
+              fontSize: 12,
               fontWeight: 800,
               color: '#ffffff',
               background: 'rgba(0,0,0,0.55)',
-              padding: '7px 16px',
+              padding: '6px 14px',
               borderRadius: 999,
               textTransform: 'uppercase',
               letterSpacing: 1.2,
@@ -143,64 +147,105 @@ export function ProfileOgCard({
             Public figure
           </span>
         </div>
+      </div>
 
-        <div style={{ position: 'absolute', left: 28, right: 28, bottom: 28, display: 'flex', flexDirection: 'column' }}>
-          <span style={{ display: 'flex', fontSize: 38, fontWeight: 900, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.02em' }}>
+      {/* Right: banner + pitch panel stacked in one column, confined to
+          this side only. */}
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, height: '100%' }}>
+        {/* Banner -- same "light sticker over dark" theme as the Story
+            card (ProfileStoryCard below), scaled down to fit landscape's
+            much shorter frame. Ported here on request so the two formats
+            read as one consistent brand, not two unrelated designs. */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            margin: '14px 14px 0',
+            background: 'rgba(241,245,249,0.97)',
+            borderRadius: 16,
+            padding: '14px 20px',
+          }}
+        >
+          {/* "Google reviews for politicians" is the platform-identity line
+              -- now the bigger, primary text -- with "Share your voice..."
+              as a smaller caption underneath instead of the other way
+              around. The Choseno logo sits to the right, vertically
+              centered against the full two-line block (not pinned to just
+              the top line) since alignItems: 'center' on this row applies
+              to the whole row's cross-axis. */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <span style={{ display: 'flex', fontSize: 22, fontWeight: 900, color: '#0f172a' }}>Google reviews for politicians</span>
+            <span style={{ display: 'flex', fontSize: 13, fontWeight: 700, color: '#64748b' }}>
+              {`Share your voice: review ${firstName} now`}
+            </span>
+          </div>
+          {/* Choseno as a solid orange pill instead of orange text on the
+              light banner -- reads as a highlighted badge rather than just
+              another line of text. Icon recolored to white-eye/orange-pupil
+              (inverted from its usual orange-eye/white-pupil) since the
+              original orange fill would nearly vanish against this same
+              orange background. */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9, background: '#f97316', padding: '9px 20px', borderRadius: 999 }}>
+            <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 6 22 C 10 10, 24 6, 36 12 L 34 7 L 44 14 L 37 23 L 35 18 C 26 12, 14 14, 8 23 Z" fill="#ffffff" />
+              <path d="M 42 26 C 38 38, 24 42, 12 36 L 14 41 L 4 34 L 11 25 L 13 30 C 22 36, 34 34, 40 25 Z" fill="#ffffff" />
+              <circle cx="24" cy="24" r="6" fill="#ffffff" />
+              <circle cx="24" cy="24" r="3.5" fill="#f97316" />
+            </svg>
+            <span
+              style={{
+                display: 'flex',
+                fontSize: 24,
+                fontWeight: 900,
+                color: '#ffffff',
+                textShadow: '0.6px 0 0 currentColor, -0.6px 0 0 currentColor, 0 0.6px 0 currentColor, 0 -0.6px 0 currentColor',
+              }}
+            >
+              Choseno
+            </span>
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            flex: 1,
+            gap: 14,
+            padding: '0 32px',
+          }}
+        >
+          {/* fontWeight: 900 is already the max standard weight, but
+              Satori's fallback sans-serif doesn't render it as heavily as
+              a real bold font would -- the multi-directional textShadow
+              fakes extra stroke thickness on top of it, which is what
+              actually reads as "bolder" once this shrinks to a feed
+              thumbnail. */}
+          <span
+            style={{
+              display: 'flex',
+              fontSize: 48,
+              fontWeight: 900,
+              color: '#f97316',
+              lineHeight: 1.05,
+              letterSpacing: '-0.02em',
+              textShadow: '0.6px 0 0 currentColor, -0.6px 0 0 currentColor, 0 0.6px 0 currentColor, 0 -0.6px 0 currentColor',
+            }}
+          >
             {safeTitle}
           </span>
-          {(safeSubtitle || partyName) && (
-            <span style={{ display: 'flex', fontSize: 16, fontWeight: 700, color: '#cbd5e1', marginTop: 6 }}>
+
+          {(partyName || safeSubtitle) && (
+            <span style={{ display: 'flex', fontSize: 20, fontWeight: 700, color: '#cbd5e1' }}>
               {[partyName, safeSubtitle].filter(Boolean).join(' · ')}
             </span>
           )}
-        </div>
-      </div>
 
-      {/* Right: the actual pitch. Dark solid panel, one direct question,
-          visible star row, an explicit anonymity badge, one big button. */}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          flex: 1,
-          height: 630,
-          padding: '40px 44px',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <svg width="34" height="34" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="og-orange-top" x1="4" y1="8" x2="44" y2="20" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor="#f97316" />
-                <stop offset="100%" stopColor="#ff8c00" />
-              </linearGradient>
-              <linearGradient id="og-orange-bottom" x1="44" y1="28" x2="8" y2="40" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor="#ea580c" />
-                <stop offset="100%" stopColor="#f97316" />
-              </linearGradient>
-            </defs>
-            <path d="M 6 22 C 10 10, 24 6, 36 12 L 34 7 L 44 14 L 37 23 L 35 18 C 26 12, 14 14, 8 23 Z" fill="url(#og-orange-top)" />
-            <path d="M 42 26 C 38 38, 24 42, 12 36 L 14 41 L 4 34 L 11 25 L 13 30 C 22 36, 34 34, 40 25 Z" fill="url(#og-orange-bottom)" />
-            <circle cx="24" cy="24" r="6" fill="#0b0d14" />
-            <circle cx="24" cy="24" r="3.5" fill="#f97316" />
-          </svg>
-          <span style={{ display: 'flex', fontSize: 20, fontWeight: 900, color: '#ffffff' }}>Choseno</span>
-        </div>
-
-        {/* Few, huge, high-contrast elements only -- this card is almost
-            always viewed shrunk to a small thumbnail (iMessage, WhatsApp,
-            a Twitter feed), where a descriptive sentence and small gray
-            fine print (both present in v1 of this redesign) turn to mush.
-            Every line here needs to survive being viewed at ~350px wide. */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
-          <span style={{ display: 'flex', fontSize: 58, fontWeight: 900, color: '#ffffff', lineHeight: 1.08, letterSpacing: '-0.02em' }}>
-            Rate {firstName}
-          </span>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <StarRow filled={filledStars} size={34} color="#fbbf24" />
-            <span style={{ display: 'flex', fontSize: 22, fontWeight: 800, color: '#fbbf24' }}>{statsLine}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 13 }}>
+            <StarRow filled={filledStars} size={30} color="#fbbf24" />
+            <span style={{ display: 'flex', fontSize: 18, fontWeight: 800, color: '#fbbf24' }}>{statsLine}</span>
           </div>
 
           <div
@@ -210,32 +255,39 @@ export function ProfileOgCard({
               gap: 10,
               alignSelf: 'flex-start',
               background: '#083344',
-              padding: '10px 20px',
+              padding: '9px 18px',
               borderRadius: 999,
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" strokeWidth="2.5">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" strokeWidth="2.5">
               <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
               <circle cx="12" cy="12" r="3" />
             </svg>
-            <span style={{ display: 'flex', fontSize: 20, fontWeight: 900, color: '#67e8f9' }}>100% anonymous</span>
+            <span style={{ display: 'flex', fontSize: 18, fontWeight: 900, color: '#67e8f9' }}>100% anonymous</span>
           </div>
-        </div>
 
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 10,
-            alignSelf: 'flex-start',
-            background: '#f97316',
-            padding: '20px 36px',
-            borderRadius: 14,
-          }}
-        >
-          <span style={{ display: 'flex', fontSize: 24, fontWeight: 900, color: '#ffffff' }}>Write a review</span>
-          <span style={{ display: 'flex', fontSize: 24, color: '#ffffff' }}>→</span>
+          <span style={{ display: 'flex', fontSize: 21, fontWeight: 900, color: '#fbbf24' }}>TAKE ACTION: SUBMIT YOUR REVIEW</span>
+          <span style={{ display: 'flex', fontSize: 16, fontWeight: 600, color: '#94a3b8' }}>
+            e.g. "Delivered on key promises this term" — anonymous review
+          </span>
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 10,
+              alignSelf: 'flex-start',
+              background: '#f97316',
+              padding: '17px 30px',
+              borderRadius: 14,
+            }}
+          >
+            <span style={{ display: 'flex', fontSize: 22, fontWeight: 900, color: '#ffffff' }}>Review this person</span>
+            <span style={{ display: 'flex', fontSize: 22, color: '#ffffff' }}>→</span>
+          </div>
+
+          <span style={{ display: 'flex', fontSize: 15, fontWeight: 700, color: '#94a3b8' }}>choseno.com</span>
         </div>
       </div>
     </div>
@@ -337,41 +389,53 @@ export function ProfileStoryCard({ title, subtitle, photoUrl, partyName, ratingA
       <div
         style={{
           display: 'flex',
-          flexDirection: 'column',
-          gap: 18,
+          alignItems: 'center',
+          justifyContent: 'space-between',
           margin: '28px 28px 0',
           background: 'rgba(241,245,249,0.97)',
           borderRadius: 22,
-          padding: '30px 32px',
+          padding: '26px 32px',
           position: 'relative',
           zIndex: 5,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span style={{ display: 'flex', fontSize: 21, fontWeight: 800, color: '#334155' }}>Google reviews for politicians</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="og-orange-top" x1="4" y1="8" x2="44" y2="20" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#f97316" />
-                  <stop offset="100%" stopColor="#ff8c00" />
-                </linearGradient>
-                <linearGradient id="og-orange-bottom" x1="44" y1="28" x2="8" y2="40" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#ea580c" />
-                  <stop offset="100%" stopColor="#f97316" />
-                </linearGradient>
-              </defs>
-              <path d="M 6 22 C 10 10, 24 6, 36 12 L 34 7 L 44 14 L 37 23 L 35 18 C 26 12, 14 14, 8 23 Z" fill="url(#og-orange-top)" />
-              <path d="M 42 26 C 38 38, 24 42, 12 36 L 14 41 L 4 34 L 11 25 L 13 30 C 22 36, 34 34, 40 25 Z" fill="url(#og-orange-bottom)" />
-              <circle cx="24" cy="24" r="6" fill="#f1f5f9" />
-              <circle cx="24" cy="24" r="3.5" fill="#f97316" />
-            </svg>
-            <span style={{ display: 'flex', fontSize: 30, fontWeight: 900, color: '#0f172a' }}>Choseno</span>
-          </div>
+        {/* "Google reviews for politicians" is the platform-identity line
+            -- now the bigger, primary text -- with "Share your voice..."
+            as a smaller caption underneath instead of the other way
+            around. The Choseno logo sits to the right, vertically centered
+            against the full two-line block via this row's own
+            alignItems: 'center'. */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <span style={{ display: 'flex', fontSize: 30, fontWeight: 900, color: '#0f172a' }}>Google reviews for politicians</span>
+          <span style={{ display: 'flex', fontSize: 17, fontWeight: 700, color: '#64748b' }}>
+            {`Share your voice: review ${firstName} now`}
+          </span>
         </div>
-        <span style={{ display: 'flex', fontSize: 34, fontWeight: 900, color: '#0f172a', lineHeight: 1.15, textAlign: 'center' }}>
-          {`SHARE YOUR VOICE: REVIEW ${firstName.toUpperCase()} NOW`}
-        </span>
+        {/* Choseno as a solid orange pill instead of orange text on the
+            light banner -- reads as a highlighted badge rather than just
+            another line of text. Icon recolored to white-eye/orange-pupil
+            (inverted from its usual orange-eye/white-pupil) since the
+            original orange fill would nearly vanish against this same
+            orange background. */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 11, background: '#f97316', padding: '12px 26px', borderRadius: 999 }}>
+          <svg width="30" height="30" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 6 22 C 10 10, 24 6, 36 12 L 34 7 L 44 14 L 37 23 L 35 18 C 26 12, 14 14, 8 23 Z" fill="#ffffff" />
+            <path d="M 42 26 C 38 38, 24 42, 12 36 L 14 41 L 4 34 L 11 25 L 13 30 C 22 36, 34 34, 40 25 Z" fill="#ffffff" />
+            <circle cx="24" cy="24" r="6" fill="#ffffff" />
+            <circle cx="24" cy="24" r="3.5" fill="#f97316" />
+          </svg>
+          <span
+            style={{
+              display: 'flex',
+              fontSize: 30,
+              fontWeight: 900,
+              color: '#ffffff',
+              textShadow: '0.6px 0 0 currentColor, -0.6px 0 0 currentColor, 0 0.6px 0 currentColor, 0 -0.6px 0 currentColor',
+            }}
+          >
+            Choseno
+          </span>
+        </div>
       </div>
 
       {/* Flexible spacer -- pure layout plumbing, no content. Pushes the
@@ -412,7 +476,21 @@ export function ProfileStoryCard({ title, subtitle, photoUrl, partyName, ratingA
           alignItems: 'flex-start',
         }}
       >
-        <span style={{ display: 'flex', fontSize: 44, fontWeight: 900, color: '#f97316', lineHeight: 1.08, letterSpacing: '-0.02em' }}>
+        {/* Same faux-bold textShadow trick as the landscape card's name --
+            fontWeight: 900 alone doesn't render as heavily as expected in
+            Satori's fallback sans-serif; this fakes extra stroke weight so
+            the name stays clearly readable once shrunk to a thumbnail. */}
+        <span
+          style={{
+            display: 'flex',
+            fontSize: 44,
+            fontWeight: 900,
+            color: '#f97316',
+            lineHeight: 1.08,
+            letterSpacing: '-0.02em',
+            textShadow: '0.6px 0 0 currentColor, -0.6px 0 0 currentColor, 0 0.6px 0 currentColor, 0 -0.6px 0 currentColor',
+          }}
+        >
           {safeTitle}
         </span>
 
@@ -423,7 +501,7 @@ export function ProfileStoryCard({ title, subtitle, photoUrl, partyName, ratingA
         )}
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <StarRow filled={filledStars} size={26} color="#fbbf24" />
+          <StarRow filled={filledStars} size={32} color="#fbbf24" />
           <span style={{ display: 'flex', fontSize: 18, fontWeight: 800, color: '#fbbf24' }}>{statsLine}</span>
         </div>
 
