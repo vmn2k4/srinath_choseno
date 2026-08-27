@@ -47,10 +47,13 @@ export default function BoundaryMapComponent({
 
       const map = L.map(mapContainerRef.current, { preferCanvas: true }).setView([0, 0], 2);
 
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-        attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
-        subdomains: "abcd",
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19,
+        // Desaturates/lightens OSM's default high-contrast palette to
+        // approximate the old CARTO Voyager look — see .map-tiles-muted
+        // in globals.css.
+        className: "map-tiles-muted",
       }).addTo(map);
 
       const layerGroup = L.layerGroup().addTo(map);

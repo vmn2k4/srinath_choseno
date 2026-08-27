@@ -468,3 +468,15 @@
   --color-danger: #dc2626;
   --color-danger-light: #991b1b;
 }
+
+/* ============ Muted OSM basemap (Leaflet) ============ */
+/* Stock OpenStreetMap tiles are high-contrast (bold red/orange highways,
+   saturated greens). We switched to them from CARTO Voyager after CARTO
+   started requiring an API key for their free raster tiles — this filter
+   desaturates/lightens the raw tile images so the map still reads as the
+   soft, pastel style the app had before, without needing a CARTO account.
+   Applied via the tileLayer's `className` option in BoundaryMapComponent
+   and InteractiveLocationPicker. */
+.map-tiles-muted {
+  filter: saturate(0.45) brightness(1.14) contrast(0.92);
+}
