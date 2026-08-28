@@ -97,13 +97,14 @@ async function synthesizeCivicStory(groundTruth) {
 Transform this VERIFIED BREAKING WIRE STORY into a comprehensive, high-depth civic news report.
 
 STRICT FACTUAL INTEGRITY RULES:
-1. GROUND TRUTH ONLY: Every fact, dollar figure, and policy mechanism must be derived strictly from the provided Source Wire Text. Do NOT invent new numbers, events, or decisions.
+1. GROUND TRUTH ONLY: Every fact, dollar figure, and policy mechanism must be derived strictly from the provided Source Wire Text. Do NOT invent new numbers, events, or decisions. If the Source Wire Text is thin (a short press-release blurb, barely more than the headline), write a SHORTER, honest piece instead of stretching it to hit a word count with plausible-sounding but unverifiable elaboration — invented motives, invented descriptive detail, invented procedural specifics. A true 200-word piece beats a padded 600-word one.
 2. DIRECT QUOTES RULE:
    - If Tier is "tier-2": Absolutely ZERO direct quotes are allowed. Use only indirect paraphrase with attribution ("According to reporting by ${groundTruth.sourceName}...").
    - If Tier is "tier-1": Direct quotes must be VERBATIM excerpts from the provided text. Never fabricate or modify quotes.
-3. NEUTRAL OPINION-FORMATION: Frame the core policy decision clearly with balanced perspectives (Government/Proponent rationale vs Critic/Opposition counter-arguments) so citizens can evaluate their representatives.
+3. NEUTRAL OPINION-FORMATION: When the source material presents a genuine dispute or policy debate, frame it with balanced perspectives (proponent rationale vs critic counter-argument) so citizens can evaluate their representatives. Do NOT manufacture a debate the source doesn't support — an appointment, a funding disbursement, a routine procedural vote often doesn't have one, and inventing opposing views for it would itself be a fabrication.
 4. STRICT JURISDICTION: This platform covers ONLY the United States and Canada. The country field MUST be either "US" or "CA".
 5. ZERO EMOJIS: Do not include emojis anywhere.
+6. WRITE LIKE AN EDITOR, NOT A TEMPLATE: You are an experienced editor deciding how THIS specific story should be told — not applying the same formula to every article. Real newsrooms don't write every piece with the same shape: some stories lead with a striking number, some with a quote, some with the human stakes, some chronologically; some need real back-and-forth between sides, others don't have one to report. Decide what this story actually needs and structure it that way. The one hard rule: it must be a single continuous narrative — plain paragraphs (ordinary breaks for pacing), NEVER markdown headers, NEVER labeled sections like "Policy Impact:" or "The Debate:", NEVER a checklist of beats answered one by one in a fixed order. If you notice yourself writing this story with the identical shape as the last one, choose a different approach. Length: 350-750 words.
 
 HEADLINE CRAFT (same standard as the manual editorial directive — Google penalizes templated headlines as Scaled Content Abuse):
 - Do NOT lead with the politician's name in a formulaic slot ("[Name] Advances/Unveils/Champions/Spearheads/Rolls Out/Pushes For [Topic] for [City]"). Those five verbs are banned as the headline's primary verb.
@@ -138,7 +139,7 @@ OUTPUT VALID JSON ONLY with this exact schema:
   "seoTitle": "SEO Title under 60 chars | Choseno",
   "metaDescription": "Concise meta description under 160 chars.",
   "tweet": "Engaging neutral 1-sentence summary.",
-  "body": "Comprehensive 5-section investigative article in Markdown: Dateline lead, Policy & Taxpayer Impact, Political & Legal Stakes, The Debate (proponent vs critic), and Public Accountability Context."
+  "body": "Continuous flowing prose (plain paragraphs separated by \\n\\n only — NO markdown headers, NO labeled sections), structured however this specific story calls for. Up to 350-750 words when the source material supports it — shorter and honest if it doesn't. Never padded."
 }`;
 
   const modelsToTry = [
@@ -366,6 +367,7 @@ if (require.main === module) {
     const limitArg = process.argv.find((a, i) => process.argv[i - 1] === '--limit');
 
     let maxHours;
+    let sinceTimestamp;
     if (explicitMaxHours) {
       // Cron passes this explicitly (e.g. --max-hours 6) — always honored as-is.
       maxHours = Number(explicitMaxHours);
@@ -380,6 +382,7 @@ if (require.main === module) {
         const { getLastPublishWindow } = require('./get-last-publish-window');
         const window = await getLastPublishWindow();
         maxHours = window.lookbackHours;
+        sinceTimestamp = window.lastPublishedAt; // exact timestamp, not rounded up to a whole hour
         console.log(`[PIPELINE] No --max-hours given; auto-computed lookback = ${maxHours}h (last published ${window.lastPublishedAt}).`);
       } catch (e) {
         console.warn('[PIPELINE] Auto-window lookup failed, defaulting to 4h:', e.message);
@@ -387,7 +390,7 @@ if (require.main === module) {
       }
     }
 
-    runVerifiedNewsPipeline({ maxHours, limit: limitArg ? Number(limitArg) : undefined }).catch(console.error);
+    runVerifiedNewsPipeline({ maxHours, sinceTimestamp, limit: limitArg ? Number(limitArg) : undefined }).catch(console.error);
   })();
 }
 

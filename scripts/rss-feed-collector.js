@@ -324,6 +324,97 @@ function isStrictlyUsOrCanada(title, description, sourceName) {
   return true;
 }
 
+// ── Office-holder / politician-profile filter ───────────────────────────────
+// Only keep candidates that are actually about an accountable individual —
+// a sitting office holder, a named key leader, or someone with an existing
+// Choseno politician profile — rather than a purely institutional/topic
+// story with no named human subject. Cheap (regex + Set lookups), runs
+// before HTTP verification and Gemini synthesis so it directly cuts cost
+// and volume on candidates that would likely fail politician-tagging anyway.
+
+const OFFICEHOLDER_TITLE_REGEX = /\b(mayor|councillor|councilwoman|councilman|council\s?member|alderman|governor|premier|senator|representative|congressman|congresswoman|mla|mpp|mna|mp\b|minister|cabinet|speaker|attorney\s?general|county\s?commissioner|county\s?executive|city\s?manager|selectman|selectboard|trustee|school\s?board|warden|reeve|sheriff|district\s?attorney|state\s?legislator|state\s?senator|state\s?representative|prime\s?minister|president|vice\s?president)\b/i;
+
+function normalizeNameForMatch(name) {
+  return (name || '').toLowerCase().replace(/[^a-z\s]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+// Pulls 2-4 word Capitalized phrases out of a headline as candidate person
+// names, so matching against the profiles Set is a handful of Set.has()
+// lookups per candidate rather than testing every profile name against
+// every headline.
+function extractCapitalizedPhrases(text) {
+  const cleaned = (text || '').replace(/["“”‘’,:;()]/g, '');
+  const words = cleaned.split(/\s+/).filter(Boolean);
+  const phrases = new Set();
+  for (let n = 4; n >= 2; n--) {
+    for (let i = 0; i + n <= words.length; i++) {
+      const slice = words.slice(i, i + n);
+      if (slice.every(w => /^[A-Z][a-zA-Z.'-]*$/.test(w))) {
+        phrases.add(slice.join(' '));
+      }
+    }
+  }
+  return [...phrases];
+}
+
+/**
+ * Fetch every politician full_name from the profiles table (paginated —
+ * this table runs into the tens of thousands of imported rows) so raw
+ * candidates can be checked against real Choseno politician profiles, not
+ * just the ~31 curated key leaders.
+ */
+async function fetchPoliticianProfileNames() {
+  const names = new Set();
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return names;
+  const pageSize = 1000;
+  let offset = 0;
+  try {
+    // Sanity cap at 60k rows so a runaway table can't hang an hourly run.
+    while (offset <= 60000) {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/profiles?select=full_name&role=eq.politician&limit=${pageSize}&offset=${offset}`,
+        { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+      );
+      if (!res.ok) break;
+      const rows = await res.json();
+      for (const r of rows) {
+        if (r.full_name) names.add(normalizeNameForMatch(r.full_name));
+      }
+      if (rows.length < pageSize) break;
+      offset += pageSize;
+    }
+  } catch (e) {
+    console.warn('[RSS Collector] Failed to fetch politician profile names:', e.message);
+  }
+  return names;
+}
+
+// Lazily computed (not at module-eval time): KEY_LEADERS_FEDERAL /
+// KEY_LEADERS_STATE_PROVINCIAL are declared further down this file, so
+// referencing them here at module-top-level would hit the const TDZ. By the
+// time this function is actually called (inside collectVerifiedRssStories),
+// the whole module has finished loading.
+let _allKeyLeaderNamesCache = null;
+function getAllKeyLeaderNames() {
+  if (!_allKeyLeaderNamesCache) {
+    _allKeyLeaderNamesCache = [...KEY_LEADERS_FEDERAL, ...KEY_LEADERS_STATE_PROVINCIAL].map(l => l.name.toLowerCase());
+  }
+  return _allKeyLeaderNamesCache;
+}
+
+function mentionsOfficeholderOrKnownPolitician(item, profileNameSet) {
+  const text = `${item.title} ${item.description || ''}`;
+  if (OFFICEHOLDER_TITLE_REGEX.test(text)) return true;
+  const lowerText = text.toLowerCase();
+  if (getAllKeyLeaderNames().some(name => lowerText.includes(name))) return true;
+  if (profileNameSet.size > 0) {
+    for (const phrase of extractCapitalizedPhrases(item.title)) {
+      if (profileNameSet.has(normalizeNameForMatch(phrase))) return true;
+    }
+  }
+  return false;
+}
+
 function decodeXmlEntities(str) {
   return (str || '')
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
@@ -460,11 +551,17 @@ async function verifyAndFetchUrl(targetUrl) {
       if (bodyText.length > 200) {
         return { status: 200, finalUrl, tier: 'tier-1', bodyText };
       } else {
-        // Limited text extracted (JS-rendered or minimal HTML), check allowlist
-        if (ALLOWLISTED_PAYWALLED_DOMAINS.has(hostname)) {
-          return { status: 200, finalUrl, tier: 'tier-2', bodyText: '', reason: 'Allowlisted outlet with limited text extraction' };
-        }
-        return { status: 200, finalUrl, tier: 'tier-1', bodyText };
+        // Limited text extracted (JS-rendered page, .gov press release with
+        // non-standard markup, etc.). Fixed 2026-08-28: this branch used to
+        // fall through to 'tier-1' for any non-allowlisted domain even
+        // though there's barely any real article text to ground against —
+        // Gemini would still be told "write a comprehensive article" and
+        // fill the gap with plausible-sounding invented detail that no
+        // downstream check catches (the quote verifier only catches
+        // fabricated *quotes*, not fabricated narrative). Thin extraction
+        // now always downgrades to tier-2 (paraphrase-only, no verbatim
+        // quotes claimed) regardless of allowlist status.
+        return { status: 200, finalUrl, tier: 'tier-2', bodyText: '', reason: 'Limited text extraction — insufficient ground truth for tier-1' };
       }
     }
 
@@ -546,11 +643,19 @@ function calculateSimilarity(str1, str2) {
  */
 async function collectVerifiedRssStories(options = {}) {
   const maxHours = options.maxHours || 4;
-  const cutoffTime = new Date(Date.now() - maxHours * 3600 * 1000);
+  // Prefer an exact timestamp over the rounded-up hour count when the
+  // caller has one (auto-window mode passes the real lastPublishedAt).
+  // maxHours is always Math.ceil()'d to a whole hour, so using it alone as
+  // the cutoff means every run silently re-scans up to ~59 extra minutes
+  // beyond "between last published and now."
+  const cutoffTime = options.sinceTimestamp ? new Date(options.sinceTimestamp) : new Date(Date.now() - maxHours * 3600 * 1000);
   console.log(`[RSS Collector] Scanning verified feeds (Lookback: ${maxHours}h, Cutoff: ${cutoffTime.toISOString()})...`);
 
-  const existingDbHeadlines = await fetchExistingHeadlines(Math.max(24, maxHours));
-  console.log(`[RSS Collector] Loaded ${existingDbHeadlines.size} database records for deduplication.`);
+  const [existingDbHeadlines, profileNameSet] = await Promise.all([
+    fetchExistingHeadlines(Math.max(24, maxHours)),
+    fetchPoliticianProfileNames()
+  ]);
+  console.log(`[RSS Collector] Loaded ${existingDbHeadlines.size} database records for deduplication, ${profileNameSet.size} politician profile names for relevance filtering.`);
 
   // Fetch every feed concurrently (bounded) instead of one-at-a-time — with
   // ~70 feeds now registered (6 national wires + curated local queries + a
@@ -580,6 +685,14 @@ async function collectVerifiedRssStories(options = {}) {
 
           // Strict US and Canada filter
           if (!isStrictlyUsOrCanada(item.title, item.description, item.sourceName)) {
+            continue;
+          }
+
+          // Only keep candidates about an actual accountable individual —
+          // a sitting office holder, a known key leader, or someone with an
+          // existing Choseno politician profile — not a purely
+          // institutional/topic story with no named human subject.
+          if (!mentionsOfficeholderOrKnownPolitician(item, profileNameSet)) {
             continue;
           }
 
@@ -630,14 +743,29 @@ async function collectVerifiedRssStories(options = {}) {
   const nationalOrdered = roundRobin(nationalNames);
   const localOrdered = roundRobin(localNames);
 
-  const rawCandidates = [];
+  const interleaved = [];
   let ni = 0, li = 0;
   while (ni < nationalOrdered.length || li < localOrdered.length) {
-    if (ni < nationalOrdered.length) rawCandidates.push(nationalOrdered[ni++]);
-    for (let k = 0; k < 2 && li < localOrdered.length; k++) rawCandidates.push(localOrdered[li++]);
+    if (ni < nationalOrdered.length) interleaved.push(nationalOrdered[ni++]);
+    for (let k = 0; k < 2 && li < localOrdered.length; k++) interleaved.push(localOrdered[li++]);
   }
 
-  console.log(`\n[RSS Collector] Found ${rawCandidates.length} raw unique candidate stories within lookback window (${nationalOrdered.length} national, ${localOrdered.length} local/municipal/provincial).`);
+  // Within-batch dedup: the same event is routinely syndicated across
+  // several outlets/feeds in one run (e.g. a governor's office press
+  // release picked up by 3 different queries) — existingDbHeadlines only
+  // catches stories already published, not siblings collected in this same
+  // run. Keep the first occurrence (already national:local prioritized) and
+  // drop later near-duplicates before they ever reach verification/synthesis.
+  const rawCandidates = [];
+  for (const item of interleaved) {
+    const normTitle = item.title.toLowerCase().replace(/[^a-z0-9]/g, ' ').trim();
+    const isBatchDuplicate = rawCandidates.some(kept =>
+      calculateSimilarity(normTitle, kept.title.toLowerCase().replace(/[^a-z0-9]/g, ' ').trim()) > 0.45
+    );
+    if (!isBatchDuplicate) rawCandidates.push(item);
+  }
+
+  console.log(`\n[RSS Collector] Found ${rawCandidates.length} raw unique candidate stories within lookback window (${nationalOrdered.length} national, ${localOrdered.length} local/municipal/provincial, ${interleaved.length - rawCandidates.length} in-batch duplicates dropped).`);
   console.log(`[RSS Collector] Executing HTTP Status & Paywall Gatekeeper on top candidates in parallel...\n`);
 
   // Cap candidate checking to avoid wasteful slow network checks. Raised

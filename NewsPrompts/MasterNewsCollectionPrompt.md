@@ -200,11 +200,31 @@ Google Search Essentials and Google News Publisher Guidelines strictly penalize 
 - **Zero Shared Verbs**: Every headline in a batch should use a distinct, active verb (e.g. *Secures, Imposes, Restructures, Petitions, Tightens, Enforces, Voids, Clashes*).
 - **Varied Ledes**: Never open articles with the formula `"[CITY], [ST] — [Official] on [Day] announced..."`. Lead with the hard numbers, community consequence, or legislative vote first.
 
-#### 4-PART / 5-SECTION JOURNALISTIC BODY STRUCTURE (350–750 WORDS):
-1. **Dateline & Lead**: Start with `CITY, Province/State — ` followed immediately by the concrete news event, key stakeholders, and public consequence.
-2. **Mechanics & Hard Figures**: Specific dollar amounts ($M/$B), percentages, bill numbers (e.g. `Bill 185`, `SB 3925`), vote tallies, statutory citations, and implementation dates.
-3. **Constituent & Regional Impact**: Direct consequences for taxpayers, businesses, renters, commuters, or specific ridings/districts.
-4. **Accountability & Next Steps**: Upcoming hearings, application deadlines, committee reviews, opposition responses, and outstanding questions.
+#### WRITE LIKE AN EDITOR, NOT A TEMPLATE (350–750 WORDS):
+
+> [!IMPORTANT]
+> **Fixed 2026-08-28, revised same day**: the body used to render as literal
+> labeled sections ("Dateline Lead" / "Policy & Taxpayer Impact" / "The
+> Debate" / ...). Removing the visible headers alone still left every
+> article marching through the identical four beats in the identical order
+> — a template with the labels hidden is still a template. There is now no
+> fixed structure at all: the model is instructed to make an editorial
+> judgment call on how each specific story should be told, the way a real
+> newsroom writes different stories differently (some lead with a number,
+> some with a quote, some with the human stakes; some have real back-and-
+> forth between sides, some don't have a debate to report and shouldn't be
+> given a manufactured one). The only hard rules are: one continuous
+> narrative, plain paragraphs (`\n\n` for pacing) — never markdown headers,
+> never labeled sections, never a checklist answered one item at a time.
+>
+> The things a civic story *can* draw on, entirely at the writer's
+> discretion per story — not a mandatory list to complete every time:
+> - The concrete event, dateline, key stakeholders, public consequence
+> - Hard figures: dollar amounts, percentages, bill numbers, vote tallies, statutory citations, implementation dates
+> - Constituent/regional impact: taxpayers, businesses, renters, commuters, specific ridings/districts
+> - Accountability angle: hearings, deadlines, committee reviews, opposition response, outstanding questions
+>
+> Use what this story actually needs. Leave out what it doesn't have.
 
 ---
 
@@ -231,7 +251,7 @@ Google Search Essentials and Google News Publisher Guidelines strictly penalize 
   "impactArea": "country",
   "latitude": 45.4215,
   "longitude": -75.6972,
-  "body": "OTTAWA, ON — ...\n\n## Statutory Framework and Funding\n\n...\n\n## Impact on Residents and Businesses\n\n...\n\n## Next Steps and Accountability\n\n...",
+  "body": "OTTAWA, ON — one continuous narrative, plain paragraphs separated by \\n\\n only — NO markdown headers, NO labeled sections. The lead, the hard figures, the impact, and the accountability angle all flow together as a single story a reader can read start to finish.",
   "seoTitle": "Descriptive Search-Friendly Title | Choseno",
   "metaDescription": "140-170 character meta description summarizing the key facts and civic impact.",
   "tags": [
