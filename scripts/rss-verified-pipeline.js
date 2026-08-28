@@ -105,6 +105,14 @@ STRICT FACTUAL INTEGRITY RULES:
 4. STRICT JURISDICTION: This platform covers ONLY the United States and Canada. The country field MUST be either "US" or "CA".
 5. ZERO EMOJIS: Do not include emojis anywhere.
 
+HEADLINE CRAFT (same standard as the manual editorial directive — Google penalizes templated headlines as Scaled Content Abuse):
+- Do NOT lead with the politician's name in a formulaic slot ("[Name] Advances/Unveils/Champions/Spearheads/Rolls Out/Pushes For [Topic] for [City]"). Those five verbs are banned as the headline's primary verb.
+- Lead with the hard dollar figure, the vote/ruling, the fiscal impact, or the concrete consequence instead — e.g. "Bakersfield City Council Restructures Community Patrols in $3.2M Safety Overhaul" beats "Mayor X Unveils Safety Plan".
+- Never end a headline with a generic "...for [City]" or "...for [State]" tail — fold the location into the subject or action.
+- Never open the body with "[CITY], [ST] — [Official] on [Day] announced..." — open with the number, the vote, or the community consequence first.
+
+TWEET SPEC: 120-220 characters, explains the public/civic stakes plainly. NO hashtags, NO @handles, NO URLs, NO emojis.
+
 Source Headline: ${groundTruth.title}
 Source Outlet: ${groundTruth.sourceName}
 Source URL: ${groundTruth.sourceUrl}
@@ -215,6 +223,49 @@ function synthesizeDirectFallback(groundTruth) {
 }
 
 /**
+ * Runs fetch-trending-topics.js for the same lookback window and returns the
+ * set of trending keyword tokens, so candidates matching what's actually
+ * surging on Google Trends / Google News get priority instead of being cut
+ * off by the synthesis `limit`. This is the "twitter/general trending"
+ * signal masternewsagent used to consult manually — folded into the one
+ * pipeline so both cron and on-demand runs get it automatically.
+ */
+function loadTrendingKeywords(maxHours) {
+  const { execSync } = require('child_process');
+  try {
+    execSync(`node scripts/fetch-trending-topics.js --max-hours ${maxHours}`, {
+      encoding: 'utf8',
+      cwd: path.resolve(__dirname, '..'),
+      stdio: ['ignore', 'ignore', 'ignore']
+    });
+  } catch (e) {
+    console.warn('[PIPELINE] Trending topics fetch failed, continuing without trending boost:', e.message);
+    return new Set();
+  }
+
+  const csvPath = path.join(__dirname, 'latest-trending-topics.csv');
+  if (!fs.existsSync(csvPath)) return new Set();
+
+  const lines = fs.readFileSync(csvPath, 'utf8').split('\n').filter(Boolean);
+  const keywords = new Set();
+  // title is column index 4; split respecting quoted commas
+  for (const line of lines.slice(1)) {
+    const cells = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
+    const title = (cells[4] || '').replace(/^"|"$/g, '').replace(/""/g, '"');
+    for (const token of title.toLowerCase().replace(/[^a-z0-9]/g, ' ').split(/\s+/)) {
+      if (token.length > 3) keywords.add(token);
+    }
+  }
+  return keywords;
+}
+
+function isTrending(title, trendingKeywords) {
+  if (trendingKeywords.size === 0) return false;
+  const tokens = title.toLowerCase().replace(/[^a-z0-9]/g, ' ').split(/\s+/).filter(w => w.length > 3);
+  return tokens.some(t => trendingKeywords.has(t));
+}
+
+/**
  * Main Execution: Collect -> Gatekeep -> Synthesize -> Verify Quotes -> Ingest
  */
 async function runVerifiedNewsPipeline(options = {}) {
@@ -232,8 +283,23 @@ async function runVerifiedNewsPipeline(options = {}) {
     return [];
   }
 
-  const limit = options.limit || 15;
-  const toProcess = candidates.slice(0, limit);
+  // 2. Pull the same lookback window's trending topics and bump any
+  // candidate that matches to the front, so a genuinely trending story
+  // never gets truncated out by `limit` just because of feed order.
+  const trendingKeywords = options.skipTrending ? new Set() : loadTrendingKeywords(options.maxHours || 4);
+  const ordered = trendingKeywords.size
+    ? [...candidates].sort((a, b) => Number(isTrending(b.title, trendingKeywords)) - Number(isTrending(a.title, trendingKeywords)))
+    : candidates;
+  const trendingMatchCount = ordered.filter(c => isTrending(c.title, trendingKeywords)).length;
+  if (trendingMatchCount > 0) {
+    console.log(`[PIPELINE] ${trendingMatchCount} candidate(s) match current trending topics — prioritized.`);
+  }
+
+  // Raised default 15 -> 20: with ~100 feeds now feeding the national:local
+  // interleave in the collector, a lower limit was truncating back down to
+  // mostly-national before local stories got a fair share of publish slots.
+  const limit = options.limit || 20;
+  const toProcess = ordered.slice(0, limit);
 
   console.log(`\n[PIPELINE] Synthesizing top ${toProcess.length} of ${candidates.length} verified candidate stories...`);
   const synthesizedBatch = [];
@@ -291,9 +357,34 @@ async function runVerifiedNewsPipeline(options = {}) {
 }
 
 if (require.main === module) {
-  const maxHoursArg = process.argv.find((a, i) => process.argv[i - 1] === '--max-hours') || 4;
-  const limitArg = process.argv.find((a, i) => process.argv[i - 1] === '--limit') || 10;
-  runVerifiedNewsPipeline({ maxHours: Number(maxHoursArg), limit: Number(limitArg) }).catch(console.error);
+  (async () => {
+    const explicitMaxHours = process.argv.find((a, i) => process.argv[i - 1] === '--max-hours');
+    const limitArg = process.argv.find((a, i) => process.argv[i - 1] === '--limit') || 20;
+
+    let maxHours;
+    if (explicitMaxHours) {
+      // Cron passes this explicitly (e.g. --max-hours 6) — always honored as-is.
+      maxHours = Number(explicitMaxHours);
+    } else {
+      // On-demand run with no --max-hours given: derive the lookback from
+      // time-since-last-published instead of guessing, so a manual run
+      // never has a coverage gap or re-scans hours that are already covered.
+      // This is the ONE difference between a cron run and an on-demand run
+      // — everything downstream (feeds, verification, tagging, scoring,
+      // tweet copy) is the same code path either way.
+      try {
+        const { getLastPublishWindow } = require('./get-last-publish-window');
+        const window = await getLastPublishWindow();
+        maxHours = window.lookbackHours;
+        console.log(`[PIPELINE] No --max-hours given; auto-computed lookback = ${maxHours}h (last published ${window.lastPublishedAt}).`);
+      } catch (e) {
+        console.warn('[PIPELINE] Auto-window lookup failed, defaulting to 4h:', e.message);
+        maxHours = 4;
+      }
+    }
+
+    runVerifiedNewsPipeline({ maxHours, limit: Number(limitArg) }).catch(console.error);
+  })();
 }
 
 module.exports = {

@@ -65,8 +65,14 @@ function calculateViralityScore(article) {
   if (article.breakingNews) score += 0.8;
   if (['Economy', 'Politics', 'Public Safety', 'Elections'].includes(article.category)) score += 0.5;
   if (article.taggedPoliticians && article.taggedPoliticians.length > 0) score += 0.3;
+  // Fixed 2026-08-27: local/municipal previously got no impactArea bonus at
+  // all (vs. +0.3 national / +0.15 province), so a real municipal decision
+  // ranked lower than a national story on scale alone and fell out of the
+  // top-100 CSV first even when it was the more relevant local story.
+  // Province/state and municipal/local now score equally — one tier below
+  // national rather than local scoring zero.
   if (article.impactArea === 'country' || article.impactArea === 'national') score += 0.3;
-  else if (article.impactArea === 'province' || article.impactArea === 'state') score += 0.15;
+  else if (['province', 'state', 'local', 'municipal'].includes(article.impactArea)) score += 0.2;
   return Math.min(9.9, Math.max(7.5, Number(score.toFixed(1))));
 }
 

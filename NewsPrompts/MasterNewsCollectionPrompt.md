@@ -11,105 +11,90 @@
 > 3. **Quote Gatekeeper**: Verbatim quotes are permitted ONLY if present in source text (Tier-1). Tier-2 outlets must be paraphrased in reported speech with attribution.
 > 4. **Strict US & Canada Only**: Only cover US & Canada governance (Federal, State/Provincial, Municipal).
 
-
-You are the Executive Editor-in-Chief, Lead Investigative Journalist, and Chief Distribution Strategist for **Choseno**, the premier non-partisan platform for political accountability and civic engagement.
-
-Your mission is to execute a **unified, multi-track news collection and ingestion cycle** strictly targeting stories that occurred and were published **between the last published timestamp in the database and NOW**, combining:
-1. **Track A — General Civic & Wire Discovery**: High-impact national and regional news from wires (AP, Reuters, CP), RSS feeds, and government portals.
-2. **Track B — 30 Key Political Leaders**: Targeted monitoring and wall-mirroring for the 30 designated executive and legislative leaders in the U.S. and Canada.
-3. **Track C — Universal Web, Local & Municipal Search**: Broad-spectrum Google searches across all 50 states, 10 provinces, 100+ municipal councils, and court dockets with dynamic politician tagging.
-
-You are responsible for journalistic accuracy, source verification, relevance, fairness, editorial depth, and end-to-end execution. Never invent facts to complete an article.
-
 ---
+
+## 0. THIS IS ONE ENGINE, NOT TWO PATHS
 
 > [!IMPORTANT]
-> **MANDATORY MASTER EXECUTION PIPELINE — DYNAMIC LOOKBACK WINDOW & UNIFIED INGESTION:**
-> **OBJECTIVE: Determine the exact lookback window (hours elapsed since last publication), query ONLY events within that window, discover, verify, deduplicate, and publish genuine high-impact articles into the Choseno database, syncing politician walls and electoral boundaries, and updating social distribution tracking.**
+> **There is a single content engine: [`scripts/rss-verified-pipeline.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/rss-verified-pipeline.js). Cron and an on-demand/manual run execute the exact same code, so there is no separate set of discovery, tagging, scoring, or writing rules to keep in sync.**
 >
-> When executing this Master Directive, you **MUST** actively follow these 6 sequential steps:
-> 
-> 1. **Determine Exact Dynamic Lookback Window**:
->    - Execute the helper script to calculate elapsed hours and exact timestamp boundaries:
->      ```bash
->      node scripts/get-last-publish-window.js
->      ```
->    - Extract `lastPublishedAt` (e.g. `2026-08-17T14:30:00Z`), `currentTime`, and `lookbackHours` (e.g. `1` or `2`).
->    - Use this `lookbackHours` value to dynamically parameterize trending fetcher:
->      ```bash
->      node scripts/fetch-trending-topics.js --max-hours <lookbackHours>
->      ```
-> 
-> 2. **Execute Parallel 3-Track Discovery (Scoped to Window)**:
->    - All web searches and Google queries must incorporate the exact date/hour window: `[query] (past <lookbackHours> hours OR "[today's date]")`.
->    - **Track A (Wire & Civic)**: Scan wire feeds and trending topics filtered for the exact window.
->    - **Track B (Key Leaders)**: Scan statements, executive orders, and votes involving the **30 Key Leaders** occurring after `lastPublishedAt`.
->    - **Track C (Universal Web & Local)**: Run Google search operators across municipal halls and court dockets with the dynamic time filter, looking up any mentioned officials in Supabase.
-> 
-> 3. **Unified Pre-Flight Deduplication**:
->    - Cross-check candidate topics across all 3 tracks against existing database slugs and headlines *before* writing full articles.
-> 
-> 4. **Synthesize Substantive Journalistic Articles**:
->    - Write 4-part structured articles (350–750 words) with verified numbers, bill citations, and canonical source deep links.
->    - Ensure every article object has: exact dateline, hard figures, constituent impact, accountability next steps, accurate lat/lng coordinates, verified `taggedPoliticianIds`, and a compliant `tweet` hook (120–220 chars, NO hashtags, NO handles, NO URLs, NO emojis).
-> 
-> 5. **Batch Ingest via Sanctioned Ingestion Engine**:
->    - Write the article JSON array into [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js)'s `articles` array.
->    - Execute:
->      ```bash
->      node scripts/insert-news-batch.js
->      ```
->    - This automatically deduplicates against 1000 recent rows, executes `admin_sync_news_article_tags()` for politician walls, and executes `admin_sync_news_article_boundaries()` for GIS boundary polygons.
-> 
-> 6. **Rank & Output Live Distribution Report**:
->    - Prepend new stories to [`batch-ranked-news.csv`](file:///Users/vmn2k4/Coding/Choseno/batch-ranked-news.csv) (keeping top 100 rows ranked 1 to 100 by virality score) and save any overflow (#101+) into [`scripts/overflow-news-batch.json`](file:///Users/vmn2k4/Coding/Choseno/scripts/overflow-news-batch.json).
->    - Verify TypeScript compilation (`npx tsc --noEmit`).
->    - Commit changes locally (`git add` and `git commit`).
->    - Output the comprehensive live distribution summary table with canonical article links and politician wall links.
+> The **only** difference between a scheduled run and an on-demand one is how the lookback window is chosen:
+>
+> ```bash
+> # Cron: fixed, explicit lookback
+> node scripts/rss-verified-pipeline.js --max-hours 6
+>
+> # On-demand, no window given: auto-computed from time-since-last-published
+> # (internally calls scripts/get-last-publish-window.js) — never re-scans
+> # already-covered hours, never leaves a gap.
+> node scripts/rss-verified-pipeline.js
+>
+> # On-demand with an explicit custom window ("just check the last 3 hours"):
+> node scripts/rss-verified-pipeline.js --max-hours 3
+> ```
+>
+> What used to require a live agent doing ad-hoc Google searches (the old
+> "3 Discovery Tracks" below) is now handled entirely inside
+> [`scripts/rss-feed-collector.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/rss-feed-collector.js):
+> ~100 registered feeds spanning federal wires, 30 named key-leader queries,
+> and one dedicated feed per US state and Canadian province/territory —
+> pooled and interleaved national:local at a fixed 1:2 ratio so national
+> wires can never crowd out local coverage the way they used to. The
+> pipeline also pulls the same-window trending topics
+> ([`scripts/fetch-trending-topics.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/fetch-trending-topics.js))
+> automatically and prioritizes any candidate that matches, so a genuinely
+> trending story never gets truncated out by the synthesis limit.
+>
+> **The one thing this can't do**: a story with zero RSS/Google News
+> footprint at all — a raw court docket, a hyper-local outlet with no feed.
+> That's the one legitimate case for a manual, occasional deep-dive outside
+> this pipeline (live web search, hand-authoring a JSON object into
+> [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js)'s
+> `articles` array, then running it directly) — not the default way news
+> gets in, and not something to run unattended on a schedule.
+
+Everything below this point is **reference material**: the editorial rules
+the pipeline's Gemini synthesis prompt already encodes (so you can audit or
+extend it), the key-leader roster it already queries, and the JSON shape it
+already produces. Treat it as documentation of what the code does, not as a
+separate set of steps to execute by hand.
 
 ---
 
-### 1. THE 3 DISCOVERY TRACKS & QUERY PARAMETERIZATION
+### 1. WHAT THE PIPELINE COVERS
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        MASTER DISCOVERY ENGINE                         │
-├──────────────────┬───────────────────────┬─────────────────────────────┤
-│ TRACK A: WIRES   │ TRACK B: KEY LEADERS  │ TRACK C: UNIVERSAL & LOCAL  │
-│ - AP / Reuters   │ - 30 US & CA Leaders  │ - 50 States, 10 Provinces   │
-│ - Canadian Press │ - Pre-mapped UUIDs    │ - Top 100 City Halls        │
-│ - Google Trends  │ - Instant Wall Mirror │ - Court Dockets & Tribunals │
-│ - Gov Portals    │ - Direct Quotes/Votes │ - Dynamic Profile Lookup    │
-└────────┬─────────┴───────────┬───────────┴──────────────┬──────────────┘
-         │                     │                          │
-         └─────────────────────┼──────────────────────────┘
-                               ▼
-            ┌──────────────────────────────────────┐
-            │ Unified Deduplication & Verification │
-            └──────────────────┬───────────────────┘
-                               ▼
-            ┌──────────────────────────────────────┐
-            │   4-Part Structured Article Writer   │
-            │   (350–750 words, deep links, GIS)   │
-            └──────────────────┬───────────────────┘
-                               ▼
-            ┌──────────────────────────────────────┐
-            │  scripts/insert-news-batch.js Engine │
-            └──────────────────┬───────────────────┘
-                               ▼
-            ┌──────────────────────────────────────┐
-            │ batch-ranked-news.csv + Live Report  │
-            └──────────────────────────────────────┘
-```
+Three governance-tier concerns are covered by feed design, not by agent
+judgment call each run:
 
-#### Dynamic Query Templates (Inject `<lookbackHours>` and `<today's date>`):
-- **Track A (Wires)**: `("breaking" OR "announced" OR "bill" OR "tariffs") ("AP News" OR "Reuters" OR "The Canadian Press" OR "CBC" OR "CTV") (past <lookbackHours> hours OR "<today's date>")`
-- **Track B (Key Leaders)**: `"[Leader Name]" (announcement OR bill OR policy OR executive order OR statement OR legislation) (past <lookbackHours> hours OR "<today's date>")`
-- **Track C (Universal Web)**: `("City Council" OR "Mayor" OR "Governor" OR "Premier" OR "Supreme Court") ("approved" OR "signed" OR "voted" OR "ruled") (past <lookbackHours> hours OR "<today's date>")`
+1. **Wire & Civic Discovery** — national wires (AP, Reuters, The Canadian
+   Press, CBC, The Hill, Politico, Globe and Mail) via
+   `NATIONAL_FEEDS` in `rss-feed-collector.js`.
+2. **30 Key Political Leaders** — one Google News feed per leader, by name
+   (see roster in §2), split into federal (pooled as "national") vs.
+   state/premier (pooled as "local") so this can't quietly re-inflate the
+   Trump/national skew the per-region feeds below were built to fix.
+3. **Municipal, State & Provincial Coverage** — one feed per US state and
+   Canadian province/territory, built by role/office terms (governor,
+   mayor, councillor, MLA, MPP, MNA, "county commission", "state
+   legislature") plus the region's name — **never a specific incumbent's
+   name**, so it keeps working across elections. Two curated catch-all
+   feeds (US and Canada) supplement this with decision-oriented terms
+   (budget, zoning, referendum, "voted to", bylaw).
+
+A dedicated opposition/caucus-politics feed exists for exactly the gap a
+premier-name-locked query can't catch: a story about the *opposition*
+losing MLAs to defection, not the sitting government.
+
+> [!NOTE]
+> If you're extending feed coverage, keep queries to **at most 2 top-level
+> term groups** (one bracketed OR-group + one quoted phrase, or two
+> bracketed groups — never three). Verified by hand: a 3rd clause silently
+> makes Google News RSS stop honoring the quoted region/leader name and
+> every feed collapses to the same generic top result.
 
 ---
 
-### 2. KEY LEADERS DATABASE PROFILE LOOKUP TABLE & MANDATORY TAGGING RULES
+### 2. KEY LEADERS ROSTER (baked into `rss-feed-collector.js`)
 
 > [!IMPORTANT]
 > **MANDATORY POLITICIAN TAGGING & PROFILE RESOLUTION RULES:**
@@ -158,19 +143,25 @@ You are responsible for journalistic accuracy, source verification, relevance, f
 | **Elizabeth May** | Leader of the Green Party | `50d60646-a942-415e-aea1-94d8293e888c` | `elizabeth-may` |
 | **Ravi Kahlon** | Senior B.C. Cabinet Minister | `472949c0-825a-498c-8a8e-33b6d292286e` | `ravi-kahlon` |
 
+To add a leader: add `{ name, country }` to `KEY_LEADERS_FEDERAL` or
+`KEY_LEADERS_STATE_PROVINCIAL` in `rss-feed-collector.js` (federal vs.
+state/premier decides which pool it's interleaved into), and add their
+row here plus their `taggedPoliticianIds` resolution in
+`insert-news-batch.js` if not already covered by the dynamic `profiles`
+lookup.
+
 ---
 
-### 3. DEDUPLICATION RULES
-Before writing an article, compare against existing Choseno coverage.
+### 3. DEDUPLICATION RULES (enforced in `rss-feed-collector.js` / `insert-news-batch.js`)
 1. **Slug match**: Exact slug match will update (`PATCH`) the existing article.
 2. **Canonical source URL match**: Shared source URLs will update rather than duplicate.
-3. **Headline token overlap**: ≥70% token overlap within ±3-day window for the same official/topic is merged into one comprehensive story.
+3. **Headline token overlap**: ≥45% token overlap against the last 2000 published headlines is treated as a duplicate and skipped before synthesis even runs.
 
 ---
 
 ### 4. JOURNALISTIC HEADLINE & EDITORIAL INTEGRITY (ANTI-SCALED CONTENT ABUSE)
 
-Google Search Essentials and Google News Publisher Guidelines strictly penalize templated or formulaic writing ("Scaled Content Abuse"). You must write headlines and body copy like an experienced investigative metro editor, NOT an automated aggregator.
+Google Search Essentials and Google News Publisher Guidelines strictly penalize templated or formulaic writing ("Scaled Content Abuse"). The Gemini synthesis prompt in `rss-verified-pipeline.js` enforces this per-article; it's documented in full here for anyone auditing or extending that prompt.
 
 #### 🚫 STRICTLY BANNED HEADLINE PATTERNS & CRUTCH WORDS:
 - ❌ **NO formulaic slots:** `[Name] Advances [Topic] [Initiative/Expansion] for [City]`
@@ -192,12 +183,12 @@ Google Search Essentials and Google News Publisher Guidelines strictly penalize 
 6. **Electoral & Regional Context**: Emphasize district boundaries, primary stakes, or succession:
    - *"Florida Primary Eve: High-Stakes Race to Decide Gubernatorial and U.S. Senate Succession"*
 
-#### 📐 BATCH DIVERSITY RATIO:
-- **Maximum 20% Name-Led**: At least 8 out of 10 stories in a batch must lead with the city, agency, policy outcome, or bill—NOT the politician's personal name.
-- **Zero Shared Verbs**: Every headline in a batch must use a distinct, active verb (e.g. *Secures, Imposes, Restructures, Petitions, Tightens, Enforces, Voids, Clashes*).
+#### 📐 BATCH DIVERSITY RATIO (aspirational — not yet enforced programmatically across a batch, only per-article):
+- **Maximum 20% Name-Led**: At least 8 out of 10 stories in a batch should lead with the city, agency, policy outcome, or bill—NOT the politician's personal name.
+- **Zero Shared Verbs**: Every headline in a batch should use a distinct, active verb (e.g. *Secures, Imposes, Restructures, Petitions, Tightens, Enforces, Voids, Clashes*).
 - **Varied Ledes**: Never open articles with the formula `"[CITY], [ST] — [Official] on [Day] announced..."`. Lead with the hard numbers, community consequence, or legislative vote first.
 
-#### 4-PART JOURNALISTIC BODY STRUCTURE (350–750 WORDS):
+#### 4-PART / 5-SECTION JOURNALISTIC BODY STRUCTURE (350–750 WORDS):
 1. **Dateline & Lead**: Start with `CITY, Province/State — ` followed immediately by the concrete news event, key stakeholders, and public consequence.
 2. **Mechanics & Hard Figures**: Specific dollar amounts ($M/$B), percentages, bill numbers (e.g. `Bill 185`, `SB 3925`), vote tallies, statutory citations, and implementation dates.
 3. **Constituent & Regional Impact**: Direct consequences for taxpayers, businesses, renters, commuters, or specific ridings/districts.
@@ -212,7 +203,7 @@ Google Search Essentials and Google News Publisher Guidelines strictly penalize 
 
 ---
 
-### 6. ARTICLE JSON SCHEMA
+### 6. ARTICLE JSON SCHEMA (what `rss-verified-pipeline.js` synthesizes and `insert-news-batch.js` ingests)
 
 ```json
 {
@@ -259,12 +250,23 @@ Google Search Essentials and Google News Publisher Guidelines strictly penalize 
 
 ---
 
-### 7. EXECUTION, RANKING & REPORTING
+### 7. THE ONE CASE THAT STILL NEEDS A MANUAL RUN
 
-1. **Populate `scripts/insert-news-batch.js`**: Place hand-researched article objects into the `articles` array and execute:
+A story that has genuinely zero RSS/Google News footprint — a raw court
+docket, a hyper-local outlet with no feed, a specific follow-up question
+("did this official actually resign yet?"). For that, and only that:
+
+1. Research and write the article JSON by hand, following §4-6 above exactly.
+2. Place it into `scripts/insert-news-batch.js`'s `articles` array and run:
    ```bash
    node scripts/insert-news-batch.js
    ```
-2. **Update Ranked CSV**: Prepend published rows to [`batch-ranked-news.csv`](file:///Users/vmn2k4/Coding/Choseno/batch-ranked-news.csv) (12 columns). Archive any overflow (#101+) into [`scripts/overflow-news-batch.json`](file:///Users/vmn2k4/Coding/Choseno/scripts/overflow-news-batch.json).
-3. **Verify & Commit**: Run `npx tsc --noEmit`, stage files with `git add`, and commit with `git commit`. *(Do not push without permission).*
-4. **Summary Report**: Output the live distribution summary table with canonical links and politician wall URLs.
+   This still runs the shared ingestion engine — dedup, politician-ID
+   resolution, virality scoring, Supabase insert, wall/boundary sync, and
+   the `batch-ranked-news.csv` update — so a manually-authored story gets
+   identical treatment to a pipeline-discovered one downstream.
+3. Verify (`npx tsc --noEmit`) and commit. *(Do not push without permission.)*
+
+This should be rare. If you're reaching for it often for a category of
+story, that's a signal to add a feed to `rss-feed-collector.js` instead —
+see the §1 note on the 2-term-group query limit before doing so.

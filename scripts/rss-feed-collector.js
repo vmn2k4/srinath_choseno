@@ -54,8 +54,21 @@ const ALLOWLISTED_PAYWALLED_DOMAINS = new Set([
 ]);
 
 // Verified US & Canada RSS Feed Registry (Federal, State/Provincial, Municipal)
-const RSS_FEEDS = [
-  // 1. US Federal & National Politics Wires
+//
+// NATIONAL_FEEDS and LOCAL_CURATED_FEEDS are hand-picked wires/queries.
+// LOCAL_REGION_FEEDS is machine-generated: one dedicated local-politics feed
+// per US state and Canadian province/territory, so small municipal, MLA/MPP,
+// and state-legislature stories get a guaranteed feed of their own instead of
+// competing inside two catch-all "US Municipal" / "Canada Municipal" queries.
+//
+// Fixed 2026-08-27: previously national wires were listed first and a single
+// global slice(0, 30) truncation (see collectVerifiedRssStories below) meant
+// national/DC stories silently crowded out every municipal and provincial
+// story before verification ever ran. Collection now buckets items per feed
+// and interleaves national vs. local at a fixed ratio so local coverage is
+// structurally guaranteed, not just hoped for.
+const NATIONAL_FEEDS = [
+  // US Federal & National Politics Wires
   {
     name: 'The Hill Politics',
     url: 'https://thehill.com/homenews/feed/',
@@ -74,20 +87,7 @@ const RSS_FEEDS = [
     country: 'US',
     category: 'Politics'
   },
-  // 2. US State Capitols, Governors & Municipal City Halls
-  {
-    name: 'Google News US Municipal & Mayors',
-    url: 'https://news.google.com/rss/search?q=(%22city+council%22+OR+mayor+OR+ordinance+OR+alderman)+when:24h&hl=en-US&gl=US&ceid=US:en',
-    country: 'US',
-    category: 'Municipal'
-  },
-  {
-    name: 'Google News US State Capitols',
-    url: 'https://news.google.com/rss/search?q=(governor+OR+%22state+senate%22+OR+%22state+house%22+OR+%22state+legislature%22)+when:24h&hl=en-US&gl=US&ceid=US:en',
-    country: 'US',
-    category: 'Politics'
-  },
-  // 3. Canada Federal Politics Wires
+  // Canada Federal Politics Wires
   {
     name: 'CBC News Politics',
     url: 'https://www.cbc.ca/cmlink/rss-politics',
@@ -105,21 +105,170 @@ const RSS_FEEDS = [
     url: 'https://globalnews.ca/politics/feed/',
     country: 'CA',
     category: 'Politics'
+  }
+];
+
+const LOCAL_CURATED_FEEDS = [
+  // US State Capitols, Governors & Municipal City Halls (catch-all, on top
+  // of the per-state feeds generated below)
+  {
+    name: 'Google News US Municipal & Mayors',
+    url: 'https://news.google.com/rss/search?q=(%22city+council%22+OR+mayor+OR+ordinance+OR+alderman+OR+%22county+commission%22+OR+%22school+board%22+OR+township+OR+borough)+(budget+OR+zoning+OR+rezoning+OR+referendum+OR+%22voted+to%22+OR+%22approved%22+OR+levy+OR+ballot)+when:24h&hl=en-US&gl=US&ceid=US:en',
+    country: 'US',
+    category: 'Municipal'
   },
-  // 4. Canada Provincial Capitols & Municipal Councils
+  {
+    name: 'Google News US State Capitols',
+    // Role/office based, not a fixed roster of incumbent names — catches
+    // any governor, state senator/rep regardless of who currently holds
+    // the seat.
+    url: 'https://news.google.com/rss/search?q=(governor+OR+%22state+senate%22+OR+%22state+house%22+OR+%22state+legislature%22+OR+%22state+representative%22)+when:24h&hl=en-US&gl=US&ceid=US:en',
+    country: 'US',
+    category: 'Politics'
+  },
+  {
+    name: 'Google News US State Party & Caucus Politics',
+    url: 'https://news.google.com/rss/search?q=(caucus+OR+resigns+OR+%22steps+down%22+OR+recall+OR+%22primary+challenge%22+OR+censure+OR+%22party+leadership%22)+(%22state+legislature%22+OR+%22state+senate%22+OR+%22state+house%22+OR+governor)+when:24h&hl=en-US&gl=US&ceid=US:en',
+    country: 'US',
+    category: 'Politics'
+  },
+  // Canada Provincial Capitols & Municipal Councils (catch-all, on top of
+  // the per-province feeds generated below)
   {
     name: 'Google News Canada Municipal & Mayors',
-    url: 'https://news.google.com/rss/search?q=(%22city+council%22+OR+mayor+OR+councillor+OR+bylaw)+when:24h&hl=en-CA&gl=CA&ceid=CA:en',
+    url: 'https://news.google.com/rss/search?q=(%22city+council%22+OR+mayor+OR+councillor+OR+bylaw+OR+trustee+OR+%22school+board%22+OR+%22regional+district%22+OR+warden+OR+reeve)+(budget+OR+zoning+OR+rezoning+OR+referendum+OR+%22voted+to%22+OR+%22approved%22+OR+levy+OR+ballot)+when:24h&hl=en-CA&gl=CA&ceid=CA:en',
     country: 'CA',
     category: 'Municipal'
   },
   {
     name: 'Google News Canada Provincial Capitols',
-    url: 'https://news.google.com/rss/search?q=(%22provincial+government%22+OR+%22legislative+assembly%22+OR+mpp+OR+mla+OR+%22Doug+Ford%22+OR+%22David+Eby%22+OR+%22Danielle+Smith%22+OR+%22Wab+Kinew%22+OR+%22Scott+Moe%22+OR+%22Tim+Houston%22+OR+%22Francois+Legault%22)+when:24h&hl=en-CA&gl=CA&ceid=CA:en',
+    // Role/office based (premier, cabinet, MLA/MPP/MNA), not a fixed
+    // roster of incumbent names — catches any officeholder, any province,
+    // regardless of who currently holds the seat.
+    url: 'https://news.google.com/rss/search?q=(%22provincial+government%22+OR+%22legislative+assembly%22+OR+mpp+OR+mla+OR+mna+OR+premier+OR+cabinet+OR+%22question+period%22)+when:24h&hl=en-CA&gl=CA&ceid=CA:en',
+    country: 'CA',
+    category: 'Politics'
+  },
+  {
+    name: 'Google News Canada Opposition & Party Politics',
+    // Covers caucus turmoil / defections / leadership fights that a
+    // premier/government-focused feed cannot catch (e.g. Conservative
+    // Party of BC MLAs quitting caucus is about the opposition, not the
+    // sitting government) — by role/party, not a named individual.
+    url: 'https://news.google.com/rss/search?q=(caucus+OR+%22official+opposition%22+OR+%22party+leadership%22+OR+resigns+OR+quits+OR+%22leaves+caucus%22+OR+%22crosses+the+floor%22+OR+%22leadership+review%22+OR+%22Conservative+Party+of+BC%22+OR+%22BC+United%22)+when:24h&hl=en-CA&gl=CA&ceid=CA:en',
     country: 'CA',
     category: 'Politics'
   }
 ];
+
+// Closes the gap that used to be "Track B" of the manual masternewsagent
+// directive (30 key governance-tier leaders) with more feeds instead of a
+// live agent — one feed per leader, by name, since only a name search can
+// target a specific officeholder's own statements/bills. Split into
+// federal (national pool) vs. state/premier (local pool) so this doesn't
+// quietly re-inflate the Trump/national skew the feeds above were built to
+// fix — the interleave ratio below only works if leaders are pooled by the
+// governance tier they actually belong to.
+const KEY_LEADERS_FEDERAL = [
+  { name: 'Donald Trump', country: 'US' }, { name: 'JD Vance', country: 'US' },
+  { name: 'Mike Johnson', country: 'US' }, { name: 'Hakeem Jeffries', country: 'US' },
+  { name: 'Chuck Schumer', country: 'US' }, { name: 'John Thune', country: 'US' },
+  { name: 'Bernie Sanders', country: 'US' }, { name: 'Ted Cruz', country: 'US' },
+  { name: 'Elizabeth Warren', country: 'US' },
+  { name: 'Mark Carney', country: 'CA' }, { name: 'Pierre Poilievre', country: 'CA' },
+  { name: 'Jagmeet Singh', country: 'CA' }, { name: 'Yves-Francois Blanchet', country: 'CA' },
+  { name: 'Chrystia Freeland', country: 'CA' }, { name: 'Dominic LeBlanc', country: 'CA' },
+  { name: 'Melanie Joly', country: 'CA' }
+];
+
+const KEY_LEADERS_STATE_PROVINCIAL = [
+  { name: 'Gavin Newsom', country: 'US' }, { name: 'Ron DeSantis', country: 'US' },
+  { name: 'Greg Abbott', country: 'US' }, { name: 'JB Pritzker', country: 'US' },
+  { name: 'Josh Shapiro', country: 'US' }, { name: 'Gretchen Whitmer', country: 'US' },
+  { name: 'Spencer Cox', country: 'US' },
+  { name: 'Doug Ford', country: 'CA' }, { name: 'Francois Legault', country: 'CA' },
+  { name: 'Danielle Smith', country: 'CA' }, { name: 'David Eby', country: 'CA' },
+  { name: 'Wab Kinew', country: 'CA' }, { name: 'Tim Houston', country: 'CA' },
+  { name: 'Elizabeth May', country: 'CA' }, { name: 'Ravi Kahlon', country: 'CA' }
+];
+
+function buildKeyLeaderFeed(leaderName, country) {
+  // Verified 2 term-groups only (quoted name + one bracketed OR-group) —
+  // a 3rd clause silently breaks Google News RSS's query matching, same
+  // issue documented on buildLocalRegionFeed below.
+  const activityTerms = 'announcement OR bill OR policy OR "executive order" OR statement OR legislation';
+  const query = `"${leaderName}" (${activityTerms}) when:24h`;
+  const hl = country === 'CA' ? 'en-CA' : 'en-US';
+  return {
+    name: `Google News Leader — ${leaderName}`,
+    url: `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=${hl}&gl=${country}&ceid=${country}:en`,
+    country,
+    category: 'Politics',
+    region: null
+  };
+}
+
+const KEY_LEADER_FEEDS_FEDERAL = KEY_LEADERS_FEDERAL.map(l => buildKeyLeaderFeed(l.name, l.country));
+const KEY_LEADER_FEEDS_LOCAL = KEY_LEADERS_STATE_PROVINCIAL.map(l => buildKeyLeaderFeed(l.name, l.country));
+
+// One dedicated local-politics feed per region so, e.g., a Wyoming city
+// council vote isn't competing for a slot against 49 other states inside a
+// single catch-all query.
+const US_STATES = [
+  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut',
+  'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa',
+  'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan',
+  'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada',
+  'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina',
+  'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+];
+
+const CA_PROVINCES = [
+  'Ontario', 'Quebec', 'British Columbia', 'Alberta', 'Manitoba', 'Saskatchewan',
+  'Nova Scotia', 'New Brunswick', 'Newfoundland and Labrador', 'Prince Edward Island',
+  'Yukon', 'Northwest Territories', 'Nunavut'
+];
+
+function buildLocalRegionFeed(regionName, country) {
+  // Role/office terms only — governors, councillors, mayors, MLAs — never a
+  // specific incumbent's name, so the feed keeps working across elections
+  // and doesn't silently miss whoever isn't on a hardcoded roster.
+  //
+  // IMPORTANT: keep this to exactly ONE bracketed OR-group + one quoted
+  // region name. Verified by hand (2026-08-27): a 3rd bracketed group
+  // (adding a separate "budget OR zoning OR ..." clause) makes Google
+  // News RSS silently stop honoring the quoted region name — every state's
+  // feed returned the identical Texas story regardless of region. Two
+  // clauses (terms + region) reliably returns region-specific results.
+  const officeTerms = country === 'CA'
+    ? 'mayor OR councillor OR MLA OR MPP OR MNA OR premier'
+    : 'governor OR mayor OR "city council" OR "county commission" OR alderman OR "state legislature"';
+  const query = `(${officeTerms}) "${regionName}" when:24h`;
+  const hl = country === 'CA' ? 'en-CA' : 'en-US';
+  return {
+    name: `Google News Local — ${regionName}`,
+    url: `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=${hl}&gl=${country}&ceid=${country}:en`,
+    country,
+    category: 'Municipal',
+    region: regionName
+  };
+}
+
+const LOCAL_REGION_FEEDS = [
+  ...US_STATES.map(s => buildLocalRegionFeed(s, 'US')),
+  ...CA_PROVINCES.map(p => buildLocalRegionFeed(p, 'CA'))
+];
+
+const RSS_FEEDS = [
+  ...NATIONAL_FEEDS,
+  ...KEY_LEADER_FEEDS_FEDERAL,
+  ...LOCAL_CURATED_FEEDS,
+  ...KEY_LEADER_FEEDS_LOCAL,
+  ...LOCAL_REGION_FEEDS
+];
+const NATIONAL_FEED_NAMES = new Set([...NATIONAL_FEEDS, ...KEY_LEADER_FEEDS_FEDERAL].map(f => f.name));
 
 // Non-US/Canada domestic and non-civic/sports keywords to strictly reject
 const NON_US_CA_DOMESTIC_REGEX = /\b(modi|gadkari|lok sabha|rajya sabha|tinubu|nigeria|nigerian|thailand|thai|lese majeste|imran khan|pakistan|pakistani|keir starmer|downing street|westminster|tory|tories|labour mp|macron|elysee|bundestag|scholz|zelenskyy|kyiv|kremlin|putin|netanyahu|knesset|gaza|hamas|hezbollah|tehran|ayotollah|cricket captain|cockroach hunger|seoul|korea|tokyo|japan|brussels|belgium|manila|philippines|sydney|auckland|new zealand|south africa|cosla|scotland|angeles city)\b/i;
@@ -196,6 +345,8 @@ function parseRssXml(xml, feedMeta) {
       pubDate: pubDate ? new Date(pubDate).toISOString() : new Date().toISOString(),
       description: description || '',
       sourceName: sourceName,
+      feedName: feedMeta.name,
+      region: feedMeta.region || null,
       country: feedMeta.country,
       category: feedMeta.category
     });
@@ -352,54 +503,100 @@ async function collectVerifiedRssStories(options = {}) {
   const existingDbHeadlines = await fetchExistingHeadlines();
   console.log(`[RSS Collector] Loaded ${existingDbHeadlines.size} database records for deduplication.`);
 
-  const rawCandidates = [];
+  // Fetch every feed concurrently (bounded) instead of one-at-a-time — with
+  // ~70 feeds now registered (6 national wires + curated local queries + a
+  // dedicated feed per US state / CA province), a serial loop would take
+  // several minutes before verification even starts.
+  const FETCH_CONCURRENCY = 10;
+  const itemsByFeed = new Map(RSS_FEEDS.map(f => [f.name, []]));
 
-  for (const feed of RSS_FEEDS) {
-    try {
-      console.log(`  Fetching RSS: ${feed.name}...`);
-      const res = await fetch(feed.url, {
-        headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)' }
-      });
-      if (!res.ok) {
-        console.warn(`  Warning: Failed to fetch ${feed.name} (HTTP ${res.status})`);
-        continue;
-      }
-      const xml = await res.text();
-      const items = parseRssXml(xml, feed);
-      console.log(`    -> Parsed ${items.length} items from ${feed.name}`);
-
-      for (const item of items) {
-        const itemDate = new Date(item.pubDate);
-        if (itemDate < cutoffTime) continue; // Skip older than lookback window
-
-        // Strict US and Canada filter
-        if (!isStrictlyUsOrCanada(item.title, item.description, item.sourceName)) {
-          continue;
+  for (let i = 0; i < RSS_FEEDS.length; i += FETCH_CONCURRENCY) {
+    const chunk = RSS_FEEDS.slice(i, i + FETCH_CONCURRENCY);
+    await Promise.all(chunk.map(async (feed) => {
+      try {
+        const res = await fetch(feed.url, {
+          headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)' }
+        });
+        if (!res.ok) {
+          console.warn(`  Warning: Failed to fetch ${feed.name} (HTTP ${res.status})`);
+          return;
         }
+        const xml = await res.text();
+        const items = parseRssXml(xml, feed);
 
-        // Deduplication against existing DB
-        const normTitle = item.title.toLowerCase().replace(/[^a-z0-9]/g, ' ').trim();
-        let isDuplicate = false;
-        for (const existing of existingDbHeadlines) {
-          if (calculateSimilarity(normTitle, existing) > 0.45) {
-            isDuplicate = true;
-            break;
+        const qualifying = [];
+        for (const item of items) {
+          const itemDate = new Date(item.pubDate);
+          if (itemDate < cutoffTime) continue; // Skip older than lookback window
+
+          // Strict US and Canada filter
+          if (!isStrictlyUsOrCanada(item.title, item.description, item.sourceName)) {
+            continue;
           }
-        }
-        if (isDuplicate) continue;
 
-        rawCandidates.push(item);
+          // Deduplication against existing DB
+          const normTitle = item.title.toLowerCase().replace(/[^a-z0-9]/g, ' ').trim();
+          let isDuplicate = false;
+          for (const existing of existingDbHeadlines) {
+            if (calculateSimilarity(normTitle, existing) > 0.45) {
+              isDuplicate = true;
+              break;
+            }
+          }
+          if (isDuplicate) continue;
+
+          qualifying.push(item);
+        }
+        console.log(`  ${feed.name}: ${items.length} parsed -> ${qualifying.length} qualify`);
+        itemsByFeed.set(feed.name, qualifying);
+      } catch (e) {
+        console.warn(`  Error fetching/parsing feed ${feed.name}:`, e.message);
       }
-    } catch (e) {
-      console.warn(`  Error parsing feed ${feed.name}:`, e.message);
-    }
+    }));
   }
 
-  console.log(`\n[RSS Collector] Found ${rawCandidates.length} raw unique candidate stories within lookback window.`);
+  // Round-robin within each pool (national wires vs. local/municipal/
+  // provincial feeds) so a single high-volume feed can't hog its own pool,
+  // then interleave the two pools 1 national : 2 local. This guarantees
+  // local coverage a fixed share of every verification batch regardless of
+  // how many items national wires happen to return that hour.
+  function roundRobin(feedNames) {
+    const buckets = feedNames.map(name => [...itemsByFeed.get(name)]);
+    const out = [];
+    let added = true;
+    while (added) {
+      added = false;
+      for (const bucket of buckets) {
+        if (bucket.length) {
+          out.push(bucket.shift());
+          added = true;
+        }
+      }
+    }
+    return out;
+  }
+
+  const nationalNames = NATIONAL_FEEDS.map(f => f.name);
+  const localNames = RSS_FEEDS.filter(f => !NATIONAL_FEED_NAMES.has(f.name)).map(f => f.name);
+  const nationalOrdered = roundRobin(nationalNames);
+  const localOrdered = roundRobin(localNames);
+
+  const rawCandidates = [];
+  let ni = 0, li = 0;
+  while (ni < nationalOrdered.length || li < localOrdered.length) {
+    if (ni < nationalOrdered.length) rawCandidates.push(nationalOrdered[ni++]);
+    for (let k = 0; k < 2 && li < localOrdered.length; k++) rawCandidates.push(localOrdered[li++]);
+  }
+
+  console.log(`\n[RSS Collector] Found ${rawCandidates.length} raw unique candidate stories within lookback window (${nationalOrdered.length} national, ${localOrdered.length} local/municipal/provincial).`);
   console.log(`[RSS Collector] Executing HTTP Status & Paywall Gatekeeper on top candidates in parallel...\n`);
 
-  // Cap candidate checking to top 30 to avoid wasteful slow network checks
-  const candidatesToCheck = rawCandidates.slice(0, 30);
+  // Cap candidate checking to avoid wasteful slow network checks. Raised
+  // from a flat 30 now that ~70 feeds are registered — the national:local
+  // interleave above (not this cap) is what guarantees fair coverage.
+  // Raised 60 -> 80 alongside the key-leader feeds (now ~100 feeds total).
+  const maxCandidates = options.maxCandidates || 80;
+  const candidatesToCheck = rawCandidates.slice(0, maxCandidates);
   const verifiedCandidates = [];
   const CONCURRENCY = 8;
 
@@ -416,6 +613,8 @@ async function collectVerifiedRssStories(options = {}) {
           pubDate: item.pubDate,
           country: item.country,
           category: item.category,
+          region: item.region || null,
+          feedName: item.feedName,
           tier: result.tier,
           sourceDescription: item.description,
           sourceBodyText: result.bodyText || item.description

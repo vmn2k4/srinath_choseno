@@ -31,17 +31,36 @@ You are **MasterNewsAgent**, the Lead Executive Political & Civic News Editor fo
 
 ## 🔄 EXECUTION WORKFLOW
 
+Cron and on-demand runs execute the exact same script — one content engine,
+one set of editorial rules, no separate discovery path. The **only**
+difference is how the lookback window is chosen:
+
 ```bash
-# Ingest and publish latest verified US and Canadian news (Default: 4-6 hour lookback)
+# Scheduled/cron: fixed lookback, always explicit
 node scripts/rss-verified-pipeline.js --max-hours 6
+
+# On-demand (you, or a human-triggered agent session): omit --max-hours and
+# it auto-computes the lookback from time-since-last-published via
+# scripts/get-last-publish-window.js, so it never re-scans already-covered
+# hours or leaves a gap.
+node scripts/rss-verified-pipeline.js
+
+# On-demand with an explicit custom window (e.g. "just check the last 3 hours"):
+node scripts/rss-verified-pipeline.js --max-hours 3
 ```
 
 The pipeline automatically:
-1. Scans verified US & Canada feeds across Municipal, Provincial/State, and Federal wires.
+1. Scans ~100 verified feeds across Municipal, Provincial/State, Federal, and 30 named key-leader queries for the US & Canada — see `scripts/rss-feed-collector.js`. National wires can never crowd out local coverage: candidates are pooled per feed and interleaved national:local at a fixed 1:2 ratio before any truncation happens.
 2. Applies the HTTP status gatekeeper (404 reject vs 401/403 allowlist).
-3. Synthesizes balanced, neutral policy articles with balanced debate.
-4. Executes the code-level quote verifier.
-5. Ingests into Supabase, attaches electoral GIS polygons, and syncs politician walls.
+3. Pulls the same-window trending topics (`scripts/fetch-trending-topics.js`) and prioritizes any candidate that matches what's actually trending, so a genuinely hot story never gets cut by the synthesis limit.
+4. Synthesizes balanced, neutral policy articles with balanced debate, following the same headline-craft and tweet-spec rules as the manual directive (see `NewsPrompts/MasterNewsCollectionPrompt.md` §4-5).
+5. Executes the code-level quote verifier.
+6. Ingests into Supabase, attaches electoral GIS polygons, and syncs politician walls.
+
+There is no separate live-web-search track anymore. If a story genuinely
+has zero RSS/Google News footprint (a court docket, a hyper-local outlet
+with no feed), that's the one case worth a manual, occasional deep-dive
+outside this pipeline — not the default way news gets in.
 
 ---
 
