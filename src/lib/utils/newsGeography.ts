@@ -107,3 +107,24 @@ export function normalizeProvinceCode(input: string | null | undefined, country?
   const upper = raw.toUpperCase();
   return ISO2.test(upper) ? upper : upper.slice(0, 2);
 }
+
+/**
+ * Reverse of normalizeProvinceCode: "BC" -> "british columbia", "CA" (with
+ * country "US") -> "california". Used to build a loose text-match target
+ * when disambiguating a same-named politician against a free-text
+ * `profiles.constituency` value (e.g. "Surrey-Panorama" or "Ontario") that
+ * isn't itself stored as a code -- see resolvePoliticianNamesToTags in
+ * AdminNewsPageClient.tsx. Unrecognized codes pass through lower-cased.
+ */
+export function provinceCodeToName(code: string | null | undefined, country?: string | null): string {
+  const raw = (code ?? "").trim().toUpperCase();
+  if (!raw) return "";
+  const table =
+    country === "US" ? US_STATE_ALIASES :
+    country === "CA" ? CA_PROVINCE_ALIASES :
+    { ...CA_PROVINCE_ALIASES, ...US_STATE_ALIASES };
+  for (const [name, c] of Object.entries(table)) {
+    if (c === raw) return name;
+  }
+  return raw.toLowerCase();
+}

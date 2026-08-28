@@ -48,7 +48,7 @@ import {
 } from "@/lib/services/news";
 import { adminSearchProfiles, adminGetProfileById } from "@/lib/services/profile";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
-import { normalizeCountryCode, normalizeProvinceCode } from "@/lib/utils/newsGeography";
+import { normalizeCountryCode, normalizeProvinceCode, isoCountryToMapShapesCountry, provinceCodeToName } from "@/lib/utils/newsGeography";
 import { getNewsAiPrompt, type NewsPromptPersonContext } from "@/lib/utils/newsPrompts";
 import { validateNewsArticleJson, validateNewsArticleBatchJson } from "@/lib/utils/newsValidation";
 import { containsEmoji } from "@/lib/utils/text";
@@ -76,6 +76,8 @@ interface ArticleFormData {
   heroImageAlt: string;
   heroImageCaption: string;
   tweet: string;
+  tweetMedium: string;
+  tweetArticle: string;
   tags: string;
   breakingNews: boolean;
   authorName: string;
@@ -93,7 +95,7 @@ const EMPTY_FORM: ArticleFormData = {
   country: "",
   province: "",
   status: "published",
-  published_at: new Date().toISOString().slice(0, 16),
+  published_at: toDatetimeLocalValue(new Date()),
   eventDate: "",
   latitude: "",
   longitude: "",
@@ -105,6 +107,8 @@ const EMPTY_FORM: ArticleFormData = {
   heroImageAlt: "",
   heroImageCaption: "",
   tweet: "",
+  tweetMedium: "",
+  tweetArticle: "",
   tags: "",
   breakingNews: false,
   authorName: "",
@@ -147,6 +151,36 @@ function formatSourcesText(sources?: Array<{ label: string; url: string }>): str
   return sources.map((s) => `${s.label} | ${s.url}`).join("\n");
 }
 
+/**
+ * Converts an instant (Date, or any string `new Date()` can parse -- an
+ * ISO/UTC timestamp from a saved article or pasted AI JSON) into the value
+ * a `<input type="datetime-local">` needs.
+ *
+ * A datetime-local input always displays/edits its value as the BROWSER'S
+ * LOCAL wall-clock time, with no timezone marker of its own -- there's no
+ * way to make it show/store UTC digits directly. formToInsert's read-back
+ * (`new Date(f.published_at).toISOString()`) relies on that: it re-parses
+ * the field assuming its digits ARE local time, which is only correct if
+ * this function wrote genuine local wall-clock digits here in the first
+ * place.
+ *
+ * The previous code instead did `new Date(iso).toISOString().slice(0,16)`
+ * -- that keeps the UTC digits and just chops the "Z" off, so the input
+ * silently displayed UTC time labeled as if it were local. Confirmed live:
+ * pasting `"published_at": "2026-08-27T21:10:00Z"` in a UTC-7 browser saved
+ * as "2026-08-28T04:10:00Z" -- each paste added another 7-hour shift
+ * on re-save, since every round trip re-applied the same wrong assumption.
+ * Using the Date object's LOCAL getters here (not the UTC ones) produces
+ * the wall-clock digits that actually round-trip back to the same instant.
+ */
+function toDatetimeLocalValue(input: string | Date | null | undefined): string {
+  if (!input) return "";
+  const d = input instanceof Date ? input : new Date(input);
+  if (Number.isNaN(d.getTime())) return "";
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
 function formToInsert(f: ArticleFormData): NewsArticleInsert {
   const content: NewsArticleContent = {
     seoTitle:        f.seoTitle        || undefined,
@@ -155,6 +189,8 @@ function formToInsert(f: ArticleFormData): NewsArticleInsert {
     heroImageAlt:    f.heroImageAlt    || undefined,
     heroImageCaption:f.heroImageCaption|| undefined,
     tweet:           f.tweet           || undefined,
+    tweetmedium:     f.tweetMedium     || undefined,
+    tweetarticle:    f.tweetArticle    || undefined,
     breakingNews:    f.breakingNews    || undefined,
     tags: f.tags
       ? f.tags.split(",").map((t) => t.trim()).filter(Boolean)
@@ -198,12 +234,8 @@ function articleToForm(a: NewsArticle): ArticleFormData {
     country:       a.country         ?? "",
     province:      a.province        ?? "",
     status:        a.status,
-    published_at:  a.published_at
-      ? new Date(a.published_at).toISOString().slice(0, 16)
-      : "",
-    eventDate:     a.event_date
-      ? new Date(a.event_date).toISOString().slice(0, 16)
-      : "",
+    published_at:  toDatetimeLocalValue(a.published_at),
+    eventDate:     toDatetimeLocalValue(a.event_date),
     latitude:      a.latitude  != null ? String(a.latitude)  : "",
     longitude:     a.longitude != null ? String(a.longitude) : "",
     impactArea:    a.impact_area ?? "",
@@ -215,6 +247,8 @@ function articleToForm(a: NewsArticle): ArticleFormData {
     heroImageAlt:  c?.heroImageAlt   ?? "",
     heroImageCaption:c?.heroImageCaption??"",
     tweet:         c?.tweet          ?? "",
+    tweetMedium:   c?.tweetmedium    ?? "",
+    tweetArticle:  c?.tweetarticle   ?? "",
     tags:          (c?.tags ?? []).join(", "),
     breakingNews:  c?.breakingNews   ?? false,
     authorName:    c?.author?.name   ?? "",
@@ -340,11 +374,9 @@ function applyJsonToForm(parsed: any, prev: ArticleFormData): ArticleFormData {
     country,
     province:       flat.province ? normalizeProvinceCode(flat.province, country) : prev.province,
     status:         flat.status         ?? prev.status,
-    published_at:   flat.published_at
-      ? new Date(flat.published_at).toISOString().slice(0, 16)
-      : prev.published_at,
+    published_at:   flat.published_at ? toDatetimeLocalValue(flat.published_at) : prev.published_at,
     eventDate: (flat.eventDate ?? flat.event_date)
-      ? new Date(flat.eventDate ?? flat.event_date).toISOString().slice(0, 16)
+      ? toDatetimeLocalValue(flat.eventDate ?? flat.event_date)
       : prev.eventDate,
     latitude:  flat.latitude  != null && flat.latitude  !== "" ? String(flat.latitude)  : prev.latitude,
     longitude: flat.longitude != null && flat.longitude !== "" ? String(flat.longitude) : prev.longitude,
@@ -356,6 +388,8 @@ function applyJsonToForm(parsed: any, prev: ArticleFormData): ArticleFormData {
     heroImageAlt:   flat.heroImageAlt   ?? prev.heroImageAlt,
     heroImageCaption:flat.heroImageCaption?? prev.heroImageCaption,
     tweet:          flat.tweet          ?? prev.tweet,
+    tweetMedium:    flat.tweetmedium    ?? prev.tweetMedium,
+    tweetArticle:   flat.tweetarticle   ?? prev.tweetArticle,
     tags: Array.isArray(flat.tags)
       ? flat.tags.join(", ")
       : (flat.tags ?? prev.tags),
@@ -377,9 +411,105 @@ function applyJsonToForm(parsed: any, prev: ArticleFormData): ArticleFormData {
 // it manually via the picker already in the Politician & Party Tagging
 // section (or, for a batch import, by editing that article afterward).
 
+interface ProfileSearchRow {
+  id: string;
+  full_name: string | null;
+  role: string | null;
+  country: string | null;
+  constituency: string | null;
+  designation: string | null;
+}
+
+/** Strips a leading political title/honorific so "Mayor Brenda Locke" still
+ * exact-matches a profile stored as "Brenda Locke". Collapses whitespace and
+ * lower-cases for comparison; does not touch the original display name. */
+function normalizePoliticianName(raw: string): string {
+  return raw
+    .trim()
+    .replace(/^(mayor|premier|prime minister|president|senator|sen\.?|governor|gov\.?|representative|rep\.?|councillor|councilor|cllr\.?|mp|mla|mpp|dr\.?|hon\.?|the honou?rable)\s+/i, "")
+    .replace(/\s+/g, " ")
+    .toLowerCase();
+}
+
+function nameTokens(raw: string): string[] {
+  return normalizePoliticianName(raw).split(" ").filter(Boolean);
+}
+
+/**
+ * True if `a` and `b` are the same name once titles are stripped, tolerating
+ * a middle name/initial difference: confirmed live that a bulk-imported
+ * profile can be stored as "Donald J. Trump" while an AI writes plain
+ * "Donald Trump" -- a strict equality check (the old behavior) never
+ * matches that, so Trump silently never got tagged even though the DB row
+ * exists. Comparing first + last token instead of the full string tolerates
+ * the gap without opening the door to matching a genuinely different person
+ * (different first or last name still fails).
+ */
+function politicianNamesMatch(a: string, b: string): boolean {
+  const ta = nameTokens(a);
+  const tb = nameTokens(b);
+  if (ta.length === 0 || tb.length === 0) return false;
+  if (ta.join(" ") === tb.join(" ")) return true;
+  return ta[0] === tb[0] && ta[ta.length - 1] === tb[tb.length - 1];
+}
+
+/**
+ * Scores how likely `candidate` is the politician a news article means --
+ * this only runs once a name matches more than one registered profile (see
+ * resolvePoliticianNamesToTags below); a uniquely-matching name never calls
+ * this. Two signals, both optional and additive:
+ *
+ * 1. Jurisdiction: the article's own country/province against the
+ *    candidate's (profiles.country/constituency are free text from import
+ *    data, not the ISO codes news_articles.country/province use, so both
+ *    sides run through the same normalizers newsGeography.ts already uses
+ *    for that exact mismatch elsewhere in this app).
+ * 2. Designation-in-text: the same real person can have more than one
+ *    profile row -- one per office they've held (confirmed live: Mark
+ *    Carney exists as both "MP"/Nepean and "Prime Minister"/Canada; Doug
+ *    Ford as both "MPP"/Etobicoke North and "Premier"/Ontario) -- and those
+ *    rows are typically in the *same* country/province, so jurisdiction
+ *    alone can't break the tie. The article text itself usually says which
+ *    office it means ("Prime Minister Mark Carney said...", "Ontario
+ *    Premier Ford..."), so a candidate whose own designation literally
+ *    appears in the article's headline/body is almost certainly the one
+ *    meant. Weighted higher than jurisdiction since it's a much sharper
+ *    signal when it's present.
+ */
+function scoreCandidateByArticle(
+  candidate: ProfileSearchRow,
+  articleContext: { country?: string; province?: string; text?: string }
+): number {
+  let score = 0;
+  if (articleContext.country && candidate.country) {
+    const articleCountryName = isoCountryToMapShapesCountry(articleContext.country).toLowerCase();
+    if (candidate.country.trim().toLowerCase() === articleCountryName) score += 2;
+  }
+  if (articleContext.province && candidate.constituency) {
+    const provinceName = provinceCodeToName(articleContext.province, isoCountryToMapShapesCountry(articleContext.country ?? "") === "USA" ? "US" : "CA").toLowerCase();
+    const constituency = candidate.constituency.toLowerCase();
+    if (constituency.includes(provinceName) || provinceName.includes(constituency) || constituency.includes(articleContext.province.toLowerCase())) {
+      score += 2;
+    }
+  }
+  if (articleContext.text && candidate.designation) {
+    // Word-boundary, not a bare substring: a short designation like "MP" or
+    // "PM" is a substring of ordinary words ("Trump", "empire", "campaign")
+    // often enough that a plain .includes() produces false positive ties --
+    // confirmed live, "MP" matched inside "Trump" and tied against the
+    // correct "Prime Minister" candidate for the same article.
+    const escaped = candidate.designation.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    if (escaped && new RegExp(`\\b${escaped}\\b`, "i").test(articleContext.text)) {
+      score += 3;
+    }
+  }
+  return score;
+}
+
 async function resolvePoliticianNamesToTags(
   supabase: ReturnType<typeof createClient>,
-  names: string[]
+  names: string[],
+  articleContext: { country?: string; province?: string; text?: string } = {}
 ): Promise<{ matched: TaggedPolitician[]; unmatched: string[] }> {
   const matched: TaggedPolitician[] = [];
   const unmatched: string[] = [];
@@ -387,14 +517,32 @@ async function resolvePoliticianNamesToTags(
     const name = raw.trim();
     if (!name) continue;
     const { data } = await adminSearchProfiles(supabase, name);
-    const politicians = ((data as { id: string; full_name: string | null; role: string | null }[] | null) || [])
-      .filter((p) => p.role === "politician");
-    const exact = politicians.filter((p) => (p.full_name || "").trim().toLowerCase() === name.toLowerCase());
+    const politicians = ((data as ProfileSearchRow[] | null) || []).filter((p) => p.role === "politician");
+    const exact = politicians.filter((p) => politicianNamesMatch(p.full_name || "", name));
+
     if (exact.length === 1) {
       matched.push({ politician_id: exact[0].id, full_name: exact[0].full_name });
-    } else {
-      unmatched.push(name);
+      continue;
     }
+
+    if (exact.length > 1) {
+      // Same name, multiple registered profiles -- either different people
+      // (two "David Lee"s in different cities) or the same person with a
+      // row per office they've held (Mark Carney as MP vs. as PM). Score
+      // both signals and only auto-tag when one candidate clearly wins.
+      const scored = exact
+        .map((p) => ({ p, score: scoreCandidateByArticle(p, articleContext) }))
+        .sort((a, b) => b.score - a.score);
+      const [best, second] = scored;
+      if (best.score > 0 && best.score !== second?.score) {
+        matched.push({ politician_id: best.p.id, full_name: best.p.full_name });
+      } else {
+        unmatched.push(`${name} (${exact.length} same-named profiles, couldn't tell them apart)`);
+      }
+      continue;
+    }
+
+    unmatched.push(name);
   }
   return { matched, unmatched };
 }
@@ -700,7 +848,9 @@ export default function AdminNewsPageClient() {
     if (politicianIds.length > 0 || politicianNames.length > 0) {
       const [byId, byName] = await Promise.all([
         politicianIds.length > 0 ? resolvePoliticianIdsToTags(supabase, politicianIds) : Promise.resolve({ matched: [], unmatched: [] }),
-        politicianNames.length > 0 ? resolvePoliticianNamesToTags(supabase, politicianNames) : Promise.resolve({ matched: [], unmatched: [] }),
+        politicianNames.length > 0
+          ? resolvePoliticianNamesToTags(supabase, politicianNames, { country: nextForm.country, province: nextForm.province, text: `${nextForm.headline} ${nextForm.body}` })
+          : Promise.resolve({ matched: [], unmatched: [] }),
       ]);
       unmatchedPoliticians = [...byId.unmatched, ...byName.unmatched];
       const matched = [...byId.matched, ...byName.matched];
@@ -782,7 +932,9 @@ export default function AdminNewsPageClient() {
       if (hint.politicianIds.length > 0 || hint.politicianNames.length > 0) {
         const [byId, byName] = await Promise.all([
           hint.politicianIds.length > 0 ? resolvePoliticianIdsToTags(supabase, hint.politicianIds) : Promise.resolve({ matched: [], unmatched: [] }),
-          hint.politicianNames.length > 0 ? resolvePoliticianNamesToTags(supabase, hint.politicianNames) : Promise.resolve({ matched: [], unmatched: [] }),
+          hint.politicianNames.length > 0
+            ? resolvePoliticianNamesToTags(supabase, hint.politicianNames, { country: article.country ?? undefined, province: article.province ?? undefined, text: `${article.headline} ${article.content?.body ?? ""}` })
+            : Promise.resolve({ matched: [], unmatched: [] }),
         ]);
         const matchedIds = new Set<string>();
         [...byId.matched, ...byName.matched].forEach((m) => matchedIds.add(m.politician_id));
@@ -1473,6 +1625,32 @@ export default function AdminNewsPageClient() {
                   {form.tweet.length > 220 && (
                     <p className="text-xs text-amber-600 mt-1 flex items-center gap-1">
                       <AlertTriangle size={12} /> {form.tweet.length} characters — Choseno appends hashtags and the article link after this, so keep it under ~220 to stay within X's 280-character limit.
+                    </p>
+                  )}
+                </FieldGroup>
+                <FieldGroup label={`Tweet Medium — Review CTA (${form.tweetMedium.length} chars — required by the AI prompt whenever a politician is tagged, optional here)`}>
+                  <Textarea
+                    value={form.tweetMedium}
+                    onChange={(e) => setField("tweetMedium", e.target.value)}
+                    placeholder={'e.g. "Do you agree with Mark Carney\'s decision to raise the federal carbon levy? Review them on Choseno." Plain text only — no emoji, hashtags, or URL; Choseno resolves and appends the tagged politician\'s wall link.'}
+                    rows={2}
+                  />
+                  {containsEmoji(form.tweetMedium) && (
+                    <p className="text-xs text-amber-600 mt-1 flex items-center gap-1">
+                      <AlertTriangle size={12} /> Contains an emoji — Choseno strips emoji before posting, so it's cleaner to remove it here.
+                    </p>
+                  )}
+                </FieldGroup>
+                <FieldGroup label={`Tweet Article — Long-Form X Premium Post (${form.tweetArticle.length} chars — optional, ~800-1,500 recommended)`}>
+                  <Textarea
+                    value={form.tweetArticle}
+                    onChange={(e) => setField("tweetArticle", e.target.value)}
+                    placeholder="Optional long-form neutral post for X Premium/X Articles: headline line, 3-5 fact bullets from the body, a balanced nod to any opposing view, then a neutral rate/review CTA. No emoji, hashtags, or URL."
+                    rows={4}
+                  />
+                  {containsEmoji(form.tweetArticle) && (
+                    <p className="text-xs text-amber-600 mt-1 flex items-center gap-1">
+                      <AlertTriangle size={12} /> Contains an emoji — Choseno strips emoji before posting, so it's cleaner to remove it here.
                     </p>
                   )}
                 </FieldGroup>

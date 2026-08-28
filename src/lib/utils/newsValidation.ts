@@ -29,6 +29,37 @@ function isValidDate(value: unknown): boolean {
 }
 
 /**
+ * Shared checks for the three X/Twitter share-text fields (tweet,
+ * tweetmedium, tweetarticle) — all plain-text-only, all get the canonical
+ * link/wall-link appended by Choseno afterwards, so a URL or emoji embedded
+ * here would just duplicate what the app adds. Only `maxLength` differs
+ * between them (tweetarticle is deliberately long-form).
+ */
+function validateShareTextField(
+  prefix: string,
+  fieldName: string,
+  value: unknown,
+  maxLength: number,
+  errors: string[],
+  warnings: string[]
+): void {
+  if (value == null) return;
+  if (typeof value !== "string") {
+    errors.push(`${prefix}"${fieldName}" must be a string.`);
+    return;
+  }
+  if (containsEmoji(value)) {
+    warnings.push(`${prefix}"${fieldName}" contains an emoji — Choseno strips emoji before posting, so it's cleaner to leave them out of the source text.`);
+  }
+  if (/https?:\/\//i.test(value)) {
+    warnings.push(`${prefix}"${fieldName}" appears to contain a URL — Choseno already appends the canonical link automatically; a URL inside "${fieldName}" will show up twice.`);
+  }
+  if (value.length > maxLength) {
+    warnings.push(`${prefix}"${fieldName}" is ${value.length} characters — keep it closer to ${maxLength} or under.`);
+  }
+}
+
+/**
  * Case/whitespace-tolerant match against an enum array; returns the canonical
  * value or null. Exported so grokNewsGeneration.ts's insert-mapper can reuse
  * the exact same normalization this validator already applies, instead of
@@ -133,20 +164,16 @@ export function validateNewsArticleJson(item: any, opts: { label?: string } = {}
     errors.push(`${prefix}"tags" must be an array of strings.`);
   }
 
-  if (flat.tweet != null) {
-    if (typeof flat.tweet !== "string") {
-      errors.push(`${prefix}"tweet" must be a string.`);
-    } else {
-      if (containsEmoji(flat.tweet)) {
-        warnings.push(`${prefix}"tweet" contains an emoji — Choseno strips emoji before posting, so it's cleaner to leave them out of the source text.`);
-      }
-      if (/https?:\/\//i.test(flat.tweet)) {
-        warnings.push(`${prefix}"tweet" appears to contain a URL — Choseno already appends the canonical article link automatically; a URL inside "tweet" will show up twice.`);
-      }
-      if (flat.tweet.length > 220) {
-        warnings.push(`${prefix}"tweet" is ${flat.tweet.length} characters — Choseno appends hashtags and the article link after it, so keep it well under X's 280-character limit (220 or less is safest).`);
-      }
-    }
+  validateShareTextField(prefix, "tweet", flat.tweet, 220, errors, warnings);
+  validateShareTextField(prefix, "tweetmedium", flat.tweetmedium, 280, errors, warnings);
+  validateShareTextField(prefix, "tweetarticle", flat.tweetarticle, 1500, errors, warnings);
+
+  if (
+    (flat.tweetmedium != null && String(flat.tweetmedium).trim() !== "") &&
+    !(Array.isArray(flat.taggedPoliticianIds) && flat.taggedPoliticianIds.length > 0) &&
+    !(Array.isArray(flat.taggedPoliticians) && flat.taggedPoliticians.length > 0)
+  ) {
+    warnings.push(`${prefix}"tweetmedium" is set but no politician is tagged — it's meant to prompt a review of a tagged politician, so it won't have anyone to point at.`);
   }
 
   return { errors, warnings };
