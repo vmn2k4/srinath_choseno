@@ -13,8 +13,13 @@ echo "========================================================" >> "$LOG_FILE"
 cd "$PROJECT_DIR" || exit 1
 
 # 1. Execute Verified RSS News Ingestion Pipeline (Machine Ground Truth & Quote Gatekeeper)
+# No --max-hours: the pipeline auto-computes the exact lookback from time-
+# since-last-published (scripts/get-last-publish-window.js). On a normal
+# hourly cadence that's ~1h every time; if a run is ever missed (sleep,
+# network blip), it self-expands to cover the gap instead of guessing at a
+# fixed margin. Falls back to 4h internally if the lookup itself fails.
 echo "Executing Verified RSS News Pipeline..." >> "$LOG_FILE"
-/opt/homebrew/bin/node scripts/rss-verified-pipeline.js --max-hours 6 >> "$LOG_FILE" 2>&1
+/opt/homebrew/bin/node scripts/rss-verified-pipeline.js >> "$LOG_FILE" 2>&1
 
 echo "Hourly run completed at: $(date)" >> "$LOG_FILE"
 echo "" >> "$LOG_FILE"

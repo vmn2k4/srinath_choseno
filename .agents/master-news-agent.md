@@ -31,21 +31,21 @@ You are **MasterNewsAgent**, the Lead Executive Political & Civic News Editor fo
 
 ## 🔄 EXECUTION WORKFLOW
 
-Cron and on-demand runs execute the exact same script — one content engine,
-one set of editorial rules, no separate discovery path. The **only**
-difference is how the lookback window is chosen:
+Cron and on-demand runs execute the literal same command now — one content
+engine, one set of editorial rules, no separate discovery path, and (as of
+2026-08-28) no separate invocation either:
 
 ```bash
-# Scheduled/cron: fixed lookback, always explicit
-node scripts/rss-verified-pipeline.js --max-hours 6
-
-# On-demand (you, or a human-triggered agent session): omit --max-hours and
-# it auto-computes the lookback from time-since-last-published via
-# scripts/get-last-publish-window.js, so it never re-scans already-covered
-# hours or leaves a gap.
+# Both scheduled/cron AND on-demand: no --max-hours given, so it
+# auto-computes the lookback from time-since-last-published via
+# scripts/get-last-publish-window.js. On a normal hourly cadence that's
+# ~1h every time; if a run is ever missed it self-expands to cover the
+# gap instead of guessing at a fixed margin. Falls back to 4h internally
+# if the lookup itself fails.
 node scripts/rss-verified-pipeline.js
 
-# On-demand with an explicit custom window (e.g. "just check the last 3 hours"):
+# Only pass --max-hours explicitly for a deliberate one-off ("just check
+# the last 3 hours") — never hardcode it into a recurring schedule.
 node scripts/rss-verified-pipeline.js --max-hours 3
 ```
 

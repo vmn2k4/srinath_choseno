@@ -227,38 +227,69 @@ const US_STATES = [
 
 const CA_PROVINCES = [
   'Ontario', 'Quebec', 'British Columbia', 'Alberta', 'Manitoba', 'Saskatchewan',
-  'Nova Scotia', 'New Brunswick', 'Newfoundland and Labrador', 'Prince Edward Island',
-  'Yukon', 'Northwest Territories', 'Nunavut'
+  'Nova Scotia', 'New Brunswick', 'Newfoundland and Labrador', 'Prince Edward Island'
 ];
 
-function buildLocalRegionFeed(regionName, country) {
+// The 3 territories returned almost nothing under their own name in testing
+// (thin direct Google News indexing) — paired with their capital, since
+// coverage of "the territory" in practice IS coverage of its one major city.
+const CA_TERRITORIES = [
+  ['Yukon', 'Whitehorse'],
+  ['Northwest Territories', 'Yellowknife'],
+  ['Nunavut', 'Iqaluit']
+];
+
+// These 10 states produce enough municipal + state-legislature volume in a
+// day that one combined query undersamples both sides of it — split into a
+// municipal-only feed and a state-level-only feed instead of one feed
+// covering both, doubling their effective coverage.
+const HIGH_VOLUME_STATES = new Set([
+  'California', 'Texas', 'New York', 'Florida', 'Pennsylvania',
+  'Illinois', 'Ohio', 'Georgia', 'North Carolina', 'Michigan'
+]);
+const US_MUNICIPAL_ONLY_TERMS = 'mayor OR "city council" OR "county commission" OR alderman';
+const US_STATE_ONLY_TERMS = 'governor OR "state legislature" OR "state senate" OR "state house"';
+
+function buildLocalRegionFeed(regionNameOrAliases, country, opts = {}) {
   // Role/office terms only — governors, councillors, mayors, MLAs — never a
   // specific incumbent's name, so the feed keeps working across elections
   // and doesn't silently miss whoever isn't on a hardcoded roster.
   //
-  // IMPORTANT: keep this to exactly ONE bracketed OR-group + one quoted
-  // region name. Verified by hand (2026-08-27): a 3rd bracketed group
-  // (adding a separate "budget OR zoning OR ..." clause) makes Google
-  // News RSS silently stop honoring the quoted region name — every state's
-  // feed returned the identical Texas story regardless of region. Two
-  // clauses (terms + region) reliably returns region-specific results.
-  const officeTerms = country === 'CA'
+  // IMPORTANT: keep this to exactly TWO top-level term groups (one bracketed
+  // OR-group of office/decision terms + one bracketed-or-bare region
+  // name/aliases). Verified by hand (2026-08-27): a 3rd group makes Google
+  // News RSS silently stop honoring the region name — every state's feed
+  // returned the identical Texas story regardless of region. An OR'd alias
+  // group (e.g. "Yukon" OR "Whitehorse") still counts as ONE group and is
+  // safe; a *separate* 3rd bracket is not.
+  const aliases = Array.isArray(regionNameOrAliases) ? regionNameOrAliases : [regionNameOrAliases];
+  const primaryName = aliases[0];
+  const officeTerms = opts.officeTerms || (country === 'CA'
     ? 'mayor OR councillor OR MLA OR MPP OR MNA OR premier'
-    : 'governor OR mayor OR "city council" OR "county commission" OR alderman OR "state legislature"';
-  const query = `(${officeTerms}) "${regionName}" when:24h`;
+    : 'governor OR mayor OR "city council" OR "county commission" OR alderman OR "state legislature"');
+  const placeClause = aliases.length > 1
+    ? `(${aliases.map(a => `"${a}"`).join(' OR ')})`
+    : `"${primaryName}"`;
+  const query = `(${officeTerms}) ${placeClause} when:24h`;
   const hl = country === 'CA' ? 'en-CA' : 'en-US';
   return {
-    name: `Google News Local — ${regionName}`,
+    name: `Google News Local — ${primaryName}${opts.labelSuffix ? ` (${opts.labelSuffix})` : ''}`,
     url: `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=${hl}&gl=${country}&ceid=${country}:en`,
     country,
     category: 'Municipal',
-    region: regionName
+    region: primaryName
   };
 }
 
 const LOCAL_REGION_FEEDS = [
-  ...US_STATES.map(s => buildLocalRegionFeed(s, 'US')),
-  ...CA_PROVINCES.map(p => buildLocalRegionFeed(p, 'CA'))
+  ...US_STATES.flatMap(s => HIGH_VOLUME_STATES.has(s)
+    ? [
+        buildLocalRegionFeed(s, 'US', { officeTerms: US_MUNICIPAL_ONLY_TERMS, labelSuffix: 'municipal' }),
+        buildLocalRegionFeed(s, 'US', { officeTerms: US_STATE_ONLY_TERMS, labelSuffix: 'state' })
+      ]
+    : [buildLocalRegionFeed(s, 'US')]),
+  ...CA_PROVINCES.map(p => buildLocalRegionFeed(p, 'CA')),
+  ...CA_TERRITORIES.map(aliases => buildLocalRegionFeed(aliases, 'CA'))
 ];
 
 const RSS_FEEDS = [
@@ -457,17 +488,35 @@ async function verifyAndFetchUrl(targetUrl) {
 }
 
 /**
- * Fetch all existing database headlines to deduplicate.
+ * Fetch existing database headlines to deduplicate against, so a story
+ * already published never gets re-verified/re-synthesized as if it were new.
+ *
+ * Fixed 2026-08-28: this previously had no `order=` clause, so `limit=2000`
+ * on a table with no ORDER BY isn't "the most recent 2000" — PostgREST
+ * returns whatever the query planner's scan order happens to be, which can
+ * silently be an arbitrary slice of the table. A story published an hour
+ * ago could be entirely absent from that sample while months-old rows fill
+ * it, so a genuine duplicate would sail through as "new" and get fully
+ * re-researched. Now explicitly ordered by recency and time-bounded.
+ *
+ * @param windowHours how far back to look — always at least 24h, and at
+ *   least as wide as the current run's own lookback, so a run that's
+ *   scanning further back (e.g. auto-window covering a missed cron tick)
+ *   never dedupes against a narrower slice than what it's actually scanning.
  */
-async function fetchExistingHeadlines() {
+async function fetchExistingHeadlines(windowHours = 24) {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return new Set();
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/news_articles?select=slug,headline&limit=2000`, {
-      headers: {
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+    const since = new Date(Date.now() - windowHours * 3600 * 1000).toISOString();
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/news_articles?select=slug,headline&published_at=gte.${since}&order=published_at.desc.nullslast&limit=2000`,
+      {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+        }
       }
-    });
+    );
     if (!res.ok) return new Set();
     const rows = await res.json();
     const set = new Set();
@@ -500,7 +549,7 @@ async function collectVerifiedRssStories(options = {}) {
   const cutoffTime = new Date(Date.now() - maxHours * 3600 * 1000);
   console.log(`[RSS Collector] Scanning verified feeds (Lookback: ${maxHours}h, Cutoff: ${cutoffTime.toISOString()})...`);
 
-  const existingDbHeadlines = await fetchExistingHeadlines();
+  const existingDbHeadlines = await fetchExistingHeadlines(Math.max(24, maxHours));
   console.log(`[RSS Collector] Loaded ${existingDbHeadlines.size} database records for deduplication.`);
 
   // Fetch every feed concurrently (bounded) instead of one-at-a-time — with
@@ -595,7 +644,12 @@ async function collectVerifiedRssStories(options = {}) {
   // from a flat 30 now that ~70 feeds are registered — the national:local
   // interleave above (not this cap) is what guarantees fair coverage.
   // Raised 60 -> 80 alongside the key-leader feeds (now ~100 feeds total).
-  const maxCandidates = options.maxCandidates || 80;
+  // This is a NETWORK/COST bound (how many source URLs get fetched and
+  // HTTP-verified per run), not an editorial cap — the publish-side limit
+  // was removed entirely (2026-08-28). Raised to 300 alongside ~126 feeds
+  // (50 states w/ 10 split into 2 + 13 CA regions + ~31 leaders + 12
+  // curated) so a run can realistically cover every feed at least once.
+  const maxCandidates = options.maxCandidates || 300;
   const candidatesToCheck = rawCandidates.slice(0, maxCandidates);
   const verifiedCandidates = [];
   const CONCURRENCY = 8;

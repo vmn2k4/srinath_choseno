@@ -1351,8 +1351,13 @@ async function run() {
 
   const batchTimestamp = new Date().toISOString().slice(0, 16).replace('T', ' ');
 
-  // Fetch existing slugs to avoid duplication
-  const existingRes = await fetch(`${SUPABASE_URL}/rest/v1/news_articles?select=slug&limit=2000`, {
+  // Fetch existing slugs to avoid duplication.
+  // Fixed 2026-08-28: this had no `order=` clause, so `limit=2000` on a
+  // table with no ORDER BY isn't "the most recent 2000" — a just-published
+  // slug (e.g. from a concurrent run) could be entirely absent from an
+  // arbitrary scan-order sample, letting a real duplicate through this
+  // final safety-net check undetected. Now ordered by recency.
+  const existingRes = await fetch(`${SUPABASE_URL}/rest/v1/news_articles?select=slug&order=published_at.desc.nullslast&limit=2000`, {
     headers: {
       apikey: authHeaders.apikey,
       Authorization: authHeaders.Authorization

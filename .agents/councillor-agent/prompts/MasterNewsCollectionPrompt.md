@@ -16,34 +16,46 @@
 ## 0. THIS IS ONE ENGINE, NOT TWO PATHS
 
 > [!IMPORTANT]
-> **There is a single content engine: [`scripts/rss-verified-pipeline.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/rss-verified-pipeline.js). Cron and an on-demand/manual run execute the exact same code, so there is no separate set of discovery, tagging, scoring, or writing rules to keep in sync.**
->
-> The **only** difference between a scheduled run and an on-demand one is how the lookback window is chosen:
+> **There is a single content engine: [`scripts/rss-verified-pipeline.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/rss-verified-pipeline.js). Cron and an on-demand/manual run execute the literal same command now — not just the same code, the same invocation:**
 >
 > ```bash
-> # Cron: fixed, explicit lookback
-> node scripts/rss-verified-pipeline.js --max-hours 6
->
-> # On-demand, no window given: auto-computed from time-since-last-published
-> # (internally calls scripts/get-last-publish-window.js) — never re-scans
-> # already-covered hours, never leaves a gap.
+> # Both scheduled/cron AND on-demand:
 > node scripts/rss-verified-pipeline.js
->
-> # On-demand with an explicit custom window ("just check the last 3 hours"):
-> node scripts/rss-verified-pipeline.js --max-hours 3
 > ```
+>
+> No `--max-hours` flag on the recurring schedule. It auto-computes the exact
+> lookback from time-since-last-published
+> ([`scripts/get-last-publish-window.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/get-last-publish-window.js))
+> every single run. On a normal hourly cadence that resolves to ~1h every
+> time — matching the schedule exactly instead of re-scanning a padded
+> window. If a run is ever missed (machine asleep, network blip), it
+> self-expands to cover the gap instead of guessing at a fixed margin.
+> Falls back to 4h internally if the lookup itself fails. Only pass
+> `--max-hours` explicitly for a deliberate one-off ("just check the last 3
+> hours") — never hardcode it into a recurring schedule; a fixed number is
+> either redundant (matches auto-window anyway) or wrong (doesn't adapt to a
+> missed run).
+>
+> There is also no per-run publish limit anymore (removed 2026-08-28) —
+> every verified, deduplicated, quote-checked candidate gets synthesized and
+> published each run. The only ceiling left is `maxCandidates` in the
+> collector (currently 300), which is a network/cost bound on how many
+> source URLs get fetched, not an editorial cap.
 >
 > What used to require a live agent doing ad-hoc Google searches (the old
 > "3 Discovery Tracks" below) is now handled entirely inside
 > [`scripts/rss-feed-collector.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/rss-feed-collector.js):
-> ~100 registered feeds spanning federal wires, 30 named key-leader queries,
-> and one dedicated feed per US state and Canadian province/territory —
-> pooled and interleaved national:local at a fixed 1:2 ratio so national
-> wires can never crowd out local coverage the way they used to. The
-> pipeline also pulls the same-window trending topics
+> ~126 registered feeds spanning federal wires, 31 named key-leader queries,
+> one feed per US state (10 highest-volume states split into
+> municipal-only + state-level-only feeds), and one feed per Canadian
+> province/territory (the 3 territories paired with their capital city,
+> since the territory name alone barely indexes) — pooled and interleaved
+> national:local at a fixed 1:2 ratio so national wires can never crowd out
+> local coverage the way they used to. The pipeline also pulls the
+> same-window trending topics
 > ([`scripts/fetch-trending-topics.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/fetch-trending-topics.js))
 > automatically and prioritizes any candidate that matches, so a genuinely
-> trending story never gets truncated out by the synthesis limit.
+> trending story never gets truncated out.
 >
 > **The one thing this can't do**: a story with zero RSS/Google News
 > footprint at all — a raw court docket, a hyper-local outlet with no feed.

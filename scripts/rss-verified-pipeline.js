@@ -295,11 +295,13 @@ async function runVerifiedNewsPipeline(options = {}) {
     console.log(`[PIPELINE] ${trendingMatchCount} candidate(s) match current trending topics — prioritized.`);
   }
 
-  // Raised default 15 -> 20: with ~100 feeds now feeding the national:local
-  // interleave in the collector, a lower limit was truncating back down to
-  // mostly-national before local stories got a fair share of publish slots.
-  const limit = options.limit || 20;
-  const toProcess = ordered.slice(0, limit);
+  // Ceiling removed 2026-08-28 (explicit user decision): every verified,
+  // deduplicated, quote-checked candidate from this run gets synthesized
+  // and published — no artificial per-run cap. Pass --limit explicitly if
+  // you ever want to throttle a specific run back down; the real ceiling
+  // going forward is options.maxCandidates in the collector (a network/cost
+  // bound on how many source URLs get fetched, not an editorial cap).
+  const toProcess = options.limit ? ordered.slice(0, options.limit) : ordered;
 
   console.log(`\n[PIPELINE] Synthesizing top ${toProcess.length} of ${candidates.length} verified candidate stories...`);
   const synthesizedBatch = [];
@@ -359,7 +361,9 @@ async function runVerifiedNewsPipeline(options = {}) {
 if (require.main === module) {
   (async () => {
     const explicitMaxHours = process.argv.find((a, i) => process.argv[i - 1] === '--max-hours');
-    const limitArg = process.argv.find((a, i) => process.argv[i - 1] === '--limit') || 20;
+    // No default here anymore — omitting --limit means uncapped (see comment
+    // at the ordered.slice call above).
+    const limitArg = process.argv.find((a, i) => process.argv[i - 1] === '--limit');
 
     let maxHours;
     if (explicitMaxHours) {
@@ -383,7 +387,7 @@ if (require.main === module) {
       }
     }
 
-    runVerifiedNewsPipeline({ maxHours, limit: Number(limitArg) }).catch(console.error);
+    runVerifiedNewsPipeline({ maxHours, limit: limitArg ? Number(limitArg) : undefined }).catch(console.error);
   })();
 }
 
