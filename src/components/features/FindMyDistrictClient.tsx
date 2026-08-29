@@ -15,6 +15,7 @@ import { trackFindDistrictCompleted } from "@/lib/analytics/events";
 import { useTranslation } from "@/contexts/LanguageContext";
 import type { RepresentationBranch } from "./RepresentationBranchTree";
 import { useGuestLocation, setGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
+import { REP_LIST_GATING_ENABLED } from "@/lib/constants/site";
 
 type ShapeRow = { id: number; name: string; country: string; boundary_type: string; properties?: unknown };
 
@@ -392,6 +393,7 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
                 branches={branches}
                 country={boundaries[0]?.country || ""}
                 defaultBranchKey="all"
+                gated={REP_LIST_GATING_ENABLED}
               />
             ) : (
               <Card padding="md" className="text-center text-sm text-text-muted">

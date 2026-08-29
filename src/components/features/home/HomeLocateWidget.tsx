@@ -7,9 +7,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, Navigation, Loader2, MapPin, ExternalLink, Flag } from "lucide-react";
+import { Search, Navigation, Loader2, MapPin, ExternalLink, Flag, LogIn } from "lucide-react";
 import { Card, Button, Input, Avatar } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import { findBoundariesByPoint } from "@/lib/services/boundaries";
 import { getOfficeHoldersForShapes } from "@/lib/services/elections";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
@@ -20,6 +21,7 @@ import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { geocodeAddressFree, type GeocodeSuggestion } from "@/lib/utils/geocode";
 import { trackSearch } from "@/lib/analytics/events";
 import { useGuestLocation, getGuestLocation, setGuestLocation, clearGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
+import { ANON_REP_PREVIEW_LIMIT, REP_LIST_GATING_ENABLED } from "@/lib/constants/site";
 
 interface RepRow {
   id: string;
@@ -64,6 +66,7 @@ function wallHrefFor(rep: RepRow): string | null {
 export default function HomeLocateWidget({ className = "" }: { className?: string }) {
   const supabase = createClient();
   const guestLocation = useGuestLocation();
+  const { user } = useAuth();
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<GeocodeSuggestion[]>([]);
   const [searching, setSearching] = useState(false);
@@ -219,6 +222,22 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
   const repsFor = (boundaryId: number) => reps.filter((r) => r.map_shape_id === boundaryId);
   const busy = locating || loadingResults;
 
+  // Flipping REP_LIST_GATING_ENABLED to false makes this true for everyone,
+  // which short-circuits every gating check below back to the original
+  // fully-open behavior -- the old code path never got deleted, just
+  // branched around, so no diff needs reverting to turn this off.
+  const showFullList = !REP_LIST_GATING_ENABLED || !!user;
+
+  // Signed-out visitors (when gating is enabled) get at most
+  // ANON_REP_PREVIEW_LIMIT people total across every boundary combined, not
+  // per boundary -- repBudget is a plain closure variable the boundary
+  // .map() below reads and mutates as it renders (recomputed fresh every
+  // render, not React state). totalRepsAvailable is the real total (not
+  // just the first 3 boundaries shown) so the sign-in CTA's count is
+  // accurate.
+  let repBudget = showFullList ? Infinity : ANON_REP_PREVIEW_LIMIT;
+  const totalRepsAvailable = reps.length;
+
   return (
     // padding="sm" + a larger override at sm+ (Card's `padding` prop itself
     // isn't responsive) -- p-8 on a ~375px phone was over a fifth of the
@@ -338,6 +357,15 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
                     displayReps = boundaryReps.slice(0, 6);
                   }
 
+                  const cappedReps = displayReps.slice(0, Math.max(0, repBudget));
+                  repBudget -= cappedReps.length;
+
+                  // Budget ran out before this boundary got anything to
+                  // show -- skip the whole card rather than rendering a
+                  // header over an empty list (the combined sign-in CTA
+                  // below covers it).
+                  if (!showFullList && boundaryReps.length > 0 && cappedReps.length === 0) return null;
+
                   return (
                     <div
                       key={b.id}
@@ -353,7 +381,7 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
                       ) : (
                         <>
                           <div className="space-y-1.5">
-                            {displayReps.map((rep) => {
+                            {cappedReps.map((rep) => {
                               const wallHref = wallHrefFor(rep);
                               const photo =
                                 rep.photo_url ||
@@ -420,7 +448,7 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
                               );
                             })}
                           </div>
-                          {boundaryReps.length > displayReps.length && (
+                          {showFullList && boundaryReps.length > displayReps.length && (
                             <Link
                               href="/find-my-district"
                               className="inline-block mt-2 text-[11px] font-semibold text-primary hover:text-primary-hover transition-colors"
@@ -433,13 +461,25 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
                     </div>
                   );
                 })}
-              {boundaries.length > 3 && (
+              {showFullList && boundaries.length > 3 && (
                 <Link
                   href="/find-my-district"
                   className="block text-center text-xs font-semibold text-primary hover:text-primary-hover pt-1"
                 >
                   See all {boundaries.length} boundaries &amp; representatives →
                 </Link>
+              )}
+              {!showFullList && totalRepsAvailable > ANON_REP_PREVIEW_LIMIT && (
+                <Card padding="sm" className="text-center space-y-1.5 border-primary/20 bg-primary/5">
+                  <p className="text-xs font-bold text-text-main">
+                    {totalRepsAvailable - ANON_REP_PREVIEW_LIMIT} more representative
+                    {totalRepsAvailable - ANON_REP_PREVIEW_LIMIT === 1 ? "" : "s"} in your area
+                  </p>
+                  <Button as={Link} href="/auth?role=citizen&next=%2Ffind-my-district" variant="primary" size="sm" className="mx-auto">
+                    <LogIn size={13} />
+                    Sign In to See the Rest
+                  </Button>
+                </Card>
               )}
             </div>
           )}

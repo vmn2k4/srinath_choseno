@@ -1,13 +1,42 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Tabs } from "@/components/primitives";
+import Link from "next/link";
+import { LogIn } from "lucide-react";
+import { Tabs, Card, Button } from "@/components/primitives";
 import RepresentationBranchTree, { RepresentationBranch } from "./RepresentationBranchTree";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
 import { createClient } from "@/lib/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { resolveRepresentationBranch, branchKeyFor } from "@/lib/services/elections";
 import { getUserBoundaryMemberships } from "@/lib/services/profile";
+import { ANON_REP_PREVIEW_LIMIT } from "@/lib/constants/site";
+
+// Trims branch.top/branch.bottom down to a total of `budget` people across
+// ALL branches combined (tops counted first, so a signed-out visitor always
+// sees the head of each branch they do get before any councillors) and
+// reports how many were cut. Pure function, no rendering -- so callers that
+// don't gate (the SEO-indexed /elections/[boundarySlug] page) never call it
+// and pay zero cost.
+function capBranchesToBudget(branches: RepresentationBranch[], budget: number) {
+  let remaining = budget;
+  let hidden = 0;
+  const capped = branches.map((b) => {
+    let top = b.top;
+    if (top) {
+      if (remaining > 0) remaining -= 1;
+      else {
+        top = null;
+        hidden += 1;
+      }
+    }
+    const bottom = remaining > 0 ? b.bottom.slice(0, remaining) : [];
+    hidden += b.bottom.length - bottom.length;
+    remaining -= bottom.length;
+    return { ...b, top, bottom };
+  });
+  return { branches: capped, hidden };
+}
 
 // "All" stacks every branch (Federal, Provincial, Municipal, ...) the viewer
 // has -- their own memberships plus whichever branch the boundary being
@@ -26,10 +55,18 @@ export default function BoundaryDirectoryClient({
   branches: initialBranches,
   country,
   defaultBranchKey,
+  gated = false,
 }: {
   branches: RepresentationBranch[];
   country: string;
   defaultBranchKey: string;
+  // Caps signed-out visitors to ANON_REP_PREVIEW_LIMIT people total, with a
+  // sign-in prompt for the rest. Only pass this from surfaces that are
+  // per-visitor and never crawled (e.g. /find-my-district, after the
+  // visitor's own address resolves) -- never from /elections/[boundarySlug],
+  // whose SSR HTML is the thing Google actually indexes for "who represents
+  // me" queries. Defaults to false (fully open) for exactly that reason.
+  gated?: boolean;
 }) {
   const [activeKey, setActiveKey] = useState(defaultBranchKey);
   const [branches, setBranches] = useState(initialBranches);
@@ -86,7 +123,20 @@ export default function BoundaryDirectoryClient({
     ...branches.map((b) => ({ key: b.key, label: b.label })),
   ];
 
-  const visibleBranches = activeKey === "all" ? branches : branches.filter((b) => b.key === activeKey);
+  const rawVisibleBranches = activeKey === "all" ? branches : branches.filter((b) => b.key === activeKey);
+
+  // Capped before the wide/compact split below so that split (which counts
+  // top+bottom per branch) reflects what's actually about to render, not the
+  // pre-cap counts.
+  const { branches: cappedBranches, hidden: hiddenCount } =
+    gated && !user ? capBranchesToBudget(rawVisibleBranches, ANON_REP_PREVIEW_LIMIT) : { branches: rawVisibleBranches, hidden: 0 };
+
+  // A branch that had people pre-cap but got trimmed down to nothing still
+  // has a real districtName/label -- rendering it as-is would hit
+  // RepresentationBranchTree's "No office holders recorded yet" fallback,
+  // which reads as missing data rather than "sign in to see it." Drop it
+  // from the grid entirely; the sign-in CTA below covers it instead.
+  const visibleBranches = gated && !user ? cappedBranches.filter((b) => b.top || b.bottom.length > 0) : cappedBranches;
 
   // Branches with more than a top+bottom pair (e.g. a Municipal branch with
   // a Mayor plus several Councillors) need the full row so their cards can
@@ -129,6 +179,19 @@ export default function BoundaryDirectoryClient({
         )}
         {wideBranches.map(renderBranch)}
       </div>
+
+      {hiddenCount > 0 && (
+        <Card padding="md" className="text-center space-y-2 border-primary/20 bg-primary/5">
+          <p className="text-sm font-bold text-text-main">
+            {hiddenCount} more representative{hiddenCount === 1 ? "" : "s"} in this area
+          </p>
+          <p className="text-xs text-text-muted">Sign in free to see who else represents you.</p>
+          <Button as={Link} href="/auth?role=citizen&next=%2Ffind-my-district" variant="primary" size="sm" className="mx-auto">
+            <LogIn size={13} />
+            Sign In to See the Rest
+          </Button>
+        </Card>
+      )}
     </div>
   );
 }

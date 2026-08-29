@@ -302,22 +302,50 @@ const RSS_FEEDS = [
 const NATIONAL_FEED_NAMES = new Set([...NATIONAL_FEEDS, ...KEY_LEADER_FEEDS_FEDERAL].map(f => f.name));
 
 // Non-US/Canada domestic and non-civic/sports keywords to strictly reject
-const NON_US_CA_DOMESTIC_REGEX = /\b(modi|gadkari|lok sabha|rajya sabha|tinubu|nigeria|nigerian|thailand|thai|lese majeste|imran khan|pakistan|pakistani|keir starmer|downing street|westminster|tory|tories|labour mp|macron|elysee|bundestag|scholz|zelenskyy|kyiv|kremlin|putin|netanyahu|knesset|gaza|hamas|hezbollah|tehran|ayotollah|cricket captain|cockroach hunger|seoul|korea|tokyo|japan|brussels|belgium|manila|philippines|sydney|auckland|new zealand|south africa|cosla|scotland|angeles city)\b/i;
-const SPORTS_ENTERTAINMENT_REGEX = /\b(premier league|chelsea|fulham|arsenal|manchester united|man utd|man city|liverpool|tottenham|real madrid|barcelona|laliga|bundesliga|serie a|champions league|striker|midfielder|goalkeeper|touchdown|quarterback|nfl|nhl|nba|mlb|wnba|badminton|cricket|world cup|super bowl|espn|sportsnet|box score|transfer window|movie review|box office)\b/i;
+const NON_US_CA_DOMESTIC_REGEX = /\b(modi|gadkari|lok sabha|rajya sabha|tinubu|nigeria|nigerian|thailand|thai|lese majeste|imran khan|pakistan|pakistani|keir starmer|downing street|westminster|tory|tories|labour mp|macron|elysee|bundestag|scholz|zelenskyy|kyiv|kremlin|putin|netanyahu|knesset|gaza|hamas|hezbollah|tehran|ayotollah|cricket captain|cockroach hunger|seoul|korea|tokyo|japan|brussels|belgium|manila|philippines|sydney|auckland|new zealand|south africa|cosla|scotland|angeles city|mexico|mexican|sheinbaum|amlo|morena party|sinaloa|jalisco|michoacan|oaxaca|chiapas|tijuana|guadalajara|monterrey|ciudad de mexico|cdmx|cartel)\b/i;
+
+// Human-interest/viral framing that isn't governance news even when it
+// names a real office holder — e.g. "NYC Mayor playing tennis goes viral"
+// or a Facebook wedding-announcement post about a mayor's daughter. This
+// is deliberately checked separately from SPORTS_ENTERTAINMENT_REGEX
+// because these aren't sports terms, they're tone/framing markers.
+const VIRAL_ENTERTAINMENT_REGEX = /\b(goes viral|viral video|viral moment|fans react|internet reacts|hilariously|wins the internet|best wishes|ties the knot|tied the knot|elopement|engagement photos|engaged to|dating rumors|adorable|sweetest moment|dressed as|kisses|kissing|legacy obituary)\b/i;
+// Includes generic sports-roundup language (roundup, snaps skid, matinee,
+// "scores and Saturday slate") because several US high schools are literally
+// named after colonial governors (Governor Livingston HS, Governor Mifflin,
+// etc.) — the office-holder title regex below can't tell "Governor
+// Livingston puts up big numbers" (a football score) from an actual
+// governor without this.
+const SPORTS_ENTERTAINMENT_REGEX = /\b(premier league|chelsea|fulham|arsenal|manchester united|man utd|man city|liverpool|tottenham|real madrid|barcelona|laliga|bundesliga|serie a|champions league|striker|midfielder|goalkeeper|touchdown|quarterback|nfl|nhl|nba|mlb|wnba|badminton|cricket|world cup|super bowl|espn|sportsnet|box score|transfer window|movie review|box office|snaps skid|matinee|saturday slate|friday night.{0,20}roundup|high school football|varsity)\b/i;
 const FOREIGN_OUTLET_REGEX = /\b(politico\.eu|nippon\.com|inquirer\.net|korea joongang daily|top south now|cosla|hindustan times|ahmedabad mirror|al jazeera|france 24|the independent)\b/i;
-const US_CA_EXECUTIVE_KEYWORDS = /\b(trump|carney|vance|biden|congress|senate|house of representatives|white house|pmo|parliament|governor|premier|mayor|councillor|alderman|city council|lcbo|usmca|epa|fcc|sec|doj|pentagon|ontario|quebec|british columbia|alberta|manitoba|saskatchewan|nova scotia|new york|california|texas|florida|pennsylvania|michigan|ohio|ottawa|toronto|montreal|vancouver|calgary|edmonton|winnipeg|chicago|los angeles|houston|phoenix|philadelphia|san antonio|san diego|dallas|san jose|austin|seattle|denver|boston)\b/i;
+// Deliberately EXCLUDES generic office titles (governor, premier, mayor,
+// senator, minister...) even though they're common US/CA titles too —
+// Mexico, Nigeria, and plenty of other countries also call their
+// subnational leaders "governor." A bare title proves nothing about
+// jurisdiction; only a named US/CA individual, an unambiguous US/CA
+// institution, or a specific US/CA place name does.
+const US_CA_EXECUTIVE_KEYWORDS = /\b(trump|carney|vance|biden|poilievre|congress|senate|house of representatives|white house|pmo|parliament hill|usmca|lcbo|epa|fcc|sec|doj|pentagon|ontario|quebec|british columbia|alberta|manitoba|saskatchewan|nova scotia|new york|california|texas|florida|pennsylvania|michigan|ohio|ottawa|toronto|montreal|vancouver|calgary|edmonton|winnipeg|chicago|los angeles|houston|phoenix|philadelphia|san antonio|san diego|dallas|san jose|austin|seattle|denver|boston)\b/i;
 
 function isStrictlyUsOrCanada(title, description, sourceName) {
   const text = `${title} ${description} ${sourceName || ''}`;
   if (SPORTS_ENTERTAINMENT_REGEX.test(text)) {
     return false; // Hard reject sports & entertainment
   }
+  if (VIRAL_ENTERTAINMENT_REGEX.test(text)) {
+    return false; // Hard reject human-interest/viral framing, even about a real office holder
+  }
   if (FOREIGN_OUTLET_REGEX.test(text)) {
     return false; // Hard reject non-US/CA foreign outlets
   }
   if (NON_US_CA_DOMESTIC_REGEX.test(text)) {
-    // If it contains non-US/CA domestic keywords, only allow if it directly involves US/CA leadership
-    if (!US_CA_EXECUTIVE_KEYWORDS.test(text)) {
+    // A foreign country/leader being mentioned doesn't automatically mean
+    // the story is ABOUT the US/CA — "...expose logic of Sheinbaum's
+    // endless concessions to Trump" is a story about Mexican politics that
+    // merely name-drops Trump in its last clause. Only allow it through if
+    // the US/CA reference is in the first half of the HEADLINE (a rough
+    // proxy for "primary subject"), not just present anywhere in the text.
+    const titleFirstHalf = (title || '').slice(0, Math.ceil((title || '').length / 2));
+    if (!US_CA_EXECUTIVE_KEYWORDS.test(titleFirstHalf)) {
       return false;
     }
   }

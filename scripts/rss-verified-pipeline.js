@@ -149,53 +149,79 @@ OUTPUT VALID JSON ONLY with this exact schema:
     'gemini-3.7-flash'
   ];
 
-  for (const model of modelsToTry) {
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 45000);
+  const wordCount = (text) => (text || '').trim().split(/\s+/).filter(Boolean).length;
+  const MIN_WORDS = 500;
 
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`, {
-        method: 'POST',
-        signal: controller.signal,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { responseMimeType: 'application/json', temperature: 0.2 }
-        })
-      });
-      clearTimeout(timeout);
+  // Fixed 2026-08-29: search-grounded enrichment used to only run when
+  // every model call technically FAILED (HTTP error/exception). But Gemini
+  // almost always returns SOME valid JSON even from a one-line RSS blurb —
+  // so a thin source never triggered it, it just silently produced (or
+  // padded out) a thin article. The gate now checks the actual OUTPUT word
+  // count: any article under 500 words gets a search-grounded enrichment
+  // pass before it's accepted, regardless of why it came out short.
+  let primaryResult = null;
+  const rawSourceText = (groundTruth.sourceBodyText || groundTruth.sourceDescription || '').replace(/\s+/g, ' ').trim();
+  const isThinSource = rawSourceText.length < 300;
 
-      if (res.ok) {
-        const data = await res.json();
-        const rawJson = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        const parsed = JSON.parse(rawJson);
+  if (!isThinSource) {
+    for (const model of modelsToTry) {
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 45000);
 
-        return {
-          ...parsed,
-          slug: generateSlug(parsed.headline || groundTruth.title, groundTruth.pubDate),
-          sources: [{ name: groundTruth.sourceName, url: groundTruth.sourceUrl }],
-          groundTruth
-        };
-      } else {
-        console.warn(`Model ${model} returned HTTP ${res.status}, trying next fallback...`);
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`, {
+          method: 'POST',
+          signal: controller.signal,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { responseMimeType: 'application/json', temperature: 0.2 }
+          })
+        });
+        clearTimeout(timeout);
+
+        if (res.ok) {
+          const data = await res.json();
+          const rawJson = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          const parsed = JSON.parse(rawJson);
+          primaryResult = {
+            ...parsed,
+            slug: generateSlug(parsed.headline || groundTruth.title, groundTruth.pubDate),
+            sources: [{ name: groundTruth.sourceName, url: groundTruth.sourceUrl }],
+            groundTruth
+          };
+          break;
+        } else {
+          console.warn(`Model ${model} returned HTTP ${res.status}, trying next fallback...`);
+        }
+      } catch (e) {
+        console.warn(`Error with ${model}:`, e.message);
       }
-    } catch (e) {
-      console.warn(`Error with ${model}:`, e.message);
     }
   }
 
-  // If standard synthesis fails or source text is thin, perform live web-search grounded synthesis
+  if (primaryResult && wordCount(primaryResult.body) >= MIN_WORDS) {
+    return primaryResult;
+  }
+
+  console.log(`[SYNTH] "${groundTruth.title.slice(0, 60)}..." ${primaryResult ? `only ${wordCount(primaryResult.body)} words` : 'produced nothing'} (min ${MIN_WORDS}) — searching the internet to enrich it.`);
+
+  // Below minimum word count (or no result at all): search the live
+  // internet for real information on this topic and write the full piece
+  // from that, rather than publishing something thin or padding a short
+  // source with invented detail.
   try {
     const searchPrompt = `You are an elite, non-partisan civic investigative journalist for Choseno.
-Search the live internet and transform this verified breaking wire topic into a comprehensive, high-depth civic news report (400-650 words):
+Search the live internet and transform this verified breaking wire topic into a comprehensive, high-depth civic news report of AT LEAST ${MIN_WORDS} words (target 500-750):
 Topic: ${groundTruth.title}
 Source: ${groundTruth.sourceName} (${groundTruth.sourceUrl})
 Date: ${groundTruth.pubDate}
+${primaryResult ? `\nWhat we already have (too short at ${wordCount(primaryResult.body)} words — use it as a starting point, then search for more to substantiate and extend it):\n${primaryResult.body}\n` : ''}
 
 REQUIREMENTS:
-1. Write 3-5 continuous flowing paragraphs analyzing the policy mechanism, taxpayer impact, civic context, and public debate.
-2. NO markdown headers, NO bulleted sections.
-3. Accurate factual grounding based on verified search results.
+1. Write continuous flowing narrative prose (like an editor's judgment call, not a fixed template) analyzing the policy mechanism, taxpayer impact, civic context, and public debate — whatever this specific story actually has to offer. NO markdown headers, NO bulleted sections, NO labeled sections.
+2. Every fact must be grounded in verified search results — do not invent numbers, quotes, or events beyond what search actually surfaces. If the story genuinely doesn't support ${MIN_WORDS} words even after searching, say less rather than pad with invented detail.
+3. Same headline-craft rules as always: no formulaic "[Name] Announces/Unveils" openers, lead with the concrete consequence.
 
 OUTPUT VALID JSON ONLY with this schema:
 {
@@ -217,36 +243,63 @@ OUTPUT VALID JSON ONLY with this schema:
   "body": "Continuous multi-paragraph prose..."
 }`;
 
-    const searchRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: searchPrompt }] }],
-        tools: [{ googleSearch: {} }]
-      })
-    });
+    // Fixed 2026-08-29: this was hardcoded to gemini-2.5-flash only. Free-
+    // tier Gemini quotas are per-model (observed: 20 requests/day on
+    // gemini-2.5-flash) — since that's also the FIRST model the primary
+    // loop above tries for every article, its quota exhausts early in a
+    // busy day, and a single hardcoded model here meant the entire
+    // enrichment feature went dark for the rest of the day once it did.
+    // Try each candidate model in turn so one model's exhausted quota
+    // doesn't take down the whole fallback.
+    let searchResult = null;
+    for (const model of modelsToTry) {
+      try {
+        const searchRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: searchPrompt }] }],
+            tools: [{ googleSearch: {} }]
+          })
+        });
 
-    if (searchRes.ok) {
-      const searchData = await searchRes.json();
-      const text = searchData.candidates?.[0]?.content?.parts?.[0]?.text;
-      const jsonMatch = text && text.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        const parsed = JSON.parse(jsonMatch[0]);
-        if (parsed.body && parsed.body.length > 200) {
-          return {
-            ...parsed,
-            slug: generateSlug(parsed.headline || groundTruth.title, groundTruth.pubDate),
-            sources: [{ name: groundTruth.sourceName, url: groundTruth.sourceUrl }],
-            groundTruth
-          };
+        if (searchRes.ok) {
+          const searchData = await searchRes.json();
+          const text = searchData.candidates?.[0]?.content?.parts?.[0]?.text;
+          const jsonMatch = text && text.match(/\{[\s\S]*\}/);
+          if (jsonMatch) {
+            searchResult = JSON.parse(jsonMatch[0]);
+            break;
+          }
+        } else {
+          console.warn(`[SYNTH] ${model} returned HTTP ${searchRes.status} for search-grounded enrichment (429 = quota exhausted for this model today), trying next model...`);
         }
+      } catch (e) {
+        console.warn(`[SYNTH] Error with ${model} for search-grounded enrichment:`, e.message);
       }
+    }
+
+    // Accept the enriched version if it's genuinely fuller than what we had
+    // (or if we had nothing) — even if it still falls short of 500, "the
+    // most substantive honest version we could produce" beats rejecting it
+    // outright.
+    if (searchResult && searchResult.body && (!primaryResult || wordCount(searchResult.body) > wordCount(primaryResult.body))) {
+      return {
+        ...searchResult,
+        slug: generateSlug(searchResult.headline || groundTruth.title, groundTruth.pubDate),
+        sources: [{ name: groundTruth.sourceName, url: groundTruth.sourceUrl }],
+        groundTruth
+      };
     }
   } catch (searchErr) {
     console.warn('[PIPELINE] Search-grounded synthesis fallback error:', searchErr.message);
   }
 
-  return synthesizeDirectFallback(groundTruth);
+  // Enrichment didn't beat what we already had (or errored): use the
+  // primary result if we got one, even if short — it's still real,
+  // grounded content. Only the bare headline+link template is the true
+  // last resort, when nothing else produced anything at all.
+  return primaryResult || synthesizeDirectFallback(groundTruth);
 }
 
 function cleanHeadline(title, sourceName) {
@@ -359,13 +412,15 @@ async function runVerifiedNewsPipeline(options = {}) {
     console.log(`[PIPELINE] ${trendingMatchCount} candidate(s) match current trending topics — prioritized.`);
   }
 
-  // Ceiling removed 2026-08-28 (explicit user decision): every verified,
-  // deduplicated, quote-checked candidate from this run gets synthesized
-  // and published — no artificial per-run cap. Pass --limit explicitly if
-  // you ever want to throttle a specific run back down; the real ceiling
-  // going forward is options.maxCandidates in the collector (a network/cost
-  // bound on how many source URLs get fetched, not an editorial cap).
   const toProcess = options.limit ? ordered.slice(0, options.limit) : ordered;
+
+  // If collectOnly is enabled (Antigravity-native synthesis mode), save candidates and stop
+  if (options.collectOnly) {
+    const candidatesPath = path.join(__dirname, 'latest-verified-rss-candidates.json');
+    fs.writeFileSync(candidatesPath, JSON.stringify(toProcess, null, 2));
+    console.log(`\n[PIPELINE] Saved ${toProcess.length} verified RSS candidate stories into ${candidatesPath} for Antigravity synthesis.`);
+    return toProcess;
+  }
 
   console.log(`\n[PIPELINE] Synthesizing top ${toProcess.length} of ${candidates.length} verified candidate stories...`);
   const synthesizedBatch = [];
@@ -425,27 +480,20 @@ async function runVerifiedNewsPipeline(options = {}) {
 if (require.main === module) {
   (async () => {
     const explicitMaxHours = process.argv.find((a, i) => process.argv[i - 1] === '--max-hours');
-    // No default here anymore — omitting --limit means uncapped (see comment
-    // at the ordered.slice call above).
     const limitArg = process.argv.find((a, i) => process.argv[i - 1] === '--limit');
+    const collectOnly = process.argv.includes('--collect-only');
+    const useApiKey = process.argv.includes('--use-api-key');
 
     let maxHours;
     let sinceTimestamp;
     if (explicitMaxHours) {
-      // Cron passes this explicitly (e.g. --max-hours 6) — always honored as-is.
       maxHours = Number(explicitMaxHours);
     } else {
-      // On-demand run with no --max-hours given: derive the lookback from
-      // time-since-last-published instead of guessing, so a manual run
-      // never has a coverage gap or re-scans hours that are already covered.
-      // This is the ONE difference between a cron run and an on-demand run
-      // — everything downstream (feeds, verification, tagging, scoring,
-      // tweet copy) is the same code path either way.
       try {
         const { getLastPublishWindow } = require('./get-last-publish-window');
         const window = await getLastPublishWindow();
         maxHours = window.lookbackHours;
-        sinceTimestamp = window.lastPublishedAt; // exact timestamp, not rounded up to a whole hour
+        sinceTimestamp = window.lastPublishedAt;
         console.log(`[PIPELINE] No --max-hours given; auto-computed lookback = ${maxHours}h (last published ${window.lastPublishedAt}).`);
       } catch (e) {
         console.warn('[PIPELINE] Auto-window lookup failed, defaulting to 4h:', e.message);
@@ -453,7 +501,13 @@ if (require.main === module) {
       }
     }
 
-    runVerifiedNewsPipeline({ maxHours, sinceTimestamp, limit: limitArg ? Number(limitArg) : undefined }).catch(console.error);
+    runVerifiedNewsPipeline({
+      maxHours,
+      sinceTimestamp,
+      limit: limitArg ? Number(limitArg) : undefined,
+      collectOnly,
+      useApiKey
+    }).catch(console.error);
   })();
 }
 

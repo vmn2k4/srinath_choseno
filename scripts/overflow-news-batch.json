@@ -1,6 +1,231 @@
 [
   {
     "rank": 101,
+    "raw": "100,9.7,\"Auburn Mayor Retains Ballot Eligibility Despite Filing After Election Deadline\",Municipal,\"CA, US\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Auburn officials have confirmed the mayor remains eligible for the upcoming election despite missing the standard filing deadline.\",\"The City of Auburn has confirmed the mayor remains qualified for the upcoming election despite missing the standard filing deadline. This decision clarifies the candidate list for local voters and maintains the current electoral timeline.\",https://www.choseno.com/news/auburn-mayor-retains-ballot-eligibility-despite-filing-after-election-deadline-2026-08-28,https://www.choseno.com/news/auburn-mayor-retains-ballot-eligibility-despite-filing-after-election-deadline-2026-08-28",
+    "archivedAt": "2026-08-29T06:01:19.133Z"
+  },
+  {
+    "rank": 101,
+    "raw": "99,9.6,\"California Legislature Blocks Governor's Proposed Wildfire Insurance Overhaul\",State Policy,\"CA, US\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The California Legislature has rejected the Governor's proposed wildfire insurance reforms, leaving current market regulations unchanged for the time being.\",\"State lawmakers have declined to advance the Governor's legislative package aimed at reforming the wildfire insurance market. The decision leaves existing insurance regulations in place for the current term.\",https://www.choseno.com/news/california-legislature-blocks-governor-s-proposed-wildfire-insurance-overhaul-2026-08-28,https://www.choseno.com/news/california-legislature-blocks-governor-s-proposed-wildfire-insurance-overhaul-2026-08-28",
+    "archivedAt": "2026-08-29T05:30:14.209Z"
+  },
+  {
+    "rank": 102,
+    "raw": "100,9.6,\"Baltimore Mayor’s Office Releases OIG Findings Amidst Escalating Records Dispute\",Municipal,\"MD, US\",Brandon Scott,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The Baltimore Mayor's office has released details regarding OIG accusations as a public records dispute continues to escalate in the city.\",\"The Baltimore Mayor's office has disclosed details regarding accusations from the Office of the Inspector General. This disclosure occurs as a broader conflict over public records access continues to intensify.\",https://www.choseno.com/news/baltimore-mayor-s-office-releases-oig-findings-amidst-escalating-records-dispute-2026-08-28,https://www.choseno.com/wall/brandon-m-scott-mayor",
+    "archivedAt": "2026-08-29T05:30:14.209Z"
+  },
+  {
+    "rank": 101,
+    "raw": "87,9.5,\"California Attorney General Challenges USPS Mail-In Voting Restrictions in Federal Lawsuit\",Legal,\"CA, US\",Rob Bonta,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"California Attorney General Rob Bonta has filed a lawsuit against the USPS, challenging new rules that critics argue could restrict mail-in voting and interfere with the electoral process.\",\"Attorney General Rob Bonta has initiated legal action against the United States Postal Service regarding new regulations that could limit mail-in ballot processing. The lawsuit seeks to prevent potential interference with election integrity and voter access.\",https://www.choseno.com/news/california-attorney-general-challenges-usps-mail-in-voting-restrictions-in-feder-2026-08-28,https://www.choseno.com/wall/rob-bonta",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 102,
+    "raw": "88,9.5,\"Dublin Lord Mayor Evaluates Economic and Cultural Impact of UNC-TCU College Football Matchup\",International Relations,\"NC, US\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Dublin's Lord Mayor has shared perspectives on the hosting of the UNC versus TCU college football game, marking a continued trend of American collegiate sports events taking place in Ireland.\",\"Dublin's Lord Mayor has provided commentary on the hosting of the UNC versus TCU college football game in Ireland. The event highlights ongoing efforts to integrate American collegiate athletics into the Irish sporting calendar.\",https://www.choseno.com/news/dublin-lord-mayor-evaluates-economic-and-cultural-impact-of-unc-tcu-college-foot-2026-08-28,https://www.choseno.com/news/dublin-lord-mayor-evaluates-economic-and-cultural-impact-of-unc-tcu-college-foot-2026-08-28",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 103,
+    "raw": "89,9.4,\"FEMA Allocates $4.1 Million in Federal Disaster Recovery Funding to North Dakota\",Federal,\"ND, US\",Kevin Cramer,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The Federal Emergency Management Agency has awarded over $4.1 million to North Dakota to support ongoing disaster recovery and infrastructure restoration efforts across the state.\",\"The Federal Emergency Management Agency has approved over $4.1 million in funding to support North Dakota's ongoing disaster recovery efforts. This federal investment aims to bolster state-level resilience and assist in the restoration of infrastructure following recent emergency events.\",https://www.choseno.com/news/fema-allocates-4-1-million-in-federal-disaster-recovery-funding-to-north-dakota-2026-08-28,https://www.choseno.com/wall/kevin-cramer",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 104,
+    "raw": "90,9.3,\"Tennessee Governor Proposes Renaming Nashville International Airport to Honor Dolly Parton\",Municipal,\"TN, US\",Bill Lee,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Tennessee Governor Bill Lee has proposed renaming the Nashville International Airport to honor the late music icon Dolly Parton, marking a potential shift in the branding of the state's major transit hub.\",\"Governor Bill Lee has initiated a proposal to rename the Nashville International Airport in tribute to the late entertainer Dolly Parton. The move seeks to recognize the cultural legacy of the Tennessee-born icon at the state's primary aviation hub.\",https://www.choseno.com/news/tennessee-governor-proposes-renaming-nashville-international-airport-to-honor-do-2026-08-28,https://www.choseno.com/wall/bill-lee-governor",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 105,
+    "raw": "91,9.3,\"Robinson Mayor plans to vote against Flock cameras\",Municipal,\"DC, US\",Civic Authority,2026-08-28T21:40:00.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Robinson Mayor plans to vote against Flock cameras\",\"Robinson Mayor plans to vote against Flock cameras &nbsp;&nbsp; KWTX\",https://www.choseno.com/news/robinson-mayor-plans-to-vote-against-flock-cameras-2026-08-28,https://www.choseno.com/news/robinson-mayor-plans-to-vote-against-flock-cameras-2026-08-28",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 106,
+    "raw": "92,9.3,\"Joe Biden Considered Pardoning Donald Trump During Bedroom Chat With Wife Jill in 2023, Claims GOP Governor\",Municipal,\"DC, US\",Civic Authority,2026-08-28T21:22:36.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Joe Biden Considered Pardoning Donald Trump During Bedroom Chat With Wife Jill in 2023, Claims GOP Governor\",\"Joe Biden Considered Pardoning Donald Trump During Bedroom Chat With Wife Jill in 2023, Claims GOP Governor &nbsp;&nbsp; okmagazine.com\",https://www.choseno.com/news/joe-biden-considered-pardoning-donald-trump-during-bedroom-chat-with-wife-jill-i-2026-08-28,https://www.choseno.com/wall/donald-j-trump-president",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 107,
+    "raw": "93,9.2,\"Donald Trump signed an executive order to rename Lake Ontario. Should Ontario rename Trump Lake?\",Politics,\"CA, CA\",Civic Authority,2026-08-28T21:29:05.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Donald Trump signed an executive order to rename Lake Ontario. Should Ontario rename Trump Lake?\",\"Donald Trump signed an executive order to rename Lake Ontario. Should Ontario rename Trump Lake? &nbsp;&nbsp; Toronto Life\",https://www.choseno.com/news/donald-trump-signed-an-executive-order-to-rename-lake-ontario-should-ontario-ren-2026-08-28,https://www.choseno.com/wall/donald-j-trump-president",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 108,
+    "raw": "94,9.2,\"Florida Gubernatorial Candidate David Jolly Outlines Stance on Surveillance Technology and Education Policy\",State Politics,\"FL, US\",David Jolly,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Florida gubernatorial candidate David Jolly has outlined his policy positions on the use of surveillance technology, data center expansion, and the state's school choice framework.\",\"Florida gubernatorial candidate David Jolly has detailed his policy positions regarding the integration of Flock surveillance cameras, the expansion of data centers, and the future of school choice in the state. These proposals address significant infrastructure and civil liberty concerns that could influence future state-level administrative priorities.\",https://www.choseno.com/news/florida-gubernatorial-candidate-david-jolly-outlines-stance-on-surveillance-tech-2026-08-28,https://www.choseno.com/wall/david-jolly",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 109,
+    "raw": "95,9.1,\"Mooresville Allocates $83,000 in Legal Fees to Prevent Release of Mayor's Video\",Municipal,\"NC, US\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The town of Mooresville has spent $83,000 in public funds to block the release of a video featuring the mayor, raising questions about the use of municipal resources in personal legal matters.\",\"The town of Mooresville has directed $83,000 in public funds toward legal efforts aimed at blocking the public release of a video featuring the mayor. This expenditure represents a significant allocation of municipal resources toward a private legal dispute involving a public official.\",https://www.choseno.com/news/mooresville-allocates-83-000-in-legal-fees-to-prevent-release-of-mayor-s-video-2026-08-28,https://www.choseno.com/news/mooresville-allocates-83-000-in-legal-fees-to-prevent-release-of-mayor-s-video-2026-08-28",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 110,
+    "raw": "96,9.1,\"Tennessee Governor Backs Proposal to Rename Nashville International Airport for Dolly Parton\",Municipal,\"TN, US\",Bill Lee,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Tennessee Governor Bill Lee has signaled his support for a proposal to rename the Nashville International Airport in honor of country music legend Dolly Parton.\",\"Tennessee Governor Bill Lee has expressed support for renaming the Nashville International Airport in honor of country music icon Dolly Parton. The proposal remains in the early stages of consideration with no specific fiscal impact or legislative timeline currently finalized.\",https://www.choseno.com/news/tennessee-governor-backs-proposal-to-rename-nashville-international-airport-for--2026-08-28,https://www.choseno.com/wall/bill-lee-governor",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 111,
+    "raw": "97,9.0,\"Manvel Mayor Calls for Flock Camera Contract Review\",Municipal,\"DC, US\",Civic Authority,2026-08-28T21:43:08.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Manvel Mayor Calls for Flock Camera Contract Review\",\"Manvel Mayor Calls for Flock Camera Contract Review &nbsp;&nbsp; Hoodline\",https://www.choseno.com/news/manvel-mayor-calls-for-flock-camera-contract-review-2026-08-28,https://www.choseno.com/news/manvel-mayor-calls-for-flock-camera-contract-review-2026-08-28",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 112,
+    "raw": "98,9.0,\"Renamed Dolly Parton International Airport is Really Happening: Tennessee Governor Bill Lee Announces Intention to Make the Change\",Municipal,\"DC, US\",Civic Authority,2026-08-28T21:34:40.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Renamed Dolly Parton International Airport is Really Happening: Tennessee Governor Bill Lee Announces Intention to Make the Change\",\"Renamed Dolly Parton International Airport is Really Happening: Tennessee Governor Bill Lee Announces Intention to Make the Change &nbsp;&nbsp; Showbiz411\",https://www.choseno.com/news/renamed-dolly-parton-international-airport-is-really-happening-tennessee-governo-2026-08-28,https://www.choseno.com/wall/bill-lee-governor",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 113,
+    "raw": "99,8.9,\"Tennessee Governor Announces Huge Change in Honor of Dolly Parton\",Municipal,\"DC, US\",Civic Authority,2026-08-28T21:28:00.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Tennessee Governor Announces Huge Change in Honor of Dolly Parton\",\"Tennessee Governor Announces Huge Change in Honor of Dolly Parton &nbsp;&nbsp; InspireMore\",https://www.choseno.com/news/tennessee-governor-announces-huge-change-in-honor-of-dolly-parton-2026-08-28,https://www.choseno.com/news/tennessee-governor-announces-huge-change-in-honor-of-dolly-parton-2026-08-28",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 114,
+    "raw": "100,8.8,\"Governor Moore Touts Vax Act, Maryland’s Lifesaving Immunization Requirements During Back-to-School Season\",Politics,\"DC, US\",Civic Authority,2026-08-28T21:31:19.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Moore Touts Vax Act, Maryland’s Lifesaving Immunization Requirements During Back-to-School Season\",\"Governor Moore Touts Vax Act, Maryland’s Lifesaving Immunization Requirements During Back-to-School Season &nbsp;&nbsp; The BayNet\",https://www.choseno.com/news/governor-moore-touts-vax-act-maryland-s-lifesaving-immunization-requirements-dur-2026-08-28,https://www.choseno.com/news/governor-moore-touts-vax-act-maryland-s-lifesaving-immunization-requirements-dur-2026-08-28",
+    "archivedAt": "2026-08-29T05:03:09.401Z"
+  },
+  {
+    "rank": 101,
+    "raw": "96,8.8,\"Tennessee Governor announces plans to rename Nashville Airport after 'state's favorite daughter' Dolly Parton\",Municipal,\"DC, US\",Civic Authority,2026-08-28T21:54:57.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Tennessee Governor announces plans to rename Nashville Airport after 'state's favorite daughter' Dolly Parton\",\"Tennessee Governor announces plans to rename Nashville Airport after 'state's favorite daughter' Dolly Parton &nbsp;&nbsp; UNILAD\",https://www.choseno.com/news/tennessee-governor-announces-plans-to-rename-nashville-airport-after-state-s-fav-2026-08-28,https://www.choseno.com/news/tennessee-governor-announces-plans-to-rename-nashville-airport-after-state-s-fav-2026-08-28",
+    "archivedAt": "2026-08-29T04:01:08.604Z"
+  },
+  {
+    "rank": 102,
+    "raw": "97,8.8,\"New York Mayor Faces Off Against Amazon\",Municipal,\"DC, US\",Civic Authority,2026-08-28T21:39:08.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"New York Mayor Faces Off Against Amazon\",\"New York Mayor Faces Off Against Amazon &nbsp;&nbsp; WSJ\",https://www.choseno.com/news/new-york-mayor-faces-off-against-amazon-2026-08-28,https://www.choseno.com/news/new-york-mayor-faces-off-against-amazon-2026-08-28",
+    "archivedAt": "2026-08-29T04:01:08.604Z"
+  },
+  {
+    "rank": 103,
+    "raw": "98,8.7,\"Two candidates are running in Nunavut community MLA byelection\",Municipal,\"CA, CA\",Civic Authority,2026-08-28T21:39:05.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Two candidates are running in Nunavut community MLA byelection\",\"Two candidates are running in Nunavut community MLA byelection &nbsp;&nbsp; The Spec\",https://www.choseno.com/news/two-candidates-are-running-in-nunavut-community-mla-byelection-2026-08-28,https://www.choseno.com/news/two-candidates-are-running-in-nunavut-community-mla-byelection-2026-08-28",
+    "archivedAt": "2026-08-29T04:01:08.604Z"
+  },
+  {
+    "rank": 104,
+    "raw": "99,9.9,\"Ohio Executive Leadership Concludes Statewide Heart of Opportunity Tour in Cincinnati and Springfield\",Politics,\"OH, US\",Mike DeWine,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Mike DeWine and Lt. Governor Jim Tressel have officially concluded their Heart of Opportunity tour following final visits to Cincinnati and Springfield.\",\"Governor Mike DeWine and Lieutenant Governor Jim Tressel have finalized a series of regional visits focused on state-level economic and community development initiatives. The tour served as a concluding engagement for the administration's current outreach efforts across Ohio's urban centers.\",https://www.choseno.com/news/ohio-executive-leadership-concludes-statewide-heart-of-opportunity-tour-in-cinci-2026-08-28,https://www.choseno.com/wall/mike-dewine-governor",
+    "archivedAt": "2026-08-29T04:01:08.604Z"
+  },
+  {
+    "rank": 105,
+    "raw": "100,9.8,\"North Bay MPP Travel Expense Allocation Under Review Following Split-Billing Disclosure\",Politics,\"ON, CA\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The practice of splitting travel expenses by a North Bay MPP is under scrutiny, prompting experts to weigh in on the transparency of provincial reimbursement procedures.\",\"Questions have emerged regarding the practice of splitting travel expenses by a North Bay MPP. The scrutiny focuses on the transparency and procedural adherence of provincial reimbursement claims.\",https://www.choseno.com/news/north-bay-mpp-travel-expense-allocation-under-review-following-split-billing-dis-2026-08-28,https://www.choseno.com/news/north-bay-mpp-travel-expense-allocation-under-review-following-split-billing-dis-2026-08-28",
+    "archivedAt": "2026-08-29T04:01:08.604Z"
+  },
+  {
+    "rank": 101,
+    "raw": "89,9.9,\"Florida Gubernatorial Field Shifts as Desmond Meade Ends Campaign\",Politics,\"FL, US\",Desmond Meade,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Voting rights advocate Desmond Meade has officially withdrawn from the Florida governor's race, marking a significant change in the state's upcoming gubernatorial contest.\",\"Voting rights advocate Desmond Meade has officially withdrawn his candidacy for the Florida governor's race. The departure narrows the field of contenders as the election cycle continues to evolve.\",https://www.choseno.com/news/florida-gubernatorial-field-shifts-as-desmond-meade-ends-campaign-2026-08-28,https://www.choseno.com/wall/desmond-meade",
+    "archivedAt": "2026-08-29T03:02:11.410Z"
+  },
+  {
+    "rank": 102,
+    "raw": "90,9.8,\"Hamilton County Residents Demand Special Election Following School Board Resignation\",Politics,\"TN, US\",Jill Black,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Hamilton County voters are pushing for a special election to fill a school board vacancy, seeking a direct ballot choice instead of an appointment following Jill Black's resignation.\",\"The resignation of board member Jill Black has triggered a public push for a ballot-based selection process to fill the vacancy. Taxpayers are seeking a direct vote rather than an appointment to determine the district's representation.\",https://www.choseno.com/news/hamilton-county-residents-demand-special-election-following-school-board-resigna-2026-08-28,https://www.choseno.com/wall/jill-black",
+    "archivedAt": "2026-08-29T03:02:11.410Z"
+  },
+  {
+    "rank": 103,
+    "raw": "91,9.8,\"$2,000 Fines Proposed Under California Plan to Prohibit Vaping Products\",Politics,\"CA, US\",Gavin Newsom,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"California Governor Gavin Newsom is moving to ban vaping products across the state, with a $2,000 fine attached to the new enforcement policy.\",\"California Governor Gavin Newsom is moving to implement a statewide ban on vaping products. The proposed policy includes a $2,000 fine for violations.\",https://www.choseno.com/news/2-000-fines-proposed-under-california-plan-to-prohibit-vaping-products-2026-08-28,https://www.choseno.com/wall/gavin-newsom-governor",
+    "archivedAt": "2026-08-29T03:02:11.410Z"
+  },
+  {
+    "rank": 104,
+    "raw": "92,9.8,\"Pennsylvania Governor Signals Support for Statewide Prohibition of Flock Surveillance Technology\",Politics,\"PA, US\",Josh Shapiro,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Josh Shapiro has signaled he would support a legislative ban on the use of Flock automated license plate reader cameras across Pennsylvania.\",\"Governor Josh Shapiro has expressed openness to a legislative ban on the use of Flock automated license plate reader cameras across Pennsylvania. The potential policy shift follows ongoing public and legislative discourse regarding the privacy implications of widespread automated surveillance.\",https://www.choseno.com/news/pennsylvania-governor-signals-support-for-statewide-prohibition-of-flock-surveil-2026-08-28,https://www.choseno.com/wall/josh-shapiro-governor",
+    "archivedAt": "2026-08-29T03:02:11.410Z"
+  },
+  {
+    "rank": 105,
+    "raw": "93,9.7,\"Tijuana Mayor Reports Sustained Political Momentum for Morena in Baja California\",Municipal,\"CA, US\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The Mayor of Tijuana reports that the Morena party continues to hold significant support in Baja California as the region prepares for its upcoming gubernatorial election.\",\"The Mayor of Tijuana has indicated that the Morena party retains significant electoral support as the region approaches its upcoming gubernatorial contest. There is no direct fiscal impact on taxpayers reported in this assessment.\",https://www.choseno.com/news/tijuana-mayor-reports-sustained-political-momentum-for-morena-in-baja-california-2026-08-28,https://www.choseno.com/news/tijuana-mayor-reports-sustained-political-momentum-for-morena-in-baja-california-2026-08-28",
+    "archivedAt": "2026-08-29T03:02:11.410Z"
+  },
+  {
+    "rank": 106,
+    "raw": "94,9.7,\"California Legislative Approval of AB 2218 Advances Tribal Water Rights to Governor’s Desk\",State,\"CA, US\",Gavin Newsom,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"California lawmakers have passed AB 2218, a significant piece of legislation concerning tribal water rights that now moves to the Governor for final review.\",\"The California legislature has passed AB 2218, a bill aimed at strengthening tribal water rights, following a period of intensive advocacy from tribal nations. The legislation now awaits final action from Governor Gavin Newsom.\",https://www.choseno.com/news/california-legislative-approval-of-ab-2218-advances-tribal-water-rights-to-gover-2026-08-28,https://www.choseno.com/wall/gavin-newsom-governor",
+    "archivedAt": "2026-08-29T03:02:11.410Z"
+  },
+  {
+    "rank": 107,
+    "raw": "95,9.6,\"Florida Mayor Faces Public Scrutiny Following Viral Video Allegations\",Municipal,\"FL, US\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"A Florida mayor is facing significant public backlash following the emergence of a viral video that includes accusations of racism against the official.\",\"A Florida mayor is currently the subject of public backlash following the circulation of a viral video containing accusations of racism. The incident has prompted community concern regarding local leadership standards.\",https://www.choseno.com/news/florida-mayor-faces-public-scrutiny-following-viral-video-allegations-2026-08-28,https://www.choseno.com/news/florida-mayor-faces-public-scrutiny-following-viral-video-allegations-2026-08-28",
+    "archivedAt": "2026-08-29T03:02:11.410Z"
+  },
+  {
+    "rank": 108,
+    "raw": "96,9.6,\"Iowa Gubernatorial and Senate Contests Tighten as Election Cycle Intensifies\",Elections,\"IA, US\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"New polling data indicates that Iowa's upcoming gubernatorial and U.S. Senate races remain highly competitive as the election cycle progresses.\",\"Recent polling data reveals narrow margins in key Iowa statewide races. These contests will determine the state's executive leadership and its representation in the U.S. Senate.\",https://www.choseno.com/news/iowa-gubernatorial-and-senate-contests-tighten-as-election-cycle-intensifies-2026-08-28,https://www.choseno.com/news/iowa-gubernatorial-and-senate-contests-tighten-as-election-cycle-intensifies-2026-08-28",
+    "archivedAt": "2026-08-29T03:02:11.410Z"
+  },
+  {
+    "rank": 109,
+    "raw": "97,9.5,\"New Jersey Extends Pandemic-Era To-Go Liquor Sales for Restaurants and Bars\",Municipal,\"NJ, US\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"New Jersey restaurants and bars will continue to offer to-go liquor sales, extending a policy that began as a temporary measure during the pandemic.\",\"New Jersey restaurants and bars will maintain the authority to sell alcoholic beverages for off-premises consumption. This extension preserves a revenue stream for the hospitality industry that originated as a temporary measure during the COVID-19 pandemic.\",https://www.choseno.com/news/new-jersey-extends-pandemic-era-to-go-liquor-sales-for-restaurants-and-bars-2026-08-28,https://www.choseno.com/news/new-jersey-extends-pandemic-era-to-go-liquor-sales-for-restaurants-and-bars-2026-08-28",
+    "archivedAt": "2026-08-29T03:02:11.410Z"
+  },
+  {
+    "rank": 110,
+    "raw": "98,9.5,\"Former Massena Mayor Urges Public Consideration Regarding Data Center Proposals\",Municipal,\"NY, US\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"A former Massena mayor is encouraging local residents to keep an open mind regarding the potential development of data centers in the community.\",\"A former Massena mayor is encouraging local residents to maintain an open perspective regarding the potential development of data centers in the area. The discussion centers on the economic and infrastructure implications of hosting such facilities within the municipality.\",https://www.choseno.com/news/former-massena-mayor-urges-public-consideration-regarding-data-center-proposals-2026-08-28,https://www.choseno.com/news/former-massena-mayor-urges-public-consideration-regarding-data-center-proposals-2026-08-28",
+    "archivedAt": "2026-08-29T03:02:11.410Z"
+  },
+  {
+    "rank": 111,
+    "raw": "99,9.4,\"New York Repeals Longstanding Prohibition on Dancing in Bars and Restaurants\",State Policy,\"NY, US\",Kathy Hochul,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"New York has officially repealed state-level restrictions that previously prohibited dancing in bars and restaurants, removing a long-standing regulatory hurdle for the state's hospitality industry.\",\"Governor Kathy Hochul has officially rescinded state-level restrictions that previously prohibited dancing in licensed hospitality venues. The move eliminates a regulatory burden on business owners and removes a long-standing legal constraint on nightlife operations.\",https://www.choseno.com/news/new-york-repeals-longstanding-prohibition-on-dancing-in-bars-and-restaurants-2026-08-28,https://www.choseno.com/wall/kathy-hochul-governor",
+    "archivedAt": "2026-08-29T03:02:11.410Z"
+  },
+  {
+    "rank": 112,
+    "raw": "100,9.3,\"Wyoming Governor Challenges Federal Presence at State Polling Sites\",Elections,\"WY, US\",Mark Gordon,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Wyoming Governor Mark Gordon has raised concerns regarding the conduct of federal election monitors, sparking a debate over the extent of federal oversight in state-managed voting processes.\",\"Governor Mark Gordon has formally expressed opposition to the presence of federal election monitors within Wyoming. The dispute centers on the scope of federal oversight authority during state-run election processes.\",https://www.choseno.com/news/wyoming-governor-challenges-federal-presence-at-state-polling-sites-2026-08-28,https://www.choseno.com/wall/mark-robert-gordon",
+    "archivedAt": "2026-08-29T03:02:11.410Z"
+  },
+  {
+    "rank": 101,
+    "raw": "90,9.3,\"Burlington Business Owners Consult with Mayor Regarding Downtown Disorder\",Municipal,\"VT, US\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"The mayor of Burlington met with local business owners to discuss ongoing concerns regarding disorder in the downtown area and potential solutions.\",\"Burlington's mayor held a meeting with local business owners to address ongoing concerns regarding disorder in the downtown area. The discussion focused on identifying potential strategies to improve safety and stability for commercial operations.\",https://www.choseno.com/news/burlington-business-owners-consult-with-mayor-regarding-downtown-disorder-2026-08-28,https://www.choseno.com/news/burlington-business-owners-consult-with-mayor-regarding-downtown-disorder-2026-08-28",
+    "archivedAt": "2026-08-29T02:05:34.026Z"
+  },
+  {
+    "rank": 102,
+    "raw": "91,9.3,\"Oceanside Deputy Mayor Under Scrutiny Regarding Financial Disclosure Compliance\",Municipal,\"CA, US\",Eric Joyce,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Oceanside Deputy Mayor Eric Joyce is facing questions regarding the accuracy of his financial disclosures and the omission of his spouse's employment details.\",\"Deputy Mayor Eric Joyce is facing public inquiries concerning the potential omission of his spouse's employment details from mandatory financial disclosures. The situation raises questions regarding transparency and adherence to municipal reporting requirements for elected officials.\",https://www.choseno.com/news/oceanside-deputy-mayor-under-scrutiny-regarding-financial-disclosure-compliance-2026-08-28,https://www.choseno.com/wall/eric-joyce",
+    "archivedAt": "2026-08-29T02:05:34.026Z"
+  },
+  {
+    "rank": 103,
+    "raw": "92,9.2,\"Orange County Commissioner Candidates Debate Expansion of Tourist Development Tax Usage\",Municipal,\"FL, US\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Candidates for the Orange County Commission are debating whether to expand the use of tourist tax funds, a move that could significantly alter how local revenue is prioritized between tourism projects and community infrastructure.\",\"Candidates for the Orange County Commission are divided on whether to grant the county more flexibility in how it spends revenue generated from the tourist development tax. The outcome of this debate could shift how millions in local tax dollars are allocated between tourism-related projects and broader community infrastructure needs.\",https://www.choseno.com/news/orange-county-commissioner-candidates-debate-expansion-of-tourist-development-ta-2026-08-28,https://www.choseno.com/news/orange-county-commissioner-candidates-debate-expansion-of-tourist-development-ta-2026-08-28",
+    "archivedAt": "2026-08-29T02:05:34.026Z"
+  },
+  {
+    "rank": 104,
+    "raw": "93,9.2,\"Bryan Leib: To protect the Florida Dream, we need Byron Donalds as governor\",Municipal,\"DC, US\",Civic Authority,2026-08-28T20:18:00.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Bryan Leib: To protect the Florida Dream, we need Byron Donalds as governor\",\"Bryan Leib: To protect the Florida Dream, we need Byron Donalds as governor &nbsp;&nbsp; Florida’s Voice\",https://www.choseno.com/news/bryan-leib-to-protect-the-florida-dream-we-need-byron-donalds-as-governor-2026-08-28,https://www.choseno.com/wall/byron-donalds-u-s-representative",
+    "archivedAt": "2026-08-29T02:05:34.026Z"
+  },
+  {
+    "rank": 105,
+    "raw": "94,9.1,\"Nashville International Airport to be Renamed in Honor of Dolly Parton\",Municipal,\"TN, US\",Bill Lee,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Tennessee Governor Bill Lee has announced a partnership to rename the Nashville International Airport in honor of country music icon Dolly Parton.\",\"Tennessee Governor Bill Lee has announced a new partnership to rename the Nashville International Airport. The initiative seeks to honor the legacy of country music icon Dolly Parton.\",https://www.choseno.com/news/nashville-international-airport-to-be-renamed-in-honor-of-dolly-parton-2026-08-28,https://www.choseno.com/wall/bill-lee-governor",
+    "archivedAt": "2026-08-29T02:05:34.026Z"
+  },
+  {
+    "rank": 106,
+    "raw": "95,9.1,\"Wyoming governor requests investigation into activity of DOJ monitors during primary\",Municipal,\"DC, US\",Civic Authority,2026-08-28T20:49:09.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Wyoming governor requests investigation into activity of DOJ monitors during primary\",\"Wyoming governor requests investigation into activity of DOJ monitors during primary &nbsp;&nbsp; livingstonenterprise.net\",https://www.choseno.com/news/wyoming-governor-requests-investigation-into-activity-of-doj-monitors-during-pri-2026-08-28,https://www.choseno.com/news/wyoming-governor-requests-investigation-into-activity-of-doj-monitors-during-pri-2026-08-28",
+    "archivedAt": "2026-08-29T02:05:34.026Z"
+  },
+  {
+    "rank": 107,
+    "raw": "96,9.0,\"What Nevada’s Democratic Candidate for Governor Would Do About Data Centers\",Politics,\"DC, US\",Civic Authority,2026-08-28T20:43:56.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"What Nevada’s Democratic Candidate for Governor Would Do About Data Centers\",\"What Nevada’s Democratic Candidate for Governor Would Do About Data Centers &nbsp;&nbsp; Heatmap News\",https://www.choseno.com/news/what-nevada-s-democratic-candidate-for-governor-would-do-about-data-centers-2026-08-28,https://www.choseno.com/news/what-nevada-s-democratic-candidate-for-governor-would-do-about-data-centers-2026-08-28",
+    "archivedAt": "2026-08-29T02:05:34.026Z"
+  },
+  {
+    "rank": 108,
+    "raw": "97,9.0,\"Data centers emerge as new flashpoint between Kotek, Drazan in Oregon governor’s race\",Politics,\"DC, US\",Civic Authority,2026-08-28T20:28:25.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Data centers emerge as new flashpoint between Kotek, Drazan in Oregon governor’s race\",\"Data centers emerge as new flashpoint between Kotek, Drazan in Oregon governor’s race &nbsp;&nbsp; Newberg Graphic\",https://www.choseno.com/news/data-centers-emerge-as-new-flashpoint-between-kotek-drazan-in-oregon-governor-s--2026-08-28,https://www.choseno.com/news/data-centers-emerge-as-new-flashpoint-between-kotek-drazan-in-oregon-governor-s--2026-08-28",
+    "archivedAt": "2026-08-29T02:05:34.026Z"
+  },
+  {
+    "rank": 109,
+    "raw": "98,8.9,\"No evidence Doug Ford posted joke about 'Lake Epstein'\",Politics,\"CA, CA\",Civic Authority,2026-08-28T20:56:12.000Z,Early Morning Drive (6:00 AM - 9:00 AM EST),\"No evidence Doug Ford posted joke about 'Lake Epstein'\",\"No evidence Doug Ford posted joke about 'Lake Epstein' &nbsp;&nbsp; AFP Fact Check\",https://www.choseno.com/news/no-evidence-doug-ford-posted-joke-about-lake-epstein-2026-08-28,https://www.choseno.com/wall/doug-ford-premier",
+    "archivedAt": "2026-08-29T02:05:34.026Z"
+  },
+  {
+    "rank": 110,
+    "raw": "99,9.9,\"Big Cypress Basin Board Retains Two Members Following Gubernatorial Reappointments\",Politics,\"FL, US\",Ron DeSantis,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Governor Ron DeSantis has announced the reappointment of two members to the Big Cypress Basin Board, maintaining existing leadership for regional water management oversight.\",\"Governor Ron DeSantis has officially reappointed two individuals to serve on the Big Cypress Basin Board. These appointments maintain the current administrative continuity of the regional water management oversight body.\",https://www.choseno.com/news/big-cypress-basin-board-retains-two-members-following-gubernatorial-reappointmen-2026-08-28,https://www.choseno.com/wall/ron-desantis-governor",
+    "archivedAt": "2026-08-29T02:05:34.026Z"
+  },
+  {
+    "rank": 111,
+    "raw": "100,9.8,\"Valley Grande Mayor Proposes Sewer Infrastructure Expansion and Potential Police Department Formation\",Municipal,\"AL, US\",Civic Authority,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Valley Grande leadership is currently evaluating the feasibility of a new sewer line project and the potential establishment of a local police department to serve the municipality.\",\"The Mayor of Valley Grande is evaluating the feasibility of a new sewer line project alongside the potential establishment of a municipal police department. These initiatives represent significant shifts in local infrastructure and public safety administration for the municipality.\",https://www.choseno.com/news/valley-grande-mayor-proposes-sewer-infrastructure-expansion-and-potential-police-2026-08-28,https://www.choseno.com/news/valley-grande-mayor-proposes-sewer-infrastructure-expansion-and-potential-police-2026-08-28",
+    "archivedAt": "2026-08-29T02:05:34.026Z"
+  },
+  {
+    "rank": 101,
     "raw": "100,9.8,\"Nebraska Governor Appoints New Members to State Brand Committee\",State Government,\"NE, US\",Jim Pillen,undefined,Early Morning Drive (6:00 AM - 9:00 AM EST),\"Nebraska Governor Jim Pillen has announced new appointments to the state Brand Committee, the body responsible for livestock brand oversight and inspection services.\",\"Governor Jim Pillen has finalized new appointments to the Nebraska Brand Committee. These appointments oversee the regulatory body responsible for livestock brand registration and inspection across the state.\",https://www.choseno.com/news/nebraska-governor-appoints-new-members-to-state-brand-committee-2026-08-28,https://www.choseno.com/wall/jim-pillen-governor",
     "archivedAt": "2026-08-29T01:00:52.080Z"
   },
