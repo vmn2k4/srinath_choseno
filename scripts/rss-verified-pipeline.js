@@ -480,8 +480,7 @@ async function runVerifiedNewsPipeline(options = {}) {
 if (require.main === module) {
   (async () => {
     const explicitMaxHours = process.argv.find((a, i) => process.argv[i - 1] === '--max-hours');
-    const limitArg = process.argv.find((a, i) => process.argv[i - 1] === '--limit');
-    const collectOnly = process.argv.includes('--collect-only');
+    const collectOnly = !process.argv.includes('--use-api-key');
     const useApiKey = process.argv.includes('--use-api-key');
 
     let maxHours;
@@ -504,7 +503,6 @@ if (require.main === module) {
     runVerifiedNewsPipeline({
       maxHours,
       sinceTimestamp,
-      limit: limitArg ? Number(limitArg) : undefined,
       collectOnly,
       useApiKey
     }).catch(console.error);
