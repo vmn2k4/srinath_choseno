@@ -121,39 +121,40 @@ const PROFILE_BLACKLIST = new Set([
 ]);
 
 const LEADER_ALIASES = {
-  'jb pritzker': 'j.b. pritzker',
-  'j.b. pritzker': 'jb pritzker',
-  'greg abbott': 'gregory abbott',
-  'gregory abbott': 'greg abbott',
-  'doug ford': 'douglas ford',
-  'douglas ford': 'doug ford',
-  'tim houston': 'timothy houston',
-  'timothy houston': 'tim houston',
-  'danielle smith': 'marlaina danielle smith',
-  'scott moe': 'scott moe',
-  'wab kinew': 'wabanakwut kinew',
-  'david eby': 'david robert patrick eby',
-  'mike dewine': 'richard michael dewine',
-  'richard michael dewine': 'mike dewine',
-  'josh shapiro': 'joshua david shapiro',
-  'joshua david shapiro': 'josh shapiro',
-  'gretchen whitmer': 'gretchen esther whitmer',
-  'gretchen esther whitmer': 'gretchen whitmer',
-  'ron desantis': 'ronald dion desantis',
-  'ronald dion desantis': 'ron desantis',
-  'kamala harris': 'kamala devi harris',
-  'donald trump': 'donald j trump',
-  'donald j trump': 'donald j. trump',
-  'donald j. trump': 'donald trump',
-  'joe biden': 'joseph r biden',
-  'joseph r biden': 'joseph r. biden',
-  'joseph r. biden': 'joe biden',
-  'mark carney': 'mark joseph carney',
-  'pierre poilievre': 'pierre marcel poilievre',
-  'justin trudeau': 'justin pierre james trudeau',
-  'chrystia freeland': 'chrystia freeland',
-  'francois legault': 'francois legault',
-  'françois legault': 'francois legault'
+  'jb pritzker': ['j.b. pritzker', 'pritzker', 'governor pritzker'],
+  'j.b. pritzker': ['jb pritzker', 'pritzker', 'governor pritzker'],
+  'greg abbott': ['gregory abbott', 'abbott', 'governor abbott'],
+  'gregory abbott': ['greg abbott', 'abbott', 'governor abbott'],
+  'doug ford': ['douglas ford', 'premier ford'],
+  'douglas ford': ['doug ford', 'premier ford'],
+  'tim houston': ['timothy houston', 'premier houston'],
+  'timothy houston': ['tim houston', 'premier houston'],
+  'danielle smith': ['marlaina danielle smith', 'premier smith'],
+  'scott moe': ['premier moe'],
+  'wab kinew': ['wabanakwut kinew', 'premier kinew'],
+  'david eby': ['david robert patrick eby', 'premier eby'],
+  'mike dewine': ['richard michael dewine', 'governor dewine', 'dewine'],
+  'richard michael dewine': ['mike dewine', 'governor dewine', 'dewine'],
+  'josh shapiro': ['joshua david shapiro', 'governor shapiro', 'shapiro'],
+  'joshua david shapiro': ['josh shapiro', 'governor shapiro', 'shapiro'],
+  'gretchen whitmer': ['gretchen esther whitmer', 'governor whitmer', 'whitmer'],
+  'gretchen esther whitmer': ['gretchen whitmer', 'governor whitmer', 'whitmer'],
+  'ron desantis': ['ronald dion desantis', 'governor desantis', 'desantis'],
+  'ronald dion desantis': ['ron desantis', 'governor desantis', 'desantis'],
+  'kamala harris': ['kamala devi harris', 'vice president harris', 'vp harris'],
+  'donald trump': ['donald j trump', 'donald j. trump', 'trump', 'president trump'],
+  'donald j trump': ['donald trump', 'trump', 'president trump'],
+  'donald j. trump': ['donald trump', 'trump', 'president trump'],
+  'joe biden': ['joseph r biden', 'joseph r. biden', 'biden', 'president biden'],
+  'joseph r biden': ['joe biden', 'biden', 'president biden'],
+  'joseph r. biden': ['joe biden', 'biden', 'president biden'],
+  'jd vance': ['j.d. vance', 'james david vance', 'vance', 'senator vance'],
+  'mark carney': ['mark joseph carney'],
+  'pierre poilievre': ['pierre marcel poilievre', 'poilievre'],
+  'justin trudeau': ['justin pierre james trudeau', 'trudeau', 'prime minister trudeau'],
+  'chrystia freeland': ['freeland', 'minister freeland'],
+  'francois legault': ['premier legault', 'legault'],
+  'françois legault': ['premier legault', 'legault']
 };
 
 function normalizeName(str) {
@@ -253,7 +254,22 @@ async function resolvePoliticianIds(article, authHeaders) {
     // LEADER_ALIASES entry. Any one matching as a word-bounded substring of
     // the article text is sufficient.
     const candidates = new Set([normName, shortName]);
-    if (LEADER_ALIASES[normName]) candidates.add(normalizeName(LEADER_ALIASES[normName]));
+    if (LEADER_ALIASES[normName]) {
+      const aliasVal = LEADER_ALIASES[normName];
+      if (Array.isArray(aliasVal)) {
+        aliasVal.forEach(a => candidates.add(normalizeName(a)));
+      } else {
+        candidates.add(normalizeName(aliasVal));
+      }
+    }
+    if (LEADER_ALIASES[shortName]) {
+      const aliasVal = LEADER_ALIASES[shortName];
+      if (Array.isArray(aliasVal)) {
+        aliasVal.forEach(a => candidates.add(normalizeName(a)));
+      } else {
+        candidates.add(normalizeName(aliasVal));
+      }
+    }
 
     for (const candidate of candidates) {
       if (!candidate || candidate.length < 4) continue;
@@ -1533,22 +1549,43 @@ async function run() {
       }
     }
 
-    // Generate static OG card if local/deployed route is active
+    // Generate static OG card directly via Supabase Edge Function (or Next.js API fallback)
     if (created.status === 'published') {
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 1500);
-        const ogRes = await fetch(`${SITE_URL}/api/news/${created.slug}/og-image`, {
+        const timeout = setTimeout(() => controller.abort(), 15000);
+        // Call Edge Function directly to avoid multi-hop timeouts
+        let ogRes = await fetch(`${SUPABASE_URL}/functions/v1/generate-news-og-image?slug=${encodeURIComponent(created.slug)}&format=json`, {
           signal: controller.signal,
           method: 'POST',
-          headers: { Authorization: authHeaders.Authorization }
+          headers: {
+            apikey: authHeaders.apikey,
+            Authorization: authHeaders.Authorization
+          }
         });
+        
+        // Fallback to SITE_URL endpoint if edge function direct call fails
+        if (!ogRes.ok && SITE_URL) {
+          ogRes = await fetch(`${SITE_URL}/api/news/${created.slug}/og-image`, {
+            signal: controller.signal,
+            method: 'POST',
+            headers: { Authorization: authHeaders.Authorization }
+          });
+        }
         clearTimeout(timeout);
+
         if (ogRes.ok) {
-          console.log(`  -> Generated share-card image`);
+          const ogData = await ogRes.json().catch(() => null);
+          if (ogData?.url) {
+            console.log(`  -> Generated static OG share-card: ${ogData.url}`);
+          } else {
+            console.log(`  -> Generated share-card image`);
+          }
+        } else {
+          console.warn(`  -> Warning: OG image generation returned ${ogRes.status}`);
         }
       } catch (ogErr) {
-        // Silently skip if local dev server isn't running on site_url
+        console.warn(`  -> Warning: OG card generation error: ${ogErr.message}`);
       }
     }
 

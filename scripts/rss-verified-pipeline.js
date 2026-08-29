@@ -143,6 +143,7 @@ OUTPUT VALID JSON ONLY with this exact schema:
 }`;
 
   const modelsToTry = [
+    'gemini-2.5-flash',
     'gemini-3.1-flash-lite',
     'gemini-flash-latest',
     'gemini-3.7-flash'
@@ -181,6 +182,68 @@ OUTPUT VALID JSON ONLY with this exact schema:
     } catch (e) {
       console.warn(`Error with ${model}:`, e.message);
     }
+  }
+
+  // If standard synthesis fails or source text is thin, perform live web-search grounded synthesis
+  try {
+    const searchPrompt = `You are an elite, non-partisan civic investigative journalist for Choseno.
+Search the live internet and transform this verified breaking wire topic into a comprehensive, high-depth civic news report (400-650 words):
+Topic: ${groundTruth.title}
+Source: ${groundTruth.sourceName} (${groundTruth.sourceUrl})
+Date: ${groundTruth.pubDate}
+
+REQUIREMENTS:
+1. Write 3-5 continuous flowing paragraphs analyzing the policy mechanism, taxpayer impact, civic context, and public debate.
+2. NO markdown headers, NO bulleted sections.
+3. Accurate factual grounding based on verified search results.
+
+OUTPUT VALID JSON ONLY with this schema:
+{
+  "headline": "A factual, compelling headline",
+  "summary": "2-sentence objective summary of what changed and taxpayer impact",
+  "category": "${groundTruth.category || 'Politics'}",
+  "country": "${groundTruth.country === 'CA' ? 'CA' : 'US'}",
+  "province": "${groundTruth.country === 'CA' ? 'ON' : 'DC'}",
+  "impactArea": "country",
+  "latitude": 38.8951,
+  "longitude": -77.0364,
+  "eventDate": "${groundTruth.pubDate.slice(0, 10)}",
+  "tags": ["Topic1", "Topic2"],
+  "taggedPoliticians": ["Exact Full Name of featured elected officials"],
+  "author": { "name": "Choseno Civic News Desk", "bio": "Civic and political reporting" },
+  "seoTitle": "SEO Title under 60 chars | Choseno",
+  "metaDescription": "Concise meta description under 160 chars.",
+  "tweet": "Engaging neutral 1-sentence summary.",
+  "body": "Continuous multi-paragraph prose..."
+}`;
+
+    const searchRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: searchPrompt }] }],
+        tools: [{ googleSearch: {} }]
+      })
+    });
+
+    if (searchRes.ok) {
+      const searchData = await searchRes.json();
+      const text = searchData.candidates?.[0]?.content?.parts?.[0]?.text;
+      const jsonMatch = text && text.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        const parsed = JSON.parse(jsonMatch[0]);
+        if (parsed.body && parsed.body.length > 200) {
+          return {
+            ...parsed,
+            slug: generateSlug(parsed.headline || groundTruth.title, groundTruth.pubDate),
+            sources: [{ name: groundTruth.sourceName, url: groundTruth.sourceUrl }],
+            groundTruth
+          };
+        }
+      }
+    }
+  } catch (searchErr) {
+    console.warn('[PIPELINE] Search-grounded synthesis fallback error:', searchErr.message);
   }
 
   return synthesizeDirectFallback(groundTruth);

@@ -38,6 +38,7 @@ import {
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
 import HomeDemoVideo from "@/components/features/home/HomeDemoVideo";
 import HomeSupportedCountries from "@/components/features/home/HomeSupportedCountries";
+import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
 import HomeLatestNews, { type HomeLatestNewsArticle } from "@/components/features/home/HomeLatestNews";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { SITE_URL } from "@/lib/constants/site";
@@ -290,6 +291,7 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
 
   return (
     <div className="w-full overflow-x-clip">
+      <MissionRegisterCTA variant="home" nextPath="/" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c") }}

@@ -7,13 +7,13 @@ import { Card, Button, Modal } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
 import { createClient } from "@/lib/supabase/client";
 import { getFounderCount } from "@/lib/services/profile";
+import { trackMissionCtaClicked } from "@/lib/analytics/events";
 
-// Anonymous-visitor conversion CTA, shown on the three pages where a guest
-// is most likely to have an opinion forming (a news story, their own
-// district, a candidate race) but can't yet act on it. Two parts sharing
-// one copy table below:
-//   1. A one-time modal -- fires after a scroll/time delay, dismissed and
-//      never shown again once seen (any browser, any of the three pages).
+// Anonymous-visitor conversion CTA, shown on the pages where a guest is
+// most likely to have an opinion forming (the homepage, a news story, their
+// own district, a candidate race) but can't yet act on it. Two parts
+// sharing one copy table below:
+//   1. A one-time-per-window modal -- fires after a scroll/time delay.
 //   2. A small persistent floating card -- stays until dismissed, a much
 //      quieter nudge than the modal.
 // Both disappear entirely once `useAuth()` reports a signed-in user, and
@@ -26,10 +26,41 @@ import { getFounderCount } from "@/lib/services/profile";
 // InteractiveLocationPicker already applies to its own popover for the
 // identical legibility reason.
 
-export type MissionCtaVariant = "news" | "district" | "elections";
+export type MissionCtaVariant = "home" | "news" | "district" | "elections";
 
-const MODAL_SEEN_KEY = "choseno_mission_modal_seen_v1";
-const SIDEBAR_DISMISSED_KEY = "choseno_mission_sidebar_dismissed_v1";
+// v1 kept one global "seen = '1'" key forever -- a single dismissal on any
+// page (e.g. a bounce off the news CTA) silently opted a visitor out of
+// ever seeing it again, on any of the other pages, for the life of the
+// browser. v2 keys per-variant (a district bounce still gets a shot on
+// elections) and stores a timestamp instead of a flag so the suppression
+// expires after RESHOW_AFTER_DAYS instead of being permanent. Renamed
+// (v1 -> v2) rather than migrated: the old keys just go stale and every
+// existing visitor gets one fresh look, which is the intended effect of
+// loosening this.
+const MODAL_SEEN_PREFIX = "choseno_mission_modal_seen_v2";
+const SIDEBAR_DISMISSED_PREFIX = "choseno_mission_sidebar_dismissed_v2";
+const RESHOW_AFTER_DAYS = 7;
+
+function storageKey(prefix: string, variant: MissionCtaVariant): string {
+  return `${prefix}_${variant}`;
+}
+
+// Suppressed only while the stored dismissal is younger than the re-show
+// window -- anything unparseable (missing, or a leftover legacy "1" from a
+// key collision) is treated as "not suppressed" rather than thrown away
+// silently as an error, since worst case is showing the CTA one extra time.
+function isSuppressed(key: string): boolean {
+  const raw = window.localStorage.getItem(key);
+  if (!raw) return false;
+  const seenAt = Number(raw);
+  if (!Number.isFinite(seenAt)) return false;
+  const daysSince = (Date.now() - seenAt) / (1000 * 60 * 60 * 24);
+  return daysSince < RESHOW_AFTER_DAYS;
+}
+
+function markSeen(key: string): void {
+  window.localStorage.setItem(key, String(Date.now()));
+}
 
 const COPY: Record<
   MissionCtaVariant,
@@ -42,6 +73,14 @@ const COPY: Record<
     cta: string;
   }
 > = {
+  home: {
+    eyebrow: "Before you dive in",
+    headline: "Rate your politicians. Anonymously.",
+    pitch: "Choseno lets citizens anonymously rate every official representing them — no username, no toxic replies. Join the mission.",
+    sidebarHeadline: "Ready to hold them accountable?",
+    sidebarBody: "Anonymous. No toxic replies.",
+    cta: "Join the Mission",
+  },
   news: {
     eyebrow: "Beyond the headline",
     headline: "What do YOU think?",
@@ -104,12 +143,12 @@ export default function MissionRegisterCTA({
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSidebarDismissed(window.localStorage.getItem(SIDEBAR_DISMISSED_KEY) === "1");
-  }, []);
+    setSidebarDismissed(isSuppressed(storageKey(SIDEBAR_DISMISSED_PREFIX, variant)));
+  }, [variant]);
 
   useEffect(() => {
     if (loading || user) return;
-    if (window.localStorage.getItem(MODAL_SEEN_KEY) === "1") return;
+    if (isSuppressed(storageKey(MODAL_SEEN_PREFIX, variant))) return;
 
     let fired = false;
     const fire = () => {
@@ -131,17 +170,26 @@ export default function MissionRegisterCTA({
       window.clearTimeout(timer);
       window.removeEventListener("scroll", onScroll);
     };
-  }, [loading, user]);
+  }, [loading, user, variant]);
 
   const dismissModal = useCallback(() => {
     setShowModal(false);
-    window.localStorage.setItem(MODAL_SEEN_KEY, "1");
-  }, []);
+    markSeen(storageKey(MODAL_SEEN_PREFIX, variant));
+  }, [variant]);
 
   const dismissSidebar = useCallback(() => {
     setSidebarDismissed(true);
-    window.localStorage.setItem(SIDEBAR_DISMISSED_KEY, "1");
-  }, []);
+    markSeen(storageKey(SIDEBAR_DISMISSED_PREFIX, variant));
+  }, [variant]);
+
+  const handleModalCtaClick = useCallback(() => {
+    trackMissionCtaClicked({ variant, trigger: "modal" });
+    dismissModal();
+  }, [variant, dismissModal]);
+
+  const handleSidebarCtaClick = useCallback(() => {
+    trackMissionCtaClicked({ variant, trigger: "sidebar" });
+  }, [variant]);
 
   if (loading || user) return null;
 
@@ -200,7 +248,7 @@ export default function MissionRegisterCTA({
             )}
 
             <div className="flex flex-col items-center gap-2 pt-1">
-              <Button as={Link} href={href} onClick={dismissModal} variant="primary" className="w-full justify-center !bg-orange-600 hover:!bg-orange-700 !shadow-lg hover:!shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-orange-500/0 before:via-white/10 before:to-orange-500/0 before:animate-pulse">
+              <Button as={Link} href={href} onClick={handleModalCtaClick} variant="primary" className="w-full justify-center !bg-orange-600 hover:!bg-orange-700 !shadow-lg hover:!shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-orange-500/0 before:via-white/10 before:to-orange-500/0 before:animate-pulse">
                 <span className="relative z-10">{copy.cta}</span>
               </Button>
               <button
@@ -234,7 +282,7 @@ export default function MissionRegisterCTA({
                 {founderLine}
               </p>
             )}
-            <Button as={Link} href={href} size="sm" variant="primary" className="w-full justify-center !bg-orange-600 hover:!bg-orange-700 !shadow-lg hover:!shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-orange-500/0 before:via-white/10 before:to-orange-500/0 before:animate-pulse">
+            <Button as={Link} href={href} onClick={handleSidebarCtaClick} size="sm" variant="primary" className="w-full justify-center !bg-orange-600 hover:!bg-orange-700 !shadow-lg hover:!shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-orange-500/0 before:via-white/10 before:to-orange-500/0 before:animate-pulse">
               <span className="relative z-10">{copy.cta}</span>
             </Button>
           </Card>

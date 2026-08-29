@@ -83,6 +83,13 @@ Deno.serve(async (req) => {
   const format = url.searchParams.get('format') === 'story' ? 'story' : 'landscape';
   const SIZE = format === 'story' ? STORY_SIZE : LANDSCAPE_SIZE;
   const CardComponent = format === 'story' ? ProfileStoryCard : ProfileOgCard;
+  // ?force=true skips the cache-hit check below and always re-renders +
+  // overwrites the cached object -- for admin/one-off use (e.g. a profile's
+  // photo just got linked and the 24h-old cached card still shows the
+  // letter-circle fallback from before that). Still requires a POST body
+  // like any other cache-miss render; it only changes whether an existing
+  // cached PNG gets served without being asked.
+  const force = url.searchParams.get('force') === 'true';
 
   // cacheKey arrives as a "/"-joined path (e.g. "wall/<id>") -- keep the
   // slashes as Storage subdirectories rather than flattening, purely for
@@ -100,7 +107,7 @@ Deno.serve(async (req) => {
   );
 
   try {
-    const cached = await tryServeCached(supabaseAdmin, objectPath);
+    const cached = force ? null : await tryServeCached(supabaseAdmin, objectPath);
     if (cached) return cached;
 
     if (req.method !== 'POST') {

@@ -90,6 +90,19 @@ export function trackSelectContent(contentType: string, itemId: string) {
   sendEvent("select_content", { content_type: contentType, item_id: itemId });
 }
 
+// MissionRegisterCTA's "Join the Mission" click -- the only anonymous->guest
+// conversion touchpoint outside /auth itself. Without this there was no way
+// to tell whether the CTA converts poorly because it doesn't get clicked
+// (a trigger/placement problem) or gets clicked but drops off before
+// completing signup at /auth (a form/friction problem) -- see
+// MissionRegisterCTA.tsx for where this fires.
+export function trackMissionCtaClicked(params: {
+  variant: "home" | "news" | "district" | "elections";
+  trigger: "modal" | "sidebar";
+}) {
+  sendEvent("mission_cta_clicked", { variant: params.variant, trigger: params.trigger });
+}
+
 // GA4's error_occurred stays as the aggregate volume/trend signal (shows up
 // in the same reports as every other event). It can't carry the detail
 // needed to actually fix something though -- message is truncated to 150
