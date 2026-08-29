@@ -412,7 +412,7 @@ async function runVerifiedNewsPipeline(options = {}) {
     console.log(`[PIPELINE] ${trendingMatchCount} candidate(s) match current trending topics — prioritized.`);
   }
 
-  const toProcess = options.limit ? ordered.slice(0, options.limit) : ordered;
+  const toProcess = ordered;
 
   // If collectOnly is enabled (Antigravity-native synthesis mode), save candidates and stop
   if (options.collectOnly) {
@@ -422,7 +422,7 @@ async function runVerifiedNewsPipeline(options = {}) {
     return toProcess;
   }
 
-  console.log(`\n[PIPELINE] Synthesizing top ${toProcess.length} of ${candidates.length} verified candidate stories...`);
+  console.log(`\n[PIPELINE] Synthesizing all ${toProcess.length} verified candidate stories (100% un-capped)...`);
   const synthesizedBatch = [];
 
   const SYNTH_CONCURRENCY = 5;
