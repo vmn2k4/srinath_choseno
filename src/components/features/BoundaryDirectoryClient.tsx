@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { LogIn } from "lucide-react";
 import { Tabs, Card, Button } from "@/components/primitives";
@@ -11,6 +11,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { resolveRepresentationBranch, branchKeyFor } from "@/lib/services/elections";
 import { getUserBoundaryMemberships } from "@/lib/services/profile";
 import { ANON_REP_PREVIEW_LIMIT } from "@/lib/constants/site";
+import { trackRepListGateShown, trackRepListGateClicked } from "@/lib/analytics/events";
 
 // Trims branch.top/branch.bottom down to a total of `budget` people across
 // ALL branches combined (tops counted first, so a signed-out visitor always
@@ -72,6 +73,11 @@ export default function BoundaryDirectoryClient({
   const [branches, setBranches] = useState(initialBranches);
   const { user, loading: authLoading } = useAuth();
   const supabase = createClient();
+  // Fires the gate impression once per mount even though hiddenCount can
+  // legitimately flip false->true more than once as the membership-resolve
+  // effect below appends branches -- without this a single real pageview
+  // would inflate "shown" counts and understate the CTA's real CTR.
+  const gateShownRef = useRef(false);
 
   useEffect(() => {
     if (authLoading || !user) return;
@@ -116,8 +122,6 @@ export default function BoundaryDirectoryClient({
   const handleReport = (targetType: ReportTargetType, targetId: string, abuseType: string) =>
     reportContent(supabase, targetType, targetId, abuseType);
 
-  if (branches.length === 0) return null;
-
   const tabItems = [
     { key: "all", label: "All" },
     ...branches.map((b) => ({ key: b.key, label: b.label })),
@@ -147,6 +151,22 @@ export default function BoundaryDirectoryClient({
   const isWide = (b: RepresentationBranch) => (b.top ? 1 : 0) + b.bottom.length > 2;
   const compactBranches = visibleBranches.filter((b) => !isWide(b));
   const wideBranches = visibleBranches.filter(isWide);
+
+  // Impression side of trackRepListGateClicked below -- fires once per
+  // mount (guarded by gateShownRef, not just a dependency array -- see its
+  // declaration) the first time the gate appears. Only ever true when
+  // `gated` is set, which today is only FindMyDistrictClient, so
+  // "find_my_district" is hardcoded rather than threaded through as a prop
+  // nobody else needs yet.
+  useEffect(() => {
+    if (hiddenCount > 0 && !gateShownRef.current) {
+      gateShownRef.current = true;
+      trackRepListGateShown({ surface: "find_my_district", hiddenCount });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hiddenCount > 0]);
+
+  if (branches.length === 0) return null;
 
   const renderBranch = (branch: RepresentationBranch) => (
     <div key={branch.key} className="bg-surface/40 border border-border-light/40 rounded-2xl p-3 sm:p-4">
@@ -186,7 +206,14 @@ export default function BoundaryDirectoryClient({
             {hiddenCount} more representative{hiddenCount === 1 ? "" : "s"} in this area
           </p>
           <p className="text-xs text-text-muted">Sign in free to see who else represents you.</p>
-          <Button as={Link} href="/auth?role=citizen&next=%2Ffind-my-district" variant="primary" size="sm" className="mx-auto">
+          <Button
+            as={Link}
+            href="/auth?role=citizen&next=%2Ffind-my-district"
+            onClick={() => trackRepListGateClicked({ surface: "find_my_district", hiddenCount })}
+            variant="primary"
+            size="sm"
+            className="mx-auto"
+          >
             <LogIn size={13} />
             Sign In to See the Rest
           </Button>

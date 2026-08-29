@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { X, ShieldOff, Ban, MessagesSquare, Sparkles, Flag } from "lucide-react";
 import { Card, Button, Modal } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
-import { trackMissionCtaClicked } from "@/lib/analytics/events";
+import { trackMissionCtaClicked, trackMissionCtaShown } from "@/lib/analytics/events";
 import { EARLY_EXPLORER_BADGE_LINE } from "@/lib/constants/site";
 
 // Anonymous-visitor conversion CTA, shown on the pages where a guest is
@@ -122,11 +122,24 @@ export default function MissionRegisterCTA({
   const { user, loading } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [sidebarDismissed, setSidebarDismissed] = useState(true); // starts hidden until localStorage check below, to avoid a flash
+  // Ref guards (not just the effects' own dependency arrays / closure
+  // locals) so React StrictMode's dev-only double-invoke of effects can't
+  // double-count a single real impression -- see the two analogous
+  // gateShownRef guards in BoundaryDirectoryClient/HomeLocateWidget.
+  const sidebarShownRef = useRef(false);
+  const modalShownRef = useRef(false);
 
   useEffect(() => {
+    if (loading || user) return; // matches the component's own `if (loading || user) return null` -- an
+    // impression fired here for a signed-in visitor would be counted against a CTA that never actually renders.
+    const suppressed = isSuppressed(storageKey(SIDEBAR_DISMISSED_PREFIX, variant));
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSidebarDismissed(isSuppressed(storageKey(SIDEBAR_DISMISSED_PREFIX, variant)));
-  }, [variant]);
+    setSidebarDismissed(suppressed);
+    if (!suppressed && !sidebarShownRef.current) {
+      sidebarShownRef.current = true;
+      trackMissionCtaShown({ variant, trigger: "sidebar" });
+    }
+  }, [variant, loading, user]);
 
   useEffect(() => {
     if (loading || user) return;
@@ -137,6 +150,10 @@ export default function MissionRegisterCTA({
       if (fired) return;
       fired = true;
       setShowModal(true);
+      if (!modalShownRef.current) {
+        modalShownRef.current = true;
+        trackMissionCtaShown({ variant, trigger: "modal" });
+      }
     };
 
     // Whichever comes first: ~15s of dwell time, or scrolling halfway down

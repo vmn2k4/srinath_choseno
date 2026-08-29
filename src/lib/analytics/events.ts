@@ -103,6 +103,37 @@ export function trackMissionCtaClicked(params: {
   sendEvent("mission_cta_clicked", { variant: params.variant, trigger: params.trigger });
 }
 
+// Impression counterpart to trackMissionCtaClicked -- without this, a click
+// count alone can't distinguish "the CTA doesn't get shown much" from "it's
+// shown plenty but nobody clicks it." Click-through rate = clicks /
+// impressions needs both sides recorded.
+export function trackMissionCtaShown(params: {
+  variant: "home" | "news" | "district" | "elections";
+  trigger: "modal" | "sidebar";
+}) {
+  sendEvent("mission_cta_shown", { variant: params.variant, trigger: params.trigger });
+}
+
+// Shown/clicked pair for the "N more representatives -- sign in to see the
+// rest" gate on HomeLocateWidget and find-my-district's Chain of
+// Representation (see ANON_REP_PREVIEW_LIMIT in lib/constants/site.ts).
+// Mirrors trackMissionCtaShown/Clicked so this touchpoint's CTR is directly
+// comparable to the mission CTA's -- two different hooks competing for the
+// same signup, measured the same way.
+export function trackRepListGateShown(params: {
+  surface: "home_widget" | "find_my_district";
+  hiddenCount: number;
+}) {
+  sendEvent("rep_list_gate_shown", { surface: params.surface, hidden_count: params.hiddenCount });
+}
+
+export function trackRepListGateClicked(params: {
+  surface: "home_widget" | "find_my_district";
+  hiddenCount: number;
+}) {
+  sendEvent("rep_list_gate_clicked", { surface: params.surface, hidden_count: params.hiddenCount });
+}
+
 // GA4's error_occurred stays as the aggregate volume/trend signal (shows up
 // in the same reports as every other event). It can't carry the detail
 // needed to actually fix something though -- message is truncated to 150

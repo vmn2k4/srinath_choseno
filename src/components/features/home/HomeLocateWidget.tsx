@@ -5,7 +5,7 @@
 // Reuses the same services/utils as the full picker (InteractiveLocationPicker,
 // FindMyDistrictClient) rather than re-deriving boundary/rep lookups here.
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Search, Navigation, Loader2, MapPin, ExternalLink, Flag, LogIn } from "lucide-react";
 import { Card, Button, Input, Avatar } from "@/components/primitives";
@@ -19,7 +19,7 @@ import ReportDialog from "../ReportDialog";
 import PoliticianEngagementStats from "../PoliticianEngagementStats";
 import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { geocodeAddressFree, type GeocodeSuggestion } from "@/lib/utils/geocode";
-import { trackSearch } from "@/lib/analytics/events";
+import { trackSearch, trackRepListGateShown, trackRepListGateClicked } from "@/lib/analytics/events";
 import { useGuestLocation, getGuestLocation, setGuestLocation, clearGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
 import { ANON_REP_PREVIEW_LIMIT, REP_LIST_GATING_ENABLED } from "@/lib/constants/site";
 
@@ -67,6 +67,9 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
   const supabase = createClient();
   const guestLocation = useGuestLocation();
   const { user } = useAuth();
+  // Fires the gate impression once per mount -- see BoundaryDirectoryClient's
+  // matching gateShownRef for why a dependency array alone isn't enough.
+  const gateShownRef = useRef(false);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<GeocodeSuggestion[]>([]);
   const [searching, setSearching] = useState(false);
@@ -237,6 +240,19 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
   // accurate.
   let repBudget = showFullList ? Infinity : ANON_REP_PREVIEW_LIMIT;
   const totalRepsAvailable = reps.length;
+  const gateVisible = !showFullList && totalRepsAvailable > ANON_REP_PREVIEW_LIMIT;
+
+  // Impression side of trackRepListGateClicked below -- fires once per
+  // mount (guarded by gateShownRef, not just a dependency array) the first
+  // time the gate becomes visible (naturally false until reps loads past
+  // the cap, so this never fires before a real location result exists).
+  useEffect(() => {
+    if (gateVisible && !gateShownRef.current) {
+      gateShownRef.current = true;
+      trackRepListGateShown({ surface: "home_widget", hiddenCount: totalRepsAvailable - ANON_REP_PREVIEW_LIMIT });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gateVisible]);
 
   return (
     // padding="sm" + a larger override at sm+ (Card's `padding` prop itself
@@ -469,13 +485,22 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
                   See all {boundaries.length} boundaries &amp; representatives →
                 </Link>
               )}
-              {!showFullList && totalRepsAvailable > ANON_REP_PREVIEW_LIMIT && (
+              {gateVisible && (
                 <Card padding="sm" className="text-center space-y-1.5 border-primary/20 bg-primary/5">
                   <p className="text-xs font-bold text-text-main">
                     {totalRepsAvailable - ANON_REP_PREVIEW_LIMIT} more representative
                     {totalRepsAvailable - ANON_REP_PREVIEW_LIMIT === 1 ? "" : "s"} in your area
                   </p>
-                  <Button as={Link} href="/auth?role=citizen&next=%2Ffind-my-district" variant="primary" size="sm" className="mx-auto">
+                  <Button
+                    as={Link}
+                    href="/auth?role=citizen&next=%2Ffind-my-district"
+                    onClick={() =>
+                      trackRepListGateClicked({ surface: "home_widget", hiddenCount: totalRepsAvailable - ANON_REP_PREVIEW_LIMIT })
+                    }
+                    variant="primary"
+                    size="sm"
+                    className="mx-auto"
+                  >
                     <LogIn size={13} />
                     Sign In to See the Rest
                   </Button>
