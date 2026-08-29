@@ -807,11 +807,15 @@ export async function recordImportedSourceUrls(
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
+/** Word count of a markdown body — plain whitespace split, no markdown stripping. */
+export function countWords(body?: string): number {
+  if (!body) return 0;
+  return body.trim().split(/\s+/).filter(Boolean).length;
+}
+
 /** Estimate reading time from markdown body (200 wpm) */
 export function estimateReadingMinutes(body?: string): number {
-  if (!body) return 1;
-  const wordCount = body.trim().split(/\s+/).length;
-  return Math.max(1, Math.round(wordCount / 200));
+  return Math.max(1, Math.round(countWords(body) / 200));
 }
 
 /** Extract plain-text excerpt from markdown body */

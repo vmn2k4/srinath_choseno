@@ -26,6 +26,7 @@ import {
   listDistinctBatches,
   recordNewsArticleShare,
   deleteNewsArticles,
+  countWords,
   type DistributionArticle,
   type BatchSummary,
 } from "@/lib/services/news";
@@ -680,6 +681,7 @@ export default function AdminNewsDistributionClient() {
                     </th>
                     <th className="py-2.5 px-3 min-w-[125px] border-r border-border/40">Published <span className="text-[10px] text-text-muted/60">(PST)</span></th>
                     <th className="py-2.5 px-3 min-w-[280px] border-r border-border/40">Headline</th>
+                    <th className="py-2.5 px-3 w-20 text-center border-r border-border/40">Words</th>
                     <th className="py-2.5 px-3 w-28 text-center border-r border-border/40">Share</th>
                     <th className="py-2.5 px-3 min-w-[140px] border-r border-border/40">Shared In</th>
                     <th className="py-2.5 px-3 min-w-[130px] border-r border-border/40">Batch</th>
@@ -693,6 +695,7 @@ export default function AdminNewsDistributionClient() {
                   {articles.map((article, index) => {
                     const shareData = getShareDataForArticle(article);
                     const tweetCopy = article.content?.tweet || article.headline;
+                    const bodyWordCount = countWords(article.content?.body);
                     const jurisdiction = [article.province, article.country].filter(Boolean).join(", ");
                     const score = article.viralScore || 8.0;
                     const isCopied = copiedTweetSlug === article.slug;
@@ -755,6 +758,22 @@ export default function AdminNewsDistributionClient() {
                             <span>{article.headline}</span>
                             <ExternalLink size={11} className="opacity-0 group-hover:opacity-100 text-text-muted shrink-0" />
                           </a>
+                        </td>
+
+                        {/* 4.5. Word Count */}
+                        <td className="py-2 px-3 text-center font-mono border-r border-border/40">
+                          <span
+                            title={`${bodyWordCount} word${bodyWordCount === 1 ? "" : "s"}`}
+                            className={
+                              bodyWordCount < 150
+                                ? "text-red-400 font-bold"
+                                : bodyWordCount < 500
+                                ? "text-amber-400"
+                                : "text-text-muted"
+                            }
+                          >
+                            {bodyWordCount}
+                          </span>
                         </td>
 
                         {/* 5. Share Button */}
