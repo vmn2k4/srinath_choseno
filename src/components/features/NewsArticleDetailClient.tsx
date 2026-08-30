@@ -585,83 +585,125 @@ export default function NewsArticleDetailClient({
             </p>
           )}
 
-          <div className="flex items-center flex-wrap gap-4 text-[clamp(0.6875rem,0.65rem+0.2vw,0.75rem)] text-text-muted pt-1 justify-between">
-            <div className="flex items-center flex-wrap gap-4">
-              {content?.author?.name && (
-                <span className="flex items-center gap-1 font-semibold text-text-secondary">
-                  <User size={12} /> {content.author.name}
-                </span>
-              )}
-              {displayDate && (
-                <span className="flex items-center gap-1">
-                  <Calendar size={12} /> {displayDate}
-                </span>
-              )}
-              <span className="flex items-center gap-1">
-                <Clock size={12} /> {readingTime} {t("newsPage.minRead")}
+          <div className="flex items-center flex-wrap gap-4 text-[clamp(0.6875rem,0.65rem+0.2vw,0.75rem)] text-text-muted pt-1">
+            {content?.author?.name && (
+              <span className="flex items-center gap-1 font-semibold text-text-secondary">
+                <User size={12} /> {content.author.name}
               </span>
-              {article.country && (
-                <span className="flex items-center gap-1">
-                  <Globe size={12} /> {article.province ? `${article.province}, ` : ""}{article.country.toUpperCase()}
-                </span>
-              )}
-            </div>
-
-            {/* Primary Rate CTA — a real button, not a label: solid fill,
-                full name. One tagged politician -> expands the inline rating
-                panel right here (no navigation). Multiple -> one button per
-                politician, all on a single row, straight to their wall page.
-                Label/name truncates or shortens by breakpoint so the row
-                stays one tidy line at every viewport. */}
-            {rateCtaLabel && (
-              primaryWallUrl && linkedPoliticians.length === 1 ? (
-                <button
-                  type="button"
-                  onClick={() => setShowTopInlineRating((v) => !v)}
-                  aria-expanded={showTopInlineRating}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-[clamp(0.6875rem,0.65rem+0.2vw,0.8125rem)] font-bold shadow-sm hover:shadow-md transition-all max-w-full cursor-pointer"
-                >
-                  <Star size={13} className="fill-white shrink-0" />
-                  <span className="truncate">{rateCtaLabel}</span>
-                  <ArrowRight size={13} className={`shrink-0 transition-transform ${showTopInlineRating ? "rotate-90" : ""}`} />
-                </button>
-              ) : linkedPoliticians.length > 1 ? (
-                <div className="flex items-center flex-nowrap gap-1.5 sm:gap-2 max-w-full overflow-x-auto">
-                  {linkedPoliticians.map((lp: any) => {
-                    const politician = lp.profiles;
-                    if (!politician?.id) return null;
-                    const fullName: string = politician.full_name || "Politician";
-                    const nameParts = fullName.trim().split(" ");
-                    const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : fullName;
-                    const isExpanded = expandedTopPoliticianId === politician.id;
-                    return (
-                      <button
-                        key={politician.id}
-                        type="button"
-                        onClick={() => setExpandedTopPoliticianId(isExpanded ? null : politician.id)}
-                        aria-expanded={isExpanded}
-                        title={`Review ${fullName}`}
-                        className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-[clamp(0.625rem,0.6rem+0.15vw,0.75rem)] font-bold shadow-sm hover:shadow-md transition-all shrink-0 cursor-pointer"
-                      >
-                        <Star size={12} className="hidden sm:inline-block fill-white shrink-0" />
-                        <span className="md:hidden">{lastName}</span>
-                        <span className="hidden md:inline truncate max-w-[140px]">{fullName}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              ) : (
-                <Link
-                  href={rateCtaHref}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-[clamp(0.6875rem,0.65rem+0.2vw,0.8125rem)] font-bold shadow-sm hover:shadow-md transition-all max-w-full"
-                >
-                  <Star size={13} className="fill-white shrink-0" />
-                  <span className="truncate">{rateCtaLabel}</span>
-                  <ArrowRight size={13} className="shrink-0" />
-                </Link>
-              )
+            )}
+            {displayDate && (
+              <span className="flex items-center gap-1">
+                <Calendar size={12} /> {displayDate}
+              </span>
+            )}
+            <span className="flex items-center gap-1">
+              <Clock size={12} /> {readingTime} {t("newsPage.minRead")}
+            </span>
+            {article.country && (
+              <span className="flex items-center gap-1">
+                <Globe size={12} /> {article.province ? `${article.province}, ` : ""}{article.country.toUpperCase()}
+              </span>
             )}
           </div>
+
+          {/* Primary Rate CTA — a "hook" card, not a bare button: the
+              politician's photo + a direct question ("What do you think of
+              X?") invites a reaction before asking for the click, same
+              pattern as a social post prompt. One tagged politician ->
+              expands the inline rating panel right here (no navigation).
+              Multiple -> one photo chip per politician, all on a single
+              scrollable row, straight to their wall page. */}
+          {rateCtaLabel && (
+            primaryWallUrl && linkedPoliticians.length === 1 ? (
+              <button
+                type="button"
+                onClick={() => setShowTopInlineRating((v) => !v)}
+                aria-expanded={showTopInlineRating}
+                className="w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl border border-orange-500/25 bg-gradient-to-r from-orange-500/10 via-orange-500/5 to-transparent hover:from-orange-500/15 hover:via-orange-500/10 transition-all text-left cursor-pointer group"
+              >
+                <Avatar
+                  src={primaryPolitician?.politician_profiles?.photo_url || primaryPolitician?.politician_profiles?.avatar_url}
+                  name={primaryPolitician?.full_name}
+                  size="lg"
+                  className="ring-2 ring-white shadow-sm"
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm sm:text-base font-bold text-text-main leading-snug">
+                    What do you think of <span className="text-orange-600">{primaryPolitician?.full_name}</span>?
+                  </p>
+                  <p className="hidden sm:block text-xs text-text-muted mt-0.5">
+                    Rate their record on this story — reviews post under your anonymous Ghost
+                  </p>
+                </div>
+                <span className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-lg bg-orange-600 group-hover:bg-orange-700 text-white text-xs font-bold shadow-sm transition-all shrink-0">
+                  <Star size={13} className="fill-white shrink-0" />
+                  <span className="hidden sm:inline">Review</span>
+                  <ArrowRight size={13} className={`shrink-0 transition-transform ${showTopInlineRating ? "rotate-90" : ""}`} />
+                </span>
+              </button>
+            ) : linkedPoliticians.length > 1 ? (
+              <div className="space-y-2">
+                <p className="text-sm sm:text-base font-bold text-text-main leading-snug">
+                  What do you think of the people in this story? <span className="text-orange-600">Rate them anonymously</span> — tap a face below.
+                </p>
+                <div className="flex items-center flex-nowrap gap-2 sm:gap-2.5 max-w-full overflow-x-auto pb-1">
+                {linkedPoliticians.map((lp: any) => {
+                  const politician = lp.profiles;
+                  if (!politician?.id) return null;
+                  const fullName: string = politician.full_name || "Politician";
+                  const nameParts = fullName.trim().split(" ");
+                  const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : fullName;
+                  const isExpanded = expandedTopPoliticianId === politician.id;
+                  return (
+                    <button
+                      key={politician.id}
+                      type="button"
+                      onClick={() => setExpandedTopPoliticianId(isExpanded ? null : politician.id)}
+                      aria-expanded={isExpanded}
+                      title={`Review ${fullName}`}
+                      className="inline-flex items-center gap-1.5 sm:gap-2 pl-1.5 pr-2.5 sm:pl-2 sm:pr-3.5 py-1.5 rounded-full bg-orange-600 hover:bg-orange-700 text-white text-[clamp(0.625rem,0.6rem+0.15vw,0.75rem)] font-bold shadow-sm hover:shadow-md transition-all shrink-0 cursor-pointer"
+                    >
+                      <Avatar
+                        src={politician.politician_profiles?.photo_url || politician.politician_profiles?.avatar_url}
+                        name={fullName}
+                        size="sm"
+                        className="ring-1 ring-white/40"
+                      />
+                      <span className="md:hidden">{lastName}</span>
+                      <span className="hidden md:inline truncate max-w-[140px]">{fullName}</span>
+                      <Star size={11} className="hidden sm:inline-block fill-white shrink-0" />
+                    </button>
+                  );
+                })}
+                </div>
+              </div>
+            ) : (
+              <Link
+                href={rateCtaHref}
+                className="w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl border border-orange-500/25 bg-gradient-to-r from-orange-500/10 via-orange-500/5 to-transparent hover:from-orange-500/15 hover:via-orange-500/10 transition-all group"
+              >
+                <Avatar
+                  src={primaryPolitician?.politician_profiles?.photo_url || primaryPolitician?.politician_profiles?.avatar_url}
+                  name={primaryPolitician?.full_name}
+                  size="lg"
+                  className="ring-2 ring-white shadow-sm"
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm sm:text-base font-bold text-text-main leading-snug">
+                    What do you think of <span className="text-orange-600">{primaryPolitician?.full_name}</span>?
+                  </p>
+                  <p className="hidden sm:block text-xs text-text-muted mt-0.5">
+                    Rate their record on this story — reviews post under your anonymous Ghost
+                  </p>
+                </div>
+                <span className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-lg bg-orange-600 group-hover:bg-orange-700 text-white text-xs font-bold shadow-sm transition-all shrink-0">
+                  <Star size={13} className="fill-white shrink-0" />
+                  <span className="hidden sm:inline">Review</span>
+                  <ArrowRight size={13} className="shrink-0" />
+                </span>
+              </Link>
+            )
+          )}
 
           {/* Inline rating panel for the single-politician case — expands
               in place under the metadata row instead of the CTA navigating
