@@ -41,12 +41,11 @@ async function getLastPublishWindow() {
   const now = new Date();
   const lastPublishedAt = latest?.published_at ? new Date(latest.published_at) : new Date(now.getTime() - 24 * 3600 * 1000);
 
-  // Fixed: Ensure a minimum lookback of 4 hours (or more if the last article is older)
-  // Plus a 1-hour overlap buffer so breaking stories published around the edges of an hour
-  // or across small batches are never missed by a narrow 1-hour window.
+  // Ensure a rolling lookback of at least 24 hours so un-ingested feed stories
+  // across all 126 state/provincial/municipal feeds are never missed.
   const diffMs = now.getTime() - lastPublishedAt.getTime();
   const rawDiffHours = Math.ceil(diffMs / (1000 * 60 * 60));
-  const diffHours = Math.max(4, rawDiffHours + 1);
+  const diffHours = Math.max(24, rawDiffHours + 1);
 
   return {
     lastPublishedAt: lastPublishedAt.toISOString(),

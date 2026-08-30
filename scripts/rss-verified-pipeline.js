@@ -382,6 +382,51 @@ function isTrending(title, trendingKeywords) {
   return tokens.some(t => trendingKeywords.has(t));
 }
 
+// A candidate that sits unsynthesized this long is no longer "breaking" —
+// this is the ONE rule that removes something from the queue without it
+// ever being published, and it's owned by the script (age is objective and
+// checkable), not left to an agent's judgment call.
+const QUEUE_EXPIRY_HOURS = 48;
+
+/**
+ * Merges freshly-discovered candidates into the persistent queue file,
+ * carrying forward anything from previous runs that hasn't been published
+ * yet (see insert-news-batch.js, which prunes this file after a successful
+ * ingest) and dropping only what's aged out past QUEUE_EXPIRY_HOURS.
+ * Dedup is by sourceUrl — the same signal insert-news-batch.js uses to
+ * confirm a candidate was actually published.
+ */
+function mergeCandidatesIntoQueue(freshCandidates, queuePath) {
+  const expiryCutoff = Date.now() - QUEUE_EXPIRY_HOURS * 3600 * 1000;
+
+  let existingQueue = [];
+  if (fs.existsSync(queuePath)) {
+    try {
+      const parsed = JSON.parse(fs.readFileSync(queuePath, 'utf8'));
+      if (Array.isArray(parsed)) existingQueue = parsed;
+    } catch (e) {
+      console.warn('[QUEUE] Could not parse existing candidate queue, starting fresh:', e.message);
+    }
+  }
+
+  const expired = existingQueue.filter(c => new Date(c.pubDate).getTime() < expiryCutoff);
+  const stillFresh = existingQueue.filter(c => new Date(c.pubDate).getTime() >= expiryCutoff);
+  if (expired.length > 0) {
+    console.log(`[QUEUE] ${expired.length} candidate(s) aged out past ${QUEUE_EXPIRY_HOURS}h unsynthesized and were dropped (not published, not carried forward):`);
+    expired.forEach(c => console.log(`  - "${c.title}"`));
+  }
+
+  const existingUrls = new Set(stillFresh.map(c => c.sourceUrl));
+  const genuinelyNew = freshCandidates.filter(c => !existingUrls.has(c.sourceUrl));
+  if (stillFresh.length > 0) {
+    console.log(`[QUEUE] Carried over ${stillFresh.length} candidate(s) from previous runs that were never synthesized — they are still queued, not lost.`);
+  }
+
+  const merged = [...stillFresh, ...genuinelyNew];
+  fs.writeFileSync(queuePath, JSON.stringify(merged, null, 2));
+  return merged;
+}
+
 /**
  * Main Execution: Collect -> Gatekeep -> Synthesize -> Verify Quotes -> Ingest
  */
@@ -412,15 +457,32 @@ async function runVerifiedNewsPipeline(options = {}) {
     console.log(`[PIPELINE] ${trendingMatchCount} candidate(s) match current trending topics — prioritized.`);
   }
 
-  const toProcess = ordered;
+  // Merge this run's freshly-discovered candidates into a PERSISTENT queue
+  // instead of overwriting latest-verified-rss-candidates.json each run.
+  // Fixed 2026-08-30: an agent handed the full candidate list and told
+  // "synthesize every one" can still just... not. The previous version of
+  // this file overwrote the candidates file every run, so anything the
+  // agent didn't get to was silently gone forever the moment the next
+  // collection cycle ran — the agent's inaction WAS the publish decision,
+  // exactly the thing the script is supposed to own. Now a candidate stays
+  // in the queue across runs until insert-news-batch.js confirms it was
+  // actually published (it prunes this file after ingesting), or until it
+  // expires for genuinely being stale (see mergeCandidatesIntoQueue). The
+  // agent can still only get through a few per run — but it can no longer
+  // make one vanish by ignoring it; it just stays queued for next time.
+  const candidatesPath = path.join(__dirname, 'latest-verified-rss-candidates.json');
+  const queue = mergeCandidatesIntoQueue(ordered, candidatesPath);
 
   // If collectOnly is enabled (Antigravity-native synthesis mode), save candidates and stop
   if (options.collectOnly) {
-    const candidatesPath = path.join(__dirname, 'latest-verified-rss-candidates.json');
-    fs.writeFileSync(candidatesPath, JSON.stringify(toProcess, null, 2));
-    console.log(`\n[PIPELINE] Saved ${toProcess.length} verified RSS candidate stories into ${candidatesPath} for Antigravity synthesis.`);
-    return toProcess;
+    console.log(`\n[PIPELINE] Candidate queue: ${queue.length} total pending (${ordered.length} newly discovered this run) saved into ${candidatesPath} for Antigravity synthesis.`);
+    return queue;
   }
+
+  // Non-collectOnly (--use-api-key) runs also process the full persistent
+  // queue, not just what this run happened to discover — so an occasional
+  // direct-API run can help drain any backlog Antigravity left behind.
+  const toProcess = queue;
 
   console.log(`\n[PIPELINE] Synthesizing all ${toProcess.length} verified candidate stories (100% un-capped)...`);
   const synthesizedBatch = [];
@@ -491,12 +553,11 @@ if (require.main === module) {
       try {
         const { getLastPublishWindow } = require('./get-last-publish-window');
         const window = await getLastPublishWindow();
-        maxHours = window.lookbackHours;
-        sinceTimestamp = window.lastPublishedAt;
+        maxHours = Math.max(24, window.lookbackHours || 24);
         console.log(`[PIPELINE] No --max-hours given; auto-computed lookback = ${maxHours}h (last published ${window.lastPublishedAt}).`);
       } catch (e) {
-        console.warn('[PIPELINE] Auto-window lookup failed, defaulting to 4h:', e.message);
-        maxHours = 4;
+        console.warn('[PIPELINE] Auto-window lookup failed, defaulting to 24h:', e.message);
+        maxHours = 24;
       }
     }
 
@@ -511,5 +572,6 @@ if (require.main === module) {
 
 module.exports = {
   runVerifiedNewsPipeline,
-  synthesizeCivicStory
+  synthesizeCivicStory,
+  mergeCandidatesIntoQueue
 };

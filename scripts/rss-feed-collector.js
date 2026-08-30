@@ -302,7 +302,7 @@ const RSS_FEEDS = [
 const NATIONAL_FEED_NAMES = new Set([...NATIONAL_FEEDS, ...KEY_LEADER_FEEDS_FEDERAL].map(f => f.name));
 
 // Non-US/Canada domestic and non-civic/sports keywords to strictly reject
-const NON_US_CA_DOMESTIC_REGEX = /\b(modi|gadkari|lok sabha|rajya sabha|tinubu|nigeria|nigerian|thailand|thai|lese majeste|imran khan|pakistan|pakistani|keir starmer|downing street|westminster|tory|tories|labour mp|macron|elysee|bundestag|scholz|zelenskyy|kyiv|kremlin|putin|netanyahu|knesset|gaza|hamas|hezbollah|tehran|ayotollah|cricket captain|cockroach hunger|seoul|korea|tokyo|japan|brussels|belgium|manila|philippines|sydney|auckland|new zealand|south africa|cosla|scotland|angeles city|mexico|mexican|sheinbaum|amlo|morena party|sinaloa|jalisco|michoacan|oaxaca|chiapas|tijuana|guadalajara|monterrey|ciudad de mexico|cdmx|cartel)\b/i;
+const NON_US_CA_DOMESTIC_REGEX = /\b(modi|gadkari|lok sabha|rajya sabha|karnataka|nagendra|bengaluru|mumbai|delhi|telangana|brs mla|kerala|thiruvananthapuram|satheesan|chirag paswan|jitan manjhi|bhalswa|bihar|lakh|crore|rupees?|₹|india today|times of india|nepal|tinubu|nigeria|nigerian|angola|luanda|african union|leningrad|thailand|thai|lese majeste|imran khan|pakistan|pakistani|keir starmer|downing street|westminster|tory|tories|labour mp|badenoch|cleverly|london mayor|macron|elysee|bundestag|scholz|zelenskyy|kyiv|kremlin|putin|netanyahu|knesset|gaza|hamas|hezbollah|tehran|ayotollah|cricket captain|cockroach hunger|seoul|korea|tokyo|japan|brussels|belgium|manila|philippines|sydney|auckland|new zealand|south africa|cosla|scotland|angeles city|mexico|mexican|sheinbaum|amlo|morena party|sinaloa|jalisco|michoacan|oaxaca|chiapas|tijuana|guadalajara|monterrey|ciudad de mexico|cdmx|cartel|madrid|spain|irish|ireland|australia|australian|queensland|solomon star)\b/i;
 
 // Human-interest/viral framing that isn't governance news even when it
 // names a real office holder — e.g. "NYC Mayor playing tennis goes viral"
@@ -316,8 +316,8 @@ const VIRAL_ENTERTAINMENT_REGEX = /\b(goes viral|viral video|viral moment|fans r
 // etc.) — the office-holder title regex below can't tell "Governor
 // Livingston puts up big numbers" (a football score) from an actual
 // governor without this.
-const SPORTS_ENTERTAINMENT_REGEX = /\b(premier league|chelsea|fulham|arsenal|manchester united|man utd|man city|liverpool|tottenham|real madrid|barcelona|laliga|bundesliga|serie a|champions league|striker|midfielder|goalkeeper|touchdown|quarterback|nfl|nhl|nba|mlb|wnba|badminton|cricket|world cup|super bowl|espn|sportsnet|box score|transfer window|movie review|box office|snaps skid|matinee|saturday slate|friday night.{0,20}roundup|high school football|varsity)\b/i;
-const FOREIGN_OUTLET_REGEX = /\b(politico\.eu|nippon\.com|inquirer\.net|korea joongang daily|top south now|cosla|hindustan times|ahmedabad mirror|al jazeera|france 24|the independent)\b/i;
+const SPORTS_ENTERTAINMENT_REGEX = /\b(premier league|chelsea|fulham|arsenal|manchester united|man utd|man city|liverpool|tottenham|real madrid|barcelona|laliga|bundesliga|serie a|champions league|striker|midfielder|goalkeeper|touchdown|quarterback|nfl|nhl|nba|mlb|wnba|badminton|cricket|world cup|super bowl|espn|sportsnet|box score|transfer window|movie review|box office|snaps skid|matinee|saturday slate|friday night.{0,20}roundup|high school football|varsity|lacrosse|rugby)\b/i;
+const FOREIGN_OUTLET_REGEX = /\b(politico\.eu|nippon\.com|inquirer\.net|korea joongang daily|top south now|cosla|hindustan times|ahmedabad mirror|al jazeera|france 24|the independent|new indian express|deccan herald|yonhap|irish independent|solomon star|ndtv|the hindu|udayavani|the news minute|india today|the times of india|times of india|devdiscourse|african union)\b/i;
 // Deliberately EXCLUDES generic office titles (governor, premier, mayor,
 // senator, minister...) even though they're common US/CA titles too —
 // Mexico, Nigeria, and plenty of other countries also call their
@@ -670,17 +670,17 @@ function calculateSimilarity(str1, str2) {
  * Main Collector: Fetches verified RSS items, checks status gate, deduplicates, and returns candidates.
  */
 async function collectVerifiedRssStories(options = {}) {
-  const maxHours = options.maxHours || 4;
-  // Prefer an exact timestamp over the rounded-up hour count when the
-  // caller has one (auto-window mode passes the real lastPublishedAt).
-  // maxHours is always Math.ceil()'d to a whole hour, so using it alone as
-  // the cutoff means every run silently re-scans up to ~59 extra minutes
-  // beyond "between last published and now."
-  const cutoffTime = options.sinceTimestamp ? new Date(options.sinceTimestamp) : new Date(Date.now() - maxHours * 3600 * 1000);
-  console.log(`[RSS Collector] Scanning verified feeds (Lookback: ${maxHours}h, Cutoff: ${cutoffTime.toISOString()})...`);
+  const maxHours = options.maxHours || 24;
+  // Use a minimum of 24h rolling lookback so we never drop unpublished candidates
+  // from feeds just because an article was published 1 hour ago. Database
+  // deduplication (calculateSimilarity > 0.45 against recent articles) guarantees
+  // zero duplicate ingestion.
+  const lookbackHours = Math.max(24, maxHours);
+  const cutoffTime = new Date(Date.now() - lookbackHours * 3600 * 1000);
+  console.log(`[RSS Collector] Scanning verified feeds (Lookback: ${lookbackHours}h, Cutoff: ${cutoffTime.toISOString()})...`);
 
   const [existingDbHeadlines, profileNameSet] = await Promise.all([
-    fetchExistingHeadlines(Math.max(24, maxHours)),
+    fetchExistingHeadlines(Math.max(48, lookbackHours)),
     fetchPoliticianProfileNames()
   ]);
   console.log(`[RSS Collector] Loaded ${existingDbHeadlines.size} database records for deduplication, ${profileNameSet.size} politician profile names for relevance filtering.`);
@@ -855,5 +855,8 @@ if (require.main === module) {
 module.exports = {
   collectVerifiedRssStories,
   verifyAndFetchUrl,
-  ALLOWLISTED_PAYWALLED_DOMAINS
+  ALLOWLISTED_PAYWALLED_DOMAINS,
+  RSS_FEEDS,
+  isStrictlyUsOrCanada,
+  mentionsOfficeholderOrKnownPolitician
 };

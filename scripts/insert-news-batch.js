@@ -1362,6 +1362,93 @@ async function run() {
     }
   }
 
+  // ── Candidate-coverage reconciliation report ────────────────────────────
+  // Fixed 2026-08-30: the collect-only / Antigravity-synthesis split lets
+  // the script own discovery+dedup while an agent owns writing prose — but
+  // nothing enforced that the agent actually synthesized what the script
+  // handed it. Proven in production: the script found 225 verified
+  // candidates, the agent only wrote 4 into bulk-news-batch.json, and it
+  // reported that as a clean "0 skipped" success.
+  //
+  // Revised same day: an earlier version of this check hard-blocked the
+  // ENTIRE batch (even the 4 genuinely good articles) when coverage was
+  // low. That's the wrong call — those 4 are real, verified, synthesized
+  // articles; there's no reason to withhold them just because the rest of
+  // the queue never got attempted. Default behavior now: always publish
+  // whatever's actually ready, but name every single candidate that didn't
+  // make it into the batch — not just a count — by matching source URL
+  // (falling back to title similarity for cases where Antigravity resolved
+  // a redirect URL to something else) against latest-verified-rss-
+  // candidates.json, when that file is fresh enough to be THIS run's pool.
+  // Pass --require-full-coverage to opt into the old hard-block behavior
+  // for a context where an incomplete batch genuinely shouldn't publish.
+  function normalizeTitleForMatch(str) {
+    return (str || '').toLowerCase().replace(/[^a-z0-9]/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  function titleTokenOverlap(a, b) {
+    const t1 = new Set(normalizeTitleForMatch(a).split(' ').filter(w => w.length > 3));
+    const t2 = new Set(normalizeTitleForMatch(b).split(' ').filter(w => w.length > 3));
+    if (t1.size === 0 || t2.size === 0) return 0;
+    let hits = 0;
+    for (const t of t1) if (t2.has(t)) hits++;
+    return hits / (t1.size + t2.size - hits);
+  }
+
+  // Hoisted so the queue-prune step after ingestion (below, near "INGESTION
+  // COMPLETE") can write back only the still-unhandled candidates without
+  // re-deriving this logic — see that block for why pruning happens at the
+  // end rather than here.
+  let queueCandidatesPath = null;
+  let queueStillMissing = null;
+
+  const candidatesPath = path.resolve(__dirname, 'latest-verified-rss-candidates.json');
+  const requireFullCoverage = process.argv.includes('--require-full-coverage');
+  if (fs.existsSync(candidatesPath)) {
+    const ageMs = Date.now() - fs.statSync(candidatesPath).mtimeMs;
+    const FRESH_WINDOW_MS = 2 * 3600 * 1000; // 2 hours
+    if (ageMs <= FRESH_WINDOW_MS) {
+      try {
+        const candidates = JSON.parse(fs.readFileSync(candidatesPath, 'utf8'));
+        const candidateCount = Array.isArray(candidates) ? candidates.length : 0;
+        if (candidateCount >= 10) {
+          const batchUrls = new Set(articlesToIngest.map(a => (a.sources?.[0]?.url || '').trim()).filter(Boolean));
+          const missing = candidates.filter(c => {
+            if (c.sourceUrl && batchUrls.has(c.sourceUrl.trim())) return false;
+            // Fallback: title similarity, in case the URL got rewritten during synthesis
+            return !articlesToIngest.some(a => titleTokenOverlap(c.title, a.headline) > 0.5);
+          });
+          queueCandidatesPath = candidatesPath;
+          queueStillMissing = missing;
+
+          const coverage = (candidateCount - missing.length) / candidateCount;
+          console.log(`[COVERAGE] ${candidateCount - missing.length}/${candidateCount} candidates synthesized (${(coverage * 100).toFixed(1)}%) — from latest-verified-rss-candidates.json written ${(ageMs / 60000).toFixed(0)}m ago.`);
+
+          if (missing.length > 0) {
+            console.log(`[COVERAGE] ${missing.length} candidate(s) from the queue were NOT synthesized into this batch:`);
+            missing.forEach((c, i) => {
+              console.log(`  ${i + 1}. "${c.title}" — ${c.sourceName || 'unknown source'} (${c.sourceUrl || 'no url'})`);
+            });
+          }
+
+          if (coverage < 0.5) {
+            console.warn('======================================================');
+            console.warn(`⚠️  LOW CANDIDATE COVERAGE: only ${(coverage * 100).toFixed(1)}% of the queue was synthesized.`);
+            console.warn('The articles below WILL still be published — they are real,');
+            console.warn('verified content. But most of the queue above was never');
+            console.warn('attempted; re-run synthesis against the missing list to recover it.');
+            console.warn('======================================================');
+            if (requireFullCoverage) {
+              console.error('--require-full-coverage was set: refusing to publish a partial batch.');
+              process.exit(1);
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('[COVERAGE] Could not parse latest-verified-rss-candidates.json for reconciliation, skipping check:', e.message);
+      }
+    }
+  }
+
   console.log(`Starting ingestion of ${articlesToIngest.length} news articles...`);
   const authHeaders = await getAuthHeaders();
 
@@ -1685,6 +1772,23 @@ async function run() {
   console.log('\n=========================================');
   console.log(`INGESTION COMPLETE: ${inserted.length} inserted, ${skipped.length} skipped.`);
   console.log('=========================================');
+
+  // Prune the persistent candidate queue: everything that made it into
+  // this batch (inserted OR skipped-as-duplicate — both mean it's been
+  // handled, not that it's still pending) is done. Only write this back
+  // once run() has reached here without throwing, so a mid-run crash
+  // leaves the queue untouched rather than losing candidates that were
+  // never actually confirmed published. This is what makes the queue
+  // self-correcting run to run instead of a static snapshot Antigravity
+  // could quietly under-deliver against forever.
+  if (queueCandidatesPath && queueStillMissing) {
+    try {
+      fs.writeFileSync(queueCandidatesPath, JSON.stringify(queueStillMissing, null, 2));
+      console.log(`[QUEUE] Pruned candidate queue to ${queueStillMissing.length} still-unhandled candidate(s) — everything synthesized this run has been removed from the backlog.`);
+    } catch (e) {
+      console.warn('[QUEUE] Failed to prune candidate queue file:', e.message);
+    }
+  }
 }
 
 run().catch(console.error);
