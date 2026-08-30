@@ -489,7 +489,7 @@ export default function NewsArticleDetailClient({
 
   return (
     <div className="w-full max-w-none pb-20 px-4 lg:px-8 space-y-6">
-      <MissionRegisterCTA variant="news" nextPath={`/news/${slug}`} />
+      <MissionRegisterCTA variant="news" nextPath={`/news/${slug}`} personName={primaryPolitician?.full_name} />
 
       {/* Consolidated Nav + Article Meta Bar — back link, category, breaking
           badge on the left; quick copy, share, translate on the right.
@@ -632,10 +632,10 @@ export default function NewsArticleDetailClient({
                     What do you think of <span className="text-orange-600">{primaryPolitician?.full_name}</span>?
                   </p>
                   <p className="hidden sm:block text-xs text-text-muted mt-0.5">
-                    Rate their record on this story — reviews post under your anonymous Ghost
+                    Choseno is anonymous Google Reviews — for politicians
                   </p>
                 </div>
-                <span className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-lg bg-orange-600 group-hover:bg-orange-700 text-white text-xs font-bold shadow-sm transition-all shrink-0">
+                <span className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-lg bg-orange-500 group-hover:bg-orange-600 text-white text-xs font-bold shadow-sm transition-all shrink-0">
                   <Star size={13} className="fill-white shrink-0" />
                   <span className="hidden sm:inline">Review</span>
                   <ArrowRight size={13} className={`shrink-0 transition-transform ${showTopInlineRating ? "rotate-90" : ""}`} />
@@ -661,7 +661,7 @@ export default function NewsArticleDetailClient({
                       onClick={() => setExpandedTopPoliticianId(isExpanded ? null : politician.id)}
                       aria-expanded={isExpanded}
                       title={`Review ${fullName}`}
-                      className="inline-flex items-center gap-1.5 sm:gap-2 pl-1.5 pr-2.5 sm:pl-2 sm:pr-3.5 py-1.5 rounded-full bg-orange-600 hover:bg-orange-700 text-white text-[clamp(0.625rem,0.6rem+0.15vw,0.75rem)] font-bold shadow-sm hover:shadow-md transition-all shrink-0 cursor-pointer"
+                      className="inline-flex items-center gap-1.5 sm:gap-2 pl-1.5 pr-2.5 sm:pl-2 sm:pr-3.5 py-1.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-[clamp(0.625rem,0.6rem+0.15vw,0.75rem)] font-bold shadow-sm hover:shadow-md transition-all shrink-0 cursor-pointer"
                     >
                       <Avatar
                         src={politician.politician_profiles?.photo_url || politician.politician_profiles?.avatar_url}
@@ -693,10 +693,10 @@ export default function NewsArticleDetailClient({
                     What do you think of <span className="text-orange-600">{primaryPolitician?.full_name}</span>?
                   </p>
                   <p className="hidden sm:block text-xs text-text-muted mt-0.5">
-                    Rate their record on this story — reviews post under your anonymous Ghost
+                    Choseno is anonymous Google Reviews — for politicians
                   </p>
                 </div>
-                <span className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-lg bg-orange-600 group-hover:bg-orange-700 text-white text-xs font-bold shadow-sm transition-all shrink-0">
+                <span className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-lg bg-orange-500 group-hover:bg-orange-600 text-white text-xs font-bold shadow-sm transition-all shrink-0">
                   <Star size={13} className="fill-white shrink-0" />
                   <span className="hidden sm:inline">Review</span>
                   <ArrowRight size={13} className="shrink-0" />

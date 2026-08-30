@@ -61,17 +61,16 @@ function markSeen(key: string): void {
   window.localStorage.setItem(key, String(Date.now()));
 }
 
-const COPY: Record<
-  MissionCtaVariant,
-  {
-    eyebrow: string;
-    headline: string;
-    pitch: string;
-    sidebarHeadline: string;
-    sidebarBody: string;
-    cta: string;
-  }
-> = {
+type CtaCopy = {
+  eyebrow: string;
+  headline: string;
+  pitch: string;
+  sidebarHeadline: string;
+  sidebarBody: string;
+  cta: string;
+};
+
+const COPY: Record<MissionCtaVariant, CtaCopy> = {
   home: {
     eyebrow: "Google Reviews, for politicians",
     headline: "Stop being a spectator.",
@@ -106,6 +105,28 @@ const COPY: Record<
   },
 };
 
+// News-variant copy personalized to the article's key tagged politician,
+// when one is known. The headline itself stays neutral -- "Share your
+// thoughts on X" invites an opinion in either direction, not just a
+// negative one -- since "Frustrated with X?" presupposes a verdict on that
+// specific person before the reader has said anything. The frustration
+// hook still does its emotional-resonance job, just aimed at politics in
+// general (a byline under the neutral headline) rather than at the named
+// person. Falls back to the generic COPY.news table when no politician is
+// tagged (or on the news listing page, which has no single "key person" to
+// name).
+function newsCopyFor(personName?: string | null): CtaCopy {
+  if (!personName) return COPY.news;
+  return {
+    eyebrow: "Beyond the headline",
+    headline: `Share your thoughts on ${personName}`,
+    pitch: `Frustrated with politics? Join now and rate ${personName} anonymously — we give you a voice.`,
+    sidebarHeadline: `Share your thoughts on ${personName}`,
+    sidebarBody: "Frustrated with politics? We give you a voice.",
+    cta: "Rate Them Now",
+  };
+}
+
 const TRUST_CHIPS = [
   { icon: ShieldOff, label: "Anonymous" },
   { icon: Ban, label: "Capped comments" },
@@ -115,9 +136,14 @@ const TRUST_CHIPS = [
 export default function MissionRegisterCTA({
   variant,
   nextPath,
+  personName,
 }: {
   variant: MissionCtaVariant;
   nextPath?: string;
+  // "news" variant only -- the article's key tagged politician's full name,
+  // when known. Personalizes the CTA copy (see newsCopyFor); ignored for
+  // every other variant.
+  personName?: string | null;
 }) {
   const { user, loading } = useAuth();
   const [showModal, setShowModal] = useState(false);
@@ -192,7 +218,7 @@ export default function MissionRegisterCTA({
 
   if (loading || user) return null;
 
-  const copy = COPY[variant];
+  const copy = variant === "news" ? newsCopyFor(personName) : COPY[variant];
   const href = `/auth?role=citizen&next=${encodeURIComponent(nextPath || "/")}`;
 
   return (
