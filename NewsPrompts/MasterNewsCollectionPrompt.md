@@ -13,96 +13,94 @@
 
 ---
 
-## 0. THIS IS ONE ENGINE, NOT TWO PATHS
+## 0. THE SHAPE OF THE SYSTEM — ONE ENGINE, A PERSISTENT QUEUE, TWO SYNTHESIS MODES
 
 > [!IMPORTANT]
-> **There is a single content engine: [`scripts/rss-verified-pipeline.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/rss-verified-pipeline.js). Cron and an on-demand/manual run execute the literal same command now — not just the same code, the same invocation:**
->
-> ```bash
-> # Both scheduled/cron AND on-demand:
-> node scripts/rss-verified-pipeline.js
-> ```
->
-> No `--max-hours` flag on the recurring schedule. It auto-computes the exact
-> lookback from time-since-last-published
-> ([`scripts/get-last-publish-window.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/get-last-publish-window.js))
-> every single run. On a normal hourly cadence that resolves to ~1h every
-> time — matching the schedule exactly instead of re-scanning a padded
-> window. If a run is ever missed (machine asleep, network blip), it
-> self-expands to cover the gap instead of guessing at a fixed margin.
-> Falls back to 4h internally if the lookup itself fails. Only pass
-> `--max-hours` explicitly for a deliberate one-off ("just check the last 3
-> hours") — never hardcode it into a recurring schedule; a fixed number is
-> either redundant (matches auto-window anyway) or wrong (doesn't adapt to a
-> missed run).
->
-> There is also no per-run publish limit anymore (removed 2026-08-28) —
-> every verified, deduplicated, quote-checked candidate gets synthesized and
-> published each run. The only ceiling left is `maxCandidates` in the
-> collector (currently 300), which is a network/cost bound on how many
-> source URLs get fetched, not an editorial cap.
->
-> What used to require a live agent doing ad-hoc Google searches (the old
-> "3 Discovery Tracks" below) is now handled entirely inside
-> [`scripts/rss-feed-collector.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/rss-feed-collector.js):
-> ~126 registered feeds spanning federal wires, 31 named key-leader queries,
-> one feed per US state (10 highest-volume states split into
-> municipal-only + state-level-only feeds), and one feed per Canadian
-> province/territory (the 3 territories paired with their capital city,
-> since the territory name alone barely indexes) — pooled and interleaved
-> national:local at a fixed 1:2 ratio so national wires can never crowd out
-> local coverage the way they used to. The pipeline also pulls the
-> same-window trending topics
-> ([`scripts/fetch-trending-topics.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/fetch-trending-topics.js))
-> automatically and prioritizes any candidate that matches, so a genuinely
-> trending story never gets truncated out.
->
-> **The one thing this can't do**: a story with zero RSS/Google News
-> footprint at all — a raw court docket, a hyper-local outlet with no feed.
-> That's the one legitimate case for a manual, occasional deep-dive outside
-> this pipeline (live web search, hand-authoring a JSON object into
-> [`scripts/insert-news-batch.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/insert-news-batch.js)'s
-> `articles` array, then running it directly) — not the default way news
-> gets in, and not something to run unattended on a schedule.
+> **There is a single content engine: [`scripts/rss-verified-pipeline.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/rss-verified-pipeline.js), backed by a persistent candidate queue the script alone owns.** The one real architectural principle here: **the script decides which candidates exist and which of them have been published; nothing else — not a cron flavor, not an agent — gets to make that call.**
 
-Everything below this point is **reference material**: the editorial rules
-the pipeline's Gemini synthesis prompt already encodes (so you can audit or
-extend it), the key-leader roster it already queries, and the JSON shape it
-already produces. Treat it as documentation of what the code does, not as a
-separate set of steps to execute by hand.
+### Two synthesis modes, one script
+
+```bash
+# Default (collect-only) — discovers/filters/dedupes, writes the candidate
+# queue, and STOPS. This is the mode for Antigravity-driven synthesis.
+node scripts/rss-verified-pipeline.js
+
+# Full API-driven run — same discovery, then also calls the Gemini API
+# directly for every queued candidate and ingests the result.
+node scripts/rss-verified-pipeline.js --use-api-key
+
+# Explicit lookback override (rare — see auto-window below for why you
+# normally don't need this):
+node scripts/rss-verified-pipeline.js --max-hours 6
+```
+
+`collectOnly` is the default specifically because `--use-api-key` costs real Gemini quota per candidate, and Antigravity-driven synthesis is free within its own plan — **cost, not capability, is why the split exists.** Both modes share 100% of discovery, filtering, dedup, and queue logic; only what happens *after* the queue is written differs.
+
+### Antigravity's role is bounded, and now enforced, not just requested
+
+> [!IMPORTANT]
+> **Antigravity's ONLY job is synthesizing prose for candidates the script already selected. It does not decide which candidates exist, which are duplicates, which are in-jurisdiction, or which get published.** All of that is 100% script-owned, upstream of anything Antigravity ever sees:
+>
+> 1. Run `node scripts/rss-verified-pipeline.js` (collect-only/default). It writes/merges [`scripts/latest-verified-rss-candidates.json`](file:///Users/vmn2k4/Coding/Choseno/scripts/latest-verified-rss-candidates.json) — the **persistent candidate queue** (see §3a).
+> 2. Read that file. For every candidate in it, search the internet for verified detail and write a full article (§4-6 below) into [`scripts/bulk-news-batch.json`](file:///Users/vmn2k4/Coding/Choseno/scripts/bulk-news-batch.json). Synthesize as many as your own budget allows in one pass — you do not have to finish the whole queue in one run.
+> 3. Run `node scripts/insert-news-batch.js` to ingest.
+>
+> **What used to be a trust problem is now a structural one.** A prior version of this workflow let an agent silently synthesize 4 of 225 queued candidates and report it as a clean "0 skipped" success — the queue file was overwritten every run, so anything not processed simply vanished, which meant *Antigravity's inaction was the de facto publish decision*. Fixed two ways, both script-side:
+> - **The queue is now persistent** (`mergeCandidatesIntoQueue`, lives in `rss-feed-collector.js`): whatever you don't get to this run stays queued for next time. It only leaves the queue two ways — confirmed published, or aged out past 48h unsynthesized (an objective, script-checked rule, not a judgment call). You genuinely cannot make a candidate disappear by ignoring it.
+> - **`insert-news-batch.js` reconciles coverage on every ingest** (§7): it names every candidate from the queue that isn't in your batch, warns loudly if coverage is under 50%, and still publishes whatever you did produce — no reason to withhold real, verified articles just because the rest of the queue wasn't gotten to yet.
+
+### Auto-window: no manual lookback math
+
+`--max-hours` is almost never needed. Omit it and [`scripts/get-last-publish-window.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/get-last-publish-window.js) computes the lookback from time-since-last-published, with a floor of **24 hours** and a 1-hour overlap buffer — wide enough that the 116-feed registry (below) is always fully re-scanned, never so narrow that a missed run or a slow news morning loses coverage. (This floor was raised from a tighter "just the actual gap" design specifically because the persistent queue now absorbs the redundancy safely — scanning wide and then deduping against the queue/DB is cheap; missing a candidate because the window was too tight is not.) Falls back to 24h if the lookup itself errors.
+
+### What's inside the discovery step
+
+[`scripts/rss-feed-collector.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/rss-feed-collector.js) is 100% deterministic code — no LLM anywhere in it:
+- **116 feeds**: 6 national wires, ~31 named key-leader queries (role + name, split federal/state-provincial pools — see §2), one feed per US state (10 highest-volume states split into municipal-only + state-only feeds), one feed per Canadian province/territory (territories paired with their capital city — see §1). Pooled and interleaved national:local at a fixed 1:2 ratio so national wires structurally cannot crowd out local coverage.
+- **Jurisdiction & relevance filtering** (§1a) — sports/entertainment, viral/human-interest framing, and foreign-primary-subject stories are hard-rejected; only candidates about a real accountable individual survive.
+- **Dedup against the published DB** (time-windowed, ordered by recency) and **against siblings collected in the same run** (syndication across outlets).
+- **HTTP Status Gatekeeper** — 404/410/root landing pages rejected; 401/403 allowlisted paywalls accepted as Tier-2; thin/failed body extraction downgrades to Tier-2 rather than falsely claiming verbatim-quote-grade source text (§1b).
+- Pulls same-window **trending topics** ([`scripts/fetch-trending-topics.js`](file:///Users/vmn2k4/Coding/Choseno/scripts/fetch-trending-topics.js)) and prioritizes matching candidates so nothing genuinely trending gets buried.
+
+**The one thing this can't do**: a story with zero RSS/Google News footprint at all — a raw court docket, a hyper-local outlet with no feed. See §7 for how that's handled without reopening the "agent decides what's published" problem.
 
 ---
 
 ### 1. WHAT THE PIPELINE COVERS
 
-Three governance-tier concerns are covered by feed design, not by agent
-judgment call each run:
+Governance-tier concerns are covered by feed design, not by agent judgment call each run:
 
-1. **Wire & Civic Discovery** — national wires (AP, Reuters, The Canadian
-   Press, CBC, The Hill, Politico, Globe and Mail) via
-   `NATIONAL_FEEDS` in `rss-feed-collector.js`.
-2. **30 Key Political Leaders** — one Google News feed per leader, by name
-   (see roster in §2), split into federal (pooled as "national") vs.
-   state/premier (pooled as "local") so this can't quietly re-inflate the
-   Trump/national skew the per-region feeds below were built to fix.
-3. **Municipal, State & Provincial Coverage** — one feed per US state and
-   Canadian province/territory, built by role/office terms (governor,
-   mayor, councillor, MLA, MPP, MNA, "county commission", "state
-   legislature") plus the region's name — **never a specific incumbent's
-   name**, so it keeps working across elections. Two curated catch-all
-   feeds (US and Canada) supplement this with decision-oriented terms
-   (budget, zoning, referendum, "voted to", bylaw).
+1. **Wire & Civic Discovery** — national wires (The Hill, Politico, CBC, Globe and Mail, Global News, Google News US Politics) via `NATIONAL_FEEDS` in `rss-feed-collector.js`.
+2. **~31 Key Political Leaders** — one Google News feed per leader, by name (see roster in §2), split into federal (pooled as "national") vs. state/premier (pooled as "local") so this can't quietly re-inflate the Trump/national skew the per-region feeds below were built to fix. Query pattern is `"Full Name" (announcement OR bill OR policy OR "executive order" OR statement OR legislation) when:24h` — exactly 2 term groups (see the query-limit note below on why a 3rd breaks this).
+3. **Municipal, State & Provincial Coverage** — one feed per US state and Canadian province/territory, built by role/office terms (governor, mayor, councillor, MLA, MPP, MNA, "county commission", "state legislature") plus the region's name — **never a specific incumbent's name**, so it keeps working across elections. The 10 highest-volume US states (CA, TX, NY, FL, PA, IL, OH, GA, NC, MI) get **two** feeds each — municipal-only terms and state-level-only terms — since one combined query undersamples both sides of their volume. The 3 Canadian territories (Yukon, NWT, Nunavut) are queried by **territory name OR capital city** (Whitehorse, Yellowknife, Iqaluit) since the territory name alone barely indexes on its own. Two curated catch-all feeds (US and Canada) supplement this with decision-oriented terms (budget, zoning, referendum, "voted to", bylaw).
 
-A dedicated opposition/caucus-politics feed exists for exactly the gap a
-premier-name-locked query can't catch: a story about the *opposition*
-losing MLAs to defection, not the sitting government.
+A dedicated opposition/caucus-politics feed exists for exactly the gap a premier-name-locked query can't catch: a story about the *opposition* losing MLAs to defection, not the sitting government.
 
 > [!NOTE]
 > If you're extending feed coverage, keep queries to **at most 2 top-level
 > term groups** (one bracketed OR-group + one quoted phrase, or two
 > bracketed groups — never three). Verified by hand: a 3rd clause silently
 > makes Google News RSS stop honoring the quoted region/leader name and
-> every feed collapses to the same generic top result.
+> every feed collapses to the same generic top result regardless of region.
+> An OR'd alias group inside one bracket (e.g. `("Yukon" OR "Whitehorse")`)
+> still counts as one group and is safe.
+
+#### 1a. Jurisdiction & relevance filtering (`isStrictlyUsOrCanada` + `mentionsOfficeholderOrKnownPolitician`)
+
+Every candidate must clear both of these before it's even considered for HTTP verification:
+
+- **Sports/entertainment** (`SPORTS_ENTERTAINMENT_REGEX`) — hard-rejected. Includes generic sports-roundup language (roundup, snaps skid, matinee, "Saturday slate", varsity, high school football) specifically because several US high schools are named after colonial governors (Governor Livingston HS, Governor Mifflin) and a bare office-title match can't otherwise tell a football score from an actual governor.
+- **Human-interest/viral framing** (`VIRAL_ENTERTAINMENT_REGEX`) — hard-rejected even when a real office holder is named. Catches "goes viral", "fans react hilariously", wedding/engagement announcements ("ties the knot", "best wishes"), and "legacy obituary" (added after a private citizen's obituary matched on a shared surname with a sitting governor).
+- **Foreign outlets** (`FOREIGN_OUTLET_REGEX`) — hard-rejected (Al Jazeera, NDTV, France 24, and similar non-US/CA press).
+- **Foreign-primary-subject stories** (`NON_US_CA_DOMESTIC_REGEX` + `US_CA_EXECUTIVE_KEYWORDS`) — a story that mentions a foreign country/leader is only allowed through if a genuine US/CA signal appears in the **first half of the headline** (a proxy for "primary subject"), not just anywhere in the text. `US_CA_EXECUTIVE_KEYWORDS` deliberately **excludes bare office titles** (governor, premier, mayor, senator...) — Mexico, Nigeria, and plenty of other countries also call their subnational leaders "governor," so a bare title proves nothing about jurisdiction. Only a named US/CA individual, an unambiguous institution (White House, Congress, PMO), or a specific place name (a state/province/city) counts. (Concrete case this fixed: "...expose logic of Sheinbaum's endless concessions to Trump" — a story about Mexican politics that only name-drops Trump in its last clause — is correctly rejected even though "Trump" appears in the text.)
+- **Office-holder/relevance filter** (`mentionsOfficeholderOrKnownPolitician`) — only kept if it names an office-holder title, one of the ~31 curated key leaders, or a capitalized name-phrase matching a real Choseno politician profile (`profiles` table, `role = 'politician'`, paginated — tens of thousands of rows). This runs before HTTP verification and synthesis, cutting cost on candidates that would fail politician-tagging anyway.
+
+#### 1b. Tier assignment (`verifyAndFetchUrl`)
+
+- **200 + >200 chars of extracted body text** → Tier-1 (verbatim quotes allowed, verified against the extracted text).
+- **200 + ≤200 chars extracted** (JS-rendered page, non-standard `.gov` markup, etc.) → **Tier-2**, regardless of allowlist status. This was previously a bug: a thin/failed extraction on a non-allowlisted domain fell through to Tier-1 anyway, meaning Gemini was told "verbatim quotes OK" against source text that was really just the headline repeated — and it filled the gap with plausible-sounding invented quotes. Fixed: thin extraction always downgrades to Tier-2 (paraphrase-only, no verbatim-quote claim).
+- **401/403 on an allowlisted paywall domain** (WSJ, Reuters, Bloomberg, NYT, etc.) → Tier-2.
+- **401/403 on a non-allowlisted domain, 404/410/500+, bare root/category landing page, malformed URL** → rejected outright.
 
 ---
 
@@ -164,16 +162,24 @@ lookup.
 
 ---
 
-### 3. DEDUPLICATION RULES (enforced in `rss-feed-collector.js` / `insert-news-batch.js`)
+### 3. DEDUPLICATION — TWO SEPARATE MECHANISMS, DON'T CONFLATE THEM
+
+**(a) Against already-published articles** (`fetchExistingHeadlines` in `rss-feed-collector.js`, `insert-news-batch.js`'s own slug check): prevents re-publishing the same story.
 1. **Slug match**: Exact slug match will update (`PATCH`) the existing article.
 2. **Canonical source URL match**: Shared source URLs will update rather than duplicate.
-3. **Headline token overlap**: ≥45% token overlap against the last 2000 published headlines is treated as a duplicate and skipped before synthesis even runs.
+3. **Headline token overlap**: ≥45% Jaccard token overlap against recent published headlines (queried with an explicit `ORDER BY published_at DESC` and a time floor — a flat `LIMIT 2000` with no `ORDER BY` isn't "the most recent 2000," it's an arbitrary scan-order slice, which was a real bug: a story published an hour ago could be entirely absent from the sample) is treated as a duplicate and skipped before synthesis even runs. **Within-run syndication dedup** also applies — the same event picked up by multiple outlets/feeds in one collection pass collapses to one candidate before it ever reaches this DB check.
+
+**(b) The persistent candidate queue** (`mergeCandidatesIntoQueue`, in `rss-feed-collector.js`, shared by the collector's own CLI entry point and by `rss-verified-pipeline.js`): this is **not** duplicate-detection — it's queue *retention*. Every collection run merges freshly-discovered candidates (deduped against the queue by `sourceUrl`) into [`scripts/latest-verified-rss-candidates.json`](file:///Users/vmn2k4/Coding/Choseno/scripts/latest-verified-rss-candidates.json) rather than overwriting it. A candidate leaves the queue only two ways:
+- `insert-news-batch.js` confirms it made it into a published/skipped batch (matched by source URL) and prunes it out.
+- It sits unsynthesized for more than **48 hours** and is dropped as no longer "breaking" — an objective, script-enforced age check, logged by name when it happens.
+
+This is the mechanism that makes "the script decides what's published" actually true rather than aspirational — see §0.
 
 ---
 
 ### 4. JOURNALISTIC HEADLINE & EDITORIAL INTEGRITY (ANTI-SCALED CONTENT ABUSE)
 
-Google Search Essentials and Google News Publisher Guidelines strictly penalize templated or formulaic writing ("Scaled Content Abuse"). The Gemini synthesis prompt in `rss-verified-pipeline.js` enforces this per-article; it's documented in full here for anyone auditing or extending that prompt.
+Google Search Essentials and Google News Publisher Guidelines strictly penalize templated or formulaic writing ("Scaled Content Abuse"). The Gemini synthesis prompt in `rss-verified-pipeline.js` enforces this per-article; it's documented in full here for anyone auditing or extending that prompt — and for Antigravity, since it's writing the same articles by hand and should hold itself to the identical bar.
 
 #### 🚫 STRICTLY BANNED HEADLINE PATTERNS & CRUTCH WORDS:
 - ❌ **NO formulaic slots:** `[Name] Advances [Topic] [Initiative/Expansion] for [City]`
@@ -200,22 +206,22 @@ Google Search Essentials and Google News Publisher Guidelines strictly penalize 
 - **Zero Shared Verbs**: Every headline in a batch should use a distinct, active verb (e.g. *Secures, Imposes, Restructures, Petitions, Tightens, Enforces, Voids, Clashes*).
 - **Varied Ledes**: Never open articles with the formula `"[CITY], [ST] — [Official] on [Day] announced..."`. Lead with the hard numbers, community consequence, or legislative vote first.
 
-#### WRITE LIKE AN EDITOR, NOT A TEMPLATE (350–750 WORDS):
+#### WRITE LIKE AN EDITOR, NOT A TEMPLATE:
 
 > [!IMPORTANT]
-> **Fixed 2026-08-28, revised same day**: the body used to render as literal
-> labeled sections ("Dateline Lead" / "Policy & Taxpayer Impact" / "The
-> Debate" / ...). Removing the visible headers alone still left every
-> article marching through the identical four beats in the identical order
-> — a template with the labels hidden is still a template. There is now no
-> fixed structure at all: the model is instructed to make an editorial
-> judgment call on how each specific story should be told, the way a real
-> newsroom writes different stories differently (some lead with a number,
-> some with a quote, some with the human stakes; some have real back-and-
-> forth between sides, some don't have a debate to report and shouldn't be
-> given a manufactured one). The only hard rules are: one continuous
-> narrative, plain paragraphs (`\n\n` for pacing) — never markdown headers,
-> never labeled sections, never a checklist answered one item at a time.
+> The body used to render as literal labeled sections ("Dateline Lead" /
+> "Policy & Taxpayer Impact" / "The Debate" / ...). Removing the visible
+> headers alone still left every article marching through the identical
+> four beats in the identical order — a template with the labels hidden is
+> still a template. There is now no fixed structure at all: make an
+> editorial judgment call on how each specific story should be told, the
+> way a real newsroom writes different stories differently (some lead with
+> a number, some with a quote, some with the human stakes; some have real
+> back-and-forth between sides, some don't have a debate to report and
+> shouldn't be given a manufactured one). The only hard rules: one
+> continuous narrative, plain paragraphs (`\n\n` for pacing) — never
+> markdown headers, never labeled sections, never a checklist answered one
+> item at a time.
 >
 > The things a civic story *can* draw on, entirely at the writer's
 > discretion per story — not a mandatory list to complete every time:
@@ -226,6 +232,41 @@ Google Search Essentials and Google News Publisher Guidelines strictly penalize 
 >
 > Use what this story actually needs. Leave out what it doesn't have.
 
+#### LENGTH: 500-WORD MINIMUM, ENFORCED WITH SEARCH-GROUNDED ENRICHMENT — NEVER PADDING
+
+> [!IMPORTANT]
+> The API-driven path (`synthesizeCivicStory`) enforces a **hard 500-word
+> floor**, checked on the actual output, not assumed from input length:
+> 1. If the source wire text is thin (<300 chars), skip straight to search-
+>    grounded synthesis rather than writing from almost nothing.
+> 2. Otherwise, try the primary structured-JSON prompt. If the result comes
+>    back under 500 words for any reason, that's the trigger — not just an
+>    outright API failure.
+> 3. **Search-grounded enrichment**: search the live internet for real
+>    information on the topic and write a fuller piece from that (target
+>    500-750 words), handing the model whatever short draft already exists
+>    as a starting point to substantiate and extend. This tries every
+>    fallback model in turn (not just one hardcoded model — see below).
+> 4. If the story genuinely doesn't support 500 words even after
+>    searching, say less rather than pad with invented detail — a true
+>    200-word piece beats a padded 600-word one. The enriched version is
+>    only accepted if it's genuinely fuller than what came before; the
+>    bare "According to reporting by..." template is the true last resort,
+>    used only when nothing else produced anything at all.
+>
+> **Antigravity should hold itself to the same 500-word floor and the same
+> "search rather than pad" discipline** when writing into `bulk-news-batch.json` —
+> this isn't just a Gemini-prompt rule, it's the actual editorial bar for
+> every article regardless of which path wrote it.
+>
+> One infrastructure note if you're extending the API-driven path: Gemini's
+> free tier enforces **per-model daily quotas** (observed: 20 requests/day
+> on `gemini-2.5-flash`) — and that model is tried first for literally
+> every article, so it exhausts early on any real-volume day. Both the
+> primary synthesis loop and the search-enrichment fallback try multiple
+> models in turn for exactly this reason; a single hardcoded model anywhere
+> in this path will go dark mid-day once its quota is gone.
+
 ---
 
 ### 5. SOCIAL HOOK & TWEET SPECIFICATION
@@ -233,9 +274,15 @@ Google Search Essentials and Google News Publisher Guidelines strictly penalize 
 - Must clearly explain public significance and civic stakes.
 - **Strict Rule: NO hashtags, NO @handles, NO URLs, and NO emojis.**
 
+This is what goes in the article's `tweet` field. Separately,
+`insert-news-batch.js` also generates a longer-form `tweetarticle` field
+(a "what changed & taxpayer impact" summary plus a Choseno.com CTA link) at
+ingestion time for every article regardless of which path synthesized it —
+that field is NOT something the synthesis step needs to produce itself.
+
 ---
 
-### 6. ARTICLE JSON SCHEMA (what `rss-verified-pipeline.js` synthesizes and `insert-news-batch.js` ingests)
+### 6. ARTICLE JSON SCHEMA (what synthesis produces and `insert-news-batch.js` ingests)
 
 ```json
 {
@@ -251,7 +298,7 @@ Google Search Essentials and Google News Publisher Guidelines strictly penalize 
   "impactArea": "country",
   "latitude": 45.4215,
   "longitude": -75.6972,
-  "body": "OTTAWA, ON — one continuous narrative, plain paragraphs separated by \\n\\n only — NO markdown headers, NO labeled sections. The lead, the hard figures, the impact, and the accountability angle all flow together as a single story a reader can read start to finish.",
+  "body": "OTTAWA, ON — one continuous narrative, plain paragraphs separated by \\n\\n only — NO markdown headers, NO labeled sections. The lead, the hard figures, the impact, and the accountability angle all flow together as a single story a reader can read start to finish. 500+ words.",
   "seoTitle": "Descriptive Search-Friendly Title | Choseno",
   "metaDescription": "140-170 character meta description summarizing the key facts and civic impact.",
   "tags": [
@@ -282,23 +329,29 @@ Google Search Essentials and Google News Publisher Guidelines strictly penalize 
 
 ---
 
-### 7. THE ONE CASE THAT STILL NEEDS A MANUAL RUN
+### 7. INGESTION & COVERAGE RECONCILIATION (`insert-news-batch.js`)
 
-A story that has genuinely zero RSS/Google News footprint — a raw court
-docket, a hyper-local outlet with no feed, a specific follow-up question
-("did this official actually resign yet?"). For that, and only that:
+Every article — whether it came from the API-driven path or from Antigravity's `bulk-news-batch.json` — funnels through this one script, which does all of the following on every run:
 
-1. Research and write the article JSON by hand, following §4-6 above exactly.
-2. Place it into `scripts/insert-news-batch.js`'s `articles` array and run:
-   ```bash
-   node scripts/insert-news-batch.js
-   ```
-   This still runs the shared ingestion engine — dedup, politician-ID
-   resolution, virality scoring, Supabase insert, wall/boundary sync, and
-   the `batch-ranked-news.csv` update — so a manually-authored story gets
-   identical treatment to a pipeline-discovered one downstream.
+1. **Candidate-coverage reconciliation** (checked first, before anything touches Supabase): if a fresh `latest-verified-rss-candidates.json` exists (written within the last 2 hours — a stale file from an unrelated earlier run is ignored so it can't cause a false alarm), it matches every candidate against this batch by source URL (falling back to title similarity for cases where a redirect URL got rewritten during synthesis) and:
+   - Logs `[COVERAGE] X/Y candidates synthesized (Z%)`.
+   - **Names every candidate that didn't make it in** — headline, source, URL — not just a count. This is the closest thing to "why was this one skipped" the script can give; it can't see an agent's internal reasoning, but it can always say exactly *which* ones to hand back for a retry.
+   - Warns loudly (`⚠️ LOW CANDIDATE COVERAGE`) below 50% coverage, but **still publishes** whatever's genuinely ready — there's no reason to withhold real, verified articles because the rest of the queue wasn't finished. Pass `--require-full-coverage` to opt into hard-blocking a partial batch instead, for a context where that's genuinely the right call.
+   - After a successful run, **prunes the queue file** to just the still-missing candidates — this is the other half of the persistent-queue mechanism in §3b.
+2. **Politician-ID resolution** (`resolvePoliticianIds`) against the `profiles` table for anything not already carrying a `taggedPoliticianIds` array.
+3. **Virality scoring** (`calculateViralityScore`) — used to rank `batch-ranked-news.csv`.
+4. **`admin_sync_news_article_tags()`** — wall mirroring for every resolved politician ID.
+5. **`admin_sync_news_article_boundaries()`** — electoral/municipal GIS polygon sync from lat/lng.
+6. **`tweetarticle` + `batch_number` generation** — added at ingestion time for every article regardless of synthesis path; not something the synthesis step needs to produce.
+7. **`batch-ranked-news.csv` update** (top 100 by virality score) and overflow archiving to `scripts/overflow-news-batch.json`.
+8. **Optional Twitter posting** (`post-to-twitter.js`) per newly-inserted article.
+
+#### The one case that still needs a manual, occasional exception
+
+A story with genuinely zero RSS/Google News footprint — a raw court docket, a hyper-local outlet with no feed, a specific follow-up question ("did this official actually resign yet?"). For that, and only that:
+
+1. Research and write the article JSON by hand, following §4-6 above exactly (500-word floor included).
+2. Place it into `scripts/insert-news-batch.js`'s `articles` array (or a batch JSON file) and run `node scripts/insert-news-batch.js` — it still runs the full reconciliation/scoring/sync pipeline above, so a manually-authored story gets identical treatment to a pipeline-discovered one.
 3. Verify (`npx tsc --noEmit`) and commit. *(Do not push without permission.)*
 
-This should be rare. If you're reaching for it often for a category of
-story, that's a signal to add a feed to `rss-feed-collector.js` instead —
-see the §1 note on the 2-term-group query limit before doing so.
+This should be rare. If you're reaching for it often for a category of story, that's a signal to add a feed to `rss-feed-collector.js` instead — see the §1 note on the 2-term-group query limit before doing so. This is also explicitly **not** something to run unattended on a schedule — unlike the main pipeline, there's no script-owned filter standing between "someone typed this" and "it's live."

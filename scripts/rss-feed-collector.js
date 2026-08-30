@@ -2,13 +2,37 @@
  * scripts/rss-feed-collector.js
  *
  * Programmatic, Machine-Extracted Ground Truth RSS Collector.
+ * No LLM in this file at all — every decision here is deterministic code.
  *
  * Guarantees:
  * 1. URLs and metadata are extracted directly from machine RSS feeds (no LLM in the loop).
- * 2. Fetches full article body text when available (Tier-1).
+ * 2. Fetches full article body text when available (Tier-1); a thin/failed
+ *    extraction downgrades to Tier-2 (paraphrase-only) rather than falsely
+ *    claiming verbatim-quote-grade source text.
  * 3. Classifies 401/403 paywalled allowlisted domains as Tier-2 (summary only, 0 quotes).
  * 4. Hard-rejects 404s, 410s, and bare root/category landing pages.
- * 5. Deduplicates against Supabase database.
+ * 5. 116 feeds: 6 national wires, ~31 named key-leader queries (by role +
+ *    name, split federal/state-provincial pools), one feed per US state
+ *    (10 highest-volume states split into municipal-only + state-only) and
+ *    per Canadian province/territory (territories paired with their
+ *    capital city). Pooled and interleaved national:local 1:2 so national
+ *    wires can't crowd out local coverage.
+ * 6. Jurisdiction filtering: sports/entertainment and human-interest/viral
+ *    framing hard-rejected; a foreign country mention only survives if a
+ *    genuine US/CA signal (named leader, institution, or place — never a
+ *    bare office title, since "governor" exists in other countries too)
+ *    appears in the first half of the headline.
+ * 7. Relevance filtering: only candidates naming an office holder, a known
+ *    key leader, or someone matching a real Choseno politician profile
+ *    (~31k profiles, paginated) survive — cuts cost before HTTP
+ *    verification or synthesis ever runs.
+ * 8. Deduplicates against Supabase (time-windowed, ordered by recency —
+ *    not a flat LIMIT with no ORDER BY) and against siblings collected in
+ *    the same run (syndication across outlets/feeds).
+ * 9. Candidates that clear all of the above are merged into a PERSISTENT
+ *    queue (mergeCandidatesIntoQueue) rather than a per-run snapshot —
+ *    anything not yet synthesized carries forward until it's published or
+ *    ages out past 48h.
  */
 
 const fs = require('fs');
@@ -802,7 +826,7 @@ async function collectVerifiedRssStories(options = {}) {
   // Raised 60 -> 80 alongside the key-leader feeds (now ~100 feeds total).
   // This is a NETWORK/COST bound (how many source URLs get fetched and
   // HTTP-verified per run), not an editorial cap — the publish-side limit
-  // was removed entirely (2026-08-28). Raised to 300 alongside ~126 feeds
+  // was removed entirely (2026-08-28). Raised to 300 alongside 116 feeds
   // (50 states w/ 10 split into 2 + 13 CA regions + ~31 leaders + 12
   // curated) so a run can realistically cover every feed at least once.
   const maxCandidates = options.maxCandidates || 300;
@@ -843,12 +867,66 @@ async function collectVerifiedRssStories(options = {}) {
   return verifiedCandidates;
 }
 
+// A candidate that sits unsynthesized this long is no longer "breaking" —
+// this is the ONE rule that removes something from the queue without it
+// ever being published, and it's owned by the script (age is objective and
+// checkable), not left to an agent's judgment call. Lives here (not in
+// rss-verified-pipeline.js) so both that pipeline AND this file's own
+// standalone CLI entry point below share the identical merge logic —
+// previously the CLI path overwrote the queue file wholesale, silently
+// discarding any backlog Antigravity hadn't gotten to yet.
+const QUEUE_EXPIRY_HOURS = 48;
+
+/**
+ * Merges freshly-discovered candidates into the persistent queue file,
+ * carrying forward anything from previous runs that hasn't been published
+ * yet (insert-news-batch.js prunes this file after a successful ingest)
+ * and dropping only what's aged out past QUEUE_EXPIRY_HOURS. Dedup is by
+ * sourceUrl — the same signal insert-news-batch.js uses to confirm a
+ * candidate was actually published.
+ */
+function mergeCandidatesIntoQueue(freshCandidates, queuePath) {
+  const expiryCutoff = Date.now() - QUEUE_EXPIRY_HOURS * 3600 * 1000;
+
+  let existingQueue = [];
+  if (fs.existsSync(queuePath)) {
+    try {
+      const parsed = JSON.parse(fs.readFileSync(queuePath, 'utf8'));
+      if (Array.isArray(parsed)) existingQueue = parsed;
+    } catch (e) {
+      console.warn('[QUEUE] Could not parse existing candidate queue, starting fresh:', e.message);
+    }
+  }
+
+  const expired = existingQueue.filter(c => new Date(c.pubDate).getTime() < expiryCutoff);
+  const stillFresh = existingQueue.filter(c => new Date(c.pubDate).getTime() >= expiryCutoff);
+  if (expired.length > 0) {
+    console.log(`[QUEUE] ${expired.length} candidate(s) aged out past ${QUEUE_EXPIRY_HOURS}h unsynthesized and were dropped (not published, not carried forward):`);
+    expired.forEach(c => console.log(`  - "${c.title}"`));
+  }
+
+  const existingUrls = new Set(stillFresh.map(c => c.sourceUrl));
+  const genuinelyNew = freshCandidates.filter(c => !existingUrls.has(c.sourceUrl));
+  if (stillFresh.length > 0) {
+    console.log(`[QUEUE] Carried over ${stillFresh.length} candidate(s) from previous runs that were never synthesized — they are still queued, not lost.`);
+  }
+
+  const merged = [...stillFresh, ...genuinelyNew];
+  fs.writeFileSync(queuePath, JSON.stringify(merged, null, 2));
+  return merged;
+}
+
 // CLI Execution
 if (require.main === module) {
-  collectVerifiedRssStories({ maxHours: 4 }).then(results => {
+  // Fixed 2026-08-30: this used to overwrite latest-verified-rss-
+  // candidates.json outright, which — if this script is ever invoked
+  // directly instead of through rss-verified-pipeline.js — would silently
+  // wipe out any unsynthesized backlog the queue was carrying. Now merges
+  // through the same persistent-queue logic the pipeline uses.
+  collectVerifiedRssStories({ maxHours: 24 }).then(results => {
     const outPath = path.join(__dirname, 'latest-verified-rss-candidates.json');
-    fs.writeFileSync(outPath, JSON.stringify(results, null, 2));
-    console.log(`Saved candidates to ${outPath}`);
+    const queue = mergeCandidatesIntoQueue(results, outPath);
+    console.log(`Candidate queue: ${queue.length} total pending (${results.length} newly discovered this run) saved to ${outPath}`);
   }).catch(console.error);
 }
 
@@ -858,5 +936,7 @@ module.exports = {
   ALLOWLISTED_PAYWALLED_DOMAINS,
   RSS_FEEDS,
   isStrictlyUsOrCanada,
-  mentionsOfficeholderOrKnownPolitician
+  mentionsOfficeholderOrKnownPolitician,
+  mergeCandidatesIntoQueue,
+  QUEUE_EXPIRY_HOURS
 };

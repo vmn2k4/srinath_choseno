@@ -1,24 +1,47 @@
 /**
  * scripts/rss-verified-pipeline.js
  *
- * End-to-End Real-World Verified News Ingestion Pipeline.
+ * End-to-End Real-World Verified News Ingestion Pipeline. The single
+ * content engine for both scheduled and on-demand runs — every invocation
+ * runs the same code, same rules, same queue. See
+ * NewsPrompts/MasterNewsCollectionPrompt.md for the full architecture
+ * writeup; this header is the short version.
  *
  * Architecture:
- * 1. Machine RSS Fetcher (collectVerifiedRssStories): extracts real wire URLs, titles, descriptions.
- * 2. HTTP Status Gatekeeper: 404/410/root landing pages rejected; 401/403 allowlisted paywalls accepted as Tier-2.
- * 3. LLM Civic Structurer (Gemini API): builds neutral context, debate, and taxpayer impact.
- * 4. Code-Level Quote Verifier (verifyArticleQuotesAndFacts): strips any ungrounded quotes.
- * 5. Immutable Source Injection: hard-codes machine URL/publisher into database record.
- * 6. Dynamic Politician Wall Sync: maps elected officials to verified canonical wall slugs.
+ * 1. Machine RSS Fetcher (collectVerifiedRssStories, in rss-feed-collector.js):
+ *    extracts real wire URLs, titles, descriptions; jurisdiction, relevance,
+ *    and dedup filtering; HTTP Status Gatekeeper (404/410/root rejected,
+ *    401/403 allowlisted paywalls accepted as Tier-2).
+ * 2. Persistent candidate queue: results merge into latest-verified-rss-
+ *    candidates.json rather than overwriting it — nothing synthesis doesn't
+ *    get to this run is lost, it carries forward until published or it
+ *    ages out past 48h (mergeCandidatesIntoQueue).
+ * 3. Two synthesis modes, controlled by --use-api-key:
+ *    - Default (collect-only): writes the queue and stops. Meant for
+ *      Antigravity (or any external agent) to read the queue and write
+ *      scripts/bulk-news-batch.json itself — the SCRIPT decides which
+ *      candidates exist; the agent's only job is writing prose for them.
+ *    - --use-api-key: calls the Gemini API directly (synthesizeCivicStory)
+ *      for every queued candidate — ground-truth-only prompt, a 500-word
+ *      minimum with automatic search-grounded enrichment (tries all
+ *      fallback models) for anything short, then code-level quote
+ *      verification (verifyArticleQuotesAndFacts) before writing the batch
+ *      and invoking insert-news-batch.js.
+ * 4. insert-news-batch.js is the one file both modes funnel through: it
+ *    verifies candidate-coverage (warns loudly + names every candidate a
+ *    synthesis run skipped, without withholding what IS ready), resolves
+ *    politician IDs, scores virality, syncs walls/GIS boundaries, updates
+ *    the ranked CSV, and prunes the queue of whatever it just published.
  *
  * Usage:
- *   node scripts/rss-verified-pipeline.js
- *   node scripts/rss-verified-pipeline.js --max-hours 6
+ *   node scripts/rss-verified-pipeline.js                  # collect-only (default) — writes the queue, agent synthesizes
+ *   node scripts/rss-verified-pipeline.js --use-api-key     # full API-driven run: collect, synthesize, ingest
+ *   node scripts/rss-verified-pipeline.js --max-hours 6     # explicit lookback (else auto-computed, min 24h either way)
  */
 
 const fs = require('fs');
 const path = require('path');
-const { collectVerifiedRssStories } = require('./rss-feed-collector');
+const { collectVerifiedRssStories, mergeCandidatesIntoQueue } = require('./rss-feed-collector');
 const { verifyArticleQuotesAndFacts } = require('./quote-and-fact-verifier');
 
 const envPath = path.resolve(__dirname, '..', '.env.local');
@@ -382,50 +405,10 @@ function isTrending(title, trendingKeywords) {
   return tokens.some(t => trendingKeywords.has(t));
 }
 
-// A candidate that sits unsynthesized this long is no longer "breaking" —
-// this is the ONE rule that removes something from the queue without it
-// ever being published, and it's owned by the script (age is objective and
-// checkable), not left to an agent's judgment call.
-const QUEUE_EXPIRY_HOURS = 48;
-
-/**
- * Merges freshly-discovered candidates into the persistent queue file,
- * carrying forward anything from previous runs that hasn't been published
- * yet (see insert-news-batch.js, which prunes this file after a successful
- * ingest) and dropping only what's aged out past QUEUE_EXPIRY_HOURS.
- * Dedup is by sourceUrl — the same signal insert-news-batch.js uses to
- * confirm a candidate was actually published.
- */
-function mergeCandidatesIntoQueue(freshCandidates, queuePath) {
-  const expiryCutoff = Date.now() - QUEUE_EXPIRY_HOURS * 3600 * 1000;
-
-  let existingQueue = [];
-  if (fs.existsSync(queuePath)) {
-    try {
-      const parsed = JSON.parse(fs.readFileSync(queuePath, 'utf8'));
-      if (Array.isArray(parsed)) existingQueue = parsed;
-    } catch (e) {
-      console.warn('[QUEUE] Could not parse existing candidate queue, starting fresh:', e.message);
-    }
-  }
-
-  const expired = existingQueue.filter(c => new Date(c.pubDate).getTime() < expiryCutoff);
-  const stillFresh = existingQueue.filter(c => new Date(c.pubDate).getTime() >= expiryCutoff);
-  if (expired.length > 0) {
-    console.log(`[QUEUE] ${expired.length} candidate(s) aged out past ${QUEUE_EXPIRY_HOURS}h unsynthesized and were dropped (not published, not carried forward):`);
-    expired.forEach(c => console.log(`  - "${c.title}"`));
-  }
-
-  const existingUrls = new Set(stillFresh.map(c => c.sourceUrl));
-  const genuinelyNew = freshCandidates.filter(c => !existingUrls.has(c.sourceUrl));
-  if (stillFresh.length > 0) {
-    console.log(`[QUEUE] Carried over ${stillFresh.length} candidate(s) from previous runs that were never synthesized — they are still queued, not lost.`);
-  }
-
-  const merged = [...stillFresh, ...genuinelyNew];
-  fs.writeFileSync(queuePath, JSON.stringify(merged, null, 2));
-  return merged;
-}
+// mergeCandidatesIntoQueue + QUEUE_EXPIRY_HOURS now live in
+// rss-feed-collector.js (imported above) so this pipeline AND that file's
+// own standalone CLI entry point share one implementation instead of two
+// that could silently drift apart.
 
 /**
  * Main Execution: Collect -> Gatekeep -> Synthesize -> Verify Quotes -> Ingest
