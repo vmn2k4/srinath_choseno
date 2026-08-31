@@ -1,20 +1,19 @@
 # Choseno Autonomous Newsroom Pipeline: Comprehensive Architecture & Operations
 
+> For the editorial rules (headline craft, word-count floor, jurisdiction/relevance filtering detail, the article JSON schema) see [`NewsPrompts/MasterNewsCollectionPrompt.md`](../NewsPrompts/MasterNewsCollectionPrompt.md) — that document is the source of truth for *what gets written*; this one is the source of truth for *how the system runs it*. Keep both in sync with the actual code, not with each other's prose — verify against the scripts before editing either.
+
 ## 1. Executive Summary & Design Principles
 
-The Choseno Newsroom Pipeline is a production-grade, autonomous civic intelligence system. It discovers, verifies, deduplicates, synthesizes, and publishes state, provincial, and municipal news across the **United States and Canada**.
+The Choseno Newsroom Pipeline is a production-grade, autonomous civic intelligence system. It discovers, verifies, deduplicates, synthesizes, and publishes federal, state/provincial, and municipal news across the **United States and Canada**.
 
 ### Core Architecture Principles
 
 1. **Strict Machine vs. LLM Division of Labor**:
-   - **Machine Scripts** (`rss-verified-pipeline.js`, `rss-feed-collector.js`, `queue-manager.js`, `insert-news-batch.js`): Control 100% of candidate discovery, HTTP status checks, paywall gating, geographic filtering, database deduplication, queue partitioning, and Supabase ingestion.
-   - **Antigravity AI Subagents**: Dedicated exclusively to search-grounded journalistic synthesis, transforming raw verified event leads into 500–750 word, neutral, non-partisan civic reports adhering to the schema.
-2. **Strict Geographic Mandate**:
-   - 100% of stories are geographically bound to the United States (all 50 states + DC/territories) and Canada (all 10 provinces + 3 territories). Non-US/CA international wires and non-civic celebrity gossip are filtered at the ingestion boundary.
-3. **Zero-Hallucination Grounding**:
-   - Every synthesized report is verified against live primary sources (government dockets, legislative transcripts, court filings, official press conferences, and regional news wires).
-4. **Autonomous Continuous Drain Loop**:
-   - The pipeline operates on an unbroken loop: candidate queues are partitioned into parallel subagent worker chunks and continuously synthesized until the queue count reaches zero.
+   - **Machine Scripts** (`rss-feed-collector.js`, `rss-verified-pipeline.js`, `insert-news-batch.js`, `sequential-pipeline-runner.js`): control 100% of candidate discovery, HTTP status checks, paywall gating, geographic/relevance filtering, deduplication, queue lifecycle, and Supabase ingestion.
+   - **LLM synthesis** (Gemini API directly, or Antigravity/an external agent reading the queue): dedicated *exclusively* to writing the prose for a candidate the scripts already selected. It never decides which candidates exist, which are duplicates, which are in-jurisdiction, or which get published — see the "queue" section below for why that boundary is enforced structurally, not just requested.
+2. **Strict Geographic Mandate**: 100% of stories are bound to the United States (all 50 states + DC) and Canada (all 10 provinces + 3 territories). Non-US/CA wires, sports/entertainment, and human-interest/viral framing are filtered before HTTP verification or synthesis ever runs.
+3. **Zero-Hallucination Grounding**: every synthesized report is grounded in machine-extracted source text (Tier-1) or paraphrased with attribution from an allowlisted paywalled source (Tier-2) — never invented. A thin or failed extraction downgrades to Tier-2 rather than falsely claiming quote-grade source text.
+4. **Sequential execution is the default operating mode, not a fallback**: [`scripts/sequential-pipeline-runner.js`](../scripts/sequential-pipeline-runner.js) processes exactly one candidate at a time — synthesize, verify, ingest, prune — before moving to the next. This was a deliberate choice over concurrent/parallel subagent waves: parallel workers hit API rate limits unevenly, produce inconsistent quality, and (in an earlier version of this pipeline) made it possible for a wave of workers to silently under-process a large queue while still reporting a clean result. There is no parallel-worker mode in this codebase — an earlier `queue-manager.js` script that split the queue into chunks for concurrent workers was removed for exactly this reason; do not reintroduce that pattern.
 
 ---
 
@@ -22,30 +21,24 @@ The Choseno Newsroom Pipeline is a production-grade, autonomous civic intelligen
 
 ```mermaid
 flowchart TD
-    A[RSS Feed Registry<br/>Federal, 50 States, 10 Provinces, Mayors] --> B[rss-feed-collector.js<br/>Machine Harvesting & Paywall Gatekeeper]
-    B --> C[Geographic & Non-Civic Filter<br/>Strict US & CA Boundary]
-    C --> D[Deduplication Engine<br/>Overlap Similarity >= 0.35 against Supabase]
-    D --> E[Trending Topics Matcher<br/>latest-trending-topics.csv]
-    E --> F[Master Candidate Queue<br/>latest-verified-rss-candidates.json]
-    F --> G[queue-manager.js split<br/>Partitions into 4 Worker Chunks]
-    G --> H1[Subagent Worker 1]
-    G --> H2[Subagent Worker 2]
-    G --> H3[Subagent Worker 3]
-    G --> H4[Subagent Worker 4]
-    H1 --> I[Worker Outputs<br/>worker-output-*.json]
-    H2 --> I
-    H3 --> I
-    H4 --> I
-    I --> J[queue-manager.js merge<br/>Schema Validation & Consolidation]
-    J --> K[insert-news-batch.js<br/>Supabase news_articles Ingestion]
-    K --> L1[Politician Wall Sync<br/>admin_sync_news_article_tags]
-    K --> L2[GIS Spatial Boundary Match<br/>admin_sync_news_article_boundaries]
-    K --> L3[Static OG Card Generation<br/>1200x630 Supabase Storage]
-    K --> L4[Ranking CSV & Archive<br/>batch-ranked-news.csv]
-    J --> M{Queue Empty?}
-    M -- No --> G
-    M -- Yes --> N[Standby for Next Hourly Cron Cycle]
+    A[RSS Feed Registry<br/>116 feeds: Federal, 50 States, 13 CA Provinces/Territories, ~31 Key Leaders] --> B[rss-feed-collector.js<br/>Machine Harvesting & Paywall Gatekeeper]
+    B --> C[Jurisdiction & Relevance Filter<br/>isStrictlyUsOrCanada + mentionsOfficeholderOrKnownPolitician]
+    C --> D[Deduplication<br/>Jaccard token overlap ≥ 0.45 against published DB<br/>+ within-run syndication collapse]
+    D --> E[Trending Topics Matcher<br/>fetch-trending-topics.js]
+    E --> F[Persistent Candidate Queue<br/>latest-verified-rss-candidates.json<br/>mergeCandidatesIntoQueue — survives across runs, 48h expiry]
+    F --> G{Synthesis mode}
+    G -- sequential-pipeline-runner.js --> H[Pop ONE candidate]
+    H --> I[synthesizeCivicStory<br/>500-word floor + search-grounded enrichment]
+    I --> J[verifyArticleQuotesAndFacts]
+    J --> K[insert-news-batch.js<br/>single-article batch]
+    K --> L[Prunes this candidate from the queue]
+    L --> H
+    G -- rss-verified-pipeline.js --use-api-key --> M[Synthesize entire queue concurrently]
+    M --> N[insert-news-batch.js<br/>full batch]
+    N --> O[Coverage reconciliation:<br/>names anything missing, prunes what published]
 ```
+
+Both synthesis modes converge on the same `insert-news-batch.js`, which is the one place politician-ID resolution, virality scoring, wall/GIS sync, and queue pruning happen — regardless of which path produced the article.
 
 ---
 
@@ -53,149 +46,101 @@ flowchart TD
 
 ### Stage 1: Feed Harvesting & Ingestion (`scripts/rss-feed-collector.js`)
 
-- **Feed Registry**:
-  - **National & Federal Wires**: *The Hill, Politico Congress, CBC News Politics, The Globe and Mail, Global News*.
-  - **Key Leader Targeted Feeds**: Real-time Google News RSS monitors for key US & Canadian leaders (*e.g., Donald Trump, JD Vance, Hakeem Jeffries, Gavin Newsom, Doug Ford, Danielle Smith, David Eby, Wab Kinew*).
-  - **50 US State Capitols & Municipal Feeds**: Dedicated RSS queries for state legislatures, city councils, mayors, county commissions, and school boards.
-  - **13 Canadian Provincial & Municipal Feeds**: Dedicated provincial legislature, city hall, and civic politics feeds.
-- **Lookback Window Calculation (`scripts/get-last-publish-window.js`)**:
-  - Automatically queries the Supabase database for the timestamp of the most recently published article.
-  - Slices the lookback window to fetch all stories since the last publication (with a safety cap between 1h and 24h).
+100% deterministic — no LLM anywhere in this file.
+
+- **Feed Registry (116 feeds)**: 6 national wires (The Hill, Politico Congress, CBC News Politics, The Globe and Mail, Global News, Google News US Politics); ~31 named key-leader queries (role + name, split federal vs. state/provincial pools); one feed per US state (10 highest-volume states split into municipal-only + state-only feeds); one feed per Canadian province/territory (the 3 territories paired with their capital city). Pooled and interleaved national:local at a fixed 1:2 ratio so national wires structurally cannot crowd out local coverage.
+- **Lookback Window (`scripts/get-last-publish-window.js`)**: computes the lookback from time-since-last-published, floored at 24 hours with a 1-hour overlap buffer. Wide overlap is intentional and cheap now that the persistent queue (Stage 2 below) absorbs redundancy safely via dedup — missing a candidate because the window was too tight is the failure mode this is designed against.
+- **Jurisdiction & relevance filtering**: `isStrictlyUsOrCanada` hard-rejects sports/entertainment framing, human-interest/viral framing (weddings, "goes viral," obituaries of unrelated namesakes), foreign outlets, and foreign-primary-subject stories (a foreign country mention only survives if a genuine US/CA signal — a named leader, institution, or place, never a bare office title — appears in the first half of the headline). `mentionsOfficeholderOrKnownPolitician` then requires the candidate to actually name an office holder, a curated key leader, or someone matching a real Choseno politician profile (~31k rows, paginated).
 - **HTTP Status & Paywall Gatekeeper**:
-  - **Tier-1 (Full Text)**: Scrapes full article body text and metadata when accessible.
-  - **Tier-2 (Allowlisted Paywalled)**: Detects HTTP 401/403 on trusted allowlist domains (*WSJ, Bloomberg, NYT, Washington Post, Globe and Mail, Toronto Star*). Permits summary extraction while strictly prohibiting unverified direct quotes.
-  - **Tier-3 (Rejection)**: Hard drops 404, 410, timeouts, and non-article root/landing pages.
+  - **Tier-1**: full body text extracted (>200 chars) — verbatim quotes permitted, verified against the extracted text.
+  - **Tier-2**: 401/403 on an allowlisted paywall domain (WSJ, Reuters, Bloomberg, NYT, Washington Post, Globe and Mail, etc.), OR a thin/failed extraction (≤200 chars) on *any* domain — paraphrase only, zero verbatim-quote claims.
+  - **Rejected**: 404/410/500+, non-allowlisted 401/403, bare root/category landing pages, malformed URLs.
 
 ---
 
-### Stage 2: Deduplication Engine & Overlap Similarity
+### Stage 2: The Persistent Candidate Queue
 
-The pipeline enforces multi-layer deduplication at both the collector stage and the queue partitioning stage.
+`latest-verified-rss-candidates.json` is **not** a per-run snapshot — it's state the script alone owns, via `mergeCandidatesIntoQueue` (lives in `rss-feed-collector.js`, imported by both `rss-verified-pipeline.js` and `sequential-pipeline-runner.js` so there is exactly one implementation).
 
-#### Mathematical Overlap Scoring Formula
+- Every collection run **merges** freshly-discovered candidates into the queue (deduped against it by `sourceUrl`) rather than overwriting it.
+- A candidate leaves the queue only two ways: **confirmed published** (`insert-news-batch.js` matches it into a batch and prunes it), or **aged out past 48 hours** unsynthesized — an objective, script-checked rule, logged by name when it fires.
 
-To catch rewrites, wire syndications, and editorial variations of the same underlying story, the system calculates token-set overlap similarity:
+This is the mechanism that makes "the script decides what's published" structurally true. It was added after a real incident: an agent given the full queue and told to synthesize everything silently processed 4 of 225 candidates and reported it as a clean success, because the queue file was overwritten every run and anything not processed simply vanished. With a persistent queue, an agent's inaction can no longer make a candidate disappear — it just stays queued for the next pass.
 
-$$\text{Overlap Similarity}(S_1, S_2) = \frac{|W_1 \cap W_2|}{\min(|W_1|, |W_2|)}$$
-
-Where:
-- $W_1 = \text{Set of normalized word tokens in String } 1 \text{ (length } > 2\text{, alphanumeric only)}$
-- $W_2 = \text{Set of normalized word tokens in String } 2$
+#### Deduplication (the actual formula — verify against `calculateSimilarity` in `rss-feed-collector.js` before trusting any other description of this)
 
 ```javascript
-function getWords(str) {
-  return new Set((str || '').toLowerCase().replace(/[^a-z0-9]/g, ' ').split(/\s+/).filter(w => w.length > 2));
-}
-
-function overlapSimilarity(s1, s2) {
-  const w1 = getWords(s1);
-  const w2 = getWords(s2);
-  if (w1.size === 0 || w2.size === 0) return 0;
-  let inter = 0;
-  for (const w of w1) if (w2.has(w)) inter++;
-  return inter / Math.min(w1.size, w2.size);
+function calculateSimilarity(str1, str2) {
+  const tokens1 = new Set(str1.toLowerCase().replace(/[^a-z0-9]/g, ' ').split(/\s+/).filter(w => w.length > 3));
+  const tokens2 = new Set(str2.toLowerCase().replace(/[^a-z0-9]/g, ' ').split(/\s+/).filter(w => w.length > 3));
+  if (tokens1.size === 0 || tokens2.size === 0) return 0;
+  let intersection = 0;
+  for (const t of tokens1) if (tokens2.has(t)) intersection++;
+  return intersection / (tokens1.size + tokens2.size - intersection); // Jaccard index — union in the denominator
 }
 ```
 
-#### Deduplication Rules
+This is the **Jaccard index** (intersection over *union*), threshold **≥ 0.45**, checked against published headlines/slugs fetched with an explicit `ORDER BY published_at DESC` and a time floor (an earlier version had no `ORDER BY` on a `LIMIT`-only query, which on a table with no natural order isn't "the most recent N" — it's an arbitrary scan-order slice, and a story published an hour ago could be entirely absent from it). Do not confuse this with the *Overlap Coefficient* (`intersection / min(size)`) — a different formula that appeared in an earlier, divergent reimplementation of this same check; the two produce different results on the same input, and the Overlap Coefficient is more prone to false-positive "duplicate" matches.
 
-1. **Database Historical Deduplication**:
-   - Every candidate headline is checked against the last 1,000 published articles in Supabase.
-   - If $\text{overlapSimilarity}(\text{Candidate Title}, \text{DB Headline}) \ge 0.35$ OR $\text{overlapSimilarity}(\text{Candidate Title}, \text{DB Slug}) \ge 0.35$, the story is dropped as already published.
-2. **In-Batch Deduplication**:
-   - Within the same RSS harvest, identical or high-overlap headlines across competing syndication networks (*e.g., AP vs. local affiliate*) are merged, keeping the highest-quality source.
+Within-run syndication dedup (the same event picked up by multiple outlets/feeds in one collection pass) uses the identical function before candidates ever reach the persistent queue.
 
 ---
 
-### Stage 3: Queue Management (`scripts/queue-manager.js`)
+### Stage 3: Synthesis — Two Modes, One Set of Rules
 
-`queue-manager.js` coordinates state between the machine pipeline, the filesystem, and the AI synthesis workers.
+Both modes call the same `synthesizeCivicStory` (in `rss-verified-pipeline.js`) and the same `verifyArticleQuotesAndFacts` (`quote-and-fact-verifier.js`). See `NewsPrompts/MasterNewsCollectionPrompt.md` §4 for the full editorial rules (500-word floor with search-grounded enrichment, headline craft, "write like an editor not a template").
 
-1. **`node scripts/queue-manager.js split <numWorkers> <chunkSize>`**:
-   - Queries Supabase for live records to verify freshness.
-   - Prunes any already-published candidates from `scripts/latest-verified-rss-candidates.json`.
-   - Slices the remaining backlog into equal chunks (e.g., 4 workers $\times$ 5 stories = 20 items per wave).
-   - Writes `scripts/worker-chunk-1.json` through `scripts/worker-chunk-N.json`.
-   - Returns a structured payload with remaining queue counts.
-2. **`node scripts/queue-manager.js merge`**:
-   - Discovers all `scripts/worker-output-*.json` files.
-   - Validates JSON structure and consolidates all articles into `scripts/bulk-news-batch.json`.
-   - Invokes `scripts/insert-news-batch.js` to execute Supabase ingestion.
-   - Prunes synthesized items from `latest-verified-rss-candidates.json`.
-   - Cleans up temporary chunk and output files.
+**A. Sequential (`scripts/sequential-pipeline-runner.js`) — the default:**
+1. Runs the same discovery + queue-merge as `rss-verified-pipeline.js`.
+2. Pops the front of the queue, synthesizes, verifies, ingests via `insert-news-batch.js` (which prunes it on success), then repeats until the queue is empty or `--max-stories` is reached.
+3. Because progress is committed and pruned after every single item, an interruption mid-run loses nothing — whatever wasn't reached simply stays queued.
+
+**B. Concurrent batch (`node scripts/rss-verified-pipeline.js --use-api-key`):** synthesizes the whole queue with bounded concurrency, writes one `bulk-news-batch.json`, and ingests it in one call. Costs more Gemini quota per run (many parallel API calls) but finishes a large backlog faster when quota allows.
+
+**When an external agent (e.g., Antigravity) does the synthesis instead of the API-driven path**: it reads the queue via the default `node scripts/rss-verified-pipeline.js` (collect-only — writes/merges the queue and stops) and writes `bulk-news-batch.json` itself. `insert-news-batch.js`'s coverage-reconciliation (Stage 4) is what keeps that path honest.
 
 ---
 
-### Stage 4: Multi-Subagent Parallel Synthesis Engine
+### Stage 4: Database Ingestion & Coverage Reconciliation (`scripts/insert-news-batch.js`)
 
-The synthesis phase leverages parallel subagents working concurrently.
+Every article — sequential, batch-API, or agent-written — funnels through this one script.
 
-#### Subagent Execution Contract
-
-Each worker:
-1. Reads its assigned chunk (`scripts/worker-chunk-X.json`).
-2. Conducts web search grounding to gather official dates, vote tallies, quotes, docket numbers, and context.
-3. Formats each article according to the **Choseno Article Schema**:
-   - `slug`: Kebab-case URL slug with date (*e.g., `federal-appeals-court-rejects-lamonica-mciver-immunity-bid-2026-08-30`*).
-   - `headline`: Factual, active-voice title.
-   - `summary`: Exactly 2 sentences of neutral, high-density summary.
-   - `category`: `Politics`, `Municipal`, `Elections`, `Economy`, or `Public Safety`.
-   - `country`: `US` or `CA`.
-   - `province`: Two-letter state/province abbreviation (*e.g., `CA`, `TX`, `ON`, `BC`, `NJ`*).
-   - `impactArea`: `national`, `state`, `province`, or `municipal`.
-   - `latitude` / `longitude`: Exact geographic coordinates of the municipal city hall or state capitol.
-   - `eventDate`: `YYYY-MM-DD` of the actual event.
-   - `tags`: Array of relevant topical and entity tags.
-   - `taggedPoliticians`: Array of full names of elected officials featured in the story.
-   - `author`: `{ name: "Choseno Civic News Desk", bio: "Civic and political reporting" }`.
-   - `seoTitle`: Title optimized for search engines ($\le 60$ characters).
-   - `metaDescription`: Meta description ($\le 160$ characters).
-   - `tweet`: Single-sentence social post ($\le 280$ characters).
-   - `sources`: Array of source objects `[{ name, url }]`.
-   - `body`: Multi-paragraph continuous non-partisan prose (**strictly 500–750 words**).
-4. Writes output to `scripts/worker-output-X.json` and signals completion.
+1. **Candidate-coverage reconciliation** (first, before touching Supabase): if a fresh queue file exists (written within 2 hours), matches this batch against it by source URL (title-similarity fallback for rewritten redirect URLs), logs `[COVERAGE] X/Y synthesized`, and — **only for genuinely multi-item batches** (a single-item batch is the sequential runner working as designed, not under-delivery, so it's exempted from this check) — names every candidate that didn't make it in and warns loudly below 50% coverage. Still publishes whatever's ready either way; `--require-full-coverage` opts into hard-blocking a partial batch instead.
+2. **Queue pruning**: after a successful run, rewrites the queue file to just the still-missing candidates.
+3. **Politician-ID resolution** (`resolvePoliticianIds`) against the `profiles` table (role = `politician`) for anything not already carrying `taggedPoliticianIds`.
+4. **Virality scoring** (`calculateViralityScore`) — feeds `batch-ranked-news.csv` ranking.
+5. **`admin_sync_news_article_tags()`** — wall mirroring (`/wall/[slug]`) for every resolved politician ID.
+6. **`admin_sync_news_article_boundaries()`** — electoral/municipal GIS polygon sync from lat/lng.
+7. **`tweetarticle` + `batch_number` generation** — added here for every article, regardless of synthesis path.
+8. **Hero image**: the article's image is stored in the `hero_image_url` column (**not** `og_image_url` — that column does not exist on `news_articles`; verify against the schema before citing a column name here again).
+9. **`batch-ranked-news.csv`** update (top 100 by virality score) + overflow to `scripts/overflow-news-batch.json`.
+10. **Optional Twitter posting** (`post-to-twitter.js`) per newly-inserted article.
 
 ---
 
-### Stage 5: Database Ingestion & Relational Propagation (`scripts/insert-news-batch.js`)
+## 4. Autonomous Scheduling
 
-When `insert-news-batch.js` executes, it performs relational and spatial operations:
+There should be exactly **one** scheduled trigger. This pipeline has repeatedly ended up with multiple schedulers stacked on top of each other across sessions (a macOS `launchd` job and one or more agent-managed cron tasks simultaneously, each unaware of the other) — each time, the symptom was the same: candidate counts and publish volume that don't add up, because two processes were racing on the same queue file. Before trusting any single number this pipeline reports, check for more than one active scheduler.
 
-1. **Slug Deduplication**:
-   - Performs a pre-flight check against the latest 1,000 slugs in Supabase to guarantee uniqueness.
-2. **Profile & Politician Wall Sync**:
-   - Resolves all names in `taggedPoliticians` against 31,000+ cached politician profiles in Supabase.
-   - Calls the database RPC `admin_sync_news_article_tags(article_id, politician_ids)`.
-   - Automatically posts mirrored updates onto the politician's activity wall (`/wall/[slug]`).
-3. **GIS Boundary Synchronization**:
-   - Calls database RPC `admin_sync_news_article_boundaries(article_id, lat, lng)`.
-   - Performs a spatial point-in-polygon query against federal congressional districts, state legislative districts, and municipal ward boundaries.
-4. **OpenGraph Social Preview Generation**:
-   - Generates an automated 1200$\times$630 static OG share card displaying the category badge, headline, location, and Choseno branding.
-   - Uploads the image to Supabase Storage (`news-images/og-cards/[slug].png`) and writes the URL to `og_image_url`.
-5. **CSV Ranking Cache & Overflow Archiving**:
-   - Prepends newly inserted articles to `batch-ranked-news.csv`, maintaining the top 100 articles by virality score.
-   - Archives any overflow articles into `scripts/overflow-news-batch.json`.
+The one trigger should run either:
+```bash
+node scripts/sequential-pipeline-runner.js   # default — quality-first, one at a time
+# or
+node scripts/rss-verified-pipeline.js --use-api-key   # concurrent batch, when you want a faster pass and have quota for it
+```
+Do not schedule a second task running the other mode, or a task that duplicates discovery/synthesis logic outside these two entry points — that reintroduces exactly the race and drift this section warns about.
 
 ---
 
-### Stage 6: Autonomous Scheduling & Hourly Cron Daemon
-
-- **Daemon Task (`task-1428`)**:
-  - Configured with cron expression `0 * * * *` (runs at the top of every hour).
-  - Triggers the RSS collector, runs the deduplication filter, partitions candidate queues, launches the multi-subagent synthesis wave, and merges outputs into Supabase.
-  - Automatically drains any accumulated candidate backlog until the queue reaches 0.
-
----
-
-## 4. Operational Invariants & Verification Checklist
+## 5. Operational Invariants & Verification Checklist
 
 | Invariant | Specification | Verification Method |
 | :--- | :--- | :--- |
-| **Geographic Scope** | Strictly US & Canada only | Machine regex filter on feed sources & country tags (`US`/`CA`) |
-| **Article Body Length** | 500 – 750 words | Automated assertion in worker scripts (`assert 500 <= words <= 750`) |
-| **Summary Length** | Exactly 2 sentences | Regex sentence count validation (`assert len(sentences) == 2`) |
-| **SEO Constraints** | SEO Title $\le 60$ chars, Meta Desc $\le 160$ chars | Length validation in synthesis scripts |
-| **Deduplication** | Overlap threshold $\ge 0.35$ | Token Jaccard check against database headlines and slugs |
+| **Geographic Scope** | Strictly US & Canada only | `isStrictlyUsOrCanada` in `rss-feed-collector.js` |
+| **Candidate relevance** | Must name an office holder, key leader, or known politician profile | `mentionsOfficeholderOrKnownPolitician` |
+| **Article Body Length** | 500-word floor, target 500-750 (search-enrichment retries below 500; never padded) | `wordCount()` check in `synthesizeCivicStory` |
+| **Deduplication** | Jaccard token overlap ≥ 0.45 against published DB, ordered by recency | `calculateSimilarity` in `rss-feed-collector.js` |
+| **Queue integrity** | Nothing leaves the queue except confirmed-published or 48h-expired | `mergeCandidatesIntoQueue` + `insert-news-batch.js` pruning |
+| **Single execution mode** | Sequential or concurrent-batch — never a third, parallel-worker path | No `queue-manager.js`-style chunk-splitting script should exist in `scripts/` |
+| **Single scheduler** | Exactly one active cron/task triggers the pipeline | Check both `launchctl list` and the agent scheduler before trusting reported counts |
 | **Git Push Rule** | Local commits only | `git push` is blocked without explicit user approval |
-| **Continuous Drain** | Unbroken worker waves until 0 remaining | Queue manager loop verification (`latest-verified-rss-candidates.json == []`) |

@@ -938,5 +938,7 @@ module.exports = {
   isStrictlyUsOrCanada,
   mentionsOfficeholderOrKnownPolitician,
   mergeCandidatesIntoQueue,
-  QUEUE_EXPIRY_HOURS
+  QUEUE_EXPIRY_HOURS,
+  calculateSimilarity,
+  fetchExistingHeadlines
 };

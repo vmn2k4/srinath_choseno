@@ -1423,23 +1423,35 @@ async function run() {
           const coverage = (candidateCount - missing.length) / candidateCount;
           console.log(`[COVERAGE] ${candidateCount - missing.length}/${candidateCount} candidates synthesized (${(coverage * 100).toFixed(1)}%) — from latest-verified-rss-candidates.json written ${(ageMs / 60000).toFixed(0)}m ago.`);
 
-          if (missing.length > 0) {
-            console.log(`[COVERAGE] ${missing.length} candidate(s) from the queue were NOT synthesized into this batch:`);
-            missing.forEach((c, i) => {
-              console.log(`  ${i + 1}. "${c.title}" — ${c.sourceName || 'unknown source'} (${c.sourceUrl || 'no url'})`);
-            });
-          }
+          // Fixed 2026-08-31: this check exists to catch a BULK batch that
+          // silently under-processed a large queue (the original incident —
+          // 225 candidates in, 4 articles out, reported as clean success).
+          // scripts/sequential-pipeline-runner.js legitimately ingests ONE
+          // candidate at a time by design — that will always look like
+          // ~1% coverage against a 100+ item queue even though it's working
+          // exactly as intended. Only run the noisy missing-list dump and
+          // the low-coverage warning for genuinely multi-item batches; a
+          // single-item batch still gets the one-line [COVERAGE] log above
+          // for visibility, just not treated as a suspected under-delivery.
+          if (articlesToIngest.length > 1) {
+            if (missing.length > 0) {
+              console.log(`[COVERAGE] ${missing.length} candidate(s) from the queue were NOT synthesized into this batch:`);
+              missing.forEach((c, i) => {
+                console.log(`  ${i + 1}. "${c.title}" — ${c.sourceName || 'unknown source'} (${c.sourceUrl || 'no url'})`);
+              });
+            }
 
-          if (coverage < 0.5) {
-            console.warn('======================================================');
-            console.warn(`⚠️  LOW CANDIDATE COVERAGE: only ${(coverage * 100).toFixed(1)}% of the queue was synthesized.`);
-            console.warn('The articles below WILL still be published — they are real,');
-            console.warn('verified content. But most of the queue above was never');
-            console.warn('attempted; re-run synthesis against the missing list to recover it.');
-            console.warn('======================================================');
-            if (requireFullCoverage) {
-              console.error('--require-full-coverage was set: refusing to publish a partial batch.');
-              process.exit(1);
+            if (coverage < 0.5) {
+              console.warn('======================================================');
+              console.warn(`⚠️  LOW CANDIDATE COVERAGE: only ${(coverage * 100).toFixed(1)}% of the queue was synthesized.`);
+              console.warn('The articles below WILL still be published — they are real,');
+              console.warn('verified content. But most of the queue above was never');
+              console.warn('attempted; re-run synthesis against the missing list to recover it.');
+              console.warn('======================================================');
+              if (requireFullCoverage) {
+                console.error('--require-full-coverage was set: refusing to publish a partial batch.');
+                process.exit(1);
+              }
             }
           }
         }
