@@ -1,41 +1,28 @@
 /**
  * scripts/sequential-pipeline-runner.js
  *
- * Deterministic, script-orchestrated sequential newsroom pipeline.
- * Quality-first alternative to the concurrent batch mode in
- * rss-verified-pipeline.js: processes exactly one candidate at a time,
- * ingesting and pruning it before moving to the next, so progress is never
- * lost to an interruption and there is no batch-level ambiguity about how
- * much got done.
+ * Deterministic, Antigravity-Native sequential newsroom pipeline coordinator.
  *
- * Fixed 2026-08-31 (day this file was introduced): the original version of
- * this file reimplemented dedup and jurisdiction filtering from scratch
- * instead of reusing rss-feed-collector.js's tested versions — with real,
- * consequential divergences: a different similarity FORMULA (overlap
- * coefficient, not Jaccard) at a looser threshold (0.35 vs 0.45), and a
- * much smaller jurisdiction pattern set missing this session's specific
- * fixes (viral/human-interest framing, the Governor-Livingston-HS sports
- * false positive, the Sinaloa/foreign-primary-subject heuristic). It also
- * never called the collector itself, so if this script is the only thing a
- * schedule invokes, new-story discovery silently stops the moment the
- * existing queue drains. All three fixed below by importing and reusing
- * the real functions instead of a second, drifting copy of the same logic.
+ * ARCHITECTURE (100% Antigravity-Native / Zero External API Key Usage):
+ * 1. Machine script owns 100% of feed collection, URL gatekeeping, and deduplication:
+ *    - `node scripts/sequential-pipeline-runner.js --collect`
+ *    - Harvests 116 verified US and Canadian feeds via `rss-feed-collector.js`.
+ *    - Enforces strict Jaccard token overlap (>= 0.45) against Supabase.
+ *    - Updates persistent master queue in `scripts/latest-verified-rss-candidates.json`.
  *
- * Architecture:
- * 1. Runs the SAME discovery step as rss-verified-pipeline.js
- *    (collectVerifiedRssStories + mergeCandidatesIntoQueue) so the queue
- *    is refreshed with new candidates every run, not just drained from a
- *    static snapshot someone else populated.
- * 2. Processes candidates sequentially ONE BY ONE:
- *    - Pops the next candidate from the front of the queue.
- *    - Synthesizes via the same synthesizeCivicStory() used by the batch
- *      pipeline (500-word floor, multi-model search-grounded enrichment).
- *    - Code-level quote/fact verification (verifyArticleQuotesAndFacts).
- *    - Ingests immediately via insert-news-batch.js, which also prunes
- *      this candidate from the queue file on success — no second,
- *      redundant pruning implementation here.
- * 3. Proceeds to the next candidate in an unbroken loop until the queue is
- *    empty or --max-stories is reached.
+ * 2. Antigravity Agent executes 100% of journalistic research and synthesis:
+ *    - `node scripts/sequential-pipeline-runner.js --pop`
+ *    - Pops the next candidate into `scripts/current-candidate.json`.
+ *    - Antigravity conducts live ground-truth web search and synthesizes a high-depth
+ *      500-750 word non-partisan civic news report adhering to the Choseno schema.
+ *    - Antigravity writes the output to `scripts/current-article.json`.
+ *
+ * 3. Machine script owns 100% of database ingestion, relational syncing, and queue pruning:
+ *    - `node scripts/sequential-pipeline-runner.js --ingest`
+ *    - Verifies quote and fact fidelity via `quote-and-fact-verifier.js`.
+ *    - Ingests into Supabase via `insert-news-batch.js`.
+ *    - Syncs politician activity walls, electoral GIS polygons, and OG share cards.
+ *    - Automatically prunes the published candidate from `latest-verified-rss-candidates.json`.
  */
 
 const fs = require('fs');
@@ -45,10 +32,11 @@ const {
   collectVerifiedRssStories,
   mergeCandidatesIntoQueue
 } = require('./rss-feed-collector');
-const { synthesizeCivicStory } = require('./rss-verified-pipeline');
 const { verifyArticleQuotesAndFacts } = require('./quote-and-fact-verifier');
 
 const QUEUE_FILE = path.join(__dirname, 'latest-verified-rss-candidates.json');
+const CURRENT_CANDIDATE_FILE = path.join(__dirname, 'current-candidate.json');
+const CURRENT_ARTICLE_FILE = path.join(__dirname, 'current-article.json');
 
 function loadQueue() {
   if (!fs.existsSync(QUEUE_FILE)) return [];
@@ -60,143 +48,191 @@ function loadQueue() {
   }
 }
 
-/**
- * Ingest a single synthesized article via insert-news-batch.js. That
- * script's own candidate-coverage reconciliation step handles pruning this
- * item from the queue on success — no separate prune implementation here,
- * so there's one place that logic can drift, not two.
- */
-function ingestSingleArticle(article) {
-  const tempPath = path.join(__dirname, 'temp-sequential-batch.json');
-  fs.writeFileSync(tempPath, JSON.stringify([article], null, 2));
-
-  try {
-    const output = execSync(`node "${path.join(__dirname, 'insert-news-batch.js')}" "${tempPath}"`, {
-      encoding: 'utf8'
-    });
-    console.log(output);
-    return true;
-  } catch (e) {
-    console.error('[SequentialRunner] Ingestion error:', e.message);
-    return false;
-  } finally {
-    if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
-  }
+function saveQueue(queue) {
+  fs.writeFileSync(QUEUE_FILE, JSON.stringify(queue, null, 2));
 }
 
 /**
- * Remove a candidate from the queue on a synthesis failure (empty body,
- * thrown exception) — the ONE case insert-news-batch.js never sees this
- * item, so nothing else will prune it. Matched by sourceUrl, same signal
- * used everywhere else in the queue lifecycle.
+ * Harvest and merge verified candidates into the persistent queue.
  */
-function pruneFailedCandidate(targetCandidate) {
-  const queue = loadQueue();
-  const remaining = queue.filter(item => item.sourceUrl !== targetCandidate.sourceUrl);
-  fs.writeFileSync(QUEUE_FILE, JSON.stringify(remaining, null, 2));
-}
-
-/**
- * Run continuous sequential synthesis loop.
- * @param {Object} options
- * @param {number} options.maxStories Optional limit for this run (default: process all remaining)
- * @param {number} options.maxHours Lookback for the discovery step (default: auto via collectVerifiedRssStories)
- */
-async function runSequentialPipeline(options = {}) {
+async function collectFreshCandidates(maxHours = 24) {
   console.log('======================================================');
-  console.log('CHOSENO SEQUENTIAL SCRIPT-CONTROLLED PIPELINE RUNNER');
-  console.log('Mode: Sequential Quality-First Synthesis (1-by-1)');
+  console.log('CHOSENO NEWSROOM PIPELINE: FEED HARVESTING & DEDUPLICATION');
   console.log('======================================================\n');
+  const fresh = await collectVerifiedRssStories({ maxHours });
+  const queue = mergeCandidatesIntoQueue(fresh, QUEUE_FILE);
+  console.log(`\n[Collector] Harvest complete. ${queue.length} total candidates in queue (${fresh.length} fresh discovered).`);
+  return queue;
+}
 
-  // Same discovery + persistent-queue merge as rss-verified-pipeline.js —
-  // without this, the queue only ever shrinks and this script eventually
-  // runs dry regardless of how much real news exists.
-  const fresh = await collectVerifiedRssStories({ maxHours: options.maxHours });
-  let queue = mergeCandidatesIntoQueue(fresh, QUEUE_FILE);
-  console.log(`[SequentialRunner] Starting with ${queue.length} verified candidate stories in queue (${fresh.length} newly discovered this run).`);
-
+/**
+ * Pop the next candidate from the master queue and write to scripts/current-candidate.json.
+ */
+function popNextCandidate() {
+  const queue = loadQueue();
   if (queue.length === 0) {
-    console.log('[SequentialRunner] Queue is empty. No candidates to process.');
-    return { processed: 0, remaining: 0 };
+    console.log(JSON.stringify({ status: 'empty', remaining: 0 }));
+    if (fs.existsSync(CURRENT_CANDIDATE_FILE)) fs.unlinkSync(CURRENT_CANDIDATE_FILE);
+    return null;
   }
 
-  let processedCount = 0;
-  const maxToProcess = options.maxStories || queue.length;
+  const candidate = queue[0];
+  fs.writeFileSync(CURRENT_CANDIDATE_FILE, JSON.stringify(candidate, null, 2));
+  console.log(JSON.stringify({
+    status: 'ready',
+    remaining: queue.length,
+    candidate: {
+      title: candidate.title,
+      sourceName: candidate.sourceName,
+      sourceUrl: candidate.sourceUrl,
+      country: candidate.country,
+      province: candidate.province || candidate.region,
+      tier: candidate.tier,
+      pubDate: candidate.pubDate
+    }
+  }, null, 2));
+  return candidate;
+}
 
-  while (queue.length > 0 && processedCount < maxToProcess) {
-    const candidate = queue[0];
-    const currentIndex = processedCount + 1;
+/**
+ * Ingest the synthesized article in scripts/current-article.json into Supabase and prune from queue.
+ */
+function ingestCurrentArticle() {
+  if (!fs.existsSync(CURRENT_ARTICLE_FILE)) {
+    console.error('[Ingest] Error: scripts/current-article.json does not exist.');
+    return false;
+  }
 
-    console.log(`\n------------------------------------------------------`);
-    console.log(`[Story ${currentIndex}/${maxToProcess}] Processing Candidate: "${candidate.title}"`);
-    console.log(`Source: ${candidate.sourceName} | Jurisdiction: ${candidate.country} / ${candidate.region || 'National'}`);
-    console.log(`------------------------------------------------------`);
+  let article;
+  try {
+    article = JSON.parse(fs.readFileSync(CURRENT_ARTICLE_FILE, 'utf8'));
+  } catch (e) {
+    console.error('[Ingest] Error parsing scripts/current-article.json:', e.message);
+    return false;
+  }
 
+  // Load current candidate for quote/fact verification
+  let currentCandidate = null;
+  if (fs.existsSync(CURRENT_CANDIDATE_FILE)) {
     try {
-      const synthesized = await synthesizeCivicStory(candidate);
+      currentCandidate = JSON.parse(fs.readFileSync(CURRENT_CANDIDATE_FILE, 'utf8'));
+    } catch (e) {}
+  }
 
-      if (!synthesized || !synthesized.body) {
-        console.warn(`[SequentialRunner] Synthesis returned empty body for: "${candidate.title}". Pruning and continuing.`);
-        pruneFailedCandidate(candidate);
-        queue = loadQueue();
-        continue;
-      }
-
-      const verification = verifyArticleQuotesAndFacts(synthesized, candidate);
-      synthesized.body = verification.sanitizedBody;
-      synthesized.content = {
-        body: verification.sanitizedBody,
-        seoTitle: synthesized.seoTitle,
-        metaDescription: synthesized.metaDescription,
-        tags: synthesized.tags,
-        tweet: synthesized.tweet,
-        author: synthesized.author,
-        sources: [{ name: candidate.sourceName, url: candidate.sourceUrl }]
-      };
-
-      const words = synthesized.body.trim().split(/\s+/).filter(Boolean).length;
-      console.log(`[SequentialRunner] Synthesized: "${synthesized.headline}" (${words} words)`);
-
-      const success = ingestSingleArticle(synthesized);
-
-      if (success) {
-        processedCount++;
-        console.log(`[SequentialRunner] Successfully published story ${processedCount}.`);
-      } else {
-        console.warn(`[SequentialRunner] Ingestion failed for "${candidate.title}". Retaining in queue for retry.`);
-        break;
-      }
-
-      // insert-news-batch.js prunes on success; just re-read its result.
-      queue = loadQueue();
-      console.log(`[SequentialRunner] Queue status: ${queue.length} candidate(s) remaining.`);
-
-    } catch (err) {
-      console.error(`[SequentialRunner] Error processing "${candidate.title}":`, err.message);
-      pruneFailedCandidate(candidate);
-      queue = loadQueue();
+  if (currentCandidate) {
+    const verification = verifyArticleQuotesAndFacts(article, currentCandidate);
+    article.body = verification.sanitizedBody;
+    if (article.content) {
+      article.content.body = verification.sanitizedBody;
     }
   }
 
-  console.log('\n======================================================');
-  console.log(`SEQUENTIAL RUN COMPLETE: ${processedCount} stories published. ${queue.length} remaining in queue.`);
-  console.log('======================================================');
+  const tempBatchPath = path.join(__dirname, 'temp-sequential-batch.json');
+  fs.writeFileSync(tempBatchPath, JSON.stringify([article], null, 2));
 
-  return {
-    processed: processedCount,
-    remaining: queue.length
-  };
+  let success = false;
+  try {
+    const output = execSync(`node "${path.join(__dirname, 'insert-news-batch.js')}" "${tempBatchPath}"`, {
+      encoding: 'utf8'
+    });
+    console.log(output);
+    success = true;
+  } catch (e) {
+    console.error('[Ingest] Database ingestion error:', e.message);
+  } finally {
+    if (fs.existsSync(tempBatchPath)) fs.unlinkSync(tempBatchPath);
+  }
+
+  if (success) {
+    // Prune candidate from queue
+    if (currentCandidate) {
+      const queue = loadQueue();
+      const updatedQueue = queue.filter(item => {
+        if (item.sourceUrl && currentCandidate.sourceUrl && item.sourceUrl === currentCandidate.sourceUrl) return false;
+        return true;
+      });
+      saveQueue(updatedQueue);
+      console.log(`[Queue] Pruned "${currentCandidate.title.slice(0, 50)}...". Remaining queue: ${updatedQueue.length}.`);
+    }
+
+    if (fs.existsSync(CURRENT_CANDIDATE_FILE)) fs.unlinkSync(CURRENT_CANDIDATE_FILE);
+    if (fs.existsSync(CURRENT_ARTICLE_FILE)) fs.unlinkSync(CURRENT_ARTICLE_FILE);
+  }
+
+  return success;
+}
+
+/**
+ * Skip and prune the current candidate if it cannot be synthesized.
+ */
+function skipCurrentCandidate() {
+  if (!fs.existsSync(CURRENT_CANDIDATE_FILE)) {
+    console.warn('[Skip] No current candidate file to skip.');
+    return;
+  }
+
+  try {
+    const currentCandidate = JSON.parse(fs.readFileSync(CURRENT_CANDIDATE_FILE, 'utf8'));
+    const queue = loadQueue();
+    const updatedQueue = queue.filter(item => item.sourceUrl !== currentCandidate.sourceUrl);
+    saveQueue(updatedQueue);
+    console.log(`[Queue] Skipped and pruned "${currentCandidate.title.slice(0, 50)}...". Remaining queue: ${updatedQueue.length}.`);
+  } catch (e) {
+    console.error('[Skip] Error skipping candidate:', e.message);
+  } finally {
+    if (fs.existsSync(CURRENT_CANDIDATE_FILE)) fs.unlinkSync(CURRENT_CANDIDATE_FILE);
+    if (fs.existsSync(CURRENT_ARTICLE_FILE)) fs.unlinkSync(CURRENT_ARTICLE_FILE);
+  }
+}
+
+/**
+ * Print queue status and top items.
+ */
+function printQueueStatus() {
+  const queue = loadQueue();
+  console.log(JSON.stringify({
+    remaining: queue.length,
+    topCandidates: queue.slice(0, 5).map((c, i) => ({
+      index: i + 1,
+      title: c.title,
+      source: c.sourceName,
+      country: c.country,
+      region: c.region || c.province
+    }))
+  }, null, 2));
 }
 
 if (require.main === module) {
-  const maxStoriesArg = process.argv.find((a, i) => process.argv[i - 1] === '--max-stories');
-  const maxHoursArg = process.argv.find((a, i) => process.argv[i - 1] === '--max-hours');
-  runSequentialPipeline({
-    maxStories: maxStoriesArg ? parseInt(maxStoriesArg, 10) : undefined,
-    maxHours: maxHoursArg ? Number(maxHoursArg) : undefined
-  }).catch(console.error);
+  const action = process.argv[2];
+  if (action === '--collect') {
+    const maxHoursArg = process.argv.find((a, i) => process.argv[i - 1] === '--max-hours');
+    const maxHours = maxHoursArg ? Number(maxHoursArg) : 24;
+    collectFreshCandidates(maxHours).catch(console.error);
+  } else if (action === '--pop') {
+    popNextCandidate();
+  } else if (action === '--ingest') {
+    ingestCurrentArticle();
+  } else if (action === '--skip') {
+    skipCurrentCandidate();
+  } else if (action === '--status') {
+    printQueueStatus();
+  } else {
+    console.log(`Choseno Sequential Pipeline Coordinator (Antigravity-Native)
+Usage:
+  node scripts/sequential-pipeline-runner.js --collect [--max-hours N]   # Harvest fresh feeds into queue
+  node scripts/sequential-pipeline-runner.js --pop                      # Pop next candidate into current-candidate.json
+  node scripts/sequential-pipeline-runner.js --ingest                   # Ingest current-article.json into Supabase & prune
+  node scripts/sequential-pipeline-runner.js --skip                     # Skip and prune current candidate
+  node scripts/sequential-pipeline-runner.js --status                   # Show queue count and top items
+`);
+  }
 }
 
 module.exports = {
-  runSequentialPipeline
+  collectFreshCandidates,
+  popNextCandidate,
+  ingestCurrentArticle,
+  skipCurrentCandidate,
+  printQueueStatus,
+  loadQueue
 };

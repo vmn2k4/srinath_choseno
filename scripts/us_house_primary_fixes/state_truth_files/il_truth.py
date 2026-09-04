@@ -1,0 +1,20 @@
+# Source: en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Illinois
+NOMINEES = {
+    1: [("Jonathan Jackson", "Democratic"), ("Christian Maxwell", "Republican")],
+    2: [("Donna Miller", "Democratic"), ("Michael Noack", "Republican")],
+    3: [("Delia Ramirez", "Democratic"), ("Angel Oakley", "Republican")],
+    4: [("Patty Garcia", "Democratic"), ("Lupe Castillo", "Republican")],
+    5: [("Mike Quigley", "Democratic"), ("Tommy Hanson", "Republican")],
+    6: [("Sean Casten", "Democratic"), ("Niki Conforti", "Republican")],
+    7: [("La Shawn Ford", "Democratic"), ("Chad Koppie", "Republican")],
+    8: [("Melissa Bean", "Democratic"), ("Jennifer Davis", "Republican")],
+    9: [("Daniel Biss", "Democratic"), ("John Elleson", "Republican")],
+    10: [("Brad Schneider", "Democratic"), ("Carl Lambrecht", "Republican")],
+    11: [("Bill Foster", "Democratic"), ("Jeff Walter", "Republican")],
+    12: [("Mike Bost", "Republican"), ("Julie Fortier", "Democratic")],
+    13: [("Nikki Budzinski", "Democratic"), ("Jeff Wilson", "Republican")],
+    14: [("Lauren Underwood", "Democratic"), ("James Marter", "Republican")],
+    15: [("Mary Miller", "Republican"), ("Jennifer Todd", "Democratic")],
+    16: [("Darin LaHood", "Republican"), ("Paul Nolley", "Democratic")],
+    17: [("Eric Sorensen", "Democratic"), ("Dillan Vancil", "Republican")],
+}

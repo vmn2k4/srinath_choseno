@@ -1,0 +1,17 @@
+TRUTH = {
+    1: ["landsman", "conroy"],
+    2: ["taylor", "mazzuckelli"],
+    3: ["beatty", "dulaney"],
+    4: ["jordan", "kolasinski"],
+    5: ["latta", "shaver"],
+    6: ["rulli", "kirtley"],
+    7: ["miller", "poindexter"],
+    8: ["davidson", "enoch"],
+    9: ["kaptur", "merrin"],
+    10: ["turner", "knickerbocker"],
+    11: ["brown", "kirchner"],
+    12: ["balderson", "christian"],
+    13: ["sykes", "coleman"],
+    14: ["joyce", "jukic"],
+    15: ["carey", "leonard"],
+}

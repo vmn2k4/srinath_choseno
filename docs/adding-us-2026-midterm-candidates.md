@@ -412,3 +412,13 @@ GROUP BY es.role_title;
   FEC equivalent exists below federal level; see `ELECTION_DATA_SOURCES.md`'s
   "USA — Governor + state legislature" section for what's been researched so
   far).
+  **Update 2026-09-03**: the Governor *seats* half of this is now done — 36
+  `election_seats` rows (role `Governor`, the real 2026-race states per
+  Wikipedia, not all 50) were added directly onto this same election's `id`,
+  reusing the `State` `map_shapes` rows Senate already sits on. **This script
+  cannot be extended with `--office G`** to fill in candidates the way it was
+  for House/Senate — `fetch_candidates()`'s FEC query only ever accepts
+  `office in {H, S, P}`; the FEC simply has no Governor data to query,
+  full stop. Candidate sourcing for these 36 seats still needs the per-state
+  research `ELECTION_DATA_SOURCES.md` tracks separately (4 states have a
+  working live-fetch Edge Function handler already; the rest don't).

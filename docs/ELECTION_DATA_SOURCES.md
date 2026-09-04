@@ -15,6 +15,35 @@ Governor + state legislature" below; 12 of 50 states researched so far, batched
 ~10-12 at a time). US municipal elections remain out of scope (thousands of
 independent systems, research one specific municipality when it matters instead).
 
+**Update — 2026-09-03: Canadian *municipal* elections stopped being fully out of
+scope.** BC's provincial election-financing regulator turned out to double as a
+genuine, verified, live municipal candidate source (see the new "Canada —
+Municipal" section below) — the first one found for any province. Off the back
+of that, the *live, user-facing* `elections`/`election_seats` tables (not the
+reference-cache tables the rest of this doc is mostly about) now also cover:
+- **2026 Ontario Municipal Elections** and **2026 Manitoba Municipal Elections**
+  — seats only (872 and 274 respectively, Councillor + Mayor), built directly
+  from `map_shapes`. No verified candidate source yet for either — same
+  "found the boundaries, haven't found who's running" gap every other
+  not-yet-`hasFetch` jurisdiction in this doc has.
+- **Governor**, added onto the existing **2026 US Midterm Elections** election
+  (36 states with a real 2026 race, same seat model already used for Senate).
+  **Important correction to earlier assumptions in this doc**: `election_role_types`
+  and the `State` `map_shapes` already existed for Governor, which made the
+  *seats* nearly free to add — but **the FEC has no Governor data at all**
+  (governors are state offices, never federally filed), so
+  `scripts/start_us_2026_midterms.py` cannot be extended with a `--office G` the
+  way it was for House/Senate. Governor candidates still need the same
+  per-state research as "USA — Governor + state legislature" below — the 4
+  states with an already-built live-fetch handler (Idaho, Connecticut, Hawaii
+  confirmed working; Colorado blocked by their WAF) can plausibly get real
+  candidates today via the existing admin "Fetch candidates" button now that
+  their seats exist, everyone else still needs it built.
+
+A real, non-obvious **boundary-classification bug** was also found while
+scoping Saskatchewan/PEI/NWT municipal seats — see the new "Lessons learned"
+entry at the bottom before building seats for any of those three.
+
 **Two parallel delivery mechanisms exist and BOTH need updating for every new
 jurisdiction — don't add one and forget the other:**
 1. `scripts/sync_<jurisdiction>_candidates.py` — standalone CLI tools (stdlib
@@ -662,7 +691,19 @@ H|S|P`.
 
 ---
 
-## USA — Governor + state legislature 🔍 research in progress (12 of 50 done)
+## USA — Governor + state legislature 🔍 research in progress (37 of 50 touched, 6 states' 2026 Governor candidates actually verified & live — see "Batch 2" below for the 25-state pass and its honest per-state confidence tiers)
+
+**Update 2026-09-03**: Governor *seats* are no longer just theoretically
+possible — they exist. 36 `election_seats` rows (one per state with a real
+2026 gubernatorial race, sourced from Wikipedia's 2026 gubernatorial election
+list, not guessed) were added directly onto the existing "2026 US Midterm
+Elections" election, role `Governor`, using the `State` `map_shapes` rows
+already shared with Senate. **This did not touch candidates at all** — FEC has
+zero Governor data (state office, never federally filed), so this doesn't
+shortcut any of the per-state research below. The 3 states with a confirmed
+working live-fetch handler (Idaho, Connecticut, Hawaii — see "4 states wired"
+below) should be checkable via the admin UI's "Fetch candidates" button today
+since their seats now exist; that hadn't been tested as of this writing.
 
 Checked whether Open States (`openstates.org`, the one project that unifies all 50
 states' legislative data in one API) covers this — **it doesn't**. Its API
@@ -889,12 +930,239 @@ if continuing: Alabama (needs one extra network round-trip to resolve a
 URL, plain HTML+Excel, no bot-detection observed) are the next-cleanest
 unimplemented states.
 
-## Municipal — Canada and US 🔍 not centrally solvable
+### Batch 2 (25 states) — the rest of the 36 with a real 2026 race, 2026-09-03
+
+Scope was every remaining state in the 36-state 2026 gubernatorial-race list
+(`ELECTION_DATA_SOURCES.md`'s Governor section above) not already covered by
+Batch 1: IA, IL, KS, MA, MD, ME, MI, MN, NE, NH, NM, NV, NY, OH, OK, OR, PA,
+RI, SC, SD, TN, TX, VT, WI, WY. Unlike Batch 1, this pass was done under real
+time pressure and did **not** get the same uniform depth per state — some got
+a full official-source pull with real names extracted and added to Choseno,
+most only got the mechanism identified and a URL confirmed to exist. Ranked
+honestly below, worst not skipped over.
+
+**✅ Found, verified against the live official source, real names added to
+Choseno (2):**
+- **Maryland**: `elections.maryland.gov/elections/2026/general_candidates/
+  2026_GG_statewide_candidatelist.html` — a clean, static, no-auth HTML page,
+  already scoped to the certified general-election ballot (not a primary
+  filing list — this is the actual distinction that made most of this batch
+  hard, see below). Real 2026 ticket: Wes Moore/Aruna Miller (Democratic, the
+  sitting Governor — matched onto his existing `office_holders`-linked
+  profile, not duplicated), Dan Cox/Rob Krop (Republican), Andy Ellis/Owen
+  Silverman Andrews (Green), Cathy White/Cathy Permut (Working Class Party —
+  a genuinely new US party, created via the same upsert-on-`(country, name)`
+  pattern `get_or_create_political_party` uses).
+- **South Dakota**: `vip.sdsos.gov/candidatelist.aspx?eid={id}` — a real,
+  structured ASP.NET page, **but the `eid` query param is opaque and not
+  self-describing** — `eid=773` returned what looks like a stale/different
+  list (2,232 items across 45 pages, far too many for one race); `eid=774`
+  is the one actually labeled "2026 General Election Candidate List" on the
+  page itself. **Don't trust an `eid` found once without re-confirming its
+  label** — this is the same class of mistake as Elections Canada's
+  by-election `EV` going stale (see "Lessons learned" below). Real 2026
+  ticket: Dan Ahlers/Steven McCleerey (Democratic), Larry Rhoden/Tony
+  Venhuizen (Republican).
+
+**🔍 Real official source found and fetched, but it's the *primary* filing
+list, not the general-election ballot — real names, wrong scope, not added:**
+- **Wyoming**: `sos.wyo.gov/Elections/Docs/2026/
+  2026_WY_Primary_Election_Candidates.pdf` — genuinely fetched and read (23
+  pages, all statewide + federal offices in one file). Confirmed real
+  primary filers for Governor: Republican — Brent Bien, Curt Blake, Eric
+  Barlow, Megan Degenfelder; Democratic — Kenneth R. Casner. **This is a
+  primary roster, dated the primary itself (Aug 11, 2026)** — Wyoming's
+  primary already happened (Aug 18, 2026) by the time this was pulled
+  (2026-09-03), so several of these names may since be eliminated. The
+  equivalent *general*-election document (a `..._General...` filename,
+  following Tennessee's naming convention below) was not located — worth
+  checking `sos.wyo.gov/Elections/Docs/2026/` directly for one before
+  guessing at a URL.
+- **Nebraska**: `sos.nebraska.gov/sites/default/files/doc/elections/2026/
+  Final_Statewide_Primary_Candidate_Filing_List_3.23.26.pdf` — same problem,
+  explicitly named `Primary` in the URL itself. Real primary filers
+  extracted (6 Republicans including incumbent Jim Pillen, 2 Democrats
+  including Lynne Walz, 2 Legal Marijuana NOW). News coverage independently
+  confirms Pillen (76%) and Walz (91%) won their primaries, so the real
+  general ticket is very likely just those two — but that's corroboration
+  from secondary reporting, not read directly off an official *general*
+  list the way Maryland/South Dakota were. Treat as probable, not verified,
+  until a `..._General_...` equivalent PDF is found.
+
+**🔍 Real, working official mechanism identified — confirmed BLOCKED by
+server-side bot detection (not a hypothetical; both a plain `curl` and a
+browser-UA `curl` were tried and both got HTTP 403):**
+- **Tennessee**: exact per-office PDF URLs exist and follow a clean,
+  predictable pattern —
+  `sos-prod.tnsosgovfiles.com/s3fs-public/document/Governor_Nov2026.pdf`
+  (found by scraping the link straight off `sos.tn.gov/elections/
+  2026-candidate-lists`, which itself loaded fine) — but the file host
+  itself 403s automated requests to the actual PDF.
+- **Oklahoma**: `filings.okelections.gov/ViewCandidates/{election-id}/72/
+  all` is a real, structured candidate-filing portal (the URL segments look
+  like `{filing-open}{filing-close}` dates + an office code) — 403s on
+  direct fetch.
+- **Wisconsin**: `elections.wi.gov/candidates` 403s outright, even the
+  landing page itself (not just a data endpoint).
+
+**🔍 Real mechanism identified — needs stateful/session-based interaction,
+not a plain GET (same class of problem as Nova Scotia's ASP.NET postback,
+documented in "Lessons learned" below):**
+- **Oregon**: ORESTAR (`secure.sos.state.or.us/orestar/CFSearchPage.do`) is
+  a real, official campaign-finance system, but it's a session-bound Java
+  web app — `cfFilings.do?cfOffice=GOV` alone returns the app shell, not
+  results; the real search almost certainly needs a session cookie from
+  `CFSearchPage.do` first, then a proper form POST. Not attempted further
+  this pass.
+
+**🔍 A real official page/system was found — a second pass (same day)
+actually fetched each one to pin down the exact blocker. None converted to
+real candidates this round, but each now has a precise, confirmed reason
+instead of just "not yet tried," which is the useful part for whoever
+continues this:**
+- **Illinois**: `elections.il.gov/campaigndisclosure/CandidateSearch.aspx`
+  loads fine (confirmed, 200) and is a real ASP.NET WebForms search — its
+  `ddlElectType` dropdown has real, confirmed codes (`GE` = General
+  Election, `GP` = General Primary, etc.), so `txtElectYear=2026` +
+  `ddlElectType=GE` + `ddlOffice=<Governor's value>` is very likely the
+  right query. **Blocked on one specific thing**: `ddlOffice`'s options are
+  empty in the static HTML — they're populated by a client-side
+  `__doPostBack` cascade after `ddlElectType` is selected, which needs
+  either a real browser session or reverse-engineering the exact AJAX
+  postback shape (same category of problem as Nova Scotia's `__VIEWSTATE`
+  postback, "Lessons learned" #9 below, one level more complex).
+- **New York**: `elections.ny.gov` confirmed **hard-blocked** — 403 on both
+  a plain and browser-UA request. The "List of candidates who have
+  qualified" page/document itself was never reached.
+- **South Carolina**: the real tool is `vrems.scvotes.sc.gov/Candidate/
+  SelectElection` (found via `scvotes.gov/candidates/`, which is itself
+  just an informational page, not the data) — loads (200) but is a bare
+  election-selector form, same postback pattern as Illinois; not pursued
+  further this pass.
+- **Vermont**: confirmed the SOS's own press release describes a "live"
+  database at `sos.vermont.gov/elections/election-info-resources/
+  candidates` backed by an Excel export, but **the exact export filename
+  could not be guessed** — three plausible names
+  (`2026_general_election_qualified_candidates.xlsx` and two variants) all
+  403'd from `outside.vermont.gov/dept/sos/Elections_Division/
+  election_info_resources/candidates/`. The real filename needs to come
+  from actually rendering the candidates page (its download link is
+  JS-rendered, not in the static HTML) rather than guessing.
+- **Kansas**: **confirmed there is no 2026 General Election list to fetch
+  yet at all** — not a blocker, a real fact. `sos.ks.gov`'s own election
+  dropdown (`elections_upcoming_candidate.aspx`) was fully enumerated:
+  its newest entry is `<option value="35">2026 Primary</option>` — no
+  "2026 General" option exists in their system as of 2026-09-03. Worth
+  re-checking after Kansas certifies its general ballot, not worth
+  retrying before then.
+- **Massachusetts**: OCPF loads, but `Filers/Index?officeId=1` returned
+  effectively nothing (692 bytes) — `officeId=1` was a guess, the real
+  numeric id for Governor (if the site uses one at all) wasn't found.
+- **Iowa**: the specific URL guessed this pass
+  (`sos.iowa.gov/elections/candidatedatabase.aspx`) 404'd — genuinely the
+  wrong path, not a block. The real candidate-database URL is referenced by
+  name in Secretary of State press releases but wasn't traced to an actual
+  link.
+- **Michigan, New Hampshire**: confirmed hard-blocked (403) on the specific
+  pages tried (`michigan.gov/sos/elections/ballot-access`,
+  `sos.nh.gov/2026-election-details`) — may still be reachable via a
+  different page on the same site.
+- **Ohio**: `ohiosos.gov` is **currently in a "Website Maintenance" mode**
+  site-wide (confirmed — the 403 response body is literally a maintenance
+  page, ~1.3MB due to embedded fonts) — worth simply retrying later, this
+  isn't a structural block.
+- **Pennsylvania**: the specific URL guessed
+  (`pa.gov/agencies/dos/.../candidate-database.html`) 404'd — wrong path,
+  real one not found.
+- **Texas**: confirmed hard-blocked (403) on `sos.state.tx.us`.
+- **Nevada**: `nvsos.gov/SOSCandidateServices/.../CandidateFiling.aspx`
+  loads (200) but returns almost nothing (212 bytes) — likely a JS-rendered
+  SPA shell, not a plain-HTML result.
+- **New Mexico**: CFIS (`login.cfis.sos.state.nm.us`) requires an
+  authenticated filer login — unclear whether a separate public read-only
+  search exists; not found this pass.
+
+**❌ Not resolvable yet — the primary itself hasn't happened**: **Rhode
+Island**'s gubernatorial primary is Sept 8, 2026 (5 days after this
+research pass) — there is no general-election field to pull at all yet,
+regardless of source quality. Revisit after that date.
+
+## Municipal — Canada ✅ BC found & verified, 4 more provinces have seats but no candidate source yet
+
+**Update 2026-09-03**: this section used to say municipal was blanket
+"not centrally solvable." That's still true for the US (see below), but not
+for Canada — BC has a genuine province-wide source, and it's specifically the
+mechanism to check for in any other province before assuming one doesn't
+exist (a campaign-financing regulator, not the elections office itself).
+
+### Canada — British Columbia Municipal ✅ found & verified, live in production
+
+**Source:** Elections BC's **Local Elections Campaign Financing** (LECFA) system
+— not the province's general elections arm, which explicitly does not
+administer local nominations at all (each municipality runs its own). LECFA
+regulates campaign *financing*, and every candidate has to register a
+financial agent to raise/spend money, which happens concurrently with filing
+nomination papers with their local Chief Election Officer.
+
+**Mechanism:** a predictable, no-auth PDF URL, updated daily:
+```
+https://elections.bc.ca/docs/lecfa/Registered-Candidates-LEGE-<election-slug>.pdf
+```
+e.g. `Registered-Candidates-LEGE-2026-10-17.pdf` for the Oct 17, 2026 general
+local elections. Columns: Jurisdiction | Office | Candidate Name | Affiliation
+| Financial Agent Name | Financial Agent Service Address. Confirmed live: the
+PDF fetched 2026-09-03 was dated that same day and had 78 candidates across
+~40 jurisdictions, 2 days into an 11-day nomination window (Sept 1–11, 2026).
+
+**Caveat — this is a financial-agent-registration list, not a literal
+nomination list.** The page itself says the *final* candidate list is only
+available "after the close of nominations." Very close in practice (both
+things happen together in real life) but not legally identical — don't
+represent this as "confirmed nominated" without that caveat, the way the FEC's
+`candidate_status == 'C'` caveat is carried elsewhere in this doc.
+
+**Not yet built:** no `sync_bc_municipal_candidates.py`, no Edge Function
+handler, no `hasFetch` entry — this was verified by hand (`curl` + read), not
+wired into the admin UI's one-click "Fetch candidates" flow yet.
+
+### Ontario / Manitoba — seats built, candidate source not yet found
+
+**2026 Ontario Municipal Elections** (Oct 26, 2026) and **2026 Manitoba
+Municipal Elections** (Oct 28, 2026) exist in the live `elections` table with
+full Councillor + Mayor seats (872 and 274 respectively) as of 2026-09-03 —
+see `adding-us-2026-midterm-candidates.md`'s sibling recipe for the general
+shape of "seats first, candidates second." Neither province has a verified
+candidate source yet — check first whether either has a BC-style LECFA/
+campaign-financing regulator with its own public registered-candidates list
+before assuming a full scrape-per-municipality is needed.
+
+### Saskatchewan / PEI / NWT — blocked, not just unresearched
+
+Boundary data exists for all three, but **don't build seats for these yet** —
+each has a real, specific problem beyond "no candidate source found," detailed
+in the new "Lessons learned" entry below:
+- **Saskatchewan**: 22 real municipalities (11 Northern Villages, 11 Northern
+  Hamlets) are misclassified as non-electable by the shared CSDTYPE→entity-type
+  map and would be silently dropped by "Build Seats."
+- **PEI**: 35 of 97 municipal shapes carry an unverified `FD` CSDTYPE code of
+  unconfirmed governance status (possibly stale pre-2018-amalgamation
+  boundaries) that currently defaults to *included*.
+- **NWT**: 17 of 41 municipal shapes are Hamlets/Community Governments/Charter
+  Communities, real incorporated municipal government types under NWT law that
+  are either wrongly excluded (Hamlets, via the same cross-province code
+  collision as Saskatchewan) or unclassified. Also has two different election
+  dates (Yellowknife Oct 19 vs. the Hamlets Dec 14), so it can't be one
+  `elections` row regardless.
+
+## Municipal — US 🔍 not centrally solvable
 
 Thousands of independent municipalities, most with no structured/API data source at
 all (often just a PDF, or nothing online). Not something to build ahead of time —
 realistically "research the one specific municipality you need, when you need it,"
-not a system to pre-build.
+not a system to pre-build. Unlike Canada, no BC-style statewide campaign-financing
+registrant list has been found for any state yet — worth checking for one
+(most US states do have *some* campaign-finance disclosure regulator) before
+assuming a per-municipality scrape is the only option.
 
 ---
 
@@ -966,3 +1234,36 @@ not a system to pre-build.
     moving on — every script run against the real DB during verification in this
     research was deleted afterward once confirmed working, to avoid leaving
     half-populated jurisdictions that look "done" but aren't.
+12. **The CSDTYPE→entity-type boundary-eligibility map
+    (`src/lib/utils/censusSubdivisionEntityTypes.ts`) is global across
+    provinces, but StatsCan reuses the same 2-3 letter CSDTYPE code for
+    genuinely different governance concepts in different provinces** — this
+    is a real, live bug, not a hypothetical. Confirmed 2026-09-03 while
+    scoping Saskatchewan/PEI/NWT for municipal seat-building:
+    - `NV` means Quebec's self-governing Nunavik Inuit villages (correctly
+      `election_eligible = false`) *and* Saskatchewan's ordinary incorporated
+      Northern Villages under the Northern Municipalities Act (should be
+      `true` — they hold normal council elections). Currently wrong for
+      Saskatchewan's 11 Northern Villages.
+    - `HAM` means an unincorporated locality with no elected government in
+      most provinces (correctly `Other/Unorganized`) *and* the Northwest
+      Territories' Hamlets Act municipalities, which do elect a mayor and
+      council. Currently wrong for NWT's 10 Hamlets.
+    - `NH` (Saskatchewan's Northern Hamlets, also elected) has the same
+      problem, bucketed with the generic "Other/Unorganized" default.
+    - Separately: an *unmapped* CSDTYPE code silently defaults to
+      **included**, not excluded (`isShapeEntityTypeSelected` in
+      `ElectionsAdminClient.tsx` returns `true` when
+      `getEntityTypeNameForShape` can't classify a shape) — the opposite
+      failure mode, and the one that matters for PEI's 35 unmapped `FD`-coded
+      shapes (of unconfirmed real-world governance status) and NWT's 4
+      Community Governments / 3 Charter Communities (unmapped, and in this
+      case probably correctly included, but unverified).
+    - **Before building seats for any new province**, cross-tabulate its
+      actual `properties->>'CSDTYPE'` values against
+      `CSD_TYPE_TO_ENTITY_TYPE` and verify each code's *real* meaning in
+      that specific province's own municipal-government legislation — don't
+      trust that a code already mapped for one province means the same thing
+      in another. A real per-province fix (not attempted yet) would need the
+      map keyed by `(province, CSDTYPE)` for the handful of colliding codes,
+      not `CSDTYPE` alone.

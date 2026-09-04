@@ -326,7 +326,7 @@ const RSS_FEEDS = [
 const NATIONAL_FEED_NAMES = new Set([...NATIONAL_FEEDS, ...KEY_LEADER_FEEDS_FEDERAL].map(f => f.name));
 
 // Non-US/Canada domestic and non-civic/sports keywords to strictly reject
-const NON_US_CA_DOMESTIC_REGEX = /\b(modi|gadkari|lok sabha|rajya sabha|karnataka|nagendra|bengaluru|mumbai|delhi|telangana|brs mla|kerala|thiruvananthapuram|satheesan|chirag paswan|jitan manjhi|bhalswa|bihar|lakh|crore|rupees?|₹|india today|times of india|nepal|tinubu|nigeria|nigerian|angola|luanda|african union|leningrad|thailand|thai|lese majeste|imran khan|pakistan|pakistani|keir starmer|downing street|westminster|tory|tories|labour mp|badenoch|cleverly|london mayor|macron|elysee|bundestag|scholz|zelenskyy|kyiv|kremlin|putin|netanyahu|knesset|gaza|hamas|hezbollah|tehran|ayotollah|cricket captain|cockroach hunger|seoul|korea|tokyo|japan|brussels|belgium|manila|philippines|sydney|auckland|new zealand|south africa|cosla|scotland|angeles city|mexico|mexican|sheinbaum|amlo|morena party|sinaloa|jalisco|michoacan|oaxaca|chiapas|tijuana|guadalajara|monterrey|ciudad de mexico|cdmx|cartel|madrid|spain|irish|ireland|australia|australian|queensland|solomon star)\b/i;
+const NON_US_CA_DOMESTIC_REGEX = /\b(xi jinping|xinhua|beijing|china|chinese|kyrgyzstan|kyrgyz|kazakhstan|uzbekistan|central asia|russia|russian|kremlin|putin|modi|gadkari|lok sabha|rajya sabha|karnataka|nagendra|bengaluru|mumbai|delhi|telangana|brs mla|kerala|thiruvananthapuram|satheesan|chirag paswan|jitan manjhi|bhalswa|bihar|lakh|crore|rupees?|₹|india today|times of india|nepal|tinubu|nigeria|nigerian|angola|luanda|african union|leningrad|thailand|thai|lese majeste|imran khan|pakistan|pakistani|keir starmer|downing street|westminster|tory|tories|labour mp|badenoch|cleverly|london mayor|bank of england|macron|elysee|bundestag|scholz|germany|german|ecb|european central bank|g20|g7|zelenskyy|kyiv|netanyahu|knesset|gaza|hamas|hezbollah|tehran|ayotollah|iran|iranian|jordan|syria|iraq|yemen|saudi arabia|cricket captain|cockroach hunger|seoul|korea|tokyo|japan|brussels|belgium|manila|philippines|sydney|auckland|new zealand|south africa|cosla|scotland|angeles city|mexico|mexican|sheinbaum|amlo|morena party|sinaloa|jalisco|michoacan|oaxaca|chiapas|tijuana|guadalajara|monterrey|ciudad de mexico|cdmx|cartel|madrid|spain|irish|ireland|australia|australian|queensland|solomon star|bermuda|oba|bernews|venezuela|caracas|maduro|brazil|argentina|cuba|haiti|ghana|malaysia)\b/i;
 
 // Human-interest/viral framing that isn't governance news even when it
 // names a real office holder — e.g. "NYC Mayor playing tennis goes viral"
@@ -340,8 +340,8 @@ const VIRAL_ENTERTAINMENT_REGEX = /\b(goes viral|viral video|viral moment|fans r
 // etc.) — the office-holder title regex below can't tell "Governor
 // Livingston puts up big numbers" (a football score) from an actual
 // governor without this.
-const SPORTS_ENTERTAINMENT_REGEX = /\b(premier league|chelsea|fulham|arsenal|manchester united|man utd|man city|liverpool|tottenham|real madrid|barcelona|laliga|bundesliga|serie a|champions league|striker|midfielder|goalkeeper|touchdown|quarterback|nfl|nhl|nba|mlb|wnba|badminton|cricket|world cup|super bowl|espn|sportsnet|box score|transfer window|movie review|box office|snaps skid|matinee|saturday slate|friday night.{0,20}roundup|high school football|varsity|lacrosse|rugby)\b/i;
-const FOREIGN_OUTLET_REGEX = /\b(politico\.eu|nippon\.com|inquirer\.net|korea joongang daily|top south now|cosla|hindustan times|ahmedabad mirror|al jazeera|france 24|the independent|new indian express|deccan herald|yonhap|irish independent|solomon star|ndtv|the hindu|udayavani|the news minute|india today|the times of india|times of india|devdiscourse|african union)\b/i;
+const SPORTS_ENTERTAINMENT_REGEX = /\b(premier league|chelsea|fulham|arsenal|manchester united|man utd|man city|liverpool|tottenham|real madrid|barcelona|laliga|bundesliga|serie a|champions league|striker|midfielder|goalkeeper|touchdown|quarterback|nfl|nhl|nba|mlb|wnba|badminton|cricket|world cup|super bowl|espn|sportsnet|box score|transfer window|movie review|box office|snaps skid|matinee|saturday slate|friday night.{0,20}roundup|high school football|varsity|lacrosse|rugby|pickleball)\b/i;
+const FOREIGN_OUTLET_REGEX = /\b(xinhua|global times|cgtn|politico\.eu|nippon\.com|inquirer\.net|korea joongang daily|top south now|cosla|hindustan times|ahmedabad mirror|al jazeera|france 24|the independent|new indian express|deccan herald|yonhap|irish independent|solomon star|ndtv|the hindu|udayavani|the news minute|india today|the times of india|times of india|devdiscourse|african union|bernews|modern ghana|malaysia-china insight|latin times|daily mail|the sun|express\.co\.uk|mirror\.co\.uk|telegraph india|thecable|gb news|people\.com|tmz|eonline|page six)\b/i;
 // Deliberately EXCLUDES generic office titles (governor, premier, mayor,
 // senator, minister...) even though they're common US/CA titles too —
 // Mexico, Nigeria, and plenty of other countries also call their
@@ -362,16 +362,8 @@ function isStrictlyUsOrCanada(title, description, sourceName) {
     return false; // Hard reject non-US/CA foreign outlets
   }
   if (NON_US_CA_DOMESTIC_REGEX.test(text)) {
-    // A foreign country/leader being mentioned doesn't automatically mean
-    // the story is ABOUT the US/CA — "...expose logic of Sheinbaum's
-    // endless concessions to Trump" is a story about Mexican politics that
-    // merely name-drops Trump in its last clause. Only allow it through if
-    // the US/CA reference is in the first half of the HEADLINE (a rough
-    // proxy for "primary subject"), not just present anywhere in the text.
-    const titleFirstHalf = (title || '').slice(0, Math.ceil((title || '').length / 2));
-    if (!US_CA_EXECUTIVE_KEYWORDS.test(titleFirstHalf)) {
-      return false;
-    }
+    // Hard reject foreign domestic politics / foreign conflict stories
+    return false;
   }
   return true;
 }

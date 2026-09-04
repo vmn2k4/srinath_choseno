@@ -201,6 +201,22 @@ const FEDERAL_LEADER_SHORT_NAMES = new Set([
 
 // Helper to look up politician profile IDs by name and scan article text with geographic disambiguation
 async function resolvePoliticianIds(article, authHeaders) {
+  const cacheFilePath = path.join(__dirname, 'cached-politician-profiles.json');
+  if (!cachedPoliticianProfiles) {
+    if (fs.existsSync(cacheFilePath)) {
+      try {
+        const stats = fs.statSync(cacheFilePath);
+        const ageHours = (Date.now() - stats.mtimeMs) / (1000 * 60 * 60);
+        if (ageHours < 24) {
+          cachedPoliticianProfiles = JSON.parse(fs.readFileSync(cacheFilePath, 'utf8'));
+          console.log(`Loaded ${cachedPoliticianProfiles.length} verified politician profiles from local disk cache (${ageHours.toFixed(1)}h old).`);
+        }
+      } catch (e) {
+        cachedPoliticianProfiles = null;
+      }
+    }
+  }
+
   if (!cachedPoliticianProfiles) {
     try {
       console.log('Loading all active profiles from Supabase database...');
@@ -222,6 +238,9 @@ async function resolvePoliticianIds(article, authHeaders) {
       }
       cachedPoliticianProfiles = all.filter(p => p.full_name && !PROFILE_BLACKLIST.has(normalizeName(p.full_name)));
       console.log(`Cached ${cachedPoliticianProfiles.length} verified politician profiles for real-time tagging.`);
+      try {
+        fs.writeFileSync(cacheFilePath, JSON.stringify(cachedPoliticianProfiles));
+      } catch (e) {}
     } catch (e) {
       console.warn('Could not cache politician profiles:', e.message);
     }
@@ -1464,7 +1483,7 @@ async function run() {
   console.log(`Starting ingestion of ${articlesToIngest.length} news articles...`);
   const authHeaders = await getAuthHeaders();
 
-  const batchTimestamp = new Date().toISOString().slice(0, 16).replace('T', ' ');
+  const batchTimestamp = process.env.NEWS_BATCH_TIMESTAMP || (new Date().toISOString().slice(0, 13).replace('T', ' ') + ':00');
 
   // Fetch existing slugs to avoid duplication.
   // Fixed 2026-08-28: this had no `order=` clause, so `limit=2000` on a

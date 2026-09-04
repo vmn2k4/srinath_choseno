@@ -1,0 +1,27 @@
+# Source: ballotpedia.org/United_States_House_of_Representatives_elections_in_Michigan,_2026
+NEW_PARTIES = ["U.S. Taxpayers Party", "Natural Law Party in Michigan"]
+MISSING = {
+    1: [("LaVeta Davenport", "Green Party"), ("Arnett Satterla", "Libertarian Party"),
+        ("Doc Kovaly", "U.S. Taxpayers Party"), ("Liz Hakola", "Working Class Party"),
+        ("Zebulon Featherly", "Independent")],
+    2: [("Charlotte Magoon", "Green Party"), ("Richard Sills", "Natural Law Party in Michigan")],
+    3: [("Joe Jock", "Green Party")],
+    4: [("Shafina Barnett", "Green Party")],
+    5: [("James Bronke", "Green Party"), ("Ronald Muszynski", "Libertarian Party"),
+        ("Sharon Renier", "U.S. Taxpayers Party")],
+    6: [("Clyde Shabazz", "Green Party"), ("Tim Teagan", "Libertarian Party"),
+        ("Michael Mickevicius", "U.S. Taxpayers Party"), ("Linda Rayburn", "Working Class Party")],
+    7: [("Shane Dedrick", "Green Party")],
+    8: [("Jim Casha", "Green Party"), ("C. Mia Pettus", "Libertarian Party"),
+        ("Kathy Goodwin", "Working Class Party")],
+    9: [("Destiny Clayton", "Green Party"), ("Kevin Vayko", "Libertarian Party"),
+        ("John Vlahos", "U.S. Taxpayers Party"), ("Jim Walkowicz", "Working Class Party"),
+        ("Jasen Cartwright", "Independent"), ("Fernando Valdez", "Independent")],
+    10: [("Kwabena Nkromo", "Green Party"), ("Mike Saliba", "Libertarian Party"),
+         ("Andrea Kirby", "Working Class Party")],
+    11: [("Ryan Teasdale", "Green Party"), ("Farid Ishac", "Libertarian Party"), ("Anil Kumar", "Independent")],
+    12: [("Brenda Sanders", "Green Party"), ("Marc Joseph Sosnowski", "U.S. Taxpayers Party"),
+         ("Gary Walkowicz", "Working Class Party")],
+    13: [("Raelyn Light", "Green Party"), ("Christopher Dardzinski", "U.S. Taxpayers Party"),
+         ("Simone Coleman", "Working Class Party"), ("Burgess Foster", "Independent")],
+}
