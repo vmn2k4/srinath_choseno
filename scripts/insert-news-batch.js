@@ -60,20 +60,52 @@ function stripEmoji(str) {
     .trim();
 }
 
-function calculateViralityScore(article) {
-  let score = 8.0;
-  if (article.breakingNews) score += 0.8;
-  if (['Economy', 'Politics', 'Public Safety', 'Elections'].includes(article.category)) score += 0.5;
-  if (article.taggedPoliticians && article.taggedPoliticians.length > 0) score += 0.3;
-  // Fixed 2026-08-27: local/municipal previously got no impactArea bonus at
-  // all (vs. +0.3 national / +0.15 province), so a real municipal decision
-  // ranked lower than a national story on scale alone and fell out of the
-  // top-100 CSV first even when it was the more relevant local story.
-  // Province/state and municipal/local now score equally — one tier below
-  // national rather than local scoring zero.
-  if (article.impactArea === 'country' || article.impactArea === 'national') score += 0.3;
-  else if (['province', 'state', 'local', 'municipal'].includes(article.impactArea)) score += 0.2;
-  return Math.min(9.9, Math.max(7.5, Number(score.toFixed(1))));
+function calculateViralityScore(article, resolvedIds = []) {
+  let score = 8.1;
+  const text = `${article.headline || ''} ${article.summary || ''} ${article.category || ''}`.toLowerCase();
+  const tags = (article.tags || article.content?.tags || []).map(t => String(t).toLowerCase());
+  const politicians = (article.taggedPoliticians || article.tagged_politicians || article.politician_names || []).map(p => String(p).toLowerCase());
+
+  // 1. High-level national / federal / executive political figures
+  const topLeaders = ['trump', 'biden', 'harris', 'trudeau', 'poilievre', 'vance', 'newsom', 'desantis', 'pritzker', 'shapiro', 'whitmer', 'supreme court', 'senator'];
+  const isTopLeader = topLeaders.some(l => text.includes(l) || politicians.some(p => p.includes(l)) || tags.some(t => t.includes(l)));
+  if (isTopLeader) {
+    score += 0.8;
+  } else if ((resolvedIds && resolvedIds.length > 0) || politicians.length > 0) {
+    score += 0.4;
+  }
+
+  // 2. High-stakes political actions & breaking events
+  if (article.breakingNews || /\b(veto|censure|indict|resignation|resign|scandal|investigation|emergency|proclamation|tornado|hurricane|lawsuit|unconstitutional|referendum|poll|tightening|surge|banned|ban)\b/i.test(text)) {
+    score += 0.5;
+  }
+
+  // 3. Category & Policy Domain
+  const cat = (article.category || '').toLowerCase();
+  if (cat.includes('election') || cat.includes('national') || cat.includes('politics')) {
+    score += 0.4;
+  } else if (cat.includes('economy') || cat.includes('labor') || cat.includes('tax') || cat.includes('budget')) {
+    score += 0.3;
+  } else if (cat.includes('safety') || cat.includes('justice') || cat.includes('health') || cat.includes('environment')) {
+    score += 0.2;
+  }
+
+  // 4. Geographic & Jurisdiction scope
+  const impact = (article.impact_area || article.impactArea || '').toLowerCase();
+  if (impact === 'country' || impact === 'national' || text.includes('presidential') || text.includes('congress') || text.includes('parliament')) {
+    score += 0.3;
+  } else if (article.province || article.state_or_province || text.includes('governor') || text.includes('premier')) {
+    score += 0.2;
+  } else {
+    score += 0.1;
+  }
+
+  // 5. Deterministic micro-variance based on slug characters for granular distinction
+  const hash = (article.slug || '').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const microJitter = ((hash % 5) - 2) * 0.05; // -0.10 to +0.10
+  score += microJitter;
+
+  return Math.min(9.8, Math.max(7.8, Number(score.toFixed(1))));
 }
 
 // Function to authenticate and get valid Authorization header
@@ -1605,7 +1637,7 @@ async function run() {
         author: article.author || { name: 'Choseno Civic News Desk', bio: 'Civic and political reporting' },
         sources: article.sources || [],
         batch_number: batchTimestamp,
-        viral_score: calculateViralityScore(article),
+        viral_score: calculateViralityScore(article, resolvedPoliticianIds),
         shared_platforms: []
       }
     };
