@@ -48,7 +48,7 @@ covering Councillor, Mayor, Board of Education Trustee, and Regional Trustee
 offices in one file, which is why one pull covers all three BC elections.
 
 **Pipeline** (ran as a one-off `psql` script, not yet promoted to a standing
-`scripts/*.py` file — see "Next steps" below):
+`scripts/*.py` file — see "Next steps" at the end of this section):
 1. Staged the raw PDF rows (jurisdiction, office, name, affiliation) into a
    temp table.
 2. **Jurisdiction name normalization** — the PDF's punctuation doesn't always
@@ -97,6 +97,78 @@ pre-existing candidate — **"John Doe" for Surrey**, added 2026-08-24 with no
 `added_by_election_admin_id` (self-registered, not a stub) and an obviously
 placeholder name. Left in place and flagged here rather than deleted
 unprompted — worth a decision on whether to remove it.
+
+**Re-run 2026-09-04 — 117 new candidates found, one real bug caught along the way**:
+
+Fetched the same PDF URL fresh (still resolves — Elections BC republishes to the
+same filename as nominations roll in). It had grown from 80 rows to **13
+pages / ~200 rows** in one day, since nomination filing is ongoing. Diffed
+every row against the live DB by hand (jurisdiction/office/name), applying
+the same methodology as the original pull:
+
+- **68 brand-new stub candidates** across municipalities and school
+  districts not resolvable before are now resolvable — most notably, **BC
+  School District trustee matching turned out to be far more complete than
+  the original pull found**: `map_shapes` actually carries ~90 BC school
+  districts (`SD5`–`SD92`), not just the 3 the original pull happened to
+  need. Simple `"<Name> School District"` → `"SDxx - <Name>"` matching
+  cleared Abbotsford, Bulkley Valley, Coast Mountains, Cowichan Valley,
+  Langley, Mission, Nanaimo-Ladysmith, Nechako Lakes, Nicola-Similkameen,
+  Peace River South, Quesnel, Revelstoke, Sea to Sky, Surrey, Vancouver
+  Island North, and West Vancouver — the "only 3 of the PDF's rows matched"
+  finding in the original pull was an artifact of that smaller PDF snapshot
+  only containing 3 school-district rows, not a real matching limitation.
+- **37 more resolved via the officeholder-dedup check** (§4 of the
+  original pipeline) — checked every new name's jurisdiction against
+  `office_holders.linked_profile_id` on the *exact same* `map_shape_id`
+  before minting a stub; genuine incumbents (e.g. Prince George's mayor
+  Garth Frizzell, Delta's mayor Dylan Kruger) got linked to their existing
+  profile instead of duplicated. One deliberate exception: a "Jim Hanson"
+  appeared as a new North Vancouver *District* council candidate, but the
+  only officeholder match by that name is a sitting North Vancouver *City*
+  councillor (different `map_shape_id`) — treated as a distinct person
+  (fresh stub) rather than force-linked across jurisdictions, since name
+  match alone across two different municipalities isn't sufficient
+  evidence they're the same real person.
+- **Regional District Electoral Area Director rows remain unresolvable**,
+  confirmed again this pass (`map_shapes` still has no boundary_type for
+  BC Regional Districts at all) — same gap as the original pull, not new.
+- **Conseil Scolaire Francophone (BC's French-language school district)
+  remains unresolvable** for the same reason as before — no `map_shapes`
+  row exists for it.
+- **Real bug caught and fixed in the same session**: the insert script's
+  `politician_profiles` step only ran for stub candidates who had a
+  matched party (`WHERE party_name IS NOT NULL`), silently skipping the
+  row entirely for the ~68 candidates with no party affiliation listed —
+  even though `politician_profiles.political_party_id` is nullable and
+  should have gotten a row with `NULL` there instead of no row at all.
+  Caught immediately by checking `politician_profiles` coverage right
+  after the insert (not by a user report) and backfilled before moving on.
+  **If replicating this pattern elsewhere: always insert the
+  `politician_profiles` row for every stub, using `LEFT JOIN` + accept
+  `NULL`, never gate the insert on the party match succeeding.**
+
+Working script for this pass:
+[`bc_refresh_sept4.py`](../scripts/us_house_primary_fixes/bc_refresh_sept4.py)
+(kept alongside the US House scripts for now since it's the only saved
+artifact of this pipeline — see "Next steps" just below for why a proper
+`sync_bc_municipal_candidates.py` still doesn't exist).
+
+**Next steps — honestly, not done yet**: this whole pipeline (steps 1–6
+above) only ever ran as a one-off `psql` session against the fetched PDF; no
+`scripts/*.py` file captures it, unlike every other pull in this doc. **Do
+not confuse this with `scripts/sync_bc_candidates.py`** — that script is a
+different pipeline entirely (BC *provincial* elections, scraped from an
+Elections BC HTML candidate-list table) and has no knowledge of the LECFA
+PDF, municipal jurisdictions, or school districts. If this needs to be
+re-run (a new LECFA PDF revision, or a future BC municipal cycle), the
+right move is to promote steps 1–6 above into a real
+`scripts/sync_bc_municipal_candidates.py` — parse the PDF, apply the
+jurisdiction-name lookup table (§2), the school-district lookup (§3), the
+officeholder-dedup check (§4), and the party-matching/creation logic (§5) —
+rather than re-deriving all of this by hand from the PDF again. Until that
+script exists, re-running this pull means repeating the manual process
+described above.
 
 ---
 
