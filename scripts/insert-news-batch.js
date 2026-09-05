@@ -1574,6 +1574,13 @@ async function run() {
       safePublishedAt = new Date().toISOString();
     }
 
+    // Ensure article body is non-empty with robust fallbacks
+    const resolvedBody = article.body || (typeof article.content === 'string' ? article.content : article.content?.body) || '';
+    if (!resolvedBody || resolvedBody.trim().split(/\s+/).length < 20) {
+      console.error(`[ERROR] Refusing to insert "${article.slug}" because body text is empty or too short (${resolvedBody.trim().split(/\s+/).filter(Boolean).length} words).`);
+      continue;
+    }
+
     const payload = {
       slug: article.slug,
       headline: article.headline,
@@ -1588,7 +1595,7 @@ async function run() {
       latitude: article.latitude,
       longitude: article.longitude,
       content: {
-        body: article.body,
+        body: resolvedBody,
         seoTitle: article.seoTitle,
         metaDescription: article.metaDescription,
         tags: article.tags,

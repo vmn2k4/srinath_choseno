@@ -122,8 +122,18 @@ function ingestCurrentArticle() {
   if (currentCandidate) {
     const verification = verifyArticleQuotesAndFacts(article, currentCandidate);
     article.body = verification.sanitizedBody;
-    if (article.content) {
+    if (article.content && typeof article.content === 'object') {
       article.content.body = verification.sanitizedBody;
+    } else {
+      article.content = { body: verification.sanitizedBody };
+    }
+  } else {
+    const extractedBody = article.body || (typeof article.content === 'string' ? article.content : article.content?.body) || '';
+    article.body = extractedBody;
+    if (article.content && typeof article.content === 'object') {
+      article.content.body = extractedBody;
+    } else {
+      article.content = { body: extractedBody };
     }
   }
 

@@ -58,7 +58,7 @@ function quoteExistsInSource(quotedSnippet, sourceText) {
  */
 function verifyArticleQuotesAndFacts(article, groundTruth) {
   const errors = [];
-  let body = article.body || article.content?.body || '';
+  let body = article.body || (typeof article.content === 'string' ? article.content : article.content?.body) || '';
   const tier = groundTruth.tier || 'tier-1';
   const sourceText = (groundTruth.sourceBodyText || groundTruth.sourceDescription || '');
 
