@@ -154,21 +154,150 @@ Working script for this pass:
 artifact of this pipeline — see "Next steps" just below for why a proper
 `sync_bc_municipal_candidates.py` still doesn't exist).
 
-**Next steps — honestly, not done yet**: this whole pipeline (steps 1–6
-above) only ever ran as a one-off `psql` session against the fetched PDF; no
-`scripts/*.py` file captures it, unlike every other pull in this doc. **Do
-not confuse this with `scripts/sync_bc_candidates.py`** — that script is a
-different pipeline entirely (BC *provincial* elections, scraped from an
-Elections BC HTML candidate-list table) and has no knowledge of the LECFA
-PDF, municipal jurisdictions, or school districts. If this needs to be
-re-run (a new LECFA PDF revision, or a future BC municipal cycle), the
-right move is to promote steps 1–6 above into a real
-`scripts/sync_bc_municipal_candidates.py` — parse the PDF, apply the
-jurisdiction-name lookup table (§2), the school-district lookup (§3), the
-officeholder-dedup check (§4), and the party-matching/creation logic (§5) —
-rather than re-deriving all of this by hand from the PDF again. Until that
-script exists, re-running this pull means repeating the manual process
-described above.
+**Re-run 2026-09-06 — 147 more, and the PDF nearly doubled again**: same
+URL, same file, still growing as BC's nomination period runs — 13 pages
+(Sept 4) → **23 pages** two days later. Whole new jurisdictions showed up
+with candidates for the first time this pass, including several of BC's
+largest cities that simply hadn't had anyone registered yet as of the
+first two pulls: **Vancouver** (TEAM's mayoral and council slate, one
+Vancouver Liberal), **Surrey** (Surrey Connect's slate, including
+incumbent mayor **Brenda Locke** — linked to her existing officeholder
+profile, not duplicated), **Kamloops**, **Chilliwack**, **Maple Ridge**,
+**Saanich**, plus ~25 smaller municipalities with zero prior LECFA rows
+(Barriere, Bowen Island, Chase, Hope, Kitimat, Merritt, Mission, Oak Bay,
+Oliver, Rossland, Salmon Arm, Smithers, Summerland, Williams Lake, and
+more). 134 stub candidates + 13 more officeholder-dedup links (Fernie's
+mayor, Grand Forks' mayor, Kamloops' mayor, Kitimat's mayor, Port Hardy's
+councillor, Salmon Arm's mayor, Summerland's mayor, Williams Lake's mayor,
+Victoria's mayor and one councillor, plus Surrey's mayor).
+
+Two candidates ran for **two different races in the same small community**
+this pass — Quesnel's Tony Goulet (already added Sept 4 as a Quesnel SD28
+school trustee candidate) also filed for Quesnel Mayor, and Fraser Lake's
+Dave Christie (already added Sept 4 as a Nechako Lakes SD91 school trustee
+candidate, the district covering Fraser Lake) also filed for Fraser Lake
+Councillor. Both linked to their existing profile rather than minting a
+second one — small BC towns commonly have the same local figure run for
+more than one seat, unlike the North Vancouver City/District "Jim Hanson"
+case from the Sept 4 pass, which stayed a deliberate non-link (two
+distinctly-sized, formally separate municipalities, no independent
+confirmation it's the same person).
+
+**A new category of unresolvable gap surfaced this pass**: Vancouver's
+ballot includes two **Park Board Commissioner** candidates (a body unique
+to the City of Vancouver among BC municipalities) — `election_seats` has
+no `role_title` for this office at all, only `Councillor`, so there's
+nowhere to attach them yet. Left out rather than mis-filed under
+`Councillor`. Same treatment as the already-known Regional District
+Electoral Area Director and Conseil Scolaire Francophone gaps, both of
+which grew further this pass (more RDs and CSF trustee rows appeared) but
+remain unresolvable for the same reasons as before.
+
+Learned from the Sept 4 bug and got the `politician_profiles` insert right
+the first time this pass — verified immediately after (0 orphaned rows)
+rather than discovering it after the fact.
+
+Script:
+[`bc_refresh_sept6.py`](../scripts/us_house_primary_fixes/bc_refresh_sept6.py).
+
+Running total: 66 (Sept 3) → 183 (Sept 4, +117) → **330 (Sept 6, +147)**.
+
+### How to check for new BC nominations (do this periodically until nominations close)
+
+BC's LECFA candidate PDF is a **live, continuously-updated document at a
+fixed URL** — Elections BC republishes to the same filename as candidates
+file, right up until nominations close ahead of the 2026-10-17 general
+local election. It grew 80 rows → 13 pages → 23 pages across just three
+checks (Sept 3, 4, 6), so re-checking every few days while filing is open
+is worth it, and stops mattering once nominations close.
+
+1. **Fetch the PDF fresh** (same URL every time, no rediscovery needed):
+   ```bash
+   curl -sL -o /tmp/lecfa_latest.pdf \
+     https://elections.bc.ca/docs/lecfa/Registered-Candidates-LEGE-2026-10-17.pdf
+   ```
+   Read it with the `Read` tool (`pages: "1-N"`, ~12 pages per call) — it's
+   a plain table, no OCR needed.
+2. **Pull the current DB state** for comparison — this exact query, against
+   all three BC election names, covers councillor/mayor/school-trustee in
+   one shot:
+   ```sql
+   select ms.name, es.role_title, p.full_name
+   from election_seats es
+   join map_shapes ms on ms.id = es.map_shape_id
+   join election_candidates ec on ec.seat_id = es.id
+   join profiles p on p.id = ec.politician_id
+   join elections e on e.id = es.election_id
+   where e.name in ('2026 BC Councillor Mayor Elections',
+                     'BC Municipal Mayor Elections',
+                     '2026 School District Trustee Elections')
+   order by ms.name, es.role_title, p.full_name;
+   ```
+3. **Diff by hand**, row by row of the PDF against that list (jurisdiction +
+   office + name). All 160 municipalities' Councillor/Mayor seats and all
+   BC school districts (`SDxx - Name`, ~90 of them, not just the ones a
+   given pull happens to need) already have empty seats pre-created — a
+   brand-new jurisdiction showing up in the PDF (as happened Sept 6 with
+   Vancouver, Surrey, Kamloops, etc.) needs its `seat_id` looked up, not
+   created.
+4. **Dedup against `office_holders`** before minting any stub — a new PDF
+   row might be a sitting officeholder re-filing for re-election:
+   ```sql
+   select oh.map_shape_id, ms.name, oh.full_name, oh.linked_profile_id, oh.is_current
+   from office_holders oh join map_shapes ms on ms.id = oh.map_shape_id
+   where oh.map_shape_id in (<the new candidates' map_shape_ids>)
+   order by ms.name;
+   ```
+   Only link to an existing `linked_profile_id` when the name **and** the
+   `map_shape_id` both match the seat being added to — a name match alone
+   across two different municipalities isn't enough evidence (see the Sept
+   4 "Jim Hanson" case, kept as a separate stub). Two exceptions worth
+   knowing about: BC's smaller communities are geographically the
+   catchment for a much bigger school district, and it's common for one
+   local figure to run for two different seats in that same community at
+   once (Quesnel's Tony Goulet: mayor *and* SD28 trustee; Fraser Lake's
+   Dave Christie: councillor *and* SD91 trustee) — link those to the
+   *already-added* profile from the other race rather than minting a
+   second person.
+5. **Insert stubs + linked candidates** — copy the pattern in
+   [`bc_refresh_sept6.py`](../scripts/us_house_primary_fixes/bc_refresh_sept6.py)
+   (the most recent, correct version): `NEW_PARTIES` for any affiliation
+   not yet in `political_parties`, `STUB` for fresh profiles, `LINKED` for
+   officeholder/cross-race matches. **Critical**: the `politician_profiles`
+   insert must run for *every* stub regardless of whether a party matched
+   (`political_party_id` is nullable) — gating it on a successful party
+   match was a real bug caught and fixed mid-pass on Sept 4 (see above).
+   Always verify immediately after applying:
+   ```sql
+   select count(*) from election_candidates ec
+   join profiles p on p.id = ec.politician_id
+   left join politician_profiles pp on pp.id = p.id
+   where ec.added_by_election_admin_id = '<admin id>'
+     and ec.submitted_at > now() - interval '10 minutes'
+     and pp.id is null;  -- must be 0
+   ```
+
+**Known, standing gaps** (confirmed unresolvable as of Sept 6, re-confirmed
+each pass, not overlooked): Regional District Electoral Area Director races
+(no `map_shapes` boundary type for BC Regional Districts at all), the
+Conseil Scolaire Francophone (BC's French-language school district, no
+`map_shapes` row), Vancouver's Park Board Commissioner race (no
+`role_title` for that office anywhere in `election_seats`), and Okanagan
+Falls' council/mayor race (its "District of" jurisdiction has no
+`map_shapes` Municipal-type row despite appearing in the LECFA PDF).
+
+**Script status**: two working, saved scripts exist —
+[`bc_refresh_sept4.py`](../scripts/us_house_primary_fixes/bc_refresh_sept4.py)
+and
+[`bc_refresh_sept6.py`](../scripts/us_house_primary_fixes/bc_refresh_sept6.py)
+— but both are one-shot, hand-built diffs (the STUB/LINKED lists were
+derived by manually reading the PDF and comparing against the DB each
+time), not a reusable script you can just re-run unmodified. Promoting
+this into a real `scripts/sync_bc_municipal_candidates.py` that automates
+steps 1–4 above (PDF parse → jurisdiction/SD name matching → officeholder
+dedup → diff against current DB) is still the right next investment if
+this needs to run routinely rather than by hand each time — genuinely not
+built yet, not being glossed over.
 
 ---
 
@@ -322,6 +451,20 @@ candidates for these 872 + 274 seats means the same per-municipality research
 `ELECTION_DATA_SOURCES.md` already describes for individual US municipalities
 — not attempted this pass, flagged as the next real gap rather than papered
 over.
+
+**Re-checked 2026-09-06** (prompted by "check all other seats with
+nominations open" after the BC re-runs above) — see
+`ELECTION_DATA_SOURCES.md`'s Ontario/Manitoba section for the full
+writeup. Short version: **Ontario's nominations already closed Aug 21,
+2026** (so it's not actually a "still open" case — the roster is final,
+just not yet sourced), and Wikipedia has confirmed-real, final per-ward
+candidate lists for Ontario's larger cities (Toronto verified live) that
+follow the same pattern that worked for US House — a genuine, bounded next
+step, not attempted yet. **Manitoba's candidate registration window is
+genuinely open through Sept 22, 2026**, but still has no province-wide
+registry to check (confirmed again) — nothing to periodically re-check
+there yet. As of this pass, **BC remains the only jurisdiction in this
+system with an actively-open, centrally-checkable nomination source.**
 
 ---
 

@@ -1131,10 +1131,62 @@ wired into the admin UI's one-click "Fetch candidates" flow yet.
 Municipal Elections** (Oct 28, 2026) exist in the live `elections` table with
 full Councillor + Mayor seats (872 and 274 respectively) as of 2026-09-03 —
 see `adding-us-2026-midterm-candidates.md`'s sibling recipe for the general
-shape of "seats first, candidates second." Neither province has a verified
-candidate source yet — check first whether either has a BC-style LECFA/
-campaign-financing regulator with its own public registered-candidates list
-before assuming a full scrape-per-municipality is needed.
+shape of "seats first, candidates second."
+
+**Update 2026-09-06 — checked both provinces for a BC-style rolling
+registry, per the instruction above. Neither has one, but their nomination
+timelines are opposite each other and worth tracking differently:**
+
+- **Ontario: nominations are already CLOSED, not open** — the province-wide
+  nomination period ran May 1 – Aug 21, 2026 (2:00 PM), with municipal
+  clerks certifying candidate lists Aug 24. This means, unlike BC, there is
+  **no rolling "check for new filings" case here** — the roster per
+  municipality is now final and fixed until the Oct 26 election. The gap
+  is purely "no source ingested yet," not "nominations still filing."
+  Elections Ontario itself still only handles the *provincial* voters' list
+  and financial-statement compliance, not a candidate registry — confirmed
+  again this pass, same conclusion as before.
+  - **New lead, confirmed real and usable for large cities**: Wikipedia
+    has full, final, per-ward "Registered candidates" sections for major
+    Ontario cities' own election pages (e.g. `2026 Toronto municipal
+    election` — confirmed live: Olivia Chow vs. Brad Bradford vs. Chris
+    Alexander for mayor, plus a per-ward candidate list with 7+ names for
+    Ward 1 alone), following exactly the same pattern that worked for US
+    House races. This will not cover all 872 Ontario municipalities —
+    Wikipedia only has dedicated pages for the larger/more populous cities
+    — but it's a real, bounded, immediately-usable source for however many
+    of Ontario's biggest municipalities (Toronto, Ottawa, Mississauga,
+    Brampton, etc. all have their own 2026 election Wikipedia pages per
+    the search results checked this pass) account for a meaningful share
+    of the 872 seats. Not yet ingested — flagged as the concrete next step
+    if/when this becomes a priority, rather than the vague "scrape every
+    municipality" framing from before.
+  - **Third-party aggregator checked, not usable**: `opencouncil.ca` was
+    found in search results framed as a province-wide election tracker,
+    but its actual pages are per-municipality templates with no live
+    candidate data behind them yet (checked its Quinte West/Belleville
+    page directly — "No results found" under Polls; a direct Toronto URL
+    guess 404'd). Not a real source at this time.
+- **Manitoba: nominations are genuinely OPEN right now** (unlike Ontario) —
+  Mayor/Reeve candidates register May 1 – Sept 22, 2026; Councillor
+  candidates June 30 – Sept 22, 2026 (per `manitoba.ca/mr/mfas`'s official
+  2026 Candidates Guidebook). This *is* the BC-shaped "rolling filing
+  window" case. But **confirmed again this pass: no province-wide
+  registry exists** — registration happens with each municipality's own
+  Senior Election Official, not centrally with Manitoba Municipal
+  Relations, and no equivalent of BC's LECFA PDF was found. There is
+  nothing to periodically re-check here yet; getting real Manitoba
+  candidates still means the same per-municipality research
+  `ELECTION_DATA_SOURCES.md` already describes for individual US
+  municipalities.
+
+**Bottom line for "check all other seats with nominations open" as a
+recurring task**: as of 2026-09-06, **BC is the only jurisdiction in this
+system with an actively-open, centrally-checkable nomination source** (see
+`CANDIDATE_DATA_PULL_LOG.md`'s BC section — window closes Sept 11, 2026).
+Ontario's window already closed (candidates are final, just not yet
+sourced — Wikipedia covers the largest cities). Manitoba's window is open
+through Sept 22 but has no central source to check at all.
 
 ### Saskatchewan / PEI / NWT — blocked, not just unresearched
 

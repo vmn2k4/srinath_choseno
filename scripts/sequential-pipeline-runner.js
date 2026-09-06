@@ -137,6 +137,27 @@ function ingestCurrentArticle() {
     }
   }
 
+  // Normalize fields required by insert-news-batch.js
+  article.headline = article.headline || article.title;
+  if (!article.slug && article.headline) {
+    const baseSlug = article.headline
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 80);
+    const dateStr = (article.published_at || article.eventDate || new Date().toISOString()).slice(0, 10);
+    article.slug = `${baseSlug}-${dateStr}`;
+  }
+  article.status = article.status || 'published';
+  article.published_at = article.published_at || new Date().toISOString();
+  article.eventDate = article.eventDate || article.published_at;
+  article.impactArea = article.impactArea || (article.province ? 'state' : 'local');
+  article.seoTitle = article.seoTitle || article.headline;
+  article.metaDescription = article.metaDescription || (article.summary ? article.summary.slice(0, 160) : '');
+  if (!article.sources && (article.sourceUrl || article.sourceName)) {
+    article.sources = [{ label: article.sourceName || 'News Source', url: article.sourceUrl || '' }];
+  }
+
   const tempBatchPath = path.join(__dirname, 'temp-sequential-batch.json');
   fs.writeFileSync(tempBatchPath, JSON.stringify([article], null, 2));
 
@@ -146,7 +167,11 @@ function ingestCurrentArticle() {
       encoding: 'utf8'
     });
     console.log(output);
-    success = true;
+    if (output.includes('[INSERTED]') || output.includes('[SKIPPED] Slug exists')) {
+      success = true;
+    } else {
+      console.error('[Ingest] Warning: Article was neither inserted nor confirmed existing slug.');
+    }
   } catch (e) {
     console.error('[Ingest] Database ingestion error:', e.message);
   } finally {
