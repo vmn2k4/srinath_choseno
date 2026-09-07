@@ -277,6 +277,136 @@ is worth it, and stops mattering once nominations close.
      and pp.id is null;  -- must be 0
    ```
 
+### Additional step, required for at least these municipalities: check the city's own official page too, not just LECFA
+
+**Discovered 2026-09-06, from a user spot-check**: the LECFA PDF (steps
+1–5 above) is a *financial-agent registration* list — Elections BC's own
+page says as much. Filing nomination papers with a city is the actual
+legal act of becoming a candidate; registering a financial agent with
+LECFA is a separate step candidates can complete later, and in practice
+several of BC's largest cities run their **own** official nomination page
+that publishes live as papers are filed, running well ahead of LECFA's
+provincial feed during the Sept 1–11 window. Checked directly (not via
+LECFA) and confirmed real gaps in every city below except Langley
+Township:
+
+| City | Their official page | Confirmed gap vs. LECFA-sourced DB, as found 2026-09-06 |
+|---|---|---|
+| **Surrey** | `surrey.ca/city-government/2026-municipal-election/candidates` (separate `/candidates-office-of-mayor` and `/candidates-office-of-councillor` sub-pages) | 2 of 3 mayoral candidates, 27 of 29 councillor candidates missing |
+| **Vancouver** | `vancouver.ca/your-government/2026-candidates-mayor.aspx` (also has separate councillor/park-board/school-trustee sub-pages) | 1 of 2 mayoral candidates missing (Muhammad Ahmad) — page explicitly says "candidate information... added as we receive them" |
+| **Burnaby** | `burnaby.ca/our-city/mayor-and-council/elections/candidates/office-of-{mayor,councillor}-candidate-profiles` | Mayor race was already in sync; 11 of 19 councillor candidates missing, **including 2 sitting incumbents** (Joe Keithley, James Wang) |
+| **Coquitlam** | `coquitlam.ca/1205/Candidate-Summaries` | 6 of 9 councillor candidates, 2 of 6 school-trustee candidates missing |
+| **Langley Township** | `tol.ca/en/the-township/about-the-candidates.aspx` | Mayor + Councillor fully in sync (all 9 already matched from LECFA) — but its School Trustee entry ("Tina Patterson") names someone **different** from the LECFA-sourced trustee already in the system (Celene Hoag); SD35 elects 5 trustees total, so both are plausibly real, independently-filed candidates, not a conflict — added both rather than picking one. |
+
+**One real bug this check surfaced and fixed in the same pass**: the Sept
+6 LECFA-only sweep (above) added "Rob Stutt" for Surrey Councillor as a
+fresh stub profile *without* checking Surrey's own officeholders first —
+he's a sitting councillor with an existing, unused profile. Checking his
+own city's page this time caught the duplicate: repointed his
+`election_candidates` row to the real profile and deleted the stray stub.
+**Moral: always run the officeholder-dedup check (step 4) scoped to the
+specific city being checked, even when that city was already covered by a
+broader LECFA-wide pass — a city-specific page can surface a name LECFA
+never had, and that name might turn out to be an existing officeholder.**
+
+**Caveat carried over from LECFA's own page**: neither source is
+"complete official results" — both are pre-election filing lists. A city's
+own page is simply *more current* during the active nomination window,
+not more authoritative in a legal sense. Once nominations close (Sept 11)
+and each city certifies its list, this gap should shrink or close on its
+own for cities that already publish live; it doesn't help at all for
+cities that only publish *after* close (Kelowna: Sept 18; Victoria:
+shortly after Sept 11) — those were never behind LECFA to begin with.
+
+**Not yet checked**: this pass only directly checked Surrey, Vancouver,
+Burnaby, Coquitlam, and Langley Township (5 of BC's ~30 largest
+municipalities) plus name-only searches confirming Abbotsford, Saanich,
+Delta, Nanaimo, and Maple Ridge each have their own equivalent page (URLs
+noted, pages not yet read for actual candidate names — Delta's in
+particular is JS/accordion-rendered and resisted extraction). **If doing
+another BC pass, check each of BC's ~30 largest municipalities' own page
+directly, not just LECFA** — the pattern found in 4 of 5 cities checked
+suggests this is closer to the norm than the exception for larger cities,
+though city size doesn't perfectly predict it (Langley Township, a
+mid-size municipality, was fully in sync).
+
+A third-party aggregator, **VoteMate** (`en.votemate.org/bc2026`, covers
+BC's 31 most populous municipalities), was also checked as a possible
+faster path to all of them at once — **not recommended as a source**: its
+Surrey page listed 5 mayoral candidates against the city's own confirmed
+3, with mismatched party labels (a former mayor tagged with a different
+person's actual party). Treat it as a rough lead for which cities to check
+directly, never as a source to copy from.
+
+Script for this pass:
+[`bc_official_pages_supplement.py`](../scripts/us_house_primary_fixes/bc_official_pages_supplement.py)
+— 44 stubs, 6 officeholder-links, 1 duplicate-profile fix (Rob Stutt).
+
+#### Bonus, same source: these pages carry real bio/contact/party data — pull it too
+
+Every one of these city candidate pages is a full profile, not just a
+name — phone, email, campaign website, social handles, elector-organization
+(party) affiliation, and a submitted candidate statement. `profiles` /
+`politician_profiles` already has columns sitting empty for exactly this:
+`bio`, `contact_phone`, `contact_email`, `source_url`,
+`political_party_id`. **No schema change needed** — this data was always
+poll-ready, just never populated for LECFA-sourced stub candidates,
+because LECFA's PDF only ever carries name + party + financial-agent
+contact, never the candidate's own bio/phone/email.
+
+**How this was pulled for Surrey (2026-09-06), reusable per-city**: rather
+than navigating to each candidate's individual page one at a time, fetch
+them all in one batch from the browser's own JS context (same-origin,
+so no CORS issue) — the councillor list page's own links give the exact
+slugs, no guessing:
+
+```js
+const links = Array.from(document.querySelectorAll('a'))
+  .filter(a => a.href.includes('candidates-office-of-councillor/'));
+// -> [{text: "Brown, Janet", href: ".../brown-janet"}, ...]
+```
+
+Then `Promise.all(urls.map(fetch))`, parse each response with
+`DOMParser`, and pull the `<article>` (or main content container)'s
+`innerText` for the bio/phone/website/socials block. **Watch for
+Cloudflare email obfuscation** — a raw `fetch()` (unlike a real page
+load) never runs the page's own JS, so emails render as the literal
+string `[email protected]` instead of decoding. The real address is
+recoverable from the `data-cfemail` attribute Cloudflare leaves on the
+placeholder span, decoded with a standard single-byte XOR (first two hex
+chars are the key, XOR every following byte-pair against it) — see
+[`surrey_enrich.py`](../scripts/us_house_primary_fixes/surrey_enrich.py)
+for the exact decoder. This isn't unique to Surrey; expect the same
+Cloudflare pattern on any BC city site sitting behind Cloudflare.
+
+**No dedicated social-links column exists** (checked — no `social` or
+`link` table in the schema), so website + social handles are folded into
+a short `Links: Website: ... | X: ... | Facebook: ...` line appended to
+`bio` rather than dropped, pending an actual schema decision if this
+becomes a permanent, structured field later.
+
+**Applied to Surrey's all 32 mayor + councillor candidates** — every
+`UPDATE` uses `COALESCE(new_value, existing_value)` per field, so it only
+fills genuinely empty fields and never clobbers a better value already on
+file (confirmed live: Linda Annis already had a real phone number on
+file from an earlier source that Surrey's own candidate page didn't list;
+the update correctly left it alone and only added her email). Real party
+affiliations recovered this pass that LECFA-sourced stubs didn't have at
+all: **SURREY NOW** and **New Surrey+** (both newly created
+`political_parties` rows) alongside the already-known Surrey First and
+Surrey Connect Public IA.
+
+**Not yet done for Vancouver, Burnaby, Coquitlam, or Langley Township** —
+same opportunity almost certainly exists on their own candidate pages
+(each showed a per-candidate profile link in the "additional step" table
+above), just not pulled yet. Reuse `surrey_enrich.py`'s pattern: swap the
+base URL and the DATA dict.
+
+Script:
+[`surrey_enrich.py`](../scripts/us_house_primary_fixes/surrey_enrich.py).
+
+---
+
 **Known, standing gaps** (confirmed unresolvable as of Sept 6, re-confirmed
 each pass, not overlooked): Regional District Electoral Area Director races
 (no `map_shapes` boundary type for BC Regional Districts at all), the

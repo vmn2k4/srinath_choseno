@@ -50,6 +50,8 @@ import {
   Send,
   UserCheck,
   ExternalLink,
+  Phone,
+  Mail,
 } from "lucide-react";
 import {
   Card,
@@ -78,6 +80,10 @@ interface CandidateRecord {
   party_name?: string;
   hometown?: string;
   education?: string;
+  bio?: string;
+  contact_phone?: string;
+  contact_email?: string;
+  source_url?: string;
   statement?: string;
   intro_video_url?: string;
   avatar_url?: string;
@@ -1038,7 +1044,56 @@ export default function CandidacyWall({
                   <span>Education: {candidate.education || candidateProfile?.education}</span>
                 </div>
               )}
+              {(candidate.contact_phone || candidateProfile?.contact_phone) && (
+                <div className="flex items-center gap-2">
+                  <Phone size={14} className="text-text-muted shrink-0" />
+                  <a
+                    href={`tel:${candidate.contact_phone || candidateProfile?.contact_phone}`}
+                    className="hover:text-accent hover:underline"
+                  >
+                    {candidate.contact_phone || candidateProfile?.contact_phone}
+                  </a>
+                </div>
+              )}
+              {(candidate.contact_email || candidateProfile?.contact_email) && (
+                <div className="flex items-center gap-2">
+                  <Mail size={14} className="text-text-muted shrink-0" />
+                  <a
+                    href={`mailto:${candidate.contact_email || candidateProfile?.contact_email}`}
+                    className="hover:text-accent hover:underline break-all"
+                  >
+                    {candidate.contact_email || candidateProfile?.contact_email}
+                  </a>
+                </div>
+              )}
             </div>
+
+            {/* About / bio -- from politician_profiles.bio, editable by the
+                candidate themselves once they've claimed this candidacy
+                (see EditProfileClient.tsx, which reads/writes this same
+                field). Kept separate from "Platform statement" below,
+                which is the candidate's own election_candidates.statement
+                ("Why I'm Running" pitch) rather than a general bio. */}
+            {(candidate.bio || candidateProfile?.bio) && (
+              <div className="pt-3 border-t border-border-light/20 space-y-1">
+                <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">
+                  About
+                </h3>
+                <p className="text-sm text-text-secondary whitespace-pre-wrap leading-relaxed">
+                  {candidate.bio || candidateProfile?.bio}
+                </p>
+                {(candidate.source_url || candidateProfile?.source_url) && (
+                  <a
+                    href={candidate.source_url || candidateProfile?.source_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs text-text-muted hover:text-accent hover:underline pt-1"
+                  >
+                    <ExternalLink size={12} /> Source
+                  </a>
+                )}
+              </div>
+            )}
 
             {/* Platform statement */}
             {candidate.statement && (
