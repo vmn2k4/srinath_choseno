@@ -1790,7 +1790,10 @@ async function run() {
       const headline = `"${(item.headline || '').replace(/"/g, '""')}"`;
       const category = item.category || 'Policy';
       const jurisdiction = `"${(item.province || '')}, ${(item.country || '')}"`;
-      const primaryOfficial = item.taggedPoliticians?.[0] || 'Civic Authority';
+      const rawPol = item.taggedPoliticians?.[0];
+      const polName = typeof rawPol === 'object' && rawPol !== null ? (rawPol.name || rawPol.full_name || '') : (typeof rawPol === 'string' ? rawPol : '');
+      const polSlug = typeof rawPol === 'object' && rawPol !== null ? (rawPol.wall_slug || polName) : polName;
+      const primaryOfficial = polName || 'Civic Authority';
       const publishedAt = item.published_at;
       const postWindow = 'Early Morning Drive (6:00 AM - 9:00 AM EST)';
       const tweetCopy = `"${(item.tweet || '').replace(/"/g, '""')}"`;
@@ -1798,7 +1801,7 @@ async function run() {
       const liveNewsUrl = `https://www.choseno.com/news/${item.slug}`;
       const wallUrl = item.primaryWallSlug 
         ? `https://www.choseno.com/wall/${item.primaryWallSlug}`
-        : (item.taggedPoliticians?.[0] ? `https://www.choseno.com/wall/${item.taggedPoliticians[0].toLowerCase().replace(/[^a-z0-9]+/g, '-')}` : liveNewsUrl);
+        : (polSlug ? `https://www.choseno.com/wall/${polSlug.toLowerCase().replace(/[^a-z0-9]+/g, '-')}` : liveNewsUrl);
 
       return `${rank},${score},${headline},${category},${jurisdiction},${primaryOfficial},${publishedAt},${postWindow},${tweetCopy},${viralReasoning},${liveNewsUrl},${wallUrl}`;
     });
