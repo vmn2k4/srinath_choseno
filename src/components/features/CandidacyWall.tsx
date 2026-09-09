@@ -12,6 +12,8 @@ import { buildSeatSlug } from "@/lib/utils/slugs";
 import PostCard, { type PostWithComments } from "@/components/features/PostCard";
 import PitchPostPlayer from "@/components/features/PitchPostPlayer";
 import MentionTextarea from "./MentionTextarea";
+import BioLinks from "./BioLinks";
+import { parseBioLinks } from "@/lib/utils/bioLinks";
 import {
   getPublicCandidateById,
   getPublicCandidateAnswers,
@@ -625,7 +627,8 @@ export default function CandidacyWall({
     getGhostDisplayName(candidate.profiles?.current_ghost_id);
   const avatarUrl = candidate.avatar_url || candidateProfile?.avatar_url;
   const bioText = candidate.bio || candidateProfile?.bio || "";
-  const isBioLong = bioText.length > 260;
+  const { text: bioProse, links: bioLinks } = parseBioLinks(bioText);
+  const isBioLong = bioProse.length > 260;
   const partyName =
     candidate.party_name ||
     candidateProfile?.party_name ||
@@ -1097,26 +1100,31 @@ export default function CandidacyWall({
                     !bioExpanded && isBioLong ? "line-clamp-3" : ""
                   }`}
                 >
-                  {candidate.bio || candidateProfile?.bio}
+                  {bioProse}
                 </p>
-                {isBioLong && (
-                  <button
-                    type="button"
-                    onClick={() => setBioExpanded((v) => !v)}
-                    className="text-xs font-semibold text-primary-light hover:underline cursor-pointer"
-                  >
-                    {bioExpanded ? "Show less" : "Read more"}
-                  </button>
-                )}
-                {(candidate.source_url || candidateProfile?.source_url) && (
-                  <a
-                    href={candidate.source_url || candidateProfile?.source_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs text-text-muted hover:text-accent hover:underline pt-1"
-                  >
-                    <ExternalLink size={12} /> Source
-                  </a>
+                <BioLinks links={bioLinks} />
+                {(isBioLong || candidate.source_url || candidateProfile?.source_url) && (
+                  <div className="flex items-center gap-3 pt-1">
+                    {isBioLong && (
+                      <button
+                        type="button"
+                        onClick={() => setBioExpanded((v) => !v)}
+                        className="text-xs font-semibold text-primary-light underline hover:text-accent cursor-pointer"
+                      >
+                        {bioExpanded ? "Show less" : "Read more"}
+                      </button>
+                    )}
+                    {(candidate.source_url || candidateProfile?.source_url) && (
+                      <a
+                        href={candidate.source_url || candidateProfile?.source_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-text-muted hover:text-accent hover:underline"
+                      >
+                        <ExternalLink size={12} /> Source
+                      </a>
+                    )}
+                  </div>
                 )}
               </div>
             )}

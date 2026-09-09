@@ -1049,6 +1049,196 @@ collisions with the candidate-id suffix, and writes ready-to-apply SQL.
 
 ---
 
+## New election category: BC provincial by-elections — 2026-09-09
+
+**User asked**: "is this election added to our system
+[elections.bc.ca/2026-abbotsford-mission-by-election](https://elections.bc.ca/2026-abbotsford-mission-by-election/)?
+I don't see it." Checked directly — it wasn't, and **couldn't have
+been**: every `elections` row in the system up to this point was
+municipal/school-trustee/US-midterm. A **BC provincial by-election**
+(an MLA seat) is a category this system had never added at all, not a
+gap in an existing pipeline. Confirmed scope before adding (asked the
+user first, since this expands the election taxonomy rather than just
+adding candidates to an existing race): only this one BC provincial
+by-election is currently active (checked the province-wide by-elections
+listing, no others called).
+
+**What existed already, what didn't**: `map_shapes` already has the
+Abbotsford-Mission provincial riding (id 22307) and a current
+officeholder (Reann Gasper, Conservative — the seat's vacancy is what
+triggered this by-election; her record is untouched, she isn't one of
+the 5 by-election candidates). `election_role_types` already supports
+`MLA` / Canada / Provincial. What was missing was the `elections` row
+itself, an `election_seats` row for this specific by-election, and the
+candidates.
+
+**Added**: a new `elections` row (`2026 Abbotsford-Mission By-election`,
+election day Sept 26, `nominations_closed` since the by-election's own
+Sept 5 nomination deadline already passed), one `election_seats` row
+(MLA, Abbotsford-Mission), and its 5 finalized candidates — Pam Alexis
+(NDP), Kerry-Lynne Findlay (Conservative), Stephen Fowler (Green),
+Lakhwinder Jhaj (CentreBC), Jeff Monds (Libertarian) — pulled directly
+from the by-election's own candidates table (a closed, stable list, not
+a moving nomination-period snapshot). None matched an existing profile
+or `office_holders` row (checked all 5 by name). Party names matched to
+the exact strings this DB already uses for other BC MLAs (`New
+Democratic Party (NDP)`, `Conservative Party`, `Green Party`, confirmed
+via Reann Gasper's own record) rather than the page's own shorthand
+("BC NDP", "BC Green Party"); CentreBC and Libertarian are new parties,
+added as-is. No photos — this by-election's candidate table is a plain
+financial-agent-contact listing, the same shape as LECFA's municipal
+data, not a per-candidate profile page with a headshot.
+
+**Standing note for future passes**: BC provincial by-elections are
+called individually and irregularly (not on the fixed municipal
+election-cycle calendar this doc otherwise tracks) — worth an occasional
+direct check of `elections.bc.ca`'s by-elections listing page, since
+nothing about the existing municipal/school-trustee re-check cadence
+would ever surface one.
+
+Script:
+[`bc_sept9_abbotsford_mission_byelection.py`](../scripts/us_house_primary_fixes/bc_sept9_abbotsford_mission_byelection.py)
+— creates the election + seat inline (not just candidates), the template
+to copy for the next BC provincial by-election.
+
+---
+
+## Full active-elections sweep, 2026-09-09 — "find the change in candidates"
+
+**User asked**: go over every active election in the system and find
+candidate changes, and for Ontario specifically — since no single
+province-wide source exists there the way BC has LECFA — go municipality
+by municipality, most populated to least.
+
+### BC re-check (LECFA grew 23 → 25 pages)
+
+Re-fetched the LECFA PDF (same URL, always current). Rather than a full
+manual row-by-row read, used `pdfplumber` to extract all page text
+programmatically, then **counted rows per (jurisdiction, office) pair
+and compared against the DB's candidate count for that same pair** —
+fast and robust without needing a brittle full-column parse (name /
+affiliation / financial-agent-name run together with no reliable
+delimiter when a candidate isn't their own agent). Any pair where
+`PDF count > DB count` was checked by hand against the raw extracted
+text for the actual names.
+
+Found 15 real municipal-council gaps across 8 municipalities — **5 of
+which (Elkford, Golden, Lytton, Port Alice, Trail) had zero candidates
+in the system at all**, not just an undercount — plus 8 more school-
+trustee gaps across 4 districts, including **SD33 - Chilliwack, entirely
+missing** (0 candidates, 5 in LECFA). All new names checked against
+`office_holders` first: 8 of the 23 total were sitting officeholders
+re-filing (linked to their existing profile, not stubbed).
+
+Scripts:
+[`bc_sept9_lecfa_recheck.py`](../scripts/us_house_primary_fixes/bc_sept9_lecfa_recheck.py),
+[`bc_sept9_school_trustee_recheck.py`](../scripts/us_house_primary_fixes/bc_sept9_school_trustee_recheck.py).
+BC total after this pass: 485 candidates (direct `COUNT`).
+
+### US House + Senate — flagged, not re-run this pass
+
+Re-verifying "who's really on the ballot" requires the full per-state
+Ballotpedia sweep documented below (**"Re-running these"** section) —
+50 states, each read and diffed by hand. Doing that properly would have
+consumed this entire pass on its own, and the user's explicit priority
+was Ontario. **Deliberately deferred, not silently skipped** — the
+existing 1,619 US candidates are the Sept 3-4 FEC-based pull plus this
+session's incumbent-photo matching; a fresh Ballotpedia sweep is still
+owed and should be its own dedicated pass.
+
+### Ontario — 872 seats, every single one at 0 candidates
+
+Direct `COUNT` before this pass: **0 candidates across all 435 Ontario
+municipalities**, despite the `2026 Ontario Municipal Elections` row's
+own `nomination_close_date` (Aug 21, 2026) already 19 days past as of
+this check. Not a partial gap — the entire province had never been
+touched beyond seat pre-creation. Confirmed (again) no single
+province-wide registry exists for Ontario the way BC has LECFA, so this
+has to go municipality by municipality — ranked by 2021 Census population
+(Wikipedia's "List of municipalities in Ontario", 435 rows, matches our
+435 exactly) and worked top-down as asked.
+
+**New structural pattern established on the first city, Toronto (pop.
+#1, 2,794,356), with the user's explicit sign-off (asked twice, since it
+governs every multi-ward city after this one)**: Toronto and most large
+Ontario cities elect councillors **by ward**, not city-wide, but every
+Ontario municipality's seats were pre-created as one generic city-wide
+Mayor + Councillor pair (matching BC's convention, where it's actually
+correct — BC councils are elected at-large). Checked whether real ward
+polygon boundaries exist anywhere in the system before doing anything:
+**they don't** — a `Ward` boundary type exists only for India (64k
+rows); zero Canadian ward polygons exist anywhere, and Toronto's own
+~370 "Advance Polling District" shapes are a different, unrelated
+federal/provincial voting-logistics geography that doesn't align with
+municipal wards. Real ward shapefile import is its own separate GIS
+project, not something derivable from a scraped candidate list.
+
+**Decision**: model wards as **name-only placeholder `map_shapes`** (`
+country='Canada', boundary_type='Ward'`, no geometry) so candidates
+group correctly by who they actually compete against — "Find my
+District" resolves to the parent municipality only, not the specific
+ward, until real boundaries are imported later (a known, documented
+gap, not an oversight). Required adding a new `country_boundary_types`
+row for `(Canada, Ward)` first — `map_shapes` has an FK to that table,
+so a boundary_type can't be used until it's registered there.
+
+**Toronto result**: 25 wards created (`Toronto Ward 1 - Etobicoke North`
+… `Ward 25 - Scarborough-Rouge Park`), each with its own `Councillor`
+seat; 190 councillor candidates attributed to the correct ward, 53
+mayor candidates (city-wide, uses the existing single Mayor seat). The
+old, now-superseded generic city-wide Councillor seat (confirmed 0
+candidates, 0 admins) was deleted. Source:
+`toronto.ca/city-government/elections/2026-election/candidate-list/` —
+an official, tabbed (Mayor/Councillor-by-ward/Trustee) page; **Trustee
+races (TDSB/TCDSB/CSV/CSCM, another 100+ candidates) intentionally left
+for a follow-up pass**, scoped out to keep Toronto's own insert
+reviewable. No officeholder-dedup was possible or attempted — Ontario
+officeholders have never been imported into `office_holders` in this
+system, so every name is a fresh stub (name only; Toronto's list
+doesn't carry bio/contact/photo for most candidates, matching the scope
+of a first LECFA-stub-equivalent pass, not full enrichment).
+
+**Generalized immediately into a reusable script** rather than staying
+Toronto-specific, since the same ward-modeling decision applies to
+every multi-ward city:
+[`on_multiward_city.py`](../scripts/us_house_primary_fixes/on_multiward_city.py)
+takes one JSON file (`city`, `mayor_seat_id`, `old_councillor_seat_id`,
+`mayor: [names]`, `wards: [{ward, names}]`) and does the ward-creation +
+stub-insert for any city — only the per-city data extraction (finding
+the source, scraping it into that JSON shape) differs city to city.
+
+**Continued top-down through 4 more cities the same session, each with
+its own source-finding quirk worth noting for next time:**
+
+| City (pop. rank) | Source | Notable |
+|---|---|---|
+| **Ottawa** (#2) | `ottawa.ca` — Mayor as one table, each of 24 wards its own sub-page (`.../certified-candidates-ward-N-name`) | Batch-`fetch`'d all 24 ward pages at once, same technique as Surrey/Burnaby |
+| **Mississauga** (#3) | `mississaugavotes.ca`'s own "Who's running" page looked empty at first — the real candidate list is a `voterview.ca` accordion **embedded in an iframe** (`ovs.voterview.ca/candidatelist/2105`), not on the page's own DOM. Had to inspect `<iframe>` `src` to find it, then navigate there directly. |
+| **Brampton** (#4) | `brampton.ca`'s own certified-candidates page | Two-tier government — voters elect a **City Councillor and a separate Regional Councillor** per ward pair (Region of Peel), a genuinely different elected body from the City. Only City Councillor + Mayor added this pass; Regional Councillor would need its own Peel Region election/seat modeling, scoped out same as Trustees. |
+| **Hamilton** (#5) | `hamilton.ca`'s certified-candidates page (Mayor/Councillor/Trustee tabs, wards as accordion items) | **Real map_shapes name collision caught before inserting**: two different `Municipal`/Canada shapes are both named exactly "Hamilton" — the actual city (pop. 569,353, `code` `3525005`) and the unrelated Township of Hamilton in Northumberland County (pop. 11,059, `code` `3514019`). Disambiguated via `census_data`/`ST_Area(geom)`, not name alone — a name-only match here would have silently attached 76 councillor candidates to a township of 11,000 people. **Worth checking for on every remaining city**: `select name, count(*) from map_shapes where boundary_type='Municipal' and country='Canada' group by name having count(*)>1` before trusting a name match. Also filtered out several `- Withdrawn`/`- WITHDRAWN` suffixed names in the source data (candidates who dropped out after certification but are still listed with a status marker). |
+
+Scripts:
+[`on_sept9_ottawa_data.json`](../scripts/us_house_primary_fixes/on_sept9_ottawa_data.json),
+[`on_sept9_mississauga_data.json`](../scripts/us_house_primary_fixes/on_sept9_mississauga_data.json),
+[`on_sept9_brampton_data.json`](../scripts/us_house_primary_fixes/on_sept9_brampton_data.json),
+[`on_sept9_hamilton_data.json`](../scripts/us_house_primary_fixes/on_sept9_hamilton_data.json)
+— all run through `on_multiward_city.py`.
+
+**Status, honestly**: **5 of 435 Ontario municipalities done — but they're
+the 5 largest**, covering roughly 5.3M of Ontario's ~14.7M 2021
+population (Toronto, Ottawa, Mississauga, Brampton, Hamilton). 430 to
+go. Every remaining city from #6 (London) down is smaller than all 5
+done so far; most below the top ~20-30 are single-ward (no ward-
+modeling step needed, much faster per city, closer to the original BC
+LECFA-stub pace) but there are a lot of them. Orphan-check and
+`wall_slug`-uniqueness re-verified clean after every single city this
+pass, not just at the end. This remains a genuinely multi-session
+undertaking at population-ranked pace — continuing top-down (next:
+London, Markham, Vaughan, Kitchener, Windsor, ...) is still the right
+approach.
+
+---
+
 ## US House + Senate — FEC, now with dropout detection
 
 **Source**: unchanged from `adding-us-2026-midterm-candidates.md` — FEC's

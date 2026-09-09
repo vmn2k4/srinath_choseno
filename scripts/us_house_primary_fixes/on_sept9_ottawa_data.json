@@ -1,0 +1,32 @@
+{
+  "city": "Ottawa",
+  "mayor_seat_id": "d59c5228-ff2c-43e5-afb4-cf1a28a441f6",
+  "old_councillor_seat_id": "e02faa20-a9a0-4851-aafc-0f0157938071",
+  "mayor": ["Jeff Leiper","Alex Lawson","Neil Saravanamuttoo","Mark Sutcliffe","Zed Chebib","Peter Westaway","Suraj Harish","Queen Divine Priya Amber Bakshi","Bernard Couchman","Ali Shayvard","Jacob Solomon","Amjad Ali Syed","Josh Rachlis","Geoff Nicholas"],
+  "wards": [
+    {"ward": "Ward 1 - Orleans East-Cumberland", "names": ["Barbara Daniela Gandolfo","Sherif Rizk","Bob Bell","Tammie Trellert","Matt Luloff","Mazhar Choudhry","Yvette Ashiri"]},
+    {"ward": "Ward 2 - Orleans West-Innes", "names": ["Laura Dudas","Jenna Jessop","David Purchase"]},
+    {"ward": "Ward 3 - Barrhaven West", "names": ["David Hill","Donna Blackburn","Jeff Balys"]},
+    {"ward": "Ward 4 - Kanata North", "names": ["Cathy Curry","James Murchison","Rob Millan"]},
+    {"ward": "Ward 5 - West Carleton", "names": ["Christine Harrison","Clarke Kelly","Dylan Nose"]},
+    {"ward": "Ward 6 - Stittsville", "names": ["Chelsea Walton","Mani Sharma","Sheetal Narwal","Tanya Hein","Theresa Qadri","Kevin Hua","Marie-Ange Yindaki Ahinful","Paul Meek","Devin Michael Fitzgerald O'Brien"]},
+    {"ward": "Ward 7 - Bay", "names": ["Theresa Kavanagh","Spencer Radford","Butch Moore"]},
+    {"ward": "Ward 8 - College", "names": ["Laine Johnson","Malloum Abakar"]},
+    {"ward": "Ward 9 - Knoxdale-Merivale", "names": ["Cole Fraser Jones","Brandon Ly","Anna Ielo-Tal","Sean Devine"]},
+    {"ward": "Ward 10 - Gloucester-Southgate", "names": ["John Redins","Donna Dickson","Jessica Bradley","Ahmed Rashid","Ayub Omar"]},
+    {"ward": "Ward 11 - Beacon Hill-Cyrville", "names": ["Cathryne Milburn","Tim Tierney","Coreen Corcoran"]},
+    {"ward": "Ward 12 - Rideau-Vanier", "names": ["Lyra Evans","Stéphanie Plante","Eric Smith","Brian Paquette","Michael Karl Sewanaku","Julie Fiala Chartrand"]},
+    {"ward": "Ward 13 - Rideau-Rockcliffe", "names": ["Peter J. Karwacki","Rawlson King"]},
+    {"ward": "Ward 14 - Somerset", "names": ["Robert Dekker","Ariel Troster","Dillon Anderson","Michael Tay","Nicholas Gollé"]},
+    {"ward": "Ward 15 - Kitchissippi", "names": ["Joanne Chianello","Subhir Uppal","Brian Innes","Xavier Commerford"]},
+    {"ward": "Ward 16 - River", "names": ["Riley Brockington"]},
+    {"ward": "Ward 17 - Capital", "names": ["Farah Gulzar","Shawn Menard","Jaac Doduck"]},
+    {"ward": "Ward 18 - Alta Vista", "names": ["Tressy El-Hawi","Marty Carr","Derek McSweeney","Muhyadin Omar Barkhat","Elsa Niyongabo"]},
+    {"ward": "Ward 19 - Orleans South-Navan", "names": ["Jason Wing","Catherine Kitts"]},
+    {"ward": "Ward 20 - Osgoode", "names": ["Isabelle Skalski","Bruce Anthony Faulkner"]},
+    {"ward": "Ward 21 - Rideau-Jock", "names": ["David Brown"]},
+    {"ward": "Ward 22 - Riverside South-Findlay Creek", "names": ["Muyiwa Ojo","Steve Desroches"]},
+    {"ward": "Ward 23 - Kanata South", "names": ["Erin Coffin","Allan Hubley","Megan Strazds-Esenbergs","Sam Bhalesar"]},
+    {"ward": "Ward 24 - Barrhaven East", "names": ["Wilson Lo","Zahy A Adam","Jules Ruhinda","Yoosaf Melparamba","Ahmed Alsabaawi"]}
+  ]
+}

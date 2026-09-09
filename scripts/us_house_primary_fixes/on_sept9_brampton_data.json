@@ -1,0 +1,85 @@
+{
+ "city": "Brampton",
+ "mayor_seat_id": "e2a81db7-7b5f-44b0-89a4-1886ff7a430a",
+ "old_councillor_seat_id": "984fd7c0-58b6-47f7-ad0f-f0ab05af0241",
+ "mayor": [
+  "Jagruti Bhatt",
+  "Patrick Brown",
+  "Gurdeep Singh Dhothar",
+  "Vidya Sagar Gautam",
+  "Prabh Gill",
+  "Wesley Jackson",
+  "Najma Khurram",
+  "Nathaniel Peart",
+  "Prabhjot Kaur Sidhu",
+  "Sandeep Somal",
+  "Paul Tarriwal",
+  "Gaurav Walia"
+ ],
+ "wards": [
+  {
+   "ward": "City Councillor Ward 1 & 5",
+   "names": [
+    "Gagandeep Singh Atwal",
+    "Tajinder Singh Bhinder",
+    "Staceyann Brooks",
+    "Amit Dutta",
+    "Tracy Ann Pepe",
+    "Rowena Santos",
+    "Tejpal Sidhu",
+    "Romolo Tantalo",
+    "Khimani Williams"
+   ]
+  },
+  {
+   "ward": "City Councillor Ward 2 & 6",
+   "names": [
+    "Navjit Kaur Brar",
+    "Jermaine Chambers",
+    "Yadvinder Deswal",
+    "Raghav Dhir",
+    "Amir Khawaja Hassan",
+    "Gurpreet Pabla",
+    "Keval Shah",
+    "Rakesh Singh Thakur",
+    "Carmen Wilson"
+   ]
+  },
+  {
+   "ward": "City Councillor Ward 3 & 4",
+   "names": [
+    "Gita Devi Dawadi Dhakal",
+    "Dennis Keenan",
+    "Jugraj Singh Khinda",
+    "Kaniki Karine Mujinga",
+    "Santokh Randhawa",
+    "Ajit Seerha"
+   ]
+  },
+  {
+   "ward": "City Councillor Ward 7 & 8",
+   "names": [
+    "Nayan Brahmbhatt",
+    "Taran Chahal",
+    "Ripudaman Singh Dhillon",
+    "Ayanna Kahlon",
+    "Ali Khan",
+    "Rakesh Sharma",
+    "Monica Singh Soares"
+   ]
+  },
+  {
+   "ward": "City Councillor Ward 9 & 10",
+   "names": [
+    "Janice Gordon-Daniels",
+    "Azad Goyat",
+    "Jagdish Singh Grewal",
+    "Kamran Hassan",
+    "Sandeep Kumar",
+    "Baljinder Singh Nehal",
+    "Cheryl Rodricks",
+    "Harkirat Singh"
+   ]
+  }
+ ]
+}

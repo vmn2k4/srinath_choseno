@@ -1,0 +1,153 @@
+{
+ "city": "Mississauga",
+ "mayor_seat_id": "e24e1b91-2dfe-40ad-b8f3-fa07f349059a",
+ "old_councillor_seat_id": "de75be99-5b95-490a-9054-5a572639db22",
+ "mayor": [
+  "Karam Ahmed",
+  "Aamir Bhatti",
+  "Bonnie Crombie",
+  "Dipika Damerla",
+  "Gord Elliott",
+  "Frank Fang",
+  "Amjad Jilani",
+  "Mohsin Khan",
+  "Mike Matulewicz",
+  "Fadi Naami",
+  "Carolyn Parrish",
+  "David Shaw",
+  "Alvin Tedjo",
+  "Ana Luisa Vasquez de Espinal"
+ ],
+ "wards": [
+  {
+   "ward": "Ward 1",
+   "names": [
+    "Stephen Dasko",
+    "Olivia Gannon"
+   ]
+  },
+  {
+   "ward": "Ward 2",
+   "names": [
+    "Samer Fawzi Alghoul",
+    "Ronnie Amyotte",
+    "Michelle Baker",
+    "Michael Carroll",
+    "Leeann Cole",
+    "Tom Ellard",
+    "Abdul Mukhtar Ghafarzoy",
+    "Syed Jaffery",
+    "Ross Kutisker-jacobson",
+    "Ananya Majumder",
+    "Olga Polstvin",
+    "Alex Ragozzino",
+    "Sue Shanly",
+    "Audrey Simpson"
+   ]
+  },
+  {
+   "ward": "Ward 3",
+   "names": [
+    "Chris Fonseca",
+    "Arshad Hashmi",
+    "Mendi Kabashi",
+    "Kim Pines",
+    "Stjepan Vukovic"
+   ]
+  },
+  {
+   "ward": "Ward 4",
+   "names": [
+    "Zulfiqar Ali",
+    "Humphrey Chukwuemeka",
+    "Khawar Hussain",
+    "John Kovac"
+   ]
+  },
+  {
+   "ward": "Ward 5",
+   "names": [
+    "Aruna Anand",
+    "Ismail Bawa",
+    "Raghavan Babu Bhogaiah",
+    "Mandeep Singh Dhaliwal",
+    "Jamie Dookie",
+    "Natalie Hart",
+    "Vipan Mehta",
+    "Michael Anthony Perretta",
+    "Rosemarie Sanchez Sanchez",
+    "Danny Singh"
+   ]
+  },
+  {
+   "ward": "Ward 6",
+   "names": [
+    "Michael Bastian",
+    "Javed Dean",
+    "Gurcharan Guleria",
+    "Ahmad Reshad Hatefi",
+    "Joe Horneck",
+    "Martina Wood"
+   ]
+  },
+  {
+   "ward": "Ward 7",
+   "names": [
+    "Gerald Adad",
+    "Amir Ali",
+    "Lucas Alves",
+    "Joel Binda",
+    "Asha Falinski",
+    "Ahsan Khokhar",
+    "Jerry Krzywda",
+    "Keshav Mandadi",
+    "Louroz Mercader",
+    "Naila Saeed",
+    "Maisa Salhia",
+    "Amitabh Srivastava",
+    "Tassawar Syed",
+    "George Tavares",
+    "Peter Tolias",
+    "Hazra Wade",
+    "Leslie Zurek-silvestri"
+   ]
+  },
+  {
+   "ward": "Ward 8",
+   "names": [
+    "Valerie Hogue",
+    "Matt Mahoney",
+    "Viktoria Manzar",
+    "Rahul Mehta",
+    "Grzegorz Nowacki"
+   ]
+  },
+  {
+   "ward": "Ward 9",
+   "names": [
+    "Ramsha Haq",
+    "Anwar Knight",
+    "Martin Reid",
+    "Mohammad Shabbeer"
+   ]
+  },
+  {
+   "ward": "Ward 10",
+   "names": [
+    "Hamza Bajwa",
+    "Suha Hashim",
+    "Aatish Jamal",
+    "Sue Mcfadden",
+    "Salman Tariq"
+   ]
+  },
+  {
+   "ward": "Ward 11",
+   "names": [
+    "Brad Butt",
+    "Amin Nanji",
+    "Dev Vashi"
+   ]
+  }
+ ]
+}

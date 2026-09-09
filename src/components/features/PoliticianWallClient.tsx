@@ -81,6 +81,8 @@ import { createClient } from "@/lib/supabase/client";
 import { trackPostCreated, trackPostEngagement, trackCommentAdded, trackPoliticianViewed } from "@/lib/analytics/events";
 import { buildPoliticianWallSlug, buildSeatSlug } from "@/lib/utils/slugs";
 import { mergeWallPosts } from "@/lib/utils/mergeWallPosts";
+import { parseBioLinks } from "@/lib/utils/bioLinks";
+import BioLinks from "./BioLinks";
 
 interface WallOwnerRecord {
   id: string;
@@ -1122,9 +1124,12 @@ export default function PoliticianWallClient({
         </div>
 
         {wallOwner?.politician_profiles?.bio && (
-          <p className="text-sm text-text-secondary pt-2 lg:pt-3 border-t border-border-light/20 leading-relaxed">
-            {wallOwner.politician_profiles.bio}
-          </p>
+          <div className="pt-2 lg:pt-3 border-t border-border-light/20 space-y-1">
+            <p className="text-sm text-text-secondary leading-relaxed">
+              {parseBioLinks(wallOwner.politician_profiles.bio).text}
+            </p>
+            <BioLinks links={parseBioLinks(wallOwner.politician_profiles.bio).links} />
+          </div>
         )}
 
         {candidacies.length > 0 && (

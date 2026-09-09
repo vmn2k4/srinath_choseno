@@ -5,7 +5,7 @@ import Modal from "@/components/primitives/Modal";
 import { Card, Button, Badge, Textarea, Spinner } from "@/components/primitives";
 import { updateElectionQuestionVideo, updateElectionQuestionNarrationText } from "@/lib/services/elections";
 import { createClient } from "@/lib/supabase/client";
-import { X, Video, Wand2, ChevronLeft, ChevronRight, Check, RefreshCw, AlertCircle } from "lucide-react";
+import { X, Video, Wand2, ChevronLeft, ChevronRight, Check, RefreshCw, AlertCircle, Play } from "lucide-react";
 
 interface QuestionRow {
   id: string;
@@ -65,6 +65,11 @@ export default function GenerateQuestionVideosFlow({
   const [generatingAll, setGeneratingAll] = useState(false);
   const [reviewIndex, setReviewIndex] = useState(0);
   const [approved, setApproved] = useState<Record<string, boolean>>({});
+  // Which question's already-approved (persisted) video is expanded inline
+  // for playback -- separate from the in-session generate/review flow below,
+  // since a question can already have a question_video_url from a PRIOR
+  // approval before this modal was even opened this time.
+  const [playingExistingId, setPlayingExistingId] = useState<string | null>(null);
 
   const generateOne = async (questionId: string) => {
     const q = questions.find((x) => x.id === questionId);
@@ -117,17 +122,6 @@ export default function GenerateQuestionVideosFlow({
     setMode("reviewing");
   };
 
-  // Jump straight into review for one specific question -- reachable right
-  // from its row in edit mode, not just the global "Review & Approve"
-  // button, so approving a single generated video doesn't require
-  // remembering a separate step.
-  const startReviewFor = (questionId: string) => {
-    const idx = readyQuestionIds.indexOf(questionId);
-    if (idx === -1) return;
-    setReviewIndex(idx);
-    setMode("reviewing");
-  };
-
   // Generated-but-unapproved videos exist only in this component's memory
   // (results state) -- closing without approving silently discards them,
   // which is exactly what was reported. Confirm first whenever there's
@@ -146,15 +140,27 @@ export default function GenerateQuestionVideosFlow({
   const currentReviewQuestion = questions.find((q) => q.id === currentReviewId);
   const currentReviewResult = currentReviewId ? results[currentReviewId] : null;
 
-  const approveCurrent = async () => {
-    if (!currentReviewId || !currentReviewResult) return;
-    await updateElectionQuestionVideo(supabase, currentReviewId, {
-      videoUrl: currentReviewResult.videoUrl,
-      videoPath: currentReviewResult.videoPath,
+  // Shared by both approval surfaces -- the inline row button (single
+  // question, no mode switch) and the fullscreen carousel's "Approve &
+  // Attach" (bulk-review flow, still useful for scanning many freshly
+  // generated videos in one pass). Same persistence either way; only what
+  // happens after approving (advance the carousel vs. just sit in the row)
+  // differs.
+  const approveQuestion = async (questionId: string) => {
+    const result = results[questionId];
+    if (!result) return;
+    await updateElectionQuestionVideo(supabase, questionId, {
+      videoUrl: result.videoUrl,
+      videoPath: result.videoPath,
     });
-    await updateElectionQuestionNarrationText(supabase, currentReviewId, drafts[currentReviewId] || null);
-    setApproved((p) => ({ ...p, [currentReviewId]: true }));
+    await updateElectionQuestionNarrationText(supabase, questionId, drafts[questionId] || null);
+    setApproved((p) => ({ ...p, [questionId]: true }));
     onApproved();
+  };
+
+  const approveCurrent = async () => {
+    if (!currentReviewId) return;
+    await approveQuestion(currentReviewId);
 
     // Nothing left to review (this was the only video, or the last one in
     // the queue) -- show the "Approved" confirmation briefly so it's clear
@@ -290,6 +296,10 @@ export default function GenerateQuestionVideosFlow({
                 {status[q.id] === "ready" && !approved[q.id] && <Badge tone="amber">Generated — not approved yet</Badge>}
                 {status[q.id] === "generating" && <Badge tone="amber">Generating…</Badge>}
                 {status[q.id] === "error" && <Badge tone="rose">Failed</Badge>}
+                {/* No in-session activity yet, but a video from a PRIOR
+                    approval is already attached (question_video_url) --
+                    surface that too, or this row looks blank/never-touched. */}
+                {!status[q.id] && q.question_video_url && <Badge tone="emerald">Video attached</Badge>}
               </div>
               <Textarea
                 value={drafts[q.id] || ""}
@@ -299,6 +309,21 @@ export default function GenerateQuestionVideosFlow({
                 placeholder="Spoken script for this question's video..."
               />
               <div className="flex items-center gap-2 flex-wrap">
+                {/* Existing persisted video (from a prior approval, this
+                    session or a past one) -- play it in place before
+                    deciding whether to regenerate. Hidden once a fresh
+                    result exists below, so the row doesn't show two video
+                    players (old + newly generated) at once. */}
+                {q.question_video_url && status[q.id] !== "ready" && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setPlayingExistingId((cur) => (cur === q.id ? null : q.id))}
+                    className="text-xs gap-1.5"
+                  >
+                    <Play size={13} /> {playingExistingId === q.id ? "Hide" : "Play"}
+                  </Button>
+                )}
                 <Button
                   size="sm"
                   variant="outline"
@@ -307,14 +332,17 @@ export default function GenerateQuestionVideosFlow({
                   className="text-xs gap-1.5"
                 >
                   {status[q.id] === "generating" ? <Spinner size="sm" /> : <Wand2 size={13} />}
-                  {status[q.id] === "ready" ? "Regenerate" : "Generate"}
+                  {status[q.id] === "ready" || q.question_video_url ? "Regenerate" : "Generate"}
                 </Button>
-                {/* Reachable right here, not just via the global "Review &
-                    Approve" button below — the whole point is nothing should
-                    require remembering a separate step to actually stick. */}
+                {/* Approve right here, inline, next to the preview below --
+                    no mode switch to a separate fullscreen carousel just to
+                    approve a single video. The fullscreen carousel (Review
+                    (N) & Approve, below) is still there for flipping through
+                    many freshly generated videos at once after "Generate
+                    All", where a focused next/prev view earns its keep. */}
                 {status[q.id] === "ready" && !approved[q.id] && (
-                  <Button size="sm" onClick={() => startReviewFor(q.id)} className="text-xs gap-1.5 bg-success hover:bg-success/85 text-white">
-                    <Check size={13} /> Review & Approve This One
+                  <Button size="sm" onClick={() => approveQuestion(q.id)} className="text-xs gap-1.5 bg-success hover:bg-success/85 text-white">
+                    <Check size={13} /> Approve & Attach
                   </Button>
                 )}
                 {errors[q.id] && (
@@ -323,6 +351,44 @@ export default function GenerateQuestionVideosFlow({
                   </span>
                 )}
               </div>
+              {playingExistingId === q.id && q.question_video_url && (
+                <div
+                  className="relative rounded-xl overflow-hidden bg-black mx-auto"
+                  style={{ aspectRatio: "9 / 16", height: "min(50vh, 420px)" }}
+                >
+                  <video
+                    key={q.question_video_url}
+                    src={q.question_video_url}
+                    controls
+                    autoPlay
+                    playsInline
+                    className="w-full h-full object-cover bg-black"
+                  />
+                </div>
+              )}
+              {/* Freshly generated (this session), not yet -- or just --
+                  approved. Shown automatically, no extra toggle click, since
+                  the whole point of hitting Generate was to look at this. */}
+              {status[q.id] === "ready" && results[q.id] && (
+                <div
+                  className="relative rounded-xl overflow-hidden bg-black mx-auto"
+                  style={{ aspectRatio: "9 / 16", height: "min(50vh, 420px)" }}
+                >
+                  <video
+                    key={results[q.id].videoUrl}
+                    src={results[q.id].videoUrl}
+                    controls
+                    autoPlay
+                    playsInline
+                    className="w-full h-full object-cover bg-black"
+                  />
+                  {approved[q.id] && (
+                    <div className="absolute top-2 right-2 bg-success/90 text-white text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <Check size={11} /> Approved
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           ))}
         </div>
