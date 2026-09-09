@@ -233,6 +233,10 @@ export default function CandidacyWall({
   const [mediaPreview, setMediaPreview] = useState<{ url: string; type: "image" | "video" } | null>(null);
   const [pitchPostToPlay, setPitchPostToPlay] = useState<PostWithComments | null>(null);
   const [showPositionsModal, setShowPositionsModal] = useState(false);
+  // Collapses a long About/bio to 3 lines in the hero card — now that the
+  // hero spans the full page width, a long bio no longer needs the height
+  // of the whole card to itself.
+  const [bioExpanded, setBioExpanded] = useState(false);
   const [showReel, setShowReel] = useState(false);
 
   // A pitch's Share button links to ?pitch=<postId> on this same page (see
@@ -619,6 +623,8 @@ export default function CandidacyWall({
     candidateProfile?.full_name ||
     getGhostDisplayName(candidate.profiles?.current_ghost_id);
   const avatarUrl = candidate.avatar_url || candidateProfile?.avatar_url;
+  const bioText = candidate.bio || candidateProfile?.bio || "";
+  const isBioLong = bioText.length > 260;
   const partyName =
     candidate.party_name ||
     candidateProfile?.party_name ||
@@ -826,15 +832,20 @@ export default function CandidacyWall({
           </div>
         </div>
       ) : (
-        /* Main Two-Column Layout */
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Column: Candidate Info & Campaign Details */}
-        <div className="lg:col-span-5 space-y-6">
+        /* Hero (full width) + Feed (full width, below) — this used to be a
+           lg:col-span-5 profile card beside a lg:col-span-7 feed, which on
+           a wide screen left the feed squeezed into a narrow column while
+           the profile card (bio/hometown/phone/etc.) ran very tall down the
+           left side. Stacking them both full-width instead means the wall
+           feed reads as a normal single-column feed, and the profile
+           details lay out horizontally instead of stretching downward. */
+        <div className="space-y-6">
           <Card padding="md" className="@container space-y-4">
             {/* Header — sized off the CARD's own rendered width (@container),
-                not the viewport. This card can be embedded in a narrow
-                column (e.g. the seat-page candidate strip) even on a wide
-                screen, where sm:/md: viewport breakpoints would wrongly
+                not the viewport. This still matters even at full width:
+                this card can be embedded in a narrow column (e.g. a future
+                narrower placement) or the page can be resized, where
+                sm:/md: viewport breakpoints would wrongly
                 think there's room and let the button row push past the
                 card's edge. Below @sm it's "tab mode": name gets its own
                 full-width row and actions stack in a second full-width row
@@ -1030,41 +1041,42 @@ export default function CandidacyWall({
               </Alert>
             )}
 
-            {/* Details list */}
-            <div className="space-y-2 text-xs text-text-secondary pt-2">
+            {/* Details row — a horizontal wrapping row of compact items
+                instead of a vertical stack. At full hero width a stacked
+                list of 4 one-line rows just ran the card down unnecessarily
+                (this was the "phone is taking the entire left-hand side"
+                complaint); wrapping lets hometown/education/phone/email
+                share a line on anything wider than a phone. */}
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs text-text-secondary pt-2">
               {(candidate.hometown || candidateProfile?.hometown) && (
-                <div className="flex items-center gap-2">
+                <span className="flex items-center gap-1.5">
                   <Home size={14} className="text-text-muted shrink-0" />
-                  <span>Hometown: {candidate.hometown || candidateProfile?.hometown}</span>
-                </div>
+                  {candidate.hometown || candidateProfile?.hometown}
+                </span>
               )}
               {(candidate.education || candidateProfile?.education) && (
-                <div className="flex items-center gap-2">
+                <span className="flex items-center gap-1.5">
                   <GraduationCap size={14} className="text-text-muted shrink-0" />
-                  <span>Education: {candidate.education || candidateProfile?.education}</span>
-                </div>
+                  {candidate.education || candidateProfile?.education}
+                </span>
               )}
               {(candidate.contact_phone || candidateProfile?.contact_phone) && (
-                <div className="flex items-center gap-2">
+                <a
+                  href={`tel:${candidate.contact_phone || candidateProfile?.contact_phone}`}
+                  className="flex items-center gap-1.5 hover:text-accent hover:underline"
+                >
                   <Phone size={14} className="text-text-muted shrink-0" />
-                  <a
-                    href={`tel:${candidate.contact_phone || candidateProfile?.contact_phone}`}
-                    className="hover:text-accent hover:underline"
-                  >
-                    {candidate.contact_phone || candidateProfile?.contact_phone}
-                  </a>
-                </div>
+                  {candidate.contact_phone || candidateProfile?.contact_phone}
+                </a>
               )}
               {(candidate.contact_email || candidateProfile?.contact_email) && (
-                <div className="flex items-center gap-2">
+                <a
+                  href={`mailto:${candidate.contact_email || candidateProfile?.contact_email}`}
+                  className="flex items-center gap-1.5 hover:text-accent hover:underline break-all"
+                >
                   <Mail size={14} className="text-text-muted shrink-0" />
-                  <a
-                    href={`mailto:${candidate.contact_email || candidateProfile?.contact_email}`}
-                    className="hover:text-accent hover:underline break-all"
-                  >
-                    {candidate.contact_email || candidateProfile?.contact_email}
-                  </a>
-                </div>
+                  {candidate.contact_email || candidateProfile?.contact_email}
+                </a>
               )}
             </div>
 
@@ -1079,9 +1091,22 @@ export default function CandidacyWall({
                 <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">
                   About
                 </h3>
-                <p className="text-sm text-text-secondary whitespace-pre-wrap leading-relaxed">
+                <p
+                  className={`text-sm text-text-secondary whitespace-pre-wrap leading-relaxed ${
+                    !bioExpanded && isBioLong ? "line-clamp-3" : ""
+                  }`}
+                >
                   {candidate.bio || candidateProfile?.bio}
                 </p>
+                {isBioLong && (
+                  <button
+                    type="button"
+                    onClick={() => setBioExpanded((v) => !v)}
+                    className="text-xs font-semibold text-primary-light hover:underline cursor-pointer"
+                  >
+                    {bioExpanded ? "Show less" : "Read more"}
+                  </button>
+                )}
                 {(candidate.source_url || candidateProfile?.source_url) && (
                   <a
                     href={candidate.source_url || candidateProfile?.source_url}
@@ -1138,10 +1163,8 @@ export default function CandidacyWall({
             )}
           </Card>
 
-        </div>
-
-        {/* Right Column: Wall Feed & Composer */}
-        <div className="lg:col-span-7 space-y-6">
+          {/* Wall Feed & Composer */}
+          <div className="space-y-6">
           {user && profile?.current_ghost_id && (
             <Card padding={composerOpen ? "md" : "sm"}>
               {!composerOpen ? (

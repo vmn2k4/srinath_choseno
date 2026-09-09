@@ -298,7 +298,137 @@ instances a user happened to spot-check, not a systematic sweep of
 every city already touched by this doc.
 
 Running total: 66 (Sept 3) → 183 (Sept 4, +117) → 330 (Sept 6, +147) →
-347 (Sept 8, +17) → **364 (Sept 9, +17)**.
+347 (Sept 8, +17) → 364 (Sept 9, +17).
+
+**Re-run 2026-09-09 continued — user asked for a systematic sweep of BC's
+top 50 municipalities by population, not just spot-checks.** Ranked all
+BC municipalities by 2026 population estimate (`worldpopulationreview.com`,
+filtered to actual incorporated municipalities — the raw list mixes in
+regional-district electoral areas and reserve lands, which don't hold
+Mayor/Council elections and had to be excluded by hand). Checked each of
+the ~40 not already covered by earlier passes directly against its own
+official election page.
+
+**Real, immediate yield — 4 more cities had live rosters:**
+- **Delta** (pop. ~127k, #9): 1 new mayor (Melissa Granum) + 6 new
+  councillors, discovered via local news (Peace Arch News/Delta Optimist)
+  naming all three slates' full tickets — Delta's own city page doesn't
+  itself list names, so this is news-sourced like the Nanaimo mayor race
+  on Sept 8, not a first-party government page. Two new parties: **Delta
+  First**, **Achieving for Delta**.
+- **Mission** (pop. ~48k, #24): city page explicitly says "updated as
+  nomination documents are processed" and delivered — 1 new mayor
+  (already had; fixed as a duplicate, see below), 5 new councillors, 2
+  new SD75 school trustees.
+- **Vernon** (pop. ~50k, #22): **had zero candidates in the system at
+  all** before this check — genuinely missed entirely by every earlier
+  LECFA pass. City's own `vernon.ca/candidatelist` page had a full live
+  roster: 2 mayor, 8 councillor.
+- **Coquitlam, Saanich, Nanaimo**, etc.: already covered by earlier
+  passes, re-confirmed unchanged.
+
+**Confirmed NOT yet available, checked directly (not inferred) — this is
+most of the remaining ~35 of the top 50**: Kelowna (won't post until
+**Oct 7**, well after close), Kamloops, Victoria, New Westminster,
+Courtenay, Comox, Chilliwack, Prince George, North Vancouver (City),
+Abbotsford, Richmond (still JS/iframe-blocked, separate issue from
+"not published yet"). All of these either explicitly state their
+Declaration of Candidates posts sometime after the Sept 11, 2026 4pm
+nomination close, or (Prince George, North Vancouver City) have a
+candidate-list page live but structurally empty as of this check.
+**This is a real timing constraint of BC election administration, not a
+research gap** — re-running this same sweep on or shortly after Sept 12
+should be dramatically more productive in one pass than repeated partial
+checks beforehand, since the majority of BC's ~30 largest cities that
+don't publish live will all go live within roughly the same 24-48 hours.
+
+**The big finding this pass, and the reason to re-audit before calling
+any BC pass "done": a systemic duplicate-profile bug, far larger than
+the two individual cases (Rob Stutt, Kristin Schnider) caught on Sept 6
+and 9.** Checking Delta and Mission's new names against their own
+officeholders caught 2 more of the same shape (Jag Gill — Mission Mayor;
+Linda Hamel — SD75 Trustee), which prompted a full audit query across
+**every** BC candidate profile added by this pipeline, matched by exact
+name against `office_holders` scoped to the same `map_shape_id`:
+
+```sql
+select p.id as db_profile_id, oh.linked_profile_id as officeholder_profile_id
+from election_candidates ec
+join profiles p on p.id = ec.politician_id
+join election_seats es on es.id = ec.seat_id
+join map_shapes ms on ms.id = es.map_shape_id
+join office_holders oh on oh.map_shape_id = ms.id and oh.is_current = true
+  and lower(trim(oh.full_name)) = lower(trim(p.full_name))
+where p.country = 'Canada'
+  and oh.linked_profile_id is not null
+  and oh.linked_profile_id != p.id;
+```
+
+**Result: 55 more duplicate pairs**, spread across roughly 40 different
+municipalities and school districts touched by the Sept 3/4/6/8 mass
+LECFA passes — every one of those passes' officeholder-dedup step had
+only ever been scoped to whichever specific city was the focus of that
+moment, never re-run as a full sweep against the complete BC officeholder
+roster. **Root cause, stated plainly for next time: a per-city dedup
+check during a large batch pass is not equivalent to a dedup check
+against the full officeholder set — always run the full-roster query
+above (or equivalent) after any multi-city batch, not just spot checks
+on the cities that prompted the pass.**
+
+Fixed by repointing every affected `election_candidates.politician_id`
+from the stray stub to the real officeholder profile —
+**deliberately did not delete the 55 orphaned stub profiles** in this
+pass (unlike the two hand-verified Sept 6/9 fixes, which did delete
+after individual confirmation). At this volume, auditing whether any of
+the 55 stub profiles had accumulated real engagement (comments, ratings,
+claims — no time to check every FK across the schema for 55 profiles
+safely) wasn't feasible to do responsibly in one pass; leaving them as
+harmless orphaned rows (no longer referenced by any `election_candidates`
+row) is the safe choice over risking a cascading delete on something a
+real visitor may have already interacted with. **Cleaning up the 55
+orphaned stub profiles is a legitimate, low-risk follow-up once someone
+confirms via the schema which tables can reference a `profiles` row and
+checks each for hits** — not done here.
+
+One data-entry wrinkle hit mid-fix: **Tony Goulet (Quesnel) holds two
+different real officeholder records** — one as Mayor, one as SD28
+School Trustee — and both of his candidacy rows shared a single stub
+profile, so the batch UPDATE (keyed only on the stub's `politician_id`)
+moved *both* to whichever pairing ran first, leaving the other pointed
+at the wrong office's profile. Caught by re-checking his rows after the
+batch ran, fixed with one more targeted `UPDATE` scoped by `seat_id` in
+addition to `politician_id`. **When a stub profile turns out to cover a
+person who holds multiple distinct current offices (mayor *and*
+trustee, e.g.), a plain politician_id-keyed batch fix isn't safe on its
+own — verify per-seat afterward.**
+
+Verified after every step this pass: 0 remaining duplicate pairs by the
+audit query above, 0 orphaned `politician_profiles` rows.
+
+Scripts:
+[`bc_sept9_top50_batch2.py`](../scripts/us_house_primary_fixes/bc_sept9_top50_batch2.py)
+(Delta + Mission + the 2 duplicate fixes found via those cities),
+[`bc_sept9_vernon_add.py`](../scripts/us_house_primary_fixes/bc_sept9_vernon_add.py),
+[`bc_sept9_duplicate_profile_audit_fix.sql`](../scripts/us_house_primary_fixes/bc_sept9_duplicate_profile_audit_fix.sql)
+(the 55-pair systemic fix — re-run the audit query above first if
+reusing this, since the exact pairs will differ once more candidates
+are added).
+
+The hand-tracked running total in this doc (66 → 183 → 330 → 347 → 364 →
+...) drifted from the real count somewhere across these passes — cross-
+checked directly against the database after this pass and the **real,
+verified total is 450** candidates across all three BC elections (288
+Councillor/Mayor + 87 Mayor-only + 75 School Trustee), not the ~395 the
+hand-tracked arithmetic above would suggest. **Trust a direct count over
+the hand-tracked running total from here on**:
+```sql
+select count(*) from election_candidates ec
+join election_seats es on es.id = ec.seat_id
+join elections e on e.id = es.election_id
+where e.name in ('2026 BC Councillor Mayor Elections',
+                  'BC Municipal Mayor Elections',
+                  '2026 School District Trustee Elections');
+```
 
 ### How to check for new BC nominations (do this periodically until nominations close)
 
@@ -372,6 +502,36 @@ all.
    insert must run for *every* stub regardless of whether a party matched
    (`political_party_id` is nullable) — gating it on a successful party
    match was a real bug caught and fixed mid-pass on Sept 4 (see above).
+
+   **Mandatory, added 2026-09-09 after photo capture was twice missed
+   (Surrey, then Burnaby) and had to be circled back for**: whenever the
+   candidates for this batch came from an individual city page (not the
+   LECFA PDF, which has no images), **check that page for a candidate
+   `<img>` in the same pass that pulls the name** — don't insert the
+   stub/link first and treat the photo as a follow-up. Grab the `<img
+   src>` alongside the name/party/bio text in the same `fetch`/`DOMParser`
+   batch (see the "Bonus" section below for the technique), and write it
+   into both `avatar_url` (what `CandidacyWall.tsx` actually renders) and
+   `photo_url`, `COALESCE`-safe, as part of the same insert. A plain
+   LECFA-only stub has no photo source and this step is correctly a no-op
+   for it — but for anything sourced from a city's own page, check the
+   page for images before writing it off; see the Sept 9 photo-audit
+   section below for which city pages actually carry headshots (an
+   individual-profile accordion, so far only Surrey and Burnaby) versus
+   which are plain name lists with nothing to fetch (Vancouver, Coquitlam,
+   Langley Township, Vernon, Mission, and by all appearances most others).
+
+   **Also mandatory, added 2026-09-09 after 768 candidates system-wide
+   turned out to have a dead "Politician Wall" link (see "Politician Wall
+   backfill" section below for the full root cause)**: every
+   `politician_profiles` insert must also set `wall_slug` — `bc_refresh_
+   sept6.py` now computes and sets it as part of the standard `new_stub`
+   flow; copy that block rather than the old `(id, political_party_id)`-
+   only insert. After applying, also run
+   [`ensure_wall_slugs.py`](../scripts/us_house_primary_fixes/ensure_wall_slugs.py)
+   as a catch-all — same role as the orphan-check below, just for this
+   field.
+
    Always verify immediately after applying:
    ```sql
    select count(*) from election_candidates ec
@@ -458,7 +618,13 @@ Script for this pass:
 [`bc_official_pages_supplement.py`](../scripts/us_house_primary_fixes/bc_official_pages_supplement.py)
 — 44 stubs, 6 officeholder-links, 1 duplicate-profile fix (Rob Stutt).
 
-#### Bonus, same source: these pages carry real bio/contact/party data — pull it too
+#### Same source, same pass: these pages carry real bio/contact/party/photo data — pull all of it together, not as a follow-up
+
+**(Originally written as an optional "bonus" step — re-titled 2026-09-09.
+It isn't optional: leaving bio/contact/party for a later pass, or photo
+for a later pass after that, is exactly the pattern that produced two
+separate "you missed something" corrections from the user on Surrey and
+Burnaby. Do this in one pass per city, photo included.)**
 
 Every one of these city candidate pages is a full profile, not just a
 name — phone, email, campaign website, social handles, elector-organization
@@ -518,8 +684,90 @@ same opportunity almost certainly exists on their own candidate pages
 above), just not pulled yet. Reuse `surrey_enrich.py`'s pattern: swap the
 base URL and the DATA dict.
 
+**Follow-up fix, 2026-09-09, caught by a user spot-check**: the original
+Sept 6 pass captured bio/phone/email/party/source_url but **never
+captured each candidate's photo**, even though most of them have a real
+headshot on their own Surrey page. Confirmed by reading
+`CandidacyWall.tsx` directly: the seat/candidate page renders
+`politician_profiles.avatar_url` specifically (`photo_url` is a separate
+column that isn't what's shown there) — both were empty for all 32
+Surrey candidates. Fixed by re-fetching each candidate page's `<img>`
+tag (excluding the shared "Your City Your Vote" logo image every page
+also embeds) and writing the same URL to both `avatar_url` and
+`photo_url` via `COALESCE` (never clobbers a real photo if one's already
+on file). 25 of 32 candidates had a submitted photo; 7 (Jesse Aajohl,
+Gail Beszedes, Leanna Chatwin, Isaac Daniel, Brad Kielmann, Enrique
+Ponce de Leon, Miguel Ting) genuinely have none — Surrey's own page for
+them says "Photo not submitted," not a scraping miss.
+
+**The photo fix was folded directly back into `surrey_enrich.py` itself
+(a `PHOTOS` dict + updated SQL generation), not left as a separate patch
+script** — a first version of this fix did save a standalone
+`bc_sept9_surrey_photos.py`, but since this doc explicitly points at
+`surrey_enrich.py` as *the* template to copy for Vancouver/Burnaby/
+Coquitlam/Langley Township, leaving the photo capture out of the
+template itself would mean the exact same gap gets copied into every
+future city. Deleted that standalone file once its contents were merged
+in. **General rule: when a fix corrects a bug in a script this doc names
+as a reusable template, merge the fix into that script — don't leave a
+second, harder-to-find patch file that a future reuse of the template
+won't pick up.** When enriching a candidate profile from a source page
+that has a headshot, always capture it in the same pass — bio-only
+enrichment leaves a data gap a user will notice immediately, as this one
+did.
+
 Script:
-[`surrey_enrich.py`](../scripts/us_house_primary_fixes/surrey_enrich.py).
+[`surrey_enrich.py`](../scripts/us_house_primary_fixes/surrey_enrich.py)
+(now the single, complete record — bio/contact/party/photo together).
+
+### Full BC photo audit, 2026-09-09 — "where else did we miss photos"
+
+**Prompted by the same user spot-check that found Bilal Cheema's missing
+photo, extended into a systematic check**: are there other cities where an
+official page has real headshots we never captured, beyond Surrey? Ran a
+DB-wide query grouping every BC candidate this pipeline added by
+municipality/role, counting missing `avatar_url` — result: photo gaps
+exist across nearly the entire dataset, but **the overwhelming majority
+are pure-LECFA stub candidates with no photo source that ever existed**
+(LECFA's PDF carries no images at all). Only candidates added via an
+individual city's own official page could possibly have a missed photo.
+
+**Checked every city with an official page fetched so far, specifically
+for `<img>` tags this time:**
+
+| City | Photos on the city's own page? | Action taken |
+|---|---|---|
+| **Surrey** | Yes (accordion, one `<img>` per candidate) | Already fixed Sept 9 (see above) |
+| **Burnaby** | Yes (accordion, one `<img>` per candidate) — Mayor, Councillor, **and** School Trustee pages all carry headshots | **Fixed this pass**: 21 photos applied (12 Councillor + 1 Mayor + 8 School Trustee). Also found Burnaby's own roster had grown since our last check: 5 new Councillor names (Tina Fiorda, Morgan Nicholsfigueiredo, Vincent Tong, Sabrina Yang as fresh stubs; Daniel Tetrault linked to an existing, unused officeholder profile) and 1 new Mayor candidate (Sabina Hsu, fresh stub) — all added, with photos where the page had one. |
+| **Vancouver** | **No** — mayor/councillor pages are plain text lists, zero `<img>` elements found (checked both) | Nothing to fetch — confirmed, not a miss |
+| **Coquitlam** | **No** — plain text + PDF-link list only | Nothing to fetch |
+| **Langley Township** | **No** — page has only unrelated site-chrome images | Nothing to fetch |
+| **Vernon** | **No** — plain contact-info table (`vernon.ca/candidatelist`) | Nothing to fetch |
+| **Mission** | **No** — news-article writeup, one banner image only | Nothing to fetch |
+| **Delta** | N/A — Delta's own city page never listed candidate names at all; data was sourced from local news coverage (Peace Arch News/Delta Optimist) of each slate, not a first-party profile page | No photo source exists to check |
+
+**Net result: Surrey and Burnaby are the only two BC cities checked so
+far whose official candidate page is an individual-profile accordion with
+headshots. Every other city's page is a plain name list (± PDF links),
+so "missing photo" there isn't a scraping gap — there's nothing to
+scrape.** If a future pass adds new cities via their own official page,
+check whether that page's layout is a profile accordion (Surrey/Burnaby
+pattern) or a plain list (everyone else so far) before assuming a photo
+gap needs fixing.
+
+Scripts:
+[`bc_sept9_burnaby_photos_and_new.py`](../scripts/us_house_primary_fixes/bc_sept9_burnaby_photos_and_new.py)
+(Councillor: 12 photos, 1 officeholder link, 4 new stubs) and
+[`bc_sept9_burnaby_mayor_trustee_photos.py`](../scripts/us_house_primary_fixes/bc_sept9_burnaby_mayor_trustee_photos.py)
+(Mayor: 1 photo + 1 new stub; School Trustee: 8 photos). Verified after
+applying: 0 orphaned `politician_profiles` rows, 0 duplicate-profile
+matches against `office_holders` (full-roster audit query, see above) —
+**455 total BC candidates** as of this pass (direct `COUNT`, not
+hand-tracked).
+
+**Standing rule going forward, per explicit user instruction**: photo
+capture is now a mandatory part of step 5 below, not a follow-up to
+circle back for — see the amended step 5.
 
 ---
 
@@ -544,6 +792,191 @@ steps 1–4 above (PDF parse → jurisdiction/SD name matching → officeholder
 dedup → diff against current DB) is still the right next investment if
 this needs to run routinely rather than by hand each time — genuinely not
 built yet, not being glossed over.
+
+---
+
+## System-wide photo push, all election types — 2026-09-09
+
+**User request**: "find out all candidates participating in elections and
+see if you can get more photos for each candidate" — explicitly scoped
+(user's choice, asked directly) to **official/party sources only, no
+per-candidate web search**, across **every** election in the system, not
+just BC.
+
+**Starting point** (direct `COUNT`, all elections):
+
+| Election | Role | Total | Missing photo |
+|---|---|---|---|
+| 2026 BC Councillor Mayor Elections | Councillor | 293 | 250 |
+| BC Municipal Mayor Elections | Mayor | 88 | 80 |
+| 2026 School District Trustee Elections | School Trustee | 75 | 67 |
+| 2026 US Midterm Elections | U.S. Representative | 1285 | 1148 |
+| 2026 US Midterm Elections | U.S. Senator | 302 | 292 |
+| 2026 US Midterm Elections | Governor | 32 | 29 |
+
+**1,866 of 2,075 total candidates system-wide had no photo.** The
+overwhelming majority are FEC-sourced US challenger/open-seat stubs with
+**no photo source that exists anywhere official** — FEC's own filing data
+carries no images, and unlike BC's municipal pages, there's no
+per-candidate US federal nomination page to check. Confirmed this isn't a
+scraping gap for that majority before spending effort on it.
+
+**One name-matching approach tested and explicitly rejected as unsafe**:
+matching US candidates to our own `office_holders` table (state/local
+officials, imported separately) by full name alone, or even by name +
+state, produced real false positives from unrelated same-name people in
+completely different jurisdictions — e.g. "Bernadette Smith, U.S. Senate
+candidate (Michigan)" name-matched a *Manitoba* provincial riding
+official holder, and several state-matched pairs turned out to be
+different people in different states once the code prefix was checked
+digit-by-digit. **Do not reuse this shortcut for US federal candidates —
+state-level granularity isn't fine enough to be safe against common
+names.** (BC's equivalent officeholder-dedup check stays safe because it
+matches on the much finer `map_shape_id`, e.g. a specific city — see the
+core methodology above.)
+
+**What actually worked — matched at seat-level precision, not name alone:**
+
+1. **US House + Senate incumbents seeking re-election** (233 matched):
+   cross-referenced every missing-photo candidate against
+   [`unitedstates/congress-legislators`](https://unitedstates.github.io/congress-legislators/legislators-current.json)
+   — the authoritative current-members dataset (same data ProPublica,
+   Congress.gov-adjacent tools, and most civic-data projects build on) —
+   on the exact **(state, district, last name)** triple for
+   Representatives and **(state, last name)** for Senators. This is
+   seat-level precision (only one person represents a given district),
+   not a name-only guess. Photo pulled from
+   `https://unitedstates.github.io/images/congress/450x550/{bioguide}.jpg`
+   — official congressional photography, public domain, served by the
+   same open-data project.
+2. **Governors seeking re-election** (2 matched: Larry Rhoden/SD, Edward
+   "Ned" Lamont/CT): matched by last name + state against Wikipedia's
+   ["List of current United States governors"](https://en.wikipedia.org/wiki/List_of_current_United_States_governors)
+   page, which carries one official state-government portrait per sitting
+   governor in a single fetchable table — the rest of that race's 29
+   missing-photo candidates are genuinely challengers/minor-party filings
+   with no incumbent photo to reuse.
+3. **BC candidates that already had a `source_url` on file but no photo**
+   (78 candidates, checked instead of assumed): all already dead ends —
+   53 point to `civicinfo.bc.ca/people` and 14 to `bcsta.org/...` (both
+   generic directory/listing pages, not per-candidate profiles, so no
+   photo was ever retrievable from them), the 7 Surrey ones are the exact
+   same 7 already confirmed "Photo not submitted" during the Sept 9
+   Surrey photo fix, and the remaining 4 are Langley Township
+   (`tol.ca`), already confirmed site-wide to have no candidate photos at
+   all. **Zero new photos from this source, but zero was the correct,
+   verified answer — not an unchecked gap.**
+
+**Result**: 235 photos added (233 Congress + 2 Governor), all via
+official, public-domain government photography, zero individual web
+searches performed. Verified: 0 new orphaned `politician_profiles` rows.
+
+**What's left, deliberately not attempted under an official-sources-only
+scope**: ~1,631 candidates (mostly US House/Senate/Governor challengers,
+plus most BC LECFA-only stubs) have no official government photo because
+they don't currently hold the office they're running for, and BC's
+remaining ~150 unchecked municipalities are, going by the pattern found
+in the 8 checked so far (Surrey and Burnaby are photo-bearing profile
+pages; Vancouver, Coquitlam, Langley Township, Vernon, Mission, and
+Delta's own page are all plain text lists with nothing to fetch), more
+likely than not to yield few or no further photos even if all were
+individually re-checked. Filling the remaining US challenger gap would
+require either individual research per candidate (news photos, campaign
+sites, Ballotpedia) — explicitly out of scope for this pass — or a
+lower-confidence bulk source; **this is a real, quantified, structural
+gap, not an oversight**, and re-running this exact matching script after
+future FEC/candidate refreshes will pick up newly-elected incumbents for
+free as districts change hands.
+
+Script:
+[`match_us_incumbent_photos.py`](../scripts/us_house_primary_fixes/match_us_incumbent_photos.py)
+— fully reusable: queries the live DB itself for missing-photo US
+House/Senate/Governor candidates (no manual export step), matches against
+`legislators.json` + `governors.json` (Sept 9 snapshots checked in next
+to the script; the script's own docstring has the two-step browser fetch
+to refresh them for a future run), and writes ready-to-apply SQL. The
+actual SQL applied this pass is saved as
+[`sept9_us_incumbent_photos.sql`](../scripts/us_house_primary_fixes/sept9_us_incumbent_photos.sql)
+for the audit trail.
+
+---
+
+## Politician Wall backfill — 768 candidates had a dead wall link, all election types — 2026-09-09
+
+**User caught it**: `/wall/dee-reiter-school-trustee` (linked from
+[Dee Reiter's SD36 - Surrey School Trustee candidate page](http://localhost:3000/elections/seat/school-trustee-sd36-surrey-496873/candidate/dee-reiter-f1bd4e))
+404'd. Asked: why, check whether other candidates have the same problem,
+and make sure it can't happen again.
+
+**Root cause**: `politician_profiles.wall_slug` is a real, `UNIQUE`
+column, and it's the *only* thing the wall page actually resolves by
+(`getWallOwnerProfileBySlug` in `src/lib/services/politicianWall.ts` does
+an `!inner` join on it — no row with that exact slug stored means
+`notFound()`). But **every link to a wall** anywhere in the app
+(`CandidacyWall.tsx`, `NavBar.tsx`, `GlobalPoliticianSearch.tsx`, etc.)
+renders its `href` as `wall_slug || buildPoliticianWallSlug(name, role)`
+— a computed fallback that *always* produces a link, real slug or not.
+So a candidate with no stored `wall_slug` still gets a normal-looking
+"View Politician Wall" link that 404s the moment it's clicked — the
+front end has no way to tell the difference, which is exactly why this
+went unnoticed until a user actually clicked one.
+`buildPoliticianWallSlug`'s own doc comment (`src/lib/utils/slugs.ts`)
+says the database is supposed to be the one storing this value; the
+computed version was only ever meant as a brief fallback (e.g. right
+after a claim, before the real slug loads in), not a permanent stand-in.
+
+`wall_slug` only gets written by the officeholder-claim/signup RPCs
+(`supabase/migrations/2026081116*_officeholder_claim_prefill_on_signup.sql`
+and its siblings) — i.e. only when a real person signs up and claims a
+profile through the site. **Every script in this directory that
+administratively inserts a candidate stub (`bc_refresh_sept4.py`,
+`bc_refresh_sept6.py`, `bc_official_pages_supplement.py`,
+`top50_batch2.py`, the US FEC import, etc.) has always left it out.**
+This is a different, older bug than the photo-fetching one fixed earlier
+today, but the same shape: an enrichment field silently missing from the
+insert templates from day one, invisible until someone checks the actual
+rendered page.
+
+**Audit, all election types**: 768 of 2,075 total candidates system-wide
+had no `wall_slug` — BC Councillor 203/293, BC Mayor 35/88, School
+Trustee 56/75, US Representative 442/1285, US Senator 3/302, Governor
+29/32.
+
+**Fix**: computed the identical slug the front-end fallback would
+compute (name + role, same slugify rules — lowercase, strip diacritics,
+non-alphanumeric runs to a single hyphen) and **stored** it for all 768,
+so the stored value and the fallback always agree from now on and every
+wall resolves. `wall_slug` being `UNIQUE` means two different people can
+land on the same computed slug at this scale — happened 12 times this
+pass (e.g. two different "Michael Dunn, Councillor" in different
+cities). Resolved by appending the first 6 hex characters of the
+candidate's own `election_candidates.id` to the colliding slug — the
+same disambiguator the candidate-page URL itself already uses
+(`buildSeatSlug`'s pattern) — never by merging the two people onto one
+wall. Verified after applying: 0 remaining missing `wall_slug`, 0
+duplicate `wall_slug` values.
+
+**Standing rule going forward, per explicit user instruction — "ensure
+this doesn't happen in future"**: every script that inserts a new
+`politician_profiles` row must compute and set `wall_slug` in that same
+insert, not leave it for a later backfill. `bc_refresh_sept6.py` (the
+template step 5 of the core methodology above points at) has been
+updated with the pattern — copy its `new_stub` → `UPDATE ... wall_slug =
+...` → `politician_profiles` insert block into any new script rather
+than reinventing it. **Whichever script or pass adds candidates, run
+[`ensure_wall_slugs.py`](../scripts/us_house_primary_fixes/ensure_wall_slugs.py)
+afterward as a standing check** — same idea as the orphan-check and
+duplicate-profile-audit queries already required after every batch (see
+the core BC methodology above): it's idempotent (finds only rows still
+missing a slug) and safe to run after any insert, from any pipeline, so
+it catches a gap even if a future script's author forgets to wire
+`wall_slug` into their own INSERT.
+
+Script:
+[`ensure_wall_slugs.py`](../scripts/us_house_primary_fixes/ensure_wall_slugs.py)
+— queries the live DB directly for every candidate missing a `wall_slug`
+(no manual export step), computes the front-end-matching slug, resolves
+collisions with the candidate-id suffix, and writes ready-to-apply SQL.
 
 ---
 

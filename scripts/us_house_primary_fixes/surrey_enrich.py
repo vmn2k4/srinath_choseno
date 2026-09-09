@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
 """Enrich Surrey's 32 mayor+councillor candidate profiles with real bio,
-phone, email, party, and source URL -- fetched directly from each
-candidate's own page at surrey.ca (2026-09-06). politician_profiles
-already has bio/contact_phone/contact_email/source_url columns sitting
-empty; no schema/social-links table exists, so website + social handles
-are folded into a short "Links:" line appended to bio instead."""
+phone, email, party, source URL, and photo -- fetched directly from each
+candidate's own page at surrey.ca (bio/contact/party: 2026-09-06; photos:
+2026-09-09 follow-up, folded back in here so this file stays the single
+correct record and the template to copy for the next city, instead of
+splitting the photo fix into a separate patch script). politician_profiles
+already has bio/contact_phone/contact_email/source_url/avatar_url/
+photo_url columns sitting empty; no schema/social-links table exists, so
+website + social handles are folded into a short "Links:" line appended
+to bio instead. CandidacyWall.tsx renders `avatar_url` specifically for
+the seat/candidate page (confirmed by reading the component) -- both
+avatar_url and photo_url are written here for forward compatibility, but
+avatar_url is the one that actually shows. When reusing this as a
+template for another city: fetch the photo in the same batch as
+bio/phone/email, not as an afterthought -- that's the mistake this
+version fixes."""
 import sys
 
 # profile_id -> dict(bio, phone, email, party, source_url, links)
@@ -146,6 +156,44 @@ DATA = {
         source_url="candidates-office-of-mayor/van-vliet-troy", links="Website: www.surreynow.ca"),
 }
 
+# profile_id -> photo URL, fetched 2026-09-09 (None = candidate's own
+# Surrey page explicitly says "Photo not submitted" -- confirmed absent,
+# not a scraping miss). 7 of 32 have none.
+PHOTOS = {
+    "93629f07-4275-4ff7-a5d8-f50d43184ed8": None,  # Jesse Aajohl
+    "77326bc2-5ccd-48fa-927d-e2657882de64": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/debra.jpg",
+    "ef0848ed-5854-4a47-ad5a-4f9b064a3e30": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Copy-of-Harry-Bains-Approved.jpg",
+    "4e2b8d5b-cd83-4e52-a3a0-d62edf290116": None,  # Gail Beszedes
+    "f7695818-1444-4552-a117-a70a249a64ba": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/mike.jpg",
+    "729ad397-94b9-4d0e-9213-c1eaeb1858d3": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/janet.jpg",
+    "f05d1a76-4493-4f87-8b1c-dd08f6709edc": None,  # Leanna Chatwin
+    "32e6c84b-002d-48d1-b75d-bbe7f4cd3f13": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Bilal-Cheema-1.png",
+    "e8173181-bf43-4d82-9399-50aca2877f3f": None,  # Isaac Daniel
+    "86c8b30f-4059-4ba8-bc9c-31f7ca40957b": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/1696641304542-2)-1).jpg",
+    "1f63cd2e-3b67-4f57-bfa5-3cfd35e23c32": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Copy-of-Michael-Approved.png",
+    "a7b66aeb-4a8f-4c1b-83cc-995e783caeb3": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/RAHUL-GILL-FOR-SURREY.png",
+    "c8d09e1e-b5c5-4919-bea9-1d49bae55b4f": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Jasroop.jpg",
+    "c23ff6cf-46ab-4ead-8533-98c9a8314f6e": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Copy-of-Gord-Hepner-Approved.jpg",
+    "5a6149ff-b373-440e-b993-7bbd91a54fdb": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Youssef-Khattab-Headshot.png",
+    "3fd62b99-aee2-435c-afaa-566142db7f57": None,  # Brad Kielmann
+    "7a688642-c4bf-40cf-8f19-766b0d837b4a": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Copy-of-Vera-Approved.jpg",
+    "daa9cad5-6612-496a-b7ca-3c3a5fc91ba1": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Gagan-Nahal-1.png",
+    "56d47dff-b6c2-466d-a64f-affc998fdedc": None,  # Enrique Ponce de Leon
+    "d3c227b8-fff0-4c55-9d55-3eda93636b95": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Jimmy-Rico.jpg",
+    "85e7b621-f5eb-4d7b-8406-7537646e2bdb": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/werner.jpg",
+    "fb21537f-f113-4042-beee-48bb48d4bd07": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/stewart.jpg",
+    "65827d31-b427-4ebc-94c5-dc4ef3335bef": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Copy-of-Rob-Stutt-Approved.jpg",
+    "507f5c27-d99b-4407-be96-5f3da70c2bcd": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Copy-of-Rona-Tepper-Approved.jpg",
+    "3eb96acc-494b-4095-a830-c97883f50358": None,  # Miguel Ting
+    "cff33abb-ece3-4ea3-8ea6-8d7d71cc33d9": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Picture1.jpg",
+    "124fe662-dab5-4a71-b87b-14a241435e9a": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Shina-Vermani-1.png",
+    "f474b741-2177-4bb3-8856-b3fa06eb7f46": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Untitled-Extract-Pages.jpg",
+    "cddc513b-0f6d-488e-8dfd-f111fa907666": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/JamesYu-Photo_0.jpeg",
+    "673efede-1b98-465c-9528-64f43b857b09": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/linda.jpg",
+    "d06486ce-31ca-4977-a367-37a7a0552282": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Copy-of-Brenda-Locke-Approved.jpg",
+    "53b1d632-2639-4ecc-8de4-8d0082a0b78d": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/troy.jpg",
+}
+
 BASE_URL = "https://www.surrey.ca/city-government/2026-municipal-election/candidates/"
 NEW_PARTIES = ["SURREY NOW", "New Surrey+"]
 
@@ -177,13 +225,22 @@ for pid, d in DATA.items():
             f"WHERE country='Canada' AND name={qstr(d['party'])})"
         )
 
+    photo_url = PHOTOS.get(pid)
+    photo_clause = ""
+    if photo_url:
+        photo_clause = (
+            f", avatar_url = COALESCE(avatar_url, {qstr(photo_url)}), "
+            f"photo_url = COALESCE(photo_url, {qstr(photo_url)})"
+        )
+
     sql.append(
         f"UPDATE public.politician_profiles SET "
         f"bio = COALESCE({qstr(bio_final)}, bio), "
         f"contact_phone = COALESCE({qstr(d['phone'])}, contact_phone), "
         f"contact_email = COALESCE({qstr(d['email'])}, contact_email), "
         f"source_url = {qstr(source_url)}"
-        f"{party_clause} "
+        f"{party_clause}"
+        f"{photo_clause} "
         f"WHERE id = '{pid}';"
     )
 

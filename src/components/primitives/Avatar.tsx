@@ -9,6 +9,7 @@
 import { useState } from "react";
 
 const SIZES = {
+  xs: { box: "w-5 h-5", text: "text-[9px]" },
   sm: { box: "w-8 h-8", text: "text-xs" },
   md: { box: "w-10 h-10", text: "text-sm" },
   lg: { box: "w-14 h-14", text: "text-lg" },

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import CandidacyWall from "./CandidacyWall";
 import ElectionResultsPanel from "./ElectionResultsPanel";
@@ -20,7 +19,6 @@ import {
   inviteCandidateToClaim,
   getClaimRequestsForSeat,
   reviewCandidacyClaim,
-  getOfficeHoldersByShapeAndRole,
   getCandidateIdsWithVideoAnswers,
   removeCandidate,
 } from "@/lib/services/elections";
@@ -38,16 +36,16 @@ import {
   Mail,
   Check,
   X,
-  Camera,
   Plus,
   Share2,
-  Landmark,
   ArrowRight,
   ExternalLink,
   Video,
   PlayCircle,
   Send,
   Trash2,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import {
   Card,
@@ -60,7 +58,6 @@ import {
   EmptyState,
   Avatar,
 } from "@/components/primitives";
-import PoliticianEngagementStats from "./PoliticianEngagementStats";
 import { createClient } from "@/lib/supabase/client";
 import { buildSeatSlug, buildCandidateSlug, buildPoliticianWallSlug, extractIdFromSlug } from "@/lib/utils/slugs";
 import { trackElectionViewed } from "@/lib/analytics/events";
@@ -183,8 +180,10 @@ export default function ElectionSeatPageClient({
   const [inviteStatusByCandidate, setInviteStatusByCandidate] = useState<Record<string, string>>({});
   const [claimRequests, setClaimRequests] = useState<any[]>([]);
   const [reviewingRequestId, setReviewingRequestId] = useState<string | null>(null);
-  const [officeHolders, setOfficeHolders] = useState<any[]>([]);
-  const [loadingHolders, setLoadingHolders] = useState(false);
+  // Seat Administrator tools collapse into this panel now that the right
+  // sidebar is gone — collapsed by default so an ordinary signed-in visitor
+  // sees one compact row, not the full Add/Invite/Review form stack.
+  const [showSeatAdminPanel, setShowSeatAdminPanel] = useState(false);
   const [engagementSummaries, setEngagementSummaries] = useState<
     Map<string, { supporterCount: number; avgRating: number; ratingCount: number; commentCount: number }>
   >(new Map());
@@ -243,13 +242,9 @@ export default function ElectionSeatPageClient({
     // this one couldn't be fixed at the same time since targetSeatId isn't
     // known until seatRow resolves, so the call had to move down here
     // rather than staying in the first batch.
-    if (seatRow?.map_shape_id) setLoadingHolders(true);
     const targetSeatId = seatRow?.id || seatId;
     const seatAdminStatusPromise = user ? getSeatAdminStatus(supabase, targetSeatId) : Promise.resolve({ data: null });
-    const [holdersResult, candidatesResult, partiesResult, { data: seatAdminStatus }] = await Promise.all([
-      seatRow?.map_shape_id
-        ? getOfficeHoldersByShapeAndRole(supabase, seatRow.map_shape_id, seatRow.role_title)
-        : Promise.resolve({ data: null }),
+    const [candidatesResult, partiesResult, { data: seatAdminStatus }] = await Promise.all([
       skipSeatRefetch ? Promise.resolve({ data: initialCandidates }) : getCandidatesBySeatIds(supabase, [targetSeatId]),
       seatRow?.map_shapes?.country
         ? getPoliticalParties(supabase, { country: seatRow.map_shapes.country })
@@ -257,10 +252,6 @@ export default function ElectionSeatPageClient({
       seatAdminStatusPromise,
     ]);
 
-    if (seatRow?.map_shape_id) {
-      setOfficeHolders((holdersResult.data as any[]) || []);
-      setLoadingHolders(false);
-    }
     setParties(partiesResult.data || []);
     if (user) setAdminStatus(seatAdminStatus);
 
@@ -576,15 +567,12 @@ export default function ElectionSeatPageClient({
 
   const alreadyApplied = myCandidacies.some((c) => c.seat_id === seatId);
   const isSeatAdmin = role === "admin" || adminStatus?.my_application_status === "approved";
-  const hasSidebar = role === "normal" || role === "politician" || adminStatus || !user;
 
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8">
-      <div className="w-full min-w-0 flex flex-col lg:flex-row gap-6 items-start">
-        {/* Main Candidate Column */}
-        <div className="flex-1 min-w-0 w-full">
-          {/* Header Card */}
-          <Card padding="md" className="mb-6 flex items-center justify-between gap-3 flex-wrap">
+      <div className="w-full min-w-0">
+        {/* Header Card */}
+        <Card padding="md" className="mb-6 flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-2.5 min-w-0 flex-wrap">
               <Badge tone="amber" shape="pill" icon={<Vote size={12} />}>
                 {seat.elections?.status?.replace("_", " ") || "Active"}
@@ -612,384 +600,87 @@ export default function ElectionSeatPageClient({
             </div>
           </Card>
 
-          {status && <p className="text-danger text-xs mb-4">{status}</p>}
+        {status && <p className="text-danger text-xs mb-4">{status}</p>}
 
-          {/* Candidate Switcher Roster */}
-          {candidates.length === 0 ? (
-            <EmptyState
-              icon={Vote}
-              title="No Candidates Approved Yet"
-              description="Nobody has been approved for this seat yet — declare your candidacy or volunteer as administrator to add candidates."
-              className="mb-8"
-            />
-          ) : (
-            <div className="space-y-6">
-              {/* Tab strip: "Community Support" poll pill first, then one pill per
-                  candidate — same row, same pill styling, so the poll reads
-                  as a tab among the candidate tabs rather than a separate
-                  control above them. */}
-              <div
-                className="flex gap-3 overflow-x-auto pb-2 mb-6"
-                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-              >
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => {
-                    setActiveMainTab("results");
-                    if (typeof window !== "undefined") {
-                      const seatSlug = seat ? buildSeatSlug(seat) : seatId;
-                      const newUrl = `/elections/seat/${seatSlug}`;
-                      window.history.replaceState(null, "", newUrl);
-                    }
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      setActiveMainTab("results");
-                      if (typeof window !== "undefined") {
-                        const seatSlug = seat ? buildSeatSlug(seat) : seatId;
-                        const newUrl = `/elections/seat/${seatSlug}`;
-                        window.history.replaceState(null, "", newUrl);
-                      }
-                    }
-                  }}
-                  className={`flex items-center gap-2 shrink-0 px-4 py-2 rounded-2xl border-2 transition-all cursor-pointer ${
-                    activeMainTab === "results"
-                      ? "border-primary bg-primary/10 shadow-[0_0_0_3px_rgba(233,235,158,0.12)]"
-                      : "border-border-light bg-surface-hover/40 hover:border-primary/40 hover:bg-surface-hover"
-                  }`}
-                >
-                  <span className="text-base leading-none">📊</span>
-                  <span
-                    className={`text-sm font-semibold whitespace-nowrap ${
-                      activeMainTab === "results" ? "text-primary-light" : "text-text-secondary"
-                    }`}
-                  >
-                    Community Support
-                  </span>
-                </div>
+        {/* Visitor action banners — used to live in a fixed-width right
+            sidebar alongside "Current Office Holders"; now that the sidebar
+            is gone (more width for the candidate roster/wall below), these
+            render as slim full-width banners instead. */}
+        {!user && (
+          <Card padding="sm" className="mb-4 bg-primary/10 border-primary/25 flex items-center justify-between gap-3 flex-wrap">
+            <p className="text-xs text-text-secondary">
+              Sign in to nominate yourself, run for this seat, or volunteer as seat administrator.
+            </p>
+            <Button size="sm" onClick={() => router.push("/auth")} className="shrink-0">
+              Sign In to Participate
+            </Button>
+          </Card>
+        )}
 
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => setActiveMainTab("interview")}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      setActiveMainTab("interview");
-                    }
-                  }}
-                  className={`flex items-center gap-2 shrink-0 px-4 py-2 rounded-2xl border-2 transition-all cursor-pointer ${
-                    activeMainTab === "interview"
-                      ? "border-primary bg-primary/10 shadow-[0_0_0_3px_rgba(233,235,158,0.12)]"
-                      : "border-border-light bg-surface-hover/40 hover:border-primary/40 hover:bg-surface-hover"
-                  }`}
-                >
-                  <Video size={15} className={activeMainTab === "interview" ? "text-primary-light" : "text-text-secondary"} />
-                  <span
-                    className={`text-sm font-semibold whitespace-nowrap ${
-                      activeMainTab === "interview" ? "text-primary-light" : "text-text-secondary"
-                    }`}
-                  >
-                    Candidate Interview
-                  </span>
-                </div>
+        {role === "normal" && user && (
+          <Card padding="sm" className="mb-4 bg-primary/10 border-primary/25 flex items-center justify-between gap-3 flex-wrap">
+            <p className="text-xs text-text-secondary">
+              Interested in running for this seat? Switch to candidate mode to declare your candidacy.
+            </p>
+            <Button size="sm" onClick={() => router.push("/profile")} className="shrink-0">
+              Run for Office
+            </Button>
+          </Card>
+        )}
 
-                {candidates.map((c) => {
-                  const name =
-                    c.display_name ||
-                    c.profiles?.full_name ||
-                    "Candidate";
-                  const isSelected = c.id === activeMainTab;
-                  const pol = c.profiles?.politician_profiles;
-                  const avatarUrl = Array.isArray(pol) ? pol[0]?.avatar_url : pol?.avatar_url;
-                  const hasPhoto = Boolean(avatarUrl);
-                  const engagement = c.profiles?.id ? engagementSummaries.get(c.profiles.id) : undefined;
-
-                  return (
-                    // A <div role="button">, not a <button> — it now wraps
-                    // PoliticianEngagementStats, which is itself a <button>;
-                    // nesting <button> inside <button> gets silently
-                    // auto-closed by the HTML parser and breaks the layout.
-                    <div
-                      key={c.id}
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => handleSelectCandidate(c)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          handleSelectCandidate(c);
-                        }
-                      }}
-                      className={`flex items-center gap-3 shrink-0 pl-2.5 pr-4 py-2 rounded-2xl border-2 transition-all cursor-pointer ${
-                        isSelected
-                          ? "border-primary bg-primary/10 shadow-[0_0_0_3px_rgba(233,235,158,0.12)]"
-                          : "border-border-light bg-surface-hover/40 hover:border-primary/40 hover:bg-surface-hover"
-                      }`}
-                    >
-                      <div className="relative shrink-0">
-                        <Avatar src={avatarUrl} name={name} size="md" />
-                        {hasPhoto && (
-                          <span
-                            className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-success text-white border-2 border-background flex items-center justify-center shadow-sm"
-                            title="Profile photo uploaded"
-                          >
-                            <Camera size={9} />
-                          </span>
-                        )}
-                      </div>
-
-                      <span className="flex flex-col items-start min-w-0">
-                        <span
-                          className={`text-sm font-semibold whitespace-nowrap ${
-                            isSelected ? "text-primary-light" : "text-text-secondary"
-                          }`}
-                        >
-                          {name}
-                        </span>
-                        {c.profiles?.id && (
-                          <PoliticianEngagementStats
-                            politicianId={c.profiles.id}
-                            politicianName={name}
-                            supporterCount={engagement?.supporterCount ?? 0}
-                            avgRating={engagement?.avgRating ?? 0}
-                            ratingCount={engagement?.ratingCount ?? 0}
-                            commentCount={engagement?.commentCount ?? 0}
-                            size="xs"
-                            // This pill's job is to switch to the candidate's
-                            // tab — rating happens after landing there, not
-                            // from the tab itself. Without this, clicking the
-                            // stats opened the old rating popup and swallowed
-                            // the tab-switch click.
-                            disableRating
-                          />
-                        )}
-                      </span>
-                      {hasPhoto && (
-                        <span
-                          className="text-[10px] bg-success/15 text-success-light border border-success/30 px-1.5 py-0.5 rounded-full font-semibold flex items-center gap-1 shrink-0"
-                          title="Candidate has profile photo"
-                        >
-                          <Camera size={10} /> Photo
-                        </span>
-                      )}
-                      {c.nomination_filed && (
-                        <CheckCircle2
-                          size={14}
-                          className="text-success shrink-0"
-                        />
-                      )}
-                      {candidateIdsWithVideo.has(c.id) && (
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setReelForCandidate({ id: c.id, name });
-                          }}
-                          className="flex items-center gap-1 text-[10px] bg-primary/15 text-primary-light border border-primary/30 px-1.5 py-0.5 rounded-full font-semibold shrink-0 cursor-pointer hover:bg-primary/25"
-                          title={`Play ${name}'s interview`}
-                        >
-                          <PlayCircle size={10} /> Pitch
-                        </button>
-                      )}
-                    </div>
-                  );
-                })}
+        {role === "politician" && user && (
+          <Card padding="sm" className="mb-4 bg-primary/10 border-primary/25 flex items-center justify-between gap-3 flex-wrap">
+            <p className="text-xs text-text-secondary">
+              {alreadyApplied
+                ? "You have filed your candidacy for this seat."
+                : "Declare your candidacy for this seat."}
+            </p>
+            {alreadyApplied ? (
+              <div className="flex items-center gap-2 text-xs font-bold text-accent shrink-0">
+                <CheckCircle2 size={16} /> Candidacy Filed
               </div>
-
-              {activeMainTab === "interview" && seat?.elections?.id && (
-                <ElectionInterviewTab
-                  electionId={seat.elections.id}
-                  candidates={candidates
-                    .filter((c) => candidateIdsWithVideo.has(c.id))
-                    .map((c) => {
-                      const pol = c.profiles?.politician_profiles;
-                      return {
-                        id: c.id,
-                        name: c.display_name || c.profiles?.full_name || "Candidate",
-                        avatarUrl: Array.isArray(pol) ? pol[0]?.avatar_url : pol?.avatar_url,
-                      };
-                    })}
-                />
-              )}
-
-              {activeMainTab === "results" && (
-                <ElectionResultsPanel
-                  seat={seat}
-                  candidates={candidates}
-                  engagementSummaries={engagementSummaries}
-                  onSelectCandidate={(c) => handleSelectCandidate(c)}
-                  mySupportedPoliticianIds={mySupportedPoliticianIds}
-                  onToggleSupport={handleToggleSupport}
-                  onRatingSubmitted={handleRatingSubmitted}
-                />
-              )}
-
-              {activeMainTab !== "results" && activeMainTab !== "interview" && selectedCandidateId && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between gap-3 px-1 flex-wrap">
-                    <span className="text-xs font-semibold text-text-muted">
-                      Candidate {candidates.findIndex((c) => c.id === selectedCandidateId) + 1} of {candidates.length}
-                    </span>
-                    {/* "View Politician Wall" used to be duplicated here --
-                        CandidacyWall's own embedded header already renders
-                        that same button (plus Play Interview and Support
-                        right next to it), so a second copy up here just
-                        crowded this row for no benefit. Share Candidate Link
-                        is the only action genuinely unique to this seat-page
-                        context, so it's the only one left. */}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={handleCopyShareLink}
-                      className="gap-1.5 text-xs border-primary/30 text-primary-light hover:bg-primary/10"
-                    >
-                      {copiedShareLink ? <Check size={13} className="text-success" /> : <Share2 size={13} />}
-                      {copiedShareLink ? "Direct Link Copied!" : "Share Candidate Link"}
-                    </Button>
-                  </div>
-                  <CandidacyWall candidateId={selectedCandidateId} embedded />
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Right Sidebar: Visitor Actions & Seat Administrator Panel */}
-        {hasSidebar && (
-          <div className="w-full lg:w-72 shrink-0 space-y-4 lg:sticky lg:top-6">
-            {/* Current Office Holders */}
-            <Card padding="sm" className="bg-primary/5 border-primary/20">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-text-main font-bold flex items-center gap-2 text-sm">
-                  <Landmark size={16} className="text-primary" />
-                  Current Office Holders
-                </h3>
-              </div>
-
-              {loadingHolders ? (
-                <div className="flex justify-center py-4">
-                  <Spinner size="sm" />
-                </div>
-              ) : officeHolders.length === 0 ? (
-                <p className="text-text-muted text-xs">No active office holders for this seat yet.</p>
-              ) : (
-                <div className="space-y-2">
-                  {officeHolders.slice(0, 5).map((holder) => {
-                    const roleTitle = holder.election_role_types?.role_title || "Incumbent";
-                    const partyName = holder.political_parties?.name;
-                    const engagement = holder.profiles?.id ? engagementSummaries.get(holder.profiles.id) : undefined;
-
-                    const content = (
-                      <div className="flex items-start gap-2 p-2 rounded-lg bg-surface-hover/40 border border-border-light/30 hover:border-primary/30 transition-all">
-                        <Avatar src={holder.photo_url} name={holder.full_name} size="sm" />
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between gap-1">
-                            <h4 className="text-text-main text-xs font-semibold truncate">{holder.full_name}</h4>
-                            {holder.linked_profile_id && (
-                              <Badge tone="primary" size="sm" className="text-[10px] px-1 py-0 shrink-0">
-                                On Choseno
-                              </Badge>
-                            )}
-                          </div>
-                          {holder.profiles?.id && (
-                            <PoliticianEngagementStats
-                              politicianId={holder.profiles.id}
-                              politicianName={holder.full_name}
-                              supporterCount={engagement?.supporterCount ?? 0}
-                              avgRating={engagement?.avgRating ?? 0}
-                              ratingCount={engagement?.ratingCount ?? 0}
-                              commentCount={engagement?.commentCount ?? 0}
-                              size="xs"
-                              className="mt-0.5"
-                              disableRating
-                            />
-                          )}
-                          <p className="text-text-muted text-[11px] truncate mt-0.5">
-                            <span className="font-medium text-primary">{roleTitle}</span>
-                            {partyName ? ` · ${partyName}` : ""}
-                          </p>
-                        </div>
-                      </div>
-                    );
-
-                    if (holder.profiles?.current_ghost_id) {
-                      const slug = `${holder.full_name}-${roleTitle}`
-                        .toLowerCase()
-                        .replace(/[^a-z0-9]+/g, "-")
-                        .replace(/(^-|-$)+/g, "");
-                      return (
-                        <Link key={holder.id} href={`/wall/${slug}`} className="block">
-                          {content}
-                        </Link>
-                      );
-                    }
-
-                    if (holder.source_url) {
-                      return (
-                        <a key={holder.id} href={holder.source_url} target="_blank" rel="noopener noreferrer" className="block">
-                          {content}
-                        </a>
-                      );
-                    }
-
-                    return <div key={holder.id}>{content}</div>;
-                  })}
-                </div>
-              )}
-            </Card>
-
-            {!user ? (
-              <Card padding="sm" className="bg-primary/10 border-primary/25 text-center">
-                <p className="text-xs text-text-secondary mb-3">
-                  Sign in to nominate yourself, run for this seat, or volunteer as seat administrator.
-                </p>
-                <Button size="sm" onClick={() => router.push("/auth")} className="w-full">
-                  Sign In to Participate
-                </Button>
-              </Card>
-            ) : null}
-
-            {role === "normal" && user && (
-              <Card padding="sm" className="bg-primary/10 border-primary/25">
-                <p className="text-sm text-text-secondary mb-3">
-                  Interested in running for this seat? Switch to candidate mode to declare your candidacy.
-                </p>
-                <Button onClick={() => router.push("/profile")} className="w-full">
-                  Run for Office
-                </Button>
-              </Card>
+            ) : (
+              <Button size="sm" onClick={startApplying} disabled={applying} className="shrink-0">
+                {applying ? "Starting..." : "Nominate Yourself"}
+              </Button>
             )}
+          </Card>
+        )}
 
-            {role === "politician" && user && (
-              <Card padding="sm" className="bg-primary/10 border-primary/25">
-                <p className="text-sm text-text-secondary mb-3">
-                  {alreadyApplied
-                    ? "You have filed your candidacy for this seat."
-                    : "Declare your candidacy for this seat."}
-                </p>
-                {alreadyApplied ? (
-                  <div className="flex items-center gap-2 text-xs font-bold text-accent">
-                    <CheckCircle2 size={16} /> Candidacy Filed
-                  </div>
-                ) : (
-                  <Button onClick={startApplying} disabled={applying} className="w-full">
-                    {applying ? "Starting..." : "Nominate Yourself"}
-                  </Button>
+        {/* Seat Administrator — collapsed by default. Everything inside is
+            unchanged from the old sidebar card, just re-homed into a
+            disclosure panel so it doesn't cost width or vertical space for
+            visitors who never open it. */}
+        {user && (
+          <Card padding="sm" className="mb-6">
+            <button
+              type="button"
+              onClick={() => setShowSeatAdminPanel((v) => !v)}
+              className="w-full flex items-center justify-between gap-2 cursor-pointer"
+            >
+              <span className="flex items-center gap-2">
+                <ShieldCheck size={18} className="text-primary" />
+                <h2 className="text-sm font-bold text-text-main">Seat Administrator</h2>
+                {isSeatAdmin && (
+                  <Badge tone="emerald" size="sm" className="text-[10px]">
+                    Approved
+                  </Badge>
                 )}
-              </Card>
-            )}
+                {adminStatus?.my_application_status === "pending" && (
+                  <Badge tone="amber" size="sm" className="text-[10px]">
+                    Pending
+                  </Badge>
+                )}
+              </span>
+              {showSeatAdminPanel ? (
+                <ChevronUp size={16} className="text-text-muted shrink-0" />
+              ) : (
+                <ChevronDown size={16} className="text-text-muted shrink-0" />
+              )}
+            </button>
 
-            {/* Seat Administrator Panel */}
-            {user && (
-              <Card padding="sm">
-                <div className="flex items-center gap-2 mb-2">
-                  <ShieldCheck size={18} className="text-primary" />
-                  <h2 className="text-sm font-bold text-text-main">Seat Administrator</h2>
-                </div>
-
+            {showSeatAdminPanel && (
+              <div className="mt-3">
                 {isSeatAdmin ? (
                   <div className="space-y-4">
                     <p className="text-xs text-success-light font-semibold flex items-center gap-1">
@@ -1003,7 +694,7 @@ export default function ElectionSeatPageClient({
                     <Button
                       size="sm"
                       onClick={() => setShowSendInviteFlow(true)}
-                      className="w-full gap-1.5"
+                      className="w-full gap-1.5 sm:w-auto"
                     >
                       <Send size={14} /> Search & Send Interview Invite
                     </Button>
@@ -1014,12 +705,12 @@ export default function ElectionSeatPageClient({
                         variant="secondary"
                         size="sm"
                         onClick={() => setShowAddCandidateForm(true)}
-                        className="w-full gap-1.5"
+                        className="w-full gap-1.5 sm:w-auto"
                       >
                         <Plus size={14} /> Add Candidate Directly
                       </Button>
                     ) : (
-                      <form onSubmit={submitUnregisteredCandidate} className="space-y-3 pt-2 border-t border-border-light/35">
+                      <form onSubmit={submitUnregisteredCandidate} className="space-y-3 pt-2 border-t border-border-light/35 max-w-md">
                         <p className="text-xs font-bold text-text-main">Add Candidate Stub</p>
                         <Input
                           type="text"
@@ -1101,7 +792,7 @@ export default function ElectionSeatPageClient({
 
                     {/* Invite Candidates to Claim */}
                     {candidates.some((c) => c.added_by_election_admin_id && !c.claimed_at) && (
-                      <div className="pt-3 border-t border-border-light/35 space-y-3">
+                      <div className="pt-3 border-t border-border-light/35 space-y-3 max-w-md">
                         <p className="text-xs font-bold text-text-secondary uppercase tracking-wide">
                           Invite Candidates to Claim
                         </p>
@@ -1171,26 +862,28 @@ export default function ElectionSeatPageClient({
                         <p className="text-xs font-bold text-text-secondary uppercase tracking-wide">
                           Manage Candidates
                         </p>
-                        {candidates.map((c) => {
-                          const name = c.display_name || c.profiles?.full_name || "Candidate";
-                          return (
-                            <div
-                              key={c.id}
-                              className="flex items-center justify-between gap-2 text-xs bg-surface-elevated rounded-xl border border-border-light/30 px-2.5 py-1.5"
-                            >
-                              <span className="truncate font-semibold text-text-secondary">{name}</span>
-                              <button
-                                type="button"
-                                onClick={() => handleRemoveCandidate(c.id, name)}
-                                disabled={removingCandidateId === c.id}
-                                className="text-text-muted hover:text-danger p-1 shrink-0 cursor-pointer disabled:opacity-50"
-                                title={`Remove ${name}`}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                          {candidates.map((c) => {
+                            const name = c.display_name || c.profiles?.full_name || "Candidate";
+                            return (
+                              <div
+                                key={c.id}
+                                className="flex items-center justify-between gap-2 text-xs bg-surface-elevated rounded-xl border border-border-light/30 px-2.5 py-1.5"
                               >
-                                <Trash2 size={14} />
-                              </button>
-                            </div>
-                          );
-                        })}
+                                <span className="truncate font-semibold text-text-secondary">{name}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => handleRemoveCandidate(c.id, name)}
+                                  disabled={removingCandidateId === c.id}
+                                  className="text-text-muted hover:text-danger p-1 shrink-0 cursor-pointer disabled:opacity-50"
+                                  title={`Remove ${name}`}
+                                >
+                                  <Trash2 size={14} />
+                                </button>
+                              </div>
+                            );
+                          })}
+                        </div>
                         {removeCandidateStatus && (
                           <p className="text-[11px] text-danger">{removeCandidateStatus}</p>
                         )}
@@ -1203,63 +896,65 @@ export default function ElectionSeatPageClient({
                         <p className="text-xs font-bold text-text-secondary uppercase tracking-wide">
                           Pending Claim Requests ({claimRequests.length})
                         </p>
-                        {claimRequests.map((r) => (
-                          <div
-                            key={r.id}
-                            className="p-2.5 bg-surface-elevated rounded-xl border border-border-light/30 space-y-1.5"
-                          >
-                            <p className="text-xs font-bold text-text-main truncate">
-                              {r.election_candidates?.profiles?.full_name ||
-                                "Unclaimed candidate"}
-                            </p>
-                            <p className="text-[11px] text-text-muted line-clamp-3">
-                              {r.motivation}
-                            </p>
-                            <p className="text-[11px] text-text-muted">{r.contact_email}</p>
-                            {r.social_media_info && (
-                              <p className="text-[11px] text-text-muted truncate">
-                                {r.social_media_info}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {claimRequests.map((r) => (
+                            <div
+                              key={r.id}
+                              className="p-2.5 bg-surface-elevated rounded-xl border border-border-light/30 space-y-1.5"
+                            >
+                              <p className="text-xs font-bold text-text-main truncate">
+                                {r.election_candidates?.profiles?.full_name ||
+                                  "Unclaimed candidate"}
                               </p>
-                            )}
-                            <div className="flex items-center gap-2 pt-1">
-                              <Button
-                                size="sm"
-                                onClick={() => handleReviewClaim(r.id, true)}
-                                disabled={reviewingRequestId === r.id}
-                                className="bg-success hover:bg-success/85 text-white"
-                              >
-                                <Check size={14} /> Approve
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => handleReviewClaim(r.id, false)}
-                                disabled={reviewingRequestId === r.id}
-                                className="text-danger border-danger/40"
-                              >
-                                <X size={14} /> Reject
-                              </Button>
+                              <p className="text-[11px] text-text-muted line-clamp-3">
+                                {r.motivation}
+                              </p>
+                              <p className="text-[11px] text-text-muted">{r.contact_email}</p>
+                              {r.social_media_info && (
+                                <p className="text-[11px] text-text-muted truncate">
+                                  {r.social_media_info}
+                                </p>
+                              )}
+                              <div className="flex items-center gap-2 pt-1">
+                                <Button
+                                  size="sm"
+                                  onClick={() => handleReviewClaim(r.id, true)}
+                                  disabled={reviewingRequestId === r.id}
+                                  className="bg-success hover:bg-success/85 text-white"
+                                >
+                                  <Check size={14} /> Approve
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => handleReviewClaim(r.id, false)}
+                                  disabled={reviewingRequestId === r.id}
+                                  className="text-danger border-danger/40"
+                                >
+                                  <X size={14} /> Reject
+                                </Button>
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
                 ) : adminStatus?.my_application_status === "pending" ? (
-                  <p className="text-xs text-warning-light font-semibold mt-2">
+                  <p className="text-xs text-warning-light font-semibold">
                     Your application to administer this seat is under review.
                   </p>
                 ) : adminStatus?.my_application_status === "rejected" ? (
-                  <p className="text-xs text-danger font-semibold mt-2">
+                  <p className="text-xs text-danger font-semibold">
                     Your application to administer this seat was not approved.
                   </p>
                 ) : adminStatus?.has_approved_admin ? (
-                  <p className="text-xs text-text-muted mt-2">
+                  <p className="text-xs text-text-muted">
                     This seat already has an assigned election administrator.
                   </p>
                 ) : (
                   <>
-                    <p className="text-xs text-text-muted mt-1 mb-3">
+                    <p className="text-xs text-text-muted mb-3">
                       Volunteer to moderate this seat and help add candidates who are missing from the platform.
                     </p>
                     {!showAdminApplyForm ? (
@@ -1267,12 +962,11 @@ export default function ElectionSeatPageClient({
                         variant="secondary"
                         size="sm"
                         onClick={() => setShowAdminApplyForm(true)}
-                        className="w-full"
                       >
                         Volunteer to Administer This Seat
                       </Button>
                     ) : (
-                      <form onSubmit={submitElectionAdminApplication} className="space-y-3">
+                      <form onSubmit={submitElectionAdminApplication} className="space-y-3 max-w-md">
                         <Textarea
                           required
                           placeholder="Tell us about yourself and why you're interested..."
@@ -1313,10 +1007,217 @@ export default function ElectionSeatPageClient({
                     )}
                   </>
                 )}
-              </Card>
+              </div>
             )}
-          </div>
+          </Card>
         )}
+
+        {/* Candidate Switcher Roster */}
+          {candidates.length === 0 ? (
+            <EmptyState
+              icon={Vote}
+              title="No Candidates Approved Yet"
+              description="Nobody has been approved for this seat yet — declare your candidacy or volunteer as administrator to add candidates."
+              className="mb-8"
+            />
+          ) : (
+            <div className="space-y-6">
+              {/* Tab strip: "Community Support" poll pill first, then one pill per
+                  candidate — same row, same pill styling, so the poll reads
+                  as a tab among the candidate tabs rather than a separate
+                  control above them. Wraps into a multi-row grid instead of
+                  scrolling horizontally — with elections running 10-30+
+                  candidates, a single endless row meant most of the roster
+                  was never seen without scrolling. Kept deliberately compact
+                  (tiny avatar, name only, no stats subtitle) so the whole
+                  roster fits in one or two rows instead of five or six —
+                  the full engagement stats/photo badge still show once you
+                  land on a candidate's own hero card below. */}
+              <div className="flex flex-wrap gap-1.5 mb-5">
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    setActiveMainTab("results");
+                    if (typeof window !== "undefined") {
+                      const seatSlug = seat ? buildSeatSlug(seat) : seatId;
+                      const newUrl = `/elections/seat/${seatSlug}`;
+                      window.history.replaceState(null, "", newUrl);
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setActiveMainTab("results");
+                      if (typeof window !== "undefined") {
+                        const seatSlug = seat ? buildSeatSlug(seat) : seatId;
+                        const newUrl = `/elections/seat/${seatSlug}`;
+                        window.history.replaceState(null, "", newUrl);
+                      }
+                    }
+                  }}
+                  className={`flex items-center gap-1.5 shrink-0 px-3 py-1.5 rounded-full border transition-all cursor-pointer ${
+                    activeMainTab === "results"
+                      ? "border-primary bg-primary/10"
+                      : "border-border-light bg-surface-hover/40 hover:border-primary/40 hover:bg-surface-hover"
+                  }`}
+                >
+                  <span className="text-sm leading-none">📊</span>
+                  <span
+                    className={`text-xs font-semibold whitespace-nowrap ${
+                      activeMainTab === "results" ? "text-primary-light" : "text-text-secondary"
+                    }`}
+                  >
+                    Community Support
+                  </span>
+                </div>
+
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setActiveMainTab("interview")}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setActiveMainTab("interview");
+                    }
+                  }}
+                  className={`flex items-center gap-1.5 shrink-0 px-3 py-1.5 rounded-full border transition-all cursor-pointer ${
+                    activeMainTab === "interview"
+                      ? "border-primary bg-primary/10"
+                      : "border-border-light bg-surface-hover/40 hover:border-primary/40 hover:bg-surface-hover"
+                  }`}
+                >
+                  <Video size={13} className={activeMainTab === "interview" ? "text-primary-light" : "text-text-secondary"} />
+                  <span
+                    className={`text-xs font-semibold whitespace-nowrap ${
+                      activeMainTab === "interview" ? "text-primary-light" : "text-text-secondary"
+                    }`}
+                  >
+                    Candidate Interview
+                  </span>
+                </div>
+
+                {candidates.map((c) => {
+                  const name =
+                    c.display_name ||
+                    c.profiles?.full_name ||
+                    "Candidate";
+                  const isSelected = c.id === activeMainTab;
+                  const pol = c.profiles?.politician_profiles;
+                  const avatarUrl = Array.isArray(pol) ? pol[0]?.avatar_url : pol?.avatar_url;
+                  const hasVideo = candidateIdsWithVideo.has(c.id);
+
+                  return (
+                    <div
+                      key={c.id}
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => handleSelectCandidate(c)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          handleSelectCandidate(c);
+                        }
+                      }}
+                      title={name}
+                      className={`flex items-center gap-1.5 shrink-0 pl-1.5 pr-2.5 py-1 rounded-full border transition-all cursor-pointer ${
+                        isSelected
+                          ? "border-primary bg-primary/10"
+                          : "border-border-light bg-surface-hover/40 hover:border-primary/40 hover:bg-surface-hover"
+                      }`}
+                    >
+                      <div className="relative shrink-0">
+                        <Avatar src={avatarUrl} name={name} size="xs" />
+                        {hasVideo && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setReelForCandidate({ id: c.id, name });
+                            }}
+                            className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-primary text-white flex items-center justify-center cursor-pointer"
+                            title={`Play ${name}'s interview`}
+                          >
+                            <PlayCircle size={7} />
+                          </button>
+                        )}
+                      </div>
+
+                      <span
+                        className={`text-xs font-medium truncate max-w-[92px] ${
+                          isSelected ? "text-primary-light" : "text-text-secondary"
+                        }`}
+                      >
+                        {name}
+                      </span>
+                      {c.nomination_filed && (
+                        <CheckCircle2
+                          size={11}
+                          className="text-success shrink-0"
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {activeMainTab === "interview" && seat?.elections?.id && (
+                <ElectionInterviewTab
+                  electionId={seat.elections.id}
+                  candidates={candidates
+                    .filter((c) => candidateIdsWithVideo.has(c.id))
+                    .map((c) => {
+                      const pol = c.profiles?.politician_profiles;
+                      return {
+                        id: c.id,
+                        name: c.display_name || c.profiles?.full_name || "Candidate",
+                        avatarUrl: Array.isArray(pol) ? pol[0]?.avatar_url : pol?.avatar_url,
+                      };
+                    })}
+                />
+              )}
+
+              {activeMainTab === "results" && (
+                <ElectionResultsPanel
+                  seat={seat}
+                  candidates={candidates}
+                  engagementSummaries={engagementSummaries}
+                  onSelectCandidate={(c) => handleSelectCandidate(c)}
+                  mySupportedPoliticianIds={mySupportedPoliticianIds}
+                  onToggleSupport={handleToggleSupport}
+                  onRatingSubmitted={handleRatingSubmitted}
+                />
+              )}
+
+              {activeMainTab !== "results" && activeMainTab !== "interview" && selectedCandidateId && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between gap-3 px-1 flex-wrap">
+                    <span className="text-xs font-semibold text-text-muted">
+                      Candidate {candidates.findIndex((c) => c.id === selectedCandidateId) + 1} of {candidates.length}
+                    </span>
+                    {/* "View Politician Wall" used to be duplicated here --
+                        CandidacyWall's own embedded header already renders
+                        that same button (plus Play Interview and Support
+                        right next to it), so a second copy up here just
+                        crowded this row for no benefit. Share Candidate Link
+                        is the only action genuinely unique to this seat-page
+                        context, so it's the only one left. */}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleCopyShareLink}
+                      className="gap-1.5 text-xs border-primary/30 text-primary-light hover:bg-primary/10"
+                    >
+                      {copiedShareLink ? <Check size={13} className="text-success" /> : <Share2 size={13} />}
+                      {copiedShareLink ? "Direct Link Copied!" : "Share Candidate Link"}
+                    </Button>
+                  </div>
+                  <CandidacyWall candidateId={selectedCandidateId} embedded />
+                </div>
+              )}
+            </div>
+          )}
       </div>
 
       {reelForCandidate && (

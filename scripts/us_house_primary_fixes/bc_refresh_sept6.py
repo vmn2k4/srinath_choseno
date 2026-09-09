@@ -272,11 +272,31 @@ if NEW_PARTIES:
 def qstr(v):
     return "NULL" if v is None else "'" + v.replace("'", "''") + "'"
 
-sql.append("CREATE TEMP TABLE new_stub (seat_id uuid, name text, party_name text, stub_id uuid) ON COMMIT DROP;")
+sql.append("CREATE TEMP TABLE new_stub (seat_id uuid, name text, party_name text, stub_id uuid, wall_slug text) ON COMMIT DROP;")
 values = []
 for seat_id, name, party in STUB:
     values.append(f"({qstr(seat_id)},{qstr(name)},{qstr(party)},gen_random_uuid())")
 sql.append("INSERT INTO new_stub (seat_id, name, party_name, stub_id) VALUES " + ",\n".join(values) + ";")
+
+# Mandatory (added 2026-09-09, see docs/CANDIDATE_DATA_PULL_LOG.md "Politician
+# Wall backfill" section): every candidate needs a real, stored wall_slug or
+# their "Politician Wall" link 404s -- the front-end's buildPoliticianWallSlug
+# fallback is only ever meant as a display-time last resort, never a
+# substitute for actually persisting it. Compute the identical slug here
+# (name + role_title, same slugify rules as src/lib/utils/slugs.ts) and
+# disambiguate on collision with the candidate's own stub_id, exactly like
+# scripts/us_house_primary_fixes/ensure_wall_slugs.py does for the backfill.
+sql.append("""
+UPDATE new_stub ns SET wall_slug = base.slug FROM (
+  SELECT ns2.stub_id,
+    CASE WHEN EXISTS (
+      SELECT 1 FROM public.politician_profiles pp WHERE pp.wall_slug = regexp_replace(regexp_replace(lower(ns2.name || '-' || es.role_title), '[^a-z0-9]+', '-', 'g'), '(^-|-$)', '', 'g')
+    ) THEN regexp_replace(regexp_replace(lower(ns2.name || '-' || es.role_title), '[^a-z0-9]+', '-', 'g'), '(^-|-$)', '', 'g') || '-' || left(replace(ns2.stub_id::text, '-', ''), 6)
+    ELSE regexp_replace(regexp_replace(lower(ns2.name || '-' || es.role_title), '[^a-z0-9]+', '-', 'g'), '(^-|-$)', '', 'g')
+    END AS slug
+  FROM new_stub ns2 JOIN public.election_seats es ON es.id = ns2.seat_id
+) base WHERE base.stub_id = ns.stub_id;
+""")
 
 sql.append(
     "INSERT INTO public.profiles (id, role, full_name, onboarding_completed, country, current_ghost_id) "
@@ -286,8 +306,8 @@ sql.append(
 # (political_party_id is nullable) -- the Sept 4 pass's bug was gating this
 # insert on party_name IS NOT NULL and silently skipping the no-party rows.
 sql.append(
-    "INSERT INTO public.politician_profiles (id, political_party_id) "
-    "SELECT ns.stub_id, pp.id FROM new_stub ns "
+    "INSERT INTO public.politician_profiles (id, political_party_id, wall_slug) "
+    "SELECT ns.stub_id, pp.id, ns.wall_slug FROM new_stub ns "
     "LEFT JOIN public.political_parties pp ON pp.country='Canada' AND pp.name = ns.party_name;"
 )
 sql.append(
