@@ -248,7 +248,57 @@ Script:
 [`bc_sept8_new_candidates.py`](../scripts/us_house_primary_fixes/bc_sept8_new_candidates.py).
 
 Running total: 66 (Sept 3) → 183 (Sept 4, +117) → 330 (Sept 6, +147) →
-**347 (Sept 8, +17)**.
+347 (Sept 8, +17).
+
+**Re-run 2026-09-09 — a real, repeatable methodology gap found by a user
+spot-check: School Trustee sub-pages were being skipped for cities with
+their own Mayor/Councillor/Trustee split into separate pages.** A user
+checked `surrey.ca/.../candidates-office-of-school-trustee` directly (a
+page that had simply never been visited in any earlier BC pass — every
+"checked Surrey" note above only ever covered Mayor + Councillor) and
+found **12 real candidates against 1 in the system**. Checking Burnaby's
+equivalent page the same way (also never previously fetched, despite
+its Mayor/Councillor pages being checked repeatedly) turned up the same
+shape of gap: **9 real candidates against 2 in the system**, including
+two sitting officeholders (Bill Brassington, Jen Mezei).
+
+**Root cause: whenever a city splits candidates across separate
+Mayor / Councillor / School Trustee pages (Surrey and Burnaby both do;
+Vancouver, Coquitlam, Langley Township, Saanich do too but *were* checked
+for all three race types each time**), every earlier pass's "checked
+this city" claim silently meant "checked whichever pages I fetched," not
+"checked every race type that city publishes." **When checking any city
+page from now on, explicitly enumerate all of its candidate URLs/tabs
+(Mayor, Councillor, School Trustee, and Park Board where applicable)
+before concluding a city is "unchanged" or "fully checked" — do not
+infer full coverage from having checked that city on an earlier date.**
+
+Also caught, same duplicate-profile shape as Rob Stutt (Sept 6): **Kristin
+Schnider** (Burnaby SD41) had been minted as a fresh stub in an earlier
+pass without an officeholder-dedup check scoped to Burnaby's school
+board specifically — she's the sitting Board Chair with an existing,
+unused profile. Fixed the same way: repointed her `election_candidates`
+row to the real profile, deleted the stray stub.
+
+New parties found: **Our Surrey** (Surrey SD36 — Kyle Jones, Anne
+Whitmore). Burnaby SD41's Burnaby Green Party and BCA - Burnaby Citizens
+Association already existed from the councillor-race additions.
+
+Script:
+[`bc_sept9_school_trustee_fix.py`](../scripts/us_house_primary_fixes/bc_sept9_school_trustee_fix.py)
+— 17 stubs, 2 officeholder-links, 1 duplicate-profile fix (Kristin
+Schnider).
+
+**Not yet re-verified for the same gap**: Nanaimo, Richmond, Delta,
+Nechako Lakes, and every other municipality checked only for
+Mayor/Councillor in earlier passes should be assumed to have an
+unchecked School Trustee (and, for Vancouver specifically, Park Board)
+page until explicitly confirmed otherwise — this pass fixed the two
+instances a user happened to spot-check, not a systematic sweep of
+every city already touched by this doc.
+
+Running total: 66 (Sept 3) → 183 (Sept 4, +117) → 330 (Sept 6, +147) →
+347 (Sept 8, +17) → **364 (Sept 9, +17)**.
 
 ### How to check for new BC nominations (do this periodically until nominations close)
 
@@ -333,6 +383,17 @@ all.
    ```
 
 ### Additional step, required for at least these municipalities: check the city's own official page too, not just LECFA
+
+**Standing rule, added 2026-09-09 after a second user spot-check caught
+Surrey's and Burnaby's School Trustee pages had simply never been
+fetched despite both cities being "checked" repeatedly**: a city that
+splits candidates across separate Mayor / Councillor / School Trustee
+(and, for Vancouver, Park Board) pages needs **every one of those pages
+enumerated and fetched explicitly** before it counts as checked — do not
+infer "I checked Surrey" covers all race types just because Mayor and
+Councillor were fetched on an earlier date. When re-visiting a city
+already in the table below, look for a race-type page you haven't
+fetched yet before concluding there's nothing new.
 
 **Discovered 2026-09-06, from a user spot-check**: the LECFA PDF (steps
 1–5 above) is a *financial-agent registration* list — Elections BC's own
