@@ -720,6 +720,75 @@ Script:
 [`surrey_enrich.py`](../scripts/us_house_primary_fixes/surrey_enrich.py)
 (now the single, complete record — bio/contact/party/photo together).
 
+### Same gap, one office type over: SD36 Surrey School Trustee had zero enrichment — 2026-09-09
+
+**User caught it, same day, same city**: asked why
+[Afzalur Rahman's School Trustee candidate page](http://localhost:3000/elections/seat/school-trustee-sd36-surrey-496873)
+had none of the phone/email/bio/photo that Surrey's Councillor candidates
+had, pointing at
+[his own real profile on surrey.ca](https://www.surrey.ca/city-government/2026-municipal-election/candidates/candidates-office-of-school-trustee/rahman-afzalur)
+as proof the same rich data exists for School Trustee too.
+
+**Root cause, and exactly the gap the "Additional step" section already
+warns about**: Surrey's 13 SD36 School Trustee candidates were added by
+[`bc_sept9_school_trustee_fix.py`](../scripts/us_house_primary_fixes/bc_sept9_school_trustee_fix.py),
+which pulled names + party from surrey.ca's school-trustee page but never
+went back for bio/phone/email/photo — the exact same class of miss as the
+Sept 6 Surrey Councillor pass, just on a different office type, one that
+`surrey_enrich.py` (Mayor + Councillor only) never covered. Surrey
+publishes a full individual profile page per candidate for **every**
+office it runs, not just Councillor — checking one office type's
+enrichment is done says nothing about the others.
+
+**Fix**: fetched all 13 of Surrey's own SD36 School Trustee pages the
+same way as Councillor (batch `fetch` + `DOMParser`, Cloudflare-email
+decode included). 12 of 13 candidates matched a real surrey.ca page (3
+have a submitted photo, all 12 have at least phone or email or both); the
+13th, **Dee Reiter, has no matching page on surrey.ca at all** — checked
+directly (`.../school-trustee/reiter-dee` 404s), not a scraping miss,
+she's simply not on the city's own list yet. Folded directly into
+`surrey_enrich.py`'s existing `DATA`/`PHOTOS` dicts rather than a new
+file, since that script is already the named template for Surrey and
+now covers all three of its office types in one place.
+
+**Standing rule, reinforcing the existing "Additional step" section
+above**: when enriching a city, enrich **every office type that city
+publishes its own individual profile pages for** (Mayor, Councillor,
+School Trustee, Park Board, ...) in the same pass — a city that does
+this for one office overwhelmingly does it for all of them, so "already
+checked this city" must mean all its office types, not just the one that
+happened to prompt the check.
+
+Script:
+[`surrey_enrich.py`](../scripts/us_house_primary_fixes/surrey_enrich.py)
+(now 44 candidates — Mayor + Councillor + School Trustee — the complete
+Surrey record for every office it runs).
+
+**Same-turn bonus fix, Burnaby Councillor**: checking whether the same
+gap existed anywhere else already-touched today found it in Burnaby too
+— the Sept 9 photo pass (`bc_sept9_burnaby_photos_and_new.py`) had
+fetched each Burnaby councillor page's *full* text (bio, phone, email,
+socials) in the same `fetch` batch as the photos, but only ever wrote the
+photo half to the DB; the bio/contact text sat unused. Rather than
+re-fetch, reused that already-captured text to enrich all 24 Burnaby
+Councillor profiles. Also caught and fixed, while reading each
+candidate's actual page text to write the bio: **James Wang, Joe
+Keithley, and Maita Santiago had been imported with the wrong party**
+("Independent") — burnaby.ca's own page states all three run under BCA
+(Burnaby Citizens Association). A plain `COALESCE` enrichment update
+would never have touched this since the existing value wasn't null, so
+this needed (and got) a separate, narrowly-scoped direct `UPDATE`.
+**Not yet done — a known, quantified gap, not silently skipped**:
+Burnaby Mayor (3 candidates) and SD41 School Trustee (9 candidates) only
+ever had their photos fetched+applied
+(`bc_sept9_burnaby_mayor_trustee_photos.py`) — the full bio/contact text
+fetch for those two office types hasn't happened yet.
+
+Script:
+[`burnaby_enrich.py`](../scripts/us_house_primary_fixes/burnaby_enrich.py)
+— same DATA-dict pattern as `surrey_enrich.py`, the template to extend
+for Burnaby's remaining two office types.
+
 ### Full BC photo audit, 2026-09-09 — "where else did we miss photos"
 
 **Prompted by the same user spot-check that found Bilal Cheema's missing

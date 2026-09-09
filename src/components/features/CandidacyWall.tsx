@@ -578,7 +578,8 @@ export default function CandidacyWall({
         supabase,
         answerId,
         activeGhostId,
-        content.trim()
+        content.trim(),
+        candidateId
       );
       if (error) throw error;
 

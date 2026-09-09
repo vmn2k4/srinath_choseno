@@ -3,16 +3,18 @@
 In-memory and Supabase query caching to reduce database load and improve response times.
 
 > **This doc covers client-side/in-memory caching only.** A second, separate caching layer was added 2026-08-18: Next.js server-side route caching (`export const revalidate` + `createPublicClient()`), which is what actually stops a repeat page view from hitting Supabase at all — see [CHOSENO_ARCHITECTURE_GUIDE.md §13.6](CHOSENO_ARCHITECTURE_GUIDE.md#136-publicanonymous-supabase-client-for-cacheable-routes). The two are complementary, not overlapping: the route cache serves the same rendered page to every visitor for a window; the in-memory cache below is per-browser-session and mostly useful for repeat interactions within one visit.
+>
+> A third, and usually larger, lever is **not caching but RLS query cost** — an unwrapped `auth.uid()` in a policy's `USING`/`WITH CHECK` gets re-evaluated per row instead of once per query, which no amount of client-side caching fixes (the *first* load of anything is still slow, cache or no cache). See [CHOSENO_ARCHITECTURE_GUIDE.md §13.9](CHOSENO_ARCHITECTURE_GUIDE.md#139-rls-policies-must-wrap-authuidauthrole-in-select-).
 
 ---
 
 ## Overview
 
 Choseno uses **two-tier caching**:
-1. **Client-side in-memory cache** (React hook, page lifetime)
+1. **Client-side in-memory cache** — module-scoped `Map`s in `apiCache.ts`, not a React hook; persists across client-side navigations for the whole browser tab session, cleared on a full page reload
 2. **Supabase row-level caching** (via RLS + materialized views)
 
-Most queries that benefit from caching return: `{ data, cache_hit, cache_age_ms }`.
+`fetchWithCache`-wrapped queries return the same `{ data, error }` shape as an un-cached Supabase call — there's no `cache_hit`/`cache_age_ms` field on the result (an earlier draft of this doc claimed there was; it doesn't exist). A cache hit is only observable externally — no network request for that key — not from the return value itself.
 
 ---
 
@@ -20,40 +22,43 @@ Most queries that benefit from caching return: `{ data, cache_hit, cache_age_ms 
 
 ### Pattern
 
+The actual implementation in [`src/lib/utils/apiCache.ts`](../src/lib/utils/apiCache.ts) — `fetchWithCache`/`invalidateCache`, not the `withCache` shown in earlier drafts of this doc. It also dedupes concurrent in-flight requests for the same key (two components mounting at once and both asking for the same data only fires one query), which the simple sketch below leaves out:
+
 ```ts
-// src/lib/utils/apiCache.ts
-const cache = new Map<string, CacheEntry>();
+// src/lib/utils/apiCache.ts (real signature)
+type FetchResult<T> = { data: T | null; error: unknown };
 
-export function withCache<T>(
+export async function fetchWithCache<T>(
   key: string,
-  fetcher: () => Promise<T>,
-  ttl: number = 60000 // 1 minute default
-): Promise<T> {
-  if (cache.has(key)) {
-    const entry = cache.get(key);
-    if (Date.now() - entry.timestamp < ttl) {
-      return Promise.resolve(entry.value);
-    }
-  }
+  fetcher: () => PromiseLike<FetchResult<T>>,
+  ttlMs = 5 * 60 * 1000 // 5 minutes default
+): Promise<FetchResult<T>> { /* ... */ }
 
-  return fetcher().then(value => {
-    cache.set(key, { value, timestamp: Date.now() });
-    return value;
-  });
-}
+export function invalidateCache(keyOrPrefix?: string): void { /* ... */ }
 ```
+
+Module-scoped state (`Map`s at file scope, not React state) — safe for genuinely global/public data, per-server-process in Next.js. **Never** use it for per-user data from a Server Component or Route Handler (one user's response could leak into another's on the same server instance); it's Client-Component-only, same caveat the file's own header comment carries.
 
 ### Usage
 
 ```ts
-// Fetch elections for a boundary; cache for 5 minutes
-const getElectionsForBoundary = (boundaryId: string) =>
-  withCache(
-    `elections_${boundaryId}`,
-    () => supabase.from('elections').select('*').eq('boundary_id', boundaryId),
+// src/lib/services/elections.ts — candidate detail, cached per candidateId
+export async function getPublicCandidateById(supabase: Client, candidateId: string) {
+  return fetchWithCache(
+    `candidate_public:${candidateId}`,
+    () => fetchPublicCandidateById(supabase, candidateId),
     5 * 60 * 1000
   );
+}
+
+// invalidated wherever a candidate's public fields actually change
+export async function updateCandidateStatement(supabase: Client, candidateId: string, statement: string) {
+  invalidateCache(`candidate_public:${candidateId}`);
+  return supabase.from("election_candidates").update({ statement }).eq("id", candidateId);
+}
 ```
+
+Cache keys use `domain:id` (colon-delimited), matching the existing `election_role_types:${country}:${boundaryType}`, `political_parties:${country}`, `site_settings:theme` keys already in the codebase — `invalidateCache("political_parties")` clears every key with that prefix (a plain `.startsWith()` check), so a broad invalidation call is a deliberate choice of a short, shared prefix, not a special API.
 
 ### TTL Guidelines
 
@@ -68,19 +73,19 @@ const getElectionsForBoundary = (boundaryId: string) =>
 
 ### Cache Invalidation
 
-**Manual invalidation** (after mutations):
+**Manual invalidation** (after mutations) — real implementation, `src/lib/utils/apiCache.ts`:
 ```ts
-export function invalidateCache(pattern?: string) {
-  if (!pattern) {
+export function invalidateCache(keyOrPrefix?: string) {
+  if (!keyOrPrefix) {
     cache.clear(); // Clear everything
-  } else {
-    // Clear all keys matching pattern
-    Array.from(cache.keys()).forEach(key => {
-      if (key.includes(pattern)) cache.delete(key);
-    });
+    return;
+  }
+  for (const key of cache.keys()) {
+    if (key.startsWith(keyOrPrefix)) cache.delete(key); // prefix match, not substring
   }
 }
 ```
+`startsWith`, not `includes` — a call like `invalidateCache("candidate_public")` clears every `candidate_public:<id>` key (the shared prefix), but wouldn't accidentally clear an unrelated key that merely *contains* `candidate_public` somewhere in the middle. Keep cache keys prefix-structured (`domain:id`, see Usage above) so this stays a meaningful guarantee.
 
 **Usage after creating a post**:
 ```ts
@@ -139,12 +144,18 @@ $$ LANGUAGE plpgsql;
 
 ### Elections & Candidacies
 
-**Queries cached**:
-- `getActiveElectionsForUser(userId)` — 10 min TTL
-- `getElectionSeats(electionId)` — 30 min TTL
-- `getCandidates(seatId)` — 5 min TTL (candidates join/withdraw frequently)
+**Queries actually cached today** (added 2026-09-09, scoped to the seat-page candidate-select flow — see [CHOSENO_ARCHITECTURE_GUIDE.md §13.9](CHOSENO_ARCHITECTURE_GUIDE.md#139-rls-policies-must-wrap-authuidauthrole-in-select-) for the RLS half of the same fix):
+- `getPublicCandidateById(candidateId)` (`elections.ts`) — key `candidate_public:${candidateId}`, 5 min TTL. Fires on every candidate-tab click on `/elections/seat/[seatId]` (`CandidacyWall`'s mount effect); switching back to a candidate already viewed this visit is now a cache hit instead of re-running the id-resolution chain (direct uuid → short-hash RPC → full-table slug scan fallback).
+- `getPublicCandidateAnswers(candidateId)` (`elections.ts`) — key `candidate_answers:${candidateId}`, 2 min TTL (shorter than the candidate record — this embeds `election_answer_comments`, which people can add at any time).
+- `getPoliticianProfile(politicianId)` (`profile.ts`) — key `politician_profile:${politicianId}`, 10 min TTL (bio/education/hometown/contact — edited by the politician through `EditProfileFlow`, not something viewers churn).
 
-**Invalidation trigger**:
+**Invalidation**: every mutation on a cached candidate's fields clears its key directly — `updateCandidateStatement`, `updateCandidateIntroVideoUrl`, `reviewCandidateApplication`, `submitCandidateApplication`, `removeCandidate`, `updateUnregisteredCandidate`, `removeUnregisteredCandidate`, `updateNominationFiled`, `upsertCandidateAnswer` invalidate `candidate_public:`/`candidate_answers:` for that id; `setCandidateAnswerOptions`/`setCandidateAnswerRanking`/`createAnswerComment` take an optional trailing `candidateId` for the same purpose (their callers — `CandidateApplicationClient`, `CandidacyWall` — already have it in scope; omit it and the 2min TTL just expires naturally instead). `upsertPoliticianProfile` invalidates `politician_profile:${userId}` on save.
+
+**Not cached, deliberately**: `getCandidacyWallPosts`/`getMentionedWallPosts` (the wall's post feed) — same "Feed Posts" reasoning as below (interactive, high update rate, stale posts are jarring), and `getCandidatesBySeatIds`/`getSeatById` (the seat's whole candidate roster) — already covered by the *separate* server-side route cache (`revalidate = 300` in `elections/seat/[seatId]/page.tsx`, see §13.6) for the initial page load; the client only re-fetches that list after an actual mutation (add/remove/approve a candidate), where serving a cached stale roster would be actively wrong.
+
+**Claimed but unimplemented in the table below** (kept for future work, not yet built): `getActiveElectionsForUser(userId)`, `getElectionSeats(electionId)`.
+
+**Invalidation trigger** (for the above, once built):
 - Create election: clear `elections_` cache
 - Nominate candidate: clear `seat_candidates_` cache for that seat
 
@@ -229,9 +240,10 @@ return () => subscription.unsubscribe();
 
 ### Debug Output
 
-Enable cache logging:
+**Not implemented** — `NEXT_PUBLIC_CACHE_DEBUG` and the hit/miss `console.log` below don't exist in `src/lib/utils/apiCache.ts` today; this was always aspirational. The sketch below is a starting point if this gets built, not something to `grep` for and expect to find. In the meantime, `Array.from((await import('@/lib/utils/apiCache')).cache?.keys?.() ?? [])` won't work either — `cache`/`inFlight` are module-private, not exported; the only way to observe hits today is a `console.log` you add and remove yourself, or the network tab (a cache hit means no request for that key at all).
 
 ```ts
+// illustrative only -- not the real file
 const CACHE_DEBUG = process.env.NEXT_PUBLIC_CACHE_DEBUG === 'true';
 
 export function withCache<T>(key: string, fetcher, ttl) {
@@ -255,10 +267,14 @@ Set `NEXT_PUBLIC_CACHE_DEBUG=true` in `.env.local` to see cache activity.
 ## Related Files
 
 - **Cache utility**: [`src/lib/utils/apiCache.ts`](../src/lib/utils/apiCache.ts)
-- **Service functions** (see each service file for `withCache` usage):
-  - [`src/lib/services/elections.ts`](../src/lib/services/elections.ts)
-  - [`src/lib/services/feed.ts`](../src/lib/services/feed.ts)
-  - [`src/lib/services/politicianWall.ts`](../src/lib/services/politicianWall.ts)
+- **Service functions actually using `fetchWithCache`/`invalidateCache`** (grep either name in a file to see its exact keys/TTLs — this list, not the per-feature TTL table above, is the source of truth for what's really cached today):
+  - [`src/lib/services/elections.ts`](../src/lib/services/elections.ts) — `getPublicCandidateById`, `getPublicCandidateAnswers`, `getElectionRoleTypes`, `getAllElectionRoleTypesForCountry`, `getKeyLeadersForCountry`
+  - [`src/lib/services/profile.ts`](../src/lib/services/profile.ts) — `getPoliticianProfile`
+  - [`src/lib/services/boundaries.ts`](../src/lib/services/boundaries.ts) — countries/boundary-types/entity-types lookups
+  - [`src/lib/services/politicalParties.ts`](../src/lib/services/politicalParties.ts) — party lists
+  - [`src/lib/services/settings.ts`](../src/lib/services/settings.ts) — site theme/rules
+  - [`src/lib/services/moderation.ts`](../src/lib/services/moderation.ts) — moderation rules
+  - `feed.ts`/`politicianWall.ts` (posts, comments, support) deliberately do **not** use it — see "Not cached, deliberately" above
 
 ---
 
@@ -269,3 +285,7 @@ Set `NEXT_PUBLIC_CACHE_DEBUG=true` in `.env.local` to see cache activity.
 - [ ] **Stale-while-revalidate**: Serve stale data while fetching fresh in background
 - [ ] **Cache analytics**: Dashboard showing hit/miss rates per query
 - [ ] **Distributed caching**: Redis cache layer for production scaling
+
+---
+
+*Last updated: 2026-09-09 — corrected this doc's code samples to match the real `fetchWithCache`/`invalidateCache` API (it had drifted to an aspirational `withCache` sketch), and documented the candidate-select caching + [companion RLS fix](CHOSENO_ARCHITECTURE_GUIDE.md#139-rls-policies-must-wrap-authuidauthrole-in-select-) added the same day for `/elections/seat/[seatId]`.*

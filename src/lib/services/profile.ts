@@ -2,6 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { isDevEnvironment } from "@/lib/utils/environment";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
+import { fetchWithCache, invalidateCache } from "@/lib/utils/apiCache";
 
 type Client = SupabaseClient<Database>;
 
@@ -366,6 +367,10 @@ export async function upsertPoliticianProfile(
   const { data: profile } = await getOwnProfile(supabase, userId, { columns: "full_name" });
   const profileName = (profile as { full_name?: string | null } | null)?.full_name;
   const wallSlug = buildPoliticianWallSlug(profileName, politicalTargetRole);
+  // Clear getPoliticianProfile's cache for this politician so a candidate
+  // who just edited their bio/education/contact info sees it reflected on
+  // their own candidacy wall right away instead of within the 10min TTL.
+  invalidateCache(`politician_profile:${userId}`);
   const result = await supabase.from("politician_profiles").upsert({
     id: userId,
     wall_slug: wallSlug,
@@ -422,13 +427,24 @@ export async function getProfileRole(supabase: Client, userId: string) {
   return supabase.from("profiles").select("role").eq("id", userId).single();
 }
 
-// politician_profiles — public campaign-page fields (CandidacyWall).
+// politician_profiles — public campaign-page fields (CandidacyWall). Cached:
+// this fires on every candidate-tab click on the seat page (CandidacyWall's
+// mount effect), and bio/education/hometown/contact change rarely (edited
+// by the politician through EditProfileFlow, not something viewers churn) —
+// matches the "Politician info (ratings, bio)" 5–10 min TTL guideline in
+// docs/API_CACHING_STRATEGY.md. Invalidated on save by upsertPoliticianProfile
+// below.
 export async function getPoliticianProfile(supabase: Client, politicianId: string) {
-  return supabase
-    .from("politician_profiles")
-    .select("education, hometown, bio, avatar_url, contact_email, contact_phone, source_url, political_parties(name)")
-    .eq("id", politicianId)
-    .maybeSingle();
+  return fetchWithCache(
+    `politician_profile:${politicianId}`,
+    () =>
+      supabase
+        .from("politician_profiles")
+        .select("education, hometown, bio, avatar_url, contact_email, contact_phone, source_url, political_parties(name)")
+        .eq("id", politicianId)
+        .maybeSingle(),
+    10 * 60 * 1000
+  );
 }
 
 // politician_profiles — full self-view including target_boundary + party id (ProfilePage).

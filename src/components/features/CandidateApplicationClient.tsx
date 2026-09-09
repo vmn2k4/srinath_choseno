@@ -256,10 +256,10 @@ export default function CandidateApplicationClient({
       }));
     }
     if (question?.question_type === "multiple_choice" && actualAnswerId) {
-      await setCandidateAnswerOptions(supabase, actualAnswerId, merged.optionIds || []);
+      await setCandidateAnswerOptions(supabase, actualAnswerId, merged.optionIds || [], candidateId);
     }
     if (question?.question_type === "ranking" && actualAnswerId) {
-      await setCandidateAnswerRanking(supabase, actualAnswerId, merged.rankedOptionIds || []);
+      await setCandidateAnswerRanking(supabase, actualAnswerId, merged.rankedOptionIds || [], candidateId);
     }
     return actualAnswerId;
   };

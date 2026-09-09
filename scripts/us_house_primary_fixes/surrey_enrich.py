@@ -1,20 +1,26 @@
 #!/usr/bin/env python3
-"""Enrich Surrey's 32 mayor+councillor candidate profiles with real bio,
-phone, email, party, source URL, and photo -- fetched directly from each
-candidate's own page at surrey.ca (bio/contact/party: 2026-09-06; photos:
-2026-09-09 follow-up, folded back in here so this file stays the single
-correct record and the template to copy for the next city, instead of
-splitting the photo fix into a separate patch script). politician_profiles
-already has bio/contact_phone/contact_email/source_url/avatar_url/
-photo_url columns sitting empty; no schema/social-links table exists, so
-website + social handles are folded into a short "Links:" line appended
-to bio instead. CandidacyWall.tsx renders `avatar_url` specifically for
-the seat/candidate page (confirmed by reading the component) -- both
-avatar_url and photo_url are written here for forward compatibility, but
-avatar_url is the one that actually shows. When reusing this as a
-template for another city: fetch the photo in the same batch as
-bio/phone/email, not as an afterthought -- that's the mistake this
-version fixes."""
+"""Enrich Surrey's mayor+councillor+school-trustee candidate profiles with
+real bio, phone, email, party, source URL, and photo -- fetched directly
+from each candidate's own page at surrey.ca (Mayor+Councillor bio/contact/
+party: 2026-09-06; their photos: 2026-09-09 follow-up; School Trustee
+bio/contact/party/photo, all in one pass: 2026-09-09, prompted by a user
+asking why SD36 Surrey trustee pages -- e.g. Afzalur Rahman -- had none of
+this despite the exact same rich profile existing on surrey.ca. All of it
+folded back into this one file so it stays the single correct record and
+the template to copy for the next city/office, instead of splitting each
+office type into its own patch script). politician_profiles already has
+bio/contact_phone/contact_email/source_url/avatar_url/photo_url columns
+sitting empty; no schema/social-links table exists, so website + social
+handles are folded into a short "Links:" line appended to bio instead.
+CandidacyWall.tsx renders `avatar_url` specifically for the seat/candidate
+page (confirmed by reading the component) -- both avatar_url and
+photo_url are written here for forward compatibility, but avatar_url is
+the one that actually shows. When reusing this as a template for another
+city or office: fetch bio/phone/email/party AND the photo in the same
+batch, for every office type that city publishes (Mayor, Councillor,
+School Trustee, ...) -- don't enrich one office type and assume the
+others are covered too; they're separate pages and were previously
+missed here for exactly that reason."""
 import sys
 
 # profile_id -> dict(bio, phone, email, party, source_url, links)
@@ -154,6 +160,58 @@ DATA = {
     "53b1d632-2639-4ecc-8de4-8d0082a0b78d": dict(  # Troy Van-Vliet
         bio=None, phone="604-780-0342", email="info@surreynow.ca", party="SURREY NOW",
         source_url="candidates-office-of-mayor/van-vliet-troy", links="Website: www.surreynow.ca"),
+    # School Trustee (SD36 - Surrey) -- added 2026-09-09. Dee Reiter is a
+    # DB candidate with no matching page on surrey.ca at all (checked
+    # directly, confirmed 404 on the expected reiter-dee URL) -- genuinely
+    # not on the city's own list, not a scraping miss, so she's excluded
+    # from DATA/PHOTOS below rather than given an empty entry.
+    "cf4d39d1-9285-4473-ad95-711f8df4ac9c": dict(  # Harjit Bhullar
+        bio=None, phone="778-855-3576", email="bhullarharjit313@gmail.com", party=None,
+        source_url="candidates-office-of-school-trustee/bhullar-harjit",
+        links="Facebook: Bhullar Trustee Candidate | Instagram: @bhullartrusteecandidate | TikTok: @bhullarharjittrusteecandidate"),
+    "0d6f2063-2f11-4c24-9904-591e8d2f2cf8": dict(  # Amrit Birring
+        bio="Amrit Birring is running for Surrey School Board Trustee for one single purpose: to set our children up for success and consequently set Canada up for success! This involves: raising academic standards to above average when compared with international standards; freeing children of any and all ideologies in schools, the biggest being SOGI 123, which has no mandate from parents; and zero tolerance for vaping and drugs in schools. Amrit is a Computer Science graduate from UBC and also holds an Electrical Engineering degree. A father of two, Amrit is an avid runner, fitness conscious, back country camper, hunter, archer, horse rider, and a black belt in Taekwondo. Amrit believes that an all around development of children happens via academics, sports, and arts activities. Amrit wants to make Surrey the best school district in Canada.",
+        phone="778-712-6242", email="abirring@shaw.ca", party=None,
+        source_url="candidates-office-of-school-trustee/birring-amrit",
+        links="Website: www.saveusfromsogi123.ca | X: @abirring | Facebook: amrit.birring.68 | Instagram: @abirring | LinkedIn: amrit-birring | TikTok: @freedompartybc | YouTube: amrit.birring"),
+    "02b19eaf-df26-4d76-920b-dd82213390d2": dict(  # Michelle Ceniza
+        bio=None, phone=None, email=None, party="SURREY NOW",
+        source_url="candidates-office-of-school-trustee/ceniza-michelle", links="Website: www.surreynow.ca"),
+    "7b183c53-0be6-4ccf-8359-c5dac7f18dec": dict(  # Gurleen K Chahal
+        bio=None, phone="604-442-4095", email="CHAHALGURLEEN6@gmail.com", party=None,
+        source_url="candidates-office-of-school-trustee/chahal-gurleen-k", links="Instagram: @GURLEEN_CHAHAL"),
+    "700c4246-e83c-471c-a5d5-2dc0696b0c5a": dict(  # Noor Cheema
+        bio=None, phone=None, email="tejcheema90@gmail.com", party=None,
+        source_url="candidates-office-of-school-trustee/cheema-noor",
+        links="Instagram: @CHEEMATEJNOOR | TikTok: @NOORCHEEMABC"),
+    "4de1990f-f401-4620-96f9-497f84c2b49d": dict(  # Vanessa Gilera
+        bio=None, phone="604-721-8963", email="VGilera94@gmail.com", party="SURREY NOW",
+        source_url="candidates-office-of-school-trustee/gilera-vanessa",
+        links="Website: www.surreynow.ca | YouTube: surreynow2026"),
+    "d2c15b90-75ba-414a-8988-6b6903715862": dict(  # Kyle Jones
+        bio="A lifelong Surrey resident, Education Assistant, and union leader, Kyle Jones understands the challenges facing students and education workers firsthand. He currently works in School District 43 and previously served with the Surrey School District as an Integration Education Support Worker (IESW), supporting students with diverse needs. Kyle's leadership extends beyond the classroom. He serves as a Shop Steward with CUPE Local 561, an Executive at Large with CUPE Metro, and a member of the Young Worker Committees for CUPE BC and the BC Federation of Labour. He is honoured to have the endorsements of CUPE 728 and the New Westminster & District Labour Council. Running under the Our Surrey banner, Kyle is seeking election as a Surrey School Board Trustee to advocate for students, families, and frontline education workers. He is committed to quality public education, strong student supports, transparent decision-making, and the investment needed to meet Surrey's growing educational needs.",
+        phone="604-418-6569", email="kylejonesfortrustee@gmail.com", party="Our Surrey",
+        source_url="candidates-office-of-school-trustee/jones-kyle",
+        links="Website: votekylejones.ca | Facebook: www.facebook.com/kyle.jones.37792/ | Instagram: www.instagram.com/kylejonessurrey/"),
+    "8979c126-49fb-43d0-ab20-ce46b41f9a2b": dict(  # Meena Kochher
+        bio=None, phone="604-506-1439", email="meena_3101@yahoo.ca", party=None,
+        source_url="candidates-office-of-school-trustee/kochher-meena", links="Instagram: @meenaforschooltrustee"),
+    "accaea4b-03b2-4f64-b43e-651da7a6e93a": dict(  # Afzalur Rahman
+        bio="Professor Dr. Afzalur Rahman is an educator, entrepreneur, community leader and father who believes every child deserves a safe, supportive and high-quality public education. With more than 16 years of teaching experience in Canada and internationally, Afzalur brings valuable experience to the Surrey Board of Education. As an independent candidate, he will put students, families and education ahead of political interests. His priorities include addressing overcrowding and portable classrooms, strengthening parents' voices, supporting teachers and frontline staff, ensuring children with special needs receive proper support, improving student safety and using education funding responsibly. His commitment is simple: putting children first while respecting families, educators and taxpayers. Let Children Be Children.",
+        phone="778-257-5225", email="nayeem71@gmail.com", party=None,
+        source_url="candidates-office-of-school-trustee/rahman-afzalur",
+        links="Facebook: professorrahman | Instagram: @prof_afzalurrahman"),
+    "1b58bb51-c35f-401c-a34a-32ca36c261e8": dict(  # Vincent Tighe
+        bio=None, phone=None, email="info@surreynow.ca", party="SURREY NOW",
+        source_url="candidates-office-of-school-trustee/tighe-vincent", links="Website: www.surreynow.ca"),
+    "22f0a01c-898b-4a04-9feb-79f54d71ae47": dict(  # Venson Wang
+        bio="I am a father, a wealth management and estate planning professional, an entrepreneur, and a grassroots community advocate running with SURREY NOW. With more than ten years in finance and business, I bring practical experience in budgeting, long-term planning, and accountability. I have also helped bring together more than 1,000 residents from diverse cultural backgrounds around community concerns. I am not a career politician. I am running for School Trustee to listen, serve, and bring the voices of parents and students into School Board decisions. My priorities are making sure school space keeps pace with Surrey's growth, directing more resources to classrooms, strengthening school safety and preventing bullying and drug-related harm, and ensuring parents receive timely information and have a meaningful voice in decisions affecting their children.",
+        phone="778-668-2655", email="vensonbt@gmail.com", party="SURREY NOW",
+        source_url="candidates-office-of-school-trustee/wang-venson",
+        links="Website: www.surreynow.ca | X: @surreynow2026 | Facebook: facebook.com/profile.php?id=61592512121332 | Instagram: @vensondw | LinkedIn: linkedin.com/in/venson-wang-797372175 | TikTok: @venson_w | YouTube: surreynow2026"),
+    "b60ca96f-4f1e-470c-a25e-2ea44e9d6823": dict(  # Anne Whitmore
+        bio=None, phone=None, email=None, party="Our Surrey",
+        source_url="candidates-office-of-school-trustee/whitmore-anne", links=None),
 }
 
 # profile_id -> photo URL, fetched 2026-09-09 (None = candidate's own
@@ -192,6 +250,21 @@ PHOTOS = {
     "673efede-1b98-465c-9528-64f43b857b09": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/linda.jpg",
     "d06486ce-31ca-4977-a367-37a7a0552282": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Copy-of-Brenda-Locke-Approved.jpg",
     "53b1d632-2639-4ecc-8de4-8d0082a0b78d": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/troy.jpg",
+    # School Trustee (SD36 - Surrey) -- fetched 2026-09-09. 3 of 12 have a
+    # submitted photo; the other 9 either have none on file or the page
+    # explicitly says "Photo not submitted" (Harjit Bhullar).
+    "cf4d39d1-9285-4473-ad95-711f8df4ac9c": None,  # Harjit Bhullar
+    "0d6f2063-2f11-4c24-9904-591e8d2f2cf8": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Amrit-Portrait.jpg",
+    "02b19eaf-df26-4d76-920b-dd82213390d2": None,  # Michelle Ceniza
+    "7b183c53-0be6-4ccf-8359-c5dac7f18dec": None,  # Gurleen K Chahal
+    "700c4246-e83c-471c-a5d5-2dc0696b0c5a": None,  # Noor Cheema
+    "4de1990f-f401-4620-96f9-497f84c2b49d": None,  # Vanessa Gilera
+    "d2c15b90-75ba-414a-8988-6b6903715862": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Kyle-Jones-Candidate-Profile-Picture.jpeg",
+    "8979c126-49fb-43d0-ab20-ce46b41f9a2b": None,  # Meena Kochher
+    "accaea4b-03b2-4f64-b43e-651da7a6e93a": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/A-R_0.jpg",
+    "1b58bb51-c35f-401c-a34a-32ca36c261e8": None,  # Vincent Tighe
+    "22f0a01c-898b-4a04-9feb-79f54d71ae47": "https://www.surrey.ca/sites/default/files/styles/large/public/2026-09/Venson_Wang_Candidate_Headshot_300dpi.jpg",
+    "b60ca96f-4f1e-470c-a25e-2ea44e9d6823": None,  # Anne Whitmore
 }
 
 BASE_URL = "https://www.surrey.ca/city-government/2026-municipal-election/candidates/"

@@ -4,7 +4,7 @@ import { fetchAllPages } from "@/lib/utils/fetchAllPages";
 import { extractIdFromSlug, buildSeatSlug, buildLegacySeatSlug, buildCandidateSlug, slugifyText } from "@/lib/utils/slugs";
 import { isDevEnvironment } from "@/lib/utils/environment";
 import { getShapeContainers, getNationalShapeForCountry } from "@/lib/services/boundaries";
-import { fetchWithCache } from "@/lib/utils/apiCache";
+import { fetchWithCache, invalidateCache } from "@/lib/utils/apiCache";
 
 type Client = SupabaseClient<Database>;
 type ElectionSeatInsert = Database["public"]["Tables"]["election_seats"]["Insert"];
@@ -898,7 +898,19 @@ export async function getCandidateById(supabase: Client, candidateId: string) {
   return { data: match || null };
 }
 
+// The seat page's candidate-tab strip calls this on every click
+// (CandidacyWall's mount effect) — cached per candidateId (whatever slug/
+// uuid form the caller passed) so switching back to a candidate already
+// viewed this visit is instant instead of re-running the id-resolution
+// chain below. 5min TTL matches "Elections & Candidacies" in
+// docs/API_CACHING_STRATEGY.md ("candidates join/withdraw frequently").
+// Invalidated by every mutation that changes a candidate's public fields —
+// see the invalidateCache(`candidate_public:...`) calls throughout this file.
 export async function getPublicCandidateById(supabase: Client, candidateId: string) {
+  return fetchWithCache(`candidate_public:${candidateId}`, () => fetchPublicCandidateById(supabase, candidateId), 5 * 60 * 1000);
+}
+
+async function fetchPublicCandidateById(supabase: Client, candidateId: string) {
   // profiles joined via !inner so a test-flagged candidate drops out
   // entirely in production rather than surviving with a null-embedded
   // profile (the default to-one embed behavior when an .eq() filter on the
@@ -950,7 +962,10 @@ export async function getPublicCandidateById(supabase: Client, candidateId: stri
     const candSlug = buildCandidateSlug(c as any);
     return c.id === candidateId || c.id === realCandidateId || candSlug === candidateId;
   });
-  return { data: match || null };
+  // Explicit `error: null` (not just `{ data }`) so this branch's return type
+  // structurally satisfies fetchWithCache's FetchResult<T> -- the fetcher
+  // wrapping this function above needs every branch to carry both fields.
+  return { data: match || null, error: null };
 }
 
 export async function applyForSeat(supabase: Client, seatId: string) {
@@ -972,14 +987,17 @@ export async function deleteCandidacy(supabase: Client, candidateId: string) {
 // candidate uses to withdraw their own application and relies on RLS alone.
 // See remove_candidate() in 20260821000004_election_nomination_windows.sql.
 export async function removeCandidate(supabase: Client, candidateId: string) {
+  invalidateCache(`candidate_public:${candidateId}`);
   return supabase.rpc("remove_candidate", { p_candidate_id: candidateId });
 }
 
 export async function updateCandidateStatement(supabase: Client, candidateId: string, statement: string) {
+  invalidateCache(`candidate_public:${candidateId}`);
   return supabase.from("election_candidates").update({ statement }).eq("id", candidateId);
 }
 
 export async function updateCandidateIntroVideoUrl(supabase: Client, candidateId: string, url: string) {
+  invalidateCache(`candidate_public:${candidateId}`);
   return supabase.from("election_candidates").update({ intro_video_url: url }).eq("id", candidateId);
 }
 
@@ -988,6 +1006,7 @@ export async function reviewCandidateApplication(
   candidateId: string,
   { approve, reviewedBy }: { approve: boolean; reviewedBy: string }
 ) {
+  invalidateCache(`candidate_public:${candidateId}`);
   return supabase
     .from("election_candidates")
     .update({ status: approve ? "approved" : "rejected", reviewed_at: new Date().toISOString(), reviewed_by: reviewedBy })
@@ -995,6 +1014,7 @@ export async function reviewCandidateApplication(
 }
 
 export async function submitCandidateApplication(supabase: Client, candidateId: string) {
+  invalidateCache(`candidate_public:${candidateId}`);
   return supabase.rpc("submit_candidate_application", { p_candidate_id: candidateId });
 }
 
@@ -1049,19 +1069,31 @@ export async function getCandidateAnswers(supabase: Client, candidateId: string)
     .eq("candidate_id", candidateId);
 }
 
+// Same hot-click path as getPublicCandidateById above (CandidacyWall's mount
+// effect calls both together). Shorter TTL than the candidate record itself
+// since this embeds election_answer_comments — people can comment on a
+// candidate's answers at any time, so this leans toward the Feed Posts /
+// comments end of the TTL table in docs/API_CACHING_STRATEGY.md rather than
+// the "candidate profile" end. Invalidated by upsertCandidateAnswer,
+// setCandidateAnswerOptions/Ranking, and createAnswerComment below.
 export async function getPublicCandidateAnswers(supabase: Client, candidateId: string) {
-  return supabase
-    .from("election_candidate_answers")
-    .select(
-      `
+  return fetchWithCache(
+    `candidate_answers:${candidateId}`,
+    () =>
+      supabase
+        .from("election_candidate_answers")
+        .select(
+          `
       id, context_text, video_url, text_answer, rating_value,
       election_questions(id, question_text, question_type, rank, visible_to_public),
       election_question_options(option_text),
       election_candidate_answer_options(rank, election_question_options(option_text)),
       election_answer_comments(id, ghost_id, content, created_at)
     `
-    )
-    .eq("candidate_id", candidateId);
+        )
+        .eq("candidate_id", candidateId),
+    2 * 60 * 1000
+  );
 }
 
 // fields: { optionId, textAnswer, ratingValue, contextText, videoUrl } -- an
@@ -1089,6 +1121,7 @@ export async function upsertCandidateAnswer(
     videoUrl?: string | null;
   } = {}
 ) {
+  invalidateCache(`candidate_answers:${candidateId}`);
   return supabase
     .from("election_candidate_answers")
     .upsert(
@@ -1109,8 +1142,13 @@ export async function upsertCandidateAnswer(
 
 // Replace-all for a multiple_choice answer's selected options -- simpler
 // than diffing against the previous selection, and this is a small set
-// (a handful of checkboxes) so a delete-then-insert is cheap.
-export async function setCandidateAnswerOptions(supabase: Client, answerId: string, optionIds: string[]) {
+// (a handful of checkboxes) so a delete-then-insert is cheap. candidateId is
+// optional (callers that already resolved the answer's parent candidate id
+// pass it through purely to invalidate that candidate's cached
+// getPublicCandidateAnswers() entry -- callers that don't have it handy
+// just let the 2min TTL expire naturally).
+export async function setCandidateAnswerOptions(supabase: Client, answerId: string, optionIds: string[], candidateId?: string) {
+  if (candidateId) invalidateCache(`candidate_answers:${candidateId}`);
   const { error: deleteError } = await supabase.from("election_candidate_answer_options").delete().eq("answer_id", answerId);
   if (deleteError) return { data: null, error: deleteError };
   if (optionIds.length === 0) return { data: [], error: null };
@@ -1121,9 +1159,11 @@ export async function setCandidateAnswerOptions(supabase: Client, answerId: stri
 
 // Replace-all for a "ranking" answer's option order -- orderedOptionIds[0]
 // is rank 1 (top priority). Same delete-then-insert shape as
-// setCandidateAnswerOptions; the partial unique index on (answer_id, rank)
+// setCandidateAnswerOptions (including the optional candidateId for cache
+// invalidation); the partial unique index on (answer_id, rank)
 // (20260804000005_ranking_question_type.sql) guarantees no duplicate ranks.
-export async function setCandidateAnswerRanking(supabase: Client, answerId: string, orderedOptionIds: string[]) {
+export async function setCandidateAnswerRanking(supabase: Client, answerId: string, orderedOptionIds: string[], candidateId?: string) {
+  if (candidateId) invalidateCache(`candidate_answers:${candidateId}`);
   const { error: deleteError } = await supabase.from("election_candidate_answer_options").delete().eq("answer_id", answerId);
   if (deleteError) return { data: null, error: deleteError };
   if (orderedOptionIds.length === 0) return { data: [], error: null };
@@ -1134,8 +1174,11 @@ export async function setCandidateAnswerRanking(supabase: Client, answerId: stri
 
 // ── election_answer_comments — public discussion on a single candidate's
 // answer to a single question, separate from the general CandidacyWall post
-// feed (see 20260801000001_answer_video_and_comments.sql). ────────────────
-export async function createAnswerComment(supabase: Client, answerId: string, ghostId: string, content: string) {
+// feed (see 20260801000001_answer_video_and_comments.sql). candidateId is
+// optional, same reasoning as setCandidateAnswerOptions above -- CandidacyWall
+// always has it (its own `candidateId` prop) so it's worth passing there. ──
+export async function createAnswerComment(supabase: Client, answerId: string, ghostId: string, content: string, candidateId?: string) {
+  if (candidateId) invalidateCache(`candidate_answers:${candidateId}`);
   const res = await supabase.from("election_answer_comments").insert({ answer_id: answerId, ghost_id: ghostId, content });
   if (res.error && (res.error.code === "42501" || res.error.message?.includes("row-level security"))) {
     return supabase.rpc("create_answer_comment", {
@@ -1306,6 +1349,7 @@ export async function attachPostMentions(supabase: Client, postId: string, menti
 // ── nomination_filed (self-editable, direct update — same pattern as
 // updateCandidateStatement, no RPC needed) ──────────────────────────────
 export async function updateNominationFiled(supabase: Client, candidateId: string, filed: boolean) {
+  invalidateCache(`candidate_public:${candidateId}`);
   return supabase.from("election_candidates").update({ nomination_filed: filed }).eq("id", candidateId);
 }
 
@@ -1403,6 +1447,7 @@ export async function updateUnregisteredCandidate(
     bio,
   }: { fullName: string; partyId?: number | null; education?: string | null; hometown?: string | null; bio?: string | null }
 ) {
+  invalidateCache(`candidate_public:${candidateId}`);
   return supabase.rpc("update_unregistered_candidate", {
     p_candidate_id: candidateId,
     p_full_name: fullName,
@@ -1421,6 +1466,7 @@ export async function updateUnregisteredCandidate(
 }
 
 export async function removeUnregisteredCandidate(supabase: Client, candidateId: string) {
+  invalidateCache(`candidate_public:${candidateId}`);
   return supabase.rpc("remove_unregistered_candidate", { p_candidate_id: candidateId });
 }
 

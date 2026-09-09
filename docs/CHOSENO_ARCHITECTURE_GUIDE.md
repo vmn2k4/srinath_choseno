@@ -565,6 +565,18 @@ Added: `politician_supporters(supporter_id)`, `profiles(current_ghost_id)` (part
 
 Eight functions in `src/lib/services/**` fetched an entire growing table with no `.limit()` at all — `getWallPosts`, `getMentionedWallPosts`, `getSupportersList` (`politicianWall.ts`), `getCandidacyWallPosts` (`elections.ts`), `getMembershipScopedPosts`/`getCountryScopedPosts`/`getInternationalScopedPosts` (`feed.ts`), `getNewsArticleComments` (`news.ts`). Each now takes an optional `{ limit?, offset? }` and defaults to 50 rows via `.range()` when the caller doesn't pass one — every existing call site is protected automatically, no caller had to change. This is a **safety cap**, page 1 of a real pager, not a finished "Load more" feature; the `offset` param exists for that UI to be built on top without another signature change.
 
+### 13.9 RLS policies must wrap `auth.uid()`/`auth.role()` in `(select ...)`
+
+Found 2026-09-09 via `supabase db advisors --linked --type performance` while investigating slow candidate selection on `/elections/seat/[seatId]`: 77 policies across the app called `auth.uid()`/`auth.role()` directly in `USING`/`WITH CHECK`. Postgres does not const-fold these into a single evaluation per query the way you'd expect from a `STABLE` function — left unwrapped, the planner re-invokes the JWT-claim lookup **once per row** the policy is applied to. Wrapping the call as `(select auth.uid())` lets Postgres evaluate it once as an InitPlan and reuse the result across every row — identical access rules, identical results, just evaluated once instead of N times. This is Supabase's own documented advisor fix, not a project-specific technique: [Auth RLS Initialization Plan](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select).
+
+`20260909000000_seat_candidate_rls_initplan_perf.sql` fixed this for the 16 tables actually traced in the candidate-select flow (`profiles`, `election_candidates`, `election_candidate_answers`, `election_candidate_answer_options`, `election_answer_comments`, `election_questions`, `election_question_options`, `election_seats`, `elections`, `map_shapes`, `politician_profiles`, `politician_supporters`, `posts`, `comments`, `user_boundary_memberships`) — the same "grep the real query path, fix only what it touches" discipline as §13.7's index migrations, applied to RLS instead of indexes. Selecting a candidate on the seat page mounts `CandidacyWall`, whose effect fires ~8-10 queries against exactly these tables (several joining `posts, comments(*)` or chaining 2-3-table `EXISTS` subqueries like `election_candidate_answers → election_candidates → election_questions`) — unwrapped `auth.uid()` meant every one of those subqueries alone re-resolved the JWT claim per row scanned, on every candidate click.
+
+Uses `ALTER POLICY ... USING (...) WITH CHECK (...)` rather than `DROP POLICY` + `CREATE POLICY` — the policy's name, command, and role stay identical, only the qual/check expression changes, so nothing that references a policy by name (nothing does today) or depends on grant timing breaks.
+
+**Not done, and why**: the same advisor run flagged ~230 `multiple_permissive_policies` findings app-wide (a table has two overlapping policies — e.g. a blanket admin `ALL` policy plus a narrower public `SELECT` policy — so Postgres evaluates both per query instead of one). This is a real but much smaller cost than per-row initplan re-evaluation (it's 2-3 boolean checks per query, not per row), and fixing it means *merging* policies — a higher-risk change to actual access-control semantics, not just an equivalent-rewrite like this one. Left as a candidate for a dedicated, carefully-reviewed follow-up rather than folded into a performance pass.
+
+See [docs/API_CACHING_STRATEGY.md](API_CACHING_STRATEGY.md) for the companion client-side caching work from the same pass (`getPublicCandidateById`, `getPublicCandidateAnswers`, `getPoliticianProfile` now go through `fetchWithCache`).
+
 ---
 
 ## 14. Next Steps for New Contributors
@@ -579,12 +591,13 @@ Eight functions in `src/lib/services/**` fetched an entire growing table with no
 8. **New slugged entity?** Read [§13.2](#132-slugs-that-carry-a-short-hash-need-an-indexed-lookup-not-a-full-table-fetch) — a short-hash slug needs its indexed RPC lookup from day one, not after the table grows large enough to notice
 9. **New public/SEO page?** Read [§13.6](#136-publicanonymous-supabase-client-for-cacheable-routes) before deciding whether it can use `createPublicClient()` + `revalidate` — check the actual RLS policy text for every table it touches, don't assume from the table name
 10. **New list-returning service function?** Default it to a capped `{ limit, offset }` from the start (see [§13.8](#138-pagination-defaults-on-list-returning-service-functions)) — an unbounded `.select()` is free to write and expensive to notice later
+11. **New RLS policy?** Wrap every `auth.uid()`/`auth.role()` call as `(select auth.uid())` from the start (see [§13.9](#139-rls-policies-must-wrap-authuidauthrole-in-select-)) — writing it unwrapped works fine locally and only shows up as a real cost once a table has rows, which is exactly why it's easy to miss in review
 
 ---
 
 **Generated**: 2026-08-17 (Updated from 2026-08-11)  
 **Status**: Active Development (Search + Reporting + Social Sharing + News Master Cycle + Office Holders Phase 2; Elections stable)
-**Last performance pass**: 2026-08-18 — indexing, pagination defaults, and public-client route caching (§13.6–§13.8); previous pass 2026-08-11 — see [§13](#13-performance-architecture--conventions)  
+**Last performance pass**: 2026-09-09 — RLS initplan fix + candidate-detail client caching for the election-seat/candidate-select page (§13.9); previous passes 2026-08-18 (indexing, pagination defaults, public-client route caching, §13.6–§13.8) and 2026-08-11 — see [§13](#13-performance-architecture--conventions)  
 **Latest features**: 2026-08-17 — Search, Reporting, Sharing, News Ingestion, Office Holders (6 provinces/territories), SEO infrastructure
 
 ---
