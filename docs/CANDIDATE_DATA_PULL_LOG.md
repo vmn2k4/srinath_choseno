@@ -200,16 +200,71 @@ rather than discovering it after the fact.
 Script:
 [`bc_refresh_sept6.py`](../scripts/us_house_primary_fixes/bc_refresh_sept6.py).
 
-Running total: 66 (Sept 3) → 183 (Sept 4, +117) → **330 (Sept 6, +147)**.
+Running total: 66 (Sept 3) → 183 (Sept 4, +117) → 330 (Sept 6, +147).
+
+**Re-run 2026-09-08 — LECFA itself hadn't moved, so this pass checked city
+pages directly instead, and found real new filings anyway**: fetched the
+LECFA PDF fresh and it came back **byte-identical (same MD5 hash) to the
+Sept 6 copy** — Elections BC simply hadn't republished it in the 2 days
+between checks. Rather than conclude "nothing new," re-checked each city's
+own page directly (per the "Additional step" section below) — real gains
+found in 3 of the ~7 cities checked this pass:
+
+- **Vancouver**: 10 new councillors (Ibrahima Cisse, Mohadeseh Gharib P.
+  Arasi, Judith Kasiama, Bilal Khan, Andy Lin, Yadwinder Mangat — all
+  **Bright Future Vancouver**, a brand-new party/slate not seen before;
+  plus Raj Mundra, Patrick Sauriol, Jonathan Weisman for **TEAM**; plus
+  Eric Redmond for **Affordable Housing**, also new) and 2 new school
+  trustees (Tasha Doucas — Vote Vancouver; Kat Nystedt — TEAM). Vancouver's
+  own mayoral page is still stuck at 2 (Ahmad, Hardwick) — incumbent Ken
+  Sim has still not appeared as a declared candidate on the city's own
+  page as of this check, worth watching.
+- **Nanaimo**: mayor race — added Leonard Krog (**linked to his existing
+  officeholder profile**, not a stub — he's the sitting mayor) and Sarah
+  Lovegrove (stub), per news coverage naming both alongside the
+  already-known Anne Marie Dryden. Nanaimo's own site still won't publish
+  its official list until after Sept 11 close, so this came from local
+  news (CHLY 101.7FM), not a government source directly — flagged as
+  slightly lower-confidence than the usual official-page sourcing, but a
+  named incumbent mayor is about as safe a call as this gets.
+- **Saanich** (District of Saanich specifically — not Central Saanich or
+  North Saanich, three separate municipalities that all share "Saanich"
+  in the name and are easy to conflate): 1 new mayor (Karen Harper,
+  linked — sitting councillor), 3 new councillors linked as officeholders
+  (Colin Plant, Nathalie Chambers) plus 3 more as fresh stubs (Alli
+  Deelstra, Nancy Di Castri, Jordan Weaver), and 1 new SD63 school trustee
+  (Karen MacEwan).
+- **Checked, unchanged since Sept 6**: Surrey (still 29 councillors + 3
+  mayors — a "Daniel, Isaac" vs "Daniel. Isaac" text-punctuation quirk on
+  Surrey's own page briefly looked like 2 new names but was the same
+  person, same slug, already counted), Burnaby (still 19 + 2), Coquitlam
+  (still 9 + 6 + 1), Langley Township (still 9 + 1 + 1).
+- **Checked, no usable data**: Richmond (still JS/iframe-rendered, resists
+  extraction — same blocker as before), Abbotsford (explicitly says its
+  declared-candidates list won't post until after the Sept 11 close, same
+  as Kelowna/Victoria/Nanaimo).
+
+Script:
+[`bc_sept8_new_candidates.py`](../scripts/us_house_primary_fixes/bc_sept8_new_candidates.py).
+
+Running total: 66 (Sept 3) → 183 (Sept 4, +117) → 330 (Sept 6, +147) →
+**347 (Sept 8, +17)**.
 
 ### How to check for new BC nominations (do this periodically until nominations close)
 
 BC's LECFA candidate PDF is a **live, continuously-updated document at a
 fixed URL** — Elections BC republishes to the same filename as candidates
 file, right up until nominations close ahead of the 2026-10-17 general
-local election. It grew 80 rows → 13 pages → 23 pages across just three
-checks (Sept 3, 4, 6), so re-checking every few days while filing is open
-is worth it, and stops mattering once nominations close.
+local election. It grew 80 rows → 13 pages → 23 pages across the first three checks
+(Sept 3, 4, 6), so re-checking every few days while filing is open is
+worth it — but **the Sept 8 check found it byte-identical (same MD5) to
+Sept 6's copy**, i.e. Elections BC doesn't republish every day even
+though candidates keep filing with cities in the meantime. **Don't treat
+an unchanged LECFA hash as "nothing to check" — compare the hash, and if
+unchanged, go straight to the per-city page check (the "Additional step"
+section below) instead of stopping.** That's exactly what turned up 17
+real new candidates on Sept 8 even though LECFA itself hadn't moved at
+all.
 
 1. **Fetch the PDF fresh** (same URL every time, no rediscovery needed):
    ```bash
