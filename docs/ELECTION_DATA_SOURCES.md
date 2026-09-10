@@ -1121,9 +1121,63 @@ things happen together in real life) but not legally identical — don't
 represent this as "confirmed nominated" without that caveat, the way the FEC's
 `candidate_status == 'C'` caveat is carried elsewhere in this doc.
 
-**Not yet built:** no `sync_bc_municipal_candidates.py`, no Edge Function
-handler, no `hasFetch` entry — this was verified by hand (`curl` + read), not
-wired into the admin UI's one-click "Fetch candidates" flow yet.
+**Not yet built:** no Edge Function handler, no `hasFetch` entry — LECFA
+verification was by hand (`curl` + read), not wired into the admin UI's
+one-click "Fetch candidates" flow yet.
+
+**Update 2026-09-10 — a materially better source found and now the
+recommended primary one: CivicInfo BC (`localelections.ca`).** LECFA lags
+real nomination filings, sometimes badly (same-day comparison found
+CivicInfo BC reporting roughly 2x LECFA's candidate count for several
+cities). CivicInfo BC is a BC not-for-profit founded by the Union of BC
+Municipalities, the Ministry of Municipal Affairs, and other core
+municipal-sector bodies (est. 2000, still partly funded by the Province of
+BC) — not a hobbyist aggregator. Its own elections page states its
+methodology directly: *"With assistance from local Chief Election
+Officers, CivicInfo BC assembles all-candidate lists, and on election
+nights we provide full results to the public and our media partners."*
+Local news outlets cite it as their own tracking source. Independently
+cross-checked against data this project had already scraped directly from
+individual city pages (Surrey: 29/29 match; Burnaby: 23/24, the 1 miss
+being a name-formatting difference, not a real one) before trusting it —
+see `docs/CANDIDATE_DATA_PULL_LOG.md`'s "BC — a much better source found"
+section for the full writeup, including caveats (labeled "Unofficial" like
+every source here; occasional typos; a small-village table-layout quirk
+that can put junk text in the party field, handled explicitly).
+
+**Mechanism:** two numeric-id-keyed indexes —
+`localelections.ca/candidates/` (146 municipalities) and
+`localelections.ca/candidates/index_sd.html` (53 school districts) — each
+entry linking to `election_candidates/{id}_2026_candidates.html`, one big
+HTML table per jurisdiction (`MAYOR`/`COUNCILLOR`/`TRUSTEE` section
+headers), each candidate row followed by a hidden "extra info" row with
+**address, phone, email (Cloudflare-obfuscated, standard XOR decode), and
+social links** — richer than LECFA, which carries none of that. No
+candidate photos (checked explicitly) — Surrey and Burnaby's own city
+pages remain the only BC sources with real headshots.
+
+**Built and verified:** `scripts/sync_bc_civicinfo_candidates.py` —
+`fetch` (stdlib + `requests`, no DB connection needed, parses via a
+custom `html.parser.HTMLParser` that tracks real table nesting depth —
+a naive `querySelectorAll`-style flatten would wrongly treat the "extra
+info" row's own inner mini-table as more candidate rows) and `diff`
+(reproduces the exact 2026-09-10 matching pipeline: order-independent /
+middle-initial-stripped name comparison so pure formatting differences
+never register as a false add or a false dropout, map_shape_id-scoped
+officeholder dedup, party-name consolidation onto existing rows rather
+than creating near-duplicates). Verified live 2026-09-10: 1,763 candidates
+across all 199 pages, 0 fetch errors, output matched the browser-based
+extraction used for the actual production insert byte-for-byte after a
+real bug (nested-cell HTML close tags corrupting the parser's cell
+boundaries, silently dropping every email/phone/link) was found and
+fixed. See the script's own module docstring for the full `fetch`/`diff`
+usage, including the exact `supabase db query --linked` SQL needed for
+each DB-state input file (this environment has no direct
+DATABASE_URL/psycopg2 path — confirmed, see `CANDIDATE_DATA_PULL_LOG.md`).
+
+**Not yet built:** no Edge Function handler / `hasFetch` entry for this
+source either — same gap as LECFA, now doubly worth closing since this is
+the better of the two.
 
 ### Ontario / Manitoba — seats built, candidate source not yet found
 

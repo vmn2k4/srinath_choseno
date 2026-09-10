@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import Link from "next/link";
-import { MapPin, Landmark, ArrowRight, Building, Sparkles, Network } from "lucide-react";
+import { MapPin, Landmark, ArrowRight, Building, Network, Vote } from "lucide-react";
 import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getMapShapeById, getShapeContainers } from "@/lib/services/boundaries";
 import {
@@ -448,6 +448,51 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
         )}
       </div>
 
+      {/* Active Election Nominations — the primary call to action for this
+          page, surfaced immediately below the header banner (above the org
+          chart) rather than buried after it. A visitor landing here is most
+          often trying to answer "is there a race here, and can I look at
+          it right now" before anything else, so it gets the hero treatment
+          instead of the plain grid it used to render as further down. */}
+      {seatRows.length > 0 && (
+        <Card
+          variant="default"
+          padding="lg"
+          className="!bg-orange-500/10 !border-orange-500/30 space-y-6"
+        >
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-700 uppercase tracking-wide bg-orange-500/15 px-2.5 py-1 rounded-full">
+              <Vote size={13} />
+              {seatRows.length} Active Election{seatRows.length === 1 ? "" : "s"}
+            </span>
+          </div>
+          <div className="space-y-1.5">
+            <h2 className="font-display text-xl sm:text-2xl font-extrabold text-text-main leading-snug">
+              {seatRows.length === 1 ? "There's a race" : "There are races"} happening in {shape.name}
+            </h2>
+            <p className="text-sm text-text-muted">
+              {totalActiveCandidates} declared candidate{totalActiveCandidates === 1 ? "" : "s"} so far — compare
+              positions and read verified constituent ratings before you vote.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {seatRows.map((seat) => (
+              <Link
+                key={seat.id}
+                href={`/elections/seat/${buildSeatSlug({ id: seat.id, role_title: seat.role_title, map_shapes: { name: shape.name, properties: shape.properties } })}`}
+                className="flex items-center justify-between gap-2 p-4 rounded-xl bg-surface hover:bg-orange-500/15 border border-orange-500/20 hover:border-orange-500/40 shadow-sm hover:shadow-md transition-all text-sm"
+              >
+                <span className="font-semibold text-text-main">{seat.role_title}</span>
+                <span className="text-orange-700 font-bold flex items-center gap-1 text-xs shrink-0">
+                  {candidateCountBySeat.get(seat.id) || 0} Candidate{(candidateCountBySeat.get(seat.id) || 0) === 1 ? "" : "s"}
+                  <ArrowRight size={13} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </Card>
+      )}
+
       {/* Org Chart */}
       <div className="space-y-4">
         <h2 className="text-xl font-bold text-text-main flex items-center gap-2">
@@ -472,31 +517,6 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
         <p>{representationSentence}</p>
         {electionSentence && <p>{electionSentence}</p>}
       </div>
-
-      {/* Active Election Nominations */}
-      {seatRows.length > 0 && (
-        <div className="space-y-3">
-          <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
-            <Sparkles size={18} className="text-primary" />
-            Active Election Nominations
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {seatRows.map((seat) => (
-              <Link
-                key={seat.id}
-                href={`/elections/seat/${buildSeatSlug({ id: seat.id, role_title: seat.role_title, map_shapes: { name: shape.name, properties: shape.properties } })}`}
-                className="flex items-center justify-between gap-2 p-3 rounded-xl bg-surface-hover/40 hover:bg-primary/10 border border-border-light/40 hover:border-primary/30 transition-all text-sm"
-              >
-                <span className="font-semibold text-text-main">{seat.role_title}</span>
-                <span className="text-primary font-bold flex items-center gap-1 text-xs">
-                  {candidateCountBySeat.get(seat.id) || 0} Candidate{(candidateCountBySeat.get(seat.id) || 0) === 1 ? "" : "s"}
-                  <ArrowRight size={13} />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Roles & Responsibilities Reference */}
       {roleTypes.length > 0 && (

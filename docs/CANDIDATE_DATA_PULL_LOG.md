@@ -1239,6 +1239,264 @@ approach.
 
 ---
 
+## BC re-check, same day — LECFA grew 25 → 35 pages, real column parser built
+
+**User asked**: find any new candidates across the system and update the
+site with them (photo/bio/contact wherever available). Re-fetched the same
+LECFA PDF a few hours after the full sweep above — it had grown again, 25
+to **35 pages**, since filing keeps moving right up to the Sept 11 close.
+
+**New approach, replacing hand-diffing for this pass**: rather than reading
+pages by eye or only counting rows per (jurisdiction, office) pair, wrote a
+real column-position parser against `extract_words()` — the PDF has no table
+lines, but its fields sit at consistent x-coordinates (jurisdiction < 132.5,
+office < 222.5, candidate name < 362.5, affiliation < 466, financial-agent
+columns ignored beyond that). Any field can wrap to a second physical line
+when long, and the reliable signal for "this line starts a new candidate"
+turned out to be **office AND name both present** — an earlier version of
+this parser used "name present" alone and silently mis-split wrapped
+surnames (e.g. "Mary Blanca Villa y" + wrapped "Battenberg") into a bogus
+second candidate. Caught before inserting anything, by checking the parser's
+output for an already-known name — Burnaby's own "Michael Angelo A_BC Robin
+Hood" Mayor entry, confirmed at the raw PDF character level to be the
+genuine LECFA-filed ballot name, not a rendering artifact — and fixing the
+row-boundary rule (office+name together, not name alone) before trusting the
+parser on anything new.
+
+**Result**: 616 total PDF candidate rows parsed; after resolving jurisdiction
+names to real `map_shapes` rows (same override table as every prior pass —
+"X, City of" → "X (City)", "`<Name> School District`" → "SDxx - `<Name>`")
+and diffing case-insensitively against the live DB, **148 genuinely new
+candidates** across ~85 municipalities/school districts — 71 resolved via
+the officeholder-dedup check (map_shape_id-scoped, same as always) and 77
+fresh stubs. **1 new party**: Pivot Kamloops (a 3-candidate Kamloops
+mayor+council slate). Full per-jurisdiction breakdown and the generating
+script: [`bc_sept9_lecfa_column_parser.py`](../scripts/us_house_primary_fixes/bc_sept9_lecfa_column_parser.py)
+(the reusable parser) +
+[`bc_sept9_full_lecfa_sweep.sql`](../scripts/us_house_primary_fixes/bc_sept9_full_lecfa_sweep.sql)
+(the actual insert, for the record).
+
+Notable new jurisdictions in this pass: Kamloops (+5, incl. the new Pivot
+Kamloops slate), Pitt Meadows (+5), Chilliwack (+3 council/mayor +4 SD33
+trustee), Kelowna (+3, its own city page still won't publish until Oct 7 but
+LECFA had them), Penticton (+3), Victoria (+2), Prince George (+2), Maple
+Ridge (+2), plus one-off new candidates or complete first-time entries for
+~30 smaller communities (Ashcroft, Barriere, Clearwater, Coldstream, Enderby,
+Esquimalt, Fernie, Gold River, Golden, Harrison Hot Springs, Houston,
+Invermere, Keremeos, Lake Country, Langford, Logan Lake, Mackenzie, Midway,
+North Saanich, Oak Bay, Oliver, Osoyoos, Qualicum Beach, Sayward, Sidney,
+Vanderhoof, White Rock, and several BC school districts' trustee races).
+
+**Photo/bio/contact enrichment: none possible for any of these 148.**
+Checked each new jurisdiction against the "does this city's own page carry
+headshots" table earlier in this doc before concluding that — Surrey and
+Burnaby remain the only two BC cities found so far whose own site publishes
+an individual-profile accordion; every other city here is either a plain
+LECFA-only stub (no image source exists anywhere) or, for the handful with
+their own city page (Kamloops, Kelowna, Chilliwack, Victoria, Prince George),
+those pages were already confirmed **not yet publishing their declared-
+candidates list at all** as of the same-day sweep above (most wait until
+after the Sept 11 nomination close). Re-checking those specific cities'
+own pages shortly after Sept 11 is the next concrete opportunity for real
+photo/bio/contact gains, same as the standing note in the full sweep above.
+
+**Verified after inserting**: BC total 483 → **631** (direct `COUNT`), 0
+orphaned `politician_profiles` rows for this batch. Ran the full-roster
+duplicate-profile audit query (see above) as a matter of course — found **8
+dup pairs, but all 8 predate this pass and are Ontario, not BC**
+(Toronto/Ottawa/Mississauga/Brampton mayors — Brad Bradford/Olivia Chow,
+Mark Sutcliffe/Jeff Leiper, Dipika Damerla/Carolyn Parrish/Alvin Tedjo,
+Patrick Brown — all created earlier the same day by the Ontario multi-ward
+pass above, which explicitly noted it had no `office_holders` data to dedup
+against at the time; evidently some Ontario officeholders exist in the table
+after all). **Not fixed in this pass** — flagged as a separate, pre-existing
+issue out of scope for the BC work just done, worth its own follow-up pass
+the same way the original 55-pair BC duplicate audit got one on 2026-09-09
+earlier in this doc.
+
+**Standing gaps, unchanged**: Regional District Electoral Area Director,
+Conseil Scolaire Francophone, and Okanagan Falls' "District of" jurisdiction
+all remain unresolvable for the same structural reason as every prior
+pass — no matching `map_shapes` row exists.
+
+---
+
+## BC — a much better source found: CivicInfo BC / localelections.ca, 2026-09-10
+
+**User asked to check every open-nomination election for adds/removals.**
+LECFA (the source every BC pass above used) came back **byte-identical**
+to the previous day's fetch — no growth. Per the standing rule, that means
+check city pages directly instead of stopping. Doing that surfaced a much
+better single source than piecemeal per-city checks: **`localelections.ca`**,
+run by **CivicInfo BC**.
+
+### Who this is, verified before trusting it with a write
+
+**Not a random aggregator** — CivicInfo BC is a BC not-for-profit society
+operating since 2000, founded by a steering committee of the province's
+core municipal-sector bodies (Union of BC Municipalities, Ministry of
+Municipal Affairs, BC Assessment, Municipal Finance Authority of BC,
+Municipal Officers' Association of BC), partly funded today by the
+Province of BC (Ministry of Housing and Municipal Affairs). Its own
+elections page states its methodology directly: *"With assistance from
+**local Chief Election Officers**, CivicInfo BC assembles all-candidate
+lists, and on election nights we provide full results to the public and
+**our media partners**."* Local news (e.g. the Chilliwack Progress/Fraser
+Valley Today coverage found this same pass) independently names CivicInfo
+BC as the source reporters themselves track. This is meaningfully more
+credible than **VoteMate**, the aggregator an earlier pass in this doc
+explicitly tested and rejected (wrong party labels, wrong headcounts) —
+CivicInfo BC's data comes from the same CEOs each city's own page sources
+from, not a third-party guess.
+
+**Independently cross-checked anyway, not just taken on reputation**:
+Surrey (29/29 of our already surrey.ca-verified councillors matched
+exactly), Burnaby (23/24 matched — the 1 miss was a name-formatting
+difference, not a real one), and Victoria's odd "David Johnston" mayoral
+entry (looked absent from a news article's shorter candidate list;
+confirmed real and correctly attributed by reading the raw LECFA PDF at
+the character level, independently). CivicInfo BC also surfaced Burnaby
+Mayor "Michael Angelo A_BC Robin Hood"'s **actual legal name, Yusuf
+Kaplan**, in parentheses — a level of detail no other source had, and
+consistent with genuinely CEO-sourced data rather than a scrape.
+
+**Real caveats found, not glossed over**: labeled "Unofficial" on its own
+page (same standing caveat as LECFA and every city page — nothing is the
+certified legal record until each city closes and certifies); occasional
+typos (a Vancouver councillor listed as "Erid Redmond", almost certainly
+"Eric Redmond" — this is why an *absence* from this source was never
+treated as proof of a dropout, see below); a handful of tiny villages
+(Greenwood, Montrose) had a shifted table column that put the
+municipality's own name in the party field instead of a real affiliation —
+caught and nulled rather than inventing a fake party.
+
+### Coverage and mechanics
+
+Two per-organization indexes, each a numeric-id-keyed `<select>`:
+`localelections.ca/candidates/` (146 municipalities) and
+`localelections.ca/candidates/index_sd.html` (53 school districts) — no
+Regional District/Islands Trust/Park Board candidate pull attempted this
+pass (those still have no `map_shapes` row to attach to regardless, the
+same standing structural gap as every prior BC pass), though the site
+does carry that data too if the schema gap ever gets closed. Each
+`election_candidates/{id}_2026_candidates.html` page is one big HTML
+table per municipality/district, sections split by an office-header row
+(`MAYOR`/`COUNCILLOR`/`TRUSTEE`), each candidate row followed by a hidden
+"extra info" row carrying **address, phone, email (Cloudflare-obfuscated,
+same XOR decode as `surrey_enrich.py`), and social links** — richer
+contact data than LECFA has ever carried, though still **no photos**
+(checked explicitly — only the site's own logo `<img>` appears anywhere).
+
+**Parsed via the browser's own JS context** (same-origin `fetch`, no CORS
+issue, same technique as the Surrey enrichment pass): `DOMParser` over
+each page, walking the table's direct-child `<tr>`s only (not
+`querySelectorAll('tbody tr')`, which would also match a nested inner
+table's auto-inserted `<tbody>` and produce garbage "candidate" rows from
+the address/contact block — caught and fixed before trusting any output).
+Fetched all 199 pages (146 municipal + 53 school district) via
+`Promise.all` in a few batches, 1,763 total candidate rows.
+
+### Matching had to be more forgiving than a straight lowercase-string
+compare, or it wildly overcounts both adds and removals
+
+First pass, naive exact-string matching: **1,264 "missing" + 126
+"possible dropouts"**. Manual spot-checks immediately found this was
+mostly noise — CivicInfo BC's own data has plenty of legitimate formatting
+variance from LECFA's (`"Georgia F Lyons"` vs our `"Georgia Lyons"`,
+`"Kielmann Brad"` vs `"Brad Kielmann"` word order, `"AAJohl Jesse"` vs
+`"Jesse Aajohl"`). Fixed by comparing **order-independent, middle-initial-
+stripped token sets** instead of raw strings (`frozenset` of lowercased
+words, single-letter tokens dropped) before concluding a name is actually
+new or actually gone. This alone reconciled 87 of the "missing" and
+brought "possible dropouts" down from 126 to a genuine 39.
+
+**The 39 remaining "in DB, not on CivicInfo BC's current list" were
+individually reviewed, not deleted.** Several turned out to be pre-existing
+data-quality issues unrelated to this pass and worth fixing separately —
+most notably **a real duplicate-profile bug found in the process**:
+Quesnel Mayor had both `"Ron Paul"` and `"Ron Paull"` as two separate
+DB rows (a typo-variant duplicate predating this session; CivicInfo BC's
+single correctly-spelled `"Ron Paull"` entry matched one of the two and
+correctly flagged the other as unmatched). One (`SD41 - Burnaby`
+`"Test Candidate (QA Demo)"`) is an unrelated QA/placeholder row, not a
+real candidate. **No name was deleted based on absence from a single
+unofficial source alone** — a typo on CivicInfo BC's own side (the
+"Erid"/"Eric" Redmond case) proves that absence isn't reliable enough
+evidence by itself. These 39 are reported here as a worked list for a
+future pass with a second corroborating source, not silently dropped.
+
+### What got written
+
+**1,177 new candidates** — 403 resolved via the same map_shape-scoped
+officeholder-dedup check every pass in this doc uses, 774 fresh stubs.
+**7 new parties** created (Achieving for Langley City, Conservative
+Electors Association, Imagine Surrey, Langley Strong, North Saanich
+Strong, Penticton Together Electors Association, Sooke Together) after
+consolidating CivicInfo BC's full legal party names onto **10 more**
+already-existing LECFA-sourced party rows rather than creating
+near-duplicates (`"A Better City Vancouver Electors Association"` →
+existing `"ABC Vancouver"`, `"Surrey Connect Public Interest Association"`
+→ existing `"Surrey Connect Public IA"`, etc.) — done as an explicit
+per-party-id resolution in Python rather than a SQL `JOIN ON lower(name)`,
+because **two existing party names already collide case-insensitively**
+(`"ABC Vancouver"`/`"ABC VANCOUVER"`, `"Achieving for Delta"` ×2, both
+pre-existing, not caused by this pass) — a lowercase join would have
+silently fanned out into two `politician_profiles` insert attempts per
+affected stub and erred the whole transaction. Every new stub also got
+**bio** (a `Links: Website: ... | Facebook: ... | Instagram: ...` line,
+same convention as Surrey/Burnaby enrichment), **contact_email**,
+**contact_phone**, and **source_url** populated directly from CivicInfo
+BC's own per-candidate data — the richest first-pass BC insert yet, no
+follow-up enrichment pass needed for these 774.
+
+**One pre-existing placeholder found and partially cleaned up**: Surrey's
+"John Doe" Mayor row (flagged since 2026-09-03, absent from both LECFA and
+CivicInfo BC) turned out to have **real user engagement attached** — 2
+supporters, 3 wall claims, 5 boundary memberships — discovered only when
+checking before a user-approved delete. **Did not hard-delete the
+profile** (real engagement on it, same caution as the 55-orphan case
+above); removed only the fake `election_candidates` row itself, leaving
+the profile and its history intact. **Moral, reinforcing the standing
+rule**: always check for real engagement before deleting a profile, even
+one a user has explicitly approved removing — new information found
+mid-task overrides an earlier approval based on incomplete information.
+
+**Verified after**: BC total 631 → **1,808** (exact match: 774 + 403 +
+the pre-existing 631). Zero SQL errors, single transaction.
+
+**Not done this pass**: enrichment (bio/contact) of the ~630 *pre-existing*
+BC candidates using this same CivicInfo BC data — only the 774 new stubs
+got it, since that was already a huge write on its own. CivicInfo BC very
+likely has phone/email/address for most of the existing 630 too (same
+page, same data), a clear, low-risk follow-up (`COALESCE`-safe update,
+never clobbers). Regional District/Islands Trust/Park Board candidates
+also remain unpulled — CivicInfo BC almost certainly has them, but they
+still have nowhere to attach without the underlying `map_shapes`/
+`election_seats` gap being closed first, same structural blocker as every
+earlier pass.
+
+**Promoted to a standing script the same day**:
+[`scripts/sync_bc_civicinfo_candidates.py`](../scripts/sync_bc_civicinfo_candidates.py)
+— `fetch` (stdlib + `requests`, no DB connection, parses via a custom
+`html.parser.HTMLParser`) and `diff` (reproduces this exact matching +
+insert-SQL pipeline). **Not a direct port of the inline browser-JS logic
+used for the actual insert above** — rewriting it in Python surfaced a
+real bug the JS version didn't have: a naive td/th close-tag handler
+matched the "extra info" row's own *nested* mini-table's closing tags too,
+prematurely closing the outer cell and silently dropping every email,
+phone, and link while leaving the address (extracted earlier in the same
+cell) looking fine. Caught by re-running the new script and diffing its
+output against this session's actual browser-JS output rather than
+assuming a rewrite is equivalent just because it runs without erroring —
+fixed by scoping the close-tag handler to the same table-depth check the
+open-tag handler already had. Verified after the fix: byte-for-byte same
+1,763-candidate output as the browser-JS extraction used for the real
+insert. **Moral for next time a browser-prototyped scraper gets ported to
+a standalone script: diff the port's output against the original before
+trusting it, don't just check that it runs.**
+
+---
+
 ## US House + Senate — FEC, now with dropout detection
 
 **Source**: unchanged from `adding-us-2026-midterm-candidates.md` — FEC's

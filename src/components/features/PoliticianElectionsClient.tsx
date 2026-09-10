@@ -9,6 +9,7 @@ import {
   findOpenSeatsInContainer,
   applyForSeat,
   deleteCandidacy,
+  getCandidatesBySeatIds,
 } from "@/lib/services/elections";
 import {
   getCountries,
@@ -57,6 +58,7 @@ export default function PoliticianElectionsClient() {
 
   const [loading, setLoading] = useState(true);
   const [openSeats, setOpenSeats] = useState<any[]>([]);
+  const [candidateCountBySeat, setCandidateCountBySeat] = useState<Map<string, number>>(new Map());
   const [myCandidacies, setMyCandidacies] = useState<any[]>([]);
   const [applyingSeatId, setApplyingSeatId] = useState<string | null>(null);
   const [withdrawCandidateId, setWithdrawCandidateId] = useState<string | null>(
@@ -91,8 +93,17 @@ export default function PoliticianElectionsClient() {
     if (shapeIds.length > 0) {
       const { data: seats } = await getOpenSeatsNearShapeIds(supabase, shapeIds);
       setOpenSeats(seats || []);
+
+      const seatIds = (seats || []).map((s: any) => s.id);
+      const { data: candidates } = await getCandidatesBySeatIds(supabase, seatIds);
+      const counts = new Map<string, number>();
+      for (const c of (candidates || []) as Array<{ seat_id: string }>) {
+        counts.set(c.seat_id, (counts.get(c.seat_id) || 0) + 1);
+      }
+      setCandidateCountBySeat(counts);
     } else {
       setOpenSeats([]);
+      setCandidateCountBySeat(new Map());
     }
 
     const { data: candidacies } = await getMyCandidacies(supabase, user.id);
@@ -510,7 +521,7 @@ export default function PoliticianElectionsClient() {
 
                   <div className="flex items-center justify-between pt-3 border-t border-border-light/20 text-xs">
                     <span className="text-text-muted">
-                      {seat.candidate_count || 0} candidates
+                      {candidateCountBySeat.get(seat.id) || 0} candidates
                     </span>
 
                     <Button
