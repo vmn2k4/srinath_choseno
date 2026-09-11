@@ -30,6 +30,10 @@
     "badge": "La Voix de la Majorité Silencieuse",
     "titleMain": "Évaluez vos Élus.",
     "titleSub": "Comme Google Reviews, mais pour la Démocratie.",
+    "nameReveal": {
+      "caption": "Lu à l'envers, « Choseno » se termine par O-N-E — « un » en anglais. Ici, chaque voix compte comme si elle était la seule.",
+      "replayLabel": "Revoir l'animation"
+    },
     "subtitle": "Un espace sûr et anonyme pour évaluer vos représentants locaux. Partagez votre vécu, lisez les avis de vos voisins et votez éclairé — sans haine, juste de la transparence.",
     "scopedTo": "Conversations de votre secteur sur",
     "citizenCta": "Rejoindre la Mission",

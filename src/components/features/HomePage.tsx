@@ -36,6 +36,7 @@ import {
   ScrollRatingStars,
 } from "@/components/features/home/HomeMotion";
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
+import NameOriginReveal from "@/components/features/home/NameOriginReveal";
 import HomeDemoVideo from "@/components/features/home/HomeDemoVideo";
 import HomeSupportedCountries from "@/components/features/home/HomeSupportedCountries";
 import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
@@ -303,6 +304,9 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
 
       {/* ============ HERO — real content, server-rendered; HeroSection only supplies the motion shell ============ */}
       <HeroSection>
+        {/* ============ NAME ORIGIN — "Choseno" reversed spells "one" ============ */}
+        <NameOriginReveal />
+
         <div className="grid lg:grid-cols-[1.15fr_1fr] gap-8 sm:gap-10 lg:gap-10 items-center">
           {/* Left — pitch + CTAs. On mobile, hide the right-side widget to make room for content.
               Each piece cascades in on its own delay (mode="mount" -- plays immediately, not on

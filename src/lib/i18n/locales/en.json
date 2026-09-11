@@ -31,6 +31,10 @@
     "titleMain": "Rate Your Politicians' Performance.",
     "titleSub": "Like Google Reviews, but for Democracy.",
     "subtitle": "A secure, anonymous space to hold local leaders accountable. Share your experience, read what your neighbors think, and walk into the booth informed — no toxicity, just accountability.",
+    "nameReveal": {
+      "caption": "Spelled backwards, “Choseno” ends where it starts — with ONE. Because you are.",
+      "replayLabel": "Watch it again"
+    },
     "scopedTo": "Conversations scoped to",
     "citizenCta": "Join the Mission",
     "candidateCta": "I'm Running for Office",
