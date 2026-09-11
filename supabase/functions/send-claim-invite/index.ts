@@ -42,12 +42,20 @@ Deno.serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } },
     );
 
-    const { data: token, error: rpcError } = await supabaseAsCaller.rpc('create_claim_invite', {
+    // create_claim_invite() now returns a row (token, tracking_token) rather
+    // than a bare token -- PostgREST hands that back as a one-element array.
+    const { data: inviteRows, error: rpcError } = await supabaseAsCaller.rpc('create_claim_invite', {
       p_candidate_id: candidateId,
       p_email: email,
     });
     if (rpcError) {
       return new Response(JSON.stringify({ error: rpcError.message }), { status: 400, headers: corsHeaders });
+    }
+    const invite = Array.isArray(inviteRows) ? inviteRows[0] : inviteRows;
+    const token: string | undefined = invite?.token;
+    const trackingToken: string | undefined = invite?.tracking_token;
+    if (!token) {
+      return new Response(JSON.stringify({ error: 'Failed to create claim invite token' }), { status: 500, headers: corsHeaders });
     }
 
     // Service role only from here -- admin.inviteUserByEmail can't be
@@ -78,8 +86,14 @@ Deno.serve(async (req) => {
     // /auth/callback, which expects a PKCE `code` param that won't exist
     // here (verifyOtp consumes token_hash, not a code) and would dead-end
     // on /auth?error=no_code instead.
+    // `data` becomes the new auth.users row's user_metadata, which the
+    // "Send Email" hook (auth-send-email) reads to know this "invite" email
+    // is a candidacy claim specifically (vs. some future unrelated use of
+    // inviteUserByEmail) and to embed the open-tracking pixel against the
+    // right candidate_claim_invites row.
     const { error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
       redirectTo: `${redirectOrigin}/claim/${token}`,
+      data: trackingToken ? { candidate_claim_tracking_token: trackingToken } : undefined,
     });
     if (inviteError) {
       return new Response(JSON.stringify({ error: inviteError.message }), { status: 400, headers: corsHeaders });

@@ -33,7 +33,14 @@ serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceRoleKey)
 
-    // Get the send record
+    // Get the send record. Two unrelated systems share this one pixel
+    // endpoint -- the bulk outreach tool (politician_claim_campaigns,
+    // tracking_token OR claim_token) and per-seat candidacy claim invites
+    // (candidate_claim_invites, tracking_token only). Their tracking_token
+    // columns are independent UUID namespaces (each DEFAULT gen_random_uuid()
+    // UNIQUE), so a token from one can't accidentally match a row in the
+    // other -- try the campaign table first since it's the higher-volume
+    // caller, then fall back.
     const { data: send, error: fetchError } = await supabase
       .from("politician_claim_campaigns")
       .select("id, sent_at, opened_at, opened_count, first_open_time_seconds")
@@ -41,53 +48,81 @@ serve(async (req) => {
       .limit(1)
       .maybeSingle()
 
-    if (fetchError || !send) {
-      console.error("Send not found:", fetchError)
+    if (!fetchError && send) {
+      const now = new Date()
+      const sentTime = send.sent_at ? new Date(send.sent_at) : now
+      const openedCount = (send.opened_count || 0) + 1
+
+      // Calculate time to first open (only if this is the first open)
+      let firstOpenTime = send.first_open_time_seconds
+      if (!send.opened_at && send.sent_at) {
+        firstOpenTime = Math.floor((now.getTime() - sentTime.getTime()) / 1000)
+      }
+
+      // Log the open event
+      const { error: insertError } = await supabase
+        .from("tracking_events")
+        .insert({
+          send_id: send.id,
+          event_type: "open",
+          event_data: {
+            ip: req.headers.get("x-forwarded-for") || "unknown",
+            user_agent: req.headers.get("user-agent"),
+            timestamp: now.toISOString(),
+            open_number: openedCount,
+          },
+        })
+
+      if (insertError) {
+        console.error("Error logging open event:", insertError)
+      }
+
+      // Update send record
+      const { error: updateError } = await supabase
+        .from("politician_claim_campaigns")
+        .update({
+          opened_at: send.opened_at || now,
+          last_opened_at: now,
+          opened_count: openedCount,
+          first_open_time_seconds: firstOpenTime,
+        })
+        .eq("id", send.id)
+
+      if (updateError) {
+        console.error("Error updating send record:", updateError)
+      }
+
+      return sendPixel(corsHeaders)
+    }
+
+    // Not a campaign send -- try a candidacy claim invite. No tracking_events
+    // log here (that table's send_id FK points at politician_claim_campaigns
+    // only); opened_at/opened_count/last_opened_at on the row itself is all
+    // the seat-page status panel reads.
+    const { data: claimInvite, error: claimFetchError } = await supabase
+      .from("candidate_claim_invites")
+      .select("id, opened_at, opened_count")
+      .eq("tracking_token", token)
+      .maybeSingle()
+
+    if (claimFetchError || !claimInvite) {
+      console.error("Send not found:", fetchError || claimFetchError)
       // Still return pixel even if not found (don't alert sender of missing records)
       return sendPixel(corsHeaders)
     }
 
     const now = new Date()
-    const sentTime = send.sent_at ? new Date(send.sent_at) : now
-    const openedCount = (send.opened_count || 0) + 1
-
-    // Calculate time to first open (only if this is the first open)
-    let firstOpenTime = send.first_open_time_seconds
-    if (!send.opened_at && send.sent_at) {
-      firstOpenTime = Math.floor((now.getTime() - sentTime.getTime()) / 1000)
-    }
-
-    // Log the open event
-    const { error: insertError } = await supabase
-      .from("tracking_events")
-      .insert({
-        send_id: send.id,
-        event_type: "open",
-        event_data: {
-          ip: req.headers.get("x-forwarded-for") || "unknown",
-          user_agent: req.headers.get("user-agent"),
-          timestamp: now.toISOString(),
-          open_number: openedCount,
-        },
-      })
-
-    if (insertError) {
-      console.error("Error logging open event:", insertError)
-    }
-
-    // Update send record
-    const { error: updateError } = await supabase
-      .from("politician_claim_campaigns")
+    const { error: updateClaimError } = await supabase
+      .from("candidate_claim_invites")
       .update({
-        opened_at: send.opened_at || now,
+        opened_at: claimInvite.opened_at || now,
         last_opened_at: now,
-        opened_count: openedCount,
-        first_open_time_seconds: firstOpenTime,
+        opened_count: (claimInvite.opened_count || 0) + 1,
       })
-      .eq("id", send.id)
+      .eq("id", claimInvite.id)
 
-    if (updateError) {
-      console.error("Error updating send record:", updateError)
+    if (updateClaimError) {
+      console.error("Error updating claim invite record:", updateClaimError)
     }
 
     return sendPixel(corsHeaders)

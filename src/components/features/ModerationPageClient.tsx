@@ -16,7 +16,11 @@ import {
   getPlatformRuleSettings,
   updatePlatformRuleSettings,
   type PlatformRuleSettings,
+  getAnonymousSupportSettings,
+  updateAnonymousSupportSettings,
+  type AnonymousSupportSettings,
 } from "@/lib/services/settings";
+import { getAnonymousSupportAdminBreakdown } from "@/lib/services/politicianWall";
 import {
   Card,
   Button,
@@ -27,7 +31,7 @@ import {
   PageHeader,
   ConfirmDialog,
 } from "@/components/primitives";
-import { ShieldAlert, Trash2, Check, Settings2, Sliders, Pencil } from "lucide-react";
+import { ShieldAlert, Trash2, Check, Settings2, Sliders, Pencil, Heart } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 interface QueueRow {
@@ -48,6 +52,17 @@ interface RuleRow {
   score_penalty: number;
   enabled: boolean;
 }
+
+interface AnonSupportBreakdownRow {
+  politician_id: string;
+  full_name: string;
+  political_party: string | null;
+  authenticated_count: number;
+  anonymous_count: number;
+  total_count: number;
+}
+
+type AnonSupportSortKey = "anonymous_count" | "authenticated_count" | "total_count";
 
 export default function ModerationPageClient() {
   const supabase = createClient();
@@ -72,6 +87,19 @@ export default function ModerationPageClient() {
   });
   const [loadingRuleSettings, setLoadingRuleSettings] = useState(true);
   const [ruleSettingsStatus, setRuleSettingsStatus] = useState("");
+
+  const [anonSupportSettings, setAnonSupportSettings] = useState<AnonymousSupportSettings>({
+    anonymous_support_enabled: false,
+    anonymous_support_rate_limit_per_hour: 20,
+  });
+  const [loadingAnonSupportSettings, setLoadingAnonSupportSettings] = useState(true);
+  const [anonSupportStatus, setAnonSupportStatus] = useState("");
+
+  const [anonBreakdown, setAnonBreakdown] = useState<AnonSupportBreakdownRow[]>([]);
+  const [loadingAnonBreakdown, setLoadingAnonBreakdown] = useState(true);
+  const [breakdownSearch, setBreakdownSearch] = useState("");
+  const [breakdownSortKey, setBreakdownSortKey] = useState<AnonSupportSortKey>("anonymous_count");
+  const [breakdownSortDir, setBreakdownSortDir] = useState<"asc" | "desc">("desc");
 
   const fetchQueue = async () => {
     if (queue.length > 0) setLoadingQueue(true);
@@ -109,11 +137,27 @@ export default function ModerationPageClient() {
     setLoadingRuleSettings(false);
   };
 
+  const fetchAnonSupportSettings = async () => {
+    setLoadingAnonSupportSettings(true);
+    const { data } = await getAnonymousSupportSettings(supabase);
+    if (data) setAnonSupportSettings(data);
+    setLoadingAnonSupportSettings(false);
+  };
+
+  const fetchAnonBreakdown = async () => {
+    setLoadingAnonBreakdown(true);
+    const { data } = await getAnonymousSupportAdminBreakdown(supabase);
+    setAnonBreakdown((data as unknown as AnonSupportBreakdownRow[]) || []);
+    setLoadingAnonBreakdown(false);
+  };
+
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchQueue();
     fetchRules();
     fetchRuleSettings();
+    fetchAnonSupportSettings();
+    fetchAnonBreakdown();
   }, [supabase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const filteredQueue = useMemo(() => {
@@ -125,6 +169,18 @@ export default function ModerationPageClient() {
       return true;
     });
   }, [queue, filterType, filterAbuseType, minReports]);
+
+  const filteredBreakdown = useMemo(() => {
+    const query = breakdownSearch.trim().toLowerCase();
+    const rows = query
+      ? anonBreakdown.filter((r) => r.full_name?.toLowerCase().includes(query))
+      : anonBreakdown.slice();
+    rows.sort((a, b) => {
+      const diff = a[breakdownSortKey] - b[breakdownSortKey];
+      return breakdownSortDir === "asc" ? diff : -diff;
+    });
+    return rows;
+  }, [anonBreakdown, breakdownSearch, breakdownSortKey, breakdownSortDir]);
 
   const handleConfirmRemove = async () => {
     if (!confirmRemove) return;
@@ -171,6 +227,16 @@ export default function ModerationPageClient() {
     }
     setRuleSettingsStatus("Saved.");
     fetchRuleSettings();
+  };
+
+  const handleSaveAnonSupportSettings = async () => {
+    setAnonSupportStatus("");
+    if (anonSupportSettings.anonymous_support_rate_limit_per_hour <= 0) {
+      setAnonSupportStatus("Error: rate limit must be a positive number.");
+      return;
+    }
+    const { error } = await updateAnonymousSupportSettings(supabase, anonSupportSettings);
+    setAnonSupportStatus(error ? "Error: failed to save settings." : "Saved.");
   };
 
   // politician_profile and office_holder rows carry a plain-text name in
@@ -241,6 +307,105 @@ export default function ModerationPageClient() {
             <Button size="sm" onClick={handleSaveRuleSettings}>
               Save
             </Button>
+          </div>
+        )}
+      </Card>
+
+      {/* Anonymous Support -- kill switch + how much of each candidate's
+          total support came from logged-out visitors (anonymous_supporters
+          table, see the anonymous_politician_support migration). */}
+      <Card padding="md" className="space-y-4">
+        <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+          <Heart size={18} className="text-primary" /> Anonymous Support
+        </h2>
+
+        {loadingAnonSupportSettings ? (
+          <Spinner />
+        ) : (
+          <div className="flex flex-wrap gap-4 items-end text-xs">
+            <label className="flex items-center gap-1.5 text-text-muted cursor-pointer">
+              <input
+                type="checkbox"
+                checked={anonSupportSettings.anonymous_support_enabled}
+                onChange={(e) =>
+                  setAnonSupportSettings((prev) => ({ ...prev, anonymous_support_enabled: e.target.checked }))
+                }
+                className="w-4 h-4 accent-primary cursor-pointer"
+              />
+              Allow logged-out visitors to support candidates
+            </label>
+
+            <label className="flex flex-col gap-1 text-text-muted">
+              Max anonymous supports / IP / hour
+              <Input
+                type="number"
+                value={String(anonSupportSettings.anonymous_support_rate_limit_per_hour)}
+                onChange={(e) =>
+                  setAnonSupportSettings((prev) => ({
+                    ...prev,
+                    anonymous_support_rate_limit_per_hour: parseInt(e.target.value, 10) || 0,
+                  }))
+                }
+                className="w-28 text-xs"
+              />
+            </label>
+
+            <Button size="sm" onClick={handleSaveAnonSupportSettings}>
+              Save
+            </Button>
+          </div>
+        )}
+        {anonSupportStatus && <p className="text-xs text-text-secondary">{anonSupportStatus}</p>}
+
+        <div className="flex flex-wrap gap-2 items-center pt-2">
+          <Input
+            placeholder="Search candidate name"
+            value={breakdownSearch}
+            onChange={(e) => setBreakdownSearch(e.target.value)}
+            className="text-xs w-56"
+          />
+          <Select
+            value={breakdownSortKey}
+            onChange={(e) => setBreakdownSortKey(e.target.value as AnonSupportSortKey)}
+            className="text-xs w-52"
+          >
+            <option value="anonymous_count">Sort: Anonymous supports</option>
+            <option value="authenticated_count">Sort: Authenticated supports</option>
+            <option value="total_count">Sort: Total supports</option>
+          </Select>
+          <Button variant="outline" size="sm" onClick={() => setBreakdownSortDir((d) => (d === "asc" ? "desc" : "asc"))}>
+            {breakdownSortDir === "asc" ? "Ascending" : "Descending"}
+          </Button>
+        </div>
+
+        {loadingAnonBreakdown ? (
+          <Spinner />
+        ) : filteredBreakdown.length === 0 ? (
+          <p className="text-xs text-text-muted py-4 text-center">No candidates with recorded support match this search.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="text-text-muted">
+                  <th className="pb-2.5 pl-2">Candidate</th>
+                  <th className="pb-2.5">Party</th>
+                  <th className="pb-2.5 text-right">Authenticated</th>
+                  <th className="pb-2.5 text-right">Anonymous</th>
+                  <th className="pb-2.5 pr-2 text-right">Total</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border-light/10">
+                {filteredBreakdown.map((row) => (
+                  <tr key={row.politician_id}>
+                    <td className="py-2 pl-2 text-text-main">{row.full_name}</td>
+                    <td className="py-2 text-text-secondary">{row.political_party || "—"}</td>
+                    <td className="py-2 text-right text-text-secondary">{row.authenticated_count}</td>
+                    <td className="py-2 text-right text-text-secondary">{row.anonymous_count}</td>
+                    <td className="py-2 pr-2 text-right font-bold text-text-main">{row.total_count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </Card>

@@ -16,6 +16,7 @@ import { buildSeatSlug } from "@/lib/utils/slugs";
 // (candidates -> profiles.id -> supporterCount) instead of re-querying.
 interface PoliticianProfile {
   avatar_url?: string | null;
+  bio?: string | null;
   political_parties?: { name?: string | null } | { name?: string | null }[] | null;
 }
 
@@ -61,6 +62,9 @@ export default function ElectionResultsPanel({
   // at most one at a time, same as every other PoliticianInlineRating
   // integration in the app (NewsArticleLinkedPoliticians, CandidacyWall).
   const [expandedRatingId, setExpandedRatingId] = useState<string | null>(null);
+  // "Read more" — a one-line bio teaser below the row, independent of the
+  // rating expand above (a visitor can have both open at once).
+  const [expandedBioId, setExpandedBioId] = useState<string | null>(null);
   const roleTitle = seat?.role_title || "this seat";
   const boundaryName = seat?.map_shapes?.name || "this district";
   const electionDateRaw = seat?.elections?.election_date;
@@ -95,7 +99,10 @@ export default function ElectionResultsPanel({
         ? polEntry.political_parties[0]
         : polEntry?.political_parties;
       const partyName = c.party_name || partyEntry?.name || null;
-      return { candidate: c, name, avatarUrl, partyName, supporterCount, avgRating, ratingCount };
+      // First non-empty line only — "Read more" is a one-line teaser, not
+      // the full bio (that's what "View Profile" is for).
+      const bioSnippet = polEntry?.bio?.split("\n").find((line) => line.trim())?.trim() || null;
+      return { candidate: c, name, avatarUrl, partyName, bioSnippet, supporterCount, avgRating, ratingCount };
     })
     .sort((a, b) => b.supporterCount - a.supporterCount);
 
@@ -256,13 +263,14 @@ export default function ElectionResultsPanel({
       </div>
 
       <div className="space-y-1.5">
-        {rows.map(({ candidate, name, avatarUrl, partyName, supporterCount, avgRating, ratingCount }) => {
+        {rows.map(({ candidate, name, avatarUrl, partyName, bioSnippet, supporterCount, avgRating, ratingCount }) => {
           const pct = totalSupport > 0 ? Math.round((supporterCount / totalSupport) * 1000) / 10 : 0;
           const isTopRow = totalSupport > 0 && supporterCount === topSupportCount;
           const isLeader = leader?.candidate.id === candidate.id;
           const politicianId = candidate.profiles?.id;
           const isSupporting = Boolean(politicianId && mySupportedPoliticianIds?.has(politicianId));
           const isRatingExpanded = expandedRatingId === candidate.id;
+          const isBioExpanded = expandedBioId === candidate.id;
           return (
             <Fragment key={candidate.id}>
             <div
@@ -277,38 +285,39 @@ export default function ElectionResultsPanel({
               }}
               className="group w-full text-left cursor-pointer rounded-xl border border-border-light/25 bg-surface/15 hover:bg-surface/40 active:bg-surface/50 transition-all p-3 sm:p-2.5 hover:border-primary/25 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3"
             >
-              {/* Identity block: avatar + name + party. Full width of its
-                  own row on mobile so the name never has to compete with
-                  the support button/stats for space and gets truncated
-                  into unreadable "Rick L..." On desktop it's a FIXED width
-                  (not flex-1) so it hugs the name instead of stretching
-                  and dragging the support button away with it — that fixed
-                  width is also what makes the button column up across
-                  rows regardless of name length, same as the progress bar
-                  now getting to spend that freed-up space instead of
-                  sitting in a sliver next to a wall of empty gap. */}
+              {/* Identity block: avatar + name + party, all on ONE line
+                  (name bold, party muted right after it) instead of
+                  stacked — keeps the whole row to a single line by
+                  default; "Read more" below is what expands it. Full
+                  width of its own row on mobile so the line never has to
+                  compete with the support button/stats for space. On
+                  desktop it's a FIXED width (not flex-1) so it hugs the
+                  name instead of stretching and dragging the support
+                  button away with it — that fixed width is also what
+                  makes the button column up across rows regardless of
+                  name length, same as the progress bar now getting to
+                  spend that freed-up space instead of sitting in a
+                  sliver next to a wall of empty gap. */}
               <div className="flex items-center gap-2.5 sm:w-48 sm:shrink-0 sm:min-w-0">
                 <Avatar src={avatarUrl} name={name} size="sm" />
-                <div className="flex flex-col min-w-0 flex-1 gap-0.5">
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-[15px] sm:text-sm font-bold text-text-main group-hover:underline leading-tight truncate">
-                      {name}
-                    </span>
-                    {isLeader && (
-                      <Badge tone="emerald" size="xs" shape="pill">
-                        Leading
-                      </Badge>
-                    )}
-                    {isTie && isTopRow && (
-                      <Badge tone="amber" size="xs" shape="pill">
-                        Tied
-                      </Badge>
-                    )}
-                  </div>
+                <div className="flex items-baseline gap-1.5 min-w-0 flex-1">
+                  <span className="text-[15px] sm:text-sm font-bold text-text-main group-hover:underline leading-tight truncate shrink-0">
+                    {name}
+                  </span>
                   {partyName && (
-                    <span className="text-xs text-text-muted truncate leading-tight">
+                    <span className="text-xs text-text-muted truncate leading-tight min-w-0">
                       {partyName}
                     </span>
+                  )}
+                  {isLeader && (
+                    <Badge tone="emerald" size="xs" shape="pill" className="shrink-0">
+                      Leading
+                    </Badge>
+                  )}
+                  {isTie && isTopRow && (
+                    <Badge tone="amber" size="xs" shape="pill" className="shrink-0">
+                      Tied
+                    </Badge>
                   )}
                 </div>
               </div>
@@ -317,7 +326,12 @@ export default function ElectionResultsPanel({
                   column), a progress bar that now actually extends to
                   fill the row, percentage, vote count, and a tap-through
                   chevron. Its own full-width row on mobile. */}
-              <div className="flex items-center gap-2 sm:gap-2.5 sm:flex-1 sm:min-w-0">
+              {/* flex-wrap on mobile only -- adding "Read more" made this
+                  row one item too many to fit unwrapped at phone widths
+                  (Support + bar + pct + heart + stars + Read more + View
+                  Profile); sm:flex-nowrap keeps the desktop single-line
+                  layout exactly as before. */}
+              <div className="flex flex-wrap items-center gap-2 sm:flex-nowrap sm:gap-2.5 sm:flex-1 sm:min-w-0">
                 <div className="relative shrink-0">
                   {!isSupporting && (
                     <span
@@ -389,6 +403,20 @@ export default function ElectionResultsPanel({
                   </button>
                 )}
 
+                {bioSnippet && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setExpandedBioId(isBioExpanded ? null : candidate.id);
+                    }}
+                    className="text-xs font-semibold text-primary hover:text-primary-hover transition-colors shrink-0"
+                    title={isBioExpanded ? "Hide bio" : `Show a one-line bio for ${name}`}
+                  >
+                    {isBioExpanded ? "Less" : "Read more"}
+                  </button>
+                )}
+
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -402,6 +430,12 @@ export default function ElectionResultsPanel({
                 </button>
               </div>
             </div>
+
+            {isBioExpanded && bioSnippet && (
+              <p className="-mt-1 pl-3 sm:pl-11 pr-3 text-xs text-text-muted truncate">
+                {bioSnippet}
+              </p>
+            )}
 
             {isRatingExpanded && politicianId && (
               <PoliticianInlineRating

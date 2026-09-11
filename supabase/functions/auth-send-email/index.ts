@@ -55,8 +55,23 @@ interface EmailData {
 }
 
 interface HookPayload {
-  user: { email: string };
+  user: { email: string; user_metadata?: Record<string, unknown> };
   email_data: EmailData;
+}
+
+// Populated only for email_action_type "invite" -- see the lookup in
+// Deno.serve below. Today "invite" is sent exclusively by the candidacy
+// claim flow's send-claim-invite Edge Function
+// (admin.inviteUserByEmail is not called anywhere else in this codebase),
+// so this is safe to treat as "this invite is a candidacy claim" without
+// the user_metadata tag actually being load-bearing -- the tag is read
+// first as the precise signal, with an email-match fallback in case a
+// resend or an older invite predates the tag existing.
+interface CandidateClaimContext {
+  trackingToken: string;
+  candidateName: string | null;
+  roleTitle: string | null;
+  boundaryName: string | null;
 }
 
 // Brand colors, matched to the app: the wordmark's orange gradient
@@ -147,15 +162,7 @@ function paragraph(text: string): string {
 // allow-list being kept in sync; only the "return to wherever the user
 // was headed" `next` param (extracted below) does.
 //
-// TEMPORARY, FOR LOCAL TESTING ONLY -- pointed at localhost:3000 so a real
-// invite email's link lands on the not-yet-deployed /auth/confirm fix
-// (claimCandidacyViaOwnEmail) running under `next dev` on this machine,
-// instead of production (which doesn't have that fix live yet). This
-// redirects EVERY auth email this project sends — signup, password reset,
-// magic link, email change, not just invites — so revert to
-// "https://www.choseno.com" and redeploy the instant local testing is
-// done. Leaving this in place breaks real users' auth emails in production.
-const SITE_URL = "http://localhost:3000";
+const SITE_URL = "https://www.choseno.com";
 
 // The `next` query param our own client code appends to redirectTo
 // (src/lib/services/auth.ts) — e.g. `/auth/callback?next=%2Fauth%2Freset-password`.
@@ -173,16 +180,70 @@ function extractNextPath(redirectTo: string): string | undefined {
   }
 }
 
+// Same 1x1 approach as campaignTemplates.ts's addTrackingPixelToTemplate --
+// duplicated rather than imported since this Deno function can't import
+// from the Next.js app.
+function trackingPixel(trackingToken: string): string {
+  const url = `${Deno.env.get("SUPABASE_URL")}/functions/v1/track-email-open?token=${encodeURIComponent(trackingToken)}`;
+  return `<img src="${url}" width="1" height="1" style="display:none;" alt="" />`;
+}
+
+// Same wrap-and-redirect approach as campaignTemplates.ts's createTrackedLink
+// (duplicated for the same reason as trackingPixel above). Deliberately NOT
+// used on the invite's own verifyUrl -- that's a single-use, stateless auth
+// link, and every hop in front of it is one more thing that can fail on the
+// one link that actually has to work. Only the secondary "learn more" link
+// below goes through this.
+function trackedLink(url: string, trackingToken: string): string {
+  const encoded = encodeURIComponent(url);
+  const base = `${Deno.env.get("SUPABASE_URL")}/functions/v1/track-link-click`;
+  return `${base}?token=${encodeURIComponent(trackingToken)}&link=${encoded}&redirect=${encoded}`;
+}
+
 function buildEmail(
   emailData: EmailData,
   siteUrl: string,
   recipientEmail: string,
+  candidateClaim?: CandidateClaimContext,
 ): { subject: string; html: string; text: string } {
   const { token, token_hash, redirect_to, email_action_type } = emailData;
   const nextPath = extractNextPath(redirect_to);
   const verifyUrl = `${siteUrl}/auth/confirm?token_hash=${encodeURIComponent(token_hash)}&type=${encodeURIComponent(email_action_type)}${
     nextPath ? `&next=${encodeURIComponent(nextPath)}` : ""
   }`;
+
+  if (email_action_type === "invite" && candidateClaim) {
+    const who = candidateClaim.candidateName ? `<strong>${candidateClaim.candidateName}</strong>'s` : "your";
+    const forRole = candidateClaim.roleTitle && candidateClaim.boundaryName
+      ? ` for ${candidateClaim.roleTitle} in ${candidateClaim.boundaryName}`
+      : "";
+    const subject = candidateClaim.roleTitle && candidateClaim.boundaryName
+      ? `Claim your ${candidateClaim.roleTitle} campaign page for ${candidateClaim.boundaryName} on Choseno`
+      : "You're invited to claim your campaign page on Choseno";
+    const exploreUrl = trackedLink(`${siteUrl}/elections`, candidateClaim.trackingToken);
+
+    return {
+      subject,
+      html: emailShell(
+        `An election administrator invited you to claim your campaign page${forRole} on Choseno.`,
+        heading("Claim your campaign page") +
+          paragraph(
+            `An election administrator added ${who} candidate profile${forRole} on Choseno and invited you (<strong>${recipientEmail}</strong>) to claim it. Claiming takes it over as your own — you can post updates, answer voter questions, and manage your campaign from there.`,
+          ) +
+          ctaButton("Claim my campaign page", verifyUrl) +
+          `<div style="margin:28px 0 4px;padding:16px 18px;background:${BRAND.surface};border-radius:10px;">` +
+            `<p style="margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:${BRAND.muted};">New to Choseno?</p>` +
+            `<p style="margin:0 0 10px;font-size:14px;line-height:1.6;color:${BRAND.slate};">Choseno is Canada's civic engagement platform — voters find their district, compare every candidate and officeholder side by side, and leave real, honest reviews of the people representing them. Think Yelp, but for democracy.</p>` +
+            `<a href="${exploreUrl}" style="font-size:13px;font-weight:700;color:${BRAND.blue};text-decoration:none;">See it in action — browse 2026 elections →</a>` +
+          `</div>` +
+          paragraph(
+            "Didn't expect this? You can safely ignore this email — no account will be created.",
+          ) +
+          trackingPixel(candidateClaim.trackingToken),
+      ),
+      text: `Claim your campaign page${forRole} on Choseno\n\nAn election administrator invited you (${recipientEmail}) to claim your candidate profile. Claim it here:\n${verifyUrl}\n\nNew to Choseno? It's Canada's civic engagement platform — voters find their district, compare every candidate and officeholder side by side, and leave real, honest reviews. Browse 2026 elections: ${siteUrl}/elections\n\nDidn't expect this? You can safely ignore this email.`,
+    };
+  }
 
   switch (email_action_type) {
     case "signup":
@@ -288,9 +349,72 @@ Deno.serve(async (req) => {
     const { user, email_data } = wh.verify(payload, headers) as HookPayload;
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const { subject, html, text } = buildEmail(email_data, SITE_URL, user.email);
-
     const admin = createClient(supabaseUrl, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+
+    // Best-effort lookup -- a failure here just falls back to the generic
+    // "invite" copy (buildEmail's default switch branch) rather than
+    // failing the whole send, since the email must go out either way.
+    let candidateClaim: CandidateClaimContext | undefined;
+    if (email_data.email_action_type === "invite") {
+      try {
+        const tagToken = typeof user.user_metadata?.candidate_claim_tracking_token === "string"
+          ? user.user_metadata.candidate_claim_tracking_token
+          : undefined;
+        const inviteQuery = admin
+          .from("candidate_claim_invites")
+          .select("tracking_token, candidate_id")
+          .is("used_at", null)
+          .order("created_at", { ascending: false })
+          .limit(1);
+        const { data: inviteRow } = tagToken
+          ? await inviteQuery.eq("tracking_token", tagToken).maybeSingle()
+          : await inviteQuery.ilike("email", user.email).maybeSingle();
+
+        if (inviteRow?.tracking_token) {
+          let candidateName: string | null = null;
+          let roleTitle: string | null = null;
+          let boundaryName: string | null = null;
+          const { data: candidateRow } = await admin
+            .from("election_candidates")
+            .select("politician_id, seat_id")
+            .eq("id", inviteRow.candidate_id)
+            .maybeSingle();
+          if (candidateRow?.politician_id) {
+            const { data: profileRow } = await admin
+              .from("profiles")
+              .select("full_name")
+              .eq("id", candidateRow.politician_id)
+              .maybeSingle();
+            candidateName = profileRow?.full_name || null;
+          }
+          // Best-effort personalization (subject line only) -- role/boundary
+          // missing just falls back to the generic subject below, same as
+          // candidateName missing already did.
+          if (candidateRow?.seat_id) {
+            const { data: seatRow } = await admin
+              .from("election_seats")
+              .select("role_title, map_shape_id")
+              .eq("id", candidateRow.seat_id)
+              .maybeSingle();
+            roleTitle = seatRow?.role_title || null;
+            if (seatRow?.map_shape_id) {
+              const { data: shapeRow } = await admin
+                .from("map_shapes")
+                .select("name")
+                .eq("id", seatRow.map_shape_id)
+                .maybeSingle();
+              boundaryName = shapeRow?.name || null;
+            }
+          }
+          candidateClaim = { trackingToken: inviteRow.tracking_token, candidateName, roleTitle, boundaryName };
+        }
+      } catch (lookupError) {
+        console.error("candidate claim lookup failed, sending generic invite copy:", lookupError);
+      }
+    }
+
+    const { subject, html, text } = buildEmail(email_data, SITE_URL, user.email, candidateClaim);
+
     const { error } = await admin.functions.invoke("send-email", {
       body: { to: user.email, subject, html, text },
     });

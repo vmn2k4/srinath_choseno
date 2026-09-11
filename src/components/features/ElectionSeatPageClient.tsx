@@ -17,6 +17,8 @@ import {
   applyForElectionAdmin,
   addUnregisteredCandidate,
   inviteCandidateToClaim,
+  listCandidateClaimInviteStatus,
+  type CandidateClaimInviteStatus,
   getClaimRequestsForSeat,
   reviewCandidacyClaim,
   getCandidateIdsWithVideoAnswers,
@@ -25,7 +27,16 @@ import {
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { getProfileRole, uploadAvatarImage } from "@/lib/services/profile";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
-import { getMySupportedPoliticianIds, addSupport, withdrawSupport } from "@/lib/services/politicianWall";
+import {
+  getMySupportedPoliticianIds,
+  addSupport,
+  withdrawSupport,
+  getMyAnonymousSupportedPoliticianIds,
+  addAnonymousSupport,
+  withdrawAnonymousSupport,
+} from "@/lib/services/politicianWall";
+import { getAnonymousSupportSettings } from "@/lib/services/settings";
+import { useAnonSupporterId } from "@/lib/utils/anonSupporter";
 import {
   Vote,
   MapPin,
@@ -178,6 +189,8 @@ export default function ElectionSeatPageClient({
   const [inviteEmails, setInviteEmails] = useState<Record<string, string>>({});
   const [invitingCandidateId, setInvitingCandidateId] = useState<string | null>(null);
   const [inviteStatusByCandidate, setInviteStatusByCandidate] = useState<Record<string, string>>({});
+  const [claimInviteStatus, setClaimInviteStatus] = useState<Record<string, CandidateClaimInviteStatus>>({});
+  const [loadingClaimInviteStatus, setLoadingClaimInviteStatus] = useState(false);
   const [claimRequests, setClaimRequests] = useState<any[]>([]);
   const [reviewingRequestId, setReviewingRequestId] = useState<string | null>(null);
   // Seat Administrator tools collapse into this panel now that the right
@@ -191,6 +204,11 @@ export default function ElectionSeatPageClient({
   // Heart button in the Results poll (same politician_supporters table the
   // "Support" button on the candidate wall already writes to).
   const [mySupportedPoliticianIds, setMySupportedPoliticianIds] = useState<Set<string>>(new Set());
+  // Anonymous-support identity + admin kill switch -- lets a logged-out
+  // visitor tap the same Heart button without an account (see
+  // anonSupporter.ts and the anonymous_supporters migration).
+  const anonId = useAnonSupporterId();
+  const [anonymousSupportEnabled, setAnonymousSupportEnabled] = useState(false);
   // Which candidate ids (election_candidates.id) have at least one video
   // answer — powers the "has a pitch" badge in the strip below, and
   // reelForCandidate opens the same PlayInterviewReel CandidacyWall's own
@@ -352,22 +370,39 @@ export default function ElectionSeatPageClient({
 
   useEffect(() => {
     let isMounted = true;
-    if (!user) {
+    getAnonymousSupportSettings(supabase).then(({ data }) => {
+      if (isMounted) setAnonymousSupportEnabled(!!data?.anonymous_support_enabled);
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [supabase]);
+
+  useEffect(() => {
+    let isMounted = true;
+    const ids = candidates.map((c) => c.profiles?.id).filter((id): id is string => Boolean(id));
+    if (ids.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMySupportedPoliticianIds(new Set());
       return;
     }
-    const ids = candidates.map((c) => c.profiles?.id).filter((id): id is string => Boolean(id));
-    if (ids.length === 0) return;
 
-    getMySupportedPoliticianIds(supabase, ids, user.id).then(({ data }) => {
-      if (!isMounted) return;
-      setMySupportedPoliticianIds(new Set(data || []));
-    });
+    if (user) {
+      getMySupportedPoliticianIds(supabase, ids, user.id).then(({ data }) => {
+        if (isMounted) setMySupportedPoliticianIds(new Set(data || []));
+      });
+    } else if (anonymousSupportEnabled && anonId) {
+      getMyAnonymousSupportedPoliticianIds(supabase, ids, anonId).then(({ data }) => {
+        if (isMounted) setMySupportedPoliticianIds(new Set(data || []));
+      });
+    } else {
+      setMySupportedPoliticianIds(new Set());
+    }
 
     return () => {
       isMounted = false;
     };
-  }, [candidates, user, supabase]);
+  }, [candidates, user, supabase, anonId, anonymousSupportEnabled]);
 
   // Heart button in the Results poll — same politician_supporters
   // insert/delete the "Support" button on the candidate wall already does,
@@ -377,7 +412,7 @@ export default function ElectionSeatPageClient({
   const handleToggleSupport = async (candidate: any) => {
     const politicianId = candidate?.profiles?.id;
     if (!politicianId) return;
-    if (!user) {
+    if (!user && (!anonymousSupportEnabled || !anonId)) {
       router.push("/auth");
       return;
     }
@@ -399,10 +434,37 @@ export default function ElectionSeatPageClient({
       return next;
     });
 
-    if (isSupporting) {
-      await withdrawSupport(supabase, politicianId, user.id);
-    } else {
-      await addSupport(supabase, politicianId, user.id);
+    // Rolls the optimistic updates above back if the write fails (e.g. the
+    // anonymous RPC rejects because the feature was disabled mid-flight, or
+    // the caller's IP hit the rate limit).
+    const rollback = () => {
+      setMySupportedPoliticianIds((prev) => {
+        const next = new Set(prev);
+        if (isSupporting) next.add(politicianId);
+        else next.delete(politicianId);
+        return next;
+      });
+      setEngagementSummaries((prev) => {
+        const next = new Map(prev);
+        const current = next.get(politicianId) || { supporterCount: 0, avgRating: 0, ratingCount: 0, commentCount: 0 };
+        next.set(politicianId, {
+          ...current,
+          supporterCount: Math.max(0, current.supporterCount + (isSupporting ? 1 : -1)),
+        });
+        return next;
+      });
+    };
+
+    if (user) {
+      if (isSupporting) await withdrawSupport(supabase, politicianId, user.id);
+      else await addSupport(supabase, politicianId, user.id);
+    } else if (anonId) {
+      if (isSupporting) {
+        await withdrawAnonymousSupport(supabase, politicianId, anonId);
+      } else {
+        const { error } = await addAnonymousSupport(supabase, politicianId, anonId);
+        if (error) rollback();
+      }
     }
   };
 
@@ -435,6 +497,20 @@ export default function ElectionSeatPageClient({
     trackedSeatViewRef.current = seatId;
     trackElectionViewed({ seatId, roleTitle: seat.role_title, electionName: seat.elections?.name });
   }, [seat, seatId]);
+
+  // Load invite status (invited/opened/signed up) only once the panel is
+  // actually open and there's an unclaimed admin-added candidate to show it
+  // for -- the RPC itself re-checks reviewer authorization per candidate
+  // server-side, but there's no point calling it for an ordinary visitor
+  // who never opens the panel.
+  useEffect(() => {
+    const seatAdmin = role === "admin" || adminStatus?.my_application_status === "approved";
+    if (!showSeatAdminPanel || !seatAdmin) return;
+    const ids = candidates
+      .filter((c) => c.added_by_election_admin_id && !c.claimed_at)
+      .map((c) => c.id);
+    if (ids.length > 0) loadClaimInviteStatus(ids);
+  }, [showSeatAdminPanel, role, adminStatus, candidates]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const startApplying = async () => {
     setApplying(true);
@@ -523,7 +599,50 @@ export default function ElectionSeatPageClient({
       ...prev,
       [candidateId]: error ? "Error: " + error.message : "Invite sent.",
     }));
-    if (!error) setInviteEmails((prev) => ({ ...prev, [candidateId]: "" }));
+    if (!error) {
+      setInviteEmails((prev) => ({ ...prev, [candidateId]: "" }));
+      loadClaimInviteStatus([candidateId]);
+    }
+  };
+
+  // Renders the invite panel's status line: invited/expired -> opened ->
+  // signed up, in that order, so an admin can judge at a glance whether a
+  // resend is worth it. `claimed` isn't shown here -- claimed candidates
+  // are filtered out of this panel entirely (see the .filter() below).
+  const describeClaimInviteStatus = (s: CandidateClaimInviteStatus | undefined): { text: string; tone: "muted" | "amber" | "success" } | null => {
+    if (!s || !s.invite_id) return null;
+    const fmt = (iso: string) => new Date(iso).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+    const expired = s.expires_at ? new Date(s.expires_at).getTime() < Date.now() : false;
+    const parts: string[] = [];
+    parts.push(expired && !s.used_at ? `Invite expired (sent ${fmt(s.invited_at!)})` : `Invited ${fmt(s.invited_at!)}`);
+    if (s.opened_at) {
+      parts.push(`Opened${s.opened_count && s.opened_count > 1 ? ` ${s.opened_count}×` : ""} (last ${fmt(s.last_opened_at || s.opened_at)})`);
+    } else {
+      parts.push("Not opened yet");
+    }
+    parts.push(s.signed_up ? "Signed up" : "Not signed up yet");
+    return {
+      text: parts.join(" · "),
+      tone: s.signed_up ? "success" : expired ? "amber" : "muted",
+    };
+  };
+
+  // Invited/opened/signed-up status for the "Invite Candidates to Claim"
+  // panel -- lets an admin tell whether a resend is worth it without
+  // guessing. Loaded on demand (panel open, or right after a send) rather
+  // than with the rest of fetchAll(), since it's admin-only and most
+  // visitors never open the panel.
+  const loadClaimInviteStatus = async (candidateIds: string[]) => {
+    if (candidateIds.length === 0) return;
+    setLoadingClaimInviteStatus(true);
+    const { data, error } = await listCandidateClaimInviteStatus(supabase, candidateIds);
+    setLoadingClaimInviteStatus(false);
+    if (error || !data) return;
+    setClaimInviteStatus((prev) => {
+      const next = { ...prev };
+      for (const row of data as CandidateClaimInviteStatus[]) next[row.candidate_id] = row;
+      return next;
+    });
   };
 
   const handleRemoveCandidate = async (candidateId: string, name: string) => {
@@ -793,9 +912,12 @@ export default function ElectionSeatPageClient({
                     {/* Invite Candidates to Claim */}
                     {candidates.some((c) => c.added_by_election_admin_id && !c.claimed_at) && (
                       <div className="pt-3 border-t border-border-light/35 space-y-3 max-w-md">
-                        <p className="text-xs font-bold text-text-secondary uppercase tracking-wide">
-                          Invite Candidates to Claim
-                        </p>
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="text-xs font-bold text-text-secondary uppercase tracking-wide">
+                            Invite Candidates to Claim
+                          </p>
+                          {loadingClaimInviteStatus && <Spinner size="sm" />}
+                        </div>
                         {candidates
                           .filter((c) => c.added_by_election_admin_id && !c.claimed_at)
                           .map((c) => {
@@ -803,11 +925,25 @@ export default function ElectionSeatPageClient({
                               c.profiles?.full_name ||
                               c.display_name ||
                               "Unclaimed Candidate";
+                            const inviteStatus = describeClaimInviteStatus(claimInviteStatus[c.id]);
                             return (
                               <div key={c.id} className="space-y-1.5">
                                 <p className="text-xs text-text-muted truncate font-semibold">
                                   {name}
                                 </p>
+                                {inviteStatus && (
+                                  <p
+                                    className={`text-[11px] ${
+                                      inviteStatus.tone === "success"
+                                        ? "text-success-light font-semibold"
+                                        : inviteStatus.tone === "amber"
+                                          ? "text-warning"
+                                          : "text-text-muted"
+                                    }`}
+                                  >
+                                    {inviteStatus.text}
+                                  </p>
+                                )}
                                 <div className="flex items-center gap-1.5">
                                   <Input
                                     type="email"
@@ -829,7 +965,7 @@ export default function ElectionSeatPageClient({
                                       invitingCandidateId === c.id ||
                                       !inviteEmails[c.id]
                                     }
-                                    title="Send Claim Invite"
+                                    title={inviteStatus ? "Resend Claim Invite" : "Send Claim Invite"}
                                   >
                                     <Mail size={14} />
                                   </Button>

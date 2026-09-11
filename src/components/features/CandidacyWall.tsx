@@ -34,8 +34,13 @@ import {
   getSupporterCount,
   withdrawSupport,
   addSupport,
+  getAnonymousSupportStatus,
+  addAnonymousSupport,
+  withdrawAnonymousSupport,
   getMentionedWallPosts,
 } from "@/lib/services/politicianWall";
+import { getAnonymousSupportSettings } from "@/lib/services/settings";
+import { useAnonSupporterId } from "@/lib/utils/anonSupporter";
 import {
   ArrowLeft,
   GraduationCap,
@@ -218,6 +223,11 @@ export default function CandidacyWall({
 
   const [supportCount, setSupportCount] = useState(initialSupportCount);
   const [isSupporting, setIsSupporting] = useState(false);
+  // Anonymous-support identity + admin kill switch -- lets a logged-out
+  // visitor support a candidate without an account (see anonSupporter.ts
+  // and the anonymous_supporters migration). anonId is null until mount.
+  const anonId = useAnonSupporterId();
+  const [anonymousSupportEnabled, setAnonymousSupportEnabled] = useState(false);
   const [ratingSummary, setRatingSummary] = useState<{ avg: number; count: number } | null>(null);
   // Inline "leave a review" panel that expands in place — same non-modal
   // pattern PoliticianWallClient and NewsArticleLinkedPoliticians already
@@ -339,10 +349,14 @@ export default function CandidacyWall({
         // to serialize for no reason (the rating box, in particular, was
         // the 3rd of 4 chained awaits here before anything rendered).
         const politicianId = cand.politician_id;
-        const [polProfileResult, supportResult, supporterCountResult, summariesResult, answersResult] =
+        const [polProfileResult, supportResult, anonSupportResult, anonSettingsResult, supporterCountResult, summariesResult, answersResult] =
           await Promise.all([
             politicianId ? getPoliticianProfile(supabase, politicianId) : Promise.resolve({ data: null }),
             politicianId && user ? getSupportStatus(supabase, politicianId, user.id) : Promise.resolve({ data: null }),
+            politicianId && !user && anonId
+              ? getAnonymousSupportStatus(supabase, politicianId, anonId)
+              : Promise.resolve({ data: null }),
+            getAnonymousSupportSettings(supabase),
             politicianId ? getSupporterCount(supabase, politicianId) : Promise.resolve({ count: 0 }),
             politicianId ? getPoliticianEngagementSummaries(supabase, [politicianId]) : Promise.resolve({ data: [] }),
             getPublicCandidateAnswers(supabase, candidateId),
@@ -350,7 +364,8 @@ export default function CandidacyWall({
 
         if (politicianId && isMounted) {
           setCandidateProfile(polProfileResult.data);
-          setIsSupporting(!!supportResult.data);
+          setIsSupporting(!!supportResult.data || !!anonSupportResult.data);
+          setAnonymousSupportEnabled(!!anonSettingsResult.data?.anonymous_support_enabled);
           setSupportCount(supporterCountResult.count || 0);
           const summary = (summariesResult.data || [])[0] as { avg_rating: number; rating_count: number } | undefined;
           setRatingSummary(summary ? { avg: summary.avg_rating, count: summary.rating_count } : null);
@@ -380,7 +395,7 @@ export default function CandidacyWall({
     return () => {
       isMounted = false;
     };
-  }, [user, authLoading, candidateId, supabase]);
+  }, [user, authLoading, candidateId, supabase, anonId]);
 
   // Re-fetches the true aggregate after a submit — the inline panel only
   // knows the viewer's own vote, not the new average, same as
@@ -410,7 +425,25 @@ export default function CandidacyWall({
   const toggleSupport = async () => {
     if (!candidate) return;
     if (!user) {
-      requireAuth();
+      if (!anonymousSupportEnabled || !anonId) {
+        requireAuth();
+        return;
+      }
+      if (isSupporting) {
+        setIsSupporting(false);
+        setSupportCount((prev) => Math.max(0, prev - 1));
+        await withdrawAnonymousSupport(supabase, candidate.politician_id, anonId);
+      } else {
+        setIsSupporting(true);
+        setSupportCount((prev) => prev + 1);
+        const { error } = await addAnonymousSupport(supabase, candidate.politician_id, anonId);
+        if (error) {
+          // Disabled mid-flight, or rate-limited server-side -- roll back
+          // the optimistic update.
+          setIsSupporting(false);
+          setSupportCount((prev) => Math.max(0, prev - 1));
+        }
+      }
       return;
     }
     if (isSupporting) {

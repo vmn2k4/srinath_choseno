@@ -48,3 +48,29 @@ export async function updatePlatformRuleSettings(supabase: Client, settings: Pla
     .update({ ...settings, updated_at: new Date().toISOString() })
     .eq("id", 1);
 }
+
+// site_settings — admin kill switch + rate-limit cap for letting logged-out
+// visitors support a candidate without an account. Same single-row table,
+// same pattern as PlatformRuleSettings above.
+export type AnonymousSupportSettings = {
+  anonymous_support_enabled: boolean;
+  anonymous_support_rate_limit_per_hour: number;
+};
+
+export async function getAnonymousSupportSettings(supabase: Client) {
+  return fetchWithCache<AnonymousSupportSettings>("site_settings:anonymous_support", () =>
+    supabase
+      .from("site_settings")
+      .select("anonymous_support_enabled, anonymous_support_rate_limit_per_hour")
+      .eq("id", 1)
+      .single()
+  );
+}
+
+export async function updateAnonymousSupportSettings(supabase: Client, settings: AnonymousSupportSettings) {
+  invalidateCache("site_settings:anonymous_support");
+  return supabase
+    .from("site_settings")
+    .update({ ...settings, updated_at: new Date().toISOString() })
+    .eq("id", 1);
+}

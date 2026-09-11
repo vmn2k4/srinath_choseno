@@ -319,9 +319,15 @@ def cmd_fetch(args):
 MUNI_OVERRIDES = {
     "Sun Peaks (Mountain Resort Municipality)": "Sun Peaks Mountain",
     "100 Mile House (District)": "One Hundred Mile House",
+    # Renamed from Queen Charlotte in 2022; our map_shapes boundary data
+    # still carries the pre-rename name (a real, standing gap -- the
+    # boundary itself needs renaming/re-importing, not just this alias).
+    "Daajing Giids (Village)": "Queen Charlotte",
 }
-PARTY_JUNK = {"served different", "city of greenwood", "village of montrose"}
+PARTY_JUNK = {"served different", "city of greenwood", "village of montrose", "village of fruitvale"}
 PARTY_OVERRIDES = {
+    "onecity association": "OneCity",
+    "victoria for all": "Victoria For All",  # CivicInfo BC itself is case-inconsistent (also seen as "VICTORIA FOR ALL")
     "a better city vancouver electors association": "ABC Vancouver",
     "affordable housing coalition of vancouver": "Affordable Housing",
     "coalition of progressive electors": "COPE",
@@ -338,10 +344,62 @@ OFFICE_MAP_SD = {"TRUSTEE": "School Trustee"}
 ADMIN_ID_DEFAULT = "5b66563e-2674-4fed-b733-3e19955a166a"
 
 
+# Common English nickname -> formal-name equivalence classes. Found needed
+# 2026-09-10 after a token-set-only compare missed real duplicates: "Gord
+# Hepner" vs the existing "Gordon Hepner", "Dave Ramey" vs "David Ramey",
+# "CJ Rhodes" vs "C.J. Rhodes", etc. -- 11 total across the first live run
+# of this script's predecessor logic, all caught by hand afterward and
+# merged (see CANDIDATE_DATA_PULL_LOG.md, "Eleven more near-duplicates").
+NICKNAMES = {
+    "gord": "gordon", "rob": "robert", "bob": "robert", "bobby": "robert",
+    "mike": "michael", "mick": "michael", "chris": "christopher",
+    "dave": "david", "davey": "david", "jim": "james", "jimmy": "james",
+    "bill": "william", "billy": "william", "will": "william",
+    "steve": "stephen", "sue": "susan", "suzie": "susan", "liz": "elizabeth",
+    "beth": "elizabeth", "ken": "kenneth", "kenny": "kenneth",
+    "tom": "thomas", "tommy": "thomas", "dan": "daniel", "danny": "daniel",
+    "andy": "andrew", "drew": "andrew", "matt": "matthew", "greg": "gregory",
+    "sam": "samuel", "joe": "joseph", "joey": "joseph", "fred": "frederick",
+    "ted": "edward", "ed": "edward", "eddie": "edward", "ron": "ronald",
+    "ronnie": "ronald", "don": "donald", "donnie": "donald", "tony": "anthony",
+    "nick": "nicholas", "pat": "patrick", "patty": "patricia",
+    "peggy": "margaret", "maggie": "margaret", "meg": "margaret",
+    "jack": "john", "johnny": "john", "frank": "francis", "harry": "harold",
+    "larry": "lawrence", "al": "albert", "abe": "abraham", "alex": "alexander",
+    "sandy": "alexander", "gerry": "gerald", "jerry": "gerald",
+    "vince": "vincent", "nate": "nathaniel", "kate": "katherine",
+    "katie": "katherine", "kathy": "katherine", "cathy": "catherine",
+    "jen": "jennifer", "jenny": "jennifer", "deb": "deborah",
+    "debbie": "deborah", "vicky": "victoria", "becky": "rebecca",
+    "cindy": "cynthia", "wendy": "gwendolyn",
+}
+
+
 def norm_tokens(name):
     name = re.sub(r"\s*\([^)]*\)\s*$", "", name)
     tokens = re.findall(r"[a-zA-Z']+", name.lower())
     return frozenset(t for t in tokens if len(t) > 1)
+
+
+def canon_tokens(name):
+    """Nickname-canonicalized version of norm_tokens, for the equivalence
+    check below -- catches "Gord"=="Gordon" that plain norm_tokens can't."""
+    return frozenset(NICKNAMES.get(t, t) for t in norm_tokens(name))
+
+
+def same_person(name_a, name_b):
+    """True if two ballot names likely belong to the same real person:
+    exact token match, one name's tokens are a subset of the other's (an
+    extra/missing middle name, e.g. "Leanna Chatwin" vs "Leanna Jacinta
+    Chatwin"), or they match after nickname canonicalization. Always scope
+    this to the same (map_shape_id, office) before calling -- it is not
+    precise enough to run name-only across different jurisdictions."""
+    ta, tb = norm_tokens(name_a), norm_tokens(name_b)
+    if not ta or not tb:
+        return False
+    if ta == tb or ta <= tb or tb <= ta:
+        return True
+    return canon_tokens(name_a) == canon_tokens(name_b)
 
 
 def clean_name(raw):
@@ -399,16 +457,16 @@ def cmd_diff(args):
     name_to_id = {r["name"]: r["id"] for r in shapes}
     seat_lookup = {(r["map_shape_id"], r["role_title"]): r["seat_id"] for r in seats}
 
-    db_index, db_index_norm = {}, {}
+    db_index, db_names_by_key = {}, {}
     for r in db_rows:
         key = (r["jurisdiction"], r["office"])
         db_index.setdefault(key, set()).add(r["full_name"].strip().lower())
-        db_index_norm.setdefault(key, {})[norm_tokens(r["full_name"])] = r["full_name"]
+        db_names_by_key.setdefault(key, []).append(r["full_name"])
 
-    oh_index = {}
+    oh_names_by_shape = {}
     for r in oh:
         if r["linked_profile_id"]:
-            oh_index.setdefault(r["map_shape_id"], {})[norm_tokens(r["full_name"])] = r["linked_profile_id"]
+            oh_names_by_shape.setdefault(r["map_shape_id"], []).append((r["full_name"], r["linked_profile_id"]))
 
     party_by_lower = {}
     for p in sorted(parties, key=lambda p: p["id"]):
@@ -424,7 +482,7 @@ def cmd_diff(args):
         return party_by_lower.get(lookup.lower())
 
     missing, dropout_candidates, unresolved = [], [], set()
-    le_seen_norm = {}
+    le_names_by_key = {}  # (map_shape_id, office) -> [name, ...], for the dropout pass below
 
     for row in records:
         resolve_fn = (lambda n: resolve_muni(n, muni_names)) if row["kind"] == "Municipal" else (lambda n: resolve_sd(n, sd_shapes))
@@ -440,12 +498,21 @@ def cmd_diff(args):
                 continue
             name = clean_name(c["name"])
             key = (resolved, office)
-            le_seen_norm.setdefault((map_shape_id, office), set()).add(norm_tokens(name))
+            le_names_by_key.setdefault((map_shape_id, office), []).append(name)
             if name.lower() in db_index.get(key, set()):
                 continue
-            if norm_tokens(name) in db_index_norm.get(key, {}):
-                continue  # same person, formatting differs only
-            pid = oh_index.get(map_shape_id, {}).get(norm_tokens(name))
+            # same_person (not just exact norm_tokens) -- catches nickname
+            # variants and extra/missing middle names, not just formatting.
+            # See the 2026-09-10 postmortem in CANDIDATE_DATA_PULL_LOG.md:
+            # an earlier version of this check missed 11 real duplicates
+            # this way (Gord/Gordon Hepner, Dave/David Ramey, etc.).
+            if any(same_person(name, existing) for existing in db_names_by_key.get(key, [])):
+                continue
+            pid = None
+            for oh_name, oh_pid in oh_names_by_shape.get(map_shape_id, []):
+                if same_person(name, oh_name):
+                    pid = oh_pid
+                    break
             entry = {
                 "resolved_jurisdiction": resolved, "resolved_office": office, "name": name,
                 "party": c.get("party"), "email": c.get("email"), "phone": c.get("phone"),
@@ -457,13 +524,30 @@ def cmd_diff(args):
                 entry["linked_profile_id"] = pid
             missing.append(entry)
 
-    for (map_shape_id, office), seen in le_seen_norm.items():
+    for (map_shape_id, office), le_names in le_names_by_key.items():
         resolved_name = next((n for n, i in name_to_id.items() if i == map_shape_id), None)
         if not resolved_name:
             continue
-        for nt, full_name in db_index_norm.get((resolved_name, office), {}).items():
-            if nt not in seen:
-                dropout_candidates.append({"jurisdiction": resolved_name, "office": office, "name": full_name})
+        for db_name in db_names_by_key.get((resolved_name, office), []):
+            if not any(same_person(db_name, le_name) for le_name in le_names):
+                dropout_candidates.append({"jurisdiction": resolved_name, "office": office, "name": db_name})
+
+    # A stub can also duplicate ANOTHER stub from this same run (two
+    # different pages both listing a formatting variant of the same
+    # person) -- check that before returning, not just against the DB.
+    dedup_missing = []
+    seen_this_run = {}
+    for r in missing:
+        if r.get("linked_profile_id"):
+            dedup_missing.append(r)
+            continue
+        key = (r["map_shape_id"], r["resolved_office"])
+        bucket = seen_this_run.setdefault(key, [])
+        if any(same_person(r["name"], other) for other in bucket):
+            continue
+        bucket.append(r["name"])
+        dedup_missing.append(r)
+    missing = dedup_missing
 
     linked = [r for r in missing if "linked_profile_id" in r]
     stub = [r for r in missing if "linked_profile_id" not in r]

@@ -39,6 +39,50 @@ export type Database = {
   }
   public: {
     Tables: {
+      anonymous_support_rate_limits: {
+        Row: {
+          created_at: string
+          ip_hash: string
+        }
+        Insert: {
+          created_at?: string
+          ip_hash: string
+        }
+        Update: {
+          created_at?: string
+          ip_hash?: string
+        }
+        Relationships: []
+      }
+      anonymous_supporters: {
+        Row: {
+          anon_id: string
+          created_at: string
+          is_test: boolean
+          politician_id: string
+        }
+        Insert: {
+          anon_id: string
+          created_at?: string
+          is_test?: boolean
+          politician_id: string
+        }
+        Update: {
+          anon_id?: string
+          created_at?: string
+          is_test?: boolean
+          politician_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anonymous_supporters_politician_id_fkey"
+            columns: ["politician_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       boundary_uploads: {
         Row: {
           boundary_type: string
@@ -152,7 +196,13 @@ export type Database = {
           email: string
           expires_at: string
           id: string
+          last_opened_at: string | null
+          link_clicks: number
+          links_clicked: Json
+          opened_at: string | null
+          opened_count: number
           token_hash: string
+          tracking_token: string
           used_at: string | null
         }
         Insert: {
@@ -162,7 +212,13 @@ export type Database = {
           email: string
           expires_at: string
           id?: string
+          last_opened_at?: string | null
+          link_clicks?: number
+          links_clicked?: Json
+          opened_at?: string | null
+          opened_count?: number
           token_hash: string
+          tracking_token?: string
           used_at?: string | null
         }
         Update: {
@@ -172,7 +228,13 @@ export type Database = {
           email?: string
           expires_at?: string
           id?: string
+          last_opened_at?: string | null
+          link_clicks?: number
+          links_clicked?: Json
+          opened_at?: string | null
+          opened_count?: number
           token_hash?: string
+          tracking_token?: string
           used_at?: string | null
         }
         Relationships: [
@@ -993,6 +1055,21 @@ export type Database = {
           id?: number
           is_general?: boolean
           name?: string
+        }
+        Relationships: []
+      }
+      internal_secrets: {
+        Row: {
+          anon_ip_pepper: string
+          id: number
+        }
+        Insert: {
+          anon_ip_pepper: string
+          id?: number
+        }
+        Update: {
+          anon_ip_pepper?: string
+          id?: number
         }
         Relationships: []
       }
@@ -2330,6 +2407,8 @@ export type Database = {
       }
       site_settings: {
         Row: {
+          anonymous_support_enabled: boolean
+          anonymous_support_rate_limit_per_hour: number
           comment_daily_limit_per_target: number
           id: number
           politician_daily_post_limit: number
@@ -2338,6 +2417,8 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          anonymous_support_enabled?: boolean
+          anonymous_support_rate_limit_per_hour?: number
           comment_daily_limit_per_target?: number
           id?: number
           politician_daily_post_limit?: number
@@ -2346,6 +2427,8 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          anonymous_support_enabled?: boolean
+          anonymous_support_rate_limit_per_hour?: number
           comment_daily_limit_per_target?: number
           id?: number
           politician_daily_post_limit?: number
@@ -2832,6 +2915,10 @@ export type Database = {
         Returns: unknown
       }
       _st_within: { Args: { geom1: unknown; geom2: unknown }; Returns: boolean }
+      add_anonymous_support: {
+        Args: { p_anon_id: string; p_is_test?: boolean; p_politician_id: string }
+        Returns: undefined
+      }
       add_unregistered_candidate:
         | {
             Args: {
@@ -3130,7 +3217,10 @@ export type Database = {
           }
       create_claim_invite: {
         Args: { p_candidate_id: string; p_email: string }
-        Returns: string
+        Returns: {
+          token: string
+          tracking_token: string
+        }[]
       }
       create_comment: {
         Args: { p_content: string; p_is_test?: boolean; p_post_id: string }
@@ -3472,6 +3562,17 @@ export type Database = {
           users: Json
         }[]
       }
+      get_anonymous_support_admin_breakdown: {
+        Args: { p_include_test?: boolean }
+        Returns: {
+          anonymous_count: number
+          authenticated_count: number
+          full_name: string
+          political_party: string
+          politician_id: string
+          total_count: number
+        }[]
+      }
       get_founder_count: { Args: never; Returns: number }
       get_geojson_shapes:
         | {
@@ -3581,6 +3682,21 @@ export type Database = {
       is_claim_reviewer_for_candidate: {
         Args: { p_candidate_id: string }
         Returns: boolean
+      }
+      list_candidate_claim_invite_status: {
+        Args: { p_candidate_ids: string[] }
+        Returns: {
+          candidate_id: string
+          email: string | null
+          expires_at: string | null
+          invite_id: string | null
+          invited_at: string | null
+          last_opened_at: string | null
+          opened_at: string | null
+          opened_count: number | null
+          signed_up: boolean | null
+          used_at: string | null
+        }[]
       }
       list_pending_self_requested_officeholder_claims: {
         Args: never
@@ -3704,6 +3820,10 @@ export type Database = {
       reject_officeholder_wall_claim: {
         Args: { p_claim_id: string; p_reason: string }
         Returns: Json
+      }
+      remove_anonymous_support: {
+        Args: { p_anon_id: string; p_politician_id: string }
+        Returns: undefined
       }
       remove_candidate: { Args: { p_candidate_id: string }; Returns: undefined }
       remove_unregistered_candidate: {

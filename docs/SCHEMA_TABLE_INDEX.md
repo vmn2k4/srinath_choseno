@@ -1,6 +1,6 @@
 # Supabase Tables — Complete Index
 
-Quick lookup table for all 44 tables in the Choseno database. For details, see [SUPABASE_SCHEMA.md](SUPABASE_SCHEMA.md).
+Quick lookup table for all 47 tables in the Choseno database. For details, see [SUPABASE_SCHEMA.md](SUPABASE_SCHEMA.md).
 
 ---
 
@@ -8,6 +8,8 @@ Quick lookup table for all 44 tables in the Choseno database. For details, see [
 
 | Table | Purpose | Key Columns | Relationships |
 |-------|---------|------------|---|
+| `anonymous_support_rate_limits` | Abuse throttle for anonymous support (never a uniqueness key) | `ip_hash`, `created_at` | Written only by `add_anonymous_support()`; never read by clients |
+| `anonymous_supporters` | Support/endorsement from a logged-out visitor, keyed by a client-minted `anon_id` instead of a real profile | `politician_id`, `anon_id`, `is_test`, `created_at` | → `profiles(politician_id)` |
 | `boundary_uploads` | Track boundary file upload batches | `id`, `name`, `country`, `boundary_type`, `uploaded_by`, `expected_count`, `completed_at` | ← `profiles(uploaded_by)`; → `map_shapes(upload_id)` |
 | `candidacy_claim_invites` | Email invite tokens for stub candidates to claim | `id`, `candidate_id`, `token_hash`, `created_by`, `claimed_at` | ← `profiles(created_by)`; → `election_candidates(candidate_id)` |
 | `candidacy_claim_requests` | Self-service claim requests | `id`, `candidate_id`, `requester_profile_id`, `status`, `reviewed_by` | ← `profiles(requester_profile_id, reviewed_by)`; → `election_candidates(candidate_id)` |
@@ -30,6 +32,7 @@ Quick lookup table for all 44 tables in the Choseno database. For details, see [
 | `entity_types` | Entity-type subtypes (City, Town, Village, etc.) | `id`, `country`, `boundary_type`, `name`, `code`, `description` | → `countries(country)` |
 | `federal_election_events` | Historical federal election records | `id`, `country`, `election_year`, `source_url`, `fetched_at` | Just data; ← `federal_election_candidates` |
 | `federal_election_candidates` | Candidates from Elections Canada | `id`, `election_event_id`, `map_shape_id`, `candidate_name`, `party_name` | → `federal_election_events(election_event_id)`; → `map_shapes(map_shape_id)` |
+| `internal_secrets` | Server-only pepper for hashing client IPs before rate-limit storage | `id`, `anon_ip_pepper` | RLS enabled with **no policies at all** — readable only from inside a `SECURITY DEFINER` function body, not through PostgREST by anyone including admins |
 | `map_shapes` | Electoral boundaries (ridings, municipalities, provinces, etc.) | `id`, `country`, `boundary_type`, `name`, `code`, `properties`, `geom`, `retired_at`, `upload_id` | → `country_boundary_types(country, type_name)`; → `boundary_uploads(upload_id)`; ← Many tables |
 | `moderation_rules` | Reportable abuse types | `abuse_type` (PK), `description` | ← `content_reports` |
 | `news_articles` | Editorial articles | `id`, `slug`, `headline`, `category`, `country`, `province`, `status`, `published_at`, `hero_image_url`, `content` | ← `posts(news_article_id)` |
@@ -68,6 +71,9 @@ Quick lookup table for all 44 tables in the Choseno database. For details, see [
 
 ### Politicians (3)
 `politician_profiles`, `political_parties`, `politician_supporters`
+
+### Anonymous Support (3)
+`anonymous_supporters`, `anonymous_support_rate_limits`, `internal_secrets` — lets a logged-out visitor support a candidate without an account; admin-gated via `site_settings.anonymous_support_enabled`. See [get_politician_engagement_summaries()](SUPABASE_SCHEMA.md) for how the public count folds authenticated + anonymous together.
 
 ### News (1)
 `news_articles`

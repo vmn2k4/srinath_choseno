@@ -225,6 +225,7 @@ Quick recap:
 - **Detail panel**: View flagged content, add admin notes, approve/dismiss/hide
 - **Hidden content log**: Audit trail of moderation actions
 - **User search**: Jump to profile to see all their content
+- **Anonymous Support** (added 2026-09-10): Kill switch (`anonymous_support_enabled`) and rate-limit cap (`anonymous_support_rate_limit_per_hour`) for letting logged-out visitors support a candidate without an account, plus a searchable/sortable breakdown table of authenticated vs. anonymous support counts per candidate (`get_anonymous_support_admin_breakdown()`, admin-only). See the `anonymous_supporters` table in [SUPABASE_SCHEMA.md](SUPABASE_SCHEMA.md).
 
 ---
 

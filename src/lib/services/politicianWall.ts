@@ -269,13 +269,29 @@ export async function getMySupportedPoliticianIds(supabase: Client, politicianId
   return { data: (data || []).map((r) => r.politician_id), error };
 }
 
+// Combined authenticated + anonymous count -- this is the single public
+// number shown next to every Support heart (candidate wall, election-seat
+// poll, general politician wall). Fixing it here means every existing
+// caller (CandidacyWall, PoliticianWallClient, the wall/[ghostId] and
+// candidacy/[candidateId] server pages) shows the combined total with no
+// changes on their end.
 export async function getSupporterCount(supabase: Client, politicianId: string) {
-  let query = supabase
+  const includeTest = isDevEnvironment();
+  const authQuery = supabase
     .from("politician_supporters")
     .select("*", { count: "exact", head: true })
     .eq("politician_id", politicianId);
-  if (!isDevEnvironment()) query = query.eq("is_test", false);
-  return query;
+  const anonQuery = supabase
+    .from("anonymous_supporters")
+    .select("*", { count: "exact", head: true })
+    .eq("politician_id", politicianId);
+
+  const [authRes, anonRes] = await Promise.all([
+    includeTest ? authQuery : authQuery.eq("is_test", false),
+    includeTest ? anonQuery : anonQuery.eq("is_test", false),
+  ]);
+
+  return { count: (authRes.count || 0) + (anonRes.count || 0), error: authRes.error || anonRes.error };
 }
 
 export async function withdrawSupport(supabase: Client, politicianId: string, supporterId: string) {
@@ -290,6 +306,50 @@ export async function addSupport(supabase: Client, politicianId: string, support
   return supabase
     .from("politician_supporters")
     .insert({ politician_id: politicianId, supporter_id: supporterId, is_test: isDevEnvironment() });
+}
+
+// ── anonymous_supporters ─────────────────────────────────────────────────
+// Same shape as the politician_supporters functions above, keyed by a
+// client-minted anon_id (see src/lib/utils/anonSupporter.ts) instead of a
+// real supporter_id -- lets a logged-out visitor support a candidate
+// without an account. All writes go through SECURITY DEFINER RPCs (never a
+// direct insert/delete) since there's no auth.uid() to scope an RLS policy
+// to for an anonymous caller.
+export async function getAnonymousSupportStatus(supabase: Client, politicianId: string, anonId: string) {
+  return supabase
+    .from("anonymous_supporters")
+    .select("anon_id")
+    .eq("politician_id", politicianId)
+    .eq("anon_id", anonId)
+    .maybeSingle();
+}
+
+export async function getMyAnonymousSupportedPoliticianIds(supabase: Client, politicianIds: string[], anonId: string) {
+  if (politicianIds.length === 0) return { data: [] as string[], error: null };
+  const { data, error } = await supabase
+    .from("anonymous_supporters")
+    .select("politician_id")
+    .eq("anon_id", anonId)
+    .in("politician_id", politicianIds);
+  return { data: (data || []).map((r) => r.politician_id), error };
+}
+
+export async function addAnonymousSupport(supabase: Client, politicianId: string, anonId: string) {
+  return supabase.rpc("add_anonymous_support", {
+    p_politician_id: politicianId,
+    p_anon_id: anonId,
+    p_is_test: isDevEnvironment(),
+  });
+}
+
+export async function withdrawAnonymousSupport(supabase: Client, politicianId: string, anonId: string) {
+  return supabase.rpc("remove_anonymous_support", { p_politician_id: politicianId, p_anon_id: anonId });
+}
+
+// Admin-only: how much of each candidate's total support came from
+// logged-out visitors. RLS/role check happens inside the RPC itself.
+export async function getAnonymousSupportAdminBreakdown(supabase: Client, includeTest = false) {
+  return supabase.rpc("get_anonymous_support_admin_breakdown", { p_include_test: includeTest });
 }
 
 // Realtime subscription wrapper — keeps the raw supabase.channel()/

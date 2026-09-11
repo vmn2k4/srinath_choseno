@@ -60,6 +60,7 @@
 | **user_boundary_memberships** | Which electoral boundaries belong to user | `profile_id`, `map_shape_id`, `updated_at` | Synced when user provides location |
 | **politician_profiles** | Extended data for politician role | `id` (FK to profiles), `political_party_id`, `education`, `hometown`, `bio`, `avatar_url` | 1:1 extension of `profiles` for role='politician' |
 | **politician_supporters** | Support/endorsement tracking | `politician_id`, `supporter_id` | M:M relationship |
+| **anonymous_supporters** | Support from a logged-out visitor (added 2026-09-10) | `politician_id`, `anon_id` | Same M:M shape, keyed by a client-minted `anon_id` instead of a real `profiles.id`; gated by `site_settings.anonymous_support_enabled`, rate-limited by IP hash via `add_anonymous_support()` — see `docs/SUPABASE_SCHEMA.md` |
 
 ### 2.2 Electoral Boundaries & Geography
 

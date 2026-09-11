@@ -845,8 +845,12 @@ export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]
   // this over a computed buildPoliticianWallSlug(name, role) fallback when
   // building a "View Politician Wall" link; see resolvePoliticianWallSlug
   // in CandidacyWall.tsx for why the computed fallback is unsafe on its own.
+  // bio: widened here (2026-09-11) so ElectionResultsPanel's "Read more"
+  // row can show a one-line bio snippet inline without a second per-
+  // candidate fetch -- same reasoning as the political_parties(name) widen
+  // above, just for the results/roster view instead of the party badge.
   const columns =
-    "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url, contact_email, contact_phone, wall_slug, political_parties(name)))";
+    "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url, contact_email, contact_phone, wall_slug, bio, political_parties(name)))";
 
   let query = supabase.from("election_candidates").select(columns).in("seat_id", resolvedIds);
   if (!isDevEnvironment()) query = query.eq("profiles.is_test", false);
@@ -1491,6 +1495,36 @@ export async function inviteCandidateToClaim(supabase: Client, candidateId: stri
     }
   }
   return { data, error };
+}
+
+export interface CandidateClaimInviteStatus {
+  candidate_id: string;
+  invite_id: string | null;
+  email: string | null;
+  invited_at: string | null;
+  expires_at: string | null;
+  used_at: string | null;
+  opened_at: string | null;
+  opened_count: number | null;
+  last_opened_at: string | null;
+  // Whether the recipient completed the invite (email_confirmed_at set via
+  // /auth/confirm's verifyOtp), NOT whether an auth.users row exists --
+  // admin.inviteUserByEmail pre-creates that row the instant the invite is
+  // *sent*, before the recipient does anything, so row-existence alone
+  // would always read true and be useless as a signal. Confirmed against a
+  // real, still-untouched invite where the row already existed but this
+  // was still false.
+  signed_up: boolean | null;
+}
+
+// Status rollup for the "Invite Candidates to Claim" panel -- invited /
+// opened / signed up / claimed, so an admin can tell whether a resend is
+// worth it before sending one. `claimed` isn't in the returned row: it's
+// election_candidates.claimed_at, which the caller already has from the
+// candidate list this is called alongside.
+export async function listCandidateClaimInviteStatus(supabase: Client, candidateIds: string[]) {
+  if (candidateIds.length === 0) return { data: [] as CandidateClaimInviteStatus[], error: null };
+  return supabase.rpc("list_candidate_claim_invite_status", { p_candidate_ids: candidateIds });
 }
 
 export async function claimCandidacyViaToken(supabase: Client, token: string) {

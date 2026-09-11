@@ -1497,6 +1497,84 @@ trusting it, don't just check that it runs.**
 
 ---
 
+## Eleven more near-duplicates, found by a user spot-check — 2026-09-10
+
+**User caught it**: looked at Surrey's own Councillor seat page and saw
+names appearing to repeat, asked "why did they all sign up twice." Checked
+the DB directly first (55 rows, all distinct `politician_id`s — no literal
+duplicate rows) and found **two different, unrelated things tangled
+together**:
+
+1. **A frontend rendering artifact, not a data bug.** Every candidate with
+   a photo renders `<img alt={name}>` *and* a separate `<span>{name}</span>`
+   right next to it (`src/components/primitives/Avatar.tsx`) — the name
+   appears once as visible text and once as accessible/alt text. However a
+   sighted user looking at the live page sees one name label per candidate,
+   same as always — the doubling only shows up in text extracted via
+   something that reads `alt`/accessibility text as separate lines (which
+   is how the user was viewing it). Checked all 55 against `has_photo` and
+   it was a perfect 1:1 match: every "name appears twice" case had a photo
+   on file, every "single letter then one name" case didn't. Not fixed —
+   there is nothing broken about this rendering; flagged here so it isn't
+   mistaken for a real bug again if it comes up.
+
+2. **Two real duplicate people**, found while checking (1) — the actual
+   thing worth investigating. `norm_tokens()`'s matching (order-independent,
+   single-letter-initial-stripped) doesn't catch a **nickname variant**
+   (CivicInfo BC spelled a name "Gord Hepner"; our existing record was
+   "Gordon Hepner") or a **real middle name being added/omitted** (CivicInfo
+   added "Jacinta" to "Leanna Chatwin"). Both slipped through the
+   2026-09-10 CivicInfo BC sync as fresh stubs sitting alongside their real,
+   pre-existing profile.
+
+**Extended the check system-wide rather than just fixing these two.** Ran a
+broader sweep across every BC candidate added that day — token-subset
+matching (catches an extra/missing middle name) plus a ~70-entry common
+English nickname-equivalence table (catches Gord/Gordon, Dave/David,
+Steve/Stephen, etc.) — scoped per `(jurisdiction, office)` to stay safe
+against cross-jurisdiction false positives. **Found 9 more**: Stephen/Steve
+Boylan (Barriere), Ken/Kenneth I Matheson (Clearwater), Ikjot Sandhu/
+Sandhu-Sahota (Delta), Dave/David Ramey (Enderby), C.J./CJ Rhodes
+(Greenwood), Scott/Scott Peter Goodmanson (Langford), Rob/Robert M Phelan
+(Nanaimo), Katherine/Katie Beach (SD52 Prince Rupert trustee), Stephen/
+Steve Duck (Sidney) — 11 total.
+
+**Fix**: verified zero engagement (supporters/ratings/wall claims) on all
+22 profiles across the 11 pairs before touching anything, then merged each
+pair — kept the older of the two profiles (COALESCE-merging in any bio/
+email/phone/photo the newer duplicate had that the older one didn't), and
+deleted the newer duplicate's candidacy + profile entirely (safe: zero
+engagement, unlike the earlier 55-pair Sept 9 case which had to leave
+orphans in place because auditing engagement at that volume wasn't
+feasible — 11 pairs was small enough to check every one individually).
+Re-ran the full sweep after: **zero remaining**. BC total 1,807 → **1,796**.
+
+**Also hardened `sync_bc_civicinfo_candidates.py` itself**, not just fixed
+the data — added the same `same_person()` check (subset + nickname table)
+into the script's own `diff` logic, replacing the exact-`norm_tokens`-only
+comparison that let these 11 through in the first place. Re-ran the
+hardened script against the now-cleaned DB: 0 new stubs, 0 new links —
+confirms the fix actually closes the gap rather than just cleaning up
+after it once.
+
+**Known, not a new bug**: 27 residual "in DB, not on the current CivicInfo
+BC pull" cases remain (Ron Paul/Ron Paull, Kat Nystedt/Kathryn Nystedt,
+Michael Angelo A_BC Robin Hood, etc.) — all either the same pre-existing
+duplicate-typo issues flagged in earlier passes (out of scope for this
+fix, already tracked separately) or genuine absences from CivicInfo BC's
+current snapshot that were already explained (a literal underscore in a
+ballot name defeating tokenization, e.g.) — not new duplicates, not
+silently ignored.
+
+**Moral, worth restating plainly**: a token-set-equality check catches
+*formatting* differences (word order, punctuation, single initials) but
+not *identity* differences a human recognizes instantly (nicknames, an
+added middle name) — always sanity-check a small sample of a bulk name-
+matching pass by eye, at real jurisdiction scale, before trusting the
+"0 duplicates found" result of the algorithm alone.
+
+---
+
 ## US House + Senate — FEC, now with dropout detection
 
 **Source**: unchanged from `adding-us-2026-midterm-candidates.md` — FEC's
@@ -2097,3 +2175,55 @@ python3 scripts/add_governor_candidates.py run
 Both require `DATABASE_URL`; the FEC-based one also needs `FEC_API_KEY`; the
 Governor one reads `NEXT_PUBLIC_SUPABASE_URL`/`NEXT_PUBLIC_SUPABASE_ANON_KEY`
 straight out of `.env.local` if not set explicitly.
+
+## BC — seats-vs-nominated analysis, stored on `map_shapes`, 2026-09-10
+
+User asked for a per-municipality/per-school-district breakdown of
+councillor and school-trustee seats available vs. candidates nominated so
+far. Neither half was sitting anywhere ready to query:
+
+- **Nominated**: pulled live via
+  `scripts/sync_bc_civicinfo_candidates.py fetch` (146 municipalities, 53
+  school districts, 1782 candidates, 0 fetch errors).
+- **Seats**: not tracked anywhere in this schema — `election_seats` is one
+  row per (election, shape, role_title) no matter how many people that
+  role elects, and CivicInfo BC's own pages never state a seat count
+  either. Inferred instead from the current `office_holders` count per
+  (`map_shape_id`, role_title) — its real unique constraint is the
+  3-column `(map_shape_id, election_role_type_id, full_name)`, so
+  multi-seat roles do have one row per sitting seat-holder today. This is
+  a proxy (council/board size can change between elections) and it's
+  already known wrong once: **City of North Vancouver shows 12 current
+  councillor rows** (casing on the names suggests an unmerged duplicate
+  import — two different-case spellings for what looks like the same
+  slate) where the real council size is 6. Left as-is and flagged rather
+  than silently corrected.
+
+Name matching, muni: CivicInfo's `"Name (Type)"` suffix (e.g. `"Langley
+(City)"`) is tried as an exact match against `map_shapes.name` first (six
+BC municipalities carry that suffix in their real name too — Langley
+City/Township, North Vancouver City/District, Esquimalt Township), then
+falls back to stripping the suffix, with the same `MUNI_OVERRIDES` dict
+the sync script's `diff` command uses for Sun Peaks / 100 Mile House.
+School districts matched cleanly on the `SD##` number in both sources (no
+overrides needed) — 53/53. One municipality, **Okanagan Falls
+(District)**, has no `map_shapes` row in our BC election-seat set at all
+(likely a newly-incorporated place our boundary data hasn't caught up
+with) — carried through with `seats: null`.
+
+Result: 815 councillor seats / 1132 nominated, 315 trustee seats / 376
+nominated, as of 2026-09-10 (nominations close 2026-09-12) — 65 races
+(45 municipal council, 20 school district) short of a full slate, 7 races
+sitting at zero candidates (5 mayoral: Belcarra, Campbell River, Nelson,
+Sooke, Sun Peaks Mountain; 2 council: Fruitvale, Tahsis).
+
+**Stored for reuse** on `map_shapes.election_seat_counts` (new JSONB
+column, same pattern as `census_data` — see
+`supabase/migrations/20260910000001_election_seat_counts.sql`), keyed by
+role_title: `{"Councillor": {"seats", "nominated", "as_of", "source"}, ...}`.
+It's a snapshot, not a live view — nominations were still open when this
+ran, so `nominated` will be stale within days. Re-running later: repeat
+the `fetch` step, re-run the two DB queries in the migration's own
+comments (map_shapes ids for BC + current `office_holders` counts), rejoin
+in Python, and `UPDATE ... SET election_seat_counts = ...` per shape — no
+script wraps this end-to-end yet.

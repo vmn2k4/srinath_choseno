@@ -700,6 +700,55 @@ Tracks support/endorsements — who supports which politician.
 
 ---
 
+### `anonymous_supporters`
+
+Same idea as `politician_supporters`, but for a logged-out visitor — support without an account. Dedup is a random `anon_id` minted client-side (see `src/lib/utils/anonSupporter.ts`) and persisted in both `localStorage` and a cookie, not a real profile. There is no way to guarantee "one support per human" this way; it only raises the cost of casual double-support past a single click. Gated behind `site_settings.anonymous_support_enabled` (admin toggle, `/admin/moderation`).
+
+| Column | Type | Nullable | Default | Notes |
+|--------|------|----------|---------|-------|
+| `politician_id` | uuid | NO | — | FK to `profiles(id)` ON DELETE CASCADE; part of PK |
+| `anon_id` | uuid | NO | — | Client-minted, not tied to any account; part of PK |
+| `is_test` | boolean | NO | `false` | Dev-environment rows, excluded from production counts (same convention as `politician_supporters.is_test`) |
+| `created_at` | timestamptz | NO | `now()` | When support added |
+
+**RLS**: Public read (`FOR SELECT USING (true)`, no write policy — every write goes through the two RPCs below, since there's no `auth.uid()` to scope a policy to for an anonymous caller).
+
+**RPCs** (both `SECURITY DEFINER`, `GRANT ... TO anon, authenticated`):
+- `add_anonymous_support(p_politician_id, p_anon_id, p_is_test)` — checks `site_settings.anonymous_support_enabled`, hashes the caller's IP server-side (via the `request.headers` GUC, falling back to `inet_client_addr()`) and enforces `site_settings.anonymous_support_rate_limit_per_hour` against `anonymous_support_rate_limits`, then upserts (`ON CONFLICT DO NOTHING`).
+- `remove_anonymous_support(p_politician_id, p_anon_id)` — plain delete, not flag-gated (a visitor who supported while the feature was on can still withdraw after an admin disables it).
+
+**Used by**: The Support heart on a candidate's page and the election-seat "Community Support" poll, for logged-out visitors only — see `CandidacyWall.tsx` / `ElectionSeatPageClient.tsx`.
+
+---
+
+### `anonymous_support_rate_limits`
+
+Write-only abuse throttle for `add_anonymous_support()` — never a uniqueness key, never read by clients. One row per successful, newly-inserted anonymous support (re-toggling a candidate you already support doesn't charge the budget).
+
+| Column | Type | Nullable | Default | Notes |
+|--------|------|----------|---------|-------|
+| `ip_hash` | text | NO | — | `sha256(client_ip \|\| pepper)` — see `internal_secrets` below |
+| `created_at` | timestamptz | NO | `now()` | Rate limit checks a rolling 1-hour window against this |
+
+**Indexes**: `(ip_hash, created_at DESC)` — serves the rolling-window count.
+
+**RLS**: Enabled, **no policies at all** — `SECURITY DEFINER`-only, same posture as `comment_rate_limits`.
+
+---
+
+### `internal_secrets`
+
+Holds the pepper used to hash client IPs before they're persisted in `anonymous_support_rate_limits`. An IP has ~32 bits of entropy — far too little for a bare SHA-256 digest to resist a rainbow-table reversal (unlike the 256-bit random token hashed for `candidacy_claim_invites`), hence a dedicated pepper.
+
+| Column | Type | Nullable | Default | Notes |
+|--------|------|----------|---------|-------|
+| `id` | smallint | NO | `1` | Single-row table, `CHECK (id = 1)` |
+| `anon_ip_pepper` | text | NO | — | Generated once via `gen_random_bytes(32)` at migration-apply time |
+
+**RLS**: Enabled, **no policies of any kind** — unreadable through PostgREST by anyone, including an admin's own session; only a `SECURITY DEFINER` function body (owner privileges, bypasses RLS) can ever read it.
+
+---
+
 ### `political_parties`
 
 Registry of political parties per country.
@@ -782,7 +831,7 @@ Platform-wide configuration flags and metadata.
 
 **RLS**: Public read, admin write.
 
-**Used by**: Admin theme panel (reading/setting `active_theme`), moderation settings.
+**Used by**: Admin theme panel (reading/setting `active_theme`), moderation settings. Also holds the anonymous-support kill switch and rate-limit cap (`anonymous_support_enabled`, `anonymous_support_rate_limit_per_hour`) editable from the "Anonymous Support" card on `/admin/moderation` — see `anonymous_supporters` above.
 
 ---
 
