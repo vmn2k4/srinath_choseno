@@ -80,7 +80,7 @@ export default function NameOriginReveal() {
 
   if (reduceMotion) {
     return (
-      <div className="mx-auto w-full sm:w-1/2 text-center px-4 pb-6 sm:pb-8">
+      <div className="mx-auto w-full lg:w-1/2 text-center px-4 pb-6 sm:pb-8">
         <p className="font-display text-3xl sm:text-5xl font-extrabold tracking-[0.15em] sm:tracking-[0.25em]">
           Chos
           <span className="text-primary">en</span>
@@ -93,7 +93,7 @@ export default function NameOriginReveal() {
 
   return (
     <motion.div
-      className="mx-auto w-full sm:w-1/2 text-center px-4 pb-6 sm:pb-8"
+      className="mx-auto w-full lg:w-1/2 text-center px-4 pb-6 sm:pb-8"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.6 }}
@@ -104,7 +104,7 @@ export default function NameOriginReveal() {
       }}
       transition={{ duration: 0.6, ease: EASE }}
     >
-      <div className="flex items-center justify-center gap-2 sm:gap-3" aria-hidden="true">
+      <div className="flex items-center justify-center gap-3 sm:gap-5" aria-hidden="true">
         {LETTERS.map((letter, index) => {
           const isActive = activeIndex === index;
           const isLit = litIndices.has(index);
@@ -112,7 +112,7 @@ export default function NameOriginReveal() {
           return (
             <motion.span
               key={index}
-              animate={{ scale: isActive ? 1.65 : 1, y: isActive ? -6 : 0, opacity: isDimmed ? 0.3 : 1 }}
+              animate={{ scale: isActive ? 1.5 : 1, y: isActive ? -10 : 0, opacity: isDimmed ? 0.3 : 1 }}
               transition={{ duration: 0.28, ease: EASE }}
               // Color and glow are plain CSS-transitioned style values, not
               // framer `animate` targets -- framer's color interpolator
@@ -124,11 +124,11 @@ export default function NameOriginReveal() {
                 color: isActive || isLit ? "var(--color-primary)" : "var(--color-text-main)",
                 textShadow:
                   isActive || isLit
-                    ? "0 0 20px color-mix(in srgb, var(--color-primary) 60%, transparent)"
+                    ? "0 0 32px color-mix(in srgb, var(--color-primary) 65%, transparent)"
                     : "0 0 0 transparent",
                 transition: "color 280ms ease, text-shadow 280ms ease",
               }}
-              className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight inline-block origin-bottom"
+              className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight inline-block origin-bottom"
             >
               {letter}
             </motion.span>
