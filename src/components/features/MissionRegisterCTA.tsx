@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { X, ShieldOff, Ban, MessagesSquare, Sparkles, Flag } from "lucide-react";
+import { X, ShieldOff, Ban, MessagesSquare, Sparkles, Flag, Share2, Check } from "lucide-react";
 import { Card, Button, Modal } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
-import { trackMissionCtaClicked, trackMissionCtaShown } from "@/lib/analytics/events";
+import { trackMissionCtaClicked, trackMissionCtaShown, trackShare } from "@/lib/analytics/events";
 import { EARLY_EXPLORER_BADGE_LINE } from "@/lib/constants/site";
 
 // Anonymous-visitor conversion CTA, shown on the pages where a guest is
@@ -25,7 +25,7 @@ import { EARLY_EXPLORER_BADGE_LINE } from "@/lib/constants/site";
 // InteractiveLocationPicker already applies to its own popover for the
 // identical legibility reason.
 
-export type MissionCtaVariant = "home" | "news" | "district" | "elections";
+export type MissionCtaVariant = "home" | "news" | "district" | "elections" | "seat";
 
 // v1 kept one global "seen = '1'" key forever -- a single dismissal on any
 // page (e.g. a bounce off the news CTA) silently opted a visitor out of
@@ -103,7 +103,37 @@ const COPY: Record<MissionCtaVariant, CtaCopy> = {
     sidebarBody: "Anonymous. No toxic replies.",
     cta: "Join the Mission",
   },
+  // Generic fallback when seatCopyFor below has no role_title to work with
+  // (shouldn't happen in practice -- every seat has one -- but the same
+  // defensive fallback newsCopyFor uses for a missing personName).
+  seat: {
+    eyebrow: "Before you vote",
+    headline: "Help your neighbors pick right.",
+    pitch: "Rate the candidates in this race anonymously — no username, no toxic replies. Then share this page so more neighbors weigh in before they decide.",
+    sidebarHeadline: "Rate this race, then share it",
+    sidebarBody: "Anonymous ratings help neighbors choose right.",
+    cta: "Rate the Candidates",
+  },
 };
+
+// Seat-variant copy personalized to the specific office, e.g. "Mayor of
+// Surrey" -- same pattern as newsCopyFor's personName interpolation below.
+// This is the one place on the site that pairs the rating pitch with an
+// explicit ask to share: a seat page is inherently about one race that
+// affects a whole neighborhood, so "rate it, then tell your neighbors" is a
+// coherent single ask here in a way it isn't on, say, the news variant.
+function seatCopyFor(roleTitle?: string | null, areaName?: string | null): CtaCopy {
+  if (!roleTitle) return COPY.seat;
+  const subject = areaName ? `${roleTitle} of ${areaName}` : roleTitle;
+  return {
+    eyebrow: "Before you vote",
+    headline: `Help your neighbors pick the right ${roleTitle}`,
+    pitch: `Rate the candidates for ${subject} anonymously — no username, no toxic replies. Then share this page so more neighbors weigh in before they decide.`,
+    sidebarHeadline: "Rate this race, then share it",
+    sidebarBody: "Anonymous ratings help neighbors choose right.",
+    cta: "Rate the Candidates",
+  };
+}
 
 // News-variant copy personalized to the article's key tagged politician,
 // when one is known. The headline itself stays neutral -- "Share your
@@ -137,6 +167,11 @@ export default function MissionRegisterCTA({
   variant,
   nextPath,
   personName,
+  seatRoleTitle,
+  seatAreaName,
+  shareUrl,
+  shareText,
+  shareTrackingId,
 }: {
   variant: MissionCtaVariant;
   nextPath?: string;
@@ -144,10 +179,22 @@ export default function MissionRegisterCTA({
   // when known. Personalizes the CTA copy (see newsCopyFor); ignored for
   // every other variant.
   personName?: string | null;
+  // "seat" variant only -- e.g. "Mayor" / "Surrey", to personalize the copy
+  // via seatCopyFor. Ignored for every other variant.
+  seatRoleTitle?: string | null;
+  seatAreaName?: string | null;
+  // When provided (any variant, but meant for "seat"), renders a secondary
+  // "Share with neighbors" action alongside the primary CTA -- native share
+  // sheet with a clipboard-copy fallback, same pattern PitchPlayer/ShareMenu
+  // already use elsewhere. Omit to render no share button at all.
+  shareUrl?: string;
+  shareText?: string;
+  shareTrackingId?: string;
 }) {
   const { user, loading } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [sidebarDismissed, setSidebarDismissed] = useState(true); // starts hidden until localStorage check below, to avoid a flash
+  const [shareCopied, setShareCopied] = useState(false);
   // Ref guards (not just the effects' own dependency arrays / closure
   // locals) so React StrictMode's dev-only double-invoke of effects can't
   // double-count a single real impression -- see the two analogous
@@ -216,9 +263,48 @@ export default function MissionRegisterCTA({
     trackMissionCtaClicked({ variant, trigger: "sidebar" });
   }, [variant]);
 
+  // Computed before handleShareClick (rather than after, by the other
+  // derived consts below) so that callback's dependency array can name the
+  // two string fields it actually uses instead of skipping them -- skipping
+  // would leave handleShareClick's share-sheet text pinned to whichever
+  // render first mounted it, silently stale once seatRoleTitle/personName
+  // resolve from a null first paint to their real value.
+  const copy =
+    variant === "news"
+      ? newsCopyFor(personName)
+      : variant === "seat"
+        ? seatCopyFor(seatRoleTitle, seatAreaName)
+        : COPY[variant];
+
+  // Native share sheet first (works on mobile browsers and lets the visitor
+  // pick WhatsApp/Messages/etc. directly) -- falls back to copying the link
+  // when navigator.share isn't available (most desktop browsers) or the
+  // visitor dismisses the share sheet without picking anything. Never
+  // throws either way, matching ShareMenu's handleNativeShareOrCopy.
+  const handleShareClick = useCallback(async () => {
+    if (!shareUrl) return;
+    trackShare(`mission_cta_${variant}`, shareTrackingId);
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({ title: copy.headline, text: shareText || copy.pitch, url: shareUrl });
+        return;
+      } catch {
+        // Dismissed or unsupported -- fall through to copy.
+      }
+    }
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        setShareCopied(true);
+        setTimeout(() => setShareCopied(false), 2500);
+      } catch {
+        // Clipboard permission denied -- nothing more we can do silently.
+      }
+    }
+  }, [shareUrl, shareText, shareTrackingId, variant, copy.headline, copy.pitch]);
+
   if (loading || user) return null;
 
-  const copy = variant === "news" ? newsCopyFor(personName) : COPY[variant];
   const href = `/auth?role=citizen&next=${encodeURIComponent(nextPath || "/")}`;
 
   return (
@@ -266,6 +352,23 @@ export default function MissionRegisterCTA({
               <Button as={Link} href={href} onClick={handleModalCtaClick} variant="primary" className="w-full justify-center !bg-orange-600 hover:!bg-orange-700 !shadow-lg hover:!shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-orange-500/0 before:via-white/10 before:to-orange-500/0 before:animate-pulse">
                 <span className="relative z-10">{copy.cta}</span>
               </Button>
+              {shareUrl && (
+                <button
+                  type="button"
+                  onClick={handleShareClick}
+                  className="w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-primary hover:text-primary/80 transition-colors cursor-pointer py-1"
+                >
+                  {shareCopied ? (
+                    <>
+                      <Check size={13} className="text-green-600" /> Link copied!
+                    </>
+                  ) : (
+                    <>
+                      <Share2 size={13} /> Share with your neighbors
+                    </>
+                  )}
+                </button>
+              )}
               <button
                 type="button"
                 onClick={dismissModal}
@@ -298,6 +401,23 @@ export default function MissionRegisterCTA({
             <Button as={Link} href={href} onClick={handleSidebarCtaClick} size="sm" variant="primary" className="w-full justify-center !bg-orange-600 hover:!bg-orange-700 !shadow-lg hover:!shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-orange-500/0 before:via-white/10 before:to-orange-500/0 before:animate-pulse">
               <span className="relative z-10">{copy.cta}</span>
             </Button>
+            {shareUrl && (
+              <button
+                type="button"
+                onClick={handleShareClick}
+                className="w-full flex items-center justify-center gap-1.5 text-[11px] font-semibold text-primary hover:text-primary/80 transition-colors cursor-pointer"
+              >
+                {shareCopied ? (
+                  <>
+                    <Check size={11} className="text-green-600" /> Link copied!
+                  </>
+                ) : (
+                  <>
+                    <Share2 size={11} /> Share with neighbors
+                  </>
+                )}
+              </button>
+            )}
           </Card>
         </div>
       )}

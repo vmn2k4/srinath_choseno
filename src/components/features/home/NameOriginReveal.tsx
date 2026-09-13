@@ -1,22 +1,19 @@
 "use client";
 
-// The "why Choseno" easter egg: read the last three letters backwards and
-// "Choseno" ends in "...eno" -> reversed, "one" ( positions 6,5,4 = o,n,e ).
-// Most visitors will never notice that just from the wordmark, so once this
-// section scrolls into view we spotlight it: a camera-style zoom pulses
-// through each letter left-to-right spelling "CHOSEN" (positions 0-5),
-// then a second, slower pass zooms specifically through positions 6, 5, 4
-// -- "O", "N", "E" -- which stay lit afterward so the word "ONE" visibly
-// hangs there once the pass finishes. The caption spelling out the pun is
-// always on screen (not gated behind the animation finishing), so the point
-// lands even for a visitor who skims past before the zoom completes -- and
-// a replay button lets anyone who wants to watch it again (or show a
-// friend) trigger it on demand.
+// The "why Choseno" easter egg, spelled out big in the hero (see also the
+// compact version that plays once per session in the navbar logo itself:
+// src/components/primitives/ChosenoLogo.tsx). Read the last three letters
+// backwards and "Choseno" ends in "...eno" -> reversed, "one" ( positions
+// 6,5,4 = o,n,e ). Most visitors will never notice that just from the
+// wordmark, so once this section scrolls into view we spotlight it: a
+// camera-style zoom pulses through each letter left-to-right spelling
+// "CHOSEN" (positions 0-5), then a second, slower pass zooms specifically
+// through positions 6, 5, 4 -- "O", "N", "E" -- which stay lit afterward so
+// the word "ONE" visibly hangs there once the pass finishes. "You are Chosen
+// + One" sits below at all times, not gated behind the animation finishing.
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { RotateCcw } from "lucide-react";
-import { useTranslation } from "@/contexts/LanguageContext";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -32,7 +29,6 @@ const ONE_STEP_MS = 480;
 
 export default function NameOriginReveal() {
   const reduceMotion = useReducedMotion();
-  const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [litIndices, setLitIndices] = useState<Set<number>>(new Set());
   const hasPlayedRef = useRef(false);
@@ -67,35 +63,37 @@ export default function NameOriginReveal() {
       delay += ONE_STEP_MS;
     });
 
-    // O, N, E stay lit after the pass -- no auto-reset. The caption is
-    // always visible anyway, so there's nothing left to reveal; a visitor
-    // who wants to watch the zoom again just hits replay.
+    // O, N, E stay lit after the pass -- no auto-reset. "You are Chosen +
+    // One" is always visible anyway, so there's nothing left to reveal.
     after(() => setActiveIndex(null));
   }, []);
 
   useEffect(() => clearPending, []);
 
-  const captionText = t(
-    "home.nameReveal.caption",
-    "Spelled backwards, “Choseno” ends where it starts — with ONE. Because you are."
+  // Not run through t() -- like the "Choseno" wordmark itself, this is the
+  // brand's own equation, not language content to translate.
+  const equation = (
+    <p className="font-display text-lg sm:text-xl font-extrabold tracking-wide">
+      You are Chosen <span className="text-primary">+</span> One
+    </p>
   );
 
   if (reduceMotion) {
     return (
-      <div className="mx-auto max-w-2xl text-center px-4 pb-6 sm:pb-8">
-        <p className="font-display text-2xl sm:text-3xl font-extrabold tracking-[0.15em] sm:tracking-[0.25em]">
+      <div className="mx-auto w-full sm:w-1/2 text-center px-4 pb-6 sm:pb-8">
+        <p className="font-display text-3xl sm:text-5xl font-extrabold tracking-[0.15em] sm:tracking-[0.25em]">
           Chos
           <span className="text-primary">en</span>
           <span className="text-primary">o</span>
         </p>
-        <p className="mt-3 text-text-muted text-sm sm:text-base leading-relaxed">{captionText}</p>
+        <div className="mt-3">{equation}</div>
       </div>
     );
   }
 
   return (
     <motion.div
-      className="mx-auto max-w-2xl text-center px-4 pb-6 sm:pb-8"
+      className="mx-auto w-full sm:w-1/2 text-center px-4 pb-6 sm:pb-8"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.6 }}
@@ -143,19 +141,7 @@ export default function NameOriginReveal() {
           one thing assistive tech actually reads. */}
       <p className="sr-only">Choseno</p>
 
-      <p className="mt-4 text-text-muted text-sm sm:text-base leading-relaxed">{captionText}</p>
-
-      <button
-        type="button"
-        onClick={() => {
-          hasPlayedRef.current = true;
-          playSequence();
-        }}
-        className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-text-muted hover:text-primary transition-colors cursor-pointer"
-      >
-        <RotateCcw size={12} aria-hidden="true" />
-        {t("home.nameReveal.replayLabel", "Watch it again")}
-      </button>
+      <div className="mt-4">{equation}</div>
     </motion.div>
   );
 }

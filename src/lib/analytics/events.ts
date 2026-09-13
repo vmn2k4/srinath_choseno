@@ -97,7 +97,7 @@ export function trackSelectContent(contentType: string, itemId: string) {
 // completing signup at /auth (a form/friction problem) -- see
 // MissionRegisterCTA.tsx for where this fires.
 export function trackMissionCtaClicked(params: {
-  variant: "home" | "news" | "district" | "elections";
+  variant: "home" | "news" | "district" | "elections" | "seat";
   trigger: "modal" | "sidebar";
 }) {
   sendEvent("mission_cta_clicked", { variant: params.variant, trigger: params.trigger });
@@ -108,7 +108,7 @@ export function trackMissionCtaClicked(params: {
 // shown plenty but nobody clicks it." Click-through rate = clicks /
 // impressions needs both sides recorded.
 export function trackMissionCtaShown(params: {
-  variant: "home" | "news" | "district" | "elections";
+  variant: "home" | "news" | "district" | "elections" | "seat";
   trigger: "modal" | "sidebar";
 }) {
   sendEvent("mission_cta_shown", { variant: params.variant, trigger: params.trigger });

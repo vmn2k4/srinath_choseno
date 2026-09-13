@@ -324,10 +324,12 @@ MUNI_OVERRIDES = {
     # boundary itself needs renaming/re-importing, not just this alias).
     "Daajing Giids (Village)": "Queen Charlotte",
 }
-PARTY_JUNK = {"served different", "city of greenwood", "village of montrose", "village of fruitvale"}
+PARTY_JUNK = {"served different", "city of greenwood", "village of montrose", "village of fruitvale", "yes"}
 PARTY_OVERRIDES = {
     "onecity association": "OneCity",
     "victoria for all": "Victoria For All",  # CivicInfo BC itself is case-inconsistent (also seen as "VICTORIA FOR ALL")
+    "surrey now electors society": "SURREY NOW",
+    "progress for langley association": "Progress for Langley",
     "a better city vancouver electors association": "ABC Vancouver",
     "affordable housing coalition of vancouver": "Affordable Housing",
     "coalition of progressive electors": "COPE",

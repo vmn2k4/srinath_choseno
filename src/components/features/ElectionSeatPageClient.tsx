@@ -72,6 +72,8 @@ import {
 import { createClient } from "@/lib/supabase/client";
 import { buildSeatSlug, buildCandidateSlug, buildPoliticianWallSlug, extractIdFromSlug } from "@/lib/utils/slugs";
 import { trackElectionViewed } from "@/lib/analytics/events";
+import { SITE_URL } from "@/lib/constants/site";
+import MissionRegisterCTA from "./MissionRegisterCTA";
 
 interface ElectionSeatPageClientProps {
   seatId: string;
@@ -686,9 +688,24 @@ export default function ElectionSeatPageClient({
 
   const alreadyApplied = myCandidacies.some((c) => c.seat_id === seatId);
   const isSeatAdmin = role === "admin" || adminStatus?.my_application_status === "approved";
+  const seatAreaName = seat.map_shapes?.name || null;
+  const seatUrl = `${SITE_URL}/elections/seat/${buildSeatSlug(seat)}`;
 
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8">
+      <MissionRegisterCTA
+        variant="seat"
+        nextPath={`/elections/seat/${buildSeatSlug(seat)}`}
+        seatRoleTitle={seat.role_title}
+        seatAreaName={seatAreaName}
+        shareUrl={seatUrl}
+        shareText={
+          seatAreaName
+            ? `See who's running for ${seat.role_title} of ${seatAreaName} and rate them anonymously on Choseno.`
+            : `See who's running for ${seat.role_title} and rate them anonymously on Choseno.`
+        }
+        shareTrackingId={seatId}
+      />
       <div className="w-full min-w-0">
         {/* Header Card */}
         <Card padding="md" className="mb-6 flex items-center justify-between gap-3 flex-wrap">
