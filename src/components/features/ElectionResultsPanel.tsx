@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import { TrendingUp, Calendar, MapPin, Heart, Users, Share2, ExternalLink, ChevronRight } from "lucide-react";
+import { TrendingUp, Calendar, MapPin, Heart, Users, Share2, ExternalLink, ChevronRight, Info } from "lucide-react";
 import { Card, Avatar, Badge, Button, StarRating } from "@/components/primitives";
 import ShareMenu, { type ShareData } from "./ShareMenu";
 import PoliticianInlineRating from "./PoliticianInlineRating";
@@ -226,8 +226,18 @@ export default function ElectionResultsPanel({
         {/* Desktop meta: stacked, right-aligned column next to the header.
             Hidden on mobile — stacking three right-aligned lines under a
             left-aligned title read as disjointed and ate a lot of height;
-            the compact single-line row below replaces it there. */}
-        <div className="hidden sm:flex flex-col items-end gap-1 text-xs text-text-muted shrink-0">
+            the compact single-line row below replaces it there.
+            ml-auto matters once this wraps onto its own line below the
+            title (a long leading sentence + this column don't always fit
+            side by side even past the sm breakpoint) — without it, the
+            parent's flex-wrap drops this box flush left on that new line
+            while its own text stays right-aligned *within* the box,
+            producing a staircase (the longest line spans full width, the
+            two shorter ones look shifted right relative to it). ml-auto
+            pushes the whole box flush right on whichever line it lands on,
+            so items-end's ragged-left/flush-right shape actually reads
+            against the card's right edge instead of floating mid-air. */}
+        <div className="hidden sm:flex flex-col items-end gap-1 text-xs text-text-muted shrink-0 ml-auto">
           {formattedDate && (
             <span className="flex items-center gap-1">
               <Calendar size={13} className="text-accent" />
@@ -343,7 +353,7 @@ export default function ElectionResultsPanel({
                     type="button"
                     variant={isSupporting ? "primary" : "outline"}
                     size="sm"
-                    className={`relative gap-1.5 !py-1.5 !px-3 text-xs font-bold transition-transform hover:scale-105 active:scale-95 ${
+                    className={`relative gap-1.5 !py-1.5 !px-2.5 lg:!px-3 text-xs font-bold transition-transform hover:scale-105 active:scale-95 ${
                       isSupporting ? "" : "!border-2"
                     }`}
                     style={isSupporting ? {
@@ -362,7 +372,15 @@ export default function ElectionResultsPanel({
                     title={isSupporting ? `Withdraw your support for ${name}` : `Cast your support for ${name}`}
                   >
                     <Heart size={12} className={isSupporting ? "fill-current" : ""} />
-                    {isSupporting ? "Supported" : "Support"}
+                    {/* Text label only once there's room to spare -- below
+                        that this row already has Support + bar + pct + heart
+                        count + stars + View Profile all fighting for one
+                        line, and the bar (the only flexible item) was the one
+                        losing, shrinking to a sliver or nothing. Icon alone
+                        (with the title tooltip above) reads fine at a glance;
+                        the bar/percentage/count next to it carry the same
+                        info anyway. */}
+                    <span className="hidden lg:inline">{isSupporting ? "Supported" : "Support"}</span>
                   </Button>
                 </div>
 
@@ -399,7 +417,7 @@ export default function ElectionResultsPanel({
                     className="shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
                     title={isRatingExpanded ? "Close rating" : `Rate ${name}`}
                   >
-                    <StarRating value={avgRating} count={ratingCount} size="xs" />
+                    <StarRating value={avgRating} count={ratingCount} size="xs" countClassName="hidden lg:inline" />
                   </button>
                 )}
 
@@ -410,10 +428,11 @@ export default function ElectionResultsPanel({
                       e.stopPropagation();
                       setExpandedBioId(isBioExpanded ? null : candidate.id);
                     }}
-                    className="text-xs font-semibold text-primary hover:text-primary-hover transition-colors shrink-0"
+                    className="flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary-hover transition-colors shrink-0"
                     title={isBioExpanded ? "Hide bio" : `Show a one-line bio for ${name}`}
                   >
-                    {isBioExpanded ? "Less" : "Read more"}
+                    <Info size={14} />
+                    <span className="hidden lg:inline">{isBioExpanded ? "Less" : "Read more"}</span>
                   </button>
                 )}
 
@@ -425,7 +444,7 @@ export default function ElectionResultsPanel({
                   className="flex items-center gap-0.5 text-xs font-semibold text-primary hover:text-primary-hover transition-colors shrink-0"
                   title={`View ${name}'s full profile`}
                 >
-                  <span className="hidden sm:inline">View Profile</span>
+                  <span className="hidden lg:inline">View Profile</span>
                   <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                 </button>
               </div>

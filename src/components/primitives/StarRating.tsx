@@ -21,12 +21,18 @@ export default function StarRating({
   size = "sm",
   onChange,
   className = "",
+  countClassName = "",
 }: {
   value: number;
   count?: number;
   size?: StarRatingSize;
   onChange?: (rating: number) => void;
   className?: string;
+  // Extra classes on the "4.5 (3)" / "New" count text specifically -- lets a
+  // tight layout (e.g. ElectionResultsPanel's candidate rows) collapse to
+  // just the stars below a given breakpoint without affecting every other
+  // caller's default (always-visible) behavior.
+  countClassName?: string;
 }) {
   const [hoverValue, setHoverValue] = useState<number | null>(null);
   const interactive = typeof onChange === "function";
@@ -68,7 +74,7 @@ export default function StarRating({
         })}
       </span>
       {typeof count === "number" && (
-        <span className="text-text-muted text-xs font-medium">
+        <span className={`text-text-muted text-xs font-medium ${countClassName}`}>
           {value > 0 ? value.toFixed(1) : "New"}
           {count > 0 ? ` (${count})` : ""}
         </span>
