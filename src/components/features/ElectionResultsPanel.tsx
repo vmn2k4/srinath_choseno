@@ -5,8 +5,10 @@ import { TrendingUp, Calendar, MapPin, Heart, Users, Share2, ExternalLink, Chevr
 import { Card, Avatar, Badge, Button, StarRating } from "@/components/primitives";
 import ShareMenu, { type ShareData } from "./ShareMenu";
 import PoliticianInlineRating from "./PoliticianInlineRating";
+import BioLinks from "./BioLinks";
 import { SITE_URL } from "@/lib/constants/site";
 import { buildSeatSlug } from "@/lib/utils/slugs";
+import { parseBioLinks } from "@/lib/utils/bioLinks";
 
 // Comprehensive "who's leading" view for a seat's candidate roster.
 // No new fields, no new table: the underlying number is the same
@@ -102,15 +104,35 @@ export default function ElectionResultsPanel({
       // bioSnippet: first ~6 words of the bio, always shown under the
       // candidate's name -- a real one-line bio (no newlines) used to mean
       // the whole thing rendered as "one line", which in practice was a
-      // full paragraph wrapping across the row. bioFull: the whole bio,
-      // only rendered once "Read more" (inline right after the snippet)
-      // is clicked.
+      // full paragraph wrapping across the row. bioProse/bioLinks: the same
+      // "Website: ... | Facebook: ..." trailing-line parse used on the full
+      // profile card (parseBioLinks/BioLinks), so "Read more" reveals real
+      // clickable links instead of the raw pipe-separated text.
       const bioFull = polEntry?.bio?.trim() || null;
+      const { text: bioProse, links: bioLinks } = parseBioLinks(bioFull);
       const bioWords = bioFull ? bioFull.replace(/\s+/g, " ").split(" ").filter(Boolean) : [];
       const bioSnippet = bioWords.length
         ? bioWords.slice(0, 6).join(" ") + (bioWords.length > 6 ? "…" : "")
         : null;
-      return { candidate: c, name, avatarUrl, partyName, bioSnippet, bioFull, hasMoreBio: bioWords.length > 6, supporterCount, avgRating, ratingCount };
+      // Worth a "Read more" whenever there's prose past the snippet OR
+      // there are parsed links to reveal -- a short bio that's ENTIRELY a
+      // links line (e.g. "Links: Website: ..." with no other prose) still
+      // needs the toggle so those links can render as clickable chips
+      // instead of sitting there as plain, un-clickable snippet text.
+      const hasMoreBio = bioWords.length > 6 || bioLinks.length > 0;
+      return {
+        candidate: c,
+        name,
+        avatarUrl,
+        partyName,
+        bioSnippet,
+        bioProse,
+        bioLinks,
+        hasMoreBio,
+        supporterCount,
+        avgRating,
+        ratingCount,
+      };
     })
     .sort((a, b) => b.supporterCount - a.supporterCount);
 
@@ -281,7 +303,7 @@ export default function ElectionResultsPanel({
       </div>
 
       <div className="space-y-1.5">
-        {rows.map(({ candidate, name, avatarUrl, partyName, bioSnippet, bioFull, hasMoreBio, supporterCount, avgRating, ratingCount }) => {
+        {rows.map(({ candidate, name, avatarUrl, partyName, bioSnippet, bioProse, bioLinks, hasMoreBio, supporterCount, avgRating, ratingCount }) => {
           const pct = totalSupport > 0 ? Math.round((supporterCount / totalSupport) * 1000) / 10 : 0;
           const isTopRow = totalSupport > 0 && supporterCount === topSupportCount;
           const isLeader = leader?.candidate.id === candidate.id;
@@ -444,13 +466,24 @@ export default function ElectionResultsPanel({
             </div>
 
             {bioSnippet && (
-              <p className="-mt-1 pl-3 sm:pl-11 pr-3 text-xs text-text-muted">
-                <span className={isBioExpanded ? "whitespace-pre-line" : ""}>
-                  {isBioExpanded ? bioFull : bioSnippet}
-                </span>
+              <div className="-mt-1 pl-3 sm:pl-11 pr-3 text-xs text-text-muted">
+                {isBioExpanded ? (
+                  <>
+                    {bioProse && <p className="whitespace-pre-line">{bioProse}</p>}
+                    {/* Real clickable links (parsed out of the bio's
+                        trailing "Website: ... | Facebook: ..." line) instead
+                        of dumping that whole pipe-separated line as inert
+                        text -- same BioLinks chip row used on the full
+                        candidate profile card. */}
+                    <BioLinks links={bioLinks} />
+                  </>
+                ) : (
+                  <span>{bioSnippet}</span>
+                )}
                 {/* Only worth a toggle when the bio actually runs past the
-                    6-word snippet -- a genuinely short bio has nothing else
-                    to expand into. */}
+                    6-word snippet, or has links the snippet can't show as
+                    clickable -- a genuinely short, link-free bio has
+                    nothing else to expand into. */}
                 {hasMoreBio && (
                   <button
                     type="button"
@@ -458,12 +491,14 @@ export default function ElectionResultsPanel({
                       e.stopPropagation();
                       setExpandedBioId(isBioExpanded ? null : candidate.id);
                     }}
-                    className="ml-1 font-semibold text-primary hover:text-primary-hover transition-colors"
+                    className={`font-semibold text-primary hover:text-primary-hover transition-colors ${
+                      isBioExpanded ? "mt-0.5" : "ml-1"
+                    }`}
                   >
                     {isBioExpanded ? "Show less" : "Read more"}
                   </button>
                 )}
-              </p>
+              </div>
             )}
 
             {isRatingExpanded && politicianId && (

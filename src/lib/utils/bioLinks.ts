@@ -66,6 +66,12 @@ const NO_HANDLE_FALLBACK = new Set(["linkedin"]);
 
 function resolveLinkHref(label: string, value: string): string | null {
   const key = label.trim().toLowerCase();
+  // A value that's already a full http(s) URL is linkable as-is even when
+  // it has an embedded space (some scraped Facebook URLs came through as
+  // ".../First Last" instead of a proper slug) -- encodeURI turns that into
+  // a valid href rather than isUrlLike's stricter no-whitespace check
+  // silently dropping the link entirely.
+  if (/^https?:\/\//i.test(value)) return encodeURI(value);
   if (isUrlLike(value)) return ensureProtocol(value);
   if (key === "website" || NO_HANDLE_FALLBACK.has(key)) return null;
   const base = HANDLE_BASE_URL[key];
@@ -78,8 +84,16 @@ export function parseBioLinks(bio: string | null | undefined): ParsedBio {
   if (!bio) return { text: "", links: [] };
 
   const paragraphs = bio.split(/\n{2,}/);
-  const lastParagraph = paragraphs[paragraphs.length - 1]?.trim();
-  if (!lastParagraph || !lastParagraph.includes("|")) {
+  const rawLastParagraph = paragraphs[paragraphs.length - 1]?.trim();
+  if (!rawLastParagraph) {
+    return { text: bio, links: [] };
+  }
+  // sync_bc_civicinfo_candidates.py's build_bio() prefixes the whole
+  // pipe-separated line with a literal "Links: " label (see
+  // docs/CANDIDATE_DATA_PULL_LOG.md) -- strip it before segment-parsing so
+  // it doesn't get swallowed into the first segment's label/value.
+  const lastParagraph = rawLastParagraph.replace(/^links:\s*/i, "");
+  if (!lastParagraph.includes("|")) {
     return { text: bio, links: [] };
   }
 
@@ -98,6 +112,10 @@ export function parseBioLinks(bio: string | null | undefined): ParsedBio {
     href: resolveLinkHref(label, value),
   }));
 
+  // No "|| bio" fallback here: when the bio IS just the links paragraph
+  // (nothing before it), the correct prose is "" -- falling back to the
+  // raw, un-stripped bio would reprint the same links as inert text right
+  // next to the clickable chips built from `links` above.
   const text = paragraphs.slice(0, -1).join("\n\n").trim();
-  return { text: text || bio, links };
+  return { text, links };
 }
