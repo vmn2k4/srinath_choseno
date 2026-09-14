@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Video, StopCircle, RefreshCw, Upload, FileVideo, ShieldAlert } from "lucide-react";
 import { uploadVideo, getVideoPublicUrl, normalizeMediaUrl } from "@/lib/services/video";
 import { Button } from "@/components/primitives";
@@ -28,6 +28,28 @@ export default function VideoRecorder({
   const timerRef = useRef<any>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  // getUserMedia's stream was previously only ever released inside
+  // mediaRecorder.onstop -- i.e. only if the user explicitly clicked "Stop
+  // Recording". Every other way this component goes away mid-recording
+  // (closing the video-interview modal, the interview player advancing to
+  // the next question and unmounting this one, navigating off the page)
+  // left the camera/mic stream running with no code path left to stop it --
+  // the browser tab kept showing the recording indicator indefinitely.
+  // mediaRecorder.stop() is a no-op if already inactive; track.stop() is
+  // idempotent, so this is safe to run even when onstop already handled it.
+  useEffect(() => {
+    return () => {
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+        try {
+          mediaRecorderRef.current.stop();
+        } catch {
+          // ignore -- we're tearing down regardless
+        }
+      }
+      streamRef.current?.getTracks().forEach((track) => track.stop());
+    };
+  }, []);
 
   const startRecording = async () => {
     setCameraError(null);
