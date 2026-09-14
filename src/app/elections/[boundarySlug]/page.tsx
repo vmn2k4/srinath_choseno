@@ -64,8 +64,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: { canonical: canonicalUrl },
-    openGraph: { title, description, url: canonicalUrl, siteName: "Choseno", type: "website" },
-    twitter: { card: "summary_large_image", title, description },
+    // No per-boundary dynamic card (unlike the seat/wall/news pages, which
+    // proxy a rendered PNG from a Supabase Edge Function) -- this route
+    // never had an `images` field at all, which is why sharing a boundary
+    // page (e.g. /elections/white-rock-21306) on Facebook/Twitter showed no
+    // preview image whatsoever, not even a fallback. Reusing the same
+    // static, already-branded asset the parent /elections list page uses is
+    // a real fix, not a placeholder: same site section, same design intent.
+    // A boundary-specific dynamic card (e.g. "White Rock — 22 candidates
+    // across 3 races") would need a new Edge Function, same pattern as
+    // generate-election-og-image -- a legitimate follow-up, not done here.
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "Choseno",
+      type: "website",
+      images: [{ url: `${BASE_URL}/og-elections.jpg`, width: 1200, height: 630, alt: title }],
+    },
+    twitter: { card: "summary_large_image", title, description, images: [`${BASE_URL}/og-elections.jpg`] },
   };
 }
 

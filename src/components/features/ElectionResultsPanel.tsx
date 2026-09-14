@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import { TrendingUp, Calendar, MapPin, Heart, Users, Share2, ExternalLink, ChevronRight, Info } from "lucide-react";
+import { TrendingUp, Calendar, MapPin, Heart, Users, Share2, ExternalLink, ChevronRight } from "lucide-react";
 import { Card, Avatar, Badge, Button, StarRating } from "@/components/primitives";
 import ShareMenu, { type ShareData } from "./ShareMenu";
 import PoliticianInlineRating from "./PoliticianInlineRating";
@@ -99,10 +99,18 @@ export default function ElectionResultsPanel({
         ? polEntry.political_parties[0]
         : polEntry?.political_parties;
       const partyName = c.party_name || partyEntry?.name || null;
-      // First non-empty line only — "Read more" is a one-line teaser, not
-      // the full bio (that's what "View Profile" is for).
-      const bioSnippet = polEntry?.bio?.split("\n").find((line) => line.trim())?.trim() || null;
-      return { candidate: c, name, avatarUrl, partyName, bioSnippet, supporterCount, avgRating, ratingCount };
+      // bioSnippet: first ~6 words of the bio, always shown under the
+      // candidate's name -- a real one-line bio (no newlines) used to mean
+      // the whole thing rendered as "one line", which in practice was a
+      // full paragraph wrapping across the row. bioFull: the whole bio,
+      // only rendered once "Read more" (inline right after the snippet)
+      // is clicked.
+      const bioFull = polEntry?.bio?.trim() || null;
+      const bioWords = bioFull ? bioFull.replace(/\s+/g, " ").split(" ").filter(Boolean) : [];
+      const bioSnippet = bioWords.length
+        ? bioWords.slice(0, 6).join(" ") + (bioWords.length > 6 ? "…" : "")
+        : null;
+      return { candidate: c, name, avatarUrl, partyName, bioSnippet, bioFull, hasMoreBio: bioWords.length > 6, supporterCount, avgRating, ratingCount };
     })
     .sort((a, b) => b.supporterCount - a.supporterCount);
 
@@ -273,7 +281,7 @@ export default function ElectionResultsPanel({
       </div>
 
       <div className="space-y-1.5">
-        {rows.map(({ candidate, name, avatarUrl, partyName, bioSnippet, supporterCount, avgRating, ratingCount }) => {
+        {rows.map(({ candidate, name, avatarUrl, partyName, bioSnippet, bioFull, hasMoreBio, supporterCount, avgRating, ratingCount }) => {
           const pct = totalSupport > 0 ? Math.round((supporterCount / totalSupport) * 1000) / 10 : 0;
           const isTopRow = totalSupport > 0 && supporterCount === topSupportCount;
           const isLeader = leader?.candidate.id === candidate.id;
@@ -336,11 +344,11 @@ export default function ElectionResultsPanel({
                   column), a progress bar that now actually extends to
                   fill the row, percentage, vote count, and a tap-through
                   chevron. Its own full-width row on mobile. */}
-              {/* flex-wrap on mobile only -- adding "Read more" made this
-                  row one item too many to fit unwrapped at phone widths
-                  (Support + bar + pct + heart + stars + Read more + View
-                  Profile); sm:flex-nowrap keeps the desktop single-line
-                  layout exactly as before. */}
+              {/* flex-wrap on mobile only -- Support + bar + pct + heart +
+                  stars + View Profile is already tight at phone widths;
+                  sm:flex-nowrap keeps the desktop single-line layout. The
+                  bio teaser lives in its own full-width line below (out of
+                  this row entirely) so it doesn't compete for space here. */}
               <div className="flex flex-wrap items-center gap-2 sm:flex-nowrap sm:gap-2.5 sm:flex-1 sm:min-w-0">
                 <div className="relative shrink-0">
                   {!isSupporting && (
@@ -421,21 +429,6 @@ export default function ElectionResultsPanel({
                   </button>
                 )}
 
-                {bioSnippet && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setExpandedBioId(isBioExpanded ? null : candidate.id);
-                    }}
-                    className="flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary-hover transition-colors shrink-0"
-                    title={isBioExpanded ? "Hide bio" : `Show a one-line bio for ${name}`}
-                  >
-                    <Info size={14} />
-                    <span className="hidden lg:inline">{isBioExpanded ? "Less" : "Read more"}</span>
-                  </button>
-                )}
-
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -450,9 +443,26 @@ export default function ElectionResultsPanel({
               </div>
             </div>
 
-            {isBioExpanded && bioSnippet && (
-              <p className="-mt-1 pl-3 sm:pl-11 pr-3 text-xs text-text-muted truncate">
-                {bioSnippet}
+            {bioSnippet && (
+              <p className="-mt-1 pl-3 sm:pl-11 pr-3 text-xs text-text-muted">
+                <span className={isBioExpanded ? "whitespace-pre-line" : ""}>
+                  {isBioExpanded ? bioFull : bioSnippet}
+                </span>
+                {/* Only worth a toggle when the bio actually runs past the
+                    6-word snippet -- a genuinely short bio has nothing else
+                    to expand into. */}
+                {hasMoreBio && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setExpandedBioId(isBioExpanded ? null : candidate.id);
+                    }}
+                    className="ml-1 font-semibold text-primary hover:text-primary-hover transition-colors"
+                  >
+                    {isBioExpanded ? "Show less" : "Read more"}
+                  </button>
+                )}
               </p>
             )}
 

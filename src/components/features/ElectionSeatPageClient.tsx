@@ -52,7 +52,6 @@ import {
   ArrowRight,
   ExternalLink,
   Video,
-  PlayCircle,
   Send,
   Trash2,
   ChevronDown,
@@ -67,7 +66,6 @@ import {
   Select,
   Spinner,
   EmptyState,
-  Avatar,
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { buildSeatSlug, buildCandidateSlug, buildPoliticianWallSlug, extractIdFromSlug } from "@/lib/utils/slugs";
@@ -1175,17 +1173,14 @@ export default function ElectionSeatPageClient({
             />
           ) : (
             <div className="space-y-6">
-              {/* Tab strip: "Community Support" poll pill first, then one pill per
-                  candidate — same row, same pill styling, so the poll reads
-                  as a tab among the candidate tabs rather than a separate
-                  control above them. Wraps into a multi-row grid instead of
-                  scrolling horizontally — with elections running 10-30+
-                  candidates, a single endless row meant most of the roster
-                  was never seen without scrolling. Kept deliberately compact
-                  (tiny avatar, name only, no stats subtitle) so the whole
-                  roster fits in one or two rows instead of five or six —
-                  the full engagement stats/photo badge still show once you
-                  land on a candidate's own hero card below. */}
+              {/* Tab strip: just "Community Support" and "Candidate Interview".
+                  Used to also carry one pill per candidate, but with
+                  elections running 10-30+ candidates that turned into a wall
+                  of pills before you even reached the content -- individual
+                  candidates are still reachable via "View Profile" in the
+                  Community Support list below (handleSelectCandidate is the
+                  same function either way), so nothing is lost by dropping
+                  the roster from this strip. */}
               <div className="flex flex-wrap gap-1.5 mb-5">
                 <div
                   role="button"
@@ -1251,68 +1246,6 @@ export default function ElectionSeatPageClient({
                   </span>
                 </div>
 
-                {candidates.map((c) => {
-                  const name =
-                    c.display_name ||
-                    c.profiles?.full_name ||
-                    "Candidate";
-                  const isSelected = c.id === activeMainTab;
-                  const pol = c.profiles?.politician_profiles;
-                  const avatarUrl = Array.isArray(pol) ? pol[0]?.avatar_url : pol?.avatar_url;
-                  const hasVideo = candidateIdsWithVideo.has(c.id);
-
-                  return (
-                    <div
-                      key={c.id}
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => handleSelectCandidate(c)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          handleSelectCandidate(c);
-                        }
-                      }}
-                      title={name}
-                      className={`flex items-center gap-1.5 shrink-0 pl-1.5 pr-2.5 py-1 rounded-full border transition-all cursor-pointer ${
-                        isSelected
-                          ? "border-primary bg-primary/10"
-                          : "border-border-light bg-surface-hover/40 hover:border-primary/40 hover:bg-surface-hover"
-                      }`}
-                    >
-                      <div className="relative shrink-0">
-                        <Avatar src={avatarUrl} name={name} size="xs" />
-                        {hasVideo && (
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setReelForCandidate({ id: c.id, name });
-                            }}
-                            className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-primary text-white flex items-center justify-center cursor-pointer"
-                            title={`Play ${name}'s interview`}
-                          >
-                            <PlayCircle size={7} />
-                          </button>
-                        )}
-                      </div>
-
-                      <span
-                        className={`text-xs font-medium truncate max-w-[92px] ${
-                          isSelected ? "text-primary-light" : "text-text-secondary"
-                        }`}
-                      >
-                        {name}
-                      </span>
-                      {c.nomination_filed && (
-                        <CheckCircle2
-                          size={11}
-                          className="text-success shrink-0"
-                        />
-                      )}
-                    </div>
-                  );
-                })}
               </div>
 
               {activeMainTab === "interview" && seat?.elections?.id && (
