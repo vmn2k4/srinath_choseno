@@ -340,7 +340,14 @@ export default function ElectionResultsPanel({
                   sliver next to a wall of empty gap. */}
               <div className="flex items-center gap-2.5 sm:w-48 sm:shrink-0 sm:min-w-0">
                 <Avatar src={avatarUrl} name={name} size="sm" />
-                <div className="flex items-baseline gap-1.5 min-w-0 flex-1">
+                {/* flex-wrap + the "2xs" badge size below: name + party +
+                    "Leading"/"Tied" together don't reliably fit this
+                    column's fixed width on one line, and without wrapping
+                    the badge just overflowed past the column, painting
+                    underneath the Support button instead of being clipped
+                    or pushed down. Wrapping drops it to its own line
+                    inside the column instead. */}
+                <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 min-w-0 flex-1">
                   <span className="text-[15px] sm:text-sm font-bold text-text-main group-hover:underline leading-tight truncate shrink-0">
                     {name}
                   </span>
@@ -350,12 +357,12 @@ export default function ElectionResultsPanel({
                     </span>
                   )}
                   {isLeader && (
-                    <Badge tone="emerald" size="xs" shape="pill" className="shrink-0">
+                    <Badge tone="emerald" size="2xs" shape="pill" className="shrink-0">
                       Leading
                     </Badge>
                   )}
                   {isTie && isTopRow && (
-                    <Badge tone="amber" size="xs" shape="pill" className="shrink-0">
+                    <Badge tone="amber" size="2xs" shape="pill" className="shrink-0">
                       Tied
                     </Badge>
                   )}

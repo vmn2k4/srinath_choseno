@@ -14,6 +14,9 @@ const TONES = {
 } as const;
 
 const SIZES = {
+  // For tight inline spots (e.g. a status pill squeezed next to a name) where
+  // even "xs" runs a compact row out of room -- smaller text and padding.
+  "2xs": "text-[9px] px-1 py-px",
   xs: "text-[10px] px-1.5 py-0.5",
   sm: "text-xs px-2.5 py-1",
 } as const;
