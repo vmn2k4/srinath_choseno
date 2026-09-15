@@ -2,17 +2,20 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { MapPin, ArrowRight, Layers, Network, ChevronDown, Sparkles } from "lucide-react";
+import { MapPin, ArrowRight, Layers, Network, ChevronDown, Sparkles, Check, Loader2 } from "lucide-react";
 import InteractiveLocationPicker from "./InteractiveLocationPicker";
 import BoundaryDirectoryClient from "./BoundaryDirectoryClient";
 import MissionRegisterCTA from "./MissionRegisterCTA";
-import { findBoundariesByPoint } from "@/lib/services/boundaries";
+import { findBoundariesByPoint, syncUserBoundaryMemberships } from "@/lib/services/boundaries";
 import { getActiveSeatsByShapeIds, getCandidatesBySeatIds, resolveRepresentationBranch } from "@/lib/services/elections";
+import { getOwnProfile, upsertProfileCore } from "@/lib/services/profile";
 import { buildBoundarySlug, buildSeatSlug } from "@/lib/utils/slugs";
-import { Card, Spinner } from "@/components/primitives";
+import { Card, Spinner, Button } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { trackFindDistrictCompleted } from "@/lib/analytics/events";
 import { useTranslation } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { useLocationGate } from "@/components/LocationRequiredGate";
 import type { RepresentationBranch } from "./RepresentationBranchTree";
 import { useGuestLocation, setGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
 import { REP_LIST_GATING_ENABLED } from "@/lib/constants/site";
@@ -67,6 +70,8 @@ interface FindMyDistrictClientProps {
 export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyDistrictClientProps) {
   const { t } = useTranslation();
   const supabase = createClient();
+  const { user } = useAuth();
+  const { clearNeedsLocation } = useLocationGate();
   const guestLocation = useGuestLocation();
   const hasInitialBoundaries = initialBoundaries.length > 0;
   const [boundaries, setBoundaries] = useState<MatchedBoundary[] | null>(
@@ -80,6 +85,8 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
   const [selectedLat, setSelectedLat] = useState<number | undefined>(undefined);
   const [selectedLng, setSelectedLng] = useState<number | undefined>(undefined);
   const [seats, setSeats] = useState<SeatWithElections[]>([]);
+  const [settingProfileLocation, setSettingProfileLocation] = useState(false);
+  const [profileLocationSet, setProfileLocationSet] = useState(false);
   // Below md: if we already know the constituency, the map/search picker
   // starts collapsed to a "Change location" pill instead of covering the
   // screen with a GPS-permission overlay on every visit. md+ always shows
@@ -219,6 +226,44 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
       setGuestLocation({ lat, lng, boundaries: matched });
     }
     await Promise.all([resolveAllBranches(matched), resolveAllSeats(matched)]);
+    // A freshly looked-up location isn't this account's location yet --
+    // only setAsMyLocation() below actually writes it, so a signed-in user
+    // researching a district other than their own (a candidate scoping a
+    // future race, a citizen checking a friend's address) never has their
+    // own profile silently changed just by looking something up.
+    setProfileLocationSet(false);
+  };
+
+  // Persists the just-looked-up location to this account -- the same two
+  // writes SetLocationClient's finish() makes (sync boundary memberships +
+  // upsert profile core), reused here rather than reimplemented. Explicit,
+  // opt-in click only; see the comment on setProfileLocationSet(false)
+  // above for why a lookup alone must never do this on its own.
+  const setAsMyLocation = async () => {
+    if (!user || selectedLat === undefined || selectedLng === undefined || !boundaries) return;
+    setSettingProfileLocation(true);
+    try {
+      const { data: profile } = await getOwnProfile(supabase, user.id, { columns: "role, full_name" });
+      const role = (profile as { role?: string } | null)?.role || "normal";
+      const fullName = (profile as { full_name?: string | null } | null)?.full_name ?? null;
+
+      const { error: syncError } = await syncUserBoundaryMemberships(supabase, selectedLat, selectedLng);
+      if (syncError) throw syncError;
+
+      const matchedNames = boundaries.map((b) => b.name).join(", ") || null;
+      const derivedCountry = boundaries[0]?.country ?? null;
+      await upsertProfileCore(supabase, user.id, { role, fullName, country: derivedCountry, constituency: matchedNames });
+
+      // Relevant if this account is a politician the gate would otherwise
+      // still think needs a location (see LocationRequiredGate's own
+      // comment) -- cheap to call even when it doesn't apply.
+      clearNeedsLocation();
+      setProfileLocationSet(true);
+    } catch (err) {
+      console.error("Failed to set profile location:", err);
+    } finally {
+      setSettingProfileLocation(false);
+    }
   };
 
   return (
@@ -292,7 +337,31 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
                   </Card>
                 ) : (
                   <>
-                    <h2 className="text-base font-bold text-text-main">{t("findDistrict.yourBoundaries")}</h2>
+                    <div className="flex items-center justify-between gap-3 flex-wrap">
+                      <h2 className="text-base font-bold text-text-main">{t("findDistrict.yourBoundaries")}</h2>
+                      {user && selectedLat !== undefined && selectedLng !== undefined && (
+                        <Button
+                          size="sm"
+                          variant={profileLocationSet ? "secondary" : "outline"}
+                          onClick={setAsMyLocation}
+                          disabled={settingProfileLocation || profileLocationSet}
+                          className="gap-1.5 text-xs"
+                        >
+                          {settingProfileLocation ? (
+                            <Loader2 size={13} className="animate-spin" />
+                          ) : profileLocationSet ? (
+                            <Check size={13} className="text-success" />
+                          ) : (
+                            <MapPin size={13} />
+                          )}
+                          {settingProfileLocation
+                            ? "Saving..."
+                            : profileLocationSet
+                            ? "Set as your location"
+                            : "Set as my location"}
+                        </Button>
+                      )}
+                    </div>
                     <div className="space-y-3">
                       {boundaries.map((b) => (
                         <Link
