@@ -55,6 +55,11 @@ Complete guide to all Choseno documentation — architecture, features, data pip
 - **[OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md](OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md)** — Complete implementation status, admin workflow, conditions & constraints, service layer API reference, maintenance tasks
 - **[OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md](OFFICEHOLDER_WALL_CLAIM_AND_MERGE.md)** — Design rationale, schema decisions, merge rules, safety checklist, future enhancements
 
+### Candidate Outreach
+
+- **[CANDIDATE_OUTREACH_CALLING.md](CANDIDATE_OUTREACH_CALLING.md)** — Election seat admin's AI-voice outbound calling option (Twilio + xAI Grok Voice), alongside the existing email invite flow; call log, transcript, outcome, and follow-up tracking in `/admin/calls`
+- **[CALL_AGENT_SCRIPT.md](CALL_AGENT_SCRIPT.md)** — The console.x.ai agent persona/call-flow script and setup checklist
+
 ### Politician & Office Holders
 
 - **[ROLES_AND_RESPONSIBILITIES_GUIDE.md](ROLES_AND_RESPONSIBILITIES_GUIDE.md)** — Guide for `election_role_types`, province-specific localized roles, rich descriptions, and tree rendering
@@ -229,6 +234,7 @@ Admin creates election (boundary + role + dates) → candidates register
 | **Unified wall claim eligibility + self-service requests** | [OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md](OFFICEHOLDER_CLAIM_SYSTEM_STATUS.md) §4.6 | Live (one eligibility check for both officeholder and generic politician walls; "Claim This Wall" now also works self-service on officeholder walls with no admin invite needed; fixed a bug where the claim button showed on walls that already had a real owner) |
 | **Mayor/Councillor HTML outreach campaign** | [OUTREACH_GUIDE.md](../OUTREACH_GUIDE.md) §4 | Live (`/admin/campaign` — professional Mayor/Councillor HTML templates, search-to-add recipients via the nav-bar search RPC, per-recipient editable wall slug, send preview; fixed a `send-email` MIME bug where HTML sends with non-ASCII characters were silently dropped by receiving mail servers despite reporting success) |
 | **All 6 campaign email templates — required/optional fields per template** | [CAMPAIGN_EMAIL_TEMPLATES.md](CAMPAIGN_EMAIL_TEMPLATES.md) | Live (field-by-field reference for Mayor, Councillor, Candidate Nominees, Civic Parties, Students Association, Professor/Academic — CSV/JSON import format, `wall_slug` pitfalls, what happens automatically on send) |
+| **AI-voice outbound candidate calling** | [CANDIDATE_OUTREACH_CALLING.md](CANDIDATE_OUTREACH_CALLING.md) | Built, not yet live (Twilio + xAI Grok Voice + a standalone `voice-bridge` relay; `/admin/calls` dashboard; needs deployment + a verified test call first) |
 
 ---
 

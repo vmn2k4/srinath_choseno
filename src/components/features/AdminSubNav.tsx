@@ -15,6 +15,7 @@ const TABS = [
   { key: "key-leaders", label: "Key Leaders", href: "/admin/key-leaders" },
   { key: "claim_requests", label: "Claim Requests", href: "/admin/claim_requests" },
   { key: "campaign", label: "Campaign", href: "/admin/campaign" },
+  { key: "calls", label: "Calls", href: "/admin/calls" },
   { key: "visualizer", label: "Boundary Inspector", href: "/admin/visualize" },
   { key: "theme", label: "Site Theme", href: "/admin/theme" },
   { key: "news", label: "News", href: "/admin/news" },

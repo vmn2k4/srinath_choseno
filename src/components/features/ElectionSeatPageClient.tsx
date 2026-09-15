@@ -8,6 +8,7 @@ import ElectionResultsPanel from "./ElectionResultsPanel";
 import ElectionInterviewTab from "./ElectionInterviewTab";
 import PlayInterviewReel from "./PlayInterviewReel";
 import SendInterviewInviteFlow from "./SendInterviewInviteFlow";
+import StartCallFlow from "./StartCallFlow";
 import {
   getSeatById,
   getCandidatesBySeatIds,
@@ -53,6 +54,7 @@ import {
   ExternalLink,
   Video,
   Send,
+  Phone,
   Trash2,
   ChevronDown,
   ChevronUp,
@@ -171,6 +173,7 @@ export default function ElectionSeatPageClient({
   // Add unregistered candidate (approved seat admins / superadmins)
   const [showAddCandidateForm, setShowAddCandidateForm] = useState(false);
   const [showSendInviteFlow, setShowSendInviteFlow] = useState(false);
+  const [showStartCallFlow, setShowStartCallFlow] = useState(false);
   const [parties, setParties] = useState<any[]>([]);
   const [newCandidateName, setNewCandidateName] = useState("");
   const [newCandidateParty, setNewCandidateParty] = useState("");
@@ -825,13 +828,28 @@ export default function ElectionSeatPageClient({
                         Directly + separately Invite to Claim -- searches
                         anyone on Choseno and sends the interview invite in
                         one step. Both older flows stay below, unchanged. */}
-                    <Button
-                      size="sm"
-                      onClick={() => setShowSendInviteFlow(true)}
-                      className="w-full gap-1.5 sm:w-auto"
-                    >
-                      <Send size={14} /> Search & Send Interview Invite
-                    </Button>
+                    <div className="flex flex-wrap gap-2">
+                      <Button
+                        size="sm"
+                        onClick={() => setShowSendInviteFlow(true)}
+                        className="gap-1.5"
+                      >
+                        <Send size={14} /> Search & Send Interview Invite
+                      </Button>
+
+                      {/* Outbound calling (xAI Grok Voice Agent via
+                          Twilio) -- same search-and-select on-ramp as the
+                          invite flow above, but places a phone call instead
+                          of sending an email. See StartCallFlow.tsx. */}
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => setShowStartCallFlow(true)}
+                        className="gap-1.5"
+                      >
+                        <Phone size={14} /> Call Candidate
+                      </Button>
+                    </div>
 
                     {/* Add Candidate Directly */}
                     {!showAddCandidateForm ? (
@@ -1320,6 +1338,15 @@ export default function ElectionSeatPageClient({
           existingCandidates={candidates}
           onClose={() => setShowSendInviteFlow(false)}
           onSent={fetchAll}
+        />
+      )}
+
+      {showStartCallFlow && (
+        <StartCallFlow
+          seatId={seat?.id || seatId}
+          existingCandidates={candidates}
+          onClose={() => setShowStartCallFlow(false)}
+          onCalled={fetchAll}
         />
       )}
     </div>

@@ -1,0 +1,17 @@
+{
+  "name": "choseno-voice-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Standalone audio relay between Twilio Media Streams and xAI's realtime Voice Agent, for Choseno's candidate-outreach calling feature. Does not run on Vercel -- needs a long-lived WebSocket server (Railway/Fly.io/Render/a small VM), see README.md.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ws": "^8.21.3"
+  }
+}
