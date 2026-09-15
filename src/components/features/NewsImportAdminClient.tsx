@@ -294,7 +294,7 @@ export default function NewsImportAdminClient() {
   }, [results]);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
       <AdminSubNav active="news-import" className="mb-6" />
       <PageHeader
         icon={Newspaper}

@@ -136,7 +136,7 @@ export default function CallCampaignDashboardClient() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-6">
+    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
       <AdminSubNav active="calls" className="mb-5" />
       <PageHeader
         icon={Phone}
