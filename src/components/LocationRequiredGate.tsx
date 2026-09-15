@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { getOwnProfile, getUserBoundaryShapeIds } from "@/lib/services/profile";
@@ -29,6 +29,28 @@ function isExempt(pathname: string) {
   return EXEMPT_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 }
 
+// This gate is mounted once in the root layout and stays mounted across
+// every client-side navigation for the whole session -- its `needsLocation`
+// check only ever re-runs when user.id/authLoading changes, not per
+// pathname (deliberately, to avoid re-querying on every route change). That
+// means once it computes true, nothing about a later navigation alone ever
+// tells it to recompute -- SetLocationClient finishing successfully doesn't
+// change user.id or authLoading, so without this context the gate kept
+// redirecting back to /set-location forever after the very save that was
+// supposed to satisfy it (confirmed live: router.push('/politician/elections')
+// immediately bounced back to /set-location?next=%2Fpolitician%2Felections).
+// This context is the explicit "I just satisfied you" signal SetLocationClient
+// calls once its save actually succeeds, instead of relying on a recompute
+// that nothing ever triggers.
+const LocationGateContext = createContext<{ clearNeedsLocation: () => void } | null>(null);
+
+export function useLocationGate() {
+  const ctx = useContext(LocationGateContext);
+  // Rendered outside the gate (shouldn't happen -- it wraps the whole app
+  // in layout.tsx) -- no-op rather than crashing a page that doesn't need it.
+  return ctx || { clearNeedsLocation: () => {} };
+}
+
 export default function LocationRequiredGate({ children }: { children: React.ReactNode }) {
   const { user, loading: authLoading } = useAuth();
   const pathname = usePathname();
@@ -37,7 +59,8 @@ export default function LocationRequiredGate({ children }: { children: React.Rea
 
   // null = not checked yet this session. Checked once per signed-in user,
   // not on every navigation -- only the exemption check below needs to
-  // re-run per pathname.
+  // re-run per pathname. Can also be cleared directly by
+  // useLocationGate().clearNeedsLocation() -- see the context comment above.
   const [needsLocation, setNeedsLocation] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -73,5 +96,9 @@ export default function LocationRequiredGate({ children }: { children: React.Rea
     }
   }, [needsLocation, pathname, router]);
 
-  return <>{children}</>;
+  return (
+    <LocationGateContext.Provider value={{ clearNeedsLocation: () => setNeedsLocation(false) }}>
+      {children}
+    </LocationGateContext.Provider>
+  );
 }

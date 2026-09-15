@@ -8,6 +8,7 @@ import { findBoundariesByPoint, syncUserBoundaryMemberships } from "@/lib/servic
 import { getOwnProfile, upsertProfileCore } from "@/lib/services/profile";
 import InteractiveLocationPicker from "./InteractiveLocationPicker";
 import { Card, Button, Alert } from "@/components/primitives";
+import { useLocationGate } from "@/components/LocationRequiredGate";
 import { Layers, Check, ArrowRight } from "lucide-react";
 
 // The location-only counterpart to OnboardingFlowClient's StepLocation --
@@ -23,6 +24,7 @@ export default function SetLocationClient({ nextPath }: { nextPath?: string }) {
   const supabase = createClient();
   const { user } = useAuth();
   const router = useRouter();
+  const { clearNeedsLocation } = useLocationGate();
 
   const [fullName, setFullName] = useState<string | null>(null);
   const [lat, setLat] = useState("");
@@ -85,6 +87,12 @@ export default function SetLocationClient({ nextPath }: { nextPath?: string }) {
         country: derivedCountry,
         constituency: matchedNames,
       });
+      // Tell LocationRequiredGate directly that this politician is satisfied
+      // now -- it's mounted once in the root layout and persists across this
+      // navigation, so without this it has no way to know its earlier
+      // "needs location" check is now stale, and its redirect effect would
+      // just bounce this exact push straight back to /set-location.
+      clearNeedsLocation();
       router.push(nextPath || "/feed");
       router.refresh();
     } catch (err) {
