@@ -72,10 +72,20 @@ export async function POST(request: NextRequest) {
       : null;
   if (supabase && attemptId) {
     const { data } = await supabase.rpc("get_call_attempt_context" as never, { p_attempt_id: attemptId } as never);
-    const row = Array.isArray(data) ? data[0] : data;
-    candidateName = (row as { candidate_name?: string })?.candidate_name || "";
-    seatRoleTitle = (row as { seat_role_title?: string })?.seat_role_title || "";
-    jurisdictionName = (row as { jurisdiction_name?: string })?.jurisdiction_name || "";
+    // get_call_attempt_context isn't in the generated Database type (same
+    // caveat as every other hand-shaped RPC result in this feature -- see
+    // calls.ts) -- data's inferred type collapses to `null`, which TS won't
+    // let you cast directly to an object shape (needs the `unknown`
+    // step-through, same as CampaignSendRow elsewhere in the codebase).
+    const rows = data as unknown as Array<{
+      candidate_name?: string;
+      seat_role_title?: string;
+      jurisdiction_name?: string;
+    }> | null;
+    const row = Array.isArray(rows) ? rows[0] : rows;
+    candidateName = row?.candidate_name || "";
+    seatRoleTitle = row?.seat_role_title || "";
+    jurisdictionName = row?.jurisdiction_name || "";
   }
 
   // AMD result: with MachineDetection: "DetectMessageEnd" on the original
