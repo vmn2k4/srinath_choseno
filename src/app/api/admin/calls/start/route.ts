@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { getProfileRole } from "@/lib/services/profile";
 
 // Places one outbound candidate-outreach call. This route is the only place
 // that holds TWILIO_ACCOUNT_SID/TWILIO_AUTH_TOKEN -- they never reach the
@@ -14,7 +15,10 @@ import { createClient } from "@/lib/supabase/server";
 // insert below runs AS the caller, not as a service role, so a caller who
 // fails that check gets blocked by RLS even if this handler had a bug.
 //
-// Request: POST { candidateId, seatId, phoneNumber, email? }
+// Request: POST { candidateId, seatId, phoneNumber, email? } for a real
+// candidate call, or POST { phoneNumber, isTest: true } for a bare
+// site-admin-only test call with no candidate/seat attached (see
+// 20260915000000_test_calls.sql).
 // Response: { ok: true, attemptId } | { error: string }
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
@@ -42,49 +46,67 @@ export async function POST(request: NextRequest) {
   const seatId: string | undefined = body?.seatId;
   const phoneNumber: string | undefined = body?.phoneNumber;
   const email: string | null = body?.email || null;
+  const isTest: boolean = body?.isTest === true;
 
-  if (!candidateId || !seatId || !phoneNumber) {
-    return NextResponse.json({ error: "candidateId, seatId, and phoneNumber are required" }, { status: 400 });
+  if (!phoneNumber) {
+    return NextResponse.json({ error: "phoneNumber is required" }, { status: 400 });
   }
 
-  // Belt-and-suspenders: the RLS policy on the insert below enforces this
-  // regardless, but checking here lets us return a clear 403 instead of a
-  // raw Postgres RLS error.
-  const { data: isReviewer, error: reviewerError } = await supabase.rpc(
-    "is_claim_reviewer_for_candidate" as never,
-    { p_candidate_id: candidateId } as never
-  );
-  if (reviewerError || !isReviewer) {
-    return NextResponse.json({ error: "You are not an approved administrator for this seat" }, { status: 403 });
-  }
+  if (isTest) {
+    // Bare test call -- no candidate/seat, so is_claim_reviewer_for_candidate
+    // has nothing to check against. Gate on plain site-admin status instead
+    // (matches the RLS policy's own site-admin bypass, and this UI only
+    // exists on /admin/calls, already site-admin-gated at the layout level
+    // -- this is defense in depth, not the only guard).
+    const { data: profile } = await getProfileRole(supabase, user.id);
+    if (profile?.role !== "admin") {
+      return NextResponse.json({ error: "Test calls are site-admin only" }, { status: 403 });
+    }
+  } else {
+    if (!candidateId || !seatId) {
+      return NextResponse.json({ error: "candidateId and seatId are required for a candidate call" }, { status: 400 });
+    }
 
-  // Do-not-call enforcement: a prior call where the candidate said "stop
-  // calling" (outcome = not_interested) must actually block the next dial,
-  // not just sit logged and ignored -- this is a compliance requirement,
-  // not a nice-to-have, so there's no override path here. If a candidate
-  // was marked not_interested by mistake, the fix is to correct that
-  // attempt's outcome from the Calls dashboard (setCallOutcome), not to
-  // force a new call through.
-  const { data: priorAttempts } = await supabase
-    .from("candidate_call_attempts" as never)
-    .select("id" as never)
-    .eq("candidate_id" as never, candidateId as never)
-    .eq("outcome" as never, "not_interested" as never)
-    .limit(1);
-  if (priorAttempts && priorAttempts.length > 0) {
-    return NextResponse.json(
-      { error: "This candidate previously asked not to be called again. Correct that outcome on the Calls dashboard first if it was a mistake." },
-      { status: 409 }
+    // Belt-and-suspenders: the RLS policy on the insert below enforces this
+    // regardless, but checking here lets us return a clear 403 instead of a
+    // raw Postgres RLS error.
+    const { data: isReviewer, error: reviewerError } = await supabase.rpc(
+      "is_claim_reviewer_for_candidate" as never,
+      { p_candidate_id: candidateId } as never
     );
+    if (reviewerError || !isReviewer) {
+      return NextResponse.json({ error: "You are not an approved administrator for this seat" }, { status: 403 });
+    }
+
+    // Do-not-call enforcement: a prior call where the candidate said "stop
+    // calling" (outcome = not_interested) must actually block the next dial,
+    // not just sit logged and ignored -- this is a compliance requirement,
+    // not a nice-to-have, so there's no override path here. If a candidate
+    // was marked not_interested by mistake, the fix is to correct that
+    // attempt's outcome from the Calls dashboard (setCallOutcome), not to
+    // force a new call through.
+    const { data: priorAttempts } = await supabase
+      .from("candidate_call_attempts" as never)
+      .select("id" as never)
+      .eq("candidate_id" as never, candidateId as never)
+      .eq("outcome" as never, "not_interested" as never)
+      .limit(1);
+    if (priorAttempts && priorAttempts.length > 0) {
+      return NextResponse.json(
+        { error: "This candidate previously asked not to be called again. Correct that outcome on the Calls dashboard first if it was a mistake." },
+        { status: 409 }
+      );
+    }
   }
 
   const { data: attempt, error: insertError } = await supabase
     .from("candidate_call_attempts" as never)
     .insert({
-      candidate_id: candidateId,
-      seat_id: seatId,
+      candidate_id: isTest ? null : candidateId,
+      seat_id: isTest ? null : seatId,
+      is_test: isTest,
       phone_number: phoneNumber,
-      email,
+      email: isTest ? null : email,
       status: "queued",
       created_by: user.id,
     } as never)

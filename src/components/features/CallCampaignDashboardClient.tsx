@@ -22,6 +22,7 @@ import {
   sendCallFollowUpEmail,
   setCallOutcome,
   deleteCallAttempt,
+  startTestCall,
   type CallAttemptRow,
 } from "@/lib/services/calls";
 import { getElections, getElectionSeatsByElectionId, getCandidatesBySeatIds } from "@/lib/services/elections";
@@ -180,6 +181,64 @@ const OUTCOME_TONE: Record<string, "neutral" | "amber" | "emerald" | "rose" | "p
 // admin's own browser session, not from the telephony webhooks themselves.
 const AUTO_FOLLOW_UP_OUTCOMES = new Set(["interested", "callback_requested"]);
 
+// Bare "dial this number, talk to the agent" call -- no candidate/seat
+// picker, just a phone number -- for verifying the Twilio/xAI/voice-bridge
+// chain actually works before ever calling a real candidate. See
+// startTestCall() in lib/services/calls.ts.
+function TestCallModal({ onClose, onCalled }: { onClose: () => void; onCalled: () => void }) {
+  const [phone, setPhone] = useState("");
+  const [calling, setCalling] = useState(false);
+  const [status, setStatus] = useState("");
+
+  const placeCall = async () => {
+    if (!phone.trim()) return;
+    setCalling(true);
+    setStatus("");
+    const { error } = await startTestCall(phone.trim());
+    setCalling(false);
+    if (error) {
+      setStatus("Error: " + error.message);
+      return;
+    }
+    onCalled();
+  };
+
+  return (
+    <Modal onOverlayClick={onClose}>
+      <Card padding="md" className="w-full max-w-md space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="font-bold text-sm text-text-main flex items-center gap-2">
+            <PhoneCall size={16} className="text-primary" /> Test Call
+          </h3>
+          <Button size="sm" variant="ghost" onClick={onClose}>
+            <X size={16} />
+          </Button>
+        </div>
+        <p className="text-xs text-text-muted">
+          Dials this number and connects it straight to the xAI agent -- no candidate or election involved. Use your
+          own number first.
+        </p>
+        <div className="space-y-1">
+          <label className="text-xs font-semibold text-text-muted">Phone number</label>
+          <input
+            type="tel"
+            autoComplete="off"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="+1 604 555 0100"
+            className="w-full bg-surface-hover border border-border-light rounded-xl text-text-main outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all p-3 text-sm"
+          />
+        </div>
+        <Button onClick={placeCall} disabled={calling || !phone.trim()} className="w-full gap-1.5">
+          {calling ? <Spinner size="sm" /> : <Phone size={14} />}
+          {calling ? "Placing call..." : "Start Test Call"}
+        </Button>
+        {status && <p className="text-xs text-danger">{status}</p>}
+      </Card>
+    </Modal>
+  );
+}
+
 export default function CallCampaignDashboardClient() {
   const supabase = createClient();
   const [attempts, setAttempts] = useState<CallAttemptRow[]>([]);
@@ -188,6 +247,7 @@ export default function CallCampaignDashboardClient() {
   const [sendingFollowUpId, setSendingFollowUpId] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [showCallPicker, setShowCallPicker] = useState(false);
+  const [showTestCall, setShowTestCall] = useState(false);
   const autoSentRef = useRef<Set<string>>(new Set());
 
   const fetchAttempts = useCallback(async () => {
@@ -271,6 +331,9 @@ export default function CallCampaignDashboardClient() {
             <Button size="sm" onClick={() => setShowCallPicker(true)} className="gap-1.5">
               <Phone size={14} /> Call Candidate
             </Button>
+            <Button size="sm" variant="outline" onClick={() => setShowTestCall(true)} className="gap-1.5">
+              <PhoneCall size={14} /> Test Call
+            </Button>
             <Button size="sm" variant="outline" onClick={fetchAttempts} className="gap-1.5">
               <RefreshCw size={14} /> Refresh
             </Button>
@@ -283,6 +346,16 @@ export default function CallCampaignDashboardClient() {
           onClose={() => setShowCallPicker(false)}
           onCalled={() => {
             setShowCallPicker(false);
+            fetchAttempts();
+          }}
+        />
+      )}
+
+      {showTestCall && (
+        <TestCallModal
+          onClose={() => setShowTestCall(false)}
+          onCalled={() => {
+            setShowTestCall(false);
             fetchAttempts();
           }}
         />
@@ -312,6 +385,7 @@ export default function CallCampaignDashboardClient() {
           {attempts.map((a) => {
             const isExpanded = expanded.has(a.id);
             const canFollowUp =
+              !a.is_test &&
               a.status === "completed" &&
               a.outcome &&
               AUTO_FOLLOW_UP_OUTCOMES.has(a.outcome) &&
@@ -322,20 +396,25 @@ export default function CallCampaignDashboardClient() {
                 <div className="flex items-start justify-between gap-3 flex-wrap">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <p className="text-sm font-bold text-text-main">{a.candidate_name}</p>
+                      <p className="text-sm font-bold text-text-main">
+                        {a.is_test ? "Test Call" : a.candidate_name}
+                      </p>
+                      {a.is_test && <Badge tone="primary">Test</Badge>}
                       <Badge tone={STATUS_TONE[a.status] || "neutral"}>{a.status.replace(/_/g, " ")}</Badge>
                       {a.answered_by && a.answered_by.startsWith("machine") && (
                         <Badge tone="amber">Voicemail (Twilio-detected)</Badge>
                       )}
                       {a.outcome && <Badge tone={OUTCOME_TONE[a.outcome] || "neutral"}>{OUTCOME_LABEL[a.outcome]}</Badge>}
-                      {a.claimed_at ? (
-                        <Badge tone="emerald">Registered</Badge>
-                      ) : (
-                        <Badge tone="neutral">Not registered yet</Badge>
-                      )}
+                      {!a.is_test &&
+                        (a.claimed_at ? (
+                          <Badge tone="emerald">Registered</Badge>
+                        ) : (
+                          <Badge tone="neutral">Not registered yet</Badge>
+                        ))}
                     </div>
                     <p className="text-xs text-text-muted mt-1">
-                      {[a.seat_role_title, a.jurisdiction_name].filter(Boolean).join(" — ")} · {a.phone_number}
+                      {a.is_test ? "" : [a.seat_role_title, a.jurisdiction_name].filter(Boolean).join(" — ") + " · "}
+                      {a.phone_number}
                       {a.email ? ` · ${a.email}` : ""}
                     </p>
                     {a.outcome_summary && <p className="text-xs text-text-muted mt-1 italic">"{a.outcome_summary}"</p>}

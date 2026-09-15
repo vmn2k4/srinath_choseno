@@ -10,11 +10,17 @@ type Client = SupabaseClient<Database>;
 // same as politician_claim_campaigns in campaigns.ts.
 export interface CallAttemptRow {
   id: string;
-  candidate_id: string;
-  seat_id: string;
-  candidate_name: string;
-  seat_role_title: string;
-  jurisdiction_name: string;
+  candidate_id: string | null;
+  seat_id: string | null;
+  // A bare "dial this number and talk to the agent" call with no
+  // candidate/seat attached -- for verifying the Twilio/xAI/voice-bridge
+  // chain actually works before ever calling a real candidate. Site-admin
+  // only (see 20260915000000_test_calls.sql). When true, the four fields
+  // below are always null -- there's nothing to join against.
+  is_test: boolean;
+  candidate_name: string | null;
+  seat_role_title: string | null;
+  jurisdiction_name: string | null;
   phone_number: string;
   email: string | null;
   status: "queued" | "ringing" | "in_progress" | "completed" | "failed" | "no_answer" | "busy" | "canceled";
@@ -28,7 +34,7 @@ export interface CallAttemptRow {
   recording_url: string | null;
   duration_seconds: number | null;
   follow_up_email_sent_at: string | null;
-  claimed_at: string | null;
+  claimed_at: string | null; // always null for a test call -- see is_test above
   error_message: string | null;
   started_at: string | null;
   ended_at: string | null;
@@ -61,6 +67,25 @@ export async function startCandidateCall(input: {
   phoneNumber: string;
   email?: string | null;
 }) {
+  return placeCall(input);
+}
+
+// Bare "dial this number, talk to the agent" call -- no candidate/seat
+// attached. For verifying the Twilio/xAI/voice-bridge chain end-to-end
+// before ever calling a real candidate. The route enforces this is
+// site-admin only, since there's no is_claim_reviewer_for_candidate check
+// to run without a candidate_id.
+export async function startTestCall(phoneNumber: string) {
+  return placeCall({ phoneNumber, isTest: true });
+}
+
+async function placeCall(input: {
+  candidateId?: string;
+  seatId?: string;
+  phoneNumber: string;
+  email?: string | null;
+  isTest?: boolean;
+}) {
   try {
     const res = await fetch("/api/admin/calls/start", {
       method: "POST",
@@ -84,6 +109,9 @@ export async function startCandidateCall(input: {
 // the "mark as sent" bookkeeping always happens right alongside the send,
 // never drifts from it.
 export async function sendCallFollowUpEmail(supabase: Client, attempt: Pick<CallAttemptRow, "id" | "candidate_id" | "email">) {
+  if (!attempt.candidate_id) {
+    return { data: null, error: { message: "Test calls have no candidate to invite" } };
+  }
   if (!attempt.email) {
     return { data: null, error: { message: "No email on file for this candidate" } };
   }
