@@ -33,6 +33,18 @@ const STATUS_MAP: Record<string, string> = {
   canceled: "canceled",
 };
 
+// See the matching comment in api/telephony/voice/route.ts -- same fix,
+// needed here for the same reason.
+function resolvePublicUrl(request: NextRequest): string {
+  const forwardedProto = request.headers.get("x-forwarded-proto");
+  const forwardedHost = request.headers.get("x-forwarded-host") || request.headers.get("host");
+  if (forwardedProto && forwardedHost) {
+    const url = new URL(request.url);
+    return `${forwardedProto}://${forwardedHost}${url.pathname}${url.search}`;
+  }
+  return request.url;
+}
+
 function verifyTwilioSignature(url: string, params: Record<string, string>, signature: string | null): boolean {
   if (!TWILIO_AUTH_TOKEN || !signature) return false;
   const sortedKeys = Object.keys(params).sort();
@@ -54,7 +66,7 @@ export async function POST(request: NextRequest) {
   });
 
   const signature = request.headers.get("X-Twilio-Signature");
-  if (!verifyTwilioSignature(request.url, params, signature)) {
+  if (!verifyTwilioSignature(resolvePublicUrl(request), params, signature)) {
     return new NextResponse("Forbidden", { status: 403 });
   }
 

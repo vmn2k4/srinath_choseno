@@ -21,6 +21,25 @@ const VOICE_BRIDGE_WS_URL = process.env.VOICE_BRIDGE_WS_URL; // e.g. wss://chose
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 
+// Twilio signs the exact public URL it was told to POST to (the `Url`
+// param on Calls.create() -- built from NEXT_PUBLIC_SITE_URL). Behind a
+// tunnel (ngrok, for local testing) or certain proxies, request.url can
+// reflect what the origin server itself sees (often still
+// http://localhost:3000/...) rather than the public URL Twilio actually
+// hit -- that mismatch would make every signature check fail. Prefer the
+// standard forwarded headers (which ngrok and Vercel both set) when
+// present, falling back to request.url for anything running with no proxy
+// in front of it at all.
+function resolvePublicUrl(request: NextRequest): string {
+  const forwardedProto = request.headers.get("x-forwarded-proto");
+  const forwardedHost = request.headers.get("x-forwarded-host") || request.headers.get("host");
+  if (forwardedProto && forwardedHost) {
+    const url = new URL(request.url);
+    return `${forwardedProto}://${forwardedHost}${url.pathname}${url.search}`;
+  }
+  return request.url;
+}
+
 function verifyTwilioSignature(url: string, params: Record<string, string>, signature: string | null): boolean {
   if (!TWILIO_AUTH_TOKEN || !signature) return false;
   const sortedKeys = Object.keys(params).sort();
@@ -46,7 +65,7 @@ export async function POST(request: NextRequest) {
   });
 
   const signature = request.headers.get("X-Twilio-Signature");
-  if (!verifyTwilioSignature(request.url, params, signature)) {
+  if (!verifyTwilioSignature(resolvePublicUrl(request), params, signature)) {
     return new NextResponse("Forbidden", { status: 403 });
   }
 

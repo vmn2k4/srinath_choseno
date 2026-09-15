@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import AdminSubNav from "./AdminSubNav";
+import StartCallFlow from "./StartCallFlow";
 import {
   Phone,
   RefreshCw,
@@ -11,8 +12,10 @@ import {
   CheckCircle2,
   Loader2,
   Trash2,
+  X,
+  PhoneCall,
 } from "lucide-react";
-import { Card, Button, Spinner, PageHeader, Badge } from "@/components/primitives";
+import { Card, Button, Spinner, PageHeader, Badge, Modal, Select } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import {
   listCandidateCallAttempts,
@@ -21,6 +24,126 @@ import {
   deleteCallAttempt,
   type CallAttemptRow,
 } from "@/lib/services/calls";
+import { getElections, getElectionSeatsByElectionId, getCandidatesBySeatIds } from "@/lib/services/elections";
+
+interface ElectionOption {
+  id: string;
+  name: string;
+}
+interface SeatOption {
+  id: string;
+  role_title: string;
+  map_shapes?: { name?: string } | { name?: string }[] | null;
+}
+
+// This page is under /admin -- gated to site admins only (see
+// src/app/admin/layout.tsx), who can act on any seat, unlike an election
+// administrator who's scoped to their own approved seats via the seat
+// page's own "Call Candidate" button (ElectionSeatPageClient.tsx). So the
+// entry point here has to resolve a seat first -- an admin browsing this
+// dashboard hasn't necessarily come from any one seat's page -- then hands
+// off to the exact same StartCallFlow component the seat page uses, just
+// fed a seatId + candidate list resolved through this picker instead of
+// already being on hand.
+function CallSeatPicker({ onClose, onCalled }: { onClose: () => void; onCalled: () => void }) {
+  const supabase = createClient();
+  const [elections, setElections] = useState<ElectionOption[]>([]);
+  const [seats, setSeats] = useState<SeatOption[]>([]);
+  const [electionId, setElectionId] = useState("");
+  const [seatId, setSeatId] = useState("");
+  const [candidates, setCandidates] = useState<{ id: string; profiles?: { full_name?: string } | null }[]>([]);
+  const [loadingElections, setLoadingElections] = useState(true);
+  const [loadingSeats, setLoadingSeats] = useState(false);
+
+  useEffect(() => {
+    getElections(supabase).then(({ data }) => {
+      setElections((data as ElectionOption[] | null) || []);
+      setLoadingElections(false);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const selectElection = async (id: string) => {
+    setElectionId(id);
+    setSeatId("");
+    setSeats([]);
+    if (!id) return;
+    setLoadingSeats(true);
+    const { data } = await getElectionSeatsByElectionId(supabase, id);
+    setSeats((data as SeatOption[] | null) || []);
+    setLoadingSeats(false);
+  };
+
+  const selectSeat = async (id: string) => {
+    setSeatId(id);
+    if (!id) return;
+    const { data } = await getCandidatesBySeatIds(supabase, [id]);
+    setCandidates((data as { id: string; profiles?: { full_name?: string } | null }[] | null) || []);
+  };
+
+  const seatLabel = (seat: SeatOption) => {
+    const shape = Array.isArray(seat.map_shapes) ? seat.map_shapes[0] : seat.map_shapes;
+    return [seat.role_title, shape?.name].filter(Boolean).join(" — ");
+  };
+
+  if (seatId) {
+    return <StartCallFlow seatId={seatId} existingCandidates={candidates} onClose={onClose} onCalled={onCalled} />;
+  }
+
+  return (
+    <Modal onOverlayClick={onClose}>
+      <Card padding="md" className="w-full max-w-lg space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="font-bold text-sm text-text-main flex items-center gap-2">
+            <PhoneCall size={16} className="text-primary" /> Call Candidate
+          </h3>
+          <Button size="sm" variant="ghost" onClick={onClose}>
+            <X size={16} />
+          </Button>
+        </div>
+        <p className="text-xs text-text-muted">
+          Pick the race first, then who to call — same flow as the seat page's own "Call Candidate" button.
+        </p>
+        {loadingElections ? (
+          <div className="flex justify-center py-3">
+            <Spinner size="sm" />
+          </div>
+        ) : (
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-text-muted">Election</label>
+            <Select value={electionId} onChange={(e) => selectElection(e.target.value)}>
+              <option value="">Select an election…</option>
+              {elections.map((e) => (
+                <option key={e.id} value={e.id}>
+                  {e.name}
+                </option>
+              ))}
+            </Select>
+          </div>
+        )}
+        {electionId && (
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-text-muted">Seat</label>
+            {loadingSeats ? (
+              <div className="flex justify-center py-3">
+                <Spinner size="sm" />
+              </div>
+            ) : (
+              <Select value={seatId} onChange={(e) => selectSeat(e.target.value)}>
+                <option value="">Select a seat…</option>
+                {seats.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {seatLabel(s)}
+                  </option>
+                ))}
+              </Select>
+            )}
+          </div>
+        )}
+      </Card>
+    </Modal>
+  );
+}
 
 const STATUS_TONE: Record<string, "neutral" | "amber" | "emerald" | "rose" | "primary"> = {
   queued: "neutral",
@@ -64,6 +187,7 @@ export default function CallCampaignDashboardClient() {
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [sendingFollowUpId, setSendingFollowUpId] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const [showCallPicker, setShowCallPicker] = useState(false);
   const autoSentRef = useRef<Set<string>>(new Set());
 
   const fetchAttempts = useCallback(async () => {
@@ -143,11 +267,26 @@ export default function CallCampaignDashboardClient() {
         title="Candidate Calls"
         subtitle="Outbound outreach calls placed via the xAI Voice Agent -- status, transcript, outcome, and follow-up email tracking."
         action={
-          <Button size="sm" variant="outline" onClick={fetchAttempts} className="gap-1.5">
-            <RefreshCw size={14} /> Refresh
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button size="sm" onClick={() => setShowCallPicker(true)} className="gap-1.5">
+              <Phone size={14} /> Call Candidate
+            </Button>
+            <Button size="sm" variant="outline" onClick={fetchAttempts} className="gap-1.5">
+              <RefreshCw size={14} /> Refresh
+            </Button>
+          </div>
         }
       />
+
+      {showCallPicker && (
+        <CallSeatPicker
+          onClose={() => setShowCallPicker(false)}
+          onCalled={() => {
+            setShowCallPicker(false);
+            fetchAttempts();
+          }}
+        />
+      )}
 
       {error && (
         <Card padding="sm" className="mb-4 border-danger/40 bg-danger/5">
@@ -160,11 +299,13 @@ export default function CallCampaignDashboardClient() {
           <Spinner />
         </div>
       ) : attempts.length === 0 ? (
-        <Card padding="lg" className="text-center">
+        <Card padding="lg" className="text-center space-y-3">
           <p className="text-sm text-text-muted">
-            No calls yet. Start one from a seat's admin panel (Elections &amp; Seats → a seat you administer → "Call
-            Candidate").
+            No calls yet. Click "Call Candidate" above, or start one from a seat's own admin panel.
           </p>
+          <Button size="sm" onClick={() => setShowCallPicker(true)} className="gap-1.5 mx-auto">
+            <Phone size={14} /> Call Candidate
+          </Button>
         </Card>
       ) : (
         <div className="space-y-3">
