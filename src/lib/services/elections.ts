@@ -798,7 +798,15 @@ export async function getSeatById(supabase: Client, seatId: string) {
       (s.map_shapes && typeof s.map_shapes !== 'string' && 'name' in s.map_shapes && s.map_shapes.name && slugifyText(`${s.role_title}-${s.map_shapes.name}`) === seatId)
     );
   });
-  return { data: match || seats[0] || null };
+  // `|| seats[0]` here used to silently substitute a completely unrelated
+  // seat -- whatever happened to be first in this anon client's visible
+  // list -- any time nothing actually matched (e.g. a draft election's
+  // seat, invisible to the anonymous SSR client that calls this; found
+  // live via a QA test election's link resolving to a real, unrelated
+  // U.S. House race instead of a 404/loading state). A genuine "not found"
+  // is what every other branch above already returns; this was the one
+  // spot that quietly lied instead.
+  return { data: match || null };
 }
 
 // ── election_candidates ──────────────────────────────────────────────────
