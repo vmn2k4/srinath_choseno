@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
+import LocationRequiredGate from "@/components/LocationRequiredGate";
 import DebugUserSwitcher from "@/components/dev/DebugUserSwitcher";
 import FakeProductionToggle from "@/components/dev/FakeProductionToggle";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
@@ -104,11 +105,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               {/* pb-16 clears the fixed mobile bottom nav bar (NavBar renders
                   it lg:hidden) so page content and the footer never sit
                   underneath it; lg+ has no bottom bar so no padding needed. */}
-              <div className="flex flex-col min-h-screen pb-16 lg:pb-0">
-                <NavBar />
-                <main className="flex-1 w-full pt-6 lg:pt-8">{children}</main>
-                <SiteFooter />
-              </div>
+              <LocationRequiredGate>
+                <div className="flex flex-col min-h-screen pb-16 lg:pb-0">
+                  <NavBar />
+                  <main className="flex-1 w-full pt-6 lg:pt-8">{children}</main>
+                  <SiteFooter />
+                </div>
+              </LocationRequiredGate>
               {process.env.NODE_ENV !== "production" && (
                 <>
                   <DebugUserSwitcher />
