@@ -89,8 +89,16 @@ BEGIN
     -- plain site-admin status directly instead of falling through
     -- is_claim_reviewer_for_candidate(NULL), which is equivalent here but
     -- less clear to read.
+    --
+    -- The subquery's columns must be explicitly aliased/qualified (prof.id,
+    -- prof.role) -- this function's RETURNS TABLE(id uuid, ...) puts a
+    -- PL/pgSQL variable named `id` in scope for the whole function body, so
+    -- a bare `WHERE id = auth.uid()` is genuinely ambiguous (variable vs.
+    -- profiles.id) and errors at runtime, not at CREATE FUNCTION time --
+    -- found live via a real "column reference \"id\" is ambiguous" once
+    -- test calls actually started hitting this branch.
     AND (
-      (a.is_test AND EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'))
+      (a.is_test AND EXISTS (SELECT 1 FROM public.profiles prof WHERE prof.id = auth.uid() AND prof.role = 'admin'))
       OR (NOT a.is_test AND public.is_claim_reviewer_for_candidate(a.candidate_id))
     )
   ORDER BY a.created_at DESC;
