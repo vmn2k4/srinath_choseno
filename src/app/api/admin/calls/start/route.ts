@@ -125,26 +125,38 @@ export async function POST(request: NextRequest) {
       Authorization: "Basic " + Buffer.from(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`).toString("base64"),
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: new URLSearchParams({
-      To: phoneNumber,
-      From: TWILIO_PHONE_NUMBER,
-      Url: `${SITE_URL}/api/telephony/voice?attemptId=${attemptId}`,
-      StatusCallback: `${SITE_URL}/api/telephony/status?attemptId=${attemptId}`,
-      StatusCallbackEvent: "initiated ringing answered completed",
-      StatusCallbackMethod: "POST",
+    // URLSearchParams built from an object literal can only hold one value
+    // per key -- Twilio's API needs StatusCallbackEvent sent as a REPEATED
+    // parameter (one pair per event), not a single space-separated string.
+    // The object-literal version silently "worked" (call still placed) but
+    // Twilio's own debugger flagged it: "Invalid events for callSid...
+    // invalid statusCallbackEvents initiated ringing answered completed" --
+    // meaning none of those intermediate status callbacks were actually
+    // registered, only whatever Twilio defaults to. Array-of-pairs form
+    // supports duplicate keys correctly.
+    body: new URLSearchParams([
+      ["To", phoneNumber],
+      ["From", TWILIO_PHONE_NUMBER],
+      ["Url", `${SITE_URL}/api/telephony/voice?attemptId=${attemptId}`],
+      ["StatusCallback", `${SITE_URL}/api/telephony/status?attemptId=${attemptId}`],
+      ["StatusCallbackEvent", "initiated"],
+      ["StatusCallbackEvent", "ringing"],
+      ["StatusCallbackEvent", "answered"],
+      ["StatusCallbackEvent", "completed"],
+      ["StatusCallbackMethod", "POST"],
       // Disclosed up front by the agent's own opening line (see
       // docs/CALL_AGENT_SCRIPT.md) -- recording without disclosure is
       // illegal in two-party-consent jurisdictions, so the script and this
       // flag are a matched pair; don't flip this on without also updating
       // the agent's instructions.
-      Record: "true",
+      ["Record", "true"],
       // Twilio's own Answering Machine Detection -- reported via
       // AnsweredBy on the status callback (api/telephony/status). Cheaper
       // and more reliable than only guessing "was this a voicemail?" from
       // the transcript after the fact (which the bridge still does too, as
       // a fallback for whatever AMD misses).
-      MachineDetection: "DetectMessageEnd",
-    }),
+      ["MachineDetection", "DetectMessageEnd"],
+    ]),
   });
 
   const twilioJson = await twilioRes.json().catch(() => null);
