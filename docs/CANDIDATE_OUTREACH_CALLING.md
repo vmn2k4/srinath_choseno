@@ -200,32 +200,61 @@ updating the script — they're a matched pair.
 
 ## What's unverified (test before calling a real candidate)
 
-Two assumptions in `voice-bridge/index.js` are informed best guesses, not
-confirmed against a live call from inside this codebase:
+**Confirmed working** via a real completed call (2026-09-16): audio format
+passthrough (`audio.input/output.format.type: "audio/pcmu"`), and the xAI
+event names this bridge listens for (`response.output_audio.delta`,
+`conversation.item.input_audio_transcription.completed`,
+`input_audio_buffer.speech_started`, `response.cancel`).
 
-1. **Audio format passthrough** — the bridge requests
-   `audio.input/output.format.type: "audio/pcmu"` (a nested field shape,
-   not the flat `input_audio_format` string some older
-   OpenAI-Realtime-derived descriptions of this API use) so it never has to
-   transcode Twilio's 8kHz mu-law audio. If xAI rejects or ignores that, a
-   real PCM16↔mu-law conversion step is needed (there's a `TODO` marking
-   exactly where).
-2. **Bridge hosting region** — recommended near `us-east-1`, on the
-   secondhand claim that's where xAI's voice inference runs. Worth a quick
-   latency comparison before committing to a region.
-3. **Exact xAI event names** — `response.output_audio.delta`,
-   `conversation.item.input_audio_transcription.completed`,
-   `input_audio_buffer.speech_started`, `response.cancel`, and a
-   `conversation.item.create` message with `role: "system"` landing as
-   additive context rather than being ignored or misrouted. All plausible
-   based on OpenAI-Realtime compatibility and secondhand descriptions of
-   this specific API, none confirmed against a real call from this
-   codebase. Watch the bridge's console output on the first test call —
-   every xAI `error`-type event is logged there.
+Still unverified:
+
+- **Bridge hosting region** — recommended near `us-east-1`, on the
+  secondhand claim that's where xAI's voice inference runs. Worth a quick
+  latency comparison before committing to a region.
+
+**Two real, non-obvious failure modes hit and fixed while getting the
+first call working** — worth knowing about if this ever needs
+redeploying from scratch:
+- **Vercel's automatic bot/DDoS mitigation blocks Twilio's webhook
+  requests by default**, serving a security-challenge HTML page instead of
+  reaching the app — Twilio can't solve it, so every call died at
+  `ringing` with Twilio's own generic "application error" voice message
+  and zero trace in this app's logs. Needs an explicit Vercel Firewall
+  bypass rule for `/api/telephony/*` (see the setup checklist in
+  `CALL_AGENT_SCRIPT.md`) — not a code fix, a project setting.
+- **Twilio's `StatusCallbackEvent` must be sent as repeated form
+  parameters**, not one space-separated string — `URLSearchParams` built
+  from a plain object literal can only hold one value per key, so it went
+  out malformed (Twilio's own debugger flagged it directly: "Invalid
+  events for callSid"). Fixed in `api/admin/calls/start/route.ts` using
+  the array-of-pairs constructor.
 
 Test with your own phone number end-to-end (see
 [voice-bridge/README.md](../voice-bridge/README.md#local-testing-without-a-real-phone-call))
 before this ever dials a candidate.
+
+## Capturing an email spoken on the call
+
+If a candidate gives their email verbally instead of it being on file up
+front, `voice-bridge` reconstructs it from the transcript
+(`extractSpokenEmail()`) and it's written to the same `email` column an
+admin-entered address would use — so it feeds the exact same follow-up
+flow either way, no separate code path.
+
+This is inherently best-effort: people spell emails out loud
+("V M N 2 K 4 at gmail dot com"), not as ready-formatted text, so it's
+reconstructed from that spoken pattern rather than matched with a normal
+email regex. It only fires on the `<letter-or-digit> at <word> dot <tld>`
+shape — a local part that's an actual dictionary word (rather than spelled
+out character by character) won't match, and it just returns nothing
+rather than guess. Getting this right at all depends on
+`buildTranscript()` recording turns in **true chronological arrival
+order** (a name correction spoken later in the call must land after the
+mistake it corrects, not before it) — the two-accumulator-strings version
+this replaced didn't actually preserve order and got a real correction
+backwards on a live call. Always worth an admin's eyes on the transcript
+before trusting a captured address for anything higher-stakes than the
+automatic follow-up send it already drives.
 
 ## Not yet built
 

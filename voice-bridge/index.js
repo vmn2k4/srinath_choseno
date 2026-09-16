@@ -75,8 +75,13 @@ wss.on("connection", (twilioWs) => {
   let streamSid = null;
   let attemptId = null;
   let callContext = {};
-  let assistantTranscript = "";
-  let candidateTranscript = "";
+  // Ordered as they actually arrive, not accumulated into two separate
+  // blobs -- see interleaveTranscript()'s comment for why the old
+  // two-blob approach actively produced wrong data (a corrected value
+  // spoken later in the call textually ends up BEFORE the mistake it
+  // corrected, once every agent turn is dumped together followed by
+  // every candidate turn together).
+  const transcriptTurns = [];
   const callStartedAt = Date.now();
 
   const closeAll = () => {
@@ -221,7 +226,13 @@ wss.on("connection", (twilioWs) => {
           break;
         }
         case "response.output_audio_transcript.delta": {
-          assistantTranscript += event.delta || "";
+          // One entry per delta chunk, in true arrival order -- merged back
+          // into readable per-turn lines at call end (see
+          // buildTranscript()). Recording chronologically as events arrive,
+          // rather than accumulating into one long-lived string per
+          // speaker, is what makes "the last thing said" in the final
+          // transcript actually mean the last thing said.
+          if (event.delta) transcriptTurns.push({ role: "assistant", text: event.delta });
           break;
         }
         // Event name for the candidate's own speech-to-text varies by
@@ -230,7 +241,7 @@ wss.on("connection", (twilioWs) => {
         // transcription. Confirm against real call logs and adjust if
         // xAI's actual event differs.
         case "conversation.item.input_audio_transcription.completed": {
-          candidateTranscript += (event.transcript || "") + " ";
+          if (event.transcript) transcriptTurns.push({ role: "candidate", text: event.transcript });
           break;
         }
         // Server-side VAD detected the candidate starting to talk. Two
@@ -278,8 +289,9 @@ wss.on("connection", (twilioWs) => {
 
   async function reportCompletion() {
     if (!attemptId) return;
-    const transcript = interleaveTranscript(candidateTranscript, assistantTranscript);
+    const transcript = buildTranscript(transcriptTurns);
     const outcome = classifyOutcome(transcript);
+    const email = extractSpokenEmail(transcript);
     const durationSeconds = Math.round((Date.now() - callStartedAt) / 1000);
 
     try {
@@ -289,7 +301,7 @@ wss.on("connection", (twilioWs) => {
           "Content-Type": "application/json",
           "x-internal-secret": INTERNAL_WEBHOOK_SECRET,
         },
-        body: JSON.stringify({ attemptId, transcript, outcome, durationSeconds }),
+        body: JSON.stringify({ attemptId, transcript, outcome, email, durationSeconds }),
       });
     } catch (err) {
       console.error(`Failed to report call completion (attemptId=${attemptId}):`, err.message);
@@ -312,14 +324,72 @@ function classifyOutcome(transcript) {
   return null;
 }
 
-// Simple best-effort interleave since both transcripts accumulate
-// independently and out of exact order; good enough for an admin skimming
-// the gist, not a production transcript diff.
-function interleaveTranscript(candidateText, assistantText) {
-  const parts = [];
-  if (assistantText.trim()) parts.push(`Agent: ${assistantText.trim()}`);
-  if (candidateText.trim()) parts.push(`Candidate: ${candidateText.trim()}`);
-  return parts.join("\n\n");
+// A candidate spells an email out loud on a phone call ("V M N 2 K 4 at
+// gmail dot com"), not as already-formatted text -- a regex for a real
+// address (x@y.z) almost never matches the transcript at all. Reconstructs
+// one from the spoken "<local part> at <domain> dot <tld>" pattern
+// instead, stripping the spaces speech-to-text puts between spelled-out
+// letters/digits. Best-effort, same posture as classifyOutcome() above --
+// an admin should still glance at the transcript before trusting this for
+// anything higher-stakes than the follow-up email send it's used for here.
+function extractSpokenEmail(transcript) {
+  const text = transcript.toLowerCase();
+  // The local-part group requires EVERY token to be a single alphanumeric
+  // character (how people actually spell things out: "b m n 2 k 4"), not
+  // any run of letters/digits/spaces -- an earlier version used the loose
+  // form and it genuinely matched into the middle of ordinary words (e.g.
+  // grabbed the "o" out of "so" right before a real spelled-out name,
+  // confirmed against a real call transcript). The lookbehind additionally
+  // blocks starting mid-word after a contraction's apostrophe (the "s" in
+  // "it's"), which the loose word-boundary check alone still let through.
+  const pattern = /(?<![a-z0-9'])((?:[a-z0-9]\s+){1,}[a-z0-9])\s+at\s+([a-z0-9]+(?:\s+[a-z0-9]+)*)\s+dot\s+([a-z]{2,})/g;
+  const stripSpaces = (s) => s.replace(/\s+/g, "");
+  let email = null;
+  // Take the LAST match, not the first -- interleaveTranscript concatenates
+  // the whole agent block then the whole candidate block rather than true
+  // chronological turns, and within the agent's own block a misheard first
+  // attempt followed by "let me confirm that back" / a corrected repeat
+  // both match this pattern. The last one spoken is the corrected one --
+  // confirmed against a real call where the agent said the wrong spelling
+  // once, then repeated the candidate's correction verbatim right after.
+  for (const match of text.matchAll(pattern)) {
+    const local = stripSpaces(match[1]);
+    const domain = stripSpaces(match[2]);
+    const tld = stripSpaces(match[3]);
+    if (!local || !domain || !tld) continue;
+    const candidate = `${local}@${domain}.${tld}`;
+    // Sanity check -- if the reconstruction doesn't even look like an
+    // email, don't let it overwrite a better earlier match.
+    if (/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(candidate)) email = candidate;
+  }
+  return email;
+}
+
+// Merges transcriptTurns (one entry per delta chunk/completed utterance, in
+// true arrival order) into readable per-turn lines: consecutive entries
+// from the same speaker join into one line, a speaker change starts a new
+// line. This used to be two separately-accumulated strings concatenated
+// "all agent text, then all candidate text" -- which actively produced
+// wrong data, not just unreadable output: a corrected value spoken LATER
+// in the real call would textually land BEFORE the mistake it corrected,
+// so anything reading "the last mention" (extractSpokenEmail above) could
+// grab the uncorrected value. Confirmed live on a real call with an email
+// correction. True arrival order fixes both the readability and the
+// extraction correctness at the same root cause.
+function buildTranscript(turns) {
+  const lines = [];
+  let currentRole = null;
+  let currentText = "";
+  for (const turn of turns) {
+    if (turn.role !== currentRole) {
+      if (currentText.trim()) lines.push(`${currentRole === "assistant" ? "Agent" : "Candidate"}: ${currentText.trim()}`);
+      currentRole = turn.role;
+      currentText = "";
+    }
+    currentText += turn.text;
+  }
+  if (currentText.trim()) lines.push(`${currentRole === "assistant" ? "Agent" : "Candidate"}: ${currentText.trim()}`);
+  return lines.join("\n\n");
 }
 
 server.listen(PORT, () => {

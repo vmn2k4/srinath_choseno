@@ -59,6 +59,13 @@ export async function POST(request: NextRequest) {
   if (typeof body.outcomeSummary === "string") update.outcome_summary = body.outcomeSummary;
   if (typeof body.outcome === "string" && VALID_OUTCOMES.has(body.outcome)) update.outcome = body.outcome;
   if (typeof body.durationSeconds === "number") update.duration_seconds = body.durationSeconds;
+  // Best-effort, reconstructed from the candidate spelling their email out
+  // loud on the call (see extractSpokenEmail() in voice-bridge/index.js) --
+  // only ever set when something was actually found, never overwrite a
+  // real pre-existing address with a failed extraction. Feeds the SAME
+  // follow-up-email flow as an email entered up front in StartCallFlow --
+  // no separate code path for "email that came from the call itself".
+  if (typeof body.email === "string" && body.email.trim()) update.email = body.email.trim();
 
   const supabase = createSupabaseClient<Database>(SUPABASE_URL, SERVICE_ROLE_KEY, { auth: { persistSession: false } });
   const { error } = await supabase
