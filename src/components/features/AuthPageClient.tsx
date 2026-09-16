@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
@@ -9,7 +9,7 @@ import { signUp, signInWithPassword, signInWithGoogle } from "@/lib/services/aut
 import { Card, Input, Button, Alert } from "@/components/primitives";
 import { EARLY_EXPLORER_BADGE_LINE } from "@/lib/constants/site";
 import { createClient } from "@/lib/supabase/client";
-import { trackSignUp, trackLogin } from "@/lib/analytics/events";
+import { trackSignUp, trackLogin, trackSignUpFailed, trackSignUpAbandoned } from "@/lib/analytics/events";
 import { Mail, Flag } from "lucide-react";
 
 export default function AuthPageClient({
@@ -50,6 +50,41 @@ export default function AuthPageClient({
     }
   }, [session, profile, authLoading, nextPath, router]);
 
+  // Abandonment tracking: fires trackSignUpAbandoned only if (a) the visitor
+  // actually typed into the sign-up form -- landing on the page and leaving
+  // immediately isn't an "abandoned attempt", it's just a bounce, already
+  // covered by GA4 page metrics -- and (b) no real outcome (success or a
+  // tracked failure) was ever recorded for this visit. hasReportedOutcomeRef
+  // is the guard against double-counting: every success/failure path below
+  // sets it before this can fire. isSignUpRef mirrors the isSignUp state
+  // into a ref so the listener (registered once, on mount) always reads the
+  // current tab instead of closing over whichever value existed when the
+  // listener was attached -- re-registering on every isSignUp toggle would
+  // fire this on the toggle itself via the cleanup below, a false positive.
+  const hasStartedFormRef = useRef(false);
+  const hasReportedOutcomeRef = useRef(false);
+  const isSignUpRef = useRef(isSignUp);
+  useEffect(() => {
+    isSignUpRef.current = isSignUp;
+  }, [isSignUp]);
+
+  useEffect(() => {
+    const reportAbandonIfNeeded = () => {
+      if (isSignUpRef.current && hasStartedFormRef.current && !hasReportedOutcomeRef.current) {
+        hasReportedOutcomeRef.current = true; // guard first: pagehide + unmount cleanup can both fire for one real departure
+        trackSignUpAbandoned("email");
+      }
+    };
+    // pagehide (not beforeunload, which blocks the back/forward cache) covers
+    // an actual tab close/reload; the cleanup below covers a Next.js
+    // client-side navigation away, which never fires either browser event.
+    window.addEventListener("pagehide", reportAbandonIfNeeded);
+    return () => {
+      window.removeEventListener("pagehide", reportAbandonIfNeeded);
+      reportAbandonIfNeeded();
+    };
+  }, []);
+
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -65,6 +100,8 @@ export default function AuthPageClient({
         // new signup always gets exactly one. Surface this explicitly instead
         // of showing "check your email" for an email that will never get one.
         if (data?.user && data.user.identities?.length === 0) {
+          hasReportedOutcomeRef.current = true;
+          trackSignUpFailed({ method: "email", reason: "email_already_exists" });
           setIsSignUp(false);
           setMessage({
             type: "error",
@@ -72,6 +109,7 @@ export default function AuthPageClient({
           });
           return;
         }
+        hasReportedOutcomeRef.current = true;
         trackSignUp("email");
         if (data?.session) {
           router.push(nextPath || (initialRole ? `/onboarding?role=${initialRole}` : "/onboarding"));
@@ -92,10 +130,12 @@ export default function AuthPageClient({
       }
     } catch (err: unknown) {
       const errorObj = err as { error_description?: string; message?: string };
-      setMessage({
-        type: "error",
-        text: errorObj.error_description || errorObj.message || "An unexpected error occurred.",
-      });
+      const text = errorObj.error_description || errorObj.message || "An unexpected error occurred.";
+      if (isSignUp) {
+        hasReportedOutcomeRef.current = true;
+        trackSignUpFailed({ method: "email", reason: "validation_error", message: text });
+      }
+      setMessage({ type: "error", text });
     } finally {
       setLoading(false);
     }
@@ -106,16 +146,23 @@ export default function AuthPageClient({
     setMessage({ type: "", text: "" });
     try {
       // Fires here, not after redirect: the OAuth handoff leaves the page,
-      // so this is the last point client-side JS runs in the flow.
+      // so this is the last point client-side JS runs in the flow. Marking
+      // the outcome here too, for the same reason -- if signInWithGoogle
+      // below throws (e.g. before the redirect even starts), the catch
+      // tracks a failure for an attempt this line already counted as a
+      // success. Accepted as-is: a thrown error here is rare (most failures
+      // happen after the redirect, outside this component entirely), and
+      // correcting the earlier trackSignUp call would need a bigger change
+      // to how that success signal works than this task asked for.
+      hasReportedOutcomeRef.current = true;
       if (isSignUp) trackSignUp("google");
       else trackLogin("google");
       await signInWithGoogle(supabase, nextPath);
     } catch (err: unknown) {
       const errorObj = err as { error_description?: string; message?: string };
-      setMessage({
-        type: "error",
-        text: errorObj.error_description || errorObj.message || "Google sign-in failed.",
-      });
+      const text = errorObj.error_description || errorObj.message || "Google sign-in failed.";
+      if (isSignUp) trackSignUpFailed({ method: "google", reason: "google_oauth_error", message: text });
+      setMessage({ type: "error", text });
       setLoading(false);
     }
   };
@@ -174,7 +221,10 @@ export default function AuthPageClient({
               type="email"
               placeholder={t("auth.emailPlaceholder")}
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (isSignUp) hasStartedFormRef.current = true;
+              }}
               autoComplete="email"
               required
             />
@@ -188,10 +238,17 @@ export default function AuthPageClient({
               type="password"
               placeholder="••••••••"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (isSignUp) hasStartedFormRef.current = true;
+              }}
               autoComplete={isSignUp ? "new-password" : "current-password"}
+              minLength={isSignUp ? 6 : undefined}
               required
             />
+            {isSignUp && (
+              <p className="mt-1.5 text-[11px] text-text-muted">At least 6 characters.</p>
+            )}
           </div>
 
           {!isSignUp && (

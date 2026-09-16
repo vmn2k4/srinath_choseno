@@ -1,6 +1,7 @@
 import { sendEvent } from "./gtag";
 import { createClient } from "@/lib/supabase/client";
 import { logClientError, type ClientErrorType } from "@/lib/services/errorLog";
+import { logSignupFunnelEvent, type SignupFunnelReason } from "@/lib/services/signupFunnel";
 import { isDevEnvironment } from "@/lib/utils/environment";
 
 // Wraps GA4's own recommended events (sign_up, login, search, share,
@@ -15,6 +16,59 @@ export function trackSignUp(method: "email" | "google") {
 
 export function trackLogin(method: "email" | "google" | "demo") {
   sendEvent("login", { method });
+}
+
+// Same relationship to trackSignUp that trackError has to a plain
+// GA4-only error event: GA4 gets a lightweight sign_up_failed/
+// sign_up_abandoned event for quick trend-watching, but signup_funnel_events
+// (Supabase) is the source of truth for the reason/message detail, because
+// GA4's sign_up event was directly observed missing real signups (see
+// analytics-live-data-pull-howto memory) -- there's no reason to trust it
+// more for the failure/abandon side. Never throws: this fires from a form's
+// catch block and a pagehide/unmount handler, neither of which should ever
+// surface a secondary error to the visitor.
+function logSignupFunnel(params: {
+  eventType: "failed" | "abandoned";
+  method: "email" | "google";
+  reason?: SignupFunnelReason | null;
+  message?: string | null;
+}) {
+  if (typeof window === "undefined") return;
+  try {
+    const supabase = createClient();
+    void logSignupFunnelEvent(supabase, {
+      eventType: params.eventType,
+      method: params.method,
+      reason: params.reason ?? null,
+      message: params.message ?? null,
+      page: window.location.pathname + window.location.search,
+      referrer: document.referrer || null,
+      userAgent: navigator.userAgent,
+      viewport: `${window.innerWidth}x${window.innerHeight}`,
+      isTest: isDevEnvironment(),
+    });
+  } catch {
+    // Swallow -- see note above.
+  }
+}
+
+export function trackSignUpFailed(params: {
+  method: "email" | "google";
+  reason: SignupFunnelReason;
+  message?: string | null;
+}) {
+  sendEvent("sign_up_failed", { method: params.method, reason: params.reason });
+  logSignupFunnel({ eventType: "failed", method: params.method, reason: params.reason, message: params.message });
+}
+
+// Fired when someone typed into the signup form (so we know they engaged,
+// not just landed on the page) but the page unloads/unmounts before either
+// trackSignUp or trackSignUpFailed ever recorded an outcome -- the "spent
+// three minutes on /auth, then nothing" case flagged from GA4's page-level
+// data, previously invisible at the individual-attempt level.
+export function trackSignUpAbandoned(method: "email") {
+  sendEvent("sign_up_abandoned", { method });
+  logSignupFunnel({ eventType: "abandoned", method });
 }
 
 export function trackLogout() {
