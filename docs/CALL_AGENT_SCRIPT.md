@@ -161,10 +161,30 @@ free to call back anytime. Thanks, and good luck out there."
    `supabase/migrations/20260914000002_candidate_call_attempts.sql`.
 4. Deploy `voice-bridge/` (see its README) and set `VOICE_BRIDGE_WS_URL` on
    the main app to its public `wss://.../media` URL.
-5. **Test with your own phone number first.** In particular, confirm the
+5. **Add a Vercel Firewall bypass for `/api/telephony/*`.** Vercel's
+   automatic bot/DDoS mitigation serves a security-challenge HTML page to
+   server-to-server traffic it can't fingerprint as a browser -- Twilio's
+   webhook requests hit exactly that, and Twilio can't solve a JS
+   challenge, so every call died at "ringing" with Twilio's own generic
+   "application error" voice message and zero trace in the app's own
+   logs (confirmed via Twilio's debugger: Error 11200, HTTP 429 from
+   `/api/telephony/voice`, plus `x-vercel-mitigated: challenge` curling it
+   directly). This is a Vercel project setting, not something a code fix
+   can touch:
+   ```bash
+   vercel firewall rules add "Twilio telephony webhooks" \
+     --condition '{"type":"path","op":"pre","value":"/api/telephony/"}' \
+     --action bypass --yes
+   vercel firewall publish --yes
+   ```
+   The app's own Twilio signature verification (`verifyTwilioSignature` in
+   both webhook routes) remains the real auth gate for that path -- this
+   only stops Vercel's edge layer from intercepting the request before it
+   ever reaches that check.
+6. **Test with your own phone number first.** In particular, confirm the
    audio actually plays both directions before calling a real candidate —
    see the audio-format caveat in `voice-bridge/README.md`.
-6. Confirm your Twilio number and recording practice comply with the
+7. Confirm your Twilio number and recording practice comply with the
    consent-recording rules for wherever you're calling (BC is
    one-party-consent federally, but check the specific rules for any
    province/state you're dialing into) — the disclosure line in STATE 1 is
