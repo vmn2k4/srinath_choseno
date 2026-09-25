@@ -60,9 +60,13 @@ async function getAuthToken() {
 }
 
 const modelsToTry = [
+  'gemini-3.1-flash-lite',
+  'gemini-3.1-flash-lite-preview',
   'gemini-flash-lite-latest',
   'gemini-3-flash-preview',
   'gemini-3.6-flash',
+  'gemini-3.7-flash',
+  'gemini-3.8-flash',
   'gemini-2.5-flash'
 ];
 
@@ -121,12 +125,13 @@ OUTPUT VALID JSON ONLY with this schema:
           const jsonMatch = text && text.match(/\{[\s\S]*\}/);
           if (jsonMatch) {
             const parsed = JSON.parse(jsonMatch[0]);
-            if (parsed && parsed.body && parsed.body.trim().split(/\s+/).filter(Boolean).length >= 450) {
+            const minWords = attempt === 0 ? 450 : 380;
+            if (parsed && parsed.body && parsed.body.trim().split(/\s+/).filter(Boolean).length >= minWords) {
               return parsed;
             }
           }
         } else if (res.status === 429 || res.status === 503) {
-          await delay(3000);
+          await delay(2000);
         }
       } catch (e) {
         // Continue to fallback
@@ -150,12 +155,13 @@ OUTPUT VALID JSON ONLY with this schema:
           const jsonMatch = text && text.match(/\{[\s\S]*\}/);
           if (jsonMatch) {
             const parsed = JSON.parse(jsonMatch[0]);
-            if (parsed && parsed.body && parsed.body.trim().split(/\s+/).filter(Boolean).length >= 450) {
+            const minWords = attempt === 0 ? 450 : 380;
+            if (parsed && parsed.body && parsed.body.trim().split(/\s+/).filter(Boolean).length >= minWords) {
               return parsed;
             }
           }
         } else if (res.status === 429 || res.status === 503) {
-          await delay(3000);
+          await delay(2000);
         }
       } catch (e) {
         // Continue
