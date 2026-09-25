@@ -19,6 +19,7 @@ import {
   ArrowUp,
   ArrowDown,
   Trash2,
+  Sparkles,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import {
@@ -571,16 +572,31 @@ export default function AdminNewsDistributionClient() {
           </div>
 
           <div className="flex items-center gap-2.5">
-            {/* Bulk Delete -- only shown once something's checked */}
+            {/* Bulk Actions -- shown when items are selected */}
             {selectedIds.size > 0 && (
-              <button
-                onClick={() => setDeleteConfirmOpen(true)}
-                title="Permanently delete the selected articles"
-                className="px-3 py-1.5 bg-rose-500/10 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold hover:bg-rose-500/20 transition-colors flex items-center gap-1.5 cursor-pointer"
-              >
-                <Trash2 size={13} />
-                <span>Delete {selectedIds.size} selected</span>
-              </button>
+              <>
+                <button
+                  onClick={() => {
+                    const ids = Array.from(selectedIds);
+                    navigator.clipboard.writeText(ids.join("\n"));
+                    showToast(`Copied ${ids.length} Story ID${ids.length === 1 ? "" : "s"} to clipboard`, "info");
+                  }}
+                  title="Copy selected Story UUIDs to clipboard"
+                  className="px-3 py-1.5 bg-primary/10 text-primary border border-primary/30 rounded-lg text-xs font-semibold hover:bg-primary/20 transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Copy size={13} />
+                  <span>Copy {selectedIds.size} IDs</span>
+                </button>
+
+                <button
+                  onClick={() => setDeleteConfirmOpen(true)}
+                  title="Permanently delete the selected articles"
+                  className="px-3 py-1.5 bg-rose-500/10 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold hover:bg-rose-500/20 transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Trash2 size={13} />
+                  <span>Delete {selectedIds.size} selected</span>
+                </button>
+              </>
             )}
 
             {/* Search Input */}
@@ -666,6 +682,7 @@ export default function AdminNewsDistributionClient() {
                       />
                     </th>
                     <th className="py-2.5 px-3 w-12 text-center border-r border-border/40">#</th>
+                    <th className="py-2.5 px-3 w-28 text-center border-r border-border/40">Story ID</th>
                     <th className="py-2.5 px-3 w-16 text-center border-r border-border/40">
                       <button
                         type="button"
@@ -725,6 +742,24 @@ export default function AdminNewsDistributionClient() {
                         {/* 1. ID / Rank */}
                         <td className="py-2 px-3 text-center font-mono text-text-muted border-r border-border/40">
                           {rowNumber}
+                        </td>
+
+                        {/* 1.5. Story UUID */}
+                        <td className="py-2 px-2 text-center font-mono text-[11px] text-text-muted border-r border-border/40 whitespace-nowrap">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (typeof navigator !== "undefined" && navigator.clipboard) {
+                                navigator.clipboard.writeText(article.id);
+                                showToast(`Copied Story ID: ${article.id.slice(0, 8)}...`, "info");
+                              }
+                            }}
+                            title={`Click to copy full ID: ${article.id}`}
+                            className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface-hover hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer group/id"
+                          >
+                            <span>{article.id.slice(0, 8)}…</span>
+                            <Copy size={10} className="opacity-0 group-hover/id:opacity-100 transition-opacity" />
+                          </button>
                         </td>
 
                         {/* 2. Score */}

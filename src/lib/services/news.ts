@@ -105,6 +105,10 @@ export interface NewsArticleContent {
   batch_rank?: number;
   /** List of social platforms where this story has been published/shared (e.g. ["X", "Facebook", "LinkedIn"]) */
   shared_platforms?: string[];
+  /** Optional array of politician names tagged in the article */
+  taggedPoliticians?: string[];
+  /** Primary official name if resolved or designated */
+  primaryPoliticianName?: string;
 }
 
 export interface NewsArticle {
@@ -927,6 +931,7 @@ export async function listNewsArticlesForDistribution(
       impact_area,
       hero_image_url,
       content,
+      viral_score,
       political_party_id,
       created_by,
       created_at,
@@ -967,11 +972,17 @@ export async function listNewsArticlesForDistribution(
     query = query.ilike("headline", `%${term}%`);
   }
 
-  // Order query
+  // Order query -- viral_desc/viral_asc use the indexed `viral_score` column
+  // (news_articles_viral_score_idx) so the sort applies across every matching
+  // row, not just whichever page happens to load first.
   if (options.sortBy === "date_asc") {
     query = query.order("published_at", { ascending: true, nullsFirst: false });
   } else if (options.sortBy === "headline_asc") {
     query = query.order("headline", { ascending: true });
+  } else if (options.sortBy === "viral_asc") {
+    query = query.order("viral_score", { ascending: true, nullsFirst: false });
+  } else if (options.sortBy === "viral_desc") {
+    query = query.order("viral_score", { ascending: false, nullsFirst: false });
   } else {
     // Default newest publication first
     query = query.order("published_at", { ascending: false, nullsFirst: false });
@@ -1002,10 +1013,50 @@ export async function listNewsArticlesForDistribution(
       .map((p: any) => p.profiles)
       .filter(Boolean);
 
-    const primaryProf = politicians[0];
+    // Pick primary politician: prioritize who is explicitly named in the headline or summary
+    const hl = (row.headline || "").toLowerCase();
+    const sm = (row.summary || "").toLowerCase();
+    let primaryProf = politicians.find((p: any) => {
+      const full = (p.full_name || "").toLowerCase().trim();
+      return full && hl.includes(full);
+    });
+
+    if (!primaryProf) {
+      primaryProf = politicians.find((p: any) => {
+        const parts = (p.full_name || "").toLowerCase().trim().split(/\s+/);
+        const lastName = parts[parts.length - 1];
+        return lastName && lastName.length > 2 && new RegExp(`\\b${lastName}\\b`, "i").test(hl);
+      });
+    }
+
+    if (!primaryProf) {
+      primaryProf = politicians.find((p: any) => {
+        const full = (p.full_name || "").toLowerCase().trim();
+        return full && sm.includes(full);
+      });
+    }
+
+    if (!primaryProf && politicians.length > 0) {
+      primaryProf = politicians[0];
+    }
+
     const primaryWallSlug = primaryProf?.politician_profiles?.wall_slug || primaryProf?.current_ghost_id || null;
-    const primaryPoliticianName = primaryProf?.full_name || null;
-    const allPoliticianNames = politicians.map((p: any) => p.full_name).filter(Boolean);
+    let primaryPoliticianName = primaryProf?.full_name || null;
+    if (!primaryPoliticianName) {
+      if (content.primaryPoliticianName) {
+        primaryPoliticianName = content.primaryPoliticianName;
+      } else if (Array.isArray(content.taggedPoliticians) && content.taggedPoliticians[0]) {
+        primaryPoliticianName = content.taggedPoliticians[0];
+      } else {
+        const titleMatch = (row.headline || '').match(/\b(?:Gov\.|Governor|Premier|Senator|Sen\.|Mayor|Minister|Rep\.|Representative)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/);
+        if (titleMatch && titleMatch[1]) {
+          primaryPoliticianName = titleMatch[1];
+        }
+      }
+    }
+    const allPoliticianNames = politicians.length > 0
+      ? Array.from(new Set(politicians.map((p: any) => p.full_name).filter(Boolean)))
+      : (primaryPoliticianName ? [primaryPoliticianName] : []);
 
     // Fallback batch number based on publication timestamp
     const rawBatch = content.batch_number;
@@ -1014,7 +1065,14 @@ export async function listNewsArticlesForDistribution(
         ? String(rawBatch).trim()
         : formatBatchNumberFromDate(row.published_at || row.created_at);
     // Fallback viral score
-    const viralScore = typeof content.viral_score === "number" ? content.viral_score : (content.breakingNews ? 9.5 : 8.0);
+    const viralScore =
+      typeof row.viral_score === "number"
+        ? row.viral_score
+        : typeof content.viral_score === "number"
+        ? content.viral_score
+        : content.breakingNews
+        ? 9.5
+        : 8.0;
     const batchRank = typeof content.batch_rank === "number" ? content.batch_rank : from + index + 1;
     const sharedPlatforms = Array.isArray(content.shared_platforms) ? content.shared_platforms : [];
 
@@ -1029,13 +1087,6 @@ export async function listNewsArticlesForDistribution(
       allPoliticianNames,
     };
   });
-
-  // If sorting by viral score, sort the retrieved page
-  if (options.sortBy === "viral_desc") {
-    formatted.sort((a, b) => (b.viralScore || 0) - (a.viralScore || 0));
-  } else if (options.sortBy === "viral_asc") {
-    formatted.sort((a, b) => (a.viralScore || 0) - (b.viralScore || 0));
-  }
 
   return {
     data: formatted,

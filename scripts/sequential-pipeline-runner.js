@@ -33,7 +33,8 @@ const {
   mergeCandidatesIntoQueue
 } = require('./rss-feed-collector');
 const { verifyArticleQuotesAndFacts } = require('./quote-and-fact-verifier');
-const { scoreCandidateVirality, synthesizeCivicStory } = require('./rss-verified-pipeline');
+const { scoreCandidateVirality, synthesizeCivicStory, synthesizeDirectFallback } = require('./rss-verified-pipeline');
+const { synthesizeArticleWithSearch } = require('./synthesize-selected-ids');
 
 const QUEUE_FILE = path.join(__dirname, 'latest-verified-rss-candidates.json');
 const CURRENT_CANDIDATE_FILE = path.join(__dirname, 'current-candidate.json');
@@ -319,12 +320,170 @@ function publishDirectRemainder(options = {}) {
   }
 }
 
+/**
+ * Autonomous end-to-end pipeline run:
+ * 1. Harvest & deduplicate fresh feeds into queue
+ * 2. Rank queue by virality score
+ * 3. Synthesize top N (default 40) into 500+ word reports with live search grounding
+ * 4. Package remaining candidates in the window as direct wire reports (score <= 8.9)
+ * 5. Batch-ingest everything into Supabase, sync politician walls, update OG share cards, and prune queue.
+ */
+async function runAutonomousPipeline(options = {}) {
+  const synthTop = options.synthTop !== undefined ? options.synthTop : 40;
+  const remainderLimit = options.remainderLimit;
+  const maxHours = options.maxHours || 24;
+
+  console.log('======================================================');
+  console.log('CHOSENO AUTONOMOUS NEWS PIPELINE (TOP SYNTHESIS + DIRECT REMAINDER)');
+  console.log(`Synthesis Target: Top ${synthTop} | Lookback: ${maxHours}h`);
+  console.log('======================================================\n');
+
+  // 1. Collect fresh candidates
+  let queue;
+  if (!options.skipCollect) {
+    queue = await collectFreshCandidates(maxHours);
+  } else {
+    queue = sortQueueByVirality(loadQueue());
+  }
+
+  if (queue.length === 0) {
+    console.log('[Auto-Run] Queue is empty. No candidates to process.');
+    return;
+  }
+
+  // 2. Select top N for synthesis and remainder for direct wire publication
+  const toSynthesize = queue.slice(0, synthTop);
+
+  const cutoffTime = Date.now() - (maxHours * 60 * 60 * 1000);
+  const remainingCandidates = queue.slice(synthTop).filter(c => {
+    const pubTime = new Date(c.pubDate).getTime();
+    return !isNaN(pubTime) && pubTime >= cutoffTime;
+  });
+
+  const toPublishDirect = typeof remainderLimit === 'number' && remainderLimit > 0
+    ? remainingCandidates.slice(0, remainderLimit)
+    : remainingCandidates;
+
+  console.log(`[Auto-Run] Processing Plan:`);
+  console.log(`  -> Synthesizing: ${toSynthesize.length} stories (Target: 500+ words, viral score 9.5-9.8)`);
+  console.log(`  -> Direct Wire: ${toPublishDirect.length} stories (viral score <= 8.9)\n`);
+
+  const finalBatch = [];
+  const publishedUrls = new Set();
+
+  // 3. Synthesize top candidates
+  for (let i = 0; i < toSynthesize.length; i++) {
+    const candidate = toSynthesize[i];
+    console.log(`[Synth ${i + 1}/${toSynthesize.length}] "${candidate.title.slice(0, 65)}..."`);
+
+    try {
+      const candidateArticle = {
+        headline: candidate.title,
+        summary: candidate.sourceDescription || candidate.title,
+        published_at: candidate.pubDate,
+        sources: [{ name: candidate.sourceName, url: candidate.sourceUrl }]
+      };
+
+      const synthesized = await synthesizeArticleWithSearch(candidateArticle);
+      const verification = verifyArticleQuotesAndFacts(synthesized, candidate);
+      const cleanBody = verification.sanitizedBody;
+      const cleanWordCount = cleanBody.split(/\s+/).filter(Boolean).length;
+
+      const dateStr = (candidate.pubDate || new Date().toISOString()).slice(0, 10);
+      const baseSlug = (synthesized.headline || candidate.title)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 80);
+
+      const articlePayload = {
+        slug: `${baseSlug}-${dateStr}`,
+        headline: synthesized.headline || candidate.title,
+        summary: synthesized.summary || candidate.sourceDescription,
+        category: candidate.category || 'Politics',
+        country: candidate.country || 'US',
+        province: candidate.province || candidate.region || null,
+        status: 'published',
+        published_at: candidate.pubDate || new Date().toISOString(),
+        eventDate: dateStr,
+        impactArea: candidate.province ? 'state' : 'country',
+        body: cleanBody,
+        seoTitle: synthesized.headline || candidate.title,
+        metaDescription: synthesized.summary || candidate.sourceDescription,
+        tags: synthesized.tags || [candidate.sourceName, candidate.country || 'National', 'Politics'],
+        taggedPoliticians: synthesized.taggedPoliticians || [],
+        author: { name: 'Choseno Civic News Desk', bio: 'Civic and political reporting' },
+        sources: [{ label: candidate.sourceName, url: candidate.sourceUrl }],
+        groundTruth: candidate
+      };
+
+      finalBatch.push(articlePayload);
+      publishedUrls.add(candidate.sourceUrl);
+      console.log(`  -> SUCCESS! Synthesized ${cleanWordCount} words.`);
+    } catch (err) {
+      console.warn(`  -> Synthesis failed for "${candidate.title.slice(0, 50)}":`, err.message);
+      console.log(`  -> Falling back to direct wire report for this candidate.`);
+      const fallbackDirect = synthesizeDirectFallback(candidate);
+      finalBatch.push(fallbackDirect);
+      publishedUrls.add(candidate.sourceUrl);
+    }
+
+    // Polite delay between API calls to prevent 429
+    await new Promise(r => setTimeout(r, 1200));
+  }
+
+  // 4. Format direct remainder candidates
+  for (const directCandidate of toPublishDirect) {
+    const directArticle = synthesizeDirectFallback(directCandidate);
+    finalBatch.push(directArticle);
+    publishedUrls.add(directCandidate.sourceUrl);
+  }
+
+  // 5. Ingest final batch into Supabase
+  if (finalBatch.length > 0) {
+    console.log(`\n[Auto-Run] Ingesting total batch of ${finalBatch.length} articles into Supabase...`);
+    const tempBatchPath = path.join(__dirname, 'temp-auto-batch.json');
+    fs.writeFileSync(tempBatchPath, JSON.stringify(finalBatch, null, 2));
+
+    try {
+      const output = execSync(`node "${path.join(__dirname, 'insert-news-batch.js')}" "${tempBatchPath}"`, {
+        encoding: 'utf8'
+      });
+      console.log(output);
+
+      // Prune published candidates from queue
+      const updatedQueue = loadQueue().filter(item => !publishedUrls.has(item.sourceUrl));
+      saveQueue(updatedQueue);
+      console.log(`[Queue] Pruned ${publishedUrls.size} published candidates. Remaining queue: ${updatedQueue.length}.`);
+    } catch (e) {
+      console.error('[Auto-Run] Database ingestion error:', e.message);
+    } finally {
+      if (fs.existsSync(tempBatchPath)) fs.unlinkSync(tempBatchPath);
+    }
+  }
+
+  console.log('======================================================');
+  console.log(`AUTONOMOUS RUN COMPLETE: ${finalBatch.length} stories processed.`);
+  console.log('======================================================\n');
+}
+
 if (require.main === module) {
   const action = process.argv[2];
   if (action === '--collect') {
     const maxHoursArg = process.argv.find((a, i) => process.argv[i - 1] === '--max-hours');
     const maxHours = maxHoursArg ? Number(maxHoursArg) : 24;
     collectFreshCandidates(maxHours).catch(console.error);
+  } else if (action === '--auto-run') {
+    const maxHoursArg = process.argv.find((a, i) => process.argv[i - 1] === '--max-hours');
+    const synthTopArg = process.argv.find((a, i) => process.argv[i - 1] === '--synth-top');
+    const remainderLimitArg = process.argv.find((a, i) => process.argv[i - 1] === '--remainder-limit');
+    const skipCollect = process.argv.includes('--skip-collect');
+    runAutonomousPipeline({
+      maxHours: maxHoursArg ? Number(maxHoursArg) : 24,
+      synthTop: synthTopArg ? Number(synthTopArg) : 40,
+      remainderLimit: remainderLimitArg ? Number(remainderLimitArg) : undefined,
+      skipCollect
+    }).catch(console.error);
   } else if (action === '--pop') {
     popNextCandidate();
   } else if (action === '--ingest') {
@@ -337,12 +496,13 @@ if (require.main === module) {
     const maxHoursArg = process.argv.find((a, i) => process.argv[i - 1] === '--max-hours');
     const limitArg = process.argv.find((a, i) => process.argv[i - 1] === '--limit');
     publishDirectRemainder({
-      maxHours: maxHoursArg ? Number(maxHoursArg) : 1,
+      maxHours: maxHoursArg ? Number(maxHoursArg) : 24,
       limit: limitArg ? Number(limitArg) : undefined
     });
   } else {
     console.log(`Choseno Sequential Pipeline Coordinator (Antigravity-Native)
 Usage:
+  node scripts/sequential-pipeline-runner.js --auto-run [--synth-top 40] [--max-hours N] # Complete autonomous run (top N synthesized + remainder direct)
   node scripts/sequential-pipeline-runner.js --collect [--max-hours N]          # Harvest fresh feeds into queue
   node scripts/sequential-pipeline-runner.js --pop                             # Pop next candidate into current-candidate.json (ranked by virality)
   node scripts/sequential-pipeline-runner.js --ingest                          # Ingest current-article.json into Supabase & prune
@@ -354,6 +514,7 @@ Usage:
 }
 
 module.exports = {
+  runAutonomousPipeline,
   collectFreshCandidates,
   popNextCandidate,
   ingestCurrentArticle,

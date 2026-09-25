@@ -117,7 +117,52 @@ async function fetchArticles(slugs: string[], token: string): Promise<ArticleRow
 }
 
 async function renderCard(article: ArticleRow, fonts: ReturnType<typeof loadFonts>): Promise<Buffer> {
-  const primaryPolitician = (article.news_article_politicians ?? []).map((p) => p.profiles).filter(Boolean)[0];
+  const politicians = (article.news_article_politicians ?? []).map((p) => p.profiles).filter(Boolean);
+  const hl = (article.headline || "").toLowerCase();
+  const sm = (article.summary || "").toLowerCase();
+
+  let primaryPolitician = politicians.find((p) => {
+    const full = (p?.full_name || "").toLowerCase().trim();
+    return full && hl.includes(full);
+  });
+
+  if (!primaryPolitician) {
+    primaryPolitician = politicians.find((p) => {
+      const parts = (p?.full_name || "").toLowerCase().trim().split(/\s+/);
+      const lastName = parts[parts.length - 1];
+      return lastName && lastName.length > 2 && new RegExp(`\\b${lastName}\\b`, "i").test(hl);
+    });
+  }
+
+  if (!primaryPolitician) {
+    primaryPolitician = politicians.find((p) => {
+      const full = (p?.full_name || "").toLowerCase().trim();
+      return full && sm.includes(full);
+    });
+  }
+
+  if (!primaryPolitician && politicians.length > 0) {
+    primaryPolitician = politicians[0];
+  }
+
+  if (!primaryPolitician) {
+    const content = (article.content as any) || {};
+    const fallbackName = content.primaryPoliticianName ||
+      (Array.isArray(content.taggedPoliticians) ? content.taggedPoliticians[0] : null) ||
+      (() => {
+        const m = (article.headline || '').match(/\b(?:Gov\.|Governor|Premier|Senator|Sen\.|Mayor|Minister|Rep\.|Representative)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/);
+        return m ? m[1] : null;
+      })();
+    if (fallbackName) {
+      primaryPolitician = {
+        full_name: fallbackName,
+        designation: null,
+        constituency: null,
+        politician_profiles: null
+      } as any;
+    }
+  }
+
   const photoUrl = primaryPolitician?.politician_profiles?.photo_url || primaryPolitician?.politician_profiles?.avatar_url;
   const inlinedPhoto = await toDataUri(photoUrl);
 

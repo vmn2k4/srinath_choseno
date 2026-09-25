@@ -61,81 +61,84 @@ function stripEmoji(str) {
 }
 
 function calculateViralityScore(article, resolvedIds = []) {
-  let score = 8.1;
+  const bodyText = (article.body || (typeof article.content === 'string' ? article.content : article.content?.body) || '').trim();
+  const wordCount = bodyText.split(/\s+/).filter(Boolean).length;
+  const isSynthesized = wordCount >= 450;
+
+  // Synthesized in-depth reports start at a higher baseline to always occupy top ranks
+  let score = isSynthesized ? 9.3 : 8.0;
   const text = `${article.headline || ''} ${article.summary || ''} ${article.category || ''}`.toLowerCase();
   const tags = (article.tags || article.content?.tags || []).map(t => String(t).toLowerCase());
   const politicians = (article.taggedPoliticians || article.tagged_politicians || article.politician_names || []).map(p => String(p).toLowerCase());
 
   // 1. High-level national / federal / executive political figures
-  const topLeaders = ['trump', 'biden', 'harris', 'trudeau', 'poilievre', 'vance', 'newsom', 'desantis', 'pritzker', 'shapiro', 'whitmer', 'supreme court', 'senator'];
+  const topLeaders = ['trump', 'biden', 'harris', 'trudeau', 'poilievre', 'vance', 'newsom', 'desantis', 'pritzker', 'shapiro', 'whitmer', 'supreme court', 'senator', 'governor', 'premier'];
   const isTopLeader = topLeaders.some(l => text.includes(l) || politicians.some(p => p.includes(l)) || tags.some(t => t.includes(l)));
   if (isTopLeader) {
-    score += 0.8;
+    score += isSynthesized ? 0.3 : 0.4;
   } else if ((resolvedIds && resolvedIds.length > 0) || politicians.length > 0) {
-    score += 0.4;
+    score += 0.2;
   }
 
   // 2. High-stakes political actions & breaking events
   if (article.breakingNews || /\b(veto|censure|indict|resignation|resign|scandal|investigation|emergency|proclamation|tornado|hurricane|lawsuit|unconstitutional|referendum|poll|tightening|surge|banned|ban)\b/i.test(text)) {
-    score += 0.5;
+    score += 0.2;
   }
 
   // 3. Category & Policy Domain
   const cat = (article.category || '').toLowerCase();
   if (cat.includes('election') || cat.includes('national') || cat.includes('politics')) {
-    score += 0.4;
+    score += 0.1;
   } else if (cat.includes('economy') || cat.includes('labor') || cat.includes('tax') || cat.includes('budget')) {
-    score += 0.3;
-  } else if (cat.includes('safety') || cat.includes('justice') || cat.includes('health') || cat.includes('environment')) {
-    score += 0.2;
-  }
-
-  // 4. Geographic & Jurisdiction scope
-  const impact = (article.impact_area || article.impactArea || '').toLowerCase();
-  if (impact === 'country' || impact === 'national' || text.includes('presidential') || text.includes('congress') || text.includes('parliament')) {
-    score += 0.3;
-  } else if (article.province || article.state_or_province || text.includes('governor') || text.includes('premier')) {
-    score += 0.2;
-  } else {
     score += 0.1;
   }
 
-  // 5. Deterministic micro-variance based on slug characters for granular distinction
+  // 4. Micro-variance based on slug characters for granular distinction
   const hash = (article.slug || '').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  const microJitter = ((hash % 5) - 2) * 0.05; // -0.10 to +0.10
+  const microJitter = ((hash % 5) - 2) * 0.02; // -0.04 to +0.04
   score += microJitter;
 
-  return Math.min(9.8, Math.max(7.8, Number(score.toFixed(1))));
+  if (isSynthesized) {
+    // Guaranteed top tier for synthesized stories: 9.4 to 9.8
+    return Math.min(9.8, Math.max(9.4, Number(score.toFixed(1))));
+  } else {
+    // Un-synthesized wire news capped at 8.9 so it never crowds out synthesized journalism
+    return Math.min(8.9, Math.max(7.8, Number(score.toFixed(1))));
+  }
 }
 
 // Function to authenticate and get valid Authorization header
 async function getAuthHeaders() {
+  if (env.admin_un && env.admin_pwd) {
+    try {
+      const authRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: env.admin_un,
+          password: env.admin_pwd
+        })
+      });
+      if (authRes.ok) {
+        const authData = await authRes.json();
+        return {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${authData.access_token}`
+        };
+      }
+    } catch (e) {
+      console.warn('Admin password login failed:', e.message);
+    }
+  }
+
   if (env.SUPABASE_SERVICE_ROLE_KEY) {
     return {
       apikey: env.SUPABASE_SERVICE_ROLE_KEY,
       Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`
     };
-  }
-
-  if (env.admin_un && env.admin_pwd) {
-    const authRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
-      method: 'POST',
-      headers: {
-        apikey: SUPABASE_ANON_KEY,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: env.admin_un,
-        password: env.admin_pwd
-      })
-    });
-    if (authRes.ok) {
-      const authData = await authRes.json();
-      return {
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${authData.access_token}`
-      };
-    }
   }
 
   return {
@@ -153,10 +156,59 @@ const PROFILE_BLACKLIST = new Set([
 ]);
 
 const LEADER_ALIASES = {
-  'jb pritzker': ['j.b. pritzker', 'pritzker', 'governor pritzker'],
-  'j.b. pritzker': ['jb pritzker', 'pritzker', 'governor pritzker'],
-  'greg abbott': ['gregory abbott', 'abbott', 'governor abbott'],
-  'gregory abbott': ['greg abbott', 'abbott', 'governor abbott'],
+  'jb pritzker': ['j.b. pritzker', 'pritzker', 'governor pritzker', 'gov pritzker'],
+  'j.b. pritzker': ['jb pritzker', 'pritzker', 'governor pritzker', 'gov pritzker'],
+  'greg abbott': ['gregory abbott', 'abbott', 'governor abbott', 'gov abbott'],
+  'gregory abbott': ['greg abbott', 'abbott', 'governor abbott', 'gov abbott'],
+  'gavin newsom': ['governor newsom', 'gov newsom', 'newsom'],
+  'maura healey': ['governor healey', 'gov healey', 'healey'],
+  'kathy hochul': ['governor hochul', 'gov hochul', 'hochul'],
+  'phil murphy': ['governor murphy', 'gov murphy', 'murphy'],
+  'mikie sherrill': ['governor sherrill', 'gov sherrill', 'sherrill', 'rep sherrill', 'representative sherrill'],
+  'alex padilla': ['senator padilla', 'sen padilla', 'padilla', 'alejandro padilla'],
+  'xavier becerra': ['secretary becerra', 'becerra'],
+  'steve hilton': ['hilton'],
+  'dale caldwell': ['lieutenant governor caldwell', 'lt gov caldwell', 'caldwell'],
+  'keisha lance bottoms': ['keisha bottoms', 'bottoms', 'mayor bottoms'],
+  'david jolly': ['jolly', 'rep jolly'],
+  'helena foulkes': ['foulkes'],
+  'sabina matos': ['lieutenant governor matos', 'lt gov matos', 'matos'],
+  'brian bergen': ['assemblyman bergen', 'bergen'],
+  'wes moore': ['governor moore', 'gov moore', 'moore'],
+  'andy beshear': ['governor beshear', 'gov beshear', 'beshear'],
+  'spencer cox': ['governor cox', 'gov cox', 'cox'],
+  'brian kemp': ['governor kemp', 'gov kemp', 'kemp'],
+  'katie hobbs': ['governor hobbs', 'gov hobbs', 'hobbs'],
+  'roy cooper': ['governor cooper', 'gov cooper', 'cooper'],
+  'sarah huckabee sanders': ['governor sanders', 'gov sanders', 'huckabee sanders'],
+  'glenn youngkin': ['governor youngkin', 'gov youngkin', 'youngkin'],
+  'tony evers': ['governor evers', 'gov evers', 'evers'],
+  'kristi noem': ['governor noem', 'gov noem', 'noem'],
+  'tate reeves': ['governor reeves', 'gov reeves', 'reeves'],
+  'henry mcmaster': ['governor mcmaster', 'gov mcmaster', 'mcmaster'],
+  'kim reynolds': ['governor reynolds', 'gov reynolds', 'reynolds'],
+  'bill lee': ['governor lee', 'gov lee'],
+  'kay ivey': ['governor ivey', 'gov ivey', 'ivey'],
+  'laura kelly': ['governor kelly', 'gov kelly'],
+  'janet mills': ['governor mills', 'gov mills', 'mills'],
+  'phil scott': ['governor scott', 'gov scott'],
+  'chris sununu': ['governor sununu', 'gov sununu', 'sununu'],
+  'ned lamont': ['governor lamont', 'gov lamont', 'lamont'],
+  'dan mckee': ['governor mckee', 'gov mckee', 'mckee'],
+  'john carney': ['governor carney', 'gov carney'],
+  'matt meyer': ['governor meyer', 'gov meyer', 'meyer'],
+  'bob ferguson': ['governor ferguson', 'gov ferguson', 'ferguson'],
+  'tina kotek': ['governor kotek', 'gov kotek', 'kotek'],
+  'brad little': ['governor little', 'gov little'],
+  'joe lombardo': ['governor lombardo', 'gov lombardo', 'lombardo'],
+  'mark gordon': ['governor gordon', 'gov gordon'],
+  'greg gianforte': ['governor gianforte', 'gov gianforte', 'gianforte'],
+  'kelly armstrong': ['governor armstrong', 'gov armstrong'],
+  'jim pillen': ['governor pillen', 'gov pillen', 'pillen'],
+  'kevin stitt': ['governor stitt', 'gov stitt', 'stitt'],
+  'mike kehoe': ['governor kehoe', 'gov kehoe', 'kehoe'],
+  'jeff landry': ['governor landry', 'gov landry', 'landry'],
+  'kelly ayotte': ['governor ayotte', 'gov ayotte', 'ayotte'],
   'doug ford': ['douglas ford', 'premier ford'],
   'douglas ford': ['doug ford', 'premier ford'],
   'tim houston': ['timothy houston', 'premier houston'],
@@ -164,7 +216,7 @@ const LEADER_ALIASES = {
   'danielle smith': ['marlaina danielle smith', 'premier smith'],
   'scott moe': ['premier moe'],
   'wab kinew': ['wabanakwut kinew', 'premier kinew'],
-  'david eby': ['david robert patrick eby', 'premier eby'],
+  'david eby': ['david robert patrick eby', 'premier eby', 'eby'],
   'mike dewine': ['richard michael dewine', 'governor dewine', 'dewine'],
   'richard michael dewine': ['mike dewine', 'governor dewine', 'dewine'],
   'josh shapiro': ['joshua david shapiro', 'governor shapiro', 'shapiro'],
@@ -390,10 +442,65 @@ async function resolvePoliticianIds(article, authHeaders) {
     selectedMatches.push(matches[0]);
   }
 
-  const selectedIds = selectedMatches.map(m => m.id);
-  const matchedProfiles = selectedMatches.map(m => m.prof);
+  // Prioritize politicians explicitly named in the HEADLINE over text/body mentions
+  const normHeadline = normalizeName(headline);
+  const normSummary = normalizeName(article.summary || '');
+
+  selectedMatches.sort((a, b) => {
+    const aProf = a.prof;
+    const bProf = b.prof;
+    const aNormName = normalizeName(aProf.full_name);
+    const bNormName = normalizeName(bProf.full_name);
+    const aShortName = getShortName(aNormName);
+    const bShortName = getShortName(bNormName);
+
+    const aAliases = LEADER_ALIASES[aNormName] || LEADER_ALIASES[aShortName] || [];
+    const aAliasList = Array.isArray(aAliases) ? aAliases : [aAliases];
+    const aInHeadline = normHeadline.includes(aNormName) || normHeadline.includes(aShortName) ||
+      aAliasList.some(alias => normHeadline.includes(normalizeName(alias)));
+
+    const bAliases = LEADER_ALIASES[bNormName] || LEADER_ALIASES[bShortName] || [];
+    const bAliasList = Array.isArray(bAliases) ? bAliases : [bAliases];
+    const bInHeadline = normHeadline.includes(bNormName) || normHeadline.includes(bShortName) ||
+      bAliasList.some(alias => normHeadline.includes(normalizeName(alias)));
+
+    if (aInHeadline && !bInHeadline) return -1;
+    if (!aInHeadline && bInHeadline) return 1;
+
+    // If both in headline, order by position where name appears
+    if (aInHeadline && bInHeadline) {
+      let aPos = normHeadline.indexOf(aShortName);
+      if (aPos === -1) aPos = normHeadline.indexOf(aNormName);
+      let bPos = normHeadline.indexOf(bShortName);
+      if (bPos === -1) bPos = normHeadline.indexOf(bNormName);
+      if (aPos !== -1 && bPos !== -1 && aPos !== bPos) return aPos - bPos;
+    }
+
+    // Next prioritize mentions in summary
+    const aInSummary = normSummary.includes(aNormName) || normSummary.includes(aShortName);
+    const bInSummary = normSummary.includes(bNormName) || normSummary.includes(bShortName);
+    if (aInSummary && !bInSummary) return -1;
+    if (!aInSummary && bInSummary) return 1;
+
+    // Fall back to highest geographic/executive score
+    return b.score - a.score;
+  });
+
+  // Deduplicate matched profiles with identical full_name to prevent double-tagging
+  const seenNames = new Set();
+  const dedupedMatches = [];
+  for (const m of selectedMatches) {
+    const fn = (m.prof?.full_name || '').toLowerCase().trim();
+    if (!seenNames.has(fn)) {
+      seenNames.add(fn);
+      dedupedMatches.push(m);
+    }
+  }
+
+  const selectedIds = dedupedMatches.map(m => m.id);
+  const matchedProfiles = dedupedMatches.map(m => m.prof);
   
-  // Resolve canonical wall slug for primary politician
+  // Resolve canonical wall slug and primary politician
   let primaryWallSlug = null;
   let primaryPoliticianName = null;
   if (matchedProfiles.length > 0) {
@@ -401,6 +508,16 @@ async function resolvePoliticianIds(article, authHeaders) {
     primaryPoliticianName = primary.full_name;
     const pp = Array.isArray(primary.politician_profiles) ? primary.politician_profiles[0] : primary.politician_profiles;
     primaryWallSlug = pp?.wall_slug || primary.current_ghost_id || null;
+  } else {
+    // If no profiles matched in DB, fall back to explicitly tagged politicians or headline extraction
+    if (taggedPoliticians && taggedPoliticians.length > 0 && taggedPoliticians[0]) {
+      primaryPoliticianName = taggedPoliticians[0];
+    } else {
+      const titleMatch = headline.match(/\b(?:Gov\.|Governor|Premier|Senator|Sen\.|Mayor|Minister|Rep\.|Representative)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/);
+      if (titleMatch && titleMatch[1]) {
+        primaryPoliticianName = titleMatch[1];
+      }
+    }
   }
 
   return {
@@ -1631,6 +1748,8 @@ async function run() {
         seoTitle: article.seoTitle,
         metaDescription: article.metaDescription,
         tags: article.tags,
+        taggedPoliticians: article.taggedPoliticians || (primaryPoliticianName ? [primaryPoliticianName] : []),
+        primaryPoliticianName: primaryPoliticianName || (article.taggedPoliticians && article.taggedPoliticians[0]) || null,
         tweet: article.tweet,
         tweetarticle: sanitizedTweetArticle,
         breakingNews: !!article.breakingNews,
@@ -1864,4 +1983,12 @@ async function run() {
   }
 }
 
-run().catch(console.error);
+if (require.main === module) {
+  run().catch(console.error);
+}
+
+module.exports = {
+  calculateViralityScore,
+  resolvePoliticianIds,
+  run
+};
