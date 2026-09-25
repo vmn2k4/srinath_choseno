@@ -325,7 +325,7 @@ export default function NewsArticleDetailClient({
 
   // 2. Extract all article topic tags and convert to clean PascalCase hashtags
   const topicTags = (content?.tags || []).map((tag) =>
-    tag
+    String(tag ?? "")
       .split(/\s+/)
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join("")
@@ -333,7 +333,7 @@ export default function NewsArticleDetailClient({
   ).filter(Boolean);
 
   const politicianTags = taggedReps.map((name) =>
-    name
+    String(name ?? "")
       .split(/\s+/)
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join("")
