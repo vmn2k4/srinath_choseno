@@ -258,6 +258,67 @@ function printQueueStatus() {
   }, null, 2));
 }
 
+/**
+ * Publish non-synthesized candidates directly from verified wire sources.
+ * Options:
+ *   --max-hours N: only publish candidates within the last N hours (default: 1 hour)
+ *   --limit N: max number of direct candidates to publish (default: all matching window)
+ */
+function publishDirectRemainder(options = {}) {
+  const queue = sortQueueByVirality(loadQueue());
+  if (queue.length === 0) {
+    console.log('[Direct-Publish] Queue is empty.');
+    return;
+  }
+
+  const maxHours = options.maxHours || 1;
+  const cutoffTime = Date.now() - (maxHours * 60 * 60 * 1000);
+
+  // Exclude candidate currently being synthesized in current-candidate.json if any
+  let currentCandidateUrl = null;
+  if (fs.existsSync(CURRENT_CANDIDATE_FILE)) {
+    try {
+      currentCandidateUrl = JSON.parse(fs.readFileSync(CURRENT_CANDIDATE_FILE, 'utf8')).sourceUrl;
+    } catch (e) {}
+  }
+
+  const directCandidates = queue.filter(c => {
+    if (currentCandidateUrl && c.sourceUrl === currentCandidateUrl) return false;
+    const pubTime = new Date(c.pubDate).getTime();
+    return !isNaN(pubTime) && pubTime >= cutoffTime;
+  });
+
+  const pool = typeof options.limit === 'number' && options.limit > 0 ? directCandidates.slice(0, options.limit) : directCandidates;
+
+  if (pool.length === 0) {
+    console.log(`[Direct-Publish] No candidate stories found in the past ${maxHours} hour(s) for direct publishing.`);
+    return;
+  }
+
+  console.log(`[Direct-Publish] Preparing ${pool.length} stories from the past ${maxHours}h for direct publication...`);
+  const batch = pool.map(item => synthesizeDirectFallback(item));
+
+  const tempBatchPath = path.join(__dirname, 'temp-direct-batch.json');
+  fs.writeFileSync(tempBatchPath, JSON.stringify(batch, null, 2));
+
+  try {
+    const output = execSync(`node "${path.join(__dirname, 'insert-news-batch.js')}" "${tempBatchPath}"`, {
+      encoding: 'utf8'
+    });
+    console.log(output);
+
+    // Prune published items from queue
+    const publishedUrls = new Set(pool.map(p => p.sourceUrl));
+    const updatedQueue = loadQueue().filter(item => !publishedUrls.has(item.sourceUrl));
+    saveQueue(updatedQueue);
+    console.log(`[Direct-Publish] Successfully published and pruned ${pool.length} stories. Remaining queue: ${updatedQueue.length}.`);
+  } catch (e) {
+    console.error('[Direct-Publish] Database ingestion error:', e.message);
+  } finally {
+    if (fs.existsSync(tempBatchPath)) fs.unlinkSync(tempBatchPath);
+  }
+}
+
 if (require.main === module) {
   const action = process.argv[2];
   if (action === '--collect') {
@@ -272,14 +333,22 @@ if (require.main === module) {
     skipCurrentCandidate();
   } else if (action === '--status') {
     printQueueStatus();
+  } else if (action === '--publish-direct-remainder') {
+    const maxHoursArg = process.argv.find((a, i) => process.argv[i - 1] === '--max-hours');
+    const limitArg = process.argv.find((a, i) => process.argv[i - 1] === '--limit');
+    publishDirectRemainder({
+      maxHours: maxHoursArg ? Number(maxHoursArg) : 1,
+      limit: limitArg ? Number(limitArg) : undefined
+    });
   } else {
     console.log(`Choseno Sequential Pipeline Coordinator (Antigravity-Native)
 Usage:
-  node scripts/sequential-pipeline-runner.js --collect [--max-hours N]   # Harvest fresh feeds into queue
-  node scripts/sequential-pipeline-runner.js --pop                      # Pop next candidate into current-candidate.json
-  node scripts/sequential-pipeline-runner.js --ingest                   # Ingest current-article.json into Supabase & prune
-  node scripts/sequential-pipeline-runner.js --skip                     # Skip and prune current candidate
-  node scripts/sequential-pipeline-runner.js --status                   # Show queue count and top items
+  node scripts/sequential-pipeline-runner.js --collect [--max-hours N]          # Harvest fresh feeds into queue
+  node scripts/sequential-pipeline-runner.js --pop                             # Pop next candidate into current-candidate.json (ranked by virality)
+  node scripts/sequential-pipeline-runner.js --ingest                          # Ingest current-article.json into Supabase & prune
+  node scripts/sequential-pipeline-runner.js --skip                            # Skip and prune current candidate
+  node scripts/sequential-pipeline-runner.js --status                          # Show queue count and top items (ranked by virality)
+  node scripts/sequential-pipeline-runner.js --publish-direct-remainder [--max-hours N] [--limit N] # Direct-publish non-synthesized wire news
 `);
   }
 }

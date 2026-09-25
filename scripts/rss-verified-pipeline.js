@@ -658,6 +658,7 @@ if (require.main === module) {
 module.exports = {
   runVerifiedNewsPipeline,
   synthesizeCivicStory,
+  synthesizeDirectFallback,
   mergeCandidatesIntoQueue,
   scoreCandidateVirality,
   isTrending
