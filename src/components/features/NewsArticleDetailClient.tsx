@@ -36,7 +36,7 @@ import { createClient } from "@/lib/supabase/client";
 import { getKeyLeadersForCountry } from "@/lib/services/elections";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import type { NewsArticle, NewsArticleContent } from "@/lib/services/news";
-import { stripEmoji } from "@/lib/utils/text";
+import { stripEmoji, tagLabel } from "@/lib/utils/text";
 import { SITE_URL } from "@/lib/constants/site";
 import { categoryToSlug, tagToSlug } from "@/lib/utils/newsTaxonomy";
 import { isoCountryToMapShapesCountry } from "@/lib/utils/newsGeography";
@@ -325,7 +325,7 @@ export default function NewsArticleDetailClient({
 
   // 2. Extract all article topic tags and convert to clean PascalCase hashtags
   const topicTags = (content?.tags || []).map((tag) =>
-    String(tag ?? "")
+    tagLabel(tag)
       .split(/\s+/)
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join("")
@@ -890,9 +890,9 @@ export default function NewsArticleDetailClient({
               <Tag size={12} /> {t("newsPage.topics")}
             </h3>
             <div className="flex flex-wrap gap-2">
-              {content.tags.map((tag) => (
-                <Link key={tag} href={`/news/topic/${tagToSlug(tag)}`}>
-                  <Badge tone="neutral" className="hover:bg-surface-active transition-colors cursor-pointer">{tag}</Badge>
+              {content.tags.map(tagLabel).filter(Boolean).map((label) => (
+                <Link key={label} href={`/news/topic/${tagToSlug(label)}`}>
+                  <Badge tone="neutral" className="hover:bg-surface-active transition-colors cursor-pointer">{label}</Badge>
                 </Link>
               ))}
             </div>
