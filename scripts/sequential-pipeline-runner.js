@@ -271,7 +271,7 @@ function publishDirectRemainder(options = {}) {
     return;
   }
 
-  const maxHours = options.maxHours || 1;
+  const maxHours = options.maxHours || 24;
   const cutoffTime = Date.now() - (maxHours * 60 * 60 * 1000);
 
   // Exclude candidate currently being synthesized in current-candidate.json if any

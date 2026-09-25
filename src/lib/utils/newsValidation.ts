@@ -160,8 +160,16 @@ export function validateNewsArticleJson(item: any, opts: { label?: string } = {}
     errors.push(`${prefix}"sources" must be an array of { label, url } objects.`);
   }
 
-  if (flat.tags != null && !Array.isArray(flat.tags) && typeof flat.tags !== "string") {
-    errors.push(`${prefix}"tags" must be an array of strings.`);
+  if (flat.tags != null) {
+    if (!Array.isArray(flat.tags) && typeof flat.tags !== "string") {
+      errors.push(`${prefix}"tags" must be an array of strings.`);
+    } else if (Array.isArray(flat.tags)) {
+      flat.tags.forEach((tag: unknown) => {
+        if (typeof tag !== "string") {
+          errors.push(`${prefix}"tags" contains a non-string value "${tag}" — every tag must be a string.`);
+        }
+      });
+    }
   }
 
   validateShareTextField(prefix, "tweet", flat.tweet, 220, errors, warnings);

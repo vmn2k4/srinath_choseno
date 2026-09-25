@@ -367,11 +367,13 @@ export default function AdminNewsDistributionClient() {
   const getShareDataForArticle = (article: DistributionArticle): ShareData => {
     const shareUrl = `${SITE_URL}/news/${article.slug}`;
     const politicianTags = (article.allPoliticianNames || [])
-      .map((name) => name.replace(/[^a-zA-Z0-9]/g, ""))
+      .map((name) => String(name ?? "").replace(/[^a-zA-Z0-9]/g, ""))
       .filter(Boolean);
-    const categoryTag = article.category ? article.category.replace(/[^a-zA-Z0-9]/g, "") : "News";
-    const locationTag = article.province ? article.province.replace(/[^a-zA-Z0-9]/g, "") : (article.country || "");
-    const topicTags = (article.content?.tags || []).map((t) => t.replace(/[^a-zA-Z0-9]/g, "")).filter(Boolean);
+    const categoryTag = article.category ? String(article.category).replace(/[^a-zA-Z0-9]/g, "") : "News";
+    const locationTag = article.province ? String(article.province).replace(/[^a-zA-Z0-9]/g, "") : (article.country || "");
+    const topicTags = (article.content?.tags || [])
+      .map((t) => String(t ?? "").replace(/[^a-zA-Z0-9]/g, ""))
+      .filter(Boolean);
 
     const combinedTagList = Array.from(
       new Set([...politicianTags, ...topicTags, categoryTag, locationTag, "Choseno"].filter(Boolean))
