@@ -70,6 +70,17 @@ function normalizeTags(tags) {
   return (tags || []).map(t => typeof t === 'string' ? t : (t?.name || t?.slug || '')).filter(Boolean);
 }
 
+// When an upstream synthesis pass drops a tagged-politician object into
+// `tags` instead of `taggedPoliticians`, the name is still real data --
+// recovering it (rather than just stripping it to a topic string) is what
+// lets resolvePoliticianIds actually link the politician, which is what
+// news_article_politicians / the OG image card / wall-sync all key off of.
+function recoverPoliticiansFromTags(tags) {
+  return (tags || [])
+    .filter(t => t && typeof t === 'object' && typeof t.name === 'string' && t.name.trim())
+    .map(t => t.name.trim());
+}
+
 function calculateViralityScore(article, resolvedIds = []) {
   const bodyText = (article.body || (typeof article.content === 'string' ? article.content : article.content?.body) || '').trim();
   const wordCount = bodyText.split(/\s+/).filter(Boolean).length;
@@ -1676,6 +1687,14 @@ async function run() {
       continue;
     }
 
+    if (!article.taggedPoliticians || article.taggedPoliticians.length === 0) {
+      const recovered = recoverPoliticiansFromTags(article.tags);
+      if (recovered.length > 0) {
+        console.log(`[RECOVERED] "${article.slug}" had politician(s) misplaced in tags: ${recovered.join(', ')}`);
+        article.taggedPoliticians = recovered;
+      }
+    }
+
     // Automatically resolve politician IDs from profiles database by scanning article headline, tags, and body
     const resolution = await resolvePoliticianIds(article, authHeaders);
     let resolvedPoliticianIds = resolution.ids;
@@ -2001,5 +2020,6 @@ module.exports = {
   calculateViralityScore,
   resolvePoliticianIds,
   normalizeTags,
+  recoverPoliticiansFromTags,
   run
 };

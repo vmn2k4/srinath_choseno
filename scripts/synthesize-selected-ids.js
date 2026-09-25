@@ -32,7 +32,7 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
 }
 
 const { verifyArticleQuotesAndFacts } = require('./quote-and-fact-verifier');
-const { calculateViralityScore, resolvePoliticianIds, normalizeTags } = require('./insert-news-batch');
+const { calculateViralityScore, resolvePoliticianIds, normalizeTags, recoverPoliticiansFromTags } = require('./insert-news-batch');
 
 async function getAuthToken() {
   if (env.admin_un && env.admin_pwd) {
@@ -220,13 +220,23 @@ async function processSelectedIds(ids) {
       const cleanBody = verification.sanitizedBody;
       const cleanWordCount = cleanBody.split(/\s+/).filter(Boolean).length;
 
+      // Some synthesis passes drop a tagged-politician object into `tags`
+      // instead of `taggedPoliticians` -- recover the name so resolution
+      // (and therefore news_article_politicians / the OG image card /
+      // wall-sync) still links the politician instead of losing them.
+      const rawTags = synthesized.tags || article.content?.tags;
+      const synthesizedTaggedPoliticians =
+        synthesized.taggedPoliticians && synthesized.taggedPoliticians.length > 0
+          ? synthesized.taggedPoliticians
+          : recoverPoliticiansFromTags(rawTags);
+
       // Automatically resolve politicians
       const resolution = await resolvePoliticianIds({
         headline: synthesized.headline || article.headline,
         summary: synthesized.summary || article.summary,
         body: cleanBody,
-        tags: normalizeTags(synthesized.tags || article.content?.tags),
-        taggedPoliticians: synthesized.taggedPoliticians || [],
+        tags: normalizeTags(rawTags),
+        taggedPoliticians: synthesizedTaggedPoliticians,
         country: article.country,
         province: article.province
       }, { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${token}` });
@@ -239,13 +249,13 @@ async function processSelectedIds(ids) {
         body: cleanBody,
         seoTitle: synthesized.headline || article.headline,
         metaDescription: synthesized.summary || article.summary,
-        tags: normalizeTags(synthesized.tags || article.content?.tags),
+        tags: normalizeTags(rawTags),
         taggedPoliticians: resolvedNames.length > 0
           ? resolvedNames
-          : (synthesized.taggedPoliticians && synthesized.taggedPoliticians.length > 0
-              ? synthesized.taggedPoliticians
+          : (synthesizedTaggedPoliticians.length > 0
+              ? synthesizedTaggedPoliticians
               : (resolution.primaryPoliticianName ? [resolution.primaryPoliticianName] : [])),
-        primaryPoliticianName: resolution.primaryPoliticianName || (synthesized.taggedPoliticians && synthesized.taggedPoliticians[0]) || null
+        primaryPoliticianName: resolution.primaryPoliticianName || synthesizedTaggedPoliticians[0] || null
       };
 
       // Recalculate virality score with synthesized depth
