@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { getPublishedNewsArticles, NEWS_CATEGORIES } from "@/lib/services/news";
 import { getActiveSeats, getCandidatesBySeatIds } from "@/lib/services/elections";
+import { getAllBlogPosts } from "@/lib/services/blogs";
 import { buildSeatSlug, buildCandidateSlug, buildBoundarySlug, buildPoliticianWallSlug } from "@/lib/utils/slugs";
 import { categoryToSlug } from "@/lib/utils/newsTaxonomy";
 import { SITE_URL } from "@/lib/constants/site";
@@ -12,6 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: "daily", priority: 1.0 },
     { url: `${baseUrl}/elections`, lastModified: new Date(), changeFrequency: "hourly", priority: 0.9 },
+    { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
     // Temporarily indexable (see robots.ts note) — anonymous visitors get a
     // default international-scoped post list so there's real content to crawl.
     { url: `${baseUrl}/feed`, lastModified: new Date(), changeFrequency: "hourly", priority: 0.6 },
@@ -51,6 +53,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // the article has one, otherwise the generated OG card, so Search/Discover
     // (not just Google News) has an image to show for every article.
     images: [a.hero_image_url || `${baseUrl}/news/${a.slug}/opengraph-image`],
+  }));
+
+  const blogPosts = await getAllBlogPosts();
+  const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: post.updatedAt ? new Date(post.updatedAt) : new Date(),
+    changeFrequency: "weekly",
+    priority: 0.8,
+    images: [`${baseUrl}/blog/${post.slug}/opengraph-image`],
   }));
 
   const wallRoutes: MetadataRoute.Sitemap = (wallProfiles || [])
@@ -159,6 +170,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
+    ...blogRoutes,
     ...wallRoutes,
     ...wallNewsArchiveRoutes,
     ...articleRoutes,

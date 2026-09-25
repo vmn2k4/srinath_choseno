@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LogOut, LogIn, User as UserIcon, Palette, Check, Menu, X, Newspaper, Vote, Shield, Sparkles, MapPin, Home, Heart } from "lucide-react";
+import { LogOut, LogIn, User as UserIcon, Palette, Check, Menu, X, Newspaper, Vote, Shield, Sparkles, MapPin, Home, Heart, BookOpen } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme, THEMES, ThemeKey } from "@/contexts/ThemeContext";
 import { useTranslation } from "@/contexts/LanguageContext";
@@ -107,7 +107,12 @@ export default function NavBar() {
       icon: Newspaper,
       active: pathname?.startsWith("/news") ?? false,
     },
-    ...(!session ? [{ href: "/about", label: "About", icon: Heart, active: isActive("/about") }] : []),
+    ...(!session
+      ? [
+          { href: "/blog", label: "Blogs", icon: BookOpen, active: pathname?.startsWith("/blog") ?? false },
+          { href: "/about", label: "About", icon: Heart, active: isActive("/about") },
+        ]
+      : []),
     session
       ? { href: "/profile", label: "Profile", icon: UserIcon, active: isActive("/profile") }
       : { href: "/auth", label: "Log In", icon: LogIn, active: isActive("/auth") },
@@ -190,6 +195,16 @@ export default function NavBar() {
             <Newspaper size={15} />
             {t("nav.news")}
           </Link>
+
+          {!session && (
+            <Link
+              href="/blog"
+              className={`flex items-center gap-1.5 ${navLinkClass(pathname?.startsWith("/blog") ?? false)}`}
+            >
+              <BookOpen size={15} />
+              {t("nav.blogs")}
+            </Link>
+          )}
 
           {!session && (
             <Link
@@ -438,6 +453,16 @@ export default function NavBar() {
             <Newspaper size={18} />
             {t("nav.news")}
           </Link>
+
+          {!session && (
+            <Link
+              href="/blog"
+              className={mobileNavLinkClass(pathname?.startsWith("/blog") ?? false)}
+            >
+              <BookOpen size={18} />
+              {t("nav.blogs")}
+            </Link>
+          )}
 
           {!session && (
             <Link

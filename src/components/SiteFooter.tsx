@@ -28,6 +28,9 @@ export default function SiteFooter() {
 
         {/* Navigation links — wrap at each link on mobile, inline on sm+ */}
         <nav aria-label="Footer navigation" className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-5">
+          <Link href="/blog" className="hover:text-text-main hover:underline transition-colors">
+            {t("nav.blogs", "Blogs")}
+          </Link>
           <Link href="/about" className="hover:text-text-main hover:underline transition-colors">
             {t("nav.about")}
           </Link>
