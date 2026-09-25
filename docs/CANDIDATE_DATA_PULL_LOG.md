@@ -1355,6 +1355,39 @@ pass — no matching `map_shapes` row exists.
 
 ---
 
+## Ontario ward geometry — placeholder shapes get real polygons, 2026-09-17
+
+**Root cause found from a user screenshot**: every Ontario ward created by `on_multiward_city.py` (Toronto onward) is a name-only placeholder with **no geometry at all** — confirmed directly: `SELECT boundary_type, count(*), count(geom) FROM map_shapes WHERE name LIKE 'Guelph%'` showed the city itself has geometry, all 6 of its wards had zero. "Find My District" resolves purely by `ST_Contains(ms.geom, point)` (pulled the live function to confirm), so a ward with no geometry is **structurally invisible** to address search — worse than the pre-split state, since the old city-wide catch-all Councillor seat (which at least matched via the city's own geometry) gets deleted the moment a city is ward-split. Every ward-split city's Councillor race had been unreachable by address lookup this whole time, only reachable via the direct city hub page.
+
+**Fix — real ward polygons loaded for 24 of 27 ward-split cities**, per the existing `docs/adding-boundary-data.md` convention (not reinvented): direct DB access via `postgresql://postgres.<ref>@aws-1-us-east-2.pooler.supabase.com:5432/postgres` (the `aws-1` pooler subdomain — `aws-0`, tried earlier in this project's history, fails with "tenant not found"), `ogr2ogr` loading each source into a staging table, then a plain `UPDATE ... FROM staging WHERE name = ...` reconciliation by ward number. Verified after every city: `ST_IsValid(geom)` on every row, plus a live `find_boundaries_by_point()` call against a real ward centroid before moving to the next city.
+
+Sources, cheapest-to-richest:
+- **Represent (Open North)**, `represent.opennorth.ca` — a federal aggregator with a clean, standardized API already covering **18 of the 24** cities in one consistent shape (Guelph, Barrie, Kitchener, Markham, Cambridge, Clarington, Oshawa, Pickering, Newmarket, Ajax, Richmond Hill, Vaughan, Waterloo, Welland, Whitby, St. Catharines, Whitchurch-Stouffville, London, Windsor, Caledon — some matched by a ward number embedded in the name, others needed the separate `external_id` field since a few cities publish their wards under neighbourhood names only). One reusable script, `load_represent_wards.py`, handles all of them.
+- **Each city's own Open Data / ArcGIS portal** for the 5 not on Represent: Toronto (`open.toronto.ca`, GPKG), Ottawa (`maps.ottawa.ca`, the **2026-2030 term** layer specifically — a 2022-2026 layer also exists and would have been wrong), Mississauga (own ArcGIS `Ward_Boundaries` service), Brampton (own ArcGIS service — its 5 real electoral areas are each 2 raw ward polygons `ST_Union`'d together, e.g. "Ward 1 & 5", matching how the seats were already modeled).
+
+**Real gotchas hit and fixed, worth knowing for next time**:
+- ogr2ogr lowercases all attribute field names on load into Postgres (`AREA_SHORT_CODE` → `area_short_code`) — every first attempt at a matching `UPDATE` failed on this until corrected.
+- A GeoJSON `FeatureCollection` declaring `MultiPolygon` per-feature can still contain a row GDAL resolves as a `GeometryCollection` at insert time (hit on Windsor) — fixed by adding `-makevalid` to the `ogr2ogr` load, not by touching the SQL side.
+- Brampton and a couple of others needed `-nlt MULTIPOLYGON` explicitly; a plain `Polygon` vs. `MultiPolygon` column-type mismatch otherwise aborts the whole staging load partway through with no partial data (caught immediately by a 0-row staging table, not a silent partial success).
+
+**Not fixed — a genuine dead end, not a shortcut skipped**: Timmins, Aurora, and Georgina (16 wards total) each publish ward boundaries as **PDF map images only** — checked each city's own site directly, no shapefile/GeoJSON/ArcGIS service exists anywhere for any of the three. Would require hand-digitizing from the PDF, the same class of gap as Nunavut's electoral boundaries elsewhere in this doc. Left as a known, documented gap.
+
+**Also added the same day** (the "keep going" ask, not just geometry): Northern Ontario's 21 smaller municipalities' mayoral races (Timmins through Sioux Narrows-Nestor Falls) plus Timmins' full 5-ward councillor breakdown (including Ward 5's unusual "4 to be elected" multi-member race), and 3 more full multi-ward cities — London (14 wards), Windsor (10 wards), and Caledon (6 wards, via the Peel Region page — its two-tier Regional Councillor race skipped, same precedent as Brampton). Ontario total: 1,293 → **1,454**.
+
+**Verified**: 214 of 230 Canadian ward `map_shapes` now carry real, valid geometry; 0 orphaned `politician_profiles`; 0 duplicate wall slugs across the whole Ontario dataset.
+
+**Continued the same way, one more pass through the Southern Ontario Wikipedia page's remaining single-tier municipalities** (the ones not covered by a regional page — Belleville, Brant, Brantford, Brockville, Chatham-Kent, Cornwall, Gananoque, Haldimand, Kawartha Lakes, Kingston, Norfolk, Orillia, Pelee, Pembroke, Peterborough, Prescott, Prince Edward, Quinte West, Smiths Falls, St. Marys, Stratford, St. Thomas — 22 total, plus 21 counties still untouched). Worked through the biggest ones: **Brantford** (5 wards), **Kingston** (12 *districts*, not wards — its own naming, kept as-is), **Chatham-Kent** (8 wards, its largest, Ward 5 Wallaceburg alone had 14 candidates), **Peterborough** (5 wards), **Kawartha Lakes** (8 wards — one mayoral candidate is a real person legally named **Doug Ford**, confirmed via his own campaign site `dougfordformayor.com` and local news coverage before trusting it, not the sitting Premier), **Quinte West** (4 wards), and **Belleville** (2 wards — genuinely only 2, double-checked by re-fetching specifically since the first pass looked truncated).
+
+**Two at-large councils done without ward-splitting** (Cornwall: 8-to-be-elected city-wide; St. Thomas: 8-to-be-elected city-wide) — all candidates go straight onto the single existing Councillor seat, no wards to create since neither city elects by ward at all.
+
+**Mayor-only for 4 more towns** where Wikipedia's page states "council candidates not listed" for that municipality specifically (Stratford, Brockville, Pembroke, Orillia) — real gap in the source itself, not a scraping miss; flagged rather than left silently incomplete.
+
+Ontario total: 1,454 → **1,803**. Verified after: 0 orphaned `politician_profiles`, 0 duplicate wall slugs.
+
+**Remaining, not yet touched**: Belleville-through-St. Marys' unfinished few (Brant County, Gananoque, Haldimand, Norfolk, Pelee, Prescott, Prince Edward County, Smiths Falls, St. Marys), and all 21 counties (each containing several more lower-tier townships not yet individually checked). Same population-ranked approach should continue if this gets picked up again.
+
+---
+
 ## BC — a much better source found: CivicInfo BC / localelections.ca, 2026-09-10
 
 **User asked to check every open-nomination election for adds/removals.**
@@ -2261,3 +2294,34 @@ the `fetch` step, re-run the two DB queries in the migration's own
 comments (map_shapes ids for BC + current `office_holders` counts), rejoin
 in Python, and `UPDATE ... SET election_seat_counts = ...` per shape — no
 script wraps this end-to-end yet.
+
+## One more near-duplicate: Steve/Steven Bede (White Rock) — 2026-09-23
+
+**User caught it** looking at the White Rock Councillor seat page: "Steven
+Bede" (no bio, no source, created 2026-09-09, likely a stub from before
+this script's CivicInfo BC source was validated) sitting alongside "Steve
+Bede" (full bio/contact/source_url, created 2026-09-10 by this script).
+Confirmed against the live CivicInfo BC page
+(`localelections.ca/election_candidates/147_2026_candidates.html`) that
+"Steve Bede" is the exact filed name — same person, same seat, no other
+Bede on the ballot.
+
+**Root cause**: the `NICKNAMES` table (see "Eleven more near-duplicates"
+above) mapped `"steve" -> "stephen"` only. `canon_tokens("Steve Bede")`
+came out `{"stephen","bede"}` against the existing `"Steven Bede"`'s
+`{"steven","bede"}` — different canonical tokens, so `same_person()`
+returned false and the sync inserted a second profile instead of matching
+the existing one. The original mapping wasn't *wrong* (it correctly
+merged a real Stephen/Steve Boylan pair the same day), it just didn't
+account for "Steve" being at least as often short for "Steven" as for
+"Stephen."
+
+**Fixed**: `NICKNAMES` now canonicalizes `steve`/`stephen`/`steven` to one
+bucket (`"steven"`) instead of a separate `stephen`-only bucket, so both
+spellings collapse together — see `scripts/sync_bc_civicinfo_candidates.py`.
+Deleted the stub `"Steven Bede"` profile directly (`profiles` row, id
+`8ce58bf6-2014-4583-a38b-78bc3e0f4578` — cascaded to its
+`politician_profiles`/`election_candidates` rows; verified zero references
+from any other table first). No re-run needed for this one seat, but the
+next full CivicInfo BC sync will now merge any other Steve/Stephen/Steven
+pairs it would otherwise have split.

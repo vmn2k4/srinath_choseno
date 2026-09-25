@@ -25,7 +25,10 @@ reference-cache tables the rest of this doc is mostly about) now also cover:
   — seats only (872 and 274 respectively, Councillor + Mayor), built directly
   from `map_shapes`. No verified candidate source yet for either — same
   "found the boundaries, haven't found who's running" gap every other
-  not-yet-`hasFetch` jurisdiction in this doc has.
+  not-yet-`hasFetch` jurisdiction in this doc has. **No longer true for
+  Ontario** — see "Ontario ✅ built" further down for the real, working
+  Wikipedia-based source found 2026-09-06 onward. Manitoba is still an open
+  gap as of this writing.
 - **Governor**, added onto the existing **2026 US Midterm Elections** election
   (36 states with a real 2026 race, same seat model already used for Senate).
   **Important correction to earlier assumptions in this doc**: `election_role_types`
@@ -1179,68 +1182,177 @@ DATABASE_URL/psycopg2 path — confirmed, see `CANDIDATE_DATA_PULL_LOG.md`).
 source either — same gap as LECFA, now doubly worth closing since this is
 the better of the two.
 
-### Ontario / Manitoba — seats built, candidate source not yet found
+### Ontario ✅ built — Wikipedia regional pages, now the primary source
 
-**2026 Ontario Municipal Elections** (Oct 26, 2026) and **2026 Manitoba
-Municipal Elections** (Oct 28, 2026) exist in the live `elections` table with
-full Councillor + Mayor seats (872 and 274 respectively) as of 2026-09-03 —
-see `adding-us-2026-midterm-candidates.md`'s sibling recipe for the general
+**2026 Ontario Municipal Elections** (Oct 26, 2026) exists in the live
+`elections` table with full Councillor + Mayor seats (872, later split into
+961+ once wards were introduced — see below) as of 2026-09-03 — see
+`adding-us-2026-midterm-candidates.md`'s sibling recipe for the general
 shape of "seats first, candidates second."
 
-**Update 2026-09-06 — checked both provinces for a BC-style rolling
-registry, per the instruction above. Neither has one, but their nomination
-timelines are opposite each other and worth tracking differently:**
+**Update 2026-09-06** first found the lead (Wikipedia's per-city 2026
+election pages carry full, final, per-ward candidate lists — Ontario's
+province-wide nomination period ran May 1 – Aug 21, 2026, so unlike BC
+there is no rolling "check for new filings" case, candidates are already
+final for the whole province). **Confirmed and built out into a working
+pipeline over 2026-09-09 through 2026-09-18** — this is the *current*
+picture, superseding the "not yet ingested" note that used to be here:
 
-- **Ontario: nominations are already CLOSED, not open** — the province-wide
-  nomination period ran May 1 – Aug 21, 2026 (2:00 PM), with municipal
-  clerks certifying candidate lists Aug 24. This means, unlike BC, there is
-  **no rolling "check for new filings" case here** — the roster per
-  municipality is now final and fixed until the Oct 26 election. The gap
-  is purely "no source ingested yet," not "nominations still filing."
-  Elections Ontario itself still only handles the *provincial* voters' list
-  and financial-statement compliance, not a candidate registry — confirmed
-  again this pass, same conclusion as before.
-  - **New lead, confirmed real and usable for large cities**: Wikipedia
-    has full, final, per-ward "Registered candidates" sections for major
-    Ontario cities' own election pages (e.g. `2026 Toronto municipal
-    election` — confirmed live: Olivia Chow vs. Brad Bradford vs. Chris
-    Alexander for mayor, plus a per-ward candidate list with 7+ names for
-    Ward 1 alone), following exactly the same pattern that worked for US
-    House races. This will not cover all 872 Ontario municipalities —
-    Wikipedia only has dedicated pages for the larger/more populous cities
-    — but it's a real, bounded, immediately-usable source for however many
-    of Ontario's biggest municipalities (Toronto, Ottawa, Mississauga,
-    Brampton, etc. all have their own 2026 election Wikipedia pages per
-    the search results checked this pass) account for a meaningful share
-    of the 872 seats. Not yet ingested — flagged as the concrete next step
-    if/when this becomes a priority, rather than the vague "scrape every
-    municipality" framing from before.
-  - **Third-party aggregator checked, not usable**: `opencouncil.ca` was
-    found in search results framed as a province-wide election tracker,
-    but its actual pages are per-municipality templates with no live
-    candidate data behind them yet (checked its Quinte West/Belleville
-    page directly — "No results found" under Polls; a direct Toronto URL
-    guess 404'd). Not a real source at this time.
-- **Manitoba: nominations are genuinely OPEN right now** (unlike Ontario) —
-  Mayor/Reeve candidates register May 1 – Sept 22, 2026; Councillor
-  candidates June 30 – Sept 22, 2026 (per `manitoba.ca/mr/mfas`'s official
-  2026 Candidates Guidebook). This *is* the BC-shaped "rolling filing
-  window" case. But **confirmed again this pass: no province-wide
-  registry exists** — registration happens with each municipality's own
-  Senior Election Official, not centrally with Manitoba Municipal
-  Relations, and no equivalent of BC's LECFA PDF was found. There is
-  nothing to periodically re-check here yet; getting real Manitoba
-  candidates still means the same per-municipality research
-  `ELECTION_DATA_SOURCES.md` already describes for individual US
-  municipalities.
+- **Real source, three tiers of Wikipedia page, richest to broadest**:
+  1. **A city's own dedicated article** (`2026 Toronto municipal election`,
+     `2026 London, Ontario, municipal election`, `2026 Windsor municipal
+     election`, etc.) — exists for the largest ~10-15 cities, always has a
+     full per-ward "Registered candidates"-style table.
+  2. **A regional hub page** (`2026 York Region municipal elections`,
+     `2026 Waterloo Region municipal elections`, `2026 Durham Region
+     municipal elections`, `2026 Niagara Region municipal elections`,
+     `2026 Peel Region municipal elections`, `2026 Halton Region municipal
+     elections`) — covers every municipality within that upper-tier region
+     in one page, each with its own full per-ward breakdown. **This is
+     usually the fastest way to get several real cities in one fetch.**
+  3. **The two provincewide catch-alls**, `2026 Ontario municipal
+     elections in Southern Ontario` and `...in Northern Ontario` — cover
+     every single-tier municipality and county *not* already covered by a
+     regional page (Guelph, Barrie, Brantford, Kingston, Chatham-Kent,
+     Peterborough, Kawartha Lakes, Belleville, Quinte West, and Northern
+     Ontario's ~22 smaller towns, among others).
+- **Two-tier regions need one deliberate scoping decision**: several
+  regions (Peel, York in part, Durham) elect a **Regional Councillor** in
+  addition to a **Local/City Councillor** per ward — two separate seats on
+  the ballot for the same ward. Every pass so far has added Mayor + local
+  Councillor only and **skipped Regional Councillor entirely** (first
+  decided for Brampton, applied consistently since) — a real, deliberate
+  gap, not an oversight, since Regional Councillor would need its own
+  region-level election/seat modeling this system doesn't have yet.
+- **Wards have no real geometry by default** — `on_multiward_city.py`
+  creates each ward as a name-only placeholder `map_shapes` row (`boundary_
+  type='Ward'`, no `geom`), which means "Find My District" cannot resolve
+  down to the ward level until real polygon geometry is loaded separately
+  (see "Ontario ward geometry" immediately below).
+- **Third-party aggregator checked, not usable**: `opencouncil.ca` looked
+  like a province-wide tracker in search results but its pages are empty
+  per-municipality templates with no live candidate data behind them.
+- **`sync_ontario_candidates.py` / `fetchOn` are a different thing** — they
+  cover Ontario's *provincial* riding elections (Voter Information Service
+  API), not municipal. Don't confuse the two despite the similar name.
+
+**Full per-city pull history — which city came from which page, what
+came up short, every gotcha hit** — is in `CANDIDATE_DATA_PULL_LOG.md`,
+search "Full active-elections sweep" (Toronto/Ottawa/Mississauga/Brampton/
+Hamilton, 2026-09-09) and the two entries titled "Ontario ward geometry"
+and the Southern-Ontario-continuation pass (both 2026-09-17/18). This
+section is the *mechanism*; that doc is the *pull-by-pull record* — same
+division of labour as the rest of this file.
+
+### Ontario ward geometry ✅ built — Represent (Open North) + per-city Open Data
+
+Every ward `map_shapes` row created by `on_multiward_city.py` starts with
+no geometry (see above). Real polygons were loaded for 24 of 27 ward-split
+cities as of 2026-09-17, using the exact method `docs/adding-boundary-data.md`
+already documents — not a new approach:
+
+- **`represent.opennorth.ca`** — a federal (Open North) aggregator with one
+  consistent API already covering most Ontario municipal wards. Covered
+  18 of 24 cities in one reusable script pass. Two field quirks to know
+  about: its `/shape` endpoint drops `external_id`, so fetch the plain
+  `/boundaries/<slug>/` listing separately when a ward's `name` has no
+  number in it (several cities publish wards under neighbourhood names,
+  e.g. Vaughan's "Maple/Kleinburg"); a handful of cities (St. Catharines)
+  return no `external_id` at all and need a hardcoded name→number map
+  instead.
+- **Each city's own Open Data/ArcGIS portal**, for the 5 not on Represent:
+  Toronto, Ottawa (careful — pick the **2026-2030 term** layer specifically,
+  a stale 2022-2026 layer also exists under the same search terms),
+  Mississauga, Brampton (its "wards" are really 5 combined electoral areas,
+  each 2 raw ward polygons `ST_Union`'d together to match how the seats
+  were modeled).
+- **DB access for this**: `postgresql://postgres.<ref>@aws-1-us-east-2
+  .pooler.supabase.com:5432/postgres` — note **`aws-1`**, not `aws-0` (which
+  fails with "tenant not found" for this project; cost real time
+  rediscovering this before it was written down here). This is a genuine
+  correction to the pattern in `adding-boundary-data.md`'s own prerequisites
+  section, which doesn't call out the exact subdomain.
+- **Genuine dead end, not a shortcut skipped**: Timmins, Aurora, Georgina
+  (16 wards) each publish ward boundaries as PDF map images only — no
+  shapefile/GeoJSON/ArcGIS service exists anywhere for any of the three.
+  Same class of gap as Nunavut's electoral boundaries elsewhere in this doc.
+
+### Ward/borough boundaries pre-built for other provinces' major cities — 2026-09-18
+
+**Ontario is not the only province where major cities elect council by
+ward.** Checked every big city in the provinces without any municipal
+election infrastructure yet, plus Manitoba's Winnipeg: **Calgary (14
+wards), Edmonton (12 wards, indigenous-named — no numbers at all), Regina
+(10 wards), Saskatoon (10 wards), Halifax Regional Municipality (16
+districts), and Montreal (19 boroughs, itself sitting inside a genuinely
+3-tier structure — city-wide councillors, borough mayors, and borough
+councillors, more complex than any Ontario city) all use a real ward-
+equivalent system.** BC's largest cities (Vancouver, Surrey, Kelowna) are
+the confirmed exception — deliberately at-large, no ward system, matching
+this system's existing BC modeling.
+
+**Real election-cycle check done before building anything** — this
+mattered: Calgary/Edmonton's next election isn't until Oct 2029 (just had
+theirs in 2025), Regina/Saskatoon's is Nov 2028, Halifax's is 2028,
+Montreal's is Nov 2029. **None of these six have an actual 2026 election**
+— only **Winnipeg** does (Manitoba's cycle, Oct 28, 2026, matching the
+already-built "2026 Manitoba Municipal Elections" row). Building full
+election/seat rows for the other six now would have meant a fake-looking
+active race 2-3 years too early.
+
+**What was actually done, split accordingly**:
+- **Winnipeg**: real infrastructure, not just shapes. Created its 15 real
+  wards (`Winnipeg Ward 1 - Old Kildonan` through `Ward 15 - North
+  Kildonan`) with real geometry from Represent, created a real Councillor
+  `election_seats` row on each under the existing 2026 Manitoba election,
+  and deleted the old generic city-wide Councillor seat (0 candidates,
+  safe) — the exact same pattern as every Ontario ward-split. 0 candidates
+  yet (Manitoba has none system-wide — see the Manitoba section below) but
+  the seat structure is real and ready the moment Manitoba candidate data
+  is ever pursued.
+- **Calgary, Edmonton, Regina, Saskatoon, Halifax, Montreal**: **boundary
+  shapes only** (96 total, all real geometry, all `ST_IsValid`), no
+  `election_seats` and no `elections` row — deliberately not wired to
+  anything yet, since there's no real election to attach them to for
+  another 2-3 years. Pre-loading the boundaries now (rather than
+  rediscovering them from scratch whenever this project actually reaches
+  each city's real election window) is the only part of "get ready early"
+  that doesn't risk misleading a site visitor.
+- **All 7 cities' real boundaries came from `represent.opennorth.ca`** —
+  every one of these boundary-sets already existed there (`winnipeg-wards`,
+  `calgary-wards`, `edmonton-wards`, `regina-wards`, `saskatoon-wards`,
+  `halifax-districts`, `montreal-boroughs`), so no per-city portal hunting
+  was needed this time, unlike several of the Ontario cities.
+
+### Manitoba 🔍 researched, no source found
+
+**2026 Manitoba Municipal Elections** (Oct 28, 2026) exists in the live
+`elections` table with full Councillor + Mayor seats (274) as of
+2026-09-03, but **remains at 0 candidates** — nominations are genuinely
+open right now (unlike Ontario): Mayor/Reeve candidates register May 1 –
+Sept 22, 2026; Councillor candidates June 30 – Sept 22, 2026 (per
+`manitoba.ca/mr/mfas`'s official 2026 Candidates Guidebook). This *is* the
+BC-shaped "rolling filing window" case. But **confirmed: no province-wide
+registry exists** — registration happens with each municipality's own
+Senior Election Official, not centrally with Manitoba Municipal Relations,
+and no equivalent of BC's LECFA PDF was found. Manitoba's own Wikipedia
+page (`2026 Manitoba municipal elections`) was also checked directly and
+is not usable — it's a results template with section headers per
+municipality but no candidate names filled in yet (unlike Ontario's
+pages, which were already final and populated by the time they were
+checked, since Manitoba's own election is later and its nominations were
+still mid-window). There is nothing to periodically re-check here yet;
+getting real Manitoba candidates still means the same per-municipality
+research this doc describes for individual US municipalities — or
+re-checking Manitoba's Wikipedia page again after its Sept 22 nomination
+close, when it may fill in the same way Ontario's did.
 
 **Bottom line for "check all other seats with nominations open" as a
-recurring task**: as of 2026-09-06, **BC is the only jurisdiction in this
-system with an actively-open, centrally-checkable nomination source** (see
-`CANDIDATE_DATA_PULL_LOG.md`'s BC section — window closes Sept 11, 2026).
-Ontario's window already closed (candidates are final, just not yet
-sourced — Wikipedia covers the largest cities). Manitoba's window is open
-through Sept 22 but has no central source to check at all.
+recurring task**, updated: **BC** (CivicInfo BC, see `CANDIDATE_DATA_PULL_LOG.md`)
+and **Ontario** (Wikipedia, this section) both now have real, working
+candidate pipelines. **Manitoba remains the one significant gap** — its
+window is open through Sept 22 but has no central source to check at all,
+and its own Wikipedia page isn't populated yet either.
 
 ### Saskatchewan / PEI / NWT — blocked, not just unresearched
 

@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Choseno Launch Video</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #ffffff;
+        color: #1f2937;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        overflow: hidden;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #fafafa;
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Scene 1: Hook - Map & District */
+      #scene-1 {
+        background: linear-gradient(135deg, #fafafa 0%, #f3f4f6 100%);
+      }
+
+      #map-container {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .map-svg {
+        width: 800px;
+        height: 600px;
+        opacity: 0.3;
+      }
+
+      .district-boundary {
+        fill: none;
+        stroke: #9ca3af;
+        stroke-width: 2;
+        opacity: 0.5;
+      }
+
+      .district-highlight {
+        fill: none;
+        stroke: #1e40af;
+        stroke-width: 3;
+        opacity: 0;
+      }
+
+      .politician-pin {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .pin-circle {
+        width: 100%;
+        height: 100%;
+        background: #1e40af;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+      }
+
+      .pin-icon {
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+      }
+
+      #politician-label {
+        position: absolute;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+      }
+
+      #politician-name {
+        font-size: 36px;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0;
+        letter-spacing: -0.5px;
+      }
+
+      #politician-title {
+        font-size: 18px;
+        color: #6b7280;
+        margin: 8px 0 0 0;
+      }
+
+      /* Scene 2: Wall - Politician Profile */
+      #scene-2 {
+        background: linear-gradient(135deg, #fafafa 0%, #f3f4f6 100%);
+      }
+
+      .politician-wall {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        width: 500px;
+        overflow: hidden;
+      }
+
+      .wall-header {
+        padding: 24px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .politician-info {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .politician-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 24px;
+        flex-shrink: 0;
+      }
+
+      .politician-details {
+        flex: 1;
+      }
+
+      .politician-details-name {
+        font-size: 20px;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0 0 4px 0;
+      }
+
+      .politician-details-title {
+        font-size: 14px;
+        color: #6b7280;
+        margin: 0;
+      }
+
+      .wall-feed {
+        padding: 16px;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      .post {
+        padding: 12px;
+        border-left: 3px solid #1e40af;
+        background: #f9fafb;
+        margin-bottom: 12px;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #4b5563;
+      }
+
+      .post-author {
+        font-weight: 600;
+        color: #1f2937;
+        font-size: 13px;
+        margin-bottom: 4px;
+      }
+
+      .wall-input {
+        padding: 16px;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #9ca3af;
+        background: #f9fafb;
+        font-family: inherit;
+      }
+
+      /* Scene 3: Action - Post Lands */
+      #scene-3 {
+        background: linear-gradient(135deg, #fafafa 0%, #f3f4f6 100%);
+      }
+
+      .new-post {
+        padding: 12px;
+        border-left: 3px solid #1e40af;
+        background: linear-gradient(90deg, #eff6ff 0%, #f9fafb 100%);
+        margin-bottom: 12px;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #1f2937;
+        font-weight: 500;
+      }
+
+      /* Scene 4: Scale - Montage */
+      #scene-4 {
+        background: linear-gradient(135deg, #fafafa 0%, #f3f4f6 100%);
+        padding: 60px;
+      }
+
+      .politician-card {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        position: absolute;
+        width: 280px;
+        z-index: 1;
+      }
+
+      .card-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+
+      .card-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .card-name {
+        font-size: 15px;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .card-title {
+        font-size: 12px;
+        color: #6b7280;
+        margin: 4px 0 0 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      /* Scene 5: Outro - Logo */
+      #scene-5 {
+        background: linear-gradient(135deg, #fafafa 0%, #f3f4f6 100%);
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .logo-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .logo {
+        font-size: 64px;
+        font-weight: 700;
+        color: #1e40af;
+        margin: 0;
+        letter-spacing: -1px;
+      }
+
+      .tagline {
+        font-size: 32px;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0;
+        text-align: center;
+        max-width: 800px;
+        line-height: 1.3;
+      }
+
+      .cta {
+        font-size: 16px;
+        color: #6b7280;
+        margin: 12px 0 0 0;
+      }
+
+      /* Audio */
+      #music {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="choseno"
+      data-start="0"
+      data-width="1920"
+      data-height="1080"
+      data-duration="18"
+    >
+      <!-- Music Track -->
+      <audio
+        id="music"
+        data-start="0"
+        data-track-index="0"
+        data-volume="0.85"
+        src="assets/music/happy-beats-business-moves-vol-11-by-ende-dot-app.mp3"
+      ></audio>
+
+      <!-- Scene 1: Hook - Map & District (0-2.5s) -->
+      <section id="scene-1" class="clip" data-start="0" data-duration="2.5" data-track-index="1">
+        <div id="map-container">
+          <!-- Simple map SVG representation -->
+          <svg
+            class="map-svg"
+            viewBox="0 0 1000 800"
+            xmlns="http://www.w3.org/2000/svg"
+            id="map-svg"
+          >
+            <!-- Background districts -->
+            <rect class="district-boundary" x="100" y="100" width="200" height="200" />
+            <rect class="district-boundary" x="350" y="100" width="200" height="200" />
+            <rect class="district-boundary" x="600" y="100" width="200" height="200" />
+            <rect class="district-boundary" x="100" y="350" width="200" height="200" />
+            <!-- Highlighted district -->
+            <rect id="highlight-district" class="district-highlight" x="350" y="350" width="200" height="200" />
+            <rect class="district-boundary" x="350" y="350" width="200" height="200" />
+            <rect class="district-boundary" x="600" y="350" width="200" height="200" />
+          </svg>
+
+          <!-- Politician Pin -->
+          <div class="politician-pin" id="politician-pin-1">
+            <div class="pin-circle">
+              <div class="pin-icon"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Politician Label -->
+        <div id="politician-label">
+          <h2 id="politician-name">Sarah Chen</h2>
+          <p id="politician-title">MP, Vancouver West</p>
+        </div>
+      </section>
+
+      <!-- Scene 2: Wall - Politician Profile (2.5-6s) -->
+      <section id="scene-2" class="clip" data-start="2.5" data-duration="3.5" data-track-index="1">
+        <div class="politician-wall" id="wall-1">
+          <div class="wall-header">
+            <div class="politician-info">
+              <div class="politician-avatar">SC</div>
+              <div class="politician-details">
+                <p class="politician-details-name">Sarah Chen</p>
+                <p class="politician-details-title">MP, Vancouver West • Liberal</p>
+              </div>
+            </div>
+          </div>
+          <div class="wall-feed">
+            <div class="post">
+              <div class="post-author">James M.</div>
+              <div>What's your stance on housing affordability?</div>
+            </div>
+            <div class="post">
+              <div class="post-author">Maria L.</div>
+              <div>Thanks for supporting climate action!</div>
+            </div>
+          </div>
+          <div class="wall-input">
+            <input type="text" class="input-field" placeholder="Share your thoughts..." />
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 3: Action - Post Lands (6-9s) -->
+      <section id="scene-3" class="clip" data-start="6" data-duration="3" data-track-index="1">
+        <div class="politician-wall" id="wall-2" style="opacity: 1;">
+          <div class="wall-header">
+            <div class="politician-info">
+              <div class="politician-avatar">SC</div>
+              <div class="politician-details">
+                <p class="politician-details-name">Sarah Chen</p>
+                <p class="politician-details-title">MP, Vancouver West • Liberal</p>
+              </div>
+            </div>
+          </div>
+          <div class="wall-feed">
+            <div class="post">
+              <div class="post-author">James M.</div>
+              <div>What's your stance on housing affordability?</div>
+            </div>
+            <div class="post">
+              <div class="post-author">Maria L.</div>
+              <div>Thanks for supporting climate action!</div>
+            </div>
+            <div class="new-post" id="voter-post">
+              <div class="post-author">You</div>
+              <div>Will you support the new transit proposal?</div>
+            </div>
+          </div>
+          <div class="wall-input">
+            <input type="text" class="input-field" placeholder="Share your thoughts..." />
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 4: Scale - Montage (9-12.5s) -->
+      <section id="scene-4" class="clip" data-start="9" data-duration="3.5" data-track-index="1">
+        <div class="politician-card" id="card-1" style="left: 200px; top: 50%; transform: translateY(-50%);">
+          <div class="card-avatar">JH</div>
+          <div class="card-info">
+            <p class="card-name">James Harrison</p>
+            <p class="card-title">Mayor, Toronto</p>
+          </div>
+        </div>
+
+        <div class="politician-card" id="card-2" style="left: 820px; top: 50%; transform: translateY(-50%);">
+          <div class="card-avatar">AR</div>
+          <div class="card-info">
+            <p class="card-name">Amelia Rodriguez</p>
+            <p class="card-title">Senator, California</p>
+          </div>
+        </div>
+
+        <div class="politician-card" id="card-3" style="left: 1440px; top: 50%; transform: translateY(-50%);">
+          <div class="card-avatar">MK</div>
+          <div class="card-info">
+            <p class="card-name">Marcus Kim</p>
+            <p class="card-title">MPP, Ontario</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 5: Outro - Logo (12.5-18s) -->
+      <section id="scene-5" class="clip" data-start="12.5" data-duration="5.5" data-track-index="1">
+        <div class="logo-section" id="logo-section">
+          <p class="logo">Choseno</p>
+          <p class="tagline">Know Your Representatives.<br />Engage. Make Politics Local.</p>
+          <p class="cta">Visit Choseno.com</p>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Scene 1: Hook - Map zoom, district highlight, pin drop
+      // beat-locked: 1.60s (strong beat)
+      const mapSvg = document.getElementById("map-svg");
+      const highlightDistrict = document.getElementById("highlight-district");
+      const pin1 = document.getElementById("politician-pin-1");
+      const label = document.getElementById("politician-label");
+
+      tl.from(mapSvg, { scale: 0.6, opacity: 0, duration: 0.8, ease: "power2.out" }, 0.2);
+      tl.to(
+        highlightDistrict,
+        { opacity: 1, duration: 0.4, ease: "power2.out" },
+        0.6,
+      );
+      tl.from(
+        pin1,
+        { scale: 0, opacity: 0, duration: 0.5, ease: "back.out(1.7)" },
+        1.0,
+      );
+      tl.from(
+        label,
+        { y: 20, opacity: 0, duration: 0.6, ease: "power2.out" },
+        1.3,
+      );
+
+      // Hold scene 1
+      tl.to({}, { duration: 0.5 }, 1.9);
+
+      // Scene 2: Wall appears
+      // beat-locked: 5.80s (strong beat)
+      const wall1 = document.getElementById("wall-1");
+      tl.from(wall1, { scale: 0.8, opacity: 0, duration: 0.6, ease: "back.out(1.5)" }, 2.5);
+      tl.to({}, { duration: 2.6 }, 3.1);
+
+      // Scene 3: Post lands
+      // beat-locked: 8.96s (strong beat)
+      const wall2 = document.getElementById("wall-2");
+      const voterPost = document.getElementById("voter-post");
+      tl.from(wall2, { scale: 0.8, opacity: 0, duration: 0.3, ease: "power2.out" }, 6.0);
+      tl.to({}, { duration: 0.4 }, 6.3);
+      tl.from(voterPost, { x: -20, opacity: 0, duration: 0.5, ease: "power2.out" }, 6.7);
+      tl.to({}, { duration: 1.8 }, 7.2);
+
+      // Scene 4: Montage - beat-grid: cards at ~0.5s intervals
+      // beat-locked: 17.91s (strong beat for final card)
+      const card1 = document.getElementById("card-1");
+      const card2 = document.getElementById("card-2");
+      const card3 = document.getElementById("card-3");
+
+      // Cards slide in from left with staggered timing
+      tl.from(card1, { x: -100, opacity: 0, duration: 0.6, ease: "power2.out" }, 9.0);
+      tl.from(card2, { x: -100, opacity: 0, duration: 0.6, ease: "power2.out" }, 9.3);
+      tl.from(card3, { x: -100, opacity: 0, duration: 0.6, ease: "power2.out" }, 9.6);
+      tl.to({}, { duration: 2.4 }, 10.2);
+
+      // Scene 5: Logo & tagline appears
+      const logoSection = document.getElementById("logo-section");
+      tl.from(logoSection, { opacity: 0, duration: 0.8, ease: "power2.out" }, 12.5);
+      tl.to({}, { duration: 4.7 }, 13.3);
+
+      // Register timeline
+      window.__timelines["choseno"] = tl;
+    </script>
+  </body>
+</html>

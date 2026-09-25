@@ -1584,7 +1584,7 @@ async function run() {
       const politicians = (article.taggedPoliticians && article.taggedPoliticians.length > 0)
         ? article.taggedPoliticians.join(', ')
         : (primaryPoliticianName || '');
-      const tags = (article.tags || []).map(t => '#' + t.replace(/[^a-zA-Z0-9]/g, '')).join(' ');
+      const tags = (article.tags || []).map(t => '#' + (typeof t === 'string' ? t : (t.name || t.slug || '')).replace(/[^a-zA-Z0-9]/g, '')).filter(t => t.length > 1).join(' ');
       const articleUrl = `https://www.choseno.com/news/${article.slug}`;
       const wallUrl = primaryWallSlug ? `https://choseno.com/wall/${primaryWallSlug}` : articleUrl;
 

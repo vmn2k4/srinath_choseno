@@ -352,12 +352,22 @@ ADMIN_ID_DEFAULT = "5b66563e-2674-4fed-b733-3e19955a166a"
 # "CJ Rhodes" vs "C.J. Rhodes", etc. -- 11 total across the first live run
 # of this script's predecessor logic, all caught by hand afterward and
 # merged (see CANDIDATE_DATA_PULL_LOG.md, "Eleven more near-duplicates").
+#
+# "steve" mapped only to "stephen" missed a real duplicate 2026-09-23: an
+# earlier pass had created "Steven Bede" (White Rock councillor), then this
+# script ran and inserted a second profile for the same person as this
+# source's actual filed name, "Steve Bede" -- canon_tokens produced
+# {"stephen","bede"} vs {"steven","bede"}, which don't match, so
+# same_person() said false and the two never got merged. "Steve" is at
+# least as often short for "Steven" as for "Stephen"; canonicalizing all
+# three spellings to one bucket ("steven") catches both without a second,
+# separate "stephen" bucket to fall out of sync with.
 NICKNAMES = {
     "gord": "gordon", "rob": "robert", "bob": "robert", "bobby": "robert",
     "mike": "michael", "mick": "michael", "chris": "christopher",
     "dave": "david", "davey": "david", "jim": "james", "jimmy": "james",
     "bill": "william", "billy": "william", "will": "william",
-    "steve": "stephen", "sue": "susan", "suzie": "susan", "liz": "elizabeth",
+    "steve": "steven", "stephen": "steven", "sue": "susan", "suzie": "susan", "liz": "elizabeth",
     "beth": "elizabeth", "ken": "kenneth", "kenny": "kenneth",
     "tom": "thomas", "tommy": "thomas", "dan": "daniel", "danny": "daniel",
     "andy": "andrew", "drew": "andrew", "matt": "matthew", "greg": "gregory",
