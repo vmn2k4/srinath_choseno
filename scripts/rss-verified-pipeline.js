@@ -405,6 +405,68 @@ function isTrending(title, trendingKeywords) {
   return tokens.some(t => trendingKeywords.has(t));
 }
 
+/**
+ * Deterministic candidate virality and editorial priority scoring (7.8 to 9.8 scale).
+ * Balances:
+ * 1. Trending topic match (+1.0)
+ * 2. High-profile political figures/leaders (+0.8)
+ * 3. High-stakes political actions & breaking events (+0.5)
+ * 4. Electoral and economic policy domain (+0.4)
+ * 5. Federal and state jurisdictional weight (+0.3)
+ */
+function scoreCandidateVirality(candidate, trendingKeywords = new Set()) {
+  let score = 8.1;
+  const text = `${candidate.title || ''} ${candidate.sourceDescription || ''} ${candidate.category || ''}`.toLowerCase();
+
+  // 1. Trending signal from Google Trends
+  if (isTrending(candidate.title || '', trendingKeywords)) {
+    score += 1.0;
+  }
+
+  // 2. High-level national / federal / executive political figures
+  const topLeaders = [
+    'trump', 'biden', 'harris', 'trudeau', 'carney', 'poilievre', 'vance',
+    'newsom', 'desantis', 'pritzker', 'shapiro', 'whitmer', 'abbott',
+    'ford', 'smith', 'eby', 'supreme court', 'senator', 'governor', 'premier'
+  ];
+  if (topLeaders.some(l => text.includes(l))) {
+    score += 0.8;
+  }
+
+  // 3. High-stakes political actions & breaking events
+  if (/\b(veto|censure|indict|resignation|resign|scandal|investigation|emergency|proclamation|tornado|hurricane|lawsuit|unconstitutional|referendum|poll|tightening|surge|banned|ban|tariff|sanction|impeach)\b/i.test(text)) {
+    score += 0.5;
+  }
+
+  // 4. Category & Policy Domain
+  const cat = (candidate.category || '').toLowerCase();
+  if (cat.includes('election') || cat.includes('national') || cat.includes('politics')) {
+    score += 0.4;
+  } else if (cat.includes('economy') || cat.includes('labor') || cat.includes('tax') || cat.includes('budget') || cat.includes('trade')) {
+    score += 0.3;
+  } else if (cat.includes('safety') || cat.includes('justice') || cat.includes('health') || cat.includes('energy')) {
+    score += 0.2;
+  }
+
+  // 5. Geographic & Jurisdiction scope
+  if (candidate.country === 'CA' || candidate.country === 'US') {
+    if (text.includes('federal') || text.includes('presidential') || text.includes('congress') || text.includes('parliament') || text.includes('white house')) {
+      score += 0.3;
+    } else if (candidate.province || candidate.region || text.includes('governor') || text.includes('premier') || text.includes('state')) {
+      score += 0.2;
+    } else {
+      score += 0.1;
+    }
+  }
+
+  // Micro-variance for granular sorting
+  const hash = (candidate.title || '').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const microJitter = ((hash % 7) - 3) * 0.02;
+  score += microJitter;
+
+  return Math.min(9.8, Math.max(7.8, Number(score.toFixed(2))));
+}
+
 // mergeCandidatesIntoQueue + QUEUE_EXPIRY_HOURS now live in
 // rss-feed-collector.js (imported above) so this pipeline AND that file's
 // own standalone CLI entry point share one implementation instead of two
@@ -428,17 +490,20 @@ async function runVerifiedNewsPipeline(options = {}) {
     return [];
   }
 
-  // 2. Pull the same lookback window's trending topics and bump any
-  // candidate that matches to the front, so a genuinely trending story
-  // never gets truncated out by `limit` just because of feed order.
+  // 2. Score candidates by virality & trending topics and rank them
   const trendingKeywords = options.skipTrending ? new Set() : loadTrendingKeywords(options.maxHours || 4);
-  const ordered = trendingKeywords.size
-    ? [...candidates].sort((a, b) => Number(isTrending(b.title, trendingKeywords)) - Number(isTrending(a.title, trendingKeywords)))
-    : candidates;
-  const trendingMatchCount = ordered.filter(c => isTrending(c.title, trendingKeywords)).length;
+  const scoredCandidates = candidates.map(c => ({
+    ...c,
+    _viralityScore: scoreCandidateVirality(c, trendingKeywords)
+  }));
+  scoredCandidates.sort((a, b) => b._viralityScore - a._viralityScore);
+
+  const trendingMatchCount = scoredCandidates.filter(c => isTrending(c.title, trendingKeywords)).length;
   if (trendingMatchCount > 0) {
     console.log(`[PIPELINE] ${trendingMatchCount} candidate(s) match current trending topics — prioritized.`);
   }
+
+  const ordered = scoredCandidates;
 
   // Merge this run's freshly-discovered candidates into a PERSISTENT queue
   // instead of overwriting latest-verified-rss-candidates.json each run.
@@ -462,20 +527,45 @@ async function runVerifiedNewsPipeline(options = {}) {
     return queue;
   }
 
-  // Non-collectOnly (--use-api-key) runs also process the full persistent
-  // queue, not just what this run happened to discover — so an occasional
-  // direct-API run can help drain any backlog Antigravity left behind.
-  const toProcess = queue;
+  // Non-collectOnly (--use-api-key) runs also process the persistent queue.
+  // Re-score queue items so newly discovered trending/virality signals apply to entire queue
+  const scoredQueue = queue.map(c => ({
+    ...c,
+    _viralityScore: c._viralityScore || scoreCandidateVirality(c, trendingKeywords)
+  }));
+  scoredQueue.sort((a, b) => b._viralityScore - a._viralityScore);
 
-  console.log(`\n[PIPELINE] Synthesizing all ${toProcess.length} verified candidate stories (100% un-capped)...`);
+  let toSynthesize = scoredQueue;
+  let toPublishDirect = [];
+
+  // Selective virality synthesis: if synthTop is specified (e.g. --synth-top 5),
+  // synthesize only top X from past hour, and publish remainder directly as wire reports.
+  if (typeof options.synthTop === 'number' && options.synthTop > 0) {
+    const oneHourAgo = Date.now() - (60 * 60 * 1000);
+    const recentCandidates = scoredQueue.filter(c => {
+      const pubTime = new Date(c.pubDate).getTime();
+      return !isNaN(pubTime) && pubTime >= oneHourAgo;
+    });
+
+    const pool = recentCandidates.length > 0 ? recentCandidates : scoredQueue;
+    toSynthesize = pool.slice(0, options.synthTop);
+    toPublishDirect = pool.slice(options.synthTop);
+
+    console.log(`\n[PIPELINE] Selective virality mode enabled (--synth-top ${options.synthTop}):`);
+    console.log(`  -> Synthesizing top ${toSynthesize.length} highest-virality stories`);
+    console.log(`  -> Publishing remaining ${toPublishDirect.length} stories directly from verified wire sources\n`);
+  } else {
+    console.log(`\n[PIPELINE] Synthesizing all ${toSynthesize.length} verified candidate stories (100% un-capped)...`);
+  }
+
   const synthesizedBatch = [];
 
   const SYNTH_CONCURRENCY = 5;
-  for (let i = 0; i < toProcess.length; i += SYNTH_CONCURRENCY) {
-    const chunk = toProcess.slice(i, i + SYNTH_CONCURRENCY);
+  for (let i = 0; i < toSynthesize.length; i += SYNTH_CONCURRENCY) {
+    const chunk = toSynthesize.slice(i, i + SYNTH_CONCURRENCY);
     const chunkResults = await Promise.all(chunk.map(async (item, idx) => {
       const globalIdx = i + idx + 1;
-      console.log(`[${globalIdx}/${toProcess.length}] Synthesizing: "${item.title.slice(0, 60)}..."`);
+      console.log(`[${globalIdx}/${toSynthesize.length}] [VIRALITY: ${item._viralityScore || 'N/A'}] Synthesizing: "${item.title.slice(0, 60)}..."`);
       try {
         const synthesized = await synthesizeCivicStory(item);
         const verification = verifyArticleQuotesAndFacts(synthesized, item);
@@ -501,6 +591,15 @@ async function runVerifiedNewsPipeline(options = {}) {
     }
   }
 
+  // Publish direct fallback articles for non-synthesized candidates
+  if (toPublishDirect.length > 0) {
+    console.log(`\n[PIPELINE] Packaging ${toPublishDirect.length} remaining articles for direct wire publication...`);
+    for (const item of toPublishDirect) {
+      const direct = synthesizeDirectFallback(item);
+      synthesizedBatch.push(direct);
+    }
+  }
+
   // 3. Write batch to JSON buffer and ingest
   const bufferPath = path.join(__dirname, 'bulk-news-batch.json');
   fs.writeFileSync(bufferPath, JSON.stringify(synthesizedBatch, null, 2));
@@ -517,7 +616,7 @@ async function runVerifiedNewsPipeline(options = {}) {
   }
 
   console.log('======================================================');
-  console.log(`PIPELINE COMPLETE: ${synthesizedBatch.length} verified real-world stories published.`);
+  console.log(`PIPELINE COMPLETE: ${synthesizedBatch.length} verified real-world stories published (${toSynthesize.length} synthesized, ${toPublishDirect.length} direct wire reports).`);
   console.log('======================================================');
   return synthesizedBatch;
 }
@@ -525,8 +624,10 @@ async function runVerifiedNewsPipeline(options = {}) {
 if (require.main === module) {
   (async () => {
     const explicitMaxHours = process.argv.find((a, i) => process.argv[i - 1] === '--max-hours');
+    const synthTopArg = process.argv.find((a, i) => process.argv[i - 1] === '--synth-top' || process.argv[i - 1] === '--synth-limit');
     const collectOnly = !process.argv.includes('--use-api-key');
     const useApiKey = process.argv.includes('--use-api-key');
+    const synthTop = synthTopArg ? Number(synthTopArg) : undefined;
 
     let maxHours;
     let sinceTimestamp;
@@ -548,7 +649,8 @@ if (require.main === module) {
       maxHours,
       sinceTimestamp,
       collectOnly,
-      useApiKey
+      useApiKey,
+      synthTop
     }).catch(console.error);
   })();
 }
@@ -556,5 +658,7 @@ if (require.main === module) {
 module.exports = {
   runVerifiedNewsPipeline,
   synthesizeCivicStory,
-  mergeCandidatesIntoQueue
+  mergeCandidatesIntoQueue,
+  scoreCandidateVirality,
+  isTrending
 };

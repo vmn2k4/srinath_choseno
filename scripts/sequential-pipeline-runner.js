@@ -33,6 +33,7 @@ const {
   mergeCandidatesIntoQueue
 } = require('./rss-feed-collector');
 const { verifyArticleQuotesAndFacts } = require('./quote-and-fact-verifier');
+const { scoreCandidateVirality, synthesizeCivicStory } = require('./rss-verified-pipeline');
 
 const QUEUE_FILE = path.join(__dirname, 'latest-verified-rss-candidates.json');
 const CURRENT_CANDIDATE_FILE = path.join(__dirname, 'current-candidate.json');
@@ -53,6 +54,17 @@ function saveQueue(queue) {
 }
 
 /**
+ * Sorts queue descending by candidate virality score.
+ */
+function sortQueueByVirality(queue) {
+  return [...queue].sort((a, b) => {
+    const scoreA = a._viralityScore !== undefined ? a._viralityScore : scoreCandidateVirality(a);
+    const scoreB = b._viralityScore !== undefined ? b._viralityScore : scoreCandidateVirality(b);
+    return scoreB - scoreA;
+  });
+}
+
+/**
  * Harvest and merge verified candidates into the persistent queue.
  */
 async function collectFreshCandidates(maxHours = 24) {
@@ -61,22 +73,29 @@ async function collectFreshCandidates(maxHours = 24) {
   console.log('======================================================\n');
   const fresh = await collectVerifiedRssStories({ maxHours });
   const queue = mergeCandidatesIntoQueue(fresh, QUEUE_FILE);
-  console.log(`\n[Collector] Harvest complete. ${queue.length} total candidates in queue (${fresh.length} fresh discovered).`);
-  return queue;
+  const sorted = sortQueueByVirality(queue);
+  saveQueue(sorted);
+  console.log(`\n[Collector] Harvest complete. ${sorted.length} total candidates in queue (${fresh.length} fresh discovered). Ranked by virality.`);
+  return sorted;
 }
 
 /**
- * Pop the next candidate from the master queue and write to scripts/current-candidate.json.
+ * Pop the next highest-virality candidate from the master queue and write to scripts/current-candidate.json.
  */
 function popNextCandidate() {
-  const queue = loadQueue();
+  let queue = loadQueue();
   if (queue.length === 0) {
     console.log(JSON.stringify({ status: 'empty', remaining: 0 }));
     if (fs.existsSync(CURRENT_CANDIDATE_FILE)) fs.unlinkSync(CURRENT_CANDIDATE_FILE);
     return null;
   }
 
+  // Ensure queue is ordered by virality
+  queue = sortQueueByVirality(queue);
+  saveQueue(queue);
+
   const candidate = queue[0];
+  candidate._viralityScore = candidate._viralityScore !== undefined ? candidate._viralityScore : scoreCandidateVirality(candidate);
   fs.writeFileSync(CURRENT_CANDIDATE_FILE, JSON.stringify(candidate, null, 2));
   console.log(JSON.stringify({
     status: 'ready',
@@ -88,7 +107,8 @@ function popNextCandidate() {
       country: candidate.country,
       province: candidate.province || candidate.region,
       tier: candidate.tier,
-      pubDate: candidate.pubDate
+      pubDate: candidate.pubDate,
+      viralityScore: candidate._viralityScore
     }
   }, null, 2));
   return candidate;
@@ -221,15 +241,16 @@ function skipCurrentCandidate() {
 }
 
 /**
- * Print queue status and top items.
+ * Print queue status and top items ranked by virality.
  */
 function printQueueStatus() {
-  const queue = loadQueue();
+  const queue = sortQueueByVirality(loadQueue());
   console.log(JSON.stringify({
     remaining: queue.length,
     topCandidates: queue.slice(0, 5).map((c, i) => ({
       index: i + 1,
       title: c.title,
+      viralityScore: c._viralityScore !== undefined ? c._viralityScore : scoreCandidateVirality(c),
       source: c.sourceName,
       country: c.country,
       region: c.region || c.province
