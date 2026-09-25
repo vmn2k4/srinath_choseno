@@ -34,7 +34,7 @@ import {
 import ShareMenu, { type ShareData } from "@/components/features/ShareMenu";
 import Checkbox from "@/components/primitives/Checkbox";
 import { ConfirmDialog } from "@/components/primitives";
-import { stripEmoji } from "@/lib/utils/text";
+import { stripEmoji, tagLabel } from "@/lib/utils/text";
 import { convertToPackificTime } from "@/lib/utils/timezone";
 import { SITE_URL } from "@/lib/constants/site";
 
@@ -373,7 +373,7 @@ export default function AdminNewsDistributionClient() {
     const categoryTag = article.category ? String(article.category).replace(/[^a-zA-Z0-9]/g, "") : "News";
     const locationTag = article.province ? String(article.province).replace(/[^a-zA-Z0-9]/g, "") : (article.country || "");
     const topicTags = (article.content?.tags || [])
-      .map((t) => String(t ?? "").replace(/[^a-zA-Z0-9]/g, ""))
+      .map((t) => tagLabel(t).replace(/[^a-zA-Z0-9]/g, ""))
       .filter(Boolean);
 
     const combinedTagList = Array.from(

@@ -10,6 +10,7 @@
  */
 import { NEWS_CATEGORIES, type NewsArticle } from "@/lib/services/news";
 import { slugifyText } from "@/lib/utils/slugs";
+import { tagLabel } from "@/lib/utils/text";
 
 /** "Product Update" -> "product-update" */
 export function categoryToSlug(category: string): string {
@@ -22,9 +23,9 @@ export function resolveCategoryFromSlug(slug: string): string | null {
   return match ?? null;
 }
 
-/** "Gun Control" -> "gun-control" */
-export function tagToSlug(tag: string): string {
-  return slugifyText(tag);
+/** "Gun Control" -> "gun-control". Tolerates a malformed non-string tag (see tagLabel) rather than throwing. */
+export function tagToSlug(tag: unknown): string {
+  return slugifyText(tagLabel(tag));
 }
 
 /** "US" -> "United States 🇺🇸", "CA" -> "Canada 🇨🇦", anything else passed through unchanged. Used by the /news filter bar's country chips (NewsPageClient). */
@@ -59,7 +60,7 @@ export function findArticlesByTagSlug(
     const tags = article.content?.tags ?? [];
     const hit = tags.find((t) => tagToSlug(t) === tagSlug);
     if (hit) {
-      if (!label) label = hit;
+      if (!label) label = tagLabel(hit);
       matches.push(article);
     }
   }
@@ -72,10 +73,12 @@ export function collectTagFrequency(articles: NewsArticle[]): Array<{ tag: strin
   const counts = new Map<string, { tag: string; count: number }>();
   for (const article of articles) {
     for (const tag of article.content?.tags ?? []) {
-      const slug = tagToSlug(tag);
+      const label = tagLabel(tag);
+      if (!label) continue;
+      const slug = tagToSlug(label);
       const existing = counts.get(slug);
       if (existing) existing.count += 1;
-      else counts.set(slug, { tag, count: 1 });
+      else counts.set(slug, { tag: label, count: 1 });
     }
   }
   return Array.from(counts.entries())

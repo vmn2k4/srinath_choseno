@@ -60,6 +60,16 @@ function stripEmoji(str) {
     .trim();
 }
 
+// content.tags must be plain strings -- every page that renders it
+// (NewsArticleDetailClient, AdminNewsDistributionClient, newsTaxonomy's tag
+// hub) assumes that. Some synthesis passes have returned tagged-politician
+// objects ({name, role, slug}) here instead of using taggedPoliticians;
+// normalize at the last mile before either write path (insert or PATCH)
+// persists content.tags, so a malformed upstream shape can't reach the DB.
+function normalizeTags(tags) {
+  return (tags || []).map(t => typeof t === 'string' ? t : (t?.name || t?.slug || '')).filter(Boolean);
+}
+
 function calculateViralityScore(article, resolvedIds = []) {
   const bodyText = (article.body || (typeof article.content === 'string' ? article.content : article.content?.body) || '').trim();
   const wordCount = bodyText.split(/\s+/).filter(Boolean).length;
@@ -1747,7 +1757,7 @@ async function run() {
         body: resolvedBody,
         seoTitle: article.seoTitle,
         metaDescription: article.metaDescription,
-        tags: article.tags,
+        tags: normalizeTags(article.tags),
         taggedPoliticians: article.taggedPoliticians || (primaryPoliticianName ? [primaryPoliticianName] : []),
         primaryPoliticianName: primaryPoliticianName || (article.taggedPoliticians && article.taggedPoliticians[0]) || null,
         tweet: article.tweet,
@@ -1990,5 +2000,6 @@ if (require.main === module) {
 module.exports = {
   calculateViralityScore,
   resolvePoliticianIds,
+  normalizeTags,
   run
 };

@@ -31,3 +31,21 @@ export function containsEmoji(text: string): boolean {
 export function stripEmoji(text: string): string {
   return text.replace(emojiPattern(), "").replace(/[ \t]{2,}/g, " ").trim();
 }
+
+/**
+ * Extracts a human-readable label from a raw news-article `content.tags`
+ * entry. Tags are normally plain strings, but a wire-story ingestion bug
+ * (insert-news-batch.js writing a tagged-politician object straight through
+ * instead of extracting its name) has left `{name, role, slug}` objects in
+ * content.tags for a batch of articles -- this tolerates that shape
+ * everywhere tags are read (slug generation, hashtag building, badge
+ * rendering) so a malformed tag can't crash instead of just degrading.
+ * Anything unrecognized becomes "" so callers can filter it out.
+ */
+export function tagLabel(tag: unknown): string {
+  if (typeof tag === "string") return tag;
+  if (tag && typeof tag === "object" && typeof (tag as { name?: unknown }).name === "string") {
+    return (tag as { name: string }).name;
+  }
+  return "";
+}

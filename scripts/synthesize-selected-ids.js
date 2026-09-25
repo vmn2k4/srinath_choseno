@@ -32,7 +32,7 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
 }
 
 const { verifyArticleQuotesAndFacts } = require('./quote-and-fact-verifier');
-const { calculateViralityScore, resolvePoliticianIds } = require('./insert-news-batch');
+const { calculateViralityScore, resolvePoliticianIds, normalizeTags } = require('./insert-news-batch');
 
 async function getAuthToken() {
   if (env.admin_un && env.admin_pwd) {
@@ -225,7 +225,7 @@ async function processSelectedIds(ids) {
         headline: synthesized.headline || article.headline,
         summary: synthesized.summary || article.summary,
         body: cleanBody,
-        tags: synthesized.tags || article.content?.tags || [],
+        tags: normalizeTags(synthesized.tags || article.content?.tags),
         taggedPoliticians: synthesized.taggedPoliticians || [],
         country: article.country,
         province: article.province
@@ -239,7 +239,7 @@ async function processSelectedIds(ids) {
         body: cleanBody,
         seoTitle: synthesized.headline || article.headline,
         metaDescription: synthesized.summary || article.summary,
-        tags: synthesized.tags || article.content?.tags || [],
+        tags: normalizeTags(synthesized.tags || article.content?.tags),
         taggedPoliticians: resolvedNames.length > 0
           ? resolvedNames
           : (synthesized.taggedPoliticians && synthesized.taggedPoliticians.length > 0
