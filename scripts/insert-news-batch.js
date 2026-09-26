@@ -395,10 +395,16 @@ async function resolvePoliticianIds(article, authHeaders) {
       }
     }
 
+    let isHeadlineMatch = false;
     for (const candidate of candidates) {
       if (!candidate || candidate.length < 4) continue;
       const escaped = candidate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(`\\b${escaped}\\b`, 'i');
+      if (regex.test(normHeadline)) {
+        isMatch = true;
+        isHeadlineMatch = true;
+        break;
+      }
       if (regex.test(normText)) {
         isMatch = true;
         break;
@@ -417,16 +423,16 @@ async function resolvePoliticianIds(article, authHeaders) {
     const isFederalLeader = /(president|prime minister|senator|minister|mp\b|representative|congress)/i.test(profDesignation) ||
       FEDERAL_LEADER_SHORT_NAMES.has(normName) || FEDERAL_LEADER_SHORT_NAMES.has(shortName);
 
-    // Country cross-check: if both article and profile have countries, they must match (unless bilateral trade/federal news)
-    if (articleCountry && profCountry && articleCountry !== profCountry && !isFederalLeader) {
+    // Country cross-check: if both article and profile have countries, they must match (unless bilateral trade/federal news or explicit headline match)
+    if (articleCountry && profCountry && articleCountry !== profCountry && !isFederalLeader && !isHeadlineMatch) {
       continue; // Skip local/provincial leader from the wrong country
     }
 
     // Geographic Relevance Score (0 to 10)
-    let geoScore = 1;
+    let geoScore = isHeadlineMatch ? 8 : 1;
 
     if (isFederalLeader) {
-      geoScore = 5; // Federal leaders are broadly applicable across their nation
+      geoScore = Math.max(geoScore, 5); // Federal leaders are broadly applicable across their nation
     }
 
     // Executive bonus for top officeholders (Premier > MPP, PM > MP, Governor > Rep)
