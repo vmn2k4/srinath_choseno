@@ -177,14 +177,14 @@ const PROFILE_BLACKLIST = new Set([
 ]);
 
 const LEADER_ALIASES = {
-  'jb pritzker': ['j.b. pritzker', 'pritzker', 'governor pritzker', 'gov pritzker'],
-  'j.b. pritzker': ['jb pritzker', 'pritzker', 'governor pritzker', 'gov pritzker'],
-  'greg abbott': ['gregory abbott', 'abbott', 'governor abbott', 'gov abbott'],
-  'gregory abbott': ['greg abbott', 'abbott', 'governor abbott', 'gov abbott'],
-  'gavin newsom': ['governor newsom', 'gov newsom', 'newsom'],
-  'maura healey': ['governor healey', 'gov healey', 'healey'],
-  'kathy hochul': ['governor hochul', 'gov hochul', 'hochul'],
-  'phil murphy': ['governor murphy', 'gov murphy', 'murphy'],
+  'jb pritzker': ['j.b. pritzker', 'pritzker', 'governor pritzker', 'gov pritzker', 'illinois governor', 'il governor'],
+  'j.b. pritzker': ['jb pritzker', 'pritzker', 'governor pritzker', 'gov pritzker', 'illinois governor', 'il governor'],
+  'greg abbott': ['gregory abbott', 'abbott', 'governor abbott', 'gov abbott', 'texas governor', 'tx governor'],
+  'gregory abbott': ['greg abbott', 'abbott', 'governor abbott', 'gov abbott', 'texas governor', 'tx governor'],
+  'gavin newsom': ['governor newsom', 'gov newsom', 'newsom', 'california governor', 'ca governor'],
+  'maura healey': ['governor healey', 'gov healey', 'healey', 'massachusetts governor'],
+  'kathy hochul': ['governor hochul', 'gov hochul', 'hochul', 'new york governor', 'ny governor'],
+  'phil murphy': ['governor murphy', 'gov murphy', 'murphy', 'new jersey governor', 'nj governor'],
   'mikie sherrill': ['governor sherrill', 'gov sherrill', 'sherrill', 'rep sherrill', 'representative sherrill'],
   'alex padilla': ['senator padilla', 'sen padilla', 'padilla', 'alejandro padilla'],
   'xavier becerra': ['secretary becerra', 'becerra'],
