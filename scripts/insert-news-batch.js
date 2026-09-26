@@ -1759,6 +1759,13 @@ async function run() {
       continue;
     }
 
+    // Resolve final tagged politicians list from existing tags or matched database profiles
+    const matchedNames = (resolution.profiles || []).map(p => p.full_name).filter(Boolean);
+    const finalTaggedPoliticians = (Array.isArray(article.taggedPoliticians) && article.taggedPoliticians.length > 0)
+      ? article.taggedPoliticians
+      : (matchedNames.length > 0 ? matchedNames : (primaryPoliticianName ? [primaryPoliticianName] : []));
+    article.taggedPoliticians = finalTaggedPoliticians;
+
     const payload = {
       slug: article.slug,
       headline: article.headline,
@@ -1777,8 +1784,8 @@ async function run() {
         seoTitle: article.seoTitle,
         metaDescription: article.metaDescription,
         tags: normalizeTags(article.tags),
-        taggedPoliticians: article.taggedPoliticians || (primaryPoliticianName ? [primaryPoliticianName] : []),
-        primaryPoliticianName: primaryPoliticianName || (article.taggedPoliticians && article.taggedPoliticians[0]) || null,
+        taggedPoliticians: finalTaggedPoliticians,
+        primaryPoliticianName: primaryPoliticianName || finalTaggedPoliticians[0] || null,
         tweet: article.tweet,
         tweetarticle: sanitizedTweetArticle,
         breakingNews: !!article.breakingNews,
@@ -1827,7 +1834,7 @@ async function run() {
         })
       });
       if (syncRes.ok) {
-        console.log(`  -> Synced politician walls for: ${(article.taggedPoliticians || []).join(', ')}`);
+        console.log(`  -> Synced politician walls for: ${finalTaggedPoliticians.join(', ')}`);
       } else {
         console.warn(`  -> Warning: failed to sync politician walls:`, await syncRes.text());
       }
@@ -1897,7 +1904,8 @@ async function run() {
     inserted.push({
       ...article,
       id: created.id,
-      primaryWallSlug: primaryWallSlug
+      primaryWallSlug: primaryWallSlug,
+      primaryPoliticianName: primaryPoliticianName || finalTaggedPoliticians[0] || null
     });
   }
 
@@ -1941,7 +1949,7 @@ async function run() {
       const rawPol = item.taggedPoliticians?.[0];
       const polName = typeof rawPol === 'object' && rawPol !== null ? (rawPol.name || rawPol.full_name || '') : (typeof rawPol === 'string' ? rawPol : '');
       const polSlug = typeof rawPol === 'object' && rawPol !== null ? (rawPol.wall_slug || polName) : polName;
-      const primaryOfficial = polName || 'Civic Authority';
+      const primaryOfficial = polName || item.primaryPoliticianName || 'Civic Authority';
       const publishedAt = item.published_at;
       const postWindow = 'Early Morning Drive (6:00 AM - 9:00 AM EST)';
       const tweetCopy = `"${(item.tweet || '').replace(/"/g, '""')}"`;
