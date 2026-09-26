@@ -539,9 +539,18 @@ async function resolvePoliticianIds(article, authHeaders) {
     if (taggedPoliticians && taggedPoliticians.length > 0 && taggedPoliticians[0]) {
       primaryPoliticianName = taggedPoliticians[0];
     } else {
-      const titleMatch = headline.match(/\b(?:Gov\.|Governor|Premier|Senator|Sen\.|Mayor|Minister|Rep\.|Representative)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/);
+      const titleMatch = headline.match(/\b(?:Gov\.|Governor|Premier|Senator|Sen\.|Mayor|Minister|Rep\.|Representative)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,2})\b/);
       if (titleMatch && titleMatch[1]) {
-        primaryPoliticianName = titleMatch[1];
+        const candidateWords = titleMatch[1].split(/\s+/);
+        const forbiddenWords = new Set([
+          'argues', 'says', 'calls', 'urges', 'announces', 'vows', 'warns', 'defends', 'signals',
+          'faces', 'signs', 'unveils', 'proposes', 'for', 'to', 'in', 'on', 'at', 'with', 'by',
+          'about', 'and', 'or', 'of', 'the', 'former', 'new', 'election', 'race', 'bid', 'speech'
+        ]);
+        const hasForbidden = candidateWords.some(w => forbiddenWords.has(w.toLowerCase()));
+        if (!hasForbidden) {
+          primaryPoliticianName = titleMatch[1];
+        }
       }
     }
   }
