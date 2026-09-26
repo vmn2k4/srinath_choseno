@@ -358,6 +358,8 @@ async function resolvePoliticianIds(article, authHeaders) {
   const taggedPoliticians = article.taggedPoliticians || [];
   const combinedText = `${headline}\n${tags.join(' ')}\n${taggedPoliticians.join(' ')}\n${body}`;
   const normText = normalizeName(combinedText);
+  const normHeadline = normalizeName(headline);
+  const normSummary = normalizeName(article.summary || article.content?.summary || '');
 
   const articleCountry = normalizeCountry(article.country);
   const articleProvince = (article.province || '').toLowerCase().trim();
@@ -470,9 +472,6 @@ async function resolvePoliticianIds(article, authHeaders) {
   }
 
   // Prioritize politicians explicitly named in the HEADLINE over text/body mentions
-  const normHeadline = normalizeName(headline);
-  const normSummary = normalizeName(article.summary || '');
-
   selectedMatches.sort((a, b) => {
     const aProf = a.prof;
     const bProf = b.prof;
