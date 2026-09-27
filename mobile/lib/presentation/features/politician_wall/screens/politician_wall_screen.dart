@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/utils/haptics.dart';
+import '../../../../core/utils/share_link.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../common/widgets/app_shell.dart' show kBottomNavClearance;
 import '../../../../domain/politician_wall/entities/politician_wall_profile.dart';
@@ -72,7 +74,22 @@ class _PoliticianWallScreenState extends ConsumerState<PoliticianWallScreen> {
     if (widget.isTab) {
       return Scaffold(body: SafeArea(bottom: false, child: body));
     }
-    return Scaffold(appBar: AppBar(), body: body);
+    final profile = profileAsync.value;
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          if (profile != null)
+            IconButton(
+              icon: const Icon(Icons.share_outlined),
+              tooltip: 'Share',
+              onPressed: () => shareChosenoLink(
+                AppRoutes.wall(profile.wallSlug ?? profile.currentGhostId),
+              ),
+            ),
+        ],
+      ),
+      body: body,
+    );
   }
 }
 

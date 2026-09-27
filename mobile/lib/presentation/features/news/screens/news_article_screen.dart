@@ -10,8 +10,12 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
+import '../../../../core/utils/share_link.dart';
 import '../../../../core/widgets/widgets.dart';
+import '../providers/news_polls_providers.dart';
 import '../providers/news_providers.dart';
+import '../widgets/news_article_polls_section.dart';
+import '../widgets/news_article_tagged_politicians_section.dart';
 
 class NewsArticleScreen extends ConsumerWidget {
   const NewsArticleScreen({super.key, required this.slug});
@@ -24,17 +28,31 @@ class NewsArticleScreen extends ConsumerWidget {
     final articleAsync = ref.watch(newsArticleBySlugProvider(slug));
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share_outlined),
+            tooltip: 'Share',
+            onPressed: () => shareChosenoLink('/news/$slug'),
+          ),
+        ],
+      ),
       body: articleAsync.when(
         data: (article) {
           final dateLabel = article.displayDate != null
               ? DateFormat.yMMMMd().format(article.displayDate!)
               : null;
+          // Fire the polls load once the article id is known — safe to call
+          // every build, same convention as PoliticianWallScreen/
+          // CandidacyWallScreen's own postFrameCallback load() calls.
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ref.read(newsArticlePollsControllerProvider.notifier).load(article.id);
+          });
           return ListView(
             padding: const EdgeInsets.fromLTRB(
-              ChosenoSpacing.lg + 4,
+              ChosenoSpacing.md,
               ChosenoSpacing.sm,
-              ChosenoSpacing.lg + 4,
+              ChosenoSpacing.md,
               ChosenoSpacing.xxl,
             ),
             children: [
@@ -67,6 +85,28 @@ class NewsArticleScreen extends ConsumerWidget {
                   height: 1.1,
                 ),
               ),
+              if (article.displayableHeroImageUrl != null) ...[
+                const SizedBox(height: ChosenoSpacing.md),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(ChosenoRadii.card),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image.network(
+                      article.displayableHeroImageUrl!,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (context, child, progress) {
+                        if (progress == null) return child;
+                        return Container(
+                          color: palette.surfaceActive,
+                          child: const Center(child: LoadingIndicator()),
+                        );
+                      },
+                      errorBuilder: (context, error, stackTrace) =>
+                          Container(color: palette.surfaceActive),
+                    ),
+                  ),
+                ),
+              ],
               if (dateLabel != null) ...[
                 const SizedBox(height: ChosenoSpacing.md),
                 Text(
@@ -80,6 +120,12 @@ class NewsArticleScreen extends ConsumerWidget {
               const SizedBox(height: ChosenoSpacing.lg),
               Divider(color: palette.borderLight),
               const SizedBox(height: ChosenoSpacing.lg),
+              // Left-aligned, not justified — on a narrow phone column
+              // (short lines, no hyphenation support) justified text
+              // stretches inter-word spacing unevenly into visible
+              // "rivers" of whitespace, which reads worse than a plain
+              // ragged-right edge. Same choice Apple News/Medium/etc. make
+              // for body copy at phone widths.
               if (article.body != null)
                 Text(
                   article.body!,
@@ -89,6 +135,14 @@ class NewsArticleScreen extends ConsumerWidget {
                     height: 1.65,
                   ),
                 ),
+              NewsArticleTaggedPoliticiansSection(
+                politicians: article.taggedPoliticians,
+                newsArticleId: article.id,
+              ),
+              // NewsArticlePollsSection renders nothing at all (not even
+              // its own top divider/spacing) once loaded with zero polls,
+              // so it never leaves a blank gap on an article without one.
+              const NewsArticlePollsSection(),
             ],
           );
         },

@@ -29,6 +29,25 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- App Links: a tapped https://(www.)choseno.com/... URL opens
+                 this Activity directly instead of a browser, once
+                 assetlinks.json (hosted at choseno.com/.well-known/) is
+                 verified against this app's signing cert — see
+                 docs/DEEP_LINKING.md for the current status (debug cert
+                 fingerprint is in place; a release keystore + its
+                 fingerprint still need adding once one exists).
+                 autoVerify is what makes Android treat this as a real App
+                 Link (skips the disambiguation dialog) rather than a
+                 plain, always-prompted deep link. DeepLinkService
+                 (core/router/deep_link_service.dart) handles the resulting
+                 intent via app_links. -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https" android:host="www.choseno.com"/>
+                <data android:scheme="https" android:host="choseno.com"/>
+            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

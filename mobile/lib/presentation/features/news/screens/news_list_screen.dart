@@ -90,60 +90,89 @@ class _NewsArticleCard extends StatelessWidget {
         ? DateFormat.yMMMd().format(article.displayDate!)
         : null;
 
+    final thumbnailUrl = article.displayableHeroImageUrl;
+
     return AppCard(
       variant: AppCardVariant.standard,
       onTap: () => context.push('/news/${article.slug}'),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            children: [
-              if (article.isBreakingNews) ...[
-                const AppBadge(
-                  label: 'Breaking',
-                  tone: AppBadgeTone.danger,
-                  size: AppBadgeSize.xs,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    if (article.isBreakingNews) ...[
+                      const AppBadge(
+                        label: 'Breaking',
+                        tone: AppBadgeTone.danger,
+                        size: AppBadgeSize.xs,
+                      ),
+                      const SizedBox(width: ChosenoSpacing.xs),
+                    ],
+                    if (article.category != null)
+                      AppBadge(
+                        label: article.category!,
+                        tone: AppBadgeTone.neutral,
+                        size: AppBadgeSize.xs,
+                      ),
+                  ],
                 ),
-                const SizedBox(width: ChosenoSpacing.xs),
+                const SizedBox(height: ChosenoSpacing.sm),
+                Text(
+                  article.headline,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: ChosenoTypography.display(
+                    color: palette.textMain,
+                    fontSize: 22,
+                    height: 1.15,
+                  ),
+                ),
+                if (article.summary != null) ...[
+                  const SizedBox(height: ChosenoSpacing.sm),
+                  Text(
+                    article.summary!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: ChosenoTypography.body(
+                      color: palette.textMuted,
+                      fontSize: 14,
+                      height: 1.45,
+                    ),
+                  ),
+                ],
+                if (dateLabel != null) ...[
+                  const SizedBox(height: ChosenoSpacing.md),
+                  Text(
+                    dateLabel,
+                    style: ChosenoTypography.body(
+                      color: palette.textMuted,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
               ],
-              if (article.category != null)
-                AppBadge(
-                  label: article.category!,
-                  tone: AppBadgeTone.neutral,
-                  size: AppBadgeSize.xs,
-                ),
-            ],
-          ),
-          const SizedBox(height: ChosenoSpacing.sm),
-          Text(
-            article.headline,
-            style: ChosenoTypography.display(
-              color: palette.textMain,
-              fontSize: 22,
-              height: 1.15,
             ),
           ),
-          if (article.summary != null) ...[
-            const SizedBox(height: ChosenoSpacing.sm),
-            Text(
-              article.summary!,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: ChosenoTypography.body(
-                color: palette.textMuted,
-                fontSize: 14,
-                height: 1.45,
-              ),
-            ),
-          ],
-          if (dateLabel != null) ...[
-            const SizedBox(height: ChosenoSpacing.md),
-            Text(
-              dateLabel,
-              style: ChosenoTypography.body(
-                color: palette.textMuted,
-                fontSize: 12,
+          // A real news app's list always carries a thumbnail — skipped
+          // entirely (no placeholder box) rather than reserved-but-empty
+          // when an article genuinely has no usable photo, same as the
+          // article screen's own hero image.
+          if (thumbnailUrl != null) ...[
+            const SizedBox(width: ChosenoSpacing.sm),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(ChosenoRadii.sm),
+              child: Image.network(
+                thumbnailUrl,
+                width: 92,
+                height: 92,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    const SizedBox(width: 92, height: 92),
               ),
             ),
           ],

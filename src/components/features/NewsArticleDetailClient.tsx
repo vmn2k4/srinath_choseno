@@ -607,6 +607,13 @@ export default function NewsArticleDetailClient({
             )}
           </div>
 
+          {/* Reader poll(s) -- admin-authored, attached via AdminNewsPollsEditor.
+              Lives right below the headline/summary/metadata now (not a
+              bottom-of-article section) so it reads as a quick "where do
+              you stand" pulse-check before the story itself. Renders
+              nothing at all when the article has no polls. */}
+          <NewsArticlePoll articleId={article.id} />
+
           {/* Primary Rate CTA — a "hook" card, not a bare button: the
               politician's photo + a direct question ("What do you think of
               X?") invites a reaction before asking for the click, same
@@ -922,12 +929,6 @@ export default function NewsArticleDetailClient({
             </ul>
           </div>
         )}
-
-        {/* Reader poll(s) -- admin-authored, attached via AdminNewsPollsEditor.
-            NewsArticlePoll renders nothing at all (not even this wrapper)
-            when the article has no polls, so it never leaves a bare
-            top-border strip on every other article. */}
-        <NewsArticlePoll articleId={article.id} />
       </Card>
 
       {/* Linked Politicians - Rate & Discuss */}

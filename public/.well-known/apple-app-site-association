@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAMID.com.choseno.chosenoMobile",
+        "paths": [
+          "/news/*",
+          "/elections/seat/*",
+          "/wall/*",
+          "/candidacy/*",
+          "/apply/*"
+        ]
+      }
+    ]
+  }
+}

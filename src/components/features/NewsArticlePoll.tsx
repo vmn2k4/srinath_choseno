@@ -1,29 +1,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { BarChart3, Check } from "lucide-react";
 import { Spinner } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
 import { createClient } from "@/lib/supabase/client";
+import { useAnonPollVoterId } from "@/lib/utils/anonPollVoter";
 import {
   getNewsArticlePolls,
   getNewsArticlePollResults,
   getMyNewsArticlePollVotes,
+  getMyAnonymousNewsArticlePollVotes,
   castNewsArticlePollVote,
+  castAnonymousNewsArticlePollVote,
   type NewsArticlePoll as PollData,
 } from "@/lib/services/newsPolls";
 
 // Reader-facing poll widget for a news article page -- an admin can attach
 // any number of these to a story (see AdminNewsPollsEditor). Always shows
 // the live tally as percentage bars (never gated behind "vote to see
-// results") so a signed-out visitor gets the same read as everyone else;
-// voting itself still requires sign-in, same as rating a politician
-// (PoliticianInlineRating) or leaving a comment.
+// results"), and voting itself needs no sign-in either -- a signed-out
+// visitor votes via a client-side anon id (see anonPollVoter.ts /
+// 20260927000001_anonymous_news_article_poll_votes.sql), the same
+// zero-friction trade the site already makes for candidate support.
 export default function NewsArticlePoll({ articleId }: { articleId: string }) {
   const supabase = createClient();
-  const router = useRouter();
   const { user } = useAuth();
+  const anonId = useAnonPollVoterId();
 
   const [polls, setPolls] = useState<PollData[]>([]);
   const [counts, setCounts] = useState<Map<string, number>>(new Map()); // option_id -> vote_count
@@ -43,7 +46,11 @@ export default function NewsArticlePoll({ articleId }: { articleId: string }) {
       const pollIds = activePolls.map((p) => p.id);
       const [{ data: resultsData }, { data: myVotesData }] = await Promise.all([
         getNewsArticlePollResults(supabase, pollIds),
-        user ? getMyNewsArticlePollVotes(supabase, pollIds) : Promise.resolve({ data: [] }),
+        user
+          ? getMyNewsArticlePollVotes(supabase, pollIds)
+          : anonId
+            ? getMyAnonymousNewsArticlePollVotes(supabase, pollIds, anonId)
+            : Promise.resolve({ data: [] }),
       ]);
       if (!isMounted) return;
 
@@ -56,14 +63,11 @@ export default function NewsArticlePoll({ articleId }: { articleId: string }) {
       isMounted = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [articleId, user?.id]);
+  }, [articleId, user?.id, anonId]);
 
   const handleVote = async (pollId: string, optionId: string) => {
-    if (!user) {
-      router.push("/auth");
-      return;
-    }
     if (votingOptionId) return; // one in-flight vote at a time
+    if (!user && !anonId) return; // anon id hasn't resolved yet (first render tick) -- ignore the click rather than vote with no identity
 
     setVotingOptionId(optionId);
     // Optimistic: move this poll's tally from the old pick (if any) to the
@@ -81,7 +85,9 @@ export default function NewsArticlePoll({ articleId }: { articleId: string }) {
     });
     setMyVotes((prev) => new Map(prev).set(pollId, optionId));
 
-    const { error } = await castNewsArticlePollVote(supabase, optionId);
+    const { error } = user
+      ? await castNewsArticlePollVote(supabase, optionId)
+      : await castAnonymousNewsArticlePollVote(supabase, optionId, anonId!);
     if (error) {
       // Roll back on failure -- re-fetch the real state rather than guess.
       const { data: resultsData } = await getNewsArticlePollResults(supabase, polls.map((p) => p.id));
@@ -102,20 +108,24 @@ export default function NewsArticlePoll({ articleId }: { articleId: string }) {
   if (loading || polls.length === 0) return null;
 
   return (
-    <div className="pt-5 border-t border-border-light/20 space-y-5">
+    // Compact side-by-side layout -- this sits right below the headline
+    // now (not a bottom-of-article section anymore), so two polls read as
+    // a single "quick takes" strip rather than a tall stack pushing the
+    // body down. Still one column on narrow phones (grid-cols-1).
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       {polls.map((poll) => {
         const options = poll.news_article_poll_options ?? [];
         const totalVotes = options.reduce((sum, o) => sum + (counts.get(o.id) || 0), 0);
         const myVote = myVotes.get(poll.id);
 
         return (
-          <div key={poll.id} className="p-4 rounded-2xl border border-border-light/40 bg-surface-elevated/60 space-y-3">
-            <div className="flex items-center gap-2">
-              <BarChart3 size={14} className="text-primary shrink-0" />
-              <h3 className="text-sm font-bold text-text-main leading-snug">{poll.question}</h3>
+          <div key={poll.id} className="p-3 rounded-xl border border-border-light/40 bg-surface-elevated/60 space-y-2">
+            <div className="flex items-center gap-1.5">
+              <BarChart3 size={13} className="text-primary shrink-0" />
+              <h3 className="text-xs font-bold text-text-main leading-snug">{poll.question}</h3>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {options.map((option) => {
                 const voteCount = counts.get(option.id) || 0;
                 const pct = totalVotes > 0 ? Math.round((voteCount / totalVotes) * 100) : 0;
@@ -128,7 +138,7 @@ export default function NewsArticlePoll({ articleId }: { articleId: string }) {
                     type="button"
                     disabled={!!votingOptionId}
                     onClick={() => handleVote(poll.id, option.id)}
-                    className={`relative w-full text-left rounded-xl border overflow-hidden transition-all disabled:cursor-default ${
+                    className={`relative w-full text-left rounded-lg border overflow-hidden transition-all disabled:cursor-default ${
                       isMine ? "border-primary" : "border-border-light/50 hover:border-primary/50"
                     }`}
                   >
@@ -136,12 +146,12 @@ export default function NewsArticlePoll({ articleId }: { articleId: string }) {
                       className={`absolute inset-y-0 left-0 transition-all duration-500 ${isMine ? "bg-primary/20" : "bg-surface-active/70"}`}
                       style={{ width: `${pct}%` }}
                     />
-                    <div className="relative flex items-center justify-between gap-2 px-3 py-2.5">
-                      <span className={`text-xs sm:text-sm font-semibold flex items-center gap-1.5 ${isMine ? "text-primary" : "text-text-main"}`}>
-                        {isMine && <Check size={13} className="shrink-0" />}
-                        {option.label}
+                    <div className="relative flex items-center justify-between gap-2 px-2.5 py-1.5">
+                      <span className={`text-[11px] sm:text-xs font-semibold flex items-center gap-1 truncate ${isMine ? "text-primary" : "text-text-main"}`}>
+                        {isMine && <Check size={11} className="shrink-0" />}
+                        <span className="truncate">{option.label}</span>
                       </span>
-                      <span className="text-xs font-bold text-text-muted shrink-0">
+                      <span className="text-[11px] font-bold text-text-muted shrink-0">
                         {isVotingThis ? <Spinner size="sm" /> : `${pct}%`}
                       </span>
                     </div>
@@ -150,11 +160,10 @@ export default function NewsArticlePoll({ articleId }: { articleId: string }) {
               })}
             </div>
 
-            <p className="text-[11px] text-text-muted">
+            <p className="text-[10px] text-text-muted">
               {totalVotes === 0
                 ? "No votes yet — be the first."
                 : `${totalVotes.toLocaleString()} vote${totalVotes === 1 ? "" : "s"}`}
-              {!user && " · Sign in to vote"}
             </p>
           </div>
         );

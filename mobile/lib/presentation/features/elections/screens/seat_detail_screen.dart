@@ -13,6 +13,7 @@ import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/utils/haptics.dart';
+import '../../../../core/utils/share_link.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../../domain/elections/entities/election_candidate.dart';
 import '../providers/seat_admin_providers.dart';
@@ -29,7 +30,15 @@ class SeatDetailScreen extends ConsumerWidget {
     final dataAsync = ref.watch(seatDetailControllerProvider(seatId));
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share_outlined),
+            tooltip: 'Share',
+            onPressed: () => shareChosenoLink('/elections/seat/$seatId'),
+          ),
+        ],
+      ),
       body: dataAsync.when(
         data: (data) {
           final dateLabel = data.seat.electionDate != null

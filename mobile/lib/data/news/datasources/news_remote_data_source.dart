@@ -35,7 +35,9 @@ class NewsRemoteDataSource {
   Future<Map<String, dynamic>> getNewsArticleBySlug(String slug) {
     return _client
         .from('news_articles')
-        .select('*')
+        .select(
+          '*, news_article_politicians(politician_id, profiles(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, wall_slug)))',
+        )
         .eq('slug', slug)
         .eq('status', 'published')
         .lte('published_at', DateTime.now().toIso8601String())

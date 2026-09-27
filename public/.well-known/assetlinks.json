@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.choseno.choseno_mobile",
+      "sha256_cert_fingerprints": [
+        "48:54:4B:E6:A6:13:1A:6D:B5:E9:56:5F:7B:59:46:97:79:C8:03:1E:A6:61:14:94:52:C9:A4:0D:21:54:25:33"
+      ]
+    }
+  }
+]

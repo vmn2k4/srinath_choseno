@@ -85,7 +85,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final location = state.matchedLocation;
 
       if (!isSignedIn) {
-        return location == AppRoutes.auth ? null : AppRoutes.auth;
+        if (location == AppRoutes.auth) return null;
+        // Carries the originally-requested location through sign-in (see
+        // the "bounce away from Auth" branch below) — otherwise a shared
+        // link tapped while signed out lands on Home after sign-in
+        // instead of the article/seat/wall page the link actually pointed
+        // to (see deep_link_service.dart).
+        return '${AppRoutes.auth}?from=${Uri.encodeComponent(state.uri.toString())}';
       }
 
       // Signed in — check onboarding next. `ownProfileProvider` is watched
@@ -120,11 +126,19 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       }
 
       // Fully signed in + onboarded + located: bounce away from Auth/
-      // Onboarding/Splash/Set-Location toward Home.
+      // Onboarding/Splash/Set-Location toward Home — unless Auth carried a
+      // `?from=` (see the sign-out branch above), in which case that's
+      // where the visitor actually meant to go.
       if (location == AppRoutes.auth ||
           location == AppRoutes.onboarding ||
           location == AppRoutes.splash ||
           (location == AppRoutes.setLocation && !needsLocation)) {
+        if (location == AppRoutes.auth) {
+          final from = state.uri.queryParameters['from'];
+          if (from != null && from.isNotEmpty && from != AppRoutes.auth) {
+            return from;
+          }
+        }
         return AppRoutes.home;
       }
       return null;
@@ -218,6 +232,18 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => PoliticianWallScreen(
           ghostIdOrSlug: state.pathParameters['wallIdOrSlug']!,
         ),
+        routes: [
+          // Web's SEO-friendly two-segment wall URL (`/wall/[ghostId]/
+          // [slug]`) — the slug is decorative there (routing key is
+          // always the first segment), so a link in that shape opens the
+          // exact same screen as the single-segment form.
+          GoRoute(
+            path: ':slug',
+            builder: (context, state) => PoliticianWallScreen(
+              ghostIdOrSlug: state.pathParameters['wallIdOrSlug']!,
+            ),
+          ),
+        ],
       ),
       GoRoute(
         path: AppRoutes.profileEdit,
@@ -232,6 +258,18 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/elections/seat/:seatId',
         builder: (context, state) =>
             SeatDetailScreen(seatId: state.pathParameters['seatId']!),
+        routes: [
+          // Web's seat-scoped candidate URL (`/elections/seat/[seatId]/
+          // candidate/[candidateId]`) — same CandidacyWallScreen the flat
+          // `/candidacy/:candidateId` route below renders; the seatId
+          // segment is only there on web for breadcrumb context.
+          GoRoute(
+            path: 'candidate/:candidateId',
+            builder: (context, state) => CandidacyWallScreen(
+              candidateId: state.pathParameters['candidateId']!,
+            ),
+          ),
+        ],
       ),
       GoRoute(
         path: '/candidacy/:candidateId',
