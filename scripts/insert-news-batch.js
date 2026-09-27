@@ -538,11 +538,18 @@ async function resolvePoliticianIds(article, authHeaders) {
   } else {
     // If no profiles matched in DB, fall back to explicitly tagged politicians or headline extraction
     if (taggedPoliticians && taggedPoliticians.length > 0 && taggedPoliticians[0]) {
-      primaryPoliticianName = taggedPoliticians[0];
-    } else {
+      const explicit = String(taggedPoliticians[0]).trim();
+      // Ignore institutional titles like "Governor of ...", "Mayor of ..." or generic offices
+      if (!/^(?:Governor|Premier|Mayor|President|Minister|Secretary|Candidate)\s+(?:of\s+|for\s+)/i.test(explicit)) {
+        primaryPoliticianName = explicit.replace(/^(?:Candidate|Former|Acting|Deputy|Interim)\s+/i, '').trim();
+      }
+    }
+
+    if (!primaryPoliticianName) {
       const titleMatch = headline.match(/\b(?:Gov\.|Governor|Premier|Senator|Sen\.|Mayor|Minister|Rep\.|Representative)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,2})\b/);
       if (titleMatch && titleMatch[1]) {
-        const candidateWords = titleMatch[1].split(/\s+/);
+        let cleanedCandidate = titleMatch[1].replace(/^(?:Candidate|Former|Acting|Deputy|Interim)\s+/i, '').trim();
+        const candidateWords = cleanedCandidate.split(/\s+/);
         const forbiddenWords = new Set([
           'argues', 'says', 'calls', 'urges', 'announces', 'vows', 'warns', 'defends', 'signals',
           'faces', 'signs', 'unveils', 'proposes', 'tells', 'asks', 'takes', 'heads', 'meets',
@@ -551,8 +558,8 @@ async function resolvePoliticianIds(article, authHeaders) {
           'new', 'election', 'race', 'bid', 'speech'
         ]);
         const hasForbidden = candidateWords.some(w => forbiddenWords.has(w.toLowerCase()));
-        if (!hasForbidden) {
-          primaryPoliticianName = titleMatch[1];
+        if (!hasForbidden && candidateWords.length >= 2) {
+          primaryPoliticianName = cleanedCandidate;
         }
       }
     }
