@@ -201,6 +201,7 @@ const LEADER_ALIASES = {
   'brian kemp': ['governor kemp', 'gov kemp', 'kemp'],
   'katie hobbs': ['governor hobbs', 'gov hobbs', 'hobbs'],
   'roy cooper': ['governor cooper', 'gov cooper', 'cooper'],
+  'josh stein': ['governor stein', 'gov stein', 'stein', 'north carolina governor', 'nc governor'],
   'sarah huckabee sanders': ['governor sanders', 'gov sanders', 'huckabee sanders'],
   'glenn youngkin': ['governor youngkin', 'gov youngkin', 'youngkin'],
   'tony evers': ['governor evers', 'gov evers', 'evers'],
