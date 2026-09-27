@@ -27,6 +27,7 @@ import NewsArticleBody from "@/components/features/NewsArticleBody";
 import NewsComments from "@/components/features/NewsComments";
 import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
 import NewsArticleLinkedPoliticians from "@/components/features/NewsArticleLinkedPoliticians";
+import NewsArticlePoll from "@/components/features/NewsArticlePoll";
 import PoliticianInlineRating from "@/components/features/PoliticianInlineRating";
 import PoliticianEngagementStats from "@/components/features/PoliticianEngagementStats";
 import RelatedNewsSection from "@/components/features/RelatedNewsSection";
@@ -921,6 +922,12 @@ export default function NewsArticleDetailClient({
             </ul>
           </div>
         )}
+
+        {/* Reader poll(s) -- admin-authored, attached via AdminNewsPollsEditor.
+            NewsArticlePoll renders nothing at all (not even this wrapper)
+            when the article has no polls, so it never leaves a bare
+            top-border strip on every other article. */}
+        <NewsArticlePoll articleId={article.id} />
       </Card>
 
       {/* Linked Politicians - Rate & Discuss */}

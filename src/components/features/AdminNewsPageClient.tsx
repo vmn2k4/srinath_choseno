@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import AdminSubNav from "./AdminSubNav";
+import AdminNewsPollsEditor from "./AdminNewsPollsEditor";
 import {
   Card,
   Button,
@@ -1758,6 +1759,12 @@ export default function AdminNewsPageClient() {
                 </div>
               </div>
             </CollapsibleFormSection>
+
+            {/* Reader Polls -- only once the article has a real id to attach
+                to; not part of `content` JSONB or this form's save/JSON
+                paste plumbing, so it manages its own load/save (see
+                AdminNewsPollsEditor). */}
+            {editingId && <AdminNewsPollsEditor articleId={editingId} />}
 
             {/* Bottom actions */}
             <div className="flex justify-end gap-3 pb-4">
