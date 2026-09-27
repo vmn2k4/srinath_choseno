@@ -544,8 +544,10 @@ async function resolvePoliticianIds(article, authHeaders) {
         const candidateWords = titleMatch[1].split(/\s+/);
         const forbiddenWords = new Set([
           'argues', 'says', 'calls', 'urges', 'announces', 'vows', 'warns', 'defends', 'signals',
-          'faces', 'signs', 'unveils', 'proposes', 'for', 'to', 'in', 'on', 'at', 'with', 'by',
-          'about', 'and', 'or', 'of', 'the', 'former', 'new', 'election', 'race', 'bid', 'speech'
+          'faces', 'signs', 'unveils', 'proposes', 'tells', 'asks', 'takes', 'heads', 'meets',
+          'backs', 'leads', 'slams', 'hits', 'eyes', 'seeks', 'joins', 'wants', 'orders', 'gives',
+          'for', 'to', 'in', 'on', 'at', 'with', 'by', 'about', 'and', 'or', 'of', 'the', 'former',
+          'new', 'election', 'race', 'bid', 'speech'
         ]);
         const hasForbidden = candidateWords.some(w => forbiddenWords.has(w.toLowerCase()));
         if (!hasForbidden) {
