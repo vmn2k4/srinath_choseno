@@ -32,7 +32,7 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
 }
 
 const { verifyArticleQuotesAndFacts } = require('./quote-and-fact-verifier');
-const { calculateViralityScore, resolvePoliticianIds, normalizeTags, recoverPoliticiansFromTags } = require('./insert-news-batch');
+const { calculateViralityScore, resolvePoliticianIds, normalizeTags, recoverPoliticiansFromTags, isInvalidPoliticianName } = require('./insert-news-batch');
 
 async function getAuthToken() {
   if (env.admin_un && env.admin_pwd) {
@@ -231,10 +231,13 @@ async function processSelectedIds(ids) {
       // (and therefore news_article_politicians / the OG image card /
       // wall-sync) still links the politician instead of losing them.
       const rawTags = synthesized.tags || article.content?.tags;
-      const synthesizedTaggedPoliticians =
+      const rawCandidatePoliticians =
         synthesized.taggedPoliticians && synthesized.taggedPoliticians.length > 0
           ? synthesized.taggedPoliticians
           : recoverPoliticiansFromTags(rawTags);
+      const synthesizedTaggedPoliticians = rawCandidatePoliticians
+        .map(p => typeof p === 'string' ? p.trim() : (p?.name || '').trim())
+        .filter(p => p && !isInvalidPoliticianName(p));
 
       // Automatically resolve politicians
       const resolution = await resolvePoliticianIds({
@@ -248,6 +251,9 @@ async function processSelectedIds(ids) {
       }, { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${token}` });
 
       const resolvedNames = resolution.profiles.map(p => p.full_name);
+      const finalPrimary = resolution.primaryPoliticianName && !isInvalidPoliticianName(resolution.primaryPoliticianName)
+        ? resolution.primaryPoliticianName
+        : (synthesizedTaggedPoliticians[0] || null);
 
       // Update article payload
       const updatedContent = {
@@ -260,8 +266,8 @@ async function processSelectedIds(ids) {
           ? resolvedNames
           : (synthesizedTaggedPoliticians.length > 0
               ? synthesizedTaggedPoliticians
-              : (resolution.primaryPoliticianName ? [resolution.primaryPoliticianName] : [])),
-        primaryPoliticianName: resolution.primaryPoliticianName || synthesizedTaggedPoliticians[0] || null
+              : (finalPrimary ? [finalPrimary] : [])),
+        primaryPoliticianName: finalPrimary
       };
 
       // Recalculate virality score with synthesized depth

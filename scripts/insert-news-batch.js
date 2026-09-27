@@ -81,6 +81,58 @@ function recoverPoliticiansFromTags(tags) {
     .map(t => t.name.trim());
 }
 
+function isInvalidPoliticianName(name) {
+  if (!name || typeof name !== 'string') return true;
+  const trimmed = name.trim();
+  const words = trimmed.split(/\s+/);
+  if (words.length < 2 || words.length > 4) return true;
+
+  const lower = trimmed.toLowerCase();
+
+  const invalidKeywords = [
+    'high school', 'school', 'university', 'college', 'academy', 'institute', 'foundation',
+    'association', 'federation', 'union', 'league', 'department', 'ministry', 'agency',
+    'committee', 'commission', 'board', 'council', 'parliament', 'congress', 'senate',
+    'assembly', 'cabinet', 'supreme court', 'white house', 'government', 'administration',
+    'police', 'military', 'army', 'navy', 'air force', 'civic leaders', 'civic leader',
+    'prime minister', 'deputy prime minister', 'first minister', 'foreign minister',
+    'finance minister', 'defense minister', 'defence minister', 'interior minister',
+    'home minister', 'education minister', 'health minister', 'environment minister',
+    'trade minister', 'justice minister', 'governors association', 'premier league',
+    'cup', 'bowl', 'stakes', 'derby', 'classic', 'awards', 'open', 'ball', 'stadium',
+    'arena', 'park', 'highway', 'bridge', 'airport', 'hospital', 'center', 'centre',
+    'museum', 'library', 'hotel', 'house of'
+  ];
+
+  if (invalidKeywords.some(kw => lower.includes(kw))) {
+    return true;
+  }
+
+  // Titles with "of" or "for" (e.g. "Governor of Texas", "Mayor of London")
+  if (/^(?:Governor|Premier|Mayor|President|Minister|Secretary|Senator|Representative|Candidate)\s+(?:of\s+|for\s+)/i.test(trimmed)) {
+    return true;
+  }
+
+  // Pure office title with nationality/region (e.g. "Dutch Prime Minister", "British Prime Minister", "Serbian President")
+  if (/^(?:Dutch|British|Canadian|American|Indian|Japanese|French|German|Serbian|Mexican|Israeli|Ukrainian|Russian|Chinese|Australian|New Zealand)?\s*(?:Prime Minister|President|Governor|Mayor|Premier|Senator|Minister|Ambassador|Chancellor)$/i.test(trimmed)) {
+    return true;
+  }
+
+  // Check forbidden headline words leaked into names
+  const forbiddenWords = new Set([
+    'argues', 'says', 'calls', 'urges', 'announces', 'vows', 'warns', 'defends', 'signals',
+    'faces', 'signs', 'unveils', 'proposes', 'tells', 'asks', 'takes', 'heads', 'meets',
+    'backs', 'leads', 'slams', 'hits', 'eyes', 'seeks', 'joins', 'wants', 'orders', 'gives',
+    'for', 'to', 'in', 'on', 'at', 'with', 'by', 'about', 'and', 'or', 'of', 'the', 'former',
+    'new', 'election', 'race', 'bid', 'speech'
+  ]);
+  if (words.some(w => forbiddenWords.has(w.toLowerCase()))) {
+    return true;
+  }
+
+  return false;
+}
+
 function calculateViralityScore(article, resolvedIds = []) {
   const bodyText = (article.body || (typeof article.content === 'string' ? article.content : article.content?.body) || '').trim();
   const wordCount = bodyText.split(/\s+/).filter(Boolean).length;
@@ -539,9 +591,9 @@ async function resolvePoliticianIds(article, authHeaders) {
     // If no profiles matched in DB, fall back to explicitly tagged politicians or headline extraction
     if (taggedPoliticians && taggedPoliticians.length > 0 && taggedPoliticians[0]) {
       const explicit = String(taggedPoliticians[0]).trim();
-      // Ignore institutional titles like "Governor of ...", "Mayor of ..." or generic offices
-      if (!/^(?:Governor|Premier|Mayor|President|Minister|Secretary|Candidate)\s+(?:of\s+|for\s+)/i.test(explicit)) {
-        primaryPoliticianName = explicit.replace(/^(?:Candidate|Former|Acting|Deputy|Interim)\s+/i, '').trim();
+      const cleanedExplicit = explicit.replace(/^(?:Candidate|Former|Acting|Deputy|Interim)\s+/i, '').trim();
+      if (!isInvalidPoliticianName(cleanedExplicit)) {
+        primaryPoliticianName = cleanedExplicit;
       }
     }
 
@@ -549,16 +601,7 @@ async function resolvePoliticianIds(article, authHeaders) {
       const titleMatch = headline.match(/\b(?:Gov\.|Governor|Premier|Senator|Sen\.|Mayor|Minister|Rep\.|Representative)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,2})\b/);
       if (titleMatch && titleMatch[1]) {
         let cleanedCandidate = titleMatch[1].replace(/^(?:Candidate|Former|Acting|Deputy|Interim)\s+/i, '').trim();
-        const candidateWords = cleanedCandidate.split(/\s+/);
-        const forbiddenWords = new Set([
-          'argues', 'says', 'calls', 'urges', 'announces', 'vows', 'warns', 'defends', 'signals',
-          'faces', 'signs', 'unveils', 'proposes', 'tells', 'asks', 'takes', 'heads', 'meets',
-          'backs', 'leads', 'slams', 'hits', 'eyes', 'seeks', 'joins', 'wants', 'orders', 'gives',
-          'for', 'to', 'in', 'on', 'at', 'with', 'by', 'about', 'and', 'or', 'of', 'the', 'former',
-          'new', 'election', 'race', 'bid', 'speech'
-        ]);
-        const hasForbidden = candidateWords.some(w => forbiddenWords.has(w.toLowerCase()));
-        if (!hasForbidden && candidateWords.length >= 2) {
+        if (!isInvalidPoliticianName(cleanedCandidate)) {
           primaryPoliticianName = cleanedCandidate;
         }
       }
@@ -1785,8 +1828,11 @@ async function run() {
 
     // Resolve final tagged politicians list from existing tags or matched database profiles
     const matchedNames = (resolution.profiles || []).map(p => p.full_name).filter(Boolean);
-    const finalTaggedPoliticians = (Array.isArray(article.taggedPoliticians) && article.taggedPoliticians.length > 0)
-      ? article.taggedPoliticians
+    const validExplicitTags = (Array.isArray(article.taggedPoliticians) ? article.taggedPoliticians : [])
+      .map(t => typeof t === 'string' ? t.trim() : (t?.name || '').trim())
+      .filter(t => t && !isInvalidPoliticianName(t));
+    const finalTaggedPoliticians = validExplicitTags.length > 0
+      ? validExplicitTags
       : (matchedNames.length > 0 ? matchedNames : (primaryPoliticianName ? [primaryPoliticianName] : []));
     article.taggedPoliticians = finalTaggedPoliticians;
 
@@ -2053,5 +2099,6 @@ module.exports = {
   resolvePoliticianIds,
   normalizeTags,
   recoverPoliticiansFromTags,
+  isInvalidPoliticianName,
   run
 };
