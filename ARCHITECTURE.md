@@ -10,7 +10,9 @@ sessions through 2026-07-29 (§§23–26), again 2026-07-30 (§27), twice more o
 2026-08-04 (§31 — the Next.js migration cutover, a post-migration parity/SEO audit-and-fix
 pass, and debug-persona tooling; §32 — the onboarding/edit-profile flow, reported directly
 against the debug personas built in §31), and again 2026-08-14 (Canada `School District`
-boundary type — see bottom of file).
+boundary type — see bottom of file), and again 2026-09-27 (news article reader polls +
+anonymous voting, plus bringing the Flutter mobile app's news article screen up to parity
+with web — see bottom of file).
 
 ---
 
@@ -2307,4 +2309,164 @@ election_date - 14 days)`). `STATUS_FLOW`/`STATUS_LABEL` collapsed to reflect th
 `nominations_open → nominations_closed → active` happen on their own as dates pass; the
 "Advance Status" button on any date-driven stage now only ever means "Close Election," the
 other manual bookend, archivable from any of the three.
+
+---
+
+## 2026-09-27: News article reader polls (signed-in + anonymous), and Flutter mobile parity for news articles
+
+*Built this session.* Two independent threads: (1) a brand-new "reader poll" feature on news
+articles — an admin attaches any number of multiple-choice polls to a story (e.g. "which
+party do you support?"), readers vote and see live percentage tallies, no account required —
+and (2) bringing the Flutter mobile app's news article screen up to parity with web (hero
+image, tagged-politician ratings, deep linking, share), which had drifted noticeably behind.
+
+### Schema — three migrations
+- **`20260927000000_news_article_polls.sql`**: `news_article_polls` (`news_article_id`,
+  `question`, `sort_order`), `news_article_poll_options` (`poll_id`, `label`, `sort_order`),
+  `news_article_poll_votes` (`poll_id`, `option_id`, `voter_id` → `profiles.id`, `UNIQUE
+  (poll_id, voter_id)`). Modeled directly on `politician_ratings`: **public read** on the
+  definition tables (polls/options), gated to a *published* article's polls via the same
+  `status = 'published' AND published_at <= now()` condition `news_articles` itself uses —
+  a poll never leaks a still-draft story's question. Every vote write goes through
+  `cast_news_article_poll_vote(p_option_id, p_is_test)` (`SECURITY DEFINER`, upserts on
+  `(poll_id, voter_id)` so re-voting changes the answer instead of erroring/duplicating) —
+  there's no direct INSERT policy on the votes table at all, matching the "RPC-only writes"
+  posture `politician_ratings` already uses. Tallies come from
+  `get_news_article_poll_results(p_poll_ids[], p_include_test)`, also `SECURITY DEFINER`:
+  it bypasses the votes table's own-row-only read policy on purpose, but only ever returns a
+  `(poll_id, option_id, vote_count)` triple — never a voter id — so the ballot stays anonymous
+  the same way a rating's `ghost_id` already is.
+- **`20260927000001_anonymous_news_article_poll_votes.sql`**: lets a *signed-out* visitor vote
+  too — directly requested mid-session ("I don't need to be signed into participate in a
+  poll"). Modeled on the pre-existing `anonymous_supporters` pattern
+  (`20260910000000_anonymous_politician_support.sql`, candidate support without an account):
+  a **separate** table `news_article_anon_poll_votes` (`poll_id`, `option_id`, `anon_id`,
+  `PRIMARY KEY (poll_id, anon_id)`) — deliberately not a nullable `voter_id` on the existing
+  table, since an anon id and a real profile id are different identity concepts with
+  different guarantees. Dedup is a random `anon_id` minted client-side and persisted in both
+  `localStorage` and a cookie (`src/lib/utils/anonPollVoter.ts` — its own storage key, not
+  shared with `anonSupporter.ts`, so the two anonymous-action features stay decoupled),
+  backstopped server-side by an IP-hash rate limit (`anonymous_poll_vote_rate_limits`,
+  reusing the same `internal_secrets.anon_ip_pepper` the support feature already seeded — one
+  pepper for hashing IPs across every anonymous-write feature, not a per-feature secret) via
+  `cast_anonymous_news_article_poll_vote(p_option_id, p_anon_id, p_is_test)`. This table is
+  fully public-read (`USING (true)`) — same posture as `anonymous_supporters`: an anon vote
+  carries no PII beyond a random id, so there's nothing sensitive to protect by hiding it, and
+  public read is what lets a returning anonymous voter's own pick be looked up with a plain
+  select instead of a dedicated RPC. `get_news_article_poll_results` was updated in place to
+  `UNION ALL` both vote tables per option.
+- **`20260927000002_news_article_poll_votes_is_test.sql`**: a real bug caught *live* while
+  verifying anonymous voting — `get_news_article_poll_results` had **no `is_test` filter at
+  all**, so a vote cast from a dev environment (`localhost:3000`) would silently count toward
+  the real public tally shown to every reader, unlike every other engagement RPC in this app
+  (`get_politician_engagement_summaries`, `get_politician_rating_summaries`), which already
+  guard against exactly this via a `p_include_test` parameter. Worse, `news_article_poll_votes`
+  (the signed-in path) didn't even have an `is_test` column to filter on — only the
+  just-added anon table did. Fixed: added the column, added `p_is_test`/`p_include_test`
+  params to both RPCs, updated `src/lib/services/newsPolls.ts` to pass
+  `isDevEnvironment()` through on every call, same convention as everywhere else. **Residual
+  gap, not fixed**: votes cast during this session's own live UI testing (via the built-in
+  browser pane, against localhost pointed at the real shared Supabase project) *before* this
+  fix existed were inserted under the old RPC signature with no `is_test` flag at all, so the
+  `ALTER TABLE ... ADD COLUMN is_test ... DEFAULT false` backfill retroactively marked them as
+  real votes — they're now permanently indistinguishable from genuine reader activity on the
+  one article (`bc-election-2026-where-each-party-stands`) this was tested against. Flagged to
+  the user; a manual `DELETE` reset of that article's two polls' tallies was offered but not
+  yet actioned as of this writing.
+- **Also caught live, fixed in place (not a separate migration — same session, before either
+  RPC above was ever exercised for real)**: `cast_anonymous_news_article_poll_vote`'s first
+  version raised `42883 function digest(text, unknown) does not exist` on the very first real
+  call. Root cause: `pgcrypto`'s `digest()` lives in the `extensions` schema on this Supabase
+  project (confirmed via `pg_extension`), not `public` — and the function's `SET search_path =
+  public` (copied from `add_anonymous_support`, which apparently has the exact same latent bug
+  but has never actually been exercised, since `anonymous_support_enabled` defaults `false` and
+  nothing has flipped it on yet) restricted resolution to `public` alone. Fixed by adding
+  `extensions` to the search path. **Worth a follow-up look**: `add_anonymous_support` almost
+  certainly has this identical bug, just never triggered because the feature it backs has
+  never been turned on.
+
+### Service layer, admin authoring, reader widget (web)
+- **`src/lib/services/newsPolls.ts`** (new file): `getNewsArticlePolls`,
+  `getNewsArticlePollResults`, `getMyNewsArticlePollVotes`/`getMyAnonymousNewsArticlePollVotes`,
+  `castNewsArticlePollVote`/`castAnonymousNewsArticlePollVote`, plus direct-table admin CRUD
+  (`createNewsArticlePoll` and friends — no RPC needed for authoring, gated by the "Admins can
+  manage" RLS policy the same way `createNewsArticle` already is).
+- **`src/components/features/AdminNewsPollsEditor.tsx`** (new): lets an admin add/delete polls
+  (question + newline-separated options) on any *already-saved* article, wired into
+  `AdminNewsPageClient.tsx`'s edit form — deliberately its own component/file rather than
+  folded into that form's existing save/JSON-paste/batch-import plumbing, since polls are a
+  separate DB entity from the article's `content` JSONB.
+- **`src/components/features/NewsArticlePoll.tsx`** (new): the reader-facing widget, embedded
+  in `NewsArticleDetailClient.tsx`. Moved mid-session from a bottom-of-article section (after
+  Sources) to directly below the headline/summary/metadata bar, and from a vertical stack to a
+  compact `grid-cols-1 sm:grid-cols-2` side-by-side layout — both changes came from live user
+  feedback on how it actually read on the page, not an upfront design decision. Always shows
+  the live tally as percentage bars (never gated behind "vote to see results"); voting itself
+  needs no sign-in, using the anon-id path above transparently when `user` is null.
+
+### A real content bug this surfaced: `sources` field-name mismatch
+The first news article this poll feature shipped on
+(`bc-election-2026-where-each-party-stands`, created by direct DB writes this session, not
+through the admin UI or `insert-news-batch.js`) had every `content.sources` entry written as
+`{ name, url }` instead of the `{ label, url }` shape `NewsArticleDetailClient.tsx` actually
+reads (`{s.label}`) — so every source link rendered with an icon and no visible text at all.
+Not a code bug; a one-off authoring mistake, fixed with a direct `jsonb_set` rewrite of that
+one row's `content.sources`. Worth remembering: `NEWS_JSON_SCHEMA.md` already documents
+`label` as the correct key — this was a case of not following the project's own documented
+schema, not a gap in the schema itself.
+
+### Flutter mobile parity (`/mobile`)
+The mobile app's news article screen (`lib/presentation/features/news/screens/
+news_article_screen.dart`) had drifted behind web on several fronts; brought current:
+
+- **Reader polls, ported from web**: new `domain/news_polls/` + `data/news_polls/` verticals
+  and a `NewsArticlePollsController` (Riverpod `AsyncNotifier`, same singleton-with-explicit-
+  `load(id)` shape as the pre-existing `WallSupportController` — not a `.family` provider,
+  since this app only ever has one article screen active at a time) calling the *same* two
+  RPCs the web widget uses. Anonymous voting was **not** ported to mobile this session — out
+  of scope, mobile still requires sign-in to vote (the user explicitly confirmed this scoping
+  mid-session: "I meant for poll only" was about web).
+- **Hero images**: `NewsArticle.heroImageUrl` existed on the entity/model already but was
+  never rendered anywhere. Now shown below the headline. Also added
+  `NewsArticle.displayableHeroImageUrl`, a getter that filters out a real bad-data pattern
+  found live: several bulk-imported articles have `hero_image_url` pointing at their own
+  auto-generated **OG social-share card** (`.../og-cards/<slug>.png` — a branded graphic with
+  the headline baked in, meant for a Twitter/Facebook link preview, never for in-article or
+  in-list display) instead of a real photo or null. Both the article screen's hero image and
+  the news list's new thumbnail (`_NewsArticleCard`, previously text-only) read this filtered
+  getter, not `heroImageUrl` directly — this is a data-pipeline bug affecting the *website*
+  too (same underlying column), not mobile-specific, and wasn't fixed at the source.
+- **Tagged-politician ratings**: `getNewsArticleBySlug`'s query gained the
+  `news_article_politicians(...)` join web's version already had; a new `TaggedPolitician`
+  entity and a brand-new `politician_ratings` domain/data/presentation vertical
+  (`upsert_politician_rating` RPC — pre-existing on the backend, never previously called from
+  Flutter at all) let a mobile reader rate a tagged politician directly from the article,
+  recording `source_news_article_id` same as web. A new shared `AppStarRating` widget
+  (`core/widgets/`) and a `showRatePoliticianSheet` bottom sheet do the picking/submitting.
+- **Deep linking, both directions**: `app_links` and `share_plus` were already `pubspec.yaml`
+  dependencies (added for the not-yet-built auth password-recovery deep link) but never wired
+  to anything. Added `DeepLinkService` (listens for cold-start + warm incoming links, routes
+  the path straight into `go_router`) and `shareChosenoLink()` (builds the canonical
+  `https://www.choseno.com/...` URL for a path this app has a route for, opens the OS share
+  sheet) — wired onto News article/Election seat/Politician wall screens' app bars. The
+  sign-in redirect in `app_router.dart` now carries the originally-requested location through
+  via `?from=`, so a shared link tapped while signed out resumes at its actual target after
+  sign-in instead of dropping onto Home. Added the two previously-missing route shapes
+  (`/wall/:id/:slug`, `/elections/seat/:seatId/candidate/:candidateId`) so more web links
+  resolve on mobile instead of 404ing. **Native config is genuinely incomplete, not just
+  unverified** — see `docs/DEEP_LINKING.md` for the full state: no Apple Developer Team ID is
+  configured in the iOS project at all (blocks Associated Domains outright), and no real
+  Android release keystore exists yet (App Links currently only verify for debug-signed
+  builds). The Android manifest intent-filter and both `.well-known` verification files
+  (`apple-app-site-association` with a `TEAMID` placeholder, `assetlinks.json` with the debug
+  keystore's SHA-256) were added regardless, ready for those two blockers to be resolved.
+- **Reading-experience polish, from direct user feedback on a real device screenshot**: body
+  text was briefly justified (`TextAlign.justify`) in response to "articles are terrible to
+  read," then reverted to left-aligned once a follow-up screenshot showed the real failure
+  mode — justified text at phone-width line lengths with no hyphenation support produces
+  visible uneven word-spacing ("rivers" of whitespace), which reads worse than a plain ragged
+  right edge, not better. Left-aligned is what Apple News/Medium/etc. use for body copy at
+  this width for exactly that reason — worth remembering before reaching for justify as a
+  readability fix on any narrow column again. Hero image position was also moved from above
+  the headline to below it, again directly requested.
 

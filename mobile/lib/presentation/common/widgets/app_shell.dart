@@ -126,8 +126,8 @@ class AppShell extends ConsumerWidget {
                 ),
                 if (myWallSlug != null)
                   const NavigationDestination(
-                    icon: Icon(Icons.account_circle_outlined),
-                    selectedIcon: Icon(Icons.account_circle),
+                    icon: Icon(Icons.forum_outlined),
+                    selectedIcon: Icon(Icons.forum),
                     label: 'My Wall',
                   ),
                 const NavigationDestination(

@@ -8,7 +8,6 @@ import {
   Clock,
   Globe,
   User,
-  ExternalLink,
   Zap,
   Tag,
   Languages,
@@ -19,8 +18,9 @@ import {
   ArrowRight,
   MapPin,
   Landmark,
+  X,
 } from "lucide-react";
-import { Card, Badge, Button, Avatar, Spinner } from "@/components/primitives";
+import { Card, Badge, Button, Avatar, Spinner, Modal } from "@/components/primitives";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import NewsArticleBody from "@/components/features/NewsArticleBody";
@@ -84,6 +84,9 @@ export default function NewsArticleDetailClient({
   // Inline (not modal) so opening it pushes the floated image + body text
   // down the page instead of covering them.
   const [showFindInline, setShowFindInline] = useState(false);
+  // Lightbox for the hero/briefing image -- click to zoom in on a full-size
+  // overlay, same click (or the X) to close.
+  const [isImageZoomed, setIsImageZoomed] = useState(false);
 
   // Key Leaders rail (right side, below the image) — a couple of the
   // country's top office holders. Resolution + a 15-min cache both live in
@@ -775,7 +778,12 @@ export default function NewsArticleDetailClient({
                 did was silently clipping the "Share This Briefing" popover
                 below instead of just letting it render on top. */}
             <div className="relative rounded-2xl border border-border-light/40 bg-gradient-to-br from-white via-surface-elevated to-orange-50/30 p-2 sm:p-3 shadow-lg hover:shadow-xl transition-shadow">
-              <div className="relative rounded-xl overflow-hidden border border-slate-200/90 shadow-sm">
+              <button
+                type="button"
+                onClick={() => setIsImageZoomed(true)}
+                aria-label="Zoom in on image"
+                className="relative block w-full rounded-xl overflow-hidden border border-slate-200/90 shadow-sm cursor-zoom-in"
+              >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={currentOgImageUrl}
@@ -783,7 +791,7 @@ export default function NewsArticleDetailClient({
                   className="w-full h-auto object-cover"
                   loading="eager"
                 />
-              </div>
+              </button>
               <div className="mt-2.5 px-2 flex items-center justify-between text-xs">
                 <span className="font-semibold text-orange-600 flex items-center gap-1">
                   ★ Choseno Civic Briefing
@@ -906,29 +914,6 @@ export default function NewsArticleDetailClient({
             </div>
           </div>
         )}
-
-        {/* Sources */}
-        {content?.sources && content.sources.length > 0 && (
-          <div className="pt-5 border-t border-border-light/20 space-y-2">
-            <h3 className="text-xs font-semibold text-text-muted uppercase tracking-widest">
-              {t("newsPage.sources")}
-            </h3>
-            <ul className="space-y-1">
-              {content.sources.map((s, i) => (
-                <li key={i}>
-                  <a
-                    href={s.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-primary hover:underline flex items-center gap-1"
-                  >
-                    <ExternalLink size={10} /> {s.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </Card>
 
       {/* Linked Politicians - Rate & Discuss */}
@@ -957,6 +942,33 @@ export default function NewsArticleDetailClient({
 
       {/* Comments */}
       <NewsComments articleId={article.id} articleSlug={slug} />
+
+      {/* Hero image lightbox -- click the briefing image above to zoom in;
+          click anywhere (backdrop or the image itself) or the X to close. */}
+      {isImageZoomed && (
+        <Modal
+          className="relative"
+          overlayClassName="bg-black/90"
+          zIndexClassName="z-[100]"
+          onOverlayClick={() => setIsImageZoomed(false)}
+        >
+          <button
+            type="button"
+            onClick={() => setIsImageZoomed(false)}
+            aria-label="Close zoomed image"
+            className="absolute top-4 right-4 z-10 inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 text-white transition-colors cursor-pointer"
+          >
+            <X size={20} />
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={currentOgImageUrl}
+            alt={`Visual summary for ${article.headline}`}
+            onClick={() => setIsImageZoomed(false)}
+            className="max-w-[95vw] max-h-[90vh] w-auto h-auto object-contain rounded-lg shadow-2xl cursor-zoom-out"
+          />
+        </Modal>
+      )}
     </div>
   );
 }

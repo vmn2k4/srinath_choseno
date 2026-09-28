@@ -138,7 +138,7 @@ class _WallBody extends ConsumerWidget {
                 AppAvatar(
                   imageUrl: profile.displayPhotoUrl,
                   fallbackText: profile.fullName,
-                  radius: 48,
+                  radius: 36,
                 ),
                 const SizedBox(height: ChosenoSpacing.md),
                 Text(

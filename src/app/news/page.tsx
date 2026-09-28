@@ -132,11 +132,37 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
   // really-paginated grid below.
   const useInfiniteFeed = !repIds && page === 1;
 
-  const [{ data: articles, error, count }, countries] = await Promise.all([
+  // NewsInfiniteFeed's own first client-side page, fetched here too so the
+  // default view's feed renders straight from the initial HTML instead of
+  // behind a client round-trip: previously this page's `articles` fetch
+  // below was already happening (needed for the JSON-LD below and for
+  // total/totalPages) and then thrown away for this view, since
+  // NewsPageClient swaps to NewsInfiniteFeed instead of rendering `items`
+  // (see its `showInfiniteFeed` branch) -- the feed remounted from scratch
+  // client-side and fetched the exact same first page again after
+  // hydration, showing a spinner in between for no reason. Matches
+  // NewsInfiniteFeedList's own default sort ("recent") + time range ("2d")
+  // + PAGE_SIZE (12) exactly, since those are its initial useState values on
+  // first mount -- a later sort/range change remounts it (via its `key`)
+  // and refetches fresh from there, same as before.
+  const INFINITE_FEED_PAGE_SIZE = 12;
+  const infiniteFeedEventDateAfter = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString();
+
+  const [{ data: articles, error, count }, countries, initialFeedArticles] = await Promise.all([
     repIds
       ? getNewsArticlesByPoliticians(supabase, repIds, { limit: PAGE_SIZE, offset, withCount: true })
       : getPublishedNewsArticles(supabase, { category, country, limit: PAGE_SIZE, offset, withCount: true }),
     getPublishedNewsCountries(supabase),
+    useInfiniteFeed
+      ? getPublishedNewsArticles(supabase, {
+          category,
+          country,
+          eventDateAfter: infiniteFeedEventDateAfter,
+          orderBy: "recent",
+          limit: INFINITE_FEED_PAGE_SIZE,
+          withPoliticianDetails: true,
+        }).then((r) => r.data ?? [])
+      : Promise.resolve(null),
   ]);
 
   // This same first-page fetch backs the JSON-LD ItemList even in the
@@ -179,6 +205,7 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
       <NewsPageClient
         items={items}
         showInfiniteFeed={useInfiniteFeed}
+        initialFeedArticles={initialFeedArticles}
         error={error}
         userRepresentatives={userRepresentatives}
         isLoggedIn={Boolean(user)}

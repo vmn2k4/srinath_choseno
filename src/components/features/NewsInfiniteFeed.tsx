@@ -46,12 +46,23 @@ function timeRangeToIso(range: NewsFeedTimeRange): string {
 export default function NewsInfiniteFeed({
   country,
   category,
+  // The feed's own first page, already fetched server-side (see
+  // news/page.tsx) with the exact params this component's defaults
+  // (sortMode "recent", timeRange "2d") would otherwise fetch client-side on
+  // mount. Only meaningful for that initial default combination -- once the
+  // reader changes sort or time range, NewsInfiniteFeedList remounts (via
+  // its `key` below) and fetches fresh from scratch, same as before this
+  // prop existed.
+  initialArticles,
 }: {
   country?: string | null;
   category?: string | null;
+  initialArticles?: NewsArticle[];
 }) {
   const [sortMode, setSortMode] = useState<NewsFeedSortMode>("recent");
   const [timeRange, setTimeRange] = useState<NewsFeedTimeRange>("2d");
+
+  const isInitialCombo = sortMode === "recent" && timeRange === "2d";
 
   return (
     <div className="space-y-6">
@@ -67,6 +78,7 @@ export default function NewsInfiniteFeed({
         timeRange={timeRange}
         country={country}
         category={category}
+        initialArticles={isInitialCombo ? initialArticles : undefined}
       />
     </div>
   );
@@ -86,19 +98,21 @@ function NewsInfiniteFeedList({
   timeRange,
   country,
   category,
+  initialArticles,
 }: {
   sortMode: NewsFeedSortMode;
   timeRange: NewsFeedTimeRange;
   country?: string | null;
   category?: string | null;
+  initialArticles?: NewsArticle[];
 }) {
   const supabase = createClient();
 
-  const [articles, setArticles] = useState<NewsArticle[]>([]);
-  const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
+  const [articles, setArticles] = useState<NewsArticle[]>(initialArticles ?? []);
+  const [offset, setOffset] = useState(initialArticles?.length ?? 0);
+  const [hasMore, setHasMore] = useState(initialArticles ? initialArticles.length === PAGE_SIZE : true);
   const [loading, setLoading] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(!initialArticles);
   const [errored, setErrored] = useState(false);
 
   const sentinelRef = useRef<HTMLDivElement | null>(null);

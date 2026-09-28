@@ -474,6 +474,11 @@ function decodeXmlEntities(str) {
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
     .replace(/&apos;/g, "'")
+    // Google News descriptions wrap the linked title and trailing source name
+    // (e.g. "<a ...>Title</a>&nbsp;&nbsp;<font ...>Source</font>") in nbsp
+    // padding instead of a plain space -- left undecoded, it survives the
+    // tag-strip below as literal "&nbsp;" text in the stored summary.
+    .replace(/&nbsp;/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();

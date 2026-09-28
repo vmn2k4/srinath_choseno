@@ -20,6 +20,7 @@ import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
 import NewsFeedPostCard from "@/components/features/NewsFeedPostCard";
 import NewsInfiniteFeed from "@/components/features/NewsInfiniteFeed";
+import type { NewsArticle } from "@/lib/services/news";
 import { countryDisplayLabel } from "@/lib/utils/newsTaxonomy";
 import { SITE_URL } from "@/lib/constants/site";
 import { stripEmoji } from "@/lib/utils/text";
@@ -77,6 +78,10 @@ interface NewsPageClientProps {
   rep: string | null;
   categories: string[];
   countries: string[];
+  // NewsInfiniteFeed's own first page, already fetched server-side with the
+  // same params it would otherwise fetch client-side on mount -- see
+  // news/page.tsx's comment on why. Null when showInfiniteFeed is false.
+  initialFeedArticles?: NewsArticle[] | null;
 }
 
 export default function NewsPageClient({
@@ -94,6 +99,7 @@ export default function NewsPageClient({
   rep,
   categories,
   countries,
+  initialFeedArticles,
 }: NewsPageClientProps) {
   const { t } = useTranslation();
   const [showFindDialog, setShowFindDialog] = useState(false);
@@ -344,7 +350,7 @@ export default function NewsPageClient({
       )}
 
       {showInfiniteFeed ? (
-        <NewsInfiniteFeed country={country} category={category} />
+        <NewsInfiniteFeed country={country} category={category} initialArticles={initialFeedArticles ?? undefined} />
       ) : items.length === 0 && !error ? (
         <Card padding="md" className="text-center py-16 text-text-muted text-sm space-y-3">
           <p>{rep ? "No news articles found for the selected representative." : t("newsPage.noArticles")}</p>

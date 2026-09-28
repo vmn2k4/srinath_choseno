@@ -185,11 +185,13 @@ back through `providers/` to find where the layering broke.
 | **Profile** (§4.E) | domain + data + presentation | View + Edit | View: General Info, Political Details (+ Switch to Citizen), Privacy & Ghost ID (score + Rotate/Burn). Edit: reuses Onboarding's step widgets (Basic Info → Location → Political Details). **Not ported**: avatar upload/display, rotation-history line |
 | **Set Location** (§4.I.8) | — (reuses Profile + Boundaries) | Full screen | Small by design — detect location, sync memberships, save |
 | **Router guards** (§1) | — | — | **All three layers now built**: signed-in → `/auth`, `onboarding_completed` → `/onboarding`, `needsLocationProvider` (politician + zero memberships) → `/set-location` |
-| **News** (§4.A.2/§4.A.3) | domain + data + presentation | List + article detail | Body renders as plain text (no markdown renderer yet). **Not ported**: category/topic browsing (§4.A.4), tagged-politician strip, comment thread |
+| **News** (§4.A.2/§4.A.3) | domain + data + presentation | List + article detail | Body renders as plain text (no markdown renderer yet). Hero image now renders (list thumbnail + article screen, both below the headline) via `NewsArticle.displayableHeroImageUrl` — a getter, not the raw `heroImageUrl` column, since some bulk-imported articles have that column pointing at their own auto-generated OG social-share card instead of a real photo (a data bug, not mobile-specific — filtered out rather than fixed at the source). Tagged-politician strip now ported (`news_article_politicians` join + a "Rate" entry point per politician, see Politician Ratings row below) and reader polls now ported (see News Polls row below). Share button in the app bar (`shareChosenoLink`). **Not ported**: category/topic browsing (§4.A.4), comment thread |
+| **News Polls** | domain + data + presentation | Inline on News article detail | Port of the website's reader-poll widget — an admin attaches any number of multiple-choice polls to an article, a reader votes and sees a live tally. `NewsArticlePollsController` (Riverpod `AsyncNotifier`, singleton + explicit `load(articleId)`, same shape as `WallSupportController` — not `.family`, since only one article screen is ever active) calls the same two backend RPCs the website uses (`cast_news_article_poll_vote`, `get_news_article_poll_results`). **Anonymous voting was intentionally not ported** — the website supports voting without an account (a client-minted anon id + IP rate limit), but that scoping request was web-only ("I meant for poll only"); mobile still requires sign-in to vote |
+| **Politician Ratings** | domain + data + presentation | `showRatePoliticianSheet` bottom sheet, opened from News article's tagged-politician strip | Brand new vertical — `upsert_politician_rating` was a pre-existing backend RPC but had never been called from Flutter at all (only the read side, `get_politician_engagement_summaries`, existed here). A new shared `AppStarRating` widget (`core/widgets/`) plus a bottom sheet (mirrors `change_location_sheet.dart`'s "top-level `showXSheet()` function + private `ConsumerStatefulWidget` body" pattern) picks 1–5 stars + an optional comment, records `source_news_article_id` when cast from an article same as web. **Not ported**: the past-reviews list `PoliticianInlineRating.tsx` also shows — the aggregate avg/count this sheet's caller already displays was judged enough for now |
 | **Seat Detail + Community Support** (§4.A.7/§4.I.7) | domain + data + presentation | Full screen | Vote-share bars, Leading/Tied badges (ported the tie-detection fix from `ElectionResultsPanel.tsx`), signed-in Support toggle (optimistic + rollback), reuses `PoliticianWallRepository`'s support methods rather than duplicating them. **Not ported**: Candidate Interview tab (video), Nominate Yourself, Election Administrator panel, anonymous support, rating |
 | **My Elections** (§4.F) | domain + data + presentation | Full screen — Politician only | My Candidacies (withdraw with confirm) + Open Seats Near You (apply) + My Admin Applications (read-only list, see Election Administrator row below). **Not ported**: "Browse a Different Area" (needs a country→container→type search UI this app has no widget for yet). Note: `apply_for_election_admin` has no role restriction (any signed-in user can volunteer), but this screen is only reachable from Profile's politician-only "My Elections" button — a citizen has no nav path to it yet |
 | **Candidacy Wall** (§4.A.8) | domain + data + presentation | Full screen | Profile card (avatar, party, role/boundary, statement, bio) + Support toggle (reuses `PoliticianWallRepository`'s support methods directly, keyed by politician id — no separate "candidacy support" concept), questionnaire section ported from `getPublicCandidateAnswers` rendering all 5 question types (`AnswerValue.tsx`'s single/multiple choice, text, rating, ranking). Seat Detail's candidate rows now open here (not the standing Wall) on tap, matching the web's "click a candidate → see their candidacy" flow. **Not ported**: Candidacy Wall's own post feed + pitch videos, answer comments, inline star-rating review — need video/nested-comment infra this app doesn't have yet |
-| **Claim Candidacy** (§4.H, Flow B only) | domain + data + presentation | Inline on Candidacy Wall | `request_candidacy_claim` RPC — a citizen/politician says "this is me" on an admin-added, unclaimed candidate row, reviewed later by an election admin. Gated on `CandidacyDetail.isUnclaimedStub` (`added_by_election_admin_id != null && claimed_at == null`) — the real schema condition, **not** the web's own `candidate.is_unregistered` (a dead field: not a real column, and no query in `src/lib/services/elections.ts` ever sets it, so `CandidacyWall.tsx`'s claim-form branch is unreachable on the website as currently written). **Not ported**: Flow A (`claim_candidacy_via_token`, the email-invite deep link) — needs Universal Links (§1) this app's router doesn't handle yet |
+| **Claim Candidacy** (§4.H, Flow B only) | domain + data + presentation | Inline on Candidacy Wall | `request_candidacy_claim` RPC — a citizen/politician says "this is me" on an admin-added, unclaimed candidate row, reviewed later by an election admin. Gated on `CandidacyDetail.isUnclaimedStub` (`added_by_election_admin_id != null && claimed_at == null`) — the real schema condition, **not** the web's own `candidate.is_unregistered` (a dead field: not a real column, and no query in `src/lib/services/elections.ts` ever sets it, so `CandidacyWall.tsx`'s claim-form branch is unreachable on the website as currently written). **Not ported**: Flow A (`claim_candidacy_via_token`, the email-invite deep link) — `DeepLinkService` (see "Deep linking" below) can now get a tapped link into the app and to `go_router`, but there's no `/candidacy/claim/:token`-shaped route or screen consuming a claim token yet, and native Universal Links/App Links config is still incomplete (see `docs/DEEP_LINKING.md`) |
 | **Election Administrator** (§4.I.5, self-service half only) | domain + data + presentation | Inline on Seat Detail + My Elections | Collapsible "Seat Administrator" panel on Seat Detail: `get_seat_admin_status` RPC drives the approved/pending/rejected/volunteer states, `apply_for_election_admin` RPC submits the volunteer form (any signed-in user, no role check server-side). My Elections lists the viewer's own applications read-only. **Not ported**: application review (`review_election_admin_application` requires `profiles.role = 'admin'` — a site-admin role this app has no UI for at all, per profile_screen.dart) and the admin console an approved administrator would use (Add Candidate Stub, review claim requests, search/invite-to-claim, the Twilio/Grok voice-call flow) — same "separate, larger effort" bucket as Candidate Application |
 | **Legal & static pages** (§4.A.12) | — | 5 screens (About/Privacy/Terms/Corrections/Editorial Standards) | One generic `StaticContentScreen` fed by an enum, no data layer — linked from Profile's footer |
 | **Shared avatar handling** (`core/widgets/app_avatar.dart`) | — | — | Every network avatar in the app goes through `AppAvatar`, which catches a failed image load (caught live: a broken Supabase Storage URL threw an uncaught exception and left a blank circle) and falls back to initials/an icon instead of a raw `CircleAvatar`+`NetworkImage` pair |
@@ -207,10 +209,47 @@ What Auth intentionally does NOT include yet (see the inline `// Not yet ported`
 the top of `sign_in_screen.dart` and `docs/FLUTTER_MOBILE_APP_GUIDE.md` §4.B/§1 in the parent
 repo for the full spec of what's still missing):
 - Google OAuth (needs the `google_sign_in` package + native platform config)
-- The password-recovery deep link (needs `app_links` wired to a route — see
-  `core/router/app_router.dart`'s routing TODO and the parent repo's Flutter guide §1's
-  Universal Links section)
+- The password-recovery deep link specifically — `app_links` is no longer unwired (see
+  "Deep linking" below, added for news/seat/wall sharing), but nothing yet special-cases a
+  Supabase auth-callback URL (a `code=` param) arriving through `DeepLinkService`; it would
+  currently just get handed to `go_router` as a plain path and 404 harmlessly. Needs a
+  `/reset-password` screen (doesn't exist yet) and a branch in `DeepLinkService._handle` that
+  recognizes the auth-callback shape and calls Supabase's session-exchange instead of routing
 - The founder-count signup nudge (cosmetic, explicitly marked skippable in the guide)
+
+## Deep linking (Universal Links / App Links + sharing)
+
+Two small, separate pieces, both new — see the parent repo's
+[`docs/DEEP_LINKING.md`](../docs/DEEP_LINKING.md) for the full write-up, including native
+config status (currently blocked on a missing Apple Developer Team ID and a missing Android
+release keystore — the Dart/Flutter side below is complete regardless of those two blockers).
+
+- **Incoming**: `core/router/deep_link_service.dart` — `DeepLinkService.start()` (called once
+  from `app.dart`'s `initState`) checks `app_links`' cold-start `getInitialLink()`, then
+  subscribes to `uriLinkStream` for the app's lifetime. Either path just extracts the tapped
+  URL's path+query and calls `appRouterProvider`'s `GoRouter.go(...)` — no new routing
+  concept, it's just handing go_router a path it already knows from somewhere other than an
+  in-app button tap. Verifies the host is `choseno.com`/`www.choseno.com` (or a bare/hostless
+  URI) before acting, so it never navigates on an arbitrary link some other app handed it.
+- **Outgoing**: `core/utils/share_link.dart` — `shareChosenoLink(path)` builds the canonical
+  `https://www.choseno.com<path>` URL and opens the OS share sheet via `share_plus`
+  (`SharePlus.instance.share(ShareParams(uri: ...))` — the current v12 API shape, not the
+  older static `Share.share()`). Wired onto News article/Election seat/Politician wall
+  screens' app bars so far.
+- **Auth redirect now preserves the target**: `app_router.dart`'s `redirect:` callback used to
+  send every unauthenticated navigation to a bare `/auth`. It now appends
+  `?from=<original-location>`, and the "bounce away from Auth once signed in" branch reads it
+  back — so a shared link tapped while signed out resumes at its real destination after
+  sign-in instead of dropping onto Home. Copy this `?from=` pattern for any future redirect
+  that can interrupt a deep-linked destination.
+- **Route parity gaps closed**: `/wall/:wallIdOrSlug/:slug` (web's SEO two-segment wall URL —
+  routes to the same `PoliticianWallScreen`, the slug is decorative) and
+  `/elections/seat/:seatId/candidate/:candidateId` (routes to the same `CandidacyWallScreen`
+  as the flat `/candidacy/:candidateId`) — both added as nested `GoRoute`s so a web link in
+  either shape resolves instead of 404ing. **Known remaining gaps** (no mobile screen exists
+  yet to route to, not just an unwired path): `/wall/[ghostId]/news` (politician wall's
+  News-mentions sub-page) and `/elections/[boundarySlug]` (boundary-scoped election listing —
+  this app's Elections tab is account-districts-scoped only, see below).
 
 ## How to add the next feature (e.g. Onboarding, or Feed)
 
