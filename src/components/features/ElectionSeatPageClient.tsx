@@ -60,6 +60,9 @@ import {
   Trash2,
   ChevronDown,
   ChevronUp,
+  ChevronLeft,
+  ChevronRight,
+  ArrowLeft,
 } from "lucide-react";
 import {
   Card,
@@ -145,6 +148,14 @@ export default function ElectionSeatPageClient({
       const seatSlug = seat ? buildSeatSlug(seat) : seatId;
       const newUrl = `/elections/seat/${seatSlug}/candidate/${candSlug}`;
       window.history.replaceState(null, "", newUrl);
+    }
+  };
+
+  const goToResults = () => {
+    setActiveMainTab("results");
+    if (typeof window !== "undefined") {
+      const seatSlug = seat ? buildSeatSlug(seat) : seatId;
+      window.history.replaceState(null, "", `/elections/seat/${seatSlug}`);
     }
   };
 
@@ -1217,23 +1228,11 @@ export default function ElectionSeatPageClient({
                 <div
                   role="button"
                   tabIndex={0}
-                  onClick={() => {
-                    setActiveMainTab("results");
-                    if (typeof window !== "undefined") {
-                      const seatSlug = seat ? buildSeatSlug(seat) : seatId;
-                      const newUrl = `/elections/seat/${seatSlug}`;
-                      window.history.replaceState(null, "", newUrl);
-                    }
-                  }}
+                  onClick={goToResults}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
-                      setActiveMainTab("results");
-                      if (typeof window !== "undefined") {
-                        const seatSlug = seat ? buildSeatSlug(seat) : seatId;
-                        const newUrl = `/elections/seat/${seatSlug}`;
-                        window.history.replaceState(null, "", newUrl);
-                      }
+                      goToResults();
                     }
                   }}
                   className={`flex items-center gap-1.5 shrink-0 px-3 py-1.5 rounded-full border transition-all cursor-pointer ${
@@ -1310,27 +1309,62 @@ export default function ElectionSeatPageClient({
 
               {activeMainTab !== "results" && activeMainTab !== "interview" && selectedCandidateId && (
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between gap-3 px-1 flex-wrap">
-                    <span className="text-xs font-semibold text-text-muted">
-                      Candidate {candidates.findIndex((c) => c.id === selectedCandidateId) + 1} of {candidates.length}
-                    </span>
-                    {/* "View Politician Wall" used to be duplicated here --
-                        CandidacyWall's own embedded header already renders
-                        that same button (plus Play Interview and Support
-                        right next to it), so a second copy up here just
-                        crowded this row for no benefit. Share Candidate Link
-                        is the only action genuinely unique to this seat-page
-                        context, so it's the only one left. */}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={handleCopyShareLink}
-                      className="gap-1.5 text-xs border-primary/30 text-primary-light hover:bg-primary/10"
-                    >
-                      {copiedShareLink ? <Check size={13} className="text-success" /> : <Share2 size={13} />}
-                      {copiedShareLink ? "Direct Link Copied!" : "Share Candidate Link"}
-                    </Button>
-                  </div>
+                  {(() => {
+                    // Same order the Community Support list shows (supporters, desc; stable on ties)
+                    const ordered = [...candidates].sort(
+                      (a, b) =>
+                        (engagementSummaries.get(b.profiles?.id)?.supporterCount ?? 0) -
+                        (engagementSummaries.get(a.profiles?.id)?.supporterCount ?? 0)
+                    );
+                    const idx = ordered.findIndex((c) => c.id === selectedCandidateId);
+                    const prev = idx > 0 ? ordered[idx - 1] : null;
+                    const next = idx >= 0 && idx < ordered.length - 1 ? ordered[idx + 1] : null;
+                    const nameOf = (c: any) => c.display_name || c.profiles?.full_name || "Candidate";
+                    return (
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between gap-3 flex-wrap">
+                          <Button variant="outline" size="sm" onClick={goToResults} className="gap-1.5 text-xs">
+                            <ArrowLeft size={13} /> All candidates &amp; Community Support
+                          </Button>
+                          {/* "View Politician Wall" lives in CandidacyWall's own header, so Share is the only seat-page-specific action here. */}
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={handleCopyShareLink}
+                            className="gap-1.5 text-xs border-primary/30 text-primary-light hover:bg-primary/10"
+                          >
+                            {copiedShareLink ? <Check size={13} className="text-success" /> : <Share2 size={13} />}
+                            {copiedShareLink ? "Direct Link Copied!" : "Share Candidate Link"}
+                          </Button>
+                        </div>
+                        <div className="flex items-center justify-between gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            disabled={!prev}
+                            onClick={() => prev && handleSelectCandidate(prev)}
+                            className="gap-1 text-xs min-w-0 max-w-[38%]"
+                          >
+                            <ChevronLeft size={14} className="shrink-0" />
+                            <span className="truncate">{prev ? nameOf(prev) : "Previous"}</span>
+                          </Button>
+                          <span className="text-xs font-semibold text-text-muted shrink-0">
+                            Candidate {idx + 1} of {ordered.length}
+                          </span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            disabled={!next}
+                            onClick={() => next && handleSelectCandidate(next)}
+                            className="gap-1 text-xs min-w-0 max-w-[38%]"
+                          >
+                            <span className="truncate">{next ? nameOf(next) : "Next"}</span>
+                            <ChevronRight size={14} className="shrink-0" />
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })()}
                   <CandidacyWall candidateId={selectedCandidateId} embedded />
                 </div>
               )}
