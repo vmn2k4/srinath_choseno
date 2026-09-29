@@ -2325,3 +2325,28 @@ Deleted the stub `"Steven Bede"` profile directly (`profiles` row, id
 from any other table first). No re-run needed for this one seat, but the
 next full CivicInfo BC sync will now merge any other Steve/Stephen/Steven
 pairs it would otherwise have split.
+
+## 2026-09-29 — BC provincial candidates: party-site bios + social links
+
+Sources: `bcndp.ca/team` (its page loads profiles from
+`/team?action_handler=bcndp-2024/action--civic-profiles&action=action--civic-profiles--get&civic_tag=cand2026&json=1`),
+`conservativebc.ca/our-team/` (per-candidate `/candidate/<slug>/` pages;
+plain curl gets a Cloudflare 403 unless sent a full browser-style header
+set), `1bc.ca/candidates` (per-candidate `/candidates/<slug>` bio pages).
+
+Matched 126 scraped candidates (NDP 49, Conservative 64, OneBC 13) to
+`election_candidates` on the "2026 BC Provincial Election" by party +
+riding (word-order-insensitive) + surname; nothing ambiguous or unmatched.
+Updated `politician_profiles.bio` for 123 of them (`bio` is the only
+storage — see the "no social-links column" note above): the party-site
+bio as prose, plus a trailing `Links: Facebook: ... | Instagram: ... | X: ...`
+line for the 85 who have personal accounts (party-level accounts
+excluded, and the NDP's generic `website_link` skipped). Existing bios
+under 80 chars (all were `MLA for <riding>`-style stubs) were replaced;
+longer bios would have been kept. Each `UPDATE` was guarded on the
+previously-read bio so nothing changed in the meantime could be clobbered.
+
+Not covered: OneBC's Shubham Joshi, AJ Wolfe, Hunter Corrigal have no
+bio page or links; Brent Chapman (an incumbent MLA) got links only.
+CentreBC (10), Green (11), Libertarian (5) and other candidates were not
+part of this pass.
