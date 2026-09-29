@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import CandidacyWall from "./CandidacyWall";
@@ -24,7 +25,7 @@ import {
   reviewCandidacyClaim,
   getCandidateIdsWithVideoAnswers,
   removeCandidate,
-  getRelatedSeatsInBoundary,
+  findOverlappingOpenSeats,
 } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { getProfileRole, uploadAvatarImage } from "@/lib/services/profile";
@@ -134,7 +135,6 @@ export default function ElectionSeatPageClient({
     return "results";
   });
   const [relatedSeats, setRelatedSeats] = useState<any[]>([]);
-  const [loadingRelatedSeats, setLoadingRelatedSeats] = useState(false);
 
   const handleSelectCandidate = (candidate: any) => {
     const candidateId = candidate.id;
@@ -327,24 +327,14 @@ export default function ElectionSeatPageClient({
 
   useEffect(() => {
     let isMounted = true;
-    if (!seat?.map_shape_id) return;
-
-    setLoadingRelatedSeats(true);
-    getRelatedSeatsInBoundary(supabase, seat.map_shape_id, seat.id)
-      .then(({ data }) => {
-        if (isMounted) {
-          setRelatedSeats((data as any[]) || []);
-          setLoadingRelatedSeats(false);
-        }
-      })
-      .catch(() => {
-        if (isMounted) setLoadingRelatedSeats(false);
-      });
-
+    if (!seat?.id) return;
+    findOverlappingOpenSeats(supabase, seat.id).then(({ data }) => {
+      if (isMounted) setRelatedSeats((data as any[]) || []);
+    });
     return () => {
       isMounted = false;
     };
-  }, [seat?.map_shape_id, seat?.id, supabase]);
+  }, [seat?.id, supabase]);
 
   useEffect(() => {
     let isMounted = true;
@@ -1347,38 +1337,47 @@ export default function ElectionSeatPageClient({
             </div>
           )}
 
-        {/* Related Races in Same Boundary */}
+        {/* Other open races whose boundary overlaps this one (municipal
+            council/trustees, provincial ridings inside the city, ...) */}
         {relatedSeats.length > 0 && (
           <Card padding="md" className="mt-8">
             <h3 className="text-lg font-bold text-text-main mb-4">
-              Other Races in {seat?.map_shapes?.name}
+              Other Races in {seatAreaName || "This Area"}
             </h3>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {relatedSeats.map((relatedSeat) => {
-                const relatedSeatSlug = buildSeatSlug(relatedSeat as any);
+              {relatedSeats.map((r) => {
+                const slug = buildSeatSlug({
+                  id: r.seat_id,
+                  role_title: r.role_title,
+                  map_shapes: { name: r.shape_name, properties: r.shape_properties },
+                });
+                const showShape = r.shape_name && r.shape_name !== seatAreaName;
                 return (
-                  <button
-                    key={relatedSeat.id}
-                    onClick={() => router.push(`/elections/seat/${relatedSeatSlug}`)}
-                    className="flex flex-col gap-2 p-3 rounded-lg border border-border-light/30 hover:border-primary/50 hover:bg-surface-hover transition-colors text-left cursor-pointer"
+                  <Link
+                    key={r.seat_id}
+                    href={`/elections/seat/${slug}`}
+                    className="flex flex-col gap-2 p-3 rounded-lg border border-border-light/30 hover:border-primary/50 hover:bg-surface-hover transition-colors"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-text-main text-sm">{relatedSeat.role_title}</p>
-                        <p className="text-xs text-text-muted mt-0.5">{relatedSeat.elections?.name}</p>
+                        <p className="font-semibold text-text-main text-sm">
+                          {r.role_title}
+                          {showShape ? ` — ${r.shape_name}` : ""}
+                        </p>
+                        <p className="text-xs text-text-muted mt-0.5">{r.election_name}</p>
                       </div>
                       <ArrowRight size={14} className="text-primary shrink-0 mt-0.5" />
                     </div>
-                    {relatedSeat.elections?.election_date && (
+                    {r.election_date && (
                       <div className="flex items-center gap-1 text-[11px] text-text-muted">
                         <Calendar size={11} />
-                        {new Date(relatedSeat.elections.election_date).toLocaleDateString("en-US", {
+                        {new Date(r.election_date + "T00:00:00").toLocaleDateString("en-US", {
                           month: "short",
                           day: "numeric",
                         })}
                       </div>
                     )}
-                  </button>
+                  </Link>
                 );
               })}
             </div>

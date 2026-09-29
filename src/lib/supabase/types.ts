@@ -3416,6 +3416,22 @@ export type Database = {
           shape_name: string
         }[]
       }
+      find_overlapping_open_seats: {
+        Args: { p_seat_id: string; p_min_overlap?: number }
+        Returns: {
+          boundary_type: string
+          election_date: string
+          election_id: string
+          election_name: string
+          election_status: string
+          map_shape_id: number
+          overlap: number
+          role_title: string
+          seat_id: string
+          shape_name: string
+          shape_properties: Json
+        }[]
+      }
       find_seat_id_by_short_hash: {
         Args: { short_hash: string }
         Returns: string

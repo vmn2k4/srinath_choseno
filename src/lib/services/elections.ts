@@ -747,20 +747,10 @@ export async function getActiveSeats(
   return q;
 }
 
-export async function getRelatedSeatsInBoundary(supabase: Client, mapShapeId: number | string, excludeSeatId?: string) {
-  await supabase.rpc("sync_election_status");
-  let query = supabase
-    .from("election_seats")
-    .select("id, role_title, map_shape_id, map_shapes(id, name, boundary_type, country, properties), elections(id, name, election_date, status)")
-    .eq("map_shape_id", mapShapeId)
-    .in("elections.status", ["nominations_open", "nominations_closed", "active"])
-    .order("role_title");
-
-  if (excludeSeatId) {
-    query = query.neq("id", excludeSeatId);
-  }
-
-  return query;
+// Open seats whose boundary overlaps this seat's (same municipality's
+// councillors/trustees, provincial ridings sitting inside it, and vice versa).
+export async function findOverlappingOpenSeats(supabase: Client, seatId: string, minOverlap = 0.5) {
+  return supabase.rpc("find_overlapping_open_seats", { p_seat_id: seatId, p_min_overlap: minOverlap });
 }
 
 export async function findOpenSeatsInContainer(supabase: Client, containerShapeId: number) {
