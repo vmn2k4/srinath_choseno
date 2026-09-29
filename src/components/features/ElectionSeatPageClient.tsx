@@ -1341,9 +1341,28 @@ export default function ElectionSeatPageClient({
             council/trustees, provincial ridings inside the city, ...) */}
         {relatedSeats.length > 0 && (
           <Card padding="md" className="mt-8">
-            <h3 className="text-lg font-bold text-text-main mb-4">
+            <h3 className="text-lg font-bold text-text-main mb-1">
               Other Races in {seatAreaName || "This Area"}
             </h3>
+            <p className="text-sm text-text-muted mb-4">
+              Several races can be on your ballot at once. Rate the candidates in each one.
+            </p>
+            <div className="mb-5 flex items-center justify-between gap-3 flex-wrap rounded-xl border-2 border-primary/40 bg-gradient-to-br from-primary/15 via-accent/10 to-primary/5 p-4">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="shrink-0 w-11 h-11 rounded-full bg-primary/20 flex items-center justify-center">
+                  <MapPin size={20} className="text-primary-light" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-text-main">Not sure which races are on your ballot?</p>
+                  <p className="text-xs text-text-muted mt-0.5">
+                    Find your district to see every race you can vote in, from mayor to MLA.
+                  </p>
+                </div>
+              </div>
+              <Button as={Link} href="/find-my-district" size="sm" className="shrink-0 gap-1.5">
+                <MapPin size={14} /> Find Your District
+              </Button>
+            </div>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {relatedSeats.map((r) => {
                 const slug = buildSeatSlug({
@@ -1351,7 +1370,6 @@ export default function ElectionSeatPageClient({
                   role_title: r.role_title,
                   map_shapes: { name: r.shape_name, properties: r.shape_properties },
                 });
-                const showShape = r.shape_name && r.shape_name !== seatAreaName;
                 return (
                   <Link
                     key={r.seat_id}
@@ -1361,8 +1379,7 @@ export default function ElectionSeatPageClient({
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-text-main text-sm">
-                          {r.role_title}
-                          {showShape ? ` — ${r.shape_name}` : ""}
+                          {r.shape_name ? `${r.role_title} of ${r.shape_name}` : r.role_title}
                         </p>
                         <p className="text-xs text-text-muted mt-0.5">{r.election_name}</p>
                       </div>
