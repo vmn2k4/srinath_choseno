@@ -739,7 +739,7 @@ export default function ElectionSeatPageClient({
                 {seat.elections?.status?.replace("_", " ") || "Active"}
               </Badge>
               <h2 className="text-lg font-bold text-text-main tracking-tight truncate">
-                {seat.role_title}
+                {seatAreaName ? `${seat.role_title} of ${seatAreaName}` : seat.role_title}
               </h2>
               <span className="text-xs text-text-muted truncate">
                 {seat.elections?.name}

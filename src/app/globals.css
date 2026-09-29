@@ -108,6 +108,13 @@
   body {
     @apply min-h-screen text-text-main antialiased font-sans m-0 p-0 box-border relative;
     background-color: var(--color-background);
+  }
+
+  /* animate-ping overlays scale to 2x and briefly poke past the viewport
+     edge, toggling a horizontal scrollbar that resizes the whole page.
+     clip (unlike hidden) creates no scroll container, so sticky still works. */
+  html {
+    overflow-x: clip;
     scrollbar-gutter: stable;
   }
 
