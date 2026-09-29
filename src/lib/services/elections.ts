@@ -747,6 +747,22 @@ export async function getActiveSeats(
   return q;
 }
 
+export async function getRelatedSeatsInBoundary(supabase: Client, mapShapeId: number | string, excludeSeatId?: string) {
+  await supabase.rpc("sync_election_status");
+  let query = supabase
+    .from("election_seats")
+    .select("id, role_title, map_shape_id, map_shapes(id, name, boundary_type, country, properties), elections(id, name, election_date, status)")
+    .eq("map_shape_id", mapShapeId)
+    .in("elections.status", ["nominations_open", "nominations_closed", "active"])
+    .order("role_title");
+
+  if (excludeSeatId) {
+    query = query.neq("id", excludeSeatId);
+  }
+
+  return query;
+}
+
 export async function findOpenSeatsInContainer(supabase: Client, containerShapeId: number) {
   return supabase.rpc("find_open_seats_in_container", { p_container_shape_id: containerShapeId });
 }

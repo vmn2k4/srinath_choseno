@@ -24,6 +24,7 @@ import {
   reviewCandidacyClaim,
   getCandidateIdsWithVideoAnswers,
   removeCandidate,
+  getRelatedSeatsInBoundary,
 } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { getProfileRole, uploadAvatarImage } from "@/lib/services/profile";
@@ -132,6 +133,8 @@ export default function ElectionSeatPageClient({
     }
     return "results";
   });
+  const [relatedSeats, setRelatedSeats] = useState<any[]>([]);
+  const [loadingRelatedSeats, setLoadingRelatedSeats] = useState(false);
 
   const handleSelectCandidate = (candidate: any) => {
     const candidateId = candidate.id;
@@ -321,6 +324,27 @@ export default function ElectionSeatPageClient({
   useEffect(() => {
     if (!authLoading && seatId) Promise.resolve().then(() => fetchAll());
   }, [user?.id, authLoading, seatId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    let isMounted = true;
+    if (!seat?.map_shape_id) return;
+
+    setLoadingRelatedSeats(true);
+    getRelatedSeatsInBoundary(supabase, seat.map_shape_id, seat.id)
+      .then(({ data }) => {
+        if (isMounted) {
+          setRelatedSeats((data as any[]) || []);
+          setLoadingRelatedSeats(false);
+        }
+      })
+      .catch(() => {
+        if (isMounted) setLoadingRelatedSeats(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [seat?.map_shape_id, seat?.id, supabase]);
 
   useEffect(() => {
     let isMounted = true;
@@ -1322,6 +1346,44 @@ export default function ElectionSeatPageClient({
               )}
             </div>
           )}
+
+        {/* Related Races in Same Boundary */}
+        {relatedSeats.length > 0 && (
+          <Card padding="md" className="mt-8">
+            <h3 className="text-lg font-bold text-text-main mb-4">
+              Other Races in {seat?.map_shapes?.name}
+            </h3>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {relatedSeats.map((relatedSeat) => {
+                const relatedSeatSlug = buildSeatSlug(relatedSeat as any);
+                return (
+                  <button
+                    key={relatedSeat.id}
+                    onClick={() => router.push(`/elections/seat/${relatedSeatSlug}`)}
+                    className="flex flex-col gap-2 p-3 rounded-lg border border-border-light/30 hover:border-primary/50 hover:bg-surface-hover transition-colors text-left cursor-pointer"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-text-main text-sm">{relatedSeat.role_title}</p>
+                        <p className="text-xs text-text-muted mt-0.5">{relatedSeat.elections?.name}</p>
+                      </div>
+                      <ArrowRight size={14} className="text-primary shrink-0 mt-0.5" />
+                    </div>
+                    {relatedSeat.elections?.election_date && (
+                      <div className="flex items-center gap-1 text-[11px] text-text-muted">
+                        <Calendar size={11} />
+                        {new Date(relatedSeat.elections.election_date).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </Card>
+        )}
       </div>
 
       {reelForCandidate && (
