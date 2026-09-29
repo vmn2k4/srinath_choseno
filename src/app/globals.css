@@ -108,6 +108,7 @@
   body {
     @apply min-h-screen text-text-main antialiased font-sans m-0 p-0 box-border relative;
     background-color: var(--color-background);
+    scrollbar-gutter: stable;
   }
 
   main {
