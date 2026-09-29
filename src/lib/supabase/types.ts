@@ -3420,6 +3420,7 @@ export type Database = {
         Args: { p_seat_id: string; p_min_overlap?: number }
         Returns: {
           boundary_type: string
+          candidate_count: number
           election_date: string
           election_id: string
           election_name: string

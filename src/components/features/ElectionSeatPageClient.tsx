@@ -1385,15 +1385,23 @@ export default function ElectionSeatPageClient({
                       </div>
                       <ArrowRight size={14} className="text-primary shrink-0 mt-0.5" />
                     </div>
-                    {r.election_date && (
-                      <div className="flex items-center gap-1 text-[11px] text-text-muted">
-                        <Calendar size={11} />
-                        {new Date(r.election_date + "T00:00:00").toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </div>
-                    )}
+                    <div className="flex items-center gap-3 flex-wrap text-[11px] text-text-muted">
+                      <span className="flex items-center gap-1 font-semibold text-text-secondary">
+                        <Users size={11} />
+                        {r.candidate_count > 0
+                          ? `${r.candidate_count} candidate${r.candidate_count === 1 ? "" : "s"} nominated`
+                          : "No candidates yet"}
+                      </span>
+                      {r.election_date && (
+                        <span className="flex items-center gap-1">
+                          <Calendar size={11} />
+                          {new Date(r.election_date + "T00:00:00").toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </span>
+                      )}
+                    </div>
                   </Link>
                 );
               })}
