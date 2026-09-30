@@ -5,6 +5,8 @@ import AdminSubNav from "./AdminSubNav";
 import {
   getAdminAnalyticsMetrics,
   getAdminDailyUserSignups,
+  getAdminSupportMetrics,
+  type SupportClickMetrics,
   type DailyUserSignupsGroup,
   type DailyUserSignup,
 } from "@/lib/services/analytics";
@@ -24,13 +26,17 @@ import {
   Check,
   Calendar,
   Filter,
+  Heart,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { getAnonymousSupportAdminBreakdown } from "@/lib/services/politicianWall";
 
 export default function AnalyticsAdminClient() {
   const supabase = createClient();
   const [metrics, setMetrics] = useState<any>(null);
   const [dailySignups, setDailySignups] = useState<DailyUserSignupsGroup[]>([]);
+  const [support, setSupport] = useState<SupportClickMetrics | null>(null);
+  const [topSupported, setTopSupported] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -44,10 +50,22 @@ export default function AnalyticsAdminClient() {
     if (isRefresh) setRefreshing(true);
     else setLoading(true);
 
-    const [resMetrics, resSignups] = await Promise.all([
+    const [resMetrics, resSignups, resSupport, resTop] = await Promise.all([
       getAdminAnalyticsMetrics(supabase),
       getAdminDailyUserSignups(supabase),
+      getAdminSupportMetrics(supabase),
+      getAnonymousSupportAdminBreakdown(supabase),
     ]);
+
+    if (resSupport.success) setSupport(resSupport.metrics);
+    if (resTop.data) {
+      setTopSupported(
+        [...(resTop.data as any[])]
+          .filter((r) => r.total_count > 0)
+          .sort((a, b) => b.total_count - a.total_count)
+          .slice(0, 10)
+      );
+    }
 
     if (resMetrics.success) {
       setMetrics(resMetrics.metrics);
@@ -231,6 +249,57 @@ export default function AnalyticsAdminClient() {
           </p>
         </Card>
       </div>
+
+      {/* Support button clicks (DB-backed; not tracked in GA4) */}
+      {support && (
+        <Card padding="lg" className="space-y-4">
+          <div>
+            <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+              <Heart size={20} className="text-primary" />
+              Support Clicks (Community Support)
+            </h2>
+            <p className="text-xs text-text-muted mt-1">
+              Support button activity on races, signed-in plus logged-out visitors. Counts current supports, so withdrawn ones are excluded.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {([
+              ["Today", support.today],
+              ["Last 7 days", support.d7],
+              ["Last 30 days", support.d30],
+              ["All time", support.allTime],
+            ] as const).map(([label, v]) => (
+              <div key={label} className="rounded-xl border border-border-light/20 bg-surface/50 p-3 space-y-1">
+                <span className="text-xs font-bold text-text-muted uppercase tracking-wider">{label}</span>
+                <p className="text-2xl font-bold text-text-main">
+                  {(v.authenticated + v.anonymous).toLocaleString()}
+                </p>
+                <p className="text-xs text-text-muted">
+                  {v.authenticated.toLocaleString()} signed-in · {v.anonymous.toLocaleString()} logged-out
+                </p>
+              </div>
+            ))}
+          </div>
+          {topSupported.length > 0 && (
+            <div className="space-y-1">
+              <h3 className="text-sm font-bold text-text-main">Most supported (all time)</h3>
+              <ul className="divide-y divide-border-light/20 text-sm">
+                {topSupported.map((r) => (
+                  <li key={r.politician_id} className="flex items-center justify-between py-1.5 gap-3">
+                    <span className="text-text-main truncate">
+                      {r.full_name}
+                      {r.political_party ? <span className="text-text-muted"> · {r.political_party}</span> : null}
+                    </span>
+                    <span className="text-text-muted shrink-0">
+                      <strong className="text-text-main">{r.total_count}</strong> ({r.authenticated_count} signed-in / {r.anonymous_count} logged-out)
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </Card>
+      )}
 
       {/* Daily User Signups & Email Audit Section */}
       <Card padding="lg" className="space-y-6">

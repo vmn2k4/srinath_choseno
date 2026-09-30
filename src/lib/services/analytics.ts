@@ -178,3 +178,51 @@ export async function getAdminDailyUserSignups(
   }
 }
 
+
+export type SupportClickMetrics = {
+  today: { authenticated: number; anonymous: number };
+  d7: { authenticated: number; anonymous: number };
+  d30: { authenticated: number; anonymous: number };
+  allTime: { authenticated: number; anonymous: number };
+};
+
+// "Support" button activity from both politician_supporters (signed-in) and
+// anonymous_supporters. Counts current rows, so a supporter who later
+// withdraws is no longer counted. Excludes is_test rows like the rest of the
+// admin analytics. Both tables are public-read, so no RPC is needed.
+export async function getAdminSupportMetrics(
+  supabase: Client
+): Promise<{ success: boolean; metrics: SupportClickMetrics; error?: string }> {
+  const empty = { authenticated: 0, anonymous: 0 };
+  const emptyMetrics: SupportClickMetrics = { today: empty, d7: empty, d30: empty, allTime: empty };
+  try {
+    const now = new Date();
+    const since = {
+      today: new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString(),
+      d7: new Date(now.getTime() - 7 * 86400000).toISOString(),
+      d30: new Date(now.getTime() - 30 * 86400000).toISOString(),
+      allTime: null as string | null,
+    };
+    const count = async (table: "politician_supporters" | "anonymous_supporters", from: string | null) => {
+      let q = supabase.from(table).select("politician_id", { count: "exact", head: true }).eq("is_test", false);
+      if (from) q = q.gte("created_at", from);
+      const { count: c, error } = await q;
+      if (error) throw error;
+      return c || 0;
+    };
+    const keys = ["today", "d7", "d30", "allTime"] as const;
+    const results = await Promise.all(
+      keys.map(async (k) => ({
+        authenticated: await count("politician_supporters", since[k]),
+        anonymous: await count("anonymous_supporters", since[k]),
+      }))
+    );
+    return {
+      success: true,
+      metrics: { today: results[0], d7: results[1], d30: results[2], allTime: results[3] },
+    };
+  } catch (err) {
+    console.error("Failed to fetch support metrics:", err);
+    return { success: false, error: err instanceof Error ? err.message : String(err), metrics: emptyMetrics };
+  }
+}
