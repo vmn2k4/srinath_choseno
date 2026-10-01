@@ -24,6 +24,13 @@ Professional email template for councillors with:
 - Emphasis on voting record and council representation
 - Same customization placeholders
 
+### `mla-candidate-interview.html`
+Invitation for BC provincial election (MLA) candidates to a free video interview, in person or self-recorded. Same design as `candidate-nominee.html`. Includes the 11 interview questions inline (copied from the `election_questions` rows for the 2026 BC Provincial Election — re-copy if those change). Loaded in `/admin/campaign` as **MLA Candidate Interview**. The printable questionnaire lives in `docs/candidate-outreach/`.
+
+**Placeholders:** `{{name}}`, `{{city}}` (put the candidate's riding here), `{{wall_slug}}` (required — the **View Your Choseno Profile** button links to `/wall/{{wall_slug}}`, which the send flow tracks), `{{claim_link}}` (the **Register & Upload Your Videos** button; generated per recipient at send time)
+
+**Also sent from the election seat page.** When a seat admin invites a candidate from an election seat page ("Search & Send Interview Invite" / "Invite Candidates to Claim"), the email comes from the `auth-send-email` Edge Function, not from `/admin/campaign`. Which email it sends is set per election by `elections.invite_email_template`; `bc_mla` (the 2026 BC Provincial Election) uses a copy of this design in `supabase/functions/auth-send-email/electionInviteTemplates.ts`, with the single-use claim link as the main button. Elections with no template set get the standard claim-invite email. Keep the copy in sync with this file when the wording changes. To add another election's email, add a builder to that file's `BUILDERS` and set the election's `invite_email_template` to its key.
+
 ## Sending emails
 
 ### The actual send tool: `/admin/campaign`

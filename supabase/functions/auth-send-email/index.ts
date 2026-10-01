@@ -54,6 +54,8 @@ interface EmailData {
   token_hash_new: string;
 }
 
+import { buildElectionInviteEmail } from "./electionInviteTemplates.ts";
+
 interface HookPayload {
   user: { email: string; user_metadata?: Record<string, unknown> };
   email_data: EmailData;
@@ -72,6 +74,11 @@ interface CandidateClaimContext {
   candidateName: string | null;
   roleTitle: string | null;
   boundaryName: string | null;
+  // Set only when the candidate's election has its own invite email
+  // (elections.invite_email_template); otherwise null and the standard
+  // claim-invite email below is sent, exactly as before.
+  electionInviteTemplate: string | null;
+  seatUrl: string | null;
 }
 
 // Brand colors, matched to the app: the wordmark's orange gradient
@@ -200,6 +207,14 @@ function trackedLink(url: string, trackingToken: string): string {
   return `${base}?token=${encodeURIComponent(trackingToken)}&link=${encoded}&redirect=${encoded}`;
 }
 
+// Mirrors src/lib/utils/slugs.ts (slugifyText / buildSeatSlug) for the common
+// case: <role>-<area>-<first 6 hex of seat id>. The seat route resolves by
+// that trailing hash, so a cosmetic difference in the text part still lands
+// on the right seat.
+function slugifyText(text: string): string {
+  return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
+}
+
 function buildEmail(
   emailData: EmailData,
   siteUrl: string,
@@ -211,6 +226,20 @@ function buildEmail(
   const verifyUrl = `${siteUrl}/auth/confirm?token_hash=${encodeURIComponent(token_hash)}&type=${encodeURIComponent(email_action_type)}${
     nextPath ? `&next=${encodeURIComponent(nextPath)}` : ""
   }`;
+
+  if (email_action_type === "invite" && candidateClaim?.electionInviteTemplate && candidateClaim.seatUrl) {
+    const custom = buildElectionInviteEmail(candidateClaim.electionInviteTemplate, {
+      siteUrl,
+      candidateName: candidateClaim.candidateName,
+      boundaryName: candidateClaim.boundaryName,
+      claimUrl: verifyUrl,
+      profileUrl: candidateClaim.seatUrl,
+      trackedLink: (url) => trackedLink(url, candidateClaim.trackingToken),
+      trackingPixel: trackingPixel(candidateClaim.trackingToken),
+    });
+    // null = unknown template key -> fall through to the standard email.
+    if (custom) return custom;
+  }
 
   if (email_action_type === "invite" && candidateClaim) {
     const who = candidateClaim.candidateName ? `<strong>${candidateClaim.candidateName}</strong>'s` : "your";
@@ -374,6 +403,8 @@ Deno.serve(async (req) => {
           let candidateName: string | null = null;
           let roleTitle: string | null = null;
           let boundaryName: string | null = null;
+          let electionInviteTemplate: string | null = null;
+          let seatUrl: string | null = null;
           const { data: candidateRow } = await admin
             .from("election_candidates")
             .select("politician_id, seat_id")
@@ -393,7 +424,7 @@ Deno.serve(async (req) => {
           if (candidateRow?.seat_id) {
             const { data: seatRow } = await admin
               .from("election_seats")
-              .select("role_title, map_shape_id")
+              .select("role_title, map_shape_id, election_id")
               .eq("id", candidateRow.seat_id)
               .maybeSingle();
             roleTitle = seatRow?.role_title || null;
@@ -405,8 +436,34 @@ Deno.serve(async (req) => {
                 .maybeSingle();
               boundaryName = shapeRow?.name || null;
             }
+            // Election-specific invite template. Its own try/catch: if this
+            // lookup fails we still send the standard claim email below
+            // rather than dropping to the generic "invite" copy.
+            try {
+              if (seatRow?.election_id) {
+                const { data: electionRow } = await admin
+                  .from("elections")
+                  .select("invite_email_template")
+                  .eq("id", seatRow.election_id)
+                  .maybeSingle();
+                electionInviteTemplate = electionRow?.invite_email_template || null;
+              }
+              const textPart = [slugifyText(roleTitle || "seat"), boundaryName ? slugifyText(boundaryName) : ""]
+                .filter(Boolean)
+                .join("-");
+              seatUrl = `${SITE_URL}/elections/seat/${textPart}-${candidateRow.seat_id.replace(/-/g, "").slice(0, 6)}`;
+            } catch (templateError) {
+              console.error("election invite template lookup failed, using standard claim email:", templateError);
+            }
           }
-          candidateClaim = { trackingToken: inviteRow.tracking_token, candidateName, roleTitle, boundaryName };
+          candidateClaim = {
+            trackingToken: inviteRow.tracking_token,
+            candidateName,
+            roleTitle,
+            boundaryName,
+            electionInviteTemplate,
+            seatUrl,
+          };
         }
       } catch (lookupError) {
         console.error("candidate claim lookup failed, sending generic invite copy:", lookupError);

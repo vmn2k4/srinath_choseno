@@ -1635,6 +1635,270 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
 </body>
 </html>`;
 
+const MLA_INTERVIEW_BODY = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #eef1f5;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            background-color: #ffffff;
+            padding: 16px 20px;
+            box-sizing: border-box;
+        }
+        .header {
+            margin-bottom: 32px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: #1a2332;
+        }
+        .intro {
+            font-size: 15px;
+            color: #666;
+            margin: 0 0 24px 0;
+        }
+        .highlight {
+            background-color: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+        .highlight-title {
+            font-weight: 600;
+            color: #1a2332;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+        .highlight p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .cta-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .cta-link:hover {
+            text-decoration: underline;
+        }
+        .section {
+            margin: 32px 0;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2332;
+            margin: 0 0 16px 0;
+        }
+        .section-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .features li {
+            padding: 8px 0 8px 24px;
+            position: relative;
+            font-size: 14px;
+        }
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        .ways-grid {
+            margin: 16px 0;
+            width: 100%;
+            display: block;
+        }
+        .way-box {
+            display: block !important;
+            width: 100% !important;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 0 0 12px 0;
+            background-color: #fafbfc;
+            box-sizing: border-box;
+            clear: both;
+        }
+        .way-box:last-child {
+            margin-bottom: 0;
+        }
+        .way-title {
+            font-weight: 600;
+            color: #1a2332;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+        .way-desc {
+            font-size: 13px;
+            color: #666;
+            margin: 0;
+        }
+        .signature {
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+        }
+        .founder-name {
+            font-weight: 600;
+            color: #1a2332;
+        }
+        .contact-links {
+            margin-top: 16px;
+            font-size: 13px;
+        }
+        .contact-links a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Your Free Video Interview for the 2026 BC Election</h1>
+            <p class="intro">Reach voters in {{city}} on Choseno before they vote on October 24</p>
+        </div>
+
+        <p style="font-size: 15px; margin: 0 0 24px 0;">Hi {{name}},</p>
+
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">This is Murugappan Valliyappan, founder of Choseno. We are a dedicated social network for politics, created right here in BC (Surrey), and we are interviewing candidates in the 2026 BC Provincial Election.</p>
+
+        <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
+            <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">Your Candidate Video Interview — 100% Free</p>
+            <p style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0 0 14px 0;">Choseno pages rank in the top 10 on Google when people search for candidates running for election. We will post your interview on our 2026 BC Provincial Election page so voters in {{city}} can watch you and understand who you are before they vote. <strong>It is completely free. It is 11 questions, 30 seconds each.</strong></p>
+            <div style="margin: 12px 0 16px 0;">
+                <a href="https://www.choseno.com/wall/{{wall_slug}}" class="cta-link" style="display: inline-block; background: #0284c7; color: #ffffff !important; font-weight: 700; font-size: 13.5px; padding: 9px 20px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35); margin: 0 8px 8px 0;">👉 View Your Choseno Profile</a>
+                <a href="{{claim_link}}" class="cta-link" style="display: inline-block; background: #ffffff; color: #0284c7 !important; font-weight: 700; font-size: 13.5px; padding: 8px 20px; border: 1px solid #0284c7; border-radius: 8px; text-decoration: none; margin: 0 0 8px 0;">Register &amp; Upload Your Videos</a>
+            </div>
+            <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #475569; border-top: 1px dashed #bae6fd; padding-top: 12px;">
+                <strong>See how voters find candidates:</strong>
+                <br>• <strong><a href="https://www.choseno.com/find-my-district" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Find Your District (Interactive Map) →</a></strong>
+                <br>• <strong><a href="https://www.choseno.com/elections/seat/u-s-representative-congressional-district-2-f35433" class="cta-link" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Sample Live Election Wall →</a></strong>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="section-title">How the Interview Works</p>
+            <div class="ways-grid" style="display: block; width: 100%; margin: 16px 0;">
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
+                    <p class="way-title">Meet &amp; Record In Person (Free)</p>
+                    <p class="way-desc">We can meet you and record your answers on video. Let us know your available time and place — in {{city}} or anywhere across the Lower Mainland. <a href="https://calendly.com/vmn2k4/30min" class="cta-link">Pick a time</a></p>
+                </div>
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
+                    <p class="way-title">Record It Yourself</p>
+                    <p class="way-desc">If a meeting does not work, record your answers on a phone or webcam and email the video to <a href="mailto:vijay86@gmail.com" class="cta-link">vijay86@gmail.com</a>. We will add it to your profile.</p>
+                </div>
+                <div class="way-box" style="display: block; width: 100%; margin: 0 0 0 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background-color: #fafbfc; box-sizing: border-box; clear: both;">
+                    <p class="way-title">Send Your Campaign Videos</p>
+                    <p class="way-desc">Send us your campaign videos and we will add them to your profile, or register using the button above and upload them yourself.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <p class="section-title">The Questions (30 Seconds Each)</p>
+            <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px 6px 16px; background-color: #fafbfc;">
+                <p class="way-desc" style="margin: 0 0 12px 0;">So you can prepare in advance, these are the 11 questions we will ask:</p>
+                <ol style="font-size: 14px; line-height: 1.55; color: #2c3e50; margin: 0 0 8px 0; padding-left: 22px;">
+                    <li style="margin-bottom: 10px;">What are your educational credentials, work history, experience, and key achievements that qualify you to be an MLA?</li>
+                    <li style="margin-bottom: 10px;">RTB dispute hearings take months, leaving rent unpaid and tenants facing bad-faith evictions. Will you establish a fast-track eviction process for non-payment of rent, or will you tie rent control to the unit instead of the tenant?</li>
+                    <li style="margin-bottom: 10px;">Provincial rules now require municipalities to allow multi-unit housing in single-family neighbourhoods. Will you roll back these density mandates until the province funds the schools and local infrastructure (such as school seats, water and sewer upgrades) needed to support growth, or keep them in place?</li>
+                    <li style="margin-bottom: 10px;">Recent court rulings and Land Act discussions have sparked fears over private property and fee-simple land titles. Will you vote to completely repeal DRIPA, amend it to explicitly protect private land, or keep it exactly as it is?</li>
+                    <li style="margin-bottom: 10px;">With emergency rooms facing rolling closures and hundreds of thousands lacking a family doctor, what immediate policy will you pass next month to attach families to a dedicated GP and end 10-hour ER waits without burning out existing staff?</li>
+                    <li style="margin-bottom: 10px;">Do you support involuntary treatment for individuals with severe, repeated overdoses and brain injuries, or should provincial tax dollars strictly support voluntary treatment and harm reduction?</li>
+                    <li style="margin-bottom: 10px;">Violent repeat offenders and open street crime continue to disrupt local business districts and transit hubs. How will your government use provincial prosecution directives and strict bail enforcement to keep repeat offenders off our streets?</li>
+                    <li style="margin-bottom: 10px;">Alberta and national industry groups want new crude export capacity to the Pacific coast. Will you vote to oppose any new oil pipelines and uphold the North Coast tanker ban, or will you support expanding pipeline corridors through BC to boost national revenue?</li>
+                    <li style="margin-bottom: 10px;">With BC facing an annual budget deficit in the billions of dollars, your party is promising costly new programs and tax relief. Name three specific provincial programs, ministries, or capital projects you will cut or defund to pay for your platform.</li>
+                    <li style="margin-bottom: 10px;">What specific local issue in this riding are you willing to take a public stand on and vote against your own party leadership?</li>
+                    <li style="margin-bottom: 10px;">What is your position on SOGI 123 in BC schools, and why? Explain whether you would keep, amend, or remove it.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Video Demo Section with Centered Play Button & Call to Action -->
+        <div class="section" style="margin: 28px 0;">
+            <div style="background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04); overflow: hidden; max-width: 520px; margin: 0 auto; text-align: center;">
+                <a href="https://www.youtube.com/watch?v=WJIpU9Cyoho" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; padding: 28px 20px 24px 20px; color: inherit;" title="Click to watch Choseno 2-minute product tour">
+                    
+                    <!-- Centered Small Brand Badge -->
+                    <div style="margin-bottom: 16px;">
+                        <span style="display: inline-block; padding: 3px 10px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 9999px;">
+                            <span style="display: inline-block; width: 14px; height: 14px; background: #0284c7; color: #ffffff; font-weight: 900; font-size: 9px; line-height: 14px; text-align: center; border-radius: 3px; margin-right: 4px; vertical-align: middle;">C</span>
+                            <span style="font-size: 11px; font-weight: 600; color: #64748b; vertical-align: middle;">Platform Tour</span>
+                        </span>
+                    </div>
+
+                    <!-- Centered Interactive Play Button -->
+                    <div style="margin: 0 auto 16px auto; width: 68px; height: 68px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 50%; box-shadow: 0 6px 20px -3px rgba(2, 132, 199, 0.4), 0 0 0 8px rgba(2, 132, 199, 0.1); text-align: center; line-height: 68px;">
+                        <span style="color: #ffffff; font-size: 26px; display: inline-block; margin-left: 5px; vertical-align: middle;">▶</span>
+                    </div>
+
+                    <!-- Subdued Header & Vision Statement -->
+                    <div style="color: #1e293b; font-size: 16px; font-weight: 700; letter-spacing: -0.2px; margin-bottom: 4px;">
+                        Watch 2-Minute Demo
+                    </div>
+                    <div style="color: #64748b; font-size: 12.5px; line-height: 1.4; max-width: 360px; margin: 0 auto 18px auto;">
+                        See how district mapping & candidate walls work for voters.
+                    </div>
+
+                    <!-- Prominent Blue Call To Action Button -->
+                    <div>
+                        <span style="display: inline-block; padding: 8px 20px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);">
+                            ▶ Play Video Tour
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <p class="section-title">Why I Built This</p>
+            <p class="section-content">
+                After 10+ years building core software at Snapchat, Qualcomm, and AMD, I moved to Surrey, BC to build a life and start my own company. Choseno was built to level the playing field for dedicated local candidates by helping voters discover and evaluate the actual person running, not just party machinery. With Canadian data staying in Canadian hands, it's a homegrown option alongside the platforms you already use.
+            </p>
+        </div>
+
+        <div class="signature">
+            <p style="margin: 0 0 16px 0;"><span class="founder-name">Murugappan Valliyappan</span><br>Founder, Choseno<br>Lower Mainland, BC</p>
+            <div class="contact-links">
+                672-355-2636 | <a href="mailto:vijay@choseno.com">vijay@choseno.com</a><br>
+                <a href="https://www.linkedin.com/in/muruvalliyappan/">LinkedIn</a> | <a href="https://www.choseno.com">choseno.com</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+
 export interface CampaignTemplatePreset {
   key: string;
   label: string;
@@ -1658,6 +1922,27 @@ export interface CampaignTemplatePreset {
 }
 
 export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
+  {
+    key: "mla_interview",
+    label: "MLA Candidate Interview",
+    badge: "MLA Interview",
+    icon: "🎥",
+    subject: "Free video interview for {{name}} — 2026 BC Provincial Election (Choseno)",
+    body: MLA_INTERVIEW_BODY,
+    requiredFields: ["name", "email", "city", "wall_slug"],
+    optionalFields: ["role"],
+    csvHeader: "name,email,city,wall_slug",
+    sampleData: "name,email,city,wall_slug\nJane Doe,jane@example.ca,Surrey-Cloverdale,jane-doe-mla-candidate\nSam Singh,sam@example.ca,Vancouver-Point Grey,sam-singh-mla-candidate",
+    defaultCampaignName: "2026 BC Provincial MLA Candidate Interviews",
+    description: "Invites BC provincial election candidates to a free video interview (in person or self-recorded), lists the 11 questions, and links their wall and registration. Put the riding in the city column.",
+    sampleRecipient: {
+      name: "Jane Doe",
+      email: "jane@example.ca",
+      role: "MLA Candidate",
+      city: "Surrey-Cloverdale",
+      wallSlug: "jane-doe-mla-candidate",
+    },
+  },
   {
     key: "candidate",
     label: "New Candidate Nominees",
