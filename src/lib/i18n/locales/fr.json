@@ -29,11 +29,11 @@
   },
   "home": {
     "badge": "La Voix de la Majorité Silencieuse",
-    "titleMain": "Évaluez vos Élus.",
-    "titleSub": "Comme Google Reviews, mais pour la Démocratie.",
-    "subtitle": "Un espace sûr et anonyme pour évaluer vos représentants locaux. Partagez votre vécu, lisez les avis de vos voisins et votez éclairé — sans haine, juste de la transparence.",
+    "titleMain": "Sachez qui est sur votre bulletin.",
+    "titleSub": "Des électeurs informés bâtissent une meilleure démocratie.",
+    "subtitle": "Tous les candidats de votre circonscription, au même endroit. Découvrez leur position sur chaque enjeu, puis soutenez-les et évaluez-les. Voter est votre devoir, faites-le en connaissance de cause.",
     "scopedTo": "Conversations de votre secteur sur",
-    "citizenCta": "Rejoindre la Mission",
+    "citizenCta": "Inscrivez-vous Gratuitement",
     "candidateCta": "Je me Présente",
     "openFeed": "Ouvrir mon Fil",
     "trustChips": {

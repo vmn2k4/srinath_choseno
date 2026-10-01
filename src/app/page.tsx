@@ -17,32 +17,32 @@ const BASE_URL = SITE_URL;
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Choseno — Rate Your Politician & See 2026 Candidate Reviews",
+  title: "Choseno — Know Who's On Your Ballot | 2026 Candidates & Politician Reviews",
   description:
-    "Rate your politicians' performance — like Google Reviews, but for democracy. We research restaurants before eating, why not politicians before voting? Find your district and rate your representatives today.",
+    "Know who's on your ballot. Find every candidate running in your district, then rate and review your representatives — like Google Reviews, but for democracy. Informed voters build better democracy.",
   alternates: { canonical: BASE_URL },
   openGraph: {
-    title: "Rate Your Politicians' Performance. Like Google Reviews, but for Democracy.",
+    title: "Know Who's On Your Ballot. Informed Voters Build Better Democracy.",
     description:
-      "We research restaurants before eating, why not politicians before voting? Locate yourself, find who holds office in your area, and start rating them today.",
+      "Find every candidate running in your district, see who holds office, and rate them — like Google Reviews, but for democracy.",
     url: BASE_URL,
     siteName: SITE_NAME,
     type: "website",
     images: [
       {
-        url: `${BASE_URL}/og-home.jpg`,
+        url: `${BASE_URL}/og-home-v2.jpg`,
         width: 1200,
         height: 630,
-        alt: "Choseno — Rate Your Politicians' Performance. Like Google Reviews, but for Democracy.",
+        alt: "Choseno — Know Who's On Your Ballot. Informed Voters Build Better Democracy.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rate Your Politicians' Performance. Like Google Reviews, but for Democracy.",
+    title: "Know Who's On Your Ballot. Informed Voters Build Better Democracy.",
     description:
-      "We research restaurants before eating, why not politicians before voting? Locate yourself, find who holds office in your area, and start rating them today.",
-    images: [`${BASE_URL}/og-home.jpg`],
+      "Find every candidate running in your district, see who holds office, and rate them — like Google Reviews, but for democracy.",
+    images: [`${BASE_URL}/og-home-v2.jpg`],
   },
 };
 

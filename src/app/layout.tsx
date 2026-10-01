@@ -69,10 +69,10 @@ export const metadata: Metadata = {
       "Empowering voters with verified civic journalism, real-time election coverage, and district-level politician accountability.",
     images: [
       {
-        url: `${SITE_URL}/og-home.jpg`,
+        url: `${SITE_URL}/og-home-v2.jpg`,
         width: 1200,
         height: 630,
-        alt: "Choseno — Rate Your Politicians' Performance. Like Google Reviews, but for Democracy.",
+        alt: "Choseno — Know who's on your ballot. Informed voters build better democracy.",
       },
     ],
   },
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     title: "Choseno — Rate Politicians, Track Candidates & Live Civic News",
     description:
       "Empowering voters with verified civic journalism, real-time election coverage, and district-level politician accountability.",
-    images: [`${SITE_URL}/og-home.jpg`],
+    images: [`${SITE_URL}/og-home-v2.jpg`],
   },
   verification: {
     other: {
