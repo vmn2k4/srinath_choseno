@@ -5,7 +5,7 @@ import { TrendingUp, Calendar, MapPin, Heart, Users, Share2, ExternalLink, Chevr
 import { Card, Avatar, Badge, Button, StarRating } from "@/components/primitives";
 import ShareMenu, { type ShareData } from "./ShareMenu";
 import PoliticianInlineRating from "./PoliticianInlineRating";
-import BioLinks from "./BioLinks";
+import { BioLinkIcons } from "./BioLinks";
 import { SITE_URL } from "@/lib/constants/site";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 import { parseBioLinks } from "@/lib/utils/bioLinks";
@@ -119,7 +119,7 @@ export default function ElectionResultsPanel({
       // links line (e.g. "Links: Website: ..." with no other prose) still
       // needs the toggle so those links can render as clickable chips
       // instead of sitting there as plain, un-clickable snippet text.
-      const hasMoreBio = bioWords.length > 6 || bioLinks.length > 0;
+      const hasMoreBio = bioWords.length > 6;
       return {
         candidate: c,
         name,
@@ -472,20 +472,14 @@ export default function ElectionResultsPanel({
               </div>
             </div>
 
-            {bioSnippet && (
-              <div className="-mt-1 pl-3 sm:pl-11 pr-3 text-xs text-text-muted">
+            {(bioSnippet || bioLinks.some((l) => l.href)) && (
+              <div className="-mt-1 pl-3 sm:pl-11 pr-3 text-xs text-text-muted flex flex-wrap items-center gap-x-2 gap-y-1">
                 {isBioExpanded ? (
                   <>
-                    {bioProse && <p className="whitespace-pre-line">{bioProse}</p>}
-                    {/* Real clickable links (parsed out of the bio's
-                        trailing "Website: ... | Facebook: ..." line) instead
-                        of dumping that whole pipe-separated line as inert
-                        text -- same BioLinks chip row used on the full
-                        candidate profile card. */}
-                    <BioLinks links={bioLinks} />
+                    {bioProse && <p className="whitespace-pre-line basis-full">{bioProse}</p>}
                   </>
                 ) : (
-                  <span>{bioSnippet}</span>
+                  bioSnippet && <span>{bioSnippet}</span>
                 )}
                 {/* Only worth a toggle when the bio actually runs past the
                     6-word snippet, or has links the snippet can't show as
@@ -499,12 +493,16 @@ export default function ElectionResultsPanel({
                       setExpandedBioId(isBioExpanded ? null : candidate.id);
                     }}
                     className={`font-semibold text-primary hover:text-primary-hover transition-colors ${
-                      isBioExpanded ? "mt-0.5" : "ml-1"
+                      ""
                     }`}
                   >
                     {isBioExpanded ? "Show less" : "Read more"}
                   </button>
                 )}
+                {/* Platform icons parsed from the bio's trailing
+                    "Website: ... | Facebook: ..." line -- always visible,
+                    each links straight to that account. */}
+                <BioLinkIcons links={bioLinks} />
               </div>
             )}
 

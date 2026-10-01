@@ -240,6 +240,18 @@ def find_officeholder_profile(db_url, map_shape_id, name):
     return out[0][0] if out else None
 
 
+def _fold(n):
+    import unicodedata
+    return unicodedata.normalize("NFKD", n).encode("ascii", "ignore").decode().lower().replace(".", "").split()
+
+
+def same_person_variant(name, have):
+    """Same seat already has this person under a spelling variant (accents, middle initial,
+    Reah/Rohini): same surname + same first initial. Conservative -- skips rather than duplicates."""
+    t = _fold(name)
+    return any((h := _fold(x)) and t and h[-1] == t[-1] and h[0][0] == t[0][0] for x in have)
+
+
 def build_plan(db_url):
     if not os.path.exists(CACHE_PATH):
         sys.exit("No cached data -- run `fetch` first.")
@@ -261,7 +273,7 @@ def build_plan(db_url):
         if seat_id is None:
             plan["unmatched_riding"].append(c)
             continue
-        if c["name"].lower() in existing.get(seat_id, set()):
+        if c["name"].lower() in existing.get(seat_id, set()) or same_person_variant(c["name"], existing.get(seat_id, set())):
             plan["already_present"].append(c)
             continue
         officeholder_profile = find_officeholder_profile(db_url, shape_id, c["name"])

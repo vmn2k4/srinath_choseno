@@ -1,0 +1,181 @@
+BC TOP 20 - NEUTRAL ELECTION POSTS (v2, for X Premium+)
+General voting day: Saturday Oct 17, 2026. Links verified against scripts/bc_municipal_candidates_2026.csv.
+Format: hook -> what's on the ballot -> links -> 2 hashtags. X shows a preview card for one link only.
+
+=== 1. Vancouver ===
+Vancouver votes Oct 17. On your ballot: Mayor, Council and School Board. See who's running and how they answer the issues, side by side.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-vancouver-deb744
+Council: https://www.choseno.com/elections/seat/councillor-vancouver-0d79fc
+School Board: https://www.choseno.com/elections/seat/school-trustee-sd39-vancouver-3dc5c6
+
+#vanpoli #bcpoli
+
+=== 2. Surrey ===
+Surrey votes Oct 17. Three races decide your city: Mayor, Council, School Board. Every candidate in one place, no spin.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-surrey-40c371
+Council: https://www.choseno.com/elections/seat/councillor-surrey-cb10fe
+School Board: https://www.choseno.com/elections/seat/school-trustee-surrey-79f384
+
+#Surrey #bcpoli
+
+=== 3. Burnaby ===
+Burnaby, do you know who's running in your city? Mayor, Council and School Board are all on the Oct 17 ballot. Look them up before you vote.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-burnaby-ada144
+Council: https://www.choseno.com/elections/seat/councillor-burnaby-f66d0c
+School Board: https://www.choseno.com/elections/seat/school-trustee-sd41-burnaby-78212b
+
+#Burnaby #bcpoli
+
+=== 4. Richmond ===
+Richmond votes Oct 17. School Board candidates are listed now, and Mayor and Council are being added as nominations are confirmed. Start with the trustee race and check back.
+
+School Board: https://www.choseno.com/elections/seat/school-trustee-sd38-richmond-c8ee4e
+
+#Richmond #bcpoli
+
+=== 5. Abbotsford ===
+Abbotsford votes Oct 17. Mayor, Council and School Board: see who's on your ballot and what they stand for.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-abbotsford-073d54
+Council: https://www.choseno.com/elections/seat/councillor-abbotsford-346244
+School Board: https://www.choseno.com/elections/seat/school-trustee-sd34-abbotsford-57ade7
+
+#Abbotsford #bcpoli
+
+=== 6. Coquitlam ===
+Coquitlam votes Oct 17. Before you mark a ballot, see every candidate for Mayor, Council and School Board in one place.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-coquitlam-621d99
+Council: https://www.choseno.com/elections/seat/councillor-coquitlam-8e2619
+School Board (SD43): https://www.choseno.com/elections/seat/school-trustee-sd43-coquitlam-5195b3
+
+#Coquitlam #bcpoli
+
+=== 7. Kelowna ===
+Kelowna votes Oct 17. Mayor, Council and School Board races are set. Compare candidates and decide for yourself.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-kelowna-e1e07f
+Council: https://www.choseno.com/elections/seat/councillor-kelowna-f86b30
+School Board (SD23): https://www.choseno.com/elections/seat/school-trustee-sd23-central-okanagan-028307
+
+#Kelowna #bcpoli
+
+=== 8. Langley Township ===
+Langley Township votes Oct 17. Mayor, Council and School Board: browse the full field for each race.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-langley-township-c9ec0d
+Council: https://www.choseno.com/elections/seat/councillor-langley-township-a57ca0
+School Board: https://www.choseno.com/elections/seat/school-trustee-langley-township-a02d7b
+
+#Langley #bcpoli
+
+=== 9. Saanich ===
+Saanich votes Oct 17. Mayor, Council and School Board candidates, all in one place. Read up, then vote.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-saanich-726be1
+Council: https://www.choseno.com/elections/seat/councillor-saanich-40f13c
+School Board: https://www.choseno.com/elections/seat/school-trustee-saanich-1aa0aa
+
+#yyjpoli #bcpoli
+
+=== 10. Delta ===
+Delta votes Oct 17. Three races, one ballot: Mayor, Council and School Board. See who's running.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-delta-9b448b
+Council: https://www.choseno.com/elections/seat/councillor-delta-ee50d0
+School Board (SD37): https://www.choseno.com/elections/seat/school-trustee-sd37-delta-d17fe1
+
+#Delta #bcpoli
+
+=== 11. Nanaimo ===
+Nanaimo votes Oct 17. Mayor, Council and School Board candidates are listed. Know your choices before election day.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-nanaimo-664c59
+Council: https://www.choseno.com/elections/seat/councillor-nanaimo-10cdc6
+School Board (SD68): https://www.choseno.com/elections/seat/school-trustee-sd68-nanaimo-ladysmith-f9a7dd
+
+#Nanaimo #bcpoli
+
+=== 12. Victoria ===
+Victoria votes Oct 17. See the candidates for Mayor, Council and School Board, and what each says on the issues.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-victoria-69ceed
+Council: https://www.choseno.com/elections/seat/councillor-victoria-a446fd
+School Board (SD61): https://www.choseno.com/elections/seat/school-trustee-sd61-greater-victoria-15aec5
+
+#yyjpoli #bcpoli
+
+=== 13. Maple Ridge ===
+Maple Ridge votes Oct 17. Mayor, Council and School Board are all on your ballot. Check every race before you go.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-maple-ridge-bff0f7
+Council: https://www.choseno.com/elections/seat/councillor-maple-ridge-2b9bb4
+School Board: https://www.choseno.com/elections/seat/school-trustee-maple-ridge-747d1e
+
+#MapleRidge #bcpoli
+
+=== 14. New Westminster ===
+New West votes Oct 17. Mayor, Council and School Board: find your candidates and compare them.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-new-westminster-3d5bd8
+Council: https://www.choseno.com/elections/seat/councillor-new-westminster-91963d
+School Board (SD40): https://www.choseno.com/elections/seat/school-trustee-sd40-new-westminster-9c2d24
+
+#NewWest #bcpoli
+
+=== 15. Prince George ===
+Prince George votes Oct 17. Mayor, Council and School Board candidates are listed. Read up before you vote.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-prince-george-ea1736
+Council: https://www.choseno.com/elections/seat/councillor-prince-george-febf40
+School Board (SD57): https://www.choseno.com/elections/seat/school-trustee-sd57-prince-george-5fdea7
+
+#PrinceGeorge #bcpoli
+
+=== 16. Port Coquitlam ===
+Port Coquitlam votes Oct 17. See who's running for Mayor and Council, plus School Board candidates for SD43.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-port-coquitlam-635c4b
+Council: https://www.choseno.com/elections/seat/councillor-port-coquitlam-a829d6
+School Board (SD43): https://www.choseno.com/elections/seat/school-trustee-sd43-coquitlam-5195b3
+
+#PoCo #bcpoli
+
+=== 17. North Vancouver (City) ===
+North Vancouver City votes Oct 17. Mayor, Council and School Board: every candidate in one place.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-north-vancouver-city-e17288
+Council: https://www.choseno.com/elections/seat/councillor-north-vancouver-city-1421cf
+School Board: https://www.choseno.com/elections/seat/school-trustee-north-vancouver-city-e4b505
+
+#NorthVan #bcpoli
+
+=== 18. West Vancouver ===
+West Vancouver votes Oct 17. Look up the candidates for Mayor, Council and School Board before you vote.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-west-vancouver-df12b8
+Council: https://www.choseno.com/elections/seat/councillor-west-vancouver-675639
+School Board (SD45): https://www.choseno.com/elections/seat/school-trustee-sd45-west-vancouver-3117da
+
+#WestVan #bcpoli
+
+=== 19. Mission ===
+Mission votes Oct 17. Mayor, Council and School Board races are on your ballot. See who's running.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-mission-106924
+Council: https://www.choseno.com/elections/seat/councillor-mission-0cba1b
+School Board (SD75): https://www.choseno.com/elections/seat/school-trustee-sd75-mission-86f4d5
+
+#MissionBC #bcpoli
+
+=== 20. Langley City ===
+Langley City votes Oct 17. Mayor, Council and School Board: browse every candidate and make an informed choice.
+
+Mayor: https://www.choseno.com/elections/seat/mayor-langley-city-80cf09
+Council: https://www.choseno.com/elections/seat/councillor-langley-city-56cc8f
+School Board: https://www.choseno.com/elections/seat/school-trustee-langley-city-d89b85
+
+#Langley #bcpoli
