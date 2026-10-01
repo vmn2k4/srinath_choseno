@@ -6,6 +6,7 @@ import { Card, Badge, EmptyState } from "@/components/primitives";
 import ElectionPartyCard from "@/components/features/ElectionPartyCard";
 import ElectionBreadcrumb from "@/components/features/ElectionBreadcrumb";
 import FaqSection from "@/components/features/FaqSection";
+import FindDistrictPromo from "@/components/features/FindDistrictPromo";
 import JsonLdScript from "@/components/features/JsonLdScript";
 import { summarizeParties } from "@/lib/utils/electionParties";
 import { clip, formatElectionDate, hubFacts, hubJsonLd, hubPath, partyPath } from "@/lib/utils/electionPartySeo";
@@ -88,6 +89,13 @@ export default async function ElectionPartiesPage({ params }: PageProps) {
           ))}
         </dl>
       </Card>
+
+      {roster.length > 0 && (
+        <FindDistrictPromo
+          title="Which of these candidates will be on your ballot?"
+          description="Find your district to see every race you can vote in, from mayor to MLA, and the candidates running in it."
+        />
+      )}
 
       {roster.length === 0 ? (
         <EmptyState icon={Users} title="No candidates yet" description="Candidates will appear here as nominations are confirmed." />

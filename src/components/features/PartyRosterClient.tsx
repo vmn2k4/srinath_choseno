@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, Swords, ArrowUpRight, Heart } from "lucide-react";
+import { Search, Swords, Flag, ArrowUpRight, Heart } from "lucide-react";
 import { Card, Avatar, Badge, Button, Input, EmptyState } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
 import { createClient } from "@/lib/supabase/client";
@@ -17,6 +17,8 @@ import {
   getMyAnonymousSupportedPoliticianIds,
 } from "@/lib/services/politicianWall";
 import { getAnonymousSupportSettings } from "@/lib/services/settings";
+import ShareMenu, { type ShareData } from "@/components/features/ShareMenu";
+import { SITE_URL } from "@/lib/constants/site";
 import { useAnonSupporterId } from "@/lib/utils/anonSupporter";
 import { partyTone, UNAFFILIATED_LABEL, type ChipCandidate, type PartyRace, type PartyView } from "@/lib/utils/electionParties";
 
@@ -141,6 +143,34 @@ function CandidateChip({ c, size = "sm", support, onHover }: ChipProps) {
   );
 }
 
+// Share payload for one race -- same ShareMenu and same post conventions as
+// the seat page's "Share This Race" (ElectionResultsPanel): no emojis,
+// candidate names as inline hashtags, and the real seat-page URL.
+function buildRaceShareData(race: PartyRace): ShareData {
+  const url = `${SITE_URL}${race.seatHref}`;
+  const area = race.areaName || race.roleTitle;
+  const cleanTag = (t: string) => t.replace(/[^a-zA-Z0-9]/g, "");
+  const everyone = [...race.mine, ...race.rivals];
+  const listed = everyone.slice(0, 6);
+  const hidden = everyone.length - listed.length;
+  const basePostText =
+    `Choseno — ${race.roleTitle} | ${area}\n\n` +
+    (everyone.length > 0
+      ? `On the ballot: ${listed.map((c) => `#${cleanTag(c.name)}`).join(", ")}${hidden > 0 ? ` & ${hidden} more` : ""}\n\n`
+      : "") +
+    "See the candidates, show your support and join the conversation:";
+  const hashtags = Array.from(new Set([cleanTag(race.roleTitle) || "Election", cleanTag(area), "Election", "Choseno"].filter(Boolean)));
+  const hashtagList = hashtags.map((t) => `#${t}`).join(" ");
+  return {
+    url,
+    basePostText,
+    hashtagList,
+    shareText: `${basePostText}\n\n${hashtagList}\n${url}`,
+    hashtags,
+    twitterUrl: `https://twitter.com/intent/tweet?text=${encodeURIComponent(basePostText)}&url=${encodeURIComponent(url)}&hashtags=${encodeURIComponent(hashtags.join(","))}`,
+  };
+}
+
 function RaceRow({
   race,
   partyName,
@@ -161,41 +191,58 @@ function RaceRow({
       padding="none"
       // Off-screen rows skip layout/paint -- every race is in the HTML for
       // crawlers, but a 500-row party page still scrolls smoothly.
-      className="overflow-hidden [content-visibility:auto] [contain-intrinsic-size:auto_110px]"
+      className="overflow-hidden [content-visibility:auto] [contain-intrinsic-size:auto_150px]"
     >
       <div className="flex">
         <div className={`w-1 shrink-0 ${tone.bar}`} aria-hidden />
-        <div className="grid min-w-0 flex-1 gap-4 p-4 md:grid-cols-[minmax(0,13rem)_minmax(0,1fr)_minmax(0,1.5fr)] md:items-center">
-          <div className="min-w-0">
+        <div className="min-w-0 flex-1 p-4">
+          {/* Heading row: race name + share button, role underneath */}
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 border-b border-border-light/30 pb-3">
             <Link
               href={race.seatHref}
-              className="group/seat inline-flex items-center gap-1 text-base font-bold text-text-main hover:text-primary"
+              className="group/seat inline-flex min-w-0 items-center gap-1 text-lg font-bold text-text-main hover:text-primary"
             >
               <span className="truncate">{race.areaName || race.roleTitle}</span>
-              <ArrowUpRight size={14} className="shrink-0 opacity-0 transition-opacity group-hover/seat:opacity-100" />
+              <ArrowUpRight size={15} className="shrink-0 opacity-0 transition-opacity group-hover/seat:opacity-100" />
             </Link>
-            <p className="text-xs text-text-muted">{race.roleTitle}</p>
+            <ShareMenu
+              articleId={race.seatId}
+              shareData={buildRaceShareData(race)}
+              triggerTitle={`Share the ${race.areaName || race.roleTitle} race`}
+              shareTitle={`${race.roleTitle} — ${race.areaName || race.roleTitle}`}
+              iconSize={15}
+              className="flex cursor-pointer items-center rounded-lg p-1.5 text-text-muted transition-colors hover:bg-primary/10 hover:text-primary"
+            />
+            <span className="text-xs text-text-muted sm:ml-auto">{race.roleTitle}</span>
           </div>
 
-          <div className="flex min-w-0 flex-wrap gap-2">
-            {race.mine.map((c) => (
-              <CandidateChip key={c.id} c={c} size="md" support={support} onHover={onHover} />
-            ))}
-          </div>
-
-          <div className="min-w-0">
-            <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-text-muted">
-              <Swords size={12} /> Facing
-            </p>
-            {race.rivals.length === 0 ? (
-              <p className="text-sm text-text-muted">No other candidates yet</p>
-            ) : (
+          {/* Body: this party's candidate on the left, who they face on the right */}
+          <div className="grid gap-4 pt-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] md:items-start">
+            <div className="min-w-0">
+              <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-text-muted">
+                <Flag size={12} /> Running
+              </p>
               <div className="flex flex-wrap gap-2">
-                {race.rivals.map((c) => (
-                  <CandidateChip key={c.id} c={c} support={support} onHover={onHover} />
+                {race.mine.map((c) => (
+                  <CandidateChip key={c.id} c={c} size="md" support={support} onHover={onHover} />
                 ))}
               </div>
-            )}
+            </div>
+
+            <div className="min-w-0">
+              <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-text-muted">
+                <Swords size={12} /> Facing
+              </p>
+              {race.rivals.length === 0 ? (
+                <p className="text-sm text-text-muted">No other candidates yet</p>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {race.rivals.map((c) => (
+                    <CandidateChip key={c.id} c={c} support={support} onHover={onHover} />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

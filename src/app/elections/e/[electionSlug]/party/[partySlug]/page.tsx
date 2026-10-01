@@ -6,6 +6,7 @@ import { Card, Badge, Avatar } from "@/components/primitives";
 import PartyRosterClient from "@/components/features/PartyRosterClient";
 import ElectionBreadcrumb from "@/components/features/ElectionBreadcrumb";
 import FaqSection from "@/components/features/FaqSection";
+import FindDistrictPromo from "@/components/features/FindDistrictPromo";
 import JsonLdScript from "@/components/features/JsonLdScript";
 import { buildPartyView, partyTone, summarizeParties } from "@/lib/utils/electionParties";
 import { clip, formatElectionDate, hubPath, partyFacts, partyJsonLd, partyPath } from "@/lib/utils/electionPartySeo";
@@ -120,6 +121,11 @@ export default async function ElectionPartyPage({ params }: PageProps) {
           </div>
         </div>
       </Card>
+
+      <FindDistrictPromo
+        title={`Which ${party.name} candidate is on your ballot?`}
+        description="Find your district to see every race you can vote in, from mayor to MLA, and the candidates running in it."
+      />
 
       <PartyRosterClient partyName={party.name} partyId={party.id} view={view} rivalHrefs={rivalHrefs} />
 
