@@ -19,9 +19,9 @@ import { encodeBase64 } from 'jsr:@std/encoding@1/base64';
 import { PartiesOgCard, type PartyCardRow } from './card.tsx';
 
 const BUCKET = 'election-og-images';
-// Candidate counts change while nominations are open, so this is shorter than
-// the seat card's 24h.
-const TTL_MS = 60 * 60 * 1000;
+// No TTL: the stored PNG is reused until the election's candidate/seat roster
+// changes. Triggers on election_candidates/election_seats stamp
+// election_og_state.changed_at; a PNG older than that is re-rendered.
 const SIZE = { width: 1200, height: 630 };
 // Bump whenever card.tsx's layout/copy changes: it's folded into the cached
 // object's path so a deploy invalidates every cached PNG at once.
@@ -66,22 +66,45 @@ Deno.serve(async (req) => {
 
   const supabaseAdmin = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
   const objectPath = `parties/${electionId}-${CARD_VERSION}.png`;
+  const refresh = new URL(req.url).searchParams.get('refresh') === '1';
 
+  const cached = await loadCached(supabaseAdmin, objectPath);
+  const changedAt = await getChangedAt(supabaseAdmin, electionId);
+  const isStale = !cached || (changedAt != null && cached.updatedAt < changedAt);
+
+  // Serving never renders when a stored PNG exists. A fresh render of the
+  // 200-candidate card sits near this worker's compute limit and fails
+  // (WORKER_RESOURCE_LIMIT, which can't be caught) a good share of the time,
+  // so a stale card is served right away with x-og-stale: 1 and the caller
+  // asks for ?refresh=1 out-of-band, retrying until a render lands.
+  if (!refresh && cached) {
+    return new Response(cached.file, {
+      headers: { ...CORS_HEADERS, 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=300', 'x-og-stale': isStale ? '1' : '0' },
+    });
+  }
+  if (refresh && !isStale) {
+    return new Response('fresh', { status: 200, headers: CORS_HEADERS });
+  }
+
+  // Either an explicit refresh of a stale/missing card, or the very first
+  // request for an election with nothing stored yet.
   try {
-    const cached = await tryServeCached(supabaseAdmin, objectPath);
-    if (cached) return cached;
-
+    const startedAt = Date.now();
     const png = await renderCard(supabaseAdmin, electionId);
     if (!png) return new Response('Election not found', { status: 404, headers: CORS_HEADERS });
 
-    // Best-effort cache write: on failure this request still returns a fresh image.
-    const { error: uploadError } = await supabaseAdmin.storage
-      .from(BUCKET)
-      .upload(objectPath, png, { contentType: 'image/png', upsert: true });
-    if (uploadError) console.error('parties-og-image upload failed:', uploadError.message);
-
+    // If the roster changed while rendering, this PNG is already stale: don't
+    // store it, so the next refresh re-renders.
+    const changedDuring = await getChangedAt(supabaseAdmin, electionId);
+    if (!changedDuring || changedDuring < startedAt) {
+      const { error: uploadError } = await supabaseAdmin.storage
+        .from(BUCKET)
+        .upload(objectPath, png, { contentType: 'image/png', upsert: true });
+      if (uploadError) console.error('parties-og-image upload failed:', uploadError.message);
+    }
+    if (refresh) return new Response('refreshed', { status: 200, headers: CORS_HEADERS });
     return new Response(png, {
-      headers: { ...CORS_HEADERS, 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=3600' },
+      headers: { ...CORS_HEADERS, 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=300', 'x-og-stale': '0' },
     });
   } catch (e) {
     console.error('parties-og-image generation failed:', e);
@@ -92,19 +115,24 @@ Deno.serve(async (req) => {
   }
 });
 
+async function getChangedAt(supabaseAdmin: any, electionId: string): Promise<number | null> {
+  const { data } = await supabaseAdmin
+    .from('election_og_state')
+    .select('changed_at')
+    .eq('election_id', electionId)
+    .maybeSingle();
+  return data?.changed_at ? new Date(data.changed_at).getTime() : null;
+}
+
 // Staleness comes from the bucket object's own updated_at (no cache table).
-async function tryServeCached(supabaseAdmin: any, objectPath: string): Promise<Response | null> {
+async function loadCached(supabaseAdmin: any, objectPath: string): Promise<{ file: Blob; updatedAt: number } | null> {
   const [dir, filename] = objectPath.split('/');
   const { data: listing } = await supabaseAdmin.storage.from(BUCKET).list(dir, { search: filename });
   const meta = listing?.find((f: any) => f.name === filename);
   if (!meta?.updated_at) return null;
-  if (Date.now() - new Date(meta.updated_at).getTime() >= TTL_MS) return null;
-
   const { data: file, error } = await supabaseAdmin.storage.from(BUCKET).download(objectPath);
   if (error || !file) return null;
-  return new Response(file, {
-    headers: { ...CORS_HEADERS, 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=3600' },
-  });
+  return { file, updatedAt: new Date(meta.updated_at).getTime() };
 }
 
 // Satori fetches <img> with no timeout, so photos are pre-fetched with a short
