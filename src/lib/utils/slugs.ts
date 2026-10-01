@@ -138,3 +138,31 @@ export function extractShapeIdFromSlug(slugOrId: string | null | undefined): str
   const match = slugOrId.match(/-?(\d+)$/);
   return match ? match[1] : slugOrId;
 }
+
+/**
+ * Build an election hub slug: 2026-bc-provincial-election-0832d7b5-e607-...
+ * Carries the full UUID so extractIdFromSlug() resolves it without a lookup.
+ */
+export function buildElectionSlug(election: { id?: string; name?: string }): string {
+  if (!election?.id) return "";
+  return `${election.name ? slugifyText(election.name) : "election"}-${election.id}`;
+}
+
+/** Slug segment used for candidates with no political party. */
+export const UNAFFILIATED_PARTY_SLUG = "unaffiliated";
+
+/**
+ * Build a party page slug within one election: new-democratic-party-ndp-12
+ * (political_parties.id is a plain bigint, appended as-is like boundary slugs).
+ */
+export function buildPartySlug(party: { id?: number | string | null; name?: string | null }): string {
+  if (party?.id == null) return UNAFFILIATED_PARTY_SLUG;
+  return `${party.name ? slugifyText(party.name) : "party"}-${party.id}`;
+}
+
+/** Returns the numeric party id from a buildPartySlug string, or null for the unaffiliated group. */
+export function extractPartyIdFromSlug(slug: string | null | undefined): number | null {
+  if (!slug || slug === UNAFFILIATED_PARTY_SLUG) return null;
+  const match = slug.match(/-?(\d+)$/);
+  return match ? Number(match[1]) : null;
+}

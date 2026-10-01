@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
   Vote,
+  Landmark,
   MapPin,
   Users,
   ChevronRight,
@@ -26,7 +27,7 @@ import {
 import InteractiveLocationPicker from "./InteractiveLocationPicker";
 import MissionRegisterCTA from "./MissionRegisterCTA";
 import { createClient } from "@/lib/supabase/client";
-import { buildSeatSlug } from "@/lib/utils/slugs";
+import { buildSeatSlug, buildElectionSlug } from "@/lib/utils/slugs";
 import { findBoundariesByPoint } from "@/lib/services/boundaries";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -436,6 +437,25 @@ export default function ElectionsPageClient({
         </div>
       ) : (
         <div className="order-2 lg:order-3 space-y-4">
+          {(() => {
+            const elections = new Map<string, { id: string; name: string }>();
+            seats.forEach((s) => {
+              if (s.elections?.id) elections.set(s.elections.id, { id: s.elections.id, name: s.elections.name });
+            });
+            if (elections.size === 0) return null;
+            return (
+              <div className="flex flex-wrap items-center gap-2 px-1">
+                <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-text-muted">
+                  <Landmark size={13} className="text-accent" /> Browse by party
+                </span>
+                {[...elections.values()].map((e) => (
+                  <Button key={e.id} as={Link} href={`/elections/e/${buildElectionSlug(e)}`} variant="outline" size="sm">
+                    {e.name}
+                  </Button>
+                ))}
+              </div>
+            );
+          })()}
           {(() => {
             const totalSeatsPages = Math.max(1, Math.ceil(seats.length / SEATS_PER_PAGE));
             const validSeatsPage = Math.min(seatsPage, totalSeatsPages);

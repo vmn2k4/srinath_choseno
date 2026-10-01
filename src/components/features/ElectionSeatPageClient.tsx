@@ -75,7 +75,7 @@ import {
   EmptyState,
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
-import { buildSeatSlug, buildCandidateSlug, buildPoliticianWallSlug, extractIdFromSlug } from "@/lib/utils/slugs";
+import { buildSeatSlug, buildCandidateSlug, buildElectionSlug, buildPoliticianWallSlug, extractIdFromSlug } from "@/lib/utils/slugs";
 import { trackElectionViewed } from "@/lib/analytics/events";
 import { SITE_URL } from "@/lib/constants/site";
 import MissionRegisterCTA from "./MissionRegisterCTA";
@@ -742,9 +742,17 @@ export default function ElectionSeatPageClient({
               <h2 className="text-lg font-bold text-text-main tracking-tight truncate">
                 {seatAreaName ? `${seat.role_title} of ${seatAreaName}` : seat.role_title}
               </h2>
-              <span className="text-xs text-text-muted truncate">
-                {seat.elections?.name}
-              </span>
+              {seat.elections?.id ? (
+                <Link
+                  href={`/elections/e/${buildElectionSlug(seat.elections)}`}
+                  title="See every party running in this election"
+                  className="text-xs text-text-muted hover:text-primary hover:underline truncate"
+                >
+                  {seat.elections.name} · All parties
+                </Link>
+              ) : (
+                <span className="text-xs text-text-muted truncate">{seat.elections?.name}</span>
+              )}
             </div>
             <div className="flex items-center gap-3 flex-wrap text-xs text-text-muted shrink-0">
               <span className="flex items-center gap-1" title={seat.map_shapes?.name}>

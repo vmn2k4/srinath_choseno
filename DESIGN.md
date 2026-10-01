@@ -61,6 +61,7 @@ Semantic roles, not hex values — every one of these is a CSS variable that cha
 - **`primary` / `primary-hover` / `primary-light` / `primary-lighter`**: the brand accent — CTAs, active nav pills, primary highlights.
 - **`accent` / `accent-hover`**: secondary brand tone — secondary buttons, tags, subtle indicators.
 - **`danger` / `warning` / `caution` / `success`** (+ `-light` / `-lighter` variants): semantic states, mapped onto Tailwind's built-in rose/amber/orange/emerald ramps. These stay constant across every theme — a warning is amber regardless of which brand color is active, since these carry meaning, not brand identity.
+- **`party-red/blue/orange/green/yellow/teal/purple/pink/slate`**: categorical party identity hues used on the per-party election pages. Constant across every theme (they identify a party, not the brand). Never hardcode a party color — `partyTone()` in `src/lib/utils/electionParties.ts` is the one place that maps a party name to a token, and spells the Tailwind classes out in full so they survive purging.
 - **`surface` / `surface-hover` / `surface-active` / `surface-elevated`**: container backgrounds, each a step "up" from the page.
 - **`background`**: the page canvas color, read by the ambient gradient layer (see below).
 - **`text-main` / `text-secondary` / `text-tertiary` / `text-muted` / `text-dark` / `text-darker`**: a full brightness ladder for text, from full-emphasis to barely-visible decorative icon tint.

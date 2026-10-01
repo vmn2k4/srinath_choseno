@@ -1,0 +1,116 @@
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { CalendarDays, Landmark, Users, Vote } from "lucide-react";
+import { Card, Badge, EmptyState } from "@/components/primitives";
+import ElectionPartyCard from "@/components/features/ElectionPartyCard";
+import ElectionBreadcrumb from "@/components/features/ElectionBreadcrumb";
+import FaqSection from "@/components/features/FaqSection";
+import JsonLdScript from "@/components/features/JsonLdScript";
+import { summarizeParties } from "@/lib/utils/electionParties";
+import { clip, formatElectionDate, hubFacts, hubJsonLd, hubPath, partyPath } from "@/lib/utils/electionPartySeo";
+import { SITE_URL } from "@/lib/constants/site";
+import { loadElection, STATUS_LABELS } from "./loadElection";
+
+export const revalidate = 300;
+
+interface PageProps {
+  params: Promise<{ electionSlug: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { electionSlug } = await params;
+  const data = await loadElection(electionSlug);
+  if (!data) return { title: "Election Not Found | Choseno", robots: { index: false } };
+
+  const { election, roster, seats } = data;
+  const parties = summarizeParties(roster);
+  const races = seats.length || new Set(roster.map((c) => c.seatId)).size;
+  const { summary } = hubFacts(election, parties, roster.length, races);
+  const title = `${election.name}: Parties, Candidates & Races | Choseno`;
+  const description = clip(summary);
+  const url = `${SITE_URL}${hubPath(election)}`;
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    // Nothing to index on an election with no candidates yet.
+    robots: roster.length === 0 ? { index: false, follow: true } : undefined,
+    openGraph: { title, description, url, siteName: "Choseno", type: "website", images: [{ url: `${SITE_URL}/og-elections.jpg`, width: 1200, height: 630, alt: title }] },
+    twitter: { card: "summary_large_image", title, description, images: [`${SITE_URL}/og-elections.jpg`] },
+  };
+}
+
+export default async function ElectionPartiesPage({ params }: PageProps) {
+  const { electionSlug } = await params;
+  const data = await loadElection(electionSlug);
+  if (!data) notFound();
+
+  const { election, roster, seats } = data;
+  const parties = summarizeParties(roster);
+  const namedCount = parties.filter((p) => p.id != null).length;
+  const hasParties = namedCount > 0;
+  const totalRaces = seats.length || new Set(roster.map((c) => c.seatId)).size;
+  const date = formatElectionDate(election.election_date);
+  const { summary, faqs } = hubFacts(election, parties, roster.length, totalRaces);
+
+  return (
+    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
+      {roster.length > 0 && <JsonLdScript data={hubJsonLd(election, parties, summary, faqs)} />}
+
+      <ElectionBreadcrumb items={[{ name: "Elections", href: "/elections" }, { name: election.name }]} />
+
+      <Card variant="hero" padding="lg" as="header">
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <Badge tone="primary">{STATUS_LABELS[election.status] || election.status}</Badge>
+          {date && (
+            <span className="inline-flex items-center gap-1.5 text-sm text-text-muted">
+              <CalendarDays size={14} /> <time dateTime={election.election_date || undefined}>{date}</time>
+            </span>
+          )}
+        </div>
+        <h1 className="font-display text-3xl sm:text-5xl font-bold text-text-main leading-tight">
+          {election.name}: parties &amp; candidates
+        </h1>
+        <p className="mt-3 max-w-3xl text-text-secondary leading-relaxed">{summary}</p>
+        <dl className="mt-6 grid grid-cols-3 gap-4 max-w-xl">
+          {[
+            { icon: Users, label: "Candidates", value: roster.length },
+            { icon: Landmark, label: "Parties", value: namedCount },
+            { icon: Vote, label: "Races", value: totalRaces },
+          ].map(({ icon: Icon, label, value }) => (
+            <div key={label}>
+              <dt className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-text-muted">
+                <Icon size={13} /> {label}
+              </dt>
+              <dd className="font-display text-3xl font-bold text-primary">{value.toLocaleString()}</dd>
+            </div>
+          ))}
+        </dl>
+      </Card>
+
+      {roster.length === 0 ? (
+        <EmptyState icon={Users} title="No candidates yet" description="Candidates will appear here as nominations are confirmed." />
+      ) : !hasParties ? (
+        <EmptyState
+          icon={Landmark}
+          title="No party affiliations for this election"
+          description="Candidates in this election are running without a listed party. Browse them by race instead."
+          action={
+            <Link href="/elections" className="text-sm font-semibold text-primary hover:underline">
+              Browse races
+            </Link>
+          }
+        />
+      ) : (
+        <section aria-label="Participating parties" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+          {parties.map((party) => (
+            <ElectionPartyCard key={party.slug} party={party} totalRaces={totalRaces} href={partyPath(election, party)} />
+          ))}
+        </section>
+      )}
+
+      {roster.length > 0 && <FaqSection faqs={faqs} heading={`${election.name} — frequently asked questions`} />}
+    </div>
+  );
+}

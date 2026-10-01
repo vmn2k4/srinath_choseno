@@ -2470,3 +2470,58 @@ news_article_screen.dart`) had drifted behind web on several fronts; brought cur
   readability fix on any narrow column again. Hero image position was also moved from above
   the headline to below it, again directly requested.
 
+## 2026-09-30: Per-party election pages (`/elections/e/[election]` and `.../party/[party]`)
+
+Every election now has a **party hub** and a **page per participating party**, so a voter can
+see everyone a party is running, where, and who they face in each race.
+
+- **Routes** (Server Components, `revalidate = 300`, cookie-free `createPublicClient()` like the
+  seat and boundary pages): `src/app/elections/e/[electionSlug]/page.tsx` (grid of parties:
+  candidate count, share of races contested, avatar peek) and
+  `.../party/[partySlug]/page.tsx` (header stats, "most often facing" rival parties, and a
+  per-race head-to-head list with the party's candidate beside every rival). A draft election is
+  invisible to the anon client by RLS and resolves to a 404. The hub's `e/` prefix keeps it clear
+  of the single-segment `[boundarySlug]` route.
+- **Data**: one new service query, `getElectionCandidatesWithParty()` (paginated, `!inner` seat
+  filter on `election_id`, `is_test` excluded outside dev), plus `getElectionById()`; the seat
+  list reuses `getElectionSeatsByElectionId()`. `loadElection.ts` dedupes these per request with
+  React `cache()` for `generateMetadata` + page. No migration.
+- **Pure logic** lives in `src/lib/utils/electionParties.ts`: flatten the roster, group by party,
+  build a party's races/uncontested ridings/rival counts. A literal "Independent" party row and a
+  missing party are merged into one "Independent / No party" group (slug `unaffiliated`). Party
+  slugs end in the numeric `political_parties.id` and resolve by that id, so a rename doesn't
+  break old links (`buildElectionSlug`/`buildPartySlug`/`extractPartyIdFromSlug` in `slugs.ts`).
+- **Colors**: parties get a stable hue from the new constant `--color-party-*` tokens
+  (`globals.css`, see DESIGN.md); known parties keep their familiar color (Conservative blue,
+  NDP orange, Green green, ...), the rest are picked by id.
+- **UI**: `ElectionPartyCard` (hub tile; whole tile clickable via a stretched title link, candidate
+  names are their own real links) and `PartyRosterClient` (search only). Serialized race data is
+  trimmed to the fields a chip renders.
+- **Support + bio on every candidate chip**: each chip carries the existing Heart "Support" button
+  and live supporter count -- same services and optimistic toggle as the seat page's Results poll
+  (`getPoliticianEngagementSummaries`, `addSupport`/`withdrawSupport`, and the anonymous variants
+  when anonymous support is on; counts include anonymous supporters). That toggle logic lives
+  inline in `ElectionSeatPageClient`, so `PartyRosterClient` repeats it rather than importing a
+  shared piece -- a candidate for extraction into one hook if a third place needs it. Hovering a
+  chip shows one fixed-position bio card (avatar, party, supporter count, bio clipped to 320 chars
+  by `toRosterCandidates`); a single page-level card is used because rows are
+  `content-visibility: auto` and would clip a per-chip popover.
+- **Entry points**: a "Browse by party" row on `/elections`, an "All parties" link in each seat
+  page header, and every hub + party page in `sitemap.ts`.
+
+### SEO design (same date)
+
+Built so a crawler gets the whole page, not a shell:
+- **Everything is in the server-rendered HTML.** All races and all "no candidate yet" ridings
+  are rendered (no "Show more" paging, no tabs); search just toggles `hidden`. Rows use
+  `content-visibility: auto` so a 500-race party still scrolls smoothly. The hub lists up to 6
+  real candidate-name links per party.
+- **Derived copy, not boilerplate.** `src/lib/utils/electionPartySeo.ts` builds the visible
+  summary paragraph, the visible FAQ, the meta description (`clip()` ends on a full sentence) and
+  the JSON-LD from the same roster numbers, so all four always agree.
+- **Structured data** (`JsonLdScript`): `BreadcrumbList` + `CollectionPage`/`ItemList` (parties on
+  the hub; up to 100 `Person` items on a party page) + `FAQPage`. FAQ answers are also rendered
+  visibly (`FaqSection`, native `<details>`), since FAQ markup is only valid for visible content.
+- **Crawl graph**: visible breadcrumbs, rival-party chips, and an "Other parties" link list on
+  every party page. Unknown/draft elections and unknown parties return `noindex`; an election
+  with zero candidates is `noindex, follow`.

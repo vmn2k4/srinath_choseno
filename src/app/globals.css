@@ -63,6 +63,19 @@
   --color-success: var(--color-emerald-500);
   --color-success-light: var(--color-emerald-300);
 
+  /* Party identity hues — categorical, constant across every theme (like the
+     semantic state colors above: they carry meaning, not brand). Assigned to
+     a party by name in src/lib/utils/electionParties.ts. */
+  --color-party-red: var(--color-red-500);
+  --color-party-blue: var(--color-blue-500);
+  --color-party-orange: var(--color-orange-500);
+  --color-party-green: var(--color-green-500);
+  --color-party-yellow: var(--color-yellow-400);
+  --color-party-teal: var(--color-teal-500);
+  --color-party-purple: var(--color-purple-500);
+  --color-party-pink: var(--color-pink-500);
+  --color-party-slate: var(--color-slate-400);
+
   /* Status/Notice text — semantic color for messages with good contrast
      Use for status alerts, notices, and information that needs to stand out */
   --color-status-text: var(--color-text-main);

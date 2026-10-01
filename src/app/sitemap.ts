@@ -1,7 +1,9 @@
 import { MetadataRoute } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { getPublishedNewsArticles, NEWS_CATEGORIES } from "@/lib/services/news";
-import { getActiveSeats, getCandidatesBySeatIds } from "@/lib/services/elections";
+import { getActiveSeats, getCandidatesBySeatIds, getElectionCandidatesWithParty } from "@/lib/services/elections";
+import { summarizeParties, toRosterCandidates } from "@/lib/utils/electionParties";
+import { hubPath, partyPath } from "@/lib/utils/electionPartySeo";
 import { getAllBlogPosts } from "@/lib/services/blogs";
 import { buildSeatSlug, buildCandidateSlug, buildBoundarySlug, buildPoliticianWallSlug } from "@/lib/utils/slugs";
 import { categoryToSlug } from "@/lib/utils/newsTaxonomy";
@@ -88,6 +90,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     id: string;
     role_title?: string;
     map_shape_id?: number;
+    elections?: { id?: string; name?: string } | null;
     map_shapes?: {
       id?: number;
       name?: string;
@@ -109,6 +112,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "weekly",
     priority: 0.65,
   }));
+
+  // One "parties in this election" hub per active election, plus one page
+  // per party that actually has candidates in it.
+  const electionsById = new Map<string, { id: string; name: string }>();
+  allSeatRows.forEach((s) => {
+    if (s.elections?.id && !electionsById.has(s.elections.id)) {
+      electionsById.set(s.elections.id, { id: s.elections.id, name: s.elections.name || "election" });
+    }
+  });
+  const electionPartyRoutes: MetadataRoute.Sitemap = (
+    await Promise.all(
+      Array.from(electionsById.values()).map(async (e) => {
+        const { data: rows } = await getElectionCandidatesWithParty(supabase, e.id);
+        const parties = summarizeParties(toRosterCandidates(rows || []));
+        if (parties.length === 0) return [];
+        return [
+          { url: `${baseUrl}${hubPath(e)}`, lastModified: new Date(), changeFrequency: "daily" as const, priority: 0.75 },
+          ...parties.map((p) => ({
+            url: `${baseUrl}${partyPath(e, p)}`,
+            lastModified: new Date(),
+            changeFrequency: "daily" as const,
+            priority: 0.7,
+          })),
+        ];
+      })
+    )
+  ).flat();
 
   let candidateRoutes: MetadataRoute.Sitemap = [];
   let seatRoutes: MetadataRoute.Sitemap = [];
@@ -175,6 +205,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...wallNewsArchiveRoutes,
     ...articleRoutes,
     ...boundaryRoutes,
+    ...electionPartyRoutes,
     ...seatRoutes,
     ...candidateRoutes,
   ];

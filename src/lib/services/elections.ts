@@ -32,6 +32,34 @@ export async function getElections(supabase: Client) {
   return supabase.from("elections").select("*").order("created_at", { ascending: false });
 }
 
+export async function getElectionById(supabase: Client, electionId: string) {
+  return supabase
+    .from("elections")
+    .select("id, name, election_date, status, nomination_close_date")
+    .eq("id", electionId)
+    .maybeSingle();
+}
+
+// Every candidate in one election with their seat and party -- the data
+// behind the per-party pages (/elections/e/[election]/party/[party]).
+// Paginated via fetchAllPages (a large election has >1000 candidates).
+// profiles joined via !inner so is_test rows drop out in production, same
+// as getCandidatesBySeatIds.
+export async function getElectionCandidatesWithParty(supabase: Client, electionId: string) {
+  return fetchAllPages((from, to) => {
+    let q = supabase
+      .from("election_candidates")
+      .select(
+        "id, seat_id, election_seats!inner(id, role_title, election_id, map_shapes(name, properties)), profiles!election_candidates_politician_id_fkey!inner(id, full_name, politician_profiles(avatar_url, bio, political_party_id, political_parties(id, name)))"
+      )
+      .eq("election_seats.election_id", electionId)
+      .order("id")
+      .range(from, to);
+    if (!isDevEnvironment()) q = q.eq("profiles.is_test", false);
+    return q;
+  });
+}
+
 export async function createElection(
   supabase: Client,
   {
