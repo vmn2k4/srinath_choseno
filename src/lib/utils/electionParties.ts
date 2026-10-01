@@ -104,13 +104,20 @@ const NAME_RULES: Array<[RegExp, keyof typeof PARTY_TONES]> = [
 ];
 const FALLBACK_HUES: Array<keyof typeof PARTY_TONES> = ["teal", "purple", "pink", "yellow", "blue", "green", "orange", "red"];
 
-export function partyTone(name: string | null | undefined, id?: number | null): PartyTone {
-  if (!name) return PARTY_TONES.slate;
+export type PartyToneKey = keyof typeof PARTY_TONES;
+
+/** Which hue a party gets. Exposed separately so non-CSS surfaces (the share image) can map it to a color. */
+export function partyToneKey(name: string | null | undefined, id?: number | null): PartyToneKey {
+  if (!name) return "slate";
   const lower = name.toLowerCase();
   const hit = NAME_RULES.find(([re]) => re.test(lower));
-  if (hit) return PARTY_TONES[hit[1]];
+  if (hit) return hit[1];
   const seed = id ?? [...lower].reduce((n, ch) => n + ch.charCodeAt(0), 0);
-  return PARTY_TONES[FALLBACK_HUES[Math.abs(seed) % FALLBACK_HUES.length]];
+  return FALLBACK_HUES[Math.abs(seed) % FALLBACK_HUES.length];
+}
+
+export function partyTone(name: string | null | undefined, id?: number | null): PartyTone {
+  return PARTY_TONES[partyToneKey(name, id)];
 }
 
 // ── Summaries ───────────────────────────────────────────────────────────
