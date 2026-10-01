@@ -242,6 +242,29 @@ type ConfirmTarget =
   | { kind: "candidate"; id: string; label: string }
   | { kind: "question"; id: string; label: string };
 
+// Click-to-play question video thumbnail. Deliberately NOT a native <video
+// controls> at this size -- that clips the browser's own "..." menu and has
+// no real full-screen affordance. Click opens the same full-screen 9:16
+// StoryViewerModal used everywhere else in the app.
+function QuestionVideoThumb({ url, onOpen, heightClass = "h-32" }: { url: string; onOpen: () => void; heightClass?: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className={`relative block shrink-0 rounded-lg overflow-hidden bg-black cursor-pointer group ${heightClass}`}
+      style={{ aspectRatio: "9 / 16" }}
+      title="Click to view full-screen"
+    >
+      <video src={url} muted playsInline preload="metadata" className="h-full w-full object-cover" />
+      <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors">
+        <span className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
+          <Play size={14} className="text-black ml-0.5" fill="currentColor" />
+        </span>
+      </span>
+    </button>
+  );
+}
+
 export default function ElectionsAdminClient() {
   const supabase = createClient();
   const { user } = useAuth();
@@ -1462,20 +1485,7 @@ export default function ElectionsAdminClient() {
                           else in the app. */}
                       <div className="space-y-1.5">
                         {q.question_video_url && (
-                          <button
-                            type="button"
-                            onClick={() => setPreviewVideoUrl(q.question_video_url)}
-                            className="relative block rounded-lg overflow-hidden bg-black max-h-32 cursor-pointer group"
-                            style={{ aspectRatio: "9 / 16", width: "auto" }}
-                            title="Click to view full-screen"
-                          >
-                            <video src={q.question_video_url} muted playsInline className="h-32 w-auto object-cover" />
-                            <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors">
-                              <span className="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
-                                <Play size={16} className="text-black ml-0.5" fill="currentColor" />
-                              </span>
-                            </span>
-                          </button>
+                          <QuestionVideoThumb url={q.question_video_url} onOpen={() => setPreviewVideoUrl(q.question_video_url)} />
                         )}
                         {showQuestionVideoUpload === q.id ? (
                           <VideoRecorder
@@ -1543,7 +1553,15 @@ export default function ElectionsAdminClient() {
                             </div>
                           )}
                         </div>
-                        <div className="flex items-center gap-1 shrink-0">
+                        <div className="flex items-start gap-3 shrink-0">
+                          {q.question_video_url && (
+                            <QuestionVideoThumb
+                              url={q.question_video_url}
+                              onOpen={() => setPreviewVideoUrl(q.question_video_url)}
+                              heightClass="h-28"
+                            />
+                          )}
+                          <div className="flex items-center gap-1">
                           <Button variant="icon" size="sm" onClick={() => startEditQuestion(q)}>
                             <Pencil size={14} />
                           </Button>
@@ -1557,6 +1575,7 @@ export default function ElectionsAdminClient() {
                           >
                             <Trash2 size={14} />
                           </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
