@@ -1,5 +1,6 @@
 "use client";
 
+import IntroVideoPlayer from "@/components/features/IntroVideoPlayer";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -591,7 +592,7 @@ export default function CandidateApplicationClient({
 
         {introVideoUrl && !showIntroRecorder && (
           <div className="space-y-2">
-            <video src={introVideoUrl} controls className="w-full max-h-72 rounded-xl bg-black" />
+            <IntroVideoPlayer url={introVideoUrl} className="w-full max-h-72 rounded-xl bg-black" />
             <Button variant="outline" size="sm" onClick={() => setShowIntroRecorder(true)} className="gap-1.5 text-xs">
               <RefreshCw size={14} /> Re-record Intro Video
             </Button>

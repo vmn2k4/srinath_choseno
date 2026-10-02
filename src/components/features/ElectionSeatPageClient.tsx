@@ -10,6 +10,7 @@ import ElectionInterviewTab from "./ElectionInterviewTab";
 import PlayInterviewReel from "./PlayInterviewReel";
 import SendInterviewInviteFlow from "./SendInterviewInviteFlow";
 import dynamic from "next/dynamic";
+import { parseYouTubeId } from "@/lib/utils/youtube";
 import StartCallFlow from "./StartCallFlow";
 import {
   getSeatById,
@@ -207,6 +208,8 @@ export default function ElectionSeatPageClient({
   const [addCandidateStatus, setAddCandidateStatus] = useState("");
   const [removingCandidateId, setRemovingCandidateId] = useState<string | null>(null);
   const [introVideoCandidateId, setIntroVideoCandidateId] = useState<string | null>(null);
+  const [introVideoMode, setIntroVideoMode] = useState<"upload" | "youtube">("upload");
+  const [youTubeInput, setYouTubeInput] = useState("");
   const [removeCandidateStatus, setRemoveCandidateStatus] = useState("");
 
   // Claim invites & review claim requests
@@ -704,6 +707,17 @@ export default function ElectionSeatPageClient({
     fetchAll();
   };
 
+  const handleAdminYouTubeSubmit = async (candidateId: string) => {
+    const id = parseYouTubeId(youTubeInput);
+    if (!id) {
+      setRemoveCandidateStatus("Error: Enter a valid YouTube link (watch, youtu.be, or shorts)");
+      return;
+    }
+    // Stored as the canonical watch URL; IntroVideoPlayer detects YouTube from it.
+    await handleAdminIntroVideoUploaded(candidateId, `https://www.youtube.com/watch?v=${id}`);
+    setYouTubeInput("");
+  };
+
   const handleReviewClaim = async (requestId: string, approve: boolean) => {
     setReviewingRequestId(requestId);
     const { error } = await reviewCandidacyClaim(supabase, requestId, approve);
@@ -1118,10 +1132,43 @@ export default function ElectionSeatPageClient({
                                   </div>
                                 </div>
                                 {introVideoCandidateId === c.id && (
-                                  <VideoRecorder
-                                    maxDuration={90}
-                                    onVideoUploaded={(url) => handleAdminIntroVideoUploaded(c.id, url)}
-                                  />
+                                  <div className="space-y-2">
+                                    <div className="flex gap-1.5">
+                                      {(["upload", "youtube"] as const).map((m) => (
+                                        <button
+                                          key={m}
+                                          type="button"
+                                          onClick={() => setIntroVideoMode(m)}
+                                          className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border cursor-pointer ${
+                                            introVideoMode === m
+                                              ? "border-primary bg-primary/10 text-primary-light"
+                                              : "border-border-light text-text-secondary"
+                                          }`}
+                                        >
+                                          {m === "upload" ? "Record / Upload" : "YouTube link"}
+                                        </button>
+                                      ))}
+                                    </div>
+                                    {introVideoMode === "upload" ? (
+                                      <VideoRecorder
+                                        maxDuration={90}
+                                        onVideoUploaded={(url) => handleAdminIntroVideoUploaded(c.id, url)}
+                                      />
+                                    ) : (
+                                      <div className="flex gap-1.5">
+                                        <input
+                                          type="url"
+                                          value={youTubeInput}
+                                          onChange={(e) => setYouTubeInput(e.target.value)}
+                                          placeholder="https://www.youtube.com/watch?v=..."
+                                          className="flex-1 min-w-0 rounded-lg border border-border-light bg-surface px-2.5 py-1.5 text-xs"
+                                        />
+                                        <Button size="sm" onClick={() => handleAdminYouTubeSubmit(c.id)}>
+                                          Save
+                                        </Button>
+                                      </div>
+                                    )}
+                                  </div>
                                 )}
                               </div>
                             );

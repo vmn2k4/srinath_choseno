@@ -1,5 +1,6 @@
 "use client";
 
+import IntroVideoPlayer from "./IntroVideoPlayer";
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -1181,11 +1182,7 @@ export default function CandidacyWall({
                   <Video size={13} className="text-accent" /> Introductory Campaign Video Pitch
                 </h3>
                 <div className="rounded-xl overflow-hidden border border-border-light/40 bg-black">
-                  <video
-                    src={candidate.intro_video_url}
-                    controls
-                    className="w-full max-h-64 object-contain"
-                  />
+                  <IntroVideoPlayer url={candidate.intro_video_url} className="w-full max-h-64 object-contain" />
                 </div>
               </div>
             )}

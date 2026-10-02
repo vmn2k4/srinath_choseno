@@ -1,5 +1,6 @@
 "use client";
 
+import IntroVideoPlayer from "./IntroVideoPlayer";
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -2231,7 +2232,7 @@ export default function ElectionsAdminClient() {
                                         <p className="text-[9px] text-text-muted uppercase font-bold tracking-wider mb-1 flex items-center gap-1">
                                           <Video size={11} /> Intro Video
                                         </p>
-                                        <video src={c.intro_video_url} controls className="w-full max-h-64 rounded-lg bg-black" />
+                                        <IntroVideoPlayer url={c.intro_video_url} />
                                       </div>
                                     ) : (
                                       <p className="text-text-muted italic">No intro video uploaded yet.</p>
