@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 import { cache } from "react";
 import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient";
 import { createPublicClient } from "@/lib/supabase/publicServer";
-import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
+import { getSeatById, getCandidatesBySeatIds, getOfficeHoldersForShape } from "@/lib/services/elections";
+import { buildRaceDescription, buildRaceParagraphs, longDate, type RaceFacts } from "@/lib/utils/seatRaceSeo";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import {
   buildSeatSlug,
@@ -56,8 +57,42 @@ const getSeatWithCandidates = cache(async (seatId: string) => {
     ((engagementRows as any[]) || []).map((r) => [r.politician_id, r.supporter_count || 0])
   );
 
-  return { seat, candidates, supporterCountByPolitician };
+  // Current office holder for this seat's boundary + role (the incumbent),
+  // used for the per-seat meta description and "About this race" copy.
+  const { data: holders } = seat?.map_shape_id
+    ? await getOfficeHoldersForShape(supabase, seat.map_shape_id)
+    : { data: [] as any[] };
+  const incumbentRow = ((holders as any[]) || []).find(
+    (h) => h.election_role_types?.role_title === seat?.role_title
+  );
+
+  return { seat, candidates, supporterCountByPolitician, incumbentRow };
 });
+
+function toRaceFacts(seat: any, candidates: any[], incumbentRow: any): RaceFacts {
+  return {
+    roleTitle: seat.role_title || "Electoral Seat",
+    boundaryName: seat.map_shapes?.name || "District",
+    electionName: seat.elections?.name || "2026 Election",
+    electionDate: seat.elections?.election_date,
+    candidates: candidates.map((c) => {
+      const pp = c.profiles?.politician_profiles;
+      const party = Array.isArray(pp?.political_parties) ? pp.political_parties[0] : pp?.political_parties;
+      return {
+        name: c.display_name || c.profiles?.full_name || "Candidate",
+        party: party?.name ?? null,
+        blurb: c.statement || pp?.bio || null,
+      };
+    }),
+    incumbent: incumbentRow
+      ? {
+          name: incumbentRow.full_name,
+          party: incumbentRow.political_parties?.name ?? null,
+          since: incumbentRow.holding_since ?? null,
+        }
+      : null,
+  };
+}
 
 // Sorts candidates by community-support count and returns the derived
 // numbers used in metadata, JSON-LD, and the AI-crawler text snapshot.
@@ -89,7 +124,7 @@ export async function generateMetadata({
   const { seatId } = await params;
   const { candidate: candidateId } = await searchParams;
 
-  const { seat, candidates, supporterCountByPolitician } = await getSeatWithCandidates(seatId);
+  const { seat, candidates, supporterCountByPolitician, incumbentRow } = await getSeatWithCandidates(seatId);
 
   if (!seat) {
     return {
@@ -98,7 +133,6 @@ export async function generateMetadata({
     };
   }
 
-  const { leader, leaderPct, isTie, tiedNames } = summarizeSupport((candidates as any[]) || [], supporterCountByPolitician);
 
   const selectedCandidate = candidateId
     ? (candidates as any[])?.find(
@@ -110,7 +144,6 @@ export async function generateMetadata({
 
   const roleTitle = seat.role_title || "Electoral Seat";
   const boundaryName = seat.map_shapes?.name || "District";
-  const electionName = seat.elections?.name || "2026 US Midterm Elections";
   const electionYear = seat.elections?.election_date?.slice(0, 4) || "2026";
   const candCount = (candidates as any[])?.length || 0;
 
@@ -137,28 +170,23 @@ export async function generateMetadata({
       ? ` Candidates include ${candidateListNames.join(", ")}${candCount > 3 ? ` & ${candCount - 3} others` : ""}.`
       : "";
 
-  const electionDateLabel = seat.elections?.election_date
-    ? new Date(seat.elections.election_date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
-    : null;
-  const supportFact =
-    leader && leaderPct !== null
-      ? ` ${leader.name} currently leads in community support (${leaderPct}%) on Choseno.`
-      : isTie && leaderPct !== null
-      ? ` ${tiedNames.join(" and ")} are tied in community support (${leaderPct}% each) on Choseno.`
-      : "";
-
-  const rawDesc = selectedCandidate?.statement
-    ? selectedCandidate.statement
-    : candidateListNames && candidateListNames.length > 0
-    ? `${roleTitle} candidates in ${boundaryName}: ${candidateListNames.join(", ")}.${supportFact} Election Day: ${electionDateLabel || "TBD"}.`
-    : `Who is running for ${roleTitle} in ${boundaryName}? Compare candidates, policy stances & voter ratings on Choseno.`;
-
-  const description = rawDesc.length > 155 ? `${rawDesc.slice(0, 152)}...` : rawDesc;
+  // Lead with the race, election, date and who is running for which party
+  // (the facts a searcher wants); the community-support figure stays in the
+  // page body, not the snippet. A selected candidate's own statement wins.
+  const description = selectedCandidate?.statement
+    ? selectedCandidate.statement.length > 155
+      ? `${selectedCandidate.statement.slice(0, 152)}...`
+      : selectedCandidate.statement
+    : buildRaceDescription(toRaceFacts(seat, (candidates as any[]) || [], incumbentRow));
 
   const seatSlug = buildSeatSlug(seat);
   const candSlug = selectedCandidate ? buildCandidateSlug(selectedCandidate) : candidateId;
 
-  const canonicalUrl = candidateId
+  // ?candidate= shows one candidate inside the seat view; their /candidacy/
+  // page is the canonical URL for that person (see the candidate route).
+  const canonicalUrl = selectedCandidate
+    ? `${BASE_URL}/candidacy/${candSlug}`
+    : candidateId
     ? `${BASE_URL}/elections/seat/${seatSlug}?candidate=${candSlug}`
     : `${BASE_URL}/elections/seat/${seatSlug}`;
 
@@ -197,15 +225,14 @@ export async function generateMetadata({
 export default async function ElectionSeatPage({ params }: SeatPageProps) {
   const { seatId } = await params;
 
-  const { seat, candidates, supporterCountByPolitician } = await getSeatWithCandidates(seatId);
+  const { seat, candidates, supporterCountByPolitician, incumbentRow } = await getSeatWithCandidates(seatId);
 
   const roleTitle = seat?.role_title || "Electoral Seat";
   const boundaryName = seat?.map_shapes?.name || "District";
   const electionDateRaw = seat?.elections?.election_date;
   const electionYear = electionDateRaw?.slice(0, 4) || "2026";
-  const electionDateLabel = electionDateRaw
-    ? new Date(electionDateRaw).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
-    : null;
+  // Formatted from the date string itself, not via Date (UTC parsing shifts it a day).
+  const electionDateLabel = longDate(electionDateRaw);
   const { ranked, leader, leaderPct, totalSupport, isTie, tiedNames } = summarizeSupport(
     (candidates as any[]) || [],
     supporterCountByPolitician
@@ -396,6 +423,19 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
         initialSeat={seat}
         initialCandidates={(candidates as any[]) || []}
       />
+
+      {/* Visible, server-rendered race summary: built from this seat's own
+          candidates, parties and incumbent so it differs page to page. */}
+      {seat && (
+        <section aria-labelledby="about-race-heading" className="px-4 lg:px-8 pb-16 max-w-4xl space-y-3 text-text-secondary leading-relaxed">
+          <h2 id="about-race-heading" className="font-display text-2xl font-bold text-text-main">
+            About the {roleTitle} race in {boundaryName}
+          </h2>
+          {buildRaceParagraphs(toRaceFacts(seat, candList, incumbentRow)).map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
+        </section>
+      )}
     </>
   );
 }

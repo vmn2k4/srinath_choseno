@@ -194,33 +194,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.95,
     }));
 
-    const seatMap = new Map(allSeatRows.map((s) => [s.id, s]));
-
-    candidateRoutes = candidateList.flatMap((c) => {
-      const candSlug = buildCandidateSlug(c);
-      const parentSeat = c.seat_id ? seatMap.get(c.seat_id) : null;
-      const seatSlug = parentSeat ? buildSeatSlug(parentSeat) : null;
-
-      const routes: MetadataRoute.Sitemap = [
-        {
-          url: `${baseUrl}/candidacy/${candSlug}`,
-          lastModified: new Date(),
-          changeFrequency: "weekly",
-          priority: 0.8,
-        },
-      ];
-
-      if (seatSlug) {
-        routes.push({
-          url: `${baseUrl}/elections/seat/${seatSlug}/candidate/${candSlug}`,
-          lastModified: new Date(),
-          changeFrequency: "weekly",
-          priority: 0.9,
-        });
-      }
-
-      return routes;
-    });
+    // One URL per candidate: /candidacy/. The seat-view route
+    // (/elections/seat/.../candidate/...) declares it as its canonical, so
+    // listing both only splits crawl effort across duplicates.
+    candidateRoutes = candidateList.map((c) => ({
+      url: `${baseUrl}/candidacy/${buildCandidateSlug(c)}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    }));
   }
 
   return [

@@ -13,7 +13,8 @@ import {
 } from "@/lib/services/elections";
 import BoundaryDirectoryClient from "@/components/features/BoundaryDirectoryClient";
 import type { BranchHolderNode, RepresentationBranch } from "@/components/features/RepresentationBranchTree";
-import { buildBoundarySlug, buildSeatSlug, extractShapeIdFromSlug } from "@/lib/utils/slugs";
+import { buildBoundarySlug, buildSeatSlug, buildCandidateSlug, extractShapeIdFromSlug } from "@/lib/utils/slugs";
+import { buildRaceDescription, partyShort, shortDate } from "@/lib/utils/seatRaceSeo";
 import { Card, Badge } from "@/components/primitives";
 import { SITE_URL } from "@/lib/constants/site";
 
@@ -48,6 +49,43 @@ const loadShape = cache(async (boundarySlug: string) => {
   return { supabase, shape };
 });
 
+type RaceSeat = {
+  id: string;
+  role_title: string;
+  elections?: { name?: string; election_date?: string } | null;
+};
+type RaceCandidateRow = {
+  id: string;
+  seat_id: string;
+  display_name?: string;
+  profiles?: { full_name?: string; politician_profiles?: { political_parties?: unknown } | null } | null;
+};
+
+// Active seats + their candidates for a boundary. Shared by generateMetadata
+// (candidate names in the description) and the page body (the candidate list),
+// deduped via cache() so it's one set of queries per request.
+const loadRaces = cache(async (shapeId: number) => {
+  const supabase = await createPublicClient();
+  const { data: seats } = await getActiveSeatsByShapeIds(supabase, [shapeId]);
+  const seatRows = (seats || []) as unknown as RaceSeat[];
+  const seatIds = seatRows.map((s) => s.id);
+  const { data: candidateRows } = seatIds.length
+    ? await getCandidatesBySeatIds(supabase, seatIds)
+    : { data: [] as RaceCandidateRow[] };
+  const candidatesBySeat = new Map<string, RaceCandidateRow[]>();
+  ((candidateRows || []) as unknown as RaceCandidateRow[]).forEach((c) => {
+    candidatesBySeat.set(c.seat_id, [...(candidatesBySeat.get(c.seat_id) || []), c]);
+  });
+  return { seatRows, candidatesBySeat };
+});
+
+const candidateName = (c: RaceCandidateRow) => c.display_name || c.profiles?.full_name || "Candidate";
+const candidateParty = (c: RaceCandidateRow) => {
+  const pp = c.profiles?.politician_profiles?.political_parties;
+  const party = (Array.isArray(pp) ? pp[0] : pp) as { name?: string } | null | undefined;
+  return party?.name ?? null;
+};
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { boundarySlug } = await params;
   const { shape } = await loadShape(boundarySlug);
@@ -57,7 +95,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const title = `${shape.name} 2026 Elections — Candidates, Reps & Voter Ratings | Choseno`;
-  const description = `Who represents you in ${shape.name}? View all 2026 ${shape.boundary_type} candidates, your current elected officials, constituent ratings and real voter feedback on Choseno.`;
+  const { seatRows, candidatesBySeat } = await loadRaces(shape.id);
+  const withCandidates = seatRows.filter((s) => (candidatesBySeat.get(s.id) || []).length > 0);
+  // With a live race, lead with who is running (what people search for);
+  // otherwise fall back to the generic directory description.
+  let description = `Who represents you in ${shape.name}? View all 2026 ${shape.boundary_type} candidates, your current elected officials, constituent ratings and real voter feedback on Choseno.`;
+  if (withCandidates.length === 1) {
+    const seat = withCandidates[0];
+    description = buildRaceDescription({
+      roleTitle: seat.role_title,
+      boundaryName: shape.name,
+      electionName: seat.elections?.name || "2026 Election",
+      electionDate: seat.elections?.election_date,
+      candidates: (candidatesBySeat.get(seat.id) || []).map((c) => ({ name: candidateName(c), party: candidateParty(c) })),
+    });
+  } else if (withCandidates.length > 1) {
+    const roles = withCandidates
+      .map((s) => `${s.role_title} (${(candidatesBySeat.get(s.id) || []).length})`)
+      .join(", ");
+    const date = shortDate(withCandidates[0].elections?.election_date);
+    const text = `${shape.name} 2026 election candidates: ${roles}${date ? `, voting ${date}` : ""}. Parties, bios and voter ratings on Choseno.`;
+    description = text.length > 160 ? `${text.slice(0, 157).replace(/\s+\S*$/, "")}...` : text;
+  }
   const canonicalUrl = `${BASE_URL}/elections/${buildBoundarySlug(shape)}`;
 
   return {
@@ -95,22 +154,10 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
 
   // Seats/candidates and the primary branch's office holders don't depend
   // on each other -- run concurrently instead of one after another.
-  const [{ containers, seatRows, candidateCountBySeat }, primaryBranch] = await Promise.all([
+  const [{ containers, seatRows, candidatesBySeat }, primaryBranch] = await Promise.all([
     (async () => {
-      const [{ data: containers }, { data: seats }] = await Promise.all([
-        getShapeContainers(supabase, shape.id),
-        getActiveSeatsByShapeIds(supabase, [shape.id]),
-      ]);
-      const seatRows = (seats || []) as Array<{ id: string; role_title: string }>;
-      const seatIds = seatRows.map((s) => s.id);
-      const { data: candidateRows } = seatIds.length
-        ? await getCandidatesBySeatIds(supabase, seatIds)
-        : { data: [] as { seat_id: string }[] };
-      const candidateCountBySeat = new Map<string, number>();
-      (candidateRows || []).forEach((c) => {
-        candidateCountBySeat.set(c.seat_id, (candidateCountBySeat.get(c.seat_id) || 0) + 1);
-      });
-      return { containers, seatRows, candidateCountBySeat };
+      const [{ data: containers }, races] = await Promise.all([getShapeContainers(supabase, shape.id), loadRaces(shape.id)]);
+      return { containers, ...races };
     })(),
     // Primary branch: whichever hierarchy the boundary being viewed itself
     // belongs to (a Federal riding page always shows Prime Minister → MP, a
@@ -120,6 +167,7 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
     resolveRepresentationBranch(supabase, shape as ShapeRow),
   ]);
 
+  const candidateCountBySeat = new Map(Array.from(candidatesBySeat, ([id, rows]) => [id, rows.length]));
   const branches: RepresentationBranch[] = [primaryBranch as RepresentationBranch];
 
   const containerList = (containers || []) as Array<{ map_shapes?: { id?: number; name?: string; boundary_type?: string } | null }>;
@@ -493,19 +541,50 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {seatRows.map((seat) => (
-              <Link
-                key={seat.id}
-                href={`/elections/seat/${buildSeatSlug({ id: seat.id, role_title: seat.role_title, map_shapes: { name: shape.name, properties: shape.properties } })}`}
-                className="flex items-center justify-between gap-2 p-4 rounded-xl bg-surface hover:bg-orange-500/15 border border-orange-500/20 hover:border-orange-500/40 shadow-sm hover:shadow-md transition-all text-sm"
-              >
-                <span className="font-semibold text-text-main">{seat.role_title}</span>
-                <span className="text-orange-700 font-bold flex items-center gap-1 text-xs shrink-0">
-                  {candidateCountBySeat.get(seat.id) || 0} Candidate{(candidateCountBySeat.get(seat.id) || 0) === 1 ? "" : "s"}
-                  <ArrowRight size={13} />
-                </span>
-              </Link>
-            ))}
+            {seatRows.map((seat) => {
+              const seatCandidates = candidatesBySeat.get(seat.id) || [];
+              const seatHref = `/elections/seat/${buildSeatSlug({ id: seat.id, role_title: seat.role_title, map_shapes: { name: shape.name, properties: shape.properties } })}`;
+              const CANDIDATE_LIST_CAP = 15;
+              return (
+                <div key={seat.id} className="rounded-xl bg-surface border border-orange-500/20 shadow-sm text-sm">
+                  <Link
+                    href={seatHref}
+                    className="flex items-center justify-between gap-2 p-4 rounded-t-xl hover:bg-orange-500/15 transition-all"
+                  >
+                    <span className="font-semibold text-text-main">{seat.role_title}</span>
+                    <span className="text-orange-700 font-bold flex items-center gap-1 text-xs shrink-0">
+                      {seatCandidates.length} Candidate{seatCandidates.length === 1 ? "" : "s"}
+                      <ArrowRight size={13} />
+                    </span>
+                  </Link>
+                  {/* Plain links to each candidate: names are what people search
+                      for, and this is a direct path from the ward/riding page
+                      to every candidate page. */}
+                  {seatCandidates.length > 0 && (
+                    <ul className="px-4 pb-4 space-y-1 text-text-secondary">
+                      {seatCandidates.slice(0, CANDIDATE_LIST_CAP).map((c) => {
+                        const party = partyShort(candidateParty(c));
+                        return (
+                          <li key={c.id}>
+                            <Link href={`/candidacy/${buildCandidateSlug(c)}`} className="text-primary hover:underline">
+                              {candidateName(c)}
+                            </Link>
+                            {party && <span className="text-text-muted"> — {party}</span>}
+                          </li>
+                        );
+                      })}
+                      {seatCandidates.length > CANDIDATE_LIST_CAP && (
+                        <li>
+                          <Link href={seatHref} className="text-text-muted hover:underline">
+                            + {seatCandidates.length - CANDIDATE_LIST_CAP} more candidates
+                          </Link>
+                        </li>
+                      )}
+                    </ul>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </Card>
       )}

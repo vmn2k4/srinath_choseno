@@ -13,7 +13,7 @@ const res = await fetch(url, { headers: { "User-Agent": "Googlebot" } });
 if (!res.ok) throw new Error(`sitemap fetch failed: ${res.status}`);
 const locs = [...(await res.text()).matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
 const seatUrls = locs.filter((u) => u.includes("/elections/seat/") && !u.includes("/candidate/")).length;
-const candidateUrls = locs.filter((u) => u.includes("/candidate/")).length;
+const candidateUrls = locs.filter((u) => u.includes("/candidacy/")).length;
 const hubUrls = locs.filter((u) => /\/elections\/e\/[^/]+$/.test(u)).length;
 
 // PostgREST caps every response at 1,000 rows, so page through everything.
@@ -49,7 +49,7 @@ const { data: elections } = await sb.from("elections").select("id").in("status",
 
 const rows = [
   ["seat pages", seatUrls, seatsWithCandidates.size],
-  ["seat-candidate pages", candidateUrls, candidates],
+  ["candidate pages (/candidacy/)", candidateUrls, candidates],
   ["election hubs (>=)", hubUrls, 1],
 ] as const;
 let bad = false;

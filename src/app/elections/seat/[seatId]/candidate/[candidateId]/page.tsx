@@ -5,6 +5,7 @@ import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient
 import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
 import { buildSeatSlug, buildCandidateSlug, extractIdFromSlug } from "@/lib/utils/slugs";
+import { buildCandidateDescription } from "@/lib/utils/seatRaceSeo";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -60,11 +61,26 @@ export async function generateMetadata({
     ? `${candidateName} (${seat.role_title}, ${seat.map_shapes?.name || "District"}) — Voter Ratings & Stances`
     : `${seat.role_title} Candidates — ${seat.map_shapes?.name || "Electoral Seat"} | Choseno`;
 
-  const description = selectedCandidate?.statement
-    ? `${selectedCandidate.statement.slice(0, 140)} — See voter ratings & constituent discussion on Choseno.`
-    : `What do voters think of ${candidateName || "this candidate"}? Read constituent feedback, policy stances, and ratings for ${seat.role_title} on Choseno.`;
+  const pp = selectedCandidate?.profiles?.politician_profiles;
+  const party = Array.isArray(pp?.political_parties) ? pp.political_parties[0] : pp?.political_parties;
+  const description = buildCandidateDescription({
+    name: candidateName || "This candidate",
+    roleTitle: seat.role_title,
+    boundaryName: seat.map_shapes?.name,
+    party: party?.name ?? null,
+    electionName: seat.elections?.name,
+    electionDate: seat.elections?.election_date,
+    statement: selectedCandidate?.statement || pp?.bio,
+  });
 
-  const canonicalUrl = `${BASE_URL}/elections/seat/${seatSlug}/candidate/${candSlug}`;
+  // The candidate's own /candidacy/ page is the one canonical URL for a
+  // candidate (it carries the server-rendered bio; this route is the same
+  // person inside the seat view). rel=canonical consolidates ranking signals
+  // there while this page itself stays exactly as it is for visitors --
+  // no redirect, so prev/next, back-to-results and history are untouched.
+  const canonicalUrl = selectedCandidate
+    ? `${BASE_URL}/candidacy/${candSlug}`
+    : `${BASE_URL}/elections/seat/${seatSlug}/candidate/${candSlug}`;
 
   const ogImageUrl = selectedCandidate
     ? `${BASE_URL}/candidacy/${selectedCandidate.id}/opengraph-image`

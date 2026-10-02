@@ -74,7 +74,11 @@ export default function ElectionResultsPanel({
   const roleTitle = seat?.role_title || "this seat";
   const boundaryName = seat?.map_shapes?.name || "this district";
   const electionDateRaw = seat?.elections?.election_date;
-  const electionDate = electionDateRaw ? new Date(electionDateRaw) : null;
+  // A date-only string ("2026-10-24") parses as UTC midnight, which renders
+  // as the previous day for visitors west of UTC -- anchor it to local time.
+  const electionDate = electionDateRaw
+    ? new Date(/^\d{4}-\d{2}-\d{2}$/.test(electionDateRaw) ? `${electionDateRaw}T00:00:00` : electionDateRaw)
+    : null;
   const formattedDate =
     electionDate && !Number.isNaN(electionDate.getTime())
       ? electionDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })

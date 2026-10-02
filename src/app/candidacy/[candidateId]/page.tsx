@@ -10,6 +10,7 @@ import {
 import { getPoliticianProfile } from "@/lib/services/profile";
 import { getSupporterCount } from "@/lib/services/politicianWall";
 import { buildCandidateSlug, buildSeatSlug, extractIdFromSlug } from "@/lib/utils/slugs";
+import { buildCandidateDescription } from "@/lib/utils/seatRaceSeo";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -66,9 +67,12 @@ export async function generateMetadata({
   const ogImageUrl = `${BASE_URL}/candidacy/${realCandidateId}/opengraph-image`;
 
   const title = `${name} — 2026 ${roleTitle} Candidate | Voter Reviews`;
-  const description = candidate.statement
-    ? `${candidate.statement.slice(0, 140)} — Read constituent ratings & voter feedback on Choseno.`
-    : `What do voters think of ${name}? Read anonymous constituent reviews, policy stances & ratings for ${roleTitle} on Choseno.`;
+  const description = buildCandidateDescription({
+    name,
+    roleTitle,
+    boundaryName: candidate.election_seats?.map_shapes?.name,
+    statement: candidate.statement,
+  });
 
   return {
     title,
