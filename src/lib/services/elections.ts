@@ -892,7 +892,7 @@ export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]
   // candidate fetch -- same reasoning as the political_parties(name) widen
   // above, just for the results/roster view instead of the party badge.
   const columns =
-    "id, statement, seat_id, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url, contact_email, contact_phone, wall_slug, bio, political_parties(name)))";
+    "id, statement, seat_id, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url, contact_email, contact_phone, wall_slug, bio, political_parties(name)))";
 
   let query = supabase.from("election_candidates").select(columns).in("seat_id", resolvedIds);
   if (!isDevEnvironment()) query = query.eq("profiles.is_test", false);
@@ -1045,6 +1045,16 @@ export async function updateCandidateStatement(supabase: Client, candidateId: st
 export async function updateCandidateIntroVideoUrl(supabase: Client, candidateId: string, url: string) {
   invalidateCache(`candidate_public:${candidateId}`);
   return supabase.from("election_candidates").update({ intro_video_url: url }).eq("id", candidateId);
+}
+
+// Seat-admin counterpart of updateCandidateIntroVideoUrl: same column, but via
+// an RPC since RLS only lets the candidate update their own row.
+export async function setCandidateIntroVideoAsAdmin(supabase: Client, candidateId: string, url: string) {
+  invalidateCache(`candidate_public:${candidateId}`);
+  return supabase.rpc(
+    "set_candidate_intro_video" as never,
+    { p_candidate_id: candidateId, p_url: url } as never
+  );
 }
 
 export async function reviewCandidateApplication(

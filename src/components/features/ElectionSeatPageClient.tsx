@@ -9,6 +9,7 @@ import ElectionResultsPanel from "./ElectionResultsPanel";
 import ElectionInterviewTab from "./ElectionInterviewTab";
 import PlayInterviewReel from "./PlayInterviewReel";
 import SendInterviewInviteFlow from "./SendInterviewInviteFlow";
+import dynamic from "next/dynamic";
 import StartCallFlow from "./StartCallFlow";
 import {
   getSeatById,
@@ -25,6 +26,7 @@ import {
   reviewCandidacyClaim,
   getCandidateIdsWithVideoAnswers,
   removeCandidate,
+  setCandidateIntroVideoAsAdmin,
   findOverlappingOpenSeats,
 } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
@@ -86,6 +88,10 @@ interface ElectionSeatPageClientProps {
   initialCandidates?: unknown[];
   initialCandidateId?: string;
 }
+
+// Same recorder/uploader the candidate uses for their own intro video
+// (default politician_videos bucket); lazy since only admins ever open it.
+const VideoRecorder = dynamic(() => import("@/components/features/VideoRecorder"), { ssr: false });
 
 export default function ElectionSeatPageClient({
   seatId,
@@ -200,6 +206,7 @@ export default function ElectionSeatPageClient({
   const [addingCandidate, setAddingCandidate] = useState(false);
   const [addCandidateStatus, setAddCandidateStatus] = useState("");
   const [removingCandidateId, setRemovingCandidateId] = useState<string | null>(null);
+  const [introVideoCandidateId, setIntroVideoCandidateId] = useState<string | null>(null);
   const [removeCandidateStatus, setRemoveCandidateStatus] = useState("");
 
   // Claim invites & review claim requests
@@ -686,6 +693,17 @@ export default function ElectionSeatPageClient({
     fetchAll();
   };
 
+  const handleAdminIntroVideoUploaded = async (candidateId: string, url: string) => {
+    const { error } = await setCandidateIntroVideoAsAdmin(supabase, candidateId, url);
+    if (error) {
+      setRemoveCandidateStatus("Error: " + error.message);
+      return;
+    }
+    setIntroVideoCandidateId(null);
+    setRemoveCandidateStatus("");
+    fetchAll();
+  };
+
   const handleReviewClaim = async (requestId: string, approve: boolean) => {
     setReviewingRequestId(requestId);
     const { error } = await reviewCandidacyClaim(supabase, requestId, approve);
@@ -1070,18 +1088,41 @@ export default function ElectionSeatPageClient({
                             return (
                               <div
                                 key={c.id}
-                                className="flex items-center justify-between gap-2 text-xs bg-surface-elevated rounded-xl border border-border-light/30 px-2.5 py-1.5"
+                                className="text-xs bg-surface-elevated rounded-xl border border-border-light/30 px-2.5 py-1.5 space-y-2"
                               >
-                                <span className="truncate font-semibold text-text-secondary">{name}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => handleRemoveCandidate(c.id, name)}
-                                  disabled={removingCandidateId === c.id}
-                                  className="text-text-muted hover:text-danger p-1 shrink-0 cursor-pointer disabled:opacity-50"
-                                  title={`Remove ${name}`}
-                                >
-                                  <Trash2 size={14} />
-                                </button>
+                                <div className="flex items-center justify-between gap-2">
+                                  <span className="truncate font-semibold text-text-secondary">{name}</span>
+                                  <div className="flex items-center gap-1 shrink-0">
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        setIntroVideoCandidateId(introVideoCandidateId === c.id ? null : c.id)
+                                      }
+                                      className="flex items-center gap-1 text-text-muted hover:text-primary p-1 cursor-pointer"
+                                      title={`${c.intro_video_url ? "Replace" : "Add"} intro video for ${name}`}
+                                    >
+                                      <Video size={14} />
+                                      <span className="text-[11px] font-semibold">
+                                        {c.intro_video_url ? "Replace video" : "Add intro video"}
+                                      </span>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleRemoveCandidate(c.id, name)}
+                                      disabled={removingCandidateId === c.id}
+                                      className="text-text-muted hover:text-danger p-1 cursor-pointer disabled:opacity-50"
+                                      title={`Remove ${name}`}
+                                    >
+                                      <Trash2 size={14} />
+                                    </button>
+                                  </div>
+                                </div>
+                                {introVideoCandidateId === c.id && (
+                                  <VideoRecorder
+                                    maxDuration={90}
+                                    onVideoUploaded={(url) => handleAdminIntroVideoUploaded(c.id, url)}
+                                  />
+                                )}
                               </div>
                             );
                           })}
