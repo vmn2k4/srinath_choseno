@@ -592,7 +592,7 @@ export default function CandidateApplicationClient({
 
         {introVideoUrl && !showIntroRecorder && (
           <div className="space-y-2">
-            <IntroVideoPlayer url={introVideoUrl} className="w-full max-h-72 rounded-xl bg-black" />
+            <IntroVideoPlayer url={introVideoUrl} />
             <Button variant="outline" size="sm" onClick={() => setShowIntroRecorder(true)} className="gap-1.5 text-xs">
               <RefreshCw size={14} /> Re-record Intro Video
             </Button>

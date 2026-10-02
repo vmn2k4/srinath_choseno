@@ -4,13 +4,15 @@ import { useState } from "react";
 import { Play } from "lucide-react";
 import { parseYouTubeId } from "@/lib/utils/youtube";
 
+// Intro videos are vertical shorts, so both branches are sized as portrait
+// (9:16, capped width) rather than a full-width landscape player.
 // Plays a candidate's intro_video_url, which is either an uploaded file or a
 // YouTube link. YouTube uses the same privacy-enhanced embed as the home-page
 // demo (HomeDemoVideo), behind a click-to-play thumbnail so no YouTube
 // requests happen until the viewer presses play.
 export default function IntroVideoPlayer({
   url,
-  className = "w-full max-h-64 rounded-lg bg-black",
+  className = "max-h-[26rem] max-w-full rounded-xl bg-black",
 }: {
   url: string;
   className?: string;
@@ -21,7 +23,7 @@ export default function IntroVideoPlayer({
   if (!youTubeId) return <video src={url} controls className={className} />;
 
   return (
-    <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black">
+    <div className="relative w-full max-w-[260px] aspect-[9/16] rounded-xl overflow-hidden bg-black">
       {playing ? (
         <iframe
           className="absolute inset-0 w-full h-full border-0"

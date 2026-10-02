@@ -1181,9 +1181,7 @@ export default function CandidacyWall({
                 <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
                   <Video size={13} className="text-accent" /> Introductory Campaign Video Pitch
                 </h3>
-                <div className="rounded-xl overflow-hidden border border-border-light/40 bg-black">
-                  <IntroVideoPlayer url={candidate.intro_video_url} className="w-full max-h-64 object-contain" />
-                </div>
+                <IntroVideoPlayer url={candidate.intro_video_url} />
               </div>
             )}
 
