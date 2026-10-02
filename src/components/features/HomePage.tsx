@@ -38,6 +38,7 @@ import {
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
 import NameOriginReveal from "@/components/features/home/NameOriginReveal";
 import HomeDemoVideo from "@/components/features/home/HomeDemoVideo";
+import HomeTestimonial from "@/components/features/home/HomeTestimonial";
 import HomeSupportedCountries from "@/components/features/home/HomeSupportedCountries";
 import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
 import HomeLatestNews, { type HomeLatestNewsArticle } from "@/components/features/home/HomeLatestNews";
@@ -386,6 +387,9 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
 
       {/* ============ DEMO VIDEO SECTION ============ */}
       <HomeDemoVideo />
+
+      {/* ============ TESTIMONIAL SECTION ============ */}
+      <HomeTestimonial />
 
       {/* ============ SUPPORTED COUNTRIES SECTION ============ */}
       <HomeSupportedCountries />
