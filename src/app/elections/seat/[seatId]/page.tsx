@@ -4,7 +4,7 @@ import { cache } from "react";
 import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient";
 import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getSeatById, getCandidatesBySeatIds, getOfficeHoldersForShape } from "@/lib/services/elections";
-import { buildRaceDescription, buildRaceParagraphs, longDate, type RaceFacts } from "@/lib/utils/seatRaceSeo";
+import { buildRaceDescription, buildRaceParagraphs, buildRaceTitle, buildCandidateTitle, longDate, type RaceFacts } from "@/lib/utils/seatRaceSeo";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import {
   buildSeatSlug,
@@ -127,9 +127,13 @@ export async function generateMetadata({
   const { seat, candidates, supporterCountByPolitician, incumbentRow } = await getSeatWithCandidates(seatId);
 
   if (!seat) {
+    // Not a 404: an admin previewing a draft election lands here too (the
+    // cookie-free client can't see drafts). noindex keeps every junk or
+    // draft URL out of the index without breaking that preview.
     return {
       title: "Seat Not Found | Choseno",
       description: "The requested election seat could not be found.",
+      robots: { index: false, follow: false },
     };
   }
 
@@ -159,16 +163,10 @@ export async function generateMetadata({
       ? candidateListNames[0]
       : "";
 
+  const raceFacts = toRaceFacts(seat, (candidates as any[]) || [], incumbentRow);
   const title = candidateName
-    ? `${candidateName} (${roleTitle}, ${boundaryName}) — 2026 Candidate & Voter Ratings | Choseno`
-    : topMatchup
-    ? `${electionYear} ${roleTitle} (${boundaryName}): ${topMatchup} — Voter Ratings | Choseno`
-    : `2026 ${roleTitle} Race (${boundaryName}) — Candidate Roster & Voter Reviews | Choseno`;
-
-  const candidateNamesFormatted =
-    candidateListNames && candidateListNames.length > 0
-      ? ` Candidates include ${candidateListNames.join(", ")}${candCount > 3 ? ` & ${candCount - 3} others` : ""}.`
-      : "";
+    ? buildCandidateTitle({ name: candidateName, roleTitle, boundaryName })
+    : buildRaceTitle(raceFacts);
 
   // Lead with the race, election, date and who is running for which party
   // (the facts a searcher wants); the community-support figure stays in the
@@ -177,7 +175,7 @@ export async function generateMetadata({
     ? selectedCandidate.statement.length > 155
       ? `${selectedCandidate.statement.slice(0, 152)}...`
       : selectedCandidate.statement
-    : buildRaceDescription(toRaceFacts(seat, (candidates as any[]) || [], incumbentRow));
+    : buildRaceDescription(raceFacts);
 
   const seatSlug = buildSeatSlug(seat);
   const candSlug = selectedCandidate ? buildCandidateSlug(selectedCandidate) : candidateId;

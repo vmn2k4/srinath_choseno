@@ -94,7 +94,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Boundary Not Found | Choseno" };
   }
 
-  const title = `${shape.name} 2026 Elections — Candidates, Reps & Voter Ratings | Choseno`;
+  const title = `${shape.name} 2026 Elections — Candidates & Reps | Choseno`;
   const { seatRows, candidatesBySeat } = await loadRaces(shape.id);
   const withCandidates = seatRows.filter((s) => (candidatesBySeat.get(s.id) || []).length > 0);
   // With a live race, lead with who is running (what people search for);

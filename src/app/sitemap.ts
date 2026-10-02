@@ -6,7 +6,7 @@ import { fetchAllPages } from "@/lib/utils/fetchAllPages";
 import { summarizeParties, toRosterCandidates } from "@/lib/utils/electionParties";
 import { hubPath, partyPath } from "@/lib/utils/electionPartySeo";
 import { getAllBlogPosts } from "@/lib/services/blogs";
-import { buildSeatSlug, buildCandidateSlug, buildBoundarySlug, buildPoliticianWallSlug } from "@/lib/utils/slugs";
+import { buildSeatSlug, buildCandidateSlug, buildBoundarySlug } from "@/lib/utils/slugs";
 import { categoryToSlug } from "@/lib/utils/newsTaxonomy";
 import { SITE_URL } from "@/lib/constants/site";
 
@@ -38,13 +38,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const supabase = await createClient();
 
-  const [{ data: articles }, { data: seats, error: seatsError }, { data: wallProfiles }] = await Promise.all([
+  const [{ data: articles }, { data: seats, error: seatsError }] = await Promise.all([
     getPublishedNewsArticles(supabase, { limit: 500 }),
     fetchAllPages((from, to) => getActiveSeats(supabase, { limit: to - from + 1, offset: from })),
-    supabase
-      .from("profiles")
-      .select("current_ghost_id, full_name, updated_at, politician_profiles(wall_slug)")
-      .not("current_ghost_id", "is", null),
   ]);
 
   // News is secondary to elections/races, and an old article matters less
@@ -79,26 +75,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.4,
     images: [`${baseUrl}/blog/${post.slug}/opengraph-image`],
   }));
-
-  const wallRoutes: MetadataRoute.Sitemap = (wallProfiles || [])
-    .filter((p) => p.current_ghost_id)
-    .map((p) => ({
-      url: `${baseUrl}/wall/${p.politician_profiles?.wall_slug || buildPoliticianWallSlug(p.full_name)}`,
-      lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
-      changeFrequency: "daily",
-      priority: 0.85,
-    }));
-
-  // Full per-politician news archive (see /wall/[ghostId]/news) -- one more
-  // indexable, linkable page per politician beyond the wall itself.
-  const wallNewsArchiveRoutes: MetadataRoute.Sitemap = (wallProfiles || [])
-    .filter((p) => p.current_ghost_id)
-    .map((p) => ({
-      url: `${baseUrl}/wall/${p.politician_profiles?.wall_slug || buildPoliticianWallSlug(p.full_name)}/news`,
-      lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
-      changeFrequency: "weekly",
-      priority: 0.55,
-    }));
 
   const allSeatRows = (seats || []) as Array<{
     id: string;
@@ -158,6 +134,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ).flat();
 
   let candidateRoutes: MetadataRoute.Sitemap = [];
+  let wallRoutes: MetadataRoute.Sitemap = [];
   let seatRoutes: MetadataRoute.Sitemap = [];
 
   if (allSeatRows.length > 0) {
@@ -177,7 +154,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       id: string;
       seat_id?: string;
       display_name?: string;
-      profiles?: { full_name?: string } | null;
+      profiles?: {
+        full_name?: string;
+        current_ghost_id?: string | null;
+        politician_profiles?: { wall_slug?: string | null } | null;
+      } | null;
     }>;
 
     const candidateCountBySeat = new Map<string, number>();
@@ -197,6 +178,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // One URL per candidate: /candidacy/. The seat-view route
     // (/elections/seat/.../candidate/...) declares it as its canonical, so
     // listing both only splits crawl effort across duplicates.
+    // Politician walls only for people on an active ballot (wall_slug is the
+    // stored canonical one). The old query pulled 1,000 arbitrary walls out
+    // of ~36K profiles -- most of them not in any live race -- plus a
+    // per-politician news archive page for each.
+    const seenWalls = new Set<string>();
+    wallRoutes = [];
+    for (const c of candidateList) {
+      const slug = c.profiles?.current_ghost_id ? c.profiles?.politician_profiles?.wall_slug : null;
+      if (!slug || seenWalls.has(slug)) continue;
+      seenWalls.add(slug);
+      wallRoutes.push({ url: `${baseUrl}/wall/${slug}`, lastModified: new Date(), changeFrequency: "daily", priority: 0.85 });
+    }
+
     candidateRoutes = candidateList.map((c) => ({
       url: `${baseUrl}/candidacy/${buildCandidateSlug(c)}`,
       lastModified: new Date(),
@@ -215,7 +209,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...boundaryRoutes,
     ...wallRoutes,
     ...articleRoutes,
-    ...wallNewsArchiveRoutes,
     ...blogRoutes,
   ];
 }

@@ -10,7 +10,7 @@ import {
 import { getPoliticianProfile } from "@/lib/services/profile";
 import { getSupporterCount } from "@/lib/services/politicianWall";
 import { buildCandidateSlug, buildSeatSlug, extractIdFromSlug } from "@/lib/utils/slugs";
-import { buildCandidateDescription } from "@/lib/utils/seatRaceSeo";
+import { buildCandidateDescription, buildCandidateTitle } from "@/lib/utils/seatRaceSeo";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -55,6 +55,7 @@ export async function generateMetadata({
     return {
       title: "Candidate Not Found | Choseno",
       description: "The requested candidate wall could not be found.",
+      robots: { index: false, follow: false },
     };
   }
 
@@ -66,7 +67,7 @@ export async function generateMetadata({
   const canonicalUrl = `${BASE_URL}/candidacy/${slug}`;
   const ogImageUrl = `${BASE_URL}/candidacy/${realCandidateId}/opengraph-image`;
 
-  const title = `${name} — 2026 ${roleTitle} Candidate | Voter Reviews`;
+  const title = buildCandidateTitle({ name, roleTitle, boundaryName: candidate.election_seats?.map_shapes?.name });
   const description = buildCandidateDescription({
     name,
     roleTitle,

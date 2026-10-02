@@ -195,3 +195,39 @@ export function buildCandidateDescription(f: CandidateFacts, max = 160): string 
   ];
   return variants.find((v) => v.length <= max) || clipSentence(variants[variants.length - 1], max);
 }
+
+const TITLE_MAX = 66;
+
+// First variant that fits; the last always wins if nothing does.
+function fitTitle(variants: string[], max = TITLE_MAX) {
+  return variants.find((v) => v.length <= max) || variants[variants.length - 1];
+}
+
+/**
+ * Seat-page <title>, built so the distinctive part (riding, role, who is
+ * running) comes first and the whole thing fits a ~60-char SERP title.
+ */
+export function buildRaceTitle(f: Pick<RaceFacts, "roleTitle" | "boundaryName" | "candidates">, max = TITLE_MAX): string {
+  const base = `${f.boundaryName} ${f.roleTitle} 2026`;
+  const [a, b] = f.candidates;
+  const n = f.candidates.length;
+  return fitTitle(
+    [
+      a && b && n === 2 ? `${base}: ${a.name} vs. ${b.name} | Choseno` : null,
+      a && n === 1 ? `${base}: ${a.name} | Choseno` : null,
+      a && n > 2 ? `${base}: ${a.name} & ${n - 1} more | Choseno` : null,
+      n > 1 ? `${base}: ${n} Candidates | Choseno` : null,
+      `${base} | Choseno`,
+    ].filter((v): v is string => !!v),
+    max
+  );
+}
+
+/** Candidate <title> (seat-view and /candidacy/ pages): name first, race second. */
+export function buildCandidateTitle(f: Pick<CandidateFacts, "name" | "roleTitle" | "boundaryName">, max = TITLE_MAX): string {
+  const where = f.boundaryName ? `${f.boundaryName} ` : "";
+  return fitTitle(
+    [`${f.name} — ${where}${f.roleTitle} Candidate 2026 | Choseno`, `${f.name} — ${f.roleTitle} Candidate 2026 | Choseno`, `${f.name} — 2026 Candidate | Choseno`],
+    max
+  );
+}

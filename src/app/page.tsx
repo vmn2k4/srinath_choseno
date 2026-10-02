@@ -19,7 +19,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Choseno — Know Who's On Your Ballot | 2026 Candidates & Politician Reviews",
   description:
-    "Know who's on your ballot. Find every candidate running in your district, then rate and review your representatives — like Google Reviews, but for democracy. Informed voters build better democracy.",
+    "Know who's on your ballot. Find every candidate running in your district, then rate and review your representatives — like Google Reviews, but for democracy.",
   alternates: { canonical: BASE_URL },
   openGraph: {
     title: "Know Who's On Your Ballot. Informed Voters Build Better Democracy.",

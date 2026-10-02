@@ -1,3 +1,4 @@
+import { partyShort } from "@/lib/utils/seatRaceSeo";
 import { Metadata } from "next";
 import { cache } from "react";
 import PoliticianWallClient from "@/components/features/PoliticianWallClient";
@@ -90,7 +91,8 @@ export async function generateMetadata({
   const canonicalWallSlug = wallSlug || buildPoliticianWallSlug(name, roleTitle);
   if (canonicalWallSlug && ghostId !== canonicalWallSlug) redirect(`/wall/${canonicalWallSlug}`);
 
-  const partyLabel = partyName ? ` (${partyName})` : "";
+  // "(NDP)", not "(New Democratic Party (NDP))" -- nested parentheses and length.
+  const partyLabel = partyName ? ` (${partyShort(partyName)})` : "";
   const locationLabel = boundaryName ? ` (${boundaryName})` : "";
 
   // Keep titles tight and under 60 characters for SERP display

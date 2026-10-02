@@ -5,7 +5,7 @@ import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient
 import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
 import { buildSeatSlug, buildCandidateSlug, extractIdFromSlug } from "@/lib/utils/slugs";
-import { buildCandidateDescription } from "@/lib/utils/seatRaceSeo";
+import { buildCandidateDescription, buildCandidateTitle } from "@/lib/utils/seatRaceSeo";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -43,6 +43,7 @@ export async function generateMetadata({
     return {
       title: "Seat Not Found | Choseno",
       description: "The requested election seat could not be found.",
+      robots: { index: false, follow: false },
     };
   }
 
@@ -58,7 +59,7 @@ export async function generateMetadata({
   const candSlug = selectedCandidate ? buildCandidateSlug(selectedCandidate) : candidateId;
 
   const title = candidateName
-    ? `${candidateName} (${seat.role_title}, ${seat.map_shapes?.name || "District"}) — Voter Ratings & Stances`
+    ? buildCandidateTitle({ name: candidateName, roleTitle: seat.role_title, boundaryName: seat.map_shapes?.name })
     : `${seat.role_title} Candidates — ${seat.map_shapes?.name || "Electoral Seat"} | Choseno`;
 
   const pp = selectedCandidate?.profiles?.politician_profiles;
