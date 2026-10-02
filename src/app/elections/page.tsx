@@ -4,8 +4,9 @@ import ElectionsPageClient, {
   MatchedBoundary,
 } from "@/components/features/ElectionsPageClient";
 import { createPublicClient } from "@/lib/supabase/publicServer";
-import { getActiveSeats, getCandidatesBySeatIds } from "@/lib/services/elections";
-import { buildSeatSlug } from "@/lib/utils/slugs";
+import Link from "next/link";
+import { getActiveSeats, getCandidatesBySeatIds, getElections } from "@/lib/services/elections";
+import { buildSeatSlug, buildElectionSlug } from "@/lib/utils/slugs";
 import { SITE_URL } from "@/lib/constants/site";
 
 const BASE_URL = SITE_URL;
@@ -67,6 +68,18 @@ export default async function ElectionsPage() {
   const role: string | null = null;
   const initialBoundaries: MatchedBoundary[] = [];
 
+  // Every live election, independent of the 300-seat cap above: the seat
+  // list is role-sorted, so it never reaches e.g. the BC provincial or US
+  // midterm seats, and the client's "Browse by party" buttons are derived
+  // from those same seats. These server-rendered links are the crawlable
+  // path from here to each election hub (and from there to every race).
+  const { data: electionRows } = await getElections(supabase);
+  const liveElections = (electionRows || [])
+    .filter((e: { status: string }) => ["nominations_open", "nominations_closed", "active"].includes(e.status))
+    .sort((a: { election_date?: string | null }, b: { election_date?: string | null }) =>
+      (a.election_date || "").localeCompare(b.election_date || "")
+    );
+
   const seatIds = (seatRows || []).map((s) => s.id);
   const candidatesBySeat: Record<string, unknown[]> = {};
   if (seatIds.length > 0) {
@@ -116,6 +129,20 @@ export default async function ElectionsPage() {
         initialRole={role}
         initialBoundaries={initialBoundaries}
       />
+      {liveElections.length > 0 && (
+        <nav aria-label="All elections" className="px-4 lg:px-8 pb-16">
+          <h2 className="font-display text-xl font-bold text-text-main mb-3">Browse every election</h2>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+            {liveElections.map((e: { id: string; name: string }) => (
+              <li key={e.id}>
+                <Link href={`/elections/e/${buildElectionSlug(e)}`} className="text-primary hover:underline">
+                  {e.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </>
   );
 }

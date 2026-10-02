@@ -767,7 +767,8 @@ export async function getActiveSeats(
       opts.withCount ? { count: "exact" } : undefined
     )
     .in("elections.status", ["nominations_open", "nominations_closed", "active"])
-    .order("role_title");
+    .order("role_title")
+    .order("id");
 
   if (opts.limit) q = q.limit(opts.limit);
   if (opts.offset) q = q.range(opts.offset, opts.offset + (opts.limit ?? 30) - 1);
@@ -892,7 +893,7 @@ export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]
   // candidate fetch -- same reasoning as the political_parties(name) widen
   // above, just for the results/roster view instead of the party badge.
   const columns =
-    "id, statement, seat_id, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url, contact_email, contact_phone, wall_slug, bio, political_parties(name)))";
+    "id, statement, seat_id, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url, contact_email, contact_phone, wall_slug, bio, political_parties(id, name)))";
 
   let query = supabase.from("election_candidates").select(columns).in("seat_id", resolvedIds);
   if (!isDevEnvironment()) query = query.eq("profiles.is_test", false);

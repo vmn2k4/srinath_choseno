@@ -112,6 +112,7 @@ interface CandidateRecord {
   election_seats?: {
     role_title?: string;
     map_shapes?: { name?: string } | null;
+    elections?: { id?: string; name?: string } | null;
   } | null;
 }
 

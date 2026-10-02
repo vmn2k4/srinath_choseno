@@ -440,7 +440,7 @@ export async function getPoliticianProfile(supabase: Client, politicianId: strin
     () =>
       supabase
         .from("politician_profiles")
-        .select("education, hometown, bio, avatar_url, contact_email, contact_phone, source_url, political_parties(name)")
+        .select("education, hometown, bio, avatar_url, contact_email, contact_phone, source_url, political_parties(id, name)")
         .eq("id", politicianId)
         .maybeSingle(),
     10 * 60 * 1000
@@ -451,7 +451,7 @@ export async function getPoliticianProfile(supabase: Client, politicianId: strin
 export async function getPoliticianProfileFull(supabase: Client, userId: string) {
   return supabase
     .from("politician_profiles")
-    .select("target_boundary_id, target_boundary_name, political_target_role, political_party_id, political_parties(name), education, hometown, bio, avatar_url, contact_email, contact_phone, source_url")
+    .select("target_boundary_id, target_boundary_name, political_target_role, political_party_id, political_parties(id, name), education, hometown, bio, avatar_url, contact_email, contact_phone, source_url")
     .eq("id", userId)
     .maybeSingle();
 }

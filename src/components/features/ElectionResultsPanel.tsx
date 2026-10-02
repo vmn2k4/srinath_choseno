@@ -8,7 +8,9 @@ import ShareMenu, { type ShareData } from "./ShareMenu";
 import PoliticianInlineRating from "./PoliticianInlineRating";
 import { BioLinkIcons } from "./BioLinks";
 import { SITE_URL } from "@/lib/constants/site";
+import Link from "next/link";
 import { buildSeatSlug } from "@/lib/utils/slugs";
+import { partyPath } from "@/lib/utils/electionPartySeo";
 import { parseBioLinks } from "@/lib/utils/bioLinks";
 
 // Comprehensive "who's leading" view for a seat's candidate roster.
@@ -20,7 +22,7 @@ import { parseBioLinks } from "@/lib/utils/bioLinks";
 interface PoliticianProfile {
   avatar_url?: string | null;
   bio?: string | null;
-  political_parties?: { name?: string | null } | { name?: string | null }[] | null;
+  political_parties?: { id?: number | null; name?: string | null } | { id?: number | null; name?: string | null }[] | null;
 }
 
 interface CandidateRow {
@@ -103,6 +105,7 @@ export default function ElectionResultsPanel({
         ? polEntry.political_parties[0]
         : polEntry?.political_parties;
       const partyName = c.party_name || partyEntry?.name || null;
+      const partyId = partyEntry?.id ?? null;
       // bioSnippet: first ~6 words of the bio, always shown under the
       // candidate's name -- a real one-line bio (no newlines) used to mean
       // the whole thing rendered as "one line", which in practice was a
@@ -127,6 +130,7 @@ export default function ElectionResultsPanel({
         name,
         avatarUrl,
         partyName,
+        partyId,
         bioSnippet,
         bioProse,
         bioLinks,
@@ -305,7 +309,7 @@ export default function ElectionResultsPanel({
       </div>
 
       <div className="space-y-1.5">
-        {rows.map(({ candidate, name, avatarUrl, partyName, bioSnippet, bioProse, bioLinks, hasMoreBio, supporterCount, avgRating, ratingCount }) => {
+        {rows.map(({ candidate, name, avatarUrl, partyName, partyId, bioSnippet, bioProse, bioLinks, hasMoreBio, supporterCount, avgRating, ratingCount }) => {
           const pct = totalSupport > 0 ? Math.round((supporterCount / totalSupport) * 1000) / 10 : 0;
           const isTopRow = totalSupport > 0 && supporterCount === topSupportCount;
           const isLeader = leader?.candidate.id === candidate.id;
@@ -354,13 +358,25 @@ export default function ElectionResultsPanel({
                     or pushed down. Wrapping drops it to its own line
                     inside the column instead. */}
                 <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 min-w-0 flex-1">
-                  <span className="text-[15px] sm:text-sm font-bold text-text-main group-hover:underline leading-tight truncate shrink-0">
+                  <span className="text-[15px] sm:text-sm font-bold text-text-main group-hover:underline group-has-[a:hover]:no-underline leading-tight truncate shrink-0">
                     {name}
                   </span>
                   {partyName && (
-                    <span className="text-xs text-text-muted truncate leading-tight min-w-0">
-                      {partyName}
-                    </span>
+                    partyId != null && seat?.elections?.id ? (
+                      <Link
+                        href={partyPath(seat.elections, { id: partyId, name: partyName })}
+                        onClick={(e) => e.stopPropagation()}
+                        onKeyDown={(e) => e.stopPropagation()}
+                        title={`See all ${partyName} candidates in this election`}
+                        className="text-xs font-medium text-text-muted border border-border-light/60 rounded-full px-2 py-0.5 hover:border-primary/50 hover:text-primary hover:bg-primary/10 transition-colors truncate leading-tight min-w-0 max-w-full"
+                      >
+                        {partyName}
+                      </Link>
+                    ) : (
+                      <span className="text-xs text-text-muted truncate leading-tight min-w-0">
+                        {partyName}
+                      </span>
+                    )
                   )}
                   {isLeader && (
                     <Badge tone="emerald" size="2xs" shape="pill" className="shrink-0">

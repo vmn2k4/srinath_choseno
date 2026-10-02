@@ -9,6 +9,7 @@ import FaqSection from "@/components/features/FaqSection";
 import FindDistrictPromo from "@/components/features/FindDistrictPromo";
 import JsonLdScript from "@/components/features/JsonLdScript";
 import { summarizeParties } from "@/lib/utils/electionParties";
+import { buildSeatSlug } from "@/lib/utils/slugs";
 import { clip, formatElectionDate, hubFacts, hubJsonLd, hubPath, partyPath } from "@/lib/utils/electionPartySeo";
 import { SITE_URL } from "@/lib/constants/site";
 import { loadElection, STATUS_LABELS } from "./loadElection";
@@ -56,6 +57,11 @@ export default async function ElectionPartiesPage({ params }: PageProps) {
   const totalRaces = seats.length || new Set(roster.map((c) => c.seatId)).size;
   const date = formatElectionDate(election.election_date);
   const { summary, faqs } = hubFacts(election, parties, roster.length, totalRaces);
+  const candidateCountBySeat = new Map<string, number>();
+  roster.forEach((c) => candidateCountBySeat.set(c.seatId, (candidateCountBySeat.get(c.seatId) || 0) + 1));
+  const racesWithCandidates = seats
+    .filter((seat) => candidateCountBySeat.has(seat.id))
+    .map((seat) => ({ seat, count: candidateCountBySeat.get(seat.id) || 0 }));
 
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
@@ -117,6 +123,28 @@ export default async function ElectionPartiesPage({ params }: PageProps) {
           {parties.map((party) => (
             <ElectionPartyCard key={party.slug} party={party} totalRaces={totalRaces} href={partyPath(election, party)} />
           ))}
+        </section>
+      )}
+
+      {racesWithCandidates.length > 0 && (
+        // Plain crawlable links to every race: this hub is linked from
+        // /elections, so it is the path that gets each seat page (and from
+        // there each candidate page) discovered, including seats the
+        // 300-seat /elections list never reaches.
+        <section aria-labelledby="all-races-heading">
+          <h2 id="all-races-heading" className="font-display text-2xl font-bold text-text-main mb-3">
+            Every race in the {election.name}
+          </h2>
+          <ul className="grid gap-x-6 gap-y-1.5 text-sm sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {racesWithCandidates.map((r) => (
+              <li key={r.seat.id}>
+                <Link href={`/elections/seat/${buildSeatSlug(r.seat as Parameters<typeof buildSeatSlug>[0])}`} className="text-primary hover:underline">
+                  {r.seat.role_title} — {r.seat.map_shapes?.name || "District"}
+                </Link>
+                <span className="text-text-muted"> ({r.count})</span>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 
