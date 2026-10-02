@@ -1,6 +1,9 @@
 "use client";
 
 import { Fragment, useState } from "react";
+import { Play } from "lucide-react";
+import IntroVideoPlayer from "./IntroVideoPlayer";
+import { parseYouTubeId } from "@/lib/utils/youtube";
 import { TrendingUp, Calendar, MapPin, Heart, Users, Share2, ExternalLink, ChevronRight } from "lucide-react";
 import { Card, Avatar, Badge, Button, StarRating } from "@/components/primitives";
 import ShareMenu, { type ShareData } from "./ShareMenu";
@@ -24,6 +27,7 @@ interface PoliticianProfile {
 
 interface CandidateRow {
   id: string;
+  intro_video_url?: string | null;
   display_name?: string | null;
   party_name?: string | null;
   profiles?: {
@@ -67,6 +71,9 @@ export default function ElectionResultsPanel({
   // "Read more" — a one-line bio teaser below the row, independent of the
   // rating expand above (a visitor can have both open at once).
   const [expandedBioId, setExpandedBioId] = useState<string | null>(null);
+  // Which candidate's intro video is open in its full-width player; the
+  // collapsed state is a small thumbnail with a play button.
+  const [expandedVideoId, setExpandedVideoId] = useState<string | null>(null);
   const roleTitle = seat?.role_title || "this seat";
   const boundaryName = seat?.map_shapes?.name || "this district";
   const electionDateRaw = seat?.elections?.election_date;
@@ -503,6 +510,57 @@ export default function ElectionResultsPanel({
                     "Website: ... | Facebook: ..." line -- always visible,
                     each links straight to that account. */}
                 <BioLinkIcons links={bioLinks} />
+              </div>
+            )}
+
+            {candidate.intro_video_url && (
+              <div className="pl-3 sm:pl-11 pr-3">
+                {expandedVideoId === candidate.id ? (
+                  <div className="max-w-xl space-y-1.5">
+                    <IntroVideoPlayer url={candidate.intro_video_url} />
+                    <button
+                      type="button"
+                      onClick={() => setExpandedVideoId(null)}
+                      className="text-xs font-semibold text-primary hover:text-primary-hover cursor-pointer"
+                    >
+                      Hide video
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setExpandedVideoId(candidate.id)}
+                    className="group relative block w-44 aspect-video rounded-xl overflow-hidden bg-black border border-border-light/40 cursor-pointer"
+                    aria-label={`Play ${name}'s intro video`}
+                  >
+                    {parseYouTubeId(candidate.intro_video_url) ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={`https://i.ytimg.com/vi/${parseYouTubeId(candidate.intro_video_url)}/hqdefault.jpg`}
+                        alt=""
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    ) : (
+                      // First frame of an uploaded video as the thumbnail.
+                      <video
+                        src={`${candidate.intro_video_url}#t=0.1`}
+                        preload="metadata"
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                      />
+                    )}
+                    <span className="absolute inset-0 bg-black/25 group-hover:bg-black/10 transition-colors" />
+                    <span className="absolute inset-0 flex items-center justify-center">
+                      <span className="w-10 h-10 rounded-full bg-primary text-text-on-primary flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
+                        <Play className="w-4 h-4 fill-current translate-x-0.5" aria-hidden="true" />
+                      </span>
+                    </span>
+                    <span className="absolute bottom-1 left-1.5 text-[10px] font-bold text-white drop-shadow">
+                      Intro video
+                    </span>
+                  </button>
+                )}
               </div>
             )}
 
